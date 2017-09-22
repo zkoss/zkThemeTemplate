@@ -1,31 +1,39 @@
+.z-menu-text, .z-menuitem-text {
+	font-size: 17px;
+}
+
+.z-menu-image, .z-menuitem-image {
+	min-height: 24px;
+	min-width: 24px;
+}
+.z-menupopup .z-menu-image,
+.z-menupopup .z-menuitem-image {
+	min-height: 24px;
+	min-width: 24px;
+}
+.z-menupopup [class^="z-icon"] {
+	font-size: 24px;
+	min-width: 24px;
+}
+.z-menupopup .z-menuitem-icon {
+	font-size: 24px;
+	top: 10px;
+}
+
+.z-menu-icon {
+	font-size: 22px;
+}
+
+.z-menu-content, .z-menuitem-content {
+	padding: 8px 12px;
+}
+
 .z-menubar-icon {
-	opacity: 1;
-}
-.z-menu,
-.z-menuitem {
-	&-content {
-		min-height: 32px;
-		padding-top: 3px;
-		padding-bottom: 3px;
-		line-height: normal;
-	}
-	&-image {
-		vertical-align: middle;
-	}
-}
-img ~ .z-menu-text, img ~ .z-menuitem-text {
-	line-height: 24px;
-	vertical-align: middle;
+	font-size: 24px;
+	margin-top: -14px;
 }
 
-.z-menu-icon,
-.z-meunitem-icon,
-.z-menupopup .z-menu-icon,
-.z-menupopup .z-menuitem-icon,
-.z-menubar-vertical .z-menu-icon {
-	top: 7px;
-}
-
-.z-menubar-horizontal .z-menuseparator {
-	line-height: 32px;
+.z-menubar-vertical {
+	max-width: 36%;
+	overflow: auto;
 }

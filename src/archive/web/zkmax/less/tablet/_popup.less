@@ -1,19 +1,35 @@
-.z-notification {
+.z-popup {
 	&-content {
-		font-size: @baseFontSize;
+		font-size: 15px;
+	}
+}
+
+.z-notification {
+	&-icon {
+		&.z-icon-times-circle,
+		&.z-icon-exclamation-circle,
+		&.z-icon-info-circle {
+			.size(32px, 32px);
+			line-height: 32px;
+			font-size: 32px;
+			left: 8px;
+		}
+	}
+	&-content {
+		padding-left: 44px;
+		padding-right: 8px;
+		font-size: 15px;
 	}
 	&-close {
-		font-size: @fontSizeLarge;
-		.size(18px, 18px);
-		line-height: 18px;
-		opacity: 0.8;
+		font-size: 22px;
+		top: 4px;
+		right: 4px;
 	}
-	
-	&-icon {
-		left: 3px;
-	}
-	
-	&-icon.z-icon-times {
-		margin-top: -8px;
-	}
+}
+
+.z-notification-left + .z-notification-icon {
+	left: 16px; // 8px arrow
+}
+.z-notification-pointer ~ .z-notification-content {
+	padding: 8px 28px 8px 44px;
 }

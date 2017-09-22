@@ -1,40 +1,38 @@
 .z-tree {
 	&-icon,
 	&-line {
-		.size(24px, 24px);
-		line-height: 24px;
-		vertical-align: top;
+		.size(12px, 12px);
+		line-height: 12px;
 	}
 	&-icon {
-		font-size: 20px;
-		opacity: 0.7;
-		left: 3px;
+		font-size: 22px;
 	}
 }
-.z-treerow {
-	&-checkable {
-		.size(24px, 24px);
-		
-		&.z-treerow-radio {
-			.borderRadius(12px);
-		}
-	}
 
-	// Sandbox-G14: use strict selector to override style
-	&-selected > .z-treecell > .z-treecell-content
-		> .z-treerow-checkable .z-treerow-icon {
-		
-		font-size: @fontSizeXLarge;
-		padding-left: 2px;
-		line-height: 22px;
-
-		&.z-icon-radio {
-			.size(10px, 10px);
-			.borderRadius(5px);
-			margin: 6px;
-		}
-	}
+.z-treecell-text {
+	margin-left: 4px;
 }
-.z-treecell-content {
-	line-height: 22px;
+
+.z-treecol-content, .z-treecell-content, .z-treefooter-content {
+	font-size: 15px;
+	padding: 10px 12px;
+}
+
+.z-tree-body .z-tree-emptybody td {
+	font-size: 15px;
+	padding: 10px 12px;
+}
+
+// checkbox
+.z-treerow-checkable {
+	.size(24px, 24px);
+	font-size: 22px;
+}
+.z-treerow-selected>.z-treecell>.z-treecell-content>.z-treerow-checkable .z-treerow-icon {
+	padding-top: 2px;
+}
+// radio
+.z-treerow-selected > .z-treecell > .z-treecell-content
+	> .z-treerow-checkable .z-treerow-icon.z-icon-radio {
+	.size(16px, 16px);
 }

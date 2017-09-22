@@ -30,50 +30,24 @@ textarea:focus {
 // Checkbox and Radio
 input[type=checkbox],
 input[type=radio] {
-	-webkit-appearance: none;
-	.size(@baseButtonWidth, @baseButtonHeight);
-	border: 1px solid @baseBorderColor;
-	.verGradient(@baseGradientStart, @baseGradientEnd);
-	position: relative;
-	top: -2px;
-	
-	&:active {
-		.verGradient(@baseGradientEnd, @baseGradientStart);
-		.boxShadow('inset 0 1px 1px rgba(210, 210, 210, 0.75)');
-	}
+	.size(24px, 24px);
 }
-input[type=checkbox]:checked {
-	.iconFontStyle(20px, #2184BA);
+input[type=checkbox] {
+	font-size: 22px;
 }
 input[type=radio] {
-	.borderRadius('2em');
-	
-	&:checked {
-		.verGradient(@baseGradientStart, @baseGradientEnd);
-		background-size: contain;
-		
-		&:after {
-			content:'';
-			.size(0, 0);
-			border: 5px solid #2184BA;
-			.borderRadius('2em');
-			position: absolute;
-			top: 6px;
-			left: 6px;
-		}
-		
-		&:active {
-			.verGradient(@baseGradientEnd, @baseGradientStart);
-		}
+	&:before {
+		.size(16px, 16px);
 	}
 }
+
 .z-label,
 .z-loading,
 .z-apply-loading-indicator,
 .z-a,
 .z-temp .z-loading,
 .z-temp .z-loading-indicator {
-	font-size: 12px;
+	font-size: 15px;
 }
 .z-apply-loading-icon,
 .z-loading-icon,
@@ -91,65 +65,36 @@ input[type=radio] {
 	}
 }
 
-//ProgressMeter
-@-webkit-keyframes z-progressmeter {
-    0% {
-       background-position: 0 0;
-    }
-    100% {
-       background-position: 20px 20px;
-    }
-}
-.z-progressmeter {
-	height: 15px;
-	border: 1px solid @baseBorderColor;
-	.borderRadius(5px);
-	background: #F0F0F0;
-	text-align: start;
-	position: relative;
-	.boxShadow('inset 0 -1px 1px rgba(255,255,255,0.3)');
-	
-	&-image {
-		font-size: 0;
-		display: inline-block;
-		height: 13px;
-		.leftBorderRadius(5px);
-		line-height: 0;
-		.verGradient(#E8F6FD, #C6E9FA);
-		vertical-align: top;
-		
-		> span {
-			.rightBorderRadius(5px);
-			.gradient('diag-', 'rgba(255, 255, 255, 1) 25%; transparent 25%; transparent 50%; rgba(255, 255, 255, 1) 50%; rgba(255, 255, 255, 1) 75%; transparent 75%; transparent 100%');
-			.applyCSS3('background-size', '20px 20px');
-			.applyCSS3('animation', 'z-progressmeter 2s linear infinite');
-			position: absolute;
-			top: 0;
-			left: 0;
-			bottom: 0;
-			right: 0;
-			overflow: hidden;
-			z-index: 1;
-		}
-	}
-}
-
 .z-html {
 	display: inline-block;
 }
 
 // JS debug error box
-.z-error .button {
-	.size(24px, 24px);
-	margin-left: 0px;
-	
-	> .z-icon-remove {
-		font-size: 20px;
+.z-error {
+	width: auto;
+	max-width: 90%;
+	padding: 12px 8px 16px 16px;
+	left: 0;
+	right: 0;
+	margin: 0 auto;
+
+	.errornumbers {
+		font-size: 17px;
 	}
-	> .z-icon-refresh {
-		font-size: 18px;
-		position: relative;
-		top: 2px;
+
+	.messagecontent {
+		padding-top: 16px;
+		padding-right: 8px;
+		font-size: 15px;
+	}
+
+	.button {
+		.size(22px, 22px);
+		font-size: 22px;
+		margin-left: 12px;
+		>.z-icon-times { // override
+			font-size: 22px;
+		}
 	}
 }
 
@@ -176,3 +121,4 @@ input[type=radio] {
 @import "~./zkmax/less/tablet/_tree.less";
 @import "~./zkmax/less/tablet/_window.less";
 @import "~./zkmax/less/tablet/_caption.less";
+@import "~./zkmax/less/tablet/_nav.less";

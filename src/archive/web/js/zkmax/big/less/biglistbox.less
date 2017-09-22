@@ -10,7 +10,7 @@
 }
 .z-biglistbox {
 	border: 1px solid @baseBorderColor;
-	background: @biglistboxBackgroundColor;
+	background: @meshBackgroundColor;
 	position: relative;
 	overflow: hidden;
 	zoom: 1;
@@ -19,8 +19,8 @@
 		border: 1px solid @baseBorderColor;
 		border-top: none;
 		border-left: none;
-		margin: 0 15px 15px 0;
-		background: @baseBackgroundColor;
+		margin: 0 18px 18px 0;
+		background: @meshBackgroundColor;
 		position: relative;
 	}
 	&-faker th {
@@ -44,24 +44,26 @@
 		.resetTable();
 	}
 	&-header {
-		border: 1px solid @meshTitleBorderColor;
-		border-left-color: #FFFFFF;
-		border-top: 0;
+		border-left: 1px solid @meshTitleBorderColor;
+		border-bottom: 1px solid @meshTitleBorderColor;
 		padding: 0;
 		text-align: left;
 		position: relative;
 		overflow: hidden;
 		cursor: default;
 		white-space: nowrap;
-		.verGradient(@baseGradientStart, @baseGradientEnd);
+		background-color: @meshTitleBackgroundColor;
 		
 		&-content {
-			.fontStyle(@baseTitleFontFamily, @fontSizeMedium, bold, @textColorGrayLight);
-			padding: 4px 5px;
-			line-height: @baseButtonHeight - 1;
+			.fontStyle(@baseTitleFontFamily, @fontSizeMedium, normal, @meshTitleColor);
+			padding: 12px 16px;
+			line-height: 1.3em;
 			position: relative;
 			white-space: nowrap;
 		}
+	}
+	&-header-leftmost {
+		border-left: none;
 	}
 	//body
 	&-body-outer {
@@ -70,7 +72,7 @@
 	&-body {
 		width: 100%;
 		border: 0;
-		background: @baseBackgroundColor;
+		background: @meshBackgroundColor;
 		position: relative;
 		overflow: hidden;
 		float: left;
@@ -78,35 +80,32 @@
 		
 		//body content
 		td {
-			.fontStyle(@baseContentFontFamily, @fontSizeMedium, normal, @textColorGrayLight);
-			border-left: 1px solid @meshContentBorderColor;
-			padding: 4px 5px;
-			line-height: @baseButtonHeight;
+			.fontStyle(@baseContentFontFamily, @fontSizeMedium, normal, @baseTextColor);
+			padding: 12px 16px;
+			line-height: 1.3em;
 			overflow: hidden;
 			cursor: pointer;
 			white-space: nowrap;
 		}
 	}
 	&-row {
+		background: @meshBackgroundColor;
+		border-top: 1px solid @meshContentBorderColor;
 		&:hover td {
 			color: @hoverColor;
-			border-color: @meshContentHoverStart;
-			.verGradient(@meshContentHoverStart, @meshContentHoverEnd);
-			background-clip: padding-box;
+			background-color: @hoverBackgroundColor;
 			position: relative;
 		}
 		&.z-biglistbox-selected {
 			td {
 				color: @selectedColor;
-				border-color: @selectedGradientStart;
-				.verGradient(@selectedGradientStart, @selectedGradientEnd);
-				background-clip: padding-box;
+				border-color: @selectedBorderColor;
+				background-color: @selectedBackgroundColor;
 				position: relative;
 			}
 			&:hover td {
 				color: @selectedHoverColor;
-				border-color: @selectedHoverBackgroundColor;
-				.resetGradient();
+				border-color: @selectedHoverBorderColor;
 				background: @selectedHoverBackgroundColor;
 				position: relative;
 			}
@@ -121,14 +120,12 @@
 		cursor: pointer;
 	}
 	&-sorticon {
-		color: @iconColor;
+		color: @meshTitleColor;
 		position: absolute;
 		top: -7px;
 		left: 50%;
 	}
 	&-hover { //sortable header hover status
-		.verGradient(@meshTitleHoverStart, @meshTitleHoverEnd);
-		background-clip: padding-box;
 		position: relative;
 	}
 	//frozen
@@ -140,61 +137,133 @@
 	}
 	&-verticalbar-frozen {
 		.size(3px, 100%);
-		border: 1px solid @baseBorderColor;
-		background: @biglistboxFrozenBackground;
+		background: @biglistboxFrozenBackgroundColor;
 		position: absolute;
 		top: -3px;
+		&-ghost {
+			.size(1px, 100%);
+			background: @biglistboxFrozenGhostBackgroundColor;
+		}
 	}
 	&-verticalbar-tick {
-		.size(8px, 16px);
-		.encodeURL(background, '~./zkmax/img/big/vbar-tick.png', -0px -0px no-repeat);
+		.size(10px, 18px);
 		position: absolute;
-		bottom: 1px;
+		font-size: 16px;
+		color: @biglistboxScrollBarTextColor;
+		background-color: #FFF;
+		border: 1px solid @biglistboxScrollBarBorderColor;
+		.borderRadius(2px);
+		bottom: 2px;
 		overflow: hidden;
-		cursor: w-resize;
+		cursor: col-resize;
 		z-index: 20;
+		font-family: 'ZK85Icons';
+		&:before {
+			content: '\e910';
+			position: absolute;
+			left: -4px;
+		}
+		&:hover {
+			background-color: @biglistboxScrollBarHoverBackgroundColor;
+            border: 1px solid @biglistboxScrollBarHoverBorderColor;
+		}
+		&:active {
+			background-color: @biglistboxScrollBarActiveBackgroundColor;
+            border: 1px solid @biglistboxScrollBarActiveBorderColor;
+		}
 	}
 	//WScroll bar
 	&-wscroll {
 		// vertical
 		&-vertical {
-			.size(15px, 100%);
+			.size(18px, 100%);
 			position: absolute;
 			top: 0;
-			right: -16px;
+			right: -19px;
 			z-index: 10;
 			
 			.z-biglistbox-wscroll-drag {
-				.size(15px, 115px);
-				.encodeURL(background, '~./zkmax/img/big/drag-v.png', no-repeat scroll 0 0 transparent);
+				font-family: 'ZK85Icons';
+				.size(18px, 116px);
+				color: @biglistboxScrollBarTextColor;
+				background-color: #FFF;
 				position: absolute;
 				overflow: hidden;
 				cursor: pointer;
 				z-index: 15;
-				
+				.z-biglistbox-wscroll-home,
+				.z-biglistbox-wscroll-up,
+				.z-biglistbox-wscroll-down,
+				.z-biglistbox-wscroll-end,
+				.z-biglistbox-wscroll-body {
+					font-size: 16px;
+					position: absolute;
+					border: 1px solid @biglistboxScrollBarBorderColor;
+					&:hover {
+						background-color: @biglistboxScrollBarHoverBackgroundColor;
+						border: 1px solid @biglistboxScrollBarHoverBorderColor;
+					}
+					&:active {
+						color: #FFF;
+						background-color: @biglistboxScrollBarActiveBackgroundColor;
+						border: 1px solid @biglistboxScrollBarActiveBorderColor;
+					}
+				}
 				.z-biglistbox-wscroll-home,
 				.z-biglistbox-wscroll-up,
 				.z-biglistbox-wscroll-down,
 				.z-biglistbox-wscroll-end {
-					.size(15px, 15px);
-					position: absolute;
+					.size(18px, 18px);
+				}
+				.z-biglistbox-wscroll-body {
+					.size(18px, 45px);
+					top: 36px;
+					border-top: 0;
+					border-bottom: 0;
+					&:before {
+						content: '\e90d';
+						position: absolute;
+						top: 14px;
+					}
+					&:hover, &:active {
+						top: 35px;
+					}
 				}
 				.z-biglistbox-wscroll-home {
 					top: 0;
+					.topBorderRadius(2px);
+					&:before {
+						content: '\e90e';
+					}
 				}
 				.z-biglistbox-wscroll-up {
-					top: 15px;
+					top: 18px;
+					border-top: 0;
+					&:before {
+						content: '\e904';
+					}
+					&:hover, &:active {
+						top: 17px;
+					}
 				}
 				.z-biglistbox-wscroll-down {
-					bottom: 15px;
+					bottom: 18px;
+					border-bottom: 0;
+					&:before {
+						content: '\e90a';
+					}
 				}
 				.z-biglistbox-wscroll-end {
 					bottom: 0;
+					.bottomBorderRadius(2px);
+					&:before {
+						content: '\e903';
+					}
 				}
 			}
 			.z-biglistbox-wscroll-pos {
 				visibility: visible;
-				.size(15px, 115px);
+				.size(18px, 115px);
 				.borderRadius(2px);
 				background: contrast(@baseBackgroundColor);
 				.opacity(0.25);
@@ -204,9 +273,10 @@
 				z-index: 10;
 			}
 			.z-biglistbox-wscroll-endbar {
-				.size(15px, 7px);
-				border: 1px solid @baseBorderColor;
-				.horGradient(@baseGradientStart, @baseGradientEnd);
+				.size(18px, 8px);
+				border: 1px solid @biglistboxScrollBarBorderColor;
+				.borderRadius(2px);
+				background-color: @biglistboxScrollBarEndBarBackgroundColor;
 				overflow: hidden;
 				position: absolute;
 				right: 0;
@@ -215,43 +285,93 @@
 		}
 		// horizontal
 		&-horizontal {
-			.size(100%, 15px);
+			.size(100%, 18px);
 			position: absolute;
 			left: 0;
-			bottom: -16px;
+			bottom: -19px;
 			z-index: 10;
 			
 			.z-biglistbox-wscroll-drag {
-				.size(115px, 15px);
-				.encodeURL(background, '~./zkmax/img/big/drag-h.png', no-repeat scroll 0 0 transparent);
+				font-family: 'ZK85Icons';
+				.size(116px, 18px);
+				color: @biglistboxScrollBarTextColor;
+				background-color: #FFF;
 				position: absolute;
 				overflow: hidden;
 				cursor: pointer;
 				z-index: 15;
-				
+				.z-biglistbox-wscroll-home,
+				.z-biglistbox-wscroll-up,
+				.z-biglistbox-wscroll-down,
+				.z-biglistbox-wscroll-end,
+				.z-biglistbox-wscroll-body {
+					font-size: 16px;
+					position: absolute;
+					top: 0;
+					border: 1px solid @biglistboxScrollBarBorderColor;
+					&:hover {
+						background-color: @biglistboxScrollBarHoverBackgroundColor;
+						border: 1px solid @biglistboxScrollBarHoverBorderColor;
+					}
+					&:active {
+						color: #FFF;
+						background-color: @biglistboxScrollBarActiveBackgroundColor;
+						border: 1px solid @biglistboxScrollBarActiveBorderColor;
+					}
+				}
 				.z-biglistbox-wscroll-home,
 				.z-biglistbox-wscroll-up,
 				.z-biglistbox-wscroll-down,
 				.z-biglistbox-wscroll-end {
-					.size(15px, 15px);
-					position: absolute;
+					.size(18px, 18px);
+				}
+				.z-biglistbox-wscroll-body {
+					.size(45px, 18px);
+					left: 36px;
+					border-left: 0;
+					border-right: 0;
+					&:before {
+						content: '\e90f';
+						position: absolute;
+						left: 14px;
+					}
+					&:hover, &:active {
+						left: 35px;
+					}
 				}
 				.z-biglistbox-wscroll-home {
-					left: 0;
+					left: 0px;
+					&:before {
+						content: '\f048';
+					}
 				}
 				.z-biglistbox-wscroll-up {
-					left: 15px;
+					left: 18px;
+					border-left: 0;
+					&:before {
+						content: '\e906';
+					}
+					&:hover, &:active {
+						left: 17px;
+					}
 				}
 				.z-biglistbox-wscroll-down {
-					right: 15px;
+					right: 18px;
+					border-right: 0;
+					&:before {
+						content: '\e90c';
+					}
 				}
 				.z-biglistbox-wscroll-end {
 					right: 0;
+					&:before {
+						content: '\f051';
+					}
 				}
 			}
 			.z-biglistbox-wscroll-pos {
 				visibility: visible;
-				.size(115px, 15px);
+				.size(115px, 18px);
 				.borderRadius(2px);
 				background: contrast(@baseBackgroundColor);
 				.opacity(0.25);
@@ -261,9 +381,10 @@
 				z-index: 10;
 			}
 			.z-biglistbox-wscroll-endbar {
-				.size(7px, 15px);
-				border: 1px solid @baseBorderColor;
-				.verGradient(@baseGradientStart, @baseGradientEnd);
+				.size(7px, 18px);
+				border: 1px solid @biglistboxScrollBarBorderColor;
+				.borderRadius(2px);
+				background-color: @biglistboxScrollBarEndBarBackgroundColor;
 				position: absolute;
 				right: -12px;
 				overflow: hidden;
@@ -275,38 +396,12 @@
 
 .ie8 {
 	.z-biglistbox-row {
-		&:hover td {
-			background: @meshHoverBackgroundColorIE8;
-		}
-
 		&.z-biglistbox-selected {
 			td {
 			 	position: static;
-			 	background: @meshSelectedBackgroundColorIE8;
 			}
 			&:hover td {
 			 	position: static;
-				background: @meshSelectedHoverBackgroundColorIE8;
-			}
-		}
-	}
-	.z-biglistbox {
-		&-header {
-			.gradientFallback(@baseGradientStart, @baseGradientEnd);
-		}
-		&-hover { //sortable header hover status
-			.gradientFallback(@meshTitleHoverStart, @meshTitleHoverEnd);
-		}
-		&-wscroll {
-			&-vertical {
-				.z-biglistbox-wscroll-endbar {
-					.gradientFallback(@baseGradientStart, @baseGradientEnd);
-				}
-			}
-			&-horizontal {
-				.z-biglistbox-wscroll-endbar {
-					.gradientFallback(@baseGradientStart, @baseGradientEnd);
-				}
 			}
 		}
 	}

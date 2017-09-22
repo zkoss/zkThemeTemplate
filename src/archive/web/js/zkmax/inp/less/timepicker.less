@@ -2,40 +2,47 @@
 
 .z-timepicker {
 	display: inline-block;
-	min-height: @baseButtonHeight;
+	min-height: @baseBarHeight;
 	white-space: nowrap;
 
 	&-input {
-		.fontStyle(@baseContentFontFamily, @fontSizeMedium, normal, @baseTextColor);
-		height: @baseButtonHeight;
+		.fontStyle(@baseContentFontFamily, @inputTextSize, normal, @inputColor);
+		height: @baseBarHeight;
 		border: 1px solid @inputBorderColor;
 		border-right: 0;
-		.leftBorderRadius(@borderRadiusSmall);
+		.leftBorderRadius(@baseBorderRadius);
 		margin: 0;
-		padding: 4px 5px;
+		padding: @inputPadding;
 		line-height: @baseLineHeight;
 		background: @inputBackgroundColor;
 
+		&:hover, &:hover + * {
+			border-color: @inputHoverBorderColor;
+		}
 		&:focus {
-			.boxShadow('inset 1px 1px 1px rgba(210, 210, 210, 0.75)');
+			border: 1px solid @inputFocusBorderColor;
+		}
+		&:focus + * {
+			border-left-width: 0;
 		}
 		&[readonly] {
-			border-color: @readonlyBorderColor;
-			background: @readonlyBackgroundColor;
+			color: @inputReadonlyColor;
+			background: @inputReadonlyBackgroundColor;
 		}
-		&[readonly]:focus {
-			.boxShadow('none');
+		&[readonly] + * {
+			color: @inputReadonlyColor;
+			background-color: @colorBackground3;
 		}
 	}
 
 	&-button {
-		.iconFontStyle(@baseFontSize, @iconColor);
+		.iconFontStyle(@comboButtonIconSize, @comboButtonIconColor);
 		display: inline-block;
 		min-width: @baseButtonWidth;
-		height: @baseButtonHeight;
+		height: @baseBarHeight;
 		border: 1px solid @inputBorderColor;
-		.rightBorderRadius(@borderRadiusSmall);
-		padding: 4px;
+		.rightBorderRadius(@baseBorderRadius);
+		padding: 6px 8px 0;
 		line-height: @baseLineHeight;
 		background: @inputBackgroundColor;
 		text-align: left;
@@ -44,51 +51,34 @@
 		cursor: pointer;
 
 		&:hover {
-			border-color: @hoverBorderColor;
-			.verGradient(@hoverGradientStart, @hoverGradientEnd);
+			border-color: @comboButtonHoverBorderColor;
+			background: @comboButtonHoverBackgroundColor;
 		}
 		&:active {
-			border-color: @activeBorderColor;
-			.verGradient(@activeGradientStart, @activeGradientEnd);
-			.boxShadow('inset 1px 1px 1px #91AAB7');
-		}
-		input[disabled] + & {
-			&:hover,
-			&:active {
-				border-color: @inputBorderColor;
-				.resetGradient();
-				.boxShadow('none');
-			}
+			color: @comboButtonActiveIconColor;
+			border-color: @comboButtonActiveBorderColor;
+			background-color: @comboButtonActiveBackgroundColor;
 		}
 	}
 
-	&-disabled {
-		.opacity(@disabledOpacity);
-		& * {
-			color: @disabledColor !important;
-			background: @disabledBackgroundColor !important;
-			cursor: default !important;
+	&-disabled &-input,
+	&-disabled &-button {
+		color: @inputDisableColor !important;
+		background: @inputDisableBackgroundColor !important;
+		cursor: default !important;
+		&:hover, &:hover + * {
+			border-color: @inputBorderColor;
 		}
 	}
 
 	&-invalid {
 		border: 1px solid @invalidBorderColor !important;
 		margin-right: -1px;
-		background: @baseBackgroundColor;
-		.boxShadow(inset -1px 0 0 @invalidBorderColor);
-	}
-
-	&-readonly:focus {
-		border-color: @readonlyBorderColor;
-		border-right-width: 0;
-		background: transparent repeat-x 0 0;
-		cursor: default;
-		.boxShadow(none);
 	}
 
 	&-rightedge {
 		border-right: 1px solid @inputBorderColor;
-		.borderRadius(@borderRadiusSmall);
+		.borderRadius(@baseBorderRadius);
 	}
 }
 
@@ -110,47 +100,9 @@
 	border: 0;
 	padding: 3px;
 	background: none;
-
-	&:focus {
-		.resetGradient();
-		.boxShadow('none');
-	}
 }
 .z-timepicker-inplace .z-timepicker-button {
-	visibility: hidden;
-}
-
-.z-timepicker-popup {
-	max-height: 200px;
-}
-
-.z-timepicker-option {
-	display: block;
-	padding: 3px 2px;
-	position: relative;
-	text-shadow: 0 1px #FFFFFF;
-	font-size: @fontSizeMedium;
-	font-weight: normal;
-	color: @baseTextColor;
-	text-decoration: none;
-}
-
-.z-timepicker-option:hover {
-	.verGradient(@hoverGradientStart, @hoverGradientEnd);
-}
-
-.z-timepicker-option-selected {
-	.verGradient(@selectedGradientStart, @selectedGradientEnd);
-	.z-comboitem-text {
-		color: @selectedColor;
-	}
-}
-
-.z-timepicker-option-selected:hover {
-	.verGradient(@selectedHoverGradientStart, @selectedHoverGradientEnd);
-	.z-timepicker-text {
-		color: @selectedHoverColor;
-	}
+	visibility: hidden; // Bug ZK-2216: Performance issue of Listbox and Combobox with inplace="true"
 }
 
 .z-timepicker-popup {
@@ -158,8 +110,46 @@
 	font-weight: normal;
 	font-size: @fontSizeMedium;
 	display: block;
-	border: 1px solid @popupBorderColor;
-	padding: 2px;
+	border: 1px solid @comboPopupBorderColor;
+	.borderRadius(@baseBorderRadius);
+	padding: 4px 8px;
+	background: @popupBackgroundColor;
+	position: absolute;
+	overflow: hidden;
+	padding: 8px;
+}
+
+.z-timepicker-option {
+	font-size: @comboPopupItemSize;
+	white-space: nowrap;
+	cursor: pointer;
+	display: block;
+	padding: 4px 8px;
+	position: relative;
+	min-height: 20px;
+	font-size: @comboPopupItemSize;
+	font-weight: normal;
+	color: @comboPopupItemColor;
+}
+
+.z-timepicker-option:hover {
+	background-color: @comboPopupItemHoverBackgroundColor;
+}
+
+.z-timepicker-option-selected {
+	color: @comboPopupItemSelectedColor;
+	line-height: @comboPopupItemSize + 2;
+}
+
+.z-timepicker-popup {
+	max-height: 200px;
+	font-family: @baseContentFontFamily;
+	font-weight: normal;
+	font-size: @fontSizeMedium;
+	display: block;
+	border: 1px solid @comboPopupBorderColor;
+	.borderRadius(@baseBorderRadius);
+	padding: 4px 8px;
 	background: @popupBackgroundColor;
 	position: absolute;
 	overflow: auto;
@@ -171,39 +161,18 @@
 	margin: 0;
 	background: transparent none repeat 0 0;
 	position: relative;
-	list-style-image: none;
-	list-style-position: outside;
-	list-style-type: none;
+	list-style: none outside none;
 }
 
 //Shadow
 .z-timepicker-shadow {
-	.borderRadius(@borderRadiusSmall);
-	.boxShadow('0 0 15px rgba(0, 0, 0, 0.35)');
+	.boxShadow('0 3px 6px 0 rgba(0,0,0,0.16), 0 2px 4px 0 rgba(0,0,0,0.24)');
 }
 
 .ie8 {
 	.z-timepicker {
 		&-button {
 			min-width: @baseButtonWidth - 10;
-			&:hover {
-				.gradientFallback(@hoverGradientStart, @hoverGradientEnd);
-			}
-			&:active {
-				.gradientFallback(@activeGradientStart, @activeGradientEnd);
-			}
-		}
-	}
-
-	.z-timepicker-option {
-		&-selected {
-			.gradientFallback(@selectedGradientStart, @selectedGradientEnd);
-		}
-		&:hover {
-			.gradientFallback(@hoverGradientStart, @hoverGradientEnd);
-		}
-		&-selected:hover {
-			.gradientFallback(@selectedHoverGradientStart, @selectedHoverGradientEnd);
 		}
 	}
 }
