@@ -156,7 +156,7 @@
 		position: relative;
 	}
 	
-	&-r, &-h {
+	&-rgb, &-hsv {
 		position: absolute;
 		left: 0;
 		.z-colorpicker-input {
@@ -165,10 +165,10 @@
 			margin-right: 0;
 		}
 	}
-	
-	&-r {top: 0;}
-	&-h {top: 43px;}
-	
+
+	&-rgb {top: 0;}
+	&-hsv {top: 43px;}
+
 	&-text,
 	&-input {
 		.fontStyle(@baseContentFontFamily, @fontSizeMedium, normal, @baseTextColor);
@@ -200,6 +200,17 @@
 		right: 0;
 		cursor: pointer;
 		width: 72px;
+	}
+
+	// old theme compatible
+	&-r, &-g, &-b,
+	&-h, &-s, &-v {
+		display: inline;
+	}
+
+	&-r-text, &-g-text, &-b-text,
+	&-h-text, &-s-text, &-v-text {
+		display: none;
 	}
 }
 // Color Palette

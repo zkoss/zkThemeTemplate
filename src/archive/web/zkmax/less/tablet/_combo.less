@@ -10,7 +10,9 @@
 
 // mobile-specific
 .z-timebox-button {
-	padding: 6px 8px 0;
+	width: 40px;
+	font-size: 22px;
+	padding: 8px 8px 0;
 	&:hover {
 		border-color: @comboButtonHoverBorderColor;
 		background: @comboButtonHoverBackgroundColor;
@@ -29,21 +31,22 @@
 
 .z-spinner-button,
 .z-doublespinner-button {
-	width: 65px;
+	width: 65px; // 64 + 1 for border-left
 	padding: 0;
 	border: none;
 
 	> a {
-		.size(32px, 32px);
+		font-size: 22px;
+		.size(32px, 34px);
+		padding: 0 4px;
 		border: 1px solid @inputBorderColor;
-		line-height: 36px;
-		background: inherit;
+		line-height: 34px;
 		position: static;
 		float: right;
 
 		&:first-child {
 			border-left: none;
-			line-height: 32px;
+			line-height: 34px;
 		}
 
 		&:hover {
@@ -75,16 +78,20 @@
 .z-spinner-disabled .z-spinner-button {
 	> a {
 		.disabledStyle();
+		background: 0 !important;
 		&:hover, &:active {
 			.disabledStyle();
+			background: 0 !important;
 		}
 	}
 }
 .z-doublespinner-disabled .z-doublespinner-button {
 	> a {
 		.disabledStyle();
+		background: 0 !important;
 		&:hover, &:active {
 			.disabledStyle();
+			background: 0 !important;
 		}
 	}
 }
@@ -97,10 +104,24 @@
 	padding: 8px;
 
 	&-inner {
-		font-size: 15px;
+		font-size: 12px;
 	}
 	&-image {
 		.size(22px, 22px);
+
+		&:empty {
+			display: none;
+		}
+	}
+}
+
+// ZK-3717 element readonly in tablet
+.z-datebox-input[readonly],
+.z-timebox-input[readonly] {
+	background: @inputBackgroundColor;
+	border-color: @inputBorderColor;
+	&:focus {
+		border-color: @inputFocusBorderColor;
 	}
 }
 

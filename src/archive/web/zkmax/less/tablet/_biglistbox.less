@@ -1,14 +1,50 @@
 .z-biglistbox {
+	&-header-content {
+		font-size: 15px;
+	}
 	&-body td {
-		font-size: 12px;
+		font-size: 15px;
 	}
 	&-outer {
 		margin: 0 22px 22px 0;
 	}
 	&-verticalbar-tick {
-		.size(14px, 22px);
-		border: 1px solid @baseBorderColor;
-		.horGradient(@baseGradientStart, @baseGradientEnd);
+		.size(14px, 100%);
+		border: 0;
+		.borderRadius(0);
+		background: transparent;
+
+		&:hover, &:active {
+			background: 0;
+			border: 0;
+		}
+		&:before {
+			content: '';
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			display: block;
+			.size(14px, 22px);
+			background: #fff;
+			border: 1px solid @baseBorderColor;
+			.borderRadius(2px);
+		}
+		&:hover:before {
+			background-color: @biglistboxScrollBarHoverBackgroundColor;
+			border: 1px solid @biglistboxScrollBarHoverBorderColor;
+		}
+		&:active:before {
+			background-color: @biglistboxScrollBarActiveBackgroundColor;
+			border: 1px solid @biglistboxScrollBarActiveBorderColor;
+		}
+		&:after {
+			content: '\e910';
+			position: absolute;
+			bottom: 1px;
+			display: block;
+			left: -3px;
+			font-size: 20px;
+		}
 	}
 	// Wscroll Vertical
 	&-wscroll-vertical {
@@ -37,7 +73,7 @@
 				.size(100%, 56px);
 				top: 56px;
 				&:before {
-					left: 2px;
+					left: 0;
 					top: 20px;
 				}
 			}
@@ -99,7 +135,30 @@
 		}
 		.z-biglistbox-wscroll-endbar {
 			.size(8px, 22px);
-			background: #FDFDFD;
+			background: @biglistboxScrollBarEndBarBackgroundColor;
 		}
+	}
+}
+
+.z-biglistbox-wscroll {
+	.clkStyle() {
+		color: #FFF;
+		background-color: @biglistboxScrollBarActiveBackgroundColor;
+		border: 1px solid @biglistboxScrollBarActiveBorderColor;
+	}
+	&-home {
+		&-clk & { .clkStyle(); }
+	}
+	&-up {
+		&-clk & { .clkStyle(); }
+	}
+	&-down {
+		&-clk & { .clkStyle(); }
+	}
+	&-end {
+		&-clk & { .clkStyle(); }
+	}
+	&-body {
+		&-clk & { .clkStyle(); }
 	}
 }

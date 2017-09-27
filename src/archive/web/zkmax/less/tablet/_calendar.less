@@ -12,6 +12,14 @@
 	&-cell {
 		font-size: 14px;
 		.size(36px, 36px);
+		&:hover {
+			color: initial;
+			background: initial;
+		}
+	}
+	&-selected:hover {
+		color: @calendarSelectedHoverColor;
+		background: @calendarSelectedHoverBackgroundColor;
 	}
 	&-header:first-child {
 		line-height: 38px;

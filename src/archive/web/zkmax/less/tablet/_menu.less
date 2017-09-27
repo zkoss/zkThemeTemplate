@@ -25,7 +25,14 @@
 }
 
 .z-menu-content, .z-menuitem-content {
-	padding: 8px 12px;
+	padding: 4px 12px;
+	min-height: 34px;
+	&:before { // text-only menu centering trick
+		content: "";
+		min-height: 24px; // same as .z-menu-image
+		display: inline-block;
+		vertical-align: middle;
+	}
 }
 
 .z-menubar-icon {
@@ -36,4 +43,7 @@
 .z-menubar-vertical {
 	max-width: 36%;
 	overflow: auto;
+	li {
+		margin: 4px 2px;
+	}
 }
