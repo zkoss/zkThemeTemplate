@@ -103,10 +103,19 @@
 	font-size: 15px;
 	padding: 8px;
 
+	&:after { // for vertical middle
+		content: '';
+		display: inline-block;
+		vertical-align: middle;
+		height: 100%;
+		width: 0;
+	}
 	&-inner {
+		display: block;
 		font-size: 12px;
 	}
 	&-image {
+		float: none;
 		.size(22px, 22px);
 
 		&:empty {

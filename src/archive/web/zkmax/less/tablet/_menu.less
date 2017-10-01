@@ -40,9 +40,24 @@
 	margin-top: -14px;
 }
 
+// Native scrollable
+.z-menubar {
+	overflow: auto;
+}
+
+.z-menubar-horizontal {
+	> ul {
+		overflow: visible;
+		white-space: nowrap;
+	}
+	li, .z-menuseparator {
+		float: none;
+		display: inline-block;
+	}
+}
+
 .z-menubar-vertical {
 	max-width: 36%;
-	overflow: auto;
 	li {
 		margin: 4px 2px;
 	}
