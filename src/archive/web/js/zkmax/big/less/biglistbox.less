@@ -168,6 +168,7 @@
             border: 1px solid @biglistboxScrollBarHoverBorderColor;
 		}
 		&:active {
+			color: @textColorDefault3;
 			background-color: @biglistboxScrollBarActiveBackgroundColor;
             border: 1px solid @biglistboxScrollBarActiveBorderColor;
 		}
@@ -389,6 +390,37 @@
 				right: -12px;
 				overflow: hidden;
 				z-index: 20;
+			}
+		}
+		&-vertical,
+		&-horizontal {
+			// Disabled button style
+			.disabledStyle() {
+				color: @disabledColor;
+				background: @disabledBackgroundColor;
+				border: 1px solid @biglistboxScrollBarBorderColor;
+				&:hover {
+					color: @disabledColor;
+					background: @disabledBackgroundColor;
+					border: 1px solid @biglistboxScrollBarBorderColor;
+				}
+				&:active {
+					color: @disabledColor;
+					background: @disabledBackgroundColor;
+					border: 1px solid @biglistboxScrollBarBorderColor;
+				}
+			}
+			.z-biglistbox-wscroll-head {
+				.z-biglistbox-wscroll-home,
+				.z-biglistbox-wscroll-up {
+					.disabledStyle();
+				}
+			}
+			.z-biglistbox-wscroll-tail {
+				.z-biglistbox-wscroll-down,
+				.z-biglistbox-wscroll-end {
+					.disabledStyle();
+				}
 			}
 		}
 	}

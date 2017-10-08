@@ -63,7 +63,7 @@
 			ul { //second level
 				position: absolute;
 				left: 0;
-				margin-top: 9px;
+				margin-top: 5px;
 				.borderRadius(4px);
 				.boxShadow('0 3px 6px 0 rgba(0,0,0,0.16), 0 2px 4px 0 rgba(0,0,0,0.24)');
 				z-index: @basePopupZIndex;
@@ -133,12 +133,9 @@
 		margin-right: 4px;
 	}
 	&-text {
-		font-family: @baseContentFontFamily;
-		font-size: @fontSizeLarge;
-		font-weight: normal;
+		.fontStyle(@baseContentFontFamily, @fontSizeLarge, normal);
 		display: inline-block;
-		position: absolute;
-		top: 7px;
+		white-space: nowrap;
 	}
 }
 
@@ -219,8 +216,8 @@
 .z-navitem-text-popup {
 	color: @navColor;
 	min-width: 180px;
-	height: @baseBarHeight;
-	padding: 0 32px;
+	height: 40px;
+	padding: 4px 18px;
 	line-height: @baseBarHeight;
 	background: @navBackgroundColor;
 	cursor: pointer;
@@ -239,6 +236,8 @@
 
 	& + .z-nav-popup {
 		.bottomBorderRadius(@baseBorderRadius);
+		// Prevent top shadow
+		.boxShadow('0 -3px 0 0 @{navBackgroundColor}, 0 3px 6px 0 rgba(0,0,0,0.16), 0 2px 4px 0 rgba(0,0,0,0.24)');
 	}
 }
 .z-navbar-vertical,
@@ -319,17 +318,6 @@
 	.itemSelected();
 	.z-nav ul {
 		padding-left: 20px;
-	}
-}
-.z-nav-popup.z-nav-popup-horizontal {
-	.z-nav, .z-navitem {
-		border-bottom: 2px solid transparent;
-	}
-	.z-navitem-selected {
-		border-bottom: 2px solid @colorPrimary;
-	}
-	.z-nav-open {
-		border-left: 2px solid transparent;
 	}
 }
 
