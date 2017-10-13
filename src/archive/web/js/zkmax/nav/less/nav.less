@@ -10,10 +10,6 @@
 	.z-navitem-selected .z-navitem-content {
 		color: @navSelectedColor;
 		background: @navSelectedBackgroundColor;
-		
-		&:hover {
-			background: lighten(@navSelectedBackgroundColor, 5%);
-		}
 	}
 }
 
@@ -188,7 +184,6 @@
 		}
 		> .z-navitem-selected:hover > .z-navitem-content {
 			color: @navSelectedColor;
-			background: lighten(@navSelectedBackgroundColor, 5%);
 		}
 	}
 	.z-nav-info {
@@ -219,7 +214,7 @@
 	height: 40px;
 	padding: 4px 18px;
 	line-height: @baseBarHeight;
-	background: @navBackgroundColor;
+	background: @popupBackgroundColor;
 	cursor: pointer;
 	white-space: nowrap;
 	z-index: @basePopupZIndex;
@@ -237,7 +232,7 @@
 	& + .z-nav-popup {
 		.bottomBorderRadius(@baseBorderRadius);
 		// Prevent top shadow
-		.boxShadow('0 -3px 0 0 @{navBackgroundColor}, 0 3px 6px 0 rgba(0,0,0,0.16), 0 2px 4px 0 rgba(0,0,0,0.24)');
+		.boxShadow('0 -3px 0 0 @{popupBackgroundColor}, 0 3px 6px 0 rgba(0,0,0,0.16), 0 2px 4px 0 rgba(0,0,0,0.24)');
 	}
 }
 .z-navbar-vertical,
@@ -295,7 +290,7 @@
 	padding: 0 4px 4px;
 	overflow: hidden;
 	z-index: @basePopupZIndex;
-	background: @navBackgroundColor;
+	background: @popupBackgroundColor;
 	.borderRadius(@baseBorderRadius);
 	.boxShadow('0 3px 6px 0 rgba(0,0,0,0.16), 0 2px 4px 0 rgba(0,0,0,0.24)');
 

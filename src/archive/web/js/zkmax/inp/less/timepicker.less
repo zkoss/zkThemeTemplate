@@ -31,7 +31,7 @@
 		}
 		&[readonly] + * {
 			color: @inputReadonlyColor;
-			background-color: @colorBackground3;
+			background-color: @inputBackgroundColor;
 		}
 	}
 
@@ -105,20 +105,6 @@
 	visibility: hidden; // Bug ZK-2216: Performance issue of Listbox and Combobox with inplace="true"
 }
 
-.z-timepicker-popup {
-	font-family: @baseContentFontFamily;
-	font-weight: normal;
-	font-size: @fontSizeMedium;
-	display: block;
-	border: 1px solid @comboPopupBorderColor;
-	.borderRadius(@baseBorderRadius);
-	padding: 4px 8px;
-	background: @popupBackgroundColor;
-	position: absolute;
-	overflow: hidden;
-	padding: 8px;
-}
-
 .z-timepicker-option {
 	font-size: @comboPopupItemSize;
 	white-space: nowrap;
@@ -127,9 +113,9 @@
 	padding: 4px 8px;
 	position: relative;
 	min-height: 20px;
-	font-size: @comboPopupItemSize;
 	font-weight: normal;
 	color: @comboPopupItemColor;
+	.borderRadius(@baseBorderRadius);
 }
 
 .z-timepicker-option:hover {
