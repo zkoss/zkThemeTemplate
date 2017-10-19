@@ -106,7 +106,7 @@
 		text-decoration: none;
 		line-height: 28px; // height - padding-top/bottom
 		&:hover {
-			color: @textColorDefault;
+			color: @navHoverColor;
 		}
 	}
 	&-image {
@@ -120,6 +120,8 @@
 		display: inline-block;
 		text-align: center;
 		margin-right: 4px;
+		line-height: normal;
+		vertical-align: text-bottom;
 	}
 	&-text {
 		.fontStyle(@baseContentFontFamily, @fontSizeLarge, normal);
@@ -181,7 +183,7 @@
 	}
 	.z-nav-info {
 		position: relative;
-		top: -4px;
+		top: -2px;
 		left: 0;
 	}
 }
@@ -293,6 +295,9 @@
 	.z-nav-content,
 	.z-navitem-content {
 		color: @navPopupColor;
+		&:hover {
+			color: @navPopupHoverColor;
+		}
 	}
 	
 	ul { //third level
