@@ -52,8 +52,14 @@
 		overflow: hidden;
 		cursor: default;
 		white-space: nowrap;
-		background-color: @meshTitleBackgroundColor;
-		
+		background: @meshTitleBackgroundColor;
+
+		&:hover {
+			background: @meshTitleHoverBackgroundColor;
+		}
+		&:active {
+			background: @meshTitleActiveBackgroundColor;
+		}
 		&-content {
 			.fontStyle(@baseTitleFontFamily, @fontSizeMedium, normal, @meshTitleColor);
 			padding: 12px 16px;
