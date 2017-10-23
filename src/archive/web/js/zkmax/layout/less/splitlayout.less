@@ -25,6 +25,9 @@
 
 		&:hover {
 			background-color: @splitterHoverBackgroundColor;
+			.z-splitlayout-splitter-button {
+				color: extract(@splitterButtonTextColors, 2);
+			}
 		}
 
 		&-horizontal {
@@ -83,7 +86,7 @@
 			left: 36px;
 		}
 		&-button {
-			.iconFontStyle(@splitterButtonTextSize, @splitterButtonTextColor);
+			.iconFontStyle(@splitterButtonTextSize, extract(@splitterButtonTextColors, 1));
 			display: inline-block;
 			position: relative;
 			vertical-align: top;

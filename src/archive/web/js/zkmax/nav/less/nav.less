@@ -6,10 +6,10 @@
 	margin: 0;
 	list-style: none;
 }
-.itemSelected() {
+.itemSelected(@color, @bgcolor) {
 	.z-navitem-selected .z-navitem-content {
-		color: @navSelectedColor;
-		background: @navSelectedBackgroundColor;
+		color: @color;
+		background: @bgcolor;
 	}
 }
 
@@ -45,7 +45,7 @@
 			}
 		}
 	}
-	.itemSelected();
+	.itemSelected(@navSelectedColor, @navSelectedBackgroundColor);
 	// horizontal style
 	&-horizontal {
 		padding: 4px 2px;
@@ -165,8 +165,8 @@
 				text-align: center;
 			}
 			&:hover {
-				color: @navColor;
-				background: @navBackgroundColor;
+				color: @navHoverColor;
+				background: @navHoverBackgroundColor;
 			}
 		}
 		> .z-navseparator + .z-nav > .z-nav-content,
@@ -209,7 +209,7 @@
 	height: 40px;
 	padding: 4px 18px;
 	line-height: @baseBarHeight;
-	background: @popupBackgroundColor;
+	background: @navPopupBackgroundColor;
 	cursor: pointer;
 	white-space: nowrap;
 	z-index: @basePopupZIndex;
@@ -227,7 +227,7 @@
 	& + .z-nav-popup {
 		.bottomBorderRadius(@baseBorderRadius);
 		// Prevent top shadow
-		.boxShadow('0 -3px 0 0 @{popupBackgroundColor}, 0 3px 6px 0 rgba(0,0,0,0.16), 0 2px 4px 0 rgba(0,0,0,0.24)');
+		.boxShadow('0 -3px 0 0 @{navPopupBackgroundColor}, 0 3px 6px 0 rgba(0,0,0,0.16), 0 2px 4px 0 rgba(0,0,0,0.24)');
 	}
 }
 
@@ -278,7 +278,7 @@
 	padding: 0 4px 4px;
 	overflow: hidden;
 	z-index: @basePopupZIndex;
-	background: @popupBackgroundColor;
+	background: @navPopupBackgroundColor;
 	.borderRadius(@baseBorderRadius);
 	.boxShadow('0 3px 6px 0 rgba(0,0,0,0.16), 0 2px 4px 0 rgba(0,0,0,0.24)');
 
@@ -305,7 +305,7 @@
 		position: relative;
 		.restUl();
 	}
-	.itemSelected();
+	.itemSelected(@navPopupSelectedColor, @navPopupSelectedBackgroundColor);
 	.z-nav ul {
 		padding-left: 20px;
 	}
