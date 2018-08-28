@@ -1,0 +1,69 @@
+@import "~./zul/less/_header.less";
+
+.z-checkbox {
+	&-default > &-mold {
+		display: none;
+	}
+	&-switch > input[type="checkbox"] {
+		display: none;
+	}
+	&-switch > &-mold {
+		margin: 4px 4px 0;
+		position: relative;
+		width: 50px;
+		height: 29px;
+		transition: .4s;
+		border-radius: 29px;
+		display: inline-block;
+
+		&:before {
+			content: "";
+			position: absolute;
+			width: 21px;
+			height: 21px;
+			left: 4px;
+			bottom: 4px;
+			transition: .4s;
+			border-radius: 50%;
+			background-color: white;
+		}
+	}
+	&-switch-off > &-mold {
+		background-color: @disabledColor;
+	}
+	&-switch-on > &-mold {
+		background-color: @checkedColor;
+
+		&:before {
+			.transform('translateX(21px)');
+		}
+	}
+	&-switch-disabled > &-mold {
+		opacity: .5;
+		cursor: default;
+	}
+	&-toggle > input[type="checkbox"] {
+		display: none;
+	}
+	&-toggle > &-mold {
+		margin: 4px 4px 0;
+		width: 30px;
+		height: 30px;
+		border-radius: 4px;
+		transition: .1s;
+		display: inline-block;
+	}
+	&-toggle-off > &-mold {
+		background-color: @disabledColor;
+		box-shadow: 0 4px 1px rgba(0, 0, 0, 0.39);
+	}
+	&-toggle-on > &-mold {
+		background-color: @checkedColor;
+		box-shadow: 0 0 5px rgba(0, 0, 0, 0.48), 0 0 6px 2px rgba(0, 0, 0, 0.35) inset;
+		.transform('translateY(4px)');
+	}
+	&-toggle-disabled > &-mold {
+		opacity: .5;
+		cursor: default;
+	}
+}
