@@ -1,0 +1,101 @@
+@import "~./zul/less/_header.less";
+
+.z-organigram{
+	overflow: auto;
+}
+
+.z-orgchildren {
+	display: flex;
+
+	&:not(:only-child) > .z-orgitem:after {
+		content: '';
+		border-left: 1px solid @baseBorderColor;
+		height: 10px;
+		position: absolute;
+		left: 50%;
+	}
+}
+
+.z-orgitem {
+	flex: auto;
+	display: flex;
+	flex-direction: column;
+	position: relative;
+
+	&:not(:only-child)::before {
+		content: '';
+		border-top: 1px solid @baseBorderColor;
+		width: 100%;
+		height: 1px;
+		top: 0px;
+		position: absolute;
+	}
+
+	&:first-child:before {
+		width: 50%;
+		left: 50%;
+	}
+
+	&:last-child:before {
+		width: 50%;
+	}
+
+	&-selected > .z-orgnode {
+		color: @selectedColor;
+		background-color: @selectedBackgroundColor;
+
+		&:hover {
+			color: @selectedHoverColor;
+			background-color: @selectedHoverBackgroundColor;
+		}
+	}
+
+	&-disabled > .z-orgnode {
+		color: @disabledColor;
+		background-color: @disabledBackgroundColor;
+		opacity: @disabledOpacity;
+		cursor: default;
+	}
+
+	&-non-selectable > .z-orgnode {
+		cursor: default;
+	}
+}
+
+.z-orgnode {
+	align-self: center;
+	position: relative;
+	margin: 10px;
+	padding: 10px;
+	border: 1px solid @baseBorderColor;
+	cursor: pointer;
+	border-radius: @baseBorderRadius;
+	background-color: @baseBackgroundColor;
+
+	> i[class="z-orgnode-icon"] {
+		display: none;
+	}
+
+	&-icon {
+		width: 10px;
+		position: absolute;
+		height: 10px;
+		right: 5px;
+		bottom: 5px;
+		cursor: pointer;
+	}
+
+	&:not(:only-child)::after {
+		content: '';
+		border-left: 1px solid @baseBorderColor;
+		height: 10px;
+		position: absolute;
+		bottom: -11px;
+		left: 50%;
+	}
+
+	&:hover {
+		color: @hoverColor;
+		background-color: @hoverBackgroundColor;
+	}
+}
