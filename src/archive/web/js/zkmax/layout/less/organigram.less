@@ -1,6 +1,6 @@
 @import "~./zul/less/_header.less";
 
-.z-organigram{
+.z-organigram {
 	overflow: auto;
 }
 
@@ -9,7 +9,7 @@
 
 	&:not(:only-child) > .z-orgitem:after {
 		content: '';
-		border-left: 1px solid @baseBorderColor;
+		border-left: @organigramLine;
 		height: 10px;
 		position: absolute;
 		left: 50%;
@@ -24,7 +24,7 @@
 
 	&:not(:only-child)::before {
 		content: '';
-		border-top: 1px solid @baseBorderColor;
+		border-top: @organigramLine;
 		width: 100%;
 		height: 1px;
 		top: 0px;
@@ -40,20 +40,19 @@
 		width: 50%;
 	}
 
-	&-selected > .z-orgnode {
-		color: @selectedColor;
-		background-color: @selectedBackgroundColor;
+	&:not(.z-orgitem-disabled) > .z-orgnode:hover {
+		color: @orgnodeColor;
+		background-color: @orgnodeHoverBackgroundColor;
+	}
 
-		&:hover {
-			color: @selectedHoverColor;
-			background-color: @selectedHoverBackgroundColor;
-		}
+	&-selected > .z-orgnode {
+		color: @orgnodeSelectedColor;
+		background-color: @orgnodeSelectedBackgroundColor;
 	}
 
 	&-disabled > .z-orgnode {
-		color: @disabledColor;
-		background-color: @disabledBackgroundColor;
-		opacity: @disabledOpacity;
+		color: @orgnodeDisabledColor;
+		background-color: @orgnodeDisabledBackgroundColor;
 		cursor: default;
 	}
 
@@ -67,35 +66,33 @@
 	position: relative;
 	margin: 10px;
 	padding: 10px;
-	border: 1px solid @baseBorderColor;
 	cursor: pointer;
-	border-radius: @baseBorderRadius;
-	background-color: @baseBackgroundColor;
+	border: @orgnodeBorder;
+	border-radius: @orgnodeBorderRadius;
+	background-color: @orgnodeBackgroundColor;
+	color: @orgnodeColor;
 
 	> i[class="z-orgnode-icon"] {
 		display: none;
 	}
 
 	&-icon {
-		width: 10px;
 		position: absolute;
-		height: 10px;
-		right: 5px;
-		bottom: 5px;
+		width: 12px;
+		height: 12px;
+		right: 0;
+		bottom: 0;
 		cursor: pointer;
+		color: @orgnodeColor;
+		font-size: 12px;
 	}
 
 	&:not(:only-child)::after {
 		content: '';
-		border-left: 1px solid @baseBorderColor;
+		border-left: @organigramLine;
 		height: 10px;
 		position: absolute;
 		bottom: -11px;
 		left: 50%;
-	}
-
-	&:hover {
-		color: @hoverColor;
-		background-color: @hoverBackgroundColor;
 	}
 }
