@@ -34,8 +34,6 @@
 			.z-nav-image,
 			.z-navitem-image,
 			i {
-				font-size: @fontSizeLarge;
-				.size(@fontSizeLarge, @fontSizeLarge);
 				margin-right: 6px;
 			}
 			.z-nav-text,
@@ -54,6 +52,7 @@
 			margin: 2px 2px 0;
 			border-bottom: 2px solid transparent;
 			min-width: 182px;
+			vertical-align: middle;
 		}
 		> ul { //topmost level
 			ul { //second level
@@ -99,12 +98,10 @@
 	&-content {
 		color: @navColor;
 		display: block;
-		height: @baseTitleHeight;
 		padding: 6px 12px;
 		position: relative;
 		overflow: hidden;
 		text-decoration: none;
-		line-height: 28px; // height - padding-top/bottom
 		&:hover {
 			color: @navHoverColor;
 			background: @navHoverBackgroundColor;
@@ -116,13 +113,9 @@
 	}
 	&-image,
 	i {
-		font-size: @fontSizeXLarge;
-		.size(@fontSizeXLarge, @fontSizeXLarge);
 		display: inline-block;
 		text-align: center;
 		margin-right: 4px;
-		line-height: normal;
-		vertical-align: text-bottom;
 	}
 	&-text {
 		.fontStyle(@baseContentFontFamily, @fontSizeLarge, normal);
@@ -285,12 +278,6 @@
 	.borderRadius(@baseBorderRadius);
 	.boxShadow('0 3px 6px 0 rgba(0,0,0,0.16), 0 2px 4px 0 rgba(0,0,0,0.24)');
 
-	.z-nav-image,
-	.z-navitem-image,
-	i {
-		font-size: @fontSizeLarge;
-		.size(@fontSizeLarge, @fontSizeLarge);
-	}
 	.z-nav-text,
 	.z-navitem-text {
 		font-size: @fontSizeMedium;

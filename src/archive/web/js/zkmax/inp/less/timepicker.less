@@ -16,16 +16,6 @@
 		line-height: @baseLineHeight;
 		background: @inputBackgroundColor;
 
-		&:hover, &:hover + a {
-			border-color: @inputHoverBorderColor;
-		}
-		&:focus {
-			border: 1px solid @inputFocusBorderColor;
-		}
-		&:focus + a {
-			border-left-width: 0;
-		}
-
 		// Placeholder ZK-3876: combobox does not provide proper placeholder style
 		&::-webkit-input-placeholder {
 			color: @inputPlaceholderColor;
@@ -44,6 +34,17 @@
 			/* IE 10+ */
 			color: @inputPlaceholderColor;
 		}
+	}
+
+	&-input&-hover, &-input&-hover + &-button {
+		border-color: @inputHoverBorderColor;
+	}
+
+	&-input:focus {
+		border: 1px solid @inputFocusBorderColor;
+	}
+	&-input:focus + &-button {
+		border-left-width: 0;
 	}
 
 	&-button {
@@ -77,9 +78,9 @@
 		color: @inputDisableColor !important;
 		background: @inputDisableBackgroundColor !important;
 		cursor: default !important;
-		&:hover, &:hover + * {
-			border-color: @inputBorderColor;
-		}
+	}
+	&-disabled &-button:hover {
+		border-color: @inputBorderColor;
 	}
 
 	&-readonly {
