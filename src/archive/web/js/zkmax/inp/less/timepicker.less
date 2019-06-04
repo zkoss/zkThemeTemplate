@@ -9,10 +9,10 @@
 		.fontStyle(@baseContentFontFamily, @inputTextSize, normal, @inputColor);
 		height: @baseBarHeight;
 		border: 1px solid @inputBorderColor;
-		.borderRadius(@baseBorderRadius);
+		border-right: 0;
+		.leftBorderRadius(@baseBorderRadius);
 		margin: 0;
 		padding: @inputPadding;
-		padding-right: @inputPaddingRight + @baseButtonWidth + 8px * 2;
 		line-height: @baseLineHeight;
 		background: @inputBackgroundColor;
 
@@ -47,16 +47,9 @@
 		border-left-width: 0;
 	}
 
-	&-input-full {
-		padding-right: @inputPaddingRight;
-	}
-
 	&-button {
 		.iconFontStyle(@comboButtonIconSize, @comboButtonIconColor);
 		display: inline-block;
-		position: relative;
-		top: 0;
-		right: @baseButtonWidth;
 		min-width: @baseButtonWidth;
 		height: @baseBarHeight;
 		border: 1px solid @inputBorderColor;
@@ -104,6 +97,11 @@
 	&-invalid {
 		border: 1px solid @invalidBorderColor !important;
 		margin-right: -1px;
+	}
+
+	&-rightedge {
+		border-right: 1px solid @inputBorderColor;
+		.borderRadius(@baseBorderRadius);
 	}
 }
 
