@@ -1,4 +1,6 @@
-required lessc version 3.7.0
+Building prerequisites:
+1. Required Node.js >= 10.16
+2. `npm install`
 
 How to use ___THEME_NAME___.jar:
 

@@ -8,6 +8,9 @@
 		<zk.version>8.0.2.1-Eval</zk.version>
 		<maven.build.timestamp.format>yyyy-MM-dd</maven.build.timestamp.format>
 		<packname>-${project.version}</packname>
+		<zktheme.resources>${project.basedir}/src/archive</zktheme.resources>
+		<zktheme.web.resources>${zktheme.resources}/web</zktheme.web.resources>
+		<zktheme.theme.outputDirectory>${project.build.outputDirectory}/web/${project.artifactId}</zktheme.theme.outputDirectory>
 	</properties>
 	<packaging>jar</packaging>
 	<name>___ARTIFACT_ID___</name>
@@ -75,30 +78,47 @@
 	<build>
 		<sourceDirectory>${project.basedir}/src/</sourceDirectory>
 		<resources>
+			<!-- handle class web resources separately below -->
 			<resource>
-				<directory>${project.basedir}/src/archive</directory>
+				<directory>${zktheme.resources}</directory>
+				<excludes>
+					<exclude>web/**</exclude>
+				</excludes>
+			</resource>
+			<!-- copy non-less into theme folder,
+					less files will be handled by plugin below -->
+			<resource>
+				<directory>${zktheme.web.resources}</directory>
+				<excludes>
+					<exclude>**/*.less</exclude>
+				</excludes>
+				<targetPath>${zktheme.theme.outputDirectory}</targetPath>
 			</resource>
 		</resources>
 		<plugins>
 			<plugin>
-				<groupId>org.zkoss.maven</groupId>
-				<artifactId>zkless-engine-maven-plugin</artifactId>
-				<version>1.1.0</version>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<version>1.6.0</version>
 				<executions>
 					<execution>
 						<id>compile-less</id>
+						<phase>process-resources</phase>
 						<goals>
-							<goal>lessc</goal>
+							<goal>exec</goal>
 						</goals>
-						<configuration>
-							<sourceDirectory>${project.basedir}/src/archive</sourceDirectory>
-							<outputDirectory>${project.basedir}/target/classes</outputDirectory>
-							<arguments>
-								<argument>--js</argument>
-							</arguments>
-						</configuration>
 					</execution>
 				</executions>
+				<configuration>
+					<executable>${project.basedir}/node_modules/.bin/zklessc</executable>
+					<arguments>
+						<argument>--source</argument>
+						<argument>${zktheme.web.resources}</argument>
+						<argument>--output</argument>
+						<argument>${zktheme.theme.outputDirectory}</argument>
+						<argument>--compress</argument>
+					</arguments>
+				</configuration>
 			</plugin>
 			<!-- Compile java -->
 			<plugin>
