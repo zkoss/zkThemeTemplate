@@ -2,7 +2,11 @@
   "name": "zk-theme-template",
   "version": "0.0.1",
   "private": true,
-  "dependencies": {
+  "scripts": {
+    "zklessc": "zklessc -s src/archive/web -o target/classes/web/___THEME_NAME___ --less-opts {\\\"javascriptEnabled\\\":true}",
+    "zklessc-dev": "zklessc -s src/archive/web -o target/classes/web/___THEME_NAME___ -w --less-opts {\\\"javascriptEnabled\\\":true}"
+  },
+  "devDependencies": {
     "zkless-engine": "^1.1.0"
   }
 }
