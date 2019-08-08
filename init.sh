@@ -61,25 +61,23 @@ while true; do
 	esac
 done
 
+
 # 2. done gathering information, update the files now
 
 # need to update
 # 1. pom.xml
-# 2. version
-# 3. folder path
-# 4. Version.java
-# 5. webAppInit.java
-# 6. config.xml
-# 7. lang-addon.xml
+# 2. folder path
+# 3. Version.java
+# 4. webAppInit.java
+# 5. config.xml
+# 6. lang-addon.xml
+
+set -e
 
 # first, check if files to be modified are present
 
 if [ ! -e pom.xml ]; then
 	echo "[pom.xml] not found, unable to proceed, abort."
-	exit 2
-fi
-if [ ! -e version ]; then
-	echo "[version] not found, unable to proceed, abort."
 	exit 2
 fi
 fileCount=$(find . -name "Version.java" | wc -l)
@@ -104,114 +102,50 @@ if [ ! -e src/archive/metainfo/zk/lang-addon.xml ]; then
 	echo "[lang-addon.xml] not found, unable to proceed, abort."
 	exit 2
 fi
-if [ ! -e readme.txt ]; then
-	echo "[readme.txt] not found, proceed anyway..."
-fi
-
 
 # all files found, start updating
 
-echo -n "updating pom.xml..."
-sed -i.zktmp "0,/<groupId>.*<\/groupId>/s//<groupId>${groupId}<\/groupId>/" pom.xml
-echo -n "...."
-sed -i.zktmp "0,/<artifactId>.*<\/artifactId>/s//<artifactId>${artifactId}<\/artifactId>/" pom.xml
-echo -n "...."
-sed -i.zktmp "0,/<version>.*<\/version>/s//<version>${version}<\/version>/" pom.xml
-echo -n "...."
-sed -i.zktmp "0,/<name>.*<\/name>/s//<name>${artifactId}<\/name>/" pom.xml
-echo -n "...."
-sed -i.zktmp "0,/<description>.*<\/description>/s//<description>${displayName}<\/description>/" pom.xml
-echo -n "..."
-echo -n "done."
-echo ""
+echo "updating pom.xml..."
+sed -i.zktmp "s/___GROUP_ID___/${groupId}/g" pom.xml
+sed -i.zktmp "s/___ARTIFACT_ID___/${artifactId}/g" pom.xml
+sed -i.zktmp "s/___VERSION___/${version}/g" pom.xml
+sed -i.zktmp "s/___DISPLAY_NAME___/${displayName}/g" pom.xml
 
-echo -n "updating version..."
-sed -i.zktmp "2 s/.*/${version}/" version
-echo -n "..................."
-echo -n "done."
-echo ""
+echo "updating Version.java..."
+sed -i.zktmp "s/___THEME_NAME___/${themeName}/g" ${versionFilePath}
+sed -i.zktmp "s/___VERSION___/${version}/g" ${versionFilePath}
 
-echo -n "updating Version.java..."
-sed -i.zktmp "0,/package org\.zkoss\.theme\..*;/s//package org\.zkoss\.theme\.${themeName};/" ${versionFilePath}
-echo -n "......."
-sed -i.zktmp "0,/public static final String UID = \".*\";/s//public static final String UID = \"${version}\";/" ${versionFilePath}
-echo -n "......."
-echo -n "done."
-echo ""
-
-echo -n "updating ThemeWebAppInit.java..."
-sed -i.zktmp "0,/\/\* .*ThemeWebAppInit\.java/s//\/\* ${themeNameCap}ThemeWebAppInit\.java/" ${themeWebAppInitFilePath}
-echo -n "."
-sed -i.zktmp "0,/package org\.zkoss\.theme\..*;/s//package org\.zkoss\.theme\.${themeName};/" ${themeWebAppInitFilePath}
-echo -n "."
-sed -i.zktmp "0,/public class .*ThemeWebAppInit implements WebAppInit {/s//public class ${themeNameCap}ThemeWebAppInit implements WebAppInit {/" ${themeWebAppInitFilePath}
-echo -n "."
-sed -i.zktmp "0,/private final static String THEME_NAME = \".*\";/s//private final static String THEME_NAME = \"${themeName}\";/" ${themeWebAppInitFilePath}
-echo -n "."
-sed -i.zktmp "0,/private final static String THEME_DISPLAY = \".*\";/s//private final static String THEME_DISPLAY = \"${displayName}\";/" ${themeWebAppInitFilePath}
-echo -n "."
+echo "updating ThemeWebAppInit.java..."
+sed -i.zktmp "s/___THEME_NAME___/${themeName}/g" ${themeWebAppInitFilePath}
+sed -i.zktmp "s/___THEME_NAME_CAP___/${themeNameCap}/g" ${themeWebAppInitFilePath}
+sed -i.zktmp "s/___DISPLAY_NAME___/${displayName}/g" ${themeWebAppInitFilePath}
 mv ${themeWebAppInitFilePath} ${oldThemePath}/${themeNameCap}ThemeWebAppInit.java
-echo -n "."
-echo -n "done."
-echo ""
 
-echo -n "updating theme path..."
+echo "updating theme path..."
 mv ${oldThemePath} ${oldThemePath/${oldThemeName}/${themeName}}
-echo -n "................"
-echo -n "done."
-echo ""
 
-echo -n "updating config.xml..."
+echo "updating config.xml..."
 configXmlFile=src/archive/metainfo/zk/config.xml
-sed -i.zktmp "0,/<config-name>.*<\/config-name>/s//<config-name>${themeName}<\/config-name>/" ${configXmlFile}
-echo -n "...."
-sed -i.zktmp "0,/<version-class>org\.zkoss\.theme\..*\.Version<\/version-class>/s//<version-class>org\.zkoss\.theme\.${themeName}\.Version<\/version-class>/" ${configXmlFile}
-echo -n "...."
-sed -i.zktmp "0,/<version-uid>.*<\/version-uid>/s//<version-uid>${version}<\/version-uid>/" ${configXmlFile}
-echo -n "...."
-sed -i.zktmp "0,/<listener-class>org\.zkoss\.theme\..*\..*ThemeWebAppInit<\/listener-class>/s//<listener-class>org\.zkoss\.theme\.${themeName}\.${themeNameCap}ThemeWebAppInit<\/listener-class>/" ${configXmlFile}
-echo -n "...."
-echo -n "done."
-echo ""
+sed -i.zktmp "s/___THEME_NAME___/${themeName}/g" ${configXmlFile}
+sed -i.zktmp "s/___THEME_NAME_CAP___/${themeNameCap}/g" ${configXmlFile}
+sed -i.zktmp "s/___VERSION___/${version}/g" ${configXmlFile}
 
-echo -n "updating lang-addon.xml..."
-langAddonXmlFile=src/archive/metainfo/zk/lang-addon.xml
-sed -i.zktmp "0,/<addon-name>.*<\/addon-name>/s//<addon-name>${themeName}<\/addon-name>/g" ${langAddonXmlFile}
-echo -n "...."
-sed -i.zktmp "0,/<version-class>org\.zkoss\.theme\..*\.Version<\/version-class>/s//<version-class>org\.zkoss\.theme\.${themeName}\.Version<\/version-class>/" ${langAddonXmlFile}
-echo -n "...."
-sed -i.zktmp "0,/<version-uid>.*<\/version-uid>/s//<version-uid>${version}<\/version-uid>/" ${langAddonXmlFile}
-echo -n "...."
-echo -n "done."
-echo ""
+echo "updating lang-addon.xml..."
+langAddonFile=src/archive/metainfo/zk/lang-addon.xml
+sed -i.zktmp "s/___THEME_NAME___/${themeName}/g" ${langAddonFile}
+sed -i.zktmp "s/___VERSION___/${version}/g" ${langAddonFile}
 
-echo -n "updating readme.txt..."
-sed -i.zktmp "0,/How to use .*\.jar:/s//How to use ${themeName}\.jar:/" readme.txt
-echo -n "...."
-sed -i.zktmp "0,/Put .*\.jar in WEB-INF\/lib, then .* will become/s//Put ${themeName}\.jar in WEB-INF\/lib, then ${themeName} will become/" readme.txt
-echo -n "...."
-sed -i.zktmp "0,/<value>.*<\/value>/s//<value>${themeName}<\/value>/" readme.txt
-echo -n "...."
-sed -i.zktmp "0,/zktheme=.*/s//zktheme=${themeName}/" readme.txt
-echo -n "...."
-echo -n "done."
-echo ""
+echo "updating readme.txt..."
+sed -i.zktmp "s/___THEME_NAME___/${themeName}/g" readme.txt
 
-echo -n "updating package.json..."
+echo "updating package.json..."
 sed -i.zktmp "s/___THEME_NAME___/${themeName}/g" package.json
-echo -n "...."
-echo -n "done."
-echo ""
 
-
-echo -n "removing zktmp files..."
+echo "removing zktmp files..."
 find . -name "*.zktmp" | xargs rm -f
-echo -n "..............."
-echo -n "done."
-echo ""
 
 echo "All done."
-exit 1
+exit 0
 
 if [ "$OS" = "Windows_NT" ]; then # to avoid tons of if/else with uname -s in Windows
 	OS_detected="Windows"
