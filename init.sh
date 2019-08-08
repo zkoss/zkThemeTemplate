@@ -197,6 +197,13 @@ echo -n "...."
 echo -n "done."
 echo ""
 
+echo -n "updating package.json..."
+sed -i.zktmp "s/___THEME_NAME___/${themeName}/g" package.json
+echo -n "...."
+echo -n "done."
+echo ""
+
+
 echo -n "removing zktmp files..."
 find . -name "*.zktmp" | xargs rm -f
 echo -n "..............."
