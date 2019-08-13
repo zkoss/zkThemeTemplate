@@ -1,6 +1,32 @@
 Building prerequisites:
 1. Required Node.js >= 10.16
-2. `npm install`
+
+Build Steps:
+
+clone the zkThemeTemplate project
+
+(initially)
+init.sh
+npm install
+
+(build jar file)
+mvn clean package
+-> target/___THEME_NAME___.jar
+
+Development:
+
+(compile run preview app)
+mvn test exec:java@preview-app
+
+(open a simple preview page in the browser, add your own pages containing the components to preview)
+http://localhost:8080
+
+(continuous compile/watch less files - in a separate console)
+npm zklessc-dev
+
+(update less-files with text editor, save file -> auto zkless compile -> browser will reload style sheet zk.wcs)
+
+
 
 How to use ___THEME_NAME___.jar:
 
@@ -18,3 +44,5 @@ How to use ___THEME_NAME___.jar:
 		zktheme=___THEME_NAME___
 	
 It does not require a server restart, but user has to refresh the browser.
+
+
