@@ -1,3 +1,7 @@
+Building prerequisites:
+1. Required Node.js >= 10.16
+2. `npm install`
+
 How to use ___THEME_NAME___.jar:
 
 1. Put ___THEME_NAME___.jar in WEB-INF/lib, then ___THEME_NAME___ will become your default theme if there is no others theme.
