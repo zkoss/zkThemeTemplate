@@ -141,6 +141,9 @@ sed -i.zktmp "s/___THEME_NAME___/${themeName}/g" readme.txt
 echo "updating package.json..."
 sed -i.zktmp "s/___THEME_NAME___/${themeName}/g" package.json
 
+echo "updating ThemePreviewApp.java..."
+sed -i.zktmp "s/___THEME_NAME___/${themeName}/g" preview/zk/example/ThemePreviewApp.java
+
 echo "removing zktmp files..."
 find . -name "*.zktmp" | xargs rm -f
 
