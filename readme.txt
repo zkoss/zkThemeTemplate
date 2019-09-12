@@ -22,7 +22,7 @@ mvn test exec:java@preview-app
 http://localhost:8080
 
 (continuous compile/watch less files - in a separate console)
-npm zklessc-dev
+npm run zklessc-dev
 
 (update less-files with text editor, save file -> auto zkless compile -> browser will reload style sheet zk.wcs)
 
