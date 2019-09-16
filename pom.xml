@@ -7,7 +7,7 @@
 	<properties>
 		<maven.compiler.source>8</maven.compiler.source>
 		<maven.compiler.target>8</maven.compiler.target>
-		<zk.version>9.0.0.FL.20190905-Eval</zk.version>
+		<zk.version>9.0.0.FL.20190912-Eval</zk.version>
 		<zkspringboot.version>1.0.4</zkspringboot.version>
 		<springboot.version>2.1.8.RELEASE</springboot.version>
 		<maven.build.timestamp.format>yyyy-MM-dd</maven.build.timestamp.format>
@@ -138,8 +138,9 @@
 							<goal>exec</goal>
 						</goals>
 						<configuration>
-							<executable>${project.basedir}/node_modules/.bin/zklessc</executable>
+							<executable>npx</executable>
 							<arguments>
+								<argument>zklessc</argument>
 								<argument>--source</argument>
 								<argument>${zktheme.web.resources}</argument>
 								<argument>--output</argument>
