@@ -1,0 +1,162 @@
+@import "~./zul/less/_header.less";
+
+.z-searchbox {
+	display: inline-block;
+	position: relative;
+	height: 34px;
+	width: 180px;
+	padding: @inputPadding;
+	padding-right: 24px;
+	border: 1px solid @inputBorderColor;
+	border-radius: @inputBorderRadius;
+	color: @inputColor;
+	background: @inputBackgroundColor;
+	cursor: pointer;
+
+	&:hover {
+		border-color: @inputHoverBorderColor;
+	}
+
+	&:focus, &-open:hover {
+		border-color: @inputFocusBorderColor;
+	}
+
+	&-disabled {
+		color: @inputDisableColor !important;
+		background-color: @inputDisableBackgroundColor !important;
+		cursor: default !important;
+		&:focus, &:hover {
+			border-color: @inputBorderColor;
+		}
+	}
+
+	&-open {
+		border: 1px solid @inputFocusBorderColor;
+	}
+
+	&:before {
+		content: '';
+		display: inline-block;
+		vertical-align: middle;
+		height: 100%;
+	}
+
+	&-label {
+		user-select: none;
+		display: inline-block;
+		max-width: 100%;
+		vertical-align: middle;
+		font-family: @baseContentFontFamily;
+		font-size: @baseFontSize;
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+	}
+
+	&-placeholder {
+		user-select: none;
+		display: none;
+		max-width: 100%;
+		vertical-align: middle;
+		font-family: @baseContentFontFamily;
+		font-size: @baseFontSize;
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		color: @inputPlaceholderColor;
+	}
+
+	&-icon {
+		color: @iconColor;
+		font-size: 22px;
+		position: absolute;
+		right: 8px;
+		top: 50%;
+		-ms-transform: translateY(-50%);
+		transform: translateY(-50%);
+	}
+
+	&-popup {
+		position: absolute;
+		z-index: 1000;
+		border: 1px solid @comboPopupBorderColor;
+		border-radius: @inputBorderRadius;
+		background: @inputBackgroundColor;
+		padding: 8px;
+
+		font-family: @baseContentFontFamily;
+		font-size: @comboPopupItemSize;
+		color: @comboPopupItemColor;
+	}
+
+	&-shadow {
+		box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16), 0 2px 4px 0 rgba(0, 0, 0, 0.24);
+	}
+
+	& &-popup {
+		display: none;
+	}
+
+	&-search {
+		height: 34px;
+		width: 100%;
+		padding: 0 8px;
+		border: 1px solid @inputBorderColor;
+		border-radius: @inputBorderRadius;
+	}
+
+	&-cave {
+		margin: 0;
+		padding: 0;
+		max-height: 350px;
+		overflow: auto;
+	}
+
+	&-item {
+		white-space: nowrap;
+		list-style: none;
+		display: block;
+		padding: 4px 8px;
+		border-radius: @inputBorderRadius;
+		cursor: pointer;
+		-moz-user-select: none;
+		-webkit-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
+
+		> label {
+			display: block;
+		}
+	}
+
+	&-item&-active, &-item:hover {
+		background-color: @comboPopupItemHoverBackgroundColor;
+	}
+
+	&-item&-selected {
+		color: @comboPopupItemSelectedColor;
+	}
+
+	&-item-check {
+		display: inline-block;
+		vertical-align: bottom;
+		border: 1px solid @checkedBorderColor;
+		border-radius: @inputBorderRadius;
+		width: @menuImageSize;
+		height: @menuImageSize;
+		margin-right: 8px;
+	}
+
+	&-item&-selected > &-item-check {
+		color: @menuCheckedColor;
+		background: @menuCheckedBackgroundColor;
+		font-family: ZK85Icons, FontAwesome;
+		font-size: @checkedIconSize;
+		font-style: normal;
+		font-weight: normal;
+		-moz-osx-font-smoothing: grayscale;
+		&::before {
+			content: "\f00c"; // fa-check
+		}
+	}
+}
