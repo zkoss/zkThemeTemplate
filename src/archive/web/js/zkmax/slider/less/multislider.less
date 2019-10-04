@@ -1,0 +1,237 @@
+@import "~./zul/less/_header.less";
+
+.z-multislider {
+	white-space: nowrap;
+	overflow: visible;
+	cursor: pointer;
+
+	&-inner {
+		position: relative;
+	}
+
+	&-track {
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		background-color: @multisliderTrackColor;
+	}
+
+	&-marks {
+		position: relative;
+	}
+
+	&-mark {
+		position: absolute;
+
+		&-label {
+			position: absolute;
+			font-family: @baseTitleFontFamily;
+			color: @textColorDefault;
+			text-align: center;
+			font-size: @fontSizeSmall;
+		}
+	}
+
+	& .z-sliderbuttons {
+		&-button {
+			box-shadow: 0 0 4px 0 @multisliderShadowColor;
+		}
+
+		&-tooltip {
+			border-radius: @multisliderBorderRadius;
+			background: @multisliderTooltipBackgroundColor;
+		}
+	}
+
+	&:not(&-disabled) {
+		& .z-sliderbuttons {
+			&-area {
+				background-color: @multisliderButtonColor;
+			}
+
+			&-button {
+				border-color: @multisliderButtonColor;
+			}
+
+			&-button:hover {
+				border-color: @multisliderButtonHoverColor;
+			}
+
+			&-button:hover .z-sliderbuttons-tooltip {
+				display: block;
+			}
+
+			&-button:active {
+				border-color: @multisliderButtonActiveColor;
+			}
+		}
+
+		& .z-sliderbuttons:nth-last-of-type(3n-1) .z-sliderbuttons-area {
+			background-color: @multisliderButtonColor2;
+		}
+
+		& .z-sliderbuttons:nth-last-of-type(3n-1) .z-sliderbuttons-button {
+			border-color: @multisliderButtonColor2;
+		}
+
+		& .z-sliderbuttons:nth-last-of-type(3n-1) .z-sliderbuttons-button:hover {
+			border-color: @multisliderButtonHoverColor2;
+		}
+
+		& .z-sliderbuttons:nth-last-of-type(3n-1) .z-sliderbuttons-button:active {
+			border-color: @multisliderButtonActiveColor2;
+		}
+
+		& .z-sliderbuttons:nth-last-of-type(3n-3) .z-sliderbuttons-area {
+			background-color: @multisliderButtonColor3;
+		}
+
+		& .z-sliderbuttons:nth-last-of-type(3n-3) .z-sliderbuttons-button {
+			border-color: @multisliderButtonColor3;
+		}
+
+		& .z-sliderbuttons:nth-last-of-type(3n-3) .z-sliderbuttons-button:hover {
+			border-color: @multisliderButtonHoverColor3;
+		}
+
+		& .z-sliderbuttons:nth-last-of-type(3n-3) .z-sliderbuttons-button:active {
+			border-color: @multisliderButtonActiveColor3;
+		}
+	}
+
+	&-horizontal {
+		width: 300px;
+		padding-left: 10px;
+		padding-right: 10px;
+
+		& .z-sliderbuttons {
+			&-area {
+				height: 100%;
+				margin-left: -7px;
+			}
+
+			&-button {
+				width: 14px;
+				height: 20px;
+				border-width: 10px 7px;
+				margin-top: -6px;
+
+				&:nth-child(2) {
+					margin-left: -14px;
+					border-top-left-radius: 20px;
+					border-bottom-left-radius: 20px;
+				}
+
+				&:last-child {
+					border-top-right-radius: 20px;
+					border-bottom-right-radius: 20px;
+				}
+			}
+
+			&-tooltip {
+				top: -38px;
+				transform: translateX(-35%);
+				padding: 4px 6px;
+			}
+		}
+	}
+
+	&-horizontal &-inner {
+		width: 100%;
+		left: -10px;
+		margin: 40px 12px 30px;
+		height: @multisliderInnerSize;
+	}
+
+	&-horizontal &-mark-label {
+		top: 20px;
+		transform: translateX(-50%);
+	}
+
+	&-vertical {
+		height: 300px;
+		padding-top: 10px;
+		padding-bottom: 10px;
+
+		& .z-sliderbuttons {
+			&-area {
+				margin-top: -7px;
+				width: 100%;
+			}
+
+			&-button {
+				width: 20px;
+				height: 14px;
+				border-width: 7px 10px;
+				margin-left: -6px;
+
+				&:nth-child(2) {
+					margin-top: -10px;
+					border-top-left-radius: 20px;
+					border-top-right-radius: 20px;
+				}
+
+				&:last-child {
+					border-bottom-left-radius: 20px;
+					border-bottom-right-radius: 20px;
+				}
+			}
+
+			&-tooltip {
+				left: 14px;
+				transform: translateY(-35%);
+				padding: 6px 4px;
+			}
+		}
+	}
+
+	&-vertical &-inner {
+		height: 100%;
+		top: -10px;
+		margin: 12px 40px 12px 12px;
+		width: @multisliderInnerSize;
+	}
+
+	&-vertical &-mark-label {
+		left: 22px;
+		transform: translateY(-50%);
+	}
+
+	&-disabled &-track {
+		background-color: @multisliderDisabledTrackColor;
+	}
+
+	&-disabled {
+		cursor: default;
+		& .z-sliderbuttons {
+			&-area {
+				background-color: @multisliderDisabledButtonColor;
+			}
+
+			&-button {
+				border-color: @multisliderDisabledButtonColor;
+				box-shadow: none;
+			}
+
+			&-tooltip {
+				background-color: @multisliderDisabledTooltipBackgroundColor;
+			}
+
+			&:nth-last-of-type(3n-1) .z-sliderbuttons-area {
+				background-color: @multisliderDisabledButtonColor2;
+			}
+
+			&:nth-last-of-type(3n-1) .z-sliderbuttons-button {
+				border-color: @multisliderDisabledButtonColor2;
+			}
+
+			&:nth-last-of-type(3n-3) .z-sliderbuttons-area {
+				background-color: @multisliderDisabledButtonColor3;
+			}
+
+			&:nth-last-of-type(3n-3) .z-sliderbuttons-button {
+				border-color: @multisliderDisabledButtonColor3;
+			}
+		}
+	}
+}
