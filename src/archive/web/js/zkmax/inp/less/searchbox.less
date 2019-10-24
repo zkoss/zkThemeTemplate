@@ -3,35 +3,47 @@
 .z-searchbox {
 	display: inline-block;
 	position: relative;
-	height: 34px;
+	height: @searchboxHeight;
 	width: 180px;
-	padding: @inputPadding;
+	padding: @searchboxPadding;
 	padding-right: 24px;
-	border: 1px solid @inputBorderColor;
-	border-radius: @inputBorderRadius;
-	color: @inputColor;
-	background: @inputBackgroundColor;
+	border: 1px solid @searchboxBorderColor;
+	border-radius: @searchboxBorderRadius;
+	color: @searchboxColor;
+	background: @searchboxBackgroundColor;
 	cursor: pointer;
 
 	&:hover {
-		border-color: @inputHoverBorderColor;
+		border-color: @searchboxHoverBorderColor;
 	}
 
-	&:focus, &-open:hover {
-		border-color: @inputFocusBorderColor;
+	&:focus {
+		border-color: @searchboxFocusBorderColor;
 	}
 
-	&-disabled {
-		color: @inputDisableColor !important;
-		background-color: @inputDisableBackgroundColor !important;
-		cursor: default !important;
-		&:focus, &:hover {
-			border-color: @inputBorderColor;
+	&:active {
+		border-color: @searchboxActiveBorderColor;
+		background: @searchboxActiveBackgroundColor;
+		color: @searchboxActiveColor;
+	}
+	&:active &-placeholder {
+		color: @searchboxActiveColor;
+	}
+	&:active &-icon {
+		color: @searchboxActiveIconColor;
+	}
+
+	&[disabled] {
+		color: @searchboxDisableColor;
+		background: @searchboxDisableBackgroundColor;
+		cursor: default;
+		border-color: @searchboxDisableBorderColor;
+		&-icon {
+			color: @searchboxDisableIconColor;
 		}
 	}
-
-	&-open {
-		border: 1px solid @inputFocusBorderColor;
+	&[disabled] &-icon {
+		color: @searchboxDisableIconColor;
 	}
 
 	&:before {
@@ -47,7 +59,7 @@
 		max-width: 100%;
 		vertical-align: middle;
 		font-family: @baseContentFontFamily;
-		font-size: @baseFontSize;
+		font-size: @searchboxFontSize;
 		overflow: hidden;
 		white-space: nowrap;
 		text-overflow: ellipsis;
@@ -59,15 +71,15 @@
 		max-width: 100%;
 		vertical-align: middle;
 		font-family: @baseContentFontFamily;
-		font-size: @baseFontSize;
+		font-size: @searchboxFontSize;
 		overflow: hidden;
 		white-space: nowrap;
 		text-overflow: ellipsis;
-		color: @inputPlaceholderColor;
+		color: @searchboxPlaceholderColor;
 	}
 
 	&-icon {
-		color: @iconColor;
+		color: @searchboxIconColor;
 		font-size: 22px;
 		position: absolute;
 		right: 8px;
@@ -79,18 +91,17 @@
 	&-popup {
 		position: absolute;
 		z-index: 1000;
-		border: 1px solid @comboPopupBorderColor;
-		border-radius: @inputBorderRadius;
-		background: @inputBackgroundColor;
-		padding: 8px;
-
+		border: 1px solid @searchboxPopupBorderColor;
+		border-radius: @searchboxPopupBorderRadius;
+		background: @searchboxPopupBackgroundColor;
+		padding: 4px;
 		font-family: @baseContentFontFamily;
-		font-size: @comboPopupItemSize;
-		color: @comboPopupItemColor;
+		font-size: @searchboxFontSize;
+		color: @searchboxColor;
 	}
 
 	&-shadow {
-		box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16), 0 2px 4px 0 rgba(0, 0, 0, 0.24);
+		box-shadow: @searchboxPopupShadow;
 	}
 
 	& &-popup {
@@ -98,11 +109,35 @@
 	}
 
 	&-search {
-		height: 34px;
+		height: @searchboxHeight;
 		width: 100%;
-		padding: 0 8px;
+		padding: @inputPadding;
 		border: 1px solid @inputBorderColor;
 		border-radius: @inputBorderRadius;
+		background: @inputBackgroundColor;
+		margin-bottom: 4px;
+		&::placeholder {
+			color: @searchboxPlaceholderColor;
+			opacity: 1;
+		}
+		&::-webkit-input-placeholder {
+			color: @searchboxPlaceholderColor;
+			opacity: 1;
+		}
+		&::-moz-placeholder {
+			color: @searchboxPlaceholderColor;
+			opacity: 1;
+		}
+		&:-ms-input-placeholder {
+			color: @searchboxPlaceholderColor;
+			opacity: 1;
+		}
+		&:hover {
+			border-color: @inputFocusBorderColor;
+		}
+		&:focus {
+			border-color: @inputFocusBorderColor;
+		}
 	}
 
 	&-cave {
@@ -113,48 +148,57 @@
 	}
 
 	&-item {
+		height: 34px;
 		white-space: nowrap;
 		list-style: none;
 		display: block;
 		padding: 4px 8px;
-		border-radius: @inputBorderRadius;
 		cursor: pointer;
+		border-radius: @searchboxPopupItemBorderRadius;
+		vertical-align: middle;
 		-moz-user-select: none;
 		-webkit-user-select: none;
 		-ms-user-select: none;
 		user-select: none;
 
-		> label {
-			display: block;
+		&:before {
+			content: '';
+			display: inline-block;
+			vertical-align: middle;
+			height: 100%;
 		}
 	}
 
-	&-item&-active, &-item:hover {
-		background-color: @comboPopupItemHoverBackgroundColor;
+	&-item&-selected {
+		color: @searchboxPopupItemSelectedColor;
 	}
 
-	&-item&-selected {
-		color: @comboPopupItemSelectedColor;
+	&-item:hover {
+		background: @searchboxPopupItemHoverBackgroundColor;
+		color: @searchboxPopupItemHoverColor;
+	}
+
+	&-item&-active {
+		background: @searchboxPopupItemActiveBackgroundColor;
+		color: @searchboxPopupItemActiveColor;
 	}
 
 	&-item-check {
 		display: inline-block;
-		vertical-align: bottom;
-		border: 1px solid @checkedBorderColor;
-		border-radius: @inputBorderRadius;
-		width: @menuImageSize;
-		height: @menuImageSize;
+		vertical-align: middle;
+		border: 1px solid @searchboxPopupItemCheckBorderColor;
+		background: @searchboxPopupItemCheckBackgroundColor;
+		border-radius: @searchboxPopupItemCheckBorderRadius;
+		width: @searchboxPopupItemCheckSize;
+		height: @searchboxPopupItemCheckSize;
 		margin-right: 8px;
 	}
 
 	&-item&-selected > &-item-check {
-		color: @menuCheckedColor;
-		background: @menuCheckedBackgroundColor;
-		font-family: ZK85Icons, FontAwesome;
-		font-size: @checkedIconSize;
-		font-style: normal;
-		font-weight: normal;
-		-moz-osx-font-smoothing: grayscale;
+		color: @searchboxPopupItemCheckCheckedColor;
+		background: @searchboxPopupItemCheckCheckedBackgroundColor;
+		.baseIconFont();
+		font-size: @searchboxPopupItemCheckSize;
 		&::before {
 			content: "\f00c"; // fa-check
 		}
