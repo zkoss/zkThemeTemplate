@@ -1,0 +1,133 @@
+@import "~./zul/less/_header.less";
+
+.z-stepbar {
+	background: @colorBackground3;
+	overflow: hidden;
+	padding: @stepbarPadding;
+	align-items: center;
+	display: -ms-flexbox;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	font-family: @baseTitleFontFamily;
+
+	&-wrapped-label {
+		& .z-step {
+			-ms-flex-direction: column;
+			flex-direction: column;
+			align-self: flex-start;
+		}
+
+		& .z-step-icon {
+			display: block;
+			margin-right: 0;
+		}
+
+		& .z-step-title {
+			margin-top: @stepbarPadding;
+		}
+
+		& .z-stepbar-separator {
+			margin: -34px -24px 0 -24px;
+		}
+	}
+	&-linear .z-step {
+		cursor: default;
+	}
+
+	&-separator {
+		flex-grow: 1;
+		background-color: @stepInactiveColor;
+		height: @stepbarSeparatorSize;
+
+		&:first-child {
+			display: none;
+		}
+	}
+
+	&-linear &-separator.z-step-active,
+	&-linear &-separator.z-step-complete,
+	&-linear &-separator.z-step-error {
+		background-color: @stepActiveColor;
+	}
+}
+
+.z-step {
+	display: flex;
+	display: -ms-flexbox;
+	align-items: center;
+	padding: @stepbarPadding;
+	position: relative;
+
+	&bar:not(&bar-linear) & {
+		cursor: pointer;
+	}
+
+	&-icon {
+		display: inline-block;
+		width: @stepSize;
+		height: @stepSize;
+		margin-right: @stepbarPadding;
+		line-height: @stepSize;
+		font-size: @stepSize;
+		text-align: center;
+		color: @stepInactiveColor;
+	}
+
+	&-icon-empty {
+		border-radius: 50%;
+		border: 4px solid @stepInactiveColor;
+		background-color: white;
+	}
+
+	&-title {
+		display: inline-block;
+		background-color: @colorBackground3;
+		font-size: @stepFontSize;
+	}
+
+	&-active &-icon,
+	&-complete &-icon {
+		color: @stepActiveColor;
+	}
+
+	&-active &-icon-empty,
+	&-complete &-icon-empty {
+		border-color: @stepActiveColor;
+	}
+
+	&bar:not(&bar-linear) &-complete &-icon:hover {
+		color: @stepHoverColor;
+	}
+
+	&bar:not(&bar-linear) &-complete &-icon:active {
+		color: @stepClickColor;
+	}
+
+	&bar:not(&bar-linear) & .z-icon-check:hover {
+		color: @textColorDefault3;
+		background-color: @stepHoverColor;
+		border-color: @stepHoverColor;
+	}
+
+	&bar:not(&bar-linear) & .z-icon-check:active {
+		color: @textColorDefault3;
+		background-color: @stepClickColor;
+		border-color: @stepClickColor;
+	}
+
+	.z-icon-check {
+		color: @textColorDefault3;
+		background-color: @stepActiveColor;
+		border-color: @stepActiveColor;
+		border-radius: 50%;
+		font-size: 24px;
+	}
+
+	&-error &-icon {
+		color: @textColorDefault3;
+		background-color: @stepErrorColor;
+		border-radius: 50%;
+		font-size: 24px;
+	}
+}
