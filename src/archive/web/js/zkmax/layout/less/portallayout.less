@@ -8,7 +8,7 @@
 .z-portallayout-vertical { 
 	> .z-portalchildren {
 		height: 100%;
-	    float: left;
+		float: left;
 	}
 }
 .z-portalchildren-content {
@@ -20,7 +20,6 @@
 	}
 }
 
-	    
 .z-portallayout-horizontal	.z-portalchildren-content {
 	> .z-panel,
 	> .z-panel-move-block {
@@ -30,4 +29,101 @@
 .z-portallayout,
 .z-portalchildren {
 	-ms-zoom: 1;
+}
+
+.z-portalchildren {
+	&-counter {
+		display: none;
+		border-radius: @portalchildrenCounterRadius;
+		padding: 0 @portalchildrenCounterPadding;
+		margin-right: @portalchildrenCounterPadding;
+		background: @portalchildrenCounterBackground;
+		font-size: 14px;
+		font-weight: 700;
+
+		&-on {
+			display: inline;
+		}
+	}
+	&-frame {
+		border: 1px solid @portalchildrenFrameBorderColor;
+		border-radius: @portalchildrenFrameRadius;
+		background: @portalchildrenFrameBackgroundColor;
+		overflow: hidden;
+		padding: @portalchildrenFramePadding;
+		padding-bottom: 0;
+		margin-right: @portalchildrenFrameMargin;
+
+		&:last-child {
+			margin-right: 0;
+		}
+
+		> .z-portalchildren {
+			&-title {
+				display: block;
+			}
+			&-content .z-panel {
+				background: @portalchildrenFramePanelBackgroundColor;
+				margin-bottom: @portalchildrenFramePanelPadding;
+				position: relative;
+
+				&:last-child {
+					margin-bottom: @portalchildrenFramePadding;
+				}
+				&-header {
+					color: @portalchildrenFramePanelHeaderTextColor;
+					padding: @portalchildrenFramePanelHeaderPadding;
+					font-size: @portalchildrenFramePanelHeaderTextSize;
+				}
+				&-drag-button {
+					display: block;
+					color: @portalchildrenFrameDragButtonColor;
+					width: @portalchildrenFrameDragButtonSize;
+					height: @portalchildrenFrameDragButtonSize;
+					float: left;
+					position: absolute;
+					top: 0;
+					left: 50%;
+					transform: translateX(-50%);
+					z-index: 1;
+				}
+				
+				.z-panelchildren {
+					padding: @portalchildrenFramePanelChildrenPadding;
+				}
+
+			}
+		}
+	}
+	&-title {
+		display: none;
+		.fontStyle(@portalchildrenFrameTitleFontFamily, @portalchildrenFrameTitleFontSize, normal, @portalchildrenFrameTitleFontColor);
+		border: 0;
+		overflow: hidden;
+		padding-bottom: @portalchildrenFramePadding;
+	}
+}
+
+.z-portallayout-horizontal {
+	> .z-portalchildren {
+		&-frame {
+			float: left;
+			clear: both;
+			margin-bottom: @portalchildrenFramePadding;
+
+			&:last-child {
+				margin-bottom: 0;
+			}
+
+			> .z-portalchildren {
+				&-content > .z-panel {
+					margin-right: @portalchildrenFramePanelPadding;
+	
+					&:last-child {
+						margin-right: 0;
+					}
+				}
+			}
+		}
+	}
 }
