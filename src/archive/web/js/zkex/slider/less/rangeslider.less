@@ -3,6 +3,8 @@
 	white-space: nowrap;
 	overflow: visible;
 	cursor: pointer;
+	font-family: @baseTitleFontFamily;
+
 	&-inner {
 		position: relative;
 	}
@@ -34,7 +36,6 @@
 		}
 		&-label {
 			position: absolute;
-			font-family: @baseTitleFontFamily;
 			color: @textColorDefault;
 			text-align: center;
 			font-size: @fontSizeSmall;
@@ -45,16 +46,18 @@
 		&-button {
 			width: @rangesliderButtonSize;
 			height: @rangesliderButtonSize;
+			background-color: @rangesliderButtonColor;
 			border-width: @rangesliderButtonBorderWidth;
 			border-color: @rangesliderButtonColor;
 			border-radius: 50%;
-			box-shadow: 0 0 4px 1px @rangesliderShadowColor;
+			box-shadow: 0 0 4px 0 @rangesliderShadowColor;
 			z-index: 2;
 		}
 
 		&-tooltip {
 			border-radius: @rangesliderBorderRadius;
 			background: @rangesliderTooltipBackgroundColor;
+			position: absolute;
 		}
 
 		&-area {
@@ -75,7 +78,8 @@
 				top: 0;
 			}
 			&-tooltip {
-				top: -20px;
+				top: -10px;
+				left: 50%;
 				transform: translateX(-50%) translateY(-100%);
 				padding: 4px 6px;
 			}
@@ -91,7 +95,7 @@
 	}
 
 	&-horizontal &-mark-label {
-		top: 18px;
+		top: 22px;
 		transform: translateX(-50%);
 	}
 
@@ -108,7 +112,8 @@
 				left: 0;
 			}
 			&-tooltip {
-				left: 20px;
+				left: 26px;
+				top: 50%;
 				transform: translateY(-50%);
 				padding: 6px 4px;
 			}
@@ -134,6 +139,7 @@
 	&:not(&-disabled) {
 		& .z-sliderbuttons-button:hover {
 			border-color: @rangesliderButtonHoverColor;
+			background-color: @rangesliderButtonHoverColor;
 		}
 
 		& .z-sliderbuttons-button:hover .z-sliderbuttons-tooltip {
@@ -142,11 +148,11 @@
 
 		& .z-sliderbuttons-button:active {
 			border-color: @rangesliderButtonActiveColor;
+			background-color: @rangesliderButtonActiveColor;
 		}
 
 		& .z-sliderbuttons-button:focus {
-			box-shadow: 0 0 0 5px @rangesliderButtonFocusShadowColor;
-			border-color: @rangesliderButtonActiveColor;
+			border-color: @rangesliderButtonFocusBorderColor;
 		}
 	}
 

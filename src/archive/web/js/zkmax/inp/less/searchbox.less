@@ -17,7 +17,7 @@
 		border-color: @searchboxHoverBorderColor;
 	}
 
-	&:focus {
+	&:focus, &-open {
 		border-color: @searchboxFocusBorderColor;
 	}
 
@@ -181,6 +181,11 @@
 	&-item&-active {
 		background: @searchboxPopupItemActiveBackgroundColor;
 		color: @searchboxPopupItemActiveColor;
+	}
+
+	&-item&-selected&-active,
+	&-item&-selected:hover {
+		color: @searchboxPopupItemSelectedColor;
 	}
 
 	&-item-check {
