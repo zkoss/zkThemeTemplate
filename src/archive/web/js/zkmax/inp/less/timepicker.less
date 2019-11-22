@@ -13,7 +13,7 @@
 		.borderRadius(@baseBorderRadius);
 		margin: 0;
 		padding: @inputPadding;
-		padding-right: @inputPaddingRight + @baseButtonWidth + 8px * 2;
+		padding-right: @inputPaddingRight + @timepickerButtonWidth;
 		line-height: @baseLineHeight;
 		background: @inputBackgroundColor;
 
@@ -45,7 +45,7 @@
 		border: 1px solid @inputFocusBorderColor;
 	}
 	&-input:focus + &-button {
-		border-left-width: 0;
+		border-left: 1px solid @inputFocusBorderColor;
 	}
 
 	&-input-full {
@@ -57,8 +57,8 @@
 		display: inline-block;
 		position: relative;
 		top: 0;
-		right: @baseButtonWidth;
-		min-width: @baseButtonWidth;
+		right: @timepickerButtonWidth;
+		min-width: @timepickerButtonWidth;
 		height: @baseBarHeight;
 		border: 1px solid @inputBorderColor;
 		.rightBorderRadius(@baseBorderRadius);
