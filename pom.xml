@@ -7,7 +7,7 @@
 	<properties>
 		<maven.compiler.source>8</maven.compiler.source>
 		<maven.compiler.target>8</maven.compiler.target>
-		<zk.version>9.0.0-RC2-Eval</zk.version>
+		<zk.version>9.0.0-Eval</zk.version>
 		<zkspringboot.version>1.0.4</zkspringboot.version>
 		<springboot.version>2.1.8.RELEASE</springboot.version>
 		<maven.build.timestamp.format>yyyy-MM-dd</maven.build.timestamp.format>
