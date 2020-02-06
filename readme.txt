@@ -13,10 +13,19 @@ npm install
 mvn clean package
 -> target/___THEME_NAME___.jar
 
+or with compact profile
+
+mvn clean package -P compact
+-> target/___THEME_NAME___.jar
+
 Development:
 
 (compile run preview app)
 mvn test exec:java@preview-app
+
+of with compact profile
+
+mvn test exec:java@preview-app -P compact
 
 (open a simple preview page in the browser, add your own pages containing the components to preview)
 http://localhost:8080

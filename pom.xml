@@ -65,6 +65,102 @@
 			<url>http://mavensync.zkoss.org/maven2/</url>
 		</pluginRepository>
 	</pluginRepositories>
+	<profiles>
+		<profile>
+			<id>default</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+		</profile>
+		<profile>
+			<id>compact</id>
+			<properties>
+				<zktheme.web.resources>${project.build.directory}/generated-sources/compact</zktheme.web.resources>
+			</properties>
+			<build>
+				<plugins>
+					<plugin>
+						<artifactId>maven-resources-plugin</artifactId>
+						<version>3.1.0</version>
+						<executions>
+							<execution>
+								<id>copy-resources</id>
+								<phase>generate-sources</phase>
+								<goals>
+									<goal>copy-resources</goal>
+								</goals>
+								<configuration>
+									<overwrite>true</overwrite>
+									<outputDirectory>${zktheme.web.resources}</outputDirectory>
+									<resources>
+										<resource>
+											<targetPath>${zktheme.web.resources}</targetPath>
+											<directory>${zktheme.resources}/web</directory>
+										</resource>
+										<resource>
+											<targetPath>${zktheme.web.resources}/zkmax/less</targetPath>
+											<directory>${project.basedir}/src/resources/compact/tablet</directory>
+										</resource>
+									</resources>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>com.coderplus.maven.plugins</groupId>
+						<artifactId>copy-rename-maven-plugin</artifactId>
+						<version>1.0.1</version>
+						<executions>
+							<execution>
+								<id>copy-less</id>
+								<phase>generate-sources</phase>
+								<goals>
+									<goal>copy</goal>
+								</goals>
+								<configuration>
+									<fileSets>
+										<fileSet>
+											<sourceFile>${project.basedir}/src/resources/compact/_compact.less</sourceFile>
+											<destinationFile>${zktheme.web.resources}/zul/less/_compact.less</destinationFile>
+										</fileSet>
+										<fileSet>
+											<sourceFile>${project.basedir}/src/resources/compact/patch.less</sourceFile>
+											<destinationFile>${zktheme.web.resources}/zul/less/patch.less</destinationFile>
+										</fileSet>
+									</fileSets>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>com.google.code.maven-replacer-plugin</groupId>
+						<artifactId>replacer</artifactId>
+						<version>1.5.3</version>
+						<executions>
+							<execution>
+								<phase>generate-sources</phase>
+								<goals>
+									<goal>replace</goal>
+								</goals>
+							</execution>
+						</executions>
+						<configuration>
+							<file>${zktheme.web.resources}/zul/less/_header.less</file>
+							<replacements>
+								<replacement>
+									<token>@import "_zkmixins.less";</token>
+									<value><![CDATA[
+									@import "_zkmixins.less";
+									@import "_compact.less";
+									]]></value>
+								</replacement>
+							</replacements>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 	<dependencies>
 		<dependency>
 			<groupId>org.zkoss.zk</groupId>
@@ -207,6 +303,20 @@
 								<descriptor>assembly/bundle.xml</descriptor>
 							</descriptors>
 						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-help-plugin</artifactId>
+				<version>3.2.0</version>
+				<executions>
+					<execution>
+						<id>show-profiles</id>
+						<phase>initialize</phase>
+						<goals>
+							<goal>active-profiles</goal>
+						</goals>
 					</execution>
 				</executions>
 			</plugin>
