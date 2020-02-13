@@ -9,7 +9,7 @@ themeTemplatePath=$themeSrcPath/___THEME_NAME___
 webAppInitFile=$themeTemplatePath/___THEME_NAME_CAP___ThemeWebAppInit.java
 
 templateFiles="pom.xml \
-readme.txt \
+readme.md \
 package.json \
 preview/zk/example/ThemePreviewApp.java \
 ${themeTemplatePath}/Version.java \
