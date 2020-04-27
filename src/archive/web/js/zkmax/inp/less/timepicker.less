@@ -2,19 +2,19 @@
 
 .z-timepicker {
 	display: inline-block;
-	min-height: @baseBarHeight;
+	min-height: @timepickerHeight;
 	white-space: nowrap;
 
 	&-input {
 		.fontStyle(@baseContentFontFamily, @inputTextSize, normal, @inputColor);
 		width: 100%;
-		height: @baseBarHeight;
+		height: @timepickerHeight;
 		border: 1px solid @inputBorderColor;
 		.borderRadius(@baseBorderRadius);
 		margin: 0;
 		padding: @inputPadding;
-		padding-right: @inputPaddingRight + @timepickerButtonWidth;
-		line-height: @baseLineHeight;
+		padding-right: @timepickerPaddingRight;
+		line-height: @timepickerLineHeight;
 		background: @inputBackgroundColor;
 
 		// Placeholder ZK-3876: combobox does not provide proper placeholder style
@@ -59,10 +59,10 @@
 		top: 0;
 		right: @timepickerButtonWidth;
 		min-width: @timepickerButtonWidth;
-		height: @baseBarHeight;
+		height: @timepickerHeight;
 		border: 1px solid @inputBorderColor;
 		.rightBorderRadius(@baseBorderRadius);
-		padding: 6px 8px 0;
+		padding: @timepickerButtonPadding;
 		line-height: @baseLineHeight;
 		background: @inputBackgroundColor;
 		text-align: left;
@@ -136,7 +136,7 @@
 	white-space: nowrap;
 	cursor: pointer;
 	display: block;
-	padding: 4px 8px;
+	padding: @timepickerPopupPadding;
 	position: relative;
 	min-height: 20px;
 	font-weight: normal;
@@ -161,7 +161,7 @@
 	display: block;
 	border: 1px solid @comboPopupBorderColor;
 	.borderRadius(@baseBorderRadius);
-	padding: 4px 8px;
+	padding: @timepickerPopupPadding;
 	background: @popupBackgroundColor;
 	position: absolute;
 	overflow: auto;

@@ -459,13 +459,13 @@
 		border: 1px solid @goldenLayoutBorderColor;
 		border-bottom: 0;
 		.topBorderRadius(@borderRadiusLarge);
-		line-height: @baseButtonHeight - 2;
+		line-height: @goldenLayoutLineHeight;
 		background: @goldenLayoutHeaderBackgroundColor;
-		min-height: 45px;
+		min-height: @goldenLayoutMinHeight;
 		.applyCSS3('box-sizing', 'border-box');
 		overflow: hidden;
 		font-family: @baseTitleFontFamily;
-		font-size: @fontSizeLarge;
+		font-size: @goldenLayoutFontSize;
 
 		.lm_controls .lm_tabdropdown:before {
 			content: "\f107";
@@ -481,13 +481,13 @@
 			border: 1px solid transparent;
 			border-bottom: none;
 			margin: 0;
-			line-height: @baseButtonHeight - 2;
+			line-height: @goldenLayoutLineHeight;
 			text-align: center;
 			position: relative;
 			top: -1px;
 			cursor: pointer;
 			float: left;
-			padding: 11px 15px 12px 15px;
+			padding: @goldenLayoutTabPadding;
 			color: @goldenLayoutHeaderColor;
 			.applyCSS3('box-sizing', 'border-box');
 
@@ -516,7 +516,7 @@
 					display: block;
 					background: @goldenLayoutSelectedBorderColor;
 					content:	'';
-					margin: 9px -16px;
+					margin: @goldenLayoutActiveTabMargin;
 				}
 			}
 
@@ -527,7 +527,7 @@
 			.lm_title {
 				font-style: normal;
 				display: inline-block;
-				line-height: @baseButtonHeight - 2;
+				line-height: @goldenLayoutLineHeight;
 				overflow: hidden;
 				text-overflow: ellipsis;
 				white-space: nowrap;
@@ -535,10 +535,10 @@
 			}
 
 			.lm_close_tab {
-				width: @fontSizeLarge;
+				width: @goldenLayoutFontSize;
 				.baseIconFont();
 				position: relative;
-				top: 1px;
+				top: @goldenLayoutCloseTabTop;
 				padding-left: 10px;
 				line-height: normal;
 
@@ -549,18 +549,18 @@
 		}
 
 		.lm_controls {
-			padding-right: 7px;
+			padding: @goldenLayoutControlPadding;
 
 			> li {
-				width: @fontSizeLarge;
+				width: @goldenLayoutFontSize;
 				.baseIconFont();
 				display: block;
-				line-height: @fontSizeLarge;
+				line-height: @goldenLayoutFontSize;
 				text-align: center;
 				position: relative;
 				cursor: pointer;
 				float: left;
-				padding: 13px 4px 15px 0px;
+				padding: @goldenLayoutControlLiPadding;
 				color: @goldenLayoutHeaderColor;
 				.applyCSS3('box-sizing', 'border-box');
 				&:hover {
@@ -631,7 +631,7 @@
 .z-goldenlayout-dragProxy {
 	.lm_header .lm_tabs {
 		font-family: @baseTitleFontFamily;
-		font-size: @fontSizeLarge;
+		font-size: @goldenLayoutFontSize;
 		.applyCSS3('box-sizing', 'border-box');
 		position: relative;
 
@@ -642,14 +642,14 @@
 			background: @goldenLayoutHeaderBackgroundColor;
 		
 			font-family: @baseTitleFontFamily;
-			font-size: @fontSizeLarge;
+			font-size: @goldenLayoutFontSize;
 			display: block;
 			margin: 0;
-			line-height: @baseButtonHeight - 2;
+			line-height: @goldenLayoutLineHeight;
 			text-align: center;
 			position: relative;
 			cursor: pointer;
-			padding: 11px 15px 12px 15px;
+			padding: @goldenLayoutTabPadding;
 			color: @goldenLayoutSelectedBorderColor;
 			.applyCSS3('box-sizing', 'border-box');
 			box-shadow: 0px 0px 5px 0px @goldenLayoutProxyBoxShadowColor;
@@ -659,7 +659,7 @@
 				display: block;
 				background: @goldenLayoutSelectedBorderColor;
 				content: '';
-				margin: 5px -15px;
+				margin: @goldenLayoutDropTabAfterMargin;
 			}
 		}
 		

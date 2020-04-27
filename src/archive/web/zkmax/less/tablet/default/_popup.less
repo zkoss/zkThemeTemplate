@@ -1,0 +1,36 @@
+.z-popup {
+	&-content {
+		font-size: 15px;
+	}
+}
+
+.z-notification {
+	&-icon {
+		&.z-icon-times-circle,
+		&.z-icon-exclamation-circle,
+		&.z-icon-info-circle {
+			.size(32px, 32px);
+			line-height: 32px;
+			font-size: 32px;
+			left: 8px;
+		}
+	}
+	&-content {
+		min-height: 0;
+		padding: 32px 8px 32px 44px;
+		font-size: 15px;
+	}
+	&-close {
+		.size(22px, 22px);
+		font-size: 22px;
+		top: 4px;
+		right: 4px;
+	}
+}
+
+.z-notification-left + .z-notification-icon {
+	left: 16px; // 8px arrow
+}
+.z-notification-pointer ~ .z-notification-content {
+	padding: 8px 28px 8px 44px;
+}

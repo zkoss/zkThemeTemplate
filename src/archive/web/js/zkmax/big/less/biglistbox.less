@@ -19,7 +19,7 @@
 		border: 1px solid @baseBorderColor;
 		border-top: none;
 		border-left: none;
-		margin: 0 18px 18px 0;
+		margin: @biglistboxOuterPadding;
 		background: @meshBackgroundColor;
 		position: relative;
 	}
@@ -63,7 +63,7 @@
 		&-content {
 			.fontStyle(@baseTitleFontFamily, @fontSizeMedium, normal, @meshTitleColor);
 			padding: 12px 16px;
-			line-height: 1.3em;
+			line-height: @biglistboxLineHeight;
 			position: relative;
 			white-space: nowrap;
 		}
@@ -88,7 +88,7 @@
 		td {
 			.fontStyle(@baseContentFontFamily, @fontSizeMedium, normal, @baseTextColor);
 			padding: 12px 16px;
-			line-height: 1.3em;
+			line-height: @biglistboxLineHeight;
 			overflow: hidden;
 			cursor: pointer;
 			white-space: nowrap;
@@ -152,14 +152,14 @@
 		}
 	}
 	&-verticalbar-tick {
-		.size(10px, 18px);
+		.size(@biglistboxVerticalTickWidth, @biglistboxVerticalTickHeight);
 		position: absolute;
 		font-size: 16px;
 		color: @biglistboxScrollBarTextColor;
 		background-color: @baseBackgroundColor;
 		border: 1px solid @biglistboxScrollBarBorderColor;
 		.borderRadius(2px);
-		bottom: 2px;
+		bottom: @biglistboxVerticalTickPositionBottom;
 		overflow: hidden;
 		cursor: col-resize;
 		z-index: 20;
@@ -167,7 +167,7 @@
 		&:before {
 			content: '\e910';
 			position: absolute;
-			left: -4px;
+			left: @biglistboxVerticalTickBeforePositionLeft;
 		}
 		&:hover {
 			background-color: @biglistboxScrollBarHoverBackgroundColor;
@@ -183,15 +183,15 @@
 	&-wscroll {
 		// vertical
 		&-vertical {
-			.size(18px, 100%);
+			.size(@biglistboxSize, 100%);
 			position: absolute;
 			top: 0;
-			right: -19px;
+			right: @biglistboxWscrollVerticalPositionRight;
 			z-index: 10;
 			
 			.z-biglistbox-wscroll-drag {
 				font-family: 'ZK85Icons';
-				.size(18px, 116px);
+				.size(@biglistboxSize, @biglistboxWscrollDragSize);
 				color: @biglistboxScrollBarTextColor;
 				background-color: @baseBackgroundColor;
 				position: absolute;
@@ -220,20 +220,26 @@
 				.z-biglistbox-wscroll-up,
 				.z-biglistbox-wscroll-down,
 				.z-biglistbox-wscroll-end {
-					.size(18px, 18px);
+					.size(@biglistboxSize, @biglistboxWscrollButtonSize);
+
+					&:before {
+						position: relative;
+						right: @biglistboxWscrollButtonBeforePositionRight;
+					}
 				}
 				.z-biglistbox-wscroll-body {
-					.size(18px, 45px);
-					top: 36px;
+					.size(@biglistboxSize, @biglistboxWscrollButtonBodySize);
+					top: @biglistboxWscrollButtonBodyPositionTop;
 					border-top: 0;
 					border-bottom: 0;
 					&:before {
 						content: '\e90d';
 						position: absolute;
-						top: 14px;
+						top: @biglistboxWscrollButtonBodyBeforePositionTop;
+						right: @biglistboxWscrollButtonBodyBeforePositionRight;
 					}
 					&:hover, &:active {
-						top: 35px;
+						top: @biglistboxWscrollButtonBodyHoverPositionTop;
 					}
 				}
 				.z-biglistbox-wscroll-home {
@@ -244,17 +250,17 @@
 					}
 				}
 				.z-biglistbox-wscroll-up {
-					top: 18px;
+					top: @biglistboxWscrollButtonSize;
 					border-top: 0;
 					&:before {
 						content: '\e904';
 					}
 					&:hover, &:active {
-						top: 17px;
+						top: @biglistboxWscrollButtonUpHoverPositionTop;
 					}
 				}
 				.z-biglistbox-wscroll-down {
-					bottom: 18px;
+					bottom: @biglistboxWscrollButtonSize;
 					border-bottom: 0;
 					&:before {
 						content: '\e90a';
@@ -280,7 +286,7 @@
 				z-index: 10;
 			}
 			.z-biglistbox-wscroll-endbar {
-				.size(18px, 8px);
+				.size(@biglistboxSize, 8px);
 				border: 1px solid @biglistboxScrollBarBorderColor;
 				.borderRadius(2px);
 				background-color: @biglistboxScrollBarEndBarBackgroundColor;
@@ -292,15 +298,15 @@
 		}
 		// horizontal
 		&-horizontal {
-			.size(100%, 18px);
+			.size(100%, @biglistboxSize);
 			position: absolute;
 			left: 0;
-			bottom: -19px;
+			bottom: @biglistboxWscrollVerticalPositionRight;
 			z-index: 10;
 			
 			.z-biglistbox-wscroll-drag {
 				font-family: 'ZK85Icons';
-				.size(116px, 18px);
+				.size(@biglistboxWscrollDragSize, @biglistboxSize);
 				color: @biglistboxScrollBarTextColor;
 				background-color: @baseBackgroundColor;
 				position: absolute;
@@ -330,20 +336,20 @@
 				.z-biglistbox-wscroll-up,
 				.z-biglistbox-wscroll-down,
 				.z-biglistbox-wscroll-end {
-					.size(18px, 18px);
+					.size(@biglistboxWscrollButtonSize, @biglistboxSize);
 				}
 				.z-biglistbox-wscroll-body {
-					.size(45px, 18px);
-					left: 36px;
+					.size(@biglistboxWscrollButtonBodySize, @biglistboxSize);
+					left: @biglistboxWscrollButtonBodyPositionTop;
 					border-left: 0;
 					border-right: 0;
 					&:before {
 						content: '\e90f';
 						position: absolute;
-						left: 14px;
+						left: @biglistboxWscrollButtonBodyBeforePositionTop;
 					}
 					&:hover, &:active {
-						left: 35px;
+						left: @biglistboxWscrollButtonBodyHoverPositionTop;
 					}
 				}
 				.z-biglistbox-wscroll-home {
@@ -353,17 +359,17 @@
 					}
 				}
 				.z-biglistbox-wscroll-up {
-					left: 18px;
+					left: @biglistboxWscrollButtonSize;
 					border-left: 0;
 					&:before {
 						content: '\e906';
 					}
 					&:hover, &:active {
-						left: 17px;
+						left: @biglistboxWscrollButtonUpHoverPositionTop;
 					}
 				}
 				.z-biglistbox-wscroll-down {
-					right: 18px;
+					right: @biglistboxWscrollButtonSize;
 					border-right: 0;
 					&:before {
 						content: '\e90c';
@@ -378,7 +384,7 @@
 			}
 			.z-biglistbox-wscroll-pos {
 				visibility: visible;
-				.size(115px, 18px);
+				.size(@biglistboxWscrollHorizontalPosWidth, @biglistboxSize);
 				.borderRadius(2px);
 				background: contrast(@baseBackgroundColor);
 				.opacity(0.25);
@@ -388,7 +394,7 @@
 				z-index: 10;
 			}
 			.z-biglistbox-wscroll-endbar {
-				.size(7px, 18px);
+				.size(7px, @biglistboxSize);
 				border: 1px solid @biglistboxScrollBarBorderColor;
 				.borderRadius(2px);
 				background-color: @biglistboxScrollBarEndBarBackgroundColor;

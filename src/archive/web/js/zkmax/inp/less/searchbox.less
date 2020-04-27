@@ -6,7 +6,7 @@
 	height: @searchboxHeight;
 	width: 180px;
 	padding: @searchboxPadding;
-	padding-right: 24px;
+	padding-right: (@searchboxIconSize + @searchboxIconRight);
 	border: 1px solid @searchboxBorderColor;
 	border-radius: @searchboxBorderRadius;
 	color: @searchboxColor;
@@ -80,9 +80,9 @@
 
 	&-icon {
 		color: @searchboxIconColor;
-		font-size: 22px;
+		font-size: @searchboxIconSize;
 		position: absolute;
-		right: 8px;
+		right: @searchboxIconRight;
 		top: 50%;
 		-ms-transform: translateY(-50%);
 		transform: translateY(-50%);
@@ -148,11 +148,11 @@
 	}
 
 	&-item {
-		height: 34px;
+		height: @inputHeight;
 		white-space: nowrap;
 		list-style: none;
 		display: block;
-		padding: 4px 8px;
+		padding: @searchboxPopupItemPadding;
 		cursor: pointer;
 		border-radius: @searchboxPopupItemBorderRadius;
 		vertical-align: middle;
@@ -196,7 +196,7 @@
 		border-radius: @searchboxPopupItemCheckBorderRadius;
 		width: @searchboxPopupItemCheckSize;
 		height: @searchboxPopupItemCheckSize;
-		margin-right: 8px;
+		margin-right: @searchboxPopupItemCheckMarginRight;
 	}
 
 	&-item&-selected > &-item-check {

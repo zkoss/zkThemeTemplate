@@ -28,7 +28,7 @@
 			font-family: @baseTitleFontFamily;
 			color: @textColorDefault;
 			text-align: center;
-			font-size: @fontSizeSmall;
+			font-size: @rangesliderLabelFontSize;
 		}
 	}
 
@@ -101,15 +101,15 @@
 				height: 100%;
 			}
 			&-button {
-				margin-top: -6px;
-				margin-left: -10px;
+				margin-top: @rangesliderHorizontalButtonMarginTop;
+				margin-left: @rangesliderHorizontalButtonMarginLeft;
 				top: 0;
 			}
 			&-tooltip {
-				top: -10px;
+				top: @rangesliderHorizontalTooltipPositionTop;
 				left: 50%;
 				transform: translateX(-50%) translateY(-100%);
-				padding: 4px 6px;
+				padding: @rangesliderHorizontalTooltipPadding;
 			}
 		}
 	}
@@ -124,7 +124,7 @@
 	}
 
 	&-horizontal &-mark-label {
-		top: 22px;
+		top: @rangesliderHorizontalMarkLabelPositionTop;
 		transform: translateX(-50%);
 	}
 
@@ -135,15 +135,15 @@
 				width: 100%;
 			}
 			&-button {
-				margin-top: -10px;
-				margin-left: -6px;
+				margin-top: @rangesliderHorizontalButtonMarginLeft;
+				margin-left: @rangesliderHorizontalButtonMarginTop;
 				left: 0;
 			}
 			&-tooltip {
-				left: 26px;
+				left: @rangesliderVerticalTooltipPositionLeft;
 				top: 50%;
 				transform: translateY(-50%);
-				padding: 6px 4px;
+				padding: @rangesliderVerticalTooltipPadding;
 			}
 		}
 	}
@@ -159,7 +159,7 @@
 	}
 
 	&-vertical &-mark-label {
-		left: 22px;
+		left: @rangesliderHorizontalMarkLabelPositionTop;
 		transform: translateY(-50%);
 	}
 

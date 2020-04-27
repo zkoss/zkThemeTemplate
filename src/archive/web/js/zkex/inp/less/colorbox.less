@@ -1,7 +1,7 @@
 @import "~./zul/less/_header.less";
 
 .z-colorbox {
-	.displaySize(inline-block, 56px, 35px);
+	.displaySize(inline-block, @colorboxWidth, @colorboxHeight);
 	border: 1px solid @baseBorderColor;
 	.borderRadius(@baseBorderRadius);
 	margin: 0 2px;
@@ -19,7 +19,7 @@
 	}
 	
 	&-button {
-		font-size: @baseFontSize;
+		font-size: @colorboxButtonFontSize;
 		.displaySize(inline-block, 14px, 14px);
 		line-height: normal;
 		background: @inputBackgroundColor;
@@ -30,7 +30,7 @@
 	}
 	
 	&-icon {
-		.iconFontStyle(@baseFontSize, @textColorDefault);
+		.iconFontStyle(@colorboxButtonFontSize, @textColorDefault);
 		.size(10px, 8px);
 		position: relative;
 		top: -3px;
@@ -57,28 +57,28 @@
 	z-index: @basePopupZIndex;
 	border: 1px solid @popupBorderColor;
 	.borderRadius(@baseBorderRadius);
-	padding: 8px;
+	padding: @colorboxPopupPadding;
 	background-color: @popupBackgroundColor;
 }
 
 // Colorpicker
 .z-colorpicker {
-	.size(310px, 460px);
+	.size(@colorpickerWidth, @colorpickerHeight);
 	position: relative;
 	overflow: hidden;
-	padding: 8px;
+	padding: @colorpickerPadding;
 
 	&-main {
 		position: relative;
 		height: 256px;
-		top: 50px;
+		top: @colorpickerMainPositionTop;
 	}
 
 	&-info {
 		position: relative;
-		margin-top: 16px;
-		height: 122px;
-		top: 50px;
+		margin-top: @colorpickerInfoMarginTop;
+		height: @colorpickerInfoHeight;
+		top: @colorpickerMainPositionTop;
 	}
 
 	&-gradient {
@@ -136,21 +136,21 @@
 		border: 1px solid @baseBorderColor;
 		background: transparent;
 		position: absolute;
-		.size(72px, 70px);
+		.size(@colorpickerColorWidth, @colorpickerColorHeight);
 		.borderRadius(2px);
 		top: 0;
-		right: 0;
+		right: @colorpickerColorPositionRight;
 		padding: 2px;
 	}
 	
 	&-newcolor {
-		.size(66px, 32px);
+		.size(@colorpickerColorItemWidth, @colorpickerColorItemHeight);
 		border: 1px solid @baseBorderColor;
 		position: relative;
 	}
 	
 	&-current {
-		.size(66px, 32px);
+		.size(@colorpickerColorItemWidth, @colorpickerColorItemHeight);
 		border: 1px solid @baseBorderColor;
 		position: relative;
 	}
@@ -159,14 +159,14 @@
 		position: absolute;
 		left: 0;
 		.z-colorpicker-input {
-			width: 48px;
+			width: @colorpickerInputWidth;
 			margin-left: 8px;
 			margin-right: 0;
 		}
 	}
 
-	&-rgb {top: 0;}
-	&-hsv {top: 43px;}
+	&-rgb {top: @colorpickerRGBPositionTop;}
+	&-hsv {top: @colorpickerHSVPositionTop;}
 
 	&-text,
 	&-input {
@@ -179,27 +179,28 @@
 	}
 	
 	&-input {
-		height: 35px;
+		height: @colorpickerInputHeight;
 		text-align: center;
 	}
 	
 	&-hex {
 		position: absolute;
-		top: 86px;
+		top: @colorpickerHEXPositionTop;
 		left: 0;
 		
 		.z-colorpicker-input {
-			width: 160px;
+			width: @colorpickerHEXInputWidth;
+			height: @colorpickerHEXInputHeight;
 			margin-left: 8px;
 		}
 	}
 	
 	&-button {
 		position: absolute;
-		top: 84px;
-		right: 0;
+		top: @colorpickerButtonPositionTop;
+		right: @colorpickerButtonPositionRight;
 		cursor: pointer;
-		width: 72px;
+		width: @colorpickerButtonWidth;
 	}
 
 	// old theme compatible
@@ -215,20 +216,20 @@
 }
 // Color Palette
 .z-colorpalette {
-	.size(340px, 300px);
-	padding: 8px;
+	.size(@colorpaletteWidth, @colorpaletteHeight);
+	padding: @colorpickerPadding;
 
 	&-head {
 		position: relative;
-		height: 50px;
+		height: @colorpaletteHeadHeight;
 	}
 
 	&-newcolor {
-		.size(35px, 35px);
+		.size(@colorpaletteNewColorWidth, @colorpaletteNewColorHeight);
 		.borderRadius(2px);
 		border: 1px solid @baseBorderColor;
 		position: absolute;
-		right: 100px;
+		right: @colorpaletteNewColorPositionRight;
 	}
 	
 	&-input,
@@ -239,12 +240,12 @@
 	}
 	
 	&-input {
-		.size(96px, 35px);
+		.size(@colorpaletteInputWidth, @colorpaletteInputHeight);
 		margin: 0;
 	}
 	
 	&-color {
-		.displaySize(inline-block, 16px, 16px);
+		.displaySize(inline-block, @colorpaletteColorSize, @colorpaletteColorSize);
 		border: 1px solid @baseBorderColor;
 		.borderRadius(2px);
 		cursor: pointer;
@@ -264,14 +265,14 @@
 .z-menu-paletteicon,
 .z-colorbox-pickericon,
 .z-menu-pickericon {
-	.size(44px, 32px);
+	.size(@colorboxIconButtonWidth, @colorboxIconButtonHeight);
 	position: absolute;
 	cursor: pointer;
 	z-index: 10;
 	color: @toolbarButtonColor;
-	font-size: @fontSizeXLarge;
+	font-size: @colorboxIconFontSize;
 	.borderRadius(@inputBorderRadius);
-	padding: @toolbarButtonPadding;
+	padding: @colorboxIconPadding;
 	&:hover {
 		color: @buttonHoverColor;
 		border-color: @buttonHoverBorderColor;
@@ -285,8 +286,8 @@
 }
 .z-colorbox-paletteicon,
 .z-menu-paletteicon {
-	left: 16px;
-	top: 16px;
+	left: @paletteiconPositionLeft;
+	top: @colorboxIconButtonPositionTop;
 	&:before {
 		.baseIconFont();
 		content: '\e902'; // ZK85Icons: icon-color-grid
@@ -294,8 +295,8 @@
 }
 .z-colorbox-pickericon,
 .z-menu-pickericon {
-	left: 68px;
-	top: 16px;
+	left: @pickericonPositionTopLeft;
+	top: @colorboxIconButtonPositionTop;
 	&:before {
 		.baseIconFont();
 		content: '\e900'; // ZK85Icons: icon-color-wheel
@@ -317,4 +318,7 @@
 .z-menu-image.z-colorbox-color {
 	border-radius: 2px;
 	border: 1px solid @baseBorderColor;
+	min-width: @colorboxMenuImageSize;
+	min-height: @colorboxMenuImageSize;
+	margin-right: @colorboxMenuImageMarginRight;
 }

@@ -20,7 +20,7 @@
 	white-space: nowrap;
 	border-top: 1px solid @navBorderColor;
 	border-bottom: 1px solid @navBorderColor;
-	padding: 4px;
+	padding: @navbarPadding;
 	ul {
 		background: @navBackgroundColor;
 		.restUl();
@@ -46,7 +46,7 @@
 	.itemSelected(@navSelectedColor, @navSelectedBackgroundColor);
 	// horizontal style
 	&-horizontal {
-		padding: 4px 2px;
+		padding: @navbarHorizontalPadding;
 		li {
 			display: inline-block;
 			margin: 2px 2px 0;
@@ -69,7 +69,7 @@
 		.z-navseparator {
 			min-width: 1px;
 			width: 1px;
-			line-height: @baseTitleHeight;
+			line-height: @navbarHorizontalLineHeight;
 			vertical-align: top; //for collapsed navbar
 			position: relative;
 			border-left: 1px solid @navBorderColor;
@@ -98,7 +98,7 @@
 	&-content {
 		color: @navColor;
 		display: block;
-		padding: 6px 12px;
+		padding: @navContentPadding;
 		position: relative;
 		overflow: hidden;
 		text-decoration: none;
@@ -116,10 +116,10 @@
 	i {
 		display: inline-block;
 		text-align: center;
-		margin-right: 4px;
+		margin-right: @navIconMarginRight;
 	}
 	&-text {
-		.fontStyle(@baseContentFontFamily, @fontSizeLarge, normal);
+		.fontStyle(@baseContentFontFamily, @navTextFontSize, normal);
 		display: inline-block;
 		white-space: nowrap;
 	}
@@ -135,8 +135,8 @@
 	background: @navBadgeBackgroundColor;
 	text-align: center;
 	position: absolute;
-	right: 8px;
-	top: 12px;
+	right: @navInfoPositionRight;
+	top: @navInfoPositionTop;
 }
 
 .z-navitem-content[disabled],
@@ -180,7 +180,7 @@
 	}
 	.z-nav-info {
 		position: relative;
-		top: -2px;
+		top: @navbarCollapsedInfoPositionTop;
 		left: 0;
 	}
 }
@@ -203,9 +203,9 @@
 .z-navitem-text-popup {
 	color: @navPopupColor;
 	min-width: 180px;
-	height: 40px;
-	padding: 4px 18px;
-	line-height: @baseBarHeight;
+	height: @navTextPopupHeight;
+	padding: @navTextPopupPadding;
+	line-height: @navTextPopupLineHeight;
 	background: @navPopupBackgroundColor;
 	cursor: pointer;
 	white-space: nowrap;
@@ -272,7 +272,7 @@
 }
 .z-nav-popup {
 	.restUl();
-	padding: 0 4px 4px;
+	padding: @navTextPopupPadding;
 	overflow: hidden;
 	z-index: @basePopupZIndex;
 	background: @navPopupBackgroundColor;

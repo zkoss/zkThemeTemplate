@@ -7,8 +7,8 @@
 
 	&-toolbar {
 		position: absolute;
-		bottom: 16px;
-		right: 8px;
+		bottom: @signatureToolbarBottom;
+		right: @signatureToolbarRight;
 
 		&-hide {
 			display: none;
@@ -26,7 +26,7 @@
 		.boxShadow('0 2px 4px 0 rgba(0,0,0,0.16)');
 		cursor: pointer;
 		white-space: nowrap;
-		margin-right: 8px;
+		margin-right: @signatureToolbarButtonSpacing;
 
 		&:hover {
 			color: @buttonHoverColor;
@@ -45,7 +45,7 @@
 		}
 		&-icon {
 			.baseIconFont();
-			font-size: 20px;
+			font-size: @signatureToolbarButtonIconFontSize;
 			vertical-align: bottom;
 		}
 		&-undo:before {

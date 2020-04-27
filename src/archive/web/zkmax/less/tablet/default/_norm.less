@@ -1,0 +1,95 @@
+*,
+*:before,
+*:after {
+	-webkit-user-drag: none;
+	-webkit-user-select: none;
+}
+*:focus {
+	outline: none;
+}
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+input,
+input:focus,
+textarea,
+textarea:focus {
+	-webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	-webkit-user-modify: read-write-plaintext-only; //Android 4.0.3 bug
+	outline: none;
+	-webkit-user-select: text;
+}
+
+// Checkbox and Radio
+input[type=checkbox],
+input[type=radio] {
+	.size(24px, 24px);
+}
+input[type=checkbox] {
+	font-size: 22px;
+	line-height: 22px;
+}
+input[type=radio] {
+	&:before {
+		.size(16px, 16px);
+	}
+}
+
+.z-label,
+.z-loading,
+.z-apply-loading-indicator,
+.z-a,
+.z-temp .z-loading,
+.z-temp .z-loading-indicator {
+	font-size: 15px;
+}
+.z-apply-loading-indicator {
+	min-width: 148px;
+}
+.z-radio,
+.z-checkbox {
+	display: inline-block;
+	line-height: 28px;
+
+	&-content {
+		font-size: 15px;
+		cursor: pointer;
+	}
+}
+
+.z-html {
+	display: inline-block;
+}
+
+// JS debug error box
+.z-error {
+	width: auto;
+	max-width: 90%;
+	padding: 12px 8px 16px 16px;
+	left: 0;
+	right: 0;
+	margin: 0 auto;
+
+	.errornumbers {
+		font-size: 17px;
+	}
+
+	.messagecontent {
+		padding-top: 16px;
+		padding-right: 8px;
+		font-size: 15px;
+	}
+
+	.button {
+		.size(22px, 22px);
+		font-size: 22px;
+		margin-left: 12px;
+		>.z-icon-times { // override
+			font-size: 22px;
+		}
+	}
+}

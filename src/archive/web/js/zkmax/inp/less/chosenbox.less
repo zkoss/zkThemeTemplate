@@ -7,8 +7,8 @@
 	line-height: normal;
 	background: @inputBackgroundColor;
 	overflow: hidden;
-	padding: 0 0 4px 0;
-	min-height: 34px;
+	padding: @chosenboxPadding;
+	min-height: @chosenboxMinHeight;
 	vertical-align: bottom;
 
 	&-focus {
@@ -19,8 +19,8 @@
 		display: inline-block;
 		border: 1px solid @chosenboxItemBorderColor;
 		.borderRadius(@baseBorderRadius);
-		margin: 4px 0 0 4px;
-		padding: 4px 8px;
+		margin: @chosenboxItemMargin;
+		padding: @chosenboxItemPadding;
 		background-color: @chosenboxItemBackgroundColor;
 		vertical-align: middle;
 		position: relative;
@@ -30,7 +30,8 @@
 		&-content {
 			.fontStyle(@baseContentFontFamily, @chosenboxItemSize, normal, @chosenboxItemColor);
 			display: inline-block;
-			margin-right: @chosenboxIconSize + 6;
+			padding: @chosenboxItemContentPadding;
+			margin-right: @chosenboxItemContentMarginRight;
 			float: left;
 		}
 
@@ -45,13 +46,13 @@
 		line-height: @chosenboxIconSize;
 		text-align: center;
 		position: absolute;
-		right: 8px;
-		top: 4px;
+		right: @chosenboxButtonPositionRight;
+		top: @chosenboxButtonPositionTop;
 	}
 
 	&-input {
 		.fontStyle(@baseContentFontFamily, @inputTextSize, normal, @inputColor);
-		.displaySize(inline-block, 30px, 28px);
+		.displaySize(inline-block, @chosenboxInputWidth, @chosenboxInputHeight);
 		border: 0 !important;
 		padding: 1px 4px 2px 8px;
 		background: transparent !important;
@@ -91,7 +92,7 @@
 		display: block;
 		border: 1px solid @comboPopupBorderColor;
 		.borderRadius(@baseBorderRadius);
-		padding: 4px 8px;
+		padding: @chosenboxPopupPadding;
 		background: @popupBackgroundColor;
 		position: absolute;
 		overflow: auto;
@@ -107,8 +108,8 @@
 
 	&-option {
 		cursor: pointer;
-		padding: 4px 8px;
-		min-height: 20px;
+		padding: @chosenboxOptionPadding;
+		min-height: @chosenboxOptionMinHeight;
 		.borderRadius(@baseBorderRadius);
 
 		&:hover, &-hover {
@@ -118,8 +119,8 @@
 
 	&-empty {
 		color: @disabledColor;
-		padding: 4px 8px;
-		min-height: 20px;
+		padding: @chosenboxOptionPadding;
+		min-height: @chosenboxOptionMinHeight;
 
 		&-creatable {
 			color: @inputColor;

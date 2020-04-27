@@ -35,7 +35,7 @@
 		height: @stepbarSeparatorSize;
 		background-color: @stepInactiveColor;
 		flex: 1;
-		margin: 0 16px 0 -16px;
+		margin: 0 @stepbarPadding 0 -@stepbarPadding;
 	}
 
 	&bar-linear &-active:before,
@@ -57,7 +57,7 @@
 
 	&-icon-empty {
 		border-radius: 50%;
-		border: 4px solid @stepInactiveColor;
+		border: @stepIconEmptyBorderWidth solid @stepInactiveColor;
 		background-color: white;
 	}
 
@@ -103,14 +103,14 @@
 		background-color: @stepActiveColor;
 		border-color: @stepActiveColor;
 		border-radius: 50%;
-		font-size: 24px;
+		font-size: @stepIconCompleteSize;
 	}
 
 	&-error &-icon {
 		color: @textColorDefault3;
 		background-color: @stepErrorColor;
 		border-radius: 50%;
-		font-size: 24px;
+		font-size: @stepIconErrorSize;
 	}
 }
 

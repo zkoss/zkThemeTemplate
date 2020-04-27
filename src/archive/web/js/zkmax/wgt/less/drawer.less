@@ -45,20 +45,20 @@
 	}
 
 	&-header {
-		padding: 13px 16px;
+		padding: @drawerTitlePadding;
 		border-bottom: 1px solid @drawerTitleLineColor;
 	}
 
 	&-title {
-		.fontStyle(@baseContentFontFamily, @fontSizeLarge, normal, @drawerTitleTextColor);
+		.fontStyle(@baseContentFontFamily, @drawerTitleFontSize, normal, @drawerTitleTextColor);
 	}
 
 	&-close {
-		.iconFontStyle(@fontSizeLarge, @iconColor);
-		.size(@fontSizeLarge, @fontSizeLarge);
+		.iconFontStyle(@drawerCloseButtonSize, @iconColor);
+		.size(@drawerCloseButtonSize, @drawerCloseButtonSize);
 		position: absolute;
-		right: 16px;
-		top: 15px;
+		right: @drawerCloseButtonRight;
+		top: @drawerCloseButtonTop;
 		text-align: center;
 		cursor: pointer;
 
@@ -68,7 +68,7 @@
 	}
 
 	&-cave {
-		padding: 16px;
+		padding: @drawerContainerPadding;
 		height: 100%;
 	}
 
