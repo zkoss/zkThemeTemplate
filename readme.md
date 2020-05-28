@@ -20,12 +20,12 @@ The jar file will be `target/___THEME_NAME___.jar`
 
 # Development
 
-## switch to compact profile (since 9.1.0)
+## switch to compact profile (since 9.2.0)
 1. Open `src/archive/web/zul/less/_zkvariables.less`
 2. Modify `@themeProfile` to "compact".
 
 ``` less
-@themeProfile:                 "default";
+@themeProfile:                 "compact";
 @themePalette:                 "iceblue";
 ```
 
