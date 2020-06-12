@@ -16,14 +16,13 @@
 
 //tree
 .z-tree {
-	background: @meshBackgroundColor;
 	border: 1px solid @baseBorderColor;
 	overflow: hidden;
 	zoom: 1;
 	//tree header div
 	&-header {
 		width: 100%;
-		background: @meshTitleBackgroundColor;
+		.verGradient(@baseGradientStart, @baseGradientEnd);
 		position: relative;
 		overflow: hidden;
 		.resetTable();
@@ -39,16 +38,16 @@
 		overflow: hidden;
 		.resetTable();
 	}
-	&-body &-emptybody td {
+	&-emptybody td {
 		.fontStyle(@baseContentFontFamily, @fontSizeMedium, normal, @disabledColor);
-		text-align: left;
+		font-style: italic;
+		text-align: center;
 		height: 1px;
-		padding: 12px 16px;
 	}
 	//tree footer div
 	&-footer {
-		background: @meshFootBackgroundColor;
 		border-top: 1px solid @baseBorderColor;
+		background: @meshFootBackgroundColor;
 		overflow: hidden;
 		white-space: nowrap;
 		.resetTable();
@@ -65,7 +64,7 @@
 	// ZK-3138: ROD loading indicator
 	&-loading {
 		background: transparent no-repeat center;
-		.encodeThemeURL(background-image, @loadingAnimationLoad);
+		.encodeThemeURL(background-image, '~./zul/img/misc/progress.gif');
 	}
 }
 //tree open icon and indent space
@@ -77,75 +76,75 @@
 		vertical-align: middle;
 	}
 	&-icon {
-		.iconFontStyle(@fontSizeLarge, @textColorDefault);
+		.iconFontStyle(@baseFontSize, @iconColor);
 		text-align: center;
 		cursor: pointer;
+		
+		&:hover {
+			color: @iconHoverColor;
+		}
 	}
 }
 //treecols
 .z-treecols {
 	th:first-child {
 		border-left: none;
+
 		// B50-3306729: the first header should have border-left when the first column is covered with other header
 		&.z-treecols-border {
 			border-left: 1px solid @meshTitleBorderColor;
 		}
 	}
 	&-bar {
-		background: @meshTitleBackgroundColor;
+		.verGradient(@baseGradientStart, @baseGradientEnd);
 		border-left: 1px solid @meshTitleBorderColor;
 		border-bottom: 1px solid @meshTitleBorderColor;
 	}
 }
 .z-treecol {
-	background: @meshTitleBackgroundColor;
-	border-left: 1px solid @meshTitleBorderColor;
+	border-right: 1px solid @meshTitleBorderColor;
 	border-bottom: 1px solid @meshTitleBorderColor;
 	padding: 0;
+	.verGradient(@baseGradientStart, @baseGradientEnd);
+	background-clip: padding-box;
 	position: relative;
 	overflow: hidden;
 	white-space: nowrap;
+	
 	&-sort {
 		cursor: pointer;
-
+		
+		&:hover {
+			.verGradient(@meshTitleHoverStart, @meshTitleHoverEnd);
+		}
 		.z-treecol-sorticon {
-			color: @meshTitleColor;
+			color: @iconColor;
 			position: absolute;
 			top: -7px;
 			left: 50%;
-			.transform('translateX(-50%)');
-
-			:active {
-				background: rgba(0, 0, 0, 0);
-			}
 		}
 	}
 	&-sizing,
 	&-sizing .z-treecol-content {
-		cursor: col-resize;
+		cursor: e-resize;
 	}
 }
 // ZK-2151: use strict selector to prevent nest problem
 //tree row and cell
 .z-treerow {
-	&:first-child {
-		.z-treecell {
-			border-top-width: 0;
-		}
-	}
 	//tree cell
 	.z-treecell {
-		border-top: 1px solid @meshContentBorderColor;
 		overflow: hidden;
 		cursor: pointer;
 		background: @meshBackgroundColor;
 		position: relative;
 		z-index: 0;
 	}
-
 	&:hover {
 		> .z-treecell {
-			background: @hoverBackgroundColor;
+			.verGradient(@meshContentHoverStart, @meshContentHoverEnd);
+			background-clip: padding-box;
+
 			> .z-treecell-content {
 				color: @hoverColor;
 			}
@@ -153,16 +152,13 @@
 	}
 	//check mark
 	&-checkable {
-		.displaySize(inline-block, @checkboxSize, @checkboxSize);
-    	.iconFontStyle(@checkedIconSize, @checkedColor);
-    	border: 1px solid @checkedBorderColor;
-    	background: @checkedBackgroundColor;
-    	vertical-align: text-top;
-    	margin-right: 8px;
-    	.borderRadius(@baseBorderRadius);
-
+		.displaySize(inline-block, @baseIconWidth, @baseIconHeight);
+		border: 1px solid @checkedBorderColor;
+		background: @checkedBackgroundColor;
+		vertical-align: middle;
+		
 		&.z-treerow-radio {
-			.borderRadius(50%);
+			.borderRadius(@baseIconWidth / 2);
 		}
 		.z-treerow-icon {
 			display: none;
@@ -172,7 +168,8 @@
 	//selected tree cell
 	&.z-treerow-selected {
 		> .z-treecell {
-			background: @selectedBackgroundColor;
+			.verGradient(@selectedGradientStart, @selectedGradientEnd);
+			background-clip: padding-box;
 			position: relative;
 
 			> .z-treecell-content {
@@ -182,7 +179,7 @@
 		
 		&:hover {
 			> .z-treecell {
-				background: @selectedHoverBackgroundColor;
+				.verGradient(@selectedHoverGradientStart, @selectedHoverGradientEnd);
 				> .z-treecell-content {
 					color: @selectedHoverColor;
 				}
@@ -191,7 +188,8 @@
 	}
 	&.z-treerow-selected.z-treerow-focus {
 		> .z-treecell {
-			background: @selectedFocusBackgroundColor;
+			.verGradient(@selectedFocusGradientStart, @selectedFocusGradientEnd);
+			background-clip: padding-box;
 			position: relative;
 
 			> .z-treecell-content {
@@ -200,7 +198,7 @@
 		}
 		&:hover {
 			> .z-treecell {
-				background: @selectedHoverBackgroundColor;
+				.verGradient(@selectedHoverGradientStart, @selectedHoverGradientEnd);
 				> .z-treecell-content {
 					color: @selectedHoverColor;
 				}
@@ -209,7 +207,7 @@
 	}
 	&-focus {
 		> .z-treecell {
-			background: @meshContentFocusBackgroundColor;
+			.verGradient(@meshContentFocusStart, @meshContentFocusEnd);
 			position: relative;
 			> .z-treecell-content {
 				color: @hoverColor;
@@ -227,13 +225,11 @@
 			
 			&.z-icon-check {} //for checkbox, use font-awesome
 			&.z-icon-radio { //for radio
-				.size(10px, 10px);
-				.borderRadius(50%);
+				.size(@baseIconWidth / 2, @baseIconWidth / 2);
+				.borderRadius(@baseIconWidth / 4);
+				margin: 3px;
+				padding: 0;
 				background: @checkedColor;
-				position: relative;
-				top: 50%;
-				left: 50%;
-				.transform('translate(-50%, -50%)');
 			}
 		}
 	}
@@ -244,6 +240,7 @@
 			cursor: default !important;
 		}
 		&:hover > .z-treecell {
+			.resetGradient();
 			position: relative;
 		}
 	}
@@ -268,24 +265,22 @@ body:not(.gecko) {
 .z-treecol-content,
 .z-treecell-content,
 .z-treefooter-content {
-	.fontStyle(@baseContentFontFamily, @fontSizeMedium, normal, @baseTextColor);
-	padding: @meshBodyPadding;
-	line-height: @meshContentLineHeight;
+	.fontStyle(@baseContentFontFamily, @fontSizeMedium, normal, @textColorGrayLight);
+	padding: 4px 5px;
+	line-height: @baseButtonHeight;
 	overflow: hidden;
 }
 .z-treecol-content {
-	color: @meshTitleColor;
+	font-weight: bold;
+	padding: 4px 5px 3px;
 	position: relative;
 }
 .z-treecell-content {
-	line-height: @treecellContentLineHeight;
-}
-.z-treefooter-content {
-	color: @textColorLight;
+	padding: 4px 2px;
+	line-height: @baseLineHeight;
 }
 .z-treecell-text {
 	vertical-align: middle;
-	margin-left: 8px;
 }
 //paging
 .z-tree-paging {
@@ -301,7 +296,7 @@ body:not(.gecko) {
 	}
 }
 .z-tree-autopaging .z-treecell-content {
-	height: @meshAutoPagingRowHeight;
+	height: @baseButtonHeight;
 	overflow: hidden;
 }
 
@@ -317,4 +312,3 @@ body:not(.gecko) {
 		}
 	}
 }
-// ZK-2151: use strict selector to prevent nest problem

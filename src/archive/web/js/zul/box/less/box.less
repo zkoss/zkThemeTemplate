@@ -42,37 +42,30 @@ td.z-splitter-outer {
 	padding: 0;
 }
 .z-splitter {
-	border: 1px solid @splitterBorderColor;
-	background-color: @splitterBackgroundColor;
-
-	&:hover {
-		background-color: @splitterHoverBackgroundColor;
-		.z-splitter-button {
-			color: extract(@splitterButtonTextColors, 2);
-		}
-	}
-
+	border: 1px solid @baseBorderColor;
+	
 	&-horizontal {
 		width: @splitterSize;
 		border-width: 0 1px;
+		.horGradient(@splitterGradientStart, @splitterGradientEnd);
 		overflow: hidden;
-		cursor: col-resize;
+		cursor: e-resize;
 		
 		> .z-splitter-button {
 			.size(@splitterSize, 30px);
 			border-width: 1px 0;
 		}
 		.z-splitter-icon {
-			font-size: @splitterButtonTextSize;
+			font-size: @fontSizeXSmall + 1; // add 1px more for .z-icon-caret
 			position: absolute;
-			top: 8px;
-			left: -3px;
+			top: 9px;
+			left: 1px;
 			
 			&.z-icon-ellipsis-v {
+				font-size: @fontSizeXSmall;
 				top: -21px;
 				left: 2px;
-				cursor: col-resize;
-				visibility: hidden;
+				cursor: e-resize;
 			}
 			&.z-icon-ellipsis-v ~ .z-splitter-icon.z-icon-ellipsis-v {
 				top: 39px;
@@ -82,25 +75,25 @@ td.z-splitter-outer {
 	&-vertical {
 		height: @splitterSize;
 		border-width: 1px 0;
+		.verGradient(@splitterGradientStart, @splitterGradientEnd);
 		overflow: hidden;
-		cursor: row-resize;
+		cursor: s-resize;
 		
 		> .z-splitter-button {
 			.size(30px, @splitterSize);
 			border-width: 0 1px;
 		}
 		.z-splitter-icon {
-			font-size: @splitterButtonTextSize;
+			font-size: @fontSizeXSmall;
 			line-height: normal;
 			position: absolute;
-			top: -4px;
-			left: 9px;
+			top: -3px;
+			left: 11px;
 			
 			&.z-icon-ellipsis-h {
 				top: -2px;
 				left: -16px;
-				cursor: row-resize;
-				visibility: hidden;
+				cursor: s-resize;
 			}
 			&.z-icon-ellipsis-h ~ .z-splitter-icon.z-icon-ellipsis-h {
 				left: 36px;
@@ -108,8 +101,9 @@ td.z-splitter-outer {
 		}
 	}
 	&-button {
-		color: extract(@splitterButtonTextColors, 1);
+		color: @iconColor;
 		display: inline-block;
+		border: 1px solid @baseBorderColor;
 		position: relative;
 		vertical-align: top; //vertical-align: make it looks same in diff browsers
 		cursor: pointer;
@@ -118,17 +112,25 @@ td.z-splitter-outer {
 			border: 0;
 			
 			.z-splitter-vertical & {
-				cursor: row-resize;
+				cursor: s-resize;
 			}
 			.z-splitter-horizontal & {
-				cursor: col-resize;
+				cursor: e-resize;
 			}
 		}
+	}
+	&-icon {
+		.opacity(0.5);
 	}
 	&-nosplitter {
 		cursor: default;
 	}
-	&-ghost {
-		background: @splitterDragBackgroundColor !important;
+}
+.z-icon-caret-up,
+.z-icon-caret-down,
+.z-icon-caret-right,
+.z-icon-caret-left {
+	.z-splitter-button:hover & {
+		.opacity(1);
 	}
 }

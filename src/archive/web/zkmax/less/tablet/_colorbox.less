@@ -1,60 +1,116 @@
 //Colorbox
 .z-colorbox {
-	height: 34px;
+	.size(44px, 32px);
 }
 .z-colorpalette {
-	padding: 4px;
-	.size(304px, auto);
+	.size(586px, 460px);
+	
 	&-newcolor {
-		.size(34px, 34px);
+		height: 32px;
+		left: 450px;
 	}
 	&-input {
-		.size(96px, 34px);
+		height: 32px;
+		left: auto;
+		right: 6px;
 	}
 	&-color {
-		.size(40px, 24px);
-		margin: 4px;
-	}
-	&-body {
-		max-height: 416px;
-		overflow: auto;
+		.size(32px, 32px);
 	}
 }
 .z-colorpicker {
-	padding: 4px;
+	.size(620px, 430px);
+	
+	&-gradient,
+	&-overlay {
+		.size(384px, 384px);
+	}
+	&-gradient {
+		left: 5px;
+		top: 40px;
+	}
+	&-overlay {
+		.encodeThemeURL(background-image, '~./zkmax/img/tablet/colorbox/colorpicker_gradient.png');
+	}
+	&-hue {
+		.size(32px, 384px);
+		top: 40px;
+		left: 400px;
+	}
+	&-bar {
+		.size(26px, 384px);
+		.encodeThemeURL(background-image, '~./zkmax/img/tablet/colorbox/colorpicker_hue.png');
+	}
+	&-arrows {
+		width: 40px;
+		.encodeThemeURL(background-image, '~./zkmax/img/tablet/colorbox/colorpicker_arrows.png');
+	}
+	&-color {
+		top: 40px;
+		left: 450px;
+	}
+	&-hex {
+		top: 46px;
+		left: 510px;
+		
+		.z-colorpicker-input {
+			margin-left: 2px;
+			top: 0;
+		}
+	}
+	&-input {
+		.size(55px, 32px);
+		padding: 3px;
+		position: relative;
+		top: -5px;
+	}
+	&-r, &-g, &-b {
+		width: 70px;
+		left: 450px;
+	}
+	&-h, &-s, &-v {
+		width: 70px;
+		left: 530px;
+	}
+	&-r, &-h {
+		top: 125px;
+	}
+	&-g, &-s {
+		top: 160px;
+	}
+	&-b, &-v {
+		top: 195px;
+	}
+	&-button {
+		width: 150px;
+		top: 235px;
+		left: 450px;
+	}
+	&-icon {
+		font-size: 20px;
+	}
 }
-
-.z-colorbox-popup {
-	padding: 4px;
-}
-
-.z-menu-image.z-colorbox-color {
-	.size(24px, 24px);
-	min-width: 24px;
-	min-height: 24px;
-}
-
 .z-colorbox-paletteicon,
 .z-menu-paletteicon,
 .z-colorbox-pickericon,
 .z-menu-pickericon {
-	font-size: 24px;
-	padding: 4px 10px;
+	.size(32px, 32px);
+	.encodeThemeURL(background, '~./zkmax/img/tablet/colorbox/cb-buttons.png');
+	background-position: 0 0;
 }
-
-.z-colorbox-paletteicon, .z-menu-paletteicon {
-	left: 12px;
-	top: 12px;
-}
-
-.z-colorbox-pickericon, .z-menu-pickericon {
-	left: 64px;
-	top: 12px;
-}
-
 .z-palette-button .z-colorbox-paletteicon,
-.z-picker-button .z-colorbox-pickericon {
-	// copied form toolbar.less: z-toolbarbutton-checked
-	color: @toolbarButtonCheckedColor;
-	background-color: @toolbarButtonCheckedBackgroundColor;
+.z-palette-button .z-menu-paletteicon,
+.z-colorpalette-popup .z-menu-paletteicon {
+	background-position: -32px 0;
+}
+.z-colorbox-pickericon,
+.z-menu-pickericon,
+.z-colorpalette-popup .z-menu-pickericon {
+	background-position: 0 -32px;
+	left: 40px;
+}
+.z-picker-button .z-colorbox-pickericon,
+.z-picker-button .z-menu-pickericon,
+.z-colorpicker-popup .z-menu-pickericon {
+	background-position: -32px -32px;
 }

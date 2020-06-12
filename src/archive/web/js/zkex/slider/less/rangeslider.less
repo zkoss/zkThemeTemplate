@@ -3,7 +3,7 @@
 	white-space: nowrap;
 	overflow: visible;
 	cursor: pointer;
-	font-family: @baseTitleFontFamily;
+	font-size: @fontSizeMedium;
 
 	&-inner {
 		position: relative;
@@ -31,14 +31,14 @@
 			border-radius: 50%;
 		}
 		&-active &-dot {
-			border-color: @rangesliderButtonColor;
+			border-color: @rangesliderAreaColor;
 			z-index: 1;
 		}
 		&-label {
 			position: absolute;
-			color: @textColorDefault;
+			font-family: @baseTitleFontFamily;
+			color: @rangesliderLabelColor;
 			text-align: center;
-			font-size: @rangesliderLabelFontSize;
 		}
 	}
 
@@ -46,22 +46,17 @@
 		&-button {
 			width: @rangesliderButtonSize;
 			height: @rangesliderButtonSize;
-			background-color: @rangesliderButtonColor;
-			border-width: @rangesliderButtonBorderWidth;
-			border-color: @rangesliderButtonColor;
 			border-radius: 50%;
-			box-shadow: 0 0 4px 0 @rangesliderShadowColor;
 			z-index: 2;
 		}
 
 		&-tooltip {
-			border-radius: @rangesliderTooltipBorderRadius;
+			border-radius: @rangesliderBorderRadius;
 			background: @rangesliderTooltipBackgroundColor;
-			position: absolute;
 		}
 
 		&-area {
-			background-color: @rangesliderButtonColor;
+			background-color: @rangesliderAreaColor;
 		}
 	}
 
@@ -72,15 +67,15 @@
 				height: 100%;
 			}
 			&-button {
-				margin-top: @rangesliderHorizontalButtonMarginTop;
-				margin-left: @rangesliderHorizontalButtonMarginLeft;
+				margin-top: -5px;
+				margin-left: -8px;
 				top: 0;
 			}
 			&-tooltip {
-				top: @rangesliderHorizontalTooltipPositionTop;
-				left: 50%;
-				transform: translateX(-50%) translateY(-100%);
-				padding: @rangesliderHorizontalTooltipPadding;
+				top: -25px;
+				left: 7px;
+				transform: translateX(-50%);
+				padding: 2px 4px;
 			}
 		}
 	}
@@ -88,18 +83,18 @@
 		margin: 40px 12px 30px;
 		height: @rangesliderInnerSize;
 	}
-	
+
 	&-horizontal &-marks {
 		width: 100%;
 	}
 
 	&-horizontal &-mark-dot {
-		top: @rangesliderHorizontalMarkDotPositionTop;
+		top: -3px;
 		transform: translateX(-50%);
 	}
 
 	&-horizontal &-mark-label {
-		top: @rangesliderHorizontalMarkLabelPositionTop;
+		top: 17px;
 		transform: translateX(-50%);
 	}
 
@@ -110,15 +105,15 @@
 				width: 100%;
 			}
 			&-button {
-				margin-top: @rangesliderHorizontalButtonMarginLeft;
-				margin-left: @rangesliderHorizontalButtonMarginTop;
+				margin-top: -8px;
+				margin-left: -5px;
 				left: 0;
 			}
 			&-tooltip {
-				left: @rangesliderVerticalTooltipPositionLeft;
-				top: 50%;
+				top: 7px;
+				left: 25px;
 				transform: translateY(-50%);
-				padding: @rangesliderVerticalTooltipPadding;
+				padding: 4px 2px;
 			}
 		}
 	}
@@ -134,32 +129,33 @@
 	}
 
 	&-vertical &-mark-dot {
-		left: @rangesliderHorizontalMarkDotPositionTop;
+		left: -3px;
 		transform: translateY(-50%);
 	}
 
 	&-vertical &-mark-label {
-		left: @rangesliderHorizontalMarkLabelPositionTop;
+		left: 20px;
 		transform: translateY(-50%);
 	}
 
 	&:not(&-disabled) {
 		& .z-sliderbuttons-button:hover {
-			border-color: @rangesliderButtonHoverColor;
-			background-color: @rangesliderButtonHoverColor;
+			border-color: @rangesliderButtonHoverBorderColor;
+			background: @rangesliderButtonHoverColor;
 		}
 
 		& .z-sliderbuttons-button:hover .z-sliderbuttons-tooltip {
 			display: block;
 		}
 
-		& .z-sliderbuttons-button:active {
-			border-color: @rangesliderButtonActiveColor;
-			background-color: @rangesliderButtonActiveColor;
-		}
-
 		& .z-sliderbuttons-button:focus {
 			border-color: @rangesliderButtonFocusBorderColor;
+			background: @rangesliderButtonFocusColor;
+		}
+
+		& .z-sliderbuttons-button:active {
+			border-color: @rangesliderButtonActiveBorderColor;
+			background: @rangesliderButtonActiveColor;
 		}
 	}
 
@@ -171,12 +167,11 @@
 		cursor: default;
 		& .z-sliderbuttons {
 			&-area {
-				background-color: @rangesliderDisabledButtonColor;
+				background-color: @rangesliderDisabledAreaColor;
 			}
 			&-button {
-				border-color: @rangesliderDisabledButtonColor;
-				background-color: @rangesliderDisabledButtonColor;
-				box-shadow: none;
+				background: @rangesliderDisabledButtonColor;
+				border-color: @rangesliderDisabledButtonBorderColor;
 			}
 			&-tooltip {
 				background-color: @rangesliderDisabledTooltipBackgroundColor;
@@ -189,6 +184,6 @@
 	}
 
 	&-disabled &-mark-active &-mark-dot {
-		border-color: @rangesliderDisabledButtonColor;
+		border-color: @rangesliderDisabledAreaColor;
 	}
 }

@@ -32,6 +32,9 @@
 			opacity: 1;
 		}
 	}
+	&:focus-within &-toolbar {
+		opacity: 1;
+	}
 
 	&-container {
 		overflow: auto;
@@ -95,14 +98,14 @@
 		bottom: 1em;
 		left: 50%;
 		transform: translateX(-50%);
-		font-size: @baseFontSize;
+		font-size: @fontSizeMedium;
 		font-family: @baseContentFontFamily;
 
 		&-button {
 			height: @pdfviewerToolbarButtonSize;
 			width: @pdfviewerToolbarButtonSize;
 			padding: 0;
-			border-radius: @baseBorderRadius;
+			border-radius: @borderRadiusSmall;
 			border: 0;
 			color: @pdfviewerToolbarButtonColor;
 			background: @pdfviewerToolbarButtonBackgroundColor;
@@ -119,19 +122,25 @@
 			&:hover {
 				color: @pdfviewerToolbarButtonHoverColor;
 				background: @pdfviewerToolbarButtonHoverBackgroundColor;
+				border: 1px solid @pdfviewerToolbarButtonHoverBorderColor;
 			}
 			&:active {
 				color: @pdfviewerToolbarButtonActiveColor;
 				background: @pdfviewerToolbarButtonActiveBackgroundColor;
+				border: 1px solid @pdfviewerToolbarButtonActiveBorderColor;
+				box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
 			}
 			&[disabled] {
+				opacity: @disabledOpacity;
 				color: @disabledColor;
 				background: @pdfviewerToolbarButtonBackgroundColor;
+				border: 0;
+				box-shadow: none;
 			}
 		}
 
 		&-separator {
-			height: @pdfviewerToolbarSeparatorHeight;
+			height: 18px;
 			width: 1px;
 			display: inline-block;
 			vertical-align: middle;
@@ -146,7 +155,7 @@
 		&-page-active {
 			-moz-appearance: textfield;
 			-webkit-appearance: textfield;
-			width: @pdfviewerToolbarPageActiveWidth;
+			width: 33px;
 			padding-top: 0;
 			padding-bottom: 0;
 			margin-left: @pdfviewerToolbarMargins;

@@ -4,14 +4,15 @@
     display: inline-block;
     margin: 0;
     padding: 0;
-    font-size: @ratingIconFontSize;
-    line-height: normal;
+    font-size: @fontSizeLarge;
+    line-height: @fontSizeLarge;
 
     > .z-rating-icon {
         text-align: center;
         color: @ratingIcon;
-        padding: @ratingIconPadding;
-        .size(@ratingIconSize, @ratingIconSize);
+        padding: 4px;
+        width: 26px;
+        height: 26px;
         text-decoration: none;
     }
 
@@ -25,7 +26,7 @@
 
     > .z-rating-hover {
         color: @ratingIconHover;
-        text-shadow: 0 0 1px @ratingIconHoverTextShadow;
+        text-shadow: 0px 0px 1px @ratingIconHoverTextShadow;
     }
 
     > .z-rating-disabled {

@@ -1,49 +1,14 @@
 .z-calendar {
-	&-text {
-		font-size: 16px;
-	}
+	min-width: 420px;
+	
 	&-icon {
-		font-size: 20px;
-	}
-	& th {
-		font-size: 14px;
-		.size(36px, 40px);
+		font-size: 24px;
+		.size(32px, 32px);
+		padding: 0 12px;
 	}
 	&-cell {
-		font-size: 14px;
-		.size(36px, 36px);
-		&:hover {
-			color: initial;
-			background: initial;
-		}
+		font-size: @baseFontSize;
 	}
-	&-selected:hover {
-		color: @calendarSelectedHoverColor;
-		background: @calendarSelectedHoverBackgroundColor;
-	}
-	&-header:first-child {
-		line-height: 38px;
-	}
-	&-decade,
-	&-month,
-	&-year {
-		.z-calendar-cell {
-			.size(63px, 48px);
-		}
-	}
-	&-wk& {
-		.z-calendar-decade, .z-calendar-month, .z-calendar-year {
-			.z-calendar-cell {
-				.size(72px, 48px);
-			}
-		}
-	}
-	&-today {
-		margin: 8px 10px 0;
-	}
-}
-.z-calendar-today .z-calendar-title {
-	font-size: 15px;
 }
 
 //Calendar wheel
@@ -55,9 +20,10 @@
 	&-date {
 		.boxOrientHorFlex();
 		width: 100%;
+		.borderRadius(3px);
+		margin-right: 4px;
 		position: relative;
-		background: @baseBackgroundColor;
-		margin-right: 2px;
+		.gradient('ver', '#000 0%; #333 35%; #888 50%; #333 65%; #000 100%');
 	}
 	&-cave {
 		position: relative;
@@ -68,16 +34,18 @@
 	}
 	&-line {
 		.size(100%, 0);
+		border-top: 1px solid #333333;
+		border-bottom: 1px solid #555555;
 		position: absolute;
 		top: 50%;
 		z-index: 1;
 	}
 	&-list {
 		.applyCSS3(box-flex, 1);
-		color: @textColorDefault;
-		background: @baseBackgroundColor;
-		height: 120px;
-		margin: 0 1px 0 0;
+		color: #FFFFFF;
+		height: 210px;
+		margin: 0 2px;
+		.gradient('ver', '#000 0%; #444 45%; #444 55%; #000 100%');
 		position: relative;
 		overflow: hidden;
 		
@@ -91,15 +59,16 @@
 		}
 		
 		li {
-			font-size: 17px;
+			font-size: 40px;
 			display: block;
-			height: 40px;
+			height: 70px;
 			margin: 0;
-			padding: 0;
-			line-height: 40px;
+			padding: 0 5px;
+			line-height: 70px;
 			opacity: 0.3;
 			text-align: center;
 			white-space: nowrap;
+			text-shadow: 0 1px #FFFFFF;
 			list-style: none;
 		}
 	}
@@ -109,26 +78,85 @@
 		clear: both;
 	}
 	&-button {
-		.fontStyle(@baseContentFontFamily, 15px, normal, #000000);
+		.fontStyle(@baseContentFontFamily, 30px, bold, #000000);
 		width: 45%;
-		border: none;
-		.borderRadius(@baseBorderRadius);
-		padding: 8px 0;
-		.boxShadow('0 3px 6px 0 rgba(0,0,0,0.16), 0 2px 4px 0 rgba(0,0,0,0.24)');
+		border: 1px solid #A6A6A6;
+		.borderRadius(3px);
+		margin: 1px 1px 0 0;
+		padding: 5px 15px;
+		line-height: 28px;
+		.verGradient(@baseGradientStart, @baseGradientEnd);
+		text-shadow: 0 1px #FFFFFF;
+		
+		&:hover,
+		&:focus {
+			border-color: #0CBCFF;
+			.boxShadow('inset 1px 1px 1px #0CBCFF, inset -1px -1px 1px #0CBCFF');
+		}
+		&:active {
+			border-color: #808080 #B6B6B6 #B6B6B6 #808080;
+			.verGradient(@baseGradientEnd, @baseGradientStart);
+			.boxShadow('inset 1px 1px 1px rgba(210, 210, 210, 0.75), 0 0 7px #CFCFCF');
+		}
 	}
 	&-left {
 		float: left;
-		background: @colorPrimary;
-		color: @textColorDefault3;
-		border: 1px solid transparent;
 	}
 	&-right {
 		float: right;
-		background: @baseBackgroundColor;
-		color: @textColorDefault;
-		border: 1px solid @colorGreyLight;
 	}
 }
 li.z-calendar-wheel-list-selected {
 	opacity: 1;
+}
+//iPhone
+@media @iphone {
+	.z-calendar-wheel {
+		&-date {
+			margin-right: 2px;
+		}
+		&-list {
+			height: 120px;
+			margin: 0 1px 0 0;
+			
+			li {
+				font-size: 20px;
+				height: 40px;
+				padding: 0;
+				line-height: 40px;
+			}
+		}
+		&-button {
+			font-size: 22px;
+		}		
+		// Bug ZK-Z773
+		//&-footer {
+		//	height: 35px;
+		//}
+	}
+}
+//Android
+@media @android {
+	.z-calendar-wheel {
+		&-date {
+			margin-right: 2px;
+		}
+		&-list {
+			margin: 0 1px 0 0;
+			height: 150px;
+			
+			li {
+				font-size: 24px;
+				height: 50px;
+				padding: 0;
+				line-height: 50px;
+			}
+		}
+		&-button {
+			font-size: 26px;
+		}
+		&-footer {
+			height: 40px;
+		}
+	}
 }

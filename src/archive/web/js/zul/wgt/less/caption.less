@@ -1,41 +1,29 @@
 @import "~./zul/less/_header.less";
 
 .z-caption {
-	background-color: transparent;
-	font-size: @captionFontSize;
+	font-size: @fontSizeMedium;
 	.size(100%, auto);
 	min-height: @baseButtonHeight;
-	line-height: normal;
+	line-height: @baseLineHeight;
+
+	& > * {
+		margin-left: 4px;
+
+		&:first-child {
+			margin-left: 0px;
+		} 
+	}
 
 	&-content,
 	.z-label {
 		display: inline-block;
-		line-height: @baseButtonHeight;
-	}
-
-	&-content {
-		& > * {
-			margin-left: @captionElementsMargin;
-
-			&:first-child {
-				margin-left: 0;
-			}
-		}
-	}
-
-	&-label {
-		margin: 0 2px;
-	}
-
-	.z-label {
 		// ZK-2209: fix style
-		padding: 0;
+		padding: 0px;
+		line-height: @baseButtonHeight;
 	}
 
 	&-image {
 		vertical-align: middle;
-		height: @captionImageMaxSize;
-		width: @captionImageMaxSize;
 	}
 
 	input {
@@ -50,12 +38,6 @@
 			border: 0;
 			background: none;
 		}
-	}
-
-	.z-button {
-		.boxShadow('none');
-		padding: @captionButtonPadding;
-		font-size: @captionButtonFontSize;
 	}
 
 	.z-a,

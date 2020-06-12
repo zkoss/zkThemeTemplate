@@ -6,7 +6,7 @@
 	height: @searchboxHeight;
 	width: 180px;
 	padding: @searchboxPadding;
-	padding-right: (@searchboxIconSize + @searchboxIconRight);
+	padding-right: 18px;
 	border: 1px solid @searchboxBorderColor;
 	border-radius: @searchboxBorderRadius;
 	color: @searchboxColor;
@@ -15,6 +15,7 @@
 
 	&:hover {
 		border-color: @searchboxHoverBorderColor;
+		background: @searchboxHoverBackgroundColor;
 	}
 
 	&:focus, &-open {
@@ -23,8 +24,9 @@
 
 	&:active {
 		border-color: @searchboxActiveBorderColor;
-		background: @searchboxActiveBackgroundColor;
+		.verGradient(@activeGradientStart, @activeGradientEnd);
 		color: @searchboxActiveColor;
+		box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
 	}
 	&:active &-placeholder {
 		color: @searchboxActiveColor;
@@ -38,6 +40,7 @@
 		background: @searchboxDisableBackgroundColor;
 		cursor: default;
 		border-color: @searchboxDisableBorderColor;
+		box-shadow: none;
 		&-icon {
 			color: @searchboxDisableIconColor;
 		}
@@ -80,9 +83,9 @@
 
 	&-icon {
 		color: @searchboxIconColor;
-		font-size: @searchboxIconSize;
+		font-size: @fontSizeLarge;
 		position: absolute;
-		right: @searchboxIconRight;
+		right: 8px;
 		top: 50%;
 		-ms-transform: translateY(-50%);
 		transform: translateY(-50%);
@@ -94,7 +97,7 @@
 		border: 1px solid @searchboxPopupBorderColor;
 		border-radius: @searchboxPopupBorderRadius;
 		background: @searchboxPopupBackgroundColor;
-		padding: 4px;
+		padding: 2px;
 		font-family: @baseContentFontFamily;
 		font-size: @searchboxFontSize;
 		color: @searchboxColor;
@@ -111,11 +114,11 @@
 	&-search {
 		height: @searchboxHeight;
 		width: 100%;
-		padding: @inputPadding;
+		padding: 0 5px;
 		border: 1px solid @inputBorderColor;
-		border-radius: @inputBorderRadius;
+		border-radius: @borderRadiusSmall;
 		background: @inputBackgroundColor;
-		margin-bottom: 4px;
+		margin-bottom: 2px;
 		&::placeholder {
 			color: @searchboxPlaceholderColor;
 			opacity: 1;
@@ -132,11 +135,8 @@
 			color: @searchboxPlaceholderColor;
 			opacity: 1;
 		}
-		&:hover {
-			border-color: @inputFocusBorderColor;
-		}
 		&:focus {
-			border-color: @inputFocusBorderColor;
+			box-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.3);
 		}
 	}
 
@@ -148,11 +148,11 @@
 	}
 
 	&-item {
-		height: @inputHeight;
+		height: 24px;
 		white-space: nowrap;
 		list-style: none;
 		display: block;
-		padding: @searchboxPopupItemPadding;
+		padding: 4px 5px;
 		cursor: pointer;
 		border-radius: @searchboxPopupItemBorderRadius;
 		vertical-align: middle;
@@ -170,24 +170,19 @@
 	}
 
 	&-item&-selected {
+		.verGradient(@selectedGradientStart, @selectedGradientEnd);
 		color: @searchboxPopupItemSelectedColor;
 	}
 
 	&-item:hover {
-		background: @searchboxPopupItemHoverBackgroundColor;
+		.verGradient(@hoverGradientStart, @hoverGradientEnd);
 		color: @searchboxPopupItemHoverColor;
 	}
 
 	&-item&-active {
-		background: @searchboxPopupItemActiveBackgroundColor;
+		.verGradient(@activeGradientStart, @activeGradientEnd);
 		color: @searchboxPopupItemActiveColor;
 	}
-
-	&-item&-selected&-active,
-	&-item&-selected:hover {
-		color: @searchboxPopupItemSelectedColor;
-	}
-
 	&-item-check {
 		display: inline-block;
 		vertical-align: middle;
@@ -196,14 +191,13 @@
 		border-radius: @searchboxPopupItemCheckBorderRadius;
 		width: @searchboxPopupItemCheckSize;
 		height: @searchboxPopupItemCheckSize;
-		margin-right: @searchboxPopupItemCheckMarginRight;
+		margin-right: 5px;
 	}
 
 	&-item&-selected > &-item-check {
 		color: @searchboxPopupItemCheckCheckedColor;
 		background: @searchboxPopupItemCheckCheckedBackgroundColor;
 		.baseIconFont();
-		font-size: @searchboxPopupItemCheckSize;
 		&::before {
 			content: "\f00c"; // fa-check
 		}

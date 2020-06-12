@@ -1,47 +1,39 @@
 @import "~./zul/less/_header.less";
 
 .z-button {
-	.fontStyle(@baseTitleFontFamily, @inputTextSize, normal, @buttonColor);
+	.fontStyle(@baseTitleFontFamily, @fontSizeMedium, normal, @baseTextColor);
 	min-height: @baseButtonHeight;
-	border: 2px solid @buttonBorderColor;
-	.borderRadius(@inputBorderRadius);
-	padding: @buttonPadding;
-	line-height: normal;
-	background-color: @buttonBackgroundColor;
-	.boxShadow('0 2px 4px 0 rgba(0,0,0,0.16)');
+	border: 1px solid @buttonBorderColor;
+	.borderRadius(@baseBorderRadius);
+	padding: 3px 12px;
+	line-height: @baseLineHeight;
+	.verGradient(@buttonGradientStart, @buttonGradientEnd);
+	text-shadow: 0 1px #FFFFFF;
 	cursor: pointer;
 	white-space: nowrap;
 
-	&-image {
-		vertical-align: text-bottom;
-	}
-
 	&:hover {
-		color: @buttonHoverColor;
-		border-color: @buttonHoverBorderColor;
-		background-color: @buttonHoverBackgroundColor;
+		border-color: @hoverBorderColor;
+		.verGradient(@hoverGradientStart, @hoverGradientEnd);
 	}
 	&:focus {
-		color: @buttonFocusColor;
-		border-color: @buttonFocusBorderColor;
-		background-color: @buttonFocusBackgroundColor;
+		color: @focusColor;
+		border-color: @focusBorderColor;
+		.verGradient(@focusGradientStart, @focusGradientEnd);
+		.boxShadow('inset 0 0 2px #0CBCFF');
 	}
 	&:active {
-		color: @buttonActiveColor;
-		border-color: @buttonActiveBorderColor;
-		background-color: @buttonActiveBackgroundColor;
+		border-color: @activeBorderColor;
+		.verGradient(@activeGradientStart, @activeGradientEnd);
 	}
 	&[disabled] {
-		color: @buttonDisableColor;
-		border-color: @buttonDisableBorderColor;
-		background-color: @buttonDisableBackgroundColor;
+		border-color: @buttonBorderColor;
+		.verGradient(@buttonGradientStart, @buttonGradientEnd);
+		.opacity(@disabledOpacity);
+		.boxShadow('none');
 		cursor: default;
 	}
-}
-
-.ie, .edge {
-	// Icon height workaround
-	.z-button > i {
-		vertical-align: text-bottom;
+	img {
+		vertical-align: middle;
 	}
 }

@@ -451,21 +451,21 @@
 
 // z-goldenlayout
 .z-goldenlayout {
-	border: 1px solid @goldenLayoutBorderColor;
-	background: @goldenLayoutBackgroundColor;
+	border: 1px solid @baseBorderColor;
+	background: @baseBackgroundColor;
 	.borderRadius(@borderRadiusLarge);
 
 	.lm_header {
-		border: 1px solid @goldenLayoutBorderColor;
+		border: 1px solid @baseBorderColor;
 		border-bottom: 0;
 		.topBorderRadius(@borderRadiusLarge);
-		line-height: @goldenLayoutLineHeight;
-		background: @goldenLayoutHeaderBackgroundColor;
-		min-height: @goldenLayoutMinHeight;
+		line-height: @baseButtonHeight;
+		background: @baseBackgroundColor;
+		min-height: 30px;
 		.applyCSS3('box-sizing', 'border-box');
 		overflow: hidden;
 		font-family: @baseTitleFontFamily;
-		font-size: @goldenLayoutFontSize;
+		font-size: @fontSizeMedium;
 
 		.lm_controls .lm_tabdropdown:before {
 			content: "\f107";
@@ -481,42 +481,38 @@
 			border: 1px solid transparent;
 			border-bottom: none;
 			margin: 0;
-			line-height: @goldenLayoutLineHeight;
+			line-height: @baseButtonHeight;
 			text-align: center;
 			position: relative;
 			top: -1px;
 			cursor: pointer;
 			float: left;
-			padding: @goldenLayoutTabPadding;
-			color: @goldenLayoutHeaderColor;
+			padding: 4px 12px 3px;
+			color: @baseTextColor;
 			.applyCSS3('box-sizing', 'border-box');
+			.verGradient(@baseGradientStart, @baseGradientEnd);
 
 			&:hover {
-				color: @goldenLayoutHeaderHoverColor;
-				border: 1px solid @goldenLayoutBorderColor;
+				color: @textColorGray;
+				border: 1px solid @baseBorderColor;
 				border-bottom: none;
 				.topBorderRadius(@borderRadiusLarge);
+				.verGradient(@goldenLayoutHoverGradientStart, @goldenLayoutHoverGradientEnd);
 			}
 
 			&.lm_active {
 				.topBorderRadius(@borderRadiusLarge);
-				background: @goldenLayoutSelectedBackgroundColor;
-				color: @goldenLayoutSelectedBorderColor;
+				background: @baseBackgroundColor;
+				color: @textColorGray;
+				border: 1px solid @baseBorderColor;
 				&:hover {
-					color: @goldenLayoutHeaderActiveHoverColor;
-					border: 1px solid @goldenLayoutBorderColor;
+					color: @textColorGray;
+					border: 1px solid @baseBorderColor;
 					border-bottom: none;
 					.topBorderRadius(@borderRadiusLarge);
 				}
 				&:first-child {
 					border-left: none;
-				}
-				&:after {
-					height: 2px;
-					display: block;
-					background: @goldenLayoutSelectedBorderColor;
-					content:	'';
-					margin: @goldenLayoutActiveTabMargin;
 				}
 			}
 
@@ -527,7 +523,7 @@
 			.lm_title {
 				font-style: normal;
 				display: inline-block;
-				line-height: @goldenLayoutLineHeight;
+				line-height: @baseButtonHeight;
 				overflow: hidden;
 				text-overflow: ellipsis;
 				white-space: nowrap;
@@ -535,12 +531,12 @@
 			}
 
 			.lm_close_tab {
-				width: @goldenLayoutFontSize;
+				width: @fontSizeMedium;
 				.baseIconFont();
 				position: relative;
-				top: @goldenLayoutCloseTabTop;
 				padding-left: 10px;
-				line-height: normal;
+				line-height: @baseButtonHeight;
+				height: 18px;
 
 				&:before {
 					content: "\f00d";
@@ -549,23 +545,20 @@
 		}
 
 		.lm_controls {
-			padding: @goldenLayoutControlPadding;
+			right: 2px;
 
 			> li {
-				width: @goldenLayoutFontSize;
+				width: @fontSizeMedium;
 				.baseIconFont();
 				display: block;
-				line-height: @goldenLayoutFontSize;
+				line-height: @fontSizeMedium;
 				text-align: center;
 				position: relative;
 				cursor: pointer;
 				float: left;
-				padding: @goldenLayoutControlLiPadding;
-				color: @goldenLayoutHeaderColor;
+				padding: 9px 11px 2px 5px;
+				color: @baseTextColor;
 				.applyCSS3('box-sizing', 'border-box');
-				&:hover {
-					color: @goldenLayoutHeaderHoverColor;
-				}
 			}
 			.lm_maximise:after {
 				content: "\f065";
@@ -586,52 +579,58 @@
 	}
 
 	.lm_splitter {
-		&.lm_horizontal:after {
-			.baseIconFont();
-			content: "\f142";
-			position: absolute;
-			font-size: 10px;
-			top: 50%;
-			left: -1px;
-			margin-top: -5px;
+		&.lm_horizontal {
+			.horGradient(@splitterGradientStart, @splitterGradientEnd);
+			&:after {
+				.baseIconFont();
+				content: "\f142";
+				position: absolute;
+				font-size: 10px;
+				top: 50%;
+				left: 3px;
+				margin-top: -5px;
+			}
 		}
 		
-		&.lm_vertical:after {
-			.baseIconFont();
-			content: "\f141";
-			position: absolute;
-			font-size: 10px;
-			left: 50%;
-			top: -1px;
-			margin-left: -5px;
+		&.lm_vertical {
+			.verGradient(@splitterGradientStart, @splitterGradientEnd);
+			&:after {
+				.baseIconFont();
+				content: "\f141";
+				position: absolute;
+				font-size: 10px;
+				left: 50%;
+				top: -1px;
+				margin-left: -5px;
+			}
 		}
 
 		&.lm_dragging {
-			background: @goldenLayoutSplitterDragging;
+			background: @dragHoverBackgroundColor;
 
 			&:hover {
-				background: @goldenLayoutSplitterDragging;
+				background: @dragHoverBackgroundColor;
 			}
 		}
 		&:hover {
-			background: @splitterHoverBackgroundColor;
+			background: @dragHoverBackgroundColor;
 		}
 	}
 }
 
 .z-goldenpanel {
-	border: 1px solid @goldenLayoutBorderColor;
+	border: 1px solid @baseBorderColor;
 	.bottomBorderRadius(@borderRadiusLarge);
 	.applyCSS3('box-sizing', 'border-box');
 	padding: 20px 16px;
-	background: @goldenLayoutPanelBackgroundColor;
+	background: @baseBackgroundColor;
 	overflow: auto;
 }
 
 .z-goldenlayout-dragProxy {
 	.lm_header .lm_tabs {
 		font-family: @baseTitleFontFamily;
-		font-size: @goldenLayoutFontSize;
+		font-size: @fontSizeMedium;
 		.applyCSS3('box-sizing', 'border-box');
 		position: relative;
 
@@ -639,39 +638,31 @@
 			border-bottom: none;
 			box-sizing: border-box;
 			.topBorderRadius(@borderRadiusLarge);
-			background: @goldenLayoutHeaderBackgroundColor;
+			background: @baseBackgroundColor;
 		
 			font-family: @baseTitleFontFamily;
-			font-size: @goldenLayoutFontSize;
+			font-size: @fontSizeMedium;
 			display: block;
 			margin: 0;
-			line-height: @goldenLayoutLineHeight;
+			line-height: @baseButtonHeight;
 			text-align: center;
 			position: relative;
 			cursor: pointer;
-			padding: @goldenLayoutTabPadding;
-			color: @goldenLayoutSelectedBorderColor;
+			padding: 4px 12px 3px;
+			color: @textColorGray;
 			.applyCSS3('box-sizing', 'border-box');
 			box-shadow: 0px 0px 5px 0px @goldenLayoutProxyBoxShadowColor;
-
-			&:after {
-				height: 2px;
-				display: block;
-				background: @goldenLayoutSelectedBorderColor;
-				content: '';
-				margin: @goldenLayoutDropTabAfterMargin;
-			}
 		}
 		
 		&:after {
-			clear:	both;
+			clear: both;
 			content: "";
-			display:	block;
+			display: block;
 		}
 	}
 	
 	> .lm_content {
-		background: @goldenLayoutPanelBackgroundColor;
+		background: @baseBackgroundColor;
 		box-shadow: 0px 0px 5px 0px @goldenLayoutProxyBoxShadowColor;
 
 		.z-goldenpanel {
@@ -681,10 +672,10 @@
 }
 
 .z-goldenlayout-dropTargetIndicator {
-	border: 1px dashed @goldenLayoutDroptargetIndicatorBorderColor;
+	border: none;
 
 	.lm_inner {
-		background: @goldenLayoutDroptargetIndicatorBackgroundColor;
+		background: @dragHoverBackgroundColor;
 	}
 }
 
@@ -693,19 +684,19 @@
 	margin: 0;
 	padding: 4px;
 	list-style-type: none;
-	background: @goldenLayoutPanelBackgroundColor;
+	background: @baseBackgroundColor;
 	box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.5);
 	.borderRadius(@baseBorderRadius);
 
 	> li {
 		cursor: pointer;
 		display: block;
-		padding: 8px;
-		padding-right: 52px;
+		padding: 4px 12px 3px;
+		padding-right: 32px;
 		height: 19px;
 
 		&:hover {
-			background: @colorPrimaryLighter;
+			background: @hoverBackgroundColor;
 		}
 
 		> span {

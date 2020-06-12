@@ -1,24 +1,22 @@
 @import "~./zul/less/_header.less";
 
 @escapedIconColor: escape("@{iconColor}");
-@escapedActiveColor: escape("@{activeColor}");
-@escapedDisabledColor: escape("@{inputDisableColor}");
+@escapedDisabledColor: escape("@{disabledColor}");
 
 .z-selectbox {
 	font-family: @baseContentFontFamily;
-	font-size: @inputTextSize;
-	line-height: normal;
-	color: @inputColor;
+	font-size: @fontSizeMedium;
+	color: @baseTextColor;
 
-	height: @inputHeight;
+	height: 24px;
 	min-width: 180px;
 	background-color: @inputBackgroundColor;
 	background-image: url("data:image/svg+xml;charset=utf8,%3Csvg%20fill%3D%27@{escapedIconColor}%27%20height%3D%2724%27%20viewBox%3D%270%200%2024%2024%27%20width%3D%2724%27%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%3E%3Cpath%20d%3D%27M7%2010l5%205%205-5z%27%2F%3E%3C%2Fsvg%3E");
 	background-repeat: no-repeat;
 	background-position: top 50% right 0;
 	border: 1px solid @inputBorderColor;
-	border-radius: @inputBorderRadius;
-	padding: @inputPadding;
+	border-radius: @borderRadiusSmall;
+	padding: 0 4px;
 	padding-right: 24px;
 
 	-moz-appearance: none;
@@ -30,26 +28,28 @@
 	}
 
 	&:hover {
-		border-color: @colorGreyDark;
+		border-color: @hoverBorderColor;
 	}
 
 	&:focus {
-		border-color: @inputFocusBorderColor;
+		border-color: @focusBorderColor;
 	}
 
 	&:active {
-		color: @activeColor;
-		background-image: url("data:image/svg+xml;charset=utf8,%3Csvg%20fill%3D%27@{escapedActiveColor}%27%20height%3D%2724%27%20viewBox%3D%270%200%2024%2024%27%20width%3D%2724%27%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%3E%3Cpath%20d%3D%27M7%2010l5%205%205-5z%27%2F%3E%3C%2Fsvg%3E");
-		background-color: @colorPrimary;
-		border-color: @colorPrimaryDark;
+		border-color: @activeBorderColor;
+		background-image: url("data:image/svg+xml;charset=utf8,%3Csvg%20fill%3D%27@{escapedIconColor}%27%20height%3D%2724%27%20viewBox%3D%270%200%2024%2024%27%20width%3D%2724%27%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%3E%3Cpath%20d%3D%27M7%2010l5%205%205-5z%27%2F%3E%3C%2Fsvg%3E"),
+						  linear-gradient(to bottom, @activeGradientStart 0%, @activeGradientEnd 100%);
+		box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.3);
 	}
 
 	&[disabled] {
-		color: @inputDisableColor;
+		.opacity(@disabledOpacity);
+		color: @disabledColor;
 		background-image: url("data:image/svg+xml;charset=utf8,%3Csvg%20fill%3D%27@{escapedDisabledColor}%27%20height%3D%2724%27%20viewBox%3D%270%200%2024%2024%27%20width%3D%2724%27%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%3E%3Cpath%20d%3D%27M7%2010l5%205%205-5z%27%2F%3E%3C%2Fsvg%3E");
-		background-color: @inputDisableBackgroundColor;
+		background-color: @disabledBackgroundColor;
 		cursor: default;
 		border-color: @inputBorderColor;
+		box-shadow: none;
 	}
 }
 
@@ -60,7 +60,7 @@
 		&:active {
 			background-image: none;
 			// popup close bug workaround
-			color: @inputColor;
+			color: @baseTextColor;
 			background-color: @inputBackgroundColor;
 		}
 		&[disabled] {

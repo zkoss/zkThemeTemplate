@@ -6,7 +6,7 @@
 	height: @cascaderHeight;
 	width: 180px;
 	padding: @cascaderPadding;
-	padding-right: 24px;
+	padding-right: 18px;
 	border: 1px solid @cascaderBorderColor;
 	border-radius: @cascaderBorderRadius;
 	color: @cascaderColor;
@@ -15,7 +15,8 @@
 
 	&:active {
 		border-color: @cascaderActiveBorderColor;
-		background: @cascaderActiveBackgroundColor;
+		.verGradient(@activeGradientStart, @activeGradientEnd);
+		box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
 	}
 
 	&:hover {
@@ -73,7 +74,7 @@
 
 	&-icon {
 		color: @cascaderIconColor;
-		font-size: 22px;
+		font-size: @fontSizeLarge;
 		position: absolute;
 		right: 8px;
 		top: 50%;
@@ -121,7 +122,7 @@
 		list-style: none;
 		display: block;
 		padding: @cascaderPopupItemPadding;
-		border-radius: @cascaderBorderRadius;
+		border-radius: @cascaderPopupItemBorderRadius;
 		cursor: pointer;
 		-moz-user-select: none;
 		-webkit-user-select: none;
@@ -145,11 +146,18 @@
 	}
 
 	&-item&-selected {
+		.verGradient(@selectedGradientStart, @selectedGradientEnd);
 		color: @cascaderPopupItemSelectedColor;
 	}
 
-	&-item&-active, &-item:hover {
-		background-color: @cascaderPopupItemHoverBackgroundColor;
+	&-item:hover {
+		.verGradient(@hoverGradientStart, @hoverGradientEnd);
+		color: @cascaderPopupItemHoverColor;
+	}
+
+	&-item&-active {
+		.verGradient(@activeGradientStart, @activeGradientEnd);
+		color: @cascaderPopupItemActiveColor;
 	}
 
 	&-item &-icon {

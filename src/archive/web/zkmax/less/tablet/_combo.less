@@ -5,17 +5,27 @@
 .z-spinner,
 .z-doublespinner, 
 .z-timepicker {
-	font-size: 15px;
+	min-height: 32px;
+	
+	&-input {
+		height: 32px;
+	}
+	&-button {
+		font-size: 20px;
+		min-width: 34px;
+		height: 32px;
+		max-height: 32px;
+		padding: 8px 6px;
+		.verGradient(@baseGradientStart, @baseGradientEnd);
+		text-align: center;
+		opacity: 0.9;
+	}
 }
-
-// mobile-specific
 .z-timebox-button {
-	width: 40px;
-	font-size: 22px;
-	padding: 8px 8px 0;
 	&:hover {
-		border-color: @comboButtonHoverBorderColor;
-		background: @comboButtonHoverBackgroundColor;
+		border-color: @hoverBorderColor;
+		.verGradient(@hoverGradientStart, @hoverGradientEnd);
+		
 		> i {
 			.size(auto, auto);
 			border-top-width: 0;
@@ -23,129 +33,75 @@
 		}
 	}
 	&:active {
-		color: @comboButtonActiveIconColor;
-		border-color: @comboButtonActiveBorderColor;
-		background-color: @comboButtonActiveBackgroundColor;
+		border-color: @activeBorderColor;
+		.verGradient(@activeGradientStart, @activeGradientEnd);
+		.boxShadow('inset 1px 1px 1px #91AAB7');
 	}
 }
-
-.z-spinner-input,
-.z-doublespinner-input {
-	padding-right: 65px + 8px;
-}
-
 .z-spinner-button,
 .z-doublespinner-button {
-	width: 65px; // 64 + 1 for border-left
-	padding: 0;
+	padding: 0px;
 	border: none;
-	right: 65px;
-
-	&:hover > i {
-		border-top: none;
-		position: static;
+	
+	&:hover {
+		.verGradient(@baseGradientStart, @baseGradientEnd);
+		
+		> i {
+			border-top: none;
+			position: static;
+		}
 	}
-
+	&:active {
+		.verGradient(@baseGradientStart, @baseGradientEnd);
+	}
 	> a {
-		font-size: 22px;
-		.size(32px, 34px);
-		padding: 0 4px;
-		border: 1px solid @inputBorderColor;
-		line-height: 34px;
+		.size(32px, 32px);
+		border: 1px solid @baseBorderColor;
+		line-height: 36px;
+		background: inherit;
 		position: static;
 		float: right;
-
+		
 		&:first-child {
 			border-left: none;
-			line-height: 34px;
-			.rightBorderRadius(@baseBorderRadius);
+			line-height: 32px;
 		}
-
-		&:hover {
-			border: 1px solid @comboButtonHoverBorderColor;
-			background: @comboButtonHoverBackgroundColor;
-		}
+		&:hover,
 		&:active {
-			color: @comboButtonActiveIconColor;
-			border: 1px solid @comboButtonActiveBorderColor;
-			background-color: @comboButtonActiveBackgroundColor;
-		}
-	}
-}
-
-.disabledStyle() {
-	color: @inputDisableColor !important;
-	border-color: @inputBorderColor !important;
-	background: @inputDisableBackgroundColor !important;
-	cursor: default !important;
-}
-
-.z-timebox-disabled .z-timebox-button {
-	.disabledStyle();
-	&:hover, &:active {
-		.disabledStyle();
-	}
-}
-
-.z-spinner-disabled .z-spinner-button {
-	> a {
-		.disabledStyle();
-		background: 0 !important;
-		&:hover, &:active {
-			.disabledStyle();
-			background: 0 !important;
-		}
-	}
-}
-.z-doublespinner-disabled .z-doublespinner-button {
-	> a {
-		.disabledStyle();
-		background: 0 !important;
-		&:hover, &:active {
-			.disabledStyle();
-			background: 0 !important;
+			.verGradient(#F2F9FE, #D6F0FD);
 		}
 	}
 }
 
 .z-combobox-popup, .z-timepicker-popup {
+	padding: 0;
+	.gradient('ver', '#D3D3D3 0%; #E5E5E5 10%; #F2F2F2 25%; #FFFFFF 50%; #F2F2F2 75%; #E5E5E5 90%; #D3D3D3 100%');
 	overflow: hidden;
 }
 .z-comboitem, .z-timepicker-option {
-	font-size: 15px;
-	padding: 8px;
-
-	&:after { // for vertical middle
-		content: '';
-		display: inline-block;
-		vertical-align: middle;
-		height: 100%;
-		width: 0;
+	font-size: @fontSizeXLarge;
+	padding: 15px 10px;
+	
+	a,
+	a:visited {
+		font-size: @fontSizeXLarge;
 	}
 	&-inner {
+		font-size: @fontSizeMedium;
 		display: block;
-		font-size: 12px;
+		margin-top: 4px;
+	}
+	&-text {
+		display: inline-block;
+		margin-top: -8px;
+		padding-left: 6px;
 	}
 	&-image {
-		float: none;
-		.size(22px, 22px);
-
-		&:empty {
-			display: none;
-		}
+		width: auto;
+		margin-top: 0px;
+		float: left;
 	}
 }
-
-// ZK-3717 element readonly in tablet
-.z-datebox-input[readonly],
-.z-timebox-input[readonly] {
-	background: @inputBackgroundColor;
-	border-color: @inputBorderColor;
-	&:focus {
-		border-color: @inputFocusBorderColor;
-	}
-}
-
 //Timebox Wheel
 .z-timebox-popup .z-timebox-wheel-body {
 	margin: 4px 0;
@@ -156,8 +112,9 @@
 	&-time {
 		.boxOrientHor();
 		width: 50%;
+		.borderRadius(3px);
 		position: relative;
-		background: @baseBackgroundColor;
+		.gradient('ver', '#000 0%; #333 35%; #888 50%; #333 65%; #000 100%');
 	}
 	&-cave {
 		position: relative;
@@ -168,16 +125,18 @@
 	}
 	&-line {
 		.size(100%, 0);
+		border-top: 1px solid #333333;
+		border-bottom: 1px solid #555555;
 		position: absolute;
 		top: 50%;
 		z-index: 1;
 	}
 	&-list {
 		.applyCSS3(box-flex, 1);
-		color: @textColorDefault;
-		background: @baseBackgroundColor;
-		height: 120px;
-		margin: 0 1px 0 0;
+		color: #FFFFFF;
+		height: 210px;
+		margin: 4px 0;
+		.gradient('ver', '#000 0%; #444 45%; #444 55%; #000 100%');
 		position: relative;
 		overflow: hidden;
 		
@@ -191,15 +150,16 @@
 		}
 		
 		li {
-			font-size: 17px;
+			font-size: 40px;
 			display: block;
-			height: 40px;
+			height: 70px;
 			margin: 0;
-			padding: 0;
-			line-height: 40px;
+			padding: 0 5px;
+			line-height: 70px;
 			opacity: 0.3;
 			text-align: center;
 			white-space: nowrap;
+			text-shadow: 0 1px #FFFFFF;
 			list-style: none;
 		}
 	}
@@ -209,25 +169,79 @@
 		clear: both;
 	}
 	&-button {
-		.fontStyle(@baseContentFontFamily, 15px, normal, #000000);
+		.fontStyle(@baseContentFontFamily, 30px, bold, #000000);
 		width: 45%;
-		border: none;
-		.borderRadius(@baseBorderRadius);
-		padding: 8px 0;
-		.boxShadow('0 3px 6px 0 rgba(0,0,0,0.16), 0 2px 4px 0 rgba(0,0,0,0.24)');
+		border: 1px solid #A6A6A6;
+		.borderRadius(3px);
+		margin: 1px 1px 0 0;
+		padding: 5px 15px;
+		line-height: 28px;
+		.verGradient(@baseGradientStart, @baseGradientEnd);
+		text-shadow: 0 1px #FFFFFF;
+		
+		&:hover,
+		&:focus {
+			border-color: #0CBCFF;
+			.boxShadow('inset 1px 1px 1px #0CBCFF, inset -1px -1px 1px #0CBCFF');
+		}
+		&:active {
+			border-color: #808080 #B6B6B6 #B6B6B6 #808080;
+			.verGradient(@baseGradientEnd, @baseGradientStart);
+			.boxShadow('inset 1px 1px 1px rgba(210, 210, 210, 0.75), 0 0 7px #CFCFCF');
+		}
 	}
 	&-left {
 		float: left;
-		background: @colorPrimary;
-		color: @textColorDefault3;
 	}
 	&-right {
 		float: right;
-		background: @baseBackgroundColor;
-		color: @textColorDefault;
-		border: 1px solid @colorGreyLight;
 	}
 }
 li.z-timebox-wheel-list-selected {
 	opacity: 1;
+}
+//iPhone
+@media @iphone {
+	.z-timebox-wheel {
+		&-list {
+			height: 120px;
+			margin: 0 1px 0 0;
+			
+			li {
+				font-size: 20px;
+				height: 40px;
+				padding: 0;
+				line-height: 40px;
+			}
+		}
+		&-button {
+			font-size: 22px;
+		}
+		// Bug ZK-Z773
+		//&-footer {
+		//	height: 35px;
+		//}
+	}
+}
+//Android
+@media @android {
+	.z-timebox-wheel {
+		&-list {
+			margin: 0 1px 0 0;
+			height: 150px;
+			
+			li {
+				font-size: 24px;
+				height: 50px;
+				padding: 0;
+				line-height: 50px;
+			}
+		}
+		&-button {
+			font-size: 26px;
+		}
+		&-footer {
+			height: 40px;
+		}
+	}
 }

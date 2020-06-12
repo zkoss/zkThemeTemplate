@@ -1,25 +1,16 @@
 .z-groupbox {
-	&-content, &-content > .z-label {
-		font-size: 15px;
+	> .z-groupbox-header {
+		.z-caption-readonly,
+		.z-groupbox-title-readonly {
+			cursor: pointer;
+		}
 	}
-
-	&-3d {
-		.z-caption-content, .z-groupbox-title-content {
-			font-size: 17px;
-		}
-		>.z-groupbox-header {
-			.z-caption, .z-groupbox-title {
-				padding: 10px 16px;
-			}
-		}
+	> .z-groupbox-readonly .z-groupbox-title {
+		cursor: pointer;
 	}
 }
 
-.z-groupbox-notitle .z-groupbox-content {
-	padding: 12px 16px;
+.z-groupbox-header,
+.z-groupbox-3d .z-groupbox-header {
+	line-height: 24px;
 }
-
-.z-groupbox-3d > .z-groupbox-content {
-	padding: 12px 16px;
-}
-

@@ -1,7 +1,7 @@
 @import "~./zul/less/_header.less";
 
 .z-stepbar {
-	background: @colorBackground3;
+	background: @baseBackgroundColor;
 	overflow: hidden;
 	padding: @stepbarPadding;
 	display: flex;
@@ -13,7 +13,7 @@
 	}
 }
 
-.z-step {	
+.z-step {
 	display: flex;
 	display: -ms-flexbox;
 	flex-direction: row;
@@ -35,7 +35,7 @@
 		height: @stepbarSeparatorSize;
 		background-color: @stepInactiveColor;
 		flex: 1;
-		margin: 0 @stepbarPadding 0 -@stepbarPadding;
+		margin: 0 8px 0 -8px;
 	}
 
 	&bar-linear &-active:before,
@@ -57,14 +57,14 @@
 
 	&-icon-empty {
 		border-radius: 50%;
-		border: @stepIconEmptyBorderWidth solid @stepInactiveColor;
-		background-color: white;
+		border: 3px solid @stepInactiveColor;
+		background-color: @baseBackgroundColor;
 	}
 
 	&-title {
-		background-color: @colorBackground3;
-		line-height: @stepSize;
+		background-color: @baseBackgroundColor;
 		font-size: @stepFontSize;
+		line-height: @stepSize;
 		vertical-align: top;
 	}
 
@@ -87,30 +87,30 @@
 	}
 
 	&bar:not(&bar-linear) & .z-icon-check:hover {
-		color: @textColorDefault3;
+		color: @baseBackgroundColor;
 		background-color: @stepHoverColor;
 		border-color: @stepHoverColor;
 	}
 
 	&bar:not(&bar-linear) & .z-icon-check:active {
-		color: @textColorDefault3;
+		color: @baseBackgroundColor;
 		background-color: @stepClickColor;
 		border-color: @stepClickColor;
 	}
 
 	.z-icon-check {
-		color: @textColorDefault3;
+		color: @baseBackgroundColor;
 		background-color: @stepActiveColor;
 		border-color: @stepActiveColor;
 		border-radius: 50%;
-		font-size: @stepIconCompleteSize;
+		font-size: 16px;
 	}
 
 	&-error &-icon {
-		color: @textColorDefault3;
+		color: @baseBackgroundColor;
 		background-color: @stepErrorColor;
 		border-radius: 50%;
-		font-size: @stepIconErrorSize;
+		font-size: 16px;
 	}
 }
 
@@ -139,7 +139,7 @@
 		margin-left: 0;
 		margin-right: -@stepbarPadding;
 	}
-	
+
 	.z-step:before,
 	.z-step:after {
 		margin-top: (@stepSize - @stepbarSeparatorSize) / 2;
@@ -187,7 +187,6 @@
 	&.z-stepbar-linear .z-step-complete .z-step-content:before {
 		background-color: @stepActiveColor;
 	}
-
 
 	.z-step-icon {
 		margin-right: 0;

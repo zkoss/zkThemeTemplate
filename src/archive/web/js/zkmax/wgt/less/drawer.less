@@ -45,30 +45,31 @@
 	}
 
 	&-header {
-		padding: @drawerTitlePadding;
+		padding: 9px 8px;
+		.verGradient(@baseGradientStart, @baseGradientEnd);
 		border-bottom: 1px solid @drawerTitleLineColor;
 	}
 
 	&-title {
-		.fontStyle(@baseContentFontFamily, @drawerTitleFontSize, normal, @drawerTitleTextColor);
+		.fontStyle(@baseContentFontFamily, @fontSizeMedium, bold, @drawerTitleTextColor);
 	}
 
 	&-close {
-		.iconFontStyle(@drawerCloseButtonSize, @iconColor);
-		.size(@drawerCloseButtonSize, @drawerCloseButtonSize);
+		.iconFontStyle(@fontSizeMedium, @textColorGray);
+		.size(@fontSizeMedium, @fontSizeMedium);
 		position: absolute;
-		right: @drawerCloseButtonRight;
-		top: @drawerCloseButtonTop;
+		right: 8px;
+		top: 10px;
 		text-align: center;
 		cursor: pointer;
 
 		&:hover {
-			color: @iconHoverColor;
+			color: @textColorGrayDark;
 		}
 	}
 
 	&-cave {
-		padding: @drawerContainerPadding;
+		padding: 8px;
 		height: 100%;
 	}
 

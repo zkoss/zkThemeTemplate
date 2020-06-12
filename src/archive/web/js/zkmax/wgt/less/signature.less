@@ -7,8 +7,8 @@
 
 	&-toolbar {
 		position: absolute;
-		bottom: @signatureToolbarBottom;
-		right: @signatureToolbarRight;
+		bottom: 6px;
+		right: 5px;
 
 		&-hide {
 			display: none;
@@ -16,36 +16,35 @@
 	}
 
 	&-tool-button {
-		.fontStyle(@baseTitleFontFamily, @inputTextSize, normal, @buttonColor);
+		.fontStyle(@baseTitleFontFamily, @fontSizeMedium, normal, @baseTextColor);
 		min-height: @baseButtonHeight;
-		border: 2px solid @buttonBorderColor;
-		.borderRadius(@inputBorderRadius);
-		padding: @buttonPadding;
-		line-height: normal;
-		background-color: @buttonBackgroundColor;
-		.boxShadow('0 2px 4px 0 rgba(0,0,0,0.16)');
+		border: 1px solid @buttonBorderColor;
+		.borderRadius(@baseBorderRadius);
+		padding: 3px 12px;
+		line-height: @baseLineHeight;
+		.verGradient(@buttonGradientStart, @buttonGradientEnd);
+		text-shadow: 0 1px #FFFFFF;
 		cursor: pointer;
 		white-space: nowrap;
-		margin-right: @signatureToolbarButtonSpacing;
+		margin-right: 5px;
 
 		&:hover {
-			color: @buttonHoverColor;
-			border-color: @buttonHoverBorderColor;
-			background-color: @buttonHoverBackgroundColor;
+			border-color: @hoverBorderColor;
+			.verGradient(@hoverGradientStart, @hoverGradientEnd);
 		}
 		&:focus {
-			color: @buttonFocusColor;
-			border-color: @buttonFocusBorderColor;
-			background-color: @buttonFocusBackgroundColor;
+			color: @focusColor;
+			border-color: @focusBorderColor;
+			.verGradient(@focusGradientStart, @focusGradientEnd);
+			.boxShadow('inset 0 0 2px #0CBCFF');
 		}
 		&:active {
-			color: @buttonActiveColor;
-			border-color: @buttonActiveBorderColor;
-			background-color: @buttonActiveBackgroundColor;
+			border-color: @activeBorderColor;
+			.verGradient(@activeGradientStart, @activeGradientEnd);
 		}
 		&-icon {
 			.baseIconFont();
-			font-size: @signatureToolbarButtonIconFontSize;
+			font-size: 16px;
 			vertical-align: bottom;
 		}
 		&-undo:before {
@@ -58,7 +57,7 @@
 			content: "\f00d";
 		}
 		&-label:not(:empty) {
-			margin-left: 4px;
+			margin-left: 3px;
 		}
 	}
 

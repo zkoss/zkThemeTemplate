@@ -3,17 +3,16 @@
 .z-sliderbuttons {
 	&-button {
 		position: absolute;
-		border-style: solid;
+		border: 1px solid @buttonBorderColor;
+		background: linear-gradient(to bottom, @baseGradientStart 0%, @baseGradientEnd 100%);
 	}
 
 	&-tooltip {
-		font-family: @baseTitleFontFamily;
 		position: absolute;
 		display: none;
-		color: @textColorDefault3;
+		color: @baseBackgroundColor;
 		vertical-align: top;
 		line-height: 1;
-		font-size: @fontSizeMedium;
 	}
 
 	&-area {

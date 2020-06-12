@@ -2,8 +2,7 @@
 
 .z-progressmeter {
 	height: @baseIconHeight;
-	border: 1px solid @progressmeterBorderColor;
-	.borderRadius(@baseBorderRadius);
+	border:1px solid @baseBorderColor;
 	background: @baseBackgroundColor 0 0 repeat-x;
 	.encodeThemeURL(background-image, '~./zul/img/misc/prgmeter-anim.gif');
 	text-align: left;
@@ -11,11 +10,11 @@
 
 	&-image {
 		font-size: 0;
-		display: inline-block;  // inline-block has filled bug in Firefox
+		display: inline-block;
 		vertical-align: top;  // prevent filled bug
 		height: @baseIconHeight - 2;
 		line-height: 0;
-		background-color: @progressmeterBackgroundColor;
+		.verGradient(@progressmeterGradientStart, @progressmeterGradientEnd);
 	}
 
 	&-indeterminate {

@@ -5,112 +5,115 @@
 	vertical-align: middle;
 	min-height: @baseButtonHeight;
 	cursor: pointer;
-	.borderRadius(@inputBorderRadius);
-	.boxShadow('0 2px 4px 0 rgba(0,0,0,0.16)');
+	border: 1px solid @buttonBorderColor;
+	.borderRadius(@borderRadiusSmall);
 	overflow: hidden;
 
 	&-content {
-		.fontStyle(@baseContentFontFamily, @inputTextSize, normal, @buttonColor);
+		.fontStyle(@baseContentFontFamily, @fontSizeMedium, normal, @baseTextColor);
 		display: block;
 		min-height: @baseButtonHeight;
-		border: 2px solid @buttonBorderColor;
-		padding: @combobuttonPadding;
-		line-height: normal;
-		background-color: @buttonBackgroundColor;
+		padding: 4px 30px 4px 5px;
+		line-height: @baseLineHeight;
+		.verGradient(@buttonGradientStart, @buttonGradientEnd);
 		vertical-align: middle;
 		position: relative;
 		white-space: nowrap;
 	}
+	&-image {
+		vertical-align: middle;
+	}
 	&-button {
 		font-weight: normal;
-		.displaySize(block, @combobuttonButtonWidth, 100%);
-		border-left: 1px solid @buttonSeparatorBorderColor;
+		.displaySize(block, @baseButtonWidth, 100%);
+		border-left: 1px solid @buttonBorderColor;
 		line-height: normal;
 		position: absolute;
 		top: 0;
 		right: 0;
 	}
 	&-icon {
-		font-size: @fontSizeLarge;
-
+		.iconFontStyle(@fontSizeLarge, @iconColor);
+		
 		&.z-icon-caret-down {
 			display: block;
 			margin-top: -8px;
 			position: absolute;
 			top: 50%;
-			left: @combobuttonButtonIconLeft;
+			left: 7px;
 		}
 	}
-	&-image {
-		vertical-align: text-bottom;
-	}
 	&:hover {
-		.z-combobutton-content {
-			color: @buttonHoverColor;
-			border-color: @buttonHoverBorderColor;
-			background-color: @buttonHoverBackgroundColor;
+		border-color: @hoverBorderColor;
+		.z-combobutton-content,
+		.z-combobutton-button {
+			border-color: @hoverBorderColor;
+			.verGradient(@hoverGradientStart, @hoverGradientEnd);
 		}
 	}
 	&:focus {
-		.z-combobutton-content {
-			color: @buttonFocusColor;
-			border-color: @buttonFocusBorderColor;
-			background-color: @buttonFocusBackgroundColor;
+		border-color: @focusBorderColor;
+		.z-combobutton-content,
+		.z-combobutton-button {
+			color: @focusColor;
+			border-color: @focusBorderColor;
+			.verGradient(@focusGradientStart, @focusGradientEnd);
+			.boxShadow('inset 0 0 2px #0CBCFF');
+		}
+		.z-combobutton-button {
+			border-left-color: @baseBorderColor;
 		}
 	}
 	&:active {
-		.z-combobutton-content {
-			color: @buttonActiveColor;
-			border-color: @buttonActiveBorderColor;
-			background-color: @buttonActiveBackgroundColor;
+		border-color: @activeBorderColor;
+		.z-combobutton-content,
+		.z-combobutton-button {
+			border-color: @activeBorderColor;
+			.verGradient(@activeGradientStart, @activeGradientEnd);
 		}
 	}
 	&[disabled] {
 		cursor: default;
-		.z-combobutton-content {
-			color: @buttonDisableColor;
-			border-color: @buttonDisableBorderColor;
-			background-color: @buttonDisableBackgroundColor;
-			cursor: default;
-		}
+		border-color: @buttonBorderColor;
+		.z-combobutton-content,
 		.z-combobutton-button {
-			border-color: @buttonDisableSeparatorBorderColor;
+			border-color: @buttonBorderColor;
+			.resetGradient();
+			.boxShadow('none');
+			.opacity(@disabledOpacity);
 		}
 	}
 
 	//toolbar mold
 	&-toolbar {
-		.z-combobutton-content {
-			font-size: @combobuttonToolbarFontSize;
-			padding: @combobuttonToolbarPadding;
-			color: @toolbarButtonColor;
-			background-color: @toolbarButtonBackgroundColor;
+		.z-combobutton-content,
+		.z-combobutton-button {
+			border-color: transparent;
+			.borderRadius(0);
+			.resetGradient();
+		}
+		&:focus {
+			.z-combobutton-content,
 			.z-combobutton-button {
 				border-color: transparent;
+				.boxShadow('none');
 			}
 		}
-		&:hover, &:focus, &:active {
+		&:active {
+			.z-combobutton-content,
 			.z-combobutton-button {
-				border-color: @buttonSeparatorBorderColor;
+				border-color: @hoverBorderColor;
+				.verGradient(@hoverGradientStart, @hoverGradientEnd);
 			}
 		}
 		&[disabled] {
+			.z-combobutton-content,
 			.z-combobutton-button {
-				border-color: @buttonDisableSeparatorBorderColor;
+				border-color: transparent;
+				.resetGradient();
+				.opacity(@disabledOpacity);
+				.boxShadow('none');
 			}
 		}
-		&.z-combobutton-open {
-			.z-combobutton-content {
-				color: @buttonColor;
-				background-color: @buttonBackgroundColor;
-			}
-		}
-	}
-}
-
-.ie, .edge {
-	// Icon height workaround
-	.z-combobutton-content > i {
-		vertical-align: text-bottom;
 	}
 }

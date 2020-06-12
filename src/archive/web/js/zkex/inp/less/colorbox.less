@@ -1,12 +1,12 @@
 @import "~./zul/less/_header.less";
 
 .z-colorbox {
-	.displaySize(inline-block, @colorboxWidth, @colorboxHeight);
-	border: 1px solid @baseBorderColor;
-	.borderRadius(@baseBorderRadius);
+	.displaySize(inline-block, @baseWidth * 5, @baseButtonHeight);
+	border: 1px solid @colorboxBorderColor;
+	.borderRadius(@borderRadiusSmall);
 	margin: 0 2px;
-	padding: 4px;
-	background: @inputBackgroundColor;
+	padding: 3px;
+	background: @baseBackgroundColor;
 	vertical-align: middle;
 	position: relative;
 	overflow: hidden;
@@ -14,15 +14,14 @@
 	
 	&-current {
 		.displaySize(inline-block, 100%, 100%);
-		border: 1px solid @baseBorderColor;
 		position: relative;
 	}
 	
 	&-button {
-		font-size: @colorboxButtonFontSize;
-		.displaySize(inline-block, 14px, 14px);
+		font-size: 11px;
+		.displaySize(inline-block, 13px, 7px);
 		line-height: normal;
-		background: @inputBackgroundColor;
+		background: @baseBackgroundColor;
 		position: absolute;
 		bottom: 1px;
 		right: 0;
@@ -30,11 +29,10 @@
 	}
 	
 	&-icon {
-		.iconFontStyle(@colorboxButtonFontSize, @textColorDefault);
-		.size(10px, 8px);
+		.iconFontStyle(@baseFontSize, @iconColor);
 		position: relative;
 		top: -3px;
-		left: -2px;
+		left: 3px;
 	}
 	
 	&-disabled,
@@ -45,70 +43,50 @@
 	}
 }
 // Popup shadow
-.z-colorbox-shadow,
-.z-menu-shadow {
-	.boxShadow('0 3px 6px 0 rgba(0,0,0,0.16), 0 2px 4px 0 rgba(0,0,0,0.24)');
-}
 .z-colorbox-popup,
 .z-menu-popup {
 	display: none;
 	position: absolute;
 	overflow: auto;
 	z-index: @basePopupZIndex;
-	border: 1px solid @popupBorderColor;
-	.borderRadius(@baseBorderRadius);
-	padding: @colorboxPopupPadding;
-	background-color: @popupBackgroundColor;
+	.boxShadow('1px 1px 3px rgba(0, 0, 0, 0.5)');
 }
-
 // Colorpicker
 .z-colorpicker {
-	.size(@colorpickerWidth, @colorpickerHeight);
+	.size(384px, 332px);
+	border: 1px solid @colorboxBorderColor;
+	background: @baseBackgroundColor;
 	position: relative;
 	overflow: hidden;
-	padding: @colorpickerPadding;
-
-	&-main {
-		position: relative;
-		height: 256px;
-		top: @colorpickerMainPositionTop;
-	}
-
-	&-info {
-		position: relative;
-		margin-top: @colorpickerInfoMarginTop;
-		height: @colorpickerInfoHeight;
-		top: @colorpickerMainPositionTop;
-	}
-
+	
 	&-gradient {
 		.size(256px, 256px);
-		border: 1px solid @baseBorderColor;
+		border: 1px solid @colorboxBorderColor;
 		position: absolute;
-		left: 0;
-		top: 0;
+		left: 7px;
+		top: 31px;
 		cursor: crosshair;
 	}
 	
 	&-overlay {
 		.size(256px, 256px);
-		.encodeURL(background-image, '~./zkex/img/colorbox/colorpicker_gradient.png');
+		.encodeThemeURL(background-image, '~./zkex/img/colorbox/colorpicker_gradient.png');
 	}
 	
 	&-bar {
 		.size(12px, 256px);
-		border: 1px solid @baseBorderColor;
-		.encodeURL(background-image, '~./zkex/img/colorbox/colorpicker_hue.png');
+		border: 1px solid @colorboxBorderColor;
+		.encodeThemeURL(background-image, '~./zkex/img/colorbox/colorpicker_hue.png');
 		position: absolute;
 		left: 7px;
 		overflow: hidden;
-		cursor: row-resize;
+		cursor: n-resize;
 	}
 	
 	&-circle {
 		.size(11px, 11px);
 		margin: -5px 0 0 -5px;
-		.encodeURL(background-image, '~./zkex/img/colorbox/colorpicker_select.gif');
+		.encodeThemeURL(background-image, '~./zkex/img/colorbox/colorpicker_select.gif');
 		position: absolute;
 		top: 0;
 		left: 0;
@@ -118,140 +96,129 @@
 	&-hue {
 		.size(27px, 256px);
 		position: absolute;
-		top: 0;
-		right: 0;
+		top: 31px;
+		left: 272px;
 	}
 	
 	&-arrows {
 		.size(27px, 9px);
 		margin: -4px 0 0 0;
-		.encodeURL(background-image, '~./zkex/img/colorbox/colorpicker_arrows.gif');
+		.encodeThemeURL(background-image, '~./zkex/img/colorbox/colorpicker_arrows.gif');
 		position: absolute;
 		left: 0;
 		overflow: hidden;
-		cursor: row-resize;
+		cursor: n-resize;
 	}
 	
 	&-color {
-		border: 1px solid @baseBorderColor;
+		border: double;
 		background: transparent;
 		position: absolute;
-		.size(@colorpickerColorWidth, @colorpickerColorHeight);
-		.borderRadius(2px);
-		top: 0;
-		right: @colorpickerColorPositionRight;
-		padding: 2px;
+		top: 34px;
+		left: 315px;
 	}
 	
 	&-newcolor {
-		.size(@colorpickerColorItemWidth, @colorpickerColorItemHeight);
-		border: 1px solid @baseBorderColor;
+		.size(48px, 32px);
+		border-bottom: 1px solid;
 		position: relative;
 	}
 	
 	&-current {
-		.size(@colorpickerColorItemWidth, @colorpickerColorItemHeight);
-		border: 1px solid @baseBorderColor;
+		.size(48px, 32px);
+		border-top: 1px solid;
 		position: relative;
 	}
 	
-	&-rgb, &-hsv {
+	&-r, &-g, &-b, &-h, &-s, &-v {
+		width: 55px;
 		position: absolute;
-		left: 0;
-		.z-colorpicker-input {
-			width: @colorpickerInputWidth;
-			margin-left: 8px;
-			margin-right: 0;
-		}
+		left: 310px;
 	}
-
-	&-rgb {top: @colorpickerRGBPositionTop;}
-	&-hsv {top: @colorpickerHSVPositionTop;}
-
+	
+	&-r {top: 122px;}
+	&-g {top: 147px;}
+	&-b {top: 172px;}
+	&-h {top: 212px;}
+	&-s {top: 237px;}
+	&-v {top: 262px;}
+	
 	&-text,
 	&-input {
 		.fontStyle(@baseContentFontFamily, @fontSizeMedium, normal, @baseTextColor);
 	}
-
-	&-text {
-		display: inline-block;
-		width: 35px;
-	}
 	
 	&-input {
-		height: @colorpickerInputHeight;
-		text-align: center;
+		.size(@baseWidth * 5, @baseButtonHeight);
+		min-height: @baseButtonHeight;
+		border: 1px solid @baseBorderColor;
+		padding: 2px;
+		background: @baseBackgroundColor;
+		float: right;
 	}
 	
 	&-hex {
 		position: absolute;
-		top: @colorpickerHEXPositionTop;
-		left: 0;
+		top: 300px;
+		left: 10px;
 		
 		.z-colorpicker-input {
-			width: @colorpickerHEXInputWidth;
-			height: @colorpickerHEXInputHeight;
-			margin-left: 8px;
+			margin-left: 5px;
+			width: @baseWidth * 8;
 		}
 	}
 	
 	&-button {
+		width: 42px;
 		position: absolute;
-		top: @colorpickerButtonPositionTop;
-		right: @colorpickerButtonPositionRight;
+		top: 300px;
+		left: 328px;
 		cursor: pointer;
-		width: @colorpickerButtonWidth;
+	}
+	
+	&-icon {
+		color: @textColorGreen;
 	}
 
-	// old theme compatible
-	&-r, &-g, &-b,
-	&-h, &-s, &-v {
-		display: inline;
-	}
-
-	&-r-text, &-g-text, &-b-text,
-	&-h-text, &-s-text, &-v-text {
-		display: none;
-	}
+	// new theme compatible
+	&-rgb-text, &-hsv-text {display: none;}
 }
 // Color Palette
 .z-colorpalette {
-	.size(@colorpaletteWidth, @colorpaletteHeight);
-	padding: @colorpickerPadding;
-
-	&-head {
-		position: relative;
-		height: @colorpaletteHeadHeight;
-	}
-
+	.size(262px, 222px);
+	border: 1px solid @colorboxBorderColor;
+	padding-left: 4px;
+	background: @baseBackgroundColor;
+	
 	&-newcolor {
-		.size(@colorpaletteNewColorWidth, @colorpaletteNewColorHeight);
-		.borderRadius(2px);
-		border: 1px solid @baseBorderColor;
-		position: absolute;
-		right: @colorpaletteNewColorPositionRight;
+		.size(50px, 24px);
+		border: 1px solid @colorboxBorderColor;
+		margin: 4px 2px;
+		position: relative;
+		left: 123px;
 	}
 	
 	&-input,
 	&-button {
 		position: absolute;
-		top: 0;
-		right: 0;
+		top: 5px;
+		left: 185px;
 	}
 	
 	&-input {
-		.size(@colorpaletteInputWidth, @colorpaletteInputHeight);
-		margin: 0;
+		.fontStyle(@baseContentFontFamily, @fontSizeMedium, normal, @baseTextColor);
+		.size(65px, @baseButtonHeight);
+		border: 1px solid @baseBorderColor;
+		padding: 2px;
+		background: @baseBackgroundColor;
 	}
 	
 	&-color {
-		.displaySize(inline-block, @colorpaletteColorSize, @colorpaletteColorSize);
-		border: 1px solid @baseBorderColor;
-		.borderRadius(2px);
+		.displaySize(inline-block, 14px, 14px);
+		border: 1px solid #FFFFFF;
 		cursor: pointer;
-		float: left;
-		margin: 1px;
-
+		float: left; 
+		
 		&:hover {
 			border: 1px solid #000000;
 		}
@@ -265,60 +232,34 @@
 .z-menu-paletteicon,
 .z-colorbox-pickericon,
 .z-menu-pickericon {
-	.size(@colorboxIconButtonWidth, @colorboxIconButtonHeight);
+	.size(22px, 22px);
+	.encodeThemeURL(background, '~./zkex/img/colorbox/cb-buttons.gif');
 	position: absolute;
 	cursor: pointer;
 	z-index: 10;
-	color: @toolbarButtonColor;
-	font-size: @colorboxIconFontSize;
-	.borderRadius(@inputBorderRadius);
-	padding: @colorboxIconPadding;
-	&:hover {
-		color: @buttonHoverColor;
-		border-color: @buttonHoverBorderColor;
-		background-color: @buttonHoverBackgroundColor;
-	}
-	&:focus {
-		color: @buttonFocusColor;
-		border-color: @buttonFocusBorderColor;
-		background-color: @buttonFocusBackgroundColor;
-	}
 }
 .z-colorbox-paletteicon,
 .z-menu-paletteicon {
-	left: @paletteiconPositionLeft;
-	top: @colorboxIconButtonPositionTop;
-	&:before {
-		.baseIconFont();
-		content: '\e902'; // ZK85Icons: icon-color-grid
-	}
+	background-position: 0 0;
+	top: 5px;
+	left: 6px;
 }
 .z-colorbox-pickericon,
 .z-menu-pickericon {
-	left: @pickericonPositionTopLeft;
-	top: @colorboxIconButtonPositionTop;
-	&:before {
-		.baseIconFont();
-		content: '\e900'; // ZK85Icons: icon-color-wheel
-	}
+	background-position: 0 -44px;
+	top: 5px;
+	left: 31px;
 }
-
 .z-colorpalette-popup .z-colorbox-paletteicon,
 .z-colorpalette-popup .z-menu-paletteicon {
-	// copied form toolbar.less: z-toolbarbutton-checked
-	color: @toolbarButtonCheckedColor;
-	background-color: @toolbarButtonCheckedBackgroundColor;
+	background-position: 0 -22px;
+	left: 6px;
+}
+.z-colorpalette-popup .z-colorbox-pickericon,
+.z-colorpalette-popup .z-menu-pickericon {
+	left: 31px;
 }
 .z-colorpicker-popup .z-colorbox-pickericon,
 .z-colorpicker-popup .z-menu-pickericon {
-	color: @toolbarButtonCheckedColor;
-	background-color: @toolbarButtonCheckedBackgroundColor;
-}
-// Menu color block
-.z-menu-image.z-colorbox-color {
-	border-radius: 2px;
-	border: 1px solid @baseBorderColor;
-	min-width: @colorboxMenuImageSize;
-	min-height: @colorboxMenuImageSize;
-	margin-right: @colorboxMenuImageMarginRight;
+	background-position: 0 -66px;
 }

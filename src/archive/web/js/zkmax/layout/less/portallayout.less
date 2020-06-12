@@ -24,7 +24,7 @@
 	> .z-panel,
 	> .z-panel-move-block {
 		float: left;
-	} 
+	}
 }
 .z-portallayout,
 .z-portalchildren {
@@ -38,7 +38,8 @@
 		padding: 0 @portalchildrenCounterPadding;
 		margin-right: @portalchildrenCounterPadding;
 		background: @portalchildrenCounterBackground;
-		font-size: 14px;
+		color: @portalchildrenCounterNumberColor;
+		font-size: 12px;
 		font-weight: 700;
 
 		&-on {
@@ -64,16 +65,28 @@
 			}
 			&-content .z-panel {
 				background: @portalchildrenFramePanelBackgroundColor;
-				margin-bottom: @portalchildrenFramePanelPadding;
+				margin-bottom: @portalchildrenFramePadding;
 				position: relative;
 
 				&:last-child {
 					margin-bottom: @portalchildrenFramePadding;
 				}
+				&-head {
+					background: @portalchildrenFramePanelBackgroundColor;
+					border-color: @portalchildrenFramePanelBorderColor;
+					border-bottom: 0;
+					border-radius: 0;
+					padding: 0;
+				}
 				&-header {
+					background: @portalchildrenFramePanelBackgroundColor;
 					color: @portalchildrenFramePanelHeaderTextColor;
 					padding: @portalchildrenFramePanelHeaderPadding;
 					font-size: @portalchildrenFramePanelHeaderTextSize;
+					font-weight: bold;
+				}
+				&-noborder .z-panel-head {
+					border: 0;
 				}
 				&-drag-button {
 					display: block;
@@ -92,7 +105,7 @@
 						position: relative;
 					}
 				}
-				
+
 				.z-panelchildren {
 					padding: @portalchildrenFramePanelChildrenPadding;
 				}
@@ -122,8 +135,8 @@
 
 			> .z-portalchildren {
 				&-content > .z-panel {
-					margin-right: @portalchildrenFramePanelPadding;
-	
+					margin-right: @portalchildrenFramePadding;
+
 					&:last-child {
 						margin-right: 0;
 					}

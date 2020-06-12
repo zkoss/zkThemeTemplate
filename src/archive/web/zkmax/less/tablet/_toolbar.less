@@ -1,14 +1,24 @@
 .z-toolbarbutton {
+	height: 32px;
+	padding: 2px 0 5px;
+	line-height: normal;
+
 	&-content {
-		font-size: 17px;
-		height: 32px;
-		> img, > i {
-			.size(24px, 24px);
-			font-size: 24px;
+		font-size: @fontSizeMedium;
+		line-height: 28px;
+		
+		img {
+			vertical-align: text-top;
 		}
 	}
 }
 
-.z-toolbar-content .z-label {
-	font-size: 17px;
+.z-toolbar-tabs .z-toolbar-content {
+	padding-top: 0;
+}
+.z-toolbar-content,
+.z-toolbar-content span,
+.z-toolbar-tabs .z-toolbar-content,
+.z-toolbar-tabs .z-toolbar-content span {
+	font-size: @fontSizeMedium;
 }

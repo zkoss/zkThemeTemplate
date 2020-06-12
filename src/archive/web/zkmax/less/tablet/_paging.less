@@ -1,54 +1,24 @@
 .z-paging {
-	height: 38px;
-	padding: 4px 12px 3px;
-
-	&-icon {
-		font-size: 22px;
-	}
-
+	height: 40px;
+	
 	&-button {
-		min-width: 30px;
-		height: 30px;
-		line-height: 30px;
-		.borderRadius(@baseBorderRadius);
-		font-size: 22px;
-		padding: 0;
-		margin: 0;
+		min-width: 32px;
+		height: 32px;
+		font-size: @fontSizeXLarge;
+		line-height: 24px;
 	}
-
-	&-text {
-		font-size: 15px;
-		margin-right: 2px;
-	}
-
-	&-info {
-		font-size: 15px;
-		top: 0;
-	}
-
 	&-input {
-		height: 31px;
-		margin-left: 2px;
+		height: 32px;
+		font-size: @baseFontSize;
 	}
-}
-
-.z-paging-os {
-	ul > li {
-		margin-left: 2px;
+	&-text {
+		font-size: @baseFontSize;
 	}
-
-	ul > li.z-paging-navigate + li, ul > li + li.z-paging-navigate {
-		margin-left: 4px;
+	&-info {
+		top: 7px;
+		font-size: @baseFontSize;
 	}
-
-	ul > li.z-paging-navigate + li.z-paging-navigate {
-		margin-left: 2px;
-	}
-
-	.z-paging-button {
-		padding: 0 8px;
-		font-size: 15px;
-		height: 30px;
-		min-width: 30px;
+	&-noborder {
+		margin-right: 10px;
 	}
 }

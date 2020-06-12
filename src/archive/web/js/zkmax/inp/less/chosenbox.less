@@ -3,80 +3,84 @@
 .z-chosenbox {
 	display: inline-block;
 	border: 1px solid @inputBorderColor;
-	.borderRadius(@baseBorderRadius);
 	line-height: normal;
 	background: @inputBackgroundColor;
 	overflow: hidden;
-	padding: @chosenboxPadding;
-	min-height: @chosenboxMinHeight;
+	min-height: @baseButtonHeight;
 	vertical-align: bottom;
+	.borderRadius(@borderRadiusSmall);
 
 	&-focus {
-		border-color: @inputFocusBorderColor;
+		.boxShadow('inset 1px 1px 1px rgba(210, 210, 210, 0.75)');
 	}
 
 	&-item {
 		display: inline-block;
+		height: 18px;
 		border: 1px solid @chosenboxItemBorderColor;
-		.borderRadius(@baseBorderRadius);
-		margin: @chosenboxItemMargin;
-		padding: @chosenboxItemPadding;
-		background-color: @chosenboxItemBackgroundColor;
+		.borderRadius(@borderRadiusSmall);
+		margin: -1px 1px 1px 1px;
+		.verGradient(@baseGradientStart, @baseGradientEnd);
 		vertical-align: middle;
 		position: relative;
 		white-space: nowrap;
 		cursor: pointer;
 
 		&-content {
-			.fontStyle(@baseContentFontFamily, @chosenboxItemSize, normal, @chosenboxItemColor);
+			.fontStyle(@baseContentFontFamily, @fontSizeMedium, normal, @textColorGrayDark);
 			display: inline-block;
-			padding: @chosenboxItemContentPadding;
-			margin-right: @chosenboxItemContentMarginRight;
+			height: 16px;
+			padding: 0px 15px 0px 3px;
+			line-height: 18px;
 			float: left;
 		}
 
 		&-focus {
-			background-color: @chosenboxItemFocusBackgroundColor;
+			border-color: @hoverBorderColor;
+			background: @hoverBackgroundColor;
 		}
 	}
 
 	&-button {
-		.iconFontStyle(@chosenboxIconSize, @chosenboxItemColor);
-		.size(@chosenboxIconSize, @chosenboxIconSize);
-		line-height: @chosenboxIconSize;
+		.iconFontStyle(11px, @iconColor);
+		.size(11px, 11px);
+		line-height: 11px;
 		text-align: center;
 		position: absolute;
-		right: @chosenboxButtonPositionRight;
-		top: @chosenboxButtonPositionTop;
+		right: 2px;
+		top: 3px;
+
+		&:hover {
+			color: @iconHoverColor;
+		}
 	}
 
 	&-input {
-		.fontStyle(@baseContentFontFamily, @inputTextSize, normal, @inputColor);
-		.displaySize(inline-block, @chosenboxInputWidth, @chosenboxInputHeight);
+		.fontStyle(@baseContentFontFamily, @fontSizeMedium, normal, @textColorGrayDark);
+		.displaySize(inline-block, 30px, 15px);
 		border: 0 !important;
-		padding: 1px 4px 2px 8px;
+		height: 17px;
+		padding: 1px 2px 2px 2px;
 		background: transparent !important;
 		outline: 0;
 		.boxShadow('none');
+		margin: 0 2px;
 	}
 
 	&-disabled {
-		border-color: @chosenboxItemDisabledBorderColor;
 		background: @disabledBackgroundColor;
+		.opacity(@disabledOpacity);
 
 		.z-chosenbox-item {
-			cursor: default;
-			border-color: @chosenboxItemDisabledBorderColor;
-			background-color: @chosenboxItemDisabledBackgroundColor;
+			cursor: default !important;
 		}
 
 		.z-chosenbox-item-content {
-			color: @chosenboxItemDisabledColor;
-			margin-right: 0;
+			padding-right: 3px !important;
 		}
 
 		.z-chosenbox-button {
-			display: none;
+			display: none !important;
 		}
 	}
 
@@ -88,11 +92,10 @@
 	}
 
 	&-popup {
-		.fontStyle(@baseContentFontFamily, @fontSizeMedium, normal, @comboPopupItemColor);
+		.fontStyle(@baseContentFontFamily, @fontSizeMedium, normal, @textColorGrayDark);
 		display: block;
-		border: 1px solid @comboPopupBorderColor;
-		.borderRadius(@baseBorderRadius);
-		padding: @chosenboxPopupPadding;
+		border: 1px solid @popupBorderColor;
+		padding: 2px;
 		background: @popupBackgroundColor;
 		position: absolute;
 		overflow: auto;
@@ -103,27 +106,25 @@
 	}
 
 	&-shadow {
-		.boxShadow('0 3px 6px 0 rgba(0,0,0,0.16), 0 2px 4px 0 rgba(0,0,0,0.24)');
+		.borderRadius(@borderRadiusSmall);
+		.boxShadow('0 0 15px rgba(0, 0, 0, 0.35)');
 	}
 
 	&-option {
 		cursor: pointer;
-		padding: @chosenboxOptionPadding;
-		min-height: @chosenboxOptionMinHeight;
-		.borderRadius(@baseBorderRadius);
-
+		padding: 1px 5px;
 		&:hover, &-hover {
-			background: @chosenboxPopupHoverBackgroundColor;
+			background: @hoverBackgroundColor;
 		}
 	}
 
 	&-empty {
+		font-style: italic;
 		color: @disabledColor;
-		padding: @chosenboxOptionPadding;
-		min-height: @chosenboxOptionMinHeight;
+		padding: 1px 5px;
 
 		&-creatable {
-			color: @inputColor;
+			color: @textColorGrayDark;
 			padding-top: 2px;
 			cursor: pointer;
 		}
@@ -135,12 +136,9 @@
 	}
 
 	&-create {
-		.iconFontStyle(@chosenboxCreateIconSize, @chosenboxCreateIconColor);
-		.size(@chosenboxCreateIconSize, @chosenboxCreateIconSize);
+		.iconFontStyle(@baseFontSize, @chosenboxCreateIconColor);
+		.size(14px, 14px);
 		margin-right: 2px;
-		&:before {
-			content: '\f067'; // z-icon-plus
-		}
 	}
 
 	&-inplace {
@@ -154,5 +152,15 @@
 
 	&-hide {
 		display: none;
+	}
+}
+
+.ie9, .ie10 {
+	.z-chosenbox {
+		&-button {
+			.size(12px, 12px);
+			line-height: 12px;
+			top: 2px;
+		}
 	}
 }

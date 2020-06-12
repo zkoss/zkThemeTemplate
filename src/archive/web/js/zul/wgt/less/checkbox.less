@@ -14,24 +14,25 @@
 		display: none;
 	}
 	&-switch > &-mold {
-		margin: @checkboxSwitchMargin;
+		margin: 4px;
 		position: relative;
-		.size(@checkboxSwitchWidth, @checkboxSwitchHeight);
+		width: 40px;
+		height: 24px;
 		transition: .4s;
-		border-radius: @checkboxSwitchHeight / 2;
+		border-radius: 24px;
 		display: inline-block;
 		float: left;
 
 		&:before {
 			content: "";
 			position: absolute;
-			.size(@checkboxSwitchSize, @checkboxSwitchSize);
-			left: @checkboxSwitchOffsetLeft;
-			bottom: @checkboxSwitchOffsetBottom;
+			width: 16px;
+			height: 16px;
+			left: 4px;
+			bottom: 4px;
 			transition: .4s;
 			border-radius: 50%;
 			background-color: white;
-			.boxShadow('0 2px 4px 0 rgba(0,0,0,0.16)');
 		}
 
 		&:focus {
@@ -50,7 +51,7 @@
 		background-color: @checkedColor;
 
 		&:before {
-			.transform("translateX(@{checkboxSwitchStep})");
+			.transform('translateX(16px)');
 		}
 	}
 	&-switch-disabled > &-mold {
@@ -65,7 +66,8 @@
 	}
 	&-toggle > &-mold {
 		margin: 4px;
-		.size(@checkboxToggleSize, @checkboxToggleSize);
+		width: 20px;
+		height: 20px;
 		border-radius: 4px;
 		transition: .1s;
 		display: inline-block;
