@@ -2,48 +2,67 @@
 
 .z-timepicker {
 	display: inline-block;
-	min-height: @baseButtonHeight;
+	min-height: @timepickerHeight;
 	white-space: nowrap;
 
 	&-input {
-		.fontStyle(@baseContentFontFamily, @fontSizeMedium, normal, @baseTextColor);
+		.fontStyle(@baseContentFontFamily, @inputTextSize, normal, @inputColor);
 		width: 100%;
-		height: @baseButtonHeight;
+		height: @timepickerHeight;
 		border: 1px solid @inputBorderColor;
-		.borderRadius(@borderRadiusSmall);
+		.borderRadius(@baseBorderRadius);
 		margin: 0;
-		padding: 4px 5px;
-		padding-right: @baseButtonWidth + 5;
-		line-height: @baseLineHeight;
+		padding: @inputPadding;
+		padding-right: @timepickerPaddingRight;
+		line-height: @timepickerLineHeight;
 		background: @inputBackgroundColor;
 
-		&:focus {
-			.boxShadow('inset 1px 1px 1px rgba(210, 210, 210, 0.75)');
+		// Placeholder ZK-3876: combobox does not provide proper placeholder style
+		&::-webkit-input-placeholder {
+			color: @inputPlaceholderColor;
 		}
-		&[readonly] {
-			border-color: @readonlyBorderColor;
-			background: @readonlyBackgroundColor;
+		&:-moz-placeholder {
+			/* FF 4-18 */
+			color: @inputPlaceholderColor;
+			opacity: 1;
 		}
-		&[readonly]:focus {
-			.boxShadow('none');
+		&::-moz-placeholder {
+			/* FF 19+ */
+			color: @inputPlaceholderColor;
+			opacity: 1;
 		}
+		&:-ms-input-placeholder {
+			/* IE 10+ */
+			color: @inputPlaceholderColor;
+		}
+	}
+
+	&-input&-hover, &-input&-hover + &-button {
+		border-color: @inputHoverBorderColor;
+	}
+
+	&-input:focus {
+		border: 1px solid @inputFocusBorderColor;
+	}
+	&-input:focus + &-button {
+		border-left: 1px solid @inputFocusBorderColor;
 	}
 
 	&-input-full {
-		padding-right: 5px;
+		padding-right: @inputPaddingRight;
 	}
 
 	&-button {
-		.iconFontStyle(@baseFontSize, @iconColor);
+		.iconFontStyle(@comboButtonIconSize, @comboButtonIconColor);
 		display: inline-block;
 		position: relative;
 		top: 0;
-		right: @baseButtonWidth;
-		min-width: @baseButtonWidth;
-		height: @baseButtonHeight;
+		right: @timepickerButtonWidth;
+		min-width: @timepickerButtonWidth;
+		height: @timepickerHeight;
 		border: 1px solid @inputBorderColor;
-		.rightBorderRadius(@borderRadiusSmall);
-		padding: 4px;
+		.rightBorderRadius(@baseBorderRadius);
+		padding: @timepickerButtonPadding;
 		line-height: @baseLineHeight;
 		background: @inputBackgroundColor;
 		text-align: left;
@@ -52,51 +71,40 @@
 		cursor: pointer;
 
 		&:hover {
-			border-color: @hoverBorderColor;
-			.verGradient(@hoverGradientStart, @hoverGradientEnd);
+			border-color: @comboButtonHoverBorderColor;
+			background: @comboButtonHoverBackgroundColor;
 		}
 		&:active {
-			border-color: @activeBorderColor;
-			.verGradient(@activeGradientStart, @activeGradientEnd);
-			.boxShadow('inset 1px 1px 1px #91AAB7');
+			color: @comboButtonActiveIconColor;
+			border-color: @comboButtonActiveBorderColor;
+			background-color: @comboButtonActiveBackgroundColor;
 		}
 	}
 
-	&-disabled {
-		.opacity(@disabledOpacity);
-		& * {
-			color: @disabledColor !important;
-			background: @disabledBackgroundColor !important;
-			cursor: default !important;
-		}
-	}
+	&-disabled &-input,
 	&-disabled &-button {
-		&:hover,
-		&:active {
-			border-color: @inputBorderColor;
-			.resetGradient();
-			.boxShadow('none');
+		color: @inputDisableColor !important;
+		background: @inputDisableBackgroundColor !important;
+		cursor: default !important;
+	}
+	&-disabled &-button:hover {
+		border-color: @inputBorderColor;
+	}
+
+	&-readonly {
+		& > input {
+			color: @inputReadonlyColor;
+			background: @inputReadonlyBackgroundColor;
+		}
+		& > a {
+			color: @inputReadonlyColor;
+			background-color: @inputBackgroundColor;
 		}
 	}
 
 	&-invalid {
 		border: 1px solid @invalidBorderColor !important;
 		margin-right: -1px;
-		background: @baseBackgroundColor;
-		.boxShadow(inset -1px 0 0 @invalidBorderColor);
-	}
-
-	&-readonly:focus {
-		border-color: @readonlyBorderColor;
-		border-right-width: 0;
-		background: transparent repeat-x 0 0;
-		cursor: default;
-		.boxShadow(none);
-	}
-
-	&-rightedge {
-		border-right: 1px solid @inputBorderColor;
-		.borderRadius(@borderRadiusSmall);
 	}
 }
 
@@ -118,56 +126,42 @@
 	border: 0;
 	padding: 3px;
 	background: none;
-
-	&:focus {
-		.resetGradient();
-		.boxShadow('none');
-	}
 }
 .z-timepicker-inplace .z-timepicker-button {
-	visibility: hidden;
+	visibility: hidden; // Bug ZK-2216: Performance issue of Listbox and Combobox with inplace="true"
+}
+
+.z-timepicker-option {
+	font-size: @comboPopupItemSize;
+	white-space: nowrap;
+	cursor: pointer;
+	display: block;
+	padding: @timepickerPopupPadding;
+	position: relative;
+	min-height: 20px;
+	font-weight: normal;
+	color: @comboPopupItemColor;
+	.borderRadius(@baseBorderRadius);
+}
+
+.z-timepicker-option:hover {
+	background-color: @comboPopupItemHoverBackgroundColor;
+}
+
+.z-timepicker-option-selected {
+	color: @comboPopupItemSelectedColor;
+	line-height: @comboPopupItemSize + 2;
 }
 
 .z-timepicker-popup {
 	max-height: 200px;
-}
-
-.z-timepicker-option {
-	display: block;
-	padding: 3px 2px;
-	position: relative;
-	text-shadow: 0 1px #FFFFFF;
-	font-size: @fontSizeMedium;
-	font-weight: normal;
-	color: @baseTextColor;
-	text-decoration: none;
-}
-
-.z-timepicker-option:hover {
-	.verGradient(@hoverGradientStart, @hoverGradientEnd);
-}
-
-.z-timepicker-option-selected {
-	.verGradient(@selectedGradientStart, @selectedGradientEnd);
-	.z-comboitem-text {
-		color: @selectedColor;
-	}
-}
-
-.z-timepicker-option-selected:hover {
-	.verGradient(@selectedHoverGradientStart, @selectedHoverGradientEnd);
-	.z-timepicker-text {
-		color: @selectedHoverColor;
-	}
-}
-
-.z-timepicker-popup {
 	font-family: @baseContentFontFamily;
 	font-weight: normal;
 	font-size: @fontSizeMedium;
 	display: block;
-	border: 1px solid @popupBorderColor;
-	padding: 2px;
+	border: 1px solid @comboPopupBorderColor;
+	.borderRadius(@baseBorderRadius);
+	padding: @timepickerPopupPadding;
 	background: @popupBackgroundColor;
 	position: absolute;
 	overflow: auto;
@@ -179,13 +173,11 @@
 	margin: 0;
 	background: transparent none repeat 0 0;
 	position: relative;
-	list-style-image: none;
-	list-style-position: outside;
-	list-style-type: none;
+	list-style: none outside none;
 }
 
 //Shadow
 .z-timepicker-shadow {
-	.borderRadius(@borderRadiusSmall);
-	.boxShadow('0 0 15px rgba(0, 0, 0, 0.35)');
+	.boxShadow('0 3px 6px 0 rgba(0,0,0,0.16), 0 2px 4px 0 rgba(0,0,0,0.24)');
 }
+

@@ -1,9 +1,9 @@
 @import "~./zul/less/_header.less";
+
 .z-multislider {
 	white-space: nowrap;
 	overflow: visible;
 	cursor: pointer;
-	font-size: @fontSizeMedium;
 
 	&-inner {
 		position: relative;
@@ -26,7 +26,9 @@
 		&-label {
 			position: absolute;
 			font-family: @baseTitleFontFamily;
+			color: @textColorDefault;
 			text-align: center;
+			font-size: @rangesliderLabelFontSize;
 		}
 	}
 
@@ -34,7 +36,11 @@
 		&-button {
 			width: @multisliderButtonSize;
 			height: @multisliderButtonSize;
+			border-width: @multisliderButtonBorderWidth;
+			background-color: @multisliderButtonColor;
+			border-color: @multisliderButtonColor;
 			border-radius: 50%;
+			box-shadow: 0 0 4px 0 @multisliderShadowColor;
 			z-index: 2;
 		}
 
@@ -44,9 +50,50 @@
 		}
 
 		&-area {
-			background-color: @multisliderAreaColor;
+			background-color: @multisliderButtonColor;
 		}
 	}
+
+	& .z-sliderbuttons:nth-last-of-type(2n-2) .z-sliderbuttons-area {
+		background-color: @multisliderButtonColor2;
+	}
+
+	& .z-sliderbuttons:nth-last-of-type(2n-2) .z-sliderbuttons-button {
+		background-color: @multisliderButtonColor2;
+		border-color: @multisliderButtonColor2;
+	}
+
+	&:not(&-disabled) {
+		& .z-sliderbuttons {	
+			&-button:hover {
+				border-color: @multisliderButtonHoverColor;
+				background-color: @multisliderButtonHoverColor;
+			}
+
+			&-button:hover .z-sliderbuttons-tooltip {
+				display: block;
+			}
+
+			&-button:active {
+				border-color: @multisliderButtonActiveColor;
+				background-color: @multisliderButtonActiveColor;
+			}
+
+			&-button:focus {
+				border-color: @multisliderButtonFocusBorderColor;
+			}
+		}
+		& .z-sliderbuttons:nth-last-of-type(2n-2) .z-sliderbuttons-button:hover {
+			border-color: @multisliderButtonHoverColor2;
+			background-color: @multisliderButtonHoverColor2;
+		}
+
+		& .z-sliderbuttons:nth-last-of-type(2n-2) .z-sliderbuttons-button:active {
+			border-color: @multisliderButtonActiveColor2;
+			background-color: @multisliderButtonActiveColor2;
+		}
+	}
+
 	&-horizontal {
 		width: 300px;
 		& .z-sliderbuttons {
@@ -54,15 +101,15 @@
 				height: 100%;
 			}
 			&-button {
-				margin-top: -5px;
-				margin-left: -8px;
+				margin-top: @rangesliderHorizontalButtonMarginTop;
+				margin-left: @rangesliderHorizontalButtonMarginLeft;
 				top: 0;
 			}
 			&-tooltip {
-				top: -25px;
-				left: 7px;
-				transform: translateX(-50%);
-				padding: 2px 4px;
+				top: @rangesliderHorizontalTooltipPositionTop;
+				left: 50%;
+				transform: translateX(-50%) translateY(-100%);
+				padding: @rangesliderHorizontalTooltipPadding;
 			}
 		}
 	}
@@ -77,7 +124,7 @@
 	}
 
 	&-horizontal &-mark-label {
-		top: 17px;
+		top: @rangesliderHorizontalMarkLabelPositionTop;
 		transform: translateX(-50%);
 	}
 
@@ -88,15 +135,15 @@
 				width: 100%;
 			}
 			&-button {
-				margin-top: -8px;
-				margin-left: -5px;
+				margin-top: @rangesliderHorizontalButtonMarginLeft;
+				margin-left: @rangesliderHorizontalButtonMarginTop;
 				left: 0;
 			}
 			&-tooltip {
-				top: 7px;
-				left: 25px;
+				left: @rangesliderVerticalTooltipPositionLeft;
+				top: 50%;
 				transform: translateY(-50%);
-				padding: 4px 2px;
+				padding: @rangesliderVerticalTooltipPadding;
 			}
 		}
 	}
@@ -112,35 +159,8 @@
 	}
 
 	&-vertical &-mark-label {
-		left: 20px;
+		left: @rangesliderHorizontalMarkLabelPositionTop;
 		transform: translateY(-50%);
-	}
-
-	&:not(&-disabled) {
-		& .z-sliderbuttons {
-			&-button:hover {
-				border-color: @multisliderButtonHoverBorderColor;
-				background: @multisliderButtonHoverColor;
-			}
-
-			&-button:hover .z-sliderbuttons-tooltip {
-				display: block;
-			}
-
-			&-button:focus {
-				border-color: @multisliderButtonFocusBorderColor;
-				background: @multisliderButtonFocusColor;
-			}
-
-			&-button:active {
-				border-color: @multisliderButtonActiveBorderColor;
-				background: @multisliderButtonActiveColor;
-			}
-		}
-
-		& .z-sliderbuttons:nth-last-of-type(2n-2) .z-sliderbuttons-area {
-			background-color: @multisliderAreaColor2;
-		}
 	}
 
 	&-disabled &-track {
@@ -151,12 +171,13 @@
 		cursor: default;
 		& .z-sliderbuttons {
 			&-area {
-				background-color: @multisliderDisabledAreaColor;
+				background-color: @multisliderDisabledButtonColor;
 			}
 
 			&-button {
-				border-color: @multisliderDisabledButtonBorderColor;
-				background: @multisliderDisabledButtonColor;
+				border-color: @multisliderDisabledButtonColor;
+				background-color: @multisliderDisabledButtonColor;
+				box-shadow: none;
 			}
 
 			&-tooltip {
@@ -164,7 +185,12 @@
 			}
 
 			&:nth-last-of-type(2n-2) .z-sliderbuttons-area {
-				background-color: @multisliderDisabledAreaColor2;
+				background-color: @multisliderDisabledButtonColor2;
+			}
+
+			&:nth-last-of-type(2n-2) .z-sliderbuttons-button {
+				border-color: @multisliderDisabledButtonColor2;
+				background-color: @multisliderDisabledButtonColor2;
 			}
 		}
 	}

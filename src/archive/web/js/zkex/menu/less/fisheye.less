@@ -14,12 +14,13 @@
 	border: 0;
 }
 .z-fisheye-text {
-	.fontStyle(@baseContentFontFamily, @fontSizeMedium, normal, @baseTextColor);
+	.fontStyle(@baseContentFontFamily, @fontSizeXSmall, normal, @tooltipColor);
 	display: none;
-	border: 1px solid @baseBorderColor;
-	padding: 2px 5px;
-	background: @baseBackgroundColor; 
+	.borderRadius(@baseBorderRadius);
+	padding: 4px;
+	background: @tooltipBackgroundColor;
 	text-align: center;
+	.boxShadow('0 2px 4px 0 rgba(0,0,0,0.16)');
 }
 .z-fisheyebar-inner {
 	position: relative;

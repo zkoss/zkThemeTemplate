@@ -45,31 +45,30 @@
 	}
 
 	&-header {
-		padding: 9px 8px;
-		.verGradient(@baseGradientStart, @baseGradientEnd);
+		padding: @drawerTitlePadding;
 		border-bottom: 1px solid @drawerTitleLineColor;
 	}
 
 	&-title {
-		.fontStyle(@baseContentFontFamily, @fontSizeMedium, bold, @drawerTitleTextColor);
+		.fontStyle(@baseContentFontFamily, @drawerTitleFontSize, normal, @drawerTitleTextColor);
 	}
 
 	&-close {
-		.iconFontStyle(@fontSizeMedium, @textColorGray);
-		.size(@fontSizeMedium, @fontSizeMedium);
+		.iconFontStyle(@drawerCloseButtonSize, @iconColor);
+		.size(@drawerCloseButtonSize, @drawerCloseButtonSize);
 		position: absolute;
-		right: 8px;
-		top: 10px;
+		right: @drawerCloseButtonRight;
+		top: @drawerCloseButtonTop;
 		text-align: center;
 		cursor: pointer;
 
 		&:hover {
-			color: @textColorGrayDark;
+			color: @iconHoverColor;
 		}
 	}
 
 	&-cave {
-		padding: 8px;
+		padding: @drawerContainerPadding;
 		height: 100%;
 	}
 

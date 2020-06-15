@@ -1,18 +1,21 @@
 @import "~./zul/less/_header.less";
 
 .z-calendar {
-	.fontStyle(@baseContentFontFamily, @fontSizeMedium, normal, @textColorGrayLight);
-	border: 1px solid @baseBorderColor;
+	.fontStyle(@baseContentFontFamily, @calendarFontSize, normal);
+	background-color: @calendarBackgroundColor;
 	min-width: 230px;
-	padding: 2px;
+	padding: @calendarPadding;
 
 	a {
 		text-decoration: none;
 	}
 	th {
-		font-family: @baseTitleFontFamily;
-		font-weight: bold;
-		padding: 12px 3px;
+		.size(32px, 36px);
+		min-width: 32px;
+		.borderRadius(@baseBorderRadius);
+		.fontStyle(@baseTitleFontFamily, @calendarFontSizeSmall, 700, @calendarWeekTitleColor);
+		text-align: center;
+		padding: 8px 0;
 	}
 
 	table {
@@ -21,10 +24,9 @@
 
 	&-title {
 		font-family: @baseTitleFontFamily;
-		font-weight: bold;
+		font-size: @calendarTitleFontSize;
 		color: @calendarTitleColor;
 		width: 100%;
-		padding: 5px 24px;
 		line-height: @baseLineHeight;
 		text-align: center;
 
@@ -35,10 +37,14 @@
 
 	&-header {
 		position: relative;
+		text-align: center;
 
 		& > a {
 			display: inline-block;
-			line-height: normal;
+		}
+
+		&:first-child { // calendar title
+			line-height: @calendarTitleLineHeight;
 		}
 	}
 
@@ -46,32 +52,32 @@
 		height: 100%;
 	}
 
-	&-decade {
-		min-height: 162px;
-	}
+	&-decade,
 	&-month,
 	&-year {
-		min-height: 162px;
-
 		.z-calendar-cell {
-			min-height: 48px;
-			line-height: @baseLineHeight * 3;
+			.size(56px, 44px);
+		}
+	}
+	&-wk& {
+		.z-calendar-decade, .z-calendar-month, .z-calendar-year {
+			.z-calendar-cell {
+				.size(64px, 44px);
+			}
 		}
 	}
 	&-cell {
-		font-size: @fontSizeSmall;
+		font-size: @calendarFontSizeSmall;
 		color: @calendarCellColor;
-		min-width:  @baseButtonWidth;
-		min-height: @baseButtonHeight;
-		padding: 3px 0;
-		line-height: @baseLineHeight + 3;
-		background: @baseBackgroundColor;
+		.size(@calendarCellWidth, @calendarCellHeight);
+		line-height: normal;
 		text-align: center;
 		cursor: pointer;
+		.borderRadius(@baseBorderRadius);
 
 		&:hover {
-			.borderRadius(@baseBorderRadius);
-			background: @hoverBackgroundColor;
+			color: @calendarCellColor;
+			background: @calendarCellHoverBackgroundColor;
 		}
 	}
 	&-weekend {
@@ -79,22 +85,21 @@
 		background: @weekendBackgroundColor;
 	}
 	&-weekday {
-		color: @weekColor;
-		background: @baseBackgroundColor;
+		color: @weekdayColor;
+		background: @weekdayBackgroundColor;
 	}
 	&-outrange {
 		color: @disabledColor;
 		text-shadow: none;
 	}
 	&-weekofyear {
-		font-style: italic;
-		color: @weekofyearColor;
+		font-style: italic !important;
+		color: @weekofyearColor !important;
 		background: @weekofyearBackgroundColor;
 		cursor: default;
 		
 		&:hover {
 			color: @weekofyearColor;
-			.borderRadius(0);
 			background: @weekofyearBackgroundColor;
 		}
 	}
@@ -115,13 +120,12 @@
 		}
 	}
 	&-selected {
-		color: @calendarSelectedColor;
 		.borderRadius(@baseBorderRadius);
-		background: @selectedGradientEnd;
-		
+		color: @calendarSelectedColor;
+		background: @calendarSelectedBackgroundColor;
 		&:hover {
 			color: @calendarSelectedHoverColor;
-			background: @selectedHoverGradientEnd;
+			background: @calendarSelectedHoverBackgroundColor;
 		}
 	}
 	&-outside {
@@ -129,9 +133,9 @@
 		text-shadow: none;
 	}
 	&-icon {
-		.iconFontStyle(20px, @iconColor);
+		.iconFontStyle(@calendarIconFontSize, @iconColor);
 		.size(@baseButtonWidth, @baseButtonHeight);
-		padding: 0 8px;
+		padding: 0 4px;
 		position: absolute;
 
 		&:hover {
@@ -139,22 +143,52 @@
 		}
 	}
 	&-right {
-		right: 0px;
+		right: @calendarLeftRightPosition;
 	}
 	&-left {
-		left: 0px;
+		left: @calendarLeftRightPosition;
 	}
 
 	&-left[disabled],
 	&-right[disabled],
 	&-disabled {
 		color: @disabledColor !important;
-		.opacity(0.4);
 		text-shadow: none !important;
 		cursor: default !important;
 
 		&:hover {
-			background: @baseBackgroundColor;
+			background: @calendarBackgroundColor;
+		}
+	}
+
+	&-today {
+		border: 1px solid @baseBorderColor;
+		.borderRadius(@baseBorderRadius);
+		background-color: @calendarBackgroundColor;
+		margin-top: @calendarTodayMarginTop;
+
+		.z-calendar-title {
+			display: block;
+			padding: @calendarTodayTitlePadding;
+			color: @calendarTodayColor;
+		}
+
+		&:hover {
+			border-color: @hoverBorderColor;
+			background-color: @calendarCellHoverBackgroundColor;
+		}
+		&:active {
+			border-color: @activeBorderColor;
+			background-color: @calendarSelectedBackgroundColor;
+			.z-calendar-title {
+				color: @calendarSelectedColor;
+			}
+		}
+
+		.z-calendar-decade + &,
+		.z-calendar-month + &,
+		.z-calendar-year + & {
+			display: none;
 		}
 	}
 }
@@ -163,6 +197,7 @@
 	position: absolute;
 
 	.z-calendar {
+		background: transparent;
 		border: 0;
 		& + .z-timebox {
 			margin: 5px;

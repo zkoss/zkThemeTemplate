@@ -1,23 +1,28 @@
 @import "~./zul/less/_header.less";
 
-.hoverStyle() {
-	border-color: @hoverBorderColor;
-	.verGradient(@hoverGradientStart, @hoverGradientEnd);
+.contentStyle(@color, @bgcolor) {
+	color: @color;
+	background-color: @bgcolor;
 }
-.activeStyle() {
-	border-color: @menuActiveBorderColorTR @menuActiveBorderColorBL @menuActiveBorderColorBL @menuActiveBorderColorTR;
-	.verGradient(@baseGradientStart, @baseGradientEnd);
-	.boxShadow('inset 1px 1px 1px rgba(210, 210, 210, 0.75)');
+.disabledStyle(@bgColor) {
+	border: 1px solid transparent;
+	cursor: default;
+	color: @disabledColor;
+	background: @bgColor;
+	text-decoration: none;
+	&:active, &:hover {
+		color: @disabledColor;
+		background: 0;
+	}
 }
 .restUl() {
 	background: transparent none repeat 0 0;
 	border: 0;
+	.borderRadius(@baseBorderRadius);
 	padding: 0;
 	margin: 0;
 	position: relative;
-	list-style-image: none;
-	list-style-position: outside;
-	list-style-type: none;
+	list-style: none outside none;
 }
 
 // define common font property
@@ -25,9 +30,9 @@
 	display: block;
 	border-top: 1px solid @baseBorderColor;
 	border-bottom: 1px solid @baseBorderColor;
-	padding: 3px 0;
-	.verGradient(@baseGradientStart, @baseGradientEnd);
+	padding: @menubarPadding;
 	position: relative;
+	background: @menuBackground;
 
 	ul {
 		overflow: hidden;
@@ -41,43 +46,36 @@
 
 	&-horizontal {
 		li {
-			margin: 0 2px;
+			margin: @menubarHorizontalMargin;
 			float: left;
 		}
 		.z-menuseparator {
 			display: block;
 			width: 1px;
 			border-left: 1px solid @menuSeparatorBorderColor;
-			line-height: @baseButtonHeight;
+			line-height: @menubarHorizontalSeparatorLineHeight;
+			margin: @menubarHorizontalSeparatorMargin;
 		}
 	}
 	&-vertical {
+		padding: 4px 2px;
 		ul {
 			display: inline-table;
 		}
 		li {
-			margin: 3px 2px 4px;
-			&:first-child {
-				margin: 2px;
-			}
+			margin: 2px;
 		}
+		.z-menu-clickable .z-menu-text {
+			margin-right: 20px;
+		}
+
 		.z-menuseparator {
 			height: 0;
 			min-height: 0;
 			border-top: 1px solid @menuSeparatorBorderColor;
 			line-height: 0;
 		}
-		.z-menu {
-			&-icon {
-				position: absolute;
-				right: 5px;
-			}
-		}
 	}
-}
-.z-menu-hover > .z-menu-content,
-.z-menuitem-hover > .z-menuitem-content {
-	.hoverStyle();
 }
 
 .z-menu,
@@ -85,11 +83,9 @@
 	.restUl(); //avoid using none default zclass
 	&-text {
 		font-family: @baseTitleFontFamily;
-		font-size: @fontSizeMedium;
+		font-size: @menuTextFontSize;
 		font-weight: normal;
 		display: inline-block;
-		line-height: @baseIconHeight;
-		text-shadow: 0 1px #FFFFFF;
 		
 		// align for img + text
 		img ~ & {
@@ -101,15 +97,17 @@
 	}
 	&-image {
 		max-width: @menuImageSize;
-		margin-right: 3px;
+		line-height: normal;
+		margin-right: 4px;
 	}
 	&-content {
-		color: @textColorGray;
+		color: @menuItemColor;
+		background: @menuItemBackground;
 		display: block;
 		border: 1px solid transparent;
 		.borderRadius(@baseBorderRadius);
-		padding: 3px 6px 3px;
-		line-height: @baseLineHeight - 2;
+		padding: @menuContentPadding;
+		line-height: @menuIconSize; // menu-icon height
 		position: relative;
 		cursor: pointer;
 		text-decoration: none;
@@ -117,26 +115,22 @@
 		z-index: 20; // the 20 is greater than menupopup-separator's z-index
 
 		&:hover {
-			.hoverStyle();
+			.contentStyle(@menuItemHoverColor, @menuItemHoverBackground);
 		}
 		&:focus {
-			.hoverStyle();
+			.contentStyle(@menuItemHoverColor, @menuItemHoverBackground);
 		}
 		&:active {
-			.activeStyle();
+			.contentStyle(@menuItemActiveColor, @menuItemActiveBackground);
 		}
 		&[disabled] {
-			.opacity(@disabledOpacity);
-			border: 1px solid transparent;
-			.resetGradient();
-			cursor: default;
-			.boxShadow('none');
+			.disabledStyle(@menuItemBackground);
 		}
 	}
 
 	// icon sclass
 	&-content i {
-		vertical-align: text-bottom;
+		margin-right: @menuIconMarginRight;
 	}
 }
 .z-menu {
@@ -146,53 +140,40 @@
 	&-clickable {
 		.z-menu-separator {
 			.size(1px, 100%);
-			background: @hoverBorderColor;
+			display: block;
+			background: transparent;
 			position: absolute;
 			top: 0;
-			right: 18px;
-		}
-		&.z-menu:hover .z-menu-separator {
-			display: block;
+			right: 30px;
 		}
 		&.z-menu:active,
 		&.z-menu-selected {
+			outline: 2px solid @focusBorderColor;
 			.z-menu-separator {
 				background: @menuSeparatorBackgroundColor;
 			}
 		}
 		.z-menu-text {
-			margin-right: 3px;
+			margin-right: 8px;
 		}
 	}
 	&-content {
-		padding-right: 18px;
+		padding-right: @menuContentPaddingRight;
 	}
 
 	&-icon {
+		font-size: @menuIconSize;
 		position: absolute;
-		right: 5px;
-
-		&.z-icon-caret-down {
-			font-size: @fontSizeLarge;
-		}
-
-		&.z-icon-caret-right {
-			font-size: 15px;
-		}
-	}
-	&-icon,
-	&-icon:hover,
-	&-icon:active {
-		color: @iconColor;
-		vertical-align: text-bottom;
+		right: 0;
+		top: @menuIconPositionTop;
 	}
 	&-selected > &-content {
-		.activeStyle();
+		.contentStyle(@menuItemActiveColor, @menuItemActiveBackground);
 	}
 }
 .z-menuitem {
 	&-selected > &-content {
-		.activeStyle();
+		.contentStyle(@menuItemActiveColor, @menuItemActiveBackground);
 	}
 }
 
@@ -201,7 +182,7 @@
 .z-menu-palette-popup,
 .z-menu-picker-popup,
 .z-menu-content-popup {
-	.boxShadow('1px 1px 2px rgba(0, 0, 0, 0.2)');
+	.boxShadow('0 3px 6px 0 rgba(0,0,0,0.16), 0 2px 4px 0 rgba(0,0,0,0.24)');
 }
 
 .z-menu-content-popup {
@@ -212,7 +193,8 @@
 }
 .z-menupopup {
 	border: 1px solid @baseBorderColor;
-	padding: 3px;
+	.borderRadius(4px);
+	padding: 4px;
 	background: @menuPopupBackground;
 	left: 0;
 	top: 0;
@@ -225,35 +207,39 @@
 		.restUl();
 	}
 	&-separator {
-		.size(2px, 100%);
-		border-width: 3px 1px 3px 0;
-		border-style: solid;
-		border-color: @menuPopupSeparatorBorder;
-		background: @menuPopupSeparatorBackground;
-		position: absolute;
-		top: 0;
-		left: 31px;
-		z-index: 10;
+		display: none;
+	}
+	.z-menu-content,
+	.z-menuitem-content {
+		color: @menuPopupItemColor;
+		background: @menuPopupItemBackground;
+		&:hover {
+			.contentStyle(@menuPopupItemHoverColor, @menuPopupItemHoverBackground);
+		}
+		&:focus {
+			.contentStyle(@menuPopupItemHoverColor, @menuPopupItemHoverBackground);
+		}
+		&:active {
+			.contentStyle(@menuPopupItemActiveColor, @menuPopupItemActiveBackground);
+		}
+		&[disabled] {
+			.disabledStyle(@menuPopupItemBackground);
+		}
 	}
 	.z-menu-image,
 	.z-menuitem-image {
 		min-width:  @menuImageSize;
 		min-height:  @menuImageSize;
-		margin-right: 9px;
+		line-height: normal;
+		background-repeat: no-repeat;
+		margin-right: 8px;
 	}
 	.z-menuitem-icon {
-		.iconFontStyle(14px, @checkedColor);
+		.iconFontStyle(@menuPopupItemIconSize, @menuCheckedColor);
 		display: none;
 		position: absolute;
-		top: 5px;
-		left: 7px;
-	}
-	.z-menu-content {
-		padding-right: 16px;
-	}
-	.z-menu-icon {
-		position: absolute;
-		right: 5px;
+		top: @menuPopupItemIconPositionTop;
+		left: @menuPopupItemIconPositionLeft;
 	}
 	.z-menuseparator {
 		font-size: 1px;
@@ -261,25 +247,37 @@
 		width: auto;
 		min-height: 2px;
 		border-bottom: 1px solid @menuPopupSeparatorBorder;
-		padding: 0px;
+		padding: 0;
 		line-height: 1px;
-		background: @menuPopupSeparatorBackground;
+		margin: 4px 0;
 		position: relative;
 	}
 	[class^="z-icon"] {
 		text-align: center;
 		display: inline-block;
 		min-width: @menuImageSize;
-		margin-right: 9px;
+		min-height: @menuImageSize;
+		margin-right: 8px;
+		line-height: normal;
+	}
+	.z-menu-hover > .z-menu-content,
+	.z-menuitem-hover > .z-menuitem-content {
+		.contentStyle(@menuPopupItemHoverColor, @menuPopupItemHoverBackground);
 	}
 }
 //define checked menuitem effect in menupopup
 .z-menuitem-checkable .z-menuitem-image {
 	border: 1px solid @checkedBorderColor;
+	.borderRadius(@baseBorderRadius);
 	background: @checkedBackgroundColor;
 }
-.z-menuitem-checked.z-menuitem-checkable .z-menuitem-icon {
-	display: block;
+.z-menuitem-checked.z-menuitem-checkable {
+	.z-menuitem-image {
+		background: @menuCheckedBackgroundColor;
+	}
+	.z-menuitem-icon {
+		display: block;
+	}
 }
 
 //define menubar hor scroll
@@ -289,8 +287,7 @@
 	}
 	&-body {
 		width: 100%;
-		margin-left: 32px;
-		margin-right: 32px;
+		margin: 0 @baseBarWidth;
 		position: relative;
 		overflow: hidden;
 	}
@@ -298,24 +295,18 @@
 		width: 5000px;
 	}
 	&-icon {
-		.iconFontStyle(@fontSizeMedium, @iconColor);
-		.opacity(0.7);
-		margin-top: -@fontSizeMedium/2;
-		margin-left: -@fontSizeMedium/2 + 2;
+		.iconFontStyle(@fontSizeXLarge, extract(@menuScrollableIconColors, 1));
+		margin-top: -@fontSizeXLarge/2;
+		margin-left: -@fontSizeXLarge/2 + 2;
 		position: absolute;
 		top: 50%;
 		left: 50%;
 	}
 	&-left,
 	&-right {
-		&:active {
-			.boxShadow('inset 1px 1px 1px rgba(210, 210, 210, 0.75)');
-		}
 		&:hover {
 			> .z-menubar-icon {
-				color: @iconHoverColor;
-				opacity: 1;
-				text-shadow: 1px 0 #C2E0F9;
+				color: extract(@menuScrollableIconColors, 2);
 			}
 		}
 	}
@@ -324,14 +315,28 @@
 	}
 	&-scrollable {
 		.size(@baseBarWidth, 100%);
-		border: 1px solid @baseBorderColor;
-		border-width: 0 1px;
 		line-height: normal;
-		.verGradient(@baseGradientStart, @baseGradientEnd);
 		position: absolute;
 		top: 0;
 		right: 0;
 		cursor: pointer;
 		z-index: 25;
+	}
+}
+
+// Icon replacement
+.z-menubar-left > i:before {
+	content: '\f104';
+}
+.z-menubar-right > i:before {
+	content: '\f105';
+}
+
+// a:active workaround: https://connect.microsoft.com/IE/feedbackdetail/view/917034
+// only works in IE11
+.ie11 {
+	.z-menu-content > *,
+	.z-menuitem-content > * {
+		pointer-events: none;
 	}
 }

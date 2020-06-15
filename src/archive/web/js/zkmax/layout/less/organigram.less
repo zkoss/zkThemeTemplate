@@ -42,19 +42,18 @@
 	}
 
 	&:not(.z-orgitem-disabled) > .z-orgnode:hover {
-		.verGradient(@orgnodeHoverBackgroundColorStart, @orgnodeHoverBackgroundColorEnd);
+		color: @orgnodeColor;
+		background-color: @orgnodeHoverBackgroundColor;
 	}
 
 	&-selected > .z-orgnode {
-		.verGradient(@orgnodeSelectedBackgroundColorStart, @orgnodeSelectedBackgroundColorEnd);
-		.boxShadow('0 1px 1px 1px rgba(0, 0, 0, 0.5)');
-		border-color: @orgnodeSelectedBorderColor;
+		color: @orgnodeSelectedColor;
+		background-color: @orgnodeSelectedBackgroundColor;
 	}
 
 	&-disabled > .z-orgnode {
 		color: @orgnodeDisabledColor;
-		.verGradient(@orgnodeBackgroundColorStart, @orgnodeBackgroundColorEnd);
-		opacity: 55%;
+		background-color: @orgnodeDisabledBackgroundColor;
 		cursor: default;
 	}
 
@@ -77,11 +76,13 @@
 	align-self: center;
 	position: relative;
 	margin: 10px;
-	padding: 10px;
+	padding: @orgnodePadding;
 	cursor: pointer;
 	border: @orgnodeBorder;
-	.verGradient(@orgnodeBackgroundColorStart, @orgnodeBackgroundColorEnd);
+	border-radius: @orgnodeBorderRadius;
+	background-color: @orgnodeBackgroundColor;
 	color: @orgnodeColor;
+	font-size: @fontSizeMedium;
 	font-family: @baseContentFontFamily;
 
 	> i[class="z-orgnode-icon"] {
@@ -95,7 +96,7 @@
 		right: 0;
 		bottom: 0;
 		cursor: pointer;
-		color: @orgnodeIconColor;
+		color: @orgnodeColor;
 		font-size: 12px;
 	}
 

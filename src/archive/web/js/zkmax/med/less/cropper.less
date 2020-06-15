@@ -142,9 +142,9 @@
 		.userSelectNone();
 
 		> ul {
-			.verGradient(@buttonGradientStart, @buttonGradientEnd);
+			font-family: @baseTitleFontFamily;
+			background: @colorPrimary;
 			.borderRadius(@baseBorderRadius);
-			border: 1px solid @buttonBorderColor;
 			box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.16);
 			list-style-type: none;
 			margin: 0;
@@ -153,18 +153,18 @@
 
 			> li {
 				float: left;
-				padding: 3px 12px;
+				padding: @cropperToolbarButtonPadding;
 				
 				&:hover {
-					.verGradient(@hoverGradientStart, @hoverGradientEnd);
+					background-color: @colorPrimaryLight;
 				}
 
 				&:active {
-					.verGradient(@activeGradientStart, @activeGradientEnd);
+					background-color: @colorPrimaryDark;
 				}
 
 				&:first-child {
-					border-right:1px solid @buttonBorderColor;
+					border-right:1px solid @colorPrimaryDark;
 				}
 
 				> a {
@@ -172,8 +172,8 @@
 					text-decoration: none;
 					display: block;
 					text-align: center;
-					line-height: @baseLineHeight;
-					.fontStyle(@baseTitleFontFamily, @fontSizeSmall, normal, @baseTextColor);
+					color: @textColorDefault3;
+					font-size: @cropperToolbarButtonFontSize;
 				}
 			}
 		}

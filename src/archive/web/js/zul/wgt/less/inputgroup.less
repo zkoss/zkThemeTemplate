@@ -10,7 +10,7 @@
 		background: @inputgroupTextBackgroundColor;
 		border: 1px solid @inputBorderColor;
 		padding: 0 12px;
-		min-height: 24px; // same as .z-textbox
+		min-height: @inputHeight; // same as .z-textbox
 		-ms-flex-align: center;
 		align-items: center;
 	}
@@ -25,12 +25,12 @@
 		flex-direction: column;
 
 		> :first-child {
-			border-top-left-radius: @baseBorderRadius;
-			border-top-right-radius: @baseBorderRadius;
+			border-top-left-radius: @inputBorderRadius;
+			border-top-right-radius: @inputBorderRadius;
 		}
 		> :last-child {
-			border-bottom-left-radius: @baseBorderRadius;
-			border-bottom-right-radius: @baseBorderRadius;
+			border-bottom-left-radius: @inputBorderRadius;
+			border-bottom-right-radius: @inputBorderRadius;
 		}
 	}
 
@@ -39,12 +39,12 @@
 			height: auto;
 		}
 		> :first-child {
-			border-top-left-radius: @baseBorderRadius;
-			border-bottom-left-radius: @baseBorderRadius;
+			border-top-left-radius: @inputBorderRadius;
+			border-bottom-left-radius: @inputBorderRadius;
 		}
 		> :last-child {
-			border-top-right-radius: @baseBorderRadius;
-			border-bottom-right-radius: @baseBorderRadius;
+			border-top-right-radius: @inputBorderRadius;
+			border-bottom-right-radius: @inputBorderRadius;
 		}
 	}
 }
