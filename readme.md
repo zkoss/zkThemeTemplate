@@ -31,6 +31,20 @@ The jar file will be `target/___THEME_NAME___.jar`
 
 3. now the theme uses the compact profile.
 
+## switch to a theme of [Theme Pack](https://www.zkoss.org/zkthemepackdemo/)
+The theme pack contains extra 23 themes, you can choose one theme that is closer to your target theme as a base theme and start to customize it.
+
+1. Download Theme Pack source jar. <br/>
+check theme color palette at `/projects/*.less`
+2. Copy one theme less to `zkThemeTemplate/src/archive/web/zul/less/colors`. <br/>
+For example, `montana.less`
+3. prepend `_` at the file name <br/>
+For example, `_montana.less`
+4. Specify the theme name at `src/archive/web/zul/less/_zkvariables.less`
+```less
+@themePalette:                 "montana";
+```
+
 ## compile run preview app
 `mvn test exec:java@preview-app`
 
