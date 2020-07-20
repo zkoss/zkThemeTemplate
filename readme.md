@@ -32,7 +32,8 @@ The jar file will be `target/___THEME_NAME___.jar`
 3. now the theme uses the compact profile.
 
 ## switch to a theme of [Theme Pack](https://www.zkoss.org/zkthemepackdemo/)
-The theme pack contains extra 23 themes, you can choose one theme that is closer to your target theme as a base theme and start to customize it.
+The theme pack contains extra 23 themes, you can choose one theme that is closer to your target theme as a base theme and start to customize it. So that it can save some efforts for you.
+(**Notice**: you need to purchase ZK EE or theme pack to access the theme pack source code.)
 
 1. Download Theme Pack source jar. <br/>
 check theme color palette at `/projects/*.less`
