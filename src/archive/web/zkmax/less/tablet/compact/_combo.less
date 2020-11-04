@@ -8,7 +8,9 @@
 	min-height: 32px;
 
 	&-input {
+		line-height: 14px;
 		height: 32px;
+		padding: 4px 5px;
 	}
 	&-button {
 		font-size: 20px;
@@ -17,7 +19,35 @@
 		max-height: 32px;
 		padding: 6px 6px;
 		text-align: center;
-		line-height: 16px;
+		line-height: 14px;
+	}
+}
+
+.z-combobox,
+.z-bandbox,
+.z-datebox,
+.z-timebox,
+.z-timepicker {
+	&-input:not(&-input-full) {
+		padding-right: 34px + 5px;
+	}
+}
+
+.z-spinner,
+.z-doublespinner {
+	&-input:not(&-input-full) {
+		padding-right: 65px + 8px;
+	}
+	&-button>a {
+		line-height: 32px;
+	}
+}
+
+.z-timebox,
+.z-spinner,
+.z-doublespinner {
+	&-button>a>i {
+		transform: none;
 	}
 }
 
@@ -61,7 +91,7 @@
 
 		&:first-child {
 			border-left: none;
-			line-height: 30px;
+			line-height: 32px;
 			.rightBorderRadius(@baseBorderRadius);
 		}
 
@@ -110,6 +140,11 @@
 			background: 0 !important;
 		}
 	}
+}
+
+.z-timepicker-button {
+	line-height: 32px;
+	padding: 3px 0;
 }
 
 .z-combobox-popup, .z-timepicker-popup {
