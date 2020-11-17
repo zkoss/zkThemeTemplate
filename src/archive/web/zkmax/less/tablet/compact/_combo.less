@@ -23,25 +23,26 @@
 	}
 }
 
-.z-combobox,
-.z-bandbox,
-.z-datebox,
-.z-timebox,
-.z-timepicker {
-	&-input:not(&-input-full) {
-		padding-right: 34px + 5px;
+@comps1: z-combobox, z-bandbox, z-datebox, z-timebox, z-timepicker;
+each(@comps1, {
+	.@{value}-input {
+		&:not(&-full) {
+			padding-right: 34px + 5px;
+		}
 	}
-}
+});
 
-.z-spinner,
-.z-doublespinner {
-	&-input:not(&-input-full) {
-		padding-right: 65px + 8px;
+@comps2: z-spinner, z-doublespinner;
+each(@comps2, {
+	.@{value} {
+		&-input:not(&-input-full) {
+			padding-right: 64px + 5px;
+		}
+		&-button>a {
+			line-height: 32px;
+		}
 	}
-	&-button>a {
-		line-height: 32px;
-	}
-}
+});
 
 .z-timebox,
 .z-spinner,
