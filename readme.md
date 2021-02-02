@@ -4,8 +4,8 @@ The ZK Theme Template serves as a base theme, allowing developers to make change
 ## Building prerequisites
 Require Node.js \>= 10.16
 
-## clone
-clone the zkThemeTemplate project
+## Fork
+fork this repository to another git repository, so this will make it easier to merge bug fixes from the original repository and migrate to the new version in the future.
 
 ## initialize a custom theme
 ```
@@ -49,6 +49,18 @@ For example, `_montana.less`
 ```less
 @themePalette:                 "montana";
 ```
+
+## Add New .less
+We suggest you customize by overriding existing variables instead of modifying the variable value directly. So that you easily merge the futhur changes from the original repository and easily differentiate the customized style and default styles. The steps are:
+1. create a new `.less` file and add those variables you want to override.
+2. import the new `.less` file in `_header.less` in the bottom to override the previous one like:
+```less
+@import "_zkvariables.less"; // variables needed for ZK
+@import "_zkmixins.less";
+
+@import "_mytheme.less"
+```
+
 
 ## preview custom theme
 * compile run preview app
