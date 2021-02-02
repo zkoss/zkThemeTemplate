@@ -1,4 +1,4 @@
-The ZK Theme Template serves as a base theme, allowing developers to make changes and create custom ZK themes. It comes with continuous/incremental compile and live-reload features to minimize the turn-around time when developing a theme.
+The ZK Theme Template serves as a base theme, allowing developers to make changes and create custom ZK themes. It comes with continuous/incremental compile and live-reload features to minimize the turn-around time when developing a theme. We assume you already know [Less](http://lesscss.org/).
 
 # Build Steps
 ## Building prerequisites
@@ -7,7 +7,7 @@ Require Node.js \>= 10.16
 ## clone
 clone the zkThemeTemplate project
 
-## initially
+## initialize a custom theme
 ```
 ./init.sh
 npm install
@@ -16,9 +16,13 @@ npm install
 ## build jar file
 `mvn clean package`
 
-The jar file will be `target/___THEME_NAME___.jar`
+It will compile `.less` files and package the source into jar. The jar file will be at `target/___THEME_NAME___.jar`
 
-# Development
+# How to Customize a Theme
+This project contains the default theme (`iceblue`) .less files. 
+The suggested steps:
+1. Swtich to a theme as a base theme
+2. Add a new `.less` file to override the existing variables.
 
 ## switch to compact profile (since 9.5.0)
 1. Open `src/archive/web/zul/less/_zkvariables.less`
@@ -46,19 +50,17 @@ For example, `_montana.less`
 @themePalette:                 "montana";
 ```
 
-## compile run preview app
+## preview custom theme
+* compile run preview app
 `mvn test exec:java@preview-app`
-
-## preview
-open a simple preview page in the browser, add your own pages containing the components to preview http://localhost:8080
+* open a simple preview page in a browser: http://localhost:8080
+* add your own pages containing the components to preview under `/preview/web`
 
 ## continuous compile/watch less files
 in a separate console:
 
 `npm run zklessc-dev`
 
-## wrap up
-update less-files with text editor, save file -\> auto zkless compile -\> browser will reload style sheet zk.wcs
 
 # How to use `___THEME_NAME___.jar`:
 
@@ -82,3 +84,5 @@ update less-files with text editor, save file -\> auto zkless compile -\> browse
     zktheme=___THEME_NAME___
     ```
 It does not require a server restart, but user has to refresh the browser.
+
+Please refer to [ZK Developer's Reference/Theming and Styling/Switching Themes](https://www.zkoss.org/wiki/ZK_Developer%27s_Reference/Theming_and_Styling/Switching_Themes).
