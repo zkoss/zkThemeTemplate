@@ -19,13 +19,13 @@
 	<packaging>jar</packaging>
 	<name>___ARTIFACT_ID___</name>
 	<scm>
-		<url>http://mavensync.zkoss.org/maven2</url>
+		<url>https://mavensync.zkoss.org/maven2</url>
 	</scm>
 	<description>___DISPLAY_NAME___</description>
 	<licenses>
 		<license>
 			<name>GNU LESSER GENERAL PUBLIC LICENSE, Version 3</name>
-			<url>http://www.gnu.org/licenses/gpl.html</url>
+			<url>https://www.gnu.org/licenses/gpl.html</url>
 			<distribution>repo</distribution>
 		</license>
 	</licenses>
@@ -34,16 +34,16 @@
 			<id>zkteam</id>
 			<name>ZK Team</name>
 			<email>info@zkoss.org</email>
-			<url>http://www.zkoss.org</url>
+			<url>https://www.zkoss.org</url>
 			<organization>Potix</organization>
-			<organizationUrl>http://www.zkoss.org</organizationUrl>
+			<organizationUrl>https://www.zkoss.org</organizationUrl>
 			<roles>
 				<role>architect</role>
 				<role>developer</role>
 			</roles>
 			<timezone>8</timezone>
 			<properties>
-				<picUrl>http://www.zkoss.org</picUrl>
+				<picUrl>https://www.zkoss.org</picUrl>
 			</properties>
 		</developer>
 	</developers>
@@ -51,18 +51,18 @@
 		<repository>
 			<id>ZK CE</id>
 			<name>ZK CE Repository</name>
-			<url>http://mavensync.zkoss.org/maven2</url>
+			<url>https://mavensync.zkoss.org/maven2</url>
 		</repository>
 		<repository>
 			<id>ZK PE EE Evaluation</id>
-			<url>http://mavensync.zkoss.org/eval/</url>
+			<url>https://mavensync.zkoss.org/eval/</url>
 		</repository>
 	</repositories>
 	<pluginRepositories>
 		<pluginRepository>
 			<id>zkmaven</id>
 			<name>ZK Maven Plugin Repository</name>
-			<url>http://mavensync.zkoss.org/maven2/</url>
+			<url>https://mavensync.zkoss.org/maven2/</url>
 		</pluginRepository>
 	</pluginRepositories>
 	<dependencies>
