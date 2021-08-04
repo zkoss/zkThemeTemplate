@@ -65,7 +65,7 @@
 		padding: @timepickerButtonPadding;
 		line-height: @baseLineHeight;
 		background: @inputBackgroundColor;
-		text-align: left;
+		text-align: center;
 		vertical-align: middle;
 		overflow: hidden;
 		cursor: pointer;
@@ -78,6 +78,9 @@
 			color: @comboButtonActiveIconColor;
 			border-color: @comboButtonActiveBorderColor;
 			background-color: @comboButtonActiveBackgroundColor;
+		}
+		&[readonly] {
+			cursor: pointer;
 		}
 	}
 
@@ -108,18 +111,8 @@
 	}
 }
 
-.z-timepicker-input {
-	&[readonly] {
-		cursor: pointer;
-	}
-}
-
 .z-timepicker-button.z-timepicker-disabled {
 	display: none;
-}
-
-.z-timepicker-button {
-	text-align: center;
 }
 
 .z-timepicker-inplace .z-timepicker-input {
