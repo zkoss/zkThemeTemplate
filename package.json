@@ -7,6 +7,6 @@
     "zklessc-dev": "zklessc -s src/archive/web -o target/classes/web/___THEME_NAME___ -w"
   },
   "devDependencies": {
-    "zkless-engine": "^1.1.8"
+    "zkless-engine": "^1.1.9"
   }
 }
