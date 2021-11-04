@@ -1,0 +1,197 @@
+@import "~./zul/less/_header.less";
+
+.z-multislider {
+	white-space: nowrap;
+	overflow: visible;
+	cursor: pointer;
+
+	&-inner {
+		position: relative;
+	}
+
+	&-track {
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		background-color: @multisliderTrackColor;
+	}
+
+	&-marks {
+		position: relative;
+	}
+
+	&-mark {
+		position: absolute;
+
+		&-label {
+			position: absolute;
+			font-family: @baseTitleFontFamily;
+			color: @textColorDefault;
+			text-align: center;
+			font-size: @rangesliderLabelFontSize;
+		}
+	}
+
+	& .z-sliderbuttons {
+		&-button {
+			width: @multisliderButtonSize;
+			height: @multisliderButtonSize;
+			border-width: @multisliderButtonBorderWidth;
+			background-color: @multisliderButtonColor;
+			border-color: @multisliderButtonColor;
+			border-radius: 50%;
+			box-shadow: 0 0 4px 0 @multisliderShadowColor;
+			z-index: 2;
+		}
+
+		&-tooltip {
+			border-radius: @multisliderBorderRadius;
+			background: @multisliderTooltipBackgroundColor;
+		}
+
+		&-area {
+			background-color: @multisliderButtonColor;
+		}
+	}
+
+	& .z-sliderbuttons:nth-last-of-type(2n-2) .z-sliderbuttons-area {
+		background-color: @multisliderButtonColor2;
+	}
+
+	& .z-sliderbuttons:nth-last-of-type(2n-2) .z-sliderbuttons-button {
+		background-color: @multisliderButtonColor2;
+		border-color: @multisliderButtonColor2;
+	}
+
+	&:not(&-disabled) {
+		& .z-sliderbuttons {	
+			&-button:hover {
+				border-color: @multisliderButtonHoverColor;
+				background-color: @multisliderButtonHoverColor;
+			}
+
+			&-button:hover .z-sliderbuttons-tooltip {
+				display: block;
+			}
+
+			&-button:active {
+				border-color: @multisliderButtonActiveColor;
+				background-color: @multisliderButtonActiveColor;
+			}
+
+			&-button:focus {
+				border-color: @multisliderButtonFocusBorderColor;
+			}
+		}
+		& .z-sliderbuttons:nth-last-of-type(2n-2) .z-sliderbuttons-button:hover {
+			border-color: @multisliderButtonHoverColor2;
+			background-color: @multisliderButtonHoverColor2;
+		}
+
+		& .z-sliderbuttons:nth-last-of-type(2n-2) .z-sliderbuttons-button:active {
+			border-color: @multisliderButtonActiveColor2;
+			background-color: @multisliderButtonActiveColor2;
+		}
+	}
+
+	&-horizontal {
+		width: 300px;
+		& .z-sliderbuttons {
+			&-area {
+				height: 100%;
+			}
+			&-button {
+				margin-top: @rangesliderHorizontalButtonMarginTop;
+				margin-left: @rangesliderHorizontalButtonMarginLeft;
+				top: 0;
+			}
+			&-tooltip {
+				top: @rangesliderHorizontalTooltipPositionTop;
+				left: 50%;
+				transform: translateX(-50%) translateY(-100%);
+				padding: @rangesliderHorizontalTooltipPadding;
+			}
+		}
+	}
+
+	&-horizontal &-inner {
+		margin: 40px 12px 30px;
+		height: @multisliderInnerSize;
+	}
+
+	&-horizontal &-marks {
+		width: 100%;
+	}
+
+	&-horizontal &-mark-label {
+		top: @rangesliderHorizontalMarkLabelPositionTop;
+		transform: translateX(-50%);
+	}
+
+	&-vertical {
+		height: 300px;
+		& .z-sliderbuttons {
+			&-area {
+				width: 100%;
+			}
+			&-button {
+				margin-top: @rangesliderHorizontalButtonMarginLeft;
+				margin-left: @rangesliderHorizontalButtonMarginTop;
+				left: 0;
+			}
+			&-tooltip {
+				left: @rangesliderVerticalTooltipPositionLeft;
+				top: 50%;
+				transform: translateY(-50%);
+				padding: @rangesliderVerticalTooltipPadding;
+			}
+		}
+	}
+
+	&-vertical &-inner {
+		margin: 12px 30px 12px 12px;
+		width: @multisliderInnerSize;
+		height: 100%;
+	}
+
+	&-vertical &-marks {
+		height: 100%;
+	}
+
+	&-vertical &-mark-label {
+		left: @rangesliderHorizontalMarkLabelPositionTop;
+		transform: translateY(-50%);
+	}
+
+	&-disabled &-track {
+		background-color: @multisliderDisabledTrackColor;
+	}
+
+	&-disabled {
+		cursor: default;
+		& .z-sliderbuttons {
+			&-area {
+				background-color: @multisliderDisabledButtonColor;
+			}
+
+			&-button {
+				border-color: @multisliderDisabledButtonColor;
+				background-color: @multisliderDisabledButtonColor;
+				box-shadow: none;
+			}
+
+			&-tooltip {
+				background-color: @multisliderDisabledTooltipBackgroundColor;
+			}
+
+			&:nth-last-of-type(2n-2) .z-sliderbuttons-area {
+				background-color: @multisliderDisabledButtonColor2;
+			}
+
+			&:nth-last-of-type(2n-2) .z-sliderbuttons-button {
+				border-color: @multisliderDisabledButtonColor2;
+				background-color: @multisliderDisabledButtonColor2;
+			}
+		}
+	}
+}

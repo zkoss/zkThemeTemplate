@@ -1,0 +1,29 @@
+.z-textbox,
+.z-decimalbox,
+.z-intbox,
+.z-longbox,
+.z-doublebox {
+	font-size: 15px;
+}
+
+.z-errorbox {
+	cursor: move;
+
+	&-icon {
+		top: -3px;
+	}
+	&-content {
+		font-size: 15px;
+		word-wrap: break-word; 
+	}
+	> .z-errorbox-icon {
+		font-size: 22px;
+		top: 6px;
+	}
+	&-up + .z-errorbox-icon {
+		top: 14px;
+	}
+	&-close {
+		font-size: 22px;
+	}
+}
