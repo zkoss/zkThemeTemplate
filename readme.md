@@ -1,8 +1,12 @@
 The ZK Theme Template serves as a base theme, allowing developers to make changes and create custom ZK themes. It comes with continuous/incremental compile and live-reload features to minimize the turn-around time when developing a theme. We assume you already know [Less](http://lesscss.org/).
 
+If you just want to customize some components' looking (not all components), please read [ZK Style Customization Guide](https://www.zkoss.org/wiki/ZK_Style_Customization_Guide).
+
 # Build Steps
 ## Building prerequisites
-Require Node.js \>= 10.16
+[Require Node.js](https://nodejs.org/en/download/) \>= 10.16
+
+Check version with `node -v`
 
 ## Fork
 fork this repository to another git repository, so this will make it easier to merge bug fixes from the original repository and migrate to the new version in the future.
@@ -21,7 +25,7 @@ It will compile `.less` files and package the source into jar. The jar file will
 # How to Customize a Theme
 This project contains the default theme (`iceblue`) .less files. 
 The suggested steps:
-1. Swtich to a theme as a base theme
+1. Switch to a theme as a base theme
 2. Add a new `.less` file to override the existing variables.
 
 ## switch to compact profile (since 9.5.0)
@@ -35,8 +39,8 @@ The suggested steps:
 
 3. now the theme uses the compact profile.
 
-## switch to a theme of [Theme Pack](https://www.zkoss.org/zkthemepackdemo/)
-The theme pack contains extra 23 themes, you can choose one theme that is closer to your target theme as a base theme and start to customize it. So that it can save some efforts for you.
+## Switch to a theme of [Theme Pack](https://www.zkoss.org/zkthemepackdemo/)
+The [theme pack](https://www.zkoss.org/zkthemepackdemo/) contains extra 23 themes, you can choose one theme that is closer to your target theme as a base theme and start to customize it. So that it can save some efforts for you.
 (**Notice**: you need to purchase ZK EE or theme pack to access the theme pack source code.)
 
 1. Download Theme Pack source jar. <br/>
@@ -51,7 +55,7 @@ For example, `_montana.less`
 ```
 
 ## Add New .less
-We suggest you customize by overriding existing variables instead of modifying the variable value directly. So that you easily merge the futhur changes from the original repository and easily differentiate the customized style and default styles. The steps are:
+We suggest you customize by overriding existing variables instead of modifying the variable value directly. So that you easily merge the future changes from the original repository and easily differentiate the customized style and default styles. The steps are:
 1. create a new `.less` file and add those variables you want to override.
 2. import the new `.less` file in `_header.less` in the bottom to override the previous one like:
 ```less
@@ -98,3 +102,14 @@ in a separate console:
 It does not require a server restart, but user has to refresh the browser.
 
 Please refer to [ZK Developer's Reference/Theming and Styling/Switching Themes](https://www.zkoss.org/wiki/ZK_Developer%27s_Reference/Theming_and_Styling/Switching_Themes).
+
+# Use cases
+## Change primary color
+`src/archive/web/zul/less/_zkvariables.less` > `@colorPrimary`
+
+## Change base font
+`src/archive/web/zul/less/_zkvariables.less` > `@baseFontSize`, `@baseTitleFontFamily`, `@baseContentFontFamily`
+
+## Change margin and padding
+Different components have different margin and padding, search "margin" and "padding" among all `.less` files.
+
