@@ -113,3 +113,14 @@ Please refer to [ZK Developer's Reference/Theming and Styling/Switching Themes](
 ## Change margin and padding
 Different components have different margin and padding, search "margin" and "padding" among all `.less` files.
 
+
+# Customize Previous Themes
+
+## breeze
+check out the branch `breeze` of this repository
+
+## atlantic 
+visit https://github.com/zkoss/atlantic and follow the readme.
+
+## silvertail, sapphire
+visit https://github.com/zkoss/zkthemes and follow the readme.
