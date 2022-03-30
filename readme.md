@@ -11,11 +11,16 @@ Check version with `node -v`
 ## Fork
 fork this repository to another git repository, so this will make it easier to merge bug fixes from the original repository and migrate to the new version in the future.
 
-## initialize a custom theme
-```
-./init.sh
-npm install
-```
+## Initialize a custom theme
+* initialize the project with a theme name. 
+
+`./init.sh`
+
+* install [zkless-engine](https://github.com/zkoss/zkless-engine).
+The LESS processor customized for ZK.
+
+`npm install`
+  
 
 ## build jar file
 `mvn clean package`
@@ -44,7 +49,7 @@ The [theme pack](https://www.zkoss.org/zkthemepackdemo/) contains extra 23 theme
 (**Notice**: you need to purchase ZK EE or theme pack to access the theme pack source code.)
 
 1. Download Theme Pack source jar. <br/>
-check theme color palette at `/projects/*.less`
+check theme color palette at `source.jar/palettes/*.less`
 2. Copy one theme less to `zkThemeTemplate/src/archive/web/zul/less/colors`. <br/>
 For example, `montana.less`
 3. prepend `_` at the file name <br/>
@@ -71,6 +76,7 @@ We suggest you customize by overriding existing variables instead of modifying t
 `mvn test exec:java@preview-app`
 * open a simple preview page in a browser: http://localhost:8080
 * add your own pages containing the components to preview under `/preview/web`
+
 
 ## continuous compile/watch less files
 in a separate console:
