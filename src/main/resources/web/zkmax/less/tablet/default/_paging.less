@@ -1,0 +1,54 @@
+.z-paging {
+	height: 38px;
+	padding: 4px 12px 3px;
+
+	&-icon {
+		font-size: 22px;
+	}
+
+	&-button {
+		min-width: 30px;
+		height: 30px;
+		line-height: 30px;
+		.borderRadius(@baseBorderRadius);
+		font-size: 22px;
+		padding: 0;
+		margin: 0;
+	}
+
+	&-text {
+		font-size: 15px;
+		margin-right: 2px;
+	}
+
+	&-info {
+		font-size: 15px;
+		top: 0;
+	}
+
+	&-input {
+		height: 31px;
+		margin-left: 2px;
+	}
+}
+
+.z-paging-os {
+	ul > li {
+		margin-left: 2px;
+	}
+
+	ul > li.z-paging-navigate + li, ul > li + li.z-paging-navigate {
+		margin-left: 4px;
+	}
+
+	ul > li.z-paging-navigate + li.z-paging-navigate {
+		margin-left: 2px;
+	}
+
+	.z-paging-button {
+		padding: 0 8px;
+		font-size: 15px;
+		height: 30px;
+		min-width: 30px;
+	}
+}

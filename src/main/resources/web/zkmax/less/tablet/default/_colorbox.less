@@ -1,0 +1,60 @@
+//Colorbox
+.z-colorbox {
+	height: 34px;
+}
+.z-colorpalette {
+	padding: 4px;
+	.size(304px, auto);
+	&-newcolor {
+		.size(34px, 34px);
+	}
+	&-input {
+		.size(96px, 34px);
+	}
+	&-color {
+		.size(40px, 24px);
+		margin: 4px;
+	}
+	&-body {
+		max-height: 416px;
+		overflow: auto;
+	}
+}
+.z-colorpicker {
+	padding: 4px;
+}
+
+.z-colorbox-popup {
+	padding: 4px;
+}
+
+.z-menu-image.z-colorbox-color {
+	.size(24px, 24px);
+	min-width: 24px;
+	min-height: 24px;
+}
+
+.z-colorbox-paletteicon,
+.z-menu-paletteicon,
+.z-colorbox-pickericon,
+.z-menu-pickericon {
+	font-size: 24px;
+	padding: 4px 10px;
+}
+
+.z-colorbox-paletteicon, .z-menu-paletteicon {
+	left: 12px;
+	top: 12px;
+}
+
+.z-colorbox-pickericon, .z-menu-pickericon {
+	left: 64px;
+	top: 12px;
+}
+
+.z-palette-button .z-colorbox-paletteicon,
+.z-picker-button .z-colorbox-pickericon {
+	// copied form toolbar.less: z-toolbarbutton-checked
+	color: @toolbarButtonCheckedColor;
+	background-color: @toolbarButtonCheckedBackgroundColor;
+}
