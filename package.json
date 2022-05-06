@@ -3,8 +3,8 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "zklessc": "zklessc -s src/archive/web -o target/classes/web/___THEME_NAME___",
-    "zklessc-dev": "zklessc -s src/archive/web -o target/classes/web/___THEME_NAME___ -w"
+    "zklessc": "zklessc -s src/archive/web -o target/classes/web/sca",
+    "zklessc-dev": "zklessc -s src/archive/web -o target/classes/web/sca -w"
   },
   "devDependencies": {
     "zkless-engine": "^1.1.9"

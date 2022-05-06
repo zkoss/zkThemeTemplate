@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>___GROUP_ID___</groupId>
-	<artifactId>___ARTIFACT_ID___</artifactId>
-	<version>___VERSION___</version>
+	<groupId>sca.logistics.sting</groupId>
+	<artifactId>sca</artifactId>
+	<version>1.1.0</version>
 	<properties>
 		<maven.compiler.source>8</maven.compiler.source>
 		<maven.compiler.target>8</maven.compiler.target>
-		<zk.version>9.6.0-Eval</zk.version>
+		<zk.version>9.6.1</zk.version>
 		<zkspringboot.version>2.5.3</zkspringboot.version>
 		<springboot.version>2.5.3</springboot.version>
 		<maven.build.timestamp.format>yyyy-MM-dd</maven.build.timestamp.format>
@@ -15,13 +15,15 @@
 		<zktheme.resources>${project.basedir}/src/archive</zktheme.resources>
 		<zktheme.web.resources>${zktheme.resources}/web</zktheme.web.resources>
 		<zktheme.theme.outputDirectory>${project.build.outputDirectory}/web/${project.artifactId}</zktheme.theme.outputDirectory>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>				
 	</properties>
 	<packaging>jar</packaging>
-	<name>___ARTIFACT_ID___</name>
+	<name>sca</name>
 	<scm>
 		<url>https://mavensync.zkoss.org/maven2</url>
 	</scm>
-	<description>___DISPLAY_NAME___</description>
+	<description>SCA Logistics custom ZK theme</description>
 	<licenses>
 		<license>
 			<name>GNU LESSER GENERAL PUBLIC LICENSE, Version 3</name>
@@ -54,8 +56,8 @@
 			<url>https://mavensync.zkoss.org/maven2</url>
 		</repository>
 		<repository>
-			<id>ZK PE EE Evaluation</id>
-			<url>https://mavensync.zkoss.org/eval/</url>
+			<id>ZK EE</id>
+			<url>https://maven.zkoss.org/repo/zk/ee</url>
 		</repository>
 	</repositories>
 	<pluginRepositories>

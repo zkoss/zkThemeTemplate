@@ -16,7 +16,7 @@ Copyright (C) 2010 Potix Corporation. All Rights Reserved.
 	it will be useful, but WITHOUT ANY WARRANTY.
 }}IS_RIGHT
 */
-package org.zkoss.theme.___THEME_NAME___;
+package org.zkoss.theme.sca;
 
 /**
  *  The version of the sapphire theme.
@@ -26,5 +26,5 @@ package org.zkoss.theme.___THEME_NAME___;
 public class Version {
 	/** Returns the version UID.
 	 */
-	public static final String UID = "___VERSION___";
+	public static final String UID = "1.1.0";
 }

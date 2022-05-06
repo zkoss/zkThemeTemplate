@@ -25,7 +25,7 @@ The LESS processor customized for ZK.
 ## build jar file
 `mvn clean package`
 
-It will compile `.less` files and package the source into jar. The jar file will be at `target/___THEME_NAME___.jar`
+It will compile `.less` files and package the source into jar. The jar file will be at `target/sca.jar`
 
 # How to Customize a Theme
 This project contains the default theme (`iceblue`) .less files. 
@@ -84,9 +84,9 @@ in a separate console:
 `npm run zklessc-dev`
 
 
-# How to use `___THEME_NAME___.jar`:
+# How to use `sca.jar`:
 
-1. Put `___THEME_NAME___.jar` in `WEB-INF/lib`, then `___THEME_NAME___.jar`
+1. Put `sca.jar` in `WEB-INF/lib`, then `sca.jar`
     will become your default theme if there is no other theme.
 
 2. Now you can also dynamically switch between different themes by
@@ -96,14 +96,14 @@ in a separate console:
         <!-- in WEB-INF/zk.xml -->
         <library-property> 
             <name>org.zkoss.theme.preferred</name>
-            <value>___THEME_NAME___</value>
+            <value>sca</value>
         </library-property> 
      ```
 
 
   - Use cookie to switch theme, add a cookie
     ```
-    zktheme=___THEME_NAME___
+    zktheme=sca
     ```
 It does not require a server restart, but user has to refresh the browser.
 

@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <config>
-	<config-name>___THEME_NAME___</config-name><!-- used to resolve dependency -->
+	<config-name>sca</config-name><!-- used to resolve dependency -->
 	<depends>zul</depends>
 	<version>
-		<version-class>org.zkoss.theme.___THEME_NAME___.Version</version-class>
-		<version-uid>___VERSION___</version-uid>
+		<version-class>org.zkoss.theme.sca.Version</version-class>
+		<version-uid>1.1.0</version-uid>
 	</version>
 
 	<listener>
-		<listener-class>org.zkoss.theme.___THEME_NAME___.___THEME_NAME_CAP___ThemeWebAppInit</listener-class>
+		<listener-class>org.zkoss.theme.sca.ScaThemeWebAppInit</listener-class>
 	</listener>
 </config>
