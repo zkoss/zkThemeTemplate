@@ -1,21 +1,23 @@
-*,
-*:before,
-*:after {
+@browserDefault: "'org.zkoss.zul.theme.browserDefault'";
+@browserDefaultPrefix: e('<c:if test="${not empty c:property(@{browserDefault})}">${".z-page "}</c:if>');
+@{browserDefaultPrefix}*,
+@{browserDefaultPrefix}*:before,
+@{browserDefaultPrefix}*:after {
 	-webkit-user-drag: none;
 	-webkit-user-select: none;
 }
-*:focus {
+@{browserDefaultPrefix}*:focus {
 	outline: none;
 }
-input[type=number]::-webkit-inner-spin-button,
-input[type=number]::-webkit-outer-spin-button {
+@{browserDefaultPrefix}input[type=number]::-webkit-inner-spin-button,
+@{browserDefaultPrefix}input[type=number]::-webkit-outer-spin-button {
 	-webkit-appearance: none;
 	margin: 0;
 }
-input,
-input:focus,
-textarea,
-textarea:focus {
+@{browserDefaultPrefix}input,
+@{browserDefaultPrefix}input:focus,
+@{browserDefaultPrefix}textarea,
+@{browserDefaultPrefix}textarea:focus {
 	-webkit-tap-highlight-color: rgba(255, 255, 255, 0);
 	-webkit-appearance: none;
 	-moz-appearance: none;
@@ -25,15 +27,15 @@ textarea:focus {
 }
 
 // Checkbox and Radio
-input[type=checkbox],
-input[type=radio] {
+@{browserDefaultPrefix}input[type=checkbox],
+@{browserDefaultPrefix}input[type=radio] {
 	.size(24px, 24px);
 }
-input[type=checkbox] {
+@{browserDefaultPrefix}input[type=checkbox] {
 	font-size: 22px;
 	line-height: 22px;
 }
-input[type=radio] {
+@{browserDefaultPrefix}input[type=radio] {
 	&:before {
 		.size(16px, 16px);
 	}
