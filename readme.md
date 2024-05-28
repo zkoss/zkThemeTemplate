@@ -34,23 +34,21 @@ The suggested steps:
 2. Add a new `.less` file to override the existing variables.
 
 ## switch to compact profile (since 9.5.0)
-1. Open `src/archive/web/zul/less/_zkvariables.less`
-2. Modify `@themeProfile` to "compact".
-
+1. Open [`src/archive/web/zul/less/_zkvariables.less`](src/archive/web/zul/less/_zkvariables.less)
+2. Modify `@themeProfile` to `compact`.
 ``` less
 @themeProfile:                 "compact";
 @themePalette:                 "iceblue";
 ```
-
 3. now the theme uses the compact profile.
 
 ## Switch to a theme of [Theme Pack](https://www.zkoss.org/zkthemepackdemo/)
 The [theme pack](https://www.zkoss.org/zkthemepackdemo/) contains extra 23 themes, you can choose one theme that is closer to your target theme as a base theme and start to customize it. So that it can save some efforts for you.
 (**Notice**: you need to purchase ZK EE or theme pack to access the theme pack source code.)
 
-1. Download Theme Pack source jar. <br/>
-check theme color palette at `source.jar/palettes/*.less`
-2. Copy one theme less to `zkThemeTemplate/src/archive/web/zul/less/colors`. <br/>
+1. Download Theme Pack source jar at [the premium repository](https://maven.zkoss.org/repo/zk/ee/org/zkoss/themepack/): [THEME_NAME]-[VERSION]-sources.jar
+2. Get theme color palette less at `source.jar/palettes/*.less`
+2. Copy the theme less to `zkThemeTemplate/src/archive/web/zul/less/colors`. <br/>
 For example, `montana.less`
 3. prepend `_` at the file name <br/>
 For example, `_montana.less`
@@ -60,14 +58,14 @@ For example, `_montana.less`
 ```
 
 ## Add New .less
-We suggest you customize by overriding existing variables instead of modifying the variable value directly. So that you easily merge the future changes from the original repository and easily differentiate the customized style and default styles. The steps are:
+We suggest you customize a theme by overriding existing variables instead of modifying the variable value directly. So that you can easily merge the future changes from the original repository and easily differentiate the customized style and default styles. The steps are:
 1. create a new `.less` file and add those variables you want to override.
-2. import the new `.less` file in `_header.less` in the bottom to override the previous one like:
+2. import the new `.less` file in `_header.less` at the bottom to override the previous one like:
 ```less
 @import "_zkvariables.less"; // variables needed for ZK
 @import "_zkmixins.less";
 
-@import "_mytheme.less"
+@import "_mytheme.less" // your new theme variables
 ```
 
 
