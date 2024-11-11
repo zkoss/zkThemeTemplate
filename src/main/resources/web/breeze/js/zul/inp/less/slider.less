@@ -1,0 +1,132 @@
+@import "~./zul/less/_header.less";
+
+.z-slider {
+	background-image: none;
+	overflow: hidden;
+	position: relative;
+	width: 100%;
+	height: 100%;
+
+	&-center {
+		.borderRadius(5px);
+		cursor: pointer;
+	}
+
+	&-button {
+		.size(@baseIconWidth, @baseIconHeight);
+		border: 1px solid @sliderBorderColor;
+		.borderRadius(@borderRadiusSmall);
+		.gradient('ver', '#FFFFFF 0%; #FEFEFE 50%; #EFEFEF 100%');
+		position: relative;
+		cursor: pointer;
+
+		&:active {
+			border-top-color: @sliderActiveBorderColor;
+			border-left-color: @sliderActiveBorderColor;
+			.verGradient(@baseGradientEnd, @baseGradientStart);
+		}
+
+		&:hover {
+			.resetGradient();
+			background: @hoverBackgroundColor;
+		}
+	}
+
+	&-knob-area {
+		stroke: @sliderAreaBackgroundColor;
+	}
+
+	&-knob-inner {
+		stroke: @sliderBackgroundColor;
+	}
+
+	&-knob-svg {
+		width: 100%;
+		height: 100%;
+		cursor: pointer;
+	}
+
+	&-input {
+		border: 1px solid @inputBorderColor;
+		.borderRadius(@baseBorderRadius);
+		background: @inputBackgroundColor;
+		-webkit-appearance: textfield;
+		-moz-appearance: textfield;
+		text-align: center;
+		position: absolute;
+		line-height: 1.5;
+		.fontStyle(@baseContentFontFamily, @fontSizeMedium, bold, @sliderInputColor);
+
+		&:focus {
+			.boxShadow('inset 1px 1px 1px rgba(210, 210, 210, 0.75)');
+			-webkit-appearance: textfield;
+			-moz-appearance: textfield;
+		}
+	}
+
+	&-horizontal {
+		height: @baseBarHeight;
+		width: 200px;
+
+		.z-slider-center {
+			.size(100%, @baseHeight - 2);
+			margin-top: -3px;
+			.gradient('ver', 'rgba(157, 157, 157, 0.5) 0%; rgba(130, 140, 149, 0.5) 13%; rgba(215, 215, 215, 0.5) 100%');
+			position: relative;
+			top: 50%;
+		}
+
+		.z-slider-button {
+			top: -5px;
+			left: 0;
+		}
+	}
+
+	&-vertical {
+		font-size: 0;
+		width: @baseBarWidth;
+		margin-right: 0px;
+		line-height: 0;
+		height: 200px;
+
+		.z-slider-button {
+			left: -5px;
+		}
+
+		.z-slider-center {
+			.size(@baseWidth - 2, 100%);
+			margin: auto;
+			.gradient('hor', 'rgba(157, 157, 157, 0.5) 0%; rgba(130, 140, 149, 0.5) 13%; rgba(215, 215, 215, 0.5) 100%');
+		}
+	}
+
+	&-popup {
+		background-color: white;
+		border: 1px outset;
+		font-family: @baseContentFontFamily;
+		font-size: @fontSizeMedium;
+		font-weight: normal;
+		padding: 2px;
+		text-shadow: 0 1px #FFFFFF;
+		position: absolute;
+		z-index: 60000;
+		.boxShadow('0 0 10px rgba(0, 0, 0, 0.35)');
+	}
+
+	&-sphere {
+		.z-slider-vertical .z-slider-button {
+			bottom: 0;
+		}
+	}
+
+	&-sphere,
+	&-scale {
+		.z-slider-button {
+			.borderRadius(15px);
+		}
+	}
+
+	&-scale {
+		.encodeThemeURL(background-image, '~./zul/img/slider/ticks.gif');
+	}
+}
