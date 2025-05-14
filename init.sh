@@ -4,14 +4,14 @@ echo ""
 echo "This script will assist you in setting up your custom ZK theme maven project."
 echo ""
 
-themeSrcPath=src/org/zkoss/theme
+themeSrcPath=src/main/java/org/zkoss/theme
 themeTemplatePath=$themeSrcPath/___THEME_NAME___
 webAppInitFile=$themeTemplatePath/___THEME_NAME_CAP___ThemeWebAppInit.java
 
 templateFiles="pom.xml \
 readme.md \
 package.json \
-preview/zk/example/ThemePreviewApp.java \
+src/test/java/zk/example/ThemePreviewApp.java \
 ${themeTemplatePath}/Version.java \
 ${webAppInitFile} \
 src/main/resources/metainfo/zk/config.xml \
