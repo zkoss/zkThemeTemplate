@@ -14,8 +14,8 @@ package.json \
 preview/zk/example/ThemePreviewApp.java \
 ${themeTemplatePath}/Version.java \
 ${webAppInitFile} \
-src/archive/metainfo/zk/config.xml \
-src/archive/metainfo/zk/lang-addon.xml"
+src/main/resources/metainfo/zk/config.xml \
+src/main/resources/metainfo/zk/lang-addon.xml"
 
 # 1. gather information
 
