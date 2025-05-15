@@ -7,12 +7,12 @@
 	<properties>
 		<maven.compiler.source>11</maven.compiler.source>
 		<maven.compiler.target>11</maven.compiler.target>
-		<zk.version>10.0.2-Eval</zk.version>
+		<zk.version>10.1.0-Eval</zk.version>
 		<zkspringboot.version>3.2.6</zkspringboot.version>
 		<springboot.version>3.2.6</springboot.version>
 		<maven.build.timestamp.format>yyyy-MM-dd</maven.build.timestamp.format>
 		<packname>-${project.version}</packname>
-		<zktheme.resources>${project.basedir}/src/archive</zktheme.resources>
+		<zktheme.resources>${project.basedir}/src/main/resources</zktheme.resources>
 		<zktheme.web.resources>${zktheme.resources}/web</zktheme.web.resources>
 		<zktheme.theme.outputDirectory>${project.build.outputDirectory}/web/${project.artifactId}</zktheme.theme.outputDirectory>
 	</properties>
@@ -88,7 +88,7 @@
 		</dependency>
 	</dependencies>
 	<build>
-		<sourceDirectory>${project.basedir}/src/</sourceDirectory>
+<!--		<sourceDirectory>${project.basedir}/src/</sourceDirectory>-->
 		<resources>
 			<!-- handle class web resources separately below -->
 			<resource>
@@ -107,12 +107,6 @@
 				<targetPath>${zktheme.theme.outputDirectory}</targetPath>
 			</resource>
 		</resources>
-		<testSourceDirectory>${project.basedir}/preview/</testSourceDirectory>
-		<testResources>
-			<testResource>
-				<directory>${project.basedir}/preview/</directory>
-			</testResource>
-		</testResources>
 		<plugins>
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
