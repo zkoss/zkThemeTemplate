@@ -5,7 +5,6 @@
 	overflow: hidden;
 	padding: @stepbarPadding;
 	display: flex;
-	display: -ms-flexbox;
 	font-family: @baseTitleFontFamily;
 
 	&:not(&-linear) .z-step {
@@ -13,11 +12,9 @@
 	}
 }
 
-.z-step {	
+.z-step {
 	display: flex;
-	display: -ms-flexbox;
 	flex-direction: row;
-	-ms-flex-direction: row;
 	align-items: center;
 	flex: 1;
 	z-index: 0;
@@ -145,33 +142,33 @@
 		margin-top: (@stepSize - @stepbarSeparatorSize) / 2;
 	}
 
-	.z-step-content {
-		position: relative;
-		display: flex;
-		flex-direction: column;
-		-ms-flex-direction: column;
-		align-items: center;
-		text-align: center;
-		vertical-align: top;
-	}
+	&:not(.z-stepbar-vertical) {
+		.z-step-content {
+			position: relative;
+			display: flex;
+			flex-direction: column;
+			-ms-flex-direction: column;
+			align-items: center;
+			text-align: center;
+			vertical-align: top;
+		}
+		.z-step-content:before,
+		.z-step-content:after {
+			position: absolute;
+			height: @stepbarSeparatorSize;
+			background-color: @stepInactiveColor;
+			content: '';
+			top: (@stepSize - @stepbarSeparatorSize) / 2;
+		}
+		.z-step-content:before {
+			left: 0;
+			right: calc(50% + (@stepSize / 2));
+		}
 
-	.z-step-content:before,
-	.z-step-content:after {
-		position: absolute;
-		height: @stepbarSeparatorSize;
-		background-color: @stepInactiveColor;
-		content: '';
-		top: (@stepSize - @stepbarSeparatorSize) / 2;
-	}
-
-	.z-step-content:before {		
-		left: 0;
-		right: calc(50% + (@stepSize / 2));
-	}
-
-	.z-step-content:after {
-		left: calc(50% + (@stepSize / 2));
-		right: 0;
+		.z-step-content:after {
+			left: calc(50% + (@stepSize / 2));
+			right: 0;
+		}
 	}
 
 	.z-step:first-child:before,
@@ -188,7 +185,6 @@
 		background-color: @stepActiveColor;
 	}
 
-
 	.z-step-icon {
 		margin-right: 0;
 	}
@@ -196,5 +192,27 @@
 	.z-step-title {
 		display: block;
 		margin-top: @stepbarPadding;
+	}
+}
+
+.z-stepbar.z-stepbar-vertical {
+	flex-direction: column;
+	.z-step {
+		flex-direction: column;
+		&:not(:first-child):before {
+			height: auto;
+			min-height: @stepbarPadding * 2;
+			width: @stepbarSeparatorSize;
+			margin: -@stepbarPadding*2 0 0 (@stepbarPadding - @stepbarSeparatorSize / 2);
+		}
+	}
+	&:not(.z-stepbar-wrapped-label) .z-step {
+		align-items: start;
+	}
+	&.z-stepbar-wrapped-label .z-step {
+		&:not(:first-child):before {
+			position: absolute;
+			left: calc(50% - @stepbarPadding);
+		}
 	}
 }
