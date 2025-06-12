@@ -29,14 +29,17 @@
 
 //listbox
 .z-listbox {
-	background: @meshBackgroundColor;
+	background: @maskBackgroundColor;
 	border: 1px solid @baseBorderColor;
 	overflow: hidden;
 	zoom: 1;
+	&:focus-visible {
+		box-shadow: @meshFocusBoxShadow;
+		transition: unset;
+	}
 	//listbox header
 	&-header {
 		width: 100%;
-		background: @meshTitleBackgroundColor;
 		position: relative;
 		overflow: hidden;
 		.resetTable();
@@ -60,8 +63,6 @@
 	}
 	//listbox footer
 	&-footer {
-		background: @meshFootBackgroundColor;
-		border-top: 1px solid @baseBorderColor;
 		overflow: hidden;
 		white-space: nowrap;
 		.resetTable();
@@ -69,6 +70,7 @@
 		.z-listfooter {
 			overflow: hidden;
 			background: @meshFootBackgroundColor;
+			border-top: 1px solid @baseBorderColor;
 		}
 
 		.z-listfoot-bar {
@@ -112,6 +114,10 @@
 	position: relative;
 	overflow: hidden;
 	white-space: nowrap;
+	&:focus-visible {
+		box-shadow: @meshTitleFocusBoxShadow;
+		transition: unset;
+	}
 	&-sort {
 		.z-listheader-content {
 			cursor: pointer;
@@ -153,6 +159,10 @@
 	&-checkable {
 		.checkable();
 		
+		&:focus-visible {
+			box-shadow: @meshTitleFocusBoxShadow;
+			transition: unset;
+		}
 		.z-listheader-icon {
 			display: none;
 			cursor: default;
@@ -263,7 +273,19 @@
 	}
 	&-focus {
 		> .z-listcell {
-			background: @meshContentFocusBackgroundColor;
+			.listitemFocusBorder(@left: 0, @right: 0) {
+				box-shadow: inset 0 2px 0 0 @meshCellFocusBoxShadowColor,
+							inset 0 -2px 0 0 @meshCellFocusBoxShadowColor,
+							inset @left 0 0 0 @meshCellFocusBoxShadowColor,
+							inset -@right 0 0 0 @meshCellFocusBoxShadowColor;
+			}
+			.listitemFocusBorder();
+			&:first-child {
+				.listitemFocusBorder(@left: 2px);
+			}
+			&:last-child {
+				.listitemFocusBorder(@right: 2px);
+			}
 		}
 		.z-listcell-content {
 			color: @hoverColor;
@@ -436,24 +458,3 @@
 	white-space: nowrap;
 	overflow: hidden;
 }
-
-.ie {
-	// Prevent sub-pixel rounding that causes scrollbar appear
-	.z-listbox-body table {
-		overflow: hidden;
-	}
-}
-
-.ie9 {
-	.z-listbox-body {
-		margin-top: auto; // ZK-3985: Listbox size change when click the listitem https://stackoverflow.com/a/6425130
-	}
-
-	.z-listitem {
-		.z-listcell {
-			position: static;
-			z-index: auto;
-		}
-	}
-}
-// ZK-2151: use strict selector to prevent nest problem
