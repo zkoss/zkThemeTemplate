@@ -173,6 +173,11 @@ div.z-log {
 		border-color: @checkboxHoverBorderColor;
 	}
 
+	&:focus-visible {
+		box-shadow: 0 0 0 2px @focusBorderColor;
+		transition: unset;
+	}
+
 	&:before {
 		content: '';
 		.displaySize(block, 12px, 12px);
@@ -220,12 +225,6 @@ div.z-log {
 		border-color: @inputDisableColor;
 		color: @inputDisableColor;
 		border-radius: 50%;
-	}
-}
-
-.ie11 {
-	input[type="radio"]::-ms-check {
-		border: 1px solid @checkedBorderColor;
 	}
 }
 
@@ -282,12 +281,6 @@ div.z-log {
 	&[disabled]:checked::-ms-check {
 		background-color: @inputDisableBackgroundColor;
 		color: @inputDisableColor;
-	}
-}
-
-.ie11 {
-	input[type="checkbox"]::-ms-check {
-		border: 1px solid @checkedBorderColor;
 	}
 }
 
@@ -560,22 +553,9 @@ span.z-upload input {
 	z-index: -1;
 }
 
-.ie9, .ie10 {
-	span.z-upload input {
-		z-index: 1;
-	}
-}
-
 .z-upload-icon {
 	.encodeThemeURL(background-image, '~./zul/img/misc/prgmeter.png');
 	overflow: hidden;
-}
-
-.ie9, .ie10 {
-	.z-upload-hover {
-		border-color: @hoverBorderColor;
-		.verGradient(@hoverGradientStart, @hoverGradientEnd);
-	}
 }
 
 //fileupload dialog

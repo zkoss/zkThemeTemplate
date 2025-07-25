@@ -16,14 +16,13 @@
 
 //grid
 .z-grid {
-	background: @meshBackgroundColor;
+	background: @maskBackgroundColor;
 	border: 1px solid @baseBorderColor;
 	overflow: hidden;
 	zoom: 1;
 	//grid header
 	&-header {
 		width: 100%;
-		background: @meshTitleBackgroundColor;
 		position: relative;
 		overflow: hidden;
 		.resetTable();
@@ -48,8 +47,6 @@
 	}
 	//grid footer
 	&-footer {
-		background: @meshFootBackgroundColor;
-		border-top: 1px solid @baseBorderColor;
 		overflow: hidden;
 		white-space: nowrap;
 		.resetTable();
@@ -57,6 +54,7 @@
 		.z-footer {
 			overflow: hidden;
 			background: @meshFootBackgroundColor;
+			border-top: 1px solid @baseBorderColor;
 		}
 
 		.z-foot-bar {
@@ -65,6 +63,11 @@
 	}
 	.z-row-inner, .z-cell {
 		background: @meshBackgroundColor;
+	}
+	.z-cell:focus-visible,
+	.z-row .z-row-inner:focus-visible {
+		box-shadow: @meshCellFocusBoxShadow;
+		transition: unset;
 	}
 	&-odd > .z-row-inner,
 	&-odd > .z-cell {
@@ -132,6 +135,10 @@
 	overflow: hidden;
 	white-space: nowrap;
 
+	&:focus-visible {
+		box-shadow: @meshTitleFocusBoxShadow;
+		transition: unset;
+	}
 	&-button {
 		.iconFontStyle(@fontSizeLarge, @meshTitleColor);
 		display: none;
@@ -300,21 +307,4 @@
 .z-cell-hidden-column, .z-row-hidden-column {
 	white-space: nowrap;
 	overflow: hidden;
-}
-
-.ie {
-	// Prevent sub-pixel rounding that causes scrollbar appear
-	.z-grid-body table {
-		overflow: hidden;
-	}
-}
-
-.ie9 {
-	.z-row {
-		.z-row-inner,
-		.z-cell {
-			position: static;
-			z-index: auto;
-		}
-	}
 }

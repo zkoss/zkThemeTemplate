@@ -106,6 +106,10 @@
 			color: @navHoverColor;
 			background: @navHoverBackgroundColor;
 		}
+		&:focus-visible	{
+			box-shadow: @navitemFocusBoxShadow;
+			transition: unset;
+		}
 	}
 	&-image {
 		max-height: @navImageSize;
