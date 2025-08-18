@@ -1,9 +1,13 @@
-The ZK Theme Template serves as a base theme, allowing developers to make changes and create custom ZK themes. It comes with continuous/incremental compile and live-reload features to minimize the turn-around time when developing a theme. We assume you already know [Less](http://lesscss.org/).
+# ZK Theme Template
+[ZK](https://github.com/zkoss/zk) is a highly productive open source Java framework for building amazing enterprise web and mobile applications. The **ZK Theme Template** provides a base theme that developers can extend to create custom ZK themes. It comes with continuous/incremental compile and live-reload features to minimize the turn-around time when developing a theme. 
 
-If you just want to customize some components' looking (not all components), please read [ZK Style Customization Guide](https://www.zkoss.org/wiki/ZK_Style_Customization_Guide).
+If you just want to adjust the look of specific components rather than all of them, please read [ZK Style Customization Guide](https://www.zkoss.org/wiki/ZK_Style_Customization_Guide).
+
+We assume you're already familiar with [Less](http://lesscss.org/).
 
 # Build Steps
 ## Building prerequisites
+
 [Require Node.js](https://nodejs.org/en/download/) \>= 10.16
 
 Check version with `node -v`
