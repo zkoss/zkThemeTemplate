@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>___GROUP_ID___</groupId>
-	<artifactId>___ARTIFACT_ID___</artifactId>
-	<version>___VERSION___</version>
+	<groupId>zkoss</groupId>
+	<artifactId>dev</artifactId>
+	<version>10.5</version>
 	<properties>
 		<maven.compiler.source>11</maven.compiler.source>
 		<maven.compiler.target>11</maven.compiler.target>
@@ -17,11 +17,11 @@
 		<zktheme.theme.outputDirectory>${project.build.outputDirectory}/web/${project.artifactId}</zktheme.theme.outputDirectory>
 	</properties>
 	<packaging>jar</packaging>
-	<name>___ARTIFACT_ID___</name>
+	<name>dev</name>
 	<scm>
 		<url>https://mavensync.zkoss.org/maven2</url>
 	</scm>
-	<description>___DISPLAY_NAME___</description>
+	<description>dev</description>
 	<licenses>
 		<license>
 			<name>GNU LESSER GENERAL PUBLIC LICENSE, Version 3</name>

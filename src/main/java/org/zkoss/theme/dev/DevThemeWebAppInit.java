@@ -1,4 +1,4 @@
-/* ___THEME_NAME_CAP___ThemeWebAppInit.java
+/* DevThemeWebAppInit.java
 
 	Purpose:
 		
@@ -14,7 +14,7 @@ Copyright (C) 2010 Potix Corporation. All Rights Reserved.
 	it will be useful, but WITHOUT ANY WARRANTY.
 }}IS_RIGHT
 */
-package org.zkoss.theme.___THEME_NAME___;
+package org.zkoss.theme.dev;
 
 import org.zkoss.zk.ui.WebApp;
 import org.zkoss.zk.ui.WebApps;
@@ -27,10 +27,10 @@ import org.zkoss.zul.theme.Themes;
  * Library property setting, Theme provider setting and Component definition setting 
  * 
  */
-public class ___THEME_NAME_CAP___ThemeWebAppInit implements WebAppInit {
+public class DevThemeWebAppInit implements WebAppInit {
 
-	private final static String THEME_NAME = "___THEME_NAME___";
-	private final static String THEME_DISPLAY = "___DISPLAY_NAME___";
+	private final static String THEME_NAME = "dev";
+	private final static String THEME_DISPLAY = "dev";
 	private final static int THEME_PRIORITY = 700;
 	
 	public void init(WebApp webapp) throws Exception {
