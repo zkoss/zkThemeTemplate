@@ -121,4 +121,28 @@
         <menuseparator/>
         <menuitem label="Help" iconSclass="z-icon-question"/>
     </menubar>
+    <h:h1>Toolbar</h:h1>
+    <toolbar>
+        <toolbarbutton label="New" iconSclass="z-icon-file"/>
+        <toolbarbutton label="Open" iconSclass="z-icon-folder-open"/>
+        <toolbarbutton label="Save" iconSclass="z-icon-save"/>
+    </toolbar>
+    <h:h1>Toolbar in tabbox</h:h1>
+    <tabbox>
+        <toolbar>
+            <toolbarbutton label="New" iconSclass="z-icon-file"/>
+            <toolbarbutton label="Open" iconSclass="z-icon-folder-open"/>
+            <toolbarbutton label="Save" iconSclass="z-icon-save"/>
+        </toolbar>
+        <tabs>
+            <tab label="Tab 1"/>
+            <tab label="Tab 2"/>
+            <tab label="Tab 3"/>
+        </tabs>
+        <tabpanels>
+            <tabpanel/>
+            <tabpanel/>
+            <tabpanel/>
+        </tabpanels>
+    </tabbox>
 </zk>
