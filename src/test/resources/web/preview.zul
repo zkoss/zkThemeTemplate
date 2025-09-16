@@ -145,4 +145,32 @@
             <tabpanel/>
         </tabpanels>
     </tabbox>
+
+    <h:h1>Navbar</h:h1>
+    <navbar>
+        <navitem label="Home" iconSclass="z-icon-home"/>
+        <navitem label="Dashboard" iconSclass="z-icon-tachometer"/>
+        <navitem label="Products" iconSclass="z-icon-cube"/>
+        <navitem label="Orders" iconSclass="z-icon-shopping-cart"/>
+        <navitem label="Reports" iconSclass="z-icon-bar-chart"/>
+        <navitem label="Settings" iconSclass="z-icon-cog"/>
+    </navbar>
+
+    <h:h1>Navbar - vertical</h:h1>
+    <navbar orient="vertical">
+        <navitem label="Home" iconSclass="z-icon-home"/>
+        <nav label="Products" iconSclass="z-icon-cube">
+            <navitem label="All Products" iconSclass="z-icon-list"/>
+            <navitem label="Categories" iconSclass="z-icon-tags"/>
+            <navitem label="Inventory" iconSclass="z-icon-warehouse"/>
+        </nav>
+        <nav label="Sales" iconSclass="z-icon-shopping-cart">
+            <navitem label="Orders" iconSclass="z-icon-file-text"/>
+            <navitem label="Customers" iconSclass="z-icon-users"/>
+            <navitem label="Analytics" iconSclass="z-icon-pie-chart"/>
+        </nav>
+        <navitem label="Support" iconSclass="z-icon-life-ring"/>
+        <navseparator/>
+        <navitem label="Profile" iconSclass="z-icon-user"/>
+    </navbar>
 </zk>
