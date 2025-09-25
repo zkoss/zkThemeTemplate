@@ -173,4 +173,19 @@
         <navseparator/>
         <navitem label="Profile" iconSclass="z-icon-user"/>
     </navbar>
+    <zscript><![CDATA[
+ListModelList model1 = new ListModelList(Locale.getAvailableLocales());
+ListModelList model2 = new ListModelList(Locale.getAvailableLocales());
+model2.setMultiple(true);
+model2.addToSelection(model2.get(1));
+model2.addToSelection(model2.get(2));
+    ]]></zscript>
+    <h:h1>chosenbox</h:h1>
+    <chosenbox model="${model1}" width="300px"/>
+    <chosenbox model="${model1}" width="300px" disabled="true"/>
+    <chosenbox model="${model2}" width="300px" />
+    <h:h1>combobox</h:h1>
+    <combobox model="${model1}"/>
+    <combobox model="${model1}" disabled="true"/>
+    <h:div style="height:100px"/>
 </zk>
