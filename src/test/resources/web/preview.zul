@@ -187,5 +187,9 @@ model2.addToSelection(model2.get(2));
     <h:h1>combobox</h:h1>
     <combobox model="${model1}"/>
     <combobox model="${model1}" disabled="true"/>
+    <combobox>
+        <comboitem label="item with description" description="my desc"/>
+        <comboitem label="item with content" content="&lt;b> my content&lt;/b>"/>
+    </combobox>
     <h:div style="height:100px"/>
 </zk>
