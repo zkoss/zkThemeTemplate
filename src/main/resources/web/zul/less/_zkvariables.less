@@ -92,7 +92,7 @@
 // -------------------------------------
 // Mesh Table (used for grid, listbox, tree, biglistbox)
 // -------------------------------------
-@meshAutoPagingRowHeight:      44px;
+@meshAutoPagingRowHeight:      48px;
 @meshAutoPagingRowPadding:     2px 16px;
 @meshAutoPagingRowLineHeight:  36px;
 @meshBackgroundColor:          @colorBackground3;
@@ -121,9 +121,9 @@
 @auxheadContentPadding:        8px 16px;
 @meshBodyPadding:              12px 16px;
 @meshEmptyBodyPadding:         12px 16px;
-@meshContentLineHeight:        1.3em;
-@meshColumnSortIconTop:        -3px;
-@meshColumnSortButtonWidth:    34px;
+@meshContentLineHeight:        1.5em;
+@meshColumnSortIconTop:        -4px;
+@meshColumnSortButtonWidth:    32px;
 @meshColumnSortButtonHeight:   48px;
 @meshRowDetailOuterPadding:    0;
 @treecellContentLineHeight:    @baseLineHeight;
@@ -261,11 +261,11 @@
 @groupboxFocusBorderRadius:    @baseBorderRadius;
 
 // Toolbar
-@toolbarHorizontalPadding:     16px;
-@toolbarPadding:               6px @toolbarHorizontalPadding;
-@toolbarButtonsSpacing:        8px;
-@toolbarInTabboxMinHeight:     48px;
-@toolbarOverflowpopupButtonSize: @fontSizeLarge;
+@toolbarHorizontalPadding:     @spacing-06;
+@toolbarPadding:               @spacing-03 @spacing-06;
+@toolbarButtonsSpacing:        @spacing-04;
+@toolbarInTabboxMinHeight:     5rem;
+@toolbarOverflowpopupButtonSize: @fontSizeMedium;
 
 // Input (used for textbox, intbox, spinner, ...)
 @inputTextSize:                @fontSizeMedium;
@@ -286,23 +286,23 @@
 @inputLineHeight:              @baseLineHeight;
 
 // Checkbox/Radio
-@checkboxSize:                 20px;
-@checkboxMargin:               0 4px 2px 8px;
+@checkboxSize:                 2.5rem;
+@checkboxMargin:               0 @spacing-02 @spacing-01 0;
 @checkboxHoverBorderColor:     @colorPrimary;
-@checkboxSwitchMargin:         2px 4px 4px;
-@checkboxSwitchWidth:          50px;
-@checkboxSwitchHeight:         29px;
-@checkboxSwitchSize:           21px;
-@checkboxSwitchStep:           21px;
-@checkboxSwitchOffsetLeft:     4px;
-@checkboxSwitchOffsetBottom:   4px;
-@checkboxToggleSize:           30px;
+@checkboxSwitchMargin:         @spacing-01 @spacing-02 @spacing-02;
+@checkboxSwitchWidth:          6rem;
+@checkboxSwitchHeight:         3.5rem;
+@checkboxSwitchSize:           2.5rem;
+@checkboxSwitchStep:           2.5rem;
+@checkboxSwitchOffsetLeft:     0.5rem;
+@checkboxSwitchOffsetBottom:   0.5rem;
+@checkboxToggleSize:           3.5rem;
 
 // Button (used for button, combobutton)
-@buttonPadding:                8px 16px;
+@buttonPadding:                @spacing-04 @spacing-06;
 @buttonColor:                  @textColorDefault3;
 @buttonBackgroundColor:        @colorPrimary;
-@buttonBorderWidth:            2px;
+@buttonBorderWidth:            0.25rem;
 @buttonBorderColor:            transparent;
 @buttonHoverColor:             @textColorDefault3;
 @buttonHoverBackgroundColor:   @colorPrimaryLight;
@@ -319,24 +319,24 @@
 @buttonSeparatorBorderColor:   @colorPrimaryDark;
 @buttonDisableSeparatorBorderColor:   @baseBorderColor;
 // Toolbar button
-@toolbarButtonFontSize:        @fontSizeLarge;
-@toolbarButtonPadding:         6px 12px;
+@toolbarButtonFontSize:        @fontSizeMedium;
+@toolbarButtonPadding:         @spacing-03 @spacing-04;
 @toolbarButtonColor:           @textColorLight;
 @toolbarButtonBackgroundColor: transparent;
 @toolbarButtonCheckedColor:           @textColorDefault3;
 @toolbarButtonCheckedBackgroundColor: @colorPrimary;
 // Combobutton
-@combobuttonPadding:           8px 46px 8px 16px;
-@combobuttonButtonWidth:       38px;
-@combobuttonButtonIconLeft:    10px;
-@combobuttonToolbarFontSize:   @fontSizeLarge;
-@combobuttonToolbarPadding:    6px 46px 6px 12px;
+@combobuttonPadding:           @spacing-04 @spacing-11 @spacing-04 @spacing-06;
+@combobuttonButtonWidth:       4rem;
+@combobuttonButtonIconLeft:    @spacing-04;
+@combobuttonToolbarFontSize:   @fontSizeMedium;
+@combobuttonToolbarPadding:    @spacing-03 @spacing-10 @spacing-03 @spacing-05;
 
 // ComboInput (combobox, datebox, bandbox, timebox, spinner...)
-@comboButtonIconSize:          18px;
-@comboButtonIconSizeLarge:     22px;
-@comboButtonPadding:           6px 8px 0;
-@comboButtonMinWidth:          @baseButtonWidth + 8px * 2;
+@comboButtonIconSize:          2rem;
+@comboButtonIconSizeLarge:     2.5rem;
+@comboButtonPadding:           spaing-03 spacing-04 0;
+@comboButtonMinWidth:          8rem;
 @comboButtonIconColor:         @textColorDefault;
 @comboButtonHoverBorderColor:  @colorPrimaryLight;
 @comboButtonHoverBackgroundColor: @colorPrimaryLighter;
@@ -346,20 +346,20 @@
 @comboPopupBorderColor:        @colorPrimary;
 @comboPopupItemSize:           @fontSizeMedium;
 @comboPopupItemColor:          @textColorDefault;
-@comboPopupIconSize:           @fontSizeLarge;
+@comboPopupIconSize:           @fontSizeMedium;
 @comboPopupIconColor:          @textColorDefault;
 @comboPopupDescSize:           @fontSizeXSmall;
 @comboPopupDescColor:          @textColorLight;
 @comboPopupItemHoverBackgroundColor: @colorPrimaryLighter;
 @comboPopupItemSelectedColor:  @colorPrimary;
-@comboInputHeight:             34px;
+@comboInputHeight:             4.5rem;
 @comboInputPaddingRight:       @inputPaddingRight + @baseButtonWidth + 8px * 2;
-@spinnerButtonWidth:           34px;
-@spinnerButtonIconHeight:      @baseBarHeight / 2;
+@spinnerButtonWidth:           4rem;
+@spinnerButtonIconHeight:      @baseLineHeight;
 @spinnerButtonIconTransform:   none; // for compact override
 @spinnerButtonIconPositionTop: 15px;
-@spinnerButtonPadding:         0 8px;
-@comboitemPadding:             4px 8px;
+@spinnerButtonPadding:         0 spacing-04;
+@comboitemPadding:             spacing-04;
 @comboitemEmptyHeight:         @comboPopupItemSize + 2px + 4px * 2;
 @comboitemInnerFontSize:       @comboPopupDescSize;
 
@@ -492,18 +492,18 @@
 @calendarFontSize:             @fontSizeMedium;
 @calendarIconFontSize:         @fontSizeMedium;
 @calendarTitleFontSize:        @fontSizeSmall;
-@calendarFontSizeSmall:        @fontSizeXSmall;
-@calendarPadding:              12px 8px;
-@calendarTitleLineHeight:      34px;
-@calendarTodayTitlePadding:    8px 0;
-@calendarCellWidth:            32px;
-@calendarCellHeight:           24px;
+@calendarFontSizeSmall:        @fontSizeSmall;
+@calendarPadding:              1.5rem;
+@calendarTitleLineHeight:      4rem;
+@calendarTodayTitlePadding:    @spacing-04 0;
+@calendarCellWidth:            4rem;
+@calendarCellHeight:           4rem;
 @calendarLeftRightPosition:    0;
-@calendarTodayMarginTop:       8px;
+@calendarTodayMarginTop:       @spacing-05;
 
 // popup
 @basePopupZIndex:              88000;
-@popupPadding:                 8px 16px;
+@popupPadding:                 @spacing-06;
 @popupBorderColor:             @baseBorderColor;
 @popupBackgroundColor:         @colorBackground3;
 
@@ -598,15 +598,15 @@
 @tabboxTabBackgroundColor:     @colorBackground3;
 @tabboxTabHoverColor:          @textColorDefault;
 @tabboxTabHoverBackgroundColor:@colorBackground3;
-@tabboxTabButtonFontSize:      @fontSizeLarge;
+@tabboxTabButtonFontSize:      @fontSizeMedium;
 @tabboxTabButtonColor:         @iconColor;
 @tabboxTabButtonHoverColor:    @iconHoverColor;
 @tabboxTabButtonTextSpacing:   22px;
 @tabboxTabSeparatorColor:      @baseBorderColor;
-@tabboxTabMinHeight:           48px;
-@tabboxTabPadding:             10px 16px;
+@tabboxTabMinHeight:           40px;
+@tabboxTabPadding:             8px 16px;
 @tabboxTabVerticalPadding:     12px 8px;
-@tabboxTabFontSize:            @fontSizeLarge;
+@tabboxTabFontSize:            @fontSizeMedium;
 @tabboxTabAccordionButtonRight:16px;
 @tabboxSelectedRadius:         0;
 @tabboxSelectedColor:          @colorPrimary;
@@ -635,28 +635,28 @@
 @menuPopupItemActiveColor:     @activeColor;
 @menuPopupItemActiveBackground:@colorPrimary;
 @menuPopupSeparatorBorder:     @colorGreyLight;
-@menuImageSize:                20px;
+@menuImageSize:                2.5rem;
 @menuCheckedColor:             @checkedBackgroundColor;
 @menuCheckedBackgroundColor:   @checkedColor;
 @menuScrollableIconColors:     @iconColor, @iconHoverColor; // 1: normal, 2: hover
-@menubarPadding:               4px;
-@menubarHorizontalMargin:      2px 0;
+@menubarPadding:               @spacing-02;
+@menubarHorizontalMargin:      @spacing-01 0;
 @menubarHorizontalSeparatorLineHeight: @baseBarHeight;
 @menubarHorizontalSeparatorMargin: 0 4px;
-@menuTextFontSize:             @fontSizeLarge;
-@menuIconSize:                 @fontSizeLarge;
-@menuContentPadding:           6px 12px;
-@menuContentLineHeight:        @menuIconSize;
-@menuContentMinHeight:         34px;
-@menuIconPositionTop:          7px;
-@menuIconMarginRight:          8px;
-@menuContentPaddingRight:      32px;
-@menuPopupItemIconSize:        16px;
-@menuPopupItemIconPositionTop: 8px;
-@menuPopupItemIconPositionLeft: 14px;
+@menuTextFontSize:             @fontSizeMedium;
+@menuIconSize:                 @fontSizeMedium;
+@menuContentPadding:           spacing-03 spacing-05;
+@menuContentLineHeight:        @baseLineHeight;
+@menuContentMinHeight:         4rem;
+@menuIconPositionTop:          @spacing-04;
+@menuIconMarginRight:          @spacing-04;
+@menuContentPaddingRight:      @spacing-09;
+@menuPopupItemIconSize:        2rem;
+@menuPopupItemIconPositionTop: @spacing-04;
+@menuPopupItemIconPositionLeft: spacing-06;
 
 // navbar
-@navImageSize:                 20px;
+@navImageSize:                 2.5rem;
 @navColor:                     @textColorLight;
 @navHoverColor:                @textColorDefault;
 @navBorderColor:               @baseBorderColor;
@@ -670,21 +670,21 @@
 @navPopupHoverBackgroundColor: @navBackgroundColor;
 @navPopupSelectedColor:        @colorPrimary;
 @navPopupSelectedBackgroundColor: @navPopupBackgroundColor;
-@navPopupPadding:              0 4px 4px;
+@navPopupPadding:              @spacing-02;
 @navSeparatorColor:            @colorGreyLight;
-@navCollapsedWidth:            32px;
+@navCollapsedWidth:            4rem;
 @navBadgeTextColor:            @textColorLight;
 @navBadgeBackgroundColor:      @colorGreyLight;
-@navbarPadding:                4px;
-@navbarHorizontalPadding:      4px 2px;
-@navbarHorizontalLineHeight:   @baseTitleHeight;
-@navContentPadding:            6px 12px;
+@navbarPadding:                @spacing-02;
+@navbarHorizontalPadding:      @spacing-03 @spacing-02;
+@navbarHorizontalLineHeight:   4.5rem;
+@navContentPadding:            @spacing-03 @spacing-05;
 @navIconMarginRight:           4px;
-@navTextFontSize:              @fontSizeLarge;
-@navInfoPositionTop:           8px;
-@navInfoPositionRight:         8px;
-@navTextPopupHeight:           40px;
-@navTextPopupPadding:          4px 18px;
+@navTextFontSize:              @fontSizeMedium;
+@navInfoPositionTop:           @spacing-03;
+@navInfoPositionRight:         @spacing-03;
+@navTextPopupHeight:           5rem;
+@navTextPopupPadding:          @spacing-02 Spacing-05;
 @navTextPopupLineHeight:       @baseBarHeight;
 @navbarCollapsedInfoPositionTop: -2px;
 @navitemFocusBoxShadowColor:     @colorPrimary;
@@ -749,9 +749,9 @@
 
 // rating
 @ratingIcon: #4a4a4a;
-@ratingIconSize: 26px;
+@ratingIconSize: 3rem;
 @ratingIconFontSize: @fontSizeMedium;
-@ratingIconPadding: 4px;
+@ratingIconPadding: spacing-02;
 @ratingIconHover: @textColorActive;
 @ratingIconHoverTextShadow: #3393f9;
 @ratingIconSelected: @textColorActive;
@@ -988,7 +988,7 @@
 @coachmarkBackgroundColor: @colorBackground3;
 
 //cascader
-@cascaderHeight: 34px;
+@cascaderHeight: 4.5rem;
 @cascaderLineHeight: calc(@cascaderHeight - 2px);
 @cascaderColor: @textColorDefault;
 @cascaderFontSize: @fontSizeMedium;
@@ -1006,9 +1006,9 @@
 @cascaderDisableColor: @inputDisableColor;
 @cascaderDisableBackgroundColor: @inputDisableBackgroundColor;
 @cascaderPopupBorderColor: @comboPopupBorderColor;
-@cascaderPopupCavePadding: 4px;
-@cascaderPopupItemPadding: 0px 28px 0px 5px;
-@cascaderPopupItemHeight: 34px;
+@cascaderPopupCavePadding: 0.5rem;
+@cascaderPopupItemPadding: 0px spacing-08 0px spacing-03;
+@cascaderPopupItemHeight: 4rem;
 @cascaderPopupItemHoverBackgroundColor: @colorPrimaryLighter;
 @cascaderPopupItemSelectedColor: @colorPrimary;
 
