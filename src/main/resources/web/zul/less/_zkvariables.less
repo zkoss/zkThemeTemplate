@@ -188,7 +188,7 @@
 @selectedFocusBackgroundColor: @selectedBackgroundColor;
 
 // Checked (used on menuitem, listbox, tree, toolbarbutton)
-@checkedIconSize:              @fontSizeLarge;
+@checkedIconSize:              @fontSizeSmall;
 @checkedColor:                 @colorPrimary;
 @checkedBorderColor:           @baseBorderColor;
 @checkedBackgroundColor:       @textColorDefault3;
@@ -272,8 +272,8 @@
 @inputBorderColor:             @baseBorderColor;
 @inputBorderRadius:            @baseBorderRadius;
 @inputBackgroundColor:         @colorBackground3;
-@inputHeight:                  34px;
-@inputPadding:                 0 8px;
+@inputHeight:                  4.5rem;
+@inputPadding:                 0 @spacing-04;
 @inputPaddingRight:            8px;
 @inputColor:                   @textColorDefault;
 @inputPlaceholderColor:        @textColorLighter;
@@ -335,8 +335,8 @@
 // ComboInput (combobox, datebox, bandbox, timebox, spinner...)
 @comboButtonIconSize:          2rem;
 @comboButtonIconSizeLarge:     2.5rem;
-@comboButtonPadding:           spaing-03 spacing-04 0;
-@comboButtonMinWidth:          8rem;
+@comboButtonPadding:           @spacing-03 @spacing-04 0;
+@comboButtonMinWidth:          4rem;
 @comboButtonIconColor:         @textColorDefault;
 @comboButtonHoverBorderColor:  @colorPrimaryLight;
 @comboButtonHoverBackgroundColor: @colorPrimaryLighter;
@@ -358,61 +358,61 @@
 @spinnerButtonIconHeight:      @baseLineHeight;
 @spinnerButtonIconTransform:   none; // for compact override
 @spinnerButtonIconPositionTop: 15px;
-@spinnerButtonPadding:         0 spacing-04;
-@comboitemPadding:             spacing-04;
+@spinnerButtonPadding:         0 @spacing-04;
+@comboitemPadding:             @spacing-02;
 @comboitemEmptyHeight:         @comboPopupItemSize + 2px + 4px * 2;
 @comboitemInnerFontSize:       @comboPopupDescSize;
 
 // Timepicker
-@timepickerButtonWidth:        36px;
+@timepickerButtonWidth:        4.5rem;
 @timepickerHeight:             @baseBarHeight;
 @timepickerLineHeight:         @baseLineHeight;
 @timepickerPaddingRight:       @inputPaddingRight + @timepickerButtonWidth;
-@timepickerButtonPadding:      6px 8px 0;
-@timepickerPopupPadding:       4px 8px;
+@timepickerButtonPadding:      @spacing-03 @spacing-04 0;
+@timepickerPopupPadding:       @spacing-02;
 
 // colorbox
 @colorboxButtonFontSize:       @baseFontSize;
-@colorboxWidth:                56px;
-@colorboxHeight:               35px;
+@colorboxWidth:                7rem;
+@colorboxHeight:               4.5rem;
 @colorboxMenuImageSize:        @menuImageSize;
-@colorboxMenuImageMarginRight: 8px;
+@colorboxMenuImageMarginRight: spacing-04;
 @colorboxPadding:              4px;
-@colorboxPopupPadding:         8px;
+@colorboxPopupPadding:         @spacing-02;
 @colorpickerWidth:             310px;
 @colorpickerHeight:            460px;
-@colorpickerPadding:           8px;
-@colorpickerMainPositionTop:   50px;
-@colorpickerInfoHeight:        122px;
-@colorpickerInfoMarginTop:     16px;
-@colorpickerColorWidth:        72px;
-@colorpickerColorHeight:       70px;
+@colorpickerPadding:           @spacing-03;
+@colorpickerMainPositionTop:   56px;
+@colorpickerInfoHeight:        124px;
+@colorpickerInfoMarginTop:     @spacing-06;
+@colorpickerColorWidth:        9rem;
+@colorpickerColorHeight:       10rem;
 @colorpickerColorPositionRight: 0;
-@colorpickerColorItemWidth:    66px;
-@colorpickerColorItemHeight:   32px;
-@colorpickerInputWidth:        48px;
-@colorpickerInputHeight:       35px;
+@colorpickerColorItemWidth:    8rem;
+@colorpickerColorItemHeight:   4.5rem;
+@colorpickerInputWidth:        6rem;
+@colorpickerInputHeight:       4.5rem;
 @colorpickerRGBPositionTop:    0;
-@colorpickerHSVPositionTop:    43px;
-@colorpickerHEXPositionTop:    86px;
+@colorpickerHSVPositionTop:    44px;
+@colorpickerHEXPositionTop:    88px;
 @colorpickerHEXInputWidth:     160px;
 @colorpickerHEXInputHeight:    @colorpickerInputHeight;
-@colorpickerButtonWidth:       72px;
-@colorpickerButtonPositionTop: 84px;
+@colorpickerButtonWidth:       9rem;
+@colorpickerButtonPositionTop: 88px;
 @colorpickerButtonPositionRight: 0;
 @colorpaletteWidth:            340px;
 @colorpaletteHeight:           300px;
-@colorpaletteHeadHeight:       50px;
-@colorpaletteNewColorWidth:    35px;
-@colorpaletteNewColorHeight:   35px;
+@colorpaletteHeadHeight:       6rem;
+@colorpaletteNewColorWidth:    4.5rem;
+@colorpaletteNewColorHeight:   4.5rem;
 @colorpaletteNewColorPositionRight: 100px;
-@colorpaletteInputWidth:       96px;
-@colorpaletteInputHeight:      35px;
-@colorpaletteColorSize:        16px;
+@colorpaletteInputWidth:       12rem;
+@colorpaletteInputHeight:      4.5rem;
+@colorpaletteColorSize:        2rem;
 @colorboxIconFontSize:         @fontSizeXLarge;
 @colorboxIconPadding:          @toolbarButtonPadding;
-@colorboxIconButtonWidth:      44px;
-@colorboxIconButtonHeight:     32px;
+@colorboxIconButtonWidth:      6rem;
+@colorboxIconButtonHeight:     4rem;
 @colorboxIconButtonPositionTop: 16px;
 @paletteiconPositionLeft:      16px;
 @pickericonPositionTopLeft:    68px;
@@ -532,7 +532,7 @@
 @pagingOsButtonPadding:        4px 8px;
 
 // slider
-@sliderAreaSize:               6px;
+@sliderAreaSize:               0.75rem;
 @sliderBackgroundColor:        @colorGreyLight;
 @sliderAreaBackgroundColor:    @colorPrimary;
 @sliderInputColor:             @textColorActive;
@@ -645,7 +645,7 @@
 @menubarHorizontalSeparatorMargin: 0 4px;
 @menuTextFontSize:             @fontSizeMedium;
 @menuIconSize:                 @fontSizeMedium;
-@menuContentPadding:           spacing-03 spacing-05;
+@menuContentPadding:           @spacing-03 @spacing-05;
 @menuContentLineHeight:        @baseLineHeight;
 @menuContentMinHeight:         4rem;
 @menuIconPositionTop:          @spacing-04;
@@ -653,7 +653,7 @@
 @menuContentPaddingRight:      @spacing-09;
 @menuPopupItemIconSize:        2rem;
 @menuPopupItemIconPositionTop: @spacing-04;
-@menuPopupItemIconPositionLeft: spacing-06;
+@menuPopupItemIconPositionLeft: @spacing-06;
 
 // navbar
 @navImageSize:                 2.5rem;
@@ -691,7 +691,7 @@
 @navitemFocusBoxShadow:          0 0 0 2px @navitemFocusBoxShadowColor;
 
 // chosenbox
-@chosenboxIconSize:            @fontSizeMedium;
+@chosenboxIconSize:            @fontSizeSmall;
 @chosenboxItemSize:            @fontSizeMedium;
 @chosenboxItemColor:           @textColorDefault3;
 @chosenboxItemBorderColor:     @colorPrimaryDark;
@@ -703,17 +703,17 @@
 @chosenboxPopupHoverBackgroundColor: @colorPrimaryLighter;
 @chosenboxCreateIconSize:      @fontSizeLarge;
 @chosenboxCreateIconColor:     @colorPrimary;
-@chosenboxPadding:             0 0 4px 0;
-@chosenboxMinHeight:           34px;
-@chosenboxItemMargin:          4px 0 0 4px;
-@chosenboxItemPadding:         4px 8px;
+@chosenboxPadding:             0 0 @spacing-02 0;
+@chosenboxMinHeight:           4.5rem;
+@chosenboxItemMargin:          @spacing-02 0 0 @spacing-02;
+@chosenboxItemPadding:         @spacing-02 @spacing-04;
 @chosenboxItemContentPadding:  0;
 @chosenboxItemContentMarginRight: @chosenboxIconSize + 6;
 @chosenboxButtonPositionTop:   4px;
 @chosenboxButtonPositionRight: 8px;
 @chosenboxInputWidth:          30px;
-@chosenboxInputHeight:         28px;
-@chosenboxInputPadding:        1px 4px 2px 8px;
+@chosenboxInputHeight:         30px;
+@chosenboxInputPadding:        4px 4px 0px 8px;
 @chosenboxPopupPadding:        4px 8px;
 @chosenboxOptionPadding:       4px 8px;
 @chosenboxOptionMinHeight:     20px;
@@ -798,10 +798,10 @@
 // signature
 @signatureBorderColor: @baseBorderColor;
 @signatureBorderRadius: @baseBorderRadius;
-@signatureToolbarRight: 8px;
-@signatureToolbarBottom: 16px;
-@signatureToolbarButtonSpacing: 8px;
-@signatureToolbarButtonIconFontSize: 20px;
+@signatureToolbarRight: 0;
+@signatureToolbarBottom: @spacing-06;
+@signatureToolbarButtonSpacing: @spacing-04;
+@signatureToolbarButtonIconFontSize: 2.5rem;
 
 // drawer
 @drawerMaskBackgroundColor: #000;
@@ -821,8 +821,8 @@
 @rangesliderTrackColor: @colorGreyLight;
 @rangesliderEmptyBackgroundColor: #FFF;
 @rangesliderShadowColor: rgba(0, 0, 0, 0.3);
-@rangesliderButtonSize: 20px;
-@rangesliderButtonBorderWidth: 2px;
+@rangesliderButtonSize: 2rem;
+@rangesliderButtonBorderWidth: 0.25rem;
 @rangesliderButtonColor: @colorPrimary;
 @rangesliderButtonHoverColor: @colorPrimaryLight;
 @rangesliderButtonActiveColor: @colorPrimaryDark;
@@ -833,23 +833,23 @@
 @rangesliderTooltipBorderRadius: @baseBorderRadius;
 @rangesliderTooltipBackgroundColor: rgba(0, 0, 0, 0.8);
 @rangesliderDisabledTooltipBackgroundColor: rgba(0, 0, 0, 0.5);
-@rangesliderInnerSize: 8px;
-@rangesliderDotSize: @baseIconWidth;
-@rangesliderDotBorderWidth: @rangesliderDotSize * 0.25;
+@rangesliderInnerSize: 0.75rem;
+@rangesliderDotSize: 1.5rem;
+@rangesliderDotBorderWidth: 0.25rem;
 @rangesliderLabelFontSize: @fontSizeSmall;
-@rangesliderHorizontalButtonMarginTop: -6px;
-@rangesliderHorizontalButtonMarginLeft: -10px;
-@rangesliderHorizontalTooltipPositionTop: -10px;
-@rangesliderHorizontalTooltipPadding: 4px 6px;
-@rangesliderHorizontalMarkDotPositionTop: -4px;
-@rangesliderHorizontalMarkLabelPositionTop: 22px;
-@rangesliderVerticalTooltipPositionLeft: 26px;
-@rangesliderVerticalTooltipPadding: 6px 4px;
+@rangesliderHorizontalButtonMarginTop: -5px;
+@rangesliderHorizontalButtonMarginLeft: -8px;
+@rangesliderHorizontalTooltipPositionTop: -8px;
+@rangesliderHorizontalTooltipPadding: 2px 4px;
+@rangesliderHorizontalMarkDotPositionTop: -3px;
+@rangesliderHorizontalMarkLabelPositionTop: 18px;
+@rangesliderVerticalTooltipPositionLeft: 24px;
+@rangesliderVerticalTooltipPadding: 4px 2px;
 
 // multislider
 @multisliderTrackColor: @colorGreyLight;
 @multisliderShadowColor: rgba(0, 0, 0, 0.2);
-@multisliderButtonSize: 20px;
+@multisliderButtonSize: 2rem;
 @multisliderButtonBorderWidth: 2px;
 @multisliderButtonColor: @colorPrimary;
 @multisliderButtonHoverColor: @colorPrimaryLight;
@@ -861,7 +861,7 @@
 @multisliderBorderRadius: @baseBorderRadius;
 @multisliderTooltipBackgroundColor: rgba(0, 0, 0, 0.8);
 @multisliderDisabledTooltipBackgroundColor: rgba(0, 0, 0, 0.5);
-@multisliderInnerSize: 8px;
+@multisliderInnerSize: 0.75rem;
 @multisliderDisabledTrackColor: @colorGreyLighter;
 @multisliderDisabledButtonColor: lighten(@multisliderButtonColor, 30%);
 @multisliderDisabledButtonColor2: lighten(@multisliderButtonColor2, 20%);
@@ -889,15 +889,15 @@
 @pdfviewerToolbarPageActiveWidth: 48px;
 
 // searchbox
-@searchboxHeight: 34px;
+@searchboxHeight: 4.5rem;
 @searchboxFontSize: @fontSizeMedium;
 @searchboxPadding: @inputPadding;
 @searchboxBorderColor: @inputBorderColor;
 @searchboxColor: @inputColor;
 @searchboxPlaceholderColor: @inputPlaceholderColor;
 @searchboxIconColor: @iconColor;
-@searchboxIconRight: 8px;
-@searchboxIconSize: 22px;
+@searchboxIconRight: @spacing-04;
+@searchboxIconSize: 4.5rem;
 @searchboxBackgroundColor: @inputBackgroundColor;
 @searchboxBorderRadius: @inputBorderRadius;
 @searchboxHoverBorderColor: @inputHoverBorderColor;
@@ -920,9 +920,9 @@
 @searchboxPopupItemActiveBackgroundColor: @colorPrimaryLight;
 @searchboxPopupItemActiveColor: @textColorDefault;
 @searchboxPopupItemSelectedColor: @textColorActive;
-@searchboxPopupItemCheckSize: 20px;
-@searchboxPopupItemPadding: 4px 8px;
-@searchboxPopupItemCheckMarginRight: 8px;
+@searchboxPopupItemCheckSize: 2.5rem;
+@searchboxPopupItemPadding: @spacing-03 @spacing-04;
+@searchboxPopupItemCheckMarginRight: @spacing-04;
 @searchboxPopupItemCheckBorderColor: @checkedBorderColor;
 @searchboxPopupItemCheckBorderRadius: @baseBorderRadius;
 @searchboxPopupItemCheckBackgroundColor: @baseBackgroundColor;
