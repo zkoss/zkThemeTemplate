@@ -54,8 +54,12 @@
 			<url>https://mavensync.zkoss.org/maven2</url>
 		</repository>
 		<repository>
-			<id>ZK PE EE Evaluation</id>
+			<id>ZK EE Evaluation</id>
 			<url>https://mavensync.zkoss.org/eval/</url>
+		</repository>
+		<repository>
+			<id>ZK EE</id>
+			<url>https://maven.zkoss.org/repo/zk/ee</url>
 		</repository>
 	</repositories>
 	<pluginRepositories>
