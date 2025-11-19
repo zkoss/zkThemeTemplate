@@ -1,6 +1,6 @@
 // Global Variables
 // -------------------------------------
-@themeProfile:                 "default";
+@themeProfile:                 "compact";
 @themePalette:                 "iceblue";
 // Typography
 // -------------------------------------
@@ -25,17 +25,17 @@
 // -------------------------------------
 // Spacing
 // -------------------------------------
-@spacing-01: 0.25rem;
-@spacing-02: 0.5rem;
-@spacing-03: 0.75rem;
-@spacing-04: 1rem; //8px
-@spacing-05: 1.5rem;
-@spacing-06: 2rem;
-@spacing-07: 2.5rem;
-@spacing-08: 3rem;
-@spacing-09: 4rem;
-@spacing-10: 5rem;
-@spacing-11: 6rem;
+@spacing-01: 2px;
+@spacing-02: @spacing-01 * 2; // 4px
+@spacing-03: @spacing-01 * 3; // 6px
+@spacing-04: @spacing-01 * 4; // 8px
+@spacing-05: @spacing-01 * 6; // 12px
+@spacing-06: @spacing-01 * 8; // 16px
+@spacing-07: @spacing-01 * 10; // 20px
+@spacing-08: @spacing-01 * 12; // 24px
+@spacing-09: @spacing-01 * 16; // 32px
+@spacing-10: @spacing-01 * 20; // 40px
+@spacing-11: @spacing-01 * 24; // 48px
 
 // -------------------------------------
 // Component sizing
@@ -94,7 +94,7 @@
 // -------------------------------------
 @meshAutoPagingRowHeight:      6rem;
 @meshAutoPagingRowPadding:     0.25rem 2rem;
-@meshAutoPagingRowLineHeight:  4.5re,;
+@meshAutoPagingRowLineHeight:  4.5rem;
 @meshBackgroundColor:          @colorBackground3;
 @meshStripeBackgroundColor:    @meshBackgroundColor;
 @meshTitleColor:               @textColorDefault3;
