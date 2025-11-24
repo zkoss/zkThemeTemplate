@@ -1,6 +1,6 @@
 // Global Variables
 // -------------------------------------
-@themeProfile:                 "compact";
+@themeProfile:                 "default";
 @themePalette:                 "iceblue";
 // Typography
 // -------------------------------------
@@ -549,7 +549,7 @@
 @errorboxInsideIconPositionTop: 8px;
 @errorboxIconPositionTop:      -1px;
 @errorboxUpIconPositionTop:    16px;
-@errorboxContentPadding:       8px 20px 8px 34px;
+@errorboxContentPadding:       @spacing-04 @spacing-09;
 
 // error (ZK JavaScript debug box)
 @errorPadding:                 16px;
@@ -702,20 +702,20 @@
 @chosenboxPopupHoverBackgroundColor: @colorPrimaryLighter;
 @chosenboxCreateIconSize:      @fontSizeLarge;
 @chosenboxCreateIconColor:     @colorPrimary;
-@chosenboxPadding:             0 0 @spacing-02 0;
+@chosenboxPadding:             @spacing-02 0;
 @chosenboxMinHeight:           4.5rem;
-@chosenboxItemMargin:          @spacing-02 0 0 @spacing-02;
+@chosenboxItemMargin:          0 0 0 @spacing-02;
 @chosenboxItemPadding:         @spacing-02 @spacing-04;
 @chosenboxItemContentPadding:  0;
 @chosenboxItemContentMarginRight: @chosenboxIconSize + 6;
 @chosenboxButtonPositionTop:   4px;
 @chosenboxButtonPositionRight: 8px;
-@chosenboxInputWidth:          30px;
-@chosenboxInputHeight:         30px;
-@chosenboxInputPadding:        4px 4px 0px 8px;
-@chosenboxPopupPadding:        4px 8px;
-@chosenboxOptionPadding:       4px 8px;
-@chosenboxOptionMinHeight:     20px;
+@chosenboxInputWidth:          28px;
+@chosenboxInputHeight:         28px;
+@chosenboxInputPadding:        0 @spacing-04;
+@chosenboxPopupPadding:        @spacing-02;
+@chosenboxOptionPadding:       @spacing-02;
+@chosenboxOptionMinHeight:     3rem;
 
 // biglistbox
 @biglistboxFrozenBackgroundColor:   @colorGreyLight;
