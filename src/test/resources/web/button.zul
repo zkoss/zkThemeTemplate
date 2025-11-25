@@ -1,0 +1,40 @@
+<?page title="Button" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<style>
+	.z-button {
+		margin-top: 4px;
+	}
+	</style>
+	<hbox>
+		<window title="Button" sclass="center-bg-win"
+			border="normal" width="300px" height="300px">
+			<div>
+				<button label="Button" />
+				<button image="/common/img/volumn.gif" />
+				<button label="Button" image="/common/img/volumn.gif" />
+				<button label="Button" iconSclass="z-icon-volume-up" />
+				<button label="Button" orient="vertical" iconSclass="z-icon-gear" />
+			</div>
+		</window>
+		<window title="Button with longer label" sclass="center-bg-win"
+			border="normal" width="300px" height="300px">
+			<button label="Long Long Button" />
+		</window>
+		<window title="Large Button" sclass="center-bg-win"
+			border="normal" width="300px" height="300px">
+			<button label="Button" width="100px" height="50px" />
+		</window>
+	</hbox>
+	<separator />
+	<hbox>
+		<window title="Button with Hover Image" sclass="center-bg-win"
+			border="normal" width="300px" height="300px">
+			<button label="Button" image="/common/img/volumn.gif" 
+					hoverImage="/common/img/network.gif" />
+		</window>
+		<window title="Button with Disable" sclass="center-bg-win"
+			border="normal" width="300px" height="300px">
+			<button label="Button" disabled="true" />
+		</window>
+	</hbox>
+</zk>

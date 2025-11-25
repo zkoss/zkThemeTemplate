@@ -76,6 +76,12 @@
 			<version>${zk.version}</version>
 			<optional>true</optional>
 		</dependency>
+		<dependency>
+			<groupId>org.zkoss.zk</groupId>
+			<artifactId>zuti</artifactId>
+			<version>${zk.version}</version>
+			<optional>true</optional>
+		</dependency>
 		<!-- test dependencies for preview app -->
 		<dependency>
 			<groupId>org.zkoss.zkspringboot</groupId>
