@@ -79,6 +79,7 @@ We suggest you customize a theme by overriding existing variables instead of mod
 * open a simple preview page in a browser: http://localhost:8080
 * add your own pages containing the components to preview under `/preview/web`
 
+visit each page without zul extension e.g. http://localhost:8080/anchor for anchor.zul
 
 ## continuous compile/watch less files
 in a separate console:
@@ -110,6 +111,13 @@ in a separate console:
 It does not require a server restart, but user has to refresh the browser.
 
 Please refer to [ZK Developer's Reference/Theming and Styling/Switching Themes](https://www.zkoss.org/wiki/ZK_Developer%27s_Reference/Theming_and_Styling/Switching_Themes).
+
+
+# Profile Differences
+Both profiles support tablet/mobile devices by [tablet](src/main/resources/web/zkmax/less/tablet)
+
+* `default`: new design with larger spacing (padding and margin) and font size.
+* `compact`: the design to be much similar to zk older themes (breeze, silvertail, sapphire) that have smaller spacing. We create this profile of theme to let users upgrade their existing applications with minimal impact on the existing page layout. To reduce the upgrade effort.
 
 # Use cases
 ## Change primary color
