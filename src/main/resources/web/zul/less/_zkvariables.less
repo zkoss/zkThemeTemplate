@@ -215,13 +215,13 @@
 @windowGhostHeaderPadding:     @containerPadding;
 // Messagebox
 @messageboxPaddingHorizontal:  @spacing-06;
-@messageboxPadding:            4px @messageboxPaddingHorizontal @spacing-06;
+@messageboxPadding:            @spacing-02 @messageboxPaddingHorizontal @spacing-06;
 @messageboxWindowPadding:      0;
 @messageboxWindowWidth:        480px;
 @messageboxWindowContentPadding: @spacing-06 0;
 @messageboxHeaderPadding:      @spacing-06;
 @messageboxViewportMarginBottom: @spacing-06;
-@messageboxButtonsMarginLeft:  8px;
+@messageboxButtonsMarginLeft:  @spacing-04;
 @messageboxIconMarginLeft:     @spacing-06;
 @messageboxIconSize:           @baseBarWidth;
 
@@ -234,7 +234,7 @@
 @borderlayoutBodyLineHeight:   @baseLineHeight;
 @borderlayoutBodyPadding:      @spacing-06;
 @borderlayoutCollapsedSize:    6rem;
-@borderlayoutCollapsedPadding: 8px;
+@borderlayoutCollapsedPadding: @spacing-04;
 @borderlayoutCollapsedIconColors: @textColorLight, @textColorLight; // 1: normal, 2: hover
 @borderlayoutIconFontSize:     @fontSizeLarge;
 @borderlayoutIconSize:         2.5rem;
@@ -273,7 +273,7 @@
 @inputBackgroundColor:         @colorBackground3;
 @inputHeight:                  4.5rem;
 @inputPadding:                 0 @spacing-04;
-@inputPaddingRight:            8px;
+@inputPaddingRight:            @spacing-04;
 @inputColor:                   @textColorDefault;
 @inputPlaceholderColor:        @textColorLighter;
 @inputHoverBorderColor:        @colorGreyDark;
@@ -375,8 +375,8 @@
 @colorboxWidth:                7rem;
 @colorboxHeight:               4.5rem;
 @colorboxMenuImageSize:        @menuImageSize;
-@colorboxMenuImageMarginRight: spacing-04;
-@colorboxPadding:              4px;
+@colorboxMenuImageMarginRight: @spacing-04;
+@colorboxPadding:              @spacing-02;
 @colorboxPopupPadding:         @spacing-02;
 @colorpickerWidth:             310px;
 @colorpickerHeight:            460px;
@@ -412,8 +412,8 @@
 @colorboxIconPadding:          @toolbarButtonPadding;
 @colorboxIconButtonWidth:      6rem;
 @colorboxIconButtonHeight:     4rem;
-@colorboxIconButtonPositionTop: 16px;
-@paletteiconPositionLeft:      16px;
+@colorboxIconButtonPositionTop: @spacing-06;
+@paletteiconPositionLeft:      @spacing-06;
 @pickericonPositionTopLeft:    68px;
 
 
@@ -423,12 +423,12 @@
 @loadingTextColor:             @textColorLight;
 @loadingAnimationDefer:        '~./zul/img/misc/progress-32.gif';
 @loadingAnimationLoad:         '~./zul/img/misc/progress-72.gif';
-@loadingIndicatorPadding:      24px 16px;
-@applyLoadingIndicatorPadding: 12px 32px 12px 56px;
-@applyLoadingIconSize:         32px;
-@applyLoadingIconPositionLeft: 16px;
+@loadingIndicatorPadding:      @spacing-08 @spacing-06;
+@applyLoadingIndicatorPadding: @spacing-05 @spacing-09 @spacing-05 56px;
+@applyLoadingIconSize:         @spacing-09;
+@applyLoadingIconPositionLeft: @spacing-06;
 @loadingIconSize:              72px;
-@loadingIconMarginBottom:      8px;
+@loadingIconMarginBottom:      @spacing-04;
 
 // scrollbar
 @scrollbarSize:                10px;
@@ -456,7 +456,7 @@
 @dragDisAllowIconColor:        @textColorLighter;
 @dragDisAllowBorderColor:      transparent;
 @dragDisAllowBackgroundColor:  @colorGreyLighter;
-@dropContentPadding:           12px;
+@dropContentPadding:           @spacing-05;
 @dropContentLineHeight:        @baseHeight - 12;
 @dropIconSize:                 @fontSizeXLarge;
 @dropIconVerticalAlign:        baseline; // for compact override
@@ -683,7 +683,7 @@
 @navInfoPositionTop:           @spacing-03;
 @navInfoPositionRight:         @spacing-03;
 @navTextPopupHeight:           5rem;
-@navTextPopupPadding:          @spacing-02 Spacing-05;
+@navTextPopupPadding:          @spacing-02 @spacing-05;
 @navTextPopupLineHeight:       @baseBarHeight;
 @navbarCollapsedInfoPositionTop: -2px;
 @navitemFocusBoxShadowColor:     @colorPrimary;
@@ -1006,7 +1006,7 @@
 @cascaderDisableBackgroundColor: @inputDisableBackgroundColor;
 @cascaderPopupBorderColor: @comboPopupBorderColor;
 @cascaderPopupCavePadding: 0.5rem;
-@cascaderPopupItemPadding: 0px spacing-08 0px spacing-03;
+@cascaderPopupItemPadding: 0px @spacing-08 0px @spacing-03;
 @cascaderPopupItemHeight: 4rem;
 @cascaderPopupItemHoverBackgroundColor: @colorPrimaryLighter;
 @cascaderPopupItemSelectedColor: @colorPrimary;

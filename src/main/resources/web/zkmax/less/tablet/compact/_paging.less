@@ -1,6 +1,6 @@
 .z-paging {
 	height: 40px;
-	padding: 4px 12px 3px;
+	padding: @spacing-02 @spacing-05 @spacing-02;
 
 	&-icon {
 		font-size: 22px;
@@ -12,13 +12,13 @@
 		line-height: 24px;
 		.borderRadius(@baseBorderRadius);
 		font-size: 18px;
-		padding: 4px 3px;
+		padding: @spacing-02 @spacing-02;
 		margin: 0;
 	}
 
 	&-text {
 		font-size: 14px;
-		margin-right: 2px;
+		margin-right: @spacing-01;
 	}
 
 	&-info {
@@ -28,26 +28,26 @@
 
 	&-input {
 		height: 32px;
-		margin-left: 2px;
+		margin-left: @spacing-01;
 		font-size: 14px;
 	}
 }
 
 .z-paging-os {
 	ul > li {
-		margin-left: 2px;
+		margin-left: @spacing-01;
 	}
 
 	ul > li.z-paging-navigate + li, ul > li + li.z-paging-navigate {
-		margin-left: 4px;
+		margin-left: @spacing-02;
 	}
 
 	ul > li.z-paging-navigate + li.z-paging-navigate {
-		margin-left: 2px;
+		margin-left: @spacing-01;
 	}
 
 	.z-paging-button {
-		padding: 0 8px;
+		padding: 0 @spacing-04;
 		font-size: 14px;
 		height: 30px;
 		min-width: 30px;

@@ -35,7 +35,7 @@
 		top: 50%;
 		font-size: 32px;
 		line-height: 32px;
-		margin-top: -16px;
+		margin-top: -@spacing-06;
 		left: 16px;
 	}
 }
@@ -49,7 +49,7 @@
 }
 
 .z-notification-up + .z-notification-icon {
-	margin-top: -12px;
+	margin-top: -@spacing-05;
 }
 
 .z-notification-down + .z-notification-icon {
@@ -191,19 +191,19 @@
 .z-notification-close {
 	font-size: @notificationCloseFontSize;
 	.size(@notificationCloseIconSize, @notificationCloseIconSize);
-	padding: 0 2px;
+	padding: 0 @spacing-01;
 	line-height: @notificationCloseFontSize;
 	position: absolute;
-	top: 8px;
-	right: 8px;
+	top: @spacing-04;
+	right: @spacing-04;
 	cursor: pointer;
 }
 
 .z-notification-right ~ .z-notification-close {
-	right: 16px;
+	right: @spacing-06;
 }
 .z-notification-up ~ .z-notification-close {
-	top: 16px;
+	top: @spacing-06;
 }
 
 // Toast
@@ -236,7 +236,7 @@
 	&-close {
 		font-size: 18px;
 		.size(20px, 20px);
-		padding: 0 2px;
+		padding: 0 @spacing-01;
 		position: absolute;
 		top: 50%;
 		right: 12px;
@@ -332,7 +332,7 @@
 	}
 
 	&-position > & {
-		margin-top: 10px;
+		margin-top: @spacing-07;
 	}
 
 	&-position-top-left { .top(); .left(); }

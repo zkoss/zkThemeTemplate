@@ -119,7 +119,7 @@
   background: #ecf0f1;
   border-bottom: 1px solid #d7e0e2;
   margin: 0;
-  padding: 0 5px;
+  padding: 0 @spacing-02;
   position: relative;
   list-style-type: none;
   line-height: 10px;
@@ -145,7 +145,7 @@
       display: inline-block;
       width: 1px;
       background: #d7e0e2;
-      margin: 0 5px;
+      margin: 0 @spacing-02;
       height: 35px;
       vertical-align: top; } // Potix: ZK-4916: style modified for trumbowyg v2.7.2
   .@{zprefix}-button-pane button {
@@ -200,7 +200,7 @@
 .@{zprefix}-dropdown {
   width: 200px;
   border: 1px solid #ecf0f1;
-  padding: 5px 0;
+  padding: @spacing-02 0;
   border-top: none;
   background: #FFF;
   margin-left: -1px;
@@ -278,7 +278,7 @@
   .@{zprefix}-modal-box label {
     display: block;
     position: relative;
-    margin: 15px 12px;
+    margin: @spacing-06 @spacing-05;
     height: 29px;
     line-height: 29px;
     overflow: hidden; }
@@ -293,7 +293,7 @@
         color: #69878f;
         background-color: #fbfcfc;
         border: 1px solid #DEDEDE;
-        padding: 0 7px;
+        padding: 0 @spacing-03;
         width: 150px; }
       .@{zprefix}-modal-box label .@{zprefix}-input-infos span.@{zprefix}-msg-error {
         color: #e74c3c; }
@@ -313,7 +313,7 @@
       font-size: 14px;
       max-width: 330px;
       width: 70%;
-      padding: 0 7px;
+      padding: 0 @spacing-03;
       transition: all 150ms; }
       .@{zprefix}-modal-box label input:hover, .@{zprefix}-modal-box label input:focus {
         outline: none;
@@ -438,7 +438,7 @@ body.@{zprefix}-body-fullscreen {
     .@{zprefix}-editor.@{zprefix}-reset-css hr {
       margin-bottom: 15px !important; }
     .@{zprefix}-editor.@{zprefix}-reset-css blockquote {
-      margin-left: 32px !important;
+      margin-left: @spacing-09 !important;
       font-style: italic !important;
       color: #555; }
     .@{zprefix}-editor.@{zprefix}-reset-css ul,
@@ -449,9 +449,9 @@ body.@{zprefix}-body-fullscreen {
     .@{zprefix}-editor.@{zprefix}-reset-css ul ol,
     .@{zprefix}-editor.@{zprefix}-reset-css ol ul {
       border: none;
-      margin: 2px !important;
+      margin: @spacing-01 !important;
       padding: 0 !important;
-      padding-left: 24px !important; }
+      padding-left: @spacing-08 !important; }
     .@{zprefix}-editor.@{zprefix}-reset-css hr {
       display: block;
       height: 1px;
@@ -477,11 +477,11 @@ body.@{zprefix}-body-fullscreen {
     .@{zprefix}-editor.@{zprefix}-reset-css h3 {
       font-size: 22px !important;
       line-height: 28px !important;
-      margin-bottom: 7px !important; }
+      margin-bottom: @spacing-03 !important; }
     .@{zprefix}-editor.@{zprefix}-reset-css h4 {
       font-size: 16px !important;
       line-height: 22px !important;
-      margin-bottom: 7px !important; }
+      margin-bottom: @spacing-03 !important; }
 
 /*
  * Dark theme
@@ -547,9 +547,9 @@ body.@{zprefix}-body-fullscreen {
   .@{zprefix}-dark .@{zprefix}-modal-box label {
     display: block;
     position: relative;
-    margin: 15px 12px;
     height: 27px;
     line-height: 27px;
+    margin: 15px @spacing-05;
     overflow: hidden; }
     .@{zprefix}-dark .@{zprefix}-modal-box label .@{zprefix}-input-infos span {
       color: #eee;

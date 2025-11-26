@@ -4,8 +4,8 @@
 	.displaySize(inline-block, @colorboxWidth, @colorboxHeight);
 	border: 1px solid @baseBorderColor;
 	.borderRadius(@baseBorderRadius);
-	margin: 0 2px;
-	padding: 4px;
+	margin: 0 @spacing-01;
+	padding: @spacing-02;
 	background: @inputBackgroundColor;
 	vertical-align: middle;
 	position: relative;
@@ -107,7 +107,7 @@
 	
 	&-circle {
 		.size(11px, 11px);
-		margin: -5px 0 0 -5px;
+		margin: -@spacing-03 0 0 -@spacing-03;
 		.encodeURL(background-image, '~./zkex/img/colorbox/colorpicker_select.gif');
 		position: absolute;
 		top: 0;
@@ -124,7 +124,7 @@
 	
 	&-arrows {
 		.size(27px, 9px);
-		margin: -4px 0 0 0;
+		margin: -@spacing-02 0 0 0;
 		.encodeURL(background-image, '~./zkex/img/colorbox/colorpicker_arrows.gif');
 		position: absolute;
 		left: 0;
@@ -140,7 +140,7 @@
 		.borderRadius(2px);
 		top: 0;
 		right: @colorpickerColorPositionRight;
-		padding: 2px;
+		padding: @spacing-01;
 	}
 	
 	&-newcolor {
@@ -160,7 +160,7 @@
 		left: 0;
 		.z-colorpicker-input {
 			width: @colorpickerInputWidth;
-			margin-left: 8px;
+			margin-left: @spacing-04;
 			margin-right: 0;
 		}
 	}
@@ -191,7 +191,7 @@
 		.z-colorpicker-input {
 			width: @colorpickerHEXInputWidth;
 			height: @colorpickerHEXInputHeight;
-			margin-left: 8px;
+			margin-left: @spacing-04;
 		}
 	}
 	

@@ -137,12 +137,12 @@
 
 			&.lm_left {
 				top: 0;
-				left: -2px;
+				left: -@spacing-01;
 			}
 
 			&.lm_right {
 				top: 0;
-				right: -2px;
+				right: -@spacing-01;
 			}
 		}
 
@@ -175,14 +175,14 @@
 	&.lm_left {
 		> .lm_items {
 			position: absolute;
-			left: 20px;
+			left: @spacing-07;
 			top: 0;
 		}
 	}
 	&.lm_right {
 		> .lm_items {
 			position: absolute;
-			right: 20px;
+			right: @spacing-07;
 			top: 0;
 		}
 
@@ -195,7 +195,7 @@
 	&.lm_bottom {
 		> .lm_items {
 			position: absolute;
-			bottom: 20px;
+			bottom: @spacing-07;
 		}
 
 		> .lm_header {
@@ -218,7 +218,7 @@
 		transition: height .4s ease-in;
 		border: solid 2px;
 		border-image-slice: 1 !important;
-		margin: -2px 0;
+		margin: -@spacing-01 0;
 	}
 
 	&.lm_left,
@@ -279,7 +279,7 @@
 		.lm_tabdropdown_list {
 			top:initial;
 			right:initial;
-			left:20px;
+			left:@spacing-07;
 		}
 	}
 }
@@ -303,7 +303,7 @@
 
 		.lm_tabdropdown_list {
 			top:initial;
-			right:20px;
+			right:@spacing-07;
 		}
 	}
 }
@@ -323,7 +323,7 @@
 
 		.lm_tabdropdown_list {
 			top:initial;
-			bottom:20px;
+			bottom:@spacing-07;
 		}
 	}
 }
@@ -343,22 +343,22 @@
 		height: 0;
 		vertical-align: middle;
 		display: inline-block;
-		border-top: 5px dashed;
-		border-right: 5px solid transparent;
-		border-left: 5px solid transparent;
+		border-top: @spacing-03 dashed;
+		border-right: @spacing-03 solid transparent;
+		border-left: @spacing-03 solid transparent;
 		color: white; // Overriden in specific Themes
 	}
 
 	.lm_tabdropdown_list {
 		position: absolute;
-		top: 20px;
+		top: @spacing-07;
 		right: 0;
 		z-index: 5;
 		overflow: hidden;
 
 		.lm_tab {
 			clear: both;
-			padding-right: 10px;
+			padding-right: @spacing-05;
 			margin: 0;
 
 			.lm_title {
@@ -512,7 +512,7 @@
 					border-left: none;
 				}
 				&:after {
-					height: 2px;
+					height: @spacing-01;
 					display: block;
 					background: @goldenLayoutSelectedBorderColor;
 					content:	'';
@@ -539,7 +539,7 @@
 				.baseIconFont();
 				position: relative;
 				top: @goldenLayoutCloseTabTop;
-				padding-left: 10px;
+				padding-left: @spacing-05;
 				line-height: normal;
 
 				&:before {
@@ -593,7 +593,7 @@
 			font-size: 10px;
 			top: 50%;
 			left: -1px;
-			margin-top: -5px;
+			margin-top: -@spacing-02;
 		}
 		
 		&.lm_vertical:after {
@@ -603,7 +603,7 @@
 			font-size: 10px;
 			left: 50%;
 			top: -1px;
-			margin-left: -5px;
+			margin-left: -@spacing-02;
 		}
 
 		&.lm_dragging {
@@ -623,7 +623,7 @@
 	border: 1px solid @goldenLayoutBorderColor;
 	.bottomBorderRadius(@borderRadiusLarge);
 	.applyCSS3('box-sizing', 'border-box');
-	padding: 20px 16px;
+	padding: @spacing-07 @spacing-06;
 	background: @goldenLayoutPanelBackgroundColor;
 	overflow: auto;
 }
@@ -655,7 +655,7 @@
 			box-shadow: 0px 0px 5px 0px @goldenLayoutProxyBoxShadowColor;
 
 			&:after {
-				height: 2px;
+				height: @spacing-01;
 				display: block;
 				background: @goldenLayoutSelectedBorderColor;
 				content: '';
@@ -691,7 +691,7 @@
 .z-goldenlayout-dropdown {
 	font-family: @baseTitleFontFamily;
 	margin: 0;
-	padding: 4px;
+	padding: @spacing-02;
 	list-style-type: none;
 	background: @goldenLayoutPanelBackgroundColor;
 	box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.5);
@@ -700,7 +700,7 @@
 	> li {
 		cursor: pointer;
 		display: block;
-		padding: 8px;
+		padding: @spacing-04;
 		padding-right: 52px;
 		height: 19px;
 

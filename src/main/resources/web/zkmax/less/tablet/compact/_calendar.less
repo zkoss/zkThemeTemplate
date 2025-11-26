@@ -1,6 +1,6 @@
 .z-calendar {
 	min-width: 420px;
-	padding: 2px;
+	padding: @spacing-01;
 
 	&-icon {
 		font-size: 20px;
@@ -34,7 +34,7 @@
 		}
 	}
 	&-today {
-		margin: 8px 10px 0;
+		margin: @spacing-04 @spacing-05 0;
 	}
 }
 .z-calendar-today .z-calendar-title {
@@ -52,7 +52,7 @@
 		width: 100%;
 		position: relative;
 		background: @baseBackgroundColor;
-		margin-right: 2px;
+		margin-right: @spacing-01;
 	}
 	&-cave {
 		position: relative;
@@ -100,7 +100,7 @@
 	}
 	&-footer {
 		height: 50px;
-		padding: 5px 0;
+		padding: @spacing-03 0;
 		clear: both;
 	}
 	&-button {
@@ -108,7 +108,7 @@
 		width: 45%;
 		border: none;
 		.borderRadius(@baseBorderRadius);
-		padding: 8px 0;
+		padding: @spacing-04 0;
 		.boxShadow('0 3px 6px 0 rgba(0,0,0,0.16), 0 2px 4px 0 rgba(0,0,0,0.24)');
 	}
 	&-left {

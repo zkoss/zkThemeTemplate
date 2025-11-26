@@ -10,14 +10,14 @@
 	&-input {
 		line-height: 14px;
 		height: 32px;
-		padding: 4px 5px;
+		padding: @spacing-02 @spacing-03;
 	}
 	&-button {
 		font-size: 20px;
 		min-width: 34px;
 		height: 32px;
 		max-height: 32px;
-		padding: 5px 6px;
+		padding: @spacing-03 @spacing-03;
 		text-align: center;
 		line-height: 14px;
 	}
@@ -27,7 +27,7 @@
 each(@comps1, {
 	.@{value}-input {
 		&:not(&-full) {
-			padding-right: 34px + 5px;
+			padding-right: 34px + @spacing-03;
 		}
 	}
 });
@@ -36,7 +36,7 @@ each(@comps1, {
 each(@comps2, {
 	.@{value} {
 		&-input:not(&-input-full) {
-			padding-right: 64px + 5px;
+			padding-right: 64px + @spacing-03;
 		}
 		&-button>a {
 			line-height: 32px;
@@ -84,7 +84,7 @@ each(@comps2, {
 	> a {
 		font-size: 22px;
 		.size(32px, 32px);
-		padding: 2px 4px;
+		padding: @spacing-01 @spacing-02;
 		border: 1px solid @inputBorderColor;
 		line-height: 30px;
 		position: static;
@@ -144,7 +144,7 @@ each(@comps2, {
 
 .z-timepicker-button {
 	line-height: 32px;
-	padding: 3px 0;
+	padding: @spacing-02 0;
 }
 
 .z-combobox-popup, .z-timepicker-popup {
@@ -152,7 +152,7 @@ each(@comps2, {
 }
 .z-comboitem, .z-timepicker-option {
 	font-size: 15px;
-	padding: 8px;
+	padding: @spacing-04;
 
 	&:after { // for vertical middle
 		content: '';
@@ -187,10 +187,10 @@ each(@comps2, {
 
 //Timebox Wheel
 .z-timebox-popup .z-timebox-wheel-body {
-	margin: 4px 0;
+	margin: @spacing-02 0;
 }
 .z-timebox-wheel {
-	padding: 0 2px;
+	padding: 0 @spacing-01;
 
 	&-time {
 		.boxOrientHor();
@@ -244,7 +244,7 @@ each(@comps2, {
 	}
 	&-footer {
 		height: 50px;
-		padding: 5px 0;
+		padding: @spacing-03 0;
 		clear: both;
 	}
 	&-button {
@@ -252,7 +252,7 @@ each(@comps2, {
 		width: 45%;
 		border: none;
 		.borderRadius(@baseBorderRadius);
-		padding: 8px 0;
+		padding: @spacing-04 0;
 		.boxShadow('0 3px 6px 0 rgba(0,0,0,0.16), 0 2px 4px 0 rgba(0,0,0,0.24)');
 	}
 	&-left {

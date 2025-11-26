@@ -15,7 +15,7 @@
 		.borderRadius(@baseBorderRadius);
 		.fontStyle(@baseTitleFontFamily, @calendarFontSizeSmall, 700, @calendarWeekTitleColor);
 		text-align: center;
-		padding: 8px 0;
+		padding: @spacing-04 0;
 	}
 
 	table {
@@ -69,12 +69,12 @@
 	&-decade,
 	&-month,
 	&-year {
-		padding-top: 8px;
+		padding-top: @spacing-04;
 
 		.z-calendar-cell {
 			min-width: 56px;
 			height: 40px;
-			padding: 0 8px;
+			padding: 0 @spacing-04;
 		}
 	}
 	&-decade {
@@ -144,7 +144,7 @@
 	&-icon {
 		.iconFontStyle(@calendarIconFontSize, @iconColor);
 		.size(@baseButtonWidth, @baseButtonHeight);
-		padding: 0 4px;
+		padding: 0 @spacing-02;
 		position: absolute;
 
 		&:hover {
@@ -216,10 +216,10 @@
 		background: transparent;
 		border: 0;
 		& + .z-timebox {
-			margin: 5px;
+			margin: @spacing-02;
 		}
 		& ~ .z-datebox-timezone {
-			margin: 0 5px 5px;
+			margin: 0 @spacing-02 @spacing-02;
 		}
 	}
 

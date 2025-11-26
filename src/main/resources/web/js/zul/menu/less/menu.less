@@ -58,15 +58,15 @@
 		}
 	}
 	&-vertical {
-		padding: 4px 2px;
+		padding: @spacing-02 @spacing-01;
 		ul {
 			display: inline-table;
 		}
 		li {
-			margin: 2px;
+			margin: @spacing-01;
 		}
 		.z-menu-clickable .z-menu-text {
-			margin-right: 20px;
+			margin-right: @spacing-07;
 		}
 
 		.z-menuseparator {
@@ -99,7 +99,7 @@
 	&-image {
 		max-width: @menuImageSize;
 		line-height: normal;
-		margin-right: 4px;
+		margin-right: @spacing-02;
 	}
 	&-content {
 		color: @menuItemColor;
@@ -146,7 +146,7 @@
 			background: transparent;
 			position: absolute;
 			top: 0;
-			right: 30px;
+			right: @spacing-09;
 		}
 		&.z-menu:active,
 		&.z-menu-selected {
@@ -156,7 +156,7 @@
 			}
 		}
 		.z-menu-text {
-			margin-right: 8px;
+			margin-right: @spacing-04;
 		}
 	}
 	&-content {
@@ -195,8 +195,8 @@
 }
 .z-menupopup {
 	border: 1px solid @baseBorderColor;
-	.borderRadius(4px);
-	padding: 4px;
+	.borderRadius(@baseBorderRadius);
+	padding: @spacing-02;
 	background: @menuPopupBackground;
 	left: 0;
 	top: 0;
@@ -228,7 +228,7 @@
 		min-height:  @menuImageSize;
 		line-height: normal;
 		background-repeat: no-repeat;
-		margin-right: 8px;
+		margin-right: @spacing-04;
 	}
 	.z-menuitem-icon {
 		.iconFontStyle(@menuPopupItemIconSize, @menuCheckedColor);
@@ -241,18 +241,18 @@
 		font-size: 1px;
 		display: block;
 		width: auto;
-		min-height: 2px;
+		min-height: @spacing-01;
 		border-bottom: 1px solid @menuPopupSeparatorBorder;
 		padding: 0;
 		line-height: 1px;
-		margin: 4px 0;
+		margin: @spacing-02 0;
 		position: relative;
 	}
 	[class^="z-icon"] {
 		text-align: center;
 		display: inline-block;
 		min-width: @menuImageSize; // for text alignment
-		margin-right: 8px;
+		margin-right: @spacing-04;
 		line-height: normal;
 	}
 	.z-menu-hover > .z-menu-content,
