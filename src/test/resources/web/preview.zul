@@ -126,6 +126,7 @@ model2.addToSelection(model2.get(2));
     </combobox>
     <nodom viewModel="@id('vm')@init('zk.example.ZulListVM')"  xmlns:n="native">
         <forEach items="@init(vm.zulFiles)">
+            <h:h1>${each}</h:h1>
             <idspace>
             <apply templateURI='@init(("~./"+=each))'/>
             </idspace>
