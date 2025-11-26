@@ -25,7 +25,7 @@
 	}
 	&-faker th {
 		font-size: 0;
-		.size(45px, 0);
+		.size(5.625rem, 0); // 45px / 8
 		border: 0;
 		margin: 0;
 		padding: 0;
@@ -154,7 +154,7 @@
 	&-verticalbar-tick {
 		.size(@biglistboxVerticalTickWidth, @biglistboxVerticalTickHeight);
 		position: absolute;
-		font-size: 16px;
+		font-size: @fontSizeMedium;
 		color: @biglistboxScrollBarTextColor;
 		background-color: @baseBackgroundColor;
 		border: 1px solid @biglistboxScrollBarBorderColor;
@@ -203,7 +203,7 @@
 				.z-biglistbox-wscroll-down,
 				.z-biglistbox-wscroll-end,
 				.z-biglistbox-wscroll-body {
-					font-size: 16px;
+					font-size: @fontSizeMedium;
 					position: absolute;
 					border: 1px solid @biglistboxScrollBarBorderColor;
 					&:hover {
@@ -318,7 +318,7 @@
 				.z-biglistbox-wscroll-down,
 				.z-biglistbox-wscroll-end,
 				.z-biglistbox-wscroll-body {
-					font-size: 16px;
+					font-size: @fontSizeMedium;
 					position: absolute;
 					top: 0;
 					border: 1px solid @biglistboxScrollBarBorderColor;

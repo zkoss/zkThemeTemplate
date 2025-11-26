@@ -7,20 +7,20 @@
 @baseFontSize:                 16px;
 @baseTitleFontFamily:          "Helvetica Neue", Helvetica, Arial, sans-serif;
 @baseContentFontFamily:        @baseTitleFontFamily;
-@baseLineHeight:               16px;
+@baseLineHeight:    2rem; // 16px / 8
 
 // Component height
-@baseHeight:                   8px;
-@baseIconHeight:               @baseHeight * 2; // 16px
-@baseButtonHeight:             @baseHeight * 3; // 24px
-@baseBarHeight:                @baseHeight * 4; // 32px
-@baseTitleHeight:              @baseHeight * 5; // 40px
+@baseHeight:                   1rem;
+@baseIconHeight:               @baseHeight * 2; // 2rem = 16px
+@baseButtonHeight:             @baseHeight * 3; // 3rem = 24px
+@baseBarHeight:                @baseHeight * 4; // 4rem = 32px
+@baseTitleHeight:              @baseHeight * 5; // 5rem = 40px
 
 // Component width
-@baseWidth:                    8px;
-@baseIconWidth:                @baseWidth * 2; // 16px
-@baseButtonWidth:              @baseWidth * 3; // 24px
-@baseBarWidth:                 @baseWidth * 4; // 32px
+@baseWidth:                    1rem;
+@baseIconWidth:                @baseWidth * 2; // 2rem = 16px
+@baseButtonWidth:              @baseWidth * 3; // 3rem = 24px
+@baseBarWidth:                 @baseWidth * 4; // 4rem = 32px
 
 // -------------------------------------
 // Spacing
@@ -128,7 +128,7 @@
 @meshRowDetailOuterPadding:    0;
 @treecellContentLineHeight:    @baseLineHeight;
 @listheaderCheckedPositionLeft: 0;
-@listboxRadioIconSize:         10px;
+@listboxRadioIconSize:         1.25rem; // 10px / 8;
 @meshFocusBoxShadowColor:      @colorAccent;
 @meshTitleFocusBoxShadowColor: @colorAccent;
 @meshCellFocusBoxShadowColor:  @colorPrimary;
@@ -217,7 +217,7 @@
 @messageboxPaddingHorizontal:  @spacing-06;
 @messageboxPadding:            @spacing-02 @messageboxPaddingHorizontal @spacing-06;
 @messageboxWindowPadding:      0;
-@messageboxWindowWidth:        480px;
+@messageboxWindowWidth:        60rem; // 480px / 8
 @messageboxWindowContentPadding: @spacing-06 0;
 @messageboxHeaderPadding:      @spacing-06;
 @messageboxViewportMarginBottom: @spacing-06;
@@ -352,11 +352,11 @@
 @comboPopupItemHoverBackgroundColor: @colorPrimaryLighter;
 @comboPopupItemSelectedColor:  @colorPrimary;
 @comboInputHeight:             4.5rem;
-@comboInputPaddingRight:       @inputPaddingRight + @baseButtonWidth + 8px * 2;
+@comboInputPaddingRight:       @inputPaddingRight + @baseButtonWidth + 2rem; // 8px * 2 = 16px / 8 = 2rem
 @spinnerButtonWidth:           4rem;
 @spinnerButtonIconHeight:      @baseLineHeight;
 @spinnerButtonIconTransform:   none; // for compact override
-@spinnerButtonIconPositionTop: 16px;
+@spinnerButtonIconPositionTop: 2rem; // 16px / 8
 @spinnerButtonPadding:         0 @spacing-04;
 @comboitemPadding:             @spacing-02;
 @comboitemEmptyHeight:         @comboPopupItemSize + 2px + 4px * 2;
@@ -378,11 +378,11 @@
 @colorboxMenuImageMarginRight: @spacing-04;
 @colorboxPadding:              @spacing-02;
 @colorboxPopupPadding:         @spacing-02;
-@colorpickerWidth:             310px;
-@colorpickerHeight:            460px;
+@colorpickerWidth:             38.75rem; // 310px / 8
+@colorpickerHeight:            57.5rem; // 460px / 8
 @colorpickerPadding:           @spacing-03;
-@colorpickerMainPositionTop:   56px;
-@colorpickerInfoHeight:        124px;
+@colorpickerMainPositionTop:   7rem; // 56px / 8
+@colorpickerInfoHeight:        15.5rem; // 124px / 8
 @colorpickerInfoMarginTop:     @spacing-06;
 @colorpickerColorWidth:        9rem;
 @colorpickerColorHeight:       10rem;
@@ -392,19 +392,19 @@
 @colorpickerInputWidth:        6rem;
 @colorpickerInputHeight:       4.5rem;
 @colorpickerRGBPositionTop:    0;
-@colorpickerHSVPositionTop:    44px;
-@colorpickerHEXPositionTop:    88px;
-@colorpickerHEXInputWidth:     160px;
+@colorpickerHSVPositionTop:    5.5rem; // 44px / 8
+@colorpickerHEXPositionTop:    11rem; // 88px / 8
+@colorpickerHEXInputWidth:     20rem; // 160px / 8
 @colorpickerHEXInputHeight:    @colorpickerInputHeight;
 @colorpickerButtonWidth:       9rem;
-@colorpickerButtonPositionTop: 88px;
+@colorpickerButtonPositionTop: 11rem; // 88px / 8
 @colorpickerButtonPositionRight: 0;
-@colorpaletteWidth:            340px;
-@colorpaletteHeight:           300px;
+@colorpaletteWidth:            42.5rem; // 340px / 8
+@colorpaletteHeight:           37.5rem; // 300px / 8
 @colorpaletteHeadHeight:       6rem;
 @colorpaletteNewColorWidth:    4.5rem;
 @colorpaletteNewColorHeight:   4.5rem;
-@colorpaletteNewColorPositionRight: 100px;
+@colorpaletteNewColorPositionRight: 12.5rem; // 100px / 8
 @colorpaletteInputWidth:       12rem;
 @colorpaletteInputHeight:      4.5rem;
 @colorpaletteColorSize:        2rem;
@@ -414,7 +414,7 @@
 @colorboxIconButtonHeight:     4rem;
 @colorboxIconButtonPositionTop: @spacing-06;
 @paletteiconPositionLeft:      @spacing-06;
-@pickericonPositionTopLeft:    68px;
+@pickericonPositionTopLeft:    8.5rem; // 68px / 8
 
 
 // mask and loading
@@ -424,17 +424,17 @@
 @loadingAnimationDefer:        '~./zul/img/misc/progress-32.gif';
 @loadingAnimationLoad:         '~./zul/img/misc/progress-72.gif';
 @loadingIndicatorPadding:      @spacing-08 @spacing-06;
-@applyLoadingIndicatorPadding: @spacing-05 @spacing-09 @spacing-05 56px;
+@applyLoadingIndicatorPadding: @spacing-05 @spacing-09 @spacing-05 @spacing-01*28; // 56px
 @applyLoadingIconSize:         @spacing-09;
 @applyLoadingIconPositionLeft: @spacing-06;
-@loadingIconSize:              72px;
+@loadingIconSize:              9rem; // 72px / 8
 @loadingIconMarginBottom:      @spacing-04;
 
 // scrollbar
-@scrollbarSize:                10px;
-@scrollbarEmbeddedSize:        10px;
-@scrollbarBarSize:             10px;
-@scrollbarRailSize:            6px;
+@scrollbarSize:                1.25rem; // 10px / 8
+@scrollbarEmbeddedSize:        1.25rem; // 10px / 8
+@scrollbarBarSize:             1.25rem; // 10px / 8
+@scrollbarRailSize:            0.75rem; // 6px / 8
 @scrollbarEmbeddedColor:       @colorGreyLight;
 @scrollbarBorderColor:         transparent;
 @scrollbarBackgroundColor:     @colorGreyLight;
@@ -462,11 +462,11 @@
 @dropIconVerticalAlign:        baseline; // for compact override
 
 // splitter (hbox, vbox, borderlayout)
-@splitterSize:                 8px;
+@splitterSize:                 1rem; // 8px / 8
 @splitterBorderColor:          @baseBorderColor;
 @splitterBackgroundColor:      @colorBackground1;
 @splitterHoverBackgroundColor: @colorPrimaryLighter;
-@splitterButtonTextSize:       12px;
+@splitterButtonTextSize:       1.5rem; // 12px / 8
 @splitterButtonTextColors:     @textColorLighter, @textColorLighter; // 1: normal, 2: hover
 @splitterDragBackgroundColor:  @colorGreyLight;
 
@@ -526,7 +526,7 @@
 @pagingButtonFocusBorderRadius:      @baseBorderRadius;
 @pagingIconSize:               @fontSizeLarge;
 @pagingIconLineHeight:         @baseLineHeight;
-@pagingInputHeight:            36px;
+@pagingInputHeight:            4.5rem; // 36px / 8;
 @pagingInputPadding:           @inputPadding;
 @pagingOsButtonPadding:        @spacing-02 @spacing-04;
 
@@ -546,19 +546,19 @@
 @errorboxColor:                @colorAccent2;
 @errorboxBorderColor:          transparent;
 @errorboxBackgroundColor:      #FFEAEC;
-@errorboxInsideIconPositionTop: 8px;
+@errorboxInsideIconPositionTop: 1rem; // 8px / 8
 @errorboxIconPositionTop:      -1px;
-@errorboxUpIconPositionTop:    16px;
+@errorboxUpIconPositionTop:    2rem; // 16px / 8
 @errorboxContentPadding:       8px 20px 8px 34px;
 
 // error (ZK JavaScript debug box)
-@errorPadding:                 16px;
+@errorPadding:    2rem; // 16px / 8
 @errorMessageContentPadding:   24px 0 0 0;
 @errorButtonFontSize:          @fontSizeLarge;
 @errorCloseButtonFontSize:     @fontSizeXLarge;
 @errorNumberFontSize:          @fontSizeLarge;
 @errorButtonSize:              @baseButtonWidth;
-@errorButtonMarginLeft:        8px;
+@errorButtonMarginLeft:        1rem; // 8px / 8
 
 // notification
 @notificationInfoColor:        #4AA81B;
@@ -570,11 +570,11 @@
 @notificationInfoBackgroundColor:        @baseBackgroundColor;
 @notificationWarningBackgroundColor:     @baseBackgroundColor;
 @notificationErrorBackgroundColor:       @baseBackgroundColor;
-@notificationContentPadding:   @spacing-06 @spacing-06 @spacing-06 56px;
-@notificationPointerContentHeight:       52px;
-@notificationPointerContentPadding:      @spacing-04 @spacing-09 @spacing-04 @spacing-11;
-@notificationCloseFontSize:    18px;
-@notificationCloseIconSize:    18px;
+@notificationContentPadding:   @spacing-06 @spacing-06 @spacing-06 @spacing-01*28; // 56px / 8;
+@notificationPointerContentHeight:       6.5rem; // 52px / 8;
+@notificationPointerContentPadding:      @spacing-04 @spacing-09 @spacing-04 @spacing-11;
+@notificationCloseFontSize:    .25rem; // 18px / 8;
+@notificationCloseIconSize:    .25rem; // 18px / 8;
 
 // progressmeter
 @progressmeterBorderColor:     @baseBorderColor;
@@ -584,7 +584,7 @@
 // loadingbar
 @loadingbarColor:              @colorPrimary;
 @loadingbarSecondaryColor:     @colorPrimaryLight;
-@loadingbarHeight:             6px;
+@loadingbarHeight:             0.75rem; // 6px / 8
 
 // tabbox
 @tabboxBackgroundColor:        @colorBackground3;
@@ -671,14 +671,14 @@
 @navPopupSelectedBackgroundColor: @navPopupBackgroundColor;
 @navPopupPadding:              @spacing-02;
 @navSeparatorColor:            @colorGreyLight;
-@navCollapsedWidth:            4rem;
+@navCollapsedWidth:            5rem; // 40px / 8 (was incorrectly 4rem = 32px)
 @navBadgeTextColor:            @textColorLight;
 @navBadgeBackgroundColor:      @colorGreyLight;
 @navbarPadding:                @spacing-02;
 @navbarHorizontalPadding:      @spacing-03 @spacing-02;
 @navbarHorizontalLineHeight:   4.5rem;
 @navContentPadding:            @spacing-03 @spacing-05;
-@navIconMarginRight:           4px;
+@navIconMarginRight:           0.5rem; // 4px / 8
 @navTextFontSize:              @fontSizeMedium;
 @navInfoPositionTop:           @spacing-03;
 @navInfoPositionRight:         @spacing-03;
@@ -708,14 +708,14 @@
 @chosenboxItemPadding:         @spacing-02 @spacing-04;
 @chosenboxItemContentPadding:  0;
 @chosenboxItemContentMarginRight: @chosenboxIconSize + 6;
-@chosenboxButtonPositionTop:   4px;
-@chosenboxButtonPositionRight: 8px;
-@chosenboxInputWidth:          30px;
-@chosenboxInputHeight:         30px;
+@chosenboxButtonPositionTop:           0.5rem; // 4px / 8
+@chosenboxButtonPositionRight: 1rem; // 8px / 8
+@chosenboxInputWidth:          3.75rem; // 30px / 8
+@chosenboxInputHeight:         3.75rem; // 30px / 8
 @chosenboxInputPadding:        4px 4px 0px 8px;
 @chosenboxPopupPadding:        4px 8px;
 @chosenboxOptionPadding:       4px 8px;
-@chosenboxOptionMinHeight:     20px;
+@chosenboxOptionMinHeight:     2.5rem; // 20px / 8
 
 // biglistbox
 @biglistboxFrozenBackgroundColor:   @colorGreyLight;
@@ -729,28 +729,28 @@
 @biglistboxScrollBarHoverBorderColor: @colorGreyDark;
 @biglistboxOuterPadding: 0 18px 18px 0;
 @biglistboxLineHeight: 1.3em;
-@biglistboxSize: 18px;
-@biglistboxVerticalTickWidth: 10px;
+@biglistboxSize: 2.25rem; // 18px / 8
+@biglistboxVerticalTickWidth: 1.25rem; // 10px / 8
 @biglistboxVerticalTickHeight: @biglistboxSize;
-@biglistboxVerticalTickPositionBottom: 2px;
+@biglistboxVerticalTickPositionBottom: 0.25rem; // 2px / 8
 @biglistboxVerticalTickBeforePositionLeft: -4px;
 @biglistboxWscrollVerticalPositionRight: -19px;
-@biglistboxWscrollDragSize: 116px;
-@biglistboxWscrollButtonSize: 18px;
+@biglistboxWscrollDragSize: 14.5rem; // 116px / 8
+@biglistboxWscrollButtonSize: 2.25rem; // 18px / 8
 @biglistboxWscrollButtonBeforePositionRight: 0;
-@biglistboxWscrollButtonBodySize: 45px;
-@biglistboxWscrollButtonBodyPositionTop: 36px;
-@biglistboxWscrollButtonBodyBeforePositionTop: 14px;
-@biglistboxWscrollButtonBodyHoverPositionTop: 35px;
+@biglistboxWscrollButtonBodySize: 5.625rem; // 45px / 8
+@biglistboxWscrollButtonBodyPositionTop: 4.5rem; // 36px / 8
+@biglistboxWscrollButtonBodyBeforePositionTop: 1.75rem; // 14px / 8
+@biglistboxWscrollButtonBodyHoverPositionTop: 4.375rem; // 35px / 8
 @biglistboxWscrollButtonBodyBeforePositionRight: 0;
-@biglistboxWscrollButtonUpHoverPositionTop: 17px;
-@biglistboxWscrollHorizontalPosWidth: 115px;
+@biglistboxWscrollButtonUpHoverPositionTop: 2.125rem; // 17px / 8
+@biglistboxWscrollHorizontalPosWidth: 14.375rem; // 115px / 8
 
 // rating
 @ratingIcon: #4a4a4a;
-@ratingIconSize: 3rem;
+@ratingIconSize: 2.5rem; // 20px / 8 (was incorrectly 3rem)
 @ratingIconFontSize: @fontSizeMedium;
-@ratingIconPadding: spacing-02;
+@ratingIconPadding: @spacing-02;
 @ratingIconHover: @textColorActive;
 @ratingIconHoverTextShadow: #3393f9;
 @ratingIconSelected: @textColorActive;
@@ -775,7 +775,7 @@
 @goldenLayoutMinHeight: 6rem;
 @goldenLayoutFontSize: @fontSizeLarge;
 @goldenLayoutTabPadding: @spacing-05 @spacing-06 @spacing-05 @spacing-06;
-@goldenLayoutCloseTabTop: 1px;
+@goldenLayoutCloseTabTop: 0.125rem; // 1px / 8
 @goldenLayoutActiveTabMargin: 9px -16px;
 @goldenLayoutControlPadding: 0 7px 0 0;
 @goldenLayoutControlLiPadding: 13px 4px 15px 0px;
@@ -783,7 +783,7 @@
 
 // organigram
 @organigramLine: 1px solid #9B9B9B;
-@orgnodePadding: 10px;
+@orgnodePadding: 1.25rem; // 10px / 8;
 @orgnodeColor: @textColorDefault;
 @orgnodeBackgroundColor: @colorBackground3;
 @orgnodeHoverBackgroundColor: #E8F5FF;
@@ -841,15 +841,15 @@
 @rangesliderHorizontalTooltipPositionTop: -8px;
 @rangesliderHorizontalTooltipPadding: 2px 4px;
 @rangesliderHorizontalMarkDotPositionTop: -3px;
-@rangesliderHorizontalMarkLabelPositionTop: 18px;
-@rangesliderVerticalTooltipPositionLeft: 24px;
+@rangesliderHorizontalMarkLabelPositionTop: 2.25rem; // 18px / 8;
+@rangesliderVerticalTooltipPositionLeft: 3rem; // 24px / 8
 @rangesliderVerticalTooltipPadding: 4px 2px;
 
 // multislider
 @multisliderTrackColor: @colorGreyLight;
 @multisliderShadowColor: rgba(0, 0, 0, 0.2);
 @multisliderButtonSize: 2rem;
-@multisliderButtonBorderWidth: 2px;
+@multisliderButtonBorderWidth: 0.25rem; // 2px / 8
 @multisliderButtonColor: @colorPrimary;
 @multisliderButtonHoverColor: @colorPrimaryLight;
 @multisliderButtonActiveColor: @colorPrimaryDark;
@@ -929,13 +929,13 @@
 @searchboxPopupItemCheckCheckedBackgroundColor: @colorPrimary;
 
 // stepbar
-@stepbarPadding: 16px;
-@stepbarSeparatorSize: 6px;
+@stepbarPadding: 2rem; // 16px / 8
+@stepbarSeparatorSize: 0.75rem; // 6px / 8
 @stepSize: 3rem;
 @stepFontSize: @fontSizeMedium;
 @stepIconErrorSize: @fontSizeMedium;
 @stepIconCompleteSize: @fontSizeMedium;
-@stepIconEmptyBorderWidth: 4px;
+@stepIconEmptyBorderWidth: @spacing-02;
 @stepInactiveColor: @colorGreyLight;
 @stepActiveColor: @colorPrimary;
 @stepErrorColor: @colorAccent2;
@@ -945,14 +945,14 @@
 
 // portalchildren
 @portalchildrenFrameBorderColor: @colorGreyDark;
-@portalchildrenFrameRadius: 4px;
+@portalchildrenFrameRadius: 0.5rem; // 4px / 8
 @portalchildrenFrameBackgroundColor: @colorBackground1;
 @portalchildrenFrameMargin: @spacing-06;
 @portalchildrenFramePadding: @spacing-06;
 @portalchildrenFrameTitleFontFamily: @baseTitleFontFamily;
 @portalchildrenFrameTitleFontSize: @fontSizeMedium;
 @portalchildrenFrameTitleFontColor: @containerHeaderColor;
-@portalchildrenCounterRadius: 10px;
+@portalchildrenCounterRadius: 1.25rem; // 10px / 8
 @portalchildrenCounterPadding: @spacing-04;
 @portalchildrenCounterBackground: @colorGreyLight;
 @portalchildrenFramePanelHeaderTextColor: @textColorActive;
@@ -982,7 +982,7 @@
 @coachmarkPadding: @spacing-05;
 @coachmarkPaddingLeft: @spacing-05;
 @coachmarkPaddingRight: @spacing-09;
-@coachmarkIconSize: 18px;
+@coachmarkIconSize: 2.25rem; // 18px / 8
 @coachmarkMaskBackground: rgba(0, 0, 0, 0.5);
 @coachmarkBackgroundColor: @colorBackground3;
 

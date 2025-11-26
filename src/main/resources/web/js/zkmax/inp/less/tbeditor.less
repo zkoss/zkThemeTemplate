@@ -27,7 +27,7 @@
   box-sizing: border-box; }
 
 .@{zprefix}-box svg {
-  width: 17px;
+  width: 2.125rem; // 17px / 8
   height: 100%;
   fill: #222; }
 
@@ -37,7 +37,7 @@
   position: relative;
   border: 1px solid #DDD;
   width: 100%;
-  min-height: 300px;
+  min-height: 37.5rem; // 300px / 8
   margin: 0px auto; } // Potix: style modified
 
 .@{zprefix}-box .@{zprefix}-editor {
@@ -56,7 +56,7 @@
   position: relative;
   box-sizing: border-box;
   padding: 20px;
-  min-height: 300px;
+  min-height: 37.5rem; // 300px / 8
   width: 100%;
   border-style: none;
   resize: none;
@@ -115,7 +115,7 @@
 
 .@{zprefix}-button-pane {
   width: 100%;
-  min-height: 36px;
+  min-height: 4.5rem; // 36px / 8
   background: #ecf0f1;
   border-bottom: 1px solid #d7e0e2;
   margin: 0;
@@ -146,13 +146,13 @@
       width: 1px;
       background: #d7e0e2;
       margin: 0 5px;
-      height: 35px;
+      height: 4.375rem; // 35px / 8
       vertical-align: top; } // Potix: ZK-4916: style modified for trumbowyg v2.7.2
   .@{zprefix}-button-pane button {
     display: inline-block;
     position: relative;
-    width: 35px;
-    height: 35px;
+    width: 4.375rem; // 35px / 8
+    height: 4.375rem; // 35px / 8
     padding: 1px 6px !important;
     margin-bottom: 1px;
     overflow: hidden;
@@ -163,7 +163,7 @@
     transition: background-color 150ms, opacity 150ms; }
     .@{zprefix}-button-pane button.@{zprefix}-textual-button {
       width: auto;
-      line-height: 35px; }
+      line-height: 4.375rem; } // 35px / 8
   .@{zprefix}-button-pane.@{zprefix}-disable button:not(.@{zprefix}-not-disable):not(.@{zprefix}-active),
   .@{zprefix}-disabled .@{zprefix}-button-pane button:not(.@{zprefix}-not-disable):not(.@{zprefix}-viewHTML-button) {
     opacity: 0.2;
@@ -198,7 +198,7 @@
       display: none !important; }
 
 .@{zprefix}-dropdown {
-  width: 200px;
+  width: 25rem; // 200px / 8
   border: 1px solid #ecf0f1;
   padding: 5px 0;
   border-top: none;
@@ -209,8 +209,8 @@
   .@{zprefix}-dropdown button {
     display: block;
     width: 100%;
-    height: 35px;
-    line-height: 35px;
+    height: 4.375rem; // 35px / 8
+    line-height: 4.375rem; // 35px / 8
     text-decoration: none;
     background: #FFF;
     padding: 0 10px;
@@ -235,7 +235,7 @@
           transform: translateX(-50%);
   max-width: 520px;
   width: 100%;
-  height: 350px;
+  height: 43.75rem; // 350px / 8
   z-index: 11;
   overflow: hidden;
   -webkit-backface-visibility: hidden;
@@ -268,7 +268,7 @@
     background: #fbfcfc; }
   .@{zprefix}-modal-box .@{zprefix}-progress {
     width: 100%;
-    height: 3px;
+    height: 0.375rem; // 3px / 8
     position: absolute;
     top: 58px; }
     .@{zprefix}-modal-box .@{zprefix}-progress .@{zprefix}-progress-bar {
@@ -279,14 +279,14 @@
     display: block;
     position: relative;
     margin: 15px 12px;
-    height: 29px;
-    line-height: 29px;
+    height: 3.625rem; // 29px / 8
+    line-height: 3.625rem; // 29px / 8
     overflow: hidden; }
     .@{zprefix}-modal-box label .@{zprefix}-input-infos {
       display: block;
       text-align: left;
-      height: 25px;
-      line-height: 25px;
+      height: 3.125rem; // 25px / 8
+      line-height: 3.125rem; // 25px / 8
       transition: all 150ms; }
       .@{zprefix}-modal-box label .@{zprefix}-input-infos span {
         display: block;
@@ -294,7 +294,7 @@
         background-color: #fbfcfc;
         border: 1px solid #DEDEDE;
         padding: 0 7px;
-        width: 150px; }
+        width: 18.75rem; } // 150px / 8
       .@{zprefix}-modal-box label .@{zprefix}-input-infos span.@{zprefix}-msg-error {
         color: #e74c3c; }
     .@{zprefix}-modal-box label.@{zprefix}-input-error input,
@@ -306,8 +306,8 @@
       position: absolute;
       top: 0;
       right: 0;
-      height: 27px;
-      line-height: 27px;
+      height: 3.375rem; // 27px / 8
+      line-height: 3.375rem; // 27px / 8
       border: 1px solid #DEDEDE;
       background: #fff;
       font-size: 14px;
@@ -331,10 +331,10 @@
     text-decoration: none;
     color: #FFF;
     display: block;
-    width: 100px;
-    height: 35px;
-    line-height: 33px;
     margin: 0 10px;
+    width: 12.5rem; // 100px / 8
+    height: 4.375rem; // 35px / 8
+    line-height: 4.125rem; // 33px / 8
     background-color: #333;
     border: none;
     cursor: pointer;
