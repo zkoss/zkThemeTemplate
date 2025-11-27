@@ -90,7 +90,7 @@ textarea.z-textbox {
 		.iconFontStyle(@fontSizeLarge, @errorboxColor);
 		position: absolute;
 		top: @errorboxInsideIconPositionTop;
-		left: 7px;
+		left: @spacing-03;
 		z-index: 2;
 	}
 }
@@ -143,8 +143,8 @@ textarea.z-textbox {
 	.size(@fontSizeLarge, @fontSizeLarge);
 	padding: 0 1px;
 	position: absolute;
-	top: 10px;
-	right: 8px;
+	top: @spacing-04;
+	right: @spacing-04;
 	cursor: pointer;
 	.opacity(0.6);
 	&:hover {
@@ -157,7 +157,7 @@ textarea.z-textbox {
 	top: @errorboxIconPositionTop;
 }
 .z-errorbox-right ~ .z-errorbox-close {
-	right: 16px;
+	right: @spacing-06;
 }
 .z-errorbox-up ~ .z-errorbox-close {
 	top: 17px;

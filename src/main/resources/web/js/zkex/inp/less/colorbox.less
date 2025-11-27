@@ -33,8 +33,8 @@
 		.iconFontStyle(@colorboxButtonFontSize, @textColorDefault);
 		.size(1.25rem, 1rem);
 		position: relative;
-		top: -3px;
-		left: -2px;
+		top: -@spacing-01;
+		left: -@spacing-01;
 	}
 	
 	&-disabled,
@@ -100,7 +100,7 @@
 		border: 1px solid @baseBorderColor;
 		.encodeURL(background-image, '~./zkex/img/colorbox/colorpicker_hue.png');
 		position: absolute;
-		left: 7px;
+		left: @spacing-03;
 		overflow: hidden;
 		cursor: row-resize;
 	}
