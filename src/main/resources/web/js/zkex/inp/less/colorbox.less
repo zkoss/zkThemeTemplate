@@ -20,7 +20,7 @@
 	
 	&-button {
 		font-size: @colorboxButtonFontSize;
-		.displaySize(inline-block, 1.75rem, 1.75rem); // 14px / 8
+		.displaySize(inline-block, 1.75rem, 1.75rem);
 		line-height: normal;
 		background: @inputBackgroundColor;
 		position: absolute;
@@ -31,7 +31,7 @@
 
 	&-icon {
 		.iconFontStyle(@colorboxButtonFontSize, @textColorDefault);
-		.size(1.25rem, 1rem); // 10px / 8, 8px / 8
+		.size(1.25rem, 1rem);
 		position: relative;
 		top: -3px;
 		left: -2px;
@@ -70,7 +70,7 @@
 
 	&-main {
 		position: relative;
-		height: 32rem; // 256px / 8
+		height: 32rem;
 		top: @colorpickerMainPositionTop;
 	}
 
@@ -82,7 +82,7 @@
 	}
 
 	&-gradient {
-		.size(32rem, 32rem); // 256px / 8
+		.size(32rem, 32rem);
 		border: 1px solid @baseBorderColor;
 		position: absolute;
 		left: 0;
@@ -91,12 +91,12 @@
 	}
 
 	&-overlay {
-		.size(32rem, 32rem); // 256px / 8
+		.size(32rem, 32rem);
 		.encodeURL(background-image, '~./zkex/img/colorbox/colorpicker_gradient.png');
 	}
 
 	&-bar {
-		.size(1.5rem, 32rem); // 12px / 8, 256px / 8
+		.size(1.5rem, 32rem);
 		border: 1px solid @baseBorderColor;
 		.encodeURL(background-image, '~./zkex/img/colorbox/colorpicker_hue.png');
 		position: absolute;
@@ -106,7 +106,7 @@
 	}
 	
 	&-circle {
-		.size(1.375rem, 1.375rem); // 11px / 8
+		.size(1.375rem, 1.375rem);
 		margin: -@spacing-03 0 0 -@spacing-03;
 		.encodeURL(background-image, '~./zkex/img/colorbox/colorpicker_select.gif');
 		position: absolute;
@@ -116,14 +116,14 @@
 	}
 
 	&-hue {
-		.size(3.375rem, 32rem); // 27px / 8, 256px / 8
+		.size(3.375rem, 32rem);
 		position: absolute;
 		top: 0;
 		right: 0;
 	}
 
 	&-arrows {
-		.size(3.375rem, 1.125rem); // 27px / 8, 9px / 8
+		.size(3.375rem, 1.125rem);
 		margin: -@spacing-02 0 0 0;
 		.encodeURL(background-image, '~./zkex/img/colorbox/colorpicker_arrows.gif');
 		position: absolute;
@@ -175,7 +175,7 @@
 
 	&-text {
 		display: inline-block;
-		width: 4.375rem; // 35px / 8
+		width: 4.375rem;
 	}
 	
 	&-input {

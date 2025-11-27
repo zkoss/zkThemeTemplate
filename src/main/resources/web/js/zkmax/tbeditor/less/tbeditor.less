@@ -27,7 +27,7 @@
   box-sizing: border-box; }
 
 .@{zprefix}-box svg {
-  width: 17px;
+  width: 2.125rem;
   height: 100%;
   fill: #222; }
 
@@ -37,7 +37,7 @@
   position: relative;
   border: 1px solid #DDD;
   width: 100%;
-  min-height: 300px;
+  min-height: 37.5rem;
   margin: 0px auto; } // Potix: style modified
 
 .@{zprefix}-box .@{zprefix}-editor {
@@ -55,8 +55,8 @@
 .@{zprefix}-textarea {
   position: relative;
   box-sizing: border-box;
-  padding: 20px;
-  min-height: 300px;
+  padding: @spacing-06;
+  min-height: 37.5rem;
   width: 100%;
   border-style: none;
   resize: none;
@@ -122,7 +122,7 @@
   padding: 0 @spacing-02;
   position: relative;
   list-style-type: none;
-  line-height: 10px;
+  line-height: 1.25rem;
   -webkit-backface-visibility: hidden;
           backface-visibility: hidden;
   z-index: 11; }
@@ -146,13 +146,13 @@
       width: 1px;
       background: #d7e0e2;
       margin: 0 @spacing-02;
-      height: 35px;
+      height: 4.375rem;
       vertical-align: top; } // Potix: ZK-4916: style modified for trumbowyg v2.7.2
   .@{zprefix}-button-pane button {
     display: inline-block;
     position: relative;
-    width: 35px;
-    height: 35px;
+    width: 4.375rem;
+    height: 4.375rem;
     padding: 1px 6px !important;
     margin-bottom: 1px;
     overflow: hidden;
@@ -163,7 +163,7 @@
     transition: background-color 150ms, opacity 150ms; }
     .@{zprefix}-button-pane button.@{zprefix}-textual-button {
       width: auto;
-      line-height: 35px; }
+      line-height: 4.375rem; }
   .@{zprefix}-button-pane.@{zprefix}-disable button:not(.@{zprefix}-not-disable):not(.@{zprefix}-active),
   .@{zprefix}-disabled .@{zprefix}-button-pane button:not(.@{zprefix}-not-disable):not(.@{zprefix}-viewHTML-button) {
     opacity: 0.2;
@@ -198,7 +198,7 @@
       display: none !important; }
 
 .@{zprefix}-dropdown {
-  width: 200px;
+  width: 25rem;
   border: 1px solid #ecf0f1;
   padding: @spacing-02 0;
   border-top: none;
@@ -209,8 +209,8 @@
   .@{zprefix}-dropdown button {
     display: block;
     width: 100%;
-    height: 35px;
-    line-height: 35px;
+    height: 4.375rem;
+    line-height: 4.375rem;
     text-decoration: none;
     background: #FFF;
     padding: 0 10px;
@@ -233,9 +233,9 @@
   left: 50%;
   -webkit-transform: translateX(-50%);
           transform: translateX(-50%);
-  max-width: 520px;
+  max-width: 65rem;
   width: 100%;
-  height: 350px;
+  height: 43.75rem;
   z-index: 11;
   overflow: hidden;
   -webkit-backface-visibility: hidden;
@@ -247,9 +247,9 @@
   left: 50%;
   -webkit-transform: translateX(-50%);
           transform: translateX(-50%);
-  max-width: 500px;
-  width: calc(100% - 20px);
   padding-bottom: 45px;
+  max-width: 62.5rem;
+  width: calc(100% - 2.5rem);
   z-index: 1;
   background-color: #FFF;
   text-align: center;
@@ -258,7 +258,7 @@
   -webkit-backface-visibility: hidden;
           backface-visibility: hidden; }
   .@{zprefix}-modal-box .@{zprefix}-modal-title {
-    font-size: 24px;
+    font-size: @fontSizeLarge;;
     font-weight: bold;
     margin: 0 0 20px;
     padding: 15px 0 13px;
@@ -279,14 +279,14 @@
     display: block;
     position: relative;
     margin: @spacing-06 @spacing-05;
-    height: 29px;
-    line-height: 29px;
+    height: 3.625rem;
+    line-height: 3.625rem;
     overflow: hidden; }
     .@{zprefix}-modal-box label .@{zprefix}-input-infos {
       display: block;
       text-align: left;
-      height: 25px;
-      line-height: 25px;
+      height: 3.125rem;
+      line-height: 3.125rem;
       transition: all 150ms; }
       .@{zprefix}-modal-box label .@{zprefix}-input-infos span {
         display: block;
@@ -294,7 +294,7 @@
         background-color: #fbfcfc;
         border: 1px solid #DEDEDE;
         padding: 0 @spacing-03;
-        width: 150px; }
+        width: 18.75rem; }
       .@{zprefix}-modal-box label .@{zprefix}-input-infos span.@{zprefix}-msg-error {
         color: #e74c3c; }
     .@{zprefix}-modal-box label.@{zprefix}-input-error input,
@@ -311,7 +311,7 @@
       border: 1px solid #DEDEDE;
       background: #fff;
       font-size: @fontSizeSmall;
-      max-width: 330px;
+      max-width: 41.25rem;
       width: 70%;
       padding: 0 @spacing-03;
       transition: all 150ms; }
@@ -331,9 +331,9 @@
     text-decoration: none;
     color: #FFF;
     display: block;
-    width: 100px;
-    height: 35px;
-    line-height: 33px;
+    width: 12.5rem;
+    height: 4.375rem;
+    line-height: 4.125rem;
     margin: 0 10px;
     background-color: #333;
     border: none;
@@ -467,15 +467,15 @@ body.@{zprefix}-body-fullscreen {
       padding: 0 !important;
       font-weight: bold; }
     .@{zprefix}-editor.@{zprefix}-reset-css h1 {
-      font-size: 32px !important;
-      line-height: 38px !important;
+      font-size: @fontSizeLarge !important;
+      line-height: 4.75rem !important;
       margin-bottom: 20px !important; }
     .@{zprefix}-editor.@{zprefix}-reset-css h2 {
-      font-size: 26px !important;
+      font-size: @fontSizeLarge !important;
       line-height: 4.25rem !important;
       margin-bottom: 15px !important; }
     .@{zprefix}-editor.@{zprefix}-reset-css h3 {
-      font-size: 22px !important;
+      font-size: @fontSizeLarge !important;
       line-height: 3.5rem !important;
       margin-bottom: @spacing-03 !important; }
     .@{zprefix}-editor.@{zprefix}-reset-css h4 {
