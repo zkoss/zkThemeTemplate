@@ -3,13 +3,13 @@
 <zk>
 	<hlayout>
 		<window title="Combobutton" border="normal" hflex="1" height="300px">
-			<combobutton label="Combobutton Popup" image="/common/img/volumn.gif">
+			<combobutton label="Combobutton Popup" image="~./img/volumn.gif">
 				<popup>
 					Popup Content
 				</popup>
 			</combobutton>
 			<separator />
-			<combobutton label="Combobutton Menupopup" image="/common/img/volumn.gif">
+			<combobutton label="Combobutton Menupopup" image="~./img/volumn.gif">
 				<menupopup>
 					<menuitem label="Index" />
 					<menu label="About">
@@ -21,12 +21,12 @@
 				</menupopup>
 			</combobutton>
 			<separator />
-			<combobutton label="Disabled Combobutton" disabled="true" image="/common/img/volumn.gif">
+			<combobutton label="Disabled Combobutton" disabled="true" image="~./img/volumn.gif">
 			</combobutton>
 		</window>
 		<window title="Combobutton mold=toolbar" border="normal" hflex="2" height="300px">
 			<toolbar>
-				<combobutton label="Combobutton" image="/common/img/volumn.gif" mold="toolbar">
+				<combobutton label="Combobutton" image="~./img/volumn.gif" mold="toolbar">
 					<menupopup>
 						<menuitem label="Index" />
 						<menu label="About">
@@ -37,7 +37,7 @@
 						</menu>
 					</menupopup>
 				</combobutton>
-				<combobutton label="Disabled Combobutton" disabled="true" image="/common/img/volumn.gif" mold="toolbar">
+				<combobutton label="Disabled Combobutton" disabled="true" image="~./img/volumn.gif" mold="toolbar">
 					<menupopup>
 						<menuitem label="Index" />
 						<menu label="About">

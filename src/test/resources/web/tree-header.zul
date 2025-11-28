@@ -50,10 +50,10 @@
 				</treechildren>
 				<treefoot>
 					<treefooter label="footer 1"/>
-					<treefooter label="image" image="/img/Centigrade-Widget-Icons/BookBlue-16x16.png"
-								hoverImage="/img/Centigrade-Widget-Icons/BookGreen-16x16.png"/>
-					<treefooter label="image" image="/img/Centigrade-Widget-Icons/BookBlue-16x16.png"
-								hoverImage="/img/Centigrade-Widget-Icons/BookGreen-16x16.png"/>
+					<treefooter label="image" image="~./img/Centigrade-Widget-Icons/BookBlue-16x16.png"
+								hoverImage="~./img/Centigrade-Widget-Icons/BookGreen-16x16.png"/>
+					<treefooter label="image" image="~./img/Centigrade-Widget-Icons/BookBlue-16x16.png"
+								hoverImage="~./img/Centigrade-Widget-Icons/BookGreen-16x16.png"/>
 				</treefoot>
 			</tree>
 		</window>
@@ -171,8 +171,8 @@
 				</treechildren>
 				<treefoot>
 					<treefooter label="footer 1"/>
-					<treefooter label="footer width Image" image="/img/Centigrade-Widget-Icons/BookBlue-16x16.png"
-								hoverImage="/img/Centigrade-Widget-Icons/BookGreen-16x16.png"/>
+					<treefooter label="footer width Image" image="~./img/Centigrade-Widget-Icons/BookBlue-16x16.png"
+								hoverImage="~./img/Centigrade-Widget-Icons/BookGreen-16x16.png"/>
 					<treefooter label="footer 3"/>
 				</treefoot>
 			</tree>
@@ -194,8 +194,8 @@
 				</treechildren>
 				<treefoot>
 					<treefooter label="footer 1"/>
-					<treefooter label="footer width Image" image="/img/Centigrade-Widget-Icons/BookBlue-16x16.png"
-								hoverImage="/img/Centigrade-Widget-Icons/BookGreen-16x16.png"/>
+					<treefooter label="footer width Image" image="~./img/Centigrade-Widget-Icons/BookBlue-16x16.png"
+								hoverImage="~./img/Centigrade-Widget-Icons/BookGreen-16x16.png"/>
 					<treefooter label="footer 3"/>
 				</treefoot>
 			</tree>
@@ -218,8 +218,8 @@
 				</treechildren>
 				<treefoot>
 					<treefooter label="footer 1"/>
-					<treefooter label="footer width Image" image="/img/Centigrade-Widget-Icons/BookBlue-16x16.png"
-								hoverImage="/img/Centigrade-Widget-Icons/BookGreen-16x16.png"/>
+					<treefooter label="footer width Image" image="~./img/Centigrade-Widget-Icons/BookBlue-16x16.png"
+								hoverImage="~./img/Centigrade-Widget-Icons/BookGreen-16x16.png"/>
 					<treefooter label="footer 3"/>
 				</treefoot>
 			</tree>
@@ -250,8 +250,8 @@
 					<treecol label="Align Left" align="left" />
 				</treecols>
 				<treefoot>
-					<treefooter label="footer width Image" image="/img/Centigrade-Widget-Icons/BookBlue-16x16.png"
-								hoverImage="/img/Centigrade-Widget-Icons/BookGreen-16x16.png"/>
+					<treefooter label="footer width Image" image="~./img/Centigrade-Widget-Icons/BookBlue-16x16.png"
+								hoverImage="~./img/Centigrade-Widget-Icons/BookGreen-16x16.png"/>
 				</treefoot>
 			</tree>
 		</window>

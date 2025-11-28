@@ -4,15 +4,15 @@
 		<window title="Window" border="normal" height="300px" width="400px">
 			<toolbar>
 				<toolbarbutton label="Button 1" iconSclass="z-icon-volume-up"/>
-				<toolbarbutton label="Button 2" mode="toggle" checked="true" image="/common/img/network.gif"/>
+				<toolbarbutton label="Button 2" mode="toggle" checked="true" image="~./img/network.gif"/>
 				<a href="http://www.zkoss.org">ZK</a>
 			</toolbar>
 			Window Content
 		</window>
 		<panel title="Panel" border="rounded" height="300px" width="400px" >
 			<toolbar >
-				<toolbarbutton label="Button 1" image="/common/img/volumn.gif"/>
-				<toolbarbutton label="Button 2" mode="toggle" checked="true" image="/common/img/network.gif"/>
+				<toolbarbutton label="Button 1" image="~./img/volumn.gif"/>
+				<toolbarbutton label="Button 2" mode="toggle" checked="true" image="~./img/network.gif"/>
 				<!--<toolbarbutton label="Button 3" mode="toggle" checked="true" disabled="true"/>-->
 			</toolbar>
 			<panelchildren >
@@ -20,8 +20,8 @@
 				(For Toolbar in panel mold, see Panel demo.)
 			</panelchildren>
 			<toolbar mold="panel">
-				<toolbarbutton label="Button 1" image="/common/img/volumn.gif"/>
-				<toolbarbutton label="Button 2" mode="toggle" checked="true" image="/common/img/network.gif"/>
+				<toolbarbutton label="Button 1" image="~./img/volumn.gif"/>
+				<toolbarbutton label="Button 2" mode="toggle" checked="true" image="~./img/network.gif"/>
 			</toolbar>
 		</panel>
 		<tabbox height="300px" width="450px" >
@@ -38,8 +38,8 @@
 				</tabpanel>
 			</tabpanels>
 			<toolbar>
-				<toolbarbutton label="Button 1" image="/common/img/volumn.gif"/>
-				<toolbarbutton label="Button 2" mode="toggle" checked="true" image="/common/img/network.gif"/>
+				<toolbarbutton label="Button 1" image="~./img/volumn.gif"/>
+				<toolbarbutton label="Button 2" mode="toggle" checked="true" image="~./img/network.gif"/>
 			</toolbar>
 		</tabbox>
 	</hbox>

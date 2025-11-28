@@ -20,18 +20,18 @@
 				<separator />
 				Comboitem with icon:
 				<combobox>
-					<comboitem label="Comboitem 1" image="/common/img/search.png" />
+					<comboitem label="Comboitem 1" image="~./img/search.png" />
 					<comboitem label="Comboitem 2" iconSclass="z-icon-apple" />
-					<comboitem label="Comboitem 3" image="/common/img/search.png" />
+					<comboitem label="Comboitem 3" image="~./img/search.png" />
 				</combobox>
 				<separator />
 				Comboitem with description and icon:
 				<combobox>
-					<comboitem label="Comboitem 1" image="/common/img/search.png" 
+					<comboitem label="Comboitem 1" image="~./img/search.png"
 						description="Description of the great Comboitem 1." />
 					<comboitem label="Comboitem 2" iconSclass="z-icon-android"
 						description="Description of the great Comboitem 2." />
-					<comboitem label="Comboitem 3" image="/common/img/search.png" 
+					<comboitem label="Comboitem 3" image="~./img/search.png"
 						description="Description of the great Comboitem 3." />
 				</combobox>
 			</vbox>

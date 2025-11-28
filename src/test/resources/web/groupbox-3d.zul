@@ -2,7 +2,7 @@
 <zk>
 	<hbox>
 		<groupbox width="300px" height="300px" mold="3d">
-			<caption image="/common/img/volumn.gif" label="Caption" />
+			<caption image="~./img/volumn.gif" label="Caption" />
 			Groupbox Content
 		</groupbox>
 		<groupbox width="300px" height="300px" mold="3d">
@@ -20,7 +20,7 @@
 	<separator />
 	<hbox>
 		<groupbox width="300px" height="300px" mold="3d">
-			<caption image="/common/img/volumn.gif" />
+			<caption image="~./img/volumn.gif" />
 			Groupbox Content
 		</groupbox>
 		<groupbox width="300px" height="300px" mold="3d">

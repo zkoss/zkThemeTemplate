@@ -2,8 +2,8 @@
 <zk>
 	<tabbox width="450px" mold="accordion">
 		<tabs>
-			<tab label="Tab 2" closable="true" image="/img/live.gif">
-				<caption label="search" image="/img/live.gif">
+			<tab label="Tab 2" closable="true" image="~./img/live.gif">
+				<caption label="search" image="~./img/live.gif">
 					<combobox>
 						<comboitem label="item 1" />
 						<comboitem label="item 2" />
@@ -13,7 +13,7 @@
 				</caption>
 			</tab>
 			<tab closable="true">
-				<caption hflex="min" label="search" image="/img/live.gif">
+				<caption hflex="min" label="search" image="~./img/live.gif">
 					<textbox />
 					<combobox>
 						<comboitem label="item 1" />
@@ -26,9 +26,9 @@
 			<tab closable="true" label="Tab3" />
 		</tabs>
 		<toolbar width="90px">
-			<toolbarbutton image="/img/live.gif" onClick='alert("Live")' />
-			<toolbarbutton image="/img/defender.gif" onClick='alert("Defender")' />
-			<toolbarbutton image="/img/battery.gif" onClick='alert("Battery")' />
+			<toolbarbutton image="~./img/live.gif" onClick='alert("Live")' />
+			<toolbarbutton image="~./img/defender.gif" onClick='alert("Defender")' />
+			<toolbarbutton image="~./img/battery.gif" onClick='alert("Battery")' />
 		</toolbar>
 		<tabpanels>
 			<tabpanel>This is panel 1</tabpanel>
@@ -43,8 +43,8 @@
 	<tabbox width="680px">
 		<tabs>
 			<tab label="Tab 1" closable="true" />
-			<tab label="Tab 2" closable="true" image="/img/live.gif">
-				<caption label="search" hflex="min" image="/img/live.gif">
+			<tab label="Tab 2" closable="true" image="~./img/live.gif">
+				<caption label="search" hflex="min" image="~./img/live.gif">
 					<custom-attributes org.zkoss.zul.image.preload="true" />
 				</caption>
 			</tab>
@@ -66,9 +66,9 @@
 			<tab label="Tab 5" closable="true" />
 		</tabs>
 		<toolbar width="230px">
-			<toolbarbutton image="/img/live.gif" onClick='alert("Live")' />
-			<toolbarbutton image="/img/defender.gif" onClick='alert("Defender")' />
-			<toolbarbutton image="/img/battery.gif" onClick='alert("Battery")' />
+			<toolbarbutton image="~./img/live.gif" onClick='alert("Live")' />
+			<toolbarbutton image="~./img/defender.gif" onClick='alert("Defender")' />
+			<toolbarbutton image="~./img/battery.gif" onClick='alert("Battery")' />
 		</toolbar>
 		<tabpanels>
 			<tabpanel>This is panel 1</tabpanel>
@@ -91,18 +91,18 @@
 					<tabbox id="tb2" orient="vertical">
 						<custom-attributes org.zkoss.zul.image.preload="true"/>
 						<tabs width="250px">
-							<tab label="Tab 2" closable="true" image="/img/live.gif">
-								<caption hflex="1" label="search" image="/img/live.gif">
+							<tab label="Tab 2" closable="true" image="~./img/live.gif">
+								<caption hflex="1" label="search" image="~./img/live.gif">
 									<textbox hflex="1" />
 								</caption>
 							</tab>
 							<tab closable="true">
-								<caption hflex="1" label="search" image="/img/live.gif">
+								<caption hflex="1" label="search" image="~./img/live.gif">
 									<textbox hflex="1" />
 								</caption>
 							</tab>
 							<tab>
-								<caption hflex="1" label="search" image="/img/live.gif">
+								<caption hflex="1" label="search" image="~./img/live.gif">
 									<textbox hflex="1" />
 								</caption>
 							</tab>

@@ -5,7 +5,7 @@
 			border="normal" width="350px" height="300px" >
 			<tabbox height="100%">
 				<toolbar>
-					<toolbarbutton label="Button 1" image="/common/img/volumn.gif" />
+					<toolbarbutton label="Button 1" image="~./img/volumn.gif" />
 					<toolbarbutton label="New" iconSclass="z-icon-file"/>
 					<toolbarbutton label="Open" iconSclass="z-icon-folder-open"/>
 					<toolbarbutton label="Save" iconSclass="z-icon-save"/>
@@ -32,14 +32,14 @@
 			border="normal" width="350px" height="300px" >
 			<tabbox height="100%">
 				<toolbar>
-					<toolbarbutton label="Button 1" image="/common/img/volumn.gif" />
+					<toolbarbutton label="Button 1" image="~./img/volumn.gif" />
 				</toolbar>
 				<tabs>
-					<tab label="Tab1" closable="true" image="/common/img/volumn.gif" />
-					<tab label="Tab2" closable="true" image="/common/img/volumn.gif" />
+					<tab label="Tab1" closable="true" image="~./img/volumn.gif" />
+					<tab label="Tab2" closable="true" image="~./img/volumn.gif" />
 					<tab label="Tab3" closable="true" />
 					<tab label="Tab4" closable="true" />
-					<tab label="Tab5" image="/common/img/volumn.gif" />
+					<tab label="Tab5" image="~./img/volumn.gif" />
 				</tabs>
 				<tabpanels>
 					<tabpanel>
@@ -113,7 +113,7 @@
 			border="normal" width="350px" height="300px" >
 			<tabbox height="100%">
 				<toolbar>
-					<toolbarbutton label="Button 1" image="/common/img/volumn.gif" />
+					<toolbarbutton label="Button 1" image="~./img/volumn.gif" />
 				</toolbar>
 				<tabs>
 					<tab label="Tab1" closable="true" />
@@ -133,10 +133,10 @@
 			border="normal" width="350px" height="300px" >
 			<tabbox height="100%">
 				<toolbar>
-					<toolbarbutton label="Button 1" image="/common/img/volumn.gif" />
+					<toolbarbutton label="Button 1" image="~./img/volumn.gif" />
 				</toolbar>
 				<tabs>
-					<tab label="Tab1" closable="true" image="/common/img/volumn.gif" />
+					<tab label="Tab1" closable="true" image="~./img/volumn.gif" />
 					<tab label="Tab2" closable="true" />
 				</tabs>
 				<tabpanels>
@@ -170,7 +170,7 @@
 				<tabs width="80px">
 					<tab label="Tab1 ZK" closable="true" />
 					<tab label="Tab2" closable="true" />
-					<tab label="Tab3" image="/common/img/volumn.gif" />
+					<tab label="Tab3" image="~./img/volumn.gif" />
 					<tab label="Tab4" />
 					<tab label="Tab5" />
 				</tabs>
@@ -230,7 +230,7 @@
 				<tabs width="80px">
 					<tab label="Tab1 ZK" closable="true" />
 					<tab label="Tab2" closable="true" />
-					<tab label="Tab3" image="/common/img/volumn.gif" />
+					<tab label="Tab3" image="~./img/volumn.gif" />
 					<tab label="Tab4" />
 					<tab label="Tab5" />
 				</tabs>
@@ -252,7 +252,7 @@
 			border="normal" width="350px" height="300px" >
 			<tabbox height="100%" orient="bottom">
 				<toolbar>
-					<toolbarbutton label="Button 1" image="/common/img/volumn.gif" />
+					<toolbarbutton label="Button 1" image="~./img/volumn.gif" />
 				</toolbar>
 				<tabs>
 					<tab label="Tab1" closable="true" />
@@ -276,7 +276,7 @@
 			border="normal" width="350px" height="300px" >
 			<tabbox height="100%" orient="bottom">
 				<toolbar>
-					<toolbarbutton label="Button 1" image="/common/img/volumn.gif" />
+					<toolbarbutton label="Button 1" image="~./img/volumn.gif" />
 				</toolbar>
 				<tabs>
 					<tab label="Tab1" closable="true" />

@@ -7,20 +7,20 @@
 			<label>Horizontal</label>
 			<menubar id="menubar" width="100%">
 				<menu label="Project"
-					image="/img/Centigrade-Widget-Icons/Briefcase-16x16.png">
+					image="~./img/Centigrade-Widget-Icons/Briefcase-16x16.png">
 					<menupopup>
 						<menuitem
-							image="/img/Centigrade-Widget-Icons/BriefcaseSpark-16x16.png"
+							image="~./img/Centigrade-Widget-Icons/BriefcaseSpark-16x16.png"
 							label="New" onClick="alert(self.label)" />
 						<menuitem
-							image="/img/Centigrade-Widget-Icons/BriefcaseOpen-16x16.png"
+							image="~./img/Centigrade-Widget-Icons/BriefcaseOpen-16x16.png"
 							label="Open" onClick="alert(self.label)" />
 						<menuitem
-							image="/img/Centigrade-Widget-Icons/DisketteBlack-16x16.png"
+							image="~./img/Centigrade-Widget-Icons/DisketteBlack-16x16.png"
 							label="Save" onClick="alert(self.label)" />
 						<menuseparator />
 						<menuitem label="Exit"
-							image="/img/Centigrade-Widget-Icons/DoorOpen-16x16.png"
+							image="~./img/Centigrade-Widget-Icons/DoorOpen-16x16.png"
 							onClick="alert(self.label)" />
 						<menuitem label="Restart"
 							iconSclass="z-icon-rotate-left"
@@ -29,7 +29,7 @@
 				</menu>
 				<menuseparator />
 				<menu label="Help"
-					image="/img/Centigrade-Widget-Icons/QuestionmarkButton-16x16.png" disabled="true">
+					image="~./img/Centigrade-Widget-Icons/QuestionmarkButton-16x16.png" disabled="true">
 					<menupopup>
 						<menuitem label="Index"
 							onClick="alert(self.label)" />
@@ -52,40 +52,40 @@
 					</menupopup>
 				</menu>
 				<menu
-					image="/img/Centigrade-Widget-Icons/Spyglass-16x16.png">
+					image="~./img/Centigrade-Widget-Icons/Spyglass-16x16.png">
 					<menupopup>
 						<menuitem label="Index"
 							onClick="alert(self.label)" />
 					</menupopup>
 				</menu>
 				<menuitem label="Menuitem" onClick="alert(self.label)" />
-				<menuitem image="/img/Centigrade-Widget-Icons/Spyglass-16x16.png" disabled="true" label="Menuitem" onClick="alert(self.label)" />
+				<menuitem image="~./img/Centigrade-Widget-Icons/Spyglass-16x16.png" disabled="true" label="Menuitem" onClick="alert(self.label)" />
 			</menubar>
 
 			<div height="50px"></div>
 			<label>Vertical: Default width is 100%</label>
 			<menubar width="100%" orient="vertical">
 				<menu label="Project"
-					image="/img/Centigrade-Widget-Icons/Briefcase-16x16.png" disabled="true">
+					image="~./img/Centigrade-Widget-Icons/Briefcase-16x16.png" disabled="true">
 					<menupopup>
 						<menuitem
-							image="/img/Centigrade-Widget-Icons/BriefcaseSpark-16x16.png"
+							image="~./img/Centigrade-Widget-Icons/BriefcaseSpark-16x16.png"
 							label="New" onClick="alert(self.label)" />
 						<menuitem
-							image="/img/Centigrade-Widget-Icons/BriefcaseOpen-16x16.png"
+							image="~./img/Centigrade-Widget-Icons/BriefcaseOpen-16x16.png"
 							label="Open" onClick="alert(self.label)" />
 						<menuitem
-							image="/img/Centigrade-Widget-Icons/DisketteBlack-16x16.png"
+							image="~./img/Centigrade-Widget-Icons/DisketteBlack-16x16.png"
 							label="Save" onClick="alert(self.label)" />
 						<menuseparator />
 				<menuitem autocheck="true" checked="true" label="Menuitem" onClick="alert(self.label)" />
 						<menuitem label="Exit"
-							image="/img/Centigrade-Widget-Icons/DoorOpen-16x16.png"
+							image="~./img/Centigrade-Widget-Icons/DoorOpen-16x16.png"
 							onClick="alert(self.label)" />
 					</menupopup>
 				</menu>
 				<menu label="Help"
-					image="/img/Centigrade-Widget-Icons/QuestionmarkButton-16x16.png">
+					image="~./img/Centigrade-Widget-Icons/QuestionmarkButton-16x16.png">
 					<menupopup>
 						<menuitem label="Index"
 							onClick="alert(self.label)" />
@@ -100,7 +100,7 @@
 					</menupopup>
 				</menu>
 				<menu
-					image="/img/Centigrade-Widget-Icons/Spyglass-16x16.png">
+					image="~./img/Centigrade-Widget-Icons/Spyglass-16x16.png">
 					<menupopup>
 						<menuitem label="Index"
 							onClick="alert(self.label)" />
@@ -117,17 +117,17 @@
 			<button label="Open menupopup" popup="popuop"/>
 			<menupopup id="popuop">
 				<menuitem
-					image="/img/Centigrade-Widget-Icons/BriefcaseSpark-16x16.png"
+					image="~./img/Centigrade-Widget-Icons/BriefcaseSpark-16x16.png"
 					label="New" onClick="alert(self.label)" />
 				<menuitem
-					image="/img/Centigrade-Widget-Icons/BriefcaseOpen-16x16.png"
+					image="~./img/Centigrade-Widget-Icons/BriefcaseOpen-16x16.png"
 					label="Open" onClick="alert(self.label)" />
 				<menuitem
-					image="/img/Centigrade-Widget-Icons/DisketteBlack-16x16.png"
+					image="~./img/Centigrade-Widget-Icons/DisketteBlack-16x16.png"
 					label="Save" onClick="alert(self.label)" />
 				<menuseparator />
 				<menuitem label="Exit"
-					image="/img/Centigrade-Widget-Icons/DoorOpen-16x16.png"
+					image="~./img/Centigrade-Widget-Icons/DoorOpen-16x16.png"
 					onClick="alert(self.label)" />
 			</menupopup>
 		</window>
@@ -138,25 +138,25 @@
 	self.setAutodrop(true);
 </attribute>
 				<menu label="Project"
-					image="/img/Centigrade-Widget-Icons/Briefcase-16x16.png">
+					image="~./img/Centigrade-Widget-Icons/Briefcase-16x16.png">
 					<menupopup>
 						<menuitem
-							image="/img/Centigrade-Widget-Icons/BriefcaseSpark-16x16.png"
+							image="~./img/Centigrade-Widget-Icons/BriefcaseSpark-16x16.png"
 							label="New" onClick="alert(self.label)" />
 						<menuitem
-							image="/img/Centigrade-Widget-Icons/BriefcaseOpen-16x16.png"
+							image="~./img/Centigrade-Widget-Icons/BriefcaseOpen-16x16.png"
 							label="Open" onClick="alert(self.label)" />
 						<menuitem
-							image="/img/Centigrade-Widget-Icons/DisketteBlack-16x16.png"
+							image="~./img/Centigrade-Widget-Icons/DisketteBlack-16x16.png"
 							label="Save" onClick="alert(self.label)" />
 						<menuseparator />
 						<menuitem label="Exit"
-							image="/img/Centigrade-Widget-Icons/DoorOpen-16x16.png"
+							image="~./img/Centigrade-Widget-Icons/DoorOpen-16x16.png"
 							onClick="alert(self.label)" />
 					</menupopup>
 				</menu>
 				<menu label="Help"
-					image="/img/Centigrade-Widget-Icons/QuestionmarkButton-16x16.png">
+					image="~./img/Centigrade-Widget-Icons/QuestionmarkButton-16x16.png">
 					<menupopup>
 						<menuitem label="Index"
 							onClick="alert(self.label)" />
@@ -171,7 +171,7 @@
 					</menupopup>
 				</menu>
 				<menu
-					image="/img/Centigrade-Widget-Icons/Spyglass-16x16.png">
+					image="~./img/Centigrade-Widget-Icons/Spyglass-16x16.png">
 					<menupopup>
 						<menuitem label="Index"
 							onClick="alert(self.label)" />
@@ -192,25 +192,25 @@
 					self.setScrollable(true);
 				</attribute>
 				<menu label="Project"
-					image="/img/Centigrade-Widget-Icons/Briefcase-16x16.png">
+					image="~./img/Centigrade-Widget-Icons/Briefcase-16x16.png">
 					<menupopup>
 						<menuitem
-							image="/img/Centigrade-Widget-Icons/BriefcaseSpark-16x16.png"
+							image="~./img/Centigrade-Widget-Icons/BriefcaseSpark-16x16.png"
 							label="New" onClick="alert(self.label)" />
 						<menuitem
-							image="/img/Centigrade-Widget-Icons/BriefcaseOpen-16x16.png"
+							image="~./img/Centigrade-Widget-Icons/BriefcaseOpen-16x16.png"
 							label="Open" onClick="alert(self.label)" />
 						<menuitem
-							image="/img/Centigrade-Widget-Icons/DisketteBlack-16x16.png"
+							image="~./img/Centigrade-Widget-Icons/DisketteBlack-16x16.png"
 							label="Save" onClick="alert(self.label)" />
 						<menuseparator />
 						<menuitem label="Exit"
-							image="/img/Centigrade-Widget-Icons/DoorOpen-16x16.png"
+							image="~./img/Centigrade-Widget-Icons/DoorOpen-16x16.png"
 							onClick="alert(self.label)" />
 					</menupopup>
 				</menu>
 				<menu label="Help"
-					image="/img/Centigrade-Widget-Icons/QuestionmarkButton-16x16.png">
+					image="~./img/Centigrade-Widget-Icons/QuestionmarkButton-16x16.png">
 					<menupopup>
 						<menuitem label="Index"
 							onClick="alert(self.label)" />
@@ -233,7 +233,7 @@
 					</menupopup>
 				</menu>
 				<menu
-					image="/img/Centigrade-Widget-Icons/Spyglass-16x16.png">
+					image="~./img/Centigrade-Widget-Icons/Spyglass-16x16.png">
 					<menupopup>
 						<menuitem label="Index"
 							onClick="alert(self.label)" />
@@ -245,25 +245,25 @@
 			<label>Vertical Menubar (mobile only)</label>
 			<menubar height="104px" width="120px" scrollable="true" orient="vertical">
 				<menu label="Project"
-					  image="/img/Centigrade-Widget-Icons/Briefcase-16x16.png">
+					  image="~./img/Centigrade-Widget-Icons/Briefcase-16x16.png">
 					<menupopup>
 						<menuitem
-								image="/img/Centigrade-Widget-Icons/BriefcaseSpark-16x16.png"
+								image="~./img/Centigrade-Widget-Icons/BriefcaseSpark-16x16.png"
 								label="New" onClick="alert(self.label)" />
 						<menuitem
-								image="/img/Centigrade-Widget-Icons/BriefcaseOpen-16x16.png"
+								image="~./img/Centigrade-Widget-Icons/BriefcaseOpen-16x16.png"
 								label="Open" onClick="alert(self.label)" />
 						<menuitem
-								image="/img/Centigrade-Widget-Icons/DisketteBlack-16x16.png"
+								image="~./img/Centigrade-Widget-Icons/DisketteBlack-16x16.png"
 								label="Save" onClick="alert(self.label)" />
 						<menuseparator />
 						<menuitem label="Exit"
-								  image="/img/Centigrade-Widget-Icons/DoorOpen-16x16.png"
+								  image="~./img/Centigrade-Widget-Icons/DoorOpen-16x16.png"
 								  onClick="alert(self.label)" />
 					</menupopup>
 				</menu>
 				<menu label="Help"
-					  image="/img/Centigrade-Widget-Icons/QuestionmarkButton-16x16.png">
+					  image="~./img/Centigrade-Widget-Icons/QuestionmarkButton-16x16.png">
 					<menupopup>
 						<menuitem label="Index"
 								  onClick="alert(self.label)" />
@@ -285,7 +285,7 @@
 						</menu>
 					</menupopup>
 				</menu>
-				<menu image="/img/Centigrade-Widget-Icons/Spyglass-16x16.png">
+				<menu image="~./img/Centigrade-Widget-Icons/Spyglass-16x16.png">
 					<menupopup>
 						<menuitem label="Index"
 								  onClick="alert(self.label)" />
@@ -309,7 +309,7 @@
 			height="300px">
 			<menubar id="menubar" width="100%">
 				<menu
-					image="/img/Centigrade-Widget-Icons/Spyglass-16x16.png">
+					image="~./img/Centigrade-Widget-Icons/Spyglass-16x16.png">
 					<menupopup>
 						<menuitem label="Index"
 							onClick="alert(self.label)" />
@@ -328,7 +328,7 @@
 			height="300px">
 			<menubar id="menubar" width="100%">
 				<menu onClick=""
-					image="/img/Centigrade-Widget-Icons/Spyglass-16x16.png">
+					image="~./img/Centigrade-Widget-Icons/Spyglass-16x16.png">
 					<menupopup>
 						<menuitem label="Index"
 							onClick="alert(self.label)" />

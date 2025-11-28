@@ -3,23 +3,23 @@
 	<hbox>
 		<window title="Window" border="normal" height="300px" width="300px">
 			<toolbar orient="vertical">
-				<toolbarbutton label="Button 1" image="/common/img/volumn.gif"/>
-				<toolbarbutton label="Button 2" image="/common/img/network.gif"/>
+				<toolbarbutton label="Button 1" image="~./img/volumn.gif"/>
+				<toolbarbutton label="Button 2" image="~./img/network.gif"/>
 			</toolbar>
 			Window Content
 		</window>
 		<panel title="Panel" border="rounded" height="300px" width="300px">
 			<toolbar orient="vertical">
-				<toolbarbutton label="Button 1" image="/common/img/volumn.gif"/>
-				<toolbarbutton label="Button 2" image="/common/img/network.gif"/>
+				<toolbarbutton label="Button 1" image="~./img/volumn.gif"/>
+				<toolbarbutton label="Button 2" image="~./img/network.gif"/>
 			</toolbar>
 			<panelchildren >
 				Panel Content
 				(For Toolbar in panel mold, see Panel demo.)
 			</panelchildren>
 			<toolbar orient="vertical">
-				<toolbarbutton label="Button 1" image="/common/img/volumn.gif"/>
-				<toolbarbutton label="Button 2" image="/common/img/network.gif"/>
+				<toolbarbutton label="Button 1" image="~./img/volumn.gif"/>
+				<toolbarbutton label="Button 2" image="~./img/network.gif"/>
 			</toolbar>
 		</panel>
 	</hbox>

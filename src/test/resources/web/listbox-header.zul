@@ -25,8 +25,8 @@
 				</listitem>
 				<listfoot>
 					<listfooter label="footer 1" />
-					<listfooter label="image" image="/img/Centigrade-Widget-Icons/BookBlue-16x16.png" hoverImage="/img/Centigrade-Widget-Icons/BookGreen-16x16.png"/>
-					<listfooter label="image" image="/img/Centigrade-Widget-Icons/BookBlue-16x16.png" hoverImage="/img/Centigrade-Widget-Icons/BookGreen-16x16.png"/>
+					<listfooter label="image" image="~./img/Centigrade-Widget-Icons/BookBlue-16x16.png" hoverImage="~./img/Centigrade-Widget-Icons/BookGreen-16x16.png"/>
+					<listfooter label="image" image="~./img/Centigrade-Widget-Icons/BookBlue-16x16.png" hoverImage="~./img/Centigrade-Widget-Icons/BookGreen-16x16.png"/>
 				</listfoot>
 			</listbox>
 		</window>
@@ -96,19 +96,19 @@
 			<listbox  width="400px">
 				<listhead sizable="true">
 					<listheader align="center" width="40px"
-						image="/img/Centigrade-Widget-Icons/ArrowsUpDown-16x16.png" />
+						image="~./img/Centigrade-Widget-Icons/ArrowsUpDown-16x16.png" />
 					<listheader label="Subject" sort="auto" />
 					<listheader label="Received" sort="auto" />
 				</listhead>
 				<listitem height="28px">
 					<listcell
-						image="/img/Centigrade-Widget-Icons/ArrowUpOrange-16x16.png" />
+						image="~./img/Centigrade-Widget-Icons/ArrowUpOrange-16x16.png" />
 					<listcell label="ZK Jet 0.8.0 is released" />
 					<listcell label="2008/11/17 17:41:29" />
 				</listitem>
 				<listitem height="28px">
 					<listcell
-						image="/img/Centigrade-Widget-Icons/ArrowDown-16x16.png" />
+						image="~./img/Centigrade-Widget-Icons/ArrowDown-16x16.png" />
 					<listcell
 						label="URLs for iPhone-Optimized Google Sites" />
 					<listcell label="2008/11/17 15:56:37" />
@@ -120,7 +120,7 @@
 				</listitem>
 				<listitem height="28px">
 					<listcell
-						image="/img/Centigrade-Widget-Icons/ArrowUpOrange-16x16.png" />
+						image="~./img/Centigrade-Widget-Icons/ArrowUpOrange-16x16.png" />
 					<listcell label="ZK Studio 0.9.0 released." />
 					<listcell label="2008/11/16 10:26:37" />
 				</listitem>
@@ -135,19 +135,19 @@
 				</auxhead>
 				<listhead sizable="true">
 					<listheader align="center" width="40px"
-						image="/img/Centigrade-Widget-Icons/ArrowsUpDown-16x16.png" />
+						image="~./img/Centigrade-Widget-Icons/ArrowsUpDown-16x16.png" />
 					<listheader label="Subject" sort="auto" />
 					<listheader label="Received" sort="auto" />
 				</listhead>
 				<listitem height="28px">
 					<listcell
-						image="/img/Centigrade-Widget-Icons/ArrowUpOrange-16x16.png" />
+						image="~./img/Centigrade-Widget-Icons/ArrowUpOrange-16x16.png" />
 					<listcell label="ZK Jet 0.8.0 is released" />
 					<listcell label="2008/11/17 17:41:29" />
 				</listitem>
 				<listitem height="28px">
 					<listcell
-						image="/img/Centigrade-Widget-Icons/ArrowDown-16x16.png" />
+						image="~./img/Centigrade-Widget-Icons/ArrowDown-16x16.png" />
 					<listcell
 						label="URLs for iPhone-Optimized Google Sites" />
 					<listcell label="2008/11/17 15:56:37" />
@@ -159,7 +159,7 @@
 				</listitem>
 				<listitem height="28px">
 					<listcell
-						image="/img/Centigrade-Widget-Icons/ArrowUpOrange-16x16.png" />
+						image="~./img/Centigrade-Widget-Icons/ArrowUpOrange-16x16.png" />
 					<listcell label="ZK Studio 0.9.0 released." />
 					<listcell label="2008/11/16 10:26:37" />
 				</listitem>
@@ -203,8 +203,8 @@
 				</listitem>
 				<listfoot>
 					<listfooter label="" />
-					<listfooter label="image" image="/img/Centigrade-Widget-Icons/BookBlue-16x16.png" hoverImage="/img/Centigrade-Widget-Icons/BookGreen-16x16.png"/>
-					<listfooter label="image" image="/img/Centigrade-Widget-Icons/BookBlue-16x16.png" hoverImage="/img/Centigrade-Widget-Icons/BookGreen-16x16.png"/>
+					<listfooter label="image" image="~./img/Centigrade-Widget-Icons/BookBlue-16x16.png" hoverImage="~./img/Centigrade-Widget-Icons/BookGreen-16x16.png"/>
+					<listfooter label="image" image="~./img/Centigrade-Widget-Icons/BookBlue-16x16.png" hoverImage="~./img/Centigrade-Widget-Icons/BookGreen-16x16.png"/>
 				</listfoot>
 			</listbox>
 		</window>
@@ -253,7 +253,7 @@
 					</listgroupfoot>
 					<listfoot>
 						<listfooter label="" />
-						<listfooter label="image" image="/img/Centigrade-Widget-Icons/BookBlue-16x16.png" hoverImage="/img/Centigrade-Widget-Icons/BookGreen-16x16.png"/>
+						<listfooter label="image" image="~./img/Centigrade-Widget-Icons/BookBlue-16x16.png" hoverImage="~./img/Centigrade-Widget-Icons/BookGreen-16x16.png"/>
 					</listfoot>
 			</listbox>
 		</window>

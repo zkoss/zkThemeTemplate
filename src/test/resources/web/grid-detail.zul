@@ -11,7 +11,7 @@
 			<detail open="true">
 				<hbox>
 					<image sclass="myimg" width="100px" height="100px"
-						src="/img/item1.jpg" />
+						src="~./img/item1.jpg" />
 					<vbox>
 						<label
 							value="Item Specifics - Item Condition	"
@@ -49,7 +49,7 @@
 			<detail fulfill="onOpen">
 				<hbox>
 					<image sclass="myimg" width="100px" height="100px"
-						src="/img/item2.jpg" />
+						src="~./img/item2.jpg" />
 					<vbox>
 						<label
 							value="Item Specifics"
@@ -87,7 +87,7 @@
 			<detail fulfill="onOpen">
 				<hbox>
 					<image sclass="myimg" width="100px" height="100px"
-						src="/img/item3.jpg" />
+						src="~./img/item3.jpg" />
 					<vbox>
 						<label
 							value="Item Specifics - Video Game Systems"
@@ -135,7 +135,7 @@
 			<detail fulfill="onOpen">
 				<hbox>
 					<image sclass="myimg" width="100px" height="100px"
-						src="/img/item4.jpg" />
+						src="~./img/item4.jpg" />
 					<vbox>
 						<label
 							value="Item Specifics - Cell Phones &amp; Smartphones"

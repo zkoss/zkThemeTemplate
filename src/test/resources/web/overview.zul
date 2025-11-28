@@ -88,7 +88,7 @@
 						<menupopup>
 							<menuitem label="Menuitem" />
 							<menuseparator />
-							<menuitem label="Menuitem" image="/img/Centigrade-Widget-Icons/DisketteBlack-16x16.png" />
+							<menuitem label="Menuitem" image="~./img/Centigrade-Widget-Icons/DisketteBlack-16x16.png" />
 						</menupopup>
 					</menu>
 					<menuitem label="Menuitem" />
