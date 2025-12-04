@@ -1,0 +1,35 @@
+<?page title="Tabbox" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<hlayout>
+		<window title="Tabbox, tabscroll=false"
+			border="normal" width="400px" height="400px">
+			<tabbox tabscroll="false" height="100%">
+				<tabs>
+					<tab label="Tab 1" />
+					<tab label="Tab 2" />
+					<tab label="Tab 3" />
+				</tabs>
+				<tabpanels>
+					<tabpanel>Tabpanel 1 Content</tabpanel>
+					<tabpanel>Tabpanel 2 Content</tabpanel>
+					<tabpanel>Tabpanel 3 Content</tabpanel>
+				</tabpanels>
+			</tabbox>
+		</window>
+		<window title="Tabbox, tabscroll=false" sclass="center-bg-win" 
+			border="normal" width="400px" height="400px">
+			<tabbox tabscroll="false" orient="vertical" height="100%">
+				<tabs width="100px">
+					<tab label="Tab 1" />
+					<tab label="Tab 2" />
+					<tab label="Tab 3" />
+				</tabs>
+				<tabpanels>
+					<tabpanel>Tabpanel 1 Content</tabpanel>
+					<tabpanel>Tabpanel 2 Content</tabpanel>
+					<tabpanel>Tabpanel 3 Content</tabpanel>
+				</tabpanels>
+			</tabbox>
+		</window>
+	</hlayout>
+</zk>

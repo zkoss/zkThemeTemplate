@@ -27,7 +27,7 @@
   box-sizing: border-box; }
 
 .@{zprefix}-box svg {
-  width: 17px;
+  width: 2.125rem;
   height: 100%;
   fill: #222; }
 
@@ -37,7 +37,7 @@
   position: relative;
   border: 1px solid #DDD;
   width: 100%;
-  min-height: 300px;
+  min-height: 37.5rem;
   margin: 0px auto; } // Potix: style modified
 
 .@{zprefix}-box .@{zprefix}-editor {
@@ -55,8 +55,8 @@
 .@{zprefix}-textarea {
   position: relative;
   box-sizing: border-box;
-  padding: 20px;
-  min-height: 300px;
+  padding: @spacing-06;
+  min-height: 37.5rem;
   width: 100%;
   border-style: none;
   resize: none;
@@ -86,9 +86,9 @@
   overflow: auto;
   border: none;
   white-space: normal;
-  font-size: 14px;
+  font-size: @fontSizeSmall;
   font-family: "Inconsolata", "Consolas", "Courier", "Courier New", sans-serif;
-  line-height: 18px; }
+  line-height: 2.25rem; }
 
 .@{zprefix}-box.@{zprefix}-editor-visible .@{zprefix}-textarea {
   height: 1px !important;
@@ -115,14 +115,14 @@
 
 .@{zprefix}-button-pane {
   width: 100%;
-  min-height: 36px;
+  min-height: 4.5rem;
   background: #ecf0f1;
   border-bottom: 1px solid #d7e0e2;
   margin: 0;
-  padding: 0 5px;
+  padding: 0 @spacing-02;
   position: relative;
   list-style-type: none;
-  line-height: 10px;
+  line-height: 1.25rem;
   -webkit-backface-visibility: hidden;
           backface-visibility: hidden;
   z-index: 11; }
@@ -130,7 +130,7 @@
     content: " ";
     display: block;
     position: absolute;
-    top: 36px;
+    top: @spacing-09;
     left: 0;
     right: 0;
     width: 100%;
@@ -145,15 +145,15 @@
       display: inline-block;
       width: 1px;
       background: #d7e0e2;
-      margin: 0 5px;
-      height: 35px;
+      margin: 0 @spacing-02;
+      height: 4.375rem;
       vertical-align: top; } // Potix: ZK-4916: style modified for trumbowyg v2.7.2
   .@{zprefix}-button-pane button {
     display: inline-block;
     position: relative;
-    width: 35px;
-    height: 35px;
-    padding: 1px 6px !important;
+    width: 4.375rem;
+    height: 4.375rem;
+    padding: 1px @spacing-03 !important;
     margin-bottom: 1px;
     overflow: hidden;
     border: none;
@@ -163,7 +163,7 @@
     transition: background-color 150ms, opacity 150ms; }
     .@{zprefix}-button-pane button.@{zprefix}-textual-button {
       width: auto;
-      line-height: 35px; }
+      line-height: 4.375rem; }
   .@{zprefix}-button-pane.@{zprefix}-disable button:not(.@{zprefix}-not-disable):not(.@{zprefix}-active),
   .@{zprefix}-disabled .@{zprefix}-button-pane button:not(.@{zprefix}-not-disable):not(.@{zprefix}-viewHTML-button) {
     opacity: 0.2;
@@ -181,26 +181,26 @@
     content: " ";
     position: absolute;
     top: 25px;
-    right: 3px;
+    right: @spacing-01;
     height: 0;
     width: 0;
     border: 3px solid transparent;
     border-top-color: #555; }
   .@{zprefix}-button-pane .@{zprefix}-open-dropdown.@{zprefix}-textual-button {
-    padding-left: 10px !important;
-    padding-right: 18px !important; }
+    padding-left: @spacing-04 !important;
+    padding-right: @spacing-06 !important; }
     .@{zprefix}-button-pane .@{zprefix}-open-dropdown.@{zprefix}-textual-button::after {
       top: 17px;
-      right: 7px; }
+      right: @spacing-03; }
   .@{zprefix}-button-pane .@{zprefix}-right {
     float: right; }
     .@{zprefix}-button-pane .@{zprefix}-right::before {
       display: none !important; }
 
 .@{zprefix}-dropdown {
-  width: 200px;
+  width: 25rem;
   border: 1px solid #ecf0f1;
-  padding: 5px 0;
+  padding: @spacing-02 0;
   border-top: none;
   background: #FFF;
   margin-left: -1px;
@@ -209,22 +209,22 @@
   .@{zprefix}-dropdown button {
     display: block;
     width: 100%;
-    height: 35px;
-    line-height: 35px;
+    height: 4.375rem;
+    line-height: 4.375rem;
     text-decoration: none;
     background: #FFF;
-    padding: 0 10px;
+    padding: 0 @spacing-04;
     color: #333 !important;
     border: none;
     cursor: pointer;
     text-align: left;
-    font-size: 15px;
+    font-size: @fontSizeSmall;
     transition: all 150ms; }
     .@{zprefix}-dropdown button:hover, .@{zprefix}-dropdown button:focus {
       background: #ecf0f1; }
     .@{zprefix}-dropdown button svg {
       float: left;
-      margin-right: 14px; }
+      margin-right: @spacing-05; }
 
 /* Modal box */
 .@{zprefix}-modal {
@@ -233,9 +233,9 @@
   left: 50%;
   -webkit-transform: translateX(-50%);
           transform: translateX(-50%);
-  max-width: 520px;
+  max-width: 65rem;
   width: 100%;
-  height: 350px;
+  height: 43.75rem;
   z-index: 11;
   overflow: hidden;
   -webkit-backface-visibility: hidden;
@@ -247,20 +247,20 @@
   left: 50%;
   -webkit-transform: translateX(-50%);
           transform: translateX(-50%);
-  max-width: 500px;
-  width: calc(100% - 20px);
   padding-bottom: 45px;
+  max-width: 62.5rem;
+  width: calc(100% - 2.5rem);
   z-index: 1;
   background-color: #FFF;
   text-align: center;
-  font-size: 14px;
+  font-size: @fontSizeSmall;
   box-shadow: rgba(0, 0, 0, 0.2) 0 2px 3px;
   -webkit-backface-visibility: hidden;
           backface-visibility: hidden; }
   .@{zprefix}-modal-box .@{zprefix}-modal-title {
-    font-size: 24px;
+    font-size: @fontSizeLarge;;
     font-weight: bold;
-    margin: 0 0 20px;
+    margin: 0 0 @spacing-07;
     padding: 15px 0 13px;
     display: block;
     border-bottom: 1px solid #EEE;
@@ -268,7 +268,7 @@
     background: #fbfcfc; }
   .@{zprefix}-modal-box .@{zprefix}-progress {
     width: 100%;
-    height: 3px;
+    height: 0.375rem;
     position: absolute;
     top: 58px; }
     .@{zprefix}-modal-box .@{zprefix}-progress .@{zprefix}-progress-bar {
@@ -278,23 +278,23 @@
   .@{zprefix}-modal-box label {
     display: block;
     position: relative;
-    margin: 15px 12px;
-    height: 29px;
-    line-height: 29px;
+    margin: @spacing-06 @spacing-05;
+    height: 3.625rem;
+    line-height: 3.625rem;
     overflow: hidden; }
     .@{zprefix}-modal-box label .@{zprefix}-input-infos {
       display: block;
       text-align: left;
-      height: 25px;
-      line-height: 25px;
+      height: 3.125rem;
+      line-height: 3.125rem;
       transition: all 150ms; }
       .@{zprefix}-modal-box label .@{zprefix}-input-infos span {
         display: block;
         color: #69878f;
         background-color: #fbfcfc;
         border: 1px solid #DEDEDE;
-        padding: 0 7px;
-        width: 150px; }
+        padding: 0 @spacing-03;
+        width: 18.75rem; }
       .@{zprefix}-modal-box label .@{zprefix}-input-infos span.@{zprefix}-msg-error {
         color: #e74c3c; }
     .@{zprefix}-modal-box label.@{zprefix}-input-error input,
@@ -306,14 +306,14 @@
       position: absolute;
       top: 0;
       right: 0;
-      height: 27px;
-      line-height: 27px;
+      height: 3.375rem;
+      line-height: 3.375rem;
       border: 1px solid #DEDEDE;
       background: #fff;
-      font-size: 14px;
-      max-width: 330px;
+      font-size: @fontSizeSmall;
+      max-width: 41.25rem;
       width: 70%;
-      padding: 0 7px;
+      padding: 0 @spacing-03;
       transition: all 150ms; }
       .@{zprefix}-modal-box label input:hover, .@{zprefix}-modal-box label input:focus {
         outline: none;
@@ -326,20 +326,20 @@
     color: red; }
   .@{zprefix}-modal-box .@{zprefix}-modal-button {
     position: absolute;
-    bottom: 10px;
+    bottom: @spacing-04;
     right: 0;
     text-decoration: none;
     color: #FFF;
     display: block;
-    width: 100px;
-    height: 35px;
-    line-height: 33px;
-    margin: 0 10px;
+    width: 12.5rem;
+    height: 4.375rem;
+    line-height: 4.125rem;
+    margin: 0 @spacing-04;
     background-color: #333;
     border: none;
     cursor: pointer;
     font-family: "Trebuchet MS", Helvetica, Verdana, sans-serif;
-    font-size: 16px;
+    font-size: @fontSizeMedium;
     transition: all 150ms; }
     .@{zprefix}-modal-box .@{zprefix}-modal-button.@{zprefix}-modal-submit {
       right: 110px;
@@ -413,7 +413,7 @@ body.@{zprefix}-body-fullscreen {
   .@{zprefix}-editor.@{zprefix}-reset-css {
     background: #FEFEFE !important;
     font-family: "Trebuchet MS", Helvetica, Verdana, sans-serif !important;
-    font-size: 14px !important;
+    font-size: @fontSizeSmall !important;
     line-height: 1.45em !important;
     white-space: normal !important;
     color: #333; }
@@ -431,27 +431,27 @@ body.@{zprefix}-body-fullscreen {
       margin-bottom: 15px !important;
       line-height: 1.4em !important;
       font-family: "Trebuchet MS", Helvetica, Verdana, sans-serif !important;
-      font-size: 14px !important;
+      font-size: @fontSizeSmall !important;
       border: none; }
     .@{zprefix}-editor.@{zprefix}-reset-css iframe,
     .@{zprefix}-editor.@{zprefix}-reset-css object,
     .@{zprefix}-editor.@{zprefix}-reset-css hr {
       margin-bottom: 15px !important; }
     .@{zprefix}-editor.@{zprefix}-reset-css blockquote {
-      margin-left: 32px !important;
+      margin-left: @spacing-09 !important;
       font-style: italic !important;
       color: #555; }
     .@{zprefix}-editor.@{zprefix}-reset-css ul,
     .@{zprefix}-editor.@{zprefix}-reset-css ol {
-      padding-left: 20px !important; }
+      padding-left: @spacing-07 !important; }
     .@{zprefix}-editor.@{zprefix}-reset-css ul ul,
     .@{zprefix}-editor.@{zprefix}-reset-css ol ol,
     .@{zprefix}-editor.@{zprefix}-reset-css ul ol,
     .@{zprefix}-editor.@{zprefix}-reset-css ol ul {
       border: none;
-      margin: 2px !important;
+      margin: @spacing-01 !important;
       padding: 0 !important;
-      padding-left: 24px !important; }
+      padding-left: @spacing-08 !important; }
     .@{zprefix}-editor.@{zprefix}-reset-css hr {
       display: block;
       height: 1px;
@@ -467,21 +467,21 @@ body.@{zprefix}-body-fullscreen {
       padding: 0 !important;
       font-weight: bold; }
     .@{zprefix}-editor.@{zprefix}-reset-css h1 {
-      font-size: 32px !important;
-      line-height: 38px !important;
-      margin-bottom: 20px !important; }
+      font-size: @fontSizeLarge !important;
+      line-height: 4.75rem !important;
+      margin-bottom: @spacing-07 !important; }
     .@{zprefix}-editor.@{zprefix}-reset-css h2 {
-      font-size: 26px !important;
-      line-height: 34px !important;
+      font-size: @fontSizeLarge !important;
+      line-height: 4.25rem !important;
       margin-bottom: 15px !important; }
     .@{zprefix}-editor.@{zprefix}-reset-css h3 {
-      font-size: 22px !important;
-      line-height: 28px !important;
-      margin-bottom: 7px !important; }
+      font-size: @fontSizeLarge !important;
+      line-height: 3.5rem !important;
+      margin-bottom: @spacing-03 !important; }
     .@{zprefix}-editor.@{zprefix}-reset-css h4 {
-      font-size: 16px !important;
-      line-height: 22px !important;
-      margin-bottom: 7px !important; }
+      font-size: @fontSizeMedium !important;
+      line-height: 2.75rem !important;
+      margin-bottom: @spacing-03 !important; }
 
 /*
  * Dark theme
@@ -547,9 +547,9 @@ body.@{zprefix}-body-fullscreen {
   .@{zprefix}-dark .@{zprefix}-modal-box label {
     display: block;
     position: relative;
-    margin: 15px 12px;
-    height: 27px;
-    line-height: 27px;
+    margin: 15px @spacing-05;
+    height: 3.375rem;
+    line-height: 3.375rem;
     overflow: hidden; }
     .@{zprefix}-dark .@{zprefix}-modal-box label .@{zprefix}-input-infos span {
       color: #eee;

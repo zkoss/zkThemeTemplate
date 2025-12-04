@@ -10,7 +10,7 @@
 	}
 	& .jcrop-dragbar { // Jcrop bug - not apply baseClass
 		display: block;
-		.size(6px, 6px);
+		.size(0.75rem, 0.75rem);
 		position: absolute;
 		&.ord {
 			&-n, &-s {
@@ -36,7 +36,7 @@
 	&-handle {
 		display: block;
 		background: white;
-		.size(6px, 6px);
+		.size(0.75rem, 0.75rem);
 		position: absolute;
 		&.ord {
 			&-n {
@@ -138,7 +138,7 @@
 		position: absolute;
 		overflow: hidden;
 		display: inline-block;
-		margin: 8px 4px;
+		margin: @spacing-04 @spacing-02;
 		.userSelectNone();
 
 		> ul {
@@ -168,7 +168,7 @@
 				}
 
 				> a {
-					height: 14px;
+					height: 1.75rem;
 					text-decoration: none;
 					display: block;
 					text-align: center;

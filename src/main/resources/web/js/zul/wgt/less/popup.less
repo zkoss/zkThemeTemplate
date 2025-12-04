@@ -33,23 +33,23 @@
 	&.z-icon-info-circle {
 		.size(32px, 32px);
 		top: 50%;
-		font-size: 32px;
-		line-height: 32px;
-		margin-top: -16px;
-		left: 16px;
+		font-size: 4rem;
+		line-height: 4rem;
+		margin-top: -@spacing-06;
+		left: @spacing-06;
 	}
 }
 
 .z-notification-pointer + .z-notification-icon {
-	left: 12px;
+	left: @spacing-05;
 }
 
 .z-notification-left + .z-notification-icon {
-	left: 24px;
+	left: @spacing-08;
 }
 
 .z-notification-up + .z-notification-icon {
-	margin-top: -12px;
+	margin-top: -@spacing-05;
 }
 
 .z-notification-down + .z-notification-icon {
@@ -60,8 +60,8 @@
 	font-family: @baseContentFontFamily;
 	font-size: @fontSizeMedium;
 	font-weight: normal;
-	width: 288px;
-	min-height: 80px;
+	width: 36rem;
+	min-height: 10rem;
 	padding: @notificationContentPadding;
 	position: relative;
 	overflow: hidden;
@@ -71,7 +71,7 @@
 	&::before {
 		content: "";
 		display: block;
-		width: 6px;
+		width: 0.75rem;
 		position: absolute;
 		top: 0;
 		bottom: 0;
@@ -80,7 +80,7 @@
 }
 
 .z-notification-pointer ~ .z-notification-content {
-	.displaySize(table-cell, 260px, @notificationPointerContentHeight);
+	.displaySize(table-cell, 32.5rem, @notificationPointerContentHeight);
 	min-height: @notificationPointerContentHeight; // fix for IE9
 	padding: @notificationPointerContentPadding;
 	vertical-align: middle;
@@ -191,19 +191,19 @@
 .z-notification-close {
 	font-size: @notificationCloseFontSize;
 	.size(@notificationCloseIconSize, @notificationCloseIconSize);
-	padding: 0 2px;
+	padding: 0 @spacing-01;
 	line-height: @notificationCloseFontSize;
 	position: absolute;
-	top: 8px;
-	right: 8px;
+	top: @spacing-04;
+	right: @spacing-04;
 	cursor: pointer;
 }
 
 .z-notification-right ~ .z-notification-close {
-	right: 16px;
+	right: @spacing-06;
 }
 .z-notification-up ~ .z-notification-close {
-	top: 16px;
+	top: @spacing-06;
 }
 
 // Toast
@@ -215,7 +215,7 @@
 		font-family: @baseContentFontFamily;
 		font-size: @fontSizeMedium;
 		font-weight: normal;
-		width: 320px;
+		width: 40rem;
 		min-height: 6rem;
 		padding: @spacing-06 @spacing-11 @spacing-06 56px;
 		position: relative;
@@ -226,7 +226,7 @@
 		&::before {
 			content: "";
 			display: block;
-			width: 6px;
+			width: 0.75rem;
 			position: absolute;
 			top: 0;
 			bottom: 0;
@@ -234,14 +234,14 @@
 		}
 	}
 	&-close {
-		font-size: 18px;
+		font-size: @fontSizeLarge;
 		.size(20px, 20px);
-		padding: 0 2px;
+		padding: 0 @spacing-01;
 		position: absolute;
 		top: 50%;
-		right: 12px;
+		right: @spacing-05;
 		cursor: pointer;
-		margin-top: -10px;
+		margin-top: -@spacing-04;
 	}
 	&-icon {
 		.z-notification-icon();
@@ -332,7 +332,7 @@
 	}
 
 	&-position > & {
-		margin-top: 10px;
+		margin-top: @spacing-07;
 	}
 
 	&-position-top-left { .top(); .left(); }

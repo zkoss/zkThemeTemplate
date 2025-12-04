@@ -25,7 +25,7 @@
 	}
 	&-faker th {
 		font-size: 0;
-		.size(45px, 0);
+		.size(5.625rem, 0);
 		border: 0;
 		margin: 0;
 		padding: 0;
@@ -62,7 +62,7 @@
 		}
 		&-content {
 			.fontStyle(@baseTitleFontFamily, @fontSizeMedium, normal, @meshTitleColor);
-			padding: 12px 16px;
+			padding: @spacing-05 @spacing-06;
 			line-height: @biglistboxLineHeight;
 			position: relative;
 			white-space: nowrap;
@@ -87,7 +87,7 @@
 		//body content
 		td {
 			.fontStyle(@baseContentFontFamily, @fontSizeMedium, normal, @baseTextColor);
-			padding: 12px 16px;
+			padding: @spacing-05 @spacing-06;
 			line-height: @biglistboxLineHeight;
 			overflow: hidden;
 			cursor: pointer;
@@ -128,7 +128,7 @@
 	&-sorticon {
 		color: @meshTitleColor;
 		position: absolute;
-		top: -7px;
+		top: -@spacing-03;
 		left: 50%;
 	}
 	&-hover { //sortable header hover status
@@ -145,7 +145,7 @@
 		.size(3px, 100%);
 		background: @biglistboxFrozenBackgroundColor;
 		position: absolute;
-		top: -3px;
+		top: -@spacing-01;
 		&-ghost {
 			.size(1px, 100%);
 			background: @biglistboxFrozenGhostBackgroundColor;
@@ -154,7 +154,7 @@
 	&-verticalbar-tick {
 		.size(@biglistboxVerticalTickWidth, @biglistboxVerticalTickHeight);
 		position: absolute;
-		font-size: 16px;
+		font-size: @fontSizeMedium;
 		color: @biglistboxScrollBarTextColor;
 		background-color: @baseBackgroundColor;
 		border: 1px solid @biglistboxScrollBarBorderColor;
@@ -203,7 +203,7 @@
 				.z-biglistbox-wscroll-down,
 				.z-biglistbox-wscroll-end,
 				.z-biglistbox-wscroll-body {
-					font-size: 16px;
+					font-size: @fontSizeMedium;
 					position: absolute;
 					border: 1px solid @biglistboxScrollBarBorderColor;
 					&:hover {
@@ -318,7 +318,7 @@
 				.z-biglistbox-wscroll-down,
 				.z-biglistbox-wscroll-end,
 				.z-biglistbox-wscroll-body {
-					font-size: 16px;
+					font-size: @fontSizeMedium;
 					position: absolute;
 					top: 0;
 					border: 1px solid @biglistboxScrollBarBorderColor;
@@ -399,7 +399,7 @@
 				.borderRadius(2px);
 				background-color: @biglistboxScrollBarEndBarBackgroundColor;
 				position: absolute;
-				right: -12px;
+				right: -@spacing-05;
 				overflow: hidden;
 				z-index: 20;
 			}

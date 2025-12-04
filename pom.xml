@@ -7,7 +7,7 @@
 	<properties>
 		<maven.compiler.source>11</maven.compiler.source>
 		<maven.compiler.target>11</maven.compiler.target>
-		<zk.version>10.1.0-jakarta-Eval</zk.version>
+		<zk.version>10.2.1-jakarta-Eval</zk.version>
 		<zkspringboot.version>3.2.6</zkspringboot.version>
 		<springboot.version>3.2.6</springboot.version>
 		<maven.build.timestamp.format>yyyy-MM-dd</maven.build.timestamp.format>
@@ -73,6 +73,12 @@
 		<dependency>
 			<groupId>org.zkoss.zk</groupId>
 			<artifactId>zkmax</artifactId>
+			<version>${zk.version}</version>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.zkoss.zk</groupId>
+			<artifactId>zuti</artifactId>
 			<version>${zk.version}</version>
 			<optional>true</optional>
 		</dependency>
@@ -143,6 +149,21 @@
 						<configuration>
 							<mainClass>zk.example.ThemePreviewApp</mainClass>
 							<classpathScope>test</classpathScope>
+						</configuration>
+					</execution>
+					<execution> <!-- continuous compile/watch less files -->
+						<id>watch-less</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<configuration>
+							<executable>npm</executable>
+							<arguments>
+								<argument>run</argument>
+								<argument>zklessc-dev</argument>
+							</arguments>
+							<async>true</async>
 						</configuration>
 					</execution>
 				</executions>

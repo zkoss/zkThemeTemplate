@@ -34,12 +34,12 @@
 			.z-nav-image,
 			.z-navitem-image,
 			i {
-				margin-right: 6px;
+				margin-right: @spacing-03;
 			}
 			.z-nav-text,
 			.z-navitem-text {
 				font-size: @fontSizeMedium;
-				margin-left: 2px;
+				margin-left: @spacing-01;
 			}
 		}
 	}
@@ -49,16 +49,16 @@
 		padding: @navbarHorizontalPadding;
 		li {
 			display: inline-block;
-			margin: 2px 2px 0;
+			margin: @spacing-01 @spacing-01 0;
 			border-bottom: 2px solid transparent;
-			min-width: 182px;
+			min-width: 22.75rem;
 			vertical-align: middle;
 		}
 		> ul { //topmost level
 			ul { //second level
 				position: absolute;
 				left: 0;
-				margin-top: 5px;
+				margin-top: @spacing-03;
 				.borderRadius(4px);
 				.boxShadow('0 3px 6px 0 rgba(0,0,0,0.16), 0 2px 4px 0 rgba(0,0,0,0.24)');
 				z-index: @basePopupZIndex;
@@ -73,7 +73,7 @@
 			vertical-align: top; //for collapsed navbar
 			position: relative;
 			border-left: 1px solid @navBorderColor;
-			margin: 0 6px;
+			margin: 0 @spacing-03;
 		}
 		.z-nav-open, .z-navitem-selected {
 			border-bottom: 2px solid @colorPrimary;
@@ -87,7 +87,7 @@
 			}
 		}
 		.z-nav .z-nav ul {
-			padding-left: 20px;
+			padding-left: @spacing-07;
 		}
 	}
 }
@@ -114,7 +114,7 @@
 	&-image {
 		max-height: @navImageSize;
 		width: @navImageSize;
-		margin-bottom: 4px;
+		margin-bottom: @spacing-02;
 	}
 	&-image,
 	i {
@@ -134,10 +134,10 @@
 .z-navitem-info {
 	.fontStyle(@baseContentFontFamily, @fontSizeXSmall, 700, @navBadgeTextColor);
 	.borderRadius(10px);
-	padding: 2px 8px;
+	padding: @spacing-01 @spacing-04;
 	line-height: normal;
-	margin-left: 4px;
-	margin-right: -4px;
+	margin-left: @spacing-02;
+	margin-right: -@spacing-02;
 	background: @navBadgeBackgroundColor;
 	text-align: center;
 	position: absolute;
@@ -209,7 +209,7 @@
 .z-nav-text-popup,
 .z-navitem-text-popup {
 	color: @navPopupColor;
-	min-width: 180px;
+	min-width: 22.5rem;
 	height: @navTextPopupHeight;
 	padding: @navTextPopupPadding;
 	line-height: @navTextPopupLineHeight;
@@ -239,11 +239,11 @@
 .z-nav-popup {
 	li {
 		display: block;
-		margin: 2px 0;
+		margin: @spacing-01 0;
 		border-left: 2px solid transparent;
 	}
 	.z-navseparator {
-		margin: 6px 0;
+		margin: @spacing-03 0;
 		height: 1px;
 		border-bottom: 1px solid @navBorderColor;
 		position: relative;
@@ -262,7 +262,7 @@
 			border-left: 2px solid transparent;
 		}
 		.z-navseparator {
-			margin-left: 8px;
+			margin-left: @spacing-04;
 		}
 	}
 	.z-nav-selected {
@@ -306,6 +306,6 @@
 	}
 	.itemSelected(@navPopupSelectedColor, @navPopupSelectedBackgroundColor);
 	.z-nav ul {
-		padding-left: 20px;
+		padding-left: @spacing-07;
 	}
 }

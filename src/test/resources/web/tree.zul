@@ -1,0 +1,191 @@
+<?page title="Tree" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<tree id="tree" width="400px" rows="8">
+		<treecols sizable="true">
+			<treecol label="Name"/>
+			<treecol label="Description"/>
+		</treecols>
+		<treechildren>
+			<treeitem>
+				<treerow>
+					<treecell label="Item 1"/>
+					<treecell label="Item 1 description"/>
+				</treerow>
+			</treeitem>
+			<treeitem>
+				<treerow>
+					<treecell label="Item 2"/>
+					<treecell label="Item 2 description"/>
+				</treerow>
+				<treechildren>
+					<treeitem>
+						<treerow>
+							<treecell label="Item 2.1"/>
+							<treecell/>
+						</treerow>
+						<treechildren>
+							<treeitem>
+								<treerow>
+									<treecell label="Item 2.1.1"/>
+									<treecell/>
+								</treerow>
+							</treeitem>
+							<treeitem>
+								<treerow>
+									<treecell label="Item 2.1.2"/>
+									<treecell/>
+								</treerow>
+							</treeitem>
+						</treechildren>
+					</treeitem>
+					<treeitem>
+						<treerow>
+							<treecell label="Item 2.2"/>
+							<treecell/>
+						</treerow>
+						<treechildren>
+							<treeitem>
+								<treerow>
+									<treecell label="Item 2.2.1"/>
+									<treecell/>
+								</treerow>
+							</treeitem>
+						</treechildren>
+					</treeitem>
+				</treechildren>
+			</treeitem>
+			<treeitem>
+				<treerow>
+					<treecell label="Item 3"/>
+					<treecell/>
+				</treerow>
+			</treeitem>
+		</treechildren>
+	</tree>
+	<separator/>
+	Tree Live Data
+	<zscript>
+		import zk.example.*;
+
+		BinaryTreeModel btm = new BinaryTreeModel(new ArrayList(new BigList(1000)));
+	</zscript>
+	<tree id="tree2" model="&#36;{btm}"/>
+
+	<separator/>
+	Tree with CheckMark
+	<button label="Toggle checkmark" onClick="tree3.checkmark = !tree3.checkmark;"/>
+	<button label="Toggle multiple" onClick="tree3.multiple = !tree3.multiple;"/>
+	<tree id="tree3"  rows="5" multiple="true" checkmark="true">
+		<treecols>
+			<treecol label="Name"/>
+			<treecol label="Description"/>
+		</treecols>
+		<treechildren>
+			<treeitem>
+				<treerow>
+					<treecell label="Item 1"/>
+					<treecell label="Item 1 description"/>
+				</treerow>
+			</treeitem>
+			<treeitem>
+				<treerow>
+					<treecell label="Item 2"/>
+					<treecell label="Item 2 description"/>
+				</treerow>
+				<treechildren>
+					<treeitem>
+						<treerow>
+							<treecell label="Item 2.1"/>
+							<treecell/>
+						</treerow>
+						<treechildren>
+							<treeitem>
+								<treerow>
+									<treecell label="Item 2.1.1"/>
+									<treecell/>
+								</treerow>
+							</treeitem>
+							<treeitem>
+								<treerow>
+									<treecell label="Item 2.1.2"/>
+									<treecell/>
+								</treerow>
+							</treeitem>
+						</treechildren>
+					</treeitem>
+					<treeitem>
+						<treerow>
+							<treecell label="Item 2.2"/>
+							<treecell label="Item 2.2 is something who cares"/>
+						</treerow>
+					</treeitem>
+				</treechildren>
+			</treeitem>
+			<treeitem>
+				<treerow>
+					<treecell label="Item 3"/>
+					<treecell/>
+				</treerow>
+			</treeitem>
+		</treechildren>
+	</tree>
+
+	<separator/>
+	<radiogroup
+			onCheck="tree4.pagingPosition = self.selectedItem.label;">
+		<radio label="top"/>
+		<radio label="bottom" checked="true"/>
+		<radio label="both"/>
+	</radiogroup>
+	<separator/>
+	Paging with Tree
+	<button label="Change Paging Mold">
+		<attribute name="onClick">
+			tree4.pagingChild.mold = "os".equals(tree4.pagingChild.mold) ? "default" : "os";
+		</attribute>
+	</button>
+	<tree id="tree4" mold="paging" pageSize="15" model="&#36;{btm}">
+		<attribute name="onCreate">
+			tree4.renderItemByPath(new int[]{1,1,1,1,1,1,1,1,1,1,1,1});
+			tree4.renderItemByPath(new int[]{0,0,0,0,0,0,0,0,0,0,0,0});
+		</attribute>
+	</tree>
+	<separator/>
+	Frozen
+	<tree>
+		<frozen columns="2"/>
+		<treecols>
+			<treecol label="aaa" width="300px"/>
+			<treecol label="bbb" width="400px"/>
+			<treecol label="ccc" width="500px"/>
+			<treecol label="ddd" width="600px"/>
+			<treecol label="eee" width="700px"/>
+			<treecol label="fff" width="800px"/>
+		</treecols>
+		<treechildren>
+			<treeitem>
+				<treerow><treecell>111</treecell><treecell>222</treecell><treecell>333</treecell><treecell>444</treecell><treecell>555</treecell><treecell>666</treecell></treerow>
+			</treeitem>
+			<treeitem>
+				<treerow><treecell>111</treecell><treecell>222</treecell><treecell>333</treecell><treecell>444</treecell><treecell>555</treecell><treecell>666</treecell></treerow>
+			</treeitem>
+			<treeitem>
+				<treerow><treecell><textbox/></treecell><treecell><textbox/></treecell><treecell><textbox/></treecell><treecell><textbox/></treecell><treecell><textbox/></treecell><treecell><textbox/></treecell></treerow>
+			</treeitem>
+			<treeitem>
+				<treerow><treecell>111</treecell><treecell>222</treecell><treecell>333</treecell><treecell>444</treecell><treecell>555</treecell><treecell>666</treecell></treerow>
+			</treeitem>
+			<treeitem>
+				<treerow><treecell>111</treecell><treecell>222</treecell><treecell>333</treecell><treecell>444</treecell><treecell>555</treecell><treecell>666</treecell></treerow>
+			</treeitem>
+		</treechildren>
+		<treefoot>
+			<treefooter label="Footer 1"/>
+			<treefooter label="Footer 2"/>
+			<treefooter label="Footer 3"/>
+			<treefooter label="Footer 4"/>
+			<treefooter label="Footer 5"/>
+			<treefooter label="Footer 6"/>
+		</treefoot>
+	</tree>
+</zk>

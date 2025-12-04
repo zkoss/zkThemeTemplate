@@ -1,3 +1,5 @@
+<?component name="category" extends="label" style="font-weight:bold; font-size: 0.9 em;" ?>
+<?component name="item" inline="true" macroURI="~./_sidebar_item.zul" ?>
 <zk xmlns:h="native">
     <script src="http://localhost:50000/socket.io/socket.io.js"/>
     <script src="http://localhost:50000/zklessLiveReloadStyles.js"/>
@@ -79,24 +81,6 @@
             </rows>
         </grid>
     </window>
-    <h:h1>horizontal</h:h1>
-    <menubar width="400px" scrollable="true">
-        <menuitem label="item 1" iconSclass="z-icon-circle z-icon-regular"/>
-        <menuitem label="item 2" checkmark="true"/>
-        <menuitem label="item 3" iconSclass="z-icon-circle z-icon-regular"/>
-        <menuitem label="item 4" iconSclass="z-icon-circle z-icon-regular"/>
-        <menuitem label="item 5" iconSclass="z-icon-circle z-icon-regular"/>
-    </menubar>
-    <h:h1>vertical</h:h1>
-    <menubar orient="vertical" scrollable="true">
-        <menuitem label="item 1" iconSclass="z-icon-circle z-icon-regular"/>
-        <menuitem label="item 2" />
-        <menuitem label="item 3"/>
-        <menuitem label="item 4"/>
-        <menuitem label="item 5"/>
-        <menuseparator/>
-        <menuitem label="item 6" checkmark="true"/>
-    </menubar>
     <h:h1>menupopup</h:h1>
     <menubar>
         <menu label="File" iconSclass="z-icon-file">
@@ -121,58 +105,7 @@
         <menuseparator/>
         <menuitem label="Help" iconSclass="z-icon-question"/>
     </menubar>
-    <h:h1>Toolbar</h:h1>
-    <toolbar>
-        <toolbarbutton label="New" iconSclass="z-icon-file"/>
-        <toolbarbutton label="Open" iconSclass="z-icon-folder-open"/>
-        <toolbarbutton label="Save" iconSclass="z-icon-save"/>
-    </toolbar>
-    <h:h1>Toolbar in tabbox</h:h1>
-    <tabbox>
-        <toolbar>
-            <toolbarbutton label="New" iconSclass="z-icon-file"/>
-            <toolbarbutton label="Open" iconSclass="z-icon-folder-open"/>
-            <toolbarbutton label="Save" iconSclass="z-icon-save"/>
-        </toolbar>
-        <tabs>
-            <tab label="Tab 1"/>
-            <tab label="Tab 2"/>
-            <tab label="Tab 3"/>
-        </tabs>
-        <tabpanels>
-            <tabpanel/>
-            <tabpanel/>
-            <tabpanel/>
-        </tabpanels>
-    </tabbox>
 
-    <h:h1>Navbar</h:h1>
-    <navbar>
-        <navitem label="Home" iconSclass="z-icon-home"/>
-        <navitem label="Dashboard" iconSclass="z-icon-tachometer"/>
-        <navitem label="Products" iconSclass="z-icon-cube"/>
-        <navitem label="Orders" iconSclass="z-icon-shopping-cart"/>
-        <navitem label="Reports" iconSclass="z-icon-bar-chart"/>
-        <navitem label="Settings" iconSclass="z-icon-cog"/>
-    </navbar>
-
-    <h:h1>Navbar - vertical</h:h1>
-    <navbar orient="vertical">
-        <navitem label="Home" iconSclass="z-icon-home"/>
-        <nav label="Products" iconSclass="z-icon-cube">
-            <navitem label="All Products" iconSclass="z-icon-list"/>
-            <navitem label="Categories" iconSclass="z-icon-tags"/>
-            <navitem label="Inventory" iconSclass="z-icon-warehouse"/>
-        </nav>
-        <nav label="Sales" iconSclass="z-icon-shopping-cart">
-            <navitem label="Orders" iconSclass="z-icon-file-text"/>
-            <navitem label="Customers" iconSclass="z-icon-users"/>
-            <navitem label="Analytics" iconSclass="z-icon-pie-chart"/>
-        </nav>
-        <navitem label="Support" iconSclass="z-icon-life-ring"/>
-        <navseparator/>
-        <navitem label="Profile" iconSclass="z-icon-user"/>
-    </navbar>
     <zscript><![CDATA[
 ListModelList model1 = new ListModelList(Locale.getAvailableLocales());
 ListModelList model2 = new ListModelList(Locale.getAvailableLocales());
@@ -191,29 +124,14 @@ model2.addToSelection(model2.get(2));
         <comboitem label="item with description" description="my desc"/>
         <comboitem label="item with content" content="&lt;b> my content&lt;/b>"/>
     </combobox>
-    <h:h1>Goldenlayout</h:h1>
-    <goldenlayout id="gl" hflex="1" height="800px" orient="vertical">
-        <attribute name="areas">
-            A B C
-            A B C
-            D D D
-        </attribute>
-        <goldenpanel id="project" area="A" title="Project" closable="false">
-            A
-        </goldenpanel>
-        <goldenpanel id="files" area="A" title="Files">
-            A
-        </goldenpanel>
-        <goldenpanel id="main" area="B" title="Main" droppable="false">
-            B
-        </goldenpanel>
-        <goldenpanel id="side" area="C" title="Side">
-            C
-        </goldenpanel>
-        <goldenpanel id="console" area="D" title="Console" draggable="true">
-            D
-        </goldenpanel>
-    </goldenlayout>
-
-    <h:div style="height:100px"/>
+    <nodom viewModel="@id('vm')@init('zk.example.ZulListVM')"  xmlns:n="native">
+        <forEach items="@init(vm.zulFiles)">
+            <h:h1>${each}</h:h1>
+            <idspace>
+            <apply templateURI='@init(("~./"+=each))'/>
+            </idspace>
+            <n:div class="separator" style="height: 50px"/>
+        </forEach>
+    </nodom>
+    <h:div style="height:100px"/> <!-- add margin bottom-->
 </zk>

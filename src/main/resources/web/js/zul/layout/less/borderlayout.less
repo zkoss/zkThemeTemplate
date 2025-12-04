@@ -159,12 +159,12 @@
 
 .z-west-splitter-button,
 .z-east-splitter-button {
-	.size(@splitterSize, 30px);
+	.size(@splitterSize, 3.75rem);
 	border-width: 1px 0;
 }
 .z-north-splitter-button,
 .z-south-splitter-button {
-	.size(30px, @splitterSize);
+	.size(3.75rem, @splitterSize);
 	border-width: 0 1px;
 }
 
@@ -230,38 +230,38 @@
 }
 .z-west-icon,
 .z-east-icon {
-	top: 8px;
-	left: -3px;
+	top: @spacing-04;
+	left: -@spacing-01;
 }
 
 .z-west-icon.z-icon-ellipsis-v,
 .z-east-icon.z-icon-ellipsis-v {
 	font-size: @fontSizeXSmall;
 	top: -21px;
-	left: 3px;
+	left: @spacing-01;
 	cursor: ew-resize;
 	visibility: hidden;
 }
 
 .z-north-icon,
 .z-south-icon {
-	left: 9px;
-	top: -4px;
+	left: @spacing-04;
+	top: -@spacing-02;
 }
 .z-west-icon.z-icon-ellipsis-v ~ .z-west-icon.z-icon-ellipsis-v,
 .z-east-icon.z-icon-ellipsis-v ~ .z-east-icon.z-icon-ellipsis-v {
-	top: 39px;
+	top: @spacing-11;
 }
 
 .z-north-icon.z-icon-ellipsis-h,
 .z-south-icon.z-icon-ellipsis-h {
-	top: -2px;
-	left: -20px;
+	top: -@spacing-01;
+	left: -@spacing-07;
 	cursor: ns-resize;
 	visibility: hidden;
 }
 
 .z-north-icon.z-icon-ellipsis-h ~ .z-north-icon.z-icon-ellipsis-h,
 .z-south-icon.z-icon-ellipsis-h ~ .z-south-icon.z-icon-ellipsis-h {
-	left: 40px;
+	left: @spacing-10;
 }

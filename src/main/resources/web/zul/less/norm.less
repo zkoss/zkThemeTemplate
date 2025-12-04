@@ -42,8 +42,8 @@ e('</c:if>');
 @{browserDefaultPrefix}fieldset {
 	border: 1px solid #c0c0c0;
 	border-radius: 0;
-	margin: 0 2px;
-	padding: 0px;
+	margin: 0 @spacing-01;
+	padding: 0;
 }
 
 @{browserDefaultPrefix}legend {
@@ -59,7 +59,7 @@ e('</c:if>');
 e('<c:if test="${empty c:property(@{browserDefault})}">');
 body {
 	margin: 0;
-	padding: 0 5px;
+	padding: 0 @spacing-03;
 }
 e('</c:if>');
 
@@ -91,7 +91,7 @@ e('</c:if>');
 		word-wrap: break-word;
 		overflow: auto;
 		.message {
-			margin-top: 8px;
+			margin-top: @spacing-04;
 		}
 	}
 	.newmessage {
@@ -156,7 +156,7 @@ div.z-log {
 		color: black;
 		border: 1px solid black;
 		margin: 10% 15%;
-		padding: 10px 0;
+		padding: @spacing-04 0;
 		background: white;
 		.opacity(1.0);
 	}
@@ -509,7 +509,7 @@ div.z-log {
 		vertical-align: @dropIconVerticalAlign;
 	}
 	&-text {
-		padding-left: 8px;
+		padding-left: @spacing-04;
 	}
 }
 
@@ -634,7 +634,7 @@ span.z-upload input {
 		.size(@scrollbarSize, 100%);
 		top: 0;
 		right: 0;
-		margin-right: 4px;
+		margin-right: @spacing-02;
 
 		.z-scrollbar {
 			&-wrapper {
@@ -644,15 +644,15 @@ span.z-upload input {
 			}
 			&-rail {
 				width: @scrollbarRailSize;
-				left: 3px;
+				left: @spacing-02;
 			}
 			&-indicator {
 				width: @scrollbarBarSize;
-				left: 1px;
+				left: @spacing-01;
 			}
 			&-icon {
-				margin-top: -8px;
-				left: -1px;
+				margin-top: -@spacing-04;
+				left: -@spacing-01;
 				top: 50%;
 				.transform('scale(0.5, 0.7)');
 			}
@@ -678,7 +678,7 @@ span.z-upload input {
 		.size(100%, @scrollbarSize);
 		left: 0;
 		bottom: 0;
-		margin-bottom: 4px;
+		margin-bottom: @spacing-02;
 
 		.z-scrollbar {
 			&-wrapper {
@@ -688,16 +688,16 @@ span.z-upload input {
 			}
 			&-rail {
 				height: @scrollbarRailSize;
-				top: 3px;
+				top: @spacing-02;
 			}
 			&-indicator {
 				height: @scrollbarBarSize;
-				top: 1px;
+				top: @spacing-01;
 			}
 			&-icon {
-				margin-left: -8px;
+				margin-left: -@spacing-04;
 				left: 50%;
-				top: -1px;
+				top: -@spacing-01;
 				.transform('rotate(90deg) scale(0.5, 0.7)');
 			}
 		}
@@ -711,7 +711,7 @@ span.z-upload input {
 	&-left,
 	&-right {
 		.buttonBase();
-		margin-top: -4px;
+		margin-top: -@spacing-02;
 	}
 	&-right {
 		right: 0;

@@ -1,7 +1,7 @@
 @import "~./zul/less/_header.less";
 
 .z-groupbox {
-	padding-top: 16px;
+	padding-top: @spacing-06;
 
 	> .z-groupbox-header {
 		background: @baseBackgroundColor;
@@ -9,26 +9,26 @@
 		.size(100%, @baseIconHeight);
 		border: 1px solid @baseBorderColor;
 		border-bottom: 0;
-		padding-left: 12px;
+		padding-left: @spacing-05;
 		line-height: normal;
 		zoom: 1;
 
 		.z-groupbox-title {
 			height: auto;
-			min-height: 24px;
+			min-height: 3rem;
 			white-space: nowrap;
 		}
 
 		.z-groupbox-title-content {
 			display: inline-block;
 			line-height: @baseButtonHeight;
-			padding: 0 4px;
+			padding: 0 @spacing-02;
 		}
 
 		.z-caption, .z-groupbox-title {
 			display: inline;
 			width: auto;
-			padding: 0 4px;
+			padding: 0 @spacing-02;
 			line-height: @baseButtonHeight;
 			background: @baseBackgroundColor;
 			position: relative;
@@ -106,7 +106,7 @@
 				padding: 0;
 				> .z-caption-image {
 					margin-left: 0;
-					margin-right: 4px;
+					margin-right: @spacing-02;
 				}
 			}
 		}

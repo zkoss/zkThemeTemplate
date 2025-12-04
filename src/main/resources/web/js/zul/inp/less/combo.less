@@ -135,7 +135,7 @@ each(@components, {
 		// Inplace editing
 		&-inplace &-input {
 			border: 0;
-			padding: 3px;
+			padding: @spacing-02;
 			background: none;
 		}
 		&-inplace &-button {
@@ -245,9 +245,9 @@ each(@components, {
 // combobox emptySearchMessage
 .z-combobox-empty-search-message {
 	display: block;
-	padding: 4px 8px;
+	padding: @spacing-02 @spacing-04;
 	position: relative;
-	min-height: @comboPopupItemSize + 2px + 4px * 2;
+	min-height: @comboPopupItemSize + @spacing-01 + @spacing-02 * 2;
 	.borderRadius(@baseBorderRadius);
 	color: @disabledColor;
 }
@@ -291,8 +291,8 @@ each(@components, {
 	line-height: @comboPopupItemSize + 2;
 }
 .z-comboitem-image {
-	margin-top: -4px;
-	margin-right: 4px;
+	margin-top: -@spacing-02;
+	margin-right: @spacing-02;
 	float: left;
 
 	&:empty {
@@ -301,7 +301,7 @@ each(@components, {
 }
 .z-comboitem-icon {
 	.iconFontStyle(@comboPopupIconSize, @comboPopupIconColor);
-	padding-right: 4px;
+	padding-right: @spacing-02;
 }
 .z-combobox-popup,
 .z-bandbox-popup,
@@ -322,13 +322,13 @@ each(@components, {
 
 .z-combobox-popup {
 	overflow: auto;
-	min-height: 10px;
+	min-height: 1.25rem;
 }
 
 .z-bandbox-popup {
 	overflow: auto;
-	padding: 8px;
-	min-height: 10px;
+	padding: @spacing-04;
+	min-height: 1.25rem;
 }
 
 .z-combobox-content {

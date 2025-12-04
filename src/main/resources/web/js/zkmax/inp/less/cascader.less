@@ -4,8 +4,8 @@
 	display: inline-block;
 	position: relative;
 	height: @cascaderHeight;
-	width: 180px;
 	border: 1px solid @cascaderBorderColor;
+	width: 22.5rem;
 	border-radius: @cascaderBorderRadius;
 	color: @cascaderColor;
 	background: @cascaderBackgroundColor;
@@ -50,7 +50,7 @@
 		width: 100%;
 		height: 100%;
 		padding: @cascaderPadding;
-		padding-right: 24px;
+		padding-right: @spacing-08;
 		vertical-align: middle;
 		line-height: @cascaderLineHeight;
 		font-family: @baseContentFontFamily;
@@ -66,7 +66,7 @@
 		width: 100%;
 		height: 100%;
 		padding: @cascaderPadding;
-		padding-right: 24px;
+		padding-right: @spacing-08;
 		vertical-align: middle;
 		line-height: @cascaderLineHeight;
 		font-family: @baseContentFontFamily;
@@ -79,9 +79,9 @@
 
 	&-icon {
 		color: @cascaderIconColor;
-		font-size: 22px;
+		font-size: @fontSizeLarge;;
 		position: absolute;
-		right: 8px;
+		right: @spacing-04;
 		top: 50%;
 		-ms-transform: translateY(-50%);
 		transform: translateY(-50%);
@@ -112,7 +112,7 @@
 		margin: 0;
 		padding: @cascaderPopupCavePadding;
 		border-left: 1px solid @cascaderSeparatorColor;
-		max-height: 350px;
+		max-height: 43.75rem;
 		overflow: auto;
 		display: inline-block;
 		vertical-align: top;
@@ -133,7 +133,7 @@
 		-webkit-user-select: none;
 		-ms-user-select: none;
 		user-select: none;
-		min-width: 148px;
+		min-width: 18.5rem;
 		height: @cascaderPopupItemHeight;
 		line-height: @cascaderPopupItemHeight;
 		position: relative;
@@ -144,10 +144,10 @@
 
 		.z-cascader-icon {
 			top: 0;
-			right: 5px;
+			right: @spacing-02;
 			line-height: @cascaderPopupItemHeight;
 			transform: none;
-			margin-left: 4px;
+			margin-left: @spacing-02;
 		}
 	}
 

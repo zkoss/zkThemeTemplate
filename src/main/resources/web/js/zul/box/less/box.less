@@ -71,18 +71,18 @@ td.z-splitter-outer {
 		cursor: col-resize;
 		
 		> .z-splitter-button {
-			.size(@splitterSize, 30px);
+			.size(@splitterSize, 3.75rem);
 			border-width: 1px 0;
 		}
 		.z-splitter-icon {
 			font-size: @splitterButtonTextSize;
 			position: absolute;
-			top: 8px;
-			left: -3px;
+			top: @spacing-04;
+			left: -@spacing-01;
 			
 			&.z-icon-ellipsis-v {
 				top: -21px;
-				left: 2px;
+				left: @spacing-01;
 				cursor: col-resize;
 				visibility: hidden;
 			}
@@ -98,24 +98,24 @@ td.z-splitter-outer {
 		cursor: row-resize;
 		
 		> .z-splitter-button {
-			.size(30px, @splitterSize);
+			.size(3.75rem, @splitterSize);
 			border-width: 0 1px;
 		}
 		.z-splitter-icon {
 			font-size: @splitterButtonTextSize;
 			line-height: normal;
 			position: absolute;
-			top: -4px;
-			left: 9px;
+			top: -@spacing-02;
+			left: @spacing-04;
 			
 			&.z-icon-ellipsis-h {
-				top: -2px;
-				left: -16px;
+				top: -@spacing-01;
+				left: -@spacing-06;
 				cursor: row-resize;
 				visibility: hidden;
 			}
 			&.z-icon-ellipsis-h ~ .z-splitter-icon.z-icon-ellipsis-h {
-				left: 36px;
+				left: @spacing-09;
 			}
 		}
 	}

@@ -54,7 +54,7 @@
 		.fontStyle(@baseContentFontFamily, @inputTextSize, normal, @inputColor);
 		.displaySize(inline-block, @chosenboxInputWidth, @chosenboxInputHeight);
 		border: 0 !important;
-		padding: 0 @spacing-02;
+		padding: 1px 4px @spacing-01 8px;
 		background: transparent !important;
 		outline: 0;
 		.boxShadow('none');
@@ -124,7 +124,7 @@
 
 		&-creatable {
 			color: @inputColor;
-			padding-top: 2px;
+			padding-top: @spacing-01;
 			cursor: pointer;
 		}
 	}
@@ -137,7 +137,7 @@
 	&-create {
 		.iconFontStyle(@chosenboxCreateIconSize, @chosenboxCreateIconColor);
 		.size(@chosenboxCreateIconSize, @chosenboxCreateIconSize);
-		margin-right: 2px;
+		margin-right: @spacing-01;
 		&:before {
 			content: '\f067'; // z-icon-plus
 		}
@@ -148,8 +148,8 @@
 		height: 100%;
 		font-style: normal;
 		display: inline-block;
-		font-size: 18px;
-		padding: 4px;
+		font-size: @fontSizeLarge;
+		padding: @spacing-02;
 	}
 
 	&-hide {

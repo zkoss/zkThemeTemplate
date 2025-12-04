@@ -4,8 +4,8 @@
 	.displaySize(inline-block, @colorboxWidth, @colorboxHeight);
 	border: 1px solid @baseBorderColor;
 	.borderRadius(@baseBorderRadius);
-	margin: 0 2px;
-	padding: 4px;
+	margin: 0 @spacing-01;
+	padding: @spacing-02;
 	background: @inputBackgroundColor;
 	vertical-align: middle;
 	position: relative;
@@ -20,7 +20,7 @@
 	
 	&-button {
 		font-size: @colorboxButtonFontSize;
-		.displaySize(inline-block, 14px, 14px);
+		.displaySize(inline-block, 1.75rem, 1.75rem);
 		line-height: normal;
 		background: @inputBackgroundColor;
 		position: absolute;
@@ -28,13 +28,13 @@
 		right: 0;
 		overflow: hidden;
 	}
-	
+
 	&-icon {
 		.iconFontStyle(@colorboxButtonFontSize, @textColorDefault);
-		.size(10px, 8px);
+		.size(1.25rem, 1rem);
 		position: relative;
-		top: -3px;
-		left: -2px;
+		top: -@spacing-01;
+		left: -@spacing-01;
 	}
 	
 	&-disabled,
@@ -70,7 +70,7 @@
 
 	&-main {
 		position: relative;
-		height: 256px;
+		height: 32rem;
 		top: @colorpickerMainPositionTop;
 	}
 
@@ -82,49 +82,49 @@
 	}
 
 	&-gradient {
-		.size(256px, 256px);
+		.size(32rem, 32rem);
 		border: 1px solid @baseBorderColor;
 		position: absolute;
 		left: 0;
 		top: 0;
 		cursor: crosshair;
 	}
-	
+
 	&-overlay {
-		.size(256px, 256px);
+		.size(32rem, 32rem);
 		.encodeURL(background-image, '~./zkex/img/colorbox/colorpicker_gradient.png');
 	}
-	
+
 	&-bar {
-		.size(12px, 256px);
+		.size(1.5rem, 32rem);
 		border: 1px solid @baseBorderColor;
 		.encodeURL(background-image, '~./zkex/img/colorbox/colorpicker_hue.png');
 		position: absolute;
-		left: 7px;
+		left: @spacing-03;
 		overflow: hidden;
 		cursor: row-resize;
 	}
 	
 	&-circle {
-		.size(11px, 11px);
-		margin: -5px 0 0 -5px;
+		.size(1.375rem, 1.375rem);
+		margin: -@spacing-03 0 0 -@spacing-03;
 		.encodeURL(background-image, '~./zkex/img/colorbox/colorpicker_select.gif');
 		position: absolute;
 		top: 0;
 		left: 0;
 		overflow: hidden;
 	}
-	
+
 	&-hue {
-		.size(27px, 256px);
+		.size(3.375rem, 32rem);
 		position: absolute;
 		top: 0;
 		right: 0;
 	}
-	
+
 	&-arrows {
-		.size(27px, 9px);
-		margin: -4px 0 0 0;
+		.size(3.375rem, 1.125rem);
+		margin: -@spacing-02 0 0 0;
 		.encodeURL(background-image, '~./zkex/img/colorbox/colorpicker_arrows.gif');
 		position: absolute;
 		left: 0;
@@ -140,7 +140,7 @@
 		.borderRadius(2px);
 		top: 0;
 		right: @colorpickerColorPositionRight;
-		padding: 2px;
+		padding: @spacing-01;
 	}
 	
 	&-newcolor {
@@ -160,7 +160,7 @@
 		left: 0;
 		.z-colorpicker-input {
 			width: @colorpickerInputWidth;
-			margin-left: 8px;
+			margin-left: @spacing-04;
 			margin-right: 0;
 		}
 	}
@@ -175,7 +175,7 @@
 
 	&-text {
 		display: inline-block;
-		width: 35px;
+		width: 4.375rem;
 	}
 	
 	&-input {
@@ -191,7 +191,7 @@
 		.z-colorpicker-input {
 			width: @colorpickerHEXInputWidth;
 			height: @colorpickerHEXInputHeight;
-			margin-left: 8px;
+			margin-left: @spacing-04;
 		}
 	}
 	
@@ -316,7 +316,7 @@
 }
 // Menu color block
 .z-menu-image.z-colorbox-color {
-	border-radius: 2px;
+	border-radius: 0.25rem;
 	border: 1px solid @baseBorderColor;
 	min-width: @colorboxMenuImageSize;
 	min-height: @colorboxMenuImageSize;

@@ -21,7 +21,7 @@
 	border: 1px solid @checkedBorderColor;
 	background: @checkedBackgroundColor;
 	vertical-align: text-top;
-	margin-right: 8px;
+	margin-right: @spacing-04;
 	.borderRadius(@baseBorderRadius);
 	position: relative;
 	left: @listheaderCheckedPositionLeft;
@@ -165,7 +165,7 @@
 		}
 		.z-listheader-icon {
 			text-align: center;
-			line-height: 18px;
+			line-height: 2.25rem;
 			display: none;
 			cursor: default;
 		}
@@ -231,7 +231,7 @@
 		}
 		.z-listitem-icon {
 			text-align: center;
-			line-height: 18px;
+			line-height: 2.25rem;
 			display: none;
 			cursor: default;
 		}
@@ -279,7 +279,7 @@
 		> .z-listcell {
 			.listitemFocusBorder(@left: 0, @right: 0) {
 				box-shadow: inset 0 2px 0 0 @meshCellFocusBoxShadowColor,
-							inset 0 -2px 0 0 @meshCellFocusBoxShadowColor,
+							inset 0 -@spacing-01 0 0 @meshCellFocusBoxShadowColor,
 							inset @left 0 0 0 @meshCellFocusBoxShadowColor,
 							inset -@right 0 0 0 @meshCellFocusBoxShadowColor;
 			}
@@ -378,7 +378,7 @@
 		vertical-align: text-top;
 		position: relative;
 		cursor: pointer;
-		margin-right: 8px;
+		margin-right: @spacing-04;
 	}
 }
 

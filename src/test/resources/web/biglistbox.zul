@@ -1,0 +1,45 @@
+<zk>
+	<vlayout vflex="1" apply="zk.example.BiglistboxComposer">
+		<vlayout>
+			<hlayout valign="bottom">
+				Change Models:
+				<selectbox id="modelBox" >
+					<template name="model">${each.x}</template>
+				</selectbox>
+				Change V/Hflex:
+				<radiogroup onCheck="biglist.vflex = biglist.hflex= self.selectedItem.label; biglist.invalidate();">
+					<radio label="1" checked="true"/>
+					<radio label="min"/>
+				</radiogroup>
+			</hlayout>
+			<hlayout valign="bottom">
+				Change fixForzenCols:
+				<radiogroup onCheck='biglist.fixFrozenCols = self.selectedItem.label.equals("Enable") '>
+					<radio label="Disable" checked="true"/>
+					<radio label="Enable"/>
+				</radiogroup>
+				Change frozenCols:
+				<selectbox id="frozenColsBox"/>
+				Change cols:
+				<selectbox id="colsSizeBox" />
+				Change rows:
+				<selectbox id="rowsSizeBox" onSelect="biglist.autoRows = false;biglist.rows = event.selectedObjects.iterator().next()"/>
+			</hlayout>
+			<hlayout valign="bottom">
+				Invalidate should look the same as before: <button label="invalidate" onClick="biglist.invalidate()"/>
+			</hlayout>
+		</vlayout>
+		<biglistbox id="biglist" hflex="1" vflex="1" colWidth="130px" sortAscending="${ascCmpr}" sortDescending="${dscCmpr}">
+			<template name="heads">
+				<html><![CDATA[
+					<div title="x=${matrixInfo[0]},y=${matrixInfo[1]}">${each[matrixInfo[0]]}</div>
+				]]></html>
+			</template>
+			<template name="rows">
+				<html><![CDATA[
+					<div title="x=${matrixInfo[0]},y=${matrixInfo[1]}">${each[matrixInfo[0]]}</div>
+				]]></html>
+			</template>
+		</biglistbox>
+	</vlayout>
+</zk>
