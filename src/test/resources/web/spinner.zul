@@ -1,0 +1,4 @@
+<?page title="Spinner" contentType="text/html;charset=UTF-8"?>
+<zk>
+    <spinner/>
+</zk>

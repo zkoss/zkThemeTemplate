@@ -1,0 +1,4 @@
+<?page title="Iframe" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<iframe style="width:99%; height:400px;border:3px inset;" src="~./html.zul" />
+</zk>

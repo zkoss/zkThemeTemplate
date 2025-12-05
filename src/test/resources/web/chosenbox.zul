@@ -95,4 +95,14 @@
 			</n:td>
 		</n:tr>
 	</n:table>
+	<zscript><![CDATA[
+ListModelList model1 = new ListModelList(Locale.getAvailableLocales());
+ListModelList model2 = new ListModelList(Locale.getAvailableLocales());
+model2.setMultiple(true);
+model2.addToSelection(model2.get(1));
+model2.addToSelection(model2.get(2));
+    ]]></zscript>
+	<chosenbox model="${model1}" width="300px"/>
+	<chosenbox model="${model1}" width="300px" disabled="true"/>
+	<chosenbox model="${model2}" width="300px" />
 </zk>

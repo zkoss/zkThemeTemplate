@@ -1,0 +1,12 @@
+<?page title="Multislider" contentType="text/html;charset=UTF-8"?>
+<zk>
+    <multislider>
+        <sliderbuttons startValue="10" endValue="70"/>
+        <sliderbuttons startValue="20" endValue="50"/>
+        <sliderbuttons startValue="30" endValue="40"/>
+    </multislider>
+    <multislider min="5" max="120" orient="vertical">
+        <sliderbuttons startValue="5" endValue="100"/>
+        <sliderbuttons startValue="20" endValue="50"/>
+    </multislider>
+</zk>

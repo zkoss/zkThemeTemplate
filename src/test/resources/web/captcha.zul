@@ -1,0 +1,6 @@
+<?page title="Captcha" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<vbox>
+	     <captcha id="cpa" length="5" width="200px" height="50px"/>
+	 </vbox>
+</zk>

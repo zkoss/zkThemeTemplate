@@ -9,7 +9,7 @@
 			cursor: pointer !important;
 		}
 	</style>
-	<div style="position: absolute; z-index: 50">
+	<div style="z-index: 50">
 		<div id="loading_div" width="300px" height="300px" style="border: 1px solid black">
 			Dummy Div
 		</div>

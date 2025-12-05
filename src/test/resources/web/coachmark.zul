@@ -1,0 +1,8 @@
+<?page title="Coachmark" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<button id="infoButton" label="Information" />
+	<coachmark target="infoButton" onTargetClick="self.close()">
+		<label>Wellcome! click here for more information!</label>
+		<button style="display: block;margin: 10px auto 0" label="got it!" onClick="self.parent.close()"/>
+	</coachmark>
+</zk>

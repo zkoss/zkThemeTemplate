@@ -1,0 +1,9 @@
+<?page title="Dropupload" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<dropupload maxsize="5120" detection="none" onUpload="doSomething(event)">
+	        <attribute name="content"><![CDATA[
+	            <b>Drop Here</b><br/>
+	            size < 5MB
+	        ]]></attribute>
+	    </dropupload>
+</zk>

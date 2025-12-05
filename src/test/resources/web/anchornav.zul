@@ -1,0 +1,18 @@
+<zk xmlns:ca="client/attribute">
+    <anchornav>
+        <listbox sizedByContent="true" hflex="min">
+            <listitem><listcell><a ca:data-anchornav-target="$win1"> First Window </a></listcell></listitem>
+            <listitem><listcell><a ca:data-anchornav-target="$win2"> Second Window </a></listcell></listitem>
+            <listitem><listcell><a ca:data-anchornav-target="$win3"> Third Window </a></listcell></listitem>
+        </listbox>
+    </anchornav>
+    <window id="win1" title="1. First Window" height="500px" sclass="target" style="background:skyblue">
+        Hello world.
+    </window>
+    <window id="win2" title="2. Second Window" height="500px" sclass="target" style="background:coral">
+        Welcome to ZK world.
+    </window>
+    <window id="win3" title="3. Third Window" height="500px" sclass="target" style="background:bisque">
+        Welcome to ZK world.
+    </window>
+</zk>

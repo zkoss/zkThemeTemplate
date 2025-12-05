@@ -359,4 +359,27 @@
 		<menuitem label="item 4" iconSclass="z-icon-circle z-icon-regular"/>
 		<menuitem label="item 5" iconSclass="z-icon-circle z-icon-regular"/>
 	</menubar>
+	<menubar>
+		<menu label="File" iconSclass="z-icon-file">
+			<menupopup>
+				<menuitem label="New" iconSclass="z-icon-file"/>
+				<menu label="Open" iconSclass="z-icon-folder-open">
+					<menupopup>
+						<menuitem label="Project..." iconSclass="z-icon-folder"/>
+						<menuitem label="File..." iconSclass="z-icon-file"/>
+					</menupopup>
+				</menu>
+				<menuitem label="Save" iconSclass="z-icon-save"/>
+				<menuitem label="Exit" iconSclass="z-icon-times"/>
+			</menupopup>
+		</menu>
+		<menu label="View">
+			<menupopup>
+				<menuitem label="Sort by Name" checkmark="true" autocheck="true" />
+				<menuitem label="Sort by Date" checkmark="true" autocheck="true" />
+			</menupopup>
+		</menu>
+		<menuseparator/>
+		<menuitem label="Help" iconSclass="z-icon-question"/>
+	</menubar>
 </zk>

@@ -1,43 +1,34 @@
 <?page title="Inputs-Combobox" contentType="text/html;charset=UTF-8"?>
 <zk>
-	<hbox>
-		<window title="Combobox (default mold)" sclass="center-bg-win"
-			border="normal" width="300px" vflex="min">
-			<vbox>
-				Simple Combobox:
-				<combobox>
-					<comboitem label="Comboitem 1" />
-					<comboitem label="Comboitem 2" />
-					<comboitem label="Comboitem 3" />
-				</combobox>
-				<separator />
-				Comboitem with description:
-				<combobox>
-					<comboitem label="Comboitem 1" description="Description of the great Comboitem 1." />
-					<comboitem label="Comboitem 2" description="Description of the great Comboitem 2." />
-					<comboitem label="Comboitem 3" description="Description of the great Comboitem 3." />
-				</combobox>
-				<separator />
-				Comboitem with icon:
-				<combobox>
-					<comboitem label="Comboitem 1" image="~./img/search.png" />
-					<comboitem label="Comboitem 2" iconSclass="z-icon-apple" />
-					<comboitem label="Comboitem 3" image="~./img/search.png" />
-				</combobox>
-				<separator />
-				Comboitem with description and icon:
-				<combobox>
-					<comboitem label="Comboitem 1" image="~./img/search.png"
-						description="Description of the great Comboitem 1." />
-					<comboitem label="Comboitem 2" iconSclass="z-icon-android"
-						description="Description of the great Comboitem 2." />
-					<comboitem label="Comboitem 3" image="~./img/search.png"
-						description="Description of the great Comboitem 3." />
-				</combobox>
-			</vbox>
-		</window>
-	</hbox>
+	Simple Combobox:
+	<combobox>
+		<comboitem label="Comboitem 1" />
+		<comboitem label="Comboitem 2" />
+		<comboitem label="Comboitem 3" />
+	</combobox>
 	<separator />
-	<hbox>
-	</hbox>
+	Comboitem with description:
+	<combobox>
+		<comboitem label="Comboitem 1" description="Description of the great Comboitem 1." />
+		<comboitem label="Comboitem 2" description="Description of the great Comboitem 2." />
+		<comboitem label="Comboitem 3" description="Description of the great Comboitem 3." />
+	</combobox>
+	<separator />
+	Comboitem with icon:
+	<combobox>
+		<comboitem label="Comboitem 1" image="~./img/search.png" />
+		<comboitem label="Comboitem 2" iconSclass="z-icon-apple" />
+		<comboitem label="Comboitem 3" image="~./img/search.png" />
+	</combobox>
+	<separator />
+	Comboitem with description and icon:
+	<combobox>
+		<comboitem label="Comboitem 1" image="~./img/search.png"
+				   description="Description of the great Comboitem 1." />
+		<comboitem label="Comboitem 2" iconSclass="z-icon-android"
+				   description="Description of the great Comboitem 2." />
+		<comboitem label="Comboitem 3" image="~./img/search.png"
+				   description="Description of the great Comboitem 3." />
+	</combobox>
+	<combobox disabled="true"/>
 </zk>

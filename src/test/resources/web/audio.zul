@@ -1,0 +1,4 @@
+<?page title="Audio" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<audio src="music.wav" controls="true"></audio>
+</zk>

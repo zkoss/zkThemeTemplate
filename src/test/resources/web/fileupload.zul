@@ -1,0 +1,9 @@
+<?page title="Fileupload" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<fileupload label="Upload">
+	   <attribute name="onUpload">
+	   org.zkoss.util.media.Media media = event.getMedia();
+	   //then, you can process media here
+	   </attribute>
+	</fileupload>
+</zk>

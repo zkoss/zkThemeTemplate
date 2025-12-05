@@ -1,0 +1,7 @@
+<zk>
+    <stepbar activeIndex="1" width="600px">
+        <step title="First Step" />
+        <step title="Second Step" />
+        <step title="Third Step"/>
+    </stepbar>
+</zk>

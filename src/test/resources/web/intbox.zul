@@ -1,0 +1,4 @@
+<?page title="Intbox" contentType="text/html;charset=UTF-8"?>
+<zk>
+	     int box:<intbox/>
+</zk>

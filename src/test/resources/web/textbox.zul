@@ -1,0 +1,12 @@
+<?page title="Textbox" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<textbox value="text..." />
+	<textbox value="secret" type="password" />
+	<textbox constraint="/.+@.+\.[a-z]+/: Please enter an e-mail address" />
+	<textbox rows="5" cols="40">
+	    <attribute name="value">
+	text line1... 
+	text line2...
+	    </attribute>
+	</textbox>
+</zk>

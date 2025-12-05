@@ -1,0 +1,5 @@
+<?page title="Datebox" contentType="text/html;charset=UTF-8"?>
+<zk>
+    <datebox lenient="true" buttonVisible="false"/>
+    <datebox lenient="false" buttonVisible="true"/>
+</zk>

@@ -1,0 +1,6 @@
+<zk>
+     <hlayout>
+         <button label="Button 3"/>
+         <button label="Button 4"/>
+     </hlayout>
+</zk>

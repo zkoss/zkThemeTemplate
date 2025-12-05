@@ -1,0 +1,12 @@
+<zk>
+    <zscript>
+        <![CDATA[
+        String[] userName = { "Tony", "Ryan", "Jumper", "Wing", "Sam" };
+        ListModelList model4Selectbox = new ListModelList(userName);
+    ]]></zscript>
+    <selectbox model="${model4Selectbox}" onSelect='alert(model.get(event.getData()));'>
+        <template name="model">
+            Name is ${each}
+        </template>
+    </selectbox>
+</zk>

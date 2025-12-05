@@ -1,0 +1,31 @@
+<?page title="Columnlayout" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<columnlayout>
+	        <columnchildren width="33%" style="padding: 5px">
+	            <panel height="100px" title="column1-1" closable="true" collapsible="true"
+	                   border="normal" maximizable="true" style="margin-bottom:10px">
+	                <panelchildren>Panel</panelchildren>
+	            </panel>
+	            <panel height="100px"  title="column1-2"
+	                   border="normal" maximizable="true" style="margin-bottom:10px">
+	                <panelchildren>Panel</panelchildren>
+	            </panel>
+	            <panel height="100px" title="column1-3" border="normal"
+	                   closable="true">
+	                <panelchildren>Panel</panelchildren>
+	            </panel>
+	        </columnchildren>
+	        <columnchildren width="33%" style="padding: 5px">
+	            <panel height="100px" title="column2-1" closable="true" collapsible="true"
+	                   border="normal" maximizable="true" style="margin-bottom:10px">
+	                <panelchildren>Panel</panelchildren>
+	            </panel>
+	        </columnchildren>
+	        <columnchildren width="33%" style="padding: 5px">
+	            <panel height="100px" title="column3-1" closable="true" collapsible="true"
+	                   border="normal" maximizable="true" style="margin-bottom:10px">
+	                <panelchildren>Panel</panelchildren>
+	            </panel>
+	        </columnchildren>
+	    </columnlayout>
+</zk>
