@@ -1,6 +1,5 @@
 <?page title="Fisheyebar" contentType="text/html;charset=UTF-8"?>
 <zk>
-<window width="500px" height="150px">
 	<div>
 		<checkbox label="AttachEdge bottom" onCheck='fsb.attachEdge=self.checked?"bottom":"top"' />
 		<checkbox label="Vertical orient" onCheck='fsb.orient=self.checked?"vertical":"horizontal"' />
@@ -8,7 +7,7 @@
 	<separator />
 	Note: The label of Fisheyebar is the only theme element that can be customized.
 	<fisheyebar id="fsb"
-		attachEdge="top" itemWidth="80" itemHeight="80" itemMaxHeight="160" itemMaxWidth="160">
+				attachEdge="bottom" itemWidth="80" itemHeight="80" itemMaxHeight="160" itemMaxWidth="160">
 		<fisheye image="~./img/Centigrade-Widget-Icons/FolderABlue-128x128.png" label="Folder" />
 		<fisheye image="~./img/Centigrade-Widget-Icons/ReadingGlass-128x128.png" label="Reading Glasses" />
 		<fisheye image="~./img/Centigrade-Widget-Icons/Briefcase-128x128.png" label="Project" />
@@ -16,5 +15,4 @@
 		<fisheye image="~./img/Centigrade-Widget-Icons/Globe-128x128.png" label="Globe" />
 		<fisheye image="~./img/Centigrade-Widget-Icons/Spyglass-128x128.png" label="Spyglass" />
 	</fisheyebar>
-</window>
 </zk>
