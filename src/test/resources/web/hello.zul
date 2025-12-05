@@ -1,9 +1,0 @@
-<zk>
-	<zscript>
-		import org.zkoss.zul.theme.Themes;
-		String theme = Themes.getDisplayName(Themes.getCurrentTheme());
-	</zscript>
-	<window title="ZK Theme Demo: ${theme}" border="normal" height="100%">
-		Hi! This is a demo for Theme: ${theme}. 
-	</window>
-</zk>
