@@ -1,5 +1,6 @@
 <?component name="category" extends="label" style="font-weight:bold; font-size: 0.9 em;" ?>
 <?component name="item" inline="true" macroURI="~./_sidebar_item.zul" ?>
+<?import zk.example.* ?>
 <zk xmlns:h="native">
     <script src="http://localhost:50000/socket.io/socket.io.js"/>
     <script src="http://localhost:50000/zklessLiveReloadStyles.js"/>
@@ -8,9 +9,16 @@
     <nodom viewModel="@id('vm')@init('zk.example.ZulListVM')"  xmlns:n="native">
         <forEach items="@init(vm.zulFiles)">
             <h:h1>${each}</h:h1>
-            <idspace>
-            <apply templateURI='@init(("~./"+=each))'/>
-            </idspace>
+            <choose>
+                <when test="@init(ZulListVM.isSeparatePage(each))">
+                    <a href="${each.substring(0, each.length()-4)}">view in the separate page</a>
+                </when>
+                <otherwise>
+                    <idspace>
+                    <apply templateURI='@init(("~./"+=each))'/>
+                    </idspace>
+                </otherwise>
+            </choose>
             <n:div class="separator" style="height: 50px"/>
         </forEach>
     </nodom>
