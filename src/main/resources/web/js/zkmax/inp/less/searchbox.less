@@ -58,7 +58,7 @@
 		height: 100%;
 		line-height: calc(@searchboxHeight - 0.25rem);
 		padding: @searchboxPadding;
-		padding-right: (@searchboxIconSize * 2 + @searchboxIconRight);
+		padding-right: calc(@searchboxIconSize * 2 + @searchboxIconRight);
 		vertical-align: middle;
 		font-family: @baseContentFontFamily;
 		font-size: @searchboxFontSize;
@@ -74,7 +74,7 @@
 		height: 100%;
 		line-height: calc(@searchboxHeight - 0.25rem);
 		padding: @searchboxPadding;
-		padding-right: (@searchboxIconSize + @searchboxIconRight);
+		padding-right: calc(@searchboxIconSize + @searchboxIconRight);
 		vertical-align: middle;
 		font-family: @baseContentFontFamily;
 		font-size: @searchboxFontSize;
@@ -95,7 +95,7 @@
 	}
 
 	&-clear {
-		right: @searchboxIconSize + @searchboxIconRight; // space for down arrow
+		right: calc(@searchboxIconSize + @searchboxIconRight); // space for down arrow
 	}
 
 	&-popup {
