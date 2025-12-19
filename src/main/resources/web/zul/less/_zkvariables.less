@@ -352,7 +352,7 @@
 @comboPopupItemHoverBackgroundColor: @colorPrimaryLighter;
 @comboPopupItemSelectedColor:  @colorPrimary;
 @comboInputHeight:             4.5rem;
-@comboInputPaddingRight:       @inputPaddingRight + @baseButtonWidth + 2rem; // 8px * 2 = 16px / 8 = 2rem
+@comboInputPaddingRight:       calc(@inputPaddingRight + @baseButtonWidth + 2rem); // 8px * 2 = 16px / 8 = 2rem
 @spinnerButtonWidth:           4rem;
 @spinnerButtonIconHeight:      @baseLineHeight;
 @spinnerButtonIconTransform:   none; // for compact override
@@ -457,7 +457,7 @@
 @dragDisAllowBorderColor:      transparent;
 @dragDisAllowBackgroundColor:  @colorGreyLighter;
 @dropContentPadding:           @spacing-05;
-@dropContentLineHeight:        @baseHeight - 12;
+@dropContentLineHeight:        calc(@baseHeight - 12px);
 @dropIconSize:                 @fontSizeXLarge;
 @dropIconVerticalAlign:        baseline; // for compact override
 
