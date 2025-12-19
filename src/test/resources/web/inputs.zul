@@ -3,7 +3,7 @@
 	<hbox>
 		<window title="Default Mold" sclass="center-bg-win"
 			border="normal" width="300px" hflex="min">
-			<vbox>
+			<vlayout>
 				Combobox:
 				<combobox>
 					<comboitem label="Comboitem 1" />
@@ -40,7 +40,12 @@
 				<doublespinner />
 				<doublespinner buttonVisible="false" />
 				<separator />
-			</vbox>
+				<intbox/>
+				<separator />
+				<longbox/>
+				<separator />
+				<colorbox/>
+			</vlayout>
 		</window>
 		<window title="Default Mold, Disabled" sclass="center-bg-win" 
 			border="normal" width="300px" hflex="min">
