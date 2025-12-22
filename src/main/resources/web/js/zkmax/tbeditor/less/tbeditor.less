@@ -1,8 +1,8 @@
 /**
- * @{zprefix} v2.7.2 - A lightweight WYSIWYG editor
- * Default stylesheet for @{zprefix} editor
+ * @{zprefix} v2.31 - A lightweight WYSIWYG editor
+ * Default stylesheet for Trumbowyg editor
  * ------------------------
- * @link http://alex-d.github.io/@{zprefix}
+ * @link https://alex-d.github.io/Trumbowyg/
  * @license MIT
  * @author Alexandre Demode (Alex-D)
  *         Twitter : @AlexandreDemode
@@ -31,19 +31,28 @@
   height: 100%;
   fill: #222; }
 
-.@{zprefix}-box,
-.@{zprefix}-editor {
-  display: block;
+.@{zprefix}-box { // Potix: style modified
+  display: flex;
+  flex-direction: column;
   position: relative;
-  border: 1px solid #DDD;
   width: 100%;
   min-height: var(--zk-rem3-75);
-  margin: 0px auto; } // Potix: style modified
+  margin: 0px auto;
+  border: 1px solid #DDD;
+}
 
-.@{zprefix}-box .@{zprefix}-editor {
+.@{zprefix}-editor-box {  // Potix: style modified
+  display: block;
+  flex: 1;
+  position: relative;
+  width: 100%;
+  border: 1px solid #DDD;
+}
+
+.@{zprefix}-box .@{zprefix}-editor, .@{zprefix}-editor-box { // Potix: style modified
   margin: 0 auto; }
 
-.@{zprefix}-editor p {
+.@{zprefix}-editor-box .@{zprefix}-editor p {
     margin: 0 0 1em; // Potix: style modified
 }
 
@@ -51,7 +60,7 @@
   background: #FEFEFE;
   border: none !important; }
 
-.@{zprefix}-editor,
+.@{zprefix}-editor-box > .@{zprefix}-editor,
 .@{zprefix}-textarea {
   position: relative;
   box-sizing: border-box;
@@ -80,6 +89,7 @@
 .@{zprefix}-box-blur .@{zprefix}-editor hr {
   opacity: 0.2; }
 
+.@{zprefix}-editor-box,
 .@{zprefix}-textarea {
   position: relative;
   display: block;
@@ -89,6 +99,10 @@
   font-size: @fontSizeSmall;
   font-family: "Inconsolata", "Consolas", "Courier", "Courier New", sans-serif;
   line-height: var(--zk-rem2-25);
+}
+
+.trumbowyg-editor-box {
+  padding: 0;
 }
 
 .@{zprefix}-box.@{zprefix}-editor-visible .@{zprefix}-textarea {
@@ -109,7 +123,7 @@
   opacity: 0.8;
   background: none; }
 
-.@{zprefix}-editor[contenteditable=true]:empty:not(:focus)::before {
+.@{zprefix}-editor-box[contenteditable=true]:empty:not(:focus)::before {
   content: attr(placeholder);
   color: #999;
   pointer-events: none; }
@@ -385,9 +399,11 @@ body.@{zprefix}-body-fullscreen {
   padding: 0;
   z-index: 99999; }
   .@{zprefix}-fullscreen.@{zprefix}-box,
+.@{zprefix}-fullscreen .@{zprefix}-editor-box,
   .@{zprefix}-fullscreen .@{zprefix}-editor {
     border: none; }
   .@{zprefix}-fullscreen .@{zprefix}-editor,
+  .@{zprefix}-fullscreen .@{zprefix}-editor-box,
   .@{zprefix}-fullscreen .@{zprefix}-textarea {
     height: calc(100% - 37px) !important;
     overflow: auto; }
