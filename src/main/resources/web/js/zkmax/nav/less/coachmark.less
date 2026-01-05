@@ -49,7 +49,7 @@
 		.size(@coachmarkIconSize, @coachmarkIconSize);
 		position: absolute;
 		top: @coachmarkPadding;
-		right: @coachmarkPadding / 2;
+		right: calc(@coachmarkPadding / 2);
 		color: @iconColor;
 		cursor: pointer;
 	}
@@ -79,10 +79,10 @@
 
 // coachmark arrow: base style
 .z-coachmark-right ~ .z-coachmark-close {
-	right: @coachmarkPadding + 16px;
+	right: calc(@coachmarkPadding + 16px);
 }
 .z-coachmark-up ~ .z-coachmark-close {
-	top: @coachmarkPadding + 16px;
+	top: calc(@coachmarkPadding + 16px);
 }
 
 .z-coachmark-left {
