@@ -1,0 +1,134 @@
+// =====================================
+// ZK Rem Variables (Lookup Table)
+// =====================================
+// Pre-calculated CSS custom properties for rem values.
+// These reference --zk-rem-ratio to scale appropriately
+// for different root font sizes.
+//
+// USAGE: Instead of ~"calc(4.5rem * var(--zk-rem-ratio))"
+//        Use: var(--zk-rem4-5)
+//
+// NAMING: --zk-rem{value} where decimal point is replaced with dash
+//         e.g., 4.5rem -> --zk-rem4-5
+//              0.75rem -> --zk-rem0-75
+//
+// For users with different root font sizes:
+// Override --zk-rem-ratio in your CSS:
+//   :root { --zk-rem-ratio: 0.5; }  /* for 16px root */
+//   :root { --zk-rem-ratio: 0.8; }  /* for 10px root */
+// =====================================
+
+:root {
+  --zk-rem-ratio: 1;
+
+  // ─────────────────────────────────────
+  // Sub-1rem values (0.125rem - 0.75rem)
+  // ─────────────────────────────────────
+  --zk-rem0-125: calc(0.125rem * var(--zk-rem-ratio)); 
+  --zk-rem0-25: calc(0.25rem * var(--zk-rem-ratio));   
+  --zk-rem0-375: calc(0.375rem * var(--zk-rem-ratio)); 
+  --zk-rem0-5: calc(0.5rem * var(--zk-rem-ratio));     
+  --zk-rem0-625: calc(0.625rem * var(--zk-rem-ratio)); 
+  --zk-rem0-75: calc(0.75rem * var(--zk-rem-ratio));   
+
+  // ─────────────────────────────────────
+  // 1rem range (1rem - 1.75rem)
+  // ─────────────────────────────────────
+  --zk-rem1: calc(1rem * var(--zk-rem-ratio));         
+  --zk-rem1-125: calc(1.125rem * var(--zk-rem-ratio)); 
+  --zk-rem1-25: calc(1.25rem * var(--zk-rem-ratio));   
+  --zk-rem1-5: calc(1.5rem * var(--zk-rem-ratio));     
+  --zk-rem1-625: calc(1.625rem * var(--zk-rem-ratio)); 
+  --zk-rem1-75: calc(1.75rem * var(--zk-rem-ratio));   
+
+  // ─────────────────────────────────────
+  // 2rem range (2rem - 2.75rem)
+  // ─────────────────────────────────────
+  --zk-rem2: calc(2rem * var(--zk-rem-ratio));         
+  --zk-rem2-125: calc(2.125rem * var(--zk-rem-ratio)); 
+  --zk-rem2-25: calc(2.25rem * var(--zk-rem-ratio));   
+  --zk-rem2-5: calc(2.5rem * var(--zk-rem-ratio));     
+  --zk-rem2-75: calc(2.75rem * var(--zk-rem-ratio));   
+
+  // ─────────────────────────────────────
+  // 3rem range (3rem - 3.5rem)
+  // ─────────────────────────────────────
+  --zk-rem3: calc(3rem * var(--zk-rem-ratio));         
+  --zk-rem3-25: calc(3.25rem * var(--zk-rem-ratio));   
+  --zk-rem3-5: calc(3.5rem * var(--zk-rem-ratio));     
+
+  // ─────────────────────────────────────
+  // 4rem range (4rem - 4.5rem)
+  // ─────────────────────────────────────
+  --zk-rem4: calc(4rem * var(--zk-rem-ratio));
+  --zk-rem4-125: calc(4.125rem * var(--zk-rem-ratio));
+  --zk-rem4-25: calc(4.25rem * var(--zk-rem-ratio));
+  --zk-rem4-375: calc(4.375rem * var(--zk-rem-ratio));
+  --zk-rem4-5: calc(4.5rem * var(--zk-rem-ratio));
+  --zk-rem4-625: calc(4.625rem * var(--zk-rem-ratio));
+  --zk-rem4-75: calc(4.75rem * var(--zk-rem-ratio));
+  --zk-rem4-875: calc(4.875rem * var(--zk-rem-ratio));
+
+  // ─────────────────────────────────────
+  // 5rem range (5rem - 5.625rem)
+  // ─────────────────────────────────────
+  --zk-rem5: calc(5rem * var(--zk-rem-ratio));         
+  --zk-rem5-5: calc(5.5rem * var(--zk-rem-ratio));     
+  --zk-rem5-625: calc(5.625rem * var(--zk-rem-ratio)); 
+
+  // ─────────────────────────────────────
+  // 6rem - 9rem
+  // ─────────────────────────────────────
+  --zk-rem6: calc(6rem * var(--zk-rem-ratio));         
+  --zk-rem6-5: calc(6.5rem * var(--zk-rem-ratio));     
+  --zk-rem7: calc(7rem * var(--zk-rem-ratio));         
+  --zk-rem8: calc(8rem * var(--zk-rem-ratio));         
+  --zk-rem8-5: calc(8.5rem * var(--zk-rem-ratio));     
+  --zk-rem9: calc(9rem * var(--zk-rem-ratio));         
+
+  // ─────────────────────────────────────
+  // 10rem - 20rem
+  // ─────────────────────────────────────
+  --zk-rem10: calc(10rem * var(--zk-rem-ratio));       
+  --zk-rem11: calc(11rem * var(--zk-rem-ratio));       
+  --zk-rem12: calc(12rem * var(--zk-rem-ratio));       
+  --zk-rem12-5: calc(12.5rem * var(--zk-rem-ratio));   
+  --zk-rem14-375: calc(14.375rem * var(--zk-rem-ratio)); 
+  --zk-rem14-5: calc(14.5rem * var(--zk-rem-ratio));   
+  --zk-rem15-5: calc(15.5rem * var(--zk-rem-ratio));   
+  --zk-rem20: calc(20rem * var(--zk-rem-ratio));       
+
+  // ─────────────────────────────────────
+  // Large values (37.5rem - 60rem)
+  // ─────────────────────────────────────
+  --zk-rem28-75: calc(28.75rem * var(--zk-rem-ratio));
+  --zk-rem36: calc(36rem * var(--zk-rem-ratio));
+  --zk-rem37-5: calc(37.5rem * var(--zk-rem-ratio));   
+  --zk-rem38-75: calc(38.75rem * var(--zk-rem-ratio)); 
+  --zk-rem42-5: calc(42.5rem * var(--zk-rem-ratio));   
+  --zk-rem52: calc(52rem * var(--zk-rem-ratio));       
+  --zk-rem57-5: calc(57.5rem * var(--zk-rem-ratio));   
+  --zk-rem0-875: calc(0.875rem * var(--zk-rem-ratio));
+  --zk-rem1-375: calc(1.375rem * var(--zk-rem-ratio));
+  --zk-rem2-375: calc(2.375rem * var(--zk-rem-ratio));
+  --zk-rem3-375: calc(3.375rem * var(--zk-rem-ratio));
+  --zk-rem3-75: calc(3.75rem * var(--zk-rem-ratio));
+  --zk-rem18-5: calc(18.5rem * var(--zk-rem-ratio));
+  --zk-rem22-5: calc(22.5rem * var(--zk-rem-ratio));
+  --zk-rem22-75: calc(22.75rem * var(--zk-rem-ratio));
+  --zk-rem25: calc(25rem * var(--zk-rem-ratio));
+  --zk-rem32: calc(32rem * var(--zk-rem-ratio));
+  --zk-rem32-5: calc(32.5rem * var(--zk-rem-ratio));
+  --zk-rem35: calc(35rem * var(--zk-rem-ratio));
+  --zk-rem40: calc(40rem * var(--zk-rem-ratio));
+  --zk-rem43-75: calc(43.75rem * var(--zk-rem-ratio));
+  --zk-rem43-8: calc(43.8rem * var(--zk-rem-ratio));
+  --zk-rem62-5: calc(62.5rem * var(--zk-rem-ratio));
+  --zk-rem125: calc(125rem * var(--zk-rem-ratio));
+  --zk-rem65: calc(65rem * var(--zk-rem-ratio));
+  --zk-rem3-625: calc(3.625rem * var(--zk-rem-ratio));
+  --zk-rem3-125: calc(3.125rem * var(--zk-rem-ratio));
+  --zk-rem18-75: calc(18.75rem * var(--zk-rem-ratio));
+  --zk-rem41-25: calc(41.25rem * var(--zk-rem-ratio));
+  --zk-rem625: calc(625rem * var(--zk-rem-ratio));
+}

@@ -14,7 +14,7 @@
 			vertical-align: top;
 		}
 		.z-scrollview-scrollbar {
-			height: 0.875rem;
+			height: var(--zk-rem0-875);
 			bottom: 1px;
 			left: @spacing-01;
 			right: @spacing-01;
@@ -29,7 +29,7 @@
 			width: 100%;
 		}
 		.z-scrollview-scrollbar {
-			width: 0.875rem;
+			width: var(--zk-rem0-875);
 			bottom: @spacing-01;
 			top: @spacing-01;
 			right: 1px;
@@ -84,7 +84,7 @@
 		
 		&-up, &-down,
 		&-left, &-right {
-			.size(4rem, 4rem);
+			.size(var(--zk-rem4), var(--zk-rem4));
 			position: absolute;
 			z-index: 999;
 		}

@@ -10,7 +10,7 @@
 	}
 	& .jcrop-dragbar { // Jcrop bug - not apply baseClass
 		display: block;
-		.size(0.75rem, 0.75rem);
+		.size(var(--zk-rem0-75), var(--zk-rem0-75));
 		position: absolute;
 		&.ord {
 			&-n, &-s {
@@ -36,7 +36,7 @@
 	&-handle {
 		display: block;
 		background: white;
-		.size(0.75rem, 0.75rem);
+		.size(var(--zk-rem0-75), var(--zk-rem0-75));
 		position: absolute;
 		&.ord {
 			&-n {
@@ -168,7 +168,7 @@
 				}
 
 				> a {
-					height: 1.75rem;
+					height: var(--zk-rem1-75);
 					text-decoration: none;
 					display: block;
 					text-align: center;

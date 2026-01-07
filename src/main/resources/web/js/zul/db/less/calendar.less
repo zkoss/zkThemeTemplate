@@ -3,7 +3,7 @@
 .z-calendar {
 	.fontStyle(@baseContentFontFamily, @calendarFontSize, normal);
 	background-color: @calendarBackgroundColor;
-	min-width: 28.75rem;
+	min-width: var(--zk-rem28-75);
 	padding: @calendarPadding;
 
 	a {
@@ -11,7 +11,7 @@
 	}
 	th {
 		.size(32px, 36px);
-		min-width: 4rem;
+		min-width: var(--zk-rem4);
 		.borderRadius(@baseBorderRadius);
 		.fontStyle(@baseTitleFontFamily, @calendarFontSizeSmall, 700, @calendarWeekTitleColor);
 		text-align: center;
@@ -72,8 +72,8 @@
 		padding-top: @spacing-04;
 
 		.z-calendar-cell {
-			min-width: 7rem;
-			height: 5rem;
+			min-width: var(--zk-rem7);
+			height: var(--zk-rem5);
 			padding: 0 @spacing-04;
 		}
 	}

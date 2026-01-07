@@ -27,7 +27,7 @@
   box-sizing: border-box; }
 
 .@{zprefix}-box svg {
-  width: 2.125rem;
+  width: var(--zk-rem2-125);
   height: 100%;
   fill: #222; }
 
@@ -37,7 +37,7 @@
   position: relative;
   border: 1px solid #DDD;
   width: 100%;
-  min-height: 37.5rem;
+  min-height: var(--zk-rem3-75);
   margin: 0px auto; } // Potix: style modified
 
 .@{zprefix}-box .@{zprefix}-editor {
@@ -56,7 +56,7 @@
   position: relative;
   box-sizing: border-box;
   padding: @spacing-06;
-  min-height: 37.5rem;
+  min-height: var(--zk-rem3-75);
   width: 100%;
   border-style: none;
   resize: none;
@@ -88,7 +88,8 @@
   white-space: normal;
   font-size: @fontSizeSmall;
   font-family: "Inconsolata", "Consolas", "Courier", "Courier New", sans-serif;
-  line-height: 2.25rem; }
+  line-height: var(--zk-rem2-25);
+}
 
 .@{zprefix}-box.@{zprefix}-editor-visible .@{zprefix}-textarea {
   height: 1px !important;
@@ -115,14 +116,14 @@
 
 .@{zprefix}-button-pane {
   width: 100%;
-  min-height: 4.5rem;
+  min-height: var(--zk-rem4-5);
   background: #ecf0f1;
   border-bottom: 1px solid #d7e0e2;
   margin: 0;
   padding: 0 @spacing-02;
   position: relative;
   list-style-type: none;
-  line-height: 1.25rem;
+  line-height: var(--zk-rem1-25);
   -webkit-backface-visibility: hidden;
           backface-visibility: hidden;
   z-index: 11; }
@@ -146,13 +147,13 @@
       width: 1px;
       background: #d7e0e2;
       margin: 0 @spacing-02;
-      height: 4.375rem;
+      height: var(--zk-rem4-375);
       vertical-align: top; } // Potix: ZK-4916: style modified for trumbowyg v2.7.2
   .@{zprefix}-button-pane button {
     display: inline-block;
     position: relative;
-    width: 4.375rem;
-    height: 4.375rem;
+    width: var(--zk-rem4-375);
+    height: var(--zk-rem4-375);
     padding: 1px @spacing-03 !important;
     margin-bottom: 1px;
     overflow: hidden;
@@ -163,7 +164,7 @@
     transition: background-color 150ms, opacity 150ms; }
     .@{zprefix}-button-pane button.@{zprefix}-textual-button {
       width: auto;
-      line-height: 4.375rem; }
+      line-height: var(--zk-rem4-375); }
   .@{zprefix}-button-pane.@{zprefix}-disable button:not(.@{zprefix}-not-disable):not(.@{zprefix}-active),
   .@{zprefix}-disabled .@{zprefix}-button-pane button:not(.@{zprefix}-not-disable):not(.@{zprefix}-viewHTML-button) {
     opacity: 0.2;
@@ -198,7 +199,7 @@
       display: none !important; }
 
 .@{zprefix}-dropdown {
-  width: 25rem;
+  width: var(--zk-rem25);
   border: 1px solid #ecf0f1;
   padding: @spacing-02 0;
   border-top: none;
@@ -209,8 +210,8 @@
   .@{zprefix}-dropdown button {
     display: block;
     width: 100%;
-    height: 4.375rem;
-    line-height: 4.375rem;
+    height: var(--zk-rem4-375);
+    line-height: var(--zk-rem4-375);
     text-decoration: none;
     background: #FFF;
     padding: 0 @spacing-04;
@@ -233,9 +234,9 @@
   left: 50%;
   -webkit-transform: translateX(-50%);
           transform: translateX(-50%);
-  max-width: 65rem;
+  max-width: var(--zk-rem65);
   width: 100%;
-  height: 43.75rem;
+  height: var(--zk-rem43-75);
   z-index: 11;
   overflow: hidden;
   -webkit-backface-visibility: hidden;
@@ -248,8 +249,8 @@
   -webkit-transform: translateX(-50%);
           transform: translateX(-50%);
   padding-bottom: 45px;
-  max-width: 62.5rem;
-  width: calc(100% - 2.5rem);
+  max-width: var(--zk-rem62-5);
+  width: calc(100% - var(--zk-rem2-5));
   z-index: 1;
   background-color: #FFF;
   text-align: center;
@@ -268,7 +269,7 @@
     background: #fbfcfc; }
   .@{zprefix}-modal-box .@{zprefix}-progress {
     width: 100%;
-    height: 0.375rem;
+    height: var(--zk-rem0-375);
     position: absolute;
     top: 58px; }
     .@{zprefix}-modal-box .@{zprefix}-progress .@{zprefix}-progress-bar {
@@ -279,14 +280,14 @@
     display: block;
     position: relative;
     margin: @spacing-06 @spacing-05;
-    height: 3.625rem;
-    line-height: 3.625rem;
+    height: var(--zk-rem3-625);
+    line-height: var(--zk-rem3-625);
     overflow: hidden; }
     .@{zprefix}-modal-box label .@{zprefix}-input-infos {
       display: block;
       text-align: left;
-      height: 3.125rem;
-      line-height: 3.125rem;
+      height: var(--zk-rem3-125);
+      line-height: var(--zk-rem3-125);
       transition: all 150ms; }
       .@{zprefix}-modal-box label .@{zprefix}-input-infos span {
         display: block;
@@ -294,7 +295,7 @@
         background-color: #fbfcfc;
         border: 1px solid #DEDEDE;
         padding: 0 @spacing-03;
-        width: 18.75rem; }
+        width: var(--zk-rem18-75); }
       .@{zprefix}-modal-box label .@{zprefix}-input-infos span.@{zprefix}-msg-error {
         color: #e74c3c; }
     .@{zprefix}-modal-box label.@{zprefix}-input-error input,
@@ -306,12 +307,12 @@
       position: absolute;
       top: 0;
       right: 0;
-      height: 3.375rem;
-      line-height: 3.375rem;
+      height: var(--zk-rem3-375);
+      line-height: var(--zk-rem3-375);
       border: 1px solid #DEDEDE;
       background: #fff;
       font-size: @fontSizeSmall;
-      max-width: 41.25rem;
+      max-width: var(--zk-rem41-25);
       width: 70%;
       padding: 0 @spacing-03;
       transition: all 150ms; }
@@ -331,9 +332,9 @@
     text-decoration: none;
     color: #FFF;
     display: block;
-    width: 12.5rem;
-    height: 4.375rem;
-    line-height: 4.125rem;
+    width: var(--zk-rem12-5);
+    height: var(--zk-rem4-375);
+    line-height: var(--zk-rem4-125);
     margin: 0 @spacing-04;
     background-color: #333;
     border: none;
@@ -468,19 +469,19 @@ body.@{zprefix}-body-fullscreen {
       font-weight: bold; }
     .@{zprefix}-editor.@{zprefix}-reset-css h1 {
       font-size: @fontSizeLarge !important;
-      line-height: 4.75rem !important;
+      line-height: var(--zk-rem4-75) !important;
       margin-bottom: @spacing-07 !important; }
     .@{zprefix}-editor.@{zprefix}-reset-css h2 {
       font-size: @fontSizeLarge !important;
-      line-height: 4.25rem !important;
+      line-height: var(--zk-rem4-25) !important;
       margin-bottom: 15px !important; }
     .@{zprefix}-editor.@{zprefix}-reset-css h3 {
       font-size: @fontSizeLarge !important;
-      line-height: 3.5rem !important;
+      line-height: var(--zk-rem3-5) !important;
       margin-bottom: @spacing-03 !important; }
     .@{zprefix}-editor.@{zprefix}-reset-css h4 {
       font-size: @fontSizeMedium !important;
-      line-height: 2.75rem !important;
+      line-height: var(--zk-rem2-75) !important;
       margin-bottom: @spacing-03 !important; }
 
 /*
@@ -548,8 +549,8 @@ body.@{zprefix}-body-fullscreen {
     display: block;
     position: relative;
     margin: 15px @spacing-05;
-    height: 3.375rem;
-    line-height: 3.375rem;
+    height: var(--zk-rem3-375);
+    line-height: var(--zk-rem3-375);
     overflow: hidden; }
     .@{zprefix}-dark .@{zprefix}-modal-box label .@{zprefix}-input-infos span {
       color: #eee;

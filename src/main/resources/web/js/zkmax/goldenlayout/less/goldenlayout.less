@@ -248,13 +248,13 @@
 	&.lm_dragProxy,
 	&.lm_stack {
 		.lm_header {
-			width: 2.5rem;
+			width: var(--zk-rem2-5);
 			vertical-align: top;
 
 			.lm_tabs {
 				transform-origin: left top;
 				top: 0;
-				width: 125rem; /*hack*/
+				width: var(--zk-rem125); /*hack*/
 			}
 
 			.lm_controls {
@@ -362,7 +362,7 @@
 			margin: 0;
 
 			.lm_title {
-				width: 12.5rem;
+				width: var(--zk-rem12-5);
 			}
 		}
 
@@ -702,7 +702,7 @@
 		display: block;
 		padding: @spacing-04;
 		padding-right: 52px;
-		height: 2.375rem;
+		height: var(--zk-rem2-375);
 
 		&:hover {
 			background: @colorPrimaryLighter;

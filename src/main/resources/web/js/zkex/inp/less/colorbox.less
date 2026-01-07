@@ -20,7 +20,7 @@
 	
 	&-button {
 		font-size: @colorboxButtonFontSize;
-		.displaySize(inline-block, 1.75rem, 1.75rem);
+		.displaySize(inline-block, var(--zk-rem1-75), var(--zk-rem1-75));
 		line-height: normal;
 		background: @inputBackgroundColor;
 		position: absolute;
@@ -31,7 +31,7 @@
 
 	&-icon {
 		.iconFontStyle(@colorboxButtonFontSize, @textColorDefault);
-		.size(1.25rem, 1rem);
+		.size(var(--zk-rem1-25), var(--zk-rem1));
 		position: relative;
 		top: -@spacing-01;
 		left: -@spacing-01;
@@ -70,7 +70,7 @@
 
 	&-main {
 		position: relative;
-		height: 32rem;
+		height: var(--zk-rem32);
 		top: @colorpickerMainPositionTop;
 	}
 
@@ -82,7 +82,7 @@
 	}
 
 	&-gradient {
-		.size(32rem, 32rem);
+		.size(var(--zk-rem32), var(--zk-rem32));
 		border: 1px solid @baseBorderColor;
 		position: absolute;
 		left: 0;
@@ -91,12 +91,12 @@
 	}
 
 	&-overlay {
-		.size(32rem, 32rem);
+		.size(var(--zk-rem32), var(--zk-rem32));
 		.encodeURL(background-image, '~./zkex/img/colorbox/colorpicker_gradient.png');
 	}
 
 	&-bar {
-		.size(1.5rem, 32rem);
+		.size(var(--zk-rem1-5), var(--zk-rem32));
 		border: 1px solid @baseBorderColor;
 		.encodeURL(background-image, '~./zkex/img/colorbox/colorpicker_hue.png');
 		position: absolute;
@@ -106,7 +106,7 @@
 	}
 	
 	&-circle {
-		.size(1.375rem, 1.375rem);
+		.size(var(--zk-rem1-375), var(--zk-rem1-375));
 		margin: -@spacing-03 0 0 -@spacing-03;
 		.encodeURL(background-image, '~./zkex/img/colorbox/colorpicker_select.gif');
 		position: absolute;
@@ -116,14 +116,14 @@
 	}
 
 	&-hue {
-		.size(3.375rem, 32rem);
+		.size(var(--zk-rem3-375), var(--zk-rem32));
 		position: absolute;
 		top: 0;
 		right: 0;
 	}
 
 	&-arrows {
-		.size(3.375rem, 1.125rem);
+		.size(var(--zk-rem3-375), var(--zk-rem1-125));
 		margin: -@spacing-02 0 0 0;
 		.encodeURL(background-image, '~./zkex/img/colorbox/colorpicker_arrows.gif');
 		position: absolute;
@@ -175,7 +175,7 @@
 
 	&-text {
 		display: inline-block;
-		width: 4.375rem;
+		width: var(--zk-rem4-375);
 	}
 	
 	&-input {
@@ -316,7 +316,7 @@
 }
 // Menu color block
 .z-menu-image.z-colorbox-color {
-	border-radius: 0.25rem;
+	border-radius: var(--zk-rem0-25);
 	border: 1px solid @baseBorderColor;
 	min-width: @colorboxMenuImageSize;
 	min-height: @colorboxMenuImageSize;

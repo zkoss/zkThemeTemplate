@@ -71,7 +71,7 @@ td.z-splitter-outer {
 		cursor: col-resize;
 		
 		> .z-splitter-button {
-			.size(@splitterSize, 3.75rem);
+			.size(@splitterSize, var(--zk-rem3-75));
 			border-width: 1px 0;
 		}
 		.z-splitter-icon {
@@ -98,7 +98,7 @@ td.z-splitter-outer {
 		cursor: row-resize;
 		
 		> .z-splitter-button {
-			.size(3.75rem, @splitterSize);
+			.size(var(--zk-rem3-75), @splitterSize);
 			border-width: 0 1px;
 		}
 		.z-splitter-icon {
