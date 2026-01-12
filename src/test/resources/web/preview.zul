@@ -7,15 +7,15 @@
     <!--	<script src="http://localhost:50000/zklessLiveReloadStylesResize.js"/>-->
     <!--	<script src="http://localhost:50000/zklessLiveReloadPage.js"/>-->
     <nodom viewModel="@id('vm')@init('zk.example.ZulListVM')"  xmlns:n="native">
-        <forEach items="@init(vm.zulFiles)">
-            <h:h1>${each}</h:h1>
+        <forEach items="@init(vm.zulFiles)" var="one">
+            <h:h1>${one}</h:h1>
             <choose>
-                <when test="@init(ZulListVM.isSeparatePage(each))">
-                    <a href="${each.substring(0, each.length()-4)}">view in the separate page</a>
+                <when test="@init(ZulListVM.isSeparatePage(one))">
+                    <a href="${one.substring(0, one.length()-4)}">view in the separate page</a>
                 </when>
                 <otherwise>
                     <idspace>
-                    <apply templateURI='@init(("~./"+=each))'/>
+                    <apply templateURI='@init(("~./"+=one))'/>
                     </idspace>
                 </otherwise>
             </choose>

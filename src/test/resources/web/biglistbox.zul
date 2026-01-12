@@ -1,5 +1,5 @@
 <zk>
-	<vlayout vflex="1" apply="zk.example.BiglistboxComposer">
+	<vlayout height="100vh" apply="zk.example.BiglistboxComposer">
 		<vlayout>
 			<hlayout valign="bottom">
 				Change Models:
