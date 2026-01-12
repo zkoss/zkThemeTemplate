@@ -3,8 +3,8 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "zklessc": "zklessc -s src/main/resources/web -o target/classes/web/dev",
-    "zklessc-dev": "zklessc -s src/main/resources/web -o target/classes/web/dev -w"
+    "zklessc": "zklessc -s src/main/resources/web -o target/classes/web/dev --less-opts '{\"math\":\"parens-division\"}'",
+    "zklessc-dev": "zklessc -s src/main/resources/web -o target/classes/web/dev -w --less-opts '{\"math\":\"parens-division\"}'"
   },
   "devDependencies": {
     "zkless-engine": "^1.1.9"

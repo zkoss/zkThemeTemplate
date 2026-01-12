@@ -138,6 +138,8 @@
 								<argument>--output</argument>
 								<argument>${zktheme.theme.outputDirectory}</argument>
 								<argument>--compress</argument>
+								<argument>--less-opts</argument>
+								<argument>{"math":"parens-division"}</argument>
 							</arguments>
 						</configuration>
 					</execution>

@@ -109,12 +109,12 @@
 		&.z-window-noheader {
 			padding: 0;
 
-			> .z-window-content {
+			>.z-window-content {
 				padding: 0;
 			}
 		}
 
-		> .z-window-content {
+		>.z-window-content {
 			border: 0;
 			.borderRadius(0);
 		}
@@ -124,7 +124,7 @@
 .z-messagebox {
 	display: inline-block;
 	white-space: normal;
-	width: @messageboxWindowWidth - @messageboxIconMarginLeft - @messageboxIconSize - @messageboxPaddingHorizontal;
+	width: calc(@messageboxWindowWidth - @messageboxIconMarginLeft - @messageboxIconSize - @messageboxPaddingHorizontal);
 
 	&-window {
 		padding: @messageboxWindowPadding;
@@ -144,7 +144,8 @@
 		margin-right: @spacing-06;
 		left: 0;
 		position: sticky;
-		& > * {
+
+		&>* {
 			margin-left: @messageboxButtonsMarginLeft;
 		}
 	}

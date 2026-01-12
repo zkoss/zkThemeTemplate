@@ -377,7 +377,7 @@ div.z-log {
 	vertical-align: top;
 	position: relative;
 	left: 50%;
-	margin-left: -(@loadingIconSize / 2);
+	margin-left: calc(@loadingIconSize / -2);
 	margin-bottom: @loadingIconMarginBottom;
 }
 .z-apply-loading-icon {
@@ -386,7 +386,7 @@ div.z-log {
 	position: absolute;
 	left: @applyLoadingIconPositionLeft;
 	top: 50%;
-	margin-top: -(@applyLoadingIconSize / 2);
+	margin-top: calc(@applyLoadingIconSize / -2);
 }
 .z-apply-mask {
 	.size(100%, 100%);
@@ -611,7 +611,7 @@ span.z-upload input {
 	}
 
 	.embedBase() {
-		.borderRadius(@scrollbarEmbeddedSize / 2);
+		.borderRadius(calc(@scrollbarEmbeddedSize / 2));
 		background-color: @scrollbarEmbeddedColor;
 		position: absolute;
 		.size(@scrollbarEmbeddedSize, @scrollbarEmbeddedSize);

@@ -32,7 +32,7 @@
 		height: @stepbarSeparatorSize;
 		background-color: @stepInactiveColor;
 		flex: 1;
-		margin: 0 @stepbarPadding 0 -@stepbarPadding;
+		margin: 0 @stepbarPadding 0 calc(@stepbarPadding * -1);
 	}
 
 	&bar-linear &-active:before,
@@ -124,7 +124,7 @@
 	}
 
 	.z-step:before {
-		margin-left: -@stepbarPadding;
+		margin-left: calc(@stepbarPadding * -1);
 		margin-right: 0;
 	}
 
@@ -134,12 +134,12 @@
 		background-color: @stepInactiveColor;
 		flex: 1;
 		margin-left: 0;
-		margin-right: -@stepbarPadding;
+		margin-right: calc(@stepbarPadding * -1);
 	}
-	
+
 	.z-step:before,
 	.z-step:after {
-		margin-top: (@stepSize - @stepbarSeparatorSize) / 2;
+		margin-top: calc((@stepSize - @stepbarSeparatorSize) / 2);
 	}
 
 	&:not(.z-stepbar-vertical) {
@@ -152,13 +152,14 @@
 			text-align: center;
 			vertical-align: top;
 		}
+
 		.z-step-content:before,
 		.z-step-content:after {
 			position: absolute;
 			height: @stepbarSeparatorSize;
 			background-color: @stepInactiveColor;
 			content: '';
-			top: (@stepSize - @stepbarSeparatorSize) / 2;
+			top: calc((@stepSize - @stepbarSeparatorSize) / 2);
 		}
 		.z-step-content:before {
 			left: 0;
@@ -201,9 +202,9 @@
 		flex-direction: column;
 		&:not(:first-child):before {
 			height: auto;
-			min-height: @stepbarPadding * 2;
+			min-height: calc(@stepbarPadding * 2);
 			width: @stepbarSeparatorSize;
-			margin: -@stepbarPadding*2 0 0 (@stepbarPadding - @stepbarSeparatorSize / 2);
+			margin: calc(@stepbarPadding * -2) 0 0 calc(@stepbarPadding - @stepbarSeparatorSize / 2);
 		}
 	}
 	&:not(.z-stepbar-wrapped-label) .z-step {

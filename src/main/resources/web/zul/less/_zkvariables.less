@@ -465,7 +465,7 @@
 @dragDisAllowBorderColor:      transparent;
 @dragDisAllowBackgroundColor:  @colorGreyLighter;
 @dropContentPadding:           @spacing-05;
-@dropContentLineHeight: calc(var(--zk-rem1) - 12px);
+@dropContentLineHeight: ~"calc(var(--zk-rem1) - 12px)";
 @dropIconSize:                 @fontSizeXLarge;
 @dropIconVerticalAlign:        baseline; // for compact override
 
@@ -896,7 +896,7 @@
 @pdfviewerToolbarPageActiveWidth: var(--zk-rem6);
 
 // searchbox
-@searchboxHCan I replace 8px with a Less variable?eight: var(--zk-rem4-25);
+@searchboxHeight: var(--zk-rem4-25);
 @searchboxFontSize: @fontSizeMedium;
 @searchboxPadding: @inputPadding;
 @searchboxBorderColor: @inputBorderColor;
@@ -996,7 +996,7 @@
 
 //cascader
 @cascaderHeight: var(--zk-rem4-5);
-@cascaderLineHeight: calc(var(--zk-rem4-5) - 2px); // cascaderHeight minus border
+@cascaderLineHeight: ~"calc(var(--zk-rem4-5) - 2px)"; // cascaderHeight minus border
 @cascaderColor: @textColorDefault;
 @cascaderFontSize: @fontSizeMedium;
 @cascaderPadding: @inputPadding;
