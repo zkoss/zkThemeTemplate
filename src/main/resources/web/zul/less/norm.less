@@ -586,7 +586,7 @@ span.z-upload input {
 
 	&-indicator {
 		border: 1px solid @scrollbarBorderColor;
-		.borderRadius(@scrollbarBarSize / 2);
+		.borderRadius(calc(@scrollbarBarSize / 2));
 		background-color: @scrollbarBarBackgroundColor;
 		position: absolute;
 		cursor: pointer;
@@ -600,7 +600,7 @@ span.z-upload input {
 		position: absolute;
 		.size(100%, 100%);
 		background: @scrollbarBackgroundColor;
-		.borderRadius(@scrollbarRailSize / 2);
+		.borderRadius(calc(@scrollbarRailSize / 2));
 	}
 
 	&-icon {

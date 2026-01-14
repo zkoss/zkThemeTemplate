@@ -4,998 +4,998 @@
 @themePalette:                 "iceblue";
 // Typography
 // -------------------------------------
-@baseFontSize:                 16px;
-@baseTitleFontFamily:          "Helvetica Neue", Helvetica, Arial, sans-serif;
-@baseContentFontFamily:        @baseTitleFontFamily;
-@baseLineHeight: var(--zk-rem2); // 16px / 8
+@baseFontSize:                 var(--zk-base-font-size);
+@baseTitleFontFamily:          var(--zk-base-title-font-family);
+@baseContentFontFamily:        var(--zk-base-content-font-family);
+@baseLineHeight:               var(--zk-base-line-height);
 
 // Component height
-@baseHeight: var(--zk-rem1);
-@baseIconHeight: var(--zk-rem2); // 2rem = 16px
-@baseButtonHeight: var(--zk-rem3); // 3rem = 24px
-@baseBarHeight: var(--zk-rem4); // 4rem = 32px
-@baseTitleHeight: var(--zk-rem5); // 5rem = 40px
+@baseHeight:                   var(--zk-base-height);
+@baseIconHeight:               var(--zk-base-icon-height);
+@baseButtonHeight:             var(--zk-base-button-height);
+@baseBarHeight:                var(--zk-base-bar-height);
+@baseTitleHeight:              var(--zk-base-title-height);
 
 // Component width
-@baseWidth: var(--zk-rem1);
-@baseIconWidth: var(--zk-rem2); // 2rem = 16px
-@baseButtonWidth: var(--zk-rem3); // 3rem = 24px
-@baseBarWidth: var(--zk-rem4); // 4rem = 32px
+@baseWidth:                    var(--zk-base-width);
+@baseIconWidth:                var(--zk-base-icon-width);
+@baseButtonWidth:              var(--zk-base-button-width);
+@baseBarWidth:                 var(--zk-base-bar-width);
 
 // -------------------------------------
 // Component sizing
 // -------------------------------------
-// Based on 14px font-size and 20px line-height
-@fontSizeXLarge:               ceil(@baseFontSize * 1.25);   // 20px
-@fontSizeLarge:                floor(@baseFontSize * 1.125); // 18px
-@fontSizeMedium:               ceil(@baseFontSize);          // 16px
-@fontSizeSmall:                floor(@baseFontSize * 0.875); // 14px
-@fontSizeXSmall:               ceil(@baseFontSize * 0.75);   // 12px
+@fontSizeXLarge:               var(--zk-font-size-x-large);
+@fontSizeLarge:                var(--zk-font-size-large);
+@fontSizeMedium:               var(--zk-font-size-medium);
+@fontSizeSmall:                var(--zk-font-size-small);
+@fontSizeXSmall:               var(--zk-font-size-x-small);
 
-@baseBorderRadius:             4px;
-@borderRadiusLarge:            6px;
-@borderRadiusSmall:            3px;
+@baseBorderRadius:             var(--zk-base-border-radius);
+@borderRadiusLarge:            var(--zk-border-radius-large);
+@borderRadiusSmall:            var(--zk-border-radius-small);
 
 // -------------------------------------
 // Component Basic Coloring
 // -------------------------------------
 // Font color
-@textColorDefault:             rgba(0, 0, 0, 0.9);
-@textColorLight:               rgba(0, 0, 0, 0.57);
-@textColorLighter:             rgba(0, 0, 0, 0.34);
-@textColorDefault3:            #FFFFFF;
-@textColorActive:              #0093F9;
+@textColorDefault:             var(--zk-text-color-default);
+@textColorLight:               var(--zk-text-color-light);
+@textColorLighter:             var(--zk-text-color-lighter);
+@textColorDefault3:            var(--zk-text-color-default3);
+@textColorActive:              var(--zk-text-color-active);
 
-@colorPrimary:                 #0093F9;
-@colorPrimaryDark:             #0064ED; //darken(@colorPrimary, 20%);
-@colorPrimaryLight:            lighten(@colorPrimary, 25%);
-@colorPrimaryLighter:          lighten(@colorPrimary, 45%); // List hover Bg
-@colorAccent:                  #FFA516;
-@colorAccent2:                 #FF4051;
-@colorAccent3:                 #261429; // Tooltip Bg
-@colorBackground1:             #F9FCFF; // Window Bg, Panel Bg
-@colorBackground3:             #FFFFFF; // Container Bg
-@colorGreyDark:                #A8A8A8;
-@colorGreyLight:               #D9D9D9; // Btn disabled Bg
-@colorGreyLighter:             #F2F2F2; // Field disabled Bg
+@colorPrimary:                 var(--zk-color-primary);
+@colorPrimaryDark:             var(--zk-color-primary-dark);
+@colorPrimaryLight:            var(--zk-color-primary-light);
+@colorPrimaryLighter:          var(--zk-color-primary-lighter);
+@colorAccent:                  var(--zk-color-accent);
+@colorAccent2:                 var(--zk-color-accent2);
+@colorAccent3:                 var(--zk-color-accent3);
+@colorBackground1:             var(--zk-color-background1);
+@colorBackground3:             var(--zk-color-background3);
+@colorGreyDark:                var(--zk-color-grey-dark);
+@colorGreyLight:               var(--zk-color-grey-light);
+@colorGreyLighter:             var(--zk-color-grey-lighter);
 
-@baseTextColor:                @textColorDefault;
+@baseTextColor:                var(--zk-base-text-color);
 
 // Border color
-@baseBorderColor:              @colorGreyLight;
+@baseBorderColor:              var(--zk-base-border-color);
 
 // Background color
-@baseBackgroundColor:          @colorBackground3;
+@baseBackgroundColor:          var(--zk-base-background-color);
 
 // -------------------------------------
 // Icon font color (used for font-awesome)
 // -------------------------------------
-@iconColor:                    @textColorLight;
-@iconHoverColor:               @textColorDefault;
-@iconDisabledColor:            @textColorLighter;
+@iconColor:                    var(--zk-icon-color);
+@iconHoverColor:               var(--zk-icon-hover-color);
+@iconDisabledColor:            var(--zk-icon-disabled-color);
 
 // -------------------------------------
 // Mesh Table (used for grid, listbox, tree, biglistbox)
 // -------------------------------------
-@meshAutoPagingRowHeight: var(--zk-rem6);
-@meshAutoPagingRowPadding:     var(--zk-rem0-25) var(--zk-rem2);
-@meshAutoPagingRowLineHeight: var(--zk-rem4-5);
-@meshBackgroundColor:          @colorBackground3;
-@meshStripeBackgroundColor:    @meshBackgroundColor;
-@meshTitleColor:               @textColorDefault3;
-@meshTitleBackgroundColor:     @colorPrimary;
-@meshTitleHoverColor:          @meshTitleColor;
-@meshTitleHoverBackgroundColor:@colorPrimaryLight;
-@meshTitleActiveColor:         @meshTitleColor;
-@meshTitleActiveBackgroundColor: @colorPrimaryDark;
-@meshTitleBorderColor:         @colorPrimaryDark;
-@meshContentBorderColor:       @colorGreyLighter;
-@meshContentFocusBackgroundColor: @selectedBackgroundColor;
-@meshFootBackgroundColor:      @colorGreyLighter;
-@meshGroupColor:               @textColorLight;
-@meshGroupBorderColor:         @baseBorderColor;
-@meshGroupBackgroundColor:     @colorBackground3;
-@meshGroupFooterColor:         @textColorLighter;
-@meshGroupFooterBackgroundColor: @colorBackground3;
-@meshGroupOpenColor:           @colorPrimary;
-@meshGroupOpenBackgroundColor: @colorBackground3;
-@meshGroupOpenBorder:          2px solid @colorPrimary;
-@meshGroupFooterOpenColor:     @colorPrimaryLight;
-@gridDetailContentPadding:     0 @spacing-05 @spacing-05 0;
-@gridDetailContentBeforeMargin: 0 0 @spacing-05 0;
-@auxheadContentPadding:        @spacing-04 @spacing-06;
-@meshBodyPadding:              @spacing-05 @spacing-06;
-@meshEmptyBodyPadding:         @spacing-05 @spacing-06;
-@meshContentLineHeight: var(--zk-rem3);
-@meshColumnSortIconTop:        -4px;
-@meshColumnSortButtonWidth: var(--zk-rem4);
-@meshColumnSortButtonHeight: var(--zk-rem6);
-@meshRowDetailOuterPadding:    0;
-@treecellContentLineHeight:    @baseLineHeight;
-@listheaderCheckedPositionLeft: 0;
-@listboxRadioIconSize: var(--zk-rem1-25); // 10px / 8;
-@meshFocusBoxShadowColor:      @colorAccent;
-@meshTitleFocusBoxShadowColor: @colorAccent;
-@meshCellFocusBoxShadowColor:  @colorPrimary;
-@meshFocusBoxShadow:           0 0 0 2px @meshFocusBoxShadowColor;
-@meshTitleFocusBoxShadow:      inset 0 0 0 2px @meshTitleFocusBoxShadowColor;
-@meshCellFocusBoxShadow:       inset 0 0 0 2px @meshCellFocusBoxShadowColor;
+@meshAutoPagingRowHeight:      var(--zk-mesh-auto-paging-row-height);
+@meshAutoPagingRowPadding:     var(--zk-mesh-auto-paging-row-padding);
+@meshAutoPagingRowLineHeight:  var(--zk-mesh-auto-paging-row-line-height);
+@meshBackgroundColor:          var(--zk-mesh-background-color);
+@meshStripeBackgroundColor:    var(--zk-mesh-stripe-background-color);
+@meshTitleColor:               var(--zk-mesh-title-color);
+@meshTitleBackgroundColor:     var(--zk-mesh-title-background-color);
+@meshTitleHoverColor:          var(--zk-mesh-title-hover-color);
+@meshTitleHoverBackgroundColor:var(--zk-mesh-title-hover-background-color);
+@meshTitleActiveColor:         var(--zk-mesh-title-active-color);
+@meshTitleActiveBackgroundColor: var(--zk-mesh-title-active-background-color);
+@meshTitleBorderColor:         var(--zk-mesh-title-border-color);
+@meshContentBorderColor:       var(--zk-mesh-content-border-color);
+@meshContentFocusBackgroundColor: var(--zk-mesh-content-focus-background-color);
+@meshFootBackgroundColor:      var(--zk-mesh-foot-background-color);
+@meshGroupColor:               var(--zk-mesh-group-color);
+@meshGroupBorderColor:         var(--zk-mesh-group-border-color);
+@meshGroupBackgroundColor:     var(--zk-mesh-group-background-color);
+@meshGroupFooterColor:         var(--zk-mesh-group-footer-color);
+@meshGroupFooterBackgroundColor: var(--zk-mesh-group-footer-background-color);
+@meshGroupOpenColor:           var(--zk-mesh-group-open-color);
+@meshGroupOpenBackgroundColor: var(--zk-mesh-group-open-background-color);
+@meshGroupOpenBorder:          var(--zk-mesh-group-open-border);
+@meshGroupFooterOpenColor:     var(--zk-mesh-group-footer-open-color);
+@gridDetailContentPadding:     var(--zk-grid-detail-content-padding);
+@gridDetailContentBeforeMargin: var(--zk-grid-detail-content-before-margin);
+@auxheadContentPadding:        var(--zk-auxhead-content-padding);
+@meshBodyPadding:              var(--zk-mesh-body-padding);
+@meshEmptyBodyPadding:         var(--zk-mesh-empty-body-padding);
+@meshContentLineHeight:        var(--zk-mesh-content-line-height);
+@meshColumnSortIconTop:        var(--zk-mesh-column-sort-icon-top);
+@meshColumnSortButtonWidth:    var(--zk-mesh-column-sort-button-width);
+@meshColumnSortButtonHeight:   var(--zk-mesh-column-sort-button-height);
+@meshRowDetailOuterPadding:    var(--zk-mesh-row-detail-outer-padding);
+@treecellContentLineHeight:    var(--zk-treecell-content-line-height);
+@listheaderCheckedPositionLeft: var(--zk-listheader-checked-position-left);
+@listboxRadioIconSize:         var(--zk-listbox-radio-icon-size);
+@meshFocusBoxShadowColor:      var(--zk-mesh-focus-box-shadow-color);
+@meshTitleFocusBoxShadowColor: var(--zk-mesh-title-focus-box-shadow-color);
+@meshCellFocusBoxShadowColor:  var(--zk-mesh-cell-focus-box-shadow-color);
+@meshFocusBoxShadow:           var(--zk-mesh-focus-box-shadow);
+@meshTitleFocusBoxShadow:      var(--zk-mesh-title-focus-box-shadow);
+@meshCellFocusBoxShadow:       var(--zk-mesh-cell-focus-box-shadow);
 
 // -------------------------------------
 // Component State
 // -------------------------------------
 // Active
-@activeColor:                  @textColorDefault3;
-@activeBorderColor:            transparent;
-@activeBackgroundColor:        @colorPrimaryDark;
-@activeGradientStart:          @activeBackgroundColor;
-@activeGradientEnd:            @activeBackgroundColor;
+@activeColor:                  var(--zk-active-color);
+@activeBorderColor:            var(--zk-active-border-color);
+@activeBackgroundColor:        var(--zk-active-background-color);
+@activeGradientStart:          var(--zk-active-gradient-start);
+@activeGradientEnd:            var(--zk-active-gradient-end);
 
 // Focus
-@focusColor:                   @textColorDefault3;
-@focusBorderColor:             @colorAccent;
-@focusBackgroundColor:         @colorPrimary;
-@focusGradientStart:           @focusBackgroundColor;
-@focusGradientEnd:             @focusBackgroundColor;
+@focusColor:                   var(--zk-focus-color);
+@focusBorderColor:             var(--zk-focus-border-color);
+@focusBackgroundColor:         var(--zk-focus-background-color);
+@focusGradientStart:           var(--zk-focus-gradient-start);
+@focusGradientEnd:             var(--zk-focus-gradient-end);
 
 // Hover
-@hoverColor:                   @baseTextColor;
-@hoverBorderColor:             transparent;
-@hoverBackgroundColor:         @colorPrimaryLighter;
-@hoverGradientStart:           @hoverBackgroundColor;
-@hoverGradientEnd:             @hoverBackgroundColor;
+@hoverColor:                   var(--zk-hover-color);
+@hoverBorderColor:             var(--zk-hover-border-color);
+@hoverBackgroundColor:         var(--zk-hover-background-color);
+@hoverGradientStart:           var(--zk-hover-gradient-start);
+@hoverGradientEnd:             var(--zk-hover-gradient-end);
 
 // Disabled
-@disabledColor:                @textColorLighter;
-@disabledBackgroundColor:      @colorGreyLighter;
-@disabledOpacity:              1;
+@disabledColor:                var(--zk-disabled-color);
+@disabledBackgroundColor:      var(--zk-disabled-background-color);
+@disabledOpacity:              var(--zk-disabled-opacity);
 
 // Invalid
-@invalidBorderColor:           @colorAccent2;
+@invalidBorderColor:           var(--zk-invalid-border-color);
 
 // Read-only
-@readonlyBorderColor:          @baseBorderColor;
-@readonlyBackgroundColor:      @colorGreyLighter;
+@readonlyBorderColor:          var(--zk-readonly-border-color);
+@readonlyBackgroundColor:      var(--zk-readonly-background-color);
 
 // Selected (used on listbox, tree, comboitem)
-@selectedColor:                @baseTextColor;
-@selectedBorderColor:          transparent;
-@selectedBackgroundColor:      @colorPrimaryLight;
+@selectedColor:                var(--zk-selected-color);
+@selectedBorderColor:          var(--zk-selected-border-color);
+@selectedBackgroundColor:      var(--zk-selected-background-color);
 
 // Selected Hover (used on listbox, tree, comboitem)
-@selectedHoverColor:           @baseTextColor;
-@selectedHoverBorderColor:     transparent;
-@selectedHoverBackgroundColor: @selectedBackgroundColor;
+@selectedHoverColor:           var(--zk-selected-hover-color);
+@selectedHoverBorderColor:     var(--zk-selected-hover-border-color);
+@selectedHoverBackgroundColor: var(--zk-selected-hover-background-color);
 
 // Selected Focus (used on listbox, tree, comboitem)
-@selectedFocusColor:           @baseTextColor;
-@selectedFocusBorderColor:     transparent;
-@selectedFocusBackgroundColor: @selectedBackgroundColor;
+@selectedFocusColor:           var(--zk-selected-focus-color);
+@selectedFocusBorderColor:     var(--zk-selected-focus-border-color);
+@selectedFocusBackgroundColor: var(--zk-selected-focus-background-color);
 
 // Checked (used on menuitem, listbox, tree, toolbarbutton)
-@checkedIconSize:              @fontSizeSmall;
-@checkedColor:                 @colorPrimary;
-@checkedBorderColor:           @baseBorderColor;
-@checkedBackgroundColor:       @textColorDefault3;
+@checkedIconSize:              var(--zk-checked-icon-size);
+@checkedColor:                 var(--zk-checked-color);
+@checkedBorderColor:           var(--zk-checked-border-color);
+@checkedBackgroundColor:       var(--zk-checked-background-color);
 
 // -------------------------------------
 // Component independent variables
 // -------------------------------------
 // Container (Window, Panel)
-@containerBackground:          @colorBackground1;
-@containerPadding:             @spacing-06;
-@containerBorderColor:         @colorGreyDark;
-@containerBorderRadius:        @baseBorderRadius;
-@containerHeaderTextSize:      @fontSizeLarge;
-@containerHeaderColor:         @textColorLight;
-@containerBodyTextSize:        @fontSizeMedium;
-@containerBodyColor:           @textColorDefault;
-@containerButtonSize:          @fontSizeLarge;
-@containerButtonColors:        @textColorLight, @textColorDefault; // 1: normal, 2: hover
-@containerButtonPadding:       @spacing-02;
+@containerBackground:          var(--zk-container-background);
+@containerPadding:             var(--zk-container-padding);
+@containerBorderColor:         var(--zk-container-border-color);
+@containerBorderRadius:        var(--zk-container-border-radius);
+@containerHeaderTextSize:      var(--zk-container-header-text-size);
+@containerHeaderColor:         var(--zk-container-header-color);
+@containerBodyTextSize:        var(--zk-container-body-text-size);
+@containerBodyColor:           var(--zk-container-body-color);
+@containerButtonSize:          var(--zk-container-button-size);
+@containerButtonColors:        var(--zk-container-button-color), var(--zk-container-button-hover-color);
+@containerButtonPadding:       var(--zk-container-button-padding);
 // Panel
-@panelHeaderPadding:           @containerPadding;
+@panelHeaderPadding:           var(--zk-panel-header-padding);
 // Window
-@windowHeaderPadding:          0 0 @spacing-06 0;
-@windowGhostHeaderPadding:     @containerPadding;
+@windowHeaderPadding:          var(--zk-window-header-padding);
+@windowGhostHeaderPadding:     var(--zk-window-ghost-header-padding);
 // Messagebox
-@messageboxPaddingHorizontal:  @spacing-06;
-@messageboxPadding:            @spacing-02 @messageboxPaddingHorizontal @spacing-06;
-@messageboxWindowPadding:      0;
-@messageboxWindowWidth: var(--zk-rem60); // 480px / 8
-@messageboxWindowContentPadding: @spacing-06 0;
-@messageboxHeaderPadding:      @spacing-06;
-@messageboxViewportMarginBottom: @spacing-06;
-@messageboxButtonsMarginLeft:  @spacing-04;
-@messageboxIconMarginLeft:     @spacing-06;
-@messageboxIconSize:           @baseBarWidth;
+@messageboxPaddingHorizontal:  var(--zk-messagebox-padding-horizontal);
+@messageboxPadding:            var(--zk-messagebox-padding);
+@messageboxWindowPadding:      var(--zk-messagebox-window-padding);
+@messageboxWindowWidth:        var(--zk-messagebox-window-width);
+@messageboxWindowContentPadding: var(--zk-messagebox-window-content-padding);
+@messageboxHeaderPadding:      var(--zk-messagebox-header-padding);
+@messageboxViewportMarginBottom: var(--zk-messagebox-viewport-margin-bottom);
+@messageboxButtonsMarginLeft:  var(--zk-messagebox-buttons-margin-left);
+@messageboxIconMarginLeft:     var(--zk-messagebox-icon-margin-left);
+@messageboxIconSize:           var(--zk-messagebox-icon-size);
 
 // Borderlayout
-@borderlayoutHeaderFontSize:   @fontSizeLarge;
-@borderlayoutHeaderHeight: var(--zk-rem6);
-@borderlayoutHeaderPadding:    @spacing-05 @spacing-06;
-@borderlayoutHeaderColor:      @textColorLight;
-@borderlayoutHeaderBackgroundColor: @baseBackgroundColor;
-@borderlayoutBodyLineHeight:   @baseLineHeight;
-@borderlayoutBodyPadding:      @spacing-06;
-@borderlayoutCollapsedSize: var(--zk-rem6);
-@borderlayoutCollapsedPadding: @spacing-04;
-@borderlayoutCollapsedIconColors: @textColorLight, @textColorLight; // 1: normal, 2: hover
-@borderlayoutIconFontSize:     @fontSizeLarge;
-@borderlayoutIconSize: var(--zk-rem2-5);
-@borderlayoutIconPositionTop:  unset; // for compact override
-@borderlayoutIconPositionRight: @spacing-05;
+@borderlayoutHeaderFontSize:   var(--zk-borderlayout-header-font-size);
+@borderlayoutHeaderHeight:     var(--zk-borderlayout-header-height);
+@borderlayoutHeaderPadding:    var(--zk-borderlayout-header-padding);
+@borderlayoutHeaderColor:      var(--zk-borderlayout-header-color);
+@borderlayoutHeaderBackgroundColor: var(--zk-borderlayout-header-background-color);
+@borderlayoutBodyLineHeight:   var(--zk-borderlayout-body-line-height);
+@borderlayoutBodyPadding:      var(--zk-borderlayout-body-padding);
+@borderlayoutCollapsedSize:    var(--zk-borderlayout-collapsed-size);
+@borderlayoutCollapsedPadding: var(--zk-borderlayout-collapsed-padding);
+@borderlayoutCollapsedIconColors: var(--zk-borderlayout-collapsed-icon-color), var(--zk-borderlayout-collapsed-icon-hover-color);
+@borderlayoutIconFontSize:     var(--zk-borderlayout-icon-font-size);
+@borderlayoutIconSize:         var(--zk-borderlayout-icon-size);
+@borderlayoutIconPositionTop:  var(--zk-borderlayout-icon-position-top);
+@borderlayoutIconPositionRight: var(--zk-borderlayout-icon-position-right);
+
 
 // Caption
-@captionFontSize:              @fontSizeLarge;
-@captionElementsMargin:        @spacing-06;
-@captionButtonPadding:         @spacing-03 @spacing-05;
-@captionImageMaxSize: var(--zk-rem2-5);
-@captionButtonFontSize:        @fontSizeLarge;
+@captionFontSize:              var(--zk-caption-font-size);
+@captionElementsMargin:        var(--zk-caption-elements-margin);
+@captionButtonPadding:         var(--zk-caption-button-padding);
+@captionImageMaxSize:          var(--zk-caption-image-max-size);
+@captionButtonFontSize:        var(--zk-caption-button-font-size);
 
 // Groupbox
-@groupboxHeaderFontSize:       @fontSizeLarge;
-@groupboxHeaderColor:          @textColorLight;
-@groupboxContentPadding:       @spacing-04 @spacing-06 @spacing-06;
-@groupboxNotitleContentPadding:@containerPadding;
-@groupbox3DHeaderPadding:      @spacing-05 @spacing-06;
-@groupbox3DContentPadding:     @containerPadding;
-@groupboxFocusBoxShadowColor:  @colorPrimary;
-@groupboxFocusBoxShadow:       0 0 0 2px @groupboxFocusBoxShadowColor;
-@groupboxFocusBorderRadius:    @baseBorderRadius;
+@groupboxHeaderFontSize:       var(--zk-groupbox-header-font-size);
+@groupboxHeaderColor:          var(--zk-groupbox-header-color);
+@groupboxContentPadding:       var(--zk-groupbox-content-padding);
+@groupboxNotitleContentPadding:var(--zk-groupbox-notitle-content-padding);
+@groupbox3DHeaderPadding:      var(--zk-groupbox-3d-header-padding);
+@groupbox3DContentPadding:     var(--zk-groupbox-3d-content-padding);
+@groupboxFocusBoxShadowColor:  var(--zk-groupbox-focus-box-shadow-color);
+@groupboxFocusBoxShadow:       var(--zk-groupbox-focus-box-shadow);
+@groupboxFocusBorderRadius:    var(--zk-groupbox-focus-border-radius);
 
 // Toolbar
-@toolbarHorizontalPadding:     @spacing-06;
-@toolbarPadding:               @spacing-03 @spacing-06;
-@toolbarButtonsSpacing:        @spacing-04;
-@toolbarInTabboxMinHeight: var(--zk-rem5);
-@toolbarOverflowpopupButtonSize: @fontSizeMedium;
+@toolbarHorizontalPadding:     var(--zk-toolbar-horizontal-padding);
+@toolbarPadding:               var(--zk-toolbar-padding);
+@toolbarButtonsSpacing:        var(--zk-toolbar-buttons-spacing);
+@toolbarInTabboxMinHeight:     var(--zk-toolbar-in-tabbox-min-height);
+@toolbarOverflowpopupButtonSize: var(--zk-toolbar-overflowpopup-button-size);
 
 // Input (used for textbox, intbox, spinner, ...)
-@inputTextSize:                @fontSizeMedium;
-@inputBorderColor:             @baseBorderColor;
-@inputBorderRadius:            @baseBorderRadius;
-@inputBackgroundColor:         @colorBackground3;
-@inputHeight: var(--zk-rem4-5);
-@inputPadding:                 0 @spacing-04;
-@inputPaddingRight:            @spacing-04;
-@inputColor:                   @textColorDefault;
-@inputPlaceholderColor:        @textColorLighter;
-@inputHoverBorderColor:        @colorGreyDark;
-@inputFocusBorderColor:        @colorPrimary;
-@inputDisableColor:            @textColorLighter;
-@inputDisableBackgroundColor:  @colorGreyLighter;
-@inputReadonlyColor:           @textColorDefault;
-@inputReadonlyBackgroundColor: @colorGreyLighter;
-@inputLineHeight:              @baseLineHeight;
+@inputTextSize:                var(--zk-input-text-size);
+@inputBorderColor:             var(--zk-input-border-color);
+@inputBorderRadius:            var(--zk-input-border-radius);
+@inputBackgroundColor:         var(--zk-input-background-color);
+@inputHeight:                  var(--zk-input-height);
+@inputPadding:                 var(--zk-input-padding);
+@inputPaddingRight:            var(--zk-input-padding-right);
+@inputColor:                   var(--zk-input-color);
+@inputPlaceholderColor:        var(--zk-input-placeholder-color);
+@inputHoverBorderColor:        var(--zk-input-hover-border-color);
+@inputFocusBorderColor:        var(--zk-input-focus-border-color);
+@inputDisableColor:            var(--zk-input-disable-color);
+@inputDisableBackgroundColor:  var(--zk-input-disable-background-color);
+@inputReadonlyColor:           var(--zk-input-readonly-color);
+@inputReadonlyBackgroundColor: var(--zk-input-readonly-background-color);
+@inputLineHeight:              var(--zk-input-line-height);
 
 // Checkbox/Radio
-@checkboxSize: var(--zk-rem2-5);
-@checkboxMargin:               0 @spacing-02 @spacing-01 0;
-@checkboxHoverBorderColor:     @colorPrimary;
-@checkboxSwitchMargin:         @spacing-01 @spacing-02 @spacing-02;
-@checkboxSwitchWidth: var(--zk-rem6);
-@checkboxSwitchHeight: var(--zk-rem3-5);
-@checkboxSwitchSize: var(--zk-rem2-5);
-@checkboxSwitchStep: var(--zk-rem2-5);
-@checkboxSwitchOffsetLeft:     var(--zk-rem0-5);
-@checkboxSwitchOffsetBottom:   var(--zk-rem0-5);
-@checkboxToggleSize: var(--zk-rem3-5);
+@checkboxSize:                 var(--zk-checkbox-size);
+@checkboxMargin:               var(--zk-checkbox-margin);
+@checkboxHoverBorderColor:     var(--zk-checkbox-hover-border-color);
+@checkboxSwitchMargin:         var(--zk-checkbox-switch-margin);
+@checkboxSwitchWidth:          var(--zk-checkbox-switch-width);
+@checkboxSwitchHeight:         var(--zk-checkbox-switch-height);
+@checkboxSwitchSize:           var(--zk-checkbox-switch-size);
+@checkboxSwitchStep:           var(--zk-checkbox-switch-step);
+@checkboxSwitchOffsetLeft:     var(--zk-checkbox-switch-offset-left);
+@checkboxSwitchOffsetBottom:   var(--zk-checkbox-switch-offset-bottom);
+@checkboxToggleSize:           var(--zk-checkbox-toggle-size);
 
 // Button (used for button, combobutton)
-@buttonPadding:                @spacing-04 @spacing-06;
-@buttonColor:                  @textColorDefault3;
-@buttonBackgroundColor:        @colorPrimary;
-@buttonBorderWidth: var(--zk-rem0-25);
-@buttonBorderColor:            transparent;
-@buttonHoverColor:             @textColorDefault3;
-@buttonHoverBackgroundColor:   @colorPrimaryLight;
-@buttonHoverBorderColor:       transparent;
-@buttonFocusColor:             @textColorDefault3;
-@buttonFocusBackgroundColor:   @colorPrimary;
-@buttonFocusBorderColor:       @colorAccent;
-@buttonActiveColor:            @textColorDefault3;
-@buttonActiveBackgroundColor:  @colorPrimaryDark;
-@buttonActiveBorderColor:      transparent;
-@buttonDisableColor:           @textColorLighter;
-@buttonDisableBackgroundColor: @colorGreyLight;
-@buttonDisableBorderColor:     transparent;
-@buttonSeparatorBorderColor:   @colorPrimaryDark;
-@buttonDisableSeparatorBorderColor:   @baseBorderColor;
+@buttonPadding:                var(--zk-button-padding);
+@buttonColor:                  var(--zk-button-color);
+@buttonBackgroundColor:        var(--zk-button-background-color);
+@buttonBorderWidth:            var(--zk-button-border-width);
+@buttonBorderColor:            var(--zk-button-border-color);
+@buttonHoverColor:             var(--zk-button-hover-color);
+@buttonHoverBackgroundColor:   var(--zk-button-hover-background-color);
+@buttonHoverBorderColor:       var(--zk-button-hover-border-color);
+@buttonFocusColor:             var(--zk-button-focus-color);
+@buttonFocusBackgroundColor:   var(--zk-button-focus-background-color);
+@buttonFocusBorderColor:       var(--zk-button-focus-border-color);
+@buttonActiveColor:            var(--zk-button-active-color);
+@buttonActiveBackgroundColor:  var(--zk-button-active-background-color);
+@buttonActiveBorderColor:      var(--zk-button-active-border-color);
+@buttonDisableColor:           var(--zk-button-disable-color);
+@buttonDisableBackgroundColor: var(--zk-button-disable-background-color);
+@buttonDisableBorderColor:     var(--zk-button-disable-border-color);
+@buttonSeparatorBorderColor:   var(--zk-button-separator-border-color);
+@buttonDisableSeparatorBorderColor: var(--zk-button-disable-separator-border-color);
 // Toolbar button
-@toolbarButtonFontSize:        @fontSizeMedium;
-@toolbarButtonPadding:         @spacing-03 @spacing-04;
-@toolbarButtonColor:           @textColorLight;
-@toolbarButtonBackgroundColor: transparent;
-@toolbarButtonCheckedColor:           @textColorDefault3;
-@toolbarButtonCheckedBackgroundColor: @colorPrimary;
+@toolbarButtonFontSize:        var(--zk-toolbar-button-font-size);
+@toolbarButtonPadding:         var(--zk-toolbar-button-padding);
+@toolbarButtonColor:           var(--zk-toolbar-button-color);
+@toolbarButtonBackgroundColor: var(--zk-toolbar-button-background-color);
+@toolbarButtonCheckedColor:           var(--zk-toolbar-button-checked-color);
+@toolbarButtonCheckedBackgroundColor: var(--zk-toolbar-button-checked-background-color);
 // Combobutton
-@combobuttonPadding:           @spacing-04 @spacing-11 @spacing-04 @spacing-06;
-@combobuttonButtonWidth: var(--zk-rem4);
-@combobuttonButtonIconLeft:    @spacing-04;
-@combobuttonToolbarFontSize:   @fontSizeMedium;
-@combobuttonToolbarPadding:    @spacing-03 @spacing-10 @spacing-03 @spacing-05;
+@combobuttonPadding:           var(--zk-combobutton-padding);
+@combobuttonButtonWidth:       var(--zk-combobutton-button-width);
+@combobuttonButtonIconLeft:    var(--zk-combobutton-button-icon-left);
+@combobuttonToolbarFontSize:   var(--zk-combobutton-toolbar-font-size);
+@combobuttonToolbarPadding:    var(--zk-combobutton-toolbar-padding);
 
 // ComboInput (combobox, datebox, bandbox, timebox, spinner...)
-@comboButtonIconSize: var(--zk-rem2);
-@comboButtonIconSizeLarge: var(--zk-rem2-5);
-@comboButtonPadding:           @spacing-03 @spacing-04 0;
-@comboButtonMinWidth: var(--zk-rem4);
-@comboButtonIconColor:         @textColorDefault;
-@comboButtonHoverBorderColor:  @colorPrimaryLight;
-@comboButtonHoverBackgroundColor: @colorPrimaryLighter;
-@comboButtonActiveIconColor:   @textColorDefault3;
-@comboButtonActiveBorderColor: @colorPrimaryDark;
-@comboButtonActiveBackgroundColor: @colorPrimary;
-@comboPopupBorderColor:        @colorPrimary;
-@comboPopupItemSize:           @fontSizeMedium;
-@comboPopupItemColor:          @textColorDefault;
-@comboPopupIconSize:           @fontSizeMedium;
-@comboPopupIconColor:          @textColorDefault;
-@comboPopupDescSize:           @fontSizeXSmall;
-@comboPopupDescColor:          @textColorLight;
-@comboPopupItemHoverBackgroundColor: @colorPrimaryLighter;
-@comboPopupItemSelectedColor:  @colorPrimary;
-@comboInputHeight: var(--zk-rem4-5);
-@comboInputPaddingRight: var(--zk-rem6); // 6rem = 48px (inputPaddingRight 8px + baseButtonWidth 24px + 16px)
-@spinnerButtonWidth: var(--zk-rem4);
-@spinnerButtonIconHeight:      @baseLineHeight;
-@spinnerButtonIconTransform:   none; // for compact override
-@spinnerButtonIconPositionTop: var(--zk-rem2); // 16px / 8
-@spinnerButtonPadding:         0 @spacing-04;
-@comboitemPadding:             @spacing-02;
-@comboitemEmptyHeight: var(--zk-rem3-25); // 26px = 16px + 2px + 8px
-@comboitemInnerFontSize:       @comboPopupDescSize;
+@comboButtonIconSize:          var(--zk-combo-button-icon-size);
+@comboButtonIconSizeLarge:     var(--zk-combo-button-icon-size-large);
+@comboButtonPadding:           var(--zk-combo-button-padding);
+@comboButtonMinWidth:          var(--zk-combo-button-min-width);
+@comboButtonIconColor:         var(--zk-combo-button-icon-color);
+@comboButtonHoverBorderColor:  var(--zk-combo-button-hover-border-color);
+@comboButtonHoverBackgroundColor: var(--zk-combo-button-hover-background-color);
+@comboButtonActiveIconColor:   var(--zk-combo-button-active-icon-color);
+@comboButtonActiveBorderColor: var(--zk-combo-button-active-border-color);
+@comboButtonActiveBackgroundColor: var(--zk-combo-button-active-background-color);
+@comboPopupBorderColor:        var(--zk-combo-popup-border-color);
+@comboPopupItemSize:           var(--zk-combo-popup-item-size);
+@comboPopupItemColor:          var(--zk-combo-popup-item-color);
+@comboPopupIconSize:           var(--zk-combo-popup-icon-size);
+@comboPopupIconColor:          var(--zk-combo-popup-icon-color);
+@comboPopupDescSize:           var(--zk-combo-popup-desc-size);
+@comboPopupDescColor:          var(--zk-combo-popup-desc-color);
+@comboPopupItemHoverBackgroundColor: var(--zk-combo-popup-item-hover-background-color);
+@comboPopupItemSelectedColor:  var(--zk-combo-popup-item-selected-color);
+@comboInputHeight:             var(--zk-combo-input-height);
+@comboInputPaddingRight:       var(--zk-combo-input-padding-right);
+@spinnerButtonWidth:           var(--zk-spinner-button-width);
+@spinnerButtonIconHeight:      var(--zk-spinner-button-icon-height);
+@spinnerButtonIconTransform:   var(--zk-spinner-button-icon-transform);
+@spinnerButtonIconPositionTop: var(--zk-spinner-button-icon-position-top);
+@spinnerButtonPadding:         var(--zk-spinner-button-padding);
+@comboitemPadding:             var(--zk-comboitem-padding);
+@comboitemEmptyHeight:         var(--zk-comboitem-empty-height);
+@comboitemInnerFontSize:       var(--zk-comboitem-inner-font-size);
 
 // Timepicker
-@timepickerButtonWidth: var(--zk-rem5);
-@timepickerHeight:             @comboInputHeight;
-@timepickerLineHeight:         @baseLineHeight;
-@timepickerPaddingRight: var(--zk-rem5-5); // 44px = inputPaddingRight 8px + timepickerButtonWidth 36px
-@timepickerButtonPadding:      @spacing-03 @spacing-04 0;
-@timepickerPopupPadding:       @spacing-02;
+@timepickerButtonWidth:        var(--zk-timepicker-button-width);
+@timepickerHeight:             var(--zk-timepicker-height);
+@timepickerLineHeight:         var(--zk-timepicker-line-height);
+@timepickerPaddingRight:       var(--zk-timepicker-padding-right);
+@timepickerButtonPadding:      var(--zk-timepicker-button-padding);
+@timepickerPopupPadding:       var(--zk-timepicker-popup-padding);
 
 // colorbox
-@colorboxButtonFontSize:       @baseFontSize;
-@colorboxWidth: var(--zk-rem7);
-@colorboxHeight: var(--zk-rem4-5);
-@colorboxMenuImageSize:        @menuImageSize;
-@colorboxMenuImageMarginRight: @spacing-04;
-@colorboxPadding:              @spacing-02;
-@colorboxPopupPadding:         @spacing-02;
-@colorpickerWidth: var(--zk-rem38-75); // 310px / 8
-@colorpickerHeight: var(--zk-rem57-5); // 460px / 8
-@colorpickerPadding:           @spacing-03;
-@colorpickerMainPositionTop: var(--zk-rem7); // 56px / 8
-@colorpickerInfoHeight: var(--zk-rem15-5); // 124px / 8
-@colorpickerInfoMarginTop:     @spacing-06;
-@colorpickerColorWidth: var(--zk-rem9);
-@colorpickerColorHeight: var(--zk-rem10);
-@colorpickerColorPositionRight: 0;
-@colorpickerColorItemWidth: var(--zk-rem8);
-@colorpickerColorItemHeight: var(--zk-rem4-5);
-@colorpickerInputWidth: var(--zk-rem6);
-@colorpickerInputHeight: var(--zk-rem4-5);
-@colorpickerRGBPositionTop:    0;
-@colorpickerHSVPositionTop: var(--zk-rem5-5); // 44px / 8
-@colorpickerHEXPositionTop: var(--zk-rem11); // 88px / 8
-@colorpickerHEXInputWidth: var(--zk-rem20); // 160px / 8
-@colorpickerHEXInputHeight:    @colorpickerInputHeight;
-@colorpickerButtonWidth: var(--zk-rem9);
-@colorpickerButtonPositionTop: var(--zk-rem11); // 88px / 8
-@colorpickerButtonPositionRight: 0;
-@colorpaletteWidth: var(--zk-rem42-5); // 340px / 8
-@colorpaletteHeight: var(--zk-rem37-5); // 300px / 8
-@colorpaletteHeadHeight: var(--zk-rem6);
-@colorpaletteNewColorWidth: var(--zk-rem4-5);
-@colorpaletteNewColorHeight: var(--zk-rem4-5);
-@colorpaletteNewColorPositionRight: var(--zk-rem12-5); // 100px / 8
-@colorpaletteInputWidth: var(--zk-rem12);
-@colorpaletteInputHeight: var(--zk-rem4-5);
-@colorpaletteColorSize: var(--zk-rem2);
-@colorboxIconFontSize:         @fontSizeXLarge;
-@colorboxIconPadding:          @toolbarButtonPadding;
-@colorboxIconButtonWidth: var(--zk-rem6);
-@colorboxIconButtonHeight: var(--zk-rem4);
-@colorboxIconButtonPositionTop: @spacing-06;
-@paletteiconPositionLeft:      @spacing-06;
-@pickericonPositionTopLeft: var(--zk-rem8-5); // 68px / 8
+@colorboxButtonFontSize:       var(--zk-colorbox-button-font-size);
+@colorboxWidth:                var(--zk-colorbox-width);
+@colorboxHeight:               var(--zk-colorbox-height);
+@colorboxMenuImageSize:        var(--zk-colorbox-menu-image-size);
+@colorboxMenuImageMarginRight: var(--zk-colorbox-menu-image-margin-right);
+@colorboxPadding:              var(--zk-colorbox-padding);
+@colorboxPopupPadding:         var(--zk-colorbox-popup-padding);
+@colorpickerWidth:             var(--zk-colorpicker-width);
+@colorpickerHeight:            var(--zk-colorpicker-height);
+@colorpickerPadding:           var(--zk-colorpicker-padding);
+@colorpickerMainPositionTop:   var(--zk-colorpicker-main-position-top);
+@colorpickerInfoHeight:        var(--zk-colorpicker-info-height);
+@colorpickerInfoMarginTop:     var(--zk-colorpicker-info-margin-top);
+@colorpickerColorWidth:        var(--zk-colorpicker-color-width);
+@colorpickerColorHeight:       var(--zk-colorpicker-color-height);
+@colorpickerColorPositionRight: var(--zk-colorpicker-color-position-right);
+@colorpickerColorItemWidth:    var(--zk-colorpicker-color-item-width);
+@colorpickerColorItemHeight:   var(--zk-colorpicker-color-item-height);
+@colorpickerInputWidth:        var(--zk-colorpicker-input-width);
+@colorpickerInputHeight:       var(--zk-colorpicker-input-height);
+@colorpickerRGBPositionTop:    var(--zk-colorpicker-rgb-position-top);
+@colorpickerHSVPositionTop:    var(--zk-colorpicker-hsv-position-top);
+@colorpickerHEXPositionTop:    var(--zk-colorpicker-hex-position-top);
+@colorpickerHEXInputWidth:     var(--zk-colorpicker-hex-input-width);
+@colorpickerHEXInputHeight:    var(--zk-colorpicker-hex-input-height);
+@colorpickerButtonWidth:       var(--zk-colorpicker-button-width);
+@colorpickerButtonPositionTop: var(--zk-colorpicker-button-position-top);
+@colorpickerButtonPositionRight: var(--zk-colorpicker-button-position-right);
+@colorpaletteWidth:            var(--zk-colorpalette-width);
+@colorpaletteHeight:           var(--zk-colorpalette-height);
+@colorpaletteHeadHeight:       var(--zk-colorpalette-head-height);
+@colorpaletteNewColorWidth:    var(--zk-colorpalette-new-color-width);
+@colorpaletteNewColorHeight:   var(--zk-colorpalette-new-color-height);
+@colorpaletteNewColorPositionRight: var(--zk-colorpalette-new-color-position-right);
+@colorpaletteInputWidth:       var(--zk-colorpalette-input-width);
+@colorpaletteInputHeight:      var(--zk-colorpalette-input-height);
+@colorpaletteColorSize:        var(--zk-colorpalette-color-size);
+@colorboxIconFontSize:         var(--zk-colorbox-icon-font-size);
+@colorboxIconPadding:          var(--zk-colorbox-icon-padding);
+@colorboxIconButtonWidth:      var(--zk-colorbox-icon-button-width);
+@colorboxIconButtonHeight:     var(--zk-colorbox-icon-button-height);
+@colorboxIconButtonPositionTop: var(--zk-colorbox-icon-button-position-top);
+@paletteiconPositionLeft:      var(--zk-paletteicon-position-left);
+@pickericonPositionTopLeft:    var(--zk-pickericon-position-top-left);
 
 
 // mask and loading
-@maskBackgroundColor:          #E0E1E3;
-@loadingBackgroundColor:       @baseBackgroundColor;
-@loadingTextColor:             @textColorLight;
+@maskBackgroundColor:          var(--zk-mask-background-color);
+@loadingBackgroundColor:       var(--zk-loading-background-color);
+@loadingTextColor:             var(--zk-loading-text-color);
 @loadingAnimationDefer:        '~./zul/img/misc/progress-32.gif';
 @loadingAnimationLoad:         '~./zul/img/misc/progress-72.gif';
-@loadingIndicatorPadding:      @spacing-08 @spacing-06;
-@applyLoadingIndicatorPadding: @spacing-05 @spacing-09 @spacing-05 @spacing-01*28; // 56px
-@applyLoadingIconSize:         @spacing-09;
-@applyLoadingIconPositionLeft: @spacing-06;
-@loadingIconSize: var(--zk-rem9); // 72px / 8
-@loadingIconMarginBottom:      @spacing-04;
+@loadingIndicatorPadding:      var(--zk-loading-indicator-padding);
+@applyLoadingIndicatorPadding: var(--zk-apply-loading-indicator-padding);
+@applyLoadingIconSize:         var(--zk-apply-loading-icon-size);
+@applyLoadingIconPositionLeft: var(--zk-apply-loading-icon-position-left);
+@loadingIconSize:              var(--zk-loading-icon-size);
+@loadingIconMarginBottom:      var(--zk-loading-icon-margin-bottom);
 
 // scrollbar
-@scrollbarSize: var(--zk-rem1-25); // 10px / 8
-@scrollbarEmbeddedSize: var(--zk-rem1-25); // 10px / 8
-@scrollbarBarSize: var(--zk-rem1-25); // 10px / 8
-@scrollbarRailSize: var(--zk-rem0-75); // 6px / 8
-@scrollbarEmbeddedColor:       @colorGreyLight;
-@scrollbarBorderColor:         transparent;
-@scrollbarBackgroundColor:     @colorGreyLight;
-@scrollbarBarBackgroundColor:  @colorPrimary;
-@scrollbarBarHoverBackground:  @colorPrimaryDark;
-@scrollbarIconDisplay:         none;
-@scrollbarButtonBackground:    transparent;
-@scrollbarButtonHoverBackground: transparent;
-@scrollbarButtonColor:         @colorPrimary;
-@scrollbarButtonHoverColor:    @colorPrimaryDark;
+@scrollbarSize:                var(--zk-scrollbar-size);
+@scrollbarEmbeddedSize:        var(--zk-scrollbar-embedded-size);
+@scrollbarBarSize:             var(--zk-scrollbar-bar-size);
+@scrollbarRailSize:            var(--zk-scrollbar-rail-size);
+@scrollbarEmbeddedColor:       var(--zk-scrollbar-embedded-color);
+@scrollbarBorderColor:         var(--zk-scrollbar-border-color);
+@scrollbarBackgroundColor:     var(--zk-scrollbar-background-color);
+@scrollbarBarBackgroundColor:  var(--zk-scrollbar-bar-background-color);
+@scrollbarBarHoverBackground:  var(--zk-scrollbar-bar-hover-background);
+@scrollbarIconDisplay:         var(--zk-scrollbar-icon-display);
+@scrollbarButtonBackground:    var(--zk-scrollbar-button-background);
+@scrollbarButtonHoverBackground: var(--zk-scrollbar-button-hover-background);
+@scrollbarButtonColor:         var(--zk-scrollbar-button-color);
+@scrollbarButtonHoverColor:    var(--zk-scrollbar-button-hover-color);
 
 // drag and drop
-@dragColor:                    @textColorDefault;
-@dragBackgroundColor:          @popupBackgroundColor;
-@dragHoverBackgroundColor:     @colorPrimaryLighter;
-@dragAllowIconColor:           @colorPrimary;
-@dragAllowBorderColor:         @colorPrimary;
-@dragAllowBackgroundColor:     @popupBackgroundColor;
-@dragDisAllowIconColor:        @textColorLighter;
-@dragDisAllowBorderColor:      transparent;
-@dragDisAllowBackgroundColor:  @colorGreyLighter;
-@dropContentPadding:           @spacing-05;
-@dropContentLineHeight: ~"calc(var(--zk-rem1) - 12px)";
-@dropIconSize:                 @fontSizeXLarge;
-@dropIconVerticalAlign:        baseline; // for compact override
+@dragColor:                    var(--zk-drag-color);
+@dragBackgroundColor:          var(--zk-drag-background-color);
+@dragHoverBackgroundColor:     var(--zk-drag-hover-background-color);
+@dragAllowIconColor:           var(--zk-drag-allow-icon-color);
+@dragAllowBorderColor:         var(--zk-drag-allow-border-color);
+@dragAllowBackgroundColor:     var(--zk-drag-allow-background-color);
+@dragDisAllowIconColor:        var(--zk-drag-disallow-icon-color);
+@dragDisAllowBorderColor:      var(--zk-drag-disallow-border-color);
+@dragDisAllowBackgroundColor:  var(--zk-drag-disallow-background-color);
+@dropContentPadding:           var(--zk-drop-content-padding);
+@dropContentLineHeight:        var(--zk-drop-content-line-height);
+@dropIconSize:                 var(--zk-drop-icon-size);
+@dropIconVerticalAlign:        var(--zk-drop-icon-vertical-align);
 
 // splitter (hbox, vbox, borderlayout)
-@splitterSize: var(--zk-rem1); // 8px / 8
-@splitterBorderColor:          @baseBorderColor;
-@splitterBackgroundColor:      @colorBackground1;
-@splitterHoverBackgroundColor: @colorPrimaryLighter;
-@splitterButtonTextSize: var(--zk-rem1-5); // 12px / 8
-@splitterButtonTextColors:     @textColorLighter, @textColorLighter; // 1: normal, 2: hover
-@splitterDragBackgroundColor:  @colorGreyLight;
+@splitterSize:                 var(--zk-splitter-size);
+@splitterBorderColor:          var(--zk-splitter-border-color);
+@splitterBackgroundColor:      var(--zk-splitter-background-color);
+@splitterHoverBackgroundColor: var(--zk-splitter-hover-background-color);
+@splitterButtonTextSize:       var(--zk-splitter-button-text-size);
+@splitterButtonTextColors:     var(--zk-splitter-button-text-color), var(--zk-splitter-button-text-hover-color);
+@splitterDragBackgroundColor:  var(--zk-splitter-drag-background-color);
 
 // calendar
-@calendarBackgroundColor:      @colorBackground3;
-@calendarTodayColor:           @textColorLight;
-@calendarTitleColor:           @baseTextColor;
-@calendarTitleHoverColor:      @baseTextColor;
-@calendarCellColor:            @baseTextColor;
-@calendarCellHoverBackgroundColor: @colorPrimaryLighter;
-@calendarSelectedColor:        @textColorDefault3;
-@calendarSelectedHoverColor:   @textColorDefault3;
-@calendarSelectedBackgroundColor: @colorPrimary;
-@calendarSelectedHoverBackgroundColor: @colorPrimary;
-@calendarWeekTitleColor:       @textColorLight;
-@weekendColor:                 @baseTextColor;
-@weekendBackgroundColor:       transparent;
-@weekdayColor:                 @baseTextColor;
-@weekdayBackgroundColor:       transparent;
-@weekofyearColor:              @textColorLighter;
-@weekofyearBackgroundColor:    transparent;
-@calendarFontSize:             @fontSizeMedium;
-@calendarIconFontSize:         @fontSizeMedium;
-@calendarTitleFontSize:        @fontSizeSmall;
-@calendarFontSizeSmall:        @fontSizeSmall;
-@calendarPadding: var(--zk-rem1-5);
-@calendarTitleLineHeight: var(--zk-rem4);
-@calendarTodayTitlePadding:    @spacing-04 0;
-@calendarCellWidth: var(--zk-rem4);
-@calendarCellHeight: var(--zk-rem4);
-@calendarLeftRightPosition:    0;
-@calendarTodayMarginTop:       @spacing-05;
+@calendarBackgroundColor:      var(--zk-calendar-background-color);
+@calendarTodayColor:           var(--zk-calendar-today-color);
+@calendarTitleColor:           var(--zk-calendar-title-color);
+@calendarTitleHoverColor:      var(--zk-calendar-title-hover-color);
+@calendarCellColor:            var(--zk-calendar-cell-color);
+@calendarCellHoverBackgroundColor: var(--zk-calendar-cell-hover-background-color);
+@calendarSelectedColor:        var(--zk-calendar-selected-color);
+@calendarSelectedHoverColor:   var(--zk-calendar-selected-hover-color);
+@calendarSelectedBackgroundColor: var(--zk-calendar-selected-background-color);
+@calendarSelectedHoverBackgroundColor: var(--zk-calendar-selected-hover-background-color);
+@calendarWeekTitleColor:       var(--zk-calendar-week-title-color);
+@weekendColor:                 var(--zk-weekend-color);
+@weekendBackgroundColor:       var(--zk-weekend-background-color);
+@weekdayColor:                 var(--zk-weekday-color);
+@weekdayBackgroundColor:       var(--zk-weekday-background-color);
+@weekofyearColor:              var(--zk-weekofyear-color);
+@weekofyearBackgroundColor:    var(--zk-weekofyear-background-color);
+@calendarFontSize:             var(--zk-calendar-font-size);
+@calendarIconFontSize:         var(--zk-calendar-icon-font-size);
+@calendarTitleFontSize:        var(--zk-calendar-title-font-size);
+@calendarFontSizeSmall:        var(--zk-calendar-font-size-small);
+@calendarPadding:              var(--zk-calendar-padding);
+@calendarTitleLineHeight:      var(--zk-calendar-title-line-height);
+@calendarTodayTitlePadding:    var(--zk-calendar-today-title-padding);
+@calendarCellWidth:            var(--zk-calendar-cell-width);
+@calendarCellHeight:           var(--zk-calendar-cell-height);
+@calendarLeftRightPosition:    var(--zk-calendar-left-right-position);
+@calendarTodayMarginTop:       var(--zk-calendar-today-margin-top);
 
 // popup
-@basePopupZIndex:              88000;
-@popupPadding:                 @spacing-06;
-@popupBorderColor:             @baseBorderColor;
-@popupBackgroundColor:         @colorBackground3;
+@basePopupZIndex:              var(--zk-base-popup-z-index);
+@popupPadding:                 var(--zk-popup-padding);
+@popupBorderColor:             var(--zk-popup-border-color);
+@popupBackgroundColor:         var(--zk-popup-background-color);
 
 // paging
-@pagingColor:                  @textColorDefault;
-@pagingHeight: var(--zk-rem6);
-@pagingBorderColor:            @baseBorderColor;
-@pagingBackgroundColor:        @colorGreyLighter;
-@pagingItemHoverBackgroundColor:   @colorPrimaryLighter;
-@pagingItemActiveColor:            @textColorDefault3;
-@pagingItemActiveBackgroundColor:  @colorPrimary;
-@pagingItemSelectedColor:          @colorPrimary;
-@pagingItemSelectedBackgroundColor:transparent;
-@pagingButtonMinWidth: var(--zk-rem3-5);
-@pagingButtonHeight: var(--zk-rem3-5);
-@pagingButtonFontSize:         @fontSizeMedium;
-@pagingButtonPadding:          5px;
-@pagingButtonMargin:           4px 0;
-@pagingButtonFocusBoxShadowColor:    @colorPrimary;
-@pagingButtonFocusBoxShadow:         0 0 0 2px @pagingButtonFocusBoxShadowColor;
-@pagingButtonFocusBorderRadius:      @baseBorderRadius;
-@pagingIconSize:               @fontSizeLarge;
-@pagingIconLineHeight:         @baseLineHeight;
-@pagingInputHeight: var(--zk-rem3-5); // 28px / 8;
-@pagingInputPadding:           @inputPadding;
-@pagingOsButtonPadding:        @spacing-02 @spacing-04;
+@pagingColor:                  var(--zk-paging-color);
+@pagingHeight:                 var(--zk-paging-height);
+@pagingBorderColor:            var(--zk-paging-border-color);
+@pagingBackgroundColor:        var(--zk-paging-background-color);
+@pagingItemHoverBackgroundColor:   var(--zk-paging-item-hover-background-color);
+@pagingItemActiveColor:            var(--zk-paging-item-active-color);
+@pagingItemActiveBackgroundColor:  var(--zk-paging-item-active-background-color);
+@pagingItemSelectedColor:          var(--zk-paging-item-selected-color);
+@pagingItemSelectedBackgroundColor: var(--zk-paging-item-selected-background-color);
+@pagingButtonMinWidth:         var(--zk-paging-button-min-width);
+@pagingButtonHeight:           var(--zk-paging-button-height);
+@pagingButtonFontSize:         var(--zk-paging-button-font-size);
+@pagingButtonPadding:          var(--zk-paging-button-padding);
+@pagingButtonMargin:           var(--zk-paging-button-margin);
+@pagingButtonFocusBoxShadowColor:    var(--zk-paging-button-focus-box-shadow-color);
+@pagingButtonFocusBoxShadow:         var(--zk-paging-button-focus-box-shadow);
+@pagingButtonFocusBorderRadius:      var(--zk-paging-button-focus-border-radius);
+@pagingIconSize:               var(--zk-paging-icon-size);
+@pagingIconLineHeight:         var(--zk-paging-icon-line-height);
+@pagingInputHeight:            var(--zk-paging-input-height);
+@pagingInputPadding:           var(--zk-paging-input-padding);
+@pagingOsButtonPadding:        var(--zk-paging-os-button-padding);
 
 // slider
-@sliderAreaSize: var(--zk-rem0-75);
-@sliderBackgroundColor:        @colorGreyLight;
-@sliderAreaBackgroundColor:    @colorPrimary;
-@sliderInputColor:             @textColorActive;
+@sliderAreaSize:               var(--zk-slider-area-size);
+@sliderBackgroundColor:        var(--zk-slider-background-color);
+@sliderAreaBackgroundColor:    var(--zk-slider-area-background-color);
+@sliderInputColor:             var(--zk-slider-input-color);
 @sliderTicks:                  '~./zul/img/slider/scale-ticks.png';
-@sliderPopupFontSize:          @fontSizeXSmall;
+@sliderPopupFontSize:          var(--zk-slider-popup-font-size);
 
 // tooltip (used in slider, fisheyebar)
-@tooltipColor:                 @textColorDefault3;
-@tooltipBackgroundColor:       @colorAccent3;
+@tooltipColor:                 var(--zk-tooltip-color);
+@tooltipBackgroundColor:       var(--zk-tooltip-background-color);
 
 // errorbox (input constraint)
-@errorboxColor:                @colorAccent2;
-@errorboxBorderColor:          transparent;
-@errorboxBackgroundColor:      #FFEAEC;
-@errorboxInsideIconPositionTop: var(--zk-rem1); // 8px / 8
-@errorboxIconPositionTop:      -1px;
-@errorboxUpIconPositionTop: var(--zk-rem2); // 16px / 8
-@errorboxContentPadding:       @spacing-04 @spacing-09;
+@errorboxColor:                var(--zk-errorbox-color);
+@errorboxBorderColor:          var(--zk-errorbox-border-color);
+@errorboxBackgroundColor:      var(--zk-errorbox-background-color);
+@errorboxInsideIconPositionTop: var(--zk-errorbox-inside-icon-position-top);
+@errorboxIconPositionTop:      var(--zk-errorbox-icon-position-top);
+@errorboxUpIconPositionTop:    var(--zk-errorbox-up-icon-position-top);
+@errorboxContentPadding:       var(--zk-errorbox-content-padding);
 
 // error (ZK JavaScript debug box)
-@errorPadding: var(--zk-rem2); // 16px / 8
-@errorMessageContentPadding:   24px 0 0 0;
-@errorButtonFontSize:          @fontSizeLarge;
-@errorCloseButtonFontSize:     @fontSizeXLarge;
-@errorNumberFontSize:          @fontSizeLarge;
-@errorButtonSize:              @baseButtonWidth;
-@errorButtonMarginLeft: var(--zk-rem1); // 8px / 8
+@errorPadding:                 var(--zk-error-padding);
+@errorMessageContentPadding:   var(--zk-error-message-content-padding);
+@errorButtonFontSize:          var(--zk-error-button-font-size);
+@errorCloseButtonFontSize:     var(--zk-error-close-button-font-size);
+@errorNumberFontSize:          var(--zk-error-number-font-size);
+@errorButtonSize:              var(--zk-error-button-size);
+@errorButtonMarginLeft:        var(--zk-error-button-margin-left);
 
 // notification
-@notificationInfoColor:        #4AA81B;
-@notificationWarningColor:     #E37601;
-@notificationErrorColor:       #F53142;
-@notificationInfoTextColor:        @baseTextColor;
-@notificationWarningTextColor:     @baseTextColor;
-@notificationErrorTextColor:       @baseTextColor;
-@notificationInfoBackgroundColor:        @baseBackgroundColor;
-@notificationWarningBackgroundColor:     @baseBackgroundColor;
-@notificationErrorBackgroundColor:       @baseBackgroundColor;
-@notificationContentPadding:   @spacing-06 @spacing-06 @spacing-06 @spacing-01*28; // 56px / 8;
-@notificationPointerContentHeight: var(--zk-rem6-5); // 52px / 8;
-@notificationPointerContentPadding:      @spacing-04 @spacing-09 @spacing-04 @spacing-11;
-@notificationCloseFontSize:    var(--zk-rem0-25); // 18px / 8;
-@notificationCloseIconSize:    var(--zk-rem0-25); // 18px / 8;
+@notificationInfoColor:        var(--zk-notification-info-color);
+@notificationWarningColor:     var(--zk-notification-warning-color);
+@notificationErrorColor:       var(--zk-notification-error-color);
+@notificationInfoTextColor:        var(--zk-notification-info-text-color);
+@notificationWarningTextColor:     var(--zk-notification-warning-text-color);
+@notificationErrorTextColor:       var(--zk-notification-error-text-color);
+@notificationInfoBackgroundColor:        var(--zk-notification-info-background-color);
+@notificationWarningBackgroundColor:     var(--zk-notification-warning-background-color);
+@notificationErrorBackgroundColor:       var(--zk-notification-error-background-color);
+@notificationContentPadding:   var(--zk-notification-content-padding);
+@notificationPointerContentHeight:       var(--zk-notification-pointer-content-height);
+@notificationPointerContentPadding:      var(--zk-notification-pointer-content-padding);
+@notificationCloseFontSize:    var(--zk-notification-close-font-size);
+@notificationCloseIconSize:    var(--zk-notification-close-icon-size);
 
 // progressmeter
-@progressmeterBorderColor:     @baseBorderColor;
-@progressmeterBackgroundColor: @colorPrimary;
+@progressmeterBorderColor:     var(--zk-progressmeter-border-color);
+@progressmeterBackgroundColor: var(--zk-progressmeter-background-color);
 @progressmeterBackgroundImage: '~./zul/img/misc/prgmeter-anim.gif';
 
 // loadingbar
-@loadingbarColor:              @colorPrimary;
-@loadingbarSecondaryColor:     @colorPrimaryLight;
-@loadingbarHeight: var(--zk-rem0-75); // 6px / 8
+@loadingbarColor:              var(--zk-loadingbar-color);
+@loadingbarSecondaryColor:     var(--zk-loadingbar-secondary-color);
+@loadingbarHeight:             var(--zk-loadingbar-height);
 
 // tabbox
-@tabboxBackgroundColor:        @colorBackground3;
-@tabboxIconPadding:            @spacing-04 @spacing-04;
-@tabboxIconVerticalPadding:    @spacing-04 0;
-@tabboxIconSize: var(--zk-rem4);
-@tabboxTabsBackgroundColor:    @colorBackground3;
-@tabboxToolbarBackgroundColor: @tabboxTabsBackgroundColor;
-@tabboxTabColor:               @textColorLight;
-@tabboxTabBackgroundColor:     @colorBackground3;
-@tabboxTabHoverColor:          @textColorDefault;
-@tabboxTabHoverBackgroundColor:@colorBackground3;
-@tabboxTabButtonFontSize:      @fontSizeMedium;
-@tabboxTabButtonColor:         @iconColor;
-@tabboxTabButtonHoverColor:    @iconHoverColor;
-@tabboxTabButtonTextSpacing: var(--zk-rem3);
-@tabboxTabSeparatorColor:      @baseBorderColor;
-@tabboxTabMinHeight: var(--zk-rem5);
-@tabboxTabPadding:             @spacing-04 @spacing-06;
-@tabboxTabVerticalPadding:     @spacing-05 @spacing-04;
-@tabboxTabFontSize:            @fontSizeMedium;
-@tabboxTabAccordionButtonRight:@spacing-06;
-@tabboxSelectedRadius:         0;
-@tabboxSelectedColor:          @colorPrimary;
-@tabboxSelectedBorderColor:    @colorPrimary;
-@tabboxSelectedHoverColor:     @colorPrimaryDark;
-@tabboxSelectedBackgroundColor:@colorBackground3;
-@tabboxSelectedHoverBackgroundColor:@colorBackground3;
-@tabboxScrollIconColor:        @iconColor;
-@tabboxScrollIconHoverColor:   @iconHoverColor;
+@tabboxBackgroundColor:        var(--zk-tabbox-background-color);
+@tabboxIconPadding:            var(--zk-tabbox-icon-padding);
+@tabboxIconVerticalPadding:    var(--zk-tabbox-icon-vertical-padding);
+@tabboxIconSize:               var(--zk-tabbox-icon-size);
+@tabboxTabsBackgroundColor:    var(--zk-tabbox-tabs-background-color);
+@tabboxToolbarBackgroundColor: var(--zk-tabbox-toolbar-background-color);
+@tabboxTabColor:               var(--zk-tabbox-tab-color);
+@tabboxTabBackgroundColor:     var(--zk-tabbox-tab-background-color);
+@tabboxTabHoverColor:          var(--zk-tabbox-tab-hover-color);
+@tabboxTabHoverBackgroundColor:var(--zk-tabbox-tab-hover-background-color);
+@tabboxTabButtonFontSize:      var(--zk-tabbox-tab-button-font-size);
+@tabboxTabButtonColor:         var(--zk-tabbox-tab-button-color);
+@tabboxTabButtonHoverColor:    var(--zk-tabbox-tab-button-hover-color);
+@tabboxTabButtonTextSpacing:   var(--zk-tabbox-tab-button-text-spacing);
+@tabboxTabSeparatorColor:      var(--zk-tabbox-tab-separator-color);
+@tabboxTabMinHeight:           var(--zk-tabbox-tab-min-height);
+@tabboxTabPadding:             var(--zk-tabbox-tab-padding);
+@tabboxTabVerticalPadding:     var(--zk-tabbox-tab-vertical-padding);
+@tabboxTabFontSize:            var(--zk-tabbox-tab-font-size);
+@tabboxTabAccordionButtonRight:var(--zk-tabbox-tab-accordion-button-right);
+@tabboxSelectedRadius:         var(--zk-tabbox-selected-radius);
+@tabboxSelectedColor:          var(--zk-tabbox-selected-color);
+@tabboxSelectedBorderColor:    var(--zk-tabbox-selected-border-color);
+@tabboxSelectedHoverColor:     var(--zk-tabbox-selected-hover-color);
+@tabboxSelectedBackgroundColor:var(--zk-tabbox-selected-background-color);
+@tabboxSelectedHoverBackgroundColor: var(--zk-tabbox-selected-hover-background-color);
+@tabboxScrollIconColor:        var(--zk-tabbox-scroll-icon-color);
+@tabboxScrollIconHoverColor:   var(--zk-tabbox-scroll-icon-hover-color);
 
 // menu
-@menuBackground:               @baseBackgroundColor;
-@menuItemColor:                @textColorLight;
-@menuItemBackground:           @baseBackgroundColor;
-@menuItemHoverColor:           @textColorLight;
-@menuItemHoverBackground:      @hoverBackgroundColor;
-@menuItemActiveColor:          @activeColor;
-@menuItemActiveBackground:     @colorPrimary;
-@menuSeparatorBorderColor:     @baseBorderColor;
-@menuSeparatorBackgroundColor: @colorGreyLight;
-@menuPopupBackground:          @popupBackgroundColor;
-@menuPopupItemColor:           @textColorLight;
-@menuPopupItemBackground:      @popupBackgroundColor;
-@menuPopupItemHoverColor:      @textColorLight;
-@menuPopupItemHoverBackground: @hoverBackgroundColor;
-@menuPopupItemActiveColor:     @activeColor;
-@menuPopupItemActiveBackground:@colorPrimary;
-@menuPopupSeparatorBorder:     @colorGreyLight;
-@menuImageSize: var(--zk-rem2-5);
-@menuCheckedColor:             @checkedBackgroundColor;
-@menuCheckedBackgroundColor:   @checkedColor;
-@menuScrollableIconColors:     @iconColor, @iconHoverColor; // 1: normal, 2: hover
-@menubarPadding:               @spacing-02;
-@menubarHorizontalMargin:      @spacing-01 0;
-@menubarHorizontalSeparatorLineHeight: @baseBarHeight;
-@menubarHorizontalSeparatorMargin: 0 4px;
-@menuTextFontSize:             @fontSizeMedium;
-@menuIconSize:                 @fontSizeMedium;
-@menuContentPadding:           @spacing-03 @spacing-05;
-@menuContentLineHeight:        @baseLineHeight;
-@menuContentMinHeight: var(--zk-rem4);
-@menuIconPositionTop:          @spacing-04;
-@menuIconMarginRight:          @spacing-04;
-@menuContentPaddingRight:      @spacing-09;
-@menuPopupItemIconSize: var(--zk-rem2);
-@menuPopupItemIconPositionTop: @spacing-04;
-@menuPopupItemIconPositionLeft: @spacing-06;
+@menuBackground:               var(--zk-menu-background);
+@menuItemColor:                var(--zk-menu-item-color);
+@menuItemBackground:           var(--zk-menu-item-background);
+@menuItemHoverColor:           var(--zk-menu-item-hover-color);
+@menuItemHoverBackground:      var(--zk-menu-item-hover-background);
+@menuItemActiveColor:          var(--zk-menu-item-active-color);
+@menuItemActiveBackground:     var(--zk-menu-item-active-background);
+@menuSeparatorBorderColor:     var(--zk-menu-separator-border-color);
+@menuSeparatorBackgroundColor: var(--zk-menu-separator-background-color);
+@menuPopupBackground:          var(--zk-menu-popup-background);
+@menuPopupItemColor:           var(--zk-menu-popup-item-color);
+@menuPopupItemBackground:      var(--zk-menu-popup-item-background);
+@menuPopupItemHoverColor:      var(--zk-menu-popup-item-hover-color);
+@menuPopupItemHoverBackground: var(--zk-menu-popup-item-hover-background);
+@menuPopupItemActiveColor:     var(--zk-menu-popup-item-active-color);
+@menuPopupItemActiveBackground: var(--zk-menu-popup-item-active-background);
+@menuPopupSeparatorBorder:     var(--zk-menu-popup-separator-border);
+@menuImageSize:                var(--zk-menu-image-size);
+@menuCheckedColor:             var(--zk-menu-checked-color);
+@menuCheckedBackgroundColor:   var(--zk-menu-checked-background-color);
+@menuScrollableIconColors:     var(--zk-menu-scrollable-icon-color), var(--zk-menu-scrollable-icon-hover-color);
+@menubarPadding:               var(--zk-menubar-padding);
+@menubarHorizontalMargin:      var(--zk-menubar-horizontal-margin);
+@menubarHorizontalSeparatorLineHeight: var(--zk-menubar-horizontal-separator-line-height);
+@menubarHorizontalSeparatorMargin: var(--zk-menubar-horizontal-separator-margin);
+@menuTextFontSize:             var(--zk-menu-text-font-size);
+@menuIconSize:                 var(--zk-menu-icon-size);
+@menuContentPadding:           var(--zk-menu-content-padding);
+@menuContentLineHeight:        var(--zk-menu-content-line-height);
+@menuContentMinHeight:         var(--zk-menu-content-min-height);
+@menuIconPositionTop:          var(--zk-menu-icon-position-top);
+@menuIconMarginRight:          var(--zk-menu-icon-margin-right);
+@menuContentPaddingRight:      var(--zk-menu-content-padding-right);
+@menuPopupItemIconSize:        var(--zk-menu-popup-item-icon-size);
+@menuPopupItemIconPositionTop: var(--zk-menu-popup-item-icon-position-top);
+@menuPopupItemIconPositionLeft: var(--zk-menu-popup-item-icon-position-left);
 
 // navbar
-@navImageSize: var(--zk-rem2-5);
-@navColor:                     @textColorLight;
-@navHoverColor:                @textColorDefault;
-@navBorderColor:               @baseBorderColor;
-@navBackgroundColor:           @colorBackground3;
-@navHoverBackgroundColor:      @navBackgroundColor;
-@navSelectedColor:             @colorPrimary;
-@navSelectedBackgroundColor:   @navBackgroundColor;
-@navPopupColor:                @textColorLight;
-@navPopupHoverColor:           @textColorDefault;
-@navPopupBackgroundColor:      @popupBackgroundColor;
-@navPopupHoverBackgroundColor: @navBackgroundColor;
-@navPopupSelectedColor:        @colorPrimary;
-@navPopupSelectedBackgroundColor: @navPopupBackgroundColor;
-@navPopupPadding:              @spacing-02;
-@navSeparatorColor:            @colorGreyLight;
-@navCollapsedWidth: var(--zk-rem5); // 40px / 8 (was incorrectly 4rem = 32px)
-@navBadgeTextColor:            @textColorLight;
-@navBadgeBackgroundColor:      @colorGreyLight;
-@navbarPadding:                @spacing-02;
-@navbarHorizontalPadding:      @spacing-03 @spacing-02;
-@navbarHorizontalLineHeight: var(--zk-rem4-5);
-@navContentPadding:            @spacing-03 @spacing-05;
-@navIconMarginRight: var(--zk-rem0-5); // 4px / 8
-@navTextFontSize:              @fontSizeMedium;
-@navInfoPositionTop:           @spacing-03;
-@navInfoPositionRight:         @spacing-03;
-@navTextPopupHeight: var(--zk-rem5);
-@navTextPopupPadding:          @spacing-02 @spacing-05;
-@navTextPopupLineHeight:       @baseBarHeight;
-@navbarCollapsedInfoPositionTop: -2px;
-@navitemFocusBoxShadowColor:     @colorPrimary;
-@navitemFocusBoxShadow:          0 0 0 2px @navitemFocusBoxShadowColor;
+@navImageSize:                 var(--zk-nav-image-size);
+@navColor:                     var(--zk-nav-color);
+@navHoverColor:                var(--zk-nav-hover-color);
+@navBorderColor:               var(--zk-nav-border-color);
+@navBackgroundColor:           var(--zk-nav-background-color);
+@navHoverBackgroundColor:      var(--zk-nav-hover-background-color);
+@navSelectedColor:             var(--zk-nav-selected-color);
+@navSelectedBackgroundColor:   var(--zk-nav-selected-background-color);
+@navPopupColor:                var(--zk-nav-popup-color);
+@navPopupHoverColor:           var(--zk-nav-popup-hover-color);
+@navPopupBackgroundColor:      var(--zk-nav-popup-background-color);
+@navPopupHoverBackgroundColor: var(--zk-nav-popup-hover-background-color);
+@navPopupSelectedColor:        var(--zk-nav-popup-selected-color);
+@navPopupSelectedBackgroundColor: var(--zk-nav-popup-selected-background-color);
+@navPopupPadding:              var(--zk-nav-popup-padding);
+@navSeparatorColor:            var(--zk-nav-separator-color);
+@navCollapsedWidth:            var(--zk-nav-collapsed-width);
+@navBadgeTextColor:            var(--zk-nav-badge-text-color);
+@navBadgeBackgroundColor:      var(--zk-nav-badge-background-color);
+@navbarPadding:                var(--zk-navbar-padding);
+@navbarHorizontalPadding:      var(--zk-navbar-horizontal-padding);
+@navbarHorizontalLineHeight:   var(--zk-navbar-horizontal-line-height);
+@navContentPadding:            var(--zk-nav-content-padding);
+@navIconMarginRight:           var(--zk-nav-icon-margin-right);
+@navTextFontSize:              var(--zk-nav-text-font-size);
+@navInfoPositionTop:           var(--zk-nav-info-position-top);
+@navInfoPositionRight:         var(--zk-nav-info-position-right);
+@navTextPopupHeight:           var(--zk-nav-text-popup-height);
+@navTextPopupPadding:          var(--zk-nav-text-popup-padding);
+@navTextPopupLineHeight:       var(--zk-nav-text-popup-line-height);
+@navbarCollapsedInfoPositionTop: var(--zk-navbar-collapsed-info-position-top);
+@navitemFocusBoxShadowColor:     var(--zk-navitem-focus-box-shadow-color);
+@navitemFocusBoxShadow:          var(--zk-navitem-focus-box-shadow);
 
 // chosenbox
-@chosenboxIconSize:            @fontSizeSmall;
-@chosenboxItemSize:            @fontSizeMedium;
-@chosenboxItemColor:           @textColorDefault3;
-@chosenboxItemBorderColor:     @colorPrimaryDark;
-@chosenboxItemBackgroundColor: @colorPrimary;
-@chosenboxItemFocusBackgroundColor: @colorPrimaryDark;
-@chosenboxItemDisabledColor:   @textColorLighter;
-@chosenboxItemDisabledBorderColor: @baseBorderColor;
-@chosenboxItemDisabledBackgroundColor: @colorGreyLight;
-@chosenboxPopupHoverBackgroundColor: @colorPrimaryLighter;
-@chosenboxCreateIconSize:      @fontSizeLarge;
-@chosenboxCreateIconColor:     @colorPrimary;
-@chosenboxPadding:             @spacing-02 0;
-@chosenboxMinHeight: var(--zk-rem4-5);
-@chosenboxItemMargin:          0 0 0 @spacing-02;
-@chosenboxItemPadding:         @spacing-02 @spacing-04;
-@chosenboxItemContentPadding:  0;
-@chosenboxItemContentMarginRight: @chosenboxIconSize + 6;
-@chosenboxButtonPositionTop: var(--zk-rem0-5); // 4px / 8
-@chosenboxButtonPositionRight: var(--zk-rem1); // 8px / 8
-@chosenboxInputWidth: var(--zk-rem3-5);
-@chosenboxInputHeight: var(--zk-rem3-5);
-@chosenboxInputPadding:        0 @spacing-04;
-@chosenboxPopupPadding:        @spacing-02;
-@chosenboxOptionPadding:       @spacing-02;
-@chosenboxOptionMinHeight: var(--zk-rem3);
+@chosenboxIconSize:            var(--zk-chosenbox-icon-size);
+@chosenboxItemSize:            var(--zk-chosenbox-item-size);
+@chosenboxItemColor:           var(--zk-chosenbox-item-color);
+@chosenboxItemBorderColor:     var(--zk-chosenbox-item-border-color);
+@chosenboxItemBackgroundColor: var(--zk-chosenbox-item-background-color);
+@chosenboxItemFocusBackgroundColor: var(--zk-chosenbox-item-focus-background-color);
+@chosenboxItemDisabledColor:   var(--zk-chosenbox-item-disabled-color);
+@chosenboxItemDisabledBorderColor: var(--zk-chosenbox-item-disabled-border-color);
+@chosenboxItemDisabledBackgroundColor: var(--zk-chosenbox-item-disabled-background-color);
+@chosenboxPopupHoverBackgroundColor: var(--zk-chosenbox-popup-hover-background-color);
+@chosenboxCreateIconSize:      var(--zk-chosenbox-create-icon-size);
+@chosenboxCreateIconColor:     var(--zk-chosenbox-create-icon-color);
+@chosenboxPadding:             var(--zk-chosenbox-padding);
+@chosenboxMinHeight:           var(--zk-chosenbox-min-height);
+@chosenboxItemMargin:          var(--zk-chosenbox-item-margin);
+@chosenboxItemPadding:         var(--zk-chosenbox-item-padding);
+@chosenboxItemContentPadding:  var(--zk-chosenbox-item-content-padding);
+@chosenboxItemContentMarginRight: var(--zk-chosenbox-item-content-margin-right);
+@chosenboxButtonPositionTop:   var(--zk-chosenbox-button-position-top);
+@chosenboxButtonPositionRight: var(--zk-chosenbox-button-position-right);
+@chosenboxInputWidth:          var(--zk-chosenbox-input-width);
+@chosenboxInputHeight:         var(--zk-chosenbox-input-height);
+@chosenboxInputPadding:        var(--zk-chosenbox-input-padding);
+@chosenboxPopupPadding:        var(--zk-chosenbox-popup-padding);
+@chosenboxOptionPadding:       var(--zk-chosenbox-option-padding);
+@chosenboxOptionMinHeight:     var(--zk-chosenbox-option-min-height);
 
 // biglistbox
-@biglistboxFrozenBackgroundColor:   @colorGreyLight;
-@biglistboxFrozenGhostBackgroundColor: @colorPrimary;
-@biglistboxScrollBarBorderColor: @baseBorderColor;
-@biglistboxScrollBarTextColor: @textColorLight;
-@biglistboxScrollBarEndBarBackgroundColor: @colorGreyLighter;
-@biglistboxScrollBarHoverBackgroundColor: @colorPrimaryLighter;
-@biglistboxScrollBarActiveBackgroundColor: @colorPrimary;
-@biglistboxScrollBarActiveBorderColor: @baseBorderColor;
-@biglistboxScrollBarHoverBorderColor: @colorGreyDark;
-@biglistboxOuterPadding: 0 18px 18px 0;
-@biglistboxLineHeight: 1.3em;
-@biglistboxSize: var(--zk-rem2-25); // 18px / 8
-@biglistboxVerticalTickWidth: var(--zk-rem1-25); // 10px / 8
-@biglistboxVerticalTickHeight: @biglistboxSize;
-@biglistboxVerticalTickPositionBottom: var(--zk-rem0-25); // 2px / 8
-@biglistboxVerticalTickBeforePositionLeft: -4px;
-@biglistboxWscrollVerticalPositionRight: -19px;
-@biglistboxWscrollDragSize: var(--zk-rem14-5); // 116px / 8
-@biglistboxWscrollButtonSize: var(--zk-rem2-25); // 18px / 8
-@biglistboxWscrollButtonBeforePositionRight: 0;
-@biglistboxWscrollButtonBodySize: var(--zk-rem5-625); // 45px / 8
-@biglistboxWscrollButtonBodyPositionTop: var(--zk-rem4-5); // 36px / 8
-@biglistboxWscrollButtonBodyBeforePositionTop: var(--zk-rem1-75); // 14px / 8
-@biglistboxWscrollButtonBodyHoverPositionTop: var(--zk-rem4-375); // 35px / 8
-@biglistboxWscrollButtonBodyBeforePositionRight: 0;
-@biglistboxWscrollButtonUpHoverPositionTop: var(--zk-rem2-125); // 17px / 8
-@biglistboxWscrollHorizontalPosWidth: var(--zk-rem14-375); // 115px / 8
+@biglistboxFrozenBackgroundColor:   var(--zk-biglistbox-frozen-background-color);
+@biglistboxFrozenGhostBackgroundColor: var(--zk-biglistbox-frozen-ghost-background-color);
+@biglistboxScrollBarBorderColor: var(--zk-biglistbox-scrollbar-border-color);
+@biglistboxScrollBarTextColor: var(--zk-biglistbox-scrollbar-text-color);
+@biglistboxScrollBarEndBarBackgroundColor: var(--zk-biglistbox-scrollbar-end-bar-background-color);
+@biglistboxScrollBarHoverBackgroundColor: var(--zk-biglistbox-scrollbar-hover-background-color);
+@biglistboxScrollBarActiveBackgroundColor: var(--zk-biglistbox-scrollbar-active-background-color);
+@biglistboxScrollBarActiveBorderColor: var(--zk-biglistbox-scrollbar-active-border-color);
+@biglistboxScrollBarHoverBorderColor: var(--zk-biglistbox-scrollbar-hover-border-color);
+@biglistboxOuterPadding:       var(--zk-biglistbox-outer-padding);
+@biglistboxLineHeight:         var(--zk-biglistbox-line-height);
+@biglistboxSize:               var(--zk-biglistbox-size);
+@biglistboxVerticalTickWidth:  var(--zk-biglistbox-vertical-tick-width);
+@biglistboxVerticalTickHeight: var(--zk-biglistbox-vertical-tick-height);
+@biglistboxVerticalTickPositionBottom: var(--zk-biglistbox-vertical-tick-position-bottom);
+@biglistboxVerticalTickBeforePositionLeft: var(--zk-biglistbox-vertical-tick-before-position-left);
+@biglistboxWscrollVerticalPositionRight: var(--zk-biglistbox-wscroll-vertical-position-right);
+@biglistboxWscrollDragSize:    var(--zk-biglistbox-wscroll-drag-size);
+@biglistboxWscrollButtonSize:  var(--zk-biglistbox-wscroll-button-size);
+@biglistboxWscrollButtonBeforePositionRight: var(--zk-biglistbox-wscroll-button-before-position-right);
+@biglistboxWscrollButtonBodySize: var(--zk-biglistbox-wscroll-button-body-size);
+@biglistboxWscrollButtonBodyPositionTop: var(--zk-biglistbox-wscroll-button-body-position-top);
+@biglistboxWscrollButtonBodyBeforePositionTop: var(--zk-biglistbox-wscroll-button-body-before-position-top);
+@biglistboxWscrollButtonBodyHoverPositionTop: var(--zk-biglistbox-wscroll-button-body-hover-position-top);
+@biglistboxWscrollButtonBodyBeforePositionRight: var(--zk-biglistbox-wscroll-button-body-before-position-right);
+@biglistboxWscrollButtonUpHoverPositionTop: var(--zk-biglistbox-wscroll-button-up-hover-position-top);
+@biglistboxWscrollHorizontalPosWidth: var(--zk-biglistbox-wscroll-horizontal-pos-width);
 
 // rating
-@ratingIcon: #4a4a4a;
-@ratingIconSize: var(--zk-rem2-5); // 20px / 8 (was incorrectly 3rem)
-@ratingIconFontSize: @fontSizeMedium;
-@ratingIconPadding: @spacing-02;
-@ratingIconHover: @textColorActive;
-@ratingIconHoverTextShadow: #3393f9;
-@ratingIconSelected: @textColorActive;
-@ratingDisabled: @colorGreyLight;
-@ratingDisabledSelected: #b4d8ff;
+@ratingIcon:                   var(--zk-rating-icon);
+@ratingIconSize:               var(--zk-rating-icon-size);
+@ratingIconFontSize:           var(--zk-rating-icon-font-size);
+@ratingIconPadding:            var(--zk-rating-icon-padding);
+@ratingIconHover:              var(--zk-rating-icon-hover);
+@ratingIconHoverTextShadow:    var(--zk-rating-icon-hover-text-shadow);
+@ratingIconSelected:           var(--zk-rating-icon-selected);
+@ratingDisabled:               var(--zk-rating-disabled);
+@ratingDisabledSelected:       var(--zk-rating-disabled-selected);
 
 // goldenlayout
-@goldenLayoutBackgroundColor: @colorBackground1;
-@goldenLayoutBorderColor: #d2d2d2;
-@goldenLayoutHeaderColor: @textColorLight;
-@goldenLayoutHeaderHoverColor: @textColorDefault;
-@goldenLayoutHeaderActiveHoverColor: @colorPrimaryDark;
-@goldenLayoutHeaderBackgroundColor: @colorBackground3;
-@goldenLayoutSelectedBorderColor: @colorPrimary;
-@goldenLayoutSelectedBackgroundColor: @colorBackground3;
-@goldenLayoutPanelBackgroundColor: @colorBackground3;
-@goldenLayoutProxyBoxShadowColor: rgba(0, 0, 0, 0.19);
-@goldenLayoutDroptargetIndicatorBorderColor: @colorPrimary;
-@goldenLayoutDroptargetIndicatorBackgroundColor: rgba(0, 147, 249, 0.15);
-@goldenLayoutSplitterDragging: @colorGreyLight;
-@goldenLayoutLineHeight: var(--zk-rem3);
-@goldenLayoutMinHeight: var(--zk-rem6);
-@goldenLayoutFontSize: @fontSizeLarge;
-@goldenLayoutTabPadding: @spacing-05 @spacing-06 @spacing-05 @spacing-06;
-@goldenLayoutCloseTabTop: var(--zk-rem0-125); // 1px / 8
-@goldenLayoutActiveTabMargin: 9px -16px;
-@goldenLayoutControlPadding: 0 7px 0 0;
-@goldenLayoutControlLiPadding: 13px 4px 15px 0px;
-@goldenLayoutDropTabAfterMargin: 5px -15px;
+@goldenLayoutBackgroundColor:  var(--zk-golden-layout-background-color);
+@goldenLayoutBorderColor:      var(--zk-golden-layout-border-color);
+@goldenLayoutHeaderColor:      var(--zk-golden-layout-header-color);
+@goldenLayoutHeaderHoverColor: var(--zk-golden-layout-header-hover-color);
+@goldenLayoutHeaderActiveHoverColor: var(--zk-golden-layout-header-active-hover-color);
+@goldenLayoutHeaderBackgroundColor: var(--zk-golden-layout-header-background-color);
+@goldenLayoutSelectedBorderColor: var(--zk-golden-layout-selected-border-color);
+@goldenLayoutSelectedBackgroundColor: var(--zk-golden-layout-selected-background-color);
+@goldenLayoutPanelBackgroundColor: var(--zk-golden-layout-panel-background-color);
+@goldenLayoutProxyBoxShadowColor: var(--zk-golden-layout-proxy-box-shadow-color);
+@goldenLayoutDroptargetIndicatorBorderColor: var(--zk-golden-layout-droptarget-indicator-border-color);
+@goldenLayoutDroptargetIndicatorBackgroundColor: var(--zk-golden-layout-droptarget-indicator-background-color);
+@goldenLayoutSplitterDragging: var(--zk-golden-layout-splitter-dragging);
+@goldenLayoutLineHeight:       var(--zk-golden-layout-line-height);
+@goldenLayoutMinHeight:        var(--zk-golden-layout-min-height);
+@goldenLayoutFontSize:         var(--zk-golden-layout-font-size);
+@goldenLayoutTabPadding:       var(--zk-golden-layout-tab-padding);
+@goldenLayoutCloseTabTop:      var(--zk-golden-layout-close-tab-top);
+@goldenLayoutActiveTabMargin:  var(--zk-golden-layout-active-tab-margin);
+@goldenLayoutControlPadding:   var(--zk-golden-layout-control-padding);
+@goldenLayoutControlLiPadding: var(--zk-golden-layout-control-li-padding);
+@goldenLayoutDropTabAfterMargin: var(--zk-golden-layout-drop-tab-after-margin);
 
 // organigram
-@organigramLine: 1px solid #9B9B9B;
-@orgnodePadding: var(--zk-rem1-25); // 10px / 8;
-@orgnodeColor: @textColorDefault;
-@orgnodeBackgroundColor: @colorBackground3;
-@orgnodeHoverBackgroundColor: #E8F5FF;
-@orgnodeSelectedColor: #FFFFFF;
-@orgnodeSelectedBackgroundColor: @colorPrimary;
-@orgnodeDisabledColor: #B0B0B0;
-@orgnodeDisabledBackgroundColor: @colorGreyLighter;
-@orgnodeBorder: 1px solid rgba(0, 0, 0, 0.15);
-@orgnodeBorderRadius: 4px;
+@organigramLine:               var(--zk-organigram-line);
+@orgnodePadding:               var(--zk-orgnode-padding);
+@orgnodeColor:                 var(--zk-orgnode-color);
+@orgnodeBackgroundColor:       var(--zk-orgnode-background-color);
+@orgnodeHoverBackgroundColor:  var(--zk-orgnode-hover-background-color);
+@orgnodeSelectedColor:         var(--zk-orgnode-selected-color);
+@orgnodeSelectedBackgroundColor: var(--zk-orgnode-selected-background-color);
+@orgnodeDisabledColor:         var(--zk-orgnode-disabled-color);
+@orgnodeDisabledBackgroundColor: var(--zk-orgnode-disabled-background-color);
+@orgnodeBorder:                var(--zk-orgnode-border);
+@orgnodeBorderRadius:          var(--zk-orgnode-border-radius);
 
 // signature
-@signatureBorderColor: @baseBorderColor;
-@signatureBorderRadius: @baseBorderRadius;
-@signatureToolbarRight: 0;
-@signatureToolbarBottom: @spacing-04;
-@signatureToolbarButtonSpacing: @spacing-04;
-@signatureToolbarButtonIconFontSize: var(--zk-rem2-5);
+@signatureBorderColor:         var(--zk-signature-border-color);
+@signatureBorderRadius:        var(--zk-signature-border-radius);
+@signatureToolbarRight:        var(--zk-signature-toolbar-right);
+@signatureToolbarBottom:       var(--zk-signature-toolbar-bottom);
+@signatureToolbarButtonSpacing: var(--zk-signature-toolbar-button-spacing);
+@signatureToolbarButtonIconFontSize: var(--zk-signature-toolbar-button-icon-font-size);
 
 // drawer
-@drawerMaskBackgroundColor: #000;
-@drawerMaskOpacity: 0.5;
-@drawerTitleTextColor: @textColorLight;
-@drawerTitleLineColor: @colorGreyLight;
-@drawerTitlePadding: @spacing-05 @spacing-06;
-@drawerTitleFontSize: @fontSizeLarge;
-@drawerCloseButtonSize: @fontSizeLarge;
-@drawerCloseButtonRight: @spacing-06;
-@drawerCloseButtonTop: @spacing-05;
-@drawerBackgroundColor: @colorBackground3;
-@drawerShadowColor: rgba(0, 0, 0, 0.3);
-@drawerContainerPadding: @containerPadding;
+@drawerMaskBackgroundColor:    var(--zk-drawer-mask-background-color);
+@drawerMaskOpacity:            var(--zk-drawer-mask-opacity);
+@drawerTitleTextColor:         var(--zk-drawer-title-text-color);
+@drawerTitleLineColor:         var(--zk-drawer-title-line-color);
+@drawerTitlePadding:           var(--zk-drawer-title-padding);
+@drawerTitleFontSize:          var(--zk-drawer-title-font-size);
+@drawerCloseButtonSize:        var(--zk-drawer-close-button-size);
+@drawerCloseButtonRight:       var(--zk-drawer-close-button-right);
+@drawerCloseButtonTop:         var(--zk-drawer-close-button-top);
+@drawerBackgroundColor:        var(--zk-drawer-background-color);
+@drawerShadowColor:            var(--zk-drawer-shadow-color);
+@drawerContainerPadding:       var(--zk-drawer-container-padding);
 
 // rangeslider
-@rangesliderTrackColor: @colorGreyLight;
-@rangesliderEmptyBackgroundColor: #FFF;
-@rangesliderShadowColor: rgba(0, 0, 0, 0.3);
-@rangesliderButtonSize: var(--zk-rem2);
-@rangesliderButtonBorderWidth: var(--zk-rem0-25);
-@rangesliderButtonColor: @colorPrimary;
-@rangesliderButtonHoverColor: @colorPrimaryLight;
-@rangesliderButtonActiveColor: @colorPrimaryDark;
-@rangesliderButtonFocusBorderColor: @colorAccent;
-@rangesliderDisabledTrackColor: @colorGreyLighter;
-@rangesliderDisabledButtonColor: lighten(@rangesliderButtonColor, 30%);
-@rangesliderBorderRadius: @baseBorderRadius;
-@rangesliderTooltipBorderRadius: @baseBorderRadius;
-@rangesliderTooltipBackgroundColor: rgba(0, 0, 0, 0.8);
-@rangesliderDisabledTooltipBackgroundColor: rgba(0, 0, 0, 0.5);
-@rangesliderInnerSize: var(--zk-rem0-75);
-@rangesliderDotSize: var(--zk-rem1-5);
-@rangesliderDotBorderWidth: var(--zk-rem0-25);
-@rangesliderLabelFontSize: @fontSizeSmall;
-@rangesliderHorizontalButtonMarginTop: -5px;
-@rangesliderHorizontalButtonMarginLeft: -8px;
-@rangesliderHorizontalTooltipPositionTop: -8px;
-@rangesliderHorizontalTooltipPadding: 2px 4px;
-@rangesliderHorizontalMarkDotPositionTop: -3px;
-@rangesliderHorizontalMarkLabelPositionTop: var(--zk-rem2-25); // 18px / 8;
-@rangesliderVerticalTooltipPositionLeft: var(--zk-rem3); // 24px / 8
-@rangesliderVerticalTooltipPadding: 4px 2px;
+@rangesliderTrackColor:        var(--zk-rangeslider-track-color);
+@rangesliderEmptyBackgroundColor: var(--zk-rangeslider-empty-background-color);
+@rangesliderShadowColor:       var(--zk-rangeslider-shadow-color);
+@rangesliderButtonSize:        var(--zk-rangeslider-button-size);
+@rangesliderButtonBorderWidth: var(--zk-rangeslider-button-border-width);
+@rangesliderButtonColor:       var(--zk-rangeslider-button-color);
+@rangesliderButtonHoverColor:  var(--zk-rangeslider-button-hover-color);
+@rangesliderButtonActiveColor: var(--zk-rangeslider-button-active-color);
+@rangesliderButtonFocusBorderColor: var(--zk-rangeslider-button-focus-border-color);
+@rangesliderDisabledTrackColor: var(--zk-rangeslider-disabled-track-color);
+@rangesliderDisabledButtonColor: var(--zk-rangeslider-disabled-button-color);
+@rangesliderBorderRadius:      var(--zk-rangeslider-border-radius);
+@rangesliderTooltipBorderRadius: var(--zk-rangeslider-tooltip-border-radius);
+@rangesliderTooltipBackgroundColor: var(--zk-rangeslider-tooltip-background-color);
+@rangesliderDisabledTooltipBackgroundColor: var(--zk-rangeslider-disabled-tooltip-background-color);
+@rangesliderInnerSize:         var(--zk-rangeslider-inner-size);
+@rangesliderDotSize:           var(--zk-rangeslider-dot-size);
+@rangesliderDotBorderWidth:    var(--zk-rangeslider-dot-border-width);
+@rangesliderLabelFontSize:     var(--zk-rangeslider-label-font-size);
+@rangesliderHorizontalButtonMarginTop: var(--zk-rangeslider-horizontal-button-margin-top);
+@rangesliderHorizontalButtonMarginLeft: var(--zk-rangeslider-horizontal-button-margin-left);
+@rangesliderHorizontalTooltipPositionTop: var(--zk-rangeslider-horizontal-tooltip-position-top);
+@rangesliderHorizontalTooltipPadding: var(--zk-rangeslider-horizontal-tooltip-padding);
+@rangesliderHorizontalMarkDotPositionTop: var(--zk-rangeslider-horizontal-mark-dot-position-top);
+@rangesliderHorizontalMarkLabelPositionTop: var(--zk-rangeslider-horizontal-mark-label-position-top);
+@rangesliderVerticalTooltipPositionLeft: var(--zk-rangeslider-vertical-tooltip-position-left);
+@rangesliderVerticalTooltipPadding: var(--zk-rangeslider-vertical-tooltip-padding);
 
 // multislider
-@multisliderTrackColor: @colorGreyLight;
-@multisliderShadowColor: rgba(0, 0, 0, 0.2);
-@multisliderButtonSize: var(--zk-rem2);
-@multisliderButtonBorderWidth: var(--zk-rem0-25); // 2px / 8
-@multisliderButtonColor: @colorPrimary;
-@multisliderButtonHoverColor: @colorPrimaryLight;
-@multisliderButtonActiveColor: @colorPrimaryDark;
-@multisliderButtonFocusBorderColor: @colorAccent;
-@multisliderButtonColor2: @colorPrimaryLight;
-@multisliderButtonHoverColor2: lighten(@multisliderButtonColor2, 15%);
-@multisliderButtonActiveColor2: darken(@multisliderButtonColor2, 20%);
-@multisliderBorderRadius: @baseBorderRadius;
-@multisliderTooltipBackgroundColor: rgba(0, 0, 0, 0.8);
-@multisliderDisabledTooltipBackgroundColor: rgba(0, 0, 0, 0.5);
-@multisliderInnerSize: var(--zk-rem0-75);
-@multisliderDisabledTrackColor: @colorGreyLighter;
-@multisliderDisabledButtonColor: lighten(@multisliderButtonColor, 30%);
-@multisliderDisabledButtonColor2: lighten(@multisliderButtonColor2, 20%);
+@multisliderTrackColor:        var(--zk-multislider-track-color);
+@multisliderShadowColor:       var(--zk-multislider-shadow-color);
+@multisliderButtonSize:        var(--zk-multislider-button-size);
+@multisliderButtonBorderWidth: var(--zk-multislider-button-border-width);
+@multisliderButtonColor:       var(--zk-multislider-button-color);
+@multisliderButtonHoverColor:  var(--zk-multislider-button-hover-color);
+@multisliderButtonActiveColor: var(--zk-multislider-button-active-color);
+@multisliderButtonFocusBorderColor: var(--zk-multislider-button-focus-border-color);
+@multisliderButtonColor2:      var(--zk-multislider-button-color2);
+@multisliderButtonHoverColor2: var(--zk-multislider-button-hover-color2);
+@multisliderButtonActiveColor2: var(--zk-multislider-button-active-color2);
+@multisliderBorderRadius:      var(--zk-multislider-border-radius);
+@multisliderTooltipBackgroundColor: var(--zk-multislider-tooltip-background-color);
+@multisliderDisabledTooltipBackgroundColor: var(--zk-multislider-disabled-tooltip-background-color);
+@multisliderInnerSize:         var(--zk-multislider-inner-size);
+@multisliderDisabledTrackColor: var(--zk-multislider-disabled-track-color);
+@multisliderDisabledButtonColor: var(--zk-multislider-disabled-button-color);
+@multisliderDisabledButtonColor2: var(--zk-multislider-disabled-button-color2);
 
 // inputgroup
-@inputgroupTextBackgroundColor: #E9ECEF;
+@inputgroupTextBackgroundColor: var(--zk-inputgroup-text-background-color);
 
 // pdfviewer
-@pdfviewerContainerBackgroundColor: gray;
-@pdfviewerSelectionBackgroundColor: blue;
-@pdfviewerToolbarBackgroundColor: @colorBackground3;
-@pdfviewerToolbarBorderColor: @baseBorderColor;
-@pdfviewerToolbarBorderRadius: @baseBorderRadius;
-@pdfviewerToolbarPadding: @spacing-03 @spacing-06;
-@pdfviewerToolbarButtonSize: var(--zk-rem3-5);
-@pdfviewerToolbarMargins: @spacing-04;
-@pdfviewerToolbarButtonColor: @textColorDefault;
-@pdfviewerToolbarButtonBackgroundColor: @colorBackground3;
-@pdfviewerToolbarButtonHoverColor: @textColorDefault;
-@pdfviewerToolbarButtonHoverBackgroundColor: @colorPrimaryLighter;
-@pdfviewerToolbarButtonActiveColor: @textColorDefault3;
-@pdfviewerToolbarButtonActiveBackgroundColor: @colorPrimary;
-@pdfviewerToolbarSeparatorColor: @baseBorderColor;
-@pdfviewerToolbarSeparatorHeight: var(--zk-rem2);
-@pdfviewerToolbarPageActiveWidth: var(--zk-rem6);
+@pdfviewerContainerBackgroundColor: var(--zk-pdfviewer-container-background-color);
+@pdfviewerSelectionBackgroundColor: var(--zk-pdfviewer-selection-background-color);
+@pdfviewerToolbarBackgroundColor: var(--zk-pdfviewer-toolbar-background-color);
+@pdfviewerToolbarBorderColor:  var(--zk-pdfviewer-toolbar-border-color);
+@pdfviewerToolbarBorderRadius: var(--zk-pdfviewer-toolbar-border-radius);
+@pdfviewerToolbarPadding:      var(--zk-pdfviewer-toolbar-padding);
+@pdfviewerToolbarButtonSize:   var(--zk-pdfviewer-toolbar-button-size);
+@pdfviewerToolbarMargins:      var(--zk-pdfviewer-toolbar-margins);
+@pdfviewerToolbarButtonColor:  var(--zk-pdfviewer-toolbar-button-color);
+@pdfviewerToolbarButtonBackgroundColor: var(--zk-pdfviewer-toolbar-button-background-color);
+@pdfviewerToolbarButtonHoverColor: var(--zk-pdfviewer-toolbar-button-hover-color);
+@pdfviewerToolbarButtonHoverBackgroundColor: var(--zk-pdfviewer-toolbar-button-hover-background-color);
+@pdfviewerToolbarButtonActiveColor: var(--zk-pdfviewer-toolbar-button-active-color);
+@pdfviewerToolbarButtonActiveBackgroundColor: var(--zk-pdfviewer-toolbar-button-active-background-color);
+@pdfviewerToolbarSeparatorColor: var(--zk-pdfviewer-toolbar-separator-color);
+@pdfviewerToolbarSeparatorHeight: var(--zk-pdfviewer-toolbar-separator-height);
+@pdfviewerToolbarPageActiveWidth: var(--zk-pdfviewer-toolbar-page-active-width);
 
 // searchbox
-@searchboxHeight: var(--zk-rem4-25);
-@searchboxFontSize: @fontSizeMedium;
-@searchboxPadding: @inputPadding;
-@searchboxBorderColor: @inputBorderColor;
-@searchboxColor: @inputColor;
-@searchboxPlaceholderColor: @inputPlaceholderColor;
-@searchboxIconColor: @iconColor;
-@searchboxIconRight: @spacing-04;
-@searchboxIconSize: var(--zk-rem2-75);
-@searchboxBackgroundColor: @inputBackgroundColor;
-@searchboxBorderRadius: @inputBorderRadius;
-@searchboxHoverBorderColor: @inputHoverBorderColor;
-@searchboxFocusBorderColor: @inputFocusBorderColor;
-@searchboxActiveBorderColor: @colorPrimaryDark;
-@searchboxActiveBackgroundColor: @colorPrimary;
-@searchboxActiveColor: @textColorDefault3;
-@searchboxActiveIconColor: @textColorDefault3;
-@searchboxDisableBorderColor: @inputBorderColor;
-@searchboxDisableBackgroundColor: @inputDisableBackgroundColor;
-@searchboxDisableColor: @inputDisableColor;
-@searchboxDisableIconColor: @iconDisabledColor;
-@searchboxPopupBackgroundColor: @textColorDefault3;
-@searchboxPopupBorderColor: @comboPopupBorderColor;
-@searchboxPopupBorderRadius: @baseBorderRadius;
-@searchboxPopupShadow: 0 3px 6px rgba(0, 0, 0, 0.3);
-@searchboxPopupItemBorderRadius: @baseBorderRadius;
-@searchboxPopupItemHoverBackgroundColor: @colorPrimaryLighter;
-@searchboxPopupItemHoverColor: @textColorDefault;
-@searchboxPopupItemActiveBackgroundColor: @colorPrimaryLight;
-@searchboxPopupItemActiveColor: @textColorDefault;
-@searchboxPopupItemSelectedColor: @textColorActive;
-@searchboxPopupItemCheckSize: var(--zk-rem2-5);
-@searchboxPopupItemPadding: @spacing-03 @spacing-04;
-@searchboxPopupItemCheckMarginRight: @spacing-04;
-@searchboxPopupItemCheckBorderColor: @checkedBorderColor;
-@searchboxPopupItemCheckBorderRadius: @baseBorderRadius;
-@searchboxPopupItemCheckBackgroundColor: @baseBackgroundColor;
-@searchboxPopupItemCheckCheckedColor: @textColorDefault3;
-@searchboxPopupItemCheckCheckedBackgroundColor: @colorPrimary;
+@searchboxHeight:              var(--zk-searchbox-height);
+@searchboxFontSize:            var(--zk-searchbox-font-size);
+@searchboxPadding:             var(--zk-searchbox-padding);
+@searchboxBorderColor:         var(--zk-searchbox-border-color);
+@searchboxColor:               var(--zk-searchbox-color);
+@searchboxPlaceholderColor:    var(--zk-searchbox-placeholder-color);
+@searchboxIconColor:           var(--zk-searchbox-icon-color);
+@searchboxIconRight:           var(--zk-searchbox-icon-right);
+@searchboxIconSize:            var(--zk-searchbox-icon-size);
+@searchboxBackgroundColor:     var(--zk-searchbox-background-color);
+@searchboxBorderRadius:        var(--zk-searchbox-border-radius);
+@searchboxHoverBorderColor:    var(--zk-searchbox-hover-border-color);
+@searchboxFocusBorderColor:    var(--zk-searchbox-focus-border-color);
+@searchboxActiveBorderColor:   var(--zk-searchbox-active-border-color);
+@searchboxActiveBackgroundColor: var(--zk-searchbox-active-background-color);
+@searchboxActiveColor:         var(--zk-searchbox-active-color);
+@searchboxActiveIconColor:     var(--zk-searchbox-active-icon-color);
+@searchboxDisableBorderColor:  var(--zk-searchbox-disable-border-color);
+@searchboxDisableBackgroundColor: var(--zk-searchbox-disable-background-color);
+@searchboxDisableColor:        var(--zk-searchbox-disable-color);
+@searchboxDisableIconColor:    var(--zk-searchbox-disable-icon-color);
+@searchboxPopupBackgroundColor: var(--zk-searchbox-popup-background-color);
+@searchboxPopupBorderColor:    var(--zk-searchbox-popup-border-color);
+@searchboxPopupBorderRadius:   var(--zk-searchbox-popup-border-radius);
+@searchboxPopupShadow:         var(--zk-searchbox-popup-shadow);
+@searchboxPopupItemBorderRadius: var(--zk-searchbox-popup-item-border-radius);
+@searchboxPopupItemHoverBackgroundColor: var(--zk-searchbox-popup-item-hover-background-color);
+@searchboxPopupItemHoverColor: var(--zk-searchbox-popup-item-hover-color);
+@searchboxPopupItemActiveBackgroundColor: var(--zk-searchbox-popup-item-active-background-color);
+@searchboxPopupItemActiveColor: var(--zk-searchbox-popup-item-active-color);
+@searchboxPopupItemSelectedColor: var(--zk-searchbox-popup-item-selected-color);
+@searchboxPopupItemPadding:    var(--zk-searchbox-popup-item-padding);
+@searchboxPopupItemCheckSize:  var(--zk-searchbox-popup-item-check-size);
+@searchboxPopupItemCheckMarginRight: var(--zk-searchbox-popup-item-check-margin-right);
+@searchboxPopupItemCheckBorderColor: var(--zk-searchbox-popup-item-check-border-color);
+@searchboxPopupItemCheckBorderRadius: var(--zk-searchbox-popup-item-check-border-radius);
+@searchboxPopupItemCheckBackgroundColor: var(--zk-searchbox-popup-item-check-background-color);
+@searchboxPopupItemCheckCheckedColor: var(--zk-searchbox-popup-item-check-checked-color);
+@searchboxPopupItemCheckCheckedBackgroundColor: var(--zk-searchbox-popup-item-check-checked-background-color);
 
 // stepbar
-@stepbarPadding: var(--zk-rem2); // 16px / 8
-@stepbarSeparatorSize: var(--zk-rem0-75); // 6px / 8
-@stepSize: var(--zk-rem3);
-@stepFontSize: @fontSizeMedium;
-@stepIconErrorSize: @fontSizeMedium;
-@stepIconCompleteSize: @fontSizeMedium;
-@stepIconEmptyBorderWidth: @spacing-02;
-@stepInactiveColor: @colorGreyLight;
-@stepActiveColor: @colorPrimary;
-@stepErrorColor: @colorAccent2;
-@stepCompleteColor: @colorPrimary;
-@stepHoverColor: @colorPrimaryLight;
-@stepClickColor: @colorPrimaryDark;
+@stepbarPadding:               var(--zk-stepbar-padding);
+@stepbarSeparatorSize:         var(--zk-stepbar-separator-size);
+@stepSize:                     var(--zk-step-size);
+@stepFontSize:                 var(--zk-step-font-size);
+@stepIconErrorSize:            var(--zk-step-icon-error-size);
+@stepIconCompleteSize:         var(--zk-step-icon-complete-size);
+@stepIconEmptyBorderWidth:     var(--zk-step-icon-empty-border-width);
+@stepInactiveColor:            var(--zk-step-inactive-color);
+@stepActiveColor:              var(--zk-step-active-color);
+@stepErrorColor:               var(--zk-step-error-color);
+@stepCompleteColor:            var(--zk-step-complete-color);
+@stepHoverColor:               var(--zk-step-hover-color);
+@stepClickColor:               var(--zk-step-click-color);
 
 // portalchildren
-@portalchildrenFrameBorderColor: @colorGreyDark;
-@portalchildrenFrameRadius: var(--zk-rem0-5); // 4px / 8
-@portalchildrenFrameBackgroundColor: @colorBackground1;
-@portalchildrenFrameMargin: @spacing-06;
-@portalchildrenFramePadding: @spacing-06;
-@portalchildrenFrameTitleFontFamily: @baseTitleFontFamily;
-@portalchildrenFrameTitleFontSize: @fontSizeMedium;
-@portalchildrenFrameTitleFontColor: @containerHeaderColor;
-@portalchildrenCounterRadius: var(--zk-rem1-25); // 10px / 8
-@portalchildrenCounterPadding: @spacing-04;
-@portalchildrenCounterBackground: @colorGreyLight;
-@portalchildrenFramePanelHeaderTextColor: @textColorActive;
-@portalchildrenFramePanelHeaderTextSize: @fontSizeMedium;
-@portalchildrenFramePanelHeaderPadding: @spacing-04 @spacing-06 @spacing-06 @spacing-06;
-@portalchildrenFramePanelChildrenPadding: @spacing-04 @spacing-06;
-@portalchildrenFramePanelBackgroundColor: @colorBackground3;
-@portalchildrenFramePanelPadding: @spacing-04;
-@portalchildrenFrameDragButtonSize: @baseIconWidth;
-@portalchildrenFrameDragButtonColor: @colorGreyDark;
+@portalchildrenFrameBorderColor: var(--zk-portalchildren-frame-border-color);
+@portalchildrenFrameRadius:    var(--zk-portalchildren-frame-radius);
+@portalchildrenFrameBackgroundColor: var(--zk-portalchildren-frame-background-color);
+@portalchildrenFrameMargin:    var(--zk-portalchildren-frame-margin);
+@portalchildrenFramePadding:   var(--zk-portalchildren-frame-padding);
+@portalchildrenFrameTitleFontFamily: var(--zk-portalchildren-frame-title-font-family);
+@portalchildrenFrameTitleFontSize: var(--zk-portalchildren-frame-title-font-size);
+@portalchildrenFrameTitleFontColor: var(--zk-portalchildren-frame-title-font-color);
+@portalchildrenCounterRadius:  var(--zk-portalchildren-counter-radius);
+@portalchildrenCounterPadding: var(--zk-portalchildren-counter-padding);
+@portalchildrenCounterBackground: var(--zk-portalchildren-counter-background);
+@portalchildrenFramePanelHeaderTextColor: var(--zk-portalchildren-frame-panel-header-text-color);
+@portalchildrenFramePanelHeaderTextSize: var(--zk-portalchildren-frame-panel-header-text-size);
+@portalchildrenFramePanelHeaderPadding: var(--zk-portalchildren-frame-panel-header-padding);
+@portalchildrenFramePanelChildrenPadding: var(--zk-portalchildren-frame-panel-children-padding);
+@portalchildrenFramePanelBackgroundColor: var(--zk-portalchildren-frame-panel-background-color);
+@portalchildrenFramePanelPadding: var(--zk-portalchildren-frame-panel-padding);
+@portalchildrenFrameDragButtonSize: var(--zk-portalchildren-frame-drag-button-size);
+@portalchildrenFrameDragButtonColor: var(--zk-portalchildren-frame-drag-button-color);
 
 // linelayout
-@linelayoutLineColor: @colorPrimary;
-@linelayoutLineWidth: var(--zk-rem0-75);
-@linelayoutCavePadding: @spacing-08;
-@linelayoutPointBorder: 0;
-@linelayoutPointRadius: 50%;
-@linelayoutPointSize: var(--zk-rem3-5);
-@linelayoutPointIconSize: var(--zk-rem2-5);
-@linelayoutPointIconColor: @textColorDefault3;
-@linelayoutPointIconFixTop: 0;
-@linelayoutPointIconFixLeft: 0;
-@linelayoutPointBackgroundColor: @colorPrimary;
-@linelayoutPointShadow: 0 0 4px rgba(0,0,0,0.3);
+@linelayoutLineColor:          var(--zk-linelayout-line-color);
+@linelayoutLineWidth:          var(--zk-linelayout-line-width);
+@linelayoutCavePadding:        var(--zk-linelayout-cave-padding);
+@linelayoutPointBorder:        var(--zk-linelayout-point-border);
+@linelayoutPointRadius:        var(--zk-linelayout-point-radius);
+@linelayoutPointSize:          var(--zk-linelayout-point-size);
+@linelayoutPointIconSize:      var(--zk-linelayout-point-icon-size);
+@linelayoutPointIconColor:      var(--zk-linelayout-point-icon-color);
+@linelayoutPointIconFixTop:     var(--zk-linelayout-point-icon-fix-top);
+@linelayoutPointIconFixLeft:    var(--zk-linelayout-point-icon-fix-left);
+@linelayoutPointBackgroundColor: var(--zk-linelayout-point-background-color);
+@linelayoutPointShadow:        var(--zk-linelayout-point-shadow);
 
 // coachmark
-@coachmarkPadding: @spacing-05;
-@coachmarkPaddingLeft: @spacing-05;
-@coachmarkPaddingRight: @spacing-09;
-@coachmarkIconSize: var(--zk-rem2-25); // 18px / 8
-@coachmarkMaskBackground: rgba(0, 0, 0, 0.5);
-@coachmarkBackgroundColor: @colorBackground3;
+@coachmarkPadding:             var(--zk-coachmark-padding);
+@coachmarkPaddingLeft:         var(--zk-coachmark-padding-left);
+@coachmarkPaddingRight:        var(--zk-coachmark-padding-right);
+@coachmarkIconSize:            var(--zk-coachmark-icon-size);
+@coachmarkMaskBackground:      var(--zk-coachmark-mask-background);
+@coachmarkBackgroundColor:     var(--zk-coachmark-background-color);
 
 //cascader
-@cascaderHeight: var(--zk-rem4-5);
-@cascaderLineHeight: ~"calc(var(--zk-rem4-5) - 2px)"; // cascaderHeight minus border
-@cascaderColor: @textColorDefault;
-@cascaderFontSize: @fontSizeMedium;
-@cascaderPadding: @inputPadding;
-@cascaderSeparatorColor: @colorGreyLight;
-@cascaderBorderColor: @inputBorderColor;
-@cascaderBorderRadius: @inputBorderRadius;
-@cascaderBackgroundColor: @inputBackgroundColor;
-@cascaderIconColor: @iconColor;
-@cascaderPlaceholderColor: @inputPlaceholderColor;
-@cascaderActiveBorderColor: @colorPrimaryDark;
-@cascaderActiveBackgroundColor: @colorPrimary;
-@cascaderHoverBorderColor: @inputHoverBorderColor;
-@cascaderFocusBorderColor: @inputFocusBorderColor;
-@cascaderDisableColor: @inputDisableColor;
-@cascaderDisableBackgroundColor: @inputDisableBackgroundColor;
-@cascaderPopupBorderColor: @comboPopupBorderColor;
-@cascaderPopupCavePadding: var(--zk-rem0-5);
-@cascaderPopupItemPadding: 0px @spacing-08 0px @spacing-03;
-@cascaderPopupItemHeight: var(--zk-rem4);
-@cascaderPopupItemHoverBackgroundColor: @colorPrimaryLighter;
-@cascaderPopupItemSelectedColor: @colorPrimary;
+@cascaderHeight:               var(--zk-cascader-height);
+@cascaderLineHeight:           var(--zk-cascader-line-height);
+@cascaderColor:                var(--zk-cascader-color);
+@cascaderFontSize:             var(--zk-cascader-font-size);
+@cascaderPadding:              var(--zk-cascader-padding);
+@cascaderSeparatorColor:       var(--zk-cascader-separator-color);
+@cascaderBorderColor:          var(--zk-cascader-border-color);
+@cascaderBorderRadius:         var(--zk-cascader-border-radius);
+@cascaderBackgroundColor:      var(--zk-cascader-background-color);
+@cascaderIconColor:            var(--zk-cascader-icon-color);
+@cascaderPlaceholderColor:     var(--zk-cascader-placeholder-color);
+@cascaderActiveBorderColor:    var(--zk-cascader-active-border-color);
+@cascaderActiveBackgroundColor: var(--zk-cascader-active-background-color);
+@cascaderHoverBorderColor:     var(--zk-cascader-hover-border-color);
+@cascaderFocusBorderColor:     var(--zk-cascader-focus-border-color);
+@cascaderDisableColor:         var(--zk-cascader-disable-color);
+@cascaderDisableBackgroundColor: var(--zk-cascader-disable-background-color);
+@cascaderPopupBorderColor:     var(--zk-cascader-popup-border-color);
+@cascaderPopupCavePadding:     var(--zk-cascader-popup-cave-padding);
+@cascaderPopupItemPadding:     var(--zk-cascader-popup-item-padding);
+@cascaderPopupItemHeight:      var(--zk-cascader-popup-item-height);
+@cascaderPopupItemHoverBackgroundColor: var(--zk-cascader-popup-item-hover-background-color);
+@cascaderPopupItemSelectedColor: var(--zk-cascader-popup-item-selected-color);
 
 // cropper
-@cropperToolbarButtonFontSize: @fontSizeSmall;
-@cropperToolbarButtonPadding: @spacing-04 @spacing-06;
+@cropperToolbarButtonFontSize: var(--zk-cropper-toolbar-button-font-size);
+@cropperToolbarButtonPadding:  var(--zk-cropper-toolbar-button-padding);
