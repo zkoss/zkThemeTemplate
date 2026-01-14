@@ -14,7 +14,7 @@ Copyright (C) 2010 Potix Corporation. All Rights Reserved.
 	it will be useful, but WITHOUT ANY WARRANTY.
 }}IS_RIGHT
 */
-package org.zkoss.theme.dev;
+package org.zkoss.theme.iceblue_rem;
 
 import org.zkoss.zk.ui.WebApp;
 import org.zkoss.zk.ui.WebApps;
@@ -23,14 +23,14 @@ import org.zkoss.zkmax.theme.ResponsiveThemeRegistry;
 import org.zkoss.zul.theme.Themes;
 
 /**
- * Initial the theme relative setting, includes
+ * Initial the theme relative settings, includes
  * Library property setting, Theme provider setting and Component definition setting 
  * 
  */
-public class DevThemeWebAppInit implements WebAppInit {
+public class IceblueRemThemeWebAppInit implements WebAppInit {
 
-	private final static String THEME_NAME = "dev";
-	private final static String THEME_DISPLAY = "dev";
+	private final static String THEME_NAME = "iceblue_rem";
+	private final static String THEME_DISPLAY = "iceblue_rem";
 	private final static int THEME_PRIORITY = 700;
 	
 	public void init(WebApp webapp) throws Exception {

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>zkoss</groupId>
-	<artifactId>dev</artifactId>
-	<version>10.5</version>
+	<groupId>org.zkoss.theme</groupId>
+	<artifactId>iceblue_rem</artifactId>
+	<version>10.3.0</version>
 	<properties>
 		<maven.compiler.source>11</maven.compiler.source>
 		<maven.compiler.target>11</maven.compiler.target>
@@ -17,7 +17,7 @@
 		<zktheme.theme.outputDirectory>${project.build.outputDirectory}/web/${project.artifactId}</zktheme.theme.outputDirectory>
 	</properties>
 	<packaging>jar</packaging>
-	<name>dev</name>
+	<name>iceblue_rem</name>
 	<scm>
 		<url>https://mavensync.zkoss.org/maven2</url>
 	</scm>

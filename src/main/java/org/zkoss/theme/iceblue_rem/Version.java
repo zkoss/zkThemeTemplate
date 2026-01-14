@@ -16,7 +16,7 @@ Copyright (C) 2010 Potix Corporation. All Rights Reserved.
 	it will be useful, but WITHOUT ANY WARRANTY.
 }}IS_RIGHT
 */
-package org.zkoss.theme.dev;
+package org.zkoss.theme.iceblue_rem;
 
 /**
  *  The version of the sapphire theme.
