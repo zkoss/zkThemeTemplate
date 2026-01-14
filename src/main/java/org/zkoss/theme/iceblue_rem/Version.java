@@ -19,12 +19,12 @@ Copyright (C) 2010 Potix Corporation. All Rights Reserved.
 package org.zkoss.theme.iceblue_rem;
 
 /**
- *  The version of the sapphire theme.
+ *  The version of the theme.
  * {@link #UID} must be the same as the version specified in lang-addon.xml.
  * @author Jimmy
  */
 public class Version {
 	/** Returns the version UID.
 	 */
-	public static final String UID = "10.5";
+	public static final String UID = "10.3.0";
 }
