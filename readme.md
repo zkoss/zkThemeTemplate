@@ -5,6 +5,10 @@ If you just want to adjust the look of specific components rather than all of th
 
 We assume you're already familiar with [Less](http://lesscss.org/).
 
+Please note that with the introduction of [CSS Variables](https://docs.zkoss.org/zk_style_customization_guide/css_variables), you may not need to create a custom theme for simple customizations. If still adopting this approach of creating a theme jar, you need to be aware that CSS variables will not take effect if you override the corresponding LESS variables.
+For example, overriding @colorPrimary will cause the CSS variable --zk-color-primary to be overridden as well.
+The same applies when specifying @themePalette, as it overrides the theme-related variables defined in the theme file.
+
 # Build Steps
 ## Building prerequisites
 
@@ -38,7 +42,7 @@ The suggested steps:
 2. Add a new `.less` file to override the existing variables.
 
 ## switch to compact profile (since 9.5.0)
-1. Open [`src/archive/web/zul/less/_zkvariables.less`](src/archive/web/zul/less/_zkvariables.less)
+1. Open [`src/main/resources/web/zul/less/_zkvariables.less`](src/main/resources/web/zul/less/_zkvariables.less)
 2. Modify `@themeProfile` to `compact`.
 ``` less
 @themeProfile:                 "compact";
@@ -52,11 +56,11 @@ The [theme pack](https://www.zkoss.org/zkthemepackdemo/) contains extra 23 theme
 
 1. Download Theme Pack source jar at [the premium repository](https://maven.zkoss.org/repo/zk/ee/org/zkoss/themepack/): [THEME_NAME]-[VERSION]-sources.jar
 2. Get theme color palette less at `source.jar/palettes/*.less`
-2. Copy the theme less to `zkThemeTemplate/src/archive/web/zul/less/colors`. <br/>
+2. Copy the theme less to `zkThemeTemplate/src/main/resources/web/zul/less/colors`. <br/>
 For example, `montana.less`
 3. prepend `_` at the file name <br/>
 For example, `_montana.less`
-4. Specify the theme name at `src/archive/web/zul/less/_zkvariables.less`
+4. Specify the theme name at `src/main/resources/web/zul/less/_zkvariables.less`
 ```less
 @themePalette:                 "montana";
 ```
@@ -113,10 +117,10 @@ Please refer to [ZK Developer's Reference/Theming and Styling/Switching Themes](
 
 # Use cases
 ## Change primary color
-`src/archive/web/zul/less/_zkvariables.less` > `@colorPrimary`
+`src/main/resources/web/zul/less/_zkvariables.less` > `@colorPrimary`
 
 ## Change base font
-`src/archive/web/zul/less/_zkvariables.less` > `@baseFontSize`, `@baseTitleFontFamily`, `@baseContentFontFamily`
+`src/main/resources/web/zul/less/_zkvariables.less` > `@baseFontSize`, `@baseTitleFontFamily`, `@baseContentFontFamily`
 
 ## Change margin and padding
 Different components have different margin and padding, search "margin" and "padding" among all `.less` files.
