@@ -1,0 +1,11 @@
+<language-addon>
+	<addon-name>wcag_navy_c</addon-name>
+	<depends>zul</depends>
+	<language-name>xul/html</language-name>
+	
+	<version>
+		<version-class>org.zkoss.theme.wcag_navy_c.Version</version-class>
+		<version-uid>10.1.0</version-uid>
+	</version>
+
+</language-addon>

@@ -1,0 +1,4 @@
+<?page title="Decimalbox" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<decimalbox value="155"/>
+</zk>

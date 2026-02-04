@@ -1,0 +1,7 @@
+<?page title="Html" contentType="text/html;charset=UTF-8"?>
+<zk>
+    <html><![CDATA[
+	         <h4>Hi, ${win.title}</h4>
+	         <p>It is the content of the html component.</p>
+    ]]></html>
+</zk>

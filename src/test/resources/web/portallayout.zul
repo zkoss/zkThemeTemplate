@@ -1,0 +1,24 @@
+<?page title="Portallayout" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<portallayout height="100%">
+	        <portalchildren width="50%">
+	            <panel height="50%" title="Calendar" border="normal">
+	                <panelchildren>
+	                    <calendar/>
+	                </panelchildren>
+	            </panel>
+	            <panel height="50%" title="Colorbox" border="normal">
+	                <panelchildren>
+	                    <colorbox/>
+	                </panelchildren>
+	            </panel>
+	        </portalchildren>
+	        <portalchildren width="50%">
+	            <panel height="100%" title="Editor" border="normal">
+	                <panelchildren>
+	                    <tbeditor/>
+	                </panelchildren>
+	            </panel>
+	        </portalchildren>
+	    </portallayout>
+</zk>

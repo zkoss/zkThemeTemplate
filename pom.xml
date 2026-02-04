@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>___GROUP_ID___</groupId>
-	<artifactId>___ARTIFACT_ID___</artifactId>
-	<version>___VERSION___</version>
+	<groupId>org.zkoss.theme</groupId>
+	<artifactId>wcag_navy_c</artifactId>
+	<version>10.1.0</version>
 	<properties>
 		<maven.compiler.source>11</maven.compiler.source>
 		<maven.compiler.target>11</maven.compiler.target>
@@ -12,16 +12,16 @@
 		<springboot.version>3.2.6</springboot.version>
 		<maven.build.timestamp.format>yyyy-MM-dd</maven.build.timestamp.format>
 		<packname>-${project.version}</packname>
-		<zktheme.resources>${project.basedir}/src/archive</zktheme.resources>
+		<zktheme.resources>${project.basedir}/src/main/resources</zktheme.resources>
 		<zktheme.web.resources>${zktheme.resources}/web</zktheme.web.resources>
 		<zktheme.theme.outputDirectory>${project.build.outputDirectory}/web/${project.artifactId}</zktheme.theme.outputDirectory>
 	</properties>
 	<packaging>jar</packaging>
-	<name>___ARTIFACT_ID___</name>
+	<name>wcag_navy_c</name>
 	<scm>
 		<url>https://mavensync.zkoss.org/maven2</url>
 	</scm>
-	<description>___DISPLAY_NAME___</description>
+	<description>WCAG Navy Compact</description>
 	<licenses>
 		<license>
 			<name>GNU LESSER GENERAL PUBLIC LICENSE, Version 3</name>
@@ -98,7 +98,7 @@
 		</dependency>
 	</dependencies>
 	<build>
-		<sourceDirectory>${project.basedir}/src/</sourceDirectory>
+<!--		<sourceDirectory>${project.basedir}/src/</sourceDirectory>-->
 		<resources>
 			<!-- handle class web resources separately below -->
 			<resource>

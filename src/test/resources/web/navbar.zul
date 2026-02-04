@@ -1,0 +1,199 @@
+<vbox>
+	<window title="Navbar (vertical)" border="normal">
+		<hlayout>
+			<vlayout hflex="1">
+				<label value="Vertical" />
+				<navbar orient="vertical">
+				    <navitem label="Home" iconSclass="z-icon-home"/>
+				    <nav label="Get Started" iconSclass="z-icon-th-list" badgeText="3">
+				        <navitem label="Step One" />
+				        <navitem label="Step Two" />
+				        <navitem label="Step Three" />
+				    </nav>
+				    <navitem label="About" iconSclass="z-icon-flag"/>
+				    <navseparator/>
+					<nav label="Contact" iconSclass="z-icon-envelope" badgeText="5">
+						<navitem label="Reply" iconSclass="z-icon-reply" />
+						<navitem label="Reply all" iconSclass="z-icon-reply-all"/>
+						<navitem label="Inbox" iconSclass="z-icon-inbox"/>
+						<navitem label="Edit" iconSclass="z-icon-edit"/>
+						<navseparator/>
+						<nav label="Settings" iconSclass="z-icon-cog" badgeText=">>">
+							<navitem label="Edit profile" iconSclass="z-icon-user"/>
+							<navitem label="Keyboard shortcuts" iconSclass="z-icon-keyboard-o"/>
+							<navitem label="Change password" iconSclass="z-icon-key"/>
+						</nav>
+					</nav>
+					<navitem label="Freeze" iconSclass="z-icon-asterisk" disabled="true"/>
+					<navitem label="Logout" iconSclass="z-icon-power-off"/>
+				</navbar>
+			</vlayout>
+			<vlayout hflex="1">
+				<checkbox label="Vertical Collapsed" checked="true">
+					<attribute name="onCheck">
+						vn1.collapsed = self.checked;
+					</attribute>
+				</checkbox>
+				<navbar id="vn1" orient="vertical" collapsed="true">	
+				    <navitem label="Home" iconSclass="z-icon-home"/>
+				    <nav label="Get Started" iconSclass="z-icon-th-list" badgeText="3">
+				        <navitem label="Step One" />
+				        <navitem label="Step Two" />
+				        <navitem label="Step Three" />
+				    </nav>
+				    <navitem label="About" iconSclass="z-icon-flag"/>
+				    <navseparator/>
+					<nav label="Contact" iconSclass="z-icon-envelope" badgeText="5">
+						<navitem label="Reply" iconSclass="z-icon-reply" />
+						<navitem label="Reply all" iconSclass="z-icon-reply-all"/>
+						<navitem label="Inbox" iconSclass="z-icon-inbox"/>
+						<navitem label="Edit" iconSclass="z-icon-edit"/>
+						<navseparator/>
+						<nav label="Settings" iconSclass="z-icon-cog" badgeText=">>">
+							<navitem label="Edit profile" iconSclass="z-icon-user"/>
+							<navitem label="Keyboard shortcuts" iconSclass="z-icon-keyboard-o"/>
+							<navitem label="Change password" iconSclass="z-icon-key"/>
+						</nav>
+					</nav>
+					<navitem label="Freeze" iconSclass="z-icon-asterisk" disabled="true"/>
+					<navitem label="Logout" iconSclass="z-icon-power-off"/>
+				</navbar>
+			</vlayout>
+			<vlayout hflex="1">
+				<checkbox label="Vertical Collapsed without Badge" checked="true">
+					<attribute name="onCheck">
+						vn2.collapsed = self.checked;
+					</attribute>
+				</checkbox>
+				<navbar id="vn2" orient="vertical" collapsed="true" hflex="min">
+				    <navitem label="Home" iconSclass="z-icon-home"/>
+				    <nav label="Get Started" iconSclass="z-icon-th-list">
+				        <navitem label="Step One" />
+				        <navitem label="Step Two" />
+				        <navitem label="Step Three" />
+				    </nav>
+				    <navitem label="About" iconSclass="z-icon-flag"/>
+				    <navseparator/>
+					<nav label="Contact" iconSclass="z-icon-envelope" >
+						<navitem label="Reply" iconSclass="z-icon-reply" />
+						<navitem label="Reply all" iconSclass="z-icon-reply-all"/>
+						<navitem label="Inbox" iconSclass="z-icon-inbox"/>
+						<navitem label="Edit" iconSclass="z-icon-edit"/>
+						<navseparator/>
+						<nav label="Settings" iconSclass="z-icon-cog">
+							<navitem label="Edit profile" iconSclass="z-icon-user"/>
+							<navitem label="Keyboard shortcuts" iconSclass="z-icon-keyboard-o"/>
+							<navitem label="Change password" iconSclass="z-icon-key"/>
+						</nav>
+					</nav>
+					<navitem label="Freeze" iconSclass="z-icon-asterisk" disabled="true"/>
+					<navitem label="Logout" iconSclass="z-icon-power-off"/>
+				</navbar>
+			</vlayout>
+		</hlayout>
+	</window>
+	<window title="Navbar (horizontal)" border="normal" width="1200px" height="500px">
+		<vlayout vflex="2">
+			<label value="Horizontal" />
+			<checkbox label="Make it shorter (tablet scroll test)" checked="false">
+				<attribute name="onCheck">
+					self.nextSibling.width = self.checked ? "300px" : "";
+				</attribute>
+			</checkbox>
+			<navbar orient="horizontal">
+			    <navitem label="Home" iconSclass="z-icon-home"/>
+			    <nav label="Get Started" iconSclass="z-icon-th-list" badgeText="3">
+			        <navitem label="Step One"/>
+			        <navitem label="Step Two"/>
+			        <navitem label="Step Three"/>
+			    </nav>
+			    <navitem label="About" iconSclass="z-icon-flag"/>
+			    <navseparator/>
+				<nav label="Contact" iconSclass="z-icon-envelope" badgeText="5">
+					<navitem label="Reply" iconSclass="z-icon-reply" />
+					<navitem label="Reply all" iconSclass="z-icon-reply-all"/>
+					<navitem label="Inbox" iconSclass="z-icon-inbox"/>
+					<navitem label="Edit" iconSclass="z-icon-edit"/>
+					<navseparator/>
+					<nav label="Settings" iconSclass="z-icon-cog" badgeText=">>">
+						<navitem label="Edit profile" iconSclass="z-icon-user"/>
+						<navitem label="Keyboard shortcuts" iconSclass="z-icon-keyboard-o"/>
+						<navitem label="Change password" iconSclass="z-icon-key"/>
+					</nav>
+				</nav>
+				<navitem label="Freeze" iconSclass="z-icon-asterisk" disabled="true"/>
+				<navitem label="Logout" iconSclass="z-icon-power-off"/>
+			</navbar>
+		</vlayout>
+		<vlayout vflex="1">
+			<checkbox label="Horizontal Collapsed" checked="true">
+				<attribute name="onCheck">
+					hn1.collapsed = self.checked;
+				</attribute>
+			</checkbox>
+			<navbar id="hn1" collapsed="true">
+			    <navitem label="Home" iconSclass="z-icon-home" />
+			    <nav label="Get Started" iconSclass="z-icon-th-list" badgeText="3">
+			        <navitem label="Step One"/>
+			        <navitem label="Step Two"/>
+			        <navitem label="Step Three"/>
+			    </nav>
+			    <navitem label="About" iconSclass="z-icon-flag"/>
+			    <navseparator/>
+				<nav label="Contact" iconSclass="z-icon-envelope" badgeText="5">
+					<navitem label="Reply" iconSclass="z-icon-reply" />
+					<navitem label="Reply all" iconSclass="z-icon-reply-all"/>
+					<navitem label="Inbox" iconSclass="z-icon-inbox"/>
+					<navitem label="Edit" iconSclass="z-icon-edit"/>
+					<navseparator/>
+					<nav label="Settings" iconSclass="z-icon-cog" badgeText=">>">
+						<navitem label="Edit profile" iconSclass="z-icon-user"/>
+						<navitem label="Keyboard shortcuts" iconSclass="z-icon-keyboard-o"/>
+						<navitem label="Change password" iconSclass="z-icon-key"/>
+					</nav>
+				</nav>
+				<navitem label="Freeze" iconSclass="z-icon-asterisk" disabled="true"/>
+				<navitem label="Logout" iconSclass="z-icon-power-off"/>
+			</navbar>
+		</vlayout>
+		<vlayout vflex="1">
+			<checkbox label="Horizontal Collapsed without Badge" checked="true">
+				<attribute name="onCheck">
+					hn2.collapsed = self.checked;
+				</attribute>
+			</checkbox>
+			<navbar id="hn2" collapsed="true">
+			    <navitem label="Home" iconSclass="z-icon-home" />
+			    <nav label="Get Started" iconSclass="z-icon-th-list">
+			        <navitem label="Step One"/>
+			        <navitem label="Step Two"/>
+			        <navitem label="Step Three"/>
+			    </nav>
+			    <navitem label="About" iconSclass="z-icon-flag"/>
+			    <navseparator/>
+				<nav label="Contact" iconSclass="z-icon-envelope">
+					<navitem label="Reply" iconSclass="z-icon-reply" />
+					<navitem label="Reply all" iconSclass="z-icon-reply-all"/>
+					<navitem label="Inbox" iconSclass="z-icon-inbox"/>
+					<navitem label="Edit" iconSclass="z-icon-edit"/>
+					<navseparator/>
+					<nav label="Settings" iconSclass="z-icon-cog">
+						<navitem label="Edit profile" iconSclass="z-icon-user"/>
+						<navitem label="Keyboard shortcuts" iconSclass="z-icon-keyboard-o"/>
+						<navitem label="Change password" iconSclass="z-icon-key"/>
+					</nav>
+				</nav>
+				<navitem label="Freeze" iconSclass="z-icon-asterisk" disabled="true"/>
+				<navitem label="Logout" iconSclass="z-icon-power-off"/>
+			</navbar>
+			<navbar>
+				<navitem label="Home" iconSclass="z-icon-home"/>
+				<navitem label="Dashboard" iconSclass="z-icon-tachometer"/>
+				<navitem label="Products" iconSclass="z-icon-cube"/>
+				<navitem label="Orders" iconSclass="z-icon-shopping-cart"/>
+				<navitem label="Reports" iconSclass="z-icon-bar-chart"/>
+				<navitem label="Settings" iconSclass="z-icon-cog"/>
+			</navbar>
+		</vlayout>
+	</window>
+</vbox>

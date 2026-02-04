@@ -1,0 +1,50 @@
+<?page title="Anchorlayout" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window title="anchorlayout Demo" border="normal" 
+	    height="100%">
+	    <anchorlayout id="al"  vflex="1"
+	        style="overflow:auto">
+	        <anchorchildren height="200px" anchor="-100">
+	            <window title="win1" border="normal" 
+	                height="100%">
+	                height is "200px" and width is its parent size minus 100
+	            </window>
+	        </anchorchildren>
+	        <anchorchildren anchor="50% -200">
+	            <window title="win2" border="normal" 
+	                height="100%">
+	                width is its parent size's 50%, and height is its parent
+	                size minus 200
+	            </window>
+	        </anchorchildren>
+	        <anchorchildren anchor="25% 20%">
+	            <window title="win3" border="normal" 
+	                height="100%">
+	                width is its parent size's 25%, and height is its parent
+	                size's 20%
+	            </window>
+	        </anchorchildren>
+	        <anchorchildren anchor="25% 20%">
+	            <window title="win4" border="normal" 
+	                height="100%">
+	                width is its parent size's 25%, and height is its parent
+	                size's 20%
+	            </window>
+	        </anchorchildren>
+	        <anchorchildren anchor="25% 20%">
+	            <window title="win5" border="normal" 
+	                height="100%">
+	                width is its parent size's 25%, and height is its parent
+	                size's 20%
+	            </window>
+	        </anchorchildren>
+	        <anchorchildren anchor="25% 20%">
+	            <window title="win6" border="normal" 
+	                height="100%">
+	                width is its parent size's 25%, and height is its parent
+	                size's 20%
+	            </window>
+	        </anchorchildren>
+	    </anchorlayout>
+	</window>
+</zk>

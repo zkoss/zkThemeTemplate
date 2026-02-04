@@ -1,0 +1,18 @@
+<zk>
+       <inputgroup>
+           @<textbox />
+       </inputgroup>
+       
+       <inputgroup>
+           <textbox placeholder="Recipient's username"/>@example.com
+       </inputgroup>
+       
+       <inputgroup>
+           $<textbox/>.00
+       </inputgroup>
+       
+       <inputgroup>
+           With textarea
+           <textbox multiline="true" rows="5" cols="30"/>
+       </inputgroup>
+   </zk>

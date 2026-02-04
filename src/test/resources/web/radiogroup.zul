@@ -1,0 +1,11 @@
+<?page title="Radiogroup" contentType="text/html;charset=UTF-8"?>
+<zk  xmlns:n="native" >
+    <radiogroup onCheck="fruit.value = self.selectedItem.label">
+        <radio label="Apple"/>
+        <radio label="Orange"/>
+        <radio label="Banana"/>
+    </radiogroup>
+    <n:br/>
+    You have selected :
+    <label id="fruit" style="color:red"/>
+</zk>

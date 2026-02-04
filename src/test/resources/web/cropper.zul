@@ -1,0 +1,6 @@
+<?page title="Cropper" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<cropper x="50" y="100" w="100" h="100" onCrop="img.setContent(event.getMedia())" width="800px"
+	 toolbarVisible="true"  src="~./img/sun.jpg"/>
+	    <image id="img"/>
+</zk>
