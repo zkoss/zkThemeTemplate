@@ -7,7 +7,7 @@
 	<properties>
 		<maven.compiler.source>11</maven.compiler.source>
 		<maven.compiler.target>11</maven.compiler.target>
-		<zk.version>10.0.2-Eval</zk.version>
+		<zk.version>10.1.0-jakarta</zk.version>
 		<zkspringboot.version>3.2.6</zkspringboot.version>
 		<springboot.version>3.2.6</springboot.version>
 		<maven.build.timestamp.format>yyyy-MM-dd</maven.build.timestamp.format>
@@ -54,8 +54,12 @@
 			<url>https://mavensync.zkoss.org/maven2</url>
 		</repository>
 		<repository>
-			<id>ZK PE EE Evaluation</id>
+			<id>ZK EE Evaluation</id>
 			<url>https://mavensync.zkoss.org/eval/</url>
+		</repository>
+		<repository>
+			<id>ZK EE</id>
+			<url>https://maven.zkoss.org/repo/zk/ee</url>
 		</repository>
 	</repositories>
 	<pluginRepositories>
@@ -69,6 +73,12 @@
 		<dependency>
 			<groupId>org.zkoss.zk</groupId>
 			<artifactId>zkmax</artifactId>
+			<version>${zk.version}</version>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.zkoss.zk</groupId>
+			<artifactId>zuti</artifactId>
 			<version>${zk.version}</version>
 			<optional>true</optional>
 		</dependency>
@@ -107,12 +117,6 @@
 				<targetPath>${zktheme.theme.outputDirectory}</targetPath>
 			</resource>
 		</resources>
-		<testSourceDirectory>${project.basedir}/preview/</testSourceDirectory>
-		<testResources>
-			<testResource>
-				<directory>${project.basedir}/preview/</directory>
-			</testResource>
-		</testResources>
 		<plugins>
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
@@ -121,7 +125,7 @@
 				<executions>
 					<execution>
 						<id>compile-less</id>
-						<phase>process-resources</phase>
+						<phase>generate-resources</phase>
 						<goals>
 							<goal>exec</goal>
 						</goals>
@@ -134,6 +138,8 @@
 								<argument>--output</argument>
 								<argument>${zktheme.theme.outputDirectory}</argument>
 								<argument>--compress</argument>
+								<argument>--less-opts</argument>
+								<argument>{"math":"parens-division"}</argument>
 							</arguments>
 						</configuration>
 					</execution>
@@ -145,6 +151,21 @@
 						<configuration>
 							<mainClass>zk.example.ThemePreviewApp</mainClass>
 							<classpathScope>test</classpathScope>
+						</configuration>
+					</execution>
+					<execution> <!-- continuous compile/watch less files -->
+						<id>watch-less</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<configuration>
+							<executable>npm</executable>
+							<arguments>
+								<argument>run</argument>
+								<argument>zklessc-dev</argument>
+							</arguments>
+							<async>true</async>
 						</configuration>
 					</execution>
 				</executions>
@@ -166,6 +187,19 @@
 						<Import-Package>*</Import-Package>
 					</instructions>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>3.2.1</version>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar-no-fork</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 			<plugin>
 				<artifactId>maven-assembly-plugin</artifactId>

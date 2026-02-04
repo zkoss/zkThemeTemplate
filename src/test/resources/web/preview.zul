@@ -1,0 +1,82 @@
+<zk>
+    <script src="http://localhost:50000/socket.io/socket.io.js"/>
+    <script src="http://localhost:50000/zklessLiveReloadStyles.js"/>
+    <!--	<script src="http://localhost:50000/zklessLiveReloadStylesResize.js"/>-->
+    <!--	<script src="http://localhost:50000/zklessLiveReloadPage.js"/>-->
+
+    <zscript>
+        Date now = new Date();
+    </zscript>
+    <window title="Window" border="normal" closable="true" maximizable="true" minimizable="true">
+        <grid>
+            <columns>
+                <column width="200px"/>
+                <column/>
+            </columns>
+            <rows>
+                <row>
+                    Buttons
+                    <div>
+                        <button label="Button"/>
+                        <button iconSclass="z-icon-save"/>
+                        <button label="Icon" iconSclass="z-icon-times"/>
+                        <button label="disabled" disabled="true"/>
+                    </div>
+                </row>
+                <row>
+                    Checkboxes
+                    <div>
+                        <checkbox label="checkbox"/>
+                        <checkbox label="checkbox" checked="true"/>
+                        <separator/>
+                        <checkbox label="toggle" mold="toggle"/>
+                        <checkbox label="toggle" mold="toggle" checked="true"/>
+                        <separator/>
+                        <checkbox label="switch" mold="switch"/>
+                        <checkbox label="switch" mold="switch" checked="true"/>
+                    </div>
+                </row>
+                <row>
+                    Inputs
+                    <div>
+                        <textbox value="textbox"/>
+                        <textbox value="readonly" readonly="true"/>
+                        <textbox value="disabled" disabled="true"/>
+                        <separator/>
+                        <datebox value="${now}"/>
+                        <datebox value="${now}" readonly="true"/>
+                        <datebox value="${now}" disabled="true"/>
+                        <separator/>
+                        <spinner value="100"/>
+                        <spinner value="200" readonly="true"/>
+                        <spinner value="300" disabled="true"/>
+                        <separator/>
+                    </div>
+                </row>
+                <row>
+                    Progressmeter
+                    <progressmeter value="40" hflex="1"/>
+                </row>
+                <row>
+                    Listbox
+                    <listbox checkmark="true" multiple="true">
+                        <listhead>
+                            <listheader label="col 1"/>
+                            <listheader label="col 2"/>
+                            <listheader label="col 3"/>
+                        </listhead>
+                        <listitem>
+                            <listcell label="aaa"/><listcell label="bbb"/><listcell label="ccc"/>
+                        </listitem>
+                        <listitem selected="true">
+                            <listcell label="aaa"/><listcell label="bbb"/><listcell label="ccc"/>
+                        </listitem>
+                        <listitem>
+                            <listcell label="aaa"/><listcell label="bbb"/><listcell label="ccc"/>
+                        </listitem>
+                    </listbox>
+                </row>
+            </rows>
+        </grid>
+    </window>
+</zk>
