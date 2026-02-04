@@ -1,0 +1,19 @@
+<?page title="Linelayout" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<zscript>
+	    ListModel model4LineLayout = new ListModelList(new String[] {
+	        "2019-Q1",
+	        "2019-Q2",
+	        "2019-Q3",
+	        "2019-Q4"
+	    });
+	  </zscript>
+	  <linelayout model="${model4LineLayout}" height="50vh">
+	    <template name="model">
+	      <lineitem>
+	        <button label="${each}"/>
+	      </lineitem>
+	    </template>
+	  </linelayout>
+
+</zk>

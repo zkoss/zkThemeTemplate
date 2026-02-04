@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk>
+	<video id="video" width="600px" src="~./media/video.mp4" poster="~./img/ZK-Logo.gif"
+		   controls="true"/>
+	<!--ZK-6030 -->
+	<hlayout>
+		<button label="Play" onClick="video.play()"/>
+		<button label="Stop" onClick="video.stop()"/>
+		<button label="Pause" onClick="video.pause()"/>
+	</hlayout>
+</zk>

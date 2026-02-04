@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<config>
+	<config-name>wcag_purple_c</config-name><!-- used to resolve dependency -->
+	<depends>zul</depends>
+	<version>
+		<version-class>org.zkoss.theme.wcag_purple_c.Version</version-class>
+		<version-uid>10.1.0</version-uid>
+	</version>
+
+	<listener>
+		<listener-class>org.zkoss.theme.wcag_purple_c.WCAGPurpleCompactThemeWebAppInit</listener-class>
+	</listener>
+</config>

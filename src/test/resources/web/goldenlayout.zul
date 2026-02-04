@@ -1,0 +1,22 @@
+<goldenlayout id="gl" hflex="1" height="800px" orient="vertical">
+    <attribute name="areas">
+        A B C
+        A B C
+        D D D
+    </attribute>
+    <goldenpanel id="project" area="A" title="Project" closable="false">
+        A
+    </goldenpanel>
+    <goldenpanel id="files" area="A" title="Files">
+        A
+    </goldenpanel>
+    <goldenpanel id="main" area="B" title="Main" droppable="false">
+        B
+    </goldenpanel>
+    <goldenpanel id="side" area="C" title="Side">
+        C
+    </goldenpanel>
+    <goldenpanel id="console" area="D" title="Console" draggable="true">
+        D
+    </goldenpanel>
+</goldenlayout>

@@ -1,0 +1,6 @@
+<?page title="Rangeslider" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<rangeslider startValue="10" endValue="90"/>
+	
+	  <rangeslider orient="vertical" startValue="20" endValue="80" markScale="20" />
+</zk>

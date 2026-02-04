@@ -1,0 +1,4 @@
+<?page title="Imagemap" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<imagemap src="~./img/sun.jpg" onClick="alert(event.x + &quot;, &quot; +event.y)"/>
+</zk>

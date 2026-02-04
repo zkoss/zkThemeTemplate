@@ -1,0 +1,4 @@
+<?page title="Longbox" contentType="text/html;charset=UTF-8"?>
+<zk>
+	 long box:<longbox width="250px"/>
+</zk>
