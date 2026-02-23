@@ -1,10 +1,10 @@
 <language-addon>
-	<addon-name>iceblue_rem</addon-name>
+	<addon-name>zk-material</addon-name>
 	<depends>zul</depends>
 	<language-name>xul/html</language-name>
 
 	<version>
-		<version-class>org.zkoss.theme.iceblue_rem.Version</version-class>
-		<version-uid>10.3.0</version-uid>
+		<version-class>org.zkoss.theme.zkmaterial.Version</version-class>
+		<version-uid>1.0.0</version-uid>
 	</version>
 </language-addon>

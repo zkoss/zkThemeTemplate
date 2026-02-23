@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <config>
-	<config-name>iceblue_rem</config-name><!-- used to resolve dependency -->
+	<config-name>zk-material</config-name><!-- used to resolve dependency -->
 	<depends>zul</depends>
 	<version>
-		<version-class>org.zkoss.theme.iceblue_rem.Version</version-class>
-		<version-uid>10.3.0</version-uid>
+		<version-class>org.zkoss.theme.zkmaterial.Version</version-class>
+		<version-uid>1.0.0</version-uid>
 	</version>
 
 	<listener>
-		<listener-class>org.zkoss.theme.iceblue_rem.IceblueRemThemeWebAppInit</listener-class>
+		<listener-class>org.zkoss.theme.zkmaterial.ZkMaterialThemeWebAppInit</listener-class>
 	</listener>
 </config>

@@ -1,6 +1,6 @@
 <zk>
-    <config-name>iceblue_rem</config-name>
+    <config-name>zk-material</config-name>
     <desktop-config>
-        <theme-provider-class>org.zkoss.theme.iceblue_rem.IceblueRemThemeProvider</theme-provider-class>
+        <theme-provider-class>org.zkoss.theme.zkmaterial.ZkMaterialThemeProvider</theme-provider-class>
     </desktop-config>
 </zk>

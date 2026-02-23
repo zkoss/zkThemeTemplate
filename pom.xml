@@ -2,8 +2,8 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.zkoss.theme</groupId>
-	<artifactId>iceblue_rem</artifactId>
-	<version>10.3.0.1</version>
+	<artifactId>zk-material</artifactId>
+	<version>1.0.0</version>
 	<properties>
 		<maven.compiler.source>11</maven.compiler.source>
 		<maven.compiler.target>11</maven.compiler.target>
@@ -17,11 +17,11 @@
 		<zktheme.theme.outputDirectory>${project.build.outputDirectory}/web/${project.artifactId}</zktheme.theme.outputDirectory>
 	</properties>
 	<packaging>jar</packaging>
-	<name>iceblue_rem</name>
+	<name>zk-material</name>
 	<scm>
 		<url>https://mavensync.zkoss.org/maven2</url>
 	</scm>
-	<description>dev</description>
+	<description>Material Design theme for ZK Framework</description>
 	<licenses>
 		<license>
 			<name>GNU LESSER GENERAL PUBLIC LICENSE, Version 3</name>
@@ -98,7 +98,6 @@
 		</dependency>
 	</dependencies>
 	<build>
-<!--		<sourceDirectory>${project.basedir}/src/</sourceDirectory>-->
 		<resources>
 			<!-- handle class web resources separately below -->
 			<resource>
@@ -107,13 +106,9 @@
 					<exclude>web/**</exclude>
 				</excludes>
 			</resource>
-			<!-- copy non-less into theme folder,
-					less files will be handled by plugin below -->
+			<!-- copy CSS files into theme folder -->
 			<resource>
 				<directory>${zktheme.web.resources}</directory>
-				<excludes>
-					<exclude>**/*.less</exclude>
-				</excludes>
 				<targetPath>${zktheme.theme.outputDirectory}</targetPath>
 			</resource>
 		</resources>
@@ -124,22 +119,16 @@
 				<version>1.6.0</version>
 				<executions>
 					<execution>
-						<id>compile-less</id>
+						<id>compile-css</id>
 						<phase>generate-resources</phase>
 						<goals>
 							<goal>exec</goal>
 						</goals>
 						<configuration>
-							<executable>npx</executable>
+							<executable>npm</executable>
 							<arguments>
-								<argument>zklessc</argument>
-								<argument>--source</argument>
-								<argument>${zktheme.web.resources}</argument>
-								<argument>--output</argument>
-								<argument>${zktheme.theme.outputDirectory}</argument>
-								<argument>--compress</argument>
-								<argument>--less-opts</argument>
-								<argument>{"math":"parens-division"}</argument>
+								<argument>run</argument>
+								<argument>build:css</argument>
 							</arguments>
 						</configuration>
 					</execution>
@@ -153,8 +142,8 @@
 							<classpathScope>test</classpathScope>
 						</configuration>
 					</execution>
-					<execution> <!-- continuous compile/watch less files -->
-						<id>watch-less</id>
+					<execution> <!-- continuous compile/watch CSS files -->
+						<id>watch-css</id>
 						<phase>process-resources</phase>
 						<goals>
 							<goal>exec</goal>
@@ -163,7 +152,7 @@
 							<executable>npm</executable>
 							<arguments>
 								<argument>run</argument>
-								<argument>zklessc-dev</argument>
+								<argument>watch</argument>
 							</arguments>
 							<async>true</async>
 						</configuration>

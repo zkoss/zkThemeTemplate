@@ -1,12 +1,15 @@
 {
-  "name": "zk-theme-template",
-  "version": "0.0.1",
+  "name": "zk-material-theme",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
-    "zklessc": "zklessc -s src/main/resources/web -o target/classes/web/dev --less-opts '{\"math\":\"parens-division\"}'",
-    "zklessc-dev": "zklessc -s src/main/resources/web -o target/classes/web/dev -w --less-opts '{\"math\":\"parens-division\"}'"
+    "build:css": "node scripts/build-css.js",
+    "build:css:dev": "node scripts/build-css.js --dev",
+    "watch": "chokidar 'src/main/resources/web/css/**/*.css' -c 'npm run build:css:dev'",
+    "minify": "cleancss -o target/classes/web/zk-material/css/zk-material.min.css target/classes/web/zk-material/css/zk-material.css"
   },
   "devDependencies": {
-    "zkless-engine": "^1.1.9"
+    "chokidar-cli": "^3.0.0",
+    "clean-css-cli": "^5.6.0"
   }
 }
