@@ -1,0 +1,178 @@
+<?page title="Media and Content Manager"?>
+<zk>
+<style>
+.thumb-grid { gap: 8px; padding: 8px; }
+.thumb-item { width: 80px; height: 80px; }
+</style>
+
+<tabbox hflex="1">
+    <tabs>
+        <tab label="Image Gallery"/>
+        <tab label="Audio Library"/>
+        <tab label="Embedded Content"/>
+    </tabs>
+    <tabpanels>
+
+        <!-- Image Gallery Tab -->
+        <tabpanel>
+            <vlayout>
+                <!-- Floor plan imagemap -->
+                <groupbox>
+                    <caption label="Site Map Navigation"/>
+                    <vlayout>
+                        <label value="Click a department area to navigate:" sclass="section-hint"/>
+                        <imagemap src="~./img/floor-plan.png"
+                                  width="400px" height="200px">
+                            <area shape="rect" coords="0,0,100,100"
+                                  tooltiptext="Engineering Floor"/>
+                            <area shape="rect" coords="100,0,200,100"
+                                  tooltiptext="HR Department"/>
+                            <area shape="rect" coords="200,0,300,100"
+                                  tooltiptext="Finance Department"/>
+                            <area shape="rect" coords="300,0,400,100"
+                                  tooltiptext="Executive Suite"/>
+                        </imagemap>
+                    </vlayout>
+                </groupbox>
+
+                <!-- Thumbnail gallery -->
+                <toolbar>
+                    <toolbarbutton label="Upload New Image" iconSclass="z-icon-upload"/>
+                    <toolbarbutton label="Delete Selected" iconSclass="z-icon-trash"/>
+                </toolbar>
+                <vbox>
+                    <hlayout>
+                        <image src="~./img/Centigrade-Widget-Icons/ArrowUpOrange-16x16.png"/>
+                        <image src="~./img/Centigrade-Widget-Icons/Envelope-16x16.png"/>
+                        <image src="~./img/Centigrade-Widget-Icons/PaperClip-16x16.png"/>
+                        <image src="~./img/Centigrade-Widget-Icons/ArrowDown-16x16.png"/>
+                    </hlayout>
+                </vbox>
+                <button label="Upload Images" upload="true"/>
+                <progressmeter value="40" width="300px"/>
+            </vlayout>
+        </tabpanel>
+
+        <!-- Audio Library Tab -->
+        <tabpanel>
+            <vlayout>
+                <listbox hflex="1" rows="6">
+                    <listhead>
+                        <listheader label="" width="40px"/>
+                        <listheader label="Title" hflex="1"/>
+                        <listheader label="Duration" width="80px"/>
+                        <listheader label="Format" width="70px"/>
+                        <listheader label="Uploaded" width="110px"/>
+                    </listhead>
+                    <listitem>
+                        <listcell>
+                            <toolbarbutton iconSclass="z-icon-play"/>
+                        </listcell>
+                        <listcell label="Q1 All-Hands Meeting Recording"/>
+                        <listcell label="01:23:45"/>
+                        <listcell label="MP3"/>
+                        <listcell label="2026-03-10"/>
+                    </listitem>
+                    <listitem>
+                        <listcell>
+                            <toolbarbutton iconSclass="z-icon-play"/>
+                        </listcell>
+                        <listcell label="Product Training Module 1"/>
+                        <listcell label="00:45:12"/>
+                        <listcell label="OGG"/>
+                        <listcell label="2026-03-12"/>
+                    </listitem>
+                    <listitem>
+                        <listcell>
+                            <toolbarbutton iconSclass="z-icon-play"/>
+                        </listcell>
+                        <listcell label="Customer Onboarding Welcome"/>
+                        <listcell label="00:08:30"/>
+                        <listcell label="MP3"/>
+                        <listcell label="2026-03-15"/>
+                    </listitem>
+                </listbox>
+
+                <!-- Audio player with track -->
+                <groupbox>
+                    <caption label="Player"/>
+                    <audio src="" controls="true" width="400px">
+                        <track kind="subtitles" src="~./dummy-captions.vtt" srclang="en" label="English"/>
+                    </audio>
+                </groupbox>
+
+                <!-- Upload audio form -->
+                <groupbox>
+                    <caption label="Upload Audio"/>
+                    <grid width="440px">
+                        <rows>
+                            <row>
+                                <label value="File:"/>
+                                <button label="Choose Audio File" upload="true"/>
+                            </row>
+                            <row>
+                                <label value="Title:"/>
+                                <textbox placeholder="Enter recording title" width="240px"/>
+                            </row>
+                            <row>
+                                <label value="Format:"/>
+                                <combobox width="120px">
+                                    <comboitem label="MP3"/>
+                                    <comboitem label="OGG"/>
+                                    <comboitem label="WAV"/>
+                                    <comboitem label="AAC"/>
+                                </combobox>
+                            </row>
+                            <row>
+                                <label value="Subtitles:"/>
+                                <checkbox label="Add subtitle track"/>
+                            </row>
+                            <row>
+                                <cell colspan="2">
+                                    <button label="Upload" iconSclass="z-icon-upload"/>
+                                </cell>
+                            </row>
+                        </rows>
+                    </grid>
+                </groupbox>
+            </vlayout>
+        </tabpanel>
+
+        <!-- Embedded Content Tab -->
+        <tabpanel>
+            <vlayout>
+                <groupbox>
+                    <caption label="External Preview"/>
+                    <vbox>
+                        <div>
+                            <span style="font-size: 12px;">Enter an embed URL and click Load to preview external content securely.</span>
+                        </div>
+                        <hbox align="center">
+                            <label value="URL:"/>
+                            <textbox placeholder="https://example.com/embed" width="400px" id="embedUrl"/>
+                            <button label="Load" iconSclass="z-icon-external-link"/>
+                        </hbox>
+                        <!-- Security CAPTCHA before loading -->
+                        <label value="Verify you are human before loading external content:"/>
+                        <captcha id="embedCaptcha"/>
+                        <hbox align="center">
+                            <textbox placeholder="Enter CAPTCHA code" width="180px"/>
+                            <button label="Verify" iconSclass="z-icon-check"/>
+                        </hbox>
+                        <!-- Embedded iframe -->
+                        <iframe src="about:blank" id="contentFrame"
+                                width="100%" height="300px"/>
+                        <!-- HTML preview area -->
+                        <html content="&lt;div style='padding:8px;background:#f9f9f9;border:1px solid #eee;font-size:12px'&gt;&lt;strong&gt;HTML Snippet Preview&lt;/strong&gt;&lt;br/&gt;Paste raw HTML here for inline rendering.&lt;/div&gt;"/>
+                        <div style="margin-top: 8px;">
+                            <label value="Note: " style="font-weight: bold;"/>
+                            <span>Only content from approved domains is allowed.</span>
+                        </div>
+                    </vbox>
+                </groupbox>
+            </vlayout>
+        </tabpanel>
+
+    </tabpanels>
+</tabbox>
+</zk>

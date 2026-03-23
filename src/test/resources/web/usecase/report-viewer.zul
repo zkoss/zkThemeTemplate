@@ -1,0 +1,228 @@
+<?page title="Financial Report Builder"?>
+<zk>
+<style>
+.report-header { background: #f5f5f5; padding: 12px; border-bottom: 2px solid #1a73e8; margin-bottom: 8px; }
+.report-title { font-size: 20px; font-weight: bold; }
+.report-sub { font-size: 12px; color: #666; margin-top: 4px; }
+</style>
+<script>
+// Handle report parameter changes
+function onParamChange() {
+    // Placeholder for live parameter update logic
+}
+</script>
+
+<!-- Export options popup -->
+<popup id="exportPopup" width="240px">
+    <vlayout>
+        <label value="Choose Export Format" style="font-weight: bold;"/>
+        <radiogroup>
+            <radio label="PDF" checked="true"/>
+            <radio label="Excel (XLSX)"/>
+            <radio label="CSV"/>
+            <radio label="HTML"/>
+        </radiogroup>
+        <separator/>
+        <button label="Download" iconSclass="z-icon-download"/>
+    </vlayout>
+</popup>
+
+<borderlayout height="640px">
+
+    <!-- North: Toolbar -->
+    <north size="48px" border="none">
+        <toolbar>
+            <toolbarbutton label="Run Report" iconSclass="z-icon-play"/>
+            <toolbarbutton label="Export PDF" iconSclass="z-icon-file-pdf-o"/>
+            <toolbarbutton label="Export CSV" iconSclass="z-icon-file-text-o" popup="exportPopup, type=toggle"/>
+            <separator/>
+            <toolbarbutton label="Print" iconSclass="z-icon-print"/>
+            <separator/>
+            <label value="Template:"/>
+            <combobox value="Q1 Revenue Summary" width="200px">
+                <comboitem label="Q1 Revenue Summary"/>
+                <comboitem label="Annual P&amp;L"/>
+                <comboitem label="Department Cost Breakdown"/>
+                <comboitem label="Sales by Region"/>
+            </combobox>
+        </toolbar>
+    </north>
+
+    <!-- West: Report Parameters -->
+    <west size="240px" title="Parameters" collapsible="true" splittable="true">
+        <vbox hflex="1">
+            <groupbox>
+                <caption label="Date Range"/>
+                <grid>
+                    <rows>
+                        <row>
+                            <label value="From:"/>
+                            <datebox width="140px"/>
+                        </row>
+                        <row>
+                            <label value="To:"/>
+                            <datebox width="140px"/>
+                        </row>
+                    </rows>
+                </grid>
+                <calendar/>
+            </groupbox>
+
+            <groupbox>
+                <caption label="Filters"/>
+                <grid>
+                    <rows>
+                        <row>
+                            <label value="Region:"/>
+                            <combobox width="140px">
+                                <comboitem label="All Regions"/>
+                                <comboitem label="North America"/>
+                                <comboitem label="Europe"/>
+                                <comboitem label="Asia Pacific"/>
+                            </combobox>
+                        </row>
+                        <row>
+                            <label value="Currency:"/>
+                            <selectbox width="100px">
+                                <listbox>
+                                    <listitem label="USD"/>
+                                    <listitem label="EUR"/>
+                                    <listitem label="GBP"/>
+                                    <listitem label="JPY"/>
+                                </listbox>
+                            </selectbox>
+                        </row>
+                        <row>
+                            <label value="Business Units:"/>
+                            <vbox>
+                                <checkbox label="Sales" checked="true"/>
+                                <checkbox label="Operations" checked="true"/>
+                                <checkbox label="R&amp;D"/>
+                                <checkbox label="Marketing" checked="true"/>
+                            </vbox>
+                        </row>
+                        <row>
+                            <label value="Top N:"/>
+                            <spinner value="10" step="5" width="70px"/>
+                        </row>
+                        <row>
+                            <label value="Min. Threshold:"/>
+                            <decimalbox value="1000.00" format="#,##0.00" width="120px"/>
+                        </row>
+                    </rows>
+                </grid>
+                <separator/>
+                <button label="Run Report" iconSclass="z-icon-play" width="100%"/>
+            </groupbox>
+        </vbox>
+    </west>
+
+    <!-- Center: Report Output -->
+    <center>
+        <vlayout hflex="1" vflex="1">
+            <html content="&lt;div class='report-header'&gt;&lt;div class='report-title'&gt;Q1 Revenue Summary — FY2026&lt;/div&gt;&lt;div class='report-sub'&gt;Generated: 2026-03-20 09:00 | Currency: USD | Regions: All&lt;/div&gt;&lt;/div&gt;"/>
+
+            <grid hflex="1">
+                <frozen columns="1"/>
+                <auxhead>
+                    <auxheader label=""/>
+                    <auxheader label="Q1 (Jan-Mar)" colspan="2"/>
+                    <auxheader label="Q2 (Apr-Jun)" colspan="2"/>
+                    <auxheader label="Total" colspan="1"/>
+                </auxhead>
+                <columns>
+                    <column label="Category" sort="auto" hflex="1"/>
+                    <column label="Revenue" sort="auto" width="110px"/>
+                    <column label="Expenses" sort="auto" width="110px"/>
+                    <column label="Revenue" sort="auto" width="110px"/>
+                    <column label="Expenses" sort="auto" width="110px"/>
+                    <column label="Net" sort="auto" width="110px"/>
+                </columns>
+                <rows>
+                    <group label="North America"/>
+                    <row>
+                        <label value="Sales"/>
+                        <label value="$420,000"/>
+                        <label value="$210,000"/>
+                        <label value="$390,000"/>
+                        <label value="$195,000"/>
+                        <label value="$405,000"/>
+                    </row>
+                    <row>
+                        <label value="Operations"/>
+                        <label value="$80,000"/>
+                        <label value="$65,000"/>
+                        <label value="$75,000"/>
+                        <label value="$60,000"/>
+                        <label value="$30,000"/>
+                    </row>
+                    <groupfoot>
+                        <cell colspan="6"><label value="North America Subtotal: $500,000 revenue, $275,000 expenses"/></cell>
+                    </groupfoot>
+
+                    <group label="Europe"/>
+                    <row>
+                        <label value="Sales"/>
+                        <label value="$310,000"/>
+                        <label value="$155,000"/>
+                        <label value="$285,000"/>
+                        <label value="$145,000"/>
+                        <label value="$295,000"/>
+                    </row>
+                    <row>
+                        <label value="Marketing"/>
+                        <label value="$50,000"/>
+                        <label value="$42,000"/>
+                        <label value="$55,000"/>
+                        <label value="$44,000"/>
+                        <label value="$19,000"/>
+                    </row>
+                    <groupfoot>
+                        <cell colspan="6"><label value="Europe Subtotal: $360,000 revenue, $197,000 expenses"/></cell>
+                    </groupfoot>
+                </rows>
+                <foot>
+                    <footer label="Grand Total" hflex="1"/>
+                    <footer label="$860,000"/>
+                    <footer label="$472,000"/>
+                    <footer label="$805,000"/>
+                    <footer label="$444,000"/>
+                    <footer label="$749,000"/>
+                </foot>
+            </grid>
+
+            <paging pageSize="20" totalSize="120"/>
+        </vlayout>
+    </center>
+
+    <!-- East: Actions panel -->
+    <east size="180px" title="Actions" collapsible="true">
+        <panel title="Quick Actions" border="normal">
+            <panelchildren>
+                <vbox>
+                    <toolbarbutton label="Save Report" iconSclass="z-icon-save"/>
+                    <toolbarbutton label="Schedule" iconSclass="z-icon-clock-o"/>
+                    <toolbarbutton label="Share" iconSclass="z-icon-share"/>
+                    <toolbarbutton label="Audit Trail" iconSclass="z-icon-history"/>
+                    <separator/>
+                    <a label="View Documentation" href="#" iconSclass="z-icon-question-circle"/>
+                    <a label="ZK Reports Guide" href="#" iconSclass="z-icon-book"/>
+                </vbox>
+            </panelchildren>
+        </panel>
+    </east>
+
+    <!-- South: Status bar -->
+    <south size="32px" border="none">
+        <hbox align="center" style="padding: 4px 12px;">
+            <label value="Report generated at: 2026-03-20 09:00:15"/>
+            <space/>
+            <label value="Rows: 4 of 120 | Page 1 of 6"/>
+            <space/>
+            <progressmeter value="100" width="120px"/>
+            <label value="Complete"/>
+        </hbox>
+    </south>
+
+</borderlayout>
+</zk>

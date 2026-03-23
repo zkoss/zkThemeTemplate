@@ -1,0 +1,116 @@
+<?page title="Enterprise App Shell"?>
+<zk>
+<style>
+.nav-item { padding: 8px 16px; }
+.status-bar { padding: 4px 12px; font-size: 12px; }
+.logo-text { font-size: 18px; margin-left: 8px; }
+</style>
+
+<borderlayout height="600px">
+    <north size="48px" border="none">
+        <toolbar>
+            <span sclass="logo-text">ERP Portal</span>
+            <separator orient="vertical"/>
+            <menubar>
+                <menu label="File">
+                    <menupopup>
+                        <menuitem label="New" iconSclass="z-icon-file-o"/>
+                        <menuitem label="Open" iconSclass="z-icon-folder-open-o"/>
+                        <menuitem label="Save" iconSclass="z-icon-save"/>
+                        <menuseparator/>
+                        <menuitem label="Exit" iconSclass="z-icon-sign-out"/>
+                    </menupopup>
+                </menu>
+                <menu label="Edit">
+                    <menupopup>
+                        <menuitem label="Undo"/>
+                        <menuitem label="Redo"/>
+                        <menuseparator/>
+                        <menuitem label="Cut"/>
+                        <menuitem label="Copy"/>
+                        <menuitem label="Paste"/>
+                    </menupopup>
+                </menu>
+                <menu label="View">
+                    <menupopup>
+                        <menuitem label="Dashboard"/>
+                        <menuitem label="Reports"/>
+                        <menuitem label="Analytics"/>
+                    </menupopup>
+                </menu>
+                <menu label="Tools">
+                    <menupopup>
+                        <menuitem label="Settings"/>
+                        <menuitem label="Import Data"/>
+                        <menuitem label="Export Data"/>
+                    </menupopup>
+                </menu>
+                <menu label="Help">
+                    <menupopup>
+                        <menuitem label="Documentation"/>
+                        <menuitem label="About"/>
+                    </menupopup>
+                </menu>
+            </menubar>
+            <toolbarbutton label="Profile" iconSclass="z-icon-user" style="margin-left: auto;"/>
+            <toolbarbutton label="Logout" iconSclass="z-icon-sign-out"/>
+        </toolbar>
+    </north>
+
+    <west size="200px" title="Navigation" collapsible="true" splittable="true">
+        <div>
+            <div sclass="nav-item"><span sclass="z-icon-dashboard"/> Dashboard</div>
+            <div sclass="nav-item"><span sclass="z-icon-users"/> Employees</div>
+            <div sclass="nav-item"><span sclass="z-icon-shopping-cart"/> Orders</div>
+            <div sclass="nav-item"><span sclass="z-icon-bar-chart"/> Reports</div>
+            <div sclass="nav-item"><span sclass="z-icon-cog"/> Settings</div>
+        </div>
+    </west>
+
+    <center>
+        <tabbox hflex="1" vflex="1">
+            <tabs>
+                <tab label="Dashboard"/>
+                <tab label="Tasks"/>
+                <tab label="Notifications"/>
+            </tabs>
+            <tabpanels>
+                <tabpanel>
+                    <vlayout>
+                        <label value="Welcome to the Dashboard" sclass="z-label"/>
+                        <div>
+                            <span>Current user: </span>
+                            <span sclass="z-label">Administrator</span>
+                        </div>
+                        <label value="Select a menu item on the left to get started."/>
+                    </vlayout>
+                </tabpanel>
+                <tabpanel>
+                    <vlayout>
+                        <label value="My Tasks"/>
+                        <div>No pending tasks.</div>
+                    </vlayout>
+                </tabpanel>
+                <tabpanel>
+                    <vlayout>
+                        <label value="Notifications"/>
+                        <div>No new notifications.</div>
+                    </vlayout>
+                </tabpanel>
+            </tabpanels>
+        </tabbox>
+    </center>
+
+    <east size="400px" title="Calendar" collapsible="true" splittable="true">
+        <calendar/>
+    </east>
+
+    <south size="28px" border="none">
+        <div sclass="status-bar">
+            <span>Status: </span>
+            <label value="Ready" id="statusLabel"/>
+            <span style="margin-left: 16px;">Last updated: 2026-03-20 09:00</span>
+        </div>
+    </south>
+</borderlayout>
+</zk>

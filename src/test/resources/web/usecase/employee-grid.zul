@@ -1,0 +1,198 @@
+<?page title="Employee Data Grid"?>
+<zk>
+<!-- Context menu popup -->
+<popup id="rowContextMenu">
+    <vlayout>
+        <button label="Edit Employee" iconSclass="z-icon-edit"/>
+        <button label="Delete" iconSclass="z-icon-trash"/>
+        <button label="View History" iconSclass="z-icon-history"/>
+    </vlayout>
+</popup>
+
+<vlayout hflex="1">
+    <!-- Toolbar -->
+    <toolbar>
+        <toolbarbutton label="Add Employee" iconSclass="z-icon-plus"/>
+        <toolbarbutton label="Export" iconSclass="z-icon-download"/>
+        <separator/>
+        <label value="Department:"/>
+        <combobox placeholder="All Departments" width="160px">
+            <comboitem label="All Departments"/>
+            <comboitem label="Engineering"/>
+            <comboitem label="HR"/>
+            <comboitem label="Finance"/>
+            <comboitem label="Operations"/>
+        </combobox>
+        <separator/>
+        <label value="Hire Date From:"/>
+        <datebox width="120px"/>
+        <label value="To:"/>
+        <datebox width="120px"/>
+        <separator/>
+        <bandbox width="120px" readonly="true" placeholder="Advanced Filter...">
+            <bandpopup>
+                <grid>
+                    <rows>
+                        <row>
+                            <label value="Name:"/>
+                            <textbox/>
+                        </row>
+                        <row>
+                            <label value="Active:"/>
+                            <checkbox label="Active only"/>
+                        </row>
+                        <row>
+                            <label value="Job Grade:"/>
+                            <combobox readonly="true">
+                                <comboitem label="All"/>
+                                <comboitem label="Junior"/>
+                                <comboitem label="Mid"/>
+                                <comboitem label="Senior"/>
+                                <comboitem label="Lead"/>
+                            </combobox>
+                        </row>
+                        <row>
+                            <cell colspan="2">
+                                <button label="Apply"/>
+                                <button label="Reset"/>
+                            </cell>
+                        </row>
+                    </rows>
+                </grid>
+            </bandpopup>
+        </bandbox>
+    </toolbar>
+
+    <!-- Data Grid -->
+    <grid hflex="1" sizedByContent="false" context="rowContextMenu">
+        <frozen columns="2"/>
+        <auxhead>
+            <auxheader label="Personal Info" colspan="2"/>
+            <auxheader label="Employment" colspan="3"/>
+            <auxheader label="Status" colspan="1"/>
+        </auxhead>
+        <columns menupopup="auto">
+            <column label="Employee ID" sort="auto" />
+            <column label="Full Name" sort="auto" />
+            <column label="Department" sort="auto" />
+            <column label="Job Grade" sort="auto" />
+            <column label="Hire Date" sort="auto" />
+            <column label="Active" />
+        </columns>
+        <rows>
+            <group label="Engineering (3)"/>
+            <row context="rowContextMenu">
+                <label value="EMP-001"/>
+                <label value="Alice Johnson"/>
+                <label value="Engineering"/>
+                <label value="Senior"/>
+                <label value="2021-03-15"/>
+                <checkbox checked="true" disabled="true"/>
+                <detail>
+                    <grid>
+                        <rows>
+                            <row>
+                                <label value="Address:"/>
+                                <textbox value="123 Main St, Springfield" width="250px"/>
+                            </row>
+                            <row>
+                                <label value="Notes:"/>
+                                <textbox value="Team lead for backend services." multiline="true" rows="2" width="250px"/>
+                            </row>
+                        </rows>
+                    </grid>
+                </detail>
+            </row>
+            <row context="rowContextMenu">
+                <label value="EMP-002"/>
+                <label value="Bob Smith"/>
+                <label value="Engineering"/>
+                <label value="Mid"/>
+                <label value="2022-07-01"/>
+                <checkbox checked="true" disabled="true"/>
+                <detail>
+                    <grid>
+                        <rows>
+                            <row>
+                                <label value="Address:"/>
+                                <textbox value="456 Oak Ave, Shelbyville" width="250px"/>
+                            </row>
+                            <row>
+                                <label value="Notes:"/>
+                                <textbox value="Frontend specialist." multiline="true" rows="2" width="250px"/>
+                            </row>
+                        </rows>
+                    </grid>
+                </detail>
+            </row>
+            <row context="rowContextMenu">
+                <label value="EMP-003"/>
+                <label value="Carol White"/>
+                <label value="Engineering"/>
+                <label value="Junior"/>
+                <label value="2024-01-10"/>
+                <checkbox checked="true" disabled="true"/>
+                <detail>
+                    <grid>
+                        <rows>
+                            <row>
+                                <label value="Address:"/>
+                                <textbox value="789 Pine Rd, Capital City" width="250px"/>
+                            </row>
+                            <row>
+                                <label value="Notes:"/>
+                                <textbox value="Recent graduate, learning fast." multiline="true" rows="2" width="250px"/>
+                            </row>
+                        </rows>
+                    </grid>
+                </detail>
+            </row>
+            <groupfoot>
+                <cell colspan="6"><label value="Engineering subtotal: 3 employees"/></cell>
+            </groupfoot>
+
+            <group label="HR (2)"/>
+            <row context="rowContextMenu">
+                <label value="EMP-004"/>
+                <label value="Diana Prince"/>
+                <label value="HR"/>
+                <label value="Senior"/>
+                <label value="2019-05-20"/>
+                <checkbox checked="true" disabled="true"/>
+                <detail>
+                    <grid>
+                        <rows>
+                            <row><label value="Address:"/><textbox value="321 Elm St" width="250px"/></row>
+                            <row><label value="Notes:"/><textbox value="Handles recruitment and onboarding." multiline="true" rows="2" width="250px"/></row>
+                        </rows>
+                    </grid>
+                </detail>
+            </row>
+            <row context="rowContextMenu">
+                <label value="EMP-005"/>
+                <label value="Evan Turner"/>
+                <label value="HR"/>
+                <label value="Mid"/>
+                <label value="2023-02-14"/>
+                <checkbox checked="false" disabled="true"/>
+                <detail>
+                    <grid>
+                        <rows>
+                            <row><label value="Address:"/><textbox value="654 Maple Dr" width="250px"/></row>
+                            <row><label value="Notes:"/><textbox value="On leave." multiline="true" rows="2" width="250px"/></row>
+                        </rows>
+                    </grid>
+                </detail>
+            </row>
+            <groupfoot>
+                <cell colspan="6"><label value="HR subtotal: 2 employees"/></cell>
+            </groupfoot>
+        </rows>
+        <foot>
+            <footer label="Total: 5 employees"/>
+        </foot>
+    </grid>
+
+    <paging pageSize="10" totalSize="50"/>
+</vlayout>
+</zk>

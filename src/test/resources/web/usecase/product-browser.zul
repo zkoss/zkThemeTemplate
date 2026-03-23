@@ -1,0 +1,210 @@
+<?page title="Product Category Browser"?>
+<zk>
+<!-- Product detail popup -->
+<popup id="productDetailPopup" width="360px">
+    <vlayout>
+        <label value="Product Details" style="font-weight: bold; font-size: 16px;"/>
+        <image src="~./img/Centigrade-Widget-Icons/Document-16x16.png" width="64px" height="64px"/>
+        <html content="&lt;p&gt;&lt;strong&gt;Laptop 15-inch Pro&lt;/strong&gt;&lt;br/&gt;High-performance laptop with 16GB RAM, 512GB SSD, and Intel i7 processor. Ideal for enterprise workloads.&lt;/p&gt;"/>
+        <hbox>
+            <button label="Add to Cart" iconSclass="z-icon-shopping-cart"/>
+            <button label="Close"/>
+        </hbox>
+    </vlayout>
+</popup>
+
+<hbox hflex="1" vflex="1">
+
+    <!-- Left: Category Tree (25%) -->
+    <vbox width="220px" vflex="1">
+        <toolbar>
+            <label value="Categories" style="font-weight: bold;"/>
+        </toolbar>
+        <tree vflex="1" hflex="1">
+            <treecols>
+                <treecol label="Category" hflex="1"/>
+                <treecol label="Count" width="55px"/>
+            </treecols>
+            <treechildren>
+                <treeitem open="true">
+                    <treerow>
+                        <treecell label="Electronics"/>
+                        <treecell label="24"/>
+                    </treerow>
+                    <treechildren>
+                        <treeitem>
+                            <treerow>
+                                <treecell label="Phones"/>
+                                <treecell label="8"/>
+                            </treerow>
+                        </treeitem>
+                        <treeitem>
+                            <treerow>
+                                <treecell label="Laptops"/>
+                                <treecell label="6"/>
+                            </treerow>
+                        </treeitem>
+                        <treeitem>
+                            <treerow>
+                                <treecell label="Tablets"/>
+                                <treecell label="10"/>
+                            </treerow>
+                        </treeitem>
+                    </treechildren>
+                </treeitem>
+                <treeitem open="true">
+                    <treerow>
+                        <treecell label="Clothing"/>
+                        <treecell label="45"/>
+                    </treerow>
+                    <treechildren>
+                        <treeitem>
+                            <treerow>
+                                <treecell label="Men"/>
+                                <treecell label="18"/>
+                            </treerow>
+                        </treeitem>
+                        <treeitem>
+                            <treerow>
+                                <treecell label="Women"/>
+                                <treecell label="20"/>
+                            </treerow>
+                        </treeitem>
+                        <treeitem>
+                            <treerow>
+                                <treecell label="Kids"/>
+                                <treecell label="7"/>
+                            </treerow>
+                        </treeitem>
+                    </treechildren>
+                </treeitem>
+                <treeitem>
+                    <treerow>
+                        <treecell label="Home and Garden"/>
+                        <treecell label="30"/>
+                    </treerow>
+                    <treechildren>
+                        <treeitem>
+                            <treerow>
+                                <treecell label="Kitchen"/>
+                                <treecell label="15"/>
+                            </treerow>
+                        </treeitem>
+                        <treeitem>
+                            <treerow>
+                                <treecell label="Tools"/>
+                                <treecell label="15"/>
+                            </treerow>
+                        </treeitem>
+                    </treechildren>
+                </treeitem>
+            </treechildren>
+            <treefoot>
+                <treefooter label="Total: 3 categories"/>
+                <treefooter label="99"/>
+            </treefoot>
+        </tree>
+    </vbox>
+
+    <splitter/>
+
+    <!-- Right: Product List (remaining width) -->
+    <vbox hflex="1" vflex="1">
+        <toolbar>
+            <toolbarbutton label="List View" iconSclass="z-icon-list"/>
+            <toolbarbutton label="Grid View" iconSclass="z-icon-th"/>
+            <separator/>
+            <label value="Search:"/>
+            <textbox placeholder="Search products..." width="200px"/>
+            <toolbarbutton label="Search" iconSclass="z-icon-search"/>
+        </toolbar>
+
+        <listbox hflex="1" vflex="1">
+            <listhead>
+                <listheader label="" width="50px"/>
+                <listheader label="Name" sort="auto" hflex="1"/>
+                <listheader label="SKU" sort="auto" width="90px"/>
+                <listheader label="Price" sort="auto" width="90px"/>
+                <listheader label="Stock" width="110px"/>
+                <listheader label="Rating" width="110px"/>
+            </listhead>
+            <listgroup label="Electronics / Laptops"/>
+            <listitem popup="productDetailPopup, type=toggle">
+                <listcell>
+                    <image src="~./img/Centigrade-Widget-Icons/Document-16x16.png"/>
+                </listcell>
+                <listcell>
+                    <a label="Laptop 15-inch Pro" href="#"/>
+                </listcell>
+                <listcell label="SKU-1001"/>
+                <listcell label="$1,299.00"/>
+                <listcell>
+                    <progressmeter value="72" width="80px"/>
+                </listcell>
+                <listcell>
+                    <rating max="5" readonly="true"/>
+                </listcell>
+            </listitem>
+            <listitem popup="productDetailPopup, type=toggle">
+                <listcell>
+                    <image src="~./img/Centigrade-Widget-Icons/Document-16x16.png"/>
+                </listcell>
+                <listcell>
+                    <a label="UltraBook Slim 13" href="#"/>
+                </listcell>
+                <listcell label="SKU-1002"/>
+                <listcell label="$899.00"/>
+                <listcell>
+                    <progressmeter value="45" width="80px"/>
+                </listcell>
+                <listcell>
+                    <rating max="5" readonly="true"/>
+                </listcell>
+            </listitem>
+            <listgroupfoot>
+                <listcell label="Laptops Subtotal"/>
+                <listcell label=""/>
+                <listcell label=""/>
+                <listcell label=""/>
+                <listcell label=""/>
+                <listcell label="2 items"/>
+            </listgroupfoot>
+            <listgroup label="Electronics / Phones"/>
+            <listitem>
+                <listcell>
+                    <image src="~./img/Centigrade-Widget-Icons/Document-16x16.png"/>
+                </listcell>
+                <listcell>
+                    <a label="SmartPhone X12" href="#"/>
+                </listcell>
+                <listcell label="SKU-2001"/>
+                <listcell label="$649.00"/>
+                <listcell>
+                    <progressmeter value="88" width="80px"/>
+                </listcell>
+                <listcell>
+                    <rating max="5" readonly="true"/>
+                </listcell>
+            </listitem>
+            <listgroupfoot>
+                <listcell label="Phones Subtotal"/>
+                <listcell label=""/>
+                <listcell label=""/>
+                <listcell label=""/>
+                <listcell label=""/>
+                <listcell label="1 item"/>
+            </listgroupfoot>
+            <listfoot>
+                <listfooter label="Total Products Shown"/>
+                <listfooter label=""/>
+                <listfooter label=""/>
+                <listfooter label=""/>
+                <listfooter label=""/>
+                <listfooter label="3 items"/>
+            </listfoot>
+        </listbox>
+
+        <paging pageSize="10" totalSize="99"/>
+    </vbox>
+</hbox>
+</zk>

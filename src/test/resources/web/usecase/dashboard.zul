@@ -1,0 +1,159 @@
+<?page title="KPI Dashboard"?>
+<zk>
+<style>
+.kpi-card { min-width: 180px; margin: 4px; }
+.kpi-value { font-size: 28px; }
+.kpi-label { font-size: 12px; margin-bottom: 8px; }
+.badge-ok  { padding: 2px 8px; font-size: 11px; }
+.badge-err { padding: 2px 8px; font-size: 11px; }
+</style>
+
+<!-- Auto-refresh timer (30 seconds) -->
+<timer delay="30000" running="true" id="refreshTimer"/>
+
+<vlayout hflex="1">
+
+    <!-- Page toolbar -->
+    <toolbar>
+        <label value="Operations Dashboard" style="font-size: 18px;"/>
+        <separator/>
+        <toolbarbutton label="Refresh" iconSclass="z-icon-refresh"/>
+        <toolbarbutton label="Settings" iconSclass="z-icon-cog" style="margin-left: auto;"/>
+    </toolbar>
+
+    <!-- KPI Cards row -->
+    <hlayout>
+        <!-- KPI 1: Orders Today -->
+        <panel title="Orders Today" border="normal" sclass="kpi-card" width="200px">
+            <panelchildren>
+                <vlayout>
+                    <div sclass="kpi-value">248</div>
+                    <div sclass="kpi-label">Daily target: 300</div>
+                    <progressmeter value="83" width="160px"/>
+                    <label value="83% of target"/>
+                </vlayout>
+            </panelchildren>
+        </panel>
+
+        <!-- KPI 2: Customer Satisfaction -->
+        <panel title="Customer Satisfaction" border="normal" sclass="kpi-card" width="220px">
+            <panelchildren>
+                <vlayout>
+                    <rating max="5" readonly="true"/>
+                    <div sclass="kpi-value">4.2</div>
+                    <div sclass="kpi-label">out of 5.0 (342 reviews)</div>
+                </vlayout>
+            </panelchildren>
+        </panel>
+
+        <!-- KPI 3: Server Load -->
+        <panel title="Server Load" border="normal" sclass="kpi-card" width="210px">
+            <panelchildren>
+                <vlayout>
+                    <div sclass="kpi-value">67%</div>
+                    <div sclass="kpi-label">CPU utilization</div>
+                    <slider curpos="67" maxpos="100" width="160px"/>
+                    <label value="Normal range: 0-80%"/>
+                </vlayout>
+            </panelchildren>
+        </panel>
+
+        <!-- KPI 4: Revenue -->
+        <panel title="Revenue" border="normal" sclass="kpi-card" width="200px">
+            <panelchildren>
+                <vlayout>
+                    <div sclass="kpi-value">$84.2K</div>
+                    <div sclass="kpi-label">Month to date</div>
+                    <html content="&lt;div style='height:8px;width:160px'&gt;&lt;/div&gt;"/>
+                    <label value="Target: $120K"/>
+                </vlayout>
+            </panelchildren>
+        </panel>
+    </hlayout>
+
+    <!-- Secondary panels -->
+    <hbox hflex="1" spacing="8px">
+
+        <!-- Recent Alerts -->
+        <groupbox hflex="1">
+            <caption label="Recent Alerts"/>
+            <listbox hflex="1" rows="6">
+                <listitem>
+                    <listcell>
+                        <span sclass="badge-err">ERROR</span>
+                        <span> Database connection pool at 95% capacity</span>
+                    </listcell>
+                </listitem>
+                <listitem>
+                    <listcell>
+                        <span sclass="badge-ok">INFO</span>
+                        <span> Nightly backup completed successfully</span>
+                    </listcell>
+                </listitem>
+                <listitem>
+                    <listcell>
+                        <span sclass="badge-err">WARN</span>
+                        <span> Disk usage on /var/log exceeds 80%</span>
+                    </listcell>
+                </listitem>
+                <listitem>
+                    <listcell>
+                        <span sclass="badge-ok">INFO</span>
+                        <span> 5 new orders received since midnight</span>
+                    </listcell>
+                </listitem>
+                <listitem>
+                    <listcell>
+                        <span sclass="badge-ok">INFO</span>
+                        <span> Scheduled maintenance window: 02:00-04:00</span>
+                    </listcell>
+                </listitem>
+            </listbox>
+        </groupbox>
+
+        <!-- System Status -->
+        <groupbox width="300px">
+            <caption label="System Status"/>
+            <grid>
+                <columns>
+                    <column label="Service" hflex="1"/>
+                    <column label="Status" width="80px"/>
+                </columns>
+                <rows>
+                    <row>
+                        <label value="Web Server"/>
+                        <checkbox checked="true" disabled="true" label="Up"/>
+                    </row>
+                    <row>
+                        <label value="Database"/>
+                        <checkbox checked="true" disabled="true" label="Up"/>
+                    </row>
+                    <row>
+                        <label value="Cache"/>
+                        <checkbox checked="true" disabled="true" label="Up"/>
+                    </row>
+                    <row>
+                        <label value="Queue"/>
+                        <checkbox checked="false" disabled="true" label="Down"/>
+                    </row>
+                    <row>
+                        <label value="Email Service"/>
+                        <checkbox checked="true" disabled="true" label="Up"/>
+                    </row>
+                </rows>
+            </grid>
+        </groupbox>
+
+    </hbox>
+
+    <!-- Embedded Analytics -->
+    <vbox hflex="1">
+        <label value="Embedded Analytics" style="margin-bottom: 4px;"/>
+        <div>
+            <span style="font-size: 12px;">Live data embedded from analytics platform:</span>
+        </div>
+        <iframe src="about:blank" width="100%" height="200px"/>
+    </vbox>
+
+</vlayout>
+</zk>
