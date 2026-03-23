@@ -1,0 +1,23 @@
+/* ZK Layout - Material Design 3 Style */
+/* Simple layout container */
+
+/* ============================================
+   Layout Container
+   ============================================ */
+.z-layout {
+    display: block;
+    position: relative;
+    font-family: inherit;
+    font-size: inherit;
+    color: inherit;
+}
+
+/* Layout with specific sizing */
+.z-layout[width] {
+    width: 100%;
+}
+
+.z-layout[height] {
+    height: 100%;
+}
+

@@ -1,0 +1,416 @@
+/* Utility Classes for ZK Material Theme */
+
+/* ============================================
+   Badge / Status Chips (MD3 chip style)
+   ============================================ */
+.badge-ok, .badge-info {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: var(--md-sys-shape-corner-full);
+    background-color: var(--md-sys-color-secondary-container);
+    color: var(--md-sys-color-on-secondary-container);
+    font-size: var(--md-sys-typescale-label-small-size);
+    font-weight: var(--md-sys-typescale-label-small-weight);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    vertical-align: middle;
+}
+
+.badge-err, .badge-warn {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: var(--md-sys-shape-corner-full);
+    font-size: var(--md-sys-typescale-label-small-size);
+    font-weight: var(--md-sys-typescale-label-small-weight);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    vertical-align: middle;
+}
+
+.badge-err {
+    background-color: var(--md-sys-color-error-container);
+    color: var(--md-sys-color-on-error-container);
+}
+
+.badge-warn {
+    background-color: var(--md-sys-color-warning-container);
+    color: var(--md-sys-color-on-warning-container);
+}
+
+/* ============================================
+   MD3 Typography Utility Classes
+   ============================================ */
+.md-title-large {
+    font-size: var(--md-sys-typescale-title-large-size);
+    font-weight: var(--md-sys-typescale-title-large-weight);
+    line-height: var(--md-sys-typescale-title-large-line-height);
+    color: var(--md-sys-color-on-surface);
+}
+
+.md-headline-small {
+    font-size: var(--md-sys-typescale-headline-small-size);
+    font-weight: var(--md-sys-typescale-headline-small-weight);
+    line-height: var(--md-sys-typescale-headline-small-line-height);
+    color: var(--md-sys-color-on-surface);
+}
+
+/* Push element to far right within flex/inline-flex container */
+.md-push-right {
+    margin-left: auto !important;
+}
+
+/* ============================================
+   Navigation / Layout Helpers
+   ============================================ */
+.nav-item {
+    padding: var(--md-sys-spacing-2) var(--md-sys-spacing-4);
+    cursor: pointer;
+    border-radius: var(--md-sys-shape-corner-full);
+    color: var(--md-sys-color-on-surface-variant);
+    font-size: var(--md-sys-typescale-label-large-size);
+    font-weight: var(--md-sys-typescale-label-large-weight);
+    transition: background-color var(--md-sys-motion-duration-short1) var(--md-sys-motion-easing-standard);
+}
+
+.nav-item:hover {
+    background-color: var(--md-sys-color-surface-container-high);
+    color: var(--md-sys-color-on-surface);
+}
+
+.status-bar {
+    padding: var(--md-sys-spacing-1) var(--md-sys-spacing-3);
+    font-size: var(--md-sys-typescale-label-small-size);
+    color: var(--md-sys-color-on-surface-variant);
+    background-color: var(--md-sys-color-surface-container-low);
+}
+
+/* ============================================
+   KPI / Metric Display Classes
+   ============================================ */
+.kpi-value {
+    font-size: var(--md-sys-typescale-headline-medium-size);
+    font-weight: var(--md-sys-typescale-headline-medium-weight);
+    line-height: var(--md-sys-typescale-headline-medium-line-height);
+    color: var(--md-sys-color-on-surface);
+}
+
+.kpi-label {
+    font-size: var(--md-sys-typescale-body-small-size);
+    color: var(--md-sys-color-on-surface-variant);
+    margin-bottom: var(--md-sys-spacing-2);
+}
+
+/* Report header block (replaces removed inline style from report-viewer.zul) */
+.report-header {
+    background-color: var(--md-sys-color-surface-container-low);
+    padding: var(--md-sys-spacing-3) var(--md-sys-spacing-4);
+    border-bottom: 2px solid var(--md-sys-color-primary);
+    margin-bottom: var(--md-sys-spacing-2);
+}
+
+.report-title {
+    font-size: var(--md-sys-typescale-title-large-size);
+    font-weight: var(--md-sys-typescale-title-large-weight);
+    color: var(--md-sys-color-on-surface);
+}
+
+.report-sub {
+    font-size: var(--md-sys-typescale-body-small-size);
+    color: var(--md-sys-color-on-surface-variant);
+    margin-top: var(--md-sys-spacing-1);
+}
+
+/* Section hint text */
+.section-hint {
+    font-size: var(--md-sys-typescale-body-small-size);
+    color: var(--md-sys-color-on-surface-variant);
+    margin-bottom: var(--md-sys-spacing-2);
+}
+
+/* ============================================
+   Display
+   ============================================ */
+.md-hidden {
+    display: none !important;
+}
+
+.md-visible {
+    display: block !important;
+}
+
+.md-invisible {
+    visibility: hidden !important;
+}
+
+/* ============================================
+   Flexbox Utilities
+   ============================================ */
+.md-flex {
+    display: flex;
+}
+
+.md-inline-flex {
+    display: inline-flex;
+}
+
+.md-flex-row {
+    flex-direction: row;
+}
+
+.md-flex-col {
+    flex-direction: column;
+}
+
+.md-flex-wrap {
+    flex-wrap: wrap;
+}
+
+.md-items-start {
+    align-items: flex-start;
+}
+
+.md-items-center {
+    align-items: center;
+}
+
+.md-items-end {
+    align-items: flex-end;
+}
+
+.md-items-stretch {
+    align-items: stretch;
+}
+
+.md-justify-start {
+    justify-content: flex-start;
+}
+
+.md-justify-center {
+    justify-content: center;
+}
+
+.md-justify-end {
+    justify-content: flex-end;
+}
+
+.md-justify-between {
+    justify-content: space-between;
+}
+
+.md-justify-around {
+    justify-content: space-around;
+}
+
+.md-flex-1 {
+    flex: 1;
+}
+
+.md-flex-auto {
+    flex: auto;
+}
+
+.md-flex-none {
+    flex: none;
+}
+
+/* ============================================
+   Gap Utilities
+   ============================================ */
+.md-gap-0 { gap: var(--md-sys-spacing-0); }
+.md-gap-1 { gap: var(--md-sys-spacing-1); }
+.md-gap-2 { gap: var(--md-sys-spacing-2); }
+.md-gap-3 { gap: var(--md-sys-spacing-3); }
+.md-gap-4 { gap: var(--md-sys-spacing-4); }
+.md-gap-6 { gap: var(--md-sys-spacing-6); }
+.md-gap-8 { gap: var(--md-sys-spacing-8); }
+
+/* ============================================
+   Spacing Utilities
+   ============================================ */
+/* Margin */
+.md-m-0 { margin: var(--md-sys-spacing-0); }
+.md-m-1 { margin: var(--md-sys-spacing-1); }
+.md-m-2 { margin: var(--md-sys-spacing-2); }
+.md-m-3 { margin: var(--md-sys-spacing-3); }
+.md-m-4 { margin: var(--md-sys-spacing-4); }
+.md-m-auto { margin: auto; }
+
+.md-mx-auto {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Padding */
+.md-p-0 { padding: var(--md-sys-spacing-0); }
+.md-p-1 { padding: var(--md-sys-spacing-1); }
+.md-p-2 { padding: var(--md-sys-spacing-2); }
+.md-p-3 { padding: var(--md-sys-spacing-3); }
+.md-p-4 { padding: var(--md-sys-spacing-4); }
+
+/* ============================================
+   Typography Utilities
+   ============================================ */
+.md-text-left { text-align: left; }
+.md-text-center { text-align: center; }
+.md-text-right { text-align: right; }
+
+.md-text-ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.md-text-wrap {
+    white-space: normal;
+    word-wrap: break-word;
+}
+
+.md-text-nowrap {
+    white-space: nowrap;
+}
+
+/* Typography Scale */
+.md-display-large {
+    font-family: var(--md-sys-typescale-display-large-font-family);
+    font-size: var(--md-sys-typescale-display-large-size);
+    line-height: var(--md-sys-typescale-display-large-line-height);
+    font-weight: var(--md-sys-typescale-display-large-weight);
+    letter-spacing: var(--md-sys-typescale-display-large-tracking);
+}
+
+.md-headline-large {
+    font-family: var(--md-sys-typescale-headline-large-font-family);
+    font-size: var(--md-sys-typescale-headline-large-size);
+    line-height: var(--md-sys-typescale-headline-large-line-height);
+    font-weight: var(--md-sys-typescale-headline-large-weight);
+}
+
+.md-title-large {
+    font-family: var(--md-sys-typescale-title-large-font-family);
+    font-size: var(--md-sys-typescale-title-large-size);
+    line-height: var(--md-sys-typescale-title-large-line-height);
+    font-weight: var(--md-sys-typescale-title-large-weight);
+}
+
+.md-title-medium {
+    font-family: var(--md-sys-typescale-title-medium-font-family);
+    font-size: var(--md-sys-typescale-title-medium-size);
+    line-height: var(--md-sys-typescale-title-medium-line-height);
+    font-weight: var(--md-sys-typescale-title-medium-weight);
+    letter-spacing: var(--md-sys-typescale-title-medium-tracking);
+}
+
+.md-body-large {
+    font-family: var(--md-sys-typescale-body-large-font-family);
+    font-size: var(--md-sys-typescale-body-large-size);
+    line-height: var(--md-sys-typescale-body-large-line-height);
+    font-weight: var(--md-sys-typescale-body-large-weight);
+    letter-spacing: var(--md-sys-typescale-body-large-tracking);
+}
+
+.md-body-medium {
+    font-family: var(--md-sys-typescale-body-medium-font-family);
+    font-size: var(--md-sys-typescale-body-medium-size);
+    line-height: var(--md-sys-typescale-body-medium-line-height);
+    font-weight: var(--md-sys-typescale-body-medium-weight);
+    letter-spacing: var(--md-sys-typescale-body-medium-tracking);
+}
+
+.md-label-large {
+    font-family: var(--md-sys-typescale-label-large-font-family);
+    font-size: var(--md-sys-typescale-label-large-size);
+    line-height: var(--md-sys-typescale-label-large-line-height);
+    font-weight: var(--md-sys-typescale-label-large-weight);
+    letter-spacing: var(--md-sys-typescale-label-large-tracking);
+}
+
+.md-label-medium {
+    font-family: var(--md-sys-typescale-label-medium-font-family);
+    font-size: var(--md-sys-typescale-label-medium-size);
+    line-height: var(--md-sys-typescale-label-medium-line-height);
+    font-weight: var(--md-sys-typescale-label-medium-weight);
+    letter-spacing: var(--md-sys-typescale-label-medium-tracking);
+}
+
+/* ============================================
+   Color Utilities
+   ============================================ */
+.md-text-primary { color: var(--md-sys-color-primary); }
+.md-text-secondary { color: var(--md-sys-color-secondary); }
+.md-text-tertiary { color: var(--md-sys-color-tertiary); }
+.md-text-error { color: var(--md-sys-color-error); }
+.md-text-on-surface { color: var(--md-sys-color-on-surface); }
+.md-text-on-surface-variant { color: var(--md-sys-color-on-surface-variant); }
+
+.md-bg-surface { background-color: var(--md-sys-color-surface); }
+.md-bg-surface-variant { background-color: var(--md-sys-color-surface-variant); }
+.md-bg-primary { background-color: var(--md-sys-color-primary); }
+.md-bg-primary-container { background-color: var(--md-sys-color-primary-container); }
+.md-bg-secondary-container { background-color: var(--md-sys-color-secondary-container); }
+
+/* ============================================
+   Elevation Utilities
+   ============================================ */
+.md-elevation-0 { box-shadow: var(--md-sys-elevation-0); }
+.md-elevation-1 { box-shadow: var(--md-sys-elevation-1); }
+.md-elevation-2 { box-shadow: var(--md-sys-elevation-2); }
+.md-elevation-3 { box-shadow: var(--md-sys-elevation-3); }
+.md-elevation-4 { box-shadow: var(--md-sys-elevation-4); }
+.md-elevation-5 { box-shadow: var(--md-sys-elevation-5); }
+
+/* ============================================
+   Shape Utilities
+   ============================================ */
+.md-rounded-none { border-radius: var(--md-sys-shape-corner-none); }
+.md-rounded-xs { border-radius: var(--md-sys-shape-corner-extra-small); }
+.md-rounded-sm { border-radius: var(--md-sys-shape-corner-small); }
+.md-rounded-md { border-radius: var(--md-sys-shape-corner-medium); }
+.md-rounded-lg { border-radius: var(--md-sys-shape-corner-large); }
+.md-rounded-xl { border-radius: var(--md-sys-shape-corner-extra-large); }
+.md-rounded-full { border-radius: var(--md-sys-shape-corner-full); }
+
+/* ============================================
+   Size Utilities
+   ============================================ */
+.md-w-full { width: 100%; }
+.md-h-full { height: 100%; }
+.md-min-w-0 { min-width: 0; }
+.md-min-h-0 { min-height: 0; }
+
+/* ============================================
+   Position Utilities
+   ============================================ */
+.md-relative { position: relative; }
+.md-absolute { position: absolute; }
+.md-fixed { position: fixed; }
+.md-sticky { position: sticky; }
+
+.md-inset-0 {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+/* ============================================
+   Overflow Utilities
+   ============================================ */
+.md-overflow-hidden { overflow: hidden; }
+.md-overflow-auto { overflow: auto; }
+.md-overflow-scroll { overflow: scroll; }
+.md-overflow-visible { overflow: visible; }
+
+/* ============================================
+   Cursor Utilities
+   ============================================ */
+.md-cursor-pointer { cursor: pointer; }
+.md-cursor-default { cursor: default; }
+.md-cursor-not-allowed { cursor: not-allowed; }
+
+/* ============================================
+   Interaction Utilities
+   ============================================ */
+.md-pointer-events-none { pointer-events: none; }
+.md-pointer-events-auto { pointer-events: auto; }
+.md-select-none { user-select: none; }
+.md-select-text { user-select: text; }

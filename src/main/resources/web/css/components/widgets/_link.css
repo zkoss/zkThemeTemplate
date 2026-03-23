@@ -1,0 +1,47 @@
+/* ZK Link (A) - Material Design 3 Style */
+/* M3 Text link */
+
+/* ============================================
+   Link
+   ============================================ */
+.z-a {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--md-sys-spacing-1);
+    color: var(--md-sys-color-primary);
+    text-decoration: none;
+    font-family: var(--md-sys-typescale-body-medium-font-family, inherit);
+    font-size: var(--md-sys-typescale-body-medium-size);
+    cursor: pointer;
+    border-radius: var(--md-sys-shape-corner-extra-small);
+    transition: color var(--md-sys-motion-duration-short1) var(--md-sys-motion-easing-standard);
+}
+
+.z-a:hover {
+    text-decoration: underline;
+}
+
+.z-a:focus-visible {
+    outline: 2px solid var(--md-sys-color-primary);
+    outline-offset: 2px;
+}
+
+.z-a:active {
+    color: var(--md-sys-color-primary);
+    opacity: 0.8;
+}
+
+/* Disabled */
+.z-a[disabled] {
+    color: var(--md-sys-color-on-surface);
+    opacity: 0.38;
+    cursor: default;
+    pointer-events: none;
+    text-decoration: none;
+}
+
+/* Image */
+.z-a-image {
+    vertical-align: middle;
+}
+

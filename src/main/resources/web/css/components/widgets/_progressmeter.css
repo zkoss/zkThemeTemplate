@@ -1,0 +1,51 @@
+/* ZK Progressmeter - Material Design 3 Style */
+/* M3 Linear Progress Indicator */
+
+/* ============================================
+   Progressmeter Container (Track)
+   ============================================ */
+.z-progressmeter {
+    display: block;
+    position: relative;
+    width: 100%;
+    height: 4px;
+    background-color: var(--md-sys-color-surface-container-highest);
+    border-radius: var(--md-sys-shape-corner-full);
+    overflow: hidden;
+}
+
+/* ============================================
+   Progress Bar (Active Indicator)
+   ============================================ */
+.z-progressmeter-image {
+    display: block;
+    height: 100%;
+    background-color: var(--md-sys-color-primary);
+    border-radius: var(--md-sys-shape-corner-full);
+    transition: width var(--md-sys-motion-duration-medium2) var(--md-sys-motion-easing-standard);
+}
+
+/* ============================================
+   Indeterminate State
+   ============================================ */
+.z-progressmeter-indeterminate {
+    overflow: hidden;
+}
+
+.z-progressmeter-indeterminate .z-progressmeter-image {
+    width: 50% !important;
+    animation: progressmeter-indeterminate 2s var(--md-sys-motion-easing-standard) infinite;
+}
+
+@keyframes progressmeter-indeterminate {
+    0% {
+        transform: translateX(-100%);
+    }
+    50% {
+        transform: translateX(100%);
+    }
+    100% {
+        transform: translateX(200%);
+    }
+}
+

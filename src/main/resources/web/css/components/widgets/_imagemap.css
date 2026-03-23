@@ -1,0 +1,29 @@
+/* ZK Imagemap - Material Design 3 Style */
+/* Image with clickable areas */
+
+/* ============================================
+   Imagemap Container
+   ============================================ */
+.z-imagemap {
+    display: inline-block;
+    position: relative;
+    line-height: 0;
+}
+
+/* Image inside imagemap */
+.z-imagemap img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--md-sys-shape-corner-small);
+}
+
+/* Area elements (clickable regions) */
+.z-imagemap area {
+    cursor: pointer;
+}
+
+.z-imagemap area:focus-visible {
+    outline: 2px solid var(--md-sys-color-primary);
+    outline-offset: 2px;
+}

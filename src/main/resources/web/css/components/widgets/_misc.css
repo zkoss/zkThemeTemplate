@@ -1,0 +1,67 @@
+/* ZK Miscellaneous Widgets - Material Design 3 Style */
+/* Simple utility components: Idspace, Include, Iframe, Audio */
+
+/* ============================================
+   Idspace
+   Minimal container for ID scope
+   ============================================ */
+.z-idspace {
+    display: block;
+    position: relative;
+}
+
+/* ============================================
+   Include
+   Container for included content
+   ============================================ */
+.z-include {
+    display: block;
+    position: relative;
+}
+
+/* ============================================
+   Iframe
+   Embedded frame container
+   ============================================ */
+.z-iframe {
+    display: block;
+    border: none;
+    width: 100%;
+    height: 100%;
+    background-color: var(--md-sys-color-surface);
+}
+
+.z-iframe iframe {
+    border: none;
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+/* ============================================
+   Audio
+   Audio player element
+   ============================================ */
+.z-audio {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+}
+
+.z-audio audio {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+}
+
+/* Custom styling for audio controls (webkit/blink) */
+.z-audio audio::-webkit-media-controls-panel {
+    background-color: var(--md-sys-color-surface-container);
+}
+
+.z-audio audio::-webkit-media-controls-current-time-display,
+.z-audio audio::-webkit-media-controls-time-remaining-display {
+    color: var(--md-sys-color-on-surface);
+    font-family: var(--md-sys-typescale-label-medium-font-family, inherit);
+    font-size: var(--md-sys-typescale-label-medium-size);
+}

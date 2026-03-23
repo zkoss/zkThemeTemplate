@@ -1,0 +1,302 @@
+/* ZK Tabbox - Material Design 3 Style */
+/* M3 Tabs component */
+
+/* ============================================
+   Tabbox Container
+   ============================================ */
+.z-tabbox {
+    display: block;
+    position: relative;
+    background-color: var(--md-sys-color-surface);
+}
+
+/* ============================================
+   Tabs Header Container
+   ============================================ */
+.z-tabs {
+    display: block;
+    position: relative;
+    background-color: var(--md-sys-color-surface);
+    border-bottom: 1px solid var(--md-sys-color-surface-container-highest);
+    overflow: hidden;
+}
+
+.z-tabs-content {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    white-space: nowrap;
+    position: relative;
+}
+
+/* ============================================
+   Individual Tab
+   Material Design 3 Tab indicator
+   ============================================ */
+.z-tab {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    list-style: none;
+    cursor: pointer;
+}
+
+.z-tab-content {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--md-sys-spacing-2);
+    padding: 0 var(--md-sys-spacing-4);
+    min-height: 48px;
+    min-width: 90px;
+    position: relative;
+
+    /* Typography */
+    font-family: var(--md-sys-typescale-title-small-font-family, inherit);
+    font-size: var(--md-sys-typescale-title-small-size);
+    font-weight: var(--md-sys-typescale-title-small-weight);
+    color: var(--md-sys-color-on-surface-variant);
+    text-decoration: none;
+
+    /* Transition */
+    transition:
+        color var(--md-sys-motion-duration-short2) var(--md-sys-motion-easing-standard),
+        background-color var(--md-sys-motion-duration-short2) var(--md-sys-motion-easing-standard);
+}
+
+/* Tab hover */
+.z-tab-content:hover {
+    background-color: var(--md-sys-color-surface-container-low);
+}
+
+/* Tab label */
+.z-tab-text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Tab image */
+.z-tab-image {
+    width: var(--md-sys-size-icon-sm);
+    height: var(--md-sys-size-icon-sm);
+    object-fit: contain;
+}
+
+/* Active indicator line (bottom border for selected tab) */
+.z-tab-selected .z-tab-content {
+    color: var(--md-sys-color-primary);
+}
+
+.z-tab-selected .z-tab-content::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background-color: var(--md-sys-color-primary);
+    border-radius: 3px 3px 0 0;
+}
+
+/* Disabled tab */
+.z-tab-disabled {
+    pointer-events: none;
+}
+
+.z-tab-disabled .z-tab-content {
+    color: color-mix(in srgb, var(--md-sys-color-on-surface) 38%, transparent);
+}
+
+/* Close button */
+.z-tab-button {
+    display: inline-flex;
+    align-items: center;
+    margin-left: var(--md-sys-spacing-2);
+    order: 1;
+}
+
+.z-tab-button .z-tabbox-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    font-size: 12px;
+    border-radius: var(--md-sys-shape-corner-full);
+    color: var(--md-sys-color-on-surface-variant);
+    cursor: pointer;
+    transition: background-color var(--md-sys-motion-duration-short1) var(--md-sys-motion-easing-standard);
+}
+
+.z-tab-button .z-tabbox-icon:hover {
+    background-color: var(--md-sys-color-surface-container-highest);
+}
+
+/* ============================================
+   Scroll Buttons
+   ============================================ */
+.z-tabbox-icon {
+    display: none;
+}
+
+.z-tabbox-scroll .z-tabbox-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 48px;
+    cursor: pointer;
+    color: var(--md-sys-color-on-surface-variant);
+    background-color: var(--md-sys-color-surface);
+    z-index: 10;
+}
+
+.z-tabbox-scroll .z-tabbox-icon:hover {
+    background-color: var(--md-sys-color-surface-container-low);
+}
+
+.z-tabbox-left-scroll,
+.z-tabbox-right-scroll {
+    position: absolute;
+    top: 0;
+}
+
+.z-tabbox-left-scroll {
+    left: 0;
+}
+
+.z-tabbox-right-scroll {
+    right: 0;
+}
+
+/* ============================================
+   Tab Panels
+   ============================================ */
+.z-tabpanels {
+    display: block;
+    background-color: var(--md-sys-color-surface);
+}
+
+.z-tabpanel {
+    padding: var(--md-sys-spacing-4);
+    background-color: var(--md-sys-color-surface);
+}
+
+/* ============================================
+   Orientation Variants
+   ============================================ */
+
+/* Bottom tabs */
+.z-tabbox-bottom .z-tabs {
+    border-bottom: none;
+    border-top: 1px solid var(--md-sys-color-surface-container-highest);
+    order: 1;
+}
+
+.z-tabbox-bottom .z-tab-selected .z-tab-content::after {
+    top: 0;
+    bottom: auto;
+    border-radius: 0 0 3px 3px;
+}
+
+/* Left tabs */
+.z-tabbox-left {
+    display: flex;
+}
+
+.z-tabbox-left .z-tabs {
+    border-bottom: none;
+    border-right: 1px solid var(--md-sys-color-surface-container-highest);
+}
+
+.z-tabbox-left .z-tabs-content {
+    flex-direction: column;
+}
+
+.z-tabbox-left .z-tab-selected .z-tab-content::after {
+    top: 0;
+    bottom: 0;
+    left: auto;
+    right: 0;
+    width: 3px;
+    height: auto;
+    border-radius: 3px 0 0 3px;
+}
+
+.z-tabbox-left .z-tabpanels {
+    flex: 1;
+}
+
+/* Right tabs */
+.z-tabbox-right {
+    display: flex;
+}
+
+.z-tabbox-right .z-tabs {
+    border-bottom: none;
+    border-left: 1px solid var(--md-sys-color-surface-container-highest);
+    order: 1;
+}
+
+.z-tabbox-right .z-tabs-content {
+    flex-direction: column;
+}
+
+.z-tabbox-right .z-tab-selected .z-tab-content::after {
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: auto;
+    width: 3px;
+    height: auto;
+    border-radius: 0 3px 3px 0;
+}
+
+/* ============================================
+   Accordion Variant
+   ============================================ */
+.z-tabbox-accordion {
+    border: 1px solid var(--md-sys-color-outline-variant);
+    border-radius: var(--md-sys-shape-corner-small);
+    overflow: hidden;
+}
+
+.z-tabbox-accordion .z-tabs {
+    border-bottom: none;
+}
+
+.z-tabbox-accordion .z-tabs-content {
+    flex-direction: column;
+}
+
+.z-tabbox-accordion .z-tab-content {
+    width: 100%;
+    justify-content: flex-start;
+    border-bottom: 1px solid var(--md-sys-color-outline-variant);
+    min-height: 48px;
+    padding: 0 var(--md-sys-spacing-4);
+}
+
+.z-tabbox-accordion .z-tab-selected .z-tab-content {
+    background-color: var(--md-sys-color-surface-container-low);
+}
+
+.z-tabbox-accordion .z-tab-selected .z-tab-content::after {
+    display: none;
+}
+
+.z-tabbox-accordion .z-tabpanel {
+    border-bottom: 1px solid var(--md-sys-color-outline-variant);
+}
+
+.z-tabbox-accordion .z-tabpanel-content {
+    padding: var(--md-sys-spacing-4);
+}
+
+/* Utility */
+.z-clear {
+    clear: both;
+}

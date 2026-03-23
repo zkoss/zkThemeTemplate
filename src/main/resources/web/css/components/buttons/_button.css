@@ -1,0 +1,346 @@
+/* ZK Button - Material Design 3 Style */
+
+/* ============================================
+   Filled Button (Default)
+   Material Design 3 primary filled button
+   ============================================ */
+.z-button {
+    /* Reset */
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    border: none;
+    outline: none;
+    text-decoration: none;
+
+    /* Layout */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--md-sys-spacing-2);
+    min-height: var(--md-sys-size-button-height);
+    min-width: 64px;
+    padding: 0 var(--md-sys-spacing-6);
+
+    /* Typography - Label Large */
+    font-family: var(--md-sys-typescale-label-large-font-family);
+    font-size: var(--md-sys-typescale-label-large-size);
+    font-weight: var(--md-sys-typescale-label-large-weight);
+    line-height: var(--md-sys-typescale-label-large-line-height);
+    letter-spacing: var(--md-sys-typescale-label-large-tracking);
+    text-transform: none;
+    white-space: nowrap;
+
+    /* Colors - Filled Button */
+    color: var(--md-sys-color-on-primary);
+    background-color: var(--md-sys-color-primary);
+
+    /* Shape */
+    border-radius: var(--md-sys-shape-button);
+
+    /* Elevation */
+    box-shadow: var(--md-sys-elevation-0);
+
+    /* Interaction */
+    cursor: pointer;
+    user-select: none;
+    vertical-align: middle;
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+
+    /* Transitions */
+    transition:
+        box-shadow var(--md-sys-motion-duration-short2) var(--md-sys-motion-easing-standard),
+        background-color var(--md-sys-motion-duration-short2) var(--md-sys-motion-easing-standard);
+}
+
+/* State Layer */
+.z-button::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background-color: var(--md-sys-color-on-primary);
+    opacity: 0;
+    transition: opacity var(--md-sys-motion-duration-short2) var(--md-sys-motion-easing-standard);
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* Hover State */
+.z-button:hover {
+    box-shadow: var(--md-sys-elevation-1);
+}
+
+.z-button:hover::before {
+    opacity: var(--md-sys-state-hover-opacity);
+}
+
+/* Focus State */
+.z-button:focus-visible {
+    outline: 2px solid var(--md-sys-color-primary);
+    outline-offset: 2px;
+}
+
+.z-button:focus::before,
+.z-button:focus-visible::before {
+    opacity: var(--md-sys-state-focus-opacity);
+}
+
+/* Active/Pressed State */
+.z-button:active {
+    box-shadow: var(--md-sys-elevation-0);
+}
+
+.z-button:active::before {
+    opacity: var(--md-sys-state-pressed-opacity);
+}
+
+/* Disabled State */
+.z-button[disabled],
+.z-button:disabled {
+    color: var(--md-sys-color-on-surface);
+    background-color: var(--md-sys-color-on-surface);
+    opacity: 1;
+    box-shadow: var(--md-sys-elevation-0);
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+.z-button[disabled]::before,
+.z-button:disabled::before {
+    display: none;
+}
+
+/* Disabled text opacity */
+.z-button[disabled],
+.z-button:disabled {
+    color: color-mix(in srgb, var(--md-sys-color-on-surface) 38%, transparent);
+    background-color: color-mix(in srgb, var(--md-sys-color-on-surface) 12%, transparent);
+}
+
+/* ============================================
+   Button Image
+   ============================================ */
+.z-button-image {
+    display: inline-block;
+    width: var(--md-sys-size-icon-sm);
+    height: var(--md-sys-size-icon-sm);
+    object-fit: contain;
+    vertical-align: middle;
+    flex-shrink: 0;
+}
+
+/* Icon inside button */
+.z-button [class^="z-icon-"],
+.z-button [class*=" z-icon-"] {
+    font-size: var(--md-sys-size-icon-sm);
+    line-height: 1;
+    flex-shrink: 0;
+}
+
+/* ============================================
+   Button Variants via Sclass
+   Use these with sclass attribute in ZUL:
+   <button sclass="z-button--outlined" />
+   ============================================ */
+
+/* Outlined Button */
+.z-button.z-button--outlined,
+.z-button--outlined {
+    color: var(--md-sys-color-primary);
+    background-color: transparent;
+    border: 1px solid var(--md-sys-color-outline);
+    box-shadow: none;
+}
+
+.z-button.z-button--outlined::before,
+.z-button--outlined::before {
+    background-color: var(--md-sys-color-primary);
+}
+
+.z-button.z-button--outlined:hover,
+.z-button--outlined:hover {
+    box-shadow: none;
+}
+
+.z-button.z-button--outlined:focus-visible,
+.z-button--outlined:focus-visible {
+    border-color: var(--md-sys-color-primary);
+}
+
+.z-button.z-button--outlined[disabled],
+.z-button--outlined[disabled] {
+    color: color-mix(in srgb, var(--md-sys-color-on-surface) 38%, transparent);
+    background-color: transparent;
+    border-color: color-mix(in srgb, var(--md-sys-color-on-surface) 12%, transparent);
+}
+
+/* Text Button */
+.z-button.z-button--text,
+.z-button--text {
+    color: var(--md-sys-color-primary);
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+    min-width: auto;
+    padding: 0 var(--md-sys-spacing-3);
+}
+
+.z-button.z-button--text::before,
+.z-button--text::before {
+    background-color: var(--md-sys-color-primary);
+}
+
+.z-button.z-button--text:hover,
+.z-button--text:hover {
+    box-shadow: none;
+}
+
+.z-button.z-button--text[disabled],
+.z-button--text[disabled] {
+    color: color-mix(in srgb, var(--md-sys-color-on-surface) 38%, transparent);
+    background-color: transparent;
+}
+
+/* Elevated Button */
+.z-button.z-button--elevated,
+.z-button--elevated {
+    color: var(--md-sys-color-primary);
+    background-color: var(--md-sys-color-surface-container-low);
+    box-shadow: var(--md-sys-elevation-1);
+}
+
+.z-button.z-button--elevated::before,
+.z-button--elevated::before {
+    background-color: var(--md-sys-color-primary);
+}
+
+.z-button.z-button--elevated:hover,
+.z-button--elevated:hover {
+    box-shadow: var(--md-sys-elevation-2);
+}
+
+.z-button.z-button--elevated[disabled],
+.z-button--elevated[disabled] {
+    color: color-mix(in srgb, var(--md-sys-color-on-surface) 38%, transparent);
+    background-color: color-mix(in srgb, var(--md-sys-color-on-surface) 12%, transparent);
+    box-shadow: var(--md-sys-elevation-0);
+}
+
+/* Tonal Button (Filled Tonal) */
+.z-button.z-button--tonal,
+.z-button--tonal {
+    color: var(--md-sys-color-on-secondary-container);
+    background-color: var(--md-sys-color-secondary-container);
+}
+
+.z-button.z-button--tonal::before,
+.z-button--tonal::before {
+    background-color: var(--md-sys-color-on-secondary-container);
+}
+
+.z-button.z-button--tonal[disabled],
+.z-button--tonal[disabled] {
+    color: color-mix(in srgb, var(--md-sys-color-on-surface) 38%, transparent);
+    background-color: color-mix(in srgb, var(--md-sys-color-on-surface) 12%, transparent);
+}
+
+/* ============================================
+   Size Variants
+   ============================================ */
+
+/* Small Button */
+.z-button.z-button--small,
+.z-button--small {
+    min-height: 32px;
+    padding: 0 var(--md-sys-spacing-4);
+    font-size: var(--md-sys-typescale-label-medium-size);
+}
+
+/* Large Button */
+.z-button.z-button--large,
+.z-button--large {
+    min-height: 48px;
+    padding: 0 var(--md-sys-spacing-8);
+    font-size: var(--md-sys-typescale-title-medium-size);
+}
+
+/* Full Width Button */
+.z-button.z-button--full-width,
+.z-button--full-width {
+    width: 100%;
+}
+
+/* ============================================
+   Icon-Only Button
+   ============================================ */
+.z-button.z-button--icon-only,
+.z-button--icon-only {
+    min-width: var(--md-sys-size-button-height);
+    width: var(--md-sys-size-button-height);
+    padding: 0;
+    border-radius: var(--md-sys-shape-corner-full);
+}
+
+.z-button.z-button--icon-only .z-button-image,
+.z-button--icon-only .z-button-image {
+    width: var(--md-sys-size-icon-md);
+    height: var(--md-sys-size-icon-md);
+}
+
+/* ============================================
+   Color Variants
+   ============================================ */
+
+/* Error/Danger Button */
+.z-button.z-button--error,
+.z-button--error {
+    color: var(--md-sys-color-on-error);
+    background-color: var(--md-sys-color-error);
+}
+
+.z-button.z-button--error::before,
+.z-button--error::before {
+    background-color: var(--md-sys-color-on-error);
+}
+
+.z-button.z-button--error:focus-visible,
+.z-button--error:focus-visible {
+    outline-color: var(--md-sys-color-error);
+}
+
+/* Secondary Button */
+.z-button.z-button--secondary,
+.z-button--secondary {
+    color: var(--md-sys-color-on-secondary);
+    background-color: var(--md-sys-color-secondary);
+}
+
+.z-button.z-button--secondary::before,
+.z-button--secondary::before {
+    background-color: var(--md-sys-color-on-secondary);
+}
+
+.z-button.z-button--secondary:focus-visible,
+.z-button--secondary:focus-visible {
+    outline-color: var(--md-sys-color-secondary);
+}
+
+/* Tertiary Button */
+.z-button.z-button--tertiary,
+.z-button--tertiary {
+    color: var(--md-sys-color-on-tertiary);
+    background-color: var(--md-sys-color-tertiary);
+}
+
+.z-button.z-button--tertiary::before,
+.z-button--tertiary::before {
+    background-color: var(--md-sys-color-on-tertiary);
+}
+
+.z-button.z-button--tertiary:focus-visible,
+.z-button--tertiary:focus-visible {
+    outline-color: var(--md-sys-color-tertiary);
+}

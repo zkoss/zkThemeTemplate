@@ -1,0 +1,233 @@
+/* ZK Textbox - Material Design 3 Style */
+
+/* ============================================
+   Outlined Text Field (Default)
+   Material Design 3 outlined text field
+   ============================================ */
+.z-textbox {
+    /* Reset browser defaults */
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    outline: none;
+    box-sizing: border-box;
+
+    /* Layout */
+    display: inline-block;
+    width: auto;
+    min-height: var(--md-sys-size-input-height-dense);
+    padding: var(--md-sys-spacing-2) var(--md-sys-spacing-4);
+
+    /* Typography - Body Large */
+    font-family: var(--md-sys-typescale-body-large-font-family, inherit);
+    font-size: var(--md-sys-typescale-body-large-size);
+    font-weight: var(--md-sys-typescale-body-large-weight);
+    line-height: var(--md-sys-typescale-body-large-line-height);
+
+    /* Colors */
+    color: var(--md-sys-color-on-surface);
+    background-color: var(--md-sys-color-surface);
+
+    /* Shape - Outlined style */
+    border: 1px solid var(--md-sys-color-outline);
+    border-radius: var(--md-sys-shape-textfield);
+    box-shadow: none;
+
+    /* Interaction */
+    cursor: text;
+
+    /* Transitions */
+    transition:
+        border-color var(--md-sys-motion-duration-short2) var(--md-sys-motion-easing-standard),
+        background-color var(--md-sys-motion-duration-short2) var(--md-sys-motion-easing-standard),
+        box-shadow var(--md-sys-motion-duration-short2) var(--md-sys-motion-easing-standard);
+}
+
+/* Placeholder styling */
+.z-textbox::placeholder {
+    color: var(--md-sys-color-on-surface-variant);
+    opacity: 1;
+}
+
+/* Hover State */
+.z-textbox:hover:not([disabled]):not([readonly]) {
+    border-color: var(--md-sys-color-on-surface);
+}
+
+/* Focus State */
+.z-textbox:focus,
+.z-textbox:focus-visible {
+    border-color: var(--md-sys-color-primary);
+    border-width: 2px;
+    padding: calc(var(--md-sys-spacing-2) - 1px) calc(var(--md-sys-spacing-4) - 1px);
+    outline: none;
+}
+
+/* Invalid State */
+.z-textbox-invalid,
+.z-textbox.z-textbox-invalid {
+    border-color: var(--md-sys-color-error);
+}
+
+.z-textbox-invalid:focus,
+.z-textbox-invalid:focus-visible,
+.z-textbox.z-textbox-invalid:focus,
+.z-textbox.z-textbox-invalid:focus-visible {
+    border-color: var(--md-sys-color-error);
+}
+
+/* Disabled State */
+.z-textbox[disabled],
+.z-textbox:disabled {
+    color: color-mix(in srgb, var(--md-sys-color-on-surface) 38%, transparent);
+    background-color: color-mix(in srgb, var(--md-sys-color-on-surface) 4%, transparent);
+    border-color: color-mix(in srgb, var(--md-sys-color-on-surface) 12%, transparent);
+    cursor: not-allowed;
+}
+
+.z-textbox[disabled]::placeholder {
+    color: color-mix(in srgb, var(--md-sys-color-on-surface) 38%, transparent);
+}
+
+/* Readonly State */
+.z-textbox[readonly] {
+    cursor: default;
+    background-color: var(--md-sys-color-surface-container-low);
+}
+
+/* ============================================
+   Multiline Textarea
+   ============================================ */
+textarea.z-textbox {
+    resize: vertical;
+    min-height: calc(var(--md-sys-size-input-height) * 1.5);
+    line-height: var(--md-sys-typescale-body-large-line-height);
+}
+
+/* ============================================
+   Inplace Textbox
+   ============================================ */
+.z-textbox-inplace {
+    background-color: transparent;
+    border-color: transparent;
+}
+
+.z-textbox-inplace:hover:not([disabled]):not([readonly]) {
+    background-color: var(--md-sys-color-surface-container-highest);
+    border-color: var(--md-sys-color-outline-variant);
+}
+
+.z-textbox-inplace:focus,
+.z-textbox-inplace:focus-visible {
+    background-color: var(--md-sys-color-surface);
+    border-color: var(--md-sys-color-primary);
+    border-width: 2px;
+    padding: calc(var(--md-sys-spacing-2) - 1px) calc(var(--md-sys-spacing-4) - 1px);
+}
+
+/* ============================================
+   Other Input Types (Intbox, Decimalbox, etc.)
+   These use the same base styles as textbox
+   ============================================ */
+.z-intbox,
+.z-longbox,
+.z-doublebox,
+.z-decimalbox {
+    /* Reset browser defaults */
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    outline: none;
+    box-sizing: border-box;
+
+    /* Layout */
+    display: inline-block;
+    width: auto;
+    min-height: var(--md-sys-size-input-height-dense);
+    padding: var(--md-sys-spacing-2) var(--md-sys-spacing-4);
+
+    /* Typography - Body Large */
+    font-family: var(--md-sys-typescale-body-large-font-family, inherit);
+    font-size: var(--md-sys-typescale-body-large-size);
+    font-weight: var(--md-sys-typescale-body-large-weight);
+    line-height: var(--md-sys-typescale-body-large-line-height);
+
+    /* Colors */
+    color: var(--md-sys-color-on-surface);
+    background-color: var(--md-sys-color-surface);
+
+    /* Shape - Outlined style */
+    border: 1px solid var(--md-sys-color-outline);
+    border-radius: var(--md-sys-shape-textfield);
+    box-shadow: none;
+
+    /* Interaction */
+    cursor: text;
+
+    /* Transitions */
+    transition:
+        border-color var(--md-sys-motion-duration-short2) var(--md-sys-motion-easing-standard),
+        background-color var(--md-sys-motion-duration-short2) var(--md-sys-motion-easing-standard);
+}
+
+/* Hover State for number inputs */
+.z-intbox:hover:not([disabled]):not([readonly]),
+.z-longbox:hover:not([disabled]):not([readonly]),
+.z-doublebox:hover:not([disabled]):not([readonly]),
+.z-decimalbox:hover:not([disabled]):not([readonly]) {
+    border-color: var(--md-sys-color-on-surface);
+}
+
+/* Focus State for number inputs */
+.z-intbox:focus,
+.z-intbox:focus-visible,
+.z-longbox:focus,
+.z-longbox:focus-visible,
+.z-doublebox:focus,
+.z-doublebox:focus-visible,
+.z-decimalbox:focus,
+.z-decimalbox:focus-visible {
+    border-color: var(--md-sys-color-primary);
+    border-width: 2px;
+    padding: calc(var(--md-sys-spacing-2) - 1px) calc(var(--md-sys-spacing-4) - 1px);
+    outline: none;
+}
+
+/* Disabled State for number inputs */
+.z-intbox[disabled],
+.z-longbox[disabled],
+.z-doublebox[disabled],
+.z-decimalbox[disabled] {
+    color: color-mix(in srgb, var(--md-sys-color-on-surface) 38%, transparent);
+    background-color: color-mix(in srgb, var(--md-sys-color-on-surface) 4%, transparent);
+    border-color: color-mix(in srgb, var(--md-sys-color-on-surface) 12%, transparent);
+    cursor: not-allowed;
+}
+
+/* Readonly State for number inputs */
+.z-intbox[readonly],
+.z-longbox[readonly],
+.z-doublebox[readonly],
+.z-decimalbox[readonly] {
+    cursor: default;
+    background-color: var(--md-sys-color-surface-container-low);
+}
+
+/* Inplace mode for number inputs */
+.z-intbox-inplace,
+.z-longbox-inplace,
+.z-doublebox-inplace,
+.z-decimalbox-inplace {
+    background-color: transparent;
+    border-color: transparent;
+}
+
+.z-intbox-inplace:focus,
+.z-longbox-inplace:focus,
+.z-doublebox-inplace:focus,
+.z-decimalbox-inplace:focus {
+    background-color: var(--md-sys-color-surface);
+    border-color: var(--md-sys-color-primary);
+    border-width: 2px;
+    padding: calc(var(--md-sys-spacing-2) - 1px) calc(var(--md-sys-spacing-4) - 1px);
+}

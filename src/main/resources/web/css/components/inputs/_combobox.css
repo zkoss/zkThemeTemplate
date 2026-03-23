@@ -1,0 +1,493 @@
+/* ZK Combobox - Material Design 3 Style */
+/* Covers: combobox, bandbox, datebox, timebox, spinner, doublespinner */
+
+/* ============================================
+   Combo Container (shared across all types)
+   ============================================ */
+.z-combobox,
+.z-bandbox,
+.z-datebox,
+.z-timebox,
+.z-spinner,
+.z-doublespinner {
+    display: inline-block;
+    height: var(--md-sys-size-input-height);
+    font-size: var(--md-sys-typescale-body-large-size);
+    line-height: normal;
+    white-space: nowrap;
+    position: relative;
+    vertical-align: middle;
+}
+
+/* ============================================
+   Combo Input
+   Material Design 3 outlined text field
+   ============================================ */
+.z-combobox-input,
+.z-bandbox-input,
+.z-datebox-input,
+.z-timebox-input,
+.z-spinner-input,
+.z-doublespinner-input {
+    /* Reset */
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    outline: none;
+    box-sizing: border-box;
+    margin: 0;
+
+    /* Layout */
+    width: 100%;
+    height: var(--md-sys-size-input-height);
+    padding: var(--md-sys-spacing-2) var(--md-sys-spacing-4);
+    padding-right: 44px; /* Space for button */
+
+    /* Typography */
+    font-family: var(--md-sys-typescale-body-large-font-family, inherit);
+    font-size: var(--md-sys-typescale-body-large-size);
+    font-weight: var(--md-sys-typescale-body-large-weight);
+    line-height: var(--md-sys-typescale-body-large-line-height);
+
+    /* Colors */
+    color: var(--md-sys-color-on-surface);
+    background-color: var(--md-sys-color-surface);
+
+    /* Shape */
+    border: 1px solid var(--md-sys-color-outline);
+    border-radius: var(--md-sys-shape-textfield);
+
+    /* Transitions */
+    transition:
+        border-color var(--md-sys-motion-duration-short2) var(--md-sys-motion-easing-standard),
+        background-color var(--md-sys-motion-duration-short2) var(--md-sys-motion-easing-standard);
+}
+
+/* Input when button is hidden */
+.z-combobox-input-full,
+.z-bandbox-input-full,
+.z-datebox-input-full,
+.z-timebox-input-full,
+.z-spinner-input-full,
+.z-doublespinner-input-full {
+    padding-right: var(--md-sys-spacing-4);
+}
+
+/* Placeholder */
+.z-combobox-input::placeholder,
+.z-bandbox-input::placeholder,
+.z-datebox-input::placeholder,
+.z-timebox-input::placeholder,
+.z-spinner-input::placeholder,
+.z-doublespinner-input::placeholder {
+    color: var(--md-sys-color-on-surface-variant);
+    opacity: 1;
+}
+
+/* Hover State (JS applies class to input) */
+.z-combobox-input.z-combobox-hover,
+.z-bandbox-input.z-bandbox-hover,
+.z-datebox-input.z-datebox-hover,
+.z-timebox-input.z-timebox-hover,
+.z-spinner-input.z-spinner-hover,
+.z-doublespinner-input.z-doublespinner-hover {
+    border-color: var(--md-sys-color-on-surface);
+}
+
+.z-combobox-input.z-combobox-hover + .z-combobox-button,
+.z-bandbox-input.z-bandbox-hover + .z-bandbox-button,
+.z-datebox-input.z-datebox-hover + .z-datebox-button,
+.z-timebox-input.z-timebox-hover + .z-timebox-button {
+    border-left-color: var(--md-sys-color-on-surface);
+}
+
+/* Focus State */
+.z-combobox-input:focus,
+.z-bandbox-input:focus,
+.z-datebox-input:focus,
+.z-timebox-input:focus,
+.z-spinner-input:focus,
+.z-doublespinner-input:focus {
+    border-color: var(--md-sys-color-primary);
+    border-width: 2px;
+    padding: calc(var(--md-sys-spacing-2) - 1px) calc(var(--md-sys-spacing-4) - 1px);
+    padding-right: 43px;
+    outline: none;
+}
+
+.z-combobox-input:focus + .z-combobox-button,
+.z-bandbox-input:focus + .z-bandbox-button,
+.z-datebox-input:focus + .z-datebox-button {
+    color: var(--md-sys-color-primary);
+}
+
+/* Invalid State */
+.z-combobox-invalid,
+.z-bandbox-invalid,
+.z-datebox-invalid,
+.z-timebox-invalid,
+.z-spinner-invalid,
+.z-doublespinner-invalid {
+    border-color: var(--md-sys-color-error) !important;
+}
+
+.z-combobox-invalid + .z-combobox-button,
+.z-bandbox-invalid + .z-bandbox-button,
+.z-datebox-invalid + .z-datebox-button {
+    color: var(--md-sys-color-error);
+}
+
+/* ============================================
+   Combo Dropdown Button (trailing icon)
+   ============================================ */
+.z-combobox-button,
+.z-bandbox-button,
+.z-datebox-button {
+    /* Reset */
+    text-decoration: none;
+
+    /* Layout */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 40px;
+    height: var(--md-sys-size-input-height);
+
+    /* Colors */
+    color: var(--md-sys-color-on-surface-variant);
+    background-color: transparent;
+    border: none;
+    border-left: 1px solid var(--md-sys-color-outline);
+    border-radius: 0 var(--md-sys-shape-textfield) var(--md-sys-shape-textfield) 0;
+
+    /* Interaction */
+    cursor: pointer;
+    overflow: hidden;
+
+    /* Transition */
+    transition:
+        color var(--md-sys-motion-duration-short2) var(--md-sys-motion-easing-standard),
+        background-color var(--md-sys-motion-duration-short2) var(--md-sys-motion-easing-standard),
+        border-color var(--md-sys-motion-duration-short2) var(--md-sys-motion-easing-standard);
+}
+
+.z-combobox-button:hover,
+.z-bandbox-button:hover,
+.z-datebox-button:hover {
+    background-color: var(--md-sys-color-surface-container-highest);
+}
+
+.z-combobox-button:active,
+.z-bandbox-button:active,
+.z-datebox-button:active {
+    background-color: var(--md-sys-color-surface-container-high);
+}
+
+/* Button icon */
+.z-combobox-icon,
+.z-bandbox-icon,
+.z-datebox-icon {
+    font-size: var(--md-sys-size-icon-sm);
+    line-height: 1;
+}
+
+/* Open state button */
+.z-combobox-open .z-combobox-button,
+.z-bandbox-open .z-bandbox-button,
+.z-datebox-open .z-datebox-button {
+    color: var(--md-sys-color-primary);
+    border-left-color: var(--md-sys-color-primary);
+}
+
+/* ============================================
+   Spinner/Timebox Button (up/down arrows)
+   ============================================ */
+.z-timebox-button,
+.z-spinner-button,
+.z-doublespinner-button {
+    /* Reset */
+    text-decoration: none;
+
+    /* Layout */
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 32px;
+    height: var(--md-sys-size-input-height);
+    padding: 0;
+
+    /* Colors */
+    color: var(--md-sys-color-on-surface-variant);
+    background-color: transparent;
+    border: none;
+    border-left: 1px solid var(--md-sys-color-outline);
+    border-radius: 0 var(--md-sys-shape-textfield) var(--md-sys-shape-textfield) 0;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.z-timebox-button > a,
+.z-spinner-button > a,
+.z-doublespinner-button > a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    width: 100%;
+    color: var(--md-sys-color-on-surface-variant);
+    text-decoration: none;
+    overflow: hidden;
+}
+
+.z-timebox-button > a:hover,
+.z-spinner-button > a:hover,
+.z-doublespinner-button > a:hover {
+    background-color: var(--md-sys-color-surface-container-highest);
+}
+
+.z-timebox-button > a > i,
+.z-spinner-button > a > i,
+.z-doublespinner-button > a > i {
+    font-size: 10px;
+}
+
+.z-timebox-button > i,
+.z-spinner-button > i,
+.z-doublespinner-button > i {
+    display: none;
+}
+
+/* ============================================
+   Disabled State
+   ============================================ */
+.z-combobox-disabled,
+.z-bandbox-disabled,
+.z-datebox-disabled,
+.z-timebox-disabled,
+.z-spinner-disabled,
+.z-doublespinner-disabled {
+    pointer-events: none;
+}
+
+.z-combobox-disabled > input,
+.z-bandbox-disabled > input,
+.z-datebox-disabled > input,
+.z-timebox-disabled > input,
+.z-spinner-disabled > input,
+.z-doublespinner-disabled > input {
+    color: color-mix(in srgb, var(--md-sys-color-on-surface) 38%, transparent) !important;
+    background-color: color-mix(in srgb, var(--md-sys-color-on-surface) 4%, transparent) !important;
+    border-color: color-mix(in srgb, var(--md-sys-color-on-surface) 12%, transparent) !important;
+    cursor: not-allowed !important;
+}
+
+.z-combobox-disabled > a,
+.z-bandbox-disabled > a,
+.z-datebox-disabled > a,
+.z-combobox-disabled > span,
+.z-bandbox-disabled > span,
+.z-datebox-disabled > span {
+    color: color-mix(in srgb, var(--md-sys-color-on-surface) 38%, transparent) !important;
+    background-color: transparent !important;
+    cursor: not-allowed !important;
+}
+
+.z-combobox-disabled .z-combobox-button,
+.z-bandbox-disabled .z-bandbox-button,
+.z-datebox-disabled .z-datebox-button {
+    border-left-color: color-mix(in srgb, var(--md-sys-color-on-surface) 12%, transparent);
+}
+
+.z-combobox-button.z-combobox-disabled,
+.z-bandbox-button.z-bandbox-disabled,
+.z-datebox-button.z-datebox-disabled {
+    display: none;
+}
+
+.z-timebox-disabled a,
+.z-spinner-disabled a,
+.z-doublespinner-disabled a {
+    color: color-mix(in srgb, var(--md-sys-color-on-surface) 38%, transparent);
+}
+
+/* ============================================
+   Readonly State
+   ============================================ */
+.z-combobox-readonly > input,
+.z-bandbox-readonly > input,
+.z-datebox-readonly > input {
+    color: var(--md-sys-color-on-surface);
+    background-color: var(--md-sys-color-surface-container-low);
+    cursor: pointer;
+}
+
+.z-combobox-readonly .z-combobox-button,
+.z-bandbox-readonly .z-bandbox-button,
+.z-datebox-readonly .z-datebox-button {
+    color: var(--md-sys-color-on-surface-variant);
+    background-color: transparent;
+}
+
+/* ============================================
+   Inplace Mode
+   ============================================ */
+.z-combobox-inplace .z-combobox-input,
+.z-bandbox-inplace .z-bandbox-input,
+.z-datebox-inplace .z-datebox-input {
+    background-color: transparent;
+    border: 1px solid transparent;
+    padding: var(--md-sys-spacing-2) var(--md-sys-spacing-4);
+}
+
+.z-combobox-inplace .z-combobox-button,
+.z-bandbox-inplace .z-bandbox-button,
+.z-datebox-inplace .z-datebox-button {
+    visibility: hidden;
+}
+
+/* ============================================
+   Popup / Dropdown Menu
+   Material Design 3 menu surface
+   ============================================ */
+.z-combobox-popup,
+.z-bandbox-popup,
+.z-datebox-popup,
+.z-timebox-popup {
+    /* Typography */
+    font-family: var(--md-sys-typescale-body-large-font-family, inherit);
+    font-size: var(--md-sys-typescale-body-medium-size);
+    color: var(--md-sys-color-on-surface);
+
+    /* Layout */
+    display: block;
+    position: absolute;
+    min-height: 10px;
+    min-width: 112px;
+    padding: var(--md-sys-spacing-1) 0;
+
+    /* Surface */
+    background-color: var(--md-sys-color-surface-container);
+    border: none;
+    border-radius: var(--md-sys-shape-corner-small);
+
+    /* Elevation */
+    box-shadow: var(--md-sys-elevation-2);
+
+    /* Behavior */
+    overflow: auto;
+    z-index: 88000;
+}
+
+.z-bandbox-popup {
+    padding: var(--md-sys-spacing-4);
+}
+
+/* Shadow class applied by JS */
+.z-combobox-shadow,
+.z-bandbox-shadow,
+.z-datebox-shadow {
+    box-shadow: var(--md-sys-elevation-2);
+}
+
+/* Popup content container */
+.z-combobox-content {
+    border: 0;
+    padding: 0;
+    margin: 0;
+    background: transparent;
+    position: relative;
+    list-style: none;
+    min-width: 100%;
+    display: inline-block;
+}
+
+/* Empty search message */
+.z-combobox-empty-search-message {
+    display: block;
+    padding: var(--md-sys-spacing-3) var(--md-sys-spacing-4);
+    color: var(--md-sys-color-on-surface-variant);
+    font-size: var(--md-sys-typescale-body-medium-size);
+}
+
+.z-combobox-empty-search-message-hidden {
+    display: none;
+}
+
+/* ============================================
+   Comboitem - Material Design 3 Menu Item
+   ============================================ */
+.z-comboitem {
+    display: block;
+    padding: var(--md-sys-spacing-2) var(--md-sys-spacing-3);
+    min-height: 48px;
+    box-sizing: border-box;
+    cursor: pointer;
+    position: relative;
+    border-radius: 0;
+
+    /* Typography */
+    font-size: var(--md-sys-typescale-body-large-size);
+    color: var(--md-sys-color-on-surface);
+
+    /* Transition */
+    transition: background-color var(--md-sys-motion-duration-short1) var(--md-sys-motion-easing-standard);
+}
+
+.z-comboitem:hover {
+    background-color: var(--md-sys-color-surface-container-highest);
+}
+
+.z-comboitem-selected {
+    background-color: var(--md-sys-color-secondary-container);
+    color: var(--md-sys-color-on-secondary-container);
+}
+
+.z-comboitem-selected:hover {
+    background-color: var(--md-sys-color-secondary-container);
+}
+
+.z-comboitem-disabled {
+    color: color-mix(in srgb, var(--md-sys-color-on-surface) 38%, transparent);
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/* Item text */
+.z-comboitem-text {
+    line-height: 1.5;
+    vertical-align: middle;
+}
+
+/* Item image */
+.z-comboitem-image {
+    margin-right: var(--md-sys-spacing-3);
+    float: left;
+    vertical-align: middle;
+}
+
+.z-comboitem-image:empty {
+    margin-right: 0;
+}
+
+/* Item icon */
+.z-comboitem-icon {
+    font-size: var(--md-sys-size-icon-sm);
+    color: var(--md-sys-color-on-surface-variant);
+    padding-right: var(--md-sys-spacing-3);
+    vertical-align: middle;
+}
+
+/* Item description */
+.z-comboitem-inner,
+.z-comboitem-content {
+    font-size: var(--md-sys-typescale-body-small-size);
+    color: var(--md-sys-color-on-surface-variant);
+    line-height: var(--md-sys-typescale-body-small-line-height);
+}

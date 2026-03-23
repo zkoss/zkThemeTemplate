@@ -1,0 +1,64 @@
+/* ZK Rating - Material Design 3 Style */
+/* M3 Rating / Star rating */
+
+/* ============================================
+   Rating Container
+   ============================================ */
+.z-rating {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--md-sys-spacing-1);
+    cursor: pointer;
+}
+
+.z-rating-horizontal {
+    flex-direction: row;
+}
+
+.z-rating-vertical {
+    flex-direction: column;
+}
+
+/* ============================================
+   Rating Icons
+   ============================================ */
+.z-rating > i {
+    font-size: 24px;
+    color: var(--md-sys-color-outline);
+    transition: color var(--md-sys-motion-duration-short1) var(--md-sys-motion-easing-standard),
+                transform var(--md-sys-motion-duration-short1) var(--md-sys-motion-easing-standard);
+}
+
+.z-rating > i:hover {
+    transform: scale(1.15);
+}
+
+/* Selected (filled) state */
+.z-rating > i.z-rating-selected {
+    color: var(--md-sys-color-primary);
+}
+
+/* Hover state */
+.z-rating > i.z-rating-hover {
+    color: var(--md-sys-color-primary);
+    opacity: 0.8;
+}
+
+/* ============================================
+   Disabled / Readonly
+   ============================================ */
+.z-rating-disabled,
+.z-rating-readonly {
+    cursor: default;
+}
+
+.z-rating-disabled > i {
+    color: var(--md-sys-color-on-surface);
+    opacity: 0.38;
+}
+
+.z-rating-disabled > i:hover,
+.z-rating-readonly > i:hover {
+    transform: none;
+}
+

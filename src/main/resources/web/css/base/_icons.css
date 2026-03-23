@@ -1,0 +1,204 @@
+/* Icon Styles for ZK Material Theme */
+
+/* ============================================
+   Material Symbols / Icons Setup
+
+   Using Google Material Symbols font.
+   Include in your HTML:
+   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+
+   Or use Font Awesome (already in ZK):
+   ZK includes Font Awesome by default
+   ============================================ */
+
+/* ============================================
+   Icon Size Classes
+   ============================================ */
+.z-icon,
+[class^="z-icon-"],
+[class*=" z-icon-"] {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Icon Sizes */
+.z-icon-xs,
+.md-icon-xs {
+    font-size: var(--md-sys-size-icon-xs);
+    width: var(--md-sys-size-icon-xs);
+    height: var(--md-sys-size-icon-xs);
+}
+
+.z-icon-sm,
+.md-icon-sm {
+    font-size: var(--md-sys-size-icon-sm);
+    width: var(--md-sys-size-icon-sm);
+    height: var(--md-sys-size-icon-sm);
+}
+
+.z-icon,
+.z-icon-md,
+.md-icon-md {
+    font-size: var(--md-sys-size-icon-md);
+    width: var(--md-sys-size-icon-md);
+    height: var(--md-sys-size-icon-md);
+}
+
+.z-icon-lg,
+.md-icon-lg {
+    font-size: var(--md-sys-size-icon-lg);
+    width: var(--md-sys-size-icon-lg);
+    height: var(--md-sys-size-icon-lg);
+}
+
+.z-icon-xl,
+.md-icon-xl {
+    font-size: var(--md-sys-size-icon-xl);
+    width: var(--md-sys-size-icon-xl);
+    height: var(--md-sys-size-icon-xl);
+}
+
+/* ============================================
+   Icon Button Container
+   ============================================ */
+.md-icon-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--md-sys-size-icon-button);
+    height: var(--md-sys-size-icon-button);
+    padding: 0;
+    border: none;
+    border-radius: var(--md-sys-shape-corner-full);
+    background-color: transparent;
+    color: var(--md-sys-color-on-surface-variant);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition:
+        background-color var(--md-sys-motion-duration-short2) var(--md-sys-motion-easing-standard),
+        color var(--md-sys-motion-duration-short2) var(--md-sys-motion-easing-standard);
+}
+
+.md-icon-button::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background-color: currentColor;
+    opacity: 0;
+    transition: opacity var(--md-sys-motion-duration-short2) var(--md-sys-motion-easing-standard);
+    pointer-events: none;
+}
+
+.md-icon-button:hover::before {
+    opacity: var(--md-sys-state-hover-opacity);
+}
+
+.md-icon-button:focus-visible::before {
+    opacity: var(--md-sys-state-focus-opacity);
+}
+
+.md-icon-button:active::before {
+    opacity: var(--md-sys-state-pressed-opacity);
+}
+
+.md-icon-button:disabled {
+    color: var(--md-sys-color-on-surface);
+    opacity: var(--md-sys-state-disabled-opacity);
+    cursor: not-allowed;
+}
+
+.md-icon-button:disabled::before {
+    opacity: 0;
+}
+
+/* Icon button variants */
+.md-icon-button--filled {
+    background-color: var(--md-sys-color-primary);
+    color: var(--md-sys-color-on-primary);
+}
+
+.md-icon-button--filled-tonal {
+    background-color: var(--md-sys-color-secondary-container);
+    color: var(--md-sys-color-on-secondary-container);
+}
+
+.md-icon-button--outlined {
+    border: 1px solid var(--md-sys-color-outline);
+}
+
+/* ============================================
+   Spinner / Loading Icon
+   ============================================ */
+.md-spinner {
+    display: inline-block;
+    width: var(--md-sys-size-icon-md);
+    height: var(--md-sys-size-icon-md);
+    border: 2px solid var(--md-sys-color-surface-variant);
+    border-top-color: var(--md-sys-color-primary);
+    border-radius: 50%;
+    animation: md-spin 0.8s linear infinite;
+}
+
+.md-spinner--sm {
+    width: var(--md-sys-size-icon-sm);
+    height: var(--md-sys-size-icon-sm);
+    border-width: 2px;
+}
+
+.md-spinner--lg {
+    width: var(--md-sys-size-icon-lg);
+    height: var(--md-sys-size-icon-lg);
+    border-width: 3px;
+}
+
+@keyframes md-spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* ============================================
+   Common ZK Icon Overrides
+   ============================================ */
+
+/* Ensure ZK icons inherit proper sizing */
+.z-button .z-icon,
+.z-toolbarbutton .z-icon,
+.z-menuitem .z-icon {
+    font-size: inherit;
+}
+
+/* Arrow/Caret icons for dropdowns */
+.z-icon-caret-down,
+.z-icon-caret-up,
+.z-icon-caret-left,
+.z-icon-caret-right {
+    font-size: var(--md-sys-size-icon-sm);
+}
+
+/* Close/Clear icons */
+.z-icon-times,
+.z-icon-remove {
+    font-size: var(--md-sys-size-icon-sm);
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity var(--md-sys-motion-duration-short2) var(--md-sys-motion-easing-standard);
+}
+
+.z-icon-times:hover,
+.z-icon-remove:hover {
+    opacity: 1;
+}

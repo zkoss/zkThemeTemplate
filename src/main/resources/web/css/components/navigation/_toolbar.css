@@ -1,0 +1,195 @@
+/* ZK Toolbar - Material Design 3 Style */
+/* M3 Top App Bar / Toolbar */
+
+/* ============================================
+   Toolbar Container
+   ============================================ */
+.z-toolbar {
+    display: block;
+    position: relative;
+    padding: var(--md-sys-spacing-2) var(--md-sys-spacing-4);
+    background-color: var(--md-sys-color-surface);
+    min-height: 48px;
+    box-sizing: border-box;
+}
+
+.z-toolbar-content {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    gap: var(--md-sys-spacing-2);
+}
+
+/* Separator inside toolbar acts as a vertical divider */
+.z-toolbar-content .z-separator {
+    display: inline-block !important;
+    width: 1px !important;
+    height: 24px !important;
+    background-color: var(--md-sys-color-outline-variant);
+    margin: 0 var(--md-sys-spacing-1);
+    flex-shrink: 0;
+}
+
+/* Alignment variants */
+.z-toolbar-start .z-toolbar-content {
+    justify-content: flex-start;
+}
+
+.z-toolbar-center .z-toolbar-content {
+    justify-content: center;
+}
+
+.z-toolbar-end .z-toolbar-content {
+    justify-content: flex-end;
+}
+
+/* Vertical toolbar */
+.z-toolbar-vertical {
+    display: inline-flex;
+    flex-direction: column;
+    min-width: auto;
+    padding: var(--md-sys-spacing-2);
+}
+
+.z-toolbar-vertical .z-toolbar-content {
+    flex-direction: column;
+}
+
+/* Toolbar in tabbox */
+.z-toolbar-tabs {
+    background-color: transparent;
+    padding: 0 var(--md-sys-spacing-2);
+}
+
+/* Toolbar in panel */
+.z-toolbar-panel {
+    background-color: transparent;
+}
+
+/* ============================================
+   Overflow Popup
+   ============================================ */
+.z-toolbar-overflowpopup-button {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+    color: var(--md-sys-color-on-surface-variant);
+    border-radius: var(--md-sys-shape-corner-full);
+    transition: background-color var(--md-sys-motion-duration-short1) var(--md-sys-motion-easing-standard);
+}
+
+.z-toolbar-overflowpopup-on .z-toolbar-overflowpopup-button {
+    display: inline-flex;
+}
+
+.z-toolbar-overflowpopup-button:hover {
+    background-color: var(--md-sys-color-surface-container-highest);
+}
+
+.z-toolbar-popup {
+    position: absolute;
+    background-color: var(--md-sys-color-surface-container);
+    border-radius: var(--md-sys-shape-corner-small);
+    box-shadow: var(--md-sys-elevation-2);
+    padding: var(--md-sys-spacing-2);
+    z-index: 88000;
+}
+
+.z-toolbar-popup-close {
+    display: none;
+}
+
+.z-toolbar-popup-open {
+    display: block;
+}
+
+/* ============================================
+   Toolbarbutton
+   Material Design 3 text/icon button style
+   ============================================ */
+.z-toolbarbutton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 36px;
+    padding: 0 var(--md-sys-spacing-3);
+    border: none;
+    border-radius: var(--md-sys-shape-corner-small);
+    background-color: transparent;
+    color: var(--md-sys-color-on-surface-variant);
+    text-decoration: none;
+    cursor: pointer;
+    white-space: nowrap;
+    position: relative;
+    overflow: hidden;
+    vertical-align: middle;
+
+    /* Typography */
+    font-family: var(--md-sys-typescale-label-large-font-family, inherit);
+    font-size: var(--md-sys-typescale-label-large-size);
+    font-weight: var(--md-sys-typescale-label-large-weight);
+
+    /* Transition */
+    transition:
+        background-color var(--md-sys-motion-duration-short1) var(--md-sys-motion-easing-standard),
+        color var(--md-sys-motion-duration-short1) var(--md-sys-motion-easing-standard);
+}
+
+.z-toolbarbutton-content {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--md-sys-spacing-2);
+}
+
+.z-toolbarbutton:hover {
+    background-color: var(--md-sys-color-surface-container-highest);
+    color: var(--md-sys-color-on-surface);
+}
+
+.z-toolbarbutton:active {
+    background-color: var(--md-sys-color-surface-container-high);
+}
+
+.z-toolbarbutton:focus-visible {
+    outline: 2px solid var(--md-sys-color-primary);
+    outline-offset: 2px;
+}
+
+/* Checked state (toggle) */
+.z-toolbarbutton-checked {
+    background-color: var(--md-sys-color-secondary-container);
+    color: var(--md-sys-color-on-secondary-container);
+}
+
+.z-toolbarbutton-checked:hover {
+    background-color: var(--md-sys-color-secondary-container);
+}
+
+/* Disabled state */
+.z-toolbarbutton-disabled {
+    color: color-mix(in srgb, var(--md-sys-color-on-surface) 38%, transparent);
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/* Icon inside toolbarbutton */
+.z-toolbarbutton [class^="z-icon-"],
+.z-toolbarbutton [class*=" z-icon-"] {
+    font-size: var(--md-sys-size-icon-sm);
+    line-height: 1;
+}
+
+.z-toolbarbutton img {
+    width: var(--md-sys-size-icon-sm);
+    height: var(--md-sys-size-icon-sm);
+    object-fit: contain;
+    vertical-align: middle;
+}
+
+/* Utility */
+.z-clear {
+    clear: both;
+}

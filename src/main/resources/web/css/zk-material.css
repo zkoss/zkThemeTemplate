@@ -1,0 +1,132 @@
+/* ZK Material Theme - Main Entry Point
+
+   Material Design 3 Theme for ZK Framework
+   Version: 1.0.0
+
+   This file serves as the main entry point for development.
+   In production, all CSS files are concatenated by the build script.
+
+   Structure:
+   1. Tokens - Design system tokens (colors, typography, spacing, etc.)
+   2. Base - Reset, utilities, icons
+   3. Components - ZK component styles
+*/
+
+/* ============================================
+   ZK Framework Integration Styles
+   ============================================ */
+
+/* Ensure ZK root containers use our theme */
+.z-page,
+.z-temp {
+    font-family: var(--md-sys-typescale-font-family-plain);
+    font-size: var(--md-sys-typescale-body-medium-size);
+    line-height: var(--md-sys-typescale-body-medium-line-height);
+    color: var(--md-sys-color-on-background);
+    background-color: var(--md-sys-color-background);
+}
+
+/* ZK Desktop/Page wrapper */
+.z-body {
+    margin: 0;
+    padding: 0;
+}
+
+/* ============================================
+   Loading States
+   ============================================ */
+.z-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--md-sys-spacing-4);
+}
+
+.z-loading-indicator {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    border: 2px solid var(--md-sys-color-surface-variant);
+    border-top-color: var(--md-sys-color-primary);
+    border-radius: 50%;
+    animation: md-spin 0.8s linear infinite;
+}
+
+/* ============================================
+   Mask/Overlay Styles
+   ============================================ */
+.z-modal-mask {
+    position: fixed;
+    inset: 0;
+    background-color: var(--md-sys-color-scrim);
+    opacity: 0.32;
+    z-index: 1000;
+}
+
+/* ============================================
+   Focus Visible Styles
+   ============================================ */
+.z-focus-visible,
+*:focus-visible {
+    outline: 2px solid var(--md-sys-color-primary);
+    outline-offset: 2px;
+}
+
+/* Remove focus outline for mouse users */
+*:focus:not(:focus-visible) {
+    outline: none;
+}
+
+/* ============================================
+   Disabled State
+   ============================================ */
+[disabled],
+.z-disabled {
+    opacity: var(--md-sys-state-disabled-opacity);
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/* ============================================
+   Error State
+   ============================================ */
+.z-invalid,
+.z-error {
+    border-color: var(--md-sys-color-error) !important;
+}
+
+.z-error-text {
+    color: var(--md-sys-color-error);
+    font-size: var(--md-sys-typescale-body-small-size);
+    margin-top: var(--md-sys-spacing-1);
+}
+
+/* ============================================
+   Helper/Supporting Text
+   ============================================ */
+.z-helper-text,
+.z-supporting-text {
+    color: var(--md-sys-color-on-surface-variant);
+    font-size: var(--md-sys-typescale-body-small-size);
+    line-height: var(--md-sys-typescale-body-small-line-height);
+    margin-top: var(--md-sys-spacing-1);
+}
+
+/* ============================================
+   Placeholder Styles
+   ============================================ */
+::placeholder {
+    color: var(--md-sys-color-on-surface-variant);
+    opacity: 1;
+}
+
+/* ============================================
+   Print Styles
+   ============================================ */
+@media print {
+    .z-modal-mask,
+    .z-popup,
+    .z-tooltip {
+        display: none !important;
+    }
+}

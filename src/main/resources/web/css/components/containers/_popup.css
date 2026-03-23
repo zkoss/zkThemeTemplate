@@ -1,0 +1,155 @@
+/* ZK Popup - Material Design 3 Style */
+/* M3 Popover / Tooltip surface */
+
+/* ============================================
+   Popup Container
+   ============================================ */
+.z-popup {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: var(--md-sys-color-surface-container);
+    border: none;
+    border-radius: var(--md-sys-shape-corner-small);
+    box-shadow: var(--md-sys-elevation-2);
+    z-index: 88000;
+    overflow: visible;
+}
+
+.z-popup-content {
+    padding: var(--md-sys-spacing-4);
+    color: var(--md-sys-color-on-surface);
+    font-family: var(--md-sys-typescale-body-medium-font-family, inherit);
+    font-size: var(--md-sys-typescale-body-medium-size);
+}
+
+/* Arrow pointer */
+.z-pointer {
+    display: none;
+}
+
+/* ============================================
+   Notification Popup
+   Material Design 3 Snackbar style
+   ============================================ */
+.z-notification {
+    position: fixed;
+    padding: var(--md-sys-spacing-3) var(--md-sys-spacing-4);
+    border-radius: var(--md-sys-shape-corner-small);
+    box-shadow: var(--md-sys-elevation-3);
+    z-index: 99000;
+    max-width: 480px;
+    min-width: 280px;
+
+    /* Default: inverse surface (snackbar) */
+    background-color: var(--md-sys-color-inverse-surface);
+    color: var(--md-sys-color-inverse-on-surface);
+
+    font-family: var(--md-sys-typescale-body-medium-font-family, inherit);
+    font-size: var(--md-sys-typescale-body-medium-size);
+}
+
+.z-notification-content {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--md-sys-spacing-3);
+}
+
+.z-notification-icon {
+    font-size: var(--md-sys-size-icon-md);
+    flex-shrink: 0;
+}
+
+.z-notification-close {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    margin-left: auto;
+    cursor: pointer;
+    border-radius: var(--md-sys-shape-corner-full);
+    color: inherit;
+    opacity: 0.7;
+    flex-shrink: 0;
+}
+
+.z-notification-close:hover {
+    opacity: 1;
+}
+
+/* Notification variants */
+.z-notification-info {
+    background-color: var(--md-sys-color-inverse-surface);
+    color: var(--md-sys-color-inverse-on-surface);
+}
+
+.z-notification-warning {
+    background-color: var(--md-sys-color-warning);
+    color: var(--md-sys-color-on-warning);
+}
+
+.z-notification-error {
+    background-color: var(--md-sys-color-error);
+    color: var(--md-sys-color-on-error);
+}
+
+/* ============================================
+   Toast
+   ============================================ */
+.z-toast {
+    position: fixed;
+    padding: var(--md-sys-spacing-3) var(--md-sys-spacing-4);
+    border-radius: var(--md-sys-shape-corner-small);
+    box-shadow: var(--md-sys-elevation-3);
+    z-index: 99000;
+    max-width: 480px;
+    min-width: 280px;
+    background-color: var(--md-sys-color-inverse-surface);
+    color: var(--md-sys-color-inverse-on-surface);
+    font-family: var(--md-sys-typescale-body-medium-font-family, inherit);
+    font-size: var(--md-sys-typescale-body-medium-size);
+}
+
+.z-toast-content {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--md-sys-spacing-3);
+}
+
+.z-toast-icon {
+    font-size: var(--md-sys-size-icon-md);
+    flex-shrink: 0;
+}
+
+.z-toast-close {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    margin-left: auto;
+    cursor: pointer;
+    border-radius: var(--md-sys-shape-corner-full);
+    color: inherit;
+    opacity: 0.7;
+    flex-shrink: 0;
+}
+
+.z-toast-close:hover {
+    opacity: 1;
+}
+
+.z-toast-info {
+    background-color: var(--md-sys-color-inverse-surface);
+}
+
+.z-toast-warning {
+    background-color: var(--md-sys-color-warning);
+    color: var(--md-sys-color-on-warning);
+}
+
+.z-toast-error {
+    background-color: var(--md-sys-color-error);
+    color: var(--md-sys-color-on-error);
+}

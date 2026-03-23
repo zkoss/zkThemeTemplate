@@ -1,0 +1,51 @@
+/* ZK Separator - Material Design 3 Style */
+/* M3 Divider */
+
+/* ============================================
+   Separator Base
+   ============================================ */
+.z-separator {
+    display: block;
+    margin: 0;
+    padding: 0;
+    border: none;
+    font-size: 0;
+    line-height: 0;
+}
+
+/* ============================================
+   Horizontal Separator
+   ============================================ */
+.z-separator-horizontal {
+    width: 100%;
+    height: var(--md-sys-spacing-2);
+    clear: both;
+}
+
+.z-separator-horizontal-bar {
+    width: 100%;
+    height: var(--md-sys-spacing-2);
+    clear: both;
+    border-bottom: 1px solid var(--md-sys-color-outline-variant);
+    box-sizing: border-box;
+}
+
+/* ============================================
+   Vertical Separator
+   ============================================ */
+.z-separator-vertical {
+    display: inline-block;
+    width: var(--md-sys-spacing-2);
+    height: 100%;
+    vertical-align: middle;
+}
+
+.z-separator-vertical-bar {
+    display: inline-block;
+    width: var(--md-sys-spacing-2);
+    height: 100%;
+    vertical-align: middle;
+    border-right: 1px solid var(--md-sys-color-outline-variant);
+    box-sizing: border-box;
+}
+

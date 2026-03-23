@@ -1,0 +1,160 @@
+/* ZK BorderLayout - Material Design 3 Style */
+/* 5-region layout system */
+
+/* ============================================
+   BorderLayout Container
+   ============================================ */
+.z-borderlayout {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+/* ============================================
+   Layout Regions
+   ============================================ */
+.z-north,
+.z-south,
+.z-east,
+.z-west,
+.z-center {
+    position: absolute;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.z-north {
+    top: 0;
+    left: 0;
+    right: 0;
+    border-bottom: 1px solid var(--md-sys-color-outline-variant);
+}
+
+.z-south {
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border-top: 1px solid var(--md-sys-color-outline-variant);
+}
+
+.z-west {
+    top: 0;
+    left: 0;
+    border-right: 1px solid var(--md-sys-color-outline-variant);
+}
+
+.z-east {
+    top: 0;
+    right: 0;
+    border-left: 1px solid var(--md-sys-color-outline-variant);
+}
+
+.z-center {
+    overflow: auto;
+}
+
+/* ============================================
+   Region Content
+   ============================================ */
+.z-north-body,
+.z-south-body,
+.z-east-body,
+.z-west-body,
+.z-center-body {
+    overflow: auto;
+    height: 100%;
+    width: 100%;
+}
+
+/* ============================================
+   Region Header (Collapsible title)
+   ============================================ */
+.z-north-header,
+.z-south-header,
+.z-east-header,
+.z-west-header {
+    display: flex;
+    align-items: center;
+    padding: var(--md-sys-spacing-2) var(--md-sys-spacing-3);
+    background-color: var(--md-sys-color-surface-container-low);
+    font-size: var(--md-sys-typescale-label-large-size);
+    font-weight: var(--md-sys-typescale-label-large-weight);
+    color: var(--md-sys-color-on-surface-variant);
+    border-bottom: 1px solid var(--md-sys-color-outline-variant);
+    cursor: pointer;
+    user-select: none;
+}
+
+/* ============================================
+   Splitter
+   ============================================ */
+.z-north-splitter,
+.z-south-splitter,
+.z-east-splitter,
+.z-west-splitter {
+    position: absolute;
+    z-index: 100;
+    background-color: var(--md-sys-color-surface-container);
+    transition: background-color var(--md-sys-motion-duration-short1) var(--md-sys-motion-easing-standard);
+}
+
+.z-north-splitter,
+.z-south-splitter {
+    height: 6px;
+    width: 100%;
+    cursor: row-resize;
+}
+
+.z-east-splitter,
+.z-west-splitter {
+    width: 6px;
+    height: 100%;
+    cursor: col-resize;
+}
+
+.z-north-splitter:hover,
+.z-south-splitter:hover,
+.z-east-splitter:hover,
+.z-west-splitter:hover {
+    background-color: var(--md-sys-color-primary);
+    opacity: 0.4;
+}
+
+/* ============================================
+   Collapse Button (in splitter)
+   ============================================ */
+.z-north-collapsed,
+.z-south-collapsed,
+.z-east-collapsed,
+.z-west-collapsed {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--md-sys-color-surface-container-low);
+    cursor: pointer;
+    z-index: 100;
+    position: absolute;
+}
+
+.z-north-collapsed,
+.z-south-collapsed {
+    height: 24px;
+    width: 100%;
+    border-bottom: 1px solid var(--md-sys-color-outline-variant);
+}
+
+.z-east-collapsed,
+.z-west-collapsed {
+    width: 24px;
+    height: 100%;
+    border-right: 1px solid var(--md-sys-color-outline-variant);
+}
+
+.z-north-collapsed:hover,
+.z-south-collapsed:hover,
+.z-east-collapsed:hover,
+.z-west-collapsed:hover {
+    background-color: var(--md-sys-color-surface-container);
+}
+

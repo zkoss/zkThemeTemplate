@@ -1,0 +1,74 @@
+/* Material Design 3 Shape System */
+
+:root {
+    /* ============================================
+       Corner Radius Scale
+       ============================================ */
+    --md-sys-shape-corner-none: 0;
+    --md-sys-shape-corner-extra-small: 4px;
+    --md-sys-shape-corner-small: 8px;
+    --md-sys-shape-corner-medium: 12px;
+    --md-sys-shape-corner-large: 16px;
+    --md-sys-shape-corner-extra-large: 28px;
+    --md-sys-shape-corner-full: 9999px;
+
+    /* ============================================
+       Component-Specific Shapes
+       ============================================ */
+
+    /* Buttons */
+    --md-sys-shape-button: var(--md-sys-shape-corner-full);
+    --md-sys-shape-button-icon: var(--md-sys-shape-corner-full);
+    --md-sys-shape-fab: var(--md-sys-shape-corner-large);
+    --md-sys-shape-fab-small: var(--md-sys-shape-corner-medium);
+    --md-sys-shape-fab-large: var(--md-sys-shape-corner-extra-large);
+    --md-sys-shape-extended-fab: var(--md-sys-shape-corner-large);
+
+    /* Inputs */
+    --md-sys-shape-textfield: var(--md-sys-shape-corner-extra-small);
+    --md-sys-shape-textfield-top: var(--md-sys-shape-corner-extra-small) var(--md-sys-shape-corner-extra-small) 0 0;
+    --md-sys-shape-select: var(--md-sys-shape-corner-extra-small);
+
+    /* Selection */
+    --md-sys-shape-checkbox: var(--md-sys-shape-corner-extra-small);
+    --md-sys-shape-radio: var(--md-sys-shape-corner-full);
+    --md-sys-shape-switch: var(--md-sys-shape-corner-full);
+    --md-sys-shape-chip: var(--md-sys-shape-corner-small);
+
+    /* Cards and Containers */
+    --md-sys-shape-card: var(--md-sys-shape-corner-medium);
+    --md-sys-shape-dialog: var(--md-sys-shape-corner-extra-large);
+    --md-sys-shape-sheet-bottom: var(--md-sys-shape-corner-extra-large) var(--md-sys-shape-corner-extra-large) 0 0;
+    --md-sys-shape-sheet-side: 0 var(--md-sys-shape-corner-large) var(--md-sys-shape-corner-large) 0;
+
+    /* Menus and Popups */
+    --md-sys-shape-menu: var(--md-sys-shape-corner-extra-small);
+    --md-sys-shape-tooltip: var(--md-sys-shape-corner-extra-small);
+    --md-sys-shape-snackbar: var(--md-sys-shape-corner-extra-small);
+
+    /* Navigation */
+    --md-sys-shape-navigation-bar: 0;
+    --md-sys-shape-navigation-rail: 0;
+    --md-sys-shape-navigation-drawer: 0 var(--md-sys-shape-corner-large) var(--md-sys-shape-corner-large) 0;
+    --md-sys-shape-tab: 0;
+    --md-sys-shape-tab-indicator: var(--md-sys-shape-corner-full) var(--md-sys-shape-corner-full) 0 0;
+
+    /* Data */
+    --md-sys-shape-list-item: 0;
+    --md-sys-shape-badge: var(--md-sys-shape-corner-full);
+    --md-sys-shape-avatar: var(--md-sys-shape-corner-full);
+
+    /* Progress */
+    --md-sys-shape-progress-track: var(--md-sys-shape-corner-full);
+    --md-sys-shape-progress-indicator: var(--md-sys-shape-corner-full);
+    --md-sys-shape-slider-track: var(--md-sys-shape-corner-full);
+    --md-sys-shape-slider-thumb: var(--md-sys-shape-corner-full);
+
+    /* ============================================
+       Border Widths
+       ============================================ */
+    --md-sys-border-width-none: 0;
+    --md-sys-border-width-thin: 1px;
+    --md-sys-border-width-medium: 2px;
+    --md-sys-border-width-thick: 3px;
+}

@@ -1,0 +1,31 @@
+/* ZK Auxhead / Auxheader - Material Design 3 Style */
+/* Auxiliary header rows for Grid/Listbox/Tree */
+
+/* ============================================
+   Auxhead Row
+   ============================================ */
+.z-auxhead {
+    background-color: var(--md-sys-color-surface-container-low);
+}
+
+/* ============================================
+   Auxheader Cell
+   ============================================ */
+.z-auxheader {
+    padding: var(--md-sys-spacing-2) var(--md-sys-spacing-4);
+    color: var(--md-sys-color-on-surface-variant);
+    font-size: var(--md-sys-typescale-label-medium-size);
+    font-weight: var(--md-sys-typescale-label-medium-weight);
+    text-align: left;
+    border-bottom: 1px solid var(--md-sys-color-outline-variant);
+    box-sizing: border-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Border for cells with rowspan */
+.z-auxhead-border {
+    border-right: 1px solid var(--md-sys-color-outline-variant);
+}
+

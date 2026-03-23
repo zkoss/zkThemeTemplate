@@ -1,0 +1,59 @@
+/* ZK Box / Hbox / Vbox - Material Design 3 Style */
+/* M3 Flex containers (table-based) */
+
+/* ============================================
+   Hbox / Vbox Container
+   ============================================ */
+.z-hbox,
+.z-vbox {
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+
+/* ============================================
+   Hbox (horizontal)
+   ============================================ */
+.z-hbox {
+    display: inline-table;
+}
+
+.z-hbox > tbody > tr > .z-hbox-cell {
+    vertical-align: middle;
+    padding: 0;
+}
+
+/* ============================================
+   Vbox (vertical)
+   ============================================ */
+.z-vbox {
+    display: table;
+    width: 100%;
+}
+
+.z-vbox > tbody > .z-vbox-row > .z-vbox-cell {
+    padding: 0;
+}
+
+/* ============================================
+   Box Separator (spacing)
+   ============================================ */
+.z-box-separator {
+    font-size: 0;
+    line-height: 0;
+}
+
+.z-box-separator td {
+    padding: 0;
+}
+
+/* ============================================
+   Stretch Alignment
+   ============================================ */
+.z-hbox-stretch > tbody > tr > .z-hbox-cell {
+    vertical-align: stretch;
+}
+
+.z-vbox-stretch > tbody > .z-vbox-row > .z-vbox-cell > * {
+    width: 100%;
+}
+

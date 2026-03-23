@@ -1,0 +1,204 @@
+/* ZK Paging - Material Design 3 Style */
+
+/* ============================================
+   Paging Container
+   ============================================ */
+.z-paging {
+    display: flex;
+    align-items: center;
+    height: auto;
+    min-height: 48px;
+    padding: var(--md-sys-spacing-2) var(--md-sys-spacing-4);
+    background-color: var(--md-sys-color-surface);
+    position: relative;
+    font-family: var(--md-sys-typescale-body-medium-font-family, inherit);
+}
+
+/* Page number list */
+.z-paging ul {
+    display: inline-flex;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    gap: 2px;
+}
+
+.z-paging ul > li {
+    display: inline;
+    list-style: none;
+}
+
+/* ============================================
+   Paging Button (page numbers & nav arrows)
+   ============================================ */
+.z-paging-button {
+    /* Reset */
+    appearance: none;
+    border: none;
+    outline: none;
+
+    /* Layout */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 32px;
+    height: 32px;
+    padding: 0 var(--md-sys-spacing-2);
+    margin: 0 1px;
+
+    /* Typography */
+    font-family: var(--md-sys-typescale-label-large-font-family, inherit);
+    font-size: var(--md-sys-typescale-label-large-size);
+    font-weight: var(--md-sys-typescale-label-large-weight);
+    color: var(--md-sys-color-on-surface);
+
+    /* Shape */
+    border-radius: var(--md-sys-shape-corner-full);
+    background-color: transparent;
+
+    /* Interaction */
+    cursor: pointer;
+    text-decoration: none;
+    white-space: nowrap;
+    vertical-align: middle;
+    line-height: normal;
+
+    /* Transition */
+    transition:
+        background-color var(--md-sys-motion-duration-short1) var(--md-sys-motion-easing-standard),
+        color var(--md-sys-motion-duration-short1) var(--md-sys-motion-easing-standard);
+}
+
+.z-paging-button:hover {
+    background-color: var(--md-sys-color-surface-container-highest);
+}
+
+.z-paging-button:active {
+    background-color: var(--md-sys-color-surface-container-high);
+}
+
+.z-paging-button:focus-visible {
+    outline: 2px solid var(--md-sys-color-primary);
+    outline-offset: 2px;
+}
+
+/* Disabled state */
+.z-paging-button[disabled] {
+    color: color-mix(in srgb, var(--md-sys-color-on-surface) 38%, transparent);
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/* Navigation icons */
+.z-paging .z-paging-icon {
+    font-size: var(--md-sys-size-icon-sm);
+    line-height: 1;
+}
+
+/* No border variant */
+.z-paging-noborder {
+    border: none;
+}
+
+/* ============================================
+   Selected Page Button
+   ============================================ */
+.z-paging-selected {
+    color: var(--md-sys-color-on-primary);
+    background-color: var(--md-sys-color-primary);
+}
+
+.z-paging-selected:hover {
+    background-color: var(--md-sys-color-primary);
+}
+
+/* ============================================
+   Page Input
+   ============================================ */
+.z-paging-input {
+    /* Reset */
+    appearance: none;
+    outline: none;
+    box-sizing: border-box;
+
+    /* Layout */
+    width: 48px;
+    height: 32px;
+    margin-left: var(--md-sys-spacing-2);
+    padding: var(--md-sys-spacing-1) var(--md-sys-spacing-2);
+
+    /* Typography */
+    font-family: var(--md-sys-typescale-body-medium-font-family, inherit);
+    font-size: var(--md-sys-typescale-body-medium-size);
+    color: var(--md-sys-color-on-surface);
+
+    /* Shape */
+    border: 1px solid var(--md-sys-color-outline);
+    border-radius: var(--md-sys-shape-textfield);
+    background-color: var(--md-sys-color-surface);
+
+    /* Alignment */
+    text-align: center;
+    vertical-align: middle;
+
+    /* Transition */
+    transition: border-color var(--md-sys-motion-duration-short2) var(--md-sys-motion-easing-standard);
+}
+
+.z-paging-input:hover {
+    border-color: var(--md-sys-color-on-surface);
+}
+
+.z-paging-input:focus {
+    border-color: var(--md-sys-color-primary);
+    border-width: 2px;
+    padding: calc(var(--md-sys-spacing-1) - 1px) calc(var(--md-sys-spacing-2) - 1px);
+}
+
+.z-paging-input[disabled] {
+    color: color-mix(in srgb, var(--md-sys-color-on-surface) 38%, transparent);
+    border-color: color-mix(in srgb, var(--md-sys-color-on-surface) 12%, transparent);
+    cursor: not-allowed;
+}
+
+/* ============================================
+   Paging Text & Info
+   ============================================ */
+.z-paging-text {
+    font-family: var(--md-sys-typescale-body-medium-font-family, inherit);
+    font-size: var(--md-sys-typescale-body-medium-size);
+    color: var(--md-sys-color-on-surface);
+    margin-right: var(--md-sys-spacing-2);
+}
+
+.z-paging-text-disabled {
+    color: color-mix(in srgb, var(--md-sys-color-on-surface) 38%, transparent);
+}
+
+.z-paging-info {
+    font-family: var(--md-sys-typescale-body-small-font-family, inherit);
+    font-size: var(--md-sys-typescale-body-small-size);
+    color: var(--md-sys-color-on-surface-variant);
+    padding: 0;
+    position: absolute;
+    top: 50%;
+    right: var(--md-sys-spacing-4);
+    transform: translateY(-50%);
+}
+
+/* ============================================
+   OnSize Variant (z-paging-os)
+   ============================================ */
+.z-paging-os {
+    border-bottom: none;
+    padding-bottom: var(--md-sys-spacing-1);
+}
+
+.z-paging-os ul > li {
+    margin-left: var(--md-sys-spacing-1);
+}
+
+.z-paging-os .z-paging-button {
+    font-size: var(--md-sys-typescale-body-medium-size);
+    padding: var(--md-sys-spacing-1) var(--md-sys-spacing-2);
+}

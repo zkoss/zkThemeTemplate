@@ -1,0 +1,136 @@
+/* ZK Select - Material Design 3 Style */
+/* Native HTML <select> element */
+
+/* ============================================
+   Select (native select dropdown)
+   ============================================ */
+.z-select {
+    /* Reset browser defaults */
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    outline: none;
+    box-sizing: border-box;
+
+    /* Layout */
+    display: inline-block;
+    width: auto;
+    min-width: 120px;
+    min-height: var(--md-sys-size-input-height-dense);
+    padding: var(--md-sys-spacing-2) var(--md-sys-spacing-8) var(--md-sys-spacing-2) var(--md-sys-spacing-4);
+
+    /* Typography - Body Large */
+    font-family: var(--md-sys-typescale-body-large-font-family, inherit);
+    font-size: var(--md-sys-typescale-body-large-size);
+    font-weight: var(--md-sys-typescale-body-large-weight);
+    line-height: var(--md-sys-typescale-body-large-line-height);
+
+    /* Colors */
+    color: var(--md-sys-color-on-surface);
+    background-color: var(--md-sys-color-surface);
+
+    /* Shape - Outlined style */
+    border: 1px solid var(--md-sys-color-outline);
+    border-radius: var(--md-sys-shape-textfield);
+    box-shadow: none;
+
+    /* Custom dropdown arrow */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2349454F' d='M2 4l4 4 4-4z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right var(--md-sys-spacing-3) center;
+
+    /* Interaction */
+    cursor: pointer;
+
+    /* Transitions */
+    transition:
+        border-color var(--md-sys-motion-duration-short2) var(--md-sys-motion-easing-standard),
+        background-color var(--md-sys-motion-duration-short2) var(--md-sys-motion-easing-standard),
+        box-shadow var(--md-sys-motion-duration-short2) var(--md-sys-motion-easing-standard);
+}
+
+/* Hover State */
+.z-select:hover:not([disabled]) {
+    border-color: var(--md-sys-color-on-surface);
+    background-color: color-mix(in srgb, var(--md-sys-color-on-surface) 4%, var(--md-sys-color-surface));
+}
+
+/* Focus State */
+.z-select:focus,
+.z-select:focus-visible {
+    border-color: var(--md-sys-color-primary);
+    border-width: 2px;
+    padding: calc(var(--md-sys-spacing-2) - 1px) calc(var(--md-sys-spacing-8) - 1px) calc(var(--md-sys-spacing-2) - 1px) calc(var(--md-sys-spacing-4) - 1px);
+    outline: none;
+}
+
+/* Disabled State */
+.z-select[disabled],
+.z-select:disabled {
+    color: color-mix(in srgb, var(--md-sys-color-on-surface) 38%, transparent);
+    background-color: color-mix(in srgb, var(--md-sys-color-on-surface) 4%, transparent);
+    border-color: color-mix(in srgb, var(--md-sys-color-on-surface) 12%, transparent);
+    cursor: not-allowed;
+    opacity: 1;
+}
+
+/* ============================================
+   Multiple Select
+   ============================================ */
+.z-select[multiple] {
+    padding: var(--md-sys-spacing-2);
+    background-image: none;
+    height: auto;
+    min-height: calc(var(--md-sys-size-input-height) * 1.5);
+}
+
+/* ============================================
+   Option Elements
+   ============================================ */
+.z-option {
+    padding: var(--md-sys-spacing-2) var(--md-sys-spacing-3);
+    color: var(--md-sys-color-on-surface);
+    background-color: var(--md-sys-color-surface);
+}
+
+/* Multiple select option styling */
+.z-select[multiple] .z-option {
+    border-radius: var(--md-sys-shape-corner-extra-small);
+    margin-bottom: 2px;
+}
+
+/* Selected option in multiple select */
+.z-select[multiple] .z-option:checked {
+    background-color: var(--md-sys-color-secondary-container);
+    color: var(--md-sys-color-on-secondary-container);
+}
+
+/* Option hover (if supported by browser) */
+.z-option:hover {
+    background-color: var(--md-sys-color-surface-container-highest);
+}
+
+/* ============================================
+   Optgroup Elements
+   ============================================ */
+.z-optgroup {
+    font-family: var(--md-sys-typescale-label-large-font-family, inherit);
+    font-size: var(--md-sys-typescale-label-large-size);
+    font-weight: var(--md-sys-typescale-label-large-weight);
+    color: var(--md-sys-color-on-surface-variant);
+    padding: var(--md-sys-spacing-2) var(--md-sys-spacing-3);
+}
+
+/* ============================================
+   Size Variants
+   ============================================ */
+.z-select-small {
+    min-height: 32px;
+    padding: var(--md-sys-spacing-1) var(--md-sys-spacing-6) var(--md-sys-spacing-1) var(--md-sys-spacing-3);
+    font-size: var(--md-sys-typescale-body-medium-size);
+}
+
+.z-select-large {
+    min-height: var(--md-sys-size-input-height);
+    padding: var(--md-sys-spacing-4) var(--md-sys-spacing-8) var(--md-sys-spacing-4) var(--md-sys-spacing-4);
+}

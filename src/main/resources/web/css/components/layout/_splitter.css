@@ -1,0 +1,145 @@
+/* ZK Splitter - Material Design 3 Style */
+/* Draggable divider between hbox/vbox children */
+
+/* ============================================
+   Splitter Container
+   ============================================ */
+.z-splitter {
+    position: relative;
+    background-color: var(--md-sys-color-surface-container-low);
+    z-index: 1;
+    flex-shrink: 0;
+    transition: background-color var(--md-sys-motion-duration-short2) var(--md-sys-motion-easing-standard);
+}
+
+/* Horizontal splitter (divides left/right) */
+.z-splitter-horizontal {
+    width: 8px;
+    height: 100%;
+    cursor: col-resize;
+}
+
+/* Vertical splitter (divides top/bottom) */
+.z-splitter-vertical {
+    width: 100%;
+    height: 8px;
+    cursor: row-resize;
+}
+
+/* Hover state */
+.z-splitter:hover {
+    background-color: var(--md-sys-color-surface-container-highest);
+}
+
+/* ============================================
+   Splitter Button (collapse/drag handle)
+   ============================================ */
+.z-splitter-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    background-color: var(--md-sys-color-surface-container);
+    border-radius: var(--md-sys-shape-corner-full);
+    cursor: pointer;
+    transition:
+        background-color var(--md-sys-motion-duration-short2) var(--md-sys-motion-easing-standard),
+        box-shadow var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
+}
+
+/* Horizontal splitter button */
+.z-splitter-horizontal .z-splitter-button {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    flex-direction: column;
+    padding: var(--md-sys-spacing-1) var(--md-sys-spacing-1);
+    gap: 2px;
+}
+
+/* Vertical splitter button */
+.z-splitter-vertical .z-splitter-button {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    flex-direction: row;
+    padding: var(--md-sys-spacing-1) var(--md-sys-spacing-1);
+    gap: 2px;
+}
+
+/* Button hover state */
+.z-splitter-button:hover {
+    background-color: var(--md-sys-color-secondary-container);
+    box-shadow: var(--md-sys-elevation-1);
+}
+
+/* Button active state */
+.z-splitter-button:active {
+    background-color: var(--md-sys-color-secondary-container);
+    box-shadow: var(--md-sys-elevation-0);
+}
+
+/* ============================================
+   Splitter Icons (ellipsis dots)
+   ============================================ */
+.z-splitter-icon {
+    color: var(--md-sys-color-on-surface-variant);
+    font-size: 12px;
+    line-height: 1;
+    opacity: 0.6;
+    transition: opacity var(--md-sys-motion-duration-short2) var(--md-sys-motion-easing-standard);
+}
+
+.z-splitter-button:hover .z-splitter-icon {
+    opacity: 1;
+}
+
+/* Hide middle icon (used for collapse indicator) */
+.z-splitter-button .z-splitter-icon:nth-child(2) {
+    display: none;
+}
+
+/* ============================================
+   Collapsed State
+   ============================================ */
+.z-splitter-collapsed .z-splitter-button {
+    background-color: var(--md-sys-color-primary-container);
+}
+
+.z-splitter-collapsed .z-splitter-button .z-splitter-icon {
+    color: var(--md-sys-color-on-primary-container);
+}
+
+/* Show collapse indicator icon when collapsed */
+.z-splitter-collapsed .z-splitter-button .z-splitter-icon:nth-child(2) {
+    display: block;
+}
+
+/* ============================================
+   Disabled State
+   ============================================ */
+.z-splitter[disabled],
+.z-splitter-disabled {
+    cursor: default;
+    background-color: color-mix(in srgb, var(--md-sys-color-on-surface) 4%, transparent);
+}
+
+.z-splitter[disabled] .z-splitter-button,
+.z-splitter-disabled .z-splitter-button {
+    opacity: 0.38;
+    cursor: default;
+    pointer-events: none;
+}
+
+/* ============================================
+   Focus State (for keyboard navigation)
+   ============================================ */
+.z-splitter:focus-visible {
+    outline: 2px solid var(--md-sys-color-primary);
+    outline-offset: -2px;
+}
+
+.z-splitter-button:focus-visible {
+    outline: 2px solid var(--md-sys-color-primary);
+    outline-offset: 2px;
+}

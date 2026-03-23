@@ -1,0 +1,127 @@
+/* ZK Window - Material Design 3 Style */
+/* M3 Dialog / Surface container */
+
+/* ============================================
+   Window Container
+   ============================================ */
+.z-window {
+    display: block;
+    position: relative;
+    background-color: var(--md-sys-color-surface);
+    border: 1px solid var(--md-sys-color-outline-variant);
+    border-radius: var(--md-sys-shape-corner-large);
+    overflow: hidden;
+    font-family: var(--md-sys-typescale-body-medium-font-family, inherit);
+}
+
+/* Overlapped / Modal window */
+.z-window-shadow {
+    box-shadow: var(--md-sys-elevation-3);
+}
+
+/* Embedded window */
+.z-window-embedded {
+    box-shadow: none;
+}
+
+/* No border variant */
+.z-window-noborder {
+    border: none;
+}
+
+/* ============================================
+   Window Header / Title Bar
+   ============================================ */
+.z-window-header {
+    display: flex;
+    align-items: center;
+    padding: var(--md-sys-spacing-4) var(--md-sys-spacing-6);
+    min-height: 48px;
+    box-sizing: border-box;
+    background-color: var(--md-sys-color-surface);
+    color: var(--md-sys-color-on-surface);
+    font-size: var(--md-sys-typescale-headline-small-size);
+    font-weight: var(--md-sys-typescale-headline-small-weight);
+    line-height: var(--md-sys-typescale-headline-small-line-height);
+    border-bottom: 1px solid var(--md-sys-color-outline-variant);
+    user-select: none;
+}
+
+.z-window-header-move {
+    cursor: move;
+}
+
+/* ============================================
+   Window Icon Buttons (Close, Min, Max)
+   ============================================ */
+.z-window-icons {
+    display: flex;
+    align-items: center;
+    gap: var(--md-sys-spacing-1);
+    margin-left: auto;
+}
+
+.z-window-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: var(--md-sys-shape-corner-full);
+    color: var(--md-sys-color-on-surface-variant);
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color var(--md-sys-motion-duration-short1) var(--md-sys-motion-easing-standard);
+}
+
+.z-window-icon:hover {
+    background-color: var(--md-sys-color-surface-container-highest);
+}
+
+.z-window-icon:active {
+    background-color: var(--md-sys-color-surface-container-high);
+}
+
+.z-window-icon i {
+    font-size: var(--md-sys-size-icon-sm);
+}
+
+/* ============================================
+   Window Content
+   ============================================ */
+.z-window-content {
+    padding: var(--md-sys-spacing-6);
+    background-color: var(--md-sys-color-surface);
+    overflow: auto;
+}
+
+.z-window-noheader .z-window-content {
+    padding-top: var(--md-sys-spacing-6);
+}
+
+/* ============================================
+   Move/Resize Ghost
+   ============================================ */
+.z-window-move-ghost {
+    opacity: 0.65;
+}
+
+.z-window-resize-faker {
+    position: absolute;
+    border: 2px dashed var(--md-sys-color-primary);
+    border-radius: var(--md-sys-shape-corner-large);
+    opacity: 0.6;
+}
+
+/* ============================================
+   Modal Overlay
+   ============================================ */
+.z-modal-mask {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: color-mix(in srgb, var(--md-sys-color-on-surface) 32%, transparent);
+    z-index: 1999;
+}

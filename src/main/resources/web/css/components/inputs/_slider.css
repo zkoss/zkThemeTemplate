@@ -1,0 +1,164 @@
+/* ZK Slider - Material Design 3 Style */
+/* M3 Slider */
+
+/* ============================================
+   Slider Container
+   ============================================ */
+.z-slider {
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+}
+
+.z-slider[orient="horizontal"],
+.z-slider:not([orient]) {
+    width: 200px;
+    height: 40px;
+}
+
+.z-slider[orient="vertical"] {
+    width: 40px;
+    height: 200px;
+}
+
+/* ============================================
+   Slider Track (Center)
+   ============================================ */
+.z-slider-center {
+    position: absolute;
+}
+
+/* Horizontal track */
+.z-slider[orient="horizontal"] .z-slider-center,
+.z-slider:not([orient]) .z-slider-center {
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 4px;
+    margin-top: -2px;
+    background-color: var(--md-sys-color-surface-container-highest);
+    border-radius: var(--md-sys-shape-corner-full);
+}
+
+/* Vertical track */
+.z-slider[orient="vertical"] .z-slider-center {
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    margin-left: -2px;
+    background-color: var(--md-sys-color-surface-container-highest);
+    border-radius: var(--md-sys-shape-corner-full);
+}
+
+/* ============================================
+   Active Track Area
+   ============================================ */
+.z-slider-area {
+    position: absolute;
+    background-color: var(--md-sys-color-primary);
+    border-radius: var(--md-sys-shape-corner-full);
+}
+
+/* Horizontal active area */
+.z-slider[orient="horizontal"] .z-slider-area,
+.z-slider:not([orient]) .z-slider-area {
+    top: 0;
+    left: 0;
+    height: 100%;
+}
+
+/* Vertical active area */
+.z-slider[orient="vertical"] .z-slider-area {
+    left: 0;
+    bottom: 0;
+    width: 100%;
+}
+
+/* ============================================
+   Slider Thumb (Button)
+   ============================================ */
+.z-slider-button {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: var(--md-sys-color-primary);
+    border-radius: var(--md-sys-shape-corner-full);
+    box-shadow: var(--md-sys-elevation-1);
+    cursor: grab;
+    transition: box-shadow var(--md-sys-motion-duration-short1) var(--md-sys-motion-easing-standard);
+    z-index: 1;
+}
+
+/* Horizontal thumb positioning */
+.z-slider[orient="horizontal"] .z-slider-button,
+.z-slider:not([orient]) .z-slider-button {
+    top: 50%;
+    margin-top: -10px;
+    margin-left: -10px;
+}
+
+/* Vertical thumb positioning */
+.z-slider[orient="vertical"] .z-slider-button {
+    left: 50%;
+    margin-left: -10px;
+    margin-bottom: -10px;
+}
+
+.z-slider-button::before {
+    content: '';
+    position: absolute;
+    inset: -10px;
+    border-radius: var(--md-sys-shape-corner-full);
+    background-color: var(--md-sys-color-primary);
+    opacity: 0;
+    transition: opacity var(--md-sys-motion-duration-short1) var(--md-sys-motion-easing-standard);
+}
+
+.z-slider-button:hover {
+    box-shadow: var(--md-sys-elevation-2);
+}
+
+.z-slider-button:hover::before {
+    opacity: var(--md-sys-state-hover-opacity);
+}
+
+.z-slider-button:focus-within::before,
+.z-slider-button:focus::before {
+    opacity: var(--md-sys-state-focus-opacity);
+}
+
+.z-slider-button:active {
+    cursor: grabbing;
+    box-shadow: var(--md-sys-elevation-1);
+    transform: scale(1.1);
+}
+
+/* ============================================
+   Scale Mold (with tick marks)
+   ============================================ */
+.z-slider-scale .z-slider-center {
+    height: 4px;
+}
+
+/* ============================================
+   Disabled State
+   ============================================ */
+.z-slider[disabled] {
+    cursor: default;
+    opacity: 0.38;
+}
+
+.z-slider[disabled] .z-slider-button {
+    cursor: default;
+    box-shadow: none;
+}
+
+.z-slider[disabled] .z-slider-area {
+    background-color: var(--md-sys-color-on-surface);
+}
+
+.z-slider[disabled] .z-slider-button {
+    background-color: var(--md-sys-color-on-surface);
+}
+

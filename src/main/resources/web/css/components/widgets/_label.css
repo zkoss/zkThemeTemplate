@@ -1,0 +1,22 @@
+/* ZK Label - Material Design 3 Style */
+/* M3 Body text */
+
+/* ============================================
+   Label
+   ============================================ */
+.z-label {
+    display: inline;
+    color: var(--md-sys-color-on-surface);
+    font-family: var(--md-sys-typescale-body-medium-font-family);
+    font-size: var(--md-sys-typescale-body-medium-size);
+    font-weight: var(--md-sys-typescale-body-medium-weight);
+    line-height: var(--md-sys-typescale-body-medium-line-height);
+    letter-spacing: var(--md-sys-typescale-body-medium-tracking);
+}
+
+/* Disabled */
+.z-label[disabled] {
+    color: color-mix(in srgb, var(--md-sys-color-on-surface) 38%, transparent);
+    cursor: default;
+    pointer-events: none;
+}

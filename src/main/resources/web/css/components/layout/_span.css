@@ -1,0 +1,20 @@
+/* ZK Span - Material Design 3 Style */
+/* Inline container component */
+
+/* ============================================
+   Span
+   ============================================ */
+.z-span {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    color: inherit;
+}
+
+/* Spacing between adjacent spans */
+.z-span + .z-span {
+    margin-left: var(--md-sys-spacing-2);
+}

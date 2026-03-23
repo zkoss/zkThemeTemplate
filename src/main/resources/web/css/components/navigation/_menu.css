@@ -1,0 +1,293 @@
+/* ZK Menu & Menubar - Material Design 3 Style */
+/* M3 Navigation Menu / App Bar menu */
+
+/* ============================================
+   Menubar Container
+   ============================================ */
+.z-menubar {
+    display: block;
+    position: relative;
+    background-color: var(--md-sys-color-surface);
+    font-family: var(--md-sys-typescale-body-large-font-family, inherit);
+    font-size: var(--md-sys-typescale-body-large-size);
+}
+
+/* Horizontal menubar */
+.z-menubar-horizontal {
+    display: flex;
+    align-items: center;
+    min-height: 48px;
+    border-bottom: 1px solid var(--md-sys-color-surface-container-highest);
+}
+
+.z-menubar-horizontal ul {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+/* Vertical menubar */
+.z-menubar-vertical {
+    display: inline-block;
+    min-width: 200px;
+    border: 1px solid var(--md-sys-color-outline-variant);
+    border-radius: var(--md-sys-shape-corner-small);
+    padding: var(--md-sys-spacing-1) 0;
+}
+
+.z-menubar-vertical ul {
+    display: block;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+/* Menubar body (scrollable) */
+.z-menubar-body {
+    overflow: hidden;
+    position: relative;
+}
+
+.z-menubar-content {
+    display: inline-block;
+    white-space: nowrap;
+}
+
+/* Scroll buttons */
+.z-menubar-scrollable {
+    display: none;
+}
+
+.z-menubar-scroll .z-menubar-scrollable {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 48px;
+    cursor: pointer;
+    color: var(--md-sys-color-on-surface-variant);
+}
+
+.z-menubar-scroll .z-menubar-scrollable:hover {
+    background-color: var(--md-sys-color-surface-container-low);
+}
+
+/* ============================================
+   Menu Item (with submenu)
+   ============================================ */
+.z-menu {
+    display: inline-block;
+    list-style: none;
+    position: relative;
+}
+
+.z-menubar-vertical .z-menu {
+    display: block;
+}
+
+.z-menu-content {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--md-sys-spacing-2);
+    padding: var(--md-sys-spacing-2) var(--md-sys-spacing-4);
+    min-height: 40px;
+    color: var(--md-sys-color-on-surface);
+    text-decoration: none;
+    cursor: pointer;
+    white-space: nowrap;
+    border-radius: 0;
+    transition: background-color var(--md-sys-motion-duration-short1) var(--md-sys-motion-easing-standard);
+}
+
+.z-menubar-vertical .z-menu-content {
+    display: flex;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.z-menu-content:hover,
+.z-menu-hover > .z-menu-content,
+.z-menu-selected > .z-menu-content {
+    background-color: var(--md-sys-color-surface-container-low);
+}
+
+.z-menu-text {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.z-menu-image {
+    width: var(--md-sys-size-icon-sm);
+    height: var(--md-sys-size-icon-sm);
+    object-fit: contain;
+}
+
+/* Submenu arrow icon */
+.z-menu-icon {
+    font-size: var(--md-sys-typescale-body-small-size);
+    color: var(--md-sys-color-on-surface-variant);
+    margin-left: var(--md-sys-spacing-2);
+}
+
+.z-menu-separator {
+    display: none;
+}
+
+/* Disabled */
+.z-menu-disabled > .z-menu-content {
+    color: color-mix(in srgb, var(--md-sys-color-on-surface) 38%, transparent);
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/* ============================================
+   Menuitem (leaf)
+   ============================================ */
+.z-menuitem {
+    display: inline-block;
+    list-style: none;
+    position: relative;
+}
+
+.z-menubar-vertical .z-menuitem {
+    display: block;
+}
+
+.z-menuitem-content {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--md-sys-spacing-2);
+    padding: var(--md-sys-spacing-2) var(--md-sys-spacing-4);
+    min-height: 40px;
+    color: var(--md-sys-color-on-surface);
+    text-decoration: none;
+    cursor: pointer;
+    white-space: nowrap;
+    border-radius: 0;
+    transition: background-color var(--md-sys-motion-duration-short1) var(--md-sys-motion-easing-standard);
+}
+
+.z-menubar-vertical .z-menuitem-content {
+    display: flex;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.z-menuitem-content:hover,
+.z-menuitem-hover > .z-menuitem-content,
+.z-menuitem-selected > .z-menuitem-content {
+    background-color: var(--md-sys-color-surface-container-low);
+}
+
+.z-menuitem-text {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.z-menuitem-image {
+    width: var(--md-sys-size-icon-sm);
+    height: var(--md-sys-size-icon-sm);
+    object-fit: contain;
+}
+
+/* Checkmark icon */
+.z-menuitem-icon {
+    font-size: var(--md-sys-typescale-body-small-size);
+    color: var(--md-sys-color-primary);
+    visibility: hidden;
+}
+
+.z-menuitem-checked .z-menuitem-icon {
+    visibility: visible;
+}
+
+/* Disabled */
+.z-menuitem-disabled > .z-menuitem-content {
+    color: color-mix(in srgb, var(--md-sys-color-on-surface) 38%, transparent);
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/* ============================================
+   Menu Separator
+   ============================================ */
+.z-menuseparator {
+    display: block;
+    list-style: none;
+    height: 1px;
+    margin: var(--md-sys-spacing-1) 0;
+    background-color: var(--md-sys-color-outline-variant);
+    border: none;
+    overflow: hidden;
+    font-size: 0;
+    line-height: 0;
+}
+
+.z-menubar-horizontal > ul > .z-menuseparator {
+    display: inline-block;
+    width: 1px;
+    height: 24px;
+    margin: 0 var(--md-sys-spacing-1);
+    vertical-align: middle;
+}
+
+/* ============================================
+   Menupopup (Submenu Dropdown)
+   Material Design 3 menu surface
+   ============================================ */
+.z-menupopup {
+    display: block;
+    position: absolute;
+    min-width: 180px;
+    padding: var(--md-sys-spacing-1) 0;
+    background-color: var(--md-sys-color-surface-container);
+    border: none;
+    border-radius: var(--md-sys-shape-corner-small);
+    box-shadow: var(--md-sys-elevation-2);
+    z-index: 88000;
+    overflow: auto;
+}
+
+.z-menupopup-content {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.z-menupopup .z-menu {
+    display: block;
+}
+
+.z-menupopup .z-menu-content {
+    display: flex;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.z-menupopup .z-menuitem {
+    display: block;
+}
+
+.z-menupopup .z-menuitem-content {
+    display: flex;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.z-menupopup-shadow {
+    box-shadow: var(--md-sys-elevation-2);
+}
+
+.z-menupopup-separator {
+    display: none;
+}
+
+.z-menupopup .z-focus-a {
+    position: absolute;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+}
