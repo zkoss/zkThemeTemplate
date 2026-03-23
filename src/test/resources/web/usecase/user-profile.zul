@@ -1,11 +1,8 @@
 <?page title="User Profile and Settings"?>
 <zk>
-<style>
-.section-hint { font-size: 12px; margin-bottom: 8px; }
-</style>
 
 <vlayout hflex="1">
-    <label value="Account Settings" style="font-size: 20px; padding: 12px 0;"/>
+    <label value="Account Settings" sclass="md-headline-small" style="padding: 12px 0;"/>
     <separator bar="true"/>
 
     <anchorlayout hflex="1">

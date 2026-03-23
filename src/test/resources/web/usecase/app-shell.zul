@@ -1,15 +1,10 @@
 <?page title="Enterprise App Shell"?>
 <zk>
-<style>
-.nav-item { padding: 8px 16px; }
-.status-bar { padding: 4px 12px; font-size: 12px; }
-.logo-text { font-size: 18px; margin-left: 8px; }
-</style>
 
-<borderlayout height="600px">
+<borderlayout height="640px">
     <north size="48px" border="none">
         <toolbar>
-            <span sclass="logo-text">ERP Portal</span>
+            <span sclass="md-title-large">ERP Portal</span>
             <separator orient="vertical"/>
             <menubar>
                 <menu label="File">
@@ -52,7 +47,7 @@
                     </menupopup>
                 </menu>
             </menubar>
-            <toolbarbutton label="Profile" iconSclass="z-icon-user" style="margin-left: auto;"/>
+            <toolbarbutton label="Profile" iconSclass="z-icon-user" sclass="md-push-right"/>
             <toolbarbutton label="Logout" iconSclass="z-icon-sign-out"/>
         </toolbar>
     </north>

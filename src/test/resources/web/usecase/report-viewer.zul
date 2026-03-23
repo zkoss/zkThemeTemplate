@@ -1,10 +1,5 @@
 <?page title="Financial Report Builder"?>
 <zk>
-<style>
-.report-header { background: #f5f5f5; padding: 12px; border-bottom: 2px solid #1a73e8; margin-bottom: 8px; }
-.report-title { font-size: 20px; font-weight: bold; }
-.report-sub { font-size: 12px; color: #666; margin-top: 4px; }
-</style>
 <script>
 // Handle report parameter changes
 function onParamChange() {

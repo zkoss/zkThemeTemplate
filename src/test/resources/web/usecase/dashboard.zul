@@ -1,12 +1,5 @@
 <?page title="KPI Dashboard"?>
 <zk>
-<style>
-.kpi-card { min-width: 180px; margin: 4px; }
-.kpi-value { font-size: 28px; }
-.kpi-label { font-size: 12px; margin-bottom: 8px; }
-.badge-ok  { padding: 2px 8px; font-size: 11px; }
-.badge-err { padding: 2px 8px; font-size: 11px; }
-</style>
 
 <!-- Auto-refresh timer (30 seconds) -->
 <timer delay="30000" running="true" id="refreshTimer"/>
@@ -15,10 +8,10 @@
 
     <!-- Page toolbar -->
     <toolbar>
-        <label value="Operations Dashboard" style="font-size: 18px;"/>
+        <label value="Operations Dashboard" sclass="md-title-large"/>
         <separator/>
         <toolbarbutton label="Refresh" iconSclass="z-icon-refresh"/>
-        <toolbarbutton label="Settings" iconSclass="z-icon-cog" style="margin-left: auto;"/>
+        <toolbarbutton label="Settings" iconSclass="z-icon-cog" sclass="md-push-right"/>
     </toolbar>
 
     <!-- KPI Cards row -->
@@ -39,7 +32,7 @@
         <panel title="Customer Satisfaction" border="normal" sclass="kpi-card" width="220px">
             <panelchildren>
                 <vlayout>
-                    <rating max="5" readonly="true"/>
+                    <rating max="5" rating="4" readonly="true"/>
                     <div sclass="kpi-value">4.2</div>
                     <div sclass="kpi-label">out of 5.0 (342 reviews)</div>
                 </vlayout>
@@ -64,7 +57,7 @@
                 <vlayout>
                     <div sclass="kpi-value">$84.2K</div>
                     <div sclass="kpi-label">Month to date</div>
-                    <html content="&lt;div style='height:8px;width:160px'&gt;&lt;/div&gt;"/>
+                    <space height="8px"/>
                     <label value="Target: $120K"/>
                 </vlayout>
             </panelchildren>

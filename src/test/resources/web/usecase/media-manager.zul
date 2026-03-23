@@ -1,9 +1,5 @@
 <?page title="Media and Content Manager"?>
 <zk>
-<style>
-.thumb-grid { gap: 8px; padding: 8px; }
-.thumb-item { width: 80px; height: 80px; }
-</style>
 
 <tabbox hflex="1">
     <tabs>
@@ -145,7 +141,7 @@
                     <caption label="External Preview"/>
                     <vbox>
                         <div>
-                            <span style="font-size: 12px;">Enter an embed URL and click Load to preview external content securely.</span>
+                            <span sclass="section-hint">Enter an embed URL and click Load to preview external content securely.</span>
                         </div>
                         <hbox align="center">
                             <label value="URL:"/>
@@ -164,8 +160,8 @@
                                 width="100%" height="300px"/>
                         <!-- HTML preview area -->
                         <html content="&lt;div style='padding:8px;background:#f9f9f9;border:1px solid #eee;font-size:12px'&gt;&lt;strong&gt;HTML Snippet Preview&lt;/strong&gt;&lt;br/&gt;Paste raw HTML here for inline rendering.&lt;/div&gt;"/>
-                        <div style="margin-top: 8px;">
-                            <label value="Note: " style="font-weight: bold;"/>
+                        <div sclass="md-m-2">
+                            <label value="Note: " sclass="md-label-large"/>
                             <span>Only content from approved domains is allowed.</span>
                         </div>
                     </vbox>

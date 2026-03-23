@@ -58,13 +58,11 @@
                             <rows>
                                 <row>
                                     <label value="Priority:"/>
-                                    <selectbox width="140px">
-                                        <listbox>
-                                            <listitem label="Normal"/>
-                                            <listitem label="High"/>
-                                            <listitem label="Critical"/>
-                                        </listbox>
-                                    </selectbox>
+                                    <combobox value="Normal" width="140px" readonly="true">
+                                        <comboitem label="Normal"/>
+                                        <comboitem label="High"/>
+                                        <comboitem label="Critical"/>
+                                    </combobox>
                                 </row>
                                 <row>
                                     <label value="Shipping Method:"/>
@@ -206,7 +204,7 @@
             <tabpanel>
                 <vlayout>
                     <label value="Upload supporting documents:"/>
-                    <fileupload label="Upload Files" autoUpload="false"/>
+                    <fileupload label="Upload Files"/>
                     <progressmeter value="65" width="300px"/>
                     <label value="Uploaded Files:"/>
                     <listbox width="500px">
