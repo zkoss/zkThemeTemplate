@@ -4,11 +4,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.zkoss.lang.Library;
 
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 
 @SpringBootApplication
 @Controller
@@ -25,9 +23,14 @@ public class ThemePreviewApp {
         SpringApplication.run(ThemePreviewApp.class, args);
     }
 
-    /** allow visiting each zul without zul e.g. http://localhost:8080/anchor */
-    @GetMapping("/{page}")
-    public String zulPage(@PathVariable("page") String page, HttpServletRequest request, HttpServletResponse response) {
-        return page ;
+    /** allow visiting each zul without zul e.g. http://localhost:8080/anchor or http://localhost:8080/usecase/app-shell */
+    @GetMapping("/**")
+    public String zulPage(HttpServletRequest request) {
+        String path = request.getServletPath();
+        // strip leading slash
+        if (path.startsWith("/")) {
+            path = path.substring(1);
+        }
+        return path;
     }
 }
