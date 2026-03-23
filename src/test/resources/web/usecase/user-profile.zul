@@ -2,7 +2,6 @@
 <zk>
 <style>
 .section-hint { font-size: 12px; margin-bottom: 8px; }
-.avatar { width: 100px; height: 100px; }
 </style>
 
 <vlayout hflex="1">
@@ -17,7 +16,7 @@
                 <groupbox>
                     <caption label="Profile Photo"/>
                     <vbox align="center">
-                        <image src="~./img/Centigrade-Widget-Icons/ArrowsUpDown-16x16.png"
+                        <image src="~./img/avatar-placeholder.svg"
                                sclass="avatar" width="80px" height="80px"/>
                         <space height="8px"/>
                         <fileupload label="Upload New Photo"/>
@@ -153,7 +152,7 @@
                                     <absolutechildren x="0" y="0" width="200px" height="50px">
                                         <captcha/>
                                     </absolutechildren>
-                                    <absolutechildren x="0" y="54px" width="200px" height="26px">
+                                    <absolutechildren x="0" y="54" width="200px" height="26px">
                                         <textbox placeholder="Enter CAPTCHA" width="200px"/>
                                     </absolutechildren>
                                 </absolutelayout>

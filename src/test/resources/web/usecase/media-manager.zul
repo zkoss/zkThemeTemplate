@@ -42,10 +42,10 @@
                 </toolbar>
                 <vbox>
                     <hlayout>
-                        <image src="~./img/Centigrade-Widget-Icons/ArrowUpOrange-16x16.png"/>
-                        <image src="~./img/Centigrade-Widget-Icons/Envelope-16x16.png"/>
-                        <image src="~./img/Centigrade-Widget-Icons/PaperClip-16x16.png"/>
-                        <image src="~./img/Centigrade-Widget-Icons/ArrowDown-16x16.png"/>
+                        <span sclass="z-icon-arrow-up"/>
+                        <span sclass="z-icon-envelope"/>
+                        <span sclass="z-icon-paperclip"/>
+                        <span sclass="z-icon-arrow-down"/>
                     </hlayout>
                 </vbox>
                 <button label="Upload Images" upload="true"/>

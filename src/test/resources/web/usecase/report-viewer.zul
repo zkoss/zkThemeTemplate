@@ -83,14 +83,12 @@ function onParamChange() {
                         </row>
                         <row>
                             <label value="Currency:"/>
-                            <selectbox width="100px">
-                                <listbox>
-                                    <listitem label="USD"/>
-                                    <listitem label="EUR"/>
-                                    <listitem label="GBP"/>
-                                    <listitem label="JPY"/>
-                                </listbox>
-                            </selectbox>
+                            <combobox width="100px">
+                                <comboitem label="USD"/>
+                                <comboitem label="EUR"/>
+                                <comboitem label="GBP"/>
+                                <comboitem label="JPY"/>
+                            </combobox>
                         </row>
                         <row>
                             <label value="Business Units:"/>

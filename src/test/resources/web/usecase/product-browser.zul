@@ -4,7 +4,7 @@
 <popup id="productDetailPopup" width="360px">
     <vlayout>
         <label value="Product Details" style="font-weight: bold; font-size: 16px;"/>
-        <image src="~./img/Centigrade-Widget-Icons/Document-16x16.png" width="64px" height="64px"/>
+        <span sclass="z-icon-file" style="font-size: 64px;"/>
         <html content="&lt;p&gt;&lt;strong&gt;Laptop 15-inch Pro&lt;/strong&gt;&lt;br/&gt;High-performance laptop with 16GB RAM, 512GB SSD, and Intel i7 processor. Ideal for enterprise workloads.&lt;/p&gt;"/>
         <hbox>
             <button label="Add to Cart" iconSclass="z-icon-shopping-cart"/>
@@ -130,9 +130,7 @@
             </listhead>
             <listgroup label="Electronics / Laptops"/>
             <listitem popup="productDetailPopup, type=toggle">
-                <listcell>
-                    <image src="~./img/Centigrade-Widget-Icons/Document-16x16.png"/>
-                </listcell>
+                <listcell iconSclass="z-icon-file"/>
                 <listcell>
                     <a label="Laptop 15-inch Pro" href="#"/>
                 </listcell>
@@ -146,9 +144,7 @@
                 </listcell>
             </listitem>
             <listitem popup="productDetailPopup, type=toggle">
-                <listcell>
-                    <image src="~./img/Centigrade-Widget-Icons/Document-16x16.png"/>
-                </listcell>
+                <listcell iconSclass="z-icon-file"/>
                 <listcell>
                     <a label="UltraBook Slim 13" href="#"/>
                 </listcell>
@@ -171,9 +167,7 @@
             </listgroupfoot>
             <listgroup label="Electronics / Phones"/>
             <listitem>
-                <listcell>
-                    <image src="~./img/Centigrade-Widget-Icons/Document-16x16.png"/>
-                </listcell>
+                <listcell iconSclass="z-icon-file"/>
                 <listcell>
                     <a label="SmartPhone X12" href="#"/>
                 </listcell>
