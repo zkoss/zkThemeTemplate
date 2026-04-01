@@ -2,10 +2,7 @@
 <?component name="item" inline="true" macroURI="~./_sidebar_item.zul" ?>
 <?import zk.example.* ?>
 <zk xmlns:h="native">
-    <script src="http://localhost:50000/socket.io/socket.io.js"/>
-    <script src="http://localhost:50000/zklessLiveReloadStyles.js"/>
-    <!--	<script src="http://localhost:50000/zklessLiveReloadStylesResize.js"/>-->
-    <!--	<script src="http://localhost:50000/zklessLiveReloadPage.js"/>-->
+    <script src="http://localhost:50000/zk-live-reload.js"/>
     <nodom viewModel="@id('vm')@init('zk.example.ZulListVM')"  xmlns:n="native">
         <forEach items="@init(vm.zulFiles)" var="one">
             <h:h1>${one}</h:h1>
