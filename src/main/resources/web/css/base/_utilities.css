@@ -127,6 +127,12 @@
     margin-bottom: var(--md-sys-spacing-2);
 }
 
+/* Page-level content padding (non-fullscreen pages) */
+.page-content {
+    padding: var(--md-sys-spacing-4);
+    box-sizing: border-box;
+}
+
 /* ============================================
    Display
    ============================================ */

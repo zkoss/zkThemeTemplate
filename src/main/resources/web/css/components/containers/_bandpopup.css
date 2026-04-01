@@ -6,15 +6,16 @@
    ============================================ */
 .z-bandpopup {
     position: absolute;
-    top: 0;
-    left: 0;
     background-color: var(--md-sys-color-surface-container);
     border: none;
     border-radius: var(--md-sys-shape-corner-small);
     box-shadow: var(--md-sys-elevation-2);
     z-index: 88000;
     overflow: auto;
-    max-height: 300px;
+    width: fit-content;
+    min-width: 200px;
+    max-width: 480px;
+    max-height: 400px;
 }
 
 /* Content area */

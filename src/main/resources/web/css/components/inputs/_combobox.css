@@ -389,6 +389,19 @@
     padding: var(--md-sys-spacing-4);
 }
 
+/* Datebox popup: constrain to calendar width, not full page */
+.z-datebox-popup {
+    width: fit-content;
+    max-width: 320px;
+}
+
+/* Bandbox popup: constrain to content width */
+.z-bandbox-popup {
+    width: fit-content;
+    min-width: 200px;
+    max-width: 480px;
+}
+
 /* Shadow class applied by JS */
 .z-combobox-shadow,
 .z-bandbox-shadow,

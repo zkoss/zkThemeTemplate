@@ -53,8 +53,8 @@
        ============================================ */
     --md-sys-size-touch-target-minimum: 48px;
     --md-sys-size-button-height: 40px;
-    --md-sys-size-input-height: 56px;
-    --md-sys-size-input-height-dense: 40px;
+    --md-sys-size-input-height: 40px;
+    --md-sys-size-input-height-dense: 36px;
     --md-sys-size-chip-height: 32px;
     --md-sys-size-icon-button: 48px;
     --md-sys-size-fab: 56px;
