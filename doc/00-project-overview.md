@@ -13,6 +13,16 @@
 
 Create a Material Design 3 theme for ZK Framework community edition components (org.zkoss.zul.*) targeting enterprise customers.
 
+## Workflow
+
+You (Claude) act as project manager coordinating subagents:
+
+1. Call **zk-theme-creator** to create/update component styles.
+2. Call **md3-design-verifier** to verify the design against the Material Design 3 specification.
+3. Repeat steps 1–2 until all components are done.
+
+- Call **zk-framework-expert** when ZUL changes are needed or for ZK-specific knowledge.
+
 ## Key Decisions
 
 | Decision | Choice | Rationale |
