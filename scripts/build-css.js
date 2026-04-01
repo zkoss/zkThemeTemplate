@@ -8,16 +8,16 @@ const themeDir = path.join(__dirname, '..', 'target/classes/web/zk-material');
 
 // norm.css.dsp = tokens + base + global styles (loaded first by WCS)
 const normFiles = [
-    'css/tokens/_colors.css',
-    'css/tokens/_typography.css',
-    'css/tokens/_spacing.css',
-    'css/tokens/_elevation.css',
-    'css/tokens/_motion.css',
-    'css/tokens/_shape.css',
-    'css/base/_reset.css',
-    'css/base/_utilities.css',
-    'css/base/_icons.css',
-    'css/zk-material.css',
+    'zul/css/tokens/_colors.css',
+    'zul/css/tokens/_typography.css',
+    'zul/css/tokens/_spacing.css',
+    'zul/css/tokens/_elevation.css',
+    'zul/css/tokens/_motion.css',
+    'zul/css/tokens/_shape.css',
+    'zul/css/base/_reset.css',
+    'zul/css/base/_utilities.css',
+    'zul/css/base/_icons.css',
+    'zul/css/zk-material.css',
 ];
 
 // combo.css.dsp = merged dropdown-type input components
