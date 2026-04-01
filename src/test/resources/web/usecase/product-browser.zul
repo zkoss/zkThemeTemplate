@@ -13,7 +13,7 @@
     </vlayout>
 </popup>
 
-<hbox hflex="1" vflex="1">
+<hbox hflex="1" vflex="1" sclass="page-content">
 
     <!-- Left: Category Tree (25%) -->
     <vbox width="220px" vflex="1">

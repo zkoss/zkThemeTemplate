@@ -1,7 +1,7 @@
 <?page title="User Profile and Settings"?>
 <zk>
 
-<vlayout hflex="1">
+<vlayout hflex="1" sclass="page-content">
     <label value="Account Settings" sclass="md-headline-small" style="padding: 12px 0;"/>
     <separator bar="true"/>
 

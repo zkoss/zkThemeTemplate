@@ -1,0 +1,127 @@
+<?page title="Use Case Gallery"?>
+<zk>
+
+<vlayout hflex="1" sclass="page-content">
+
+    <label value="Use Case Gallery" sclass="md-headline-small" style="padding: 8px 0 4px;"/>
+    <label value="Click any card to open the corresponding use case page." sclass="section-hint"/>
+    <separator bar="true"/>
+
+    <div sclass="md-flex md-flex-wrap md-gap-4">
+
+        <!-- Dashboard -->
+        <groupbox width="280px">
+            <caption label="KPI Dashboard"/>
+            <vlayout>
+                <label value="Operations overview with KPI cards, charts, and live metrics." sclass="section-hint"/>
+                <hlayout>
+                    <label sclass="badge-info" value="vlayout"/>
+                    <label sclass="badge-info" value="panel"/>
+                    <label sclass="badge-info" value="listbox"/>
+                </hlayout>
+                <a href="/usecase/dashboard" label="Open Dashboard →" sclass="md-text-primary"/>
+            </vlayout>
+        </groupbox>
+
+        <!-- App Shell -->
+        <groupbox width="280px">
+            <caption label="Enterprise App Shell"/>
+            <vlayout>
+                <label value="Full application shell with menubar, toolbar, tabbox and sidebar." sclass="section-hint"/>
+                <hlayout>
+                    <label sclass="badge-info" value="borderlayout"/>
+                    <label sclass="badge-info" value="menubar"/>
+                    <label sclass="badge-info" value="tabbox"/>
+                </hlayout>
+                <a href="/usecase/app-shell" label="Open App Shell →" sclass="md-text-primary"/>
+            </vlayout>
+        </groupbox>
+
+        <!-- Order Entry -->
+        <groupbox width="280px">
+            <caption label="Sales Order Entry"/>
+            <vlayout>
+                <label value="Multi-tab order form with product selection, pricing and attachments." sclass="section-hint"/>
+                <hlayout>
+                    <label sclass="badge-info" value="window"/>
+                    <label sclass="badge-info" value="grid"/>
+                    <label sclass="badge-info" value="combobutton"/>
+                </hlayout>
+                <a href="/usecase/order-entry" label="Open Order Entry →" sclass="md-text-primary"/>
+            </vlayout>
+        </groupbox>
+
+        <!-- Employee Grid -->
+        <groupbox width="280px">
+            <caption label="Employee Data Grid"/>
+            <vlayout>
+                <label value="Advanced grid with frozen columns, grouping, auxhead and inline editing." sclass="section-hint"/>
+                <hlayout>
+                    <label sclass="badge-info" value="grid"/>
+                    <label sclass="badge-info" value="bandbox"/>
+                    <label sclass="badge-info" value="paging"/>
+                </hlayout>
+                <a href="/usecase/employee-grid" label="Open Employee Grid →" sclass="md-text-primary"/>
+            </vlayout>
+        </groupbox>
+
+        <!-- User Profile -->
+        <groupbox width="280px">
+            <caption label="User Profile and Settings"/>
+            <vlayout>
+                <label value="Two-column profile editor with personal info, preferences and security settings." sclass="section-hint"/>
+                <hlayout>
+                    <label sclass="badge-info" value="anchorlayout"/>
+                    <label sclass="badge-info" value="slider"/>
+                    <label sclass="badge-info" value="captcha"/>
+                </hlayout>
+                <a href="/usecase/user-profile" label="Open User Profile →" sclass="md-text-primary"/>
+            </vlayout>
+        </groupbox>
+
+        <!-- Product Browser -->
+        <groupbox width="280px">
+            <caption label="Product Category Browser"/>
+            <vlayout>
+                <label value="Split-pane browser with category tree, product listbox and detail popup." sclass="section-hint"/>
+                <hlayout>
+                    <label sclass="badge-info" value="splitter"/>
+                    <label sclass="badge-info" value="tree"/>
+                    <label sclass="badge-info" value="listbox"/>
+                </hlayout>
+                <a href="/usecase/product-browser" label="Open Product Browser →" sclass="md-text-primary"/>
+            </vlayout>
+        </groupbox>
+
+        <!-- Report Viewer -->
+        <groupbox width="280px">
+            <caption label="Financial Report Builder"/>
+            <vlayout>
+                <label value="Parameter-driven report with date filters, grouping grid and export toolbar." sclass="section-hint"/>
+                <hlayout>
+                    <label sclass="badge-info" value="borderlayout"/>
+                    <label sclass="badge-info" value="toolbar"/>
+                    <label sclass="badge-info" value="calendar"/>
+                </hlayout>
+                <a href="/usecase/report-viewer" label="Open Report Viewer →" sclass="md-text-primary"/>
+            </vlayout>
+        </groupbox>
+
+        <!-- Media Manager -->
+        <groupbox width="280px">
+            <caption label="Media and Content Manager"/>
+            <vlayout>
+                <label value="Tab-based media library with image gallery, audio player and embed viewer." sclass="section-hint"/>
+                <hlayout>
+                    <label sclass="badge-info" value="tabbox"/>
+                    <label sclass="badge-info" value="audio"/>
+                    <label sclass="badge-info" value="progressmeter"/>
+                </hlayout>
+                <a href="/usecase/media-manager" label="Open Media Manager →" sclass="md-text-primary"/>
+            </vlayout>
+        </groupbox>
+
+    </div>
+
+</vlayout>
+</zk>

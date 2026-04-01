@@ -9,7 +9,7 @@
     </vlayout>
 </popup>
 
-<vlayout hflex="1">
+<vlayout hflex="1" sclass="page-content">
     <!-- Toolbar -->
     <toolbar>
         <toolbarbutton label="Add Employee" iconSclass="z-icon-plus"/>

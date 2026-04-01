@@ -4,7 +4,7 @@
 <!-- Auto-refresh timer (30 seconds) -->
 <timer delay="30000" running="true" id="refreshTimer"/>
 
-<vlayout hflex="1">
+<vlayout hflex="1" sclass="page-content">
 
     <!-- Page toolbar -->
     <toolbar>

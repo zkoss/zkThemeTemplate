@@ -1,7 +1,7 @@
 <?page title="Media and Content Manager"?>
 <zk>
 
-<tabbox hflex="1">
+<tabbox hflex="1" sclass="page-content">
     <tabs>
         <tab label="Image Gallery"/>
         <tab label="Audio Library"/>
