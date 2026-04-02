@@ -1,4 +1,5 @@
 <?page title="Media and Content Manager"?>
+<?link rel="stylesheet" type="text/css" href="~./usecase/usecase.css"?>
 <zk>
 
 <tabbox hflex="1" sclass="page-content">

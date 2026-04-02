@@ -1,43 +1,6 @@
 /* Utility Classes for ZK Material Theme */
 
 /* ============================================
-   Badge / Status Chips (MD3 chip style)
-   ============================================ */
-.badge-ok, .badge-info {
-    display: inline-block;
-    padding: 2px 8px;
-    border-radius: var(--md-sys-shape-corner-full);
-    background-color: var(--md-sys-color-secondary-container);
-    color: var(--md-sys-color-on-secondary-container);
-    font-size: var(--md-sys-typescale-label-small-size);
-    font-weight: var(--md-sys-typescale-label-small-weight);
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-    vertical-align: middle;
-}
-
-.badge-err, .badge-warn {
-    display: inline-block;
-    padding: 2px 8px;
-    border-radius: var(--md-sys-shape-corner-full);
-    font-size: var(--md-sys-typescale-label-small-size);
-    font-weight: var(--md-sys-typescale-label-small-weight);
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-    vertical-align: middle;
-}
-
-.badge-err {
-    background-color: var(--md-sys-color-error-container);
-    color: var(--md-sys-color-on-error-container);
-}
-
-.badge-warn {
-    background-color: var(--md-sys-color-warning-container);
-    color: var(--md-sys-color-on-warning-container);
-}
-
-/* ============================================
    MD3 Typography Utility Classes
    ============================================ */
 .md-title-large {
@@ -120,63 +83,10 @@
     padding-bottom: var(--md-sys-spacing-3);
 }
 
-/* ============================================
-   KPI / Metric Display Classes
-   ============================================ */
-.kpi-value {
-    font-size: var(--md-sys-typescale-headline-medium-size);
-    font-weight: var(--md-sys-typescale-headline-medium-weight);
-    line-height: var(--md-sys-typescale-headline-medium-line-height);
-    color: var(--md-sys-color-on-surface);
-}
-
-.kpi-label {
-    font-size: var(--md-sys-typescale-body-small-size);
-    color: var(--md-sys-color-on-surface-variant);
-    margin-bottom: var(--md-sys-spacing-2);
-}
-
-/* Report header block (replaces removed inline style from report-viewer.zul) */
-.report-header {
-    background-color: var(--md-sys-color-surface-container-low);
-    padding: var(--md-sys-spacing-3) var(--md-sys-spacing-4);
-    border-bottom: 2px solid var(--md-sys-color-primary);
-    margin-bottom: var(--md-sys-spacing-2);
-}
-
-.report-title {
-    font-size: var(--md-sys-typescale-title-large-size);
-    font-weight: var(--md-sys-typescale-title-large-weight);
-    color: var(--md-sys-color-on-surface);
-}
-
-.report-sub {
-    font-size: var(--md-sys-typescale-body-small-size);
-    color: var(--md-sys-color-on-surface-variant);
-    margin-top: var(--md-sys-spacing-1);
-}
-
-/* Section hint text */
-.section-hint {
-    font-size: var(--md-sys-typescale-body-small-size);
-    color: var(--md-sys-color-on-surface-variant);
-    margin-bottom: var(--md-sys-spacing-2);
-}
-
 /* Page-level content padding (non-fullscreen pages) */
 .page-content {
     padding: var(--md-sys-spacing-4);
     box-sizing: border-box;
-}
-
-/* Inline HTML snippet preview — replaces hardcoded inline styles */
-.html-snippet-preview {
-    padding: var(--md-sys-spacing-2);
-    background-color: var(--md-sys-color-surface-container-low);
-    border: 1px solid var(--md-sys-color-outline-variant);
-    border-radius: var(--md-sys-shape-corner-extra-small);
-    font-size: var(--md-sys-typescale-body-small-size);
-    color: var(--md-sys-color-on-surface);
 }
 
 /* ============================================
@@ -197,6 +107,16 @@
 /* ============================================
    Flexbox Utilities
    ============================================ */
+
+/* Horizontal flex row — use on <div> to lay out ZK components side-by-side.
+   Children receive flex sizing via sclass="md-flex-1" (grow) or width="Npx" (fixed). */
+.md-hbox {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: var(--md-sys-spacing-3);
+}
+
 .md-flex {
     display: flex;
 }
@@ -255,6 +175,7 @@
 
 .md-flex-1 {
     flex: 1;
+    min-width: 0;
 }
 
 .md-flex-auto {

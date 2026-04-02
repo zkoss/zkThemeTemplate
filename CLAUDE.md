@@ -71,23 +71,23 @@ npm run watch
 ### URL Patterns
 ```
 http://localhost:8080/{component-name}.zul
-http://localhost:8080/{component-name}          # .zul extension is optional
 ```
+`.zul` extension is required. The catch-all is restricted to `*.zul` only to avoid intercepting static resources.
 
 ### Common Component Pages
 | Component | URL |
 |-----------|-----|
-| Overview | http://localhost:8080/preview |
-| Checkbox | http://localhost:8080/checkbox |
-| Button | http://localhost:8080/button |
-| Listbox | http://localhost:8080/listbox |
-| Grid | http://localhost:8080/grid |
-| Tabbox | http://localhost:8080/tabbox |
-| Combobox | http://localhost:8080/combobox |
-| Datebox | http://localhost:8080/datebox |
-| Tree | http://localhost:8080/tree |
-| Panel | http://localhost:8080/panel |
-| Window | http://localhost:8080/window |
+| Overview | http://localhost:8080/preview.zul |
+| Checkbox | http://localhost:8080/checkbox.zul |
+| Button | http://localhost:8080/button.zul |
+| Listbox | http://localhost:8080/listbox.zul |
+| Grid | http://localhost:8080/grid.zul |
+| Tabbox | http://localhost:8080/tabbox.zul |
+| Combobox | http://localhost:8080/combobox.zul |
+| Datebox | http://localhost:8080/datebox.zul |
+| Tree | http://localhost:8080/tree.zul |
+| Panel | http://localhost:8080/panel.zul |
+| Window | http://localhost:8080/window.zul |
 
 Preview ZUL files are located at `src/test/resources/web/*.zul`.
 

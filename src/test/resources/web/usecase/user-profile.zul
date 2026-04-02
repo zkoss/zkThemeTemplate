@@ -1,4 +1,5 @@
 <?page title="User Profile and Settings"?>
+<?link rel="stylesheet" type="text/css" href="~./usecase/usecase.css"?>
 <zk>
 
 <vlayout hflex="1" sclass="page-content">
