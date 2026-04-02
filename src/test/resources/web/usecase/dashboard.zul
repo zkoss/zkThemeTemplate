@@ -45,7 +45,7 @@
                     <vlayout>
                         <div sclass="kpi-value">67%</div>
                         <div sclass="kpi-label">CPU utilization</div>
-                        <slider curpos="67" maxpos="100" width="160px"/>
+                        <progressmeter value="67"/>
                         <label value="Normal range: 0-80%"/>
                     </vlayout>
                 </panelchildren>
@@ -57,7 +57,6 @@
                     <vlayout>
                         <div sclass="kpi-value">$84.2K</div>
                         <div sclass="kpi-label">Month to date</div>
-                        <space height="8px"/>
                         <label value="Target: $120K"/>
                     </vlayout>
                 </panelchildren>
@@ -85,7 +84,7 @@
                     </listitem>
                     <listitem>
                         <listcell>
-                            <span sclass="badge-err">WARN</span>
+                            <span sclass="badge-warn">WARN</span>
                             <span>Disk usage on /var/log exceeds 80%</span>
                         </listcell>
                     </listitem>
@@ -138,11 +137,5 @@
             </groupbox>
 
         </div>
-
-        <!-- Embedded Analytics -->
-        <vlayout hflex="1">
-            <label value="Embedded Analytics" sclass="md-title-medium"/>
-            <span sclass="md-label-medium">Live data embedded from analytics platform:</span>
-        </vlayout>
     </vlayout>
 </zk>

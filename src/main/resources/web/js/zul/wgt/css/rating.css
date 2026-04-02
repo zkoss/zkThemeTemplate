@@ -24,7 +24,7 @@
    ============================================ */
 .z-rating > i {
     font-size: 24px;
-    color: var(--md-sys-color-outline);
+    color: var(--md-sys-color-on-surface-variant);
     /* Expand touch target to M3 recommended 40×40px minimum */
     padding: var(--md-sys-spacing-2);
     margin: calc(-1 * var(--md-sys-spacing-2));
@@ -39,11 +39,12 @@
 /* Selected (filled) state */
 .z-rating > i.z-rating-selected {
     color: var(--md-sys-color-primary);
+    font-weight: 900; /* Use solid glyph if FA 5+ is present */
 }
 
 /* Hover state */
 .z-rating > i.z-rating-hover {
-    color: color-mix(in srgb, var(--md-sys-color-primary) 80%, var(--md-sys-color-outline));
+    color: color-mix(in srgb, var(--md-sys-color-primary) 80%, var(--md-sys-color-on-surface-variant));
     opacity: 1;
 }
 
