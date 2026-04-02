@@ -1,13 +1,17 @@
 const http = require('http');
+const { execSync } = require('child_process');
 
 const CLIENT_SCRIPT = `(function () {
     var source = new EventSource('http://localhost:{{port}}/events');
-    source.addEventListener('reload', function () {
+    source.addEventListener('reload-css', function () {
         document.querySelectorAll('link[rel="stylesheet"]').forEach(function (link) {
             if (link.href.indexOf(window.location.origin) === 0) {
                 link.href = link.href.replace(/\\?.*|$/, '?t=' + Date.now());
             }
         });
+    });
+    source.addEventListener('reload-page', function () {
+        window.location.reload();
     });
 }())`;
 
@@ -37,10 +41,27 @@ module.exports = function startLiveReload(port) {
         }
     });
 
+    server.on('error', (err) => {
+        if (err.code === 'EADDRINUSE') {
+            console.log(`[live-reload] Port ${port} in use, killing previous process...`);
+            try {
+                execSync(`lsof -ti :${port} | xargs kill -9`);
+            } catch (_) { /* no process found, ignore */ }
+            server.listen(port);
+        } else {
+            throw err;
+        }
+    });
+
     server.listen(port);
     console.log(`[live-reload] Listening on port ${port}`);
 
-    return function notify() {
-        clients.forEach(res => res.write('event: reload\ndata: {}\n\n'));
+    return {
+        notifyCss: function() {
+            clients.forEach(res => res.write('event: reload-css\ndata: {}\n\n'));
+        },
+        notifyPage: function() {
+            clients.forEach(res => res.write('event: reload-page\ndata: {}\n\n'));
+        }
     };
 };

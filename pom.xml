@@ -96,6 +96,13 @@
 			<type>pom</type>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<version>${springboot.version}</version>
+			<scope>test</scope>
+			<optional>true</optional>
+		</dependency>
 	</dependencies>
 	<build>
 		<resources>
