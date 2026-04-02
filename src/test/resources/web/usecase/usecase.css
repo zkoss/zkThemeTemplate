@@ -17,6 +17,7 @@
     letter-spacing: 0.5px;
     text-transform: uppercase;
     vertical-align: middle;
+    margin-right: var(--md-sys-spacing-2);
 }
 
 .badge-err, .badge-warn {
@@ -28,6 +29,7 @@
     letter-spacing: 0.5px;
     text-transform: uppercase;
     vertical-align: middle;
+    margin-right: var(--md-sys-spacing-2);
 }
 
 .badge-err {
