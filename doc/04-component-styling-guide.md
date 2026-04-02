@@ -218,6 +218,19 @@ padding: var(--md-sys-spacing-4); /* 16px all sides */
 gap: var(--md-sys-spacing-2); /* 8px between icon and text */
 ```
 
+### Layout & Container Spacing
+
+To ensure components are not crowded, the following defaults are applied to ZK layout and container components:
+
+1. **Layout Containers** (vlayout, hlayout, hbox, vbox):
+   - Use `gap` for child spacing.
+   - Default: `var(--md-sys-spacing-3)` (12px).
+   - Compact: `var(--md-sys-spacing-2)` (8px).
+2. **Container Components** (groupbox, panel, window):
+   - Internal padding: `var(--md-sys-spacing-4)` (16px).
+3. **Inline Components** (buttons/labels in toolbars):
+   - Inline margin: `var(--md-sys-spacing-1)` (4px) to ensure separation.
+
 ---
 
 ## Elevation Guidelines

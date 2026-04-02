@@ -175,108 +175,14 @@ src/main/resources/web/css/
 
 ---
 
-## 前置作業（開始 Iteration 前先完成）
-
-### 1. 更換主色調：紫色 → 企業級鋼藍色
-
-**原因**：現有 Purple (#6750A4) 色系對企業應用而言過於鮮豔、缺乏穩重感。
-
-**新色調**：Corporate Steel Blue — 參考 SAP Fiori / IBM Carbon / Salesforce 等主流企業級設計系統的藍色風格，低彩度、穩重、專業。
-
-修改檔案：`src/main/resources/web/css/tokens/_colors.css`
-
-**Primary（鋼藍色）** 替換整個 primary palette：
-```css
---md-ref-palette-primary-0:  #000000;
---md-ref-palette-primary-10: #001B45;
---md-ref-palette-primary-20: #00317A;
---md-ref-palette-primary-30: #0047B0;
---md-ref-palette-primary-40: #1A5DC8;   /* 主色：企業藍，不過分鮮豔 */
---md-ref-palette-primary-50: #4178D5;
---md-ref-palette-primary-60: #6895E2;
---md-ref-palette-primary-70: #90B2EF;
---md-ref-palette-primary-80: #BAD0F8;
---md-ref-palette-primary-90: #D8E8FF;
---md-ref-palette-primary-95: #EBF2FF;
---md-ref-palette-primary-99: #FAFCFF;
---md-ref-palette-primary-100: #FFFFFF;
-```
-
-**Secondary（藍灰色）** 替換 secondary palette（目前為紫灰色）：
-```css
---md-ref-palette-secondary-0:  #000000;
---md-ref-palette-secondary-10: #171D28;
---md-ref-palette-secondary-20: #2C3340;
---md-ref-palette-secondary-30: #434A59;
---md-ref-palette-secondary-40: #5B6270;   /* 輔色：藍灰 */
---md-ref-palette-secondary-50: #747B8A;
---md-ref-palette-secondary-60: #8F96A4;
---md-ref-palette-secondary-70: #AAB1BF;
---md-ref-palette-secondary-80: #C6CCD9;
---md-ref-palette-secondary-90: #E2E7F4;
---md-ref-palette-secondary-95: #EFF3FF;
---md-ref-palette-secondary-99: #FAFCFF;
---md-ref-palette-secondary-100: #FFFFFF;
-```
-
-**Tertiary（深青色）** 替換 tertiary（目前為粉紅）：
-```css
---md-ref-palette-tertiary-0:  #000000;
---md-ref-palette-tertiary-10: #002022;
---md-ref-palette-tertiary-20: #003B3E;
---md-ref-palette-tertiary-30: #00575C;
---md-ref-palette-tertiary-40: #007478;   /* 第三色：深青，企業成熟感 */
---md-ref-palette-tertiary-50: #009499;
---md-ref-palette-tertiary-60: #00B4BA;
---md-ref-palette-tertiary-70: #2DD2D8;
---md-ref-palette-tertiary-80: #80EAED;
---md-ref-palette-tertiary-90: #C4F5F6;
---md-ref-palette-tertiary-95: #E1FAFB;
---md-ref-palette-tertiary-99: #F5FFFE;
---md-ref-palette-tertiary-100: #FFFFFF;
-```
-
-neutral / neutral-variant / error palette **保持不變**。
-
-### 2. 清除 report-viewer.zul 內嵌樣式
-
-`src/test/resources/web/usecase/report-viewer.zul` 頂部有一段 `<style>` 區塊需完全移除：
-
-```html
-<!-- 移除這整段 -->
-<style>
-.report-header { background: #f5f5f5; padding: 12px; border-bottom: 2px solid #1a73e8; margin-bottom: 8px; }
-.report-title { font-size: 20px; font-weight: bold; }
-.report-sub { font-size: 12px; color: #666; margin-top: 4px; }
-</style>
-```
-
-原則：**use-case ZUL 頁面不應包含任何 `<style>` 區塊**，所有樣式由主題 CSS 負責。
-
----
-
-## 已知系統性問題：元件間距（Spacing）
-
-### 問題描述
-
-元件預設擺放時彼此之間沒有間距，全部緊貼在一起。ZK Framework 預設 margin=0，layout 元件預設不給子元件間距。
-
-### 解決策略
-
-在 Iteration 過程中，當截圖發現元件擠在一起時，在對應 CSS 修正步驟中一併處理：
-
-1. **Layout 容器**（vlayout、hlayout、hbox、vbox）：設定 `gap`
-   - 預設：`var(--md-sys-spacing-3)` (12px)
-   - 緊湊：`var(--md-sys-spacing-2)` (8px)
-2. **容器元件內部**（groupbox、panel、window）：設定 `padding: var(--md-sys-spacing-4)` (16px)
-3. **行內元件**（toolbar 內 button、label）：設定 `margin-inline: var(--md-sys-spacing-1)` (4px)
-
-相關 CSS 檔案：`_box.css`、`_layout.css`、`_groupbox.css`、`_panel.css`
-
----
-
 ## 注意事項
 
 1. **截圖是硬性要求**：每個 iteration 必須有 before/after 截圖，由 AI 自動分析，作為視覺驗證證據
 2. **瀏覽器重整**：`npm run watch` 自動重編 CSS 後，需重新導航頁面才能看到最新效果
 3. **ZUL 頁面不得有 inline style**：若發現其他 ZUL 有 `<style>` 區塊，一律在前置作業中清除
+4. **每次修正後必須更新報告**：每完成一輪修正，必須在 `doc/md3-reports/{page}-v1.md` 的 Remediation Log 補記當次所有處理項目，要求：
+   - 每個 finding 都必須標記最終狀態：`✅ Fixed` / `⚠️ ZK Constraint` / `📋 Design Decision` / `📋 Accepted`
+   - 包含具體修改內容（檔案名 + 修改描述）
+   - 若原本標記為 ❌ 或 ⚠️ 但實際已存在或已解決，應標記為 `✅ Already present` 並說明
+   - 報告底部需更新 **Post-Fix Status**，明確列出剩餘 ❌ 和 ⚠️ 數量
+   - 無法修正的項目必須在報告中說明原因（ZK 框架限制 / 設計決策），不得靜默忽略

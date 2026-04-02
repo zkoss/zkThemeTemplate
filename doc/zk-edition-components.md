@@ -99,7 +99,7 @@
 - Group
 - Groupbox
 - Groupfoot
-- Hbox
+- Hbox (deprecated)
 - Hlayout
 - Html
 - Iframe
@@ -143,7 +143,7 @@
 - Space
 - Span
 - Spinner
-- Splitter
+- Splitter (deprecated)
 - Style
 - Tab
 - Tabbox
@@ -165,7 +165,7 @@
 - Treefooter
 - Treeitem
 - Treerow
-- Vbox
+- Vbox (deprecated)
 - Vlayout
 - West
 - Window
