@@ -167,7 +167,7 @@
             <!-- Shipping Tab -->
             <tabpanel>
                 <vlayout>
-                    <label value="Shipping Address" sclass="md-title-small"/>
+                    <label value="Shipping Address" sclass="fs-5"/>
                     <grid width="400px">
                         <rows>
                             <row>
@@ -203,7 +203,7 @@
             <!-- Attachments Tab -->
             <tabpanel>
                 <vlayout>
-                    <label value="Upload supporting documents:" sclass="md-title-small"/>
+                    <label value="Upload supporting documents:" sclass="fs-5"/>
                     <fileupload label="Upload Files"/>
                     <progressmeter value="65" width="300px"/>
                     <label value="Uploaded Files:"/>

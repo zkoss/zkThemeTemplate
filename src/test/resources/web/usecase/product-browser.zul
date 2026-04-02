@@ -3,7 +3,7 @@
 <!-- Product detail popup -->
 <popup id="productDetailPopup" width="360px">
     <vlayout>
-        <label value="Product Details" sclass="md-title-medium"/>
+        <label value="Product Details" sclass="fs-4"/>
         <span sclass="z-icon-file md-icon-xl"/>
         <html content="&lt;p&gt;&lt;strong&gt;Laptop 15-inch Pro&lt;/strong&gt;&lt;br/&gt;High-performance laptop with 16GB RAM, 512GB SSD, and Intel i7 processor. Ideal for enterprise workloads.&lt;/p&gt;"/>
         <hlayout>
@@ -18,7 +18,7 @@
     <!-- Left: Category Tree (25%) -->
     <vlayout width="220px" vflex="1">
         <toolbar>
-            <label value="Categories" sclass="md-title-small"/>
+            <label value="Categories" sclass="fs-5"/>
         </toolbar>
         <tree vflex="1" hflex="1">
             <treecols>

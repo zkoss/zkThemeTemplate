@@ -3,7 +3,7 @@
 <zk>
 
 <vlayout hflex="1" sclass="page-content">
-    <label value="Account Settings" sclass="md-headline-small md-py-3"/>
+    <label value="Account Settings" sclass="fs-2 md-py-3"/>
     <separator bar="true"/>
 
     <anchorlayout hflex="1">
@@ -18,7 +18,7 @@
                                sclass="avatar" width="80px" height="80px"/>
                         <space height="8px"/>
                         <fileupload label="Upload New Photo"/>
-                        <div sclass="section-hint">JPEG or PNG, max 2MB</div>
+                        <div sclass="section-hint fs-6">JPEG or PNG, max 2MB</div>
                     </vlayout>
                 </groupbox>
 

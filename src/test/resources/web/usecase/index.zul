@@ -4,8 +4,8 @@
 
 <vlayout hflex="1" sclass="page-content">
 
-    <label value="Use Case Gallery" sclass="md-headline-small" style="padding: 8px 0 4px;"/>
-    <label value="Click any card to open the corresponding use case page." sclass="section-hint"/>
+    <label value="Use Case Gallery" sclass="fs-2" style="padding: 8px 0 4px;"/>
+    <label value="Click any card to open the corresponding use case page." sclass="section-hint fs-6"/>
     <separator bar="true"/>
 
     <div sclass="md-flex md-flex-wrap md-gap-4">
@@ -14,7 +14,7 @@
         <groupbox width="280px">
             <caption label="KPI Dashboard"/>
             <vlayout>
-                <label value="Operations overview with KPI cards, charts, and live metrics." sclass="section-hint"/>
+                <label value="Operations overview with KPI cards, charts, and live metrics." sclass="section-hint fs-6"/>
                 <hlayout>
                     <label sclass="badge-info" value="vlayout"/>
                     <label sclass="badge-info" value="panel"/>
@@ -28,7 +28,7 @@
         <groupbox width="280px">
             <caption label="Enterprise App Shell"/>
             <vlayout>
-                <label value="Full application shell with menubar, toolbar, tabbox and sidebar." sclass="section-hint"/>
+                <label value="Full application shell with menubar, toolbar, tabbox and sidebar." sclass="section-hint fs-6"/>
                 <hlayout>
                     <label sclass="badge-info" value="borderlayout"/>
                     <label sclass="badge-info" value="menubar"/>
@@ -42,7 +42,7 @@
         <groupbox width="280px">
             <caption label="Sales Order Entry"/>
             <vlayout>
-                <label value="Multi-tab order form with product selection, pricing and attachments." sclass="section-hint"/>
+                <label value="Multi-tab order form with product selection, pricing and attachments." sclass="section-hint fs-6"/>
                 <hlayout>
                     <label sclass="badge-info" value="window"/>
                     <label sclass="badge-info" value="grid"/>
@@ -56,7 +56,7 @@
         <groupbox width="280px">
             <caption label="Employee Data Grid"/>
             <vlayout>
-                <label value="Advanced grid with frozen columns, grouping, auxhead and inline editing." sclass="section-hint"/>
+                <label value="Advanced grid with frozen columns, grouping, auxhead and inline editing." sclass="section-hint fs-6"/>
                 <hlayout>
                     <label sclass="badge-info" value="grid"/>
                     <label sclass="badge-info" value="bandbox"/>
@@ -70,7 +70,7 @@
         <groupbox width="280px">
             <caption label="User Profile and Settings"/>
             <vlayout>
-                <label value="Two-column profile editor with personal info, preferences and security settings." sclass="section-hint"/>
+                <label value="Two-column profile editor with personal info, preferences and security settings." sclass="section-hint fs-6"/>
                 <hlayout>
                     <label sclass="badge-info" value="anchorlayout"/>
                     <label sclass="badge-info" value="slider"/>
@@ -84,7 +84,7 @@
         <groupbox width="280px">
             <caption label="Product Category Browser"/>
             <vlayout>
-                <label value="Split-pane browser with category tree, product listbox and detail popup." sclass="section-hint"/>
+                <label value="Split-pane browser with category tree, product listbox and detail popup." sclass="section-hint fs-6"/>
                 <hlayout>
                     <label sclass="badge-info" value="splitter"/>
                     <label sclass="badge-info" value="tree"/>
@@ -98,7 +98,7 @@
         <groupbox width="280px">
             <caption label="Financial Report Builder"/>
             <vlayout>
-                <label value="Parameter-driven report with date filters, grouping grid and export toolbar." sclass="section-hint"/>
+                <label value="Parameter-driven report with date filters, grouping grid and export toolbar." sclass="section-hint fs-6"/>
                 <hlayout>
                     <label sclass="badge-info" value="borderlayout"/>
                     <label sclass="badge-info" value="toolbar"/>
@@ -112,7 +112,7 @@
         <groupbox width="280px">
             <caption label="Media and Content Manager"/>
             <vlayout>
-                <label value="Tab-based media library with image gallery, audio player and embed viewer." sclass="section-hint"/>
+                <label value="Tab-based media library with image gallery, audio player and embed viewer." sclass="section-hint fs-6"/>
                 <hlayout>
                     <label sclass="badge-info" value="tabbox"/>
                     <label sclass="badge-info" value="audio"/>

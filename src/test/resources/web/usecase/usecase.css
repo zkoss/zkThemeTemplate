@@ -43,15 +43,7 @@
 /* ============================================
    KPI / Metric Display
    ============================================ */
-.kpi-value {
-    font-size: var(--md-sys-typescale-headline-medium-size);
-    font-weight: var(--md-sys-typescale-headline-medium-weight);
-    line-height: var(--md-sys-typescale-headline-medium-line-height);
-    color: var(--md-sys-color-on-surface);
-}
-
 .kpi-label {
-    font-size: var(--md-sys-typescale-body-small-size);
     color: var(--md-sys-color-on-surface-variant);
     margin-bottom: var(--md-sys-spacing-2);
 }
@@ -66,23 +58,10 @@
     margin-bottom: var(--md-sys-spacing-2);
 }
 
-.report-title {
-    font-size: var(--md-sys-typescale-title-large-size);
-    font-weight: var(--md-sys-typescale-title-large-weight);
-    color: var(--md-sys-color-on-surface);
-}
-
-.report-sub {
-    font-size: var(--md-sys-typescale-body-small-size);
-    color: var(--md-sys-color-on-surface-variant);
-    margin-top: var(--md-sys-spacing-1);
-}
-
 /* ============================================
    Misc Demo Helpers
    ============================================ */
 .section-hint {
-    font-size: var(--md-sys-typescale-body-small-size);
     color: var(--md-sys-color-on-surface-variant);
     margin-bottom: var(--md-sys-spacing-2);
 }
