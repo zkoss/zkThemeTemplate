@@ -36,11 +36,8 @@
 ## 啟動指令
 
 ```bash
-# Terminal 1 — 啟動 preview app（需 JDK 17）
+# 啟動 preview app（需 JDK 17），同時自動監看 CSS 變更
 setjdk 17 && mvn test exec:java@preview-app
-
-# Terminal 2 — 監看 CSS 變更（自動重編）
-npm run watch
 ```
 
 ---
@@ -105,14 +102,13 @@ npm run watch
 工具：`zk-theme-creator` agent
 
 1. 提供 md3-design-verifier 報告 + frontend-design 設計建議（若有）
-2. 指定需修改的 CSS 檔案
+2. 判斷每個問題的修正類型，再指定對應的 CSS 檔案：
+   - **Theme 修正**：問題根因在元件樣式本身 → 修改 `src/main/resources/web/zul/css/` 下的對應元件 CSS
+   - **Application 修正**：問題是 use-case 頁面特有的版面或內容需求 → 修改 `src/test/resources/web/usecase/usecase.css` 或對應 ZUL
 3. 說明問題與期望效果
+4. 修正完成後，更新 `doc/md3-reports/{page}-v1.md` 的 Remediation Log，標記每個 finding 的最終狀態（含修正類型）
 
-### Step 5 — 重建 & 再截圖（VERIFY）
-
-```bash
-npm run build:css
-```
+### Step 5 — 再截圖驗證（VERIFY）
 
 1. 重新導航至頁面（強制重整）
 2. 全頁截圖（**after 圖**，存為 `doc/screenshots/{page}-after.png`）
