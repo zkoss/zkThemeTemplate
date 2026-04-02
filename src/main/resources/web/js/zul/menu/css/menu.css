@@ -97,19 +97,34 @@
     cursor: pointer;
     white-space: nowrap;
     border-radius: 0;
+    position: relative;
+    overflow: hidden;
     transition: background-color var(--md-sys-motion-duration-short1) var(--md-sys-motion-easing-standard);
+}
+
+.z-menu-content::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-color: var(--md-sys-color-on-surface);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--md-sys-motion-duration-short1) var(--md-sys-motion-easing-standard);
+}
+
+.z-menu-content:hover::before,
+.z-menu-hover > .z-menu-content::before {
+    opacity: var(--md-sys-state-hover-opacity);
+}
+
+.z-menu-selected > .z-menu-content {
+    background-color: var(--md-sys-color-surface-container-low);
 }
 
 .z-menubar-vertical .z-menu-content {
     display: flex;
     width: 100%;
     box-sizing: border-box;
-}
-
-.z-menu-content:hover,
-.z-menu-hover > .z-menu-content,
-.z-menu-selected > .z-menu-content {
-    background-color: var(--md-sys-color-surface-container-low);
 }
 
 .z-menu-text {
@@ -166,19 +181,34 @@
     cursor: pointer;
     white-space: nowrap;
     border-radius: 0;
+    position: relative;
+    overflow: hidden;
     transition: background-color var(--md-sys-motion-duration-short1) var(--md-sys-motion-easing-standard);
+}
+
+.z-menuitem-content::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-color: var(--md-sys-color-on-surface);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--md-sys-motion-duration-short1) var(--md-sys-motion-easing-standard);
+}
+
+.z-menuitem-content:hover::before,
+.z-menuitem-hover > .z-menuitem-content::before {
+    opacity: var(--md-sys-state-hover-opacity);
+}
+
+.z-menuitem-selected > .z-menuitem-content {
+    background-color: var(--md-sys-color-surface-container-low);
 }
 
 .z-menubar-vertical .z-menuitem-content {
     display: flex;
     width: 100%;
     box-sizing: border-box;
-}
-
-.z-menuitem-content:hover,
-.z-menuitem-hover > .z-menuitem-content,
-.z-menuitem-selected > .z-menuitem-content {
-    background-color: var(--md-sys-color-surface-container-low);
 }
 
 .z-menuitem-text {

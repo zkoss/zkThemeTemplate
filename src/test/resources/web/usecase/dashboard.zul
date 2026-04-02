@@ -65,7 +65,7 @@
     </hlayout>
 
     <!-- Secondary panels -->
-    <hbox hflex="1" spacing="8px">
+    <hlayout hflex="1" >
 
         <!-- Recent Alerts -->
         <groupbox hflex="1">
@@ -115,38 +115,38 @@
                 <rows>
                     <row>
                         <label value="Web Server"/>
-                        <checkbox checked="true" disabled="true" label="Up"/>
+                        <label sclass="badge-ok" value="Up"/>
                     </row>
                     <row>
                         <label value="Database"/>
-                        <checkbox checked="true" disabled="true" label="Up"/>
+                        <label sclass="badge-ok" value="Up"/>
                     </row>
                     <row>
                         <label value="Cache"/>
-                        <checkbox checked="true" disabled="true" label="Up"/>
+                        <label sclass="badge-ok" value="Up"/>
                     </row>
                     <row>
                         <label value="Queue"/>
-                        <checkbox checked="false" disabled="true" label="Down"/>
+                        <label sclass="badge-err" value="Down"/>
                     </row>
                     <row>
                         <label value="Email Service"/>
-                        <checkbox checked="true" disabled="true" label="Up"/>
+                        <label sclass="badge-ok" value="Up"/>
                     </row>
                 </rows>
             </grid>
         </groupbox>
 
-    </hbox>
+    </hlayout>
 
     <!-- Embedded Analytics -->
-    <vbox hflex="1">
-        <label value="Embedded Analytics" style="margin-bottom: 4px;"/>
+    <vlayout hflex="1">
+        <label value="Embedded Analytics" sclass="md-title-medium"/>
         <div>
-            <span style="font-size: 12px;">Live data embedded from analytics platform:</span>
+            <span sclass="md-label-medium">Live data embedded from analytics platform:</span>
         </div>
         <iframe src="about:blank" width="100%" height="200px"/>
-    </vbox>
+    </vlayout>
 
 </vlayout>
 </zk>

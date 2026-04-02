@@ -255,7 +255,7 @@
 .z-timebox-button > a > i,
 .z-spinner-button > a > i,
 .z-doublespinner-button > a > i {
-    font-size: 10px;
+    font-size: var(--md-sys-size-icon-xs);
 }
 
 .z-timebox-button > i,

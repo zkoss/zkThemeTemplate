@@ -2,7 +2,7 @@
 <zk>
 
 <vlayout hflex="1" sclass="page-content">
-    <label value="Account Settings" sclass="md-headline-small" style="padding: 12px 0;"/>
+    <label value="Account Settings" sclass="md-headline-small md-py-3"/>
     <separator bar="true"/>
 
     <anchorlayout hflex="1">
@@ -12,13 +12,13 @@
             <vlayout>
                 <groupbox>
                     <caption label="Profile Photo"/>
-                    <vbox align="center">
+                    <vlayout sclass="md-text-center">
                         <image src="~./img/avatar-placeholder.svg"
                                sclass="avatar" width="80px" height="80px"/>
                         <space height="8px"/>
                         <fileupload label="Upload New Photo"/>
                         <div sclass="section-hint">JPEG or PNG, max 2MB</div>
-                    </vbox>
+                    </vlayout>
                 </groupbox>
 
                 <space height="12px"/>
@@ -48,11 +48,11 @@
                         <rows>
                             <row>
                                 <label value="Name:"/>
-                                <hbox>
+                                <hlayout>
                                     <textbox value="Jane" placeholder="First name" width="120px"/>
                                     <space width="8px"/>
                                     <textbox value="Doe" placeholder="Last name" width="120px"/>
-                                </hbox>
+                                </hlayout>
                             </row>
                             <row>
                                 <label value="Email:"/>
@@ -100,17 +100,17 @@
                             </row>
                             <row>
                                 <label value="Notifications:"/>
-                                <vbox>
+                                <vlayout>
                                     <checkbox label="Email Notifications" checked="true"/>
                                     <checkbox label="SMS Alerts"/>
-                                </vbox>
+                                </vlayout>
                             </row>
                             <row>
                                 <label value="Session Timeout:"/>
-                                <hbox>
+                                <hlayout>
                                     <slider curpos="30" minpos="5" maxpos="60" width="160px"/>
                                     <label value="30 min"/>
-                                </hbox>
+                                </hlayout>
                             </row>
                             <row>
                                 <label value="Font Size:"/>
@@ -145,14 +145,10 @@
                             </row>
                             <row>
                                 <label value="CAPTCHA:"/>
-                                <absolutelayout width="200px" height="80px">
-                                    <absolutechildren x="0" y="0" width="200px" height="50px">
-                                        <captcha/>
-                                    </absolutechildren>
-                                    <absolutechildren x="0" y="54" width="200px" height="26px">
-                                        <textbox placeholder="Enter CAPTCHA" width="200px"/>
-                                    </absolutechildren>
-                                </absolutelayout>
+                                <vlayout width="200px">
+                                    <captcha/>
+                                    <textbox placeholder="Enter CAPTCHA" width="200px"/>
+                                </vlayout>
                             </row>
                         </rows>
                     </grid>
@@ -165,13 +161,13 @@
 
     <separator bar="true"/>
 
-    <hbox>
+    <hlayout>
         <button label="Save Changes" iconSclass="z-icon-check"/>
         <space width="8px"/>
         <button label="Cancel"/>
         <separator orient="vertical"/>
         <a label="Delete Account" href="#"/>
-    </hbox>
+    </hlayout>
 
 </vlayout>
 </zk>

@@ -25,6 +25,9 @@
 .z-rating > i {
     font-size: 24px;
     color: var(--md-sys-color-outline);
+    /* Expand touch target to M3 recommended 40×40px minimum */
+    padding: var(--md-sys-spacing-2);
+    margin: calc(-1 * var(--md-sys-spacing-2));
     transition: color var(--md-sys-motion-duration-short1) var(--md-sys-motion-easing-standard),
                 transform var(--md-sys-motion-duration-short1) var(--md-sys-motion-easing-standard);
 }
@@ -40,8 +43,8 @@
 
 /* Hover state */
 .z-rating > i.z-rating-hover {
-    color: var(--md-sys-color-primary);
-    opacity: 0.8;
+    color: color-mix(in srgb, var(--md-sys-color-primary) 80%, var(--md-sys-color-outline));
+    opacity: 1;
 }
 
 /* ============================================

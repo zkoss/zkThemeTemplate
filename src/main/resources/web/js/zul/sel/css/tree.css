@@ -108,7 +108,8 @@
 
 /* Focus row */
 .z-treerow-focus {
-    outline: none;
+    outline: 2px solid var(--md-sys-color-primary);
+    outline-offset: -2px;
 }
 
 /* Disabled row */

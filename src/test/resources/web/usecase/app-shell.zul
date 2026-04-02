@@ -54,7 +54,7 @@
 
     <west size="200px" title="Navigation" collapsible="true" splittable="true">
         <div>
-            <div sclass="nav-item"><span sclass="z-icon-dashboard"/> Dashboard</div>
+            <div sclass="nav-item nav-item--active"><span sclass="z-icon-dashboard"/> Dashboard</div>
             <div sclass="nav-item"><span sclass="z-icon-users"/> Employees</div>
             <div sclass="nav-item"><span sclass="z-icon-shopping-cart"/> Orders</div>
             <div sclass="nav-item"><span sclass="z-icon-bar-chart"/> Reports</div>
@@ -72,10 +72,10 @@
             <tabpanels>
                 <tabpanel>
                     <vlayout>
-                        <label value="Welcome to the Dashboard" sclass="z-label"/>
+                        <label value="Welcome to the Dashboard" sclass="md-title-medium"/>
                         <div>
                             <span>Current user: </span>
-                            <span sclass="z-label">Administrator</span>
+                            <span sclass="md-body-large">Administrator</span>
                         </div>
                         <label value="Select a menu item on the left to get started."/>
                     </vlayout>
@@ -104,7 +104,7 @@
         <div sclass="status-bar">
             <span>Status: </span>
             <label value="Ready" id="statusLabel"/>
-            <span style="margin-left: 16px;">Last updated: 2026-03-20 09:00</span>
+            <span style="margin-left: var(--md-sys-spacing-4);">Last updated: 2026-03-20 09:00</span>
         </div>
     </south>
 </borderlayout>

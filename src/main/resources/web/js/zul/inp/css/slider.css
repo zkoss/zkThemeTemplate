@@ -154,6 +154,10 @@
     box-shadow: none;
 }
 
+.z-slider[disabled] .z-slider-center {
+    background-color: color-mix(in srgb, var(--md-sys-color-on-surface) 12%, transparent);
+}
+
 .z-slider[disabled] .z-slider-area {
     background-color: var(--md-sys-color-on-surface);
 }

@@ -36,14 +36,12 @@
                     <toolbarbutton label="Upload New Image" iconSclass="z-icon-upload"/>
                     <toolbarbutton label="Delete Selected" iconSclass="z-icon-trash"/>
                 </toolbar>
-                <vbox>
-                    <hlayout>
-                        <span sclass="z-icon-arrow-up"/>
-                        <span sclass="z-icon-envelope"/>
-                        <span sclass="z-icon-paperclip"/>
-                        <span sclass="z-icon-arrow-down"/>
-                    </hlayout>
-                </vbox>
+                <toolbar>
+                    <toolbarbutton iconSclass="z-icon-arrow-up" tooltiptext="Move Up"/>
+                    <toolbarbutton iconSclass="z-icon-envelope" tooltiptext="Send"/>
+                    <toolbarbutton iconSclass="z-icon-paperclip" tooltiptext="Attach"/>
+                    <toolbarbutton iconSclass="z-icon-arrow-down" tooltiptext="Move Down"/>
+                </toolbar>
                 <button label="Upload Images" upload="true"/>
                 <progressmeter value="40" width="300px"/>
             </vlayout>
@@ -92,9 +90,7 @@
                 <!-- Audio player with track -->
                 <groupbox>
                     <caption label="Player"/>
-                    <audio src="" controls="true" width="400px">
-                        <track kind="subtitles" src="~./dummy-captions.vtt" srclang="en" label="English"/>
-                    </audio>
+                    <audio src="" controls="true" width="400px"/>
                 </groupbox>
 
                 <!-- Upload audio form -->
@@ -139,32 +135,32 @@
             <vlayout>
                 <groupbox>
                     <caption label="External Preview"/>
-                    <vbox>
+                    <vlayout>
                         <div>
                             <span sclass="section-hint">Enter an embed URL and click Load to preview external content securely.</span>
                         </div>
-                        <hbox align="center">
+                        <hlayout valign="middle">
                             <label value="URL:"/>
                             <textbox placeholder="https://example.com/embed" width="400px" id="embedUrl"/>
                             <button label="Load" iconSclass="z-icon-external-link"/>
-                        </hbox>
+                        </hlayout>
                         <!-- Security CAPTCHA before loading -->
                         <label value="Verify you are human before loading external content:"/>
                         <captcha id="embedCaptcha"/>
-                        <hbox align="center">
+                        <hlayout valign="middle">
                             <textbox placeholder="Enter CAPTCHA code" width="180px"/>
                             <button label="Verify" iconSclass="z-icon-check"/>
-                        </hbox>
+                        </hlayout>
                         <!-- Embedded iframe -->
                         <iframe src="about:blank" id="contentFrame"
                                 width="100%" height="300px"/>
                         <!-- HTML preview area -->
-                        <html content="&lt;div style='padding:8px;background:#f9f9f9;border:1px solid #eee;font-size:12px'&gt;&lt;strong&gt;HTML Snippet Preview&lt;/strong&gt;&lt;br/&gt;Paste raw HTML here for inline rendering.&lt;/div&gt;"/>
+                        <html content="&lt;div class='html-snippet-preview'&gt;&lt;strong&gt;HTML Snippet Preview&lt;/strong&gt;&lt;br/&gt;Paste raw HTML here for inline rendering.&lt;/div&gt;"/>
                         <div sclass="md-m-2">
                             <label value="Note: " sclass="md-label-large"/>
                             <span>Only content from approved domains is allowed.</span>
                         </div>
-                    </vbox>
+                    </vlayout>
                 </groupbox>
             </vlayout>
         </tabpanel>

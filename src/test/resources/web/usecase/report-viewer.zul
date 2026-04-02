@@ -1,16 +1,9 @@
 <?page title="Financial Report Builder"?>
 <zk>
-<script>
-// Handle report parameter changes
-function onParamChange() {
-    // Placeholder for live parameter update logic
-}
-</script>
-
 <!-- Export options popup -->
 <popup id="exportPopup" width="240px">
     <vlayout>
-        <label value="Choose Export Format" style="font-weight: bold;"/>
+        <label value="Choose Export Format" sclass="md-title-small"/>
         <radiogroup>
             <radio label="PDF" checked="true"/>
             <radio label="Excel (XLSX)"/>
@@ -45,7 +38,7 @@ function onParamChange() {
 
     <!-- West: Report Parameters -->
     <west size="240px" title="Parameters" collapsible="true" splittable="true">
-        <vbox hflex="1">
+        <vlayout hflex="1">
             <groupbox>
                 <caption label="Date Range"/>
                 <grid>
@@ -87,12 +80,12 @@ function onParamChange() {
                         </row>
                         <row>
                             <label value="Business Units:"/>
-                            <vbox>
+                            <vlayout>
                                 <checkbox label="Sales" checked="true"/>
                                 <checkbox label="Operations" checked="true"/>
                                 <checkbox label="R&amp;D"/>
                                 <checkbox label="Marketing" checked="true"/>
-                            </vbox>
+                            </vlayout>
                         </row>
                         <row>
                             <label value="Top N:"/>
@@ -107,7 +100,7 @@ function onParamChange() {
                 <separator/>
                 <button label="Run Report" iconSclass="z-icon-play" width="100%"/>
             </groupbox>
-        </vbox>
+        </vlayout>
     </west>
 
     <!-- Center: Report Output -->
@@ -192,7 +185,7 @@ function onParamChange() {
     <east size="180px" title="Actions" collapsible="true">
         <panel title="Quick Actions" border="normal">
             <panelchildren>
-                <vbox>
+                <vlayout>
                     <toolbarbutton label="Save Report" iconSclass="z-icon-save"/>
                     <toolbarbutton label="Schedule" iconSclass="z-icon-clock-o"/>
                     <toolbarbutton label="Share" iconSclass="z-icon-share"/>
@@ -200,21 +193,21 @@ function onParamChange() {
                     <separator/>
                     <a label="View Documentation" href="#" iconSclass="z-icon-question-circle"/>
                     <a label="ZK Reports Guide" href="#" iconSclass="z-icon-book"/>
-                </vbox>
+                </vlayout>
             </panelchildren>
         </panel>
     </east>
 
     <!-- South: Status bar -->
     <south size="32px" border="none">
-        <hbox align="center" style="padding: 4px 12px;">
+        <hlayout valign="middle" sclass="status-bar-inner">
             <label value="Report generated at: 2026-03-20 09:00:15"/>
             <space/>
             <label value="Rows: 4 of 120 | Page 1 of 6"/>
             <space/>
             <progressmeter value="100" width="120px"/>
             <label value="Complete"/>
-        </hbox>
+        </hlayout>
     </south>
 
 </borderlayout>

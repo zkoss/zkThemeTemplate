@@ -125,9 +125,8 @@
 
 .z-combobutton[disabled] .z-combobutton-content,
 .z-combobutton[disabled] .z-combobutton-button {
-    color: var(--md-sys-color-on-surface);
-    opacity: 0.38;
-    border-color: var(--md-sys-color-on-surface);
+    color: color-mix(in srgb, var(--md-sys-color-on-surface) 38%, transparent);
+    border-color: color-mix(in srgb, var(--md-sys-color-on-surface) 12%, transparent);
 }
 
 /* ============================================

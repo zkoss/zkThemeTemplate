@@ -132,6 +132,11 @@
     background-color: var(--md-sys-color-surface-container-low);
 }
 
+.z-row-focus {
+    outline: 2px solid var(--md-sys-color-primary);
+    outline-offset: -2px;
+}
+
 /* Odd row (striped) */
 .z-grid-odd {
     background-color: var(--md-sys-color-surface-container-lowest);
@@ -164,6 +169,22 @@
     border-bottom: 1px solid var(--md-sys-color-outline-variant);
     font-weight: var(--md-sys-typescale-title-small-weight);
     cursor: pointer;
+    position: relative;
+}
+
+/* M3 state layer on collapsible group rows */
+.z-group::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-color: var(--md-sys-color-on-surface);
+    opacity: 0;
+    transition: opacity var(--md-sys-motion-duration-short1) var(--md-sys-motion-easing-standard);
+    pointer-events: none;
+}
+
+.z-group:hover::before {
+    opacity: var(--md-sys-state-hover-opacity);
 }
 
 .z-group-inner {

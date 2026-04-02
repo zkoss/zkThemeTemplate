@@ -47,6 +47,14 @@
     color: var(--md-sys-color-on-surface);
 }
 
+.md-title-small {
+    font-family: var(--md-sys-typescale-title-small-font-family, inherit);
+    font-size: var(--md-sys-typescale-title-small-size);
+    line-height: var(--md-sys-typescale-title-small-line-height);
+    font-weight: var(--md-sys-typescale-title-small-weight);
+    letter-spacing: var(--md-sys-typescale-title-small-tracking);
+}
+
 .md-headline-small {
     font-size: var(--md-sys-typescale-headline-small-size);
     font-weight: var(--md-sys-typescale-headline-small-weight);
@@ -77,11 +85,39 @@
     color: var(--md-sys-color-on-surface);
 }
 
+.nav-item--active,
+.nav-item-selected {
+    background-color: var(--md-sys-color-secondary-container);
+    color: var(--md-sys-color-on-secondary-container);
+}
+
+.nav-item--active:hover,
+.nav-item-selected:hover {
+    background-color: var(--md-sys-color-secondary-container);
+}
+
 .status-bar {
     padding: var(--md-sys-spacing-1) var(--md-sys-spacing-3);
     font-size: var(--md-sys-typescale-label-small-size);
     color: var(--md-sys-color-on-surface-variant);
     background-color: var(--md-sys-color-surface-container-low);
+}
+
+.status-bar-inner {
+    padding: var(--md-sys-spacing-1) var(--md-sys-spacing-3);
+}
+
+/* Avatar — circular profile image container */
+.avatar {
+    border-radius: var(--md-sys-shape-corner-full);
+    object-fit: cover;
+    overflow: hidden;
+}
+
+/* Vertical padding utility (spacing-3 = 12px) */
+.md-py-3 {
+    padding-top: var(--md-sys-spacing-3);
+    padding-bottom: var(--md-sys-spacing-3);
 }
 
 /* ============================================
@@ -131,6 +167,16 @@
 .page-content {
     padding: var(--md-sys-spacing-4);
     box-sizing: border-box;
+}
+
+/* Inline HTML snippet preview — replaces hardcoded inline styles */
+.html-snippet-preview {
+    padding: var(--md-sys-spacing-2);
+    background-color: var(--md-sys-color-surface-container-low);
+    border: 1px solid var(--md-sys-color-outline-variant);
+    border-radius: var(--md-sys-shape-corner-extra-small);
+    font-size: var(--md-sys-typescale-body-small-size);
+    color: var(--md-sys-color-on-surface);
 }
 
 /* ============================================
@@ -420,3 +466,13 @@
 .md-pointer-events-auto { pointer-events: auto; }
 .md-select-none { user-select: none; }
 .md-select-text { user-select: text; }
+
+
+/* ============================================
+   Icon Size Utilities
+   ============================================ */
+.md-icon-xs  { font-size: var(--md-sys-size-icon-xs); }
+.md-icon-sm  { font-size: var(--md-sys-size-icon-sm); }
+.md-icon-md  { font-size: var(--md-sys-size-icon-md); }
+.md-icon-lg  { font-size: var(--md-sys-size-icon-lg); }
+.md-icon-xl  { font-size: var(--md-sys-size-icon-xl); }

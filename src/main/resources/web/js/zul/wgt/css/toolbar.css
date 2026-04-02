@@ -114,7 +114,7 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-height: 36px;
+    min-height: 40px;
     padding: 0 var(--md-sys-spacing-3);
     border: none;
     border-radius: var(--md-sys-shape-corner-small);
@@ -133,9 +133,7 @@
     font-weight: var(--md-sys-typescale-label-large-weight);
 
     /* Transition */
-    transition:
-        background-color var(--md-sys-motion-duration-short1) var(--md-sys-motion-easing-standard),
-        color var(--md-sys-motion-duration-short1) var(--md-sys-motion-easing-standard);
+    transition: color var(--md-sys-motion-duration-short1) var(--md-sys-motion-easing-standard);
 }
 
 .z-toolbarbutton-content {
@@ -144,13 +142,28 @@
     gap: var(--md-sys-spacing-2);
 }
 
+/* M3 state layer */
+.z-toolbarbutton::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background-color: var(--md-sys-color-on-surface-variant);
+    opacity: 0;
+    transition: opacity var(--md-sys-motion-duration-short1) var(--md-sys-motion-easing-standard);
+    pointer-events: none;
+}
+
 .z-toolbarbutton:hover {
-    background-color: var(--md-sys-color-surface-container-highest);
     color: var(--md-sys-color-on-surface);
 }
 
-.z-toolbarbutton:active {
-    background-color: var(--md-sys-color-surface-container-high);
+.z-toolbarbutton:hover::before {
+    opacity: var(--md-sys-state-hover-opacity);
+}
+
+.z-toolbarbutton:active::before {
+    opacity: var(--md-sys-state-pressed-opacity);
 }
 
 .z-toolbarbutton:focus-visible {

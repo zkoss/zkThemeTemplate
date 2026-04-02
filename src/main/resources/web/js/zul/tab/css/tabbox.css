@@ -52,6 +52,7 @@
     min-height: 48px;
     min-width: 90px;
     position: relative;
+    overflow: hidden;
 
     /* Typography */
     font-family: var(--md-sys-typescale-title-small-font-family, inherit);
@@ -61,14 +62,23 @@
     text-decoration: none;
 
     /* Transition */
-    transition:
-        color var(--md-sys-motion-duration-short2) var(--md-sys-motion-easing-standard),
-        background-color var(--md-sys-motion-duration-short2) var(--md-sys-motion-easing-standard);
+    transition: color var(--md-sys-motion-duration-short2) var(--md-sys-motion-easing-standard);
 }
 
-/* Tab hover */
-.z-tab-content:hover {
-    background-color: var(--md-sys-color-surface-container-low);
+/* M3 state layer */
+.z-tab-content::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-color: var(--md-sys-color-on-surface);
+    opacity: 0;
+    transition: opacity var(--md-sys-motion-duration-short1) var(--md-sys-motion-easing-standard);
+    pointer-events: none;
+}
+
+/* Tab hover — state layer overlay instead of background swap */
+.z-tab-content:hover::before {
+    opacity: var(--md-sys-state-hover-opacity);
 }
 
 /* Tab label */

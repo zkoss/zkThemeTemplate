@@ -1,13 +1,11 @@
 <?page title="Employee Data Grid"?>
 <zk>
 <!-- Context menu popup -->
-<popup id="rowContextMenu">
-    <vlayout>
-        <button label="Edit Employee" iconSclass="z-icon-edit"/>
-        <button label="Delete" iconSclass="z-icon-trash"/>
-        <button label="View History" iconSclass="z-icon-history"/>
-    </vlayout>
-</popup>
+<menupopup id="rowContextMenu">
+    <menuitem label="Edit Employee" iconSclass="z-icon-edit"/>
+    <menuitem label="Delete" iconSclass="z-icon-trash"/>
+    <menuitem label="View History" iconSclass="z-icon-history"/>
+</menupopup>
 
 <vlayout hflex="1" sclass="page-content">
     <!-- Toolbar -->
@@ -87,7 +85,7 @@
                 <label value="Engineering"/>
                 <label value="Senior"/>
                 <label value="2021-03-15"/>
-                <checkbox checked="true" disabled="true"/>
+                <label sclass="badge-ok" value="Active"/>
                 <detail>
                     <grid>
                         <rows>
@@ -109,7 +107,7 @@
                 <label value="Engineering"/>
                 <label value="Mid"/>
                 <label value="2022-07-01"/>
-                <checkbox checked="true" disabled="true"/>
+                <label sclass="badge-ok" value="Active"/>
                 <detail>
                     <grid>
                         <rows>
@@ -131,7 +129,7 @@
                 <label value="Engineering"/>
                 <label value="Junior"/>
                 <label value="2024-01-10"/>
-                <checkbox checked="true" disabled="true"/>
+                <label sclass="badge-ok" value="Active"/>
                 <detail>
                     <grid>
                         <rows>
@@ -158,7 +156,7 @@
                 <label value="HR"/>
                 <label value="Senior"/>
                 <label value="2019-05-20"/>
-                <checkbox checked="true" disabled="true"/>
+                <label sclass="badge-ok" value="Active"/>
                 <detail>
                     <grid>
                         <rows>
@@ -174,7 +172,7 @@
                 <label value="HR"/>
                 <label value="Mid"/>
                 <label value="2023-02-14"/>
-                <checkbox checked="false" disabled="true"/>
+                <label sclass="badge-err" value="Inactive"/>
                 <detail>
                     <grid>
                         <rows>

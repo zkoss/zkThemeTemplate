@@ -13,7 +13,7 @@
 
             <!-- General Tab -->
             <tabpanel>
-                <hbox width="100%" align="start" spacing="16px">
+                <hlayout width="100%" style="gap: var(--md-sys-spacing-4);">
                     <!-- Customer Info -->
                     <groupbox width="380px">
                         <caption label="Customer Info"/>
@@ -26,7 +26,7 @@
                                 <row>
                                     <label value="Customer ID:"/>
                                     <inputgroup>
-                                        <label value="ID:" style="padding: 0 6px;"/>
+                                        <label value="ID:" style="padding: 0 var(--md-sys-spacing-2);"/>
                                         <intbox value="10042" width="140px"/>
                                     </inputgroup>
                                 </row>
@@ -52,7 +52,7 @@
                     </groupbox>
 
                     <!-- Order Details -->
-                    <groupbox hflex="1">
+                    <groupbox width="400px">
                         <caption label="Order Details"/>
                         <grid>
                             <rows>
@@ -99,7 +99,7 @@
                             </rows>
                         </grid>
                     </groupbox>
-                </hbox>
+                </hlayout>
             </tabpanel>
 
             <!-- Line Items Tab -->
@@ -158,16 +158,16 @@
                             <listfooter label="Grand Total: $5,191.90"/>
                         </listfoot>
                     </listbox>
-                    <hbox>
+                    <hlayout>
                         <button label="Add Line Item" iconSclass="z-icon-plus"/>
-                    </hbox>
+                    </hlayout>
                 </vlayout>
             </tabpanel>
 
             <!-- Shipping Tab -->
             <tabpanel>
-                <vbox>
-                    <label value="Shipping Address"/>
+                <vlayout>
+                    <label value="Shipping Address" sclass="md-title-small"/>
                     <grid width="400px">
                         <rows>
                             <row>
@@ -197,13 +197,13 @@
                             </row>
                         </rows>
                     </grid>
-                </vbox>
+                </vlayout>
             </tabpanel>
 
             <!-- Attachments Tab -->
             <tabpanel>
                 <vlayout>
-                    <label value="Upload supporting documents:"/>
+                    <label value="Upload supporting documents:" sclass="md-title-small"/>
                     <fileupload label="Upload Files"/>
                     <progressmeter value="65" width="300px"/>
                     <label value="Uploaded Files:"/>
@@ -232,7 +232,7 @@
 
     <!-- Footer actions -->
     <separator/>
-    <hbox pack="end" width="100%">
+    <hlayout width="100%" sclass="md-text-right">
         <combobutton label="Save">
             <menupopup>
                 <menuitem label="Save as Draft"/>
@@ -240,7 +240,7 @@
             </menupopup>
         </combobutton>
         <button label="Cancel"/>
-    </hbox>
+    </hlayout>
 
 </window>
 </zk>

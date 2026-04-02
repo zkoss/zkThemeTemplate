@@ -3,22 +3,22 @@
 <!-- Product detail popup -->
 <popup id="productDetailPopup" width="360px">
     <vlayout>
-        <label value="Product Details" style="font-weight: bold; font-size: 16px;"/>
-        <span sclass="z-icon-file" style="font-size: 64px;"/>
+        <label value="Product Details" sclass="md-title-medium"/>
+        <span sclass="z-icon-file md-icon-xl"/>
         <html content="&lt;p&gt;&lt;strong&gt;Laptop 15-inch Pro&lt;/strong&gt;&lt;br/&gt;High-performance laptop with 16GB RAM, 512GB SSD, and Intel i7 processor. Ideal for enterprise workloads.&lt;/p&gt;"/>
-        <hbox>
+        <hlayout>
             <button label="Add to Cart" iconSclass="z-icon-shopping-cart"/>
             <button label="Close"/>
-        </hbox>
+        </hlayout>
     </vlayout>
 </popup>
 
-<hbox hflex="1" vflex="1" sclass="page-content">
+<hlayout hflex="1" vflex="1" sclass="page-content">
 
     <!-- Left: Category Tree (25%) -->
-    <vbox width="220px" vflex="1">
+    <vlayout width="220px" vflex="1">
         <toolbar>
-            <label value="Categories" style="font-weight: bold;"/>
+            <label value="Categories" sclass="md-title-small"/>
         </toolbar>
         <tree vflex="1" hflex="1">
             <treecols>
@@ -104,12 +104,12 @@
                 <treefooter label="99"/>
             </treefoot>
         </tree>
-    </vbox>
+    </vlayout>
 
-    <splitter/>
+    <separator/>
 
     <!-- Right: Product List (remaining width) -->
-    <vbox hflex="1" vflex="1">
+    <vlayout hflex="1" vflex="1">
         <toolbar>
             <toolbarbutton label="List View" iconSclass="z-icon-list"/>
             <toolbarbutton label="Grid View" iconSclass="z-icon-th"/>
@@ -199,6 +199,6 @@
         </listbox>
 
         <paging pageSize="10" totalSize="99"/>
-    </vbox>
-</hbox>
+    </vlayout>
+</hlayout>
 </zk>

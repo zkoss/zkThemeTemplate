@@ -144,6 +144,10 @@
     font-weight: var(--md-sys-typescale-label-large-weight);
 }
 
+.z-calendar-cell.z-calendar-selected:hover {
+    background-color: color-mix(in srgb, var(--md-sys-color-primary) 92%, var(--md-sys-color-on-primary));
+}
+
 /* Outside (other month days) */
 .z-calendar-cell.z-calendar-outside {
     color: var(--md-sys-color-on-surface-variant);

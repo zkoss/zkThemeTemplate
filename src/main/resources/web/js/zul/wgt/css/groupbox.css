@@ -29,6 +29,25 @@
     background-color: var(--md-sys-color-surface);
     padding: 0 var(--md-sys-spacing-2);
     cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--md-sys-shape-corner-extra-small);
+}
+
+/* M3 state layer on interactive groupbox title */
+.z-groupbox-title::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background-color: var(--md-sys-color-on-surface);
+    opacity: 0;
+    transition: opacity var(--md-sys-motion-duration-short1) var(--md-sys-motion-easing-standard);
+    pointer-events: none;
+}
+
+.z-groupbox-title:hover::before {
+    opacity: var(--md-sys-state-hover-opacity);
 }
 
 .z-groupbox-title-content {

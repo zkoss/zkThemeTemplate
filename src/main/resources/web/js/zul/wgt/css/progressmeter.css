@@ -34,15 +34,17 @@
 
 .z-progressmeter-indeterminate .z-progressmeter-image {
     width: 50% !important;
-    animation: progressmeter-indeterminate 2s var(--md-sys-motion-easing-standard) infinite;
+    animation: progressmeter-indeterminate 2s linear infinite;
 }
 
 @keyframes progressmeter-indeterminate {
     0% {
         transform: translateX(-100%);
+        animation-timing-function: var(--md-sys-motion-easing-emphasized-accelerate);
     }
     50% {
         transform: translateX(100%);
+        animation-timing-function: var(--md-sys-motion-easing-emphasized-decelerate);
     }
     100% {
         transform: translateX(200%);

@@ -31,6 +31,11 @@
     transition: opacity var(--md-sys-motion-duration-short2) var(--md-sys-motion-easing-standard);
 }
 
+.z-panel:hover {
+    box-shadow: var(--md-sys-elevation-card-hover);
+    transition: box-shadow var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
+}
+
 .z-panel:hover::after {
     opacity: var(--md-sys-state-hover-opacity);
 }
