@@ -21,10 +21,11 @@
 ┌─── Iteration Loop ────────────────────────────────────┐
 │  1. OBSERVE  → 截圖 + AI 視覺分析                     │
 │  2. AUDIT    → md3-design-verifier 生成 MD3 合規報告  │
-│  3. FIX      → zk-theme-creator 修改對應元件 CSS      │
-│  4. REBUILD  → npm run build:css                      │
-│  5. VERIFY   → 再次截圖，對比 before/after            │
-│  6. PASS?    → md3-design-verifier 無 Critical 問題   │
+│  3. DESIGN   → frontend-design 分析版面、提供設計方向 │
+│  4. FIX      → zk-theme-creator 修改對應元件 CSS      │
+│  5. REBUILD  → npm run build:css                      │
+│  6. VERIFY   → 再次截圖，對比 before/after            │
+│  7. PASS?    → md3-design-verifier 無 Critical 問題   │
 └───────────────────────────────────────────────────────┘
        ↓（8 個頁面全部通過）
   mvn clean package 最終建置
@@ -85,15 +86,29 @@ npm run watch
 2. 指定審查重點元件
 3. 輸出報告儲存至 `doc/md3-reports/{page}-v1.md`
 
-### Step 3 — CSS 修正（FIX）
+### Step 3 — 設計方向分析（DESIGN）
+
+工具：`frontend-design` skill
+
+1. 提供 before 截圖 + md3-design-verifier 報告
+2. 請 frontend-design 分析：
+   - 整體版面結構是否符合 MD3 視覺層次
+   - 間距、色彩、排版的具體改善方向
+   - 各元件的設計優先順序建議
+3. 輸出設計建議，作為 zk-theme-creator 的實作依據
+
+> **觸發條件**：當 md3-design-verifier 報告有 2 個以上 Critical 問題，或版面需要整體重構時使用。  
+> 單一元件的小修正（1 個 Critical 以下）可直接跳至 Step 4。
+
+### Step 4 — CSS 修正（FIX）
 
 工具：`zk-theme-creator` agent
 
-1. 提供 md3-design-verifier 報告
+1. 提供 md3-design-verifier 報告 + frontend-design 設計建議（若有）
 2. 指定需修改的 CSS 檔案
 3. 說明問題與期望效果
 
-### Step 4 — 重建 & 再截圖（VERIFY）
+### Step 5 — 重建 & 再截圖（VERIFY）
 
 ```bash
 npm run build:css
@@ -103,6 +118,7 @@ npm run build:css
 2. 全頁截圖（**after 圖**，存為 `doc/screenshots/{page}-after.png`）
 3. 視覺對比 before/after
 4. 再次執行 md3-design-verifier 確認問題已解決
+5. 若有使用 frontend-design 建議，對照確認設計方向已落實
 
 ---
 
@@ -137,6 +153,7 @@ npm run build:css
 | Console 檢查 | `mcp__claude-in-chrome__read_console_messages` |
 | DOM 結構查詢 | `mcp__claude-in-chrome__javascript_tool` |
 | MD3 審查報告 | `md3-design-verifier` agent |
+| 設計方向分析 | `frontend-design` skill（複雜版面或多個 Critical 問題時啟用） |
 | CSS 實作修改 | `zk-theme-creator` agent |
 | CSS 重建 | Bash: `npm run build:css` |
 | ZK DOM 參考 | `/Users/hawk/Documents/workspace/ZK10/zk/zul` |
