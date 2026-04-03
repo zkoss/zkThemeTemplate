@@ -383,6 +383,21 @@
     /* Behavior */
     overflow: auto;
     z-index: 88000;
+
+    /* M3 menu enter animation */
+    transform-origin: top left;
+    animation: md-combo-popup-enter var(--md-sys-motion-duration-medium2) var(--md-sys-motion-easing-emphasized-decelerate);
+}
+
+@keyframes md-combo-popup-enter {
+    from {
+        opacity: 0;
+        transform: scaleY(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scaleY(1);
+    }
 }
 
 .z-bandbox-popup {

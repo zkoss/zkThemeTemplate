@@ -43,6 +43,49 @@
 }
 
 /* ============================================
+   App Shell — Navigation Sidebar Items (M3 Navigation Drawer)
+   ============================================ */
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: var(--md-sys-spacing-3);
+    padding: var(--md-sys-spacing-2) var(--md-sys-spacing-4);
+    border-radius: var(--md-sys-shape-corner-full);
+    cursor: pointer;
+    color: var(--md-sys-color-on-surface-variant);
+    font-size: var(--md-sys-typescale-label-large-size);
+    font-weight: var(--md-sys-typescale-label-large-weight);
+    position: relative;
+    overflow: hidden;
+    transition: color var(--md-sys-motion-duration-short1) var(--md-sys-motion-easing-standard);
+}
+
+.nav-item::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background-color: var(--md-sys-color-on-surface-variant);
+    opacity: 0;
+    transition: opacity var(--md-sys-motion-duration-short1) var(--md-sys-motion-easing-standard);
+    pointer-events: none;
+}
+
+.nav-item:hover::before {
+    opacity: var(--md-sys-state-hover-opacity);
+}
+
+/* M3 Navigation Drawer active/selected destination */
+.nav-item--active {
+    background-color: var(--md-sys-color-secondary-container);
+    color: var(--md-sys-color-on-secondary-container);
+}
+
+.nav-item--active::before {
+    background-color: var(--md-sys-color-on-secondary-container);
+}
+
+/* ============================================
    KPI / Metric Display
    ============================================ */
 .kpi-label {

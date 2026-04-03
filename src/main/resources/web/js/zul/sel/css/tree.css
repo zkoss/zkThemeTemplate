@@ -90,11 +90,12 @@
     background-color: var(--md-sys-color-surface);
     border-bottom: 1px solid var(--md-sys-color-surface-container-highest);
     cursor: pointer;
-    transition: background-color var(--md-sys-motion-duration-short1) var(--md-sys-motion-easing-standard);
 }
 
-.z-treerow:hover {
-    background-color: var(--md-sys-color-surface-container-low);
+/* M3 state layer via color-mix (avoids position:relative on <tr> breaking table-layout:fixed) */
+.z-treerow:hover .z-treecell-content {
+    background-color: color-mix(in srgb, var(--md-sys-color-on-surface) 8%, var(--md-sys-color-surface));
+    transition: background-color var(--md-sys-motion-duration-short1) var(--md-sys-motion-easing-standard);
 }
 
 /* Selected row */
@@ -102,8 +103,12 @@
     background-color: var(--md-sys-color-secondary-container);
 }
 
-.z-treerow-selected:hover {
-    background-color: var(--md-sys-color-secondary-container);
+.z-treerow-selected .z-treecell-content {
+    background-color: transparent;
+}
+
+.z-treerow-selected:hover .z-treecell-content {
+    background-color: color-mix(in srgb, var(--md-sys-color-on-secondary-container) 8%, var(--md-sys-color-secondary-container));
 }
 
 /* Focus row */
