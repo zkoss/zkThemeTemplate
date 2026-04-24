@@ -1,5 +1,7 @@
 # Use-Case 驅動設計計畫
 
+https://mui.com/store/previews/mira-pro-react-material-admin-dashboard/
+
 ## 背景與目標
 
 目前主題已有 50+ 個元件 CSS 檔案，但設計方式是「逐元件調整」，缺乏整體視角。
@@ -67,13 +69,17 @@ setjdk 17 && mvn test exec:java@preview-app
 
 1. 導航至 use-case 頁面
 2. 全頁截圖（**before 圖**，存為 `doc/screenshots/{page}-before.png`）
-3. 讀取 console 錯誤：`mcp__claude-in-chrome__read_console_messages`
-4. **AI 視覺分析**截圖，識別以下問題：
+3. **捲動到頁面底部**，截圖 footer / action button 區域
+4. **zoom in 關鍵 UI 區域**（footer 按鈕、表單 input、toolbar button）確認邊框完整顯示
+5. 讀取 console 錯誤：`mcp__claude-in-chrome__read_console_messages`
+6. **AI 視覺分析**截圖，識別以下問題：
    - 布局問題：元件重疊、溢出容器、異常捲動條
+   - **邊框裁切**：border 是否在 overflow:hidden 容器邊緣被裁切（上下各 1px 消失）
    - 間距問題：元件緊貼（margin/gap 為 0）、內距不足
    - 顏色問題：主色調是否企業風格、是否過於鮮豔
    - 排版問題：字型大小階層不清晰、contrast 不足
    - 元件狀態：hover/focus/active 無視覺回饋
+7. （選用）用 `javascript_tool` 執行 overflow 裁切自動檢查，找出 `overflow:hidden` 容器內 border 高度 ≈ 容器高度的元件
 
 ### Step 2 — MD3 合規審查（AUDIT）
 
@@ -94,9 +100,6 @@ setjdk 17 && mvn test exec:java@preview-app
    - 各元件的設計優先順序建議
 3. 輸出設計建議，作為 zk-theme-creator 的實作依據
 
-> **觸發條件**：當 md3-design-verifier 報告有 2 個以上 Critical 問題，或版面需要整體重構時使用。  
-> 單一元件的小修正（1 個 Critical 以下）可直接跳至 Step 4。
-
 ### Step 4 — CSS 修正（FIX）
 
 工具：`zk-theme-creator` agent
@@ -112,9 +115,10 @@ setjdk 17 && mvn test exec:java@preview-app
 
 1. 重新導航至頁面（強制重整）
 2. 全頁截圖（**after 圖**，存為 `doc/screenshots/{page}-after.png`）
-3. 視覺對比 before/after
-4. 再次執行 md3-design-verifier 確認問題已解決
-5. 若有使用 frontend-design 建議，對照確認設計方向已落實
+3. **zoom in 與 Step 1 相同的關鍵區域**（footer 按鈕、表單 input），對比修正前後
+4. 視覺對比 before/after（全頁 + zoom 截圖）
+5. 再次執行 md3-design-verifier 確認問題已解決
+6. 若有使用 frontend-design 建議，對照確認設計方向已落實
 
 ---
 
@@ -122,6 +126,8 @@ setjdk 17 && mvn test exec:java@preview-app
 
 ### Must Pass（否則繼續修改）
 - [ ] 截圖無布局崩潰（無元素溢出、重疊、異常捲動）
+- [ ] Footer / action 區域 zoom 截圖：按鈕邊框上下完整顯示（無裁切）
+- [ ] 有 border 的表單元件 zoom 截圖：border 四邊完整（無 `overflow:hidden` 裁切）
 - [ ] `md3-design-verifier` 報告：**Critical(❌) 項目 = 0**
 - [ ] Console 無紅色 CSS/JS 錯誤
 

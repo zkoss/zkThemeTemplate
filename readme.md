@@ -73,13 +73,28 @@ We suggest you customize a theme by overriding existing variables instead of mod
 ```
 
 
-## preview custom theme
-* compile run preview app
-`mvn test exec:java@preview-app`
-* open a simple preview page in a browser: http://localhost:8080
-* add your own pages containing the components to preview under `/preview/web`
-* it also runs `zklessc-dev` to continuously compile/watch all .less files. You can see all modifications on less in the preview app in a short time. 
-visit each page without zul extension e.g. http://localhost:8080/anchor for anchor.zul
+## Preview Custom Theme
+
+Start the preview application:
+```bash
+mvn test exec:java@preview-app
+```
+
+In a separate terminal, start the CSS watcher:
+```bash
+npm run watch
+```
+
+Open the preview in a browser: http://localhost:8080
+
+### Hot Reload
+
+When `npm run watch` is running alongside the preview app:
+- Any change to a CSS file under `src/main/resources/web/` triggers an automatic rebuild.
+- After a successful rebuild, the browser reloads only the changed CSS — no full page refresh required.
+- A live-reload server runs on port 50000 to push notifications to the browser.
+
+Visit component pages with the `.zul` extension, e.g. http://localhost:8080/button.zul
 
 
 

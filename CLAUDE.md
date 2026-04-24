@@ -96,42 +96,55 @@ Located in `doc/` directory:
 
 | File | Description |
 |------|-------------|
-| [01-implementation-plan.md](doc/01-implementation-plan.md) | Phase breakdown, task list, workflow |
-| [02-material-design-tokens.md](doc/02-material-design-tokens.md) | Complete token system reference |
-| [03-component-dom-structures.md](doc/03-component-dom-structures.md) | DOM structure of each ZK component |
-| [04-component-styling-guide.md](doc/04-component-styling-guide.md) | How to style components with M3 |
-| [05-progress-tracker.md](doc/05-progress-tracker.md) | Current progress, next steps |
-| [06-button-implementation.md](doc/06-button-implementation.md) | Detailed Button implementation reference |
-| [07-zk-source-reference.md](doc/07-zk-source-reference.md) | How to navigate ZK source code |
+| [component-dom-structures.md](doc/component-dom-structures.md) | DOM structure of each ZK component |
+| [zk-source-reference.md](doc/zk-source-reference.md) | How to navigate ZK source code |
+| [css-dsp-file-structure.md](doc/css-dsp-file-structure.md) | All required *.css.dsp output files for the theme |
+| [usecase-driven-iteration.md](doc/usecase-driven-iteration.md) | Use-case driven iteration workflow (OBSERVE→AUDIT→FIX→VERIFY) |
+| [preview-page-descriptions.md](doc/preview-page-descriptions.md) | ZUL page descriptions for 8 use-case enterprise scenarios |
+| [zk-edition-components.md](doc/zk-edition-components.md) | Components by ZK edition (CE/PE/EE) |
+| [mira/](doc/mira/) | 49 Mira HTML reference pages + MUI stylesheet (index-BnB_Ifri.css) |
 
 ## Quick Start for New Session
 
-1. **Read the progress tracker**: `05-progress-tracker.md`
-2. **Check which component is next**: Follow Tier order in `01-implementation-plan.md`
-3. **Research DOM structure**: Use `07-zk-source-reference.md` to find component source
-4. **Document DOM**: Add to `03-component-dom-structures.md`
-5. **Implement CSS**: Follow patterns in `04-component-styling-guide.md`
-6. **Update progress**: Mark complete in `05-progress-tracker.md`
+1. **Read the iteration workflow**: `doc/usecase-driven-iteration.md`
+2. **Check required output files**: `doc/css-dsp-file-structure.md`
+3. **Research DOM structure**: `doc/component-dom-structures.md` or ZK source at `/Users/hawk/Documents/workspace/ZK10/zk/zul`
+4. **Implement CSS**: Use MD3 token patterns; all colors via `var(--md-sys-color-*)` — no hardcoded hex
+5. **Build**: `npm run build:css`
+6. **Verify**: `withjdk.sh 17 mvn test exec:java@preview-app`, then screenshot use-case pages
 
 ## Architecture and Structure
 
 ### CSS Structure
 ```
-src/main/resources/web/css/
-├── tokens/                    # Material Design 3 tokens
-│   ├── _colors.css           # Color system
-│   ├── _typography.css       # Type scale
-│   ├── _spacing.css          # Spacing (4dp grid)
-│   ├── _elevation.css        # Shadows
-│   ├── _shape.css            # Border radius
-│   └── _motion.css           # Animations
-├── base/                      # Foundation styles
-│   ├── _reset.css            # CSS reset
-│   ├── _utilities.css        # Utility classes
-│   └── _icons.css            # Icon fonts
-├── components/                # Component styles
-└── zk-material.css           # Main entry point
+src/main/resources/web/
+├── zul/css/
+│   ├── tokens/               # MD3 design tokens (bundled → norm.css.dsp)
+│   │   ├── _colors.css
+│   │   ├── _typography.css
+│   │   ├── _spacing.css
+│   │   ├── _elevation.css
+│   │   ├── _shape.css
+│   │   └── _motion.css
+│   ├── base/                 # Foundation styles (bundled → norm.css.dsp)
+│   │   ├── _reset.css
+│   │   ├── _utilities.css
+│   │   └── _icons.css
+│   └── zk-material.css       # Global entry styles
+└── js/zul/                   # Component CSS (auto-scanned → *.css.dsp 1:1)
+    ├── box/css/
+    ├── db/css/
+    ├── grid/css/
+    ├── inp/css/              # combobox/datebox/timebox/spinner/bandbox → combo.css.dsp
+    ├── layout/css/
+    ├── menu/css/
+    ├── mesh/css/
+    ├── sel/css/
+    ├── tab/css/
+    ├── wgt/css/              # toolbarbutton → footer.css.dsp
+    └── wnd/css/
 ```
+Build output: `target/classes/web/zk-material/`
 
 ### Java Integration
 - `ZkMaterialThemeWebAppInit.java`: Registers theme with ZK framework
@@ -166,8 +179,10 @@ src/main/resources/web/css/
 
 ## Component Styling Pattern
 ```css
+/* src/main/resources/web/js/zul/wgt/css/button.css */
 .z-{component} {
     /* Layout, Typography, Colors, Shape, Elevation using tokens */
+    color: var(--md-sys-color-primary); /* always use tokens, never hardcode hex */
 }
 .z-{component}::before { /* hover/focus overlay */ }
 .z-{component}:hover { }
