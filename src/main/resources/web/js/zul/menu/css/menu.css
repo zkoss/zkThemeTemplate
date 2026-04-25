@@ -1,0 +1,227 @@
+/* MD3 Menu / Menubar / Menupopup */
+/* Menubar DOM: <div class="z-menubar"><ul><li class="z-menu"><a class="z-menu-content"><span class="z-menu-text">Menu</span></a></li></ul></div>
+   Menupopup DOM: <ul class="z-menupopup"><li class="z-menuitem"><a class="z-menuitem-content"><span class="z-menuitem-text">Item</span></a></li></ul> */
+
+/* ─── Menubar ────────────────────────────────────────────────────────────── */
+.z-menubar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    min-height: 48px;
+    background-color: var(--md-sys-color-primary);
+    color: var(--md-sys-color-on-primary);
+    padding: 0 var(--md-sys-spacing-4);
+    list-style: none;
+    margin: 0;
+    font-family: var(--md-sys-typescale-font-family);
+    position: relative;
+    z-index: 100;
+    box-shadow: var(--md-sys-elevation-2);
+}
+
+/* ZK menubar DOM: .z-menubar > UL (no class) > LI.z-menu
+   The intermediate UL must be flex to lay menus horizontally */
+.z-menubar > ul {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    flex: 1;
+    min-height: 48px;
+}
+
+.z-menubar li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+/* ─── Top-level menu item in menubar ────────────────────────────────────── */
+.z-menubar > .z-menu,
+.z-menubar-content > .z-menu {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+}
+
+.z-menubar .z-menu-content {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--md-sys-spacing-1);
+    padding: 0 var(--md-sys-spacing-3);
+    min-height: 48px;
+    color: var(--md-sys-color-on-primary);
+    font-size: var(--md-sys-typescale-title-small-size);
+    font-weight: var(--md-sys-typescale-title-small-weight);
+    cursor: pointer;
+    user-select: none;
+    text-decoration: none;
+    white-space: nowrap;
+    position: relative;
+    overflow: hidden;
+    transition: background-color var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
+}
+
+.z-menubar .z-menu-content::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-color: var(--md-sys-color-on-primary);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
+}
+
+.z-menubar .z-menu-content:hover::before,
+.z-menubar .z-menu-open .z-menu-content::before {
+    opacity: var(--md-sys-state-hover-opacity);
+}
+
+.z-menubar .z-menu-open .z-menu-content {
+    background-color: rgba(255, 255, 255, 0.12);
+}
+
+/* Menu text */
+.z-menu-text,
+.z-menuitem-text {
+    pointer-events: none;
+    position: relative;
+    z-index: 1;
+}
+
+/* Menu arrow indicator */
+.z-menu-arrow {
+    font-size: 12px;
+    margin-left: var(--md-sys-spacing-1);
+    position: relative;
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* ─── Menupopup dropdown ─────────────────────────────────────────────────── */
+.z-menupopup {
+    position: absolute;
+    z-index: 1600;
+    list-style: none;
+    margin: 2px 0 0 0;
+    padding: var(--md-sys-spacing-1) 0;
+    background-color: var(--md-sys-color-surface);
+    border-radius: var(--md-sys-shape-card);
+    box-shadow: var(--md-sys-elevation-dropdown);
+    border: 1px solid var(--md-sys-color-outline-variant);
+    min-width: 160px;
+    overflow: hidden;
+    box-sizing: border-box;
+    font-family: var(--md-sys-typescale-font-family);
+}
+
+.z-menupopup ul,
+.z-menupopup li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+/* Nested menupopup (submenu) */
+.z-menu > .z-menupopup {
+    top: 0;
+    left: 100%;
+    margin: 0 0 0 2px;
+}
+
+/* ─── Menuitem ───────────────────────────────────────────────────────────── */
+.z-menuitem {
+    position: relative;
+    display: block;
+}
+
+.z-menuitem-content {
+    display: flex;
+    align-items: center;
+    gap: var(--md-sys-spacing-2);
+    padding: var(--md-sys-spacing-2) var(--md-sys-spacing-4);
+    color: var(--md-sys-color-on-surface);
+    font-size: var(--md-sys-typescale-body-medium-size);
+    font-weight: var(--md-sys-typescale-body-medium-weight);
+    cursor: pointer;
+    text-decoration: none;
+    user-select: none;
+    white-space: nowrap;
+    min-height: 36px;
+    position: relative;
+    overflow: hidden;
+    transition: background-color var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
+}
+
+.z-menuitem-content::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-color: var(--md-sys-color-on-surface);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
+}
+
+.z-menuitem-content:hover::before {
+    opacity: var(--md-sys-state-hover-opacity);
+}
+
+.z-menuitem-content:active::before {
+    opacity: var(--md-sys-state-pressed-opacity);
+}
+
+/* Selected menuitem */
+.z-menuitem.z-menuitem-selected .z-menuitem-content,
+.z-menuitem.z-selected .z-menuitem-content {
+    background-color: var(--md-sys-color-primary-container);
+    color: var(--md-sys-color-on-primary-container);
+}
+
+/* Checked menuitem */
+.z-menuitem-checked .z-menuitem-content::after {
+    content: '\2713';
+    margin-left: auto;
+    font-size: 14px;
+    color: var(--md-sys-color-primary);
+}
+
+/* Disabled menuitem */
+.z-menuitem-disabled .z-menuitem-content,
+.z-menuitem[disabled] .z-menuitem-content {
+    color: var(--md-sys-color-disabled);
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/* Menuitem icon */
+.z-menuitem-content [class*="z-icon-"] {
+    font-size: 18px;
+    flex-shrink: 0;
+    color: var(--md-sys-color-on-surface-variant);
+}
+
+/* ─── Menu separator ─────────────────────────────────────────────────────── */
+.z-menuseparator {
+    height: 1px;
+    background-color: var(--md-sys-color-outline-variant);
+    margin: var(--md-sys-spacing-1) 0;
+}
+
+/* ─── Context menu popup ─────────────────────────────────────────────────── */
+.z-menu-popup {
+    position: fixed;
+    z-index: 1700;
+    list-style: none;
+    margin: 0;
+    padding: var(--md-sys-spacing-1) 0;
+    background-color: var(--md-sys-color-surface);
+    border-radius: var(--md-sys-shape-card);
+    box-shadow: var(--md-sys-elevation-dropdown);
+    border: 1px solid var(--md-sys-color-outline-variant);
+    min-width: 160px;
+    overflow: hidden;
+    font-family: var(--md-sys-typescale-font-family);
+}

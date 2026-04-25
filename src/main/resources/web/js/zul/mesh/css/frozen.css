@@ -1,0 +1,35 @@
+/* MD3 Frozen — sticky/frozen column styles for grid/listbox */
+
+/* Frozen column container */
+.z-frozen {
+    position: relative;
+    overflow: hidden;
+}
+
+/* Frozen cells (sticky left columns) */
+.z-frozen-inner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    z-index: 10;
+    background-color: var(--md-sys-color-surface);
+}
+
+/* Shadow to indicate frozen boundary */
+.z-frozen-inner::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 8px;
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.08), transparent);
+    pointer-events: none;
+}
+
+/* Frozen header cells */
+.z-frozen .z-column,
+.z-frozen .z-listheader {
+    background-color: var(--md-sys-color-surface-container-low);
+}

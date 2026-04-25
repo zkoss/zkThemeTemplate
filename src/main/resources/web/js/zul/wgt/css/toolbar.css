@@ -1,0 +1,94 @@
+/* MD3 Toolbar */
+/* DOM: <div class="z-toolbar"><div class="z-toolbar-content">children</div></div> */
+
+.z-toolbar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    min-height: 48px;
+    background-color: var(--md-sys-color-surface);
+    border-bottom: 1px solid var(--md-sys-color-outline-variant);
+    box-sizing: border-box;
+}
+
+.z-toolbar-content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex: 1;
+    gap: var(--md-sys-spacing-1);
+    padding: 0 var(--md-sys-spacing-4);
+    flex-wrap: wrap;
+    min-height: inherit;
+}
+
+/* South (bottom) toolbar variant */
+.z-toolbar-south {
+    border-top: 1px solid var(--md-sys-color-outline-variant);
+    border-bottom: none;
+}
+
+/* ─── App bar variant: toolbar inside borderlayout north ──────────────────── */
+/* When the toolbar is used as a top app bar (inside .z-north),
+   give it the primary app bar background and white text/icons */
+.z-north .z-toolbar {
+    background-color: var(--md-sys-color-primary);
+    border-bottom: none;
+    color: var(--md-sys-color-on-primary);
+}
+
+/* Menubar inside the north toolbar: inherit transparent background */
+.z-north .z-toolbar .z-menubar {
+    background-color: transparent;
+    box-shadow: none;
+    padding: 0;
+    min-height: 48px;
+}
+
+/* Menubar menu text in app bar context: on-primary color */
+.z-north .z-toolbar .z-menubar .z-menu-content {
+    color: var(--md-sys-color-on-primary);
+}
+
+/* Toolbarbuttons in app bar: on-primary color */
+.z-north .z-toolbar .z-toolbarbutton {
+    color: var(--md-sys-color-on-primary);
+}
+
+.z-north .z-toolbar .z-toolbarbutton::before {
+    background-color: var(--md-sys-color-on-primary);
+}
+
+/* App title / brand text in toolbar */
+.z-north .z-toolbar .z-span {
+    color: var(--md-sys-color-on-primary);
+    font-size: var(--md-sys-typescale-title-large-size);
+    font-weight: var(--md-sys-typescale-title-large-weight);
+}
+
+/* Separator in app bar */
+.z-north .z-toolbar .z-toolbarseparator,
+.z-north .z-toolbar-content .z-toolbarseparator {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Separator within toolbar */
+.z-toolbar .z-toolbarseparator,
+.z-toolbar-content .z-toolbarseparator {
+    display: inline-block;
+    width: 1px;
+    height: 24px;
+    background-color: var(--md-sys-color-outline-variant);
+    margin: 0 var(--md-sys-spacing-1);
+    flex-shrink: 0;
+}
+
+/* <separator/> inside toolbar — acts as a flex spacer, not full-width horizontal */
+.z-toolbar .z-separator,
+.z-toolbar-content .z-separator {
+    flex: 1 1 auto;
+    width: auto !important;
+    height: 0;
+    background-color: transparent;
+    border: none;
+}

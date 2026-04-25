@@ -1,0 +1,31 @@
+/* MD3 Link (anchor) component */
+/* DOM: <a class="z-a">text</a> */
+
+.z-a {
+    display: inline;
+    color: var(--md-sys-color-primary);
+    text-decoration: none;
+    font-family: var(--md-sys-typescale-font-family);
+    font-size: inherit;
+    font-weight: inherit;
+    cursor: pointer;
+    transition: color var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
+}
+
+.z-a:hover {
+    text-decoration: underline;
+    color: var(--md-sys-color-primary);
+}
+
+.z-a:focus-visible {
+    outline: 2px solid var(--md-sys-color-primary);
+    outline-offset: 2px;
+    border-radius: 2px;
+}
+
+.z-a[disabled],
+.z-a.z-a-disabled {
+    color: var(--md-sys-color-disabled);
+    cursor: not-allowed;
+    pointer-events: none;
+}

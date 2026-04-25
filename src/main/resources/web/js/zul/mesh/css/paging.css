@@ -1,0 +1,181 @@
+/* MD3 Paging — pagination controls */
+/* DOM: .z-paging > .z-paging-first + .z-paging-prev + .z-paging-text + .z-paging-next + .z-paging-last */
+
+.z-paging {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    gap: var(--md-sys-spacing-1);
+    padding: var(--md-sys-spacing-1) var(--md-sys-spacing-4);
+    min-height: 40px;
+    font-family: var(--md-sys-typescale-font-family);
+    font-size: var(--md-sys-typescale-body-medium-size);
+    color: var(--md-sys-color-on-surface-variant);
+    background-color: var(--md-sys-color-surface-container-low);
+    border-top: 1px solid var(--md-sys-color-outline-variant);
+    box-sizing: border-box;
+}
+
+/* ZK renders paging as nav > ul > li — flatten the list */
+.z-paging ul {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: var(--md-sys-spacing-1);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.z-paging ul li {
+    display: flex;
+    align-items: center;
+}
+
+/* Navigation buttons (first/prev/previous/next/last) */
+.z-paging-first,
+.z-paging-prev,
+.z-paging-previous,
+.z-paging-next,
+.z-paging-last {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: transparent;
+    color: var(--md-sys-color-on-surface-variant);
+    border-radius: var(--md-sys-shape-corner-full);
+    cursor: pointer;
+    font-size: 14px;
+    overflow: hidden;
+    transition:
+        background-color var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard),
+        color var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
+}
+
+.z-paging-first::before,
+.z-paging-prev::before,
+.z-paging-previous::before,
+.z-paging-next::before,
+.z-paging-last::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-color: currentColor;
+    opacity: 0;
+    pointer-events: none;
+    border-radius: inherit;
+    transition: opacity var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
+}
+
+.z-paging-first:hover::before,
+.z-paging-prev:hover::before,
+.z-paging-previous:hover::before,
+.z-paging-next:hover::before,
+.z-paging-last:hover::before {
+    opacity: var(--md-sys-state-hover-opacity);
+}
+
+.z-paging-first:active::before,
+.z-paging-prev:active::before,
+.z-paging-previous:active::before,
+.z-paging-next:active::before,
+.z-paging-last:active::before {
+    opacity: var(--md-sys-state-pressed-opacity);
+}
+
+/* Disabled nav buttons */
+.z-paging-first[disabled],
+.z-paging-prev[disabled],
+.z-paging-previous[disabled],
+.z-paging-next[disabled],
+.z-paging-last[disabled] {
+    color: var(--md-sys-color-disabled);
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/* Page number buttons */
+.z-paging-button {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 32px;
+    height: 32px;
+    padding: 0 var(--md-sys-spacing-1);
+    border: none;
+    background: transparent;
+    color: var(--md-sys-color-on-surface-variant);
+    border-radius: var(--md-sys-shape-corner-full);
+    cursor: pointer;
+    font-family: var(--md-sys-typescale-font-family);
+    font-size: var(--md-sys-typescale-body-medium-size);
+    font-weight: var(--md-sys-typescale-body-medium-weight);
+    overflow: hidden;
+    transition:
+        background-color var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard),
+        color var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
+}
+
+.z-paging-button::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-color: currentColor;
+    opacity: 0;
+    pointer-events: none;
+    border-radius: inherit;
+    transition: opacity var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
+}
+
+.z-paging-button:hover::before { opacity: var(--md-sys-state-hover-opacity); }
+.z-paging-button:active::before { opacity: var(--md-sys-state-pressed-opacity); }
+
+/* Active page */
+.z-paging-button.z-paging-selected,
+.z-paging-button.z-selected {
+    background-color: var(--md-sys-color-primary);
+    color: var(--md-sys-color-on-primary);
+    font-weight: var(--md-sys-typescale-label-large-weight);
+}
+
+/* Page text info ("Page 1 of 10") */
+.z-paging-text {
+    display: inline-flex;
+    align-items: center;
+    padding: 0 var(--md-sys-spacing-2);
+    font-size: var(--md-sys-typescale-body-medium-size);
+    color: var(--md-sys-color-on-surface-variant);
+    white-space: nowrap;
+}
+
+/* Page size select */
+.z-paging-input {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--md-sys-spacing-1);
+    margin-left: var(--md-sys-spacing-2);
+    font-size: var(--md-sys-typescale-body-medium-size);
+    color: var(--md-sys-color-on-surface-variant);
+}
+
+.z-paging-input input[type="text"],
+.z-paging-input .z-intbox {
+    width: 48px;
+    text-align: center;
+    height: 32px;
+    min-height: 32px;
+    border: 1px solid var(--md-sys-color-outline);
+    border-radius: var(--md-sys-shape-input);
+    background-color: var(--md-sys-color-surface);
+    font-family: var(--md-sys-typescale-font-family);
+    font-size: var(--md-sys-typescale-body-medium-size);
+    color: var(--md-sys-color-on-surface);
+    outline: none;
+    padding: 0 var(--md-sys-spacing-1);
+}

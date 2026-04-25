@@ -1,0 +1,74 @@
+/* Miscellaneous shared ZK widget styles */
+
+/* ZK loading / busy indicator */
+.z-loading-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--md-sys-spacing-2);
+    color: var(--md-sys-color-primary);
+    font-family: var(--md-sys-typescale-font-family);
+    font-size: var(--md-sys-typescale-body-medium-size);
+}
+
+/* Notification/toast */
+.z-notification {
+    background-color: var(--md-sys-color-inverse-surface);
+    color: var(--md-sys-color-inverse-on-surface);
+    border-radius: var(--md-sys-shape-corner-extra-small);
+    padding: var(--md-sys-spacing-2) var(--md-sys-spacing-4);
+    font-family: var(--md-sys-typescale-font-family);
+    font-size: var(--md-sys-typescale-body-medium-size);
+    box-shadow: var(--md-sys-elevation-3);
+    max-width: 400px;
+}
+
+/* ZK mask overlay */
+.z-modal-mask,
+.z-mask {
+    background-color: var(--md-sys-color-scrim);
+    position: fixed;
+    inset: 0;
+    z-index: 1400;
+}
+
+/* Focus ring utility */
+.z-focus-ring:focus-visible {
+    outline: 3px solid var(--md-sys-color-primary);
+    outline-offset: 2px;
+}
+
+/* ZK shadow host */
+.z-shadow {
+    box-shadow: var(--md-sys-elevation-2);
+}
+
+/* Error message style */
+.z-error-box {
+    background-color: var(--md-sys-color-error-container);
+    color: var(--md-sys-color-on-error-container);
+    border-radius: var(--md-sys-shape-corner-extra-small);
+    padding: var(--md-sys-spacing-2) var(--md-sys-spacing-3);
+    font-family: var(--md-sys-typescale-font-family);
+    font-size: var(--md-sys-typescale-body-small-size);
+}
+
+/* ZK loading indicator inside components */
+.z-apply-loading {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+/* Tooltip */
+.z-tooltip {
+    position: absolute;
+    z-index: 2000;
+    background-color: var(--md-sys-color-inverse-surface);
+    color: var(--md-sys-color-inverse-on-surface);
+    padding: var(--md-sys-spacing-1) var(--md-sys-spacing-2);
+    border-radius: var(--md-sys-shape-corner-extra-small);
+    font-family: var(--md-sys-typescale-font-family);
+    font-size: var(--md-sys-typescale-body-small-size);
+    white-space: nowrap;
+    pointer-events: none;
+    box-shadow: var(--md-sys-elevation-2);
+}

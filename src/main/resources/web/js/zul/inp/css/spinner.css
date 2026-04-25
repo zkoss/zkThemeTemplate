@@ -1,0 +1,117 @@
+/* MD3 Spinner / Doublespinner — numeric input with increment/decrement buttons */
+/* DOM: <span class="z-spinner"><input class="z-spinner-input"><span class="z-spinner-btn"><button class="z-spinner-up-button"/><button class="z-spinner-dn-button"/></span></span> */
+
+.z-spinner,
+.z-doublespinner {
+    display: inline-flex;
+    align-items: center;
+    position: relative;
+    border: 1px solid var(--md-sys-color-outline);
+    border-radius: var(--md-sys-shape-input);
+    background-color: var(--md-sys-color-surface);
+    min-height: 40px;
+    box-sizing: border-box;
+    transition: border-color var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
+}
+
+.z-spinner:hover,
+.z-doublespinner:hover {
+    border-color: var(--md-sys-color-on-surface);
+}
+
+.z-spinner:focus-within,
+.z-doublespinner:focus-within {
+    border-color: var(--md-sys-color-primary);
+    border-width: 2px;
+}
+
+.z-spinner-input,
+.z-doublespinner-input {
+    flex: 1;
+    min-width: 0;
+    border: none;
+    background: transparent;
+    padding: 0 var(--md-sys-spacing-3);
+    height: 100%;
+    min-height: 38px;
+    font-family: var(--md-sys-typescale-font-family);
+    font-size: var(--md-sys-typescale-body-medium-size);
+    color: var(--md-sys-color-on-surface);
+    outline: none;
+    box-sizing: border-box;
+}
+
+/* Button container */
+.z-spinner-btn,
+.z-doublespinner-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    flex-shrink: 0;
+    width: 28px;
+    height: 100%;
+    border-left: 1px solid var(--md-sys-color-outline-variant);
+}
+
+/* Up/Down buttons */
+.z-spinner-up-button,
+.z-spinner-dn-button,
+.z-doublespinner-up-button,
+.z-doublespinner-dn-button {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    border: none;
+    background: transparent;
+    color: var(--md-sys-color-on-surface-variant);
+    cursor: pointer;
+    padding: 0;
+    overflow: hidden;
+    font-size: 10px;
+    transition: background-color var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
+}
+
+.z-spinner-up-button::before,
+.z-spinner-dn-button::before,
+.z-doublespinner-up-button::before,
+.z-doublespinner-dn-button::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-color: currentColor;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
+}
+
+.z-spinner-up-button:hover::before,
+.z-spinner-dn-button:hover::before,
+.z-doublespinner-up-button:hover::before,
+.z-doublespinner-dn-button:hover::before {
+    opacity: var(--md-sys-state-hover-opacity);
+}
+
+.z-spinner-up-button:active::before,
+.z-spinner-dn-button:active::before {
+    opacity: var(--md-sys-state-pressed-opacity);
+}
+
+.z-spinner-up-button {
+    border-bottom: 1px solid var(--md-sys-color-outline-variant);
+    border-radius: 0 var(--md-sys-shape-input) 0 0;
+}
+
+.z-spinner-dn-button {
+    border-radius: 0 0 var(--md-sys-shape-input) 0;
+}
+
+/* Disabled */
+.z-spinner[disabled],
+.z-doublespinner[disabled],
+.z-spinner.z-spinner-disabled,
+.z-doublespinner.z-doublespinner-disabled {
+    opacity: var(--md-sys-state-disabled-opacity);
+    pointer-events: none;
+}

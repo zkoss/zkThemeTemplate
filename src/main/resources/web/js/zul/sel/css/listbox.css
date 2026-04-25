@@ -1,0 +1,180 @@
+/* MD3 Listbox — selection list component */
+/* DOM: .z-listbox > .z-listbox-header > .z-listheader
+        .z-listbox > .z-listbox-body > table > tbody > .z-listitem > td.z-listcell > .z-listcell-cnt */
+
+.z-listbox {
+    display: block;
+    background-color: var(--md-sys-color-surface);
+    border-radius: var(--md-sys-shape-card);
+    box-shadow: var(--md-sys-elevation-card);
+    border: 1px solid var(--md-sys-color-outline-variant);
+    overflow: hidden;
+    box-sizing: border-box;
+    font-family: var(--md-sys-typescale-font-family);
+}
+
+/* ─── Header ───────────────────────────────────────────────────────────── */
+.z-listbox-header {
+    overflow: hidden;
+    background-color: var(--md-sys-color-surface-container-low);
+}
+
+.z-listhead,
+.z-listheader {
+    padding: var(--md-sys-spacing-3) var(--md-sys-spacing-4);
+    font-size: var(--md-sys-typescale-label-large-size);
+    font-weight: var(--md-sys-typescale-label-large-weight);
+    line-height: var(--md-sys-typescale-label-large-line-height);
+    color: var(--md-sys-color-on-surface-variant);
+    text-align: left;
+    border-bottom: 2px solid var(--md-sys-color-outline-variant);
+    background-color: var(--md-sys-color-surface-container-low);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    user-select: none;
+    vertical-align: middle;
+    position: relative;
+    box-sizing: border-box;
+    cursor: default;
+}
+
+.z-listheader-sort {
+    cursor: pointer;
+}
+
+.z-listheader-sort:hover {
+    background-color: var(--md-sys-color-surface-container);
+}
+
+/* ─── Body ─────────────────────────────────────────────────────────────── */
+.z-listbox-body {
+    overflow: auto;
+}
+
+.z-listbox-body table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+/* List item row */
+.z-listitem {
+    border-bottom: 1px solid var(--md-sys-color-outline-variant);
+    transition: background-color var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
+    cursor: pointer;
+}
+
+.z-listitem:last-child {
+    border-bottom: none;
+}
+
+.z-listitem:hover {
+    background-color: var(--md-sys-color-surface-container-low);
+}
+
+.z-listitem.z-listitem-selected,
+.z-listitem.z-selected {
+    background-color: var(--md-sys-color-primary-container);
+    color: var(--md-sys-color-on-primary-container);
+}
+
+.z-listitem.z-listitem-selected:hover,
+.z-listitem.z-selected:hover {
+    background-color: var(--md-sys-color-primary-container);
+}
+
+/* Focus */
+.z-listitem:focus-visible,
+.z-listitem.z-listitem-focus {
+    outline: 2px solid var(--md-sys-color-primary);
+    outline-offset: -2px;
+}
+
+/* Cell */
+.z-listcell {
+    padding: 0;
+    vertical-align: middle;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+/* ZK renders cell content as DIV.z-listcell-content inside TD.z-listcell */
+.z-listcell-cnt,
+.z-listcell-content {
+    display: block;
+    padding: var(--md-sys-spacing-2) var(--md-sys-spacing-4);
+    font-size: var(--md-sys-typescale-body-medium-size);
+    font-weight: var(--md-sys-typescale-body-medium-weight);
+    color: var(--md-sys-color-on-surface);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.z-listitem.z-selected .z-listcell-cnt,
+.z-listitem.z-selected .z-listcell-content {
+    color: var(--md-sys-color-on-primary-container);
+}
+
+/* ─── Listgroup (collapsible group header rows) ────────────────────── */
+.z-listgroup td,
+.z-listgroup .z-listcell-cnt,
+.z-listgroup .z-listcell-content {
+    background-color: var(--md-sys-color-surface-container-low);
+    color: var(--md-sys-color-on-surface-variant);
+    font-size: var(--md-sys-typescale-label-large-size);
+    font-weight: var(--md-sys-typescale-label-large-weight);
+    padding: var(--md-sys-spacing-2) var(--md-sys-spacing-4);
+    border-bottom: 1px solid var(--md-sys-color-outline-variant);
+}
+
+/* Group open/close toggle arrow */
+.z-listgroup .z-listgroup-icon {
+    margin-right: var(--md-sys-spacing-2);
+    color: var(--md-sys-color-on-surface-variant);
+    font-size: 12px;
+}
+
+/* ─── Listgroupfoot (group subtotal rows) ──────────────────────────── */
+.z-listgroupfoot td,
+.z-listgroupfoot .z-listcell-cnt,
+.z-listgroupfoot .z-listcell-content {
+    background-color: var(--md-sys-color-surface-container);
+    color: var(--md-sys-color-on-surface);
+    font-size: var(--md-sys-typescale-body-medium-size);
+    font-weight: var(--md-sys-typescale-label-large-weight);
+    padding: var(--md-sys-spacing-2) var(--md-sys-spacing-4);
+    border-top: 1px solid var(--md-sys-color-outline-variant);
+    border-bottom: 1px solid var(--md-sys-color-outline-variant);
+    white-space: nowrap;
+    overflow: visible;
+}
+
+/* ─── Footer ─────────────────────────────────────────────────────────── */
+.z-listbox-footer {
+    background-color: var(--md-sys-color-surface-container-low);
+    border-top: 2px solid var(--md-sys-color-outline-variant);
+}
+
+.z-listfoot .z-listfooter,
+.z-listfoot td {
+    padding: var(--md-sys-spacing-3) var(--md-sys-spacing-4);
+    font-weight: var(--md-sys-typescale-label-large-weight);
+    color: var(--md-sys-color-on-surface-variant);
+    font-size: var(--md-sys-typescale-body-medium-size);
+}
+
+/* Empty */
+.z-listbox-emph {
+    padding: var(--md-sys-spacing-8) var(--md-sys-spacing-4);
+    text-align: center;
+    color: var(--md-sys-color-on-surface-variant);
+    font-style: italic;
+    font-size: var(--md-sys-typescale-body-medium-size);
+}
+
+/* Checkbox cell in listbox */
+.z-listcell .z-checkbox {
+    margin: 0;
+}

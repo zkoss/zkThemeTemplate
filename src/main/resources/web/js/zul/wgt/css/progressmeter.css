@@ -1,0 +1,23 @@
+/* MD3 Progress Meter (linear progress indicator) */
+/* DOM: <div class="z-progressmeter"><div class="z-progressmeter-bar" style="width:X%"/></div> */
+
+.z-progressmeter {
+    display: block;
+    width: 100%;
+    height: 8px;
+    background-color: var(--md-sys-color-surface-container-high);
+    border-radius: var(--md-sys-shape-corner-full);
+    overflow: hidden;
+    position: relative;
+}
+
+/* ZK renders the fill as .z-progressmeter-image (inline-block span with inline width%) */
+.z-progressmeter-bar,
+.z-progressmeter-image {
+    display: block !important;
+    height: 100%;
+    background-color: var(--md-sys-color-primary);
+    border-radius: var(--md-sys-shape-corner-full);
+    transition: width var(--md-sys-motion-duration-medium2) var(--md-sys-motion-easing-standard);
+    min-width: 0;
+}

@@ -1,0 +1,57 @@
+/* zk-material — Global entry styles */
+
+/* ZK framework resets */
+.z-page,
+.z-container {
+    font-family: var(--md-sys-typescale-font-family);
+    font-size: var(--md-sys-typescale-body-medium-size);
+    color: var(--md-sys-color-on-background);
+}
+
+/* Remove default ZK styles that conflict with MD3 */
+.z-label {
+    font-family: var(--md-sys-typescale-font-family);
+    font-size: var(--md-sys-typescale-body-medium-size);
+    color: var(--md-sys-color-on-surface);
+}
+
+/* ZK HTML element */
+.z-html {
+    font-family: var(--md-sys-typescale-font-family);
+}
+
+/* ZK separator */
+.z-separator {
+    border: 0;
+    border-top: 1px solid var(--md-sys-color-outline-variant);
+    margin: var(--md-sys-spacing-2) 0;
+}
+
+/* ZK loading indicator */
+.z-loading-indicator {
+    color: var(--md-sys-color-primary);
+}
+
+/* ZK mask (modal overlay) */
+.z-modal-mask {
+    background: var(--md-sys-color-scrim);
+}
+
+/* Scrollbars — subtle MD3 style */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--md-sys-color-outline-variant);
+    border-radius: var(--md-sys-shape-corner-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--md-sys-color-outline);
+}

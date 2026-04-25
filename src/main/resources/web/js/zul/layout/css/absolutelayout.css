@@ -1,0 +1,13 @@
+/* MD3 Absolute Layout — position relative container */
+
+.z-absolutelayout {
+    position: relative;
+    display: block;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.z-absolutechildren {
+    position: absolute;
+    box-sizing: border-box;
+}

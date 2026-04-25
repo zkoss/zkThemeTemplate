@@ -1,0 +1,20 @@
+/* MD3 Columnlayout — responsive multi-column layout */
+
+.z-columnlayout {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: var(--md-sys-spacing-4);
+    box-sizing: border-box;
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+.z-columnchildren {
+    flex: 1;
+    min-width: 200px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: var(--md-sys-spacing-4);
+}

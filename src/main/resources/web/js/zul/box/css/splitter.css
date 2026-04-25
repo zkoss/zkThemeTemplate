@@ -1,0 +1,60 @@
+/* MD3 Splitter — resize handle between panes */
+/* DOM: <div class="z-splitter"><div class="z-splitter-handle"/></div> */
+
+.z-splitter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    background-color: transparent;
+    position: relative;
+    z-index: 5;
+    transition: background-color var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
+}
+
+/* Horizontal splitter (between top/bottom) */
+.z-splitter-horizontal {
+    width: 100%;
+    height: 8px;
+    cursor: row-resize;
+}
+
+.z-splitter-horizontal:hover {
+    background-color: var(--md-sys-color-surface-container);
+}
+
+/* Vertical splitter (between left/right) */
+.z-splitter-vertical,
+.z-splitter:not(.z-splitter-horizontal) {
+    width: 8px;
+    height: 100%;
+    cursor: col-resize;
+}
+
+.z-splitter-vertical:hover,
+.z-splitter:not(.z-splitter-horizontal):hover {
+    background-color: var(--md-sys-color-surface-container);
+}
+
+/* Drag handle indicator */
+.z-splitter-handle {
+    background-color: var(--md-sys-color-outline-variant);
+    border-radius: var(--md-sys-shape-corner-full);
+    pointer-events: none;
+    transition: background-color var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
+}
+
+.z-splitter-horizontal .z-splitter-handle {
+    width: 40px;
+    height: 4px;
+}
+
+.z-splitter-vertical .z-splitter-handle,
+.z-splitter:not(.z-splitter-horizontal) .z-splitter-handle {
+    width: 4px;
+    height: 40px;
+}
+
+.z-splitter:hover .z-splitter-handle {
+    background-color: var(--md-sys-color-outline);
+}

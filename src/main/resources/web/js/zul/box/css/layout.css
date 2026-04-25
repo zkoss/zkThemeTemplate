@@ -1,0 +1,51 @@
+/* MD3 Layout — hlayout and vlayout with spacing */
+
+/* Horizontal layout */
+.z-hlayout {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    flex-wrap: nowrap;
+    box-sizing: border-box;
+    min-width: 0;
+}
+
+
+/* ZK renders each hlayout child wrapped in .z-hlayout-inner (not .z-hlayout-cell).
+   ZK injects inline padding-right on each inner for spacing — override with !important
+   since parent .z-hlayout uses gap for spacing instead. */
+.z-hlayout-cell,
+.z-hlayout-inner {
+    display: flex;
+    align-items: stretch;
+    box-sizing: border-box;
+    vertical-align: top;
+    padding-right: 0 !important;
+}
+
+/* hflex="1" inner — grows to fill remaining space */
+.z-hlayout-inner.z-flex-item {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+/* Vertical layout */
+.z-vlayout {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    box-sizing: border-box;
+    gap: var(--md-sys-spacing-4);
+}
+
+/* vlayout wraps each child in z-vlayout-inner; stretch it to full width */
+.z-vlayout-inner {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.z-vlayout-cell {
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+}

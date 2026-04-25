@@ -1,0 +1,85 @@
+/* MD3 Checkbox */
+/* DOM: <label class="z-checkbox"><input type="checkbox"><span class="z-checkbox-content">Label</span></label> */
+
+.z-checkbox {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--md-sys-spacing-2);
+    cursor: pointer;
+    font-family: var(--md-sys-typescale-font-family);
+    font-size: var(--md-sys-typescale-body-medium-size);
+    font-weight: var(--md-sys-typescale-body-medium-weight);
+    line-height: var(--md-sys-typescale-body-medium-line-height);
+    color: var(--md-sys-color-on-surface);
+    user-select: none;
+}
+
+.z-checkbox input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    min-width: 18px;
+    border: 2px solid var(--md-sys-color-outline);
+    border-radius: 2px;
+    background-color: transparent;
+    cursor: pointer;
+    position: relative;
+    transition:
+        background-color var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard),
+        border-color var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
+    flex-shrink: 0;
+}
+
+/* Checkmark via pseudo-element */
+.z-checkbox input[type="checkbox"]::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    display: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 18'%3E%3Cpath fill='%23ffffff' d='M7 14l-4-4 1.4-1.4L7 11.2l6.6-6.6L15 6z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+
+.z-checkbox input[type="checkbox"]:checked {
+    background-color: var(--md-sys-color-primary);
+    border-color: var(--md-sys-color-primary);
+}
+
+.z-checkbox input[type="checkbox"]:checked::after {
+    display: block;
+}
+
+.z-checkbox input[type="checkbox"]:indeterminate {
+    background-color: var(--md-sys-color-primary);
+    border-color: var(--md-sys-color-primary);
+}
+
+.z-checkbox input[type="checkbox"]:indeterminate::after {
+    display: block;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 18'%3E%3Crect fill='%23ffffff' x='3' y='8' width='12' height='2'/%3E%3C/svg%3E");
+}
+
+.z-checkbox input[type="checkbox"]:focus-visible {
+    outline: 3px solid var(--md-sys-color-primary);
+    outline-offset: 2px;
+}
+
+/* Label text */
+.z-checkbox-content {
+    flex: 1;
+    font-family: var(--md-sys-typescale-font-family);
+    font-size: var(--md-sys-typescale-body-medium-size);
+    color: var(--md-sys-color-on-surface);
+    line-height: var(--md-sys-typescale-body-medium-line-height);
+}
+
+/* Disabled */
+.z-checkbox[disabled],
+.z-checkbox.z-checkbox-disabled {
+    cursor: not-allowed;
+    opacity: var(--md-sys-state-disabled-opacity);
+    pointer-events: none;
+}

@@ -1,0 +1,39 @@
+/* MD3 Input Group — input + addon(s) in a single row */
+
+.z-inputgroup {
+    display: inline-flex;
+    align-items: stretch;
+    border: 1px solid var(--md-sys-color-outline);
+    border-radius: var(--md-sys-shape-input);
+    overflow: hidden;
+    background-color: var(--md-sys-color-surface);
+    transition: border-color var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
+}
+
+.z-inputgroup:focus-within {
+    border-color: var(--md-sys-color-primary);
+    border-width: 2px;
+}
+
+/* Addon label/text placed before/after the input */
+.z-inputgroup-addon {
+    display: inline-flex;
+    align-items: center;
+    padding: 0 var(--md-sys-spacing-3);
+    background-color: var(--md-sys-color-surface-container);
+    color: var(--md-sys-color-on-surface-variant);
+    font-family: var(--md-sys-typescale-font-family);
+    font-size: var(--md-sys-typescale-body-medium-size);
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+/* Input inside inputgroup — remove its own border */
+.z-inputgroup .z-textbox,
+.z-inputgroup input {
+    border: none !important;
+    border-radius: 0 !important;
+    outline: none !important;
+    flex: 1;
+    min-width: 0;
+}

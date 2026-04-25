@@ -1,0 +1,54 @@
+/* MD3 Rating component — star rating */
+/* DOM: <div class="z-rating z-rating-horizontal">
+          <i class="z-rating-icon z-icon-star [z-rating-selected] [z-rating-readonly]"></i>
+        </div> */
+
+.z-rating {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--md-sys-spacing-1);
+    line-height: 1;
+    cursor: pointer;
+}
+
+/* Each star icon */
+.z-rating-icon {
+    display: inline-block;
+    font-size: 18px;
+    color: var(--md-sys-color-outline);
+    transition: color var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
+    line-height: 1;
+    cursor: pointer;
+    user-select: none;
+}
+
+/* Selected (filled) star */
+.z-rating-icon.z-rating-selected {
+    color: var(--md-sys-color-warning);
+}
+
+/* Hover state for interactive rating */
+.z-rating:not(.z-rating-horizontal .z-rating-readonly) .z-rating-icon:hover {
+    color: var(--md-sys-color-warning);
+    transform: scale(1.1);
+}
+
+/* Readonly — no hover effects */
+.z-rating-icon.z-rating-readonly {
+    cursor: default;
+    pointer-events: none;
+}
+
+/* Legacy selectors kept for compatibility */
+.z-rating-star {
+    display: inline-block;
+    font-size: 18px;
+    color: var(--md-sys-color-outline);
+    line-height: 1;
+    cursor: pointer;
+}
+
+.z-rating-star.z-selected,
+.z-rating-star.z-rating-selected {
+    color: var(--md-sys-color-warning);
+}

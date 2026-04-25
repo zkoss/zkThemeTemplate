@@ -1,0 +1,19 @@
+/* MD3 Anchor Layout — anchor-based responsive layout */
+/* ZK JS sets width/height via inline style on each .z-anchorchildren.
+   We use flex so children sit side-by-side when anchor percentages are set. */
+
+.z-anchorlayout {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: var(--md-sys-spacing-4);
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.z-anchorchildren {
+    /* ZK JS overrides width via inline style — flex respects that */
+    flex: 0 0 auto;
+    box-sizing: border-box;
+    min-width: 0;
+}

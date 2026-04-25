@@ -1,0 +1,74 @@
+/* MD3 Toolbar Button — Text button / Icon button for toolbar context */
+
+.z-toolbarbutton {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    min-height: 32px;
+    padding: 0 var(--md-sys-spacing-2);
+    border: none;
+    border-radius: var(--md-sys-shape-button);
+    background-color: transparent;
+    color: var(--md-sys-color-primary);
+    font-family: var(--md-sys-typescale-font-family);
+    font-size: var(--md-sys-typescale-label-large-size);
+    font-weight: var(--md-sys-typescale-label-large-weight);
+    line-height: var(--md-sys-typescale-label-large-line-height);
+    cursor: pointer;
+    user-select: none;
+    white-space: nowrap;
+    text-decoration: none;
+    outline: none;
+    transition: background-color var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
+}
+
+.z-toolbarbutton::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background-color: var(--md-sys-color-primary);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
+}
+
+.z-toolbarbutton:hover::before { opacity: var(--md-sys-state-hover-opacity); }
+.z-toolbarbutton:focus-visible::before { opacity: var(--md-sys-state-focus-opacity); }
+.z-toolbarbutton:active::before { opacity: var(--md-sys-state-pressed-opacity); }
+
+.z-toolbarbutton:focus-visible {
+    outline: 2px solid var(--md-sys-color-primary);
+    outline-offset: 1px;
+}
+
+/* Label span inside toolbarbutton */
+.z-toolbarbutton-content {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--md-sys-spacing-1);
+    position: relative;
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* Disabled */
+.z-toolbarbutton[disabled],
+.z-toolbarbutton.z-toolbarbutton-disabled {
+    color: var(--md-sys-color-disabled);
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+.z-toolbarbutton[disabled]::before,
+.z-toolbarbutton.z-toolbarbutton-disabled::before {
+    display: none;
+}
+
+/* Selected / active state (e.g. toggle button) */
+.z-toolbarbutton.z-toolbarbutton-selected {
+    color: var(--md-sys-color-primary);
+    background-color: var(--md-sys-color-primary-container);
+}

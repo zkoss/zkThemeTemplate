@@ -1,0 +1,151 @@
+/* MD3 Tabbox — tab navigation */
+/* DOM: .z-tabbox > .z-tabs > .z-tab[.z-tab-selected] > .z-tab-text
+        .z-tabbox > .z-tabpanels > .z-tabpanel */
+
+.z-tabbox {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--md-sys-color-surface);
+    font-family: var(--md-sys-typescale-font-family);
+}
+
+/* ─── Tab bar ───────────────────────────────────────────────────────────── */
+.z-tabs {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-bottom: 1px solid var(--md-sys-color-outline-variant);
+    background-color: var(--md-sys-color-surface);
+    flex-shrink: 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none;
+}
+
+.z-tabs::-webkit-scrollbar {
+    display: none;
+}
+
+/* ─── Individual tab ────────────────────────────────────────────────────── */
+.z-tab {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    list-style: none;
+    padding: var(--md-sys-spacing-3) var(--md-sys-spacing-4);
+    cursor: pointer;
+    color: var(--md-sys-color-on-surface-variant);
+    font-size: var(--md-sys-typescale-title-small-size);
+    font-weight: var(--md-sys-typescale-title-small-weight);
+    line-height: var(--md-sys-typescale-title-small-line-height);
+    white-space: nowrap;
+    user-select: none;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    transition:
+        color var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard),
+        border-color var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
+    overflow: hidden;
+}
+
+/* State layer */
+.z-tab::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-color: var(--md-sys-color-primary);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
+}
+
+.z-tab:hover {
+    color: var(--md-sys-color-on-surface);
+}
+
+.z-tab:hover::before { opacity: var(--md-sys-state-hover-opacity); }
+
+/* Selected tab */
+.z-tab.z-tab-selected {
+    color: var(--md-sys-color-primary);
+    border-bottom-color: var(--md-sys-color-primary);
+}
+
+/* Tab text */
+.z-tab-text {
+    position: relative;
+    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--md-sys-spacing-1);
+    pointer-events: none;
+}
+
+/* Tab close button */
+.z-tab-close {
+    position: relative;
+    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 16px;
+    border: none;
+    background: transparent;
+    color: var(--md-sys-color-on-surface-variant);
+    cursor: pointer;
+    border-radius: var(--md-sys-shape-corner-full);
+    font-size: 12px;
+    margin-left: var(--md-sys-spacing-1);
+    padding: 0;
+    transition: background-color var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
+}
+
+.z-tab-close:hover {
+    background-color: var(--md-sys-color-surface-container-high);
+    color: var(--md-sys-color-on-surface);
+}
+
+/* Disabled tab */
+.z-tab.z-tab-disabled {
+    color: var(--md-sys-color-disabled);
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/* ─── Tab panels ────────────────────────────────────────────────────────── */
+.z-tabpanels {
+    flex: 1;
+    overflow: auto;
+    background-color: var(--md-sys-color-surface);
+}
+
+.z-tabpanel {
+    padding: var(--md-sys-spacing-3) var(--md-sys-spacing-4);
+}
+
+/* Accordion tabbox variant */
+.z-tabbox-accordion .z-tabs {
+    flex-direction: column;
+    border-bottom: none;
+    border-right: 1px solid var(--md-sys-color-outline-variant);
+    width: auto;
+}
+
+.z-tabbox-accordion .z-tab {
+    border-bottom: none;
+    border-left: 3px solid transparent;
+    margin-bottom: 0;
+    justify-content: flex-start;
+    padding: var(--md-sys-spacing-3) var(--md-sys-spacing-4);
+}
+
+.z-tabbox-accordion .z-tab.z-tab-selected {
+    border-left-color: var(--md-sys-color-primary);
+    background-color: var(--md-sys-color-primary-container);
+    color: var(--md-sys-color-on-primary-container);
+}

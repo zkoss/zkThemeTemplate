@@ -1,0 +1,122 @@
+/* MD3 Panel — card-style container with header */
+/* DOM: .z-panel > .z-panel-head > .z-panel-header > .z-panel-caption + .z-panel-icon
+        .z-panel > .z-panel-body > .z-panel-content */
+
+.z-panel {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--md-sys-color-surface);
+    border-radius: var(--md-sys-shape-card);
+    box-shadow: var(--md-sys-elevation-panel);
+    border: 1px solid var(--md-sys-color-outline-variant);
+    overflow: hidden;
+    box-sizing: border-box;
+    font-family: var(--md-sys-typescale-font-family);
+}
+
+/* ─── Panel head ─────────────────────────────────────────────────────────── */
+.z-panel-head {
+    flex-shrink: 0;
+    background-color: var(--md-sys-color-surface);
+    border-bottom: 1px solid var(--md-sys-color-outline-variant);
+}
+
+.z-panel-header {
+    display: flex;
+    align-items: center;
+    padding: var(--md-sys-spacing-3) var(--md-sys-spacing-4);
+    min-height: 48px;
+}
+
+/* Panel title */
+.z-panel-caption {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: var(--md-sys-spacing-2);
+}
+
+/* ZK renders caption label as text node in .z-caption-content, not .z-caption-text */
+.z-panel-caption .z-caption-text,
+.z-panel-caption .z-caption-content,
+.z-panel-title {
+    font-size: var(--md-sys-typescale-title-medium-size);
+    font-weight: var(--md-sys-typescale-title-medium-weight);
+    line-height: var(--md-sys-typescale-title-medium-line-height);
+    color: var(--md-sys-color-on-surface);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Panel control icons (collapse, close) */
+.z-panel-icon {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--md-sys-spacing-1);
+    flex-shrink: 0;
+}
+
+.z-panel-close,
+.z-panel-collapse,
+.z-panel-maximize {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border: none;
+    background: transparent;
+    color: var(--md-sys-color-on-surface-variant);
+    border-radius: var(--md-sys-shape-corner-full);
+    cursor: pointer;
+    font-size: 14px;
+    position: relative;
+    overflow: hidden;
+    transition: background-color var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
+}
+
+.z-panel-close:hover,
+.z-panel-collapse:hover,
+.z-panel-maximize:hover {
+    background-color: var(--md-sys-color-surface-container);
+    color: var(--md-sys-color-on-surface);
+}
+
+/* Panel toolbar area (below header) */
+.z-panel-tbar,
+.z-panel-bbar,
+.z-panel-fbar,
+.z-panel-lbar,
+.z-panel-rbar {
+    background-color: var(--md-sys-color-surface-container-low);
+    border-bottom: 1px solid var(--md-sys-color-outline-variant);
+}
+
+/* ─── Panel body ─────────────────────────────────────────────────────────── */
+.z-panel-body {
+    flex: 1;
+    overflow: auto;
+    background-color: var(--md-sys-color-surface);
+}
+
+/* z-panelchildren is the actual content wrapper rendered by ZK */
+.z-panelchildren {
+    padding: var(--md-sys-spacing-4);
+    color: var(--md-sys-color-on-surface);
+    font-size: var(--md-sys-typescale-body-medium-size);
+    box-sizing: border-box;
+}
+
+/* legacy alias kept for completeness */
+.z-panel-content {
+    padding: var(--md-sys-spacing-4);
+    color: var(--md-sys-color-on-surface);
+    font-size: var(--md-sys-typescale-body-medium-size);
+}
+
+/* ─── Collapsed state ────────────────────────────────────────────────────── */
+.z-panel-collapsed .z-panel-body {
+    display: none;
+}

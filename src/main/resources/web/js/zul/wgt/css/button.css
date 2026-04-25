@@ -1,0 +1,113 @@
+/* MD3 Button — Filled (primary) and Outlined variants */
+
+/* ─── Base: Filled button ─────────────────────────────────────────────── */
+.z-button {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    min-height: 36px;
+    padding: 0 var(--md-sys-spacing-4);
+    border: none;
+    border-radius: var(--md-sys-shape-button);
+    background-color: var(--md-sys-color-primary);
+    color: var(--md-sys-color-on-primary);
+    font-family: var(--md-sys-typescale-font-family);
+    font-size: var(--md-sys-typescale-label-large-size);
+    font-weight: var(--md-sys-typescale-label-large-weight);
+    line-height: var(--md-sys-typescale-label-large-line-height);
+    letter-spacing: 0.01em;
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: pointer;
+    user-select: none;
+    vertical-align: middle;
+    outline: none;
+    transition:
+        background-color var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard),
+        box-shadow var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
+}
+
+/* State layer */
+.z-button::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background-color: var(--md-sys-color-on-primary);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
+}
+
+.z-button:hover::before { opacity: var(--md-sys-state-hover-opacity); }
+.z-button:focus-visible::before { opacity: var(--md-sys-state-focus-opacity); }
+.z-button:active::before { opacity: var(--md-sys-state-pressed-opacity); }
+
+.z-button:focus-visible {
+    outline: 3px solid var(--md-sys-color-primary);
+    outline-offset: 2px;
+}
+
+/* ─── Outlined / Default variant ─────────────────────────────────────── */
+.z-button-default,
+.z-button.z-button-default {
+    background-color: transparent;
+    color: var(--md-sys-color-primary);
+    border: 1px solid var(--md-sys-color-outline);
+}
+
+.z-button-default::before,
+.z-button.z-button-default::before {
+    background-color: var(--md-sys-color-primary);
+}
+
+.z-button-default:focus-visible,
+.z-button.z-button-default:focus-visible {
+    border-color: var(--md-sys-color-primary);
+}
+
+/* ─── Disabled state ─────────────────────────────────────────────────── */
+.z-button[disabled],
+.z-button.z-button-disabled {
+    background-color: var(--md-sys-color-disabled-container);
+    color: var(--md-sys-color-disabled);
+    border-color: transparent;
+    box-shadow: none;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+.z-button[disabled]::before,
+.z-button.z-button-disabled::before {
+    display: none;
+}
+
+.z-button-default[disabled],
+.z-button.z-button-default[disabled] {
+    background-color: transparent;
+    border-color: var(--md-sys-color-disabled-container);
+    color: var(--md-sys-color-disabled);
+}
+
+/* ─── Upload button variant ──────────────────────────────────────────── */
+.z-uploadbutton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    min-height: 36px;
+    padding: 0 var(--md-sys-spacing-4);
+    border: none;
+    border-radius: var(--md-sys-shape-button);
+    background-color: var(--md-sys-color-primary);
+    color: var(--md-sys-color-on-primary);
+    font-family: var(--md-sys-typescale-font-family);
+    font-size: var(--md-sys-typescale-label-large-size);
+    font-weight: var(--md-sys-typescale-label-large-weight);
+    line-height: var(--md-sys-typescale-label-large-line-height);
+    cursor: pointer;
+    white-space: nowrap;
+}

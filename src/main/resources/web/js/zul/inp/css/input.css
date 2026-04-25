@@ -1,0 +1,115 @@
+/* MD3 Text Field (Outlined) — Textbox, Intbox, Decimalbox, Doublebox, Longbox */
+/* DOM: <input class="z-textbox" type="text"> */
+
+/* ─── Shared outlined text field base ──────────────────────────────────── */
+.z-textbox,
+.z-intbox,
+.z-decimalbox,
+.z-doublebox,
+.z-longbox,
+.z-passwordbox {
+    display: inline-block;
+    width: 100%;
+    min-height: 40px;
+    padding: 0 var(--md-sys-spacing-3);
+    border: 1px solid var(--md-sys-color-outline);
+    border-radius: var(--md-sys-shape-input);
+    background-color: var(--md-sys-color-surface);
+    color: var(--md-sys-color-on-surface);
+    font-family: var(--md-sys-typescale-font-family);
+    font-size: var(--md-sys-typescale-body-medium-size);
+    font-weight: var(--md-sys-typescale-body-medium-weight);
+    line-height: var(--md-sys-typescale-body-medium-line-height);
+    outline: none;
+    box-sizing: border-box;
+    vertical-align: middle;
+    transition:
+        border-color var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard),
+        border-width var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
+}
+
+.z-textbox::placeholder,
+.z-intbox::placeholder,
+.z-decimalbox::placeholder,
+.z-doublebox::placeholder,
+.z-longbox::placeholder,
+.z-passwordbox::placeholder {
+    color: var(--md-sys-color-on-surface-variant);
+    opacity: 1;
+}
+
+/* Hover */
+.z-textbox:hover,
+.z-intbox:hover,
+.z-decimalbox:hover,
+.z-doublebox:hover,
+.z-longbox:hover,
+.z-passwordbox:hover {
+    border-color: var(--md-sys-color-on-surface);
+}
+
+/* Focus */
+.z-textbox:focus,
+.z-textbox:focus-visible,
+.z-intbox:focus,
+.z-intbox:focus-visible,
+.z-decimalbox:focus,
+.z-decimalbox:focus-visible,
+.z-doublebox:focus,
+.z-doublebox:focus-visible,
+.z-longbox:focus,
+.z-longbox:focus-visible,
+.z-passwordbox:focus,
+.z-passwordbox:focus-visible {
+    border-color: var(--md-sys-color-primary);
+    border-width: 2px;
+    padding: 0 calc(var(--md-sys-spacing-3) - 1px);
+}
+
+/* Readonly */
+.z-textbox[readonly],
+.z-intbox[readonly],
+.z-decimalbox[readonly],
+.z-doublebox[readonly],
+.z-longbox[readonly],
+.z-passwordbox[readonly] {
+    background-color: var(--md-sys-color-surface-container-low);
+    border-color: var(--md-sys-color-outline-variant);
+    color: var(--md-sys-color-on-surface-variant);
+}
+
+/* Disabled */
+.z-textbox[disabled],
+.z-intbox[disabled],
+.z-decimalbox[disabled],
+.z-doublebox[disabled],
+.z-longbox[disabled],
+.z-passwordbox[disabled],
+.z-textbox.z-textbox-disabled,
+.z-intbox.z-intbox-disabled {
+    opacity: var(--md-sys-state-disabled-opacity);
+    background-color: var(--md-sys-color-surface-container-low);
+    border-color: var(--md-sys-color-outline-variant);
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/* Error state */
+.z-textbox.z-error,
+.z-intbox.z-error,
+.z-textbox-error {
+    border-color: var(--md-sys-color-error);
+}
+
+.z-textbox.z-error:focus,
+.z-intbox.z-error:focus {
+    border-color: var(--md-sys-color-error);
+}
+
+/* Textarea */
+textarea.z-textbox {
+    min-height: 80px;
+    padding: var(--md-sys-spacing-2) var(--md-sys-spacing-3);
+    resize: vertical;
+    line-height: var(--md-sys-typescale-body-medium-line-height);
+}

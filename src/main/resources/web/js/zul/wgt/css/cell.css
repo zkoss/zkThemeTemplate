@@ -1,0 +1,11 @@
+/* MD3 Cell — generic cell container */
+
+.z-cell {
+    display: table-cell;
+    vertical-align: middle;
+    padding: var(--md-sys-spacing-2) var(--md-sys-spacing-3);
+    font-family: var(--md-sys-typescale-font-family);
+    font-size: var(--md-sys-typescale-body-medium-size);
+    color: var(--md-sys-color-on-surface);
+    box-sizing: border-box;
+}

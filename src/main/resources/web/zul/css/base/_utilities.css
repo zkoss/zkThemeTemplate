@@ -1,0 +1,135 @@
+/* MD3 Utility Classes */
+
+/* Text colors */
+.text-primary { color: var(--md-sys-color-primary); }
+.text-secondary { color: var(--md-sys-color-on-surface-variant); }
+.text-error { color: var(--md-sys-color-error); }
+.text-disabled { color: var(--md-sys-color-disabled); }
+
+/* Background colors */
+.bg-surface { background-color: var(--md-sys-color-surface); }
+.bg-surface-variant { background-color: var(--md-sys-color-surface-variant); }
+.bg-primary { background-color: var(--md-sys-color-primary); color: var(--md-sys-color-on-primary); }
+.bg-primary-container { background-color: var(--md-sys-color-primary-container); color: var(--md-sys-color-on-primary-container); }
+
+/* Elevation shadows */
+.elevation-0 { box-shadow: var(--md-sys-elevation-0); }
+.elevation-1 { box-shadow: var(--md-sys-elevation-1); }
+.elevation-2 { box-shadow: var(--md-sys-elevation-2); }
+.elevation-3 { box-shadow: var(--md-sys-elevation-3); }
+
+/* Spacing helpers (margin/padding using MD3 spacing tokens) */
+.p-1 { padding: var(--md-sys-spacing-1) !important; }
+.p-2 { padding: var(--md-sys-spacing-2) !important; }
+.p-3 { padding: var(--md-sys-spacing-3) !important; }
+.p-4 { padding: var(--md-sys-spacing-4) !important; }
+.p-6 { padding: var(--md-sys-spacing-6) !important; }
+
+.px-2 { padding-left: var(--md-sys-spacing-2) !important; padding-right: var(--md-sys-spacing-2) !important; }
+.px-4 { padding-left: var(--md-sys-spacing-4) !important; padding-right: var(--md-sys-spacing-4) !important; }
+.py-2 { padding-top: var(--md-sys-spacing-2) !important; padding-bottom: var(--md-sys-spacing-2) !important; }
+.py-4 { padding-top: var(--md-sys-spacing-4) !important; padding-bottom: var(--md-sys-spacing-4) !important; }
+
+.m-0 { margin: 0 !important; }
+.mb-2 { margin-bottom: var(--md-sys-spacing-2) !important; }
+.mb-4 { margin-bottom: var(--md-sys-spacing-4) !important; }
+.mt-2 { margin-top: var(--md-sys-spacing-2) !important; }
+.mt-4 { margin-top: var(--md-sys-spacing-4) !important; }
+
+/* Display */
+.d-flex { display: flex !important; }
+.d-block { display: block !important; }
+.align-center { align-items: center !important; }
+.justify-between { justify-content: space-between !important; }
+.gap-2 { gap: var(--md-sys-spacing-2) !important; }
+.gap-4 { gap: var(--md-sys-spacing-4) !important; }
+
+/* Typography */
+.fw-medium { font-weight: 500 !important; }
+.fw-bold { font-weight: 700 !important; }
+.text-sm { font-size: var(--md-sys-typescale-body-small-size) !important; }
+
+/* Borders */
+.rounded { border-radius: var(--md-sys-shape-corner-small) !important; }
+.rounded-full { border-radius: var(--md-sys-shape-corner-full) !important; }
+
+/* Truncation */
+.text-truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Visually hidden (accessible) */
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* ============================================
+   Layout utilities for use-case pages
+   (md-hbox / md-flex-1 / md-push-right)
+   ============================================ */
+
+/* Horizontal flex row with MD3 gap */
+.md-hbox {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    gap: var(--md-sys-spacing-4) !important;
+    box-sizing: border-box;
+}
+
+/* Flex child that takes equal share of available space */
+.md-flex-1 {
+    flex: 1 1 0 !important;
+    min-width: 0;
+    box-sizing: border-box;
+}
+
+/* Push subsequent sibling(s) to the right end of a flex row */
+.md-push-right {
+    margin-left: auto !important;
+}
+
+/* Page-level container — full-width vertical column with spacing */
+.page-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--md-sys-spacing-4);
+    padding: var(--md-sys-spacing-4);
+    box-sizing: border-box;
+    min-height: 100%;
+    background-color: var(--md-sys-color-surface-container-lowest);
+}
+
+/* When page-content is applied to a tabbox, the padding and gap must be reset
+   to avoid indenting the tab bar and adding unwanted gap between tabs/tabpanels.
+   The tabbox manages its own internal layout. */
+.z-tabbox.page-content {
+    padding: 0;
+    gap: 0;
+}
+
+/* ============================================
+   md-* utility aliases (used in ZUL sclass)
+   ============================================ */
+.md-text-center { text-align: center !important; }
+.md-text-right  { text-align: right !important; }
+.md-text-primary { color: var(--md-sys-color-primary) !important; }
+
+.md-py-3 { padding-top: var(--md-sys-spacing-3) !important; padding-bottom: var(--md-sys-spacing-3) !important; }
+.md-m-2  { margin: var(--md-sys-spacing-2) !important; }
+
+.md-flex      { display: flex !important; }
+.md-flex-wrap { flex-wrap: wrap !important; }
+.md-gap-4     { gap: var(--md-sys-spacing-4) !important; }
+
+.md-icon-xl { font-size: 48px !important; }

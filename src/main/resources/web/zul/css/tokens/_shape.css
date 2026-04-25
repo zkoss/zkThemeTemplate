@@ -1,0 +1,19 @@
+/* MD3 Shape Tokens — corner radius aligned with Mira */
+:root {
+    /* MD3 corner radius scale */
+    --md-sys-shape-corner-none: 0px;
+    --md-sys-shape-corner-extra-small: 4px;   /* inputs, chips */
+    --md-sys-shape-corner-small: 8px;          /* buttons, text fields */
+    --md-sys-shape-corner-medium: 12px;        /* cards, panels */
+    --md-sys-shape-corner-large: 16px;         /* dialogs, drawers */
+    --md-sys-shape-corner-extra-large: 28px;   /* bottom sheets */
+    --md-sys-shape-corner-full: 9999px;        /* pills, FAB */
+
+    /* Semantic aliases used in ZK components */
+    --md-sys-shape-button: var(--md-sys-shape-corner-small);
+    --md-sys-shape-input: var(--md-sys-shape-corner-extra-small);
+    --md-sys-shape-card: var(--md-sys-shape-corner-medium);
+    --md-sys-shape-dialog: var(--md-sys-shape-corner-large);
+    --md-sys-shape-chip: var(--md-sys-shape-corner-small);
+    --md-sys-shape-menu: var(--md-sys-shape-corner-extra-small);
+}

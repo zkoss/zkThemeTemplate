@@ -1,0 +1,9 @@
+/* MD3 Span — inline span container */
+
+.z-span {
+    display: inline;
+    box-sizing: border-box;
+    font-family: var(--md-sys-typescale-font-family);
+    font-size: inherit;
+    color: inherit;
+}

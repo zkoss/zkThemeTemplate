@@ -1,0 +1,13 @@
+/* MD3 Toolbarpanel — transparent panel for toolbar layouts */
+
+.z-toolbarpanel {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex: 1;
+    background: transparent;
+    padding: 0;
+    margin: 0;
+    min-height: inherit;
+    font-family: var(--md-sys-typescale-font-family);
+}

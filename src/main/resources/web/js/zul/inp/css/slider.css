@@ -1,0 +1,110 @@
+/* MD3 Slider — range input */
+/* Real ZK DOM:
+   <div class="z-slider z-slider-horizontal" role="slider">
+     <div id="{uuid}-inner" class="z-slider-center">
+       <div id="{uuid}-area"  class="z-slider-area" style="position:absolute; width:{px}"></div>
+       <div id="{uuid}-btn"   class="z-slider-button" style="left:{px}"></div>
+     </div>
+   </div>
+*/
+
+/* ── Outer container ──────────────────────────────────── */
+.z-slider {
+    display: block;
+    position: relative;
+    padding: var(--md-sys-spacing-3) 0;
+    cursor: pointer;
+    user-select: none;
+    box-sizing: border-box;
+}
+
+/* ── Track wrapper (center) ───────────────────────────── */
+.z-slider-center {
+    position: relative;
+    height: 4px;
+    background-color: var(--md-sys-color-surface-container-high);
+    border-radius: var(--md-sys-shape-corner-full);
+    margin: 10px 10px; /* room for thumb overflow */
+}
+
+/* ── Filled portion of track (area) ──────────────────── */
+.z-slider-area {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background-color: var(--md-sys-color-primary);
+    border-radius: var(--md-sys-shape-corner-full);
+}
+
+/* ── Thumb (button) ───────────────────────────────────── */
+.z-slider-button {
+    position: absolute;
+    top: 50%;
+    width: 20px;
+    height: 20px;
+    margin-top: -10px;  /* center on 4px track: shift up half thumb */
+    margin-left: -10px; /* center thumb on its left position */
+    border-radius: var(--md-sys-shape-corner-full);
+    background-color: var(--md-sys-color-primary);
+    box-shadow: var(--md-sys-elevation-1);
+    cursor: grab;
+    transition:
+        box-shadow var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard),
+        transform  var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
+    /* State-layer ring */
+}
+
+.z-slider-button::before {
+    content: '';
+    position: absolute;
+    inset: -8px;
+    border-radius: var(--md-sys-shape-corner-full);
+    background-color: var(--md-sys-color-primary);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
+}
+
+.z-slider:hover .z-slider-button::before {
+    opacity: var(--md-sys-state-hover-opacity);
+}
+
+.z-slider-button:active {
+    cursor: grabbing;
+    transform: scale(1.15);
+    box-shadow: var(--md-sys-elevation-2);
+}
+
+/* ── Vertical slider ─────────────────────────────────── */
+.z-slider-ver,
+.z-slider-vertical {
+    display: inline-block;
+    width: auto;
+    padding: 0 var(--md-sys-spacing-3);
+}
+
+.z-slider-ver .z-slider-center,
+.z-slider-vertical .z-slider-center {
+    width: 4px;
+    height: 100%;
+    margin: 10px 10px;
+}
+
+.z-slider-ver .z-slider-button,
+.z-slider-vertical .z-slider-button {
+    left: 50%;
+    top: auto;
+    bottom: 0;
+    transform: translateX(-50%);
+    margin-left: -10px;
+    margin-bottom: -10px;
+}
+
+/* ── Disabled ────────────────────────────────────────── */
+.z-slider[disabled],
+.z-slider.z-slider-disabled {
+    opacity: var(--md-sys-state-disabled-opacity);
+    pointer-events: none;
+    cursor: not-allowed;
+}

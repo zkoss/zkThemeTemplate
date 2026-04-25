@@ -1,0 +1,19 @@
+/* Icon font placeholder — Lucide icons to be integrated in Phase 3 */
+/* For now, use Font Awesome via CDN fallback for preview */
+
+/* ZK icon classes common mapping */
+[class^="z-icon-"]::before,
+[class*=" z-icon-"]::before {
+    font-style: normal;
+    font-variant: normal;
+    font-weight: normal;
+    font-size: 1em;
+    line-height: 1;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+/* Standard icon sizes */
+.z-icon-sm::before { font-size: 0.875em; }
+.z-icon-lg::before { font-size: 1.25em; }
+.z-icon-2x::before { font-size: 2em; }

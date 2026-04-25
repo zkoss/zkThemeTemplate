@@ -1,0 +1,195 @@
+/* MD3 Tree — hierarchical list component */
+/* Actual DOM structure:
+   .z-tree > .z-tree-header > TABLE > THEAD > TR.z-treecols > TH.z-treecol > DIV.z-treecol-content
+   .z-tree > .z-tree-body  > TABLE > TBODY.z-treechildren > TR.z-treerow > TD.z-treecell > DIV.z-treecell-content > SPAN.z-tree-icon + SPAN.z-treecell-text
+   .z-tree > .z-tree-footer
+*/
+
+.z-tree {
+    display: block;
+    background-color: var(--md-sys-color-surface);
+    border-radius: var(--md-sys-shape-card);
+    box-shadow: var(--md-sys-elevation-card);
+    border: 1px solid var(--md-sys-color-outline-variant);
+    overflow: hidden;
+    box-sizing: border-box;
+    font-family: var(--md-sys-typescale-font-family);
+}
+
+/* ─── Header ───────────────────────────────────────────────────────────── */
+.z-tree-header {
+    overflow: hidden;
+    background-color: var(--md-sys-color-surface-container-low);
+}
+
+.z-tree-header table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+.z-treecols {
+    background-color: var(--md-sys-color-surface-container-low);
+}
+
+.z-treecol {
+    padding: var(--md-sys-spacing-3) var(--md-sys-spacing-4);
+    font-size: var(--md-sys-typescale-label-large-size);
+    font-weight: var(--md-sys-typescale-label-large-weight);
+    color: var(--md-sys-color-on-surface-variant);
+    text-align: left;
+    border-bottom: 2px solid var(--md-sys-color-outline-variant);
+    background-color: var(--md-sys-color-surface-container-low);
+    white-space: nowrap;
+    user-select: none;
+    vertical-align: middle;
+    overflow: hidden;
+}
+
+.z-treecol-content {
+    display: flex;
+    align-items: center;
+    gap: var(--md-sys-spacing-1);
+    font-size: var(--md-sys-typescale-label-large-size);
+    font-weight: var(--md-sys-typescale-label-large-weight);
+    color: var(--md-sys-color-on-surface-variant);
+}
+
+/* Splitter bar between columns */
+.z-treecols-bar {
+    width: 8px;
+    cursor: col-resize;
+    background-color: var(--md-sys-color-outline-variant);
+}
+
+/* ─── Body ─────────────────────────────────────────────────────────────── */
+.z-tree-body {
+    overflow: auto;
+}
+
+.z-tree-body table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+/* Treechildren = TBODY */
+.z-treechildren {
+    /* native table body */
+}
+
+/* Tree item row — TR.z-treerow */
+.z-treerow {
+    border-bottom: 1px solid var(--md-sys-color-outline-variant);
+    transition: background-color var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
+    cursor: pointer;
+}
+
+.z-treerow:last-child {
+    border-bottom: none;
+}
+
+.z-treerow:hover {
+    background-color: var(--md-sys-color-surface-container-low);
+}
+
+.z-treerow.z-treerow-selected,
+.z-treerow.z-selected {
+    background-color: var(--md-sys-color-primary-container);
+    color: var(--md-sys-color-on-primary-container);
+}
+
+/* Focus */
+.z-treerow:focus-visible,
+.z-treerow.z-treerow-focus {
+    outline: 2px solid var(--md-sys-color-primary);
+    outline-offset: -2px;
+}
+
+/* ─── Cell — TD.z-treecell ─────────────────────────────────────────────── */
+.z-treecell {
+    padding: 0;
+    vertical-align: middle;
+    overflow: hidden;
+}
+
+/* Content wrapper inside TD */
+.z-treecell-content {
+    display: flex;
+    align-items: center;
+    gap: var(--md-sys-spacing-1);
+    padding: var(--md-sys-spacing-2) var(--md-sys-spacing-4);
+    font-size: var(--md-sys-typescale-body-medium-size);
+    font-weight: var(--md-sys-typescale-body-medium-weight);
+    color: var(--md-sys-color-on-surface);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-height: 36px;
+}
+
+.z-treecell-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    flex: 1;
+}
+
+.z-treerow.z-selected .z-treecell-content {
+    color: var(--md-sys-color-on-primary-container);
+}
+
+/* ─── Toggle / expand icon ─────────────────────────────────────────────── */
+/* Parent rows: SPAN.z-tree-icon > I.z-icon-caret-down.z-tree-open */
+.z-tree-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    color: var(--md-sys-color-on-surface-variant);
+    font-size: 12px;
+    border-radius: var(--md-sys-shape-corner-full);
+    cursor: pointer;
+    transition: background-color var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
+}
+
+.z-tree-icon:hover {
+    background-color: var(--md-sys-color-surface-container);
+}
+
+/* ─── Indentation spacers ──────────────────────────────────────────────── */
+/* Child rows: each nesting level adds a SPAN.z-tree-line.z-tree-spacer */
+.z-tree-spacer {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+}
+
+.z-tree-line {
+    display: inline-block;
+    width: 20px;
+    flex-shrink: 0;
+}
+
+/* ─── Footer ────────────────────────────────────────────────────────────── */
+.z-tree-footer {
+    background-color: var(--md-sys-color-surface-container-low);
+    border-top: 2px solid var(--md-sys-color-outline-variant);
+}
+
+.z-tree-footer table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+.z-treefooter {
+    padding: var(--md-sys-spacing-3) var(--md-sys-spacing-4);
+    font-size: var(--md-sys-typescale-body-medium-size);
+    font-weight: var(--md-sys-typescale-label-large-weight);
+    color: var(--md-sys-color-on-surface-variant);
+    vertical-align: middle;
+}

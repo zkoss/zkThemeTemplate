@@ -1,0 +1,39 @@
+/* MD3 Selectbox — styled select component */
+
+.z-selectbox {
+    display: inline-flex;
+    align-items: center;
+    position: relative;
+    border: 1px solid var(--md-sys-color-outline);
+    border-radius: var(--md-sys-shape-input);
+    background-color: var(--md-sys-color-surface);
+    overflow: hidden;
+    min-height: 40px;
+    transition: border-color var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
+}
+
+.z-selectbox:focus-within {
+    border-color: var(--md-sys-color-primary);
+    border-width: 2px;
+}
+
+.z-selectbox select,
+.z-selectbox-select {
+    appearance: none;
+    -webkit-appearance: none;
+    flex: 1;
+    padding: 0 var(--md-sys-spacing-4);
+    border: none;
+    background: transparent;
+    font-family: var(--md-sys-typescale-font-family);
+    font-size: var(--md-sys-typescale-body-medium-size);
+    color: var(--md-sys-color-on-surface);
+    cursor: pointer;
+    min-height: 40px;
+    outline: none;
+}
+
+.z-selectbox[disabled] {
+    opacity: var(--md-sys-state-disabled-opacity);
+    pointer-events: none;
+}

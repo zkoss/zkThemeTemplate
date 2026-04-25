@@ -1,0 +1,150 @@
+/* MD3 Window — modal/floating window component */
+/* DOM: .z-window > .z-window-header > .z-window-caption + .z-window-icon
+        .z-window > .z-window-content */
+
+.z-window {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--md-sys-color-surface);
+    border-radius: var(--md-sys-shape-dialog);
+    box-shadow: var(--md-sys-elevation-dialog);
+    border: none;
+    overflow: hidden;
+    box-sizing: border-box;
+    font-family: var(--md-sys-typescale-font-family);
+    position: relative;
+}
+
+/* Embedded window (not modal) */
+.z-window-embedded {
+    box-shadow: var(--md-sys-elevation-card);
+    border: 1px solid var(--md-sys-color-outline-variant);
+    border-radius: var(--md-sys-shape-card);
+}
+
+/* ─── Header ─────────────────────────────────────────────────────────────── */
+.z-window-header {
+    display: flex;
+    align-items: center;
+    padding: var(--md-sys-spacing-4) var(--md-sys-spacing-6);
+    border-bottom: 1px solid var(--md-sys-color-outline-variant);
+    background-color: var(--md-sys-color-surface);
+    flex-shrink: 0;
+    min-height: 56px;
+    position: relative;
+    cursor: default;
+}
+
+/* Draggable header */
+.z-window-modal .z-window-header,
+.z-window-overlapped .z-window-header {
+    cursor: move;
+}
+
+.z-window-caption {
+    flex: 1;
+    min-width: 0;
+}
+
+/* Caption text — ZK renders window title as a plain text node directly in header,
+   so we style the header itself for typography, plus keep .z-caption-text/.z-label
+   as fallback selectors for titled windows. */
+.z-window-header {
+    font-size: var(--md-sys-typescale-title-medium-size);
+    font-weight: var(--md-sys-typescale-title-medium-weight);
+    line-height: var(--md-sys-typescale-title-medium-line-height);
+    color: var(--md-sys-color-on-surface);
+}
+
+.z-window-header .z-caption-text,
+.z-window-header .z-label {
+    font-size: var(--md-sys-typescale-title-medium-size);
+    font-weight: var(--md-sys-typescale-title-medium-weight);
+    line-height: var(--md-sys-typescale-title-medium-line-height);
+    color: var(--md-sys-color-on-surface);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Window control icons (close, minimize, maximize)
+   ZK renders this as .z-window-icons (plural) */
+.z-window-icon,
+.z-window-icons {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--md-sys-spacing-1);
+    flex-shrink: 0;
+}
+
+.z-window-close,
+.z-window-maximize,
+.z-window-minimize,
+.z-window-sizable {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: transparent;
+    color: var(--md-sys-color-on-surface-variant);
+    border-radius: var(--md-sys-shape-corner-full);
+    cursor: pointer;
+    font-size: 16px;
+    position: relative;
+    overflow: hidden;
+    transition: background-color var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
+}
+
+.z-window-close:hover,
+.z-window-maximize:hover,
+.z-window-minimize:hover,
+.z-window-sizable:hover {
+    background-color: var(--md-sys-color-surface-container);
+    color: var(--md-sys-color-on-surface);
+}
+
+.z-window-close:hover {
+    background-color: var(--md-sys-color-error-container);
+    color: var(--md-sys-color-on-error-container);
+}
+
+/* ─── Content ────────────────────────────────────────────────────────────── */
+.z-window-content {
+    flex: 1;
+    padding: var(--md-sys-spacing-4);
+    overflow: auto;
+    color: var(--md-sys-color-on-surface);
+    font-size: var(--md-sys-typescale-body-medium-size);
+}
+
+/* ─── Resize handle ──────────────────────────────────────────────────────── */
+.z-window-se {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 16px;
+    height: 16px;
+    cursor: se-resize;
+    opacity: 0.3;
+}
+
+/* ─── Modal shadow ───────────────────────────────────────────────────────── */
+.z-window-modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background-color: var(--md-sys-color-scrim);
+    z-index: 1400;
+}
+
+/* Highlighted / focused window */
+.z-window-highlighted .z-window-header {
+    background-color: var(--md-sys-color-primary-container);
+    color: var(--md-sys-color-on-primary-container);
+}
+
+.z-window-highlighted .z-window-header .z-caption-text,
+.z-window-highlighted .z-window-header .z-label {
+    color: var(--md-sys-color-on-primary-container);
+}

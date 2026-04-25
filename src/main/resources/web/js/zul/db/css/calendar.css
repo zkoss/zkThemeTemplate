@@ -1,0 +1,232 @@
+/* MD3 Calendar — date picker / inline calendar */
+/* ZK calendar actual DOM structure:
+   .z-calendar
+     .z-focus-a (hidden focus trap)
+     .z-calendar-header
+       A.z-calendar-icon.z-calendar-left  (prev)
+       A.z-calendar-title
+         SPAN.z-calendar-text (month)
+         SPAN.z-calendar-text (year)
+       A.z-calendar-icon.z-calendar-right (next)
+     TABLE.z-calendar-body
+       THEAD > TR > TH.z-calendar-weekday/.z-calendar-weekend
+       TBODY > TR > TD.z-calendar-cell.z-calendar-weekday/.z-calendar-weekend[.z-calendar-outside/.z-today/.z-selected]
+*/
+
+.z-calendar {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--md-sys-color-surface);
+    border-radius: var(--md-sys-shape-card);
+    border: 1px solid var(--md-sys-color-outline-variant);
+    overflow: hidden;
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 200px;
+    font-family: var(--md-sys-typescale-font-family);
+    user-select: none;
+}
+
+/* ─── Calendar header (month/year navigation) ────────────────────────────── */
+.z-calendar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--md-sys-spacing-2) var(--md-sys-spacing-3);
+    background-color: var(--md-sys-color-surface);
+    border-bottom: 1px solid var(--md-sys-color-outline-variant);
+    min-height: 48px;
+    box-sizing: border-box;
+}
+
+/* Month/year title */
+.z-calendar-title {
+    font-size: var(--md-sys-typescale-title-small-size);
+    font-weight: var(--md-sys-typescale-title-small-weight);
+    color: var(--md-sys-color-on-surface);
+    cursor: pointer;
+    padding: var(--md-sys-spacing-1) var(--md-sys-spacing-2);
+    border-radius: var(--md-sys-shape-button);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: var(--md-sys-spacing-1);
+    transition: background-color var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
+}
+
+.z-calendar-title:hover {
+    background-color: var(--md-sys-color-surface-container);
+}
+
+.z-calendar-text {
+    pointer-events: none;
+}
+
+/* Prev/Next navigation icons */
+.z-calendar-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: var(--md-sys-shape-corner-full);
+    color: var(--md-sys-color-on-surface-variant);
+    text-decoration: none;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
+    flex-shrink: 0;
+}
+
+.z-calendar-icon:hover {
+    background-color: var(--md-sys-color-surface-container);
+    color: var(--md-sys-color-on-surface);
+}
+
+/* ─── Calendar body (TABLE) ───────────────────────────────────────────────── */
+.z-calendar-body {
+    border-collapse: collapse;
+    border-spacing: 0;
+    padding: var(--md-sys-spacing-2) var(--md-sys-spacing-2);
+    width: 100%;
+    box-sizing: border-box;
+    table-layout: fixed;
+}
+
+/* ─── Day-of-week header cells (TH) ─────────────────────────────────────── */
+.z-calendar-body thead th,
+.z-calendar-weekday,
+.z-calendar-weekend {
+    text-align: center;
+    vertical-align: middle;
+    height: 32px;
+    font-size: var(--md-sys-typescale-label-medium-size);
+    font-weight: var(--md-sys-typescale-label-medium-weight);
+    color: var(--md-sys-color-on-surface-variant);
+    padding: 0;
+}
+
+/* Weekend day-of-week header */
+.z-calendar-body thead th.z-calendar-weekend {
+    color: var(--md-sys-color-error);
+}
+
+/* ─── Day cells (TD) ─────────────────────────────────────────────────────── */
+.z-calendar-cell {
+    position: relative;
+    text-align: center;
+    vertical-align: middle;
+    width: auto;
+    height: 32px;
+    padding: 0;
+    font-size: var(--md-sys-typescale-body-medium-size);
+    font-weight: var(--md-sys-typescale-body-medium-weight);
+    color: var(--md-sys-color-on-surface);
+    cursor: pointer;
+    border-radius: var(--md-sys-shape-corner-full);
+    transition:
+        background-color var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard),
+        color var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
+}
+
+/* Hover state via background on the TD itself */
+.z-calendar-cell:hover {
+    background-color: color-mix(in srgb, var(--md-sys-color-on-surface) 8%, transparent);
+}
+
+/* Weekend day color */
+.z-calendar-body tbody td.z-calendar-weekend {
+    color: var(--md-sys-color-error);
+    opacity: 0.8;
+}
+
+/* Outside-month days (greyed) */
+.z-calendar-cell.z-calendar-outside {
+    color: var(--md-sys-color-on-surface-variant);
+    opacity: 0.4;
+}
+
+/* Today */
+.z-calendar-cell.z-today {
+    background-color: var(--md-sys-color-primary-container);
+    color: var(--md-sys-color-on-primary-container);
+    font-weight: var(--md-sys-typescale-label-large-weight);
+}
+
+.z-calendar-cell.z-today:hover {
+    background-color: color-mix(in srgb, var(--md-sys-color-primary-container) 85%, var(--md-sys-color-on-primary-container));
+}
+
+/* Selected day */
+.z-calendar-cell.z-selected,
+.z-calendar-cell.z-calendar-selected {
+    background-color: var(--md-sys-color-primary);
+    color: var(--md-sys-color-on-primary);
+    font-weight: var(--md-sys-typescale-label-large-weight);
+}
+
+.z-calendar-cell.z-selected:hover,
+.z-calendar-cell.z-calendar-selected:hover {
+    background-color: color-mix(in srgb, var(--md-sys-color-primary) 85%, var(--md-sys-color-on-primary));
+}
+
+/* Disabled day */
+.z-calendar-cell.z-calendar-disabled,
+.z-calendar-cell[disabled] {
+    color: var(--md-sys-color-disabled);
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/* ─── Month/year picker (when clicking the title) ────────────────────────── */
+.z-calendar-monthpicker,
+.z-calendar-yearpicker {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--md-sys-spacing-2);
+    padding: var(--md-sys-spacing-3);
+}
+
+.z-calendar-month,
+.z-calendar-year {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 48px;
+    border-radius: var(--md-sys-shape-button);
+    cursor: pointer;
+    font-size: var(--md-sys-typescale-body-medium-size);
+    color: var(--md-sys-color-on-surface);
+    text-decoration: none;
+    transition: background-color var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
+}
+
+.z-calendar-month:hover,
+.z-calendar-year:hover {
+    background-color: var(--md-sys-color-surface-container);
+}
+
+.z-calendar-month.z-selected,
+.z-calendar-year.z-selected {
+    background-color: var(--md-sys-color-primary);
+    color: var(--md-sys-color-on-primary);
+}
+
+/* ─── Calendar footer (Today button) ────────────────────────────────────── */
+.z-calendar-footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: var(--md-sys-spacing-2) var(--md-sys-spacing-3);
+    border-top: 1px solid var(--md-sys-color-outline-variant);
+    gap: var(--md-sys-spacing-2);
+}
+
+/* Focus trap element */
+.z-focus-a {
+    position: absolute;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    opacity: 0;
+}

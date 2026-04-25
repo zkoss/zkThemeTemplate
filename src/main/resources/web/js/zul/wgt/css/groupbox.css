@@ -1,0 +1,62 @@
+/* MD3 Groupbox — card-style container with header */
+/* DOM: <div class="z-groupbox"><div class="z-groupbox-header">caption</div><div class="z-groupbox-body">content</div></div> */
+
+.z-groupbox {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--md-sys-color-surface);
+    border-radius: var(--md-sys-shape-card);
+    border: 1px solid var(--md-sys-color-outline-variant);
+    box-shadow: var(--md-sys-elevation-card);
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.z-groupbox-header {
+    display: flex;
+    align-items: center;
+    padding: var(--md-sys-spacing-3) var(--md-sys-spacing-4);
+    border-bottom: 1px solid var(--md-sys-color-outline-variant);
+    background-color: var(--md-sys-color-surface);
+    min-height: 48px;
+    flex-shrink: 0;
+}
+
+/* Caption text inside header — ZK renders text in .z-caption-content, not .z-caption-text */
+.z-groupbox-header .z-caption-text,
+.z-groupbox-header .z-caption-content {
+    font-size: var(--md-sys-typescale-title-medium-size);
+    font-weight: var(--md-sys-typescale-title-medium-weight);
+    line-height: var(--md-sys-typescale-title-medium-line-height);
+    color: var(--md-sys-color-on-surface);
+}
+
+/* Icons in header */
+.z-groupbox-header .z-groupbox-icon,
+.z-groupbox-header [class*="z-icon-"] {
+    font-size: 16px;
+    color: var(--md-sys-color-on-surface-variant);
+    cursor: pointer;
+    margin-left: auto;
+    flex-shrink: 0;
+    padding: var(--md-sys-spacing-1);
+    border-radius: var(--md-sys-shape-corner-full);
+}
+
+.z-groupbox-header .z-groupbox-icon:hover,
+.z-groupbox-header [class*="z-icon-"]:hover {
+    background-color: var(--md-sys-color-surface-container);
+}
+
+.z-groupbox-body,
+.z-groupbox-content {
+    padding: var(--md-sys-spacing-4);
+    flex: 1;
+    overflow: auto;
+}
+
+/* Closed/collapsed state */
+.z-groupbox-closed .z-groupbox-body,
+.z-groupbox-closed .z-groupbox-content {
+    display: none;
+}

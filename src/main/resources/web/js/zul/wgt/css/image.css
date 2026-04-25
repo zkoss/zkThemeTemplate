@@ -1,0 +1,14 @@
+/* MD3 Image component */
+
+.z-image {
+    display: inline-block;
+    max-width: 100%;
+    vertical-align: middle;
+    border-radius: var(--md-sys-shape-corner-extra-small);
+}
+
+.z-image img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}

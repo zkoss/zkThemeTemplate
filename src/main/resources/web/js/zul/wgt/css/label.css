@@ -1,0 +1,23 @@
+/* MD3 Label — inline text component */
+
+.z-label {
+    display: inline;
+    font-family: var(--md-sys-typescale-font-family);
+    font-size: var(--md-sys-typescale-body-medium-size);
+    font-weight: var(--md-sys-typescale-body-medium-weight);
+    line-height: var(--md-sys-typescale-body-medium-line-height);
+    color: var(--md-sys-color-on-surface);
+    word-break: break-word;
+}
+
+/* Pre-formatted label */
+.z-label-pre {
+    white-space: pre-wrap;
+    font-family: var(--md-sys-typescale-mono-family);
+}
+
+/* Multiline label */
+.z-label-multiline {
+    display: block;
+    white-space: pre-wrap;
+}

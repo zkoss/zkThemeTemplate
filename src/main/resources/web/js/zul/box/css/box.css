@@ -1,0 +1,40 @@
+/* MD3 Box — hbox and vbox layout containers */
+
+/* Horizontal box */
+.z-hbox {
+    display: inline-flex;
+    flex-direction: row;
+    align-items: flex-start;
+    flex-wrap: nowrap;
+    box-sizing: border-box;
+}
+
+/* Horizontal box full-width */
+.z-hbox.z-hbox-block {
+    display: flex;
+    width: 100%;
+}
+
+/* Vertical box */
+.z-vbox {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    flex-wrap: nowrap;
+    box-sizing: border-box;
+}
+
+/* Vertical box full-width */
+.z-vbox.z-vbox-block {
+    display: flex;
+    width: 100%;
+}
+
+/* Box cells */
+.z-hbox-cell,
+.z-vbox-cell {
+    flex-shrink: 0;
+    box-sizing: border-box;
+    display: flex;
+    align-items: flex-start;
+}

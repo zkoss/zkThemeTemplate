@@ -1,0 +1,33 @@
+/* MD3 Auxhead — auxiliary/grouped column header row */
+/* DOM: TR.z-auxhead > TH.z-auxheader > div.z-auxheader-content */
+
+.z-auxhead {
+    background-color: var(--md-sys-color-surface-container) !important;
+    border-bottom: 1px solid var(--md-sys-color-outline-variant);
+}
+
+/* TH cell */
+.z-auxheader {
+    padding: var(--md-sys-spacing-2) var(--md-sys-spacing-4);
+    font-family: var(--md-sys-typescale-font-family);
+    font-size: var(--md-sys-typescale-label-medium-size);
+    font-weight: var(--md-sys-typescale-label-medium-weight);
+    color: var(--md-sys-color-on-surface-variant);
+    text-align: center;
+    background-color: var(--md-sys-color-surface-container);
+    border-right: 1px solid var(--md-sys-color-outline-variant);
+    vertical-align: middle;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    box-sizing: border-box;
+}
+
+.z-auxheader:last-child {
+    border-right: none;
+}
+
+/* Inner content wrapper */
+.z-auxheader-content {
+    display: block;
+}

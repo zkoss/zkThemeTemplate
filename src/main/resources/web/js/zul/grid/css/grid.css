@@ -1,0 +1,259 @@
+/* MD3 Grid — data table component */
+/* DOM: .z-grid > .z-grid-header > table.z-grid-header-inner > thead > tr > th.z-column
+        .z-grid > .z-grid-body > table > tbody > tr.z-row > td.z-row-inner */
+
+.z-grid {
+    display: block;
+    background-color: var(--md-sys-color-surface);
+    border-radius: var(--md-sys-shape-card);
+    box-shadow: var(--md-sys-elevation-card);
+    border: 1px solid var(--md-sys-color-outline-variant);
+    overflow: hidden;
+    box-sizing: border-box;
+    width: 100%;
+    font-family: var(--md-sys-typescale-font-family);
+}
+
+/* Grid nested inside groupbox/panel/window — remove card-on-card effect */
+.z-groupbox .z-grid,
+.z-panel-body .z-grid,
+.z-window-content .z-grid:not(.z-grid-standalone) {
+    border: none;
+    box-shadow: none;
+    border-radius: 0;
+}
+
+/* Form grid label column: fixed width so label doesn't take 50% */
+.z-groupbox .z-grid .z-row-inner:first-child,
+.z-panel-body .z-grid .z-row-inner:first-child {
+    width: 140px;
+    min-width: 140px;
+    color: var(--md-sys-color-on-surface-variant);
+    font-size: var(--md-sys-typescale-body-medium-size);
+    white-space: nowrap;
+}
+
+/* ─── Auxiliary header row (auxhead / auxheader) ─────────────────────────── */
+.z-auxhead {
+    background-color: var(--md-sys-color-surface-container);
+}
+
+.z-auxheader {
+    padding: var(--md-sys-spacing-2) var(--md-sys-spacing-4);
+    font-family: var(--md-sys-typescale-font-family);
+    font-size: var(--md-sys-typescale-label-medium-size);
+    font-weight: var(--md-sys-typescale-label-large-weight);
+    color: var(--md-sys-color-on-surface-variant);
+    text-align: center;
+    border-bottom: 1px solid var(--md-sys-color-outline-variant);
+    border-inline-end: 1px solid var(--md-sys-color-outline-variant);
+    background-color: var(--md-sys-color-surface-container);
+    vertical-align: middle;
+    white-space: nowrap;
+    box-sizing: border-box;
+}
+
+.z-auxheader:last-child {
+    border-inline-end: none;
+}
+
+/* Frozen column spacer in auxhead */
+.z-auxheader.z-frozen-col {
+    background-color: var(--md-sys-color-surface-container-low);
+    border-inline-end: 2px solid var(--md-sys-color-outline-variant);
+}
+
+/* Auxhead bar (scroll spacer column) */
+.z-auxhead-bar {
+    background-color: var(--md-sys-color-surface-container);
+    border-bottom: 1px solid var(--md-sys-color-outline-variant);
+}
+
+/* ─── Header area ───────────────────────────────────────────────────────── */
+.z-grid-header {
+    overflow: hidden;
+    background-color: var(--md-sys-color-surface-container-low);
+}
+
+.z-grid-header-inner {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+/* Column header cell */
+.z-column,
+.z-listheader {
+    padding: var(--md-sys-spacing-3) var(--md-sys-spacing-4);
+    font-family: var(--md-sys-typescale-font-family);
+    font-size: var(--md-sys-typescale-label-large-size);
+    font-weight: var(--md-sys-typescale-label-large-weight);
+    line-height: var(--md-sys-typescale-label-large-line-height);
+    color: var(--md-sys-color-on-surface-variant);
+    text-align: left;
+    border-bottom: 2px solid var(--md-sys-color-outline-variant);
+    background-color: var(--md-sys-color-surface-container-low);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    user-select: none;
+    vertical-align: middle;
+    position: relative;
+    box-sizing: border-box;
+}
+
+/* Sortable column */
+.z-column-sort {
+    cursor: pointer;
+}
+
+.z-column-sort:hover {
+    background-color: var(--md-sys-color-surface-container);
+}
+
+.z-column .z-column-sort-icon,
+.z-column [class*="z-icon-"] {
+    font-size: 14px;
+    margin-left: var(--md-sys-spacing-1);
+    color: var(--md-sys-color-on-surface-variant);
+    vertical-align: middle;
+}
+
+/* Column separator for resize */
+.z-column-sizer {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    cursor: col-resize;
+    background: var(--md-sys-color-outline-variant);
+    opacity: 0;
+    transition: opacity var(--md-sys-motion-duration-short3);
+}
+
+.z-column:hover .z-column-sizer {
+    opacity: 1;
+}
+
+/* ─── Body area ─────────────────────────────────────────────────────────── */
+.z-grid-body {
+    overflow: auto;
+    max-height: 100%;
+}
+
+.z-grid-body table,
+.z-grid-inner {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+/* Row */
+.z-row {
+    border-bottom: 1px solid var(--md-sys-color-outline-variant);
+    transition: background-color var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
+}
+
+.z-row:last-child {
+    border-bottom: none;
+}
+
+.z-row:hover {
+    background-color: var(--md-sys-color-surface-container-low);
+}
+
+.z-row.z-row-selected,
+.z-row.z-selected {
+    background-color: var(--md-sys-color-primary-container);
+}
+
+.z-row.z-row-selected:hover,
+.z-row.z-selected:hover {
+    background-color: var(--md-sys-color-primary-container);
+}
+
+/* Cell */
+.z-row-inner,
+.z-cell {
+    padding: var(--md-sys-spacing-2) var(--md-sys-spacing-4);
+    font-family: var(--md-sys-typescale-font-family);
+    font-size: var(--md-sys-typescale-body-medium-size);
+    font-weight: var(--md-sys-typescale-body-medium-weight);
+    color: var(--md-sys-color-on-surface);
+    vertical-align: middle;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    box-sizing: border-box;
+}
+
+/* Even/odd striping (optional, disabled by default) */
+.z-grid-striped .z-row:nth-child(even) {
+    background-color: var(--md-sys-color-surface-container-lowest);
+}
+
+/* ─── Foot area ─────────────────────────────────────────────────────────── */
+.z-grid-foot {
+    background-color: var(--md-sys-color-surface-container-low);
+    border-top: 2px solid var(--md-sys-color-outline-variant);
+}
+
+.z-foot td,
+.z-foot .z-row-inner {
+    font-weight: var(--md-sys-typescale-label-large-weight);
+    color: var(--md-sys-color-on-surface-variant);
+}
+
+/* ─── Group rows ────────────────────────────────────────────────────────── */
+/* .z-group is a TR; .z-group-inner is the TD; .z-group-content is inner div */
+.z-group {
+    background-color: var(--md-sys-color-surface-container-low);
+    border-top: 1px solid var(--md-sys-color-outline-variant);
+    border-bottom: 1px solid var(--md-sys-color-outline-variant);
+}
+
+.z-group-inner {
+    padding: var(--md-sys-spacing-2) var(--md-sys-spacing-4);
+    font-family: var(--md-sys-typescale-font-family);
+    font-size: var(--md-sys-typescale-label-large-size);
+    font-weight: var(--md-sys-typescale-label-large-weight);
+    color: var(--md-sys-color-on-surface-variant);
+}
+
+.z-group-content {
+    display: flex;
+    align-items: center;
+    gap: var(--md-sys-spacing-2);
+}
+
+/* Group toggle icon */
+.z-group-icon {
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+    color: var(--md-sys-color-on-surface-variant);
+    font-size: 14px;
+}
+
+/* ─── Groupfoot rows ─────────────────────────────────────────────────────── */
+.z-groupfoot {
+    background-color: var(--md-sys-color-surface-container-lowest);
+    border-bottom: 1px solid var(--md-sys-color-outline-variant);
+}
+
+.z-groupfoot .z-cell {
+    padding: var(--md-sys-spacing-2) var(--md-sys-spacing-4);
+    font-size: var(--md-sys-typescale-body-small-size);
+    font-style: italic;
+    color: var(--md-sys-color-on-surface-variant);
+}
+
+/* Empty message */
+.z-grid-emph {
+    padding: var(--md-sys-spacing-8) var(--md-sys-spacing-4);
+    text-align: center;
+    color: var(--md-sys-color-on-surface-variant);
+    font-style: italic;
+    font-size: var(--md-sys-typescale-body-medium-size);
+}

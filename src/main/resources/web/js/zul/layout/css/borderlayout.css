@@ -1,0 +1,255 @@
+/* MD3 BorderLayout — north/south/east/west/center panel layout */
+/* ZK uses absolute positioning for all regions. JS calculates left/top/width/height inline.
+   DO NOT use flexbox on .z-borderlayout — it will break JS layout calculations.
+   DOM: .z-borderlayout (position:relative) > .z-north/.z-south/.z-west/.z-east/.z-center (position:absolute)
+        Each region has a "-body" child for scrollable content, a "-splitter" drag handle,
+        and a "-collapsed" placeholder when closed. */
+
+/* ─── Container ───────────────────────────────────────────────────────────── */
+.z-borderlayout {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    box-sizing: border-box;
+    background-color: var(--md-sys-color-background);
+}
+
+/* ─── All regions: absolute positioned by ZK JS ───────────────────────────── */
+.z-north,
+.z-south,
+.z-west,
+.z-east,
+.z-center {
+    position: absolute;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+/* ─── North (top) ─────────────────────────────────────────────────────────── */
+.z-north {
+    background-color: var(--md-sys-color-surface);
+    border-bottom: 1px solid var(--md-sys-color-outline-variant);
+    z-index: 16;
+}
+
+.z-north-noborder {
+    border-bottom: none;
+}
+
+.z-north-body {
+    overflow: auto;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+/* ─── South (bottom) ──────────────────────────────────────────────────────── */
+.z-south {
+    background-color: var(--md-sys-color-surface);
+    border-top: 1px solid var(--md-sys-color-outline-variant);
+    z-index: 14;
+}
+
+.z-south-noborder {
+    border-top: none;
+}
+
+.z-south-body {
+    overflow: auto;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+/* ─── West (left sidebar) ─────────────────────────────────────────────────── */
+.z-west {
+    background-color: var(--md-sys-color-surface-container-low);
+    border-right: 1px solid var(--md-sys-color-outline-variant);
+    z-index: 12;
+}
+
+.z-west-noborder {
+    border-right: none;
+}
+
+.z-west-body {
+    overflow: auto;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+/* ─── East (right sidebar) ────────────────────────────────────────────────── */
+.z-east {
+    background-color: var(--md-sys-color-surface-container-low);
+    border-left: 1px solid var(--md-sys-color-outline-variant);
+    z-index: 10;
+}
+
+.z-east-noborder {
+    border-left: none;
+}
+
+.z-east-body {
+    overflow: auto;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+/* ─── Center (main content) ───────────────────────────────────────────────── */
+.z-center {
+    background-color: var(--md-sys-color-background);
+    z-index: 8;
+}
+
+.z-center-noborder {
+    border: none;
+}
+
+.z-center-body {
+    overflow: auto;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+/* ─── Splitters — MUST have explicit small width/height for JS offset calc ── */
+/* ZK reads split.offsetWidth / split.offsetHeight for layout calculations.
+   Without explicit size, they expand to 100% and break JS positioning. */
+.z-west-splitter,
+.z-east-splitter {
+    position: absolute;
+    width: 8px;
+    cursor: ew-resize;
+    overflow: hidden;
+    background-color: var(--md-sys-color-outline-variant);
+    opacity: 0.4;
+    transition: opacity var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard),
+                background-color var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
+    z-index: 20;
+}
+
+.z-north-splitter,
+.z-south-splitter {
+    position: absolute;
+    height: 8px;
+    cursor: ns-resize;
+    overflow: hidden;
+    background-color: var(--md-sys-color-outline-variant);
+    opacity: 0.4;
+    transition: opacity var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard),
+                background-color var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
+}
+
+.z-west-splitter:hover,
+.z-east-splitter:hover,
+.z-north-splitter:hover,
+.z-south-splitter:hover {
+    opacity: 1;
+    background-color: var(--md-sys-color-primary);
+}
+
+/* ─── Splitter buttons (collapse toggle) ─────────────────────────────────── */
+.z-west-splitter-button,
+.z-east-splitter-button,
+.z-north-splitter-button,
+.z-south-splitter-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    background-color: var(--md-sys-color-surface);
+    border: 1px solid var(--md-sys-color-outline-variant);
+    border-radius: var(--md-sys-shape-corner-full);
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    font-size: 10px;
+    color: var(--md-sys-color-on-surface-variant);
+    transition: background-color var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
+    box-shadow: var(--md-sys-elevation-1);
+}
+
+.z-west-splitter-button:hover,
+.z-east-splitter-button:hover,
+.z-north-splitter-button:hover,
+.z-south-splitter-button:hover {
+    background-color: var(--md-sys-color-surface-container);
+    color: var(--md-sys-color-on-surface);
+}
+
+/* Hide disabled icons */
+.z-west-splitter-button-disabled .z-icon-caret-left,
+.z-east-splitter-button-disabled .z-icon-caret-right,
+.z-north-splitter-button-disabled .z-icon-caret-up,
+.z-south-splitter-button-disabled .z-icon-caret-down {
+    display: none;
+}
+
+/* ─── Collapsed panel placeholders ───────────────────────────────────────── */
+.z-north-collapsed,
+.z-south-collapsed,
+.z-west-collapsed,
+.z-east-collapsed {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--md-sys-color-surface-container);
+    border: 1px solid var(--md-sys-color-outline-variant);
+    cursor: pointer;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.z-north-collapsed:hover,
+.z-south-collapsed:hover,
+.z-west-collapsed:hover,
+.z-east-collapsed:hover {
+    background-color: var(--md-sys-color-surface-container-high);
+}
+
+/* ─── Panel headers inside border layout regions ─────────────────────────── */
+.z-north-header,
+.z-south-header,
+.z-west-header,
+.z-east-header,
+.z-center-header {
+    display: flex;
+    align-items: center;
+    height: 40px;
+    padding: 0 var(--md-sys-spacing-3);
+    background-color: var(--md-sys-color-surface-container);
+    border-bottom: 1px solid var(--md-sys-color-outline-variant);
+    font-size: var(--md-sys-typescale-title-small-size);
+    font-weight: var(--md-sys-typescale-title-small-weight);
+    color: var(--md-sys-color-on-surface-variant);
+    white-space: nowrap;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+/* ─── Region title (collapsed rotation) ──────────────────────────────────── */
+.z-west-title,
+.z-east-title {
+    transform: rotate(90deg);
+    transform-origin: left bottom;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.z-north-title,
+.z-south-title,
+.z-west-title,
+.z-east-title {
+    font-size: var(--md-sys-typescale-label-medium-size);
+    font-weight: var(--md-sys-typescale-label-medium-weight);
+    color: var(--md-sys-color-on-surface-variant);
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* ─── Drag ghost ──────────────────────────────────────────────────────────── */
+.z-splitter-ghost {
+    background-color: var(--md-sys-color-primary);
+    opacity: 0.3;
+    position: absolute;
+}

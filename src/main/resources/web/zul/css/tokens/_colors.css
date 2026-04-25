@@ -1,0 +1,71 @@
+/* MD3 Color Tokens — aligned with Mira dashboard (blue-indigo palette) */
+:root {
+    /* Primary — Mira #376fd0 blue */
+    --md-sys-color-primary: #376fd0;
+    --md-sys-color-on-primary: #ffffff;
+    --md-sys-color-primary-container: #d6e4ff;
+    --md-sys-color-on-primary-container: #001c3d;
+
+    /* Secondary — teal accent */
+    --md-sys-color-secondary: #4db6ac;
+    --md-sys-color-on-secondary: #ffffff;
+    --md-sys-color-secondary-container: #b2dfdb;
+    --md-sys-color-on-secondary-container: #00251a;
+
+    /* Tertiary */
+    --md-sys-color-tertiary: #7e73d6;
+    --md-sys-color-on-tertiary: #ffffff;
+    --md-sys-color-tertiary-container: #e6dfff;
+    --md-sys-color-on-tertiary-container: #1a0068;
+
+    /* Error */
+    --md-sys-color-error: #d32f2f;
+    --md-sys-color-on-error: #ffffff;
+    --md-sys-color-error-container: #ffcdd2;
+    --md-sys-color-on-error-container: #7f0000;
+
+    /* Warning (non-standard MD3, needed for badges) */
+    --md-sys-color-warning: #f57c00;
+    --md-sys-color-on-warning: #ffffff;
+    --md-sys-color-warning-container: #ffe0b2;
+    --md-sys-color-on-warning-container: #7a3900;
+
+    /* Surface & Background — Mira uses #f7f9fc page bg */
+    --md-sys-color-background: #f7f9fc;
+    --md-sys-color-on-background: rgba(0, 0, 0, 0.87);
+    --md-sys-color-surface: #ffffff;
+    --md-sys-color-on-surface: rgba(0, 0, 0, 0.87);
+    --md-sys-color-surface-variant: #f0f4fa;
+    --md-sys-color-on-surface-variant: rgba(0, 0, 0, 0.6);
+
+    /* Surface containers (elevation tiers) */
+    --md-sys-color-surface-container-lowest: #ffffff;
+    --md-sys-color-surface-container-low: #f7f9fc;
+    --md-sys-color-surface-container: #f0f4fa;
+    --md-sys-color-surface-container-high: #e8eef7;
+    --md-sys-color-surface-container-highest: #e0e8f4;
+
+    /* Outline */
+    --md-sys-color-outline: rgba(0, 0, 0, 0.23);
+    --md-sys-color-outline-variant: rgba(0, 0, 0, 0.12);
+
+    /* Inverse */
+    --md-sys-color-inverse-surface: #2d3748;
+    --md-sys-color-inverse-on-surface: #f0f4fa;
+    --md-sys-color-inverse-primary: #9ec3ff;
+
+    /* Scrim */
+    --md-sys-color-scrim: rgba(0, 0, 0, 0.5);
+
+    /* State layer opacities */
+    --md-sys-state-hover-opacity: 0.08;
+    --md-sys-state-focus-opacity: 0.12;
+    --md-sys-state-pressed-opacity: 0.12;
+    --md-sys-state-dragged-opacity: 0.16;
+    --md-sys-state-disabled-opacity: 0.38;
+    --md-sys-state-disabled-container-opacity: 0.12;
+
+    /* Semantic / Role colors for ZK components */
+    --md-sys-color-disabled: rgba(0, 0, 0, 0.38);
+    --md-sys-color-disabled-container: rgba(0, 0, 0, 0.12);
+}

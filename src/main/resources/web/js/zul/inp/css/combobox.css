@@ -1,0 +1,135 @@
+/* MD3 Combobox — dropdown text field */
+/* DOM: <span class="z-combobox"><input class="z-combobox-input"><button class="z-combobox-button"><i class="z-icon-caret-down"/></button><ul class="z-combobox-popup">...</ul></span> */
+
+/* ─── Wrapper ─────────────────────────────────────────────────────────── */
+.z-combobox {
+    display: inline-flex;
+    align-items: center;
+    position: relative;
+    border: 1px solid var(--md-sys-color-outline);
+    border-radius: var(--md-sys-shape-input);
+    background-color: var(--md-sys-color-surface);
+    min-height: 40px;
+    overflow: visible;
+    box-sizing: border-box;
+    transition: border-color var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
+}
+
+.z-combobox:hover {
+    border-color: var(--md-sys-color-on-surface);
+}
+
+.z-combobox:focus-within {
+    border-color: var(--md-sys-color-primary);
+    border-width: 2px;
+}
+
+/* ─── Input field ─────────────────────────────────────────────────────── */
+.z-combobox-input {
+    flex: 1;
+    min-width: 0;
+    border: none;
+    background: transparent;
+    padding: 0 var(--md-sys-spacing-3);
+    height: 100%;
+    min-height: 38px;
+    font-family: var(--md-sys-typescale-font-family);
+    font-size: var(--md-sys-typescale-body-medium-size);
+    font-weight: var(--md-sys-typescale-body-medium-weight);
+    color: var(--md-sys-color-on-surface);
+    outline: none;
+    box-sizing: border-box;
+}
+
+.z-combobox-input::placeholder {
+    color: var(--md-sys-color-on-surface-variant);
+    opacity: 1;
+}
+
+/* ─── Dropdown button ─────────────────────────────────────────────────── */
+.z-combobox-button {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    min-height: 38px;
+    border: none;
+    background: transparent;
+    color: var(--md-sys-color-on-surface-variant);
+    cursor: pointer;
+    flex-shrink: 0;
+    border-radius: 0 var(--md-sys-shape-input) var(--md-sys-shape-input) 0;
+    transition: color var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
+    overflow: hidden;
+}
+
+.z-combobox-button::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-color: currentColor;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
+}
+
+.z-combobox-button:hover::before { opacity: var(--md-sys-state-hover-opacity); }
+.z-combobox-button:active::before { opacity: var(--md-sys-state-pressed-opacity); }
+
+/* ─── Popup dropdown ──────────────────────────────────────────────────── */
+.z-combobox-popup {
+    position: absolute;
+    top: 100%;
+    left: -1px;
+    right: -1px;
+    z-index: 1600;
+    list-style: none;
+    margin: 4px 0 0 0;
+    padding: var(--md-sys-spacing-1) 0;
+    background-color: var(--md-sys-color-surface);
+    border-radius: var(--md-sys-shape-card);
+    box-shadow: var(--md-sys-elevation-dropdown);
+    border: 1px solid var(--md-sys-color-outline-variant);
+    max-height: 280px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    box-sizing: border-box;
+}
+
+/* Comboitem */
+.z-comboitem {
+    display: flex;
+    align-items: center;
+    padding: var(--md-sys-spacing-2) var(--md-sys-spacing-4);
+    font-family: var(--md-sys-typescale-font-family);
+    font-size: var(--md-sys-typescale-body-medium-size);
+    color: var(--md-sys-color-on-surface);
+    cursor: pointer;
+    transition: background-color var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.z-comboitem:hover {
+    background-color: var(--md-sys-color-surface-container);
+}
+
+.z-comboitem.z-comboitem-selected,
+.z-comboitem.z-selected {
+    background-color: var(--md-sys-color-primary-container);
+    color: var(--md-sys-color-on-primary-container);
+}
+
+/* Disabled */
+.z-combobox[disabled],
+.z-combobox.z-combobox-disabled {
+    opacity: var(--md-sys-state-disabled-opacity);
+    pointer-events: none;
+}
+
+.z-combobox[disabled] .z-combobox-input,
+.z-combobox.z-combobox-disabled .z-combobox-input {
+    cursor: not-allowed;
+}
