@@ -20,7 +20,7 @@
                     <label sclass="badge-info" value="panel"/>
                     <label sclass="badge-info" value="listbox"/>
                 </hlayout>
-                <a href="/usecase/dashboard" label="Open Dashboard →" sclass="md-text-primary"/>
+                <a href="/usecase/dashboard.zul" label="Open Dashboard →" sclass="md-text-primary"/>
             </vlayout>
         </groupbox>
 
@@ -34,7 +34,7 @@
                     <label sclass="badge-info" value="menubar"/>
                     <label sclass="badge-info" value="tabbox"/>
                 </hlayout>
-                <a href="/usecase/app-shell" label="Open App Shell →" sclass="md-text-primary"/>
+                <a href="/usecase/app-shell.zul" label="Open App Shell →" sclass="md-text-primary"/>
             </vlayout>
         </groupbox>
 
@@ -48,7 +48,7 @@
                     <label sclass="badge-info" value="grid"/>
                     <label sclass="badge-info" value="combobutton"/>
                 </hlayout>
-                <a href="/usecase/order-entry" label="Open Order Entry →" sclass="md-text-primary"/>
+                <a href="/usecase/order-entry.zul" label="Open Order Entry →" sclass="md-text-primary"/>
             </vlayout>
         </groupbox>
 
@@ -62,7 +62,7 @@
                     <label sclass="badge-info" value="bandbox"/>
                     <label sclass="badge-info" value="paging"/>
                 </hlayout>
-                <a href="/usecase/employee-grid" label="Open Employee Grid →" sclass="md-text-primary"/>
+                <a href="/usecase/employee-grid.zul" label="Open Employee Grid →" sclass="md-text-primary"/>
             </vlayout>
         </groupbox>
 
@@ -76,7 +76,7 @@
                     <label sclass="badge-info" value="slider"/>
                     <label sclass="badge-info" value="captcha"/>
                 </hlayout>
-                <a href="/usecase/user-profile" label="Open User Profile →" sclass="md-text-primary"/>
+                <a href="/usecase/user-profile.zul" label="Open User Profile →" sclass="md-text-primary"/>
             </vlayout>
         </groupbox>
 
@@ -90,7 +90,7 @@
                     <label sclass="badge-info" value="tree"/>
                     <label sclass="badge-info" value="listbox"/>
                 </hlayout>
-                <a href="/usecase/product-browser" label="Open Product Browser →" sclass="md-text-primary"/>
+                <a href="/usecase/product-browser.zul" label="Open Product Browser →" sclass="md-text-primary"/>
             </vlayout>
         </groupbox>
 
@@ -104,7 +104,7 @@
                     <label sclass="badge-info" value="toolbar"/>
                     <label sclass="badge-info" value="calendar"/>
                 </hlayout>
-                <a href="/usecase/report-viewer" label="Open Report Viewer →" sclass="md-text-primary"/>
+                <a href="/usecase/report-viewer.zul" label="Open Report Viewer →" sclass="md-text-primary"/>
             </vlayout>
         </groupbox>
 
@@ -118,7 +118,7 @@
                     <label sclass="badge-info" value="audio"/>
                     <label sclass="badge-info" value="progressmeter"/>
                 </hlayout>
-                <a href="/usecase/media-manager" label="Open Media Manager →" sclass="md-text-primary"/>
+                <a href="/usecase/media-manager.zul" label="Open Media Manager →" sclass="md-text-primary"/>
             </vlayout>
         </groupbox>
 

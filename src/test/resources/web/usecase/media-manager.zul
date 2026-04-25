@@ -91,7 +91,7 @@
                 <!-- Audio player with track -->
                 <groupbox>
                     <caption label="Player"/>
-                    <audio src="" controls="true" width="400px"/>
+                    <audio src="" controls="true" hflex="1"/>
                 </groupbox>
 
                 <!-- Upload audio form -->

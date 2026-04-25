@@ -1,7 +1,8 @@
 <?page title="Enterprise App Shell"?>
+<?link rel="stylesheet" type="text/css" href="~./usecase/usecase.css"?>
 <zk>
 
-<borderlayout height="640px">
+<borderlayout height="100vh">
     <north size="48px" border="none">
         <toolbar>
             <span sclass="fs-3">ERP Portal</span>

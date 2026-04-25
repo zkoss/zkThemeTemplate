@@ -1,6 +1,6 @@
 <?page title="Order Entry Form"?>
 <zk>
-<window title="New Sales Order" border="normal" width="820px">
+<window title="New Sales Order" border="normal" width="900px">
 
     <tabbox width="100%">
         <tabs>
@@ -52,7 +52,7 @@
                     </groupbox>
 
                     <!-- Order Details -->
-                    <groupbox width="400px">
+                    <groupbox width="430px">
                         <caption label="Order Details"/>
                         <grid>
                             <rows>

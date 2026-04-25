@@ -4,6 +4,20 @@
  */
 
 /* ============================================
+   User Profile — Avatar
+   ============================================ */
+/* ZK <image sclass="avatar"> renders as a plain <img class="avatar z-image">
+   Apply border-radius directly to the img element */
+img.avatar,
+.avatar.z-image {
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+    border: 3px solid var(--md-sys-color-outline-variant);
+    background-color: var(--md-sys-color-surface-container-high);
+}
+
+/* ============================================
    Badge / Status Chips
    ============================================ */
 .badge-ok, .badge-info {
@@ -93,6 +107,22 @@
     margin-bottom: var(--md-sys-spacing-2);
 }
 
+/* KPI card: ensure panel fills its flex cell and has a min width */
+.kpi-card {
+    min-width: 180px;
+}
+
+/* Ensure panel children content has proper padding */
+.kpi-card .z-panel-content {
+    padding: var(--md-sys-spacing-4);
+}
+
+/* KPI big number */
+.kpi-card .fs-1 {
+    color: var(--md-sys-color-on-surface);
+    margin-bottom: var(--md-sys-spacing-1);
+}
+
 /* ============================================
    Report Page
    ============================================ */
@@ -101,6 +131,75 @@
     padding: var(--md-sys-spacing-3) var(--md-sys-spacing-4);
     border-bottom: 2px solid var(--md-sys-color-primary);
     margin-bottom: var(--md-sys-spacing-2);
+}
+
+.report-title {
+    font-size: var(--md-sys-typescale-title-large-size);
+    font-weight: var(--md-sys-typescale-title-large-weight);
+    line-height: var(--md-sys-typescale-title-large-line-height);
+    color: var(--md-sys-color-on-surface);
+    margin-bottom: var(--md-sys-spacing-1);
+}
+
+.report-sub {
+    font-size: var(--md-sys-typescale-body-small-size);
+    font-weight: var(--md-sys-typescale-body-small-weight);
+    color: var(--md-sys-color-on-surface-variant);
+    margin: 0;
+}
+
+/* ============================================
+   App Shell — Status Bar (bottom south panel)
+   ============================================ */
+.status-bar {
+    display: flex;
+    align-items: center;
+    gap: var(--md-sys-spacing-3);
+    padding: 0 var(--md-sys-spacing-4);
+    height: 28px;
+    font-size: var(--md-sys-typescale-body-small-size);
+    color: var(--md-sys-color-on-surface-variant);
+    background-color: var(--md-sys-color-surface-container-low);
+}
+
+/* Status bar used with sclass="status-bar-inner" on hlayout */
+.status-bar-inner.z-hlayout,
+.z-hlayout.status-bar-inner {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 100%;
+    padding: 0 var(--md-sys-spacing-4);
+    gap: var(--md-sys-spacing-3);
+    font-size: var(--md-sys-typescale-body-small-size);
+    color: var(--md-sys-color-on-surface-variant);
+    background-color: var(--md-sys-color-surface-container-low);
+    box-sizing: border-box;
+}
+
+.status-bar-inner .z-hlayout-inner {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: var(--md-sys-spacing-3);
+    height: 100%;
+    flex: 1;
+    overflow: hidden;
+}
+
+/* Prevent labels in status bar from wrapping */
+.status-bar-inner .z-label {
+    white-space: nowrap;
+    font-size: var(--md-sys-typescale-body-small-size);
+    color: var(--md-sys-color-on-surface-variant);
+}
+
+/* ============================================
+   App Shell — West Navigation Sidebar padding
+   ============================================ */
+/* The west body has no native padding; add some via the first child div */
+.z-west-body > .z-div {
+    padding: var(--md-sys-spacing-2) var(--md-sys-spacing-2);
 }
 
 /* ============================================
@@ -118,4 +217,25 @@
     border-radius: var(--md-sys-shape-corner-extra-small);
     font-size: var(--md-sys-typescale-body-small-size);
     color: var(--md-sys-color-on-surface);
+}
+
+/* ============================================
+   Media Manager — Audio player full width
+   ============================================ */
+/* The ZK <audio> component renders as a native <audio> element.
+   ZK may set a fixed width attribute; override to stretch to container. */
+.z-audio {
+    width: 100% !important;
+    display: block;
+}
+
+/* Suppress bottom border on toolbar when immediately followed by another toolbar
+   to avoid double-line visual artifact when toolbars are stacked vertically */
+.z-tabpanel .z-toolbar + .z-toolbar {
+    border-top: none;
+}
+
+/* Ensure the tabpanel vlayout content has proper background on page-content tabbox */
+.z-tabbox.page-content .z-tabpanels {
+    background-color: var(--md-sys-color-surface-container-lowest);
 }
