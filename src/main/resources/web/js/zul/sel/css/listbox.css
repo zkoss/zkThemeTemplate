@@ -84,11 +84,10 @@
     background-color: var(--md-sys-color-primary-container);
 }
 
-/* Focus */
-.z-listitem:focus-visible,
-.z-listitem.z-listitem-focus {
-    outline: 2px solid var(--md-sys-color-primary);
-    outline-offset: -2px;
+/* Focus — outline on <tr> clips at cell boundaries; use box-shadow on the first cell instead */
+.z-listitem:focus-visible .z-listcell:first-child,
+.z-listitem.z-listitem-focus .z-listcell:first-child {
+    box-shadow: inset 3px 0 0 var(--md-sys-color-primary);
 }
 
 /* Cell */
@@ -121,12 +120,18 @@
 .z-listgroup td,
 .z-listgroup .z-listcell-cnt,
 .z-listgroup .z-listcell-content {
-    background-color: var(--md-sys-color-surface-container-low);
-    color: var(--md-sys-color-on-surface-variant);
+    background-color: var(--md-sys-color-surface-container);
+    color: var(--md-sys-color-on-surface);
     font-size: var(--md-sys-typescale-label-large-size);
     font-weight: var(--md-sys-typescale-label-large-weight);
     padding: var(--md-sys-spacing-2) var(--md-sys-spacing-4);
+    border-top: 1px solid var(--md-sys-color-outline-variant);
     border-bottom: 1px solid var(--md-sys-color-outline-variant);
+}
+
+.z-listgroup > td:first-child {
+    border-left: 3px solid var(--md-sys-color-primary);
+    padding-left: calc(var(--md-sys-spacing-4) - 3px);
 }
 
 /* Group open/close toggle arrow */

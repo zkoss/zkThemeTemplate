@@ -22,9 +22,14 @@
     user-select: none;
 }
 
-/* Selected (filled) star */
+/* Selected (filled) star — override icon font's hollow glyph with solid Unicode star */
 .z-rating-icon.z-rating-selected {
     color: var(--md-sys-color-warning);
+}
+
+.z-rating-icon.z-rating-selected::before {
+    content: '\2605';
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 /* Hover state for interactive rating */

@@ -84,3 +84,23 @@
     opacity: var(--md-sys-state-disabled-opacity);
     pointer-events: none;
 }
+
+/* ─── Calendar popup ──────────────────────────────────────────────────── */
+.z-datebox-popup {
+    position: absolute;
+    z-index: 1700;
+    background-color: var(--md-sys-color-surface);
+    border-radius: var(--md-sys-shape-card);
+    box-shadow: var(--md-sys-elevation-dropdown);
+    border: 1px solid var(--md-sys-color-outline-variant);
+    overflow: hidden;
+    box-sizing: border-box;
+    min-width: 280px;
+}
+
+.z-datebox-popup .z-calendar {
+    width: 320px;
+    border: none;
+    box-shadow: none;
+    border-radius: 0;
+}

@@ -1,128 +1,88 @@
-<?page title="Use Case Gallery"?>
+<?page title="zk-material Use Cases"?>
 <?link rel="stylesheet" type="text/css" href="~./usecase/usecase.css"?>
 <zk>
+<borderlayout height="100vh">
 
-<vlayout hflex="1" sclass="page-content">
+    <west size="258px" border="none" collapsible="false">
+        <div sclass="sidebar-nav">
+            <div sclass="sidebar-brand">zk-material</div>
 
-    <label value="Use Case Gallery" sclass="fs-2" style="padding: 8px 0 4px;"/>
-    <label value="Click any card to open the corresponding use case page." sclass="section-hint fs-6"/>
-    <separator bar="true"/>
+            <label sclass="nav-section" value="Use Cases"/>
+            <a href="/usecase/dashboard.zul"       target="content-frame" sclass="nav-item">KPI Dashboard</a>
+            <a href="/usecase/app-shell.zul"        target="content-frame" sclass="nav-item">Enterprise App Shell</a>
+            <a href="/usecase/order-entry.zul"      target="content-frame" sclass="nav-item">Sales Order Entry</a>
+            <a href="/usecase/employee-grid.zul"    target="content-frame" sclass="nav-item">Employee Data Grid</a>
+            <a href="/usecase/user-profile.zul"     target="content-frame" sclass="nav-item">User Profile</a>
+            <a href="/usecase/product-browser.zul"  target="content-frame" sclass="nav-item">Product Browser</a>
+            <a href="/usecase/report-viewer.zul"    target="content-frame" sclass="nav-item">Report Viewer</a>
+            <a href="/usecase/media-manager.zul"    target="content-frame" sclass="nav-item">Media Manager</a>
 
-    <div sclass="md-flex md-flex-wrap md-gap-4">
+            <label sclass="nav-section" value="Form Controls"/>
+            <a href="/button.zul"       target="content-frame" sclass="nav-item">Button</a>
+            <a href="/combobutton.zul"  target="content-frame" sclass="nav-item">Combobutton</a>
+            <a href="/checkbox.zul"     target="content-frame" sclass="nav-item">Checkbox</a>
+            <a href="/radiogroup.zul"   target="content-frame" sclass="nav-item">Radiogroup</a>
+            <a href="/textbox.zul"      target="content-frame" sclass="nav-item">Textbox</a>
+            <a href="/combobox.zul"     target="content-frame" sclass="nav-item">Combobox</a>
+            <a href="/selectbox.zul"    target="content-frame" sclass="nav-item">Selectbox</a>
+            <a href="/datebox.zul"      target="content-frame" sclass="nav-item">Datebox</a>
+            <a href="/timebox.zul"      target="content-frame" sclass="nav-item">Timebox</a>
+            <a href="/spinner.zul"      target="content-frame" sclass="nav-item">Spinner</a>
+            <a href="/slider.zul"       target="content-frame" sclass="nav-item">Slider</a>
+            <a href="/rating.zul"       target="content-frame" sclass="nav-item">Rating</a>
+            <a href="/inputgroup.zul"   target="content-frame" sclass="nav-item">Inputgroup</a>
+            <a href="/bandbox.zul"      target="content-frame" sclass="nav-item">Bandbox</a>
 
-        <!-- Dashboard -->
-        <groupbox width="280px">
-            <caption label="KPI Dashboard"/>
-            <vlayout>
-                <label value="Operations overview with KPI cards, charts, and live metrics." sclass="section-hint fs-6"/>
-                <hlayout>
-                    <label sclass="badge-info" value="vlayout"/>
-                    <label sclass="badge-info" value="panel"/>
-                    <label sclass="badge-info" value="listbox"/>
-                </hlayout>
-                <a href="/usecase/dashboard.zul" label="Open Dashboard →" sclass="md-text-primary"/>
-            </vlayout>
-        </groupbox>
+            <label sclass="nav-section" value="Data"/>
+            <a href="/grid.zul"              target="content-frame" sclass="nav-item">Grid</a>
+            <a href="/grid-header.zul"       target="content-frame" sclass="nav-item">Grid (Header)</a>
+            <a href="/grid-grouping.zul"     target="content-frame" sclass="nav-item">Grid (Grouping)</a>
+            <a href="/grid-detail.zul"       target="content-frame" sclass="nav-item">Grid (Detail)</a>
+            <a href="/listbox.zul"           target="content-frame" sclass="nav-item">Listbox</a>
+            <a href="/listbox-header.zul"    target="content-frame" sclass="nav-item">Listbox (Header)</a>
+            <a href="/listbox-grouping.zul"  target="content-frame" sclass="nav-item">Listbox (Grouping)</a>
+            <a href="/tree.zul"              target="content-frame" sclass="nav-item">Tree</a>
+            <a href="/tree-header.zul"       target="content-frame" sclass="nav-item">Tree (Header)</a>
+            <a href="/paging.zul"            target="content-frame" sclass="nav-item">Paging</a>
+            <a href="/biglistbox.zul"        target="content-frame" sclass="nav-item">Biglistbox</a>
 
-        <!-- App Shell -->
-        <groupbox width="280px">
-            <caption label="Enterprise App Shell"/>
-            <vlayout>
-                <label value="Full application shell with menubar, toolbar, tabbox and sidebar." sclass="section-hint fs-6"/>
-                <hlayout>
-                    <label sclass="badge-info" value="borderlayout"/>
-                    <label sclass="badge-info" value="menubar"/>
-                    <label sclass="badge-info" value="tabbox"/>
-                </hlayout>
-                <a href="/usecase/app-shell.zul" label="Open App Shell →" sclass="md-text-primary"/>
-            </vlayout>
-        </groupbox>
+            <label sclass="nav-section" value="Navigation"/>
+            <a href="/menubar.zul"           target="content-frame" sclass="nav-item">Menubar</a>
+            <a href="/toolbar.zul"           target="content-frame" sclass="nav-item">Toolbar</a>
+            <a href="/tabbox.zul"            target="content-frame" sclass="nav-item">Tabbox</a>
+            <a href="/tabbox-accordion.zul"  target="content-frame" sclass="nav-item">Tabbox (Accordion)</a>
 
-        <!-- Order Entry -->
-        <groupbox width="280px">
-            <caption label="Sales Order Entry"/>
-            <vlayout>
-                <label value="Multi-tab order form with product selection, pricing and attachments." sclass="section-hint fs-6"/>
-                <hlayout>
-                    <label sclass="badge-info" value="window"/>
-                    <label sclass="badge-info" value="grid"/>
-                    <label sclass="badge-info" value="combobutton"/>
-                </hlayout>
-                <a href="/usecase/order-entry.zul" label="Open Order Entry →" sclass="md-text-primary"/>
-            </vlayout>
-        </groupbox>
+            <label sclass="nav-section" value="Containers"/>
+            <a href="/window.zul"    target="content-frame" sclass="nav-item">Window</a>
+            <a href="/panel.zul"     target="content-frame" sclass="nav-item">Panel</a>
+            <a href="/groupbox.zul"  target="content-frame" sclass="nav-item">Groupbox</a>
+            <a href="/popup.zul"     target="content-frame" sclass="nav-item">Popup</a>
+            <a href="/caption.zul"   target="content-frame" sclass="nav-item">Caption</a>
 
-        <!-- Employee Grid -->
-        <groupbox width="280px">
-            <caption label="Employee Data Grid"/>
-            <vlayout>
-                <label value="Advanced grid with frozen columns, grouping, auxhead and inline editing." sclass="section-hint fs-6"/>
-                <hlayout>
-                    <label sclass="badge-info" value="grid"/>
-                    <label sclass="badge-info" value="bandbox"/>
-                    <label sclass="badge-info" value="paging"/>
-                </hlayout>
-                <a href="/usecase/employee-grid.zul" label="Open Employee Grid →" sclass="md-text-primary"/>
-            </vlayout>
-        </groupbox>
+            <label sclass="nav-section" value="Layout"/>
+            <a href="/borderlayout.zul"    target="content-frame" sclass="nav-item">Borderlayout</a>
+            <a href="/hlayout.zul"         target="content-frame" sclass="nav-item">Hlayout / Vlayout</a>
+            <a href="/splitter.zul"        target="content-frame" sclass="nav-item">Splitter</a>
+            <a href="/anchorlayout.zul"    target="content-frame" sclass="nav-item">Anchorlayout</a>
+            <a href="/absolutelayout.zul"  target="content-frame" sclass="nav-item">Absolutelayout</a>
 
-        <!-- User Profile -->
-        <groupbox width="280px">
-            <caption label="User Profile and Settings"/>
-            <vlayout>
-                <label value="Two-column profile editor with personal info, preferences and security settings." sclass="section-hint fs-6"/>
-                <hlayout>
-                    <label sclass="badge-info" value="anchorlayout"/>
-                    <label sclass="badge-info" value="slider"/>
-                    <label sclass="badge-info" value="captcha"/>
-                </hlayout>
-                <a href="/usecase/user-profile.zul" label="Open User Profile →" sclass="md-text-primary"/>
-            </vlayout>
-        </groupbox>
+            <label sclass="nav-section" value="Feedback"/>
+            <a href="/progressmeter.zul"  target="content-frame" sclass="nav-item">Progressmeter</a>
+            <a href="/notification.zul"   target="content-frame" sclass="nav-item">Notification</a>
+            <a href="/toast.zul"          target="content-frame" sclass="nav-item">Toast</a>
+            <a href="/messagebox.zul"     target="content-frame" sclass="nav-item">Messagebox</a>
+            <a href="/calendar.zul"       target="content-frame" sclass="nav-item">Calendar</a>
+        </div>
+    </west>
 
-        <!-- Product Browser -->
-        <groupbox width="280px">
-            <caption label="Product Category Browser"/>
-            <vlayout>
-                <label value="Split-pane browser with category tree, product listbox and detail popup." sclass="section-hint fs-6"/>
-                <hlayout>
-                    <label sclass="badge-info" value="splitter"/>
-                    <label sclass="badge-info" value="tree"/>
-                    <label sclass="badge-info" value="listbox"/>
-                </hlayout>
-                <a href="/usecase/product-browser.zul" label="Open Product Browser →" sclass="md-text-primary"/>
-            </vlayout>
-        </groupbox>
+    <center border="none" autoscroll="false">
+        <html><![CDATA[
+            <iframe id="content-frame" name="content-frame"
+                src="/usecase/dashboard.zul"
+                style="width:100%;height:100%;border:none;display:block;">
+            </iframe>
+        ]]></html>
+    </center>
 
-        <!-- Report Viewer -->
-        <groupbox width="280px">
-            <caption label="Financial Report Builder"/>
-            <vlayout>
-                <label value="Parameter-driven report with date filters, grouping grid and export toolbar." sclass="section-hint fs-6"/>
-                <hlayout>
-                    <label sclass="badge-info" value="borderlayout"/>
-                    <label sclass="badge-info" value="toolbar"/>
-                    <label sclass="badge-info" value="calendar"/>
-                </hlayout>
-                <a href="/usecase/report-viewer.zul" label="Open Report Viewer →" sclass="md-text-primary"/>
-            </vlayout>
-        </groupbox>
-
-        <!-- Media Manager -->
-        <groupbox width="280px">
-            <caption label="Media and Content Manager"/>
-            <vlayout>
-                <label value="Tab-based media library with image gallery, audio player and embed viewer." sclass="section-hint fs-6"/>
-                <hlayout>
-                    <label sclass="badge-info" value="tabbox"/>
-                    <label sclass="badge-info" value="audio"/>
-                    <label sclass="badge-info" value="progressmeter"/>
-                </hlayout>
-                <a href="/usecase/media-manager.zul" label="Open Media Manager →" sclass="md-text-primary"/>
-            </vlayout>
-        </groupbox>
-
-    </div>
-
-</vlayout>
+</borderlayout>
 </zk>

@@ -80,9 +80,6 @@
 /* ─── Popup dropdown ──────────────────────────────────────────────────── */
 .z-combobox-popup {
     position: absolute;
-    top: 100%;
-    left: -1px;
-    right: -1px;
     z-index: 1600;
     list-style: none;
     margin: 4px 0 0 0;

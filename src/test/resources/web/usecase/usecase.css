@@ -57,6 +57,67 @@ img.avatar,
 }
 
 /* ============================================
+   Index — Mira-Style Sidebar Shell
+   ============================================ */
+.sidebar-nav {
+    background-color: var(--md-sys-color-primary);
+    height: 100%;
+    padding: 16px 0;
+    overflow-y: auto;
+    box-sizing: border-box;
+}
+
+.sidebar-brand {
+    padding: 8px 16px 16px;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--md-sys-color-inverse-on-surface);
+    letter-spacing: -0.01em;
+}
+
+.nav-section {
+    display: block;
+    padding: 16px 16px 4px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--md-sys-color-inverse-on-surface);
+    opacity: 0.6;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.sidebar-nav .nav-item,
+.sidebar-nav .z-a.nav-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 16px;
+    margin: 0 8px 2px 0;
+    border-radius: 0 24px 24px 0;
+    color: var(--md-sys-color-inverse-on-surface);
+    font-size: 14px;
+    text-decoration: none;
+    transition: background-color 150ms ease;
+}
+
+.sidebar-nav .nav-item:hover,
+.sidebar-nav .z-a.nav-item:hover {
+    background-color: rgba(255, 255, 255, 0.08);
+    text-decoration: none;
+}
+
+.sidebar-nav .nav-item::before {
+    display: none;
+}
+
+/* Content iframe fills center panel */
+#content-frame {
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: block;
+}
+
+/* ============================================
    App Shell — Navigation Sidebar Items (M3 Navigation Drawer)
    ============================================ */
 .nav-item {
