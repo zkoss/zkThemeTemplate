@@ -1,30 +1,17 @@
 <?page title="Product Category Browser"?>
 <?link rel="stylesheet" type="text/css" href="~./usecase/usecase.css"?>
 <zk>
-<!-- Product detail popup -->
-<popup id="productDetailPopup" width="360px">
-    <vlayout>
-        <label value="Product Details" sclass="fs-4"/>
-        <span sclass="z-icon-file md-icon-xl"/>
-        <html content="&lt;p&gt;&lt;strong&gt;Laptop 15-inch Pro&lt;/strong&gt;&lt;br/&gt;High-performance laptop with 16GB RAM, 512GB SSD, and Intel i7 processor. Ideal for enterprise workloads.&lt;/p&gt;"/>
-        <hlayout>
-            <button label="Add to Cart" iconSclass="z-icon-shopping-cart"/>
-            <button label="Close"/>
-        </hlayout>
-    </vlayout>
-</popup>
-
 <hlayout hflex="1" vflex="1" sclass="page-content">
 
     <!-- Left: Category Tree (25%) -->
-    <vlayout width="220px" vflex="1">
+    <vlayout width="320px" vflex="1">
         <toolbar>
             <label value="Categories" sclass="fs-5"/>
         </toolbar>
         <tree vflex="1" hflex="1">
             <treecols>
                 <treecol label="Category" hflex="1"/>
-                <treecol label="Count" width="55px"/>
+                <treecol label="Count" width="100px"/>
             </treecols>
             <treechildren>
                 <treeitem open="true">
@@ -202,4 +189,16 @@
         <paging pageSize="10" totalSize="99"/>
     </vlayout>
 </hlayout>
+    <!-- Product detail popup -->
+    <popup id="productDetailPopup" width="360px">
+        <vlayout>
+            <label value="Product Details" sclass="fs-4"/>
+            <span sclass="z-icon-file md-icon-xl"/>
+            <html content="&lt;p&gt;&lt;strong&gt;Laptop 15-inch Pro&lt;/strong&gt;&lt;br/&gt;High-performance laptop with 16GB RAM, 512GB SSD, and Intel i7 processor. Ideal for enterprise workloads.&lt;/p&gt;"/>
+            <hlayout>
+                <button label="Add to Cart" iconSclass="z-icon-shopping-cart"/>
+                <button label="Close"/>
+            </hlayout>
+        </vlayout>
+    </popup>
 </zk>

@@ -16,7 +16,7 @@
     </vlayout>
 </popup>
 
-<borderlayout height="640px">
+<borderlayout height="800px" >
 
     <!-- North: Toolbar -->
     <north size="48px" border="none">
@@ -38,7 +38,7 @@
     </north>
 
     <!-- West: Report Parameters -->
-    <west size="240px" title="Parameters" collapsible="true" splittable="true">
+    <west size="340px" title="Parameters" collapsible="true" splittable="true">
         <vlayout hflex="1">
             <groupbox>
                 <caption label="Date Range"/>

@@ -1,6 +1,6 @@
 <?page title="Order Entry Form"?>
 <zk>
-<window title="New Sales Order" border="normal" width="900px">
+<window title="New Sales Order" border="normal" >
 
     <tabbox width="100%">
         <tabs>
@@ -15,7 +15,7 @@
             <tabpanel>
                 <hlayout width="100%" style="gap: var(--md-sys-spacing-4);">
                     <!-- Customer Info -->
-                    <groupbox width="380px">
+                    <groupbox hflex="1">
                         <caption label="Customer Info"/>
                         <grid>
                             <rows>
@@ -52,7 +52,7 @@
                     </groupbox>
 
                     <!-- Order Details -->
-                    <groupbox width="430px">
+                    <groupbox hflex="1">
                         <caption label="Order Details"/>
                         <grid>
                             <rows>
@@ -168,7 +168,7 @@
             <tabpanel>
                 <vlayout>
                     <label value="Shipping Address" sclass="fs-5"/>
-                    <grid width="400px">
+                    <grid>
                         <rows>
                             <row>
                                 <label value="Address:"/>

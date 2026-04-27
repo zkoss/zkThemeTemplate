@@ -15,7 +15,7 @@
                     <caption label="Profile Photo"/>
                     <vlayout sclass="md-text-center">
                         <image src="~./img/avatar-placeholder.svg"
-                               sclass="avatar" width="80px" height="80px"/>
+                               sclass="avatar" width="80px" height="80px" style="margin: auto"/>
                         <space height="8px"/>
                         <fileupload label="Upload New Photo"/>
                         <div sclass="section-hint fs-6">JPEG or PNG, max 2MB</div>
