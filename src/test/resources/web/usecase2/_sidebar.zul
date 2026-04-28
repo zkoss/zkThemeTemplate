@@ -1,5 +1,4 @@
 <zk>
-<!-- Shared sidebar — included by every usecase2 page -->
 <vlayout sclass="m-sidebar__inner">
 
     <div sclass="m-sidebar__brand">
@@ -11,64 +10,142 @@
 
     <div sclass="m-nav-section">Pages</div>
     <navbar orient="vertical" sclass="m-sidebar">
-        <nav label="Dashboard" iconSclass="z-icon-th-large">
-            <navitem label="Default"   href="/usecase2/index.zul"/>
-            <navitem label="Analytics" href="/usecase2/analytics.zul"/>
-            <navitem label="SaaS"      href="/usecase2/saas.zul"/>
+        <nav label="Dashboard" iconSclass="z-icon-th-large" open="true">
+            <navitem label="Default"
+                onClick="@command('navigate', page='~./usecase2/default.zul')"
+                sclass="@load(vm.currentPage eq '~./usecase2/default.zul' ? 'm-active' : '')"/>
+            <navitem label="Analytics"
+                onClick="@command('navigate', page='~./usecase2/analytics.zul')"
+                sclass="@load(vm.currentPage eq '~./usecase2/analytics.zul' ? 'm-active' : '')"/>
+            <navitem label="SaaS"
+                onClick="@command('navigate', page='~./usecase2/saas.zul')"
+                sclass="@load(vm.currentPage eq '~./usecase2/saas.zul' ? 'm-active' : '')"/>
         </nav>
-        <navitem label="Pages"    iconSclass="z-icon-file-text-o"      href="/usecase2/pages.zul"/>
-        <navitem label="Projects" iconSclass="z-icon-folder-o"         href="/usecase2/projects.zul" badgeText="8"/>
-        <navitem label="Orders"   iconSclass="z-icon-shopping-cart"    href="/usecase2/orders.zul"/>
-        <navitem label="Products" iconSclass="z-icon-cube"             href="/usecase2/products.zul"/>
-        <nav label="Invoices"     iconSclass="z-icon-file-o">
-            <navitem label="Invoice List"   href="/usecase2/invoice-list.zul"/>
-            <navitem label="Invoice Detail" href="/usecase2/invoice-detail.zul"/>
+        <navitem label="Pages"    iconSclass="z-icon-file-text-o"
+            onClick="@command('navigate', page='~./usecase2/pages.zul')"
+            sclass="@load(vm.currentPage eq '~./usecase2/pages.zul' ? 'm-active' : '')"/>
+        <navitem label="Projects" iconSclass="z-icon-folder-o" badgeText="8"
+            onClick="@command('navigate', page='~./usecase2/projects.zul')"
+            sclass="@load(vm.currentPage eq '~./usecase2/projects.zul' ? 'm-active' : '')"/>
+        <navitem label="Orders"   iconSclass="z-icon-shopping-cart"
+            onClick="@command('navigate', page='~./usecase2/orders.zul')"
+            sclass="@load(vm.currentPage eq '~./usecase2/orders.zul' ? 'm-active' : '')"/>
+        <navitem label="Products" iconSclass="z-icon-cube"
+            onClick="@command('navigate', page='~./usecase2/products.zul')"
+            sclass="@load(vm.currentPage eq '~./usecase2/products.zul' ? 'm-active' : '')"/>
+        <nav label="Invoices" iconSclass="z-icon-file-o">
+            <navitem label="Invoice List"
+                onClick="@command('navigate', page='~./usecase2/invoice-list.zul')"
+                sclass="@load(vm.currentPage eq '~./usecase2/invoice-list.zul' ? 'm-active' : '')"/>
+            <navitem label="Invoice Detail"
+                onClick="@command('navigate', page='~./usecase2/invoice-detail.zul')"
+                sclass="@load(vm.currentPage eq '~./usecase2/invoice-detail.zul' ? 'm-active' : '')"/>
         </nav>
-        <navitem label="Tasks"    iconSclass="z-icon-check-square-o"   href="/usecase2/tasks.zul" badgeText="17"/>
-        <navitem label="Calendar" iconSclass="z-icon-calendar"         href="/usecase2/calendar.zul"/>
-        <nav label="Auth"         iconSclass="z-icon-user">
-            <navitem label="Sign In"        href="/usecase2/sign-in.zul"/>
-            <navitem label="Sign Up"        href="/usecase2/sign-up.zul"/>
-            <navitem label="Reset Password" href="/usecase2/reset-password.zul"/>
+        <navitem label="Tasks"    iconSclass="z-icon-check-square-o" badgeText="17"
+            onClick="@command('navigate', page='~./usecase2/tasks.zul')"
+            sclass="@load(vm.currentPage eq '~./usecase2/tasks.zul' ? 'm-active' : '')"/>
+        <navitem label="Calendar" iconSclass="z-icon-calendar"
+            onClick="@command('navigate', page='~./usecase2/calendar.zul')"
+            sclass="@load(vm.currentPage eq '~./usecase2/calendar.zul' ? 'm-active' : '')"/>
+        <nav label="Auth" iconSclass="z-icon-user">
+            <navitem label="Sign In"
+                onClick="@command('navigate', page='~./usecase2/sign-in.zul')"
+                sclass="@load(vm.currentPage eq '~./usecase2/sign-in.zul' ? 'm-active' : '')"/>
+            <navitem label="Sign Up"
+                onClick="@command('navigate', page='~./usecase2/sign-up.zul')"
+                sclass="@load(vm.currentPage eq '~./usecase2/sign-up.zul' ? 'm-active' : '')"/>
+            <navitem label="Reset Password"
+                onClick="@command('navigate', page='~./usecase2/reset-password.zul')"
+                sclass="@load(vm.currentPage eq '~./usecase2/reset-password.zul' ? 'm-active' : '')"/>
         </nav>
     </navbar>
 
     <div sclass="m-nav-section">Elements</div>
     <navbar orient="vertical" sclass="m-sidebar">
         <nav label="Components" iconSclass="z-icon-th">
-            <navitem label="Accordion"  href="/usecase2/accordion.zul"/>
-            <navitem label="Alerts"     href="/usecase2/alerts.zul"/>
-            <navitem label="Avatars"    href="/usecase2/avatars.zul"/>
-            <navitem label="Badges"     href="/usecase2/badges.zul"/>
-            <navitem label="Buttons"    href="/usecase2/buttons.zul"/>
-            <navitem label="Cards"      href="/usecase2/cards.zul"/>
-            <navitem label="Chips"      href="/usecase2/chips.zul"/>
-            <navitem label="Dialogs"    href="/usecase2/dialogs.zul"/>
-            <navitem label="Lists"      href="/usecase2/lists.zul"/>
-            <navitem label="Menus"      href="/usecase2/menus.zul"/>
-            <navitem label="Pagination" href="/usecase2/pagination.zul"/>
-            <navitem label="Progress"   href="/usecase2/progress.zul"/>
-            <navitem label="Tabs"       href="/usecase2/tabs.zul"/>
-            <navitem label="Tooltips"   href="/usecase2/tooltips.zul"/>
+            <navitem label="Accordion"
+                onClick="@command('navigate', page='~./usecase2/accordion.zul')"
+                sclass="@load(vm.currentPage eq '~./usecase2/accordion.zul' ? 'm-active' : '')"/>
+            <navitem label="Alerts"
+                onClick="@command('navigate', page='~./usecase2/alerts.zul')"
+                sclass="@load(vm.currentPage eq '~./usecase2/alerts.zul' ? 'm-active' : '')"/>
+            <navitem label="Avatars"
+                onClick="@command('navigate', page='~./usecase2/avatars.zul')"
+                sclass="@load(vm.currentPage eq '~./usecase2/avatars.zul' ? 'm-active' : '')"/>
+            <navitem label="Badges"
+                onClick="@command('navigate', page='~./usecase2/badges.zul')"
+                sclass="@load(vm.currentPage eq '~./usecase2/badges.zul' ? 'm-active' : '')"/>
+            <navitem label="Buttons"
+                onClick="@command('navigate', page='~./usecase2/buttons.zul')"
+                sclass="@load(vm.currentPage eq '~./usecase2/buttons.zul' ? 'm-active' : '')"/>
+            <navitem label="Cards"
+                onClick="@command('navigate', page='~./usecase2/cards.zul')"
+                sclass="@load(vm.currentPage eq '~./usecase2/cards.zul' ? 'm-active' : '')"/>
+            <navitem label="Chips"
+                onClick="@command('navigate', page='~./usecase2/chips.zul')"
+                sclass="@load(vm.currentPage eq '~./usecase2/chips.zul' ? 'm-active' : '')"/>
+            <navitem label="Dialogs"
+                onClick="@command('navigate', page='~./usecase2/dialogs.zul')"
+                sclass="@load(vm.currentPage eq '~./usecase2/dialogs.zul' ? 'm-active' : '')"/>
+            <navitem label="Lists"
+                onClick="@command('navigate', page='~./usecase2/lists.zul')"
+                sclass="@load(vm.currentPage eq '~./usecase2/lists.zul' ? 'm-active' : '')"/>
+            <navitem label="Menus"
+                onClick="@command('navigate', page='~./usecase2/menus.zul')"
+                sclass="@load(vm.currentPage eq '~./usecase2/menus.zul' ? 'm-active' : '')"/>
+            <navitem label="Pagination"
+                onClick="@command('navigate', page='~./usecase2/pagination.zul')"
+                sclass="@load(vm.currentPage eq '~./usecase2/pagination.zul' ? 'm-active' : '')"/>
+            <navitem label="Progress"
+                onClick="@command('navigate', page='~./usecase2/progress.zul')"
+                sclass="@load(vm.currentPage eq '~./usecase2/progress.zul' ? 'm-active' : '')"/>
+            <navitem label="Tabs"
+                onClick="@command('navigate', page='~./usecase2/tabs.zul')"
+                sclass="@load(vm.currentPage eq '~./usecase2/tabs.zul' ? 'm-active' : '')"/>
+            <navitem label="Tooltips"
+                onClick="@command('navigate', page='~./usecase2/tooltips.zul')"
+                sclass="@load(vm.currentPage eq '~./usecase2/tooltips.zul' ? 'm-active' : '')"/>
         </nav>
-        <nav label="Charts"  iconSclass="z-icon-bar-chart">
-            <navitem label="ApexCharts" href="/usecase2/charts-apex.zul"/>
-            <navitem label="Chart.js"   href="/usecase2/charts-chartjs.zul"/>
+        <nav label="Charts" iconSclass="z-icon-bar-chart">
+            <navitem label="ApexCharts"
+                onClick="@command('navigate', page='~./usecase2/charts-apex.zul')"
+                sclass="@load(vm.currentPage eq '~./usecase2/charts-apex.zul' ? 'm-active' : '')"/>
+            <navitem label="Chart.js"
+                onClick="@command('navigate', page='~./usecase2/charts-chartjs.zul')"
+                sclass="@load(vm.currentPage eq '~./usecase2/charts-chartjs.zul' ? 'm-active' : '')"/>
         </nav>
-        <nav label="Forms"   iconSclass="z-icon-pencil-square-o">
-            <navitem label="Text Fields"        href="/usecase2/forms-text-fields.zul"/>
-            <navitem label="Selects"            href="/usecase2/forms-selects.zul"/>
-            <navitem label="Pickers"            href="/usecase2/forms-pickers.zul"/>
-            <navitem label="Editors"            href="/usecase2/forms-editors.zul"/>
-            <navitem label="Selection Controls" href="/usecase2/forms-selection-controls.zul"/>
+        <nav label="Forms" iconSclass="z-icon-pencil-square-o">
+            <navitem label="Text Fields"
+                onClick="@command('navigate', page='~./usecase2/forms-text-fields.zul')"
+                sclass="@load(vm.currentPage eq '~./usecase2/forms-text-fields.zul' ? 'm-active' : '')"/>
+            <navitem label="Selects"
+                onClick="@command('navigate', page='~./usecase2/forms-selects.zul')"
+                sclass="@load(vm.currentPage eq '~./usecase2/forms-selects.zul' ? 'm-active' : '')"/>
+            <navitem label="Pickers"
+                onClick="@command('navigate', page='~./usecase2/forms-pickers.zul')"
+                sclass="@load(vm.currentPage eq '~./usecase2/forms-pickers.zul' ? 'm-active' : '')"/>
+            <navitem label="Editors"
+                onClick="@command('navigate', page='~./usecase2/forms-editors.zul')"
+                sclass="@load(vm.currentPage eq '~./usecase2/forms-editors.zul' ? 'm-active' : '')"/>
+            <navitem label="Selection Controls"
+                onClick="@command('navigate', page='~./usecase2/forms-selection-controls.zul')"
+                sclass="@load(vm.currentPage eq '~./usecase2/forms-selection-controls.zul' ? 'm-active' : '')"/>
         </nav>
-        <nav label="Tables"  iconSclass="z-icon-table">
-            <navitem label="Simple Table"   href="/usecase2/tables-simple.zul"/>
-            <navitem label="Advanced Table" href="/usecase2/tables-advanced.zul"/>
-            <navitem label="Data Grid"      href="/usecase2/tables-datagrid.zul"/>
+        <nav label="Tables" iconSclass="z-icon-table">
+            <navitem label="Simple Table"
+                onClick="@command('navigate', page='~./usecase2/tables-simple.zul')"
+                sclass="@load(vm.currentPage eq '~./usecase2/tables-simple.zul' ? 'm-active' : '')"/>
+            <navitem label="Advanced Table"
+                onClick="@command('navigate', page='~./usecase2/tables-advanced.zul')"
+                sclass="@load(vm.currentPage eq '~./usecase2/tables-advanced.zul' ? 'm-active' : '')"/>
+            <navitem label="Data Grid"
+                onClick="@command('navigate', page='~./usecase2/tables-datagrid.zul')"
+                sclass="@load(vm.currentPage eq '~./usecase2/tables-datagrid.zul' ? 'm-active' : '')"/>
         </nav>
-        <nav label="Icons"   iconSclass="z-icon-heart-o">
-            <navitem label="Lucide Icons" href="/usecase2/icons-lucide.zul"/>
+        <nav label="Icons" iconSclass="z-icon-heart-o">
+            <navitem label="Lucide Icons"
+                onClick="@command('navigate', page='~./usecase2/icons-lucide.zul')"
+                sclass="@load(vm.currentPage eq '~./usecase2/icons-lucide.zul' ? 'm-active' : '')"/>
         </nav>
         <navitem label="Maps" iconSclass="z-icon-map-marker"/>
     </navbar>

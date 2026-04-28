@@ -1,12 +1,4 @@
-<?page title="Avatars | Mira ZK"?>
-<?link rel="stylesheet" type="text/css" href="~./usecase2/usecase2.css"?>
-<zk>
-<borderlayout height="100vh">
-    <west size="258px" border="none" sclass="m-sidebar">
-        <include src="~./usecase2/_sidebar.zul"/>
-    </west>
-    <center border="none" autoscroll="true">
-        <div sclass="m-main">
+<div sclass="m-main">
             <div sclass="m-page-header">
                 <label sclass="m-page-title" value="Avatars"/>
             </div>
@@ -41,6 +33,3 @@
                 </hlayout>
             </div>
         </div>
-    </center>
-</borderlayout>
-</zk>
