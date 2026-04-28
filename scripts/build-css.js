@@ -143,6 +143,19 @@ function build() {
         }
     }
 
+    // 2b. Auto-scan js/zkmax/**/css/*.css → 1:1 *.css.dsp (overrides stubs)
+    const jsZkmaxDir = path.join(webDir, 'js/zkmax');
+    if (fs.existsSync(jsZkmaxDir)) {
+        const zkmaxCssFiles = scanCssFiles(jsZkmaxDir, webDir);
+        for (const relPath of zkmaxCssFiles) {
+            const content = readFile(relPath);
+            if (content) {
+                writeDsp(relPath + '.dsp', content);
+                console.log(`  ${relPath}.dsp`);
+            }
+        }
+    }
+
     // 3. Build combo.css.dsp (merged dropdown inputs)
     const comboCSS = comboFiles.map(f => readFile(f)).join('\n');
     if (comboCSS.trim()) {

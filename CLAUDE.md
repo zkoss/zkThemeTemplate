@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is **zk-material** - a Material Design 3 theme for ZK Framework community edition components (`org.zkoss.zul.*`) targeting enterprise customers. The project uses pure CSS (no LESS) with CSS Custom Properties for theming.
+This is **zk-material** - a Material Design 3 theme for ZK Framework targeting enterprise customers. The project uses pure CSS (no LESS) with CSS Custom Properties for theming.
 
 - **Theme Name**: `zk-material`
 - **Version**: 1.0.0
