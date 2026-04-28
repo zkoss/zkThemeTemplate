@@ -1,6 +1,5 @@
 /* MD3 Div — block div wrapper */
 
 .z-div {
-    display: block;
     box-sizing: border-box;
 }

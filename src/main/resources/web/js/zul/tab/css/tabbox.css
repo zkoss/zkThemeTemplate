@@ -85,6 +85,11 @@
     pointer-events: none;
 }
 
+/* Hide close button in accordion (not meaningful in accordion layout) */
+.z-tabbox-accordion .z-tab-button {
+    display: none;
+}
+
 /* Tab close button */
 .z-tab-close {
     position: relative;
@@ -128,24 +133,112 @@
     padding: var(--md-sys-spacing-3) var(--md-sys-spacing-4);
 }
 
-/* Accordion tabbox variant */
-.z-tabbox-accordion .z-tabs {
-    flex-direction: column;
-    border-bottom: none;
-    border-right: 1px solid var(--md-sys-color-outline-variant);
-    width: auto;
+/* ─── Accordion mold ────────────────────────────────────────────────────── */
+/*
+ * In accordion mode the DOM is completely different:
+ *   div.z-tabbox.z-tabbox-accordion
+ *     div.z-tabpanels
+ *       div.z-tabpanel          ← outer wrapper for each section
+ *         div.z-tab             ← accordion header (trigger)
+ *           div.z-tab-content
+ *         div#uuid-cave         ← expandable content area
+ *
+ * There is NO .z-tabs wrapper — each .z-tab lives directly inside its .z-tabpanel.
+ */
+
+.z-tabbox-accordion {
+    display: block;
+    border: 1px solid var(--md-sys-color-outline-variant);
+    border-radius: var(--md-sys-shape-corner-medium);
+    overflow: hidden;
 }
 
-.z-tabbox-accordion .z-tab {
+.z-tabbox-accordion .z-tabpanels {
+    display: block;
+    overflow: visible;
+    background: var(--md-sys-color-surface);
+    padding: 0;
+}
+
+/* Each accordion section wrapper */
+.z-tabbox-accordion .z-tabpanel {
+    border-bottom: 1px solid var(--md-sys-color-outline-variant);
+    padding: 0;
+}
+
+.z-tabbox-accordion .z-tabpanel:last-child {
     border-bottom: none;
-    border-left: 3px solid transparent;
-    margin-bottom: 0;
-    justify-content: flex-start;
+}
+
+/* Accordion header (the tab that acts as a trigger) */
+.z-tabbox-accordion .z-tab {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     padding: var(--md-sys-spacing-3) var(--md-sys-spacing-4);
+    cursor: pointer;
+    color: var(--md-sys-color-on-surface);
+    background: var(--md-sys-color-surface);
+    font-size: var(--md-sys-typescale-body-large-size);
+    font-weight: var(--md-sys-typescale-title-small-weight);
+    border: none;
+    margin: 0;
+    overflow: hidden;
+    user-select: none;
+    transition:
+        color var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard),
+        background-color var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
+}
+
+.z-tabbox-accordion .z-tab::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-color: var(--md-sys-color-on-surface);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
+}
+
+.z-tabbox-accordion .z-tab:hover::before {
+    opacity: var(--md-sys-state-hover-opacity);
+}
+
+/* Chevron arrow on the right — pure CSS, no font dependency */
+.z-tabbox-accordion .z-tab-content::after {
+    content: '';
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-right: 2px solid var(--md-sys-color-on-surface-variant);
+    border-bottom: 2px solid var(--md-sys-color-on-surface-variant);
+    transform: rotate(45deg);
+    margin-left: auto;
+    flex-shrink: 0;
+    transition: transform var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
 }
 
 .z-tabbox-accordion .z-tab.z-tab-selected {
-    border-left-color: var(--md-sys-color-primary);
-    background-color: var(--md-sys-color-primary-container);
-    color: var(--md-sys-color-on-primary-container);
+    color: var(--md-sys-color-primary);
+    background: var(--md-sys-color-surface-container-lowest);
+}
+
+.z-tabbox-accordion .z-tab.z-tab-selected .z-tab-content::after {
+    transform: rotate(-135deg);
+    border-color: var(--md-sys-color-primary);
+}
+
+/* Tab text area */
+.z-tabbox-accordion .z-tab-text {
+    pointer-events: none;
+}
+
+/* Expandable content cave */
+.z-tabbox-accordion .z-tabpanel > [id$="-cave"] {
+    padding: var(--md-sys-spacing-4);
+    color: var(--md-sys-color-on-surface-variant);
+    font-size: var(--md-sys-typescale-body-medium-size);
+    line-height: 1.6;
+    background: var(--md-sys-color-surface);
 }
