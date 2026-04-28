@@ -1,0 +1,43 @@
+<?page title="Pickers | Mira ZK"?>
+<?link rel="stylesheet" type="text/css" href="~./usecase2/usecase2.css"?>
+<zk>
+<borderlayout height="100vh">
+    <west size="258px" border="none" sclass="m-sidebar">
+        <include src="~./usecase2/_sidebar.zul"/>
+    </west>
+    <center border="none" autoscroll="true">
+        <div sclass="m-main">
+            <div sclass="m-page-header">
+                <label sclass="m-page-title" value="Pickers"/>
+            </div>
+            <div sclass="m-card">
+                <label sclass="m-card__title" value="Pickers"/>
+                <grid>
+                    <rows>
+                        <row>
+                            <label value="Date" style="font-weight:500;"/>
+                            <datebox width="260px" placeholder="Select date"/>
+                        </row>
+                        <row>
+                            <label value="Time" style="font-weight:500;"/>
+                            <timebox width="260px"/>
+                        </row>
+                        <row>
+                            <label value="Date and Time" style="font-weight:500;"/>
+                            <datetimebox width="260px"/>
+                        </row>
+                        <row>
+                            <label value="Month" style="font-weight:500;"/>
+                            <datebox format="yyyy/MM" width="260px"/>
+                        </row>
+                        <row>
+                            <label value="Quantity" style="font-weight:500;"/>
+                            <spinner value="1" step="1" width="260px"/>
+                        </row>
+                    </rows>
+                </grid>
+            </div>
+        </div>
+    </center>
+</borderlayout>
+</zk>

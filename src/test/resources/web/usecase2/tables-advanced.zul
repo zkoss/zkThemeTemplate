@@ -1,0 +1,77 @@
+<?page title="Advanced Table | Mira ZK"?>
+<?link rel="stylesheet" type="text/css" href="~./usecase2/usecase2.css"?>
+<zk>
+<borderlayout height="100vh">
+    <west size="258px" border="none" sclass="m-sidebar">
+        <include src="~./usecase2/_sidebar.zul"/>
+    </west>
+    <center border="none" autoscroll="true">
+        <div sclass="m-main">
+            <div sclass="m-page-header">
+                <label sclass="m-page-title" value="Advanced Table"/>
+            </div>
+            <div sclass="m-card">
+                <label sclass="m-card__title" value="Advanced Table"/>
+                <listbox checkmark="true" multiple="true">
+                    <listhead sizable="true">
+                        <listheader label="Order ID" sort="auto" width="110px"/>
+                        <listheader label="Customer" sort="auto"/>
+                        <listheader label="Product" sort="auto"/>
+                        <listheader label="Amount" sort="auto" width="110px"/>
+                        <listheader label="Date" sort="auto" width="120px"/>
+                        <listheader label="Status" width="120px"/>
+                    </listhead>
+                    <listitem>
+                        <listcell label="#10001"/>
+                        <listcell label="Alice Johnson"/>
+                        <listcell label="Wireless Headphones"/>
+                        <listcell label="$129.99"/>
+                        <listcell label="Apr 20, 2025"/>
+                        <listcell><div sclass="m-badge m-badge--success">Shipped</div></listcell>
+                    </listitem>
+                    <listitem>
+                        <listcell label="#10002"/>
+                        <listcell label="Bob Williams"/>
+                        <listcell label="Ergonomic Chair"/>
+                        <listcell label="$349.00"/>
+                        <listcell label="Apr 21, 2025"/>
+                        <listcell><div sclass="m-badge m-badge--warning">Processing</div></listcell>
+                    </listitem>
+                    <listitem>
+                        <listcell label="#10003"/>
+                        <listcell label="Carol Davis"/>
+                        <listcell label="USB-C Hub"/>
+                        <listcell label="$59.95"/>
+                        <listcell label="Apr 22, 2025"/>
+                        <listcell><div sclass="m-badge m-badge--success">Delivered</div></listcell>
+                    </listitem>
+                    <listitem>
+                        <listcell label="#10004"/>
+                        <listcell label="David Brown"/>
+                        <listcell label="Mechanical Keyboard"/>
+                        <listcell label="$199.00"/>
+                        <listcell label="Apr 23, 2025"/>
+                        <listcell><div sclass="m-badge m-badge--error">Cancelled</div></listcell>
+                    </listitem>
+                    <listitem>
+                        <listcell label="#10005"/>
+                        <listcell label="Eva Martinez"/>
+                        <listcell label="Standing Desk"/>
+                        <listcell label="$599.00"/>
+                        <listcell label="Apr 24, 2025"/>
+                        <listcell><div sclass="m-badge m-badge--info">Pending</div></listcell>
+                    </listitem>
+                    <listitem>
+                        <listcell label="#10006"/>
+                        <listcell label="Frank Wilson"/>
+                        <listcell label="Monitor 27in"/>
+                        <listcell label="$449.99"/>
+                        <listcell label="Apr 25, 2025"/>
+                        <listcell><div sclass="m-badge m-badge--success">Shipped</div></listcell>
+                    </listitem>
+                </listbox>
+            </div>
+        </div>
+    </center>
+</borderlayout>
+</zk>

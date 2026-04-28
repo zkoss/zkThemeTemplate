@@ -1,0 +1,38 @@
+<?page title="Accordion | Mira ZK"?>
+<?link rel="stylesheet" type="text/css" href="~./usecase2/usecase2.css"?>
+<zk>
+<borderlayout height="100vh">
+    <west size="258px" border="none" sclass="m-sidebar">
+        <include src="~./usecase2/_sidebar.zul"/>
+    </west>
+    <center border="none" autoscroll="true">
+        <div sclass="m-main">
+            <div sclass="m-page-header">
+                <label sclass="m-page-title" value="Accordion"/>
+            </div>
+
+            <div sclass="m-card">
+                <label sclass="m-card__title" value="Default Accordion"/>
+                <tabbox mold="accordion" sclass="m-accordion" width="100%">
+                    <tabs>
+                        <tab label="Collapsible Group Item #1"/>
+                        <tab label="Collapsible Group Item #2"/>
+                        <tab label="Collapsible Group Item #3"/>
+                    </tabs>
+                    <tabpanels>
+                        <tabpanel>
+                            <label value="Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch." style="font-size:13px;color:#555;line-height:1.6;"/>
+                        </tabpanel>
+                        <tabpanel>
+                            <label value="Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch." style="font-size:13px;color:#555;line-height:1.6;"/>
+                        </tabpanel>
+                        <tabpanel>
+                            <label value="Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch." style="font-size:13px;color:#555;line-height:1.6;"/>
+                        </tabpanel>
+                    </tabpanels>
+                </tabbox>
+            </div>
+        </div>
+    </center>
+</borderlayout>
+</zk>

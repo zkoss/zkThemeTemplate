@@ -1,0 +1,63 @@
+<?page title="Selects | Mira ZK"?>
+<?link rel="stylesheet" type="text/css" href="~./usecase2/usecase2.css"?>
+<zk>
+<borderlayout height="100vh">
+    <west size="258px" border="none" sclass="m-sidebar">
+        <include src="~./usecase2/_sidebar.zul"/>
+    </west>
+    <center border="none" autoscroll="true">
+        <div sclass="m-main">
+            <div sclass="m-page-header">
+                <label sclass="m-page-title" value="Selects"/>
+            </div>
+            <div sclass="m-card">
+                <label sclass="m-card__title" value="Selects"/>
+                <grid>
+                    <rows>
+                        <row>
+                            <label value="Country" style="font-weight:500;"/>
+                            <combobox width="260px" placeholder="Select country">
+                                <comboitem label="United States"/>
+                                <comboitem label="United Kingdom"/>
+                                <comboitem label="Canada"/>
+                                <comboitem label="Australia"/>
+                                <comboitem label="Germany"/>
+                                <comboitem label="France"/>
+                                <comboitem label="Japan"/>
+                            </combobox>
+                        </row>
+                        <row>
+                            <label value="Category" style="font-weight:500;"/>
+                            <combobox width="260px" placeholder="Select category">
+                                <comboitem label="Electronics"/>
+                                <comboitem label="Clothing"/>
+                                <comboitem label="Books"/>
+                                <comboitem label="Sports"/>
+                                <comboitem label="Home &amp; Garden"/>
+                            </combobox>
+                        </row>
+                        <row>
+                            <label value="Status" style="font-weight:500;"/>
+                            <combobox width="260px" placeholder="Select status">
+                                <comboitem label="Active"/>
+                                <comboitem label="Inactive"/>
+                                <comboitem label="Pending"/>
+                                <comboitem label="Archived"/>
+                            </combobox>
+                        </row>
+                        <row>
+                            <label value="Priority" style="font-weight:500;"/>
+                            <combobox width="260px" placeholder="Select priority">
+                                <comboitem label="Low"/>
+                                <comboitem label="Medium"/>
+                                <comboitem label="High"/>
+                                <comboitem label="Critical"/>
+                            </combobox>
+                        </row>
+                    </rows>
+                </grid>
+            </div>
+        </div>
+    </center>
+</borderlayout>
+</zk>

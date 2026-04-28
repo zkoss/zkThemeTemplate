@@ -1,0 +1,64 @@
+<?page title="Menus | Mira ZK"?>
+<?link rel="stylesheet" type="text/css" href="~./usecase2/usecase2.css"?>
+<zk>
+<borderlayout height="100vh">
+    <west size="258px" border="none" sclass="m-sidebar">
+        <include src="~./usecase2/_sidebar.zul"/>
+    </west>
+    <center border="none" autoscroll="true">
+        <div sclass="m-main">
+            <div sclass="m-page-header">
+                <label sclass="m-page-title" value="Menus"/>
+            </div>
+
+            <div sclass="m-card" style="margin-bottom:16px;">
+                <label sclass="m-card__title" value="Menubar"/>
+                <menubar sclass="m-menubar">
+                    <menu label="File">
+                        <menupopup>
+                            <menuitem label="New"   iconSclass="z-icon-file-o"/>
+                            <menuitem label="Open"  iconSclass="z-icon-folder-open-o"/>
+                            <menuitem label="Save"  iconSclass="z-icon-save"/>
+                            <menuseparator/>
+                            <menuitem label="Exit"  iconSclass="z-icon-power-off"/>
+                        </menupopup>
+                    </menu>
+                    <menu label="Edit">
+                        <menupopup>
+                            <menuitem label="Cut"   iconSclass="z-icon-scissors"/>
+                            <menuitem label="Copy"  iconSclass="z-icon-copy"/>
+                            <menuitem label="Paste" iconSclass="z-icon-clipboard"/>
+                        </menupopup>
+                    </menu>
+                    <menu label="View">
+                        <menupopup>
+                            <menuitem label="Zoom In"  iconSclass="z-icon-search-plus"/>
+                            <menuitem label="Zoom Out" iconSclass="z-icon-search-minus"/>
+                            <menuseparator/>
+                            <menuitem label="Full Screen" iconSclass="z-icon-expand"/>
+                        </menupopup>
+                    </menu>
+                    <menu label="Help">
+                        <menupopup>
+                            <menuitem label="Documentation" iconSclass="z-icon-book"/>
+                            <menuitem label="About"         iconSclass="z-icon-info-circle"/>
+                        </menupopup>
+                    </menu>
+                </menubar>
+            </div>
+
+            <div sclass="m-card">
+                <label sclass="m-card__title" value="Context Menu (right-click on button)"/>
+                <button label="Right-click me" sclass="m-btn--outlined" context="contextMenu"/>
+                <menupopup id="contextMenu">
+                    <menuitem label="View"   iconSclass="z-icon-eye"/>
+                    <menuitem label="Edit"   iconSclass="z-icon-pencil"/>
+                    <menuitem label="Copy"   iconSclass="z-icon-copy"/>
+                    <menuseparator/>
+                    <menuitem label="Delete" iconSclass="z-icon-trash-o" style="color:#d32f2f;"/>
+                </menupopup>
+            </div>
+        </div>
+    </center>
+</borderlayout>
+</zk>

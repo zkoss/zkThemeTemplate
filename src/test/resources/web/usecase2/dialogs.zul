@@ -1,0 +1,78 @@
+<?page title="Dialogs | Mira ZK"?>
+<?link rel="stylesheet" type="text/css" href="~./usecase2/usecase2.css"?>
+<zk>
+<borderlayout height="100vh">
+    <west size="258px" border="none" sclass="m-sidebar">
+        <include src="~./usecase2/_sidebar.zul"/>
+    </west>
+    <center border="none" autoscroll="true">
+        <div sclass="m-main">
+            <div sclass="m-page-header">
+                <label sclass="m-page-title" value="Dialogs"/>
+            </div>
+
+            <div sclass="m-card">
+                <label sclass="m-card__title" value="Modal Dialogs"/>
+                <hlayout spacing="8px">
+                    <button label="Simple Dialog"   sclass="m-btn--primary"   onClick="simpleDialog.doModal()"/>
+                    <button label="Confirm Dialog"  sclass="m-btn--outlined"  onClick="confirmDialog.doModal()"/>
+                    <button label="Form Dialog"     sclass="m-btn--outlined"  onClick="formDialog.doModal()"/>
+                </hlayout>
+            </div>
+
+            <!-- Simple dialog -->
+            <window id="simpleDialog" title="Dialog Title" closable="true" mode="overlapped"
+                    sclass="m-dialog" visible="false" width="500px">
+                <vlayout style="padding:16px 20px;">
+                    <label value="Cras mattis consectetur purus sit amet fermentum." style="font-size:14px;color:#555;line-height:1.6;"/>
+                    <separator/>
+                    <hlayout style="justify-content:flex-end;" spacing="8px">
+                        <button label="Cancel" sclass="m-btn--outlined" onClick="simpleDialog.setVisible(false)"/>
+                        <button label="OK"     sclass="m-btn--primary"  onClick="simpleDialog.setVisible(false)"/>
+                    </hlayout>
+                </vlayout>
+            </window>
+
+            <!-- Confirm dialog -->
+            <window id="confirmDialog" title="Confirm Action" closable="true" mode="overlapped"
+                    sclass="m-dialog" visible="false" width="440px">
+                <vlayout style="padding:16px 20px;">
+                    <label value="Are you sure you want to proceed? This action cannot be undone." style="font-size:14px;color:#555;line-height:1.6;"/>
+                    <separator/>
+                    <hlayout style="justify-content:flex-end;" spacing="8px">
+                        <button label="Cancel"  sclass="m-btn--outlined" onClick="confirmDialog.setVisible(false)"/>
+                        <button label="Confirm" sclass="m-btn--danger"   onClick="confirmDialog.setVisible(false)"/>
+                    </hlayout>
+                </vlayout>
+            </window>
+
+            <!-- Form dialog -->
+            <window id="formDialog" title="Edit Profile" closable="true" mode="overlapped"
+                    sclass="m-dialog" visible="false" width="500px">
+                <vlayout style="padding:16px 20px;" spacing="12px">
+                    <hlayout spacing="12px">
+                        <vlayout hflex="1">
+                            <label value="First Name" style="font-size:12px;font-weight:500;margin-bottom:4px;"/>
+                            <textbox width="100%" placeholder="First name"/>
+                        </vlayout>
+                        <vlayout hflex="1">
+                            <label value="Last Name" style="font-size:12px;font-weight:500;margin-bottom:4px;"/>
+                            <textbox width="100%" placeholder="Last name"/>
+                        </vlayout>
+                    </hlayout>
+                    <vlayout>
+                        <label value="Email" style="font-size:12px;font-weight:500;margin-bottom:4px;"/>
+                        <textbox width="100%" placeholder="email@example.com" type="email"/>
+                    </vlayout>
+                    <separator/>
+                    <hlayout style="justify-content:flex-end;" spacing="8px">
+                        <button label="Cancel" sclass="m-btn--outlined" onClick="formDialog.setVisible(false)"/>
+                        <button label="Save"   sclass="m-btn--primary"  onClick="formDialog.setVisible(false)"/>
+                    </hlayout>
+                </vlayout>
+            </window>
+
+        </div>
+    </center>
+</borderlayout>
+</zk>

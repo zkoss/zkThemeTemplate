@@ -1,0 +1,86 @@
+<?page title="Data Grid | Mira ZK"?>
+<?link rel="stylesheet" type="text/css" href="~./usecase2/usecase2.css"?>
+<zk>
+<borderlayout height="100vh">
+    <west size="258px" border="none" sclass="m-sidebar">
+        <include src="~./usecase2/_sidebar.zul"/>
+    </west>
+    <center border="none" autoscroll="true">
+        <div sclass="m-main">
+            <div sclass="m-page-header">
+                <label sclass="m-page-title" value="Data Grid"/>
+            </div>
+            <div sclass="m-card">
+                <label sclass="m-card__title" value="Data Grid"/>
+                <grid mold="default">
+                    <columns>
+                        <column label="SKU" width="100px"/>
+                        <column label="Product Name"/>
+                        <column label="Category" width="140px"/>
+                        <column label="Price" width="100px"/>
+                        <column label="Stock" width="90px"/>
+                        <column label="Rating" width="90px"/>
+                        <column label="Status" width="110px"/>
+                    </columns>
+                    <rows>
+                        <row>
+                            <label value="SKU-001"/>
+                            <label value="Wireless Headphones Pro"/>
+                            <label value="Electronics"/>
+                            <label value="$129.99"/>
+                            <label value="245"/>
+                            <label value="4.8 ★"/>
+                            <div sclass="m-badge m-badge--success">In Stock</div>
+                        </row>
+                        <row>
+                            <label value="SKU-002"/>
+                            <label value="Ergonomic Office Chair"/>
+                            <label value="Furniture"/>
+                            <label value="$349.00"/>
+                            <label value="32"/>
+                            <label value="4.5 ★"/>
+                            <div sclass="m-badge m-badge--warning">Low Stock</div>
+                        </row>
+                        <row>
+                            <label value="SKU-003"/>
+                            <label value="USB-C 7-in-1 Hub"/>
+                            <label value="Electronics"/>
+                            <label value="$59.95"/>
+                            <label value="0"/>
+                            <label value="4.2 ★"/>
+                            <div sclass="m-badge m-badge--error">Out of Stock</div>
+                        </row>
+                        <row>
+                            <label value="SKU-004"/>
+                            <label value="Mechanical Keyboard TKL"/>
+                            <label value="Electronics"/>
+                            <label value="$199.00"/>
+                            <label value="118"/>
+                            <label value="4.7 ★"/>
+                            <div sclass="m-badge m-badge--success">In Stock</div>
+                        </row>
+                        <row>
+                            <label value="SKU-005"/>
+                            <label value="Height-Adjustable Desk"/>
+                            <label value="Furniture"/>
+                            <label value="$599.00"/>
+                            <label value="15"/>
+                            <label value="4.6 ★"/>
+                            <div sclass="m-badge m-badge--warning">Low Stock</div>
+                        </row>
+                        <row>
+                            <label value="SKU-006"/>
+                            <label value="27in IPS Monitor 4K"/>
+                            <label value="Electronics"/>
+                            <label value="$449.99"/>
+                            <label value="67"/>
+                            <label value="4.9 ★"/>
+                            <div sclass="m-badge m-badge--success">In Stock</div>
+                        </row>
+                    </rows>
+                </grid>
+            </div>
+        </div>
+    </center>
+</borderlayout>
+</zk>

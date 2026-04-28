@@ -1,0 +1,55 @@
+<?page title="Text Fields | Mira ZK"?>
+<?link rel="stylesheet" type="text/css" href="~./usecase2/usecase2.css"?>
+<zk>
+<borderlayout height="100vh">
+    <west size="258px" border="none" sclass="m-sidebar">
+        <include src="~./usecase2/_sidebar.zul"/>
+    </west>
+    <center border="none" autoscroll="true">
+        <div sclass="m-main">
+            <div sclass="m-page-header">
+                <label sclass="m-page-title" value="Text Fields"/>
+            </div>
+            <div sclass="m-card">
+                <label sclass="m-card__title" value="Text Fields"/>
+                <grid>
+                    <rows>
+                        <row>
+                            <label value="First Name" style="font-weight:500;"/>
+                            <textbox placeholder="Enter first name" width="260px"/>
+                        </row>
+                        <row>
+                            <label value="Last Name" style="font-weight:500;"/>
+                            <textbox placeholder="Enter last name" width="260px"/>
+                        </row>
+                        <row>
+                            <label value="Email" style="font-weight:500;"/>
+                            <textbox type="email" placeholder="email@example.com" width="260px"/>
+                        </row>
+                        <row>
+                            <label value="Password" style="font-weight:500;"/>
+                            <textbox type="password" placeholder="Enter password" width="260px"/>
+                        </row>
+                        <row>
+                            <label value="Phone" style="font-weight:500;"/>
+                            <intbox placeholder="Phone number" width="260px"/>
+                        </row>
+                        <row>
+                            <label value="Amount" style="font-weight:500;"/>
+                            <decimalbox placeholder="0.00" width="260px"/>
+                        </row>
+                        <row>
+                            <label value="Description" style="font-weight:500;"/>
+                            <textbox multiline="true" rows="4" placeholder="Enter description..." width="260px"/>
+                        </row>
+                        <row>
+                            <label value="Disabled Field" style="font-weight:500;"/>
+                            <textbox value="Read only content" disabled="true" width="260px"/>
+                        </row>
+                    </rows>
+                </grid>
+            </div>
+        </div>
+    </center>
+</borderlayout>
+</zk>

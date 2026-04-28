@@ -1,0 +1,36 @@
+<?page title="Selection Controls | Mira ZK"?>
+<?link rel="stylesheet" type="text/css" href="~./usecase2/usecase2.css"?>
+<zk>
+<borderlayout height="100vh">
+    <west size="258px" border="none" sclass="m-sidebar">
+        <include src="~./usecase2/_sidebar.zul"/>
+    </west>
+    <center border="none" autoscroll="true">
+        <div sclass="m-main">
+            <div sclass="m-page-header">
+                <label sclass="m-page-title" value="Selection Controls"/>
+            </div>
+            <div sclass="m-card">
+                <label sclass="m-card__title" value="Checkboxes"/>
+                <vlayout spacing="8px">
+                    <checkbox label="Default checkbox" checked="false"/>
+                    <checkbox label="Checked checkbox" checked="true"/>
+                    <checkbox label="Disabled checkbox" disabled="true"/>
+                    <checkbox label="Checked and disabled" checked="true" disabled="true"/>
+                </vlayout>
+            </div>
+            <div sclass="m-card" style="margin-top:16px;">
+                <label sclass="m-card__title" value="Radio Buttons"/>
+                <vlayout spacing="8px">
+                    <radiogroup>
+                        <radio label="Option A" checked="true"/>
+                        <radio label="Option B"/>
+                        <radio label="Option C"/>
+                        <radio label="Disabled option" disabled="true"/>
+                    </radiogroup>
+                </vlayout>
+            </div>
+        </div>
+    </center>
+</borderlayout>
+</zk>

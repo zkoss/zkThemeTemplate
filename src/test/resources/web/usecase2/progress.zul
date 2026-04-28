@@ -1,0 +1,76 @@
+<?page title="Progress | Mira ZK"?>
+<?link rel="stylesheet" type="text/css" href="~./usecase2/usecase2.css"?>
+<zk>
+<borderlayout height="100vh">
+    <west size="258px" border="none" sclass="m-sidebar">
+        <include src="~./usecase2/_sidebar.zul"/>
+    </west>
+    <center border="none" autoscroll="true">
+        <div sclass="m-main">
+            <div sclass="m-page-header">
+                <label sclass="m-page-title" value="Progress"/>
+            </div>
+
+            <vlayout spacing="20px">
+                <!-- Linear progress bars -->
+                <div sclass="m-card">
+                    <label sclass="m-card__title" value="Linear — Determinate"/>
+                    <vlayout spacing="12px">
+                        <hlayout>
+                            <label value="10%  " style="font-size:12px;color:#666;width:40px;"/>
+                            <progressmeter value="10"  width="300px" sclass="m-progress"/>
+                        </hlayout>
+                        <hlayout>
+                            <label value="40%  " style="font-size:12px;color:#666;width:40px;"/>
+                            <progressmeter value="40"  width="300px" sclass="m-progress"/>
+                        </hlayout>
+                        <hlayout>
+                            <label value="70%  " style="font-size:12px;color:#666;width:40px;"/>
+                            <progressmeter value="70"  width="300px" sclass="m-progress"/>
+                        </hlayout>
+                    </vlayout>
+                </div>
+
+                <!-- Linear Indeterminate -->
+                <div sclass="m-card">
+                    <label sclass="m-card__title" value="Linear — Indeterminate"/>
+                    <div sclass="m-progress-linear--indeterminate" width="300px"/>
+                </div>
+
+                <!-- Circular Spinners -->
+                <div sclass="m-card">
+                    <label sclass="m-card__title" value="Circular — Spinners"/>
+                    <hlayout spacing="24px" style="align-items:center;">
+                        <div sclass="m-spinner m-spinner--sm"/>
+                        <div sclass="m-spinner"/>
+                        <div sclass="m-spinner m-spinner--lg"/>
+                    </hlayout>
+                </div>
+
+                <!-- Colour variants -->
+                <div sclass="m-card">
+                    <label sclass="m-card__title" value="Colour Variants"/>
+                    <vlayout spacing="12px">
+                        <hlayout>
+                            <label value="Primary   " style="font-size:12px;color:#666;width:70px;"/>
+                            <progressmeter value="65" width="300px" sclass="m-progress m-progress--primary"/>
+                        </hlayout>
+                        <hlayout>
+                            <label value="Success   " style="font-size:12px;color:#666;width:70px;"/>
+                            <progressmeter value="80" width="300px" sclass="m-progress m-progress--success"/>
+                        </hlayout>
+                        <hlayout>
+                            <label value="Warning   " style="font-size:12px;color:#666;width:70px;"/>
+                            <progressmeter value="45" width="300px" sclass="m-progress m-progress--warning"/>
+                        </hlayout>
+                        <hlayout>
+                            <label value="Error     " style="font-size:12px;color:#666;width:70px;"/>
+                            <progressmeter value="25" width="300px" sclass="m-progress m-progress--error"/>
+                        </hlayout>
+                    </vlayout>
+                </div>
+            </vlayout>
+        </div>
+    </center>
+</borderlayout>
+</zk>

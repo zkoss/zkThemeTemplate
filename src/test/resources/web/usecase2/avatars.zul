@@ -1,0 +1,46 @@
+<?page title="Avatars | Mira ZK"?>
+<?link rel="stylesheet" type="text/css" href="~./usecase2/usecase2.css"?>
+<zk>
+<borderlayout height="100vh">
+    <west size="258px" border="none" sclass="m-sidebar">
+        <include src="~./usecase2/_sidebar.zul"/>
+    </west>
+    <center border="none" autoscroll="true">
+        <div sclass="m-main">
+            <div sclass="m-page-header">
+                <label sclass="m-page-title" value="Avatars"/>
+            </div>
+
+            <div sclass="m-card" style="margin-bottom:16px;">
+                <label sclass="m-card__title" value="Sizes"/>
+                <hlayout spacing="16px" style="align-items:flex-end;">
+                    <div sclass="m-avatar" style="width:24px;height:24px;background:#376fd0;">
+                        <label value="L" style="color:#fff;font-size:11px;font-weight:600;"/>
+                    </div>
+                    <div sclass="m-avatar m-avatar--sm" style="background:#5c7bd9;">
+                        <label value="L" style="color:#fff;font-weight:600;"/>
+                    </div>
+                    <div sclass="m-avatar m-avatar--md" style="background:#376fd0;">
+                        <label value="L" style="color:#fff;font-weight:600;font-size:16px;"/>
+                    </div>
+                    <div sclass="m-avatar" style="width:56px;height:56px;background:#233044;">
+                        <label value="L" style="color:#fff;font-weight:600;font-size:22px;"/>
+                    </div>
+                </hlayout>
+            </div>
+
+            <div sclass="m-card">
+                <label sclass="m-card__title" value="Colour Variants"/>
+                <hlayout spacing="12px">
+                    <div sclass="m-avatar m-avatar--md" style="background:#376fd0;"><label value="A" style="color:#fff;font-weight:600;font-size:15px;"/></div>
+                    <div sclass="m-avatar m-avatar--md" style="background:#2e7d32;"><label value="B" style="color:#fff;font-weight:600;font-size:15px;"/></div>
+                    <div sclass="m-avatar m-avatar--md" style="background:#d32f2f;"><label value="C" style="color:#fff;font-weight:600;font-size:15px;"/></div>
+                    <div sclass="m-avatar m-avatar--md" style="background:#ed6c02;"><label value="D" style="color:#fff;font-weight:600;font-size:15px;"/></div>
+                    <div sclass="m-avatar m-avatar--md" style="background:#7e73d6;"><label value="E" style="color:#fff;font-weight:600;font-size:15px;"/></div>
+                    <div sclass="m-avatar m-avatar--md" style="background:#0288d1;"><label value="F" style="color:#fff;font-weight:600;font-size:15px;"/></div>
+                </hlayout>
+            </div>
+        </div>
+    </center>
+</borderlayout>
+</zk>

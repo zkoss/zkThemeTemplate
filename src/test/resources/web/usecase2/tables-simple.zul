@@ -1,0 +1,72 @@
+<?page title="Simple Table | Mira ZK"?>
+<?link rel="stylesheet" type="text/css" href="~./usecase2/usecase2.css"?>
+<zk>
+<borderlayout height="100vh">
+    <west size="258px" border="none" sclass="m-sidebar">
+        <include src="~./usecase2/_sidebar.zul"/>
+    </west>
+    <center border="none" autoscroll="true">
+        <div sclass="m-main">
+            <div sclass="m-page-header">
+                <label sclass="m-page-title" value="Simple Table"/>
+            </div>
+            <div sclass="m-card">
+                <label sclass="m-card__title" value="Simple Table"/>
+                <grid mold="default">
+                    <columns>
+                        <column label="ID" width="80px"/>
+                        <column label="Name"/>
+                        <column label="Email"/>
+                        <column label="Role" width="140px"/>
+                        <column label="Status" width="110px"/>
+                    </columns>
+                    <rows>
+                        <row>
+                            <label value="001"/>
+                            <label value="Alice Johnson"/>
+                            <label value="alice@example.com"/>
+                            <label value="Admin"/>
+                            <div sclass="m-badge m-badge--success">Active</div>
+                        </row>
+                        <row>
+                            <label value="002"/>
+                            <label value="Bob Williams"/>
+                            <label value="bob@example.com"/>
+                            <label value="Editor"/>
+                            <div sclass="m-badge m-badge--success">Active</div>
+                        </row>
+                        <row>
+                            <label value="003"/>
+                            <label value="Carol Davis"/>
+                            <label value="carol@example.com"/>
+                            <label value="Viewer"/>
+                            <div sclass="m-badge m-badge--warning">Pending</div>
+                        </row>
+                        <row>
+                            <label value="004"/>
+                            <label value="David Brown"/>
+                            <label value="david@example.com"/>
+                            <label value="Editor"/>
+                            <div sclass="m-badge m-badge--error">Inactive</div>
+                        </row>
+                        <row>
+                            <label value="005"/>
+                            <label value="Eva Martinez"/>
+                            <label value="eva@example.com"/>
+                            <label value="Admin"/>
+                            <div sclass="m-badge m-badge--success">Active</div>
+                        </row>
+                        <row>
+                            <label value="006"/>
+                            <label value="Frank Wilson"/>
+                            <label value="frank@example.com"/>
+                            <label value="Viewer"/>
+                            <div sclass="m-badge m-badge--success">Active</div>
+                        </row>
+                    </rows>
+                </grid>
+            </div>
+        </div>
+    </center>
+</borderlayout>
+</zk>

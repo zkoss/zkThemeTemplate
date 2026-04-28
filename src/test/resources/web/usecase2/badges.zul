@@ -1,0 +1,45 @@
+<?page title="Badges | Mira ZK"?>
+<?link rel="stylesheet" type="text/css" href="~./usecase2/usecase2.css"?>
+<zk>
+<borderlayout height="100vh">
+    <west size="258px" border="none" sclass="m-sidebar">
+        <include src="~./usecase2/_sidebar.zul"/>
+    </west>
+    <center border="none" autoscroll="true">
+        <div sclass="m-main">
+            <div sclass="m-page-header">
+                <label sclass="m-page-title" value="Badges"/>
+            </div>
+
+            <div sclass="m-card">
+                <label sclass="m-card__title" value="Color Variants"/>
+                <hlayout spacing="8px" style="flex-wrap:wrap;">
+                    <div sclass="m-badge m-badge--success">Done</div>
+                    <div sclass="m-badge m-badge--warning">In Progress</div>
+                    <div sclass="m-badge m-badge--error">Cancelled</div>
+                    <div sclass="m-badge m-badge--info">New</div>
+                    <div sclass="m-badge m-badge--neutral">Archived</div>
+                </hlayout>
+
+                <separator/>
+
+                <label sclass="m-card__title" value="Inline with text"/>
+                <vlayout spacing="8px">
+                    <hlayout>
+                        <label value="Project Aurora  "/>
+                        <div sclass="m-badge m-badge--success">Done</div>
+                    </hlayout>
+                    <hlayout>
+                        <label value="Project Eagle   "/>
+                        <div sclass="m-badge m-badge--warning">In Progress</div>
+                    </hlayout>
+                    <hlayout>
+                        <label value="Project Omega   "/>
+                        <div sclass="m-badge m-badge--error">Cancelled</div>
+                    </hlayout>
+                </vlayout>
+            </div>
+        </div>
+    </center>
+</borderlayout>
+</zk>

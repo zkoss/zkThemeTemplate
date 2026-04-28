@@ -1,0 +1,36 @@
+<?page title="Chips | Mira ZK"?>
+<?link rel="stylesheet" type="text/css" href="~./usecase2/usecase2.css"?>
+<zk>
+<borderlayout height="100vh">
+    <west size="258px" border="none" sclass="m-sidebar">
+        <include src="~./usecase2/_sidebar.zul"/>
+    </west>
+    <center border="none" autoscroll="true">
+        <div sclass="m-main">
+            <div sclass="m-page-header">
+                <label sclass="m-page-title" value="Chips"/>
+            </div>
+
+            <div sclass="m-card">
+                <label sclass="m-card__title" value="Filled Chips"/>
+                <hlayout spacing="8px" style="flex-wrap:wrap;">
+                    <div sclass="m-chip m-chip--primary">Today</div>
+                    <div sclass="m-chip m-chip--success">Active</div>
+                    <div sclass="m-chip m-chip--warning">Pending</div>
+                    <div sclass="m-chip m-chip--error">Expired</div>
+                </hlayout>
+
+                <separator/>
+
+                <label sclass="m-card__title" value="Period Chips"/>
+                <hlayout spacing="8px">
+                    <div sclass="m-chip m-chip--primary">Today</div>
+                    <div sclass="m-chip m-chip--primary">Annual</div>
+                    <div sclass="m-chip m-chip--primary">Monthly</div>
+                    <div sclass="m-chip m-chip--primary">Weekly</div>
+                </hlayout>
+            </div>
+        </div>
+    </center>
+</borderlayout>
+</zk>

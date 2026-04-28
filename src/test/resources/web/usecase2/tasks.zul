@@ -1,0 +1,75 @@
+<?page title="Tasks | Mira ZK"?>
+<?link rel="stylesheet" type="text/css" href="~./usecase2/usecase2.css"?>
+<zk>
+<borderlayout height="100vh">
+    <west size="258px" border="none" sclass="m-sidebar">
+        <include src="~./usecase2/_sidebar.zul"/>
+    </west>
+    <center border="none" autoscroll="true">
+        <div sclass="m-main">
+            <div sclass="m-page-header">
+                <label sclass="m-page-title" value="Tasks"/>
+            </div>
+            <div sclass="m-card">
+                <label sclass="m-card__title" value="Tasks"/>
+                <listbox checkmark="true" multiple="true">
+                    <listhead>
+                        <listheader label="Task"/>
+                        <listheader label="Assignee" width="160px"/>
+                        <listheader label="Due Date" width="120px"/>
+                        <listheader label="Status" width="120px"/>
+                    </listhead>
+                    <listitem>
+                        <listcell label="Design new dashboard wireframes"/>
+                        <listcell label="Lucy Lavender"/>
+                        <listcell label="Apr 30, 2025"/>
+                        <listcell><div sclass="m-badge m-badge--warning">In Progress</div></listcell>
+                    </listitem>
+                    <listitem>
+                        <listcell label="Update user onboarding flow"/>
+                        <listcell label="James Dalton"/>
+                        <listcell label="May 5, 2025"/>
+                        <listcell><div sclass="m-badge m-badge--info">Todo</div></listcell>
+                    </listitem>
+                    <listitem>
+                        <listcell label="Fix login page responsiveness"/>
+                        <listcell label="Tracy Mack"/>
+                        <listcell label="Apr 28, 2025"/>
+                        <listcell><div sclass="m-badge m-badge--success">Done</div></listcell>
+                    </listitem>
+                    <listitem>
+                        <listcell label="Write API documentation"/>
+                        <listcell label="Sallie Love"/>
+                        <listcell label="May 10, 2025"/>
+                        <listcell><div sclass="m-badge m-badge--info">Todo</div></listcell>
+                    </listitem>
+                    <listitem>
+                        <listcell label="Conduct usability testing sessions"/>
+                        <listcell label="Raymond Ennis"/>
+                        <listcell label="May 15, 2025"/>
+                        <listcell><div sclass="m-badge m-badge--warning">In Progress</div></listcell>
+                    </listitem>
+                    <listitem>
+                        <listcell label="Deploy staging environment update"/>
+                        <listcell label="Glenda Jang"/>
+                        <listcell label="Apr 25, 2025"/>
+                        <listcell><div sclass="m-badge m-badge--success">Done</div></listcell>
+                    </listitem>
+                    <listitem>
+                        <listcell label="Review Q2 analytics report"/>
+                        <listcell label="Matthew Winters"/>
+                        <listcell label="May 20, 2025"/>
+                        <listcell><div sclass="m-badge m-badge--info">Todo</div></listcell>
+                    </listitem>
+                    <listitem>
+                        <listcell label="Migrate database to new schema"/>
+                        <listcell label="James Dalton"/>
+                        <listcell label="May 8, 2025"/>
+                        <listcell><div sclass="m-badge m-badge--error">Blocked</div></listcell>
+                    </listitem>
+                </listbox>
+            </div>
+        </div>
+    </center>
+</borderlayout>
+</zk>

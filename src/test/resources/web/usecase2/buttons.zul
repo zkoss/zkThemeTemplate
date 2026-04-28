@@ -1,0 +1,63 @@
+<?page title="Buttons | Mira ZK"?>
+<?link rel="stylesheet" type="text/css" href="~./usecase2/usecase2.css"?>
+<zk>
+<borderlayout height="100vh">
+    <west size="258px" border="none" sclass="m-sidebar">
+        <include src="~./usecase2/_sidebar.zul"/>
+    </west>
+    <center border="none" autoscroll="true">
+        <div sclass="m-main">
+            <div sclass="m-page-header">
+                <label sclass="m-page-title" value="Buttons"/>
+            </div>
+
+            <!-- Contained -->
+            <div sclass="m-card" style="margin-bottom:16px;">
+                <label sclass="m-card__title" value="Contained"/>
+                <hlayout spacing="8px">
+                    <button label="Primary"   sclass="m-btn--primary"/>
+                    <button label="Secondary" sclass="m-btn--secondary"/>
+                    <button label="Success"   sclass="m-btn--success"/>
+                    <button label="Warning"   sclass="m-btn--warning"/>
+                    <button label="Danger"    sclass="m-btn--danger"/>
+                    <button label="Info"      sclass="m-btn--info"/>
+                    <button label="Light"     sclass="m-btn--light"/>
+                    <button label="Dark"      sclass="m-btn--dark"/>
+                </hlayout>
+            </div>
+
+            <!-- Outlined -->
+            <div sclass="m-card" style="margin-bottom:16px;">
+                <label sclass="m-card__title" value="Outlined"/>
+                <hlayout spacing="8px">
+                    <button label="Primary"   sclass="m-btn--outlined-primary"/>
+                    <button label="Secondary" sclass="m-btn--outlined-secondary"/>
+                    <button label="Success"   sclass="m-btn--outlined-success"/>
+                    <button label="Warning"   sclass="m-btn--outlined-warning"/>
+                    <button label="Danger"    sclass="m-btn--outlined-danger"/>
+                </hlayout>
+            </div>
+
+            <!-- Text -->
+            <div sclass="m-card" style="margin-bottom:16px;">
+                <label sclass="m-card__title" value="Text"/>
+                <hlayout spacing="8px">
+                    <button label="Primary"   sclass="m-btn--text-primary"/>
+                    <button label="Secondary" sclass="m-btn--text-secondary"/>
+                    <button label="Danger"    sclass="m-btn--text-danger"/>
+                </hlayout>
+            </div>
+
+            <!-- Sizes -->
+            <div sclass="m-card">
+                <label sclass="m-card__title" value="Sizes"/>
+                <hlayout spacing="8px" style="align-items:center;">
+                    <button label="Small"  sclass="m-btn--primary m-btn--sm"/>
+                    <button label="Medium" sclass="m-btn--primary"/>
+                    <button label="Large"  sclass="m-btn--primary m-btn--lg"/>
+                </hlayout>
+            </div>
+        </div>
+    </center>
+</borderlayout>
+</zk>

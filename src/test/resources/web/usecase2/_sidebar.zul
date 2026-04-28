@@ -1,0 +1,93 @@
+<zk>
+<!-- Shared sidebar — included by every usecase2 page -->
+<vlayout sclass="m-sidebar__inner">
+
+    <div sclass="m-sidebar__brand">
+        <span sclass="m-sidebar__brand-name">Mira</span>
+        <div sclass="m-badge m-badge--info" style="font-size:9px;padding:1px 5px;">PRO</div>
+    </div>
+
+    <textbox sclass="m-sidebar__search" placeholder="Search topics..." readonly="true"/>
+
+    <div sclass="m-nav-section">Pages</div>
+    <navbar orient="vertical" sclass="m-sidebar">
+        <nav label="Dashboard" iconSclass="z-icon-th-large">
+            <navitem label="Default"   href="/usecase2/index.zul"/>
+            <navitem label="Analytics" href="/usecase2/analytics.zul"/>
+            <navitem label="SaaS"      href="/usecase2/saas.zul"/>
+        </nav>
+        <navitem label="Pages"    iconSclass="z-icon-file-text-o"      href="/usecase2/pages.zul"/>
+        <navitem label="Projects" iconSclass="z-icon-folder-o"         href="/usecase2/projects.zul" badgeText="8"/>
+        <navitem label="Orders"   iconSclass="z-icon-shopping-cart"    href="/usecase2/orders.zul"/>
+        <navitem label="Products" iconSclass="z-icon-cube"             href="/usecase2/products.zul"/>
+        <nav label="Invoices"     iconSclass="z-icon-file-o">
+            <navitem label="Invoice List"   href="/usecase2/invoice-list.zul"/>
+            <navitem label="Invoice Detail" href="/usecase2/invoice-detail.zul"/>
+        </nav>
+        <navitem label="Tasks"    iconSclass="z-icon-check-square-o"   href="/usecase2/tasks.zul" badgeText="17"/>
+        <navitem label="Calendar" iconSclass="z-icon-calendar"         href="/usecase2/calendar.zul"/>
+        <nav label="Auth"         iconSclass="z-icon-user">
+            <navitem label="Sign In"        href="/usecase2/sign-in.zul"/>
+            <navitem label="Sign Up"        href="/usecase2/sign-up.zul"/>
+            <navitem label="Reset Password" href="/usecase2/reset-password.zul"/>
+        </nav>
+    </navbar>
+
+    <div sclass="m-nav-section">Elements</div>
+    <navbar orient="vertical" sclass="m-sidebar">
+        <nav label="Components" iconSclass="z-icon-th">
+            <navitem label="Accordion"  href="/usecase2/accordion.zul"/>
+            <navitem label="Alerts"     href="/usecase2/alerts.zul"/>
+            <navitem label="Avatars"    href="/usecase2/avatars.zul"/>
+            <navitem label="Badges"     href="/usecase2/badges.zul"/>
+            <navitem label="Buttons"    href="/usecase2/buttons.zul"/>
+            <navitem label="Cards"      href="/usecase2/cards.zul"/>
+            <navitem label="Chips"      href="/usecase2/chips.zul"/>
+            <navitem label="Dialogs"    href="/usecase2/dialogs.zul"/>
+            <navitem label="Lists"      href="/usecase2/lists.zul"/>
+            <navitem label="Menus"      href="/usecase2/menus.zul"/>
+            <navitem label="Pagination" href="/usecase2/pagination.zul"/>
+            <navitem label="Progress"   href="/usecase2/progress.zul"/>
+            <navitem label="Tabs"       href="/usecase2/tabs.zul"/>
+            <navitem label="Tooltips"   href="/usecase2/tooltips.zul"/>
+        </nav>
+        <nav label="Charts"  iconSclass="z-icon-bar-chart">
+            <navitem label="ApexCharts" href="/usecase2/charts-apex.zul"/>
+            <navitem label="Chart.js"   href="/usecase2/charts-chartjs.zul"/>
+        </nav>
+        <nav label="Forms"   iconSclass="z-icon-pencil-square-o">
+            <navitem label="Text Fields"        href="/usecase2/forms-text-fields.zul"/>
+            <navitem label="Selects"            href="/usecase2/forms-selects.zul"/>
+            <navitem label="Pickers"            href="/usecase2/forms-pickers.zul"/>
+            <navitem label="Editors"            href="/usecase2/forms-editors.zul"/>
+            <navitem label="Selection Controls" href="/usecase2/forms-selection-controls.zul"/>
+        </nav>
+        <nav label="Tables"  iconSclass="z-icon-table">
+            <navitem label="Simple Table"   href="/usecase2/tables-simple.zul"/>
+            <navitem label="Advanced Table" href="/usecase2/tables-advanced.zul"/>
+            <navitem label="Data Grid"      href="/usecase2/tables-datagrid.zul"/>
+        </nav>
+        <nav label="Icons"   iconSclass="z-icon-heart-o">
+            <navitem label="Lucide Icons" href="/usecase2/icons-lucide.zul"/>
+        </nav>
+        <navitem label="Maps" iconSclass="z-icon-map-marker"/>
+    </navbar>
+
+    <div sclass="m-nav-section">Mira Pro</div>
+    <navbar orient="vertical" sclass="m-sidebar">
+        <navitem label="Documentation" iconSclass="z-icon-book"/>
+        <navitem label="Changelog"     iconSclass="z-icon-list-alt" badgeText="v6.1.0"/>
+    </navbar>
+
+    <div sclass="m-sidebar__user">
+        <div sclass="m-avatar m-avatar--sm" style="background:#5c7bd9;">
+            <label value="L" style="color:#fff;font-weight:600;"/>
+        </div>
+        <div sclass="m-sidebar__user-info">
+            <div sclass="m-sidebar__user-name">Lucy Lavender</div>
+            <div sclass="m-sidebar__user-role">UX Designer</div>
+        </div>
+    </div>
+
+</vlayout>
+</zk>

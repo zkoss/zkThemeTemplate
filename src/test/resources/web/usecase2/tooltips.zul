@@ -1,0 +1,60 @@
+<?page title="Tooltips | Mira ZK"?>
+<?link rel="stylesheet" type="text/css" href="~./usecase2/usecase2.css"?>
+<zk>
+<borderlayout height="100vh">
+    <west size="258px" border="none" sclass="m-sidebar">
+        <include src="~./usecase2/_sidebar.zul"/>
+    </west>
+    <center border="none" autoscroll="true">
+        <div sclass="m-main">
+            <div sclass="m-page-header">
+                <label sclass="m-page-title" value="Tooltips"/>
+            </div>
+
+            <div sclass="m-card">
+                <label sclass="m-card__title" value="Hover to see tooltips"/>
+
+                <hlayout spacing="16px" style="flex-wrap:wrap;padding:16px 0;">
+                    <!-- Tooltip via popup attribute -->
+                    <popup id="tt1" width="180px" sclass="m-tooltip">
+                        <label value="This is a tooltip! It can contain any text." style="font-size:12px;"/>
+                    </popup>
+                    <button label="Top tooltip"    sclass="m-btn--outlined" tooltip="tt1, position=before_start"/>
+
+                    <popup id="tt2" width="160px" sclass="m-tooltip">
+                        <label value="Tooltip on the right side." style="font-size:12px;"/>
+                    </popup>
+                    <button label="Right tooltip"  sclass="m-btn--outlined" tooltip="tt2, position=end_after"/>
+
+                    <popup id="tt3" width="160px" sclass="m-tooltip">
+                        <label value="Tooltip on the bottom." style="font-size:12px;"/>
+                    </popup>
+                    <button label="Bottom tooltip" sclass="m-btn--outlined" tooltip="tt3, position=after_start"/>
+
+                    <popup id="tt4" width="160px" sclass="m-tooltip">
+                        <label value="Tooltip on the left." style="font-size:12px;"/>
+                    </popup>
+                    <button label="Left tooltip"   sclass="m-btn--outlined" tooltip="tt4, position=start_after"/>
+                </hlayout>
+
+                <separator/>
+
+                <label sclass="m-card__title" value="Icon tooltips"/>
+                <hlayout spacing="20px" style="padding:8px 0;align-items:center;">
+                    <popup id="tIcon1" sclass="m-tooltip"><label value="Delete this item" style="font-size:12px;"/></popup>
+                    <button iconSclass="z-icon-trash-o"  sclass="m-icon-btn" tooltip="tIcon1"/>
+
+                    <popup id="tIcon2" sclass="m-tooltip"><label value="Edit details" style="font-size:12px;"/></popup>
+                    <button iconSclass="z-icon-pencil"   sclass="m-icon-btn" tooltip="tIcon2"/>
+
+                    <popup id="tIcon3" sclass="m-tooltip"><label value="Download file" style="font-size:12px;"/></popup>
+                    <button iconSclass="z-icon-download" sclass="m-icon-btn" tooltip="tIcon3"/>
+
+                    <popup id="tIcon4" sclass="m-tooltip"><label value="Share with team" style="font-size:12px;"/></popup>
+                    <button iconSclass="z-icon-share-alt" sclass="m-icon-btn" tooltip="tIcon4"/>
+                </hlayout>
+            </div>
+        </div>
+    </center>
+</borderlayout>
+</zk>

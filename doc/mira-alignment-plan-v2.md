@@ -1,0 +1,130 @@
+# ZK Material Theme — Mira Alignment Plan v2
+
+**Target Reference:**: it visually mimics the **Mira dashboard** at https://mira.bootlab.io/dashboard/default as closely as possible. All token / component / icon work in this plan is driven by what this single page actually needs — it is the north star, not a generic "MD3 alignment" exercise.
+
+This document combines the original dashboard alignment plan with the v2 updates. It serves as the primary technical specification for mimicking the Mira dashboard and its component library.
+
+---
+
+## 1. Core Rules & Logic
+
+### Component Selection
+- **(a) ZK Native First:** If a matching ZK widget exists, use it. Otherwise, use `<div>` with custom CSS classes (e.g., Badge, Card, Chip).
+- **(b) Alerts:** Use ZK's `Clients.showNotification(...)`.
+- **(c) Cards & Chips:** Implement using `<div>` structures and custom CSS to match MUI patterns.
+- **(d) Dialogs:** Use `<window mode="modal">`. ZK windows provide the necessary accessibility, focus trapping, and lifecycle management out-of-the-box.
+
+### Visual Assets & Charts
+- **(a) Charts:** Do NOT use ZK Chart widgets. Use high-fidelity screenshots from the Mira site for all chart regions (e.g., Total Revenue, Sales by Country).
+- **(b) Images:** Download and use original assets (avatars, logos, illustrations) directly from the Mira site.
+
+### Data Displays
+- **(a) Simple Tables:** Use `<grid>`.
+- **(b) Selectable Tables:** Use `<listbox checkmark="true">` for tables requiring checkboxes.
+
+### Navigation & Scope
+- **(a) Sidebar Inert Items:** "Maps" should be listed in the sidebar but have no navigation target.
+- **(b) Placeholder Pages:** "Documentation" and "Change Log" entries are listed but do not require content pages.
+- **(c) Icons:** Exclusively use Lucide Icons.
+- **(d) Full Sidebar Coverage:** Every sidebar menu item that is not explicitly excluded above (Maps, Documentation, Change Log) MUST have a working ZUL page implemented under `usecase2/`. Clicking a menu item must navigate to its real page — no dead links, no "coming soon" stubs.
+- **(e) Sidebar Scrollability: The sidebar may scroll vertically. All menu items must be accessible by scrolling — no item may be permanently hidden or clipped regardless of viewport height.
+
+
+---
+
+## 2. Frozen Pages and New Layout
+
+The 8 existing use-case pages are now **frozen** and serve as regression smoke tests. They are NOT targets for Mira-mimic styling:
+- `src/test/resources/web/usecase/` (app-shell.zul, dashboard.zul, employee-grid.zul, media-manager.zul, order-entry.zul, product-browser.zul, report-viewer.zul, user-profile.zul).
+
+New Mira-mimic pages live in a sibling folder, flat (no subdirectories):
+`src/test/resources/web/usecase2/`
+- `index.zul` (the dashboard mimic)
+- `alerts.zul`, `accordion.zul`, `avatars.zul`, `badges.zul`, `buttons.zul`, `cards.zul`, `chips.zul`, `dialogs.zul`, `lists.zul`, `menus.zul`, `pagination.zul`, `progress.zul`, `tabs.zul`, `tooltips.zul`.
+
+---
+
+## 3. Sidebar Implementation (PE/EE Target)
+
+The sidebar uses the `zkmax` navigation family to mimic Mira's collapsible section behavior.
+
+| Widget | Java class | Role in Mira sidebar |
+|---|---|---|
+| `<navbar>` | `org.zkoss.zkmax.zul.Navbar` | Outer vertical container |
+| `<nav>` | `org.zkoss.zkmax.zul.Nav` | Collapsible group (Pages, Components, etc.) |
+| `<navitem>` | `org.zkoss.zkmax.zul.Navitem` | Clickable leaf item; supports `iconSclass` and `label` |
+
+**Mapping Details:**
+- **Brand/Search:** Positioned above the `<navbar>` in a `<vlayout>`.
+- **Active State:** Controlled via server-side toggle of an `m-active` sclass.
+
+---
+
+## 4. Component Mapping Table
+
+| Mira component | Implementation | Notes / Rule |
+|---|---|---|
+| **Alerts** | `<div class="m-alert">` | Toast variants use `Clients.showNotification(...)` |
+| **Accordion** | `<tabbox mold="accordion"/>` | Re-skin `.z-tabbox-accordion` selectors |
+| **Avatars** | `<div class="m-avatar">` | Variants (sm/md/lg, circle) via modifier classes |
+| **Badges** | `<div class="m-badge">` | **Rule (a) — div only** |
+| **Buttons** | `<button>`, `<toolbarbutton>` | Variants (contained/outlined) via `sclass` |
+| **Cards** | `<div class="m-card">` | **Rule (c) — div only** (header/body/footer) |
+| **Chips** | `<div class="m-chip">` | **Rule (c) — div only** |
+| **Dialogs** | `<window mode="modal">` | Rule (d) recommendation |
+| **Lists** | `<div>` or `<grid>` | Visual only = div; Data-bound = grid/listbox |
+| **Menus** | `<menubar>`, `<menupopup>` | Sidebar uses `<navbar>`, not menubar |
+| **Pagination** | `<paging>` | Integrates with grid/listbox |
+| **Progress** | `<progressmeter>` | Indeterminate spinner via div + CSS animation |
+| **Tabs** | `<tabbox>` | Re-skin `.z-tabs` / `.z-tab` |
+| **Tooltips** | `<popup>` | Triggered via `tooltip` attribute |
+
+---
+
+## 5. Execution Phases
+
+
+### Phase 0 — Recon & Asset Collection
+- Capture full-page screenshot of Mira dashboard → `doc/mira/dashboard-default-full.png`.
+- Capture chart regions as PNGs (e.g., `total-revenue.png`) and save to `src/test/resources/web/usecase2/img/mira/charts/`.
+- Extract visual tokens: primary palette (#376fd0), Inter font weights, 8px border-radii, and MUI shadow values.
+
+### Phase 1 — Token Alignment
+- Update `_colors.css`, `_typography.css`, `_shape.css`, and `_elevation.css`.
+- Ensure every component CSS references `var(--md-sys-color-*)`.
+
+### Phase 2 — Lucide Icon Integration
+- Install Lucide font files in `src/main/resources/web/zul/css/fonts/`.
+- Update `_icons.css` to map `.z-icon-*` to Lucide codepoints.
+
+### Phase 3 — Build Mira Pages (usecase2/)
+- **3.1 `index.zul`:** Build the dashboard mimic using the region map (KPI cards, charts, grid).
+- **3.2 Sidebar:** Implement using the `<navbar>` / `<nav>` / `<navitem>` recipe.
+- **3.3 Component Demos:** Create one ZUL page per "Components" section entry (e.g., `alerts.zul`, `buttons.zul`). Coverage must be exhaustive — every sidebar entry not on the explicit exclusion list (Maps, Documentation, Change Log) gets its own ZUL page wired to the sidebar link.
+- **3.4 Tables & Dialogs:** Align Grid/Listbox and Window styling to Mira's MUI look.
+
+### Phase 4 — Component CSS Polish
+- Add selectors for the `zkmax` nav family.
+- Add `<paging>` and `<tabbox mold="accordion">` selectors.
+- Namespace custom Mira-specific classes with `m-` prefix (e.g., `.m-card`).
+
+### Phase 5 — Verification
+
+#### 5.1 Visual Parity Audit (per page)
+For **every** page under `usecase2/` (starting with `index.zul`), run this loop until the page is visually indistinguishable from its Mira counterpart:
+
+1. **Capture local screenshot** of the ZK page at 1440×900 viewport → `doc/mira-reports/<page>-local.png`.
+2. **Capture / locate target screenshot** of the corresponding Mira page → `doc/mira-reports/<page>-target.png`.
+3. **Diff** side-by-side. Record every visible mismatch (color, spacing, typography, icon, alignment, shadow, radius, hover state, missing element) in `doc/mira-reports/<page>-diffs.md`.
+4. **Fix** the diffs in CSS / ZUL.
+5. **Re-capture** and repeat until the diff list is empty.
+
+A page is only considered "done" when its diff report is empty. Do NOT move to the next page with open diffs.
+
+#### 5.2 Sidebar Acceptance Checks
+These are blocking checks — failure means Phase 5 is not complete:
+
+- [ ] Every sidebar item (except Maps, Documentation, Change Log) navigates to a real, rendered ZUL page.
+- [ ]  The sidebar may scroll vertically. When scrolled to the bottom, all menu items must be fully visible — no item clipped, hidden, or cut off. Verify by scrolling the sidebar to the bottom and confirming every entry is readable.
+- [ ] Active-state highlight matches Mira's active item styling.
+- [ ] Collapsible group expand/collapse behavior matches Mira.

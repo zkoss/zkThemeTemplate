@@ -1,0 +1,256 @@
+/* MD3 Navbar / Nav / Navitem — zkmax navigation components */
+/*
+ * DOM (vertical orient, our primary use case):
+ *   nav.z-navbar.z-navbar-vertical
+ *     ul (cave)
+ *       li.z-nav[.z-nav-open][.z-nav-selected]
+ *         a.z-nav-content
+ *           i.z-icon-*
+ *           span.z-nav-text
+ *           span.z-nav-info  (badge)
+ *         ul (submenu cave)
+ *           li.z-navitem[.z-navitem-selected]
+ *             a.z-navitem-content
+ *               i.z-icon-*
+ *               span.z-navitem-text
+ *               span.z-navitem-info  (badge)
+ */
+
+/* ─── Reset ──────────────────────────────────────────────────────────────── */
+.z-navbar,
+.z-navbar ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border: none;
+    background: transparent;
+}
+
+.z-navbar {
+    display: block;
+    position: relative;
+    font-family: var(--md-sys-typescale-font-family);
+    font-size: var(--md-sys-typescale-body-medium-size);
+}
+
+/* ─── Shared content links ───────────────────────────────────────────────── */
+.z-nav-content,
+.z-navitem-content {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: var(--md-sys-spacing-2);
+    padding: 10px var(--md-sys-spacing-4);
+    color: var(--md-sys-color-on-surface-variant);
+    text-decoration: none;
+    border-radius: var(--md-sys-shape-corner-small);
+    overflow: hidden;
+    cursor: pointer;
+    transition:
+        color var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard),
+        background-color var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
+}
+
+/* State layer */
+.z-nav-content::before,
+.z-navitem-content::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-color: currentColor;
+    opacity: 0;
+    pointer-events: none;
+    border-radius: inherit;
+    transition: opacity var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
+}
+
+.z-nav-content:hover::before,
+.z-navitem-content:hover::before {
+    opacity: var(--md-sys-state-hover-opacity);
+}
+
+.z-nav-content:active::before,
+.z-navitem-content:active::before {
+    opacity: var(--md-sys-state-pressed-opacity);
+}
+
+/* ─── Icons ──────────────────────────────────────────────────────────────── */
+.z-nav-content i,
+.z-navitem-content i,
+.z-nav-image,
+.z-navitem-image {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    min-width: 18px;
+    font-size: 15px;
+    flex-shrink: 0;
+}
+
+/* ─── Text ───────────────────────────────────────────────────────────────── */
+.z-nav-text,
+.z-navitem-text {
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: var(--md-sys-typescale-body-medium-size);
+    font-weight: var(--md-sys-typescale-body-medium-weight);
+}
+
+/* ─── Badge (info) ───────────────────────────────────────────────────────── */
+.z-nav-info,
+.z-navitem-info {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 20px;
+    height: 18px;
+    padding: 0 6px;
+    border-radius: 9px;
+    background-color: var(--md-sys-color-primary);
+    color: var(--md-sys-color-on-primary);
+    font-size: 10px;
+    font-weight: 600;
+    line-height: 1;
+    margin-left: auto;
+    flex-shrink: 0;
+}
+
+/* ─── Collapsible nav group ──────────────────────────────────────────────── */
+.z-nav {
+    display: block;
+}
+
+/* Chevron indicator for collapsible nav — pure CSS, no font dependency */
+.z-nav-content::after {
+    content: '';
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-right: 1.5px solid currentColor;
+    border-bottom: 1.5px solid currentColor;
+    transform: rotate(45deg);
+    margin-left: auto;
+    flex-shrink: 0;
+    opacity: 0.6;
+    transition: transform var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
+}
+
+.z-nav-open > .z-nav-content::after {
+    transform: rotate(-135deg);
+}
+
+/* Submenu list — hidden when nav is closed */
+.z-nav > ul {
+    display: none;
+    overflow: hidden;
+}
+
+.z-nav-open > ul {
+    display: block;
+}
+
+/* Indent submenu items */
+.z-nav > ul .z-navitem-content {
+    padding-left: calc(var(--md-sys-spacing-4) + 26px);
+}
+
+/* ─── Active/selected states ────────────────────────────────────────────── */
+.z-navitem-selected > .z-navitem-content,
+.z-navitem.z-navitem-selected > .z-navitem-content {
+    color: var(--md-sys-color-primary);
+    background-color: var(--md-sys-color-secondary-container);
+    font-weight: 600;
+}
+
+.z-nav-selected > .z-nav-content,
+.z-nav-open > .z-nav-content {
+    color: var(--md-sys-color-on-surface);
+}
+
+/* ─── Disabled ───────────────────────────────────────────────────────────── */
+.z-navitem-content[disabled],
+.z-navitem-content[disabled]:hover {
+    color: var(--md-sys-color-disabled, rgba(0,0,0,0.38));
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/* ─── Vertical layout (sidebar) ──────────────────────────────────────────── */
+.z-navbar-vertical > ul > li {
+    display: block;
+    margin: 1px 0;
+}
+
+.z-navbar-vertical .z-navitem-content {
+    border-left: 3px solid transparent;
+}
+
+.z-navbar-vertical .z-navitem-selected > .z-navitem-content {
+    border-left-color: var(--md-sys-color-primary);
+}
+
+/* ─── Horizontal layout ──────────────────────────────────────────────────── */
+.z-navbar-horizontal > ul {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: var(--md-sys-spacing-1);
+}
+
+.z-navbar-horizontal > ul > li {
+    display: inline-flex;
+    align-items: center;
+}
+
+.z-navbar-horizontal .z-nav > ul {
+    position: absolute;
+    z-index: 1000;
+    background: var(--md-sys-color-surface-container);
+    border-radius: var(--md-sys-shape-corner-medium);
+    box-shadow: var(--md-sys-elevation-2);
+    min-width: 180px;
+    padding: var(--md-sys-spacing-1) 0;
+}
+
+/* ─── Popup (overflow menu in horizontal mode) ───────────────────────────── */
+.z-nav-popup {
+    list-style: none;
+    margin: 0;
+    padding: var(--md-sys-spacing-1) 0;
+    background: var(--md-sys-color-surface-container);
+    border-radius: var(--md-sys-shape-corner-medium);
+    box-shadow: var(--md-sys-elevation-2);
+    min-width: 180px;
+    overflow: hidden;
+}
+
+.z-nav-popup .z-nav-content,
+.z-nav-popup .z-navitem-content {
+    padding: 8px var(--md-sys-spacing-4);
+    border-radius: 0;
+    color: var(--md-sys-color-on-surface);
+}
+
+/* ─── Collapsed state ────────────────────────────────────────────────────── */
+.z-navbar-collapsed > ul > .z-nav > .z-nav-content > .z-nav-text,
+.z-navbar-collapsed > ul > .z-navitem > .z-navitem-content > .z-navitem-text {
+    display: none;
+}
+
+.z-navbar-collapsed > ul > .z-nav > .z-nav-content::after {
+    display: none;
+}
+
+.z-navbar-collapsed .z-nav-info,
+.z-navbar-collapsed .z-navitem-info {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    margin-left: 0;
+    min-width: 16px;
+    height: 16px;
+    font-size: 9px;
+}
