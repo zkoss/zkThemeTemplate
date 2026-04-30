@@ -133,3 +133,22 @@
 .md-gap-4     { gap: var(--md-sys-spacing-4) !important; }
 
 .md-icon-xl { font-size: 48px !important; }
+
+/* ── Heading utility classes: z-h1 → z-h7 ──────────────────────
+   Apply as sclass on any ZK component (label, div, span, etc.)
+   Scale mirrors Mira's h3 (~24px page titles) and h6 (~14px labels)
+   ────────────────────────────────────────────────────────────── */
+.z-h1, .z-h2, .z-h3, .z-h4, .z-h5, .z-h6, .z-h7 {
+    font-family: var(--md-sys-typescale-font-family);
+    color: var(--md-sys-color-on-surface);
+    display: block;
+    margin: 0;
+}
+
+.z-h1 { font-size: 2rem;     font-weight: 700; line-height: 1.2;  letter-spacing: -0.5px; }
+.z-h2 { font-size: 1.75rem;  font-weight: 700; line-height: 1.2;  letter-spacing: -0.25px; }
+.z-h3 { font-size: 1.5rem;   font-weight: 600; line-height: 1.25; }
+.z-h4 { font-size: 1.25rem;  font-weight: 600; line-height: 1.3;  }
+.z-h5 { font-size: 1.125rem; font-weight: 600; line-height: 1.4;  }
+.z-h6 { font-size: 0.875rem; font-weight: 600; line-height: 1.4;  }
+.z-h7 { font-size: 0.75rem;  font-weight: 500; line-height: 1.4;  }

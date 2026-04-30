@@ -5,22 +5,17 @@
 .z-grid {
     display: block;
     background-color: var(--md-sys-color-surface);
-    border-radius: var(--md-sys-shape-card);
-    box-shadow: var(--md-sys-elevation-card);
-    border: 1px solid var(--md-sys-color-outline-variant);
     overflow: hidden;
     box-sizing: border-box;
     width: 100%;
     font-family: var(--md-sys-typescale-font-family);
 }
 
-/* Grid nested inside groupbox/panel/window — remove card-on-card effect */
-.z-groupbox .z-grid,
-.z-panel-body .z-grid,
-.z-window-content .z-grid:not(.z-grid-standalone) {
-    border: none;
-    box-shadow: none;
-    border-radius: 0;
+/* Standalone card grid — opt-in card appearance */
+.z-grid-standalone {
+    border-radius: var(--md-sys-shape-card);
+    box-shadow: var(--md-sys-elevation-card);
+    border: 1px solid var(--md-sys-color-outline-variant);
 }
 
 /* Form grid label column: fixed width so label doesn't take 50% */
