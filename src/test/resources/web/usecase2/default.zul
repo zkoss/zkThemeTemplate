@@ -11,9 +11,8 @@
             <button label="Today: April 29"     sclass="m-btn--primary"/>
         </hlayout>
     </div>
-
     <!-- KPI cards -->
-    <hlayout sclass="m-kpi-row">
+    <div sclass="m--row">
 
         <div sclass="m-card m-kpi-card">
             <div sclass="m-kpi-card__header">
@@ -62,10 +61,10 @@
             </div>
         </div>
 
-    </hlayout>
+    </div>
 
     <!-- Charts row: Total Revenue + Weekly Sales -->
-    <hlayout sclass="m-charts-row" spacing="0">
+    <div sclass="m-charts-row">
 
         <div sclass="m-card m-chart-card-main">
             <label sclass="m-card__title" value="Total revenue"/>
@@ -107,10 +106,10 @@
             </grid>
         </div>
 
-    </hlayout>
+    </div>
 
     <!-- Bottom row: Mobile/Desktop + Latest Projects -->
-    <hlayout sclass="m-bottom-row" spacing="0">
+    <div sclass="m-bottom-row">
 
         <div sclass="m-bottom-card-chart m-card">
             <label sclass="m-card__title" value="Mobile / Desktop"/>
@@ -174,6 +173,6 @@
             </grid>
         </div>
 
-    </hlayout>
+    </div>
 
 </div>

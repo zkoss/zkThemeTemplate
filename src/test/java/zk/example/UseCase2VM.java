@@ -6,7 +6,7 @@ import org.zkoss.bind.annotation.NotifyChange;
 
 public class UseCase2VM {
 
-    private String currentPage = "~./usecase2/_default.zul";
+    private String currentPage = "~./usecase2/default.zul";
 
     public String getCurrentPage() {
         return currentPage;

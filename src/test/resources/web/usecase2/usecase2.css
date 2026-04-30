@@ -197,7 +197,7 @@
 
 /* ── Main content area ─────────────────────────────────────── */
 .m-main {
-    padding: 20px 24px;
+    padding: 24px;
     background: var(--md-sys-color-surface-variant, #f7f9fc);
     min-height: calc(100vh - 56px);
 }
@@ -596,29 +596,9 @@
 .m-btn--sm.z-button { padding: 4px 10px; font-size: 12px; }
 .m-btn--lg.z-button { padding: 10px 20px; font-size: 15px; }
 
-/* ── Hlayout / Vlayout flex fix ─────────────────────────────── */
-.m-kpi-row.z-hlayout,
-.m-charts-row.z-hlayout,
-.m-bottom-row.z-hlayout,
-.m-page-header.z-hlayout,
-.m-page-actions.z-hlayout,
-.m-topbar.z-hlayout {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 16px;
-}
-
-.m-charts-row.z-hlayout,
-.m-bottom-row.z-hlayout {
-    gap: 16px;
-    flex-wrap: nowrap;
-}
-
-/* Target z-hlayout-inner wrappers for flex sizing */
-.m-charts-row.z-hlayout > .z-hlayout-inner:first-child { flex: 2 1 0; min-width: 0; }
-.m-charts-row.z-hlayout > .z-hlayout-inner:last-child  { flex: 1 1 0; min-width: 0; }
-.m-bottom-row.z-hlayout  > .z-hlayout-inner:first-child { flex: 1 1 0; min-width: 0; }
-.m-bottom-row.z-hlayout  > .z-hlayout-inner:last-child  { flex: 2 1 0; min-width: 0; }
-/* Make inner divs fill their wrapper */
-.m-chart-card-main, .m-chart-card-side,
-.m-bottom-card-chart, .m-bottom-card-projects { width: 100%; min-width: 0; }
+/* ── KPI / chart row direct-child sizing (plain div containers) ── */
+.m-kpi-row > .m-kpi-card            { flex: 1; min-width: 0; }
+.m-charts-row > .m-chart-card-main  { flex: 2; min-width: 0; }
+.m-charts-row > .m-chart-card-side  { flex: 1; min-width: 0; }
+.m-bottom-row > .m-bottom-card-chart    { flex: 1; min-width: 0; }
+.m-bottom-row > .m-bottom-card-projects { flex: 2; min-width: 0; }
