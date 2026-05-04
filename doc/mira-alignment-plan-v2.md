@@ -32,6 +32,33 @@ This document combines the original dashboard alignment plan with the v2 updates
 
 ---
 
+## 1b. MUI CSS Reference
+
+When implementing or refining any ZK component CSS, read the matching MUI 9.0.0 CSS file first. These files contain the exact padding, font sizes, border-radii, state-layer colors, and transitions used by Mira.
+
+**Source directory**: `/Users/hawk/Documents/workspace/THEME/material-ui-7.3.1/static-css-output/`
+**Index**: `…/static-css-output/INDEX.md` — includes a ZK→MUI lookup table and class naming conventions.
+
+Quick lookup for the most commonly needed files:
+
+| ZK component | MUI CSS file |
+|---|---|
+| `<button>` / `<toolbarbutton>` | `Inputs/Button.css` |
+| `<textbox>` / `<combobox>` / `<datebox>` | `Inputs/InputBase.css`, `Inputs/OutlinedInput.css` |
+| `<checkbox>` | `Inputs/Checkbox.css` |
+| `<radiogroup>` / `<radio>` | `Inputs/Radio.css` |
+| `<grid>` / `<listbox>` (data table) | `DataDisplay/Table.css`, `DataDisplay/TableCell.css`, `DataDisplay/TableRow.css` |
+| `<window>` / card `<div>` | `Surfaces/Card.css`, `Surfaces/Paper.css` |
+| `<window mode="modal">` | `Feedback/Dialog.css`, `Feedback/DialogTitle.css`, `Feedback/DialogContent.css`, `Feedback/DialogActions.css` |
+| `<progressmeter>` | `Feedback/CircularProgress.css`, `Feedback/LinearProgress.css` |
+| `<tabbox>` | `Navigation/Tabs.css`, `Navigation/Tab.css` |
+| `<navbar>` / `<menubar>` | `Navigation/Drawer.css`, `Navigation/Menu.css`, `Navigation/MenuItem.css` |
+| `<paging>` | `Navigation/Pagination.css`, `Navigation/PaginationItem.css` |
+| `.m-badge`, `.m-chip`, `.m-avatar` | `DataDisplay/Badge.css`, `DataDisplay/Chip.css`, `DataDisplay/Avatar.css` |
+| Typography utilities (z-h1–z-h7) | `DataDisplay/Typography.css` |
+
+---
+
 ## 2. Frozen Pages and New Layout
 
 The 8 existing use-case pages are now **frozen** and serve as regression smoke tests. They are NOT targets for Mira-mimic styling:
@@ -57,6 +84,7 @@ The sidebar uses the `zkmax` navigation family to mimic Mira's collapsible secti
 **Mapping Details:**
 - **Brand/Search:** Positioned above the `<navbar>` in a `<vlayout>`.
 - **Active State:** Controlled via server-side toggle of an `m-active` sclass.
+- **Injection:** All `usecase2/` pages must inject the shared sidebar via `<apply templateURI="_sidebar.zul"/>` (NOT `<include src="_sidebar.zul"/>`). `<apply>` evaluates the template in the current page's component scope, which is required for the active-state sclass and any per-page bindings to resolve correctly. Using `<include>` creates an isolated IdSpace and breaks active-state coordination.
 
 ---
 
@@ -104,6 +132,7 @@ The sidebar uses the `zkmax` navigation family to mimic Mira's collapsible secti
 - **3.4 Tables & Dialogs:** Align Grid/Listbox and Window styling to Mira's MUI look.
 
 ### Phase 4 — Component CSS Polish
+- **Before editing any component CSS**: read the corresponding MUI CSS file from `…/static-css-output/` (see Section 1b for the lookup table). Extract exact values for padding, font-size, border-radius, colors, and transition timing.
 - Add selectors for the `zkmax` nav family.
 - Add `<paging>` and `<tabbox mold="accordion">` selectors.
 - Namespace custom Mira-specific classes with `m-` prefix (e.g., `.m-card`).
@@ -125,6 +154,135 @@ A page is only considered "done" when its diff report is empty. Do NOT move to t
 These are blocking checks — failure means Phase 5 is not complete:
 
 - [ ] Every sidebar item (except Maps, Documentation, Change Log) navigates to a real, rendered ZUL page.
-- [ ]  The sidebar may scroll vertically. When scrolled to the bottom, all menu items must be fully visible — no item clipped, hidden, or cut off. Verify by scrolling the sidebar to the bottom and confirming every entry is readable.
+- [ ] The sidebar may scroll vertically. When scrolled to the bottom, all menu items must be fully visible — no item clipped, hidden, or cut off. Verify by scrolling the sidebar to the bottom and confirming every entry is readable.
 - [ ] Active-state highlight matches Mira's active item styling.
 - [ ] Collapsible group expand/collapse behavior matches Mira.
+
+---
+
+## 6. Progress Tracker
+
+### Phase 0 — Recon & Asset Collection
+- [x] Full-page screenshot of Mira dashboard → `doc/mira/mira.png` *(saved as `mira.png` rather than `dashboard-default-full.png`)*
+- [ ] Chart region PNGs → `src/test/resources/web/usecase2/img/mira/charts/` *(directory not yet created)*
+- [x] Visual tokens extracted (primary palette #376fd0, Inter font weights, 8px border-radii, MUI shadow values)
+
+### Phase 1 — Token Alignment
+- [x] `_colors.css` updated to Mira palette (#376fd0 primary)
+- [x] `_typography.css` updated (Inter font, weights)
+- [x] `_shape.css` updated (8px border-radii)
+- [x] `_elevation.css` updated (MUI shadow values)
+- [x] All component CSS references `var(--md-sys-color-*)` (41 component CSS files)
+
+### Phase 2 — Lucide Icon Integration
+- N/A Lucide font files *(SVG data URI / mask-image approach used instead of font files — no font directory needed)*
+- [x] `_icons.css` maps `.z-icon-*` to Lucide icons (SVG data URI mask-image implementation)
+
+### Phase 3 — Build Mira Pages
+- [x] `index.zul` — SPA shell with MVVM (`UseCase2VM`)
+- [x] `_sidebar.zul` — sidebar with `@command('navigate', page=...)` wiring
+- [x] `default.zul` — dashboard content fragment (KPI cards, charts, grid)
+- [x] `analytics.zul`
+- [x] `saas.zul`
+- [x] `pages.zul`
+- [x] `projects.zul`
+- [x] `orders.zul`
+- [x] `products.zul`
+- [x] `invoice-list.zul`
+- [x] `invoice-detail.zul`
+- [x] `tasks.zul`
+- ~~`calendar.zul`~~ *(removed — no ZK calendar widget)*
+- [x] `sign-in.zul`
+- [x] `sign-up.zul`
+- [x] `reset-password.zul`
+- [x] `accordion.zul`
+- [x] `alerts.zul`
+- [x] `avatars.zul`
+- [x] `badges.zul`
+- [x] `buttons.zul`
+- [x] `cards.zul`
+- [x] `chips.zul`
+- [x] `dialogs.zul`
+- [x] `lists.zul`
+- [x] `menus.zul`
+- [x] `pagination.zul`
+- [x] `progress.zul`
+- [x] `tabs.zul`
+- [x] `tooltips.zul`
+- [x] `charts-apex.zul`
+- [x] `charts-chartjs.zul`
+- [x] `forms-editors.zul`
+- [x] `forms-pickers.zul`
+- [x] `forms-selection-controls.zul`
+- [x] `forms-selects.zul`
+- [x] `forms-text-fields.zul`
+- [x] `tables-simple.zul`
+- [x] `tables-advanced.zul`
+- [x] `tables-datagrid.zul`
+- [x] `icons-lucide.zul`
+
+### Phase 4 — Component CSS Polish
+- [ ] Button / toolbarbutton
+- [ ] Textbox / combobox / datebox
+- [ ] Checkbox / radio
+- [ ] Grid / Listbox (data table)
+- [ ] Window / card
+- [ ] Modal dialog
+- [ ] Progressmeter
+- [ ] Tabbox (standard + accordion)
+- [ ] Navbar / nav / navitem (sidebar)
+- [ ] Paging
+- [ ] Tooltip
+- [ ] `.m-card`, `.m-chip`, `.m-badge`, `.m-avatar` custom classes
+
+### Phase 5 — Visual Parity Audit
+
+#### 5.1 Per-Page Audit
+| Page | Screenshot Captured | Diffs Recorded | Diffs Fixed |
+|------|-------------------|----------------|-------------|
+| `default.zul` (dashboard) | [ ] | [ ] | [ ] |
+| `analytics.zul` | [ ] | [ ] | [ ] |
+| `saas.zul` | [ ] | [ ] | [ ] |
+| `pages.zul` | [ ] | [ ] | [ ] |
+| `projects.zul` | [ ] | [ ] | [ ] |
+| `orders.zul` | [ ] | [ ] | [ ] |
+| `products.zul` | [ ] | [ ] | [ ] |
+| `invoice-list.zul` | [ ] | [ ] | [ ] |
+| `invoice-detail.zul` | [ ] | [ ] | [ ] |
+| `tasks.zul` | [ ] | [ ] | [ ] |
+| `sign-in.zul` | [ ] | [ ] | [ ] |
+| `sign-up.zul` | [ ] | [ ] | [ ] |
+| `reset-password.zul` | [ ] | [ ] | [ ] |
+| `accordion.zul` | [ ] | [ ] | [ ] |
+| `alerts.zul` | [ ] | [ ] | [ ] |
+| `avatars.zul` | [ ] | [ ] | [ ] |
+| `badges.zul` | [ ] | [ ] | [ ] |
+| `buttons.zul` | [ ] | [ ] | [ ] |
+| `cards.zul` | [ ] | [ ] | [ ] |
+| `chips.zul` | [ ] | [ ] | [ ] |
+| `dialogs.zul` | [ ] | [ ] | [ ] |
+| `lists.zul` | [ ] | [ ] | [ ] |
+| `menus.zul` | [ ] | [ ] | [ ] |
+| `pagination.zul` | [ ] | [ ] | [ ] |
+| `progress.zul` | [ ] | [ ] | [ ] |
+| `tabs.zul` | [ ] | [ ] | [ ] |
+| `tooltips.zul` | [ ] | [ ] | [ ] |
+| `charts-apex.zul` | [ ] | [ ] | [ ] |
+| `charts-chartjs.zul` | [ ] | [ ] | [ ] |
+| `forms-editors.zul` | [ ] | [ ] | [ ] |
+| `forms-pickers.zul` | [ ] | [ ] | [ ] |
+| `forms-selection-controls.zul` | [ ] | [ ] | [ ] |
+| `forms-selects.zul` | [ ] | [ ] | [ ] |
+| `forms-text-fields.zul` | [ ] | [ ] | [ ] |
+| `tables-simple.zul` | [ ] | [ ] | [ ] |
+| `tables-advanced.zul` | [ ] | [ ] | [ ] |
+| `tables-datagrid.zul` | [ ] | [ ] | [ ] |
+| `icons-lucide.zul` | [ ] | [ ] | [ ] |
+
+#### 5.2 Sidebar Acceptance Checks
+- [x] SPA navigation: sidebar clicks swap center content without full page reload
+- [x] Hash-based URL deep linking: `index.zul#<pagename>` navigates directly to the matching page on load; sidebar clicks update the URL hash; browser back/forward restores the correct page (implemented in `UseCase2VM.java` via `Desktop.getBookmark()` / `Desktop.setBookmark()` / `onBookmarkChange`)
+- [x] Every sidebar item (except Maps, Documentation, Change Log, Calendar) navigates to a real, rendered ZUL page
+- [ ] Sidebar scrolls vertically; all items visible when scrolled to bottom
+- [ ] Active-state highlight matches Mira's active item styling
+- [ ] Collapsible group expand/collapse behavior matches Mira

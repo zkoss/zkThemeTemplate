@@ -60,11 +60,17 @@ npm run watch
 ### Preview and Development
 ```bash
 # Run preview application on localhost:8080
-mvn test exec:java@preview-app
-
-# In separate terminal - watch CSS files for changes
-npm run watch
+# This also starts npm run watch (live-reload on port 50000) automatically via process-resources phase
+withjdk.sh 17 mvn test exec:java@preview-app
 ```
+
+The `watch-css` Maven execution (bound to `process-resources`, `async: true`) starts `npm run watch` automatically. It watches:
+- `src/main/resources/web/**/*.css` → rebuilds theme CSS → browser hot-swaps (no reload)
+- `src/test/resources/web/**/*.zul` → copies to target → browser reloads page
+- `src/test/resources/web/**/*.css` → copies to target → browser hot-swaps (no reload)
+- `src/test/resources/web/**/*.{png,jpg,gif,svg,webp}` → copies to target → browser reloads page
+
+The live-reload client script is injected via `_sidebar.zul` (included by all usecase2 pages) and `preview.zul`.
 
 ## Preview Pages
 
@@ -91,6 +97,17 @@ http://localhost:8080/{component-name}.zul
 
 Preview ZUL files are located at `src/test/resources/web/*.zul`.
 
+### UseCase2 SPA (Mira Dashboard)
+The UseCase2 SPA supports hash-based deep linking — append `#<pagename>` to jump directly to any sidebar page:
+```
+http://localhost:8080/usecase2/index.zul#<pagename>
+```
+**WARNING**: `/index.zul` (root) returns 404 — always use the full `/usecase2/index.zul` path.
+
+Example: `http://localhost:8080/usecase2/index.zul#analytics`
+
+Valid page names: `default`, `analytics`, `saas`, `pages`, `projects`, `orders`, `products`, `invoice-list`, `invoice-detail`, `tasks`, `sign-in`, `sign-up`, `reset-password`, `accordion`, `alerts`, `avatars`, `badges`, `buttons`, `cards`, `chips`, `dialogs`, `lists`, `menus`, `pagination`, `progress`, `tabs`, `tooltips`, `charts-apex`, `charts-chartjs`, `forms-editors`, `forms-pickers`, `forms-selection-controls`, `forms-selects`, `forms-text-fields`, `tables-simple`, `tables-advanced`, `tables-datagrid`, `icons-lucide`
+
 ## Documentation Index
 Located in `doc/` directory:
 
@@ -104,14 +121,23 @@ Located in `doc/` directory:
 | [zk-edition-components.md](doc/zk-edition-components.md) | Components by ZK edition (CE/PE/EE) |
 | [mira/](doc/mira/) | 49 Mira HTML reference pages + MUI stylesheet (index-BnB_Ifri.css) |
 
+### External CSS Reference
+| Path | Description |
+|------|-------------|
+| `/Users/hawk/Documents/workspace/THEME/material-ui-7.3.1/static-css-output/` | MUI 9.0.0 static CSS — one file per component |
+| `…/static-css-output/INDEX.md` | Index with ZK→MUI lookup table and class naming conventions |
+
+**Rule**: When implementing or refining any ZK component CSS, read the matching MUI CSS file first for exact padding, font sizes, state-layer colors, and transitions. See the Quick Lookup table in the index.
+
 ## Quick Start for New Session
 
 1. **Read the iteration workflow**: `doc/usecase-driven-iteration.md`
 2. **Check required output files**: `doc/css-dsp-file-structure.md`
 3. **Research DOM structure**: `doc/component-dom-structures.md` or ZK source at `/Users/hawk/Documents/workspace/ZK10/zk/zul`
-4. **Implement CSS**: Use MD3 token patterns; all colors via `var(--md-sys-color-*)` — no hardcoded hex
-5. **Build**: `npm run build:css`
-6. **Verify**: `withjdk.sh 17 mvn test exec:java@preview-app`, then screenshot use-case pages
+4. **Reference MUI CSS**: `/Users/hawk/Documents/workspace/THEME/material-ui-7.3.1/static-css-output/INDEX.md` → pick matching file
+5. **Implement CSS**: Use MD3 token patterns; all colors via `var(--md-sys-color-*)` — no hardcoded hex
+6. **Build**: `npm run build:css`
+7. **Verify**: `withjdk.sh 17 mvn test exec:java@preview-app`, then screenshot use-case pages
 
 ## Architecture and Structure
 
