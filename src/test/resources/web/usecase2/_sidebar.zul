@@ -10,7 +10,7 @@
 
     <div sclass="m-nav-section">Pages</div>
     <navbar orient="vertical" sclass="m-sidebar">
-        <nav label="Dashboard" iconSclass="z-icon-th-large" open="true">
+        <nav label="Dashboard" iconSclass="z-icon-layout-grid" open="true">
             <navitem label="Default"
                 onClick="@command('navigate', page='~./usecase2/default.zul')"
                 sclass="@load(vm.currentPage eq '~./usecase2/default.zul' ? 'm-active' : '')"/>
@@ -21,7 +21,7 @@
                 onClick="@command('navigate', page='~./usecase2/saas.zul')"
                 sclass="@load(vm.currentPage eq '~./usecase2/saas.zul' ? 'm-active' : '')"/>
         </nav>
-        <nav label="Pages" iconSclass="z-icon-file-text-o">
+        <nav label="Pages" iconSclass="z-icon-file-text">
             <navitem label="Profile"
                 onClick="@command('navigate', page='~./usecase2/pages-profile.zul')"
                 sclass="@load(vm.currentPage eq '~./usecase2/pages-profile.zul' ? 'm-active' : '')"/>
@@ -38,16 +38,16 @@
                 onClick="@command('navigate', page='~./usecase2/pages-blank.zul')"
                 sclass="@load(vm.currentPage eq '~./usecase2/pages-blank.zul' ? 'm-active' : '')"/>
         </nav>
-        <navitem label="Projects" iconSclass="z-icon-folder-o" badgeText="8"
+        <navitem label="Projects" iconSclass="z-icon-folder" badgeText="8"
             onClick="@command('navigate', page='~./usecase2/projects.zul')"
             sclass="@load(vm.currentPage eq '~./usecase2/projects.zul' ? 'm-active' : '')"/>
         <navitem label="Orders"   iconSclass="z-icon-shopping-cart"
             onClick="@command('navigate', page='~./usecase2/orders.zul')"
             sclass="@load(vm.currentPage eq '~./usecase2/orders.zul' ? 'm-active' : '')"/>
-        <navitem label="Products" iconSclass="z-icon-cube"
+        <navitem label="Products" iconSclass="z-icon-package"
             onClick="@command('navigate', page='~./usecase2/products.zul')"
             sclass="@load(vm.currentPage eq '~./usecase2/products.zul' ? 'm-active' : '')"/>
-        <nav label="Invoices" iconSclass="z-icon-file-o">
+        <nav label="Invoices" iconSclass="z-icon-file">
             <navitem label="Invoice List"
                 onClick="@command('navigate', page='~./usecase2/invoice-list.zul')"
                 sclass="@load(vm.currentPage eq '~./usecase2/invoice-list.zul' ? 'm-active' : '')"/>
@@ -55,7 +55,7 @@
                 onClick="@command('navigate', page='~./usecase2/invoice-detail.zul')"
                 sclass="@load(vm.currentPage eq '~./usecase2/invoice-detail.zul' ? 'm-active' : '')"/>
         </nav>
-        <navitem label="Tasks"    iconSclass="z-icon-check-square-o" badgeText="17"
+        <navitem label="Tasks"    iconSclass="z-icon-square-check" badgeText="17"
             onClick="@command('navigate', page='~./usecase2/tasks.zul')"
             sclass="@load(vm.currentPage eq '~./usecase2/tasks.zul' ? 'm-active' : '')"/>
         <nav label="Auth" iconSclass="z-icon-user">
@@ -73,7 +73,7 @@
 
     <div sclass="m-nav-section">Elements</div>
     <navbar orient="vertical" sclass="m-sidebar">
-        <nav label="Components" iconSclass="z-icon-th">
+        <nav label="Components" iconSclass="z-icon-grid-3x3">
             <navitem label="Accordion"
                 onClick="@command('navigate', page='~./usecase2/accordion.zul')"
                 sclass="@load(vm.currentPage eq '~./usecase2/accordion.zul' ? 'm-active' : '')"/>
@@ -125,7 +125,7 @@
                 onClick="@command('navigate', page='~./usecase2/charts-chartjs.zul')"
                 sclass="@load(vm.currentPage eq '~./usecase2/charts-chartjs.zul' ? 'm-active' : '')"/>
         </nav>
-        <nav label="Forms" iconSclass="z-icon-pencil-square-o">
+        <nav label="Forms" iconSclass="z-icon-square-pen">
             <navitem label="Text Fields"
                 onClick="@command('navigate', page='~./usecase2/forms-text-fields.zul')"
                 sclass="@load(vm.currentPage eq '~./usecase2/forms-text-fields.zul' ? 'm-active' : '')"/>
@@ -153,18 +153,18 @@
                 onClick="@command('navigate', page='~./usecase2/tables-datagrid.zul')"
                 sclass="@load(vm.currentPage eq '~./usecase2/tables-datagrid.zul' ? 'm-active' : '')"/>
         </nav>
-        <nav label="Icons" iconSclass="z-icon-heart-o">
+        <nav label="Icons" iconSclass="z-icon-smile">
             <navitem label="Lucide Icons"
                 onClick="@command('navigate', page='~./usecase2/icons-lucide.zul')"
                 sclass="@load(vm.currentPage eq '~./usecase2/icons-lucide.zul' ? 'm-active' : '')"/>
         </nav>
-        <navitem label="Maps" iconSclass="z-icon-map-marker"/>
+        <navitem label="Maps" iconSclass="z-icon-map-pin"/>
     </navbar>
 
     <div sclass="m-nav-section">Mira Pro</div>
     <navbar orient="vertical" sclass="m-sidebar">
         <navitem label="Documentation" iconSclass="z-icon-book"/>
-        <navitem label="Changelog"     iconSclass="z-icon-list-alt" badgeText="v6.1.0"/>
+        <navitem label="Changelog"     iconSclass="z-icon-clipboard-list" badgeText="v6.1.0"/>
     </navbar>
 
     <div sclass="m-sidebar__user">

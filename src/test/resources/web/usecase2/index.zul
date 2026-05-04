@@ -14,7 +14,7 @@
             <hlayout sclass="m-topbar">
                 <textbox placeholder="Search topics..." />
                 <div sclass="m-topbar-right">
-                    <button iconSclass="z-icon-envelope" sclass="m-icon-btn"/>
+                    <button iconSclass="z-icon-mail" sclass="m-icon-btn"/>
                     <button iconSclass="z-icon-bell"     sclass="m-icon-btn"/>
                     <div sclass="m-avatar m-avatar--sm" style="background:#5c7bd9;">
                         <label value="L" style="color:#fff;font-weight:600;"/>

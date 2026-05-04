@@ -131,7 +131,7 @@ function generateLucideIconsCSS(iconNames) {
 function generateIconsZul(iconNames) {
     const destPath = path.join(__dirname, '..', 'src/test/resources/web/usecase2/icons-lucide.zul');
     const entries = iconNames.map(name =>
-        `            <div sclass="m-icon-gallery__item"><span class="z-icon-${name}" sclass="m-icon-gallery__icon"/><label sclass="m-icon-gallery__name" value="${name}"/></div>`
+        `            <div sclass="m-icon-gallery__item"><span sclass="z-icon-${name} m-icon-gallery__icon"/><label sclass="m-icon-gallery__name" value="${name}"/></div>`
     ).join('\n');
 
     const zul = `<div sclass="m-main">

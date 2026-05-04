@@ -21,7 +21,7 @@
                     <label sclass="m-card__title" value="List with Icons"/>
                     <div sclass="m-list">
                         <div sclass="m-list__item">
-                            <span sclass="z-icon-envelope m-list__icon"/>
+                            <span sclass="z-icon-mail m-list__icon"/>
                             <span>Inbox</span>
                         </div>
                         <div sclass="m-list__item">
@@ -29,7 +29,7 @@
                             <span>Starred</span>
                         </div>
                         <div sclass="m-list__item">
-                            <span sclass="z-icon-paper-plane m-list__icon"/>
+                            <span sclass="z-icon-send m-list__icon"/>
                             <span>Sent</span>
                         </div>
                         <div sclass="m-list__item">

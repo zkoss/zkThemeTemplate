@@ -9,7 +9,7 @@
                     <label sclass="m-card__title" value="Default Alerts"/>
                     <vlayout spacing="12px">
                         <div sclass="m-alert m-alert--info">
-                            <span sclass="m-alert__icon z-icon-info-circle"/>
+                            <span sclass="m-alert__icon z-icon-info"/>
                             <label value="This is an info alert — check it out!"/>
                         </div>
                         <div sclass="m-alert m-alert--success">
@@ -17,11 +17,11 @@
                             <label value="This is a success alert — check it out!"/>
                         </div>
                         <div sclass="m-alert m-alert--warning">
-                            <span sclass="m-alert__icon z-icon-exclamation-triangle"/>
+                            <span sclass="m-alert__icon z-icon-triangle-alert"/>
                             <label value="This is a warning alert — check it out!"/>
                         </div>
                         <div sclass="m-alert m-alert--error">
-                            <span sclass="m-alert__icon z-icon-times-circle"/>
+                            <span sclass="m-alert__icon z-icon-circle-x"/>
                             <label value="This is an error alert — check it out!"/>
                         </div>
                     </vlayout>

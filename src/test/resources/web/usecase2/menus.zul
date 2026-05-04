@@ -8,8 +8,8 @@
                 <menubar sclass="m-menubar">
                     <menu label="File">
                         <menupopup>
-                            <menuitem label="New"   iconSclass="z-icon-file-o"/>
-                            <menuitem label="Open"  iconSclass="z-icon-folder-open-o"/>
+                            <menuitem label="New"   iconSclass="z-icon-file"/>
+                            <menuitem label="Open"  iconSclass="z-icon-folder-open"/>
                             <menuitem label="Save"  iconSclass="z-icon-save"/>
                             <menuseparator/>
                             <menuitem label="Exit"  iconSclass="z-icon-power-off"/>
@@ -24,8 +24,8 @@
                     </menu>
                     <menu label="View">
                         <menupopup>
-                            <menuitem label="Zoom In"  iconSclass="z-icon-search-plus"/>
-                            <menuitem label="Zoom Out" iconSclass="z-icon-search-minus"/>
+                            <menuitem label="Zoom In"  iconSclass="z-icon-zoom-in"/>
+                            <menuitem label="Zoom Out" iconSclass="z-icon-zoom-out"/>
                             <menuseparator/>
                             <menuitem label="Full Screen" iconSclass="z-icon-expand"/>
                         </menupopup>
@@ -33,7 +33,7 @@
                     <menu label="Help">
                         <menupopup>
                             <menuitem label="Documentation" iconSclass="z-icon-book"/>
-                            <menuitem label="About"         iconSclass="z-icon-info-circle"/>
+                            <menuitem label="About"         iconSclass="z-icon-info"/>
                         </menupopup>
                     </menu>
                 </menubar>
@@ -47,7 +47,7 @@
                     <menuitem label="Edit"   iconSclass="z-icon-pencil"/>
                     <menuitem label="Copy"   iconSclass="z-icon-copy"/>
                     <menuseparator/>
-                    <menuitem label="Delete" iconSclass="z-icon-trash-o" style="color:#d32f2f;"/>
+                    <menuitem label="Delete" iconSclass="z-icon-trash-2" style="color:#d32f2f;"/>
                 </menupopup>
             </div>
         </div>

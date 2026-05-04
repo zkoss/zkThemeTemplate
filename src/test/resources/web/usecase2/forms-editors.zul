@@ -12,8 +12,8 @@
                 <button iconSclass="z-icon-bold"          sclass="m-btn--outlined" style="min-width:32px;padding:4px 8px;"/>
                 <button iconSclass="z-icon-italic"        sclass="m-btn--outlined" style="min-width:32px;padding:4px 8px;"/>
                 <button iconSclass="z-icon-underline"     sclass="m-btn--outlined" style="min-width:32px;padding:4px 8px;"/>
-                <button iconSclass="z-icon-list-ul"       sclass="m-btn--outlined" style="min-width:32px;padding:4px 8px;"/>
-                <button iconSclass="z-icon-list-ol"       sclass="m-btn--outlined" style="min-width:32px;padding:4px 8px;"/>
+                <button iconSclass="z-icon-list"          sclass="m-btn--outlined" style="min-width:32px;padding:4px 8px;"/>
+                <button iconSclass="z-icon-list-ordered" sclass="m-btn--outlined" style="min-width:32px;padding:4px 8px;"/>
                 <button iconSclass="z-icon-link"          sclass="m-btn--outlined" style="min-width:32px;padding:4px 8px;"/>
             </div>
             <textbox multiline="true" rows="8" style="width:100%;border:none;padding:12px;font-family:inherit;font-size:14px;resize:vertical;"

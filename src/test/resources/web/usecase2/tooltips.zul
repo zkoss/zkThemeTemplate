@@ -34,7 +34,7 @@
                 <label sclass="m-card__title" value="Icon tooltips"/>
                 <hlayout spacing="20px" style="padding:8px 0;align-items:center;">
                     <popup id="tIcon1" sclass="m-tooltip"><label value="Delete this item" style="font-size:12px;"/></popup>
-                    <button iconSclass="z-icon-trash-o"  sclass="m-icon-btn" tooltip="tIcon1"/>
+                    <button iconSclass="z-icon-trash-2"  sclass="m-icon-btn" tooltip="tIcon1"/>
 
                     <popup id="tIcon2" sclass="m-tooltip"><label value="Edit details" style="font-size:12px;"/></popup>
                     <button iconSclass="z-icon-pencil"   sclass="m-icon-btn" tooltip="tIcon2"/>
@@ -43,7 +43,7 @@
                     <button iconSclass="z-icon-download" sclass="m-icon-btn" tooltip="tIcon3"/>
 
                     <popup id="tIcon4" sclass="m-tooltip"><label value="Share with team" style="font-size:12px;"/></popup>
-                    <button iconSclass="z-icon-share-alt" sclass="m-icon-btn" tooltip="tIcon4"/>
+                    <button iconSclass="z-icon-share-2" sclass="m-icon-btn" tooltip="tIcon4"/>
                 </hlayout>
             </div>
         </div>
