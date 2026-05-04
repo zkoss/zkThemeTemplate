@@ -687,3 +687,37 @@
     align-self: flex-start;
 }
 
+/* ── Icon gallery (icons-lucide.zul) ──────────────────────────── */
+.m-icon-gallery {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.m-icon-gallery__hint {
+    color: #757575;
+    font-size: 13px;
+    display: block;
+    margin-bottom: 16px;
+}
+
+.m-icon-gallery__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    width: 88px;
+    text-align: center;
+}
+
+.m-icon-gallery__icon {
+    font-size: 24px;
+    color: #376fd0;
+}
+
+.m-icon-gallery__name {
+    font-size: 9px;
+    color: #757575;
+    word-break: break-all;
+}
+

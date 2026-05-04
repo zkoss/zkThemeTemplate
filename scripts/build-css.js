@@ -92,6 +92,68 @@ const stubPaths = [
     'js/zkmax/tbeditor/css/tbeditor.css.dsp',
 ];
 
+function minifySvg(svg) {
+    return svg
+        .replace(/<!--[\s\S]*?-->/g, '')  // strip comments
+        .replace(/\s+/g, ' ')             // collapse whitespace
+        .replace(/ class="[^"]*"/g, '')   // strip lucide class attr (not needed for mask)
+        .trim();
+}
+
+function encodeSvgForCss(svg) {
+    return svg
+        .replace(/%/g, '%25')
+        .replace(/</g, '%3C')
+        .replace(/>/g, '%3E')
+        .replace(/"/g, '%22');
+}
+
+function getLucideIcons() {
+    const iconsDir = path.join(__dirname, '..', 'node_modules/lucide-static/icons');
+    if (!fs.existsSync(iconsDir)) return [];
+    return fs.readdirSync(iconsDir)
+        .filter(f => f.endsWith('.svg'))
+        .sort()
+        .map(f => f.replace('.svg', ''));
+}
+
+function generateLucideIconsCSS(iconNames) {
+    const iconsDir = path.join(__dirname, '..', 'node_modules/lucide-static/icons');
+    let css = '/* Lucide icon classes — auto-generated from lucide-static; class name = z-icon-{lucide-name} */\n';
+    for (const name of iconNames) {
+        const svg = fs.readFileSync(path.join(iconsDir, name + '.svg'), 'utf8');
+        const encoded = encodeSvgForCss(minifySvg(svg));
+        css += `.z-icon-${name}{--_icon:url("data:image/svg+xml,${encoded}")}\n`;
+    }
+    return css;
+}
+
+function generateIconsZul(iconNames) {
+    const destPath = path.join(__dirname, '..', 'src/test/resources/web/usecase2/icons-lucide.zul');
+    const entries = iconNames.map(name =>
+        `            <div sclass="m-icon-gallery__item"><span class="z-icon-${name}" sclass="m-icon-gallery__icon"/><label sclass="m-icon-gallery__name" value="${name}"/></div>`
+    ).join('\n');
+
+    const zul = `<div sclass="m-main">
+
+    <div sclass="m-page-header">
+        <label sclass="m-page-title" value="Lucide Icons"/>
+    </div>
+    <separator bar="true"/>
+
+    <div sclass="m-card">
+        <label sclass="m-card__title" value="All ${iconNames.length} Lucide Icons"/>
+        <label sclass="m-icon-gallery__hint" value="Usage: iconSclass=&quot;z-icon-{name}&quot; or sclass=&quot;z-icon-{name}&quot;"/>
+        <div sclass="m-icon-gallery">
+${entries}
+        </div>
+    </div>
+
+</div>`;
+
+    fs.writeFileSync(destPath, zul, 'utf8');
+}
+
 function readFile(relativePath) {
     const fullPath = path.join(webDir, relativePath);
     if (fs.existsSync(fullPath)) {
@@ -127,13 +189,19 @@ function build() {
     }
     console.log(`  ${stubPaths.length} empty stubs (zkex/zkmax/font)`);
 
-    // 1. Build norm.css.dsp (tokens + base + global)
+    // 1. Build norm.css.dsp (tokens + base + global + generated Lucide icons)
+    const lucideIcons = getLucideIcons();
     let normCSS = '';
     for (const file of normFiles) {
         normCSS += readFile(file) + '\n';
     }
+    normCSS += generateLucideIconsCSS(lucideIcons);
     writeDsp('zul/css/norm.css.dsp', normCSS);
-    console.log('  zul/css/norm.css.dsp');
+    console.log(`  zul/css/norm.css.dsp (${lucideIcons.length} Lucide icons)`);
+
+    // 1b. Generate icons demo page
+    generateIconsZul(lucideIcons);
+    console.log(`  icons-lucide.zul (${lucideIcons.length} icons)`);
 
     // 2. Auto-scan js/zul/**/css/*.css → 1:1 *.css.dsp
     const jsZulDir = path.join(webDir, 'js/zul');
