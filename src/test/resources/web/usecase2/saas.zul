@@ -1,9 +1,113 @@
 <div sclass="m-main">
-            <div sclass="m-page-header">
-                <label sclass="m-page-title" value="SaaS Dashboard"/>
+
+    <div sclass="m-page-header">
+        <div>
+            <label sclass="m-page-title"    value="SaaS Dashboard"/>
+            <label sclass="m-page-subtitle" value="Today: April 29"/>
+        </div>
+        <hlayout sclass="m-page-actions">
+            <button label="Today: April 29" sclass="m-btn--primary"/>
+        </hlayout>
+    </div>
+
+    <div sclass="m-kpi-row">
+
+        <div sclass="m-card m-kpi-card">
+            <div sclass="m-kpi-card__header">
+                <label sclass="m-kpi-card__label" value="Income"/>
+                <div sclass="m-chip m-chip--primary">Monthly</div>
             </div>
-            <div sclass="m-card">
-                <label sclass="m-card__title" value="SaaS Dashboard"/>
-                <label value="Content coming soon." style="color:#757575;font-size:14px;"/>
+            <label sclass="m-kpi-card__value" value="$37,500"/>
+            <div sclass="m-kpi-card__footer">
+                <span sclass="m-kpi-trend--up">+14%</span>
+                <span sclass="m-kpi-since">Since last month</span>
             </div>
         </div>
+
+        <div sclass="m-card m-kpi-card">
+            <div sclass="m-kpi-card__header">
+                <label sclass="m-kpi-card__label" value="Visitors"/>
+                <div sclass="m-chip m-chip--primary">Annual</div>
+            </div>
+            <label sclass="m-kpi-card__value" value="150,121"/>
+            <div sclass="m-kpi-card__footer">
+                <span sclass="m-kpi-trend--down">-12%</span>
+                <span sclass="m-kpi-since">Since last month</span>
+            </div>
+        </div>
+
+        <div sclass="m-card m-kpi-card">
+            <div sclass="m-kpi-card__header">
+                <label sclass="m-kpi-card__label" value="Completed Orders"/>
+                <div sclass="m-chip m-chip--primary">Weekly</div>
+            </div>
+            <label sclass="m-kpi-card__value" value="12,432"/>
+            <div sclass="m-kpi-card__footer">
+                <span sclass="m-kpi-trend--up">+24%</span>
+                <span sclass="m-kpi-since">Since last month</span>
+            </div>
+        </div>
+
+        <div sclass="m-card m-kpi-card m-kpi-card--primary">
+            <div sclass="m-kpi-card__header">
+                <label sclass="m-kpi-card__label" value="Pending Orders"/>
+            </div>
+            <label sclass="m-kpi-card__value" value="22"/>
+            <div sclass="m-kpi-card__footer">
+                <span sclass="m-kpi-trend--down">-6%</span>
+                <span sclass="m-kpi-since">Real-Time</span>
+            </div>
+        </div>
+
+    </div>
+
+    <div sclass="m-charts-row">
+
+        <div sclass="m-card m-chart-card-main">
+            <label sclass="m-card__title" value="Sales / Revenue"/>
+            <image src="~./usecase2/img/charts/total-revenue.png" sclass="m-chart-img"/>
+        </div>
+
+        <div sclass="m-card m-chart-card-side">
+            <label sclass="m-card__title" value="Weekly sales"/>
+            <image src="~./usecase2/img/charts/weekly-sales.png" sclass="m-chart-img"/>
+            <grid sclass="m-revenue-table" mold="default">
+                <columns>
+                    <column label="Source"/>
+                    <column label="Revenue"/>
+                    <column label="Value"/>
+                </columns>
+                <rows>
+                    <row><label value="Social"/><label value="260"/><label sclass="m-positive" value="+35%"/></row>
+                    <row><label value="Search Engines"/><label value="125"/><label sclass="m-negative" value="-12%"/></row>
+                    <row><label value="Direct"/><label value="54"/><label sclass="m-positive" value="+46%"/></row>
+                    <row><label value="Other"/><label value="146"/><label sclass="m-positive" value="+24%"/></row>
+                </rows>
+            </grid>
+        </div>
+
+    </div>
+
+    <div sclass="m-card">
+        <label sclass="m-card__title" value="Latest products"/>
+        <grid sclass="m-projects-grid" mold="default">
+            <columns>
+                <column label="Product Name"/>
+                <column label="License Type"/>
+                <column label="Technology"/>
+                <column label="Open Tickets"/>
+                <column label="Sales"/>
+            </columns>
+            <rows>
+                <row><label value="Aurora"/><label value="Single License"/><div sclass="m-chip m-chip--primary">React</div><label value="12"/><label value="1,205"/></row>
+                <row><label value="Canary"/><label value="Single License"/><div sclass="m-chip m-chip--primary">React</div><label value="1"/><label value="410"/></row>
+                <row><label value="Eagle"/><label value="Extended License"/><div sclass="m-chip">Angular</div><label value="2"/><label value="108"/></row>
+                <row><label value="Fireball"/><label value="Single License"/><div sclass="m-chip m-chip--primary">React</div><label value="3"/><label value="360"/></row>
+                <row><label value="Omega"/><label value="Single License"/><div sclass="m-chip">Angular</div><label value="6"/><label value="712"/></row>
+                <row><label value="Yoda"/><label value="Extended License"/><div sclass="m-chip">Angular</div><label value="15"/><label value="1,502"/></row>
+                <row><label value="Zulu"/><label value="Extended License"/><div sclass="m-chip">Angular</div><label value="2"/><label value="480"/></row>
+            </rows>
+        </grid>
+    </div>
+
+</div>

@@ -12,7 +12,7 @@
         </hlayout>
     </div>
     <!-- KPI cards -->
-    <div sclass="m--row">
+    <div sclass="m-kpi-row">
 
         <div sclass="m-card m-kpi-card">
             <div sclass="m-kpi-card__header">
@@ -50,11 +50,11 @@
             </div>
         </div>
 
-        <div sclass="m-card m-kpi-card">
+        <div sclass="m-card m-kpi-card m-kpi-card--primary">
             <div sclass="m-kpi-card__header">
-                <label sclass="m-kpi-card__label m-kpi-card__label--primary" value="Pending Orders"/>
+                <label sclass="m-kpi-card__label" value="Pending Orders"/>
             </div>
-            <label sclass="m-kpi-card__value m-kpi-card__value--primary" value="45"/>
+            <label sclass="m-kpi-card__value" value="45"/>
             <div sclass="m-kpi-card__footer">
                 <span sclass="m-kpi-trend--down">-9%</span>
                 <span sclass="m-kpi-since">Since last month</span>

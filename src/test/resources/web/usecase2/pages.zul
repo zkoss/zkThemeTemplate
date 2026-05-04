@@ -1,9 +1,96 @@
 <div sclass="m-main">
-            <div sclass="m-page-header">
-                <label sclass="m-page-title" value="Pages"/>
+
+    <div sclass="m-page-header">
+        <label sclass="m-page-title" value="Pages"/>
+    </div>
+
+    <div sclass="m-kpi-row" style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;">
+
+        <div sclass="m-card">
+            <label sclass="m-card__title" value="Profile"/>
+            <label value="User profile page with personal information, activity feed, and settings." style="font-size:13px;color:#49454f;display:block;margin-bottom:16px;"/>
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
+                <div sclass="m-avatar" style="background:#376fd0;width:48px;height:48px;font-size:18px;">
+                    <label value="L" style="color:#fff;font-weight:600;"/>
+                </div>
+                <div>
+                    <label value="Lucy Lavender" style="font-size:14px;font-weight:600;display:block;"/>
+                    <label value="UX Designer" style="font-size:12px;color:#49454f;display:block;"/>
+                </div>
             </div>
-            <div sclass="m-card">
-                <label sclass="m-card__title" value="Pages"/>
-                <label value="Content coming soon." style="color:#757575;font-size:14px;"/>
+            <button label="View Profile" sclass="m-btn--outlined"/>
+        </div>
+
+        <div sclass="m-card">
+            <label sclass="m-card__title" value="Settings"/>
+            <label value="Account settings, preferences, notifications, and security options." style="font-size:13px;color:#49454f;display:block;margin-bottom:16px;"/>
+            <vlayout>
+                <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #f0f0f0;">
+                    <label value="Email notifications" style="font-size:13px;"/>
+                    <checkbox checked="true"/>
+                </div>
+                <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #f0f0f0;">
+                    <label value="Two-factor auth" style="font-size:13px;"/>
+                    <checkbox/>
+                </div>
+                <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;">
+                    <label value="Marketing emails" style="font-size:13px;"/>
+                    <checkbox checked="true"/>
+                </div>
+            </vlayout>
+        </div>
+
+        <div sclass="m-card">
+            <label sclass="m-card__title" value="Pricing"/>
+            <label value="Subscription plans and pricing tiers for different team sizes." style="font-size:13px;color:#49454f;display:block;margin-bottom:16px;"/>
+            <vlayout>
+                <div style="text-align:center;padding:12px;border:1px solid #e0e0e0;border-radius:8px;margin-bottom:8px;">
+                    <label value="Free" style="font-size:16px;font-weight:700;display:block;"/>
+                    <label value="$0 / month" style="font-size:13px;color:#49454f;display:block;"/>
+                </div>
+                <div style="text-align:center;padding:12px;background:var(--md-sys-color-primary,#376fd0);border-radius:8px;margin-bottom:8px;">
+                    <label value="Pro" style="font-size:16px;font-weight:700;color:#fff;display:block;"/>
+                    <label value="$19 / month" style="font-size:13px;color:#dce5f5;display:block;"/>
+                </div>
+                <div style="text-align:center;padding:12px;border:1px solid #e0e0e0;border-radius:8px;">
+                    <label value="Enterprise" style="font-size:16px;font-weight:700;display:block;"/>
+                    <label value="Custom pricing" style="font-size:13px;color:#49454f;display:block;"/>
+                </div>
+            </vlayout>
+        </div>
+
+        <div sclass="m-card">
+            <label sclass="m-card__title" value="Chat"/>
+            <label value="Real-time messaging interface with contacts and message threads." style="font-size:13px;color:#49454f;display:block;margin-bottom:16px;"/>
+            <vlayout>
+                <div style="display:flex;align-items:center;gap:8px;padding:8px;background:#f7f9fc;border-radius:8px;margin-bottom:6px;">
+                    <div sclass="m-avatar m-avatar--sm" style="background:#e91e63;"><label value="T" style="color:#fff;font-size:11px;font-weight:600;"/></div>
+                    <div style="flex:1;">
+                        <label value="Tracy Mack" style="font-size:13px;font-weight:600;display:block;"/>
+                        <label value="Hey, are you available?" style="font-size:12px;color:#49454f;display:block;"/>
+                    </div>
+                    <label value="2m" style="font-size:11px;color:#9e9e9e;"/>
+                </div>
+                <div style="display:flex;align-items:center;gap:8px;padding:8px;background:#f7f9fc;border-radius:8px;">
+                    <div sclass="m-avatar m-avatar--sm" style="background:#4caf50;"><label value="J" style="color:#fff;font-size:11px;font-weight:600;"/></div>
+                    <div style="flex:1;">
+                        <label value="James Dalton" style="font-size:13px;font-weight:600;display:block;"/>
+                        <label value="The build passed!" style="font-size:12px;color:#49454f;display:block;"/>
+                    </div>
+                    <label value="15m" style="font-size:11px;color:#9e9e9e;"/>
+                </div>
+            </vlayout>
+        </div>
+
+        <div sclass="m-card">
+            <label sclass="m-card__title" value="Blank Page"/>
+            <label value="A clean starting point for new page layouts and custom content." style="font-size:13px;color:#49454f;display:block;margin-bottom:24px;"/>
+            <div style="border:2px dashed #e0e0e0;border-radius:8px;padding:32px;text-align:center;">
+                <label value="Empty canvas" style="font-size:14px;color:#9e9e9e;display:block;margin-bottom:8px;"/>
+                <button label="Start building" sclass="m-btn--primary"/>
             </div>
         </div>
+
+    </div>
+
+</div>

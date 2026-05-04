@@ -2,7 +2,8 @@
 <?link rel="stylesheet" type="text/css" href="~./usecase2/usecase2.css"?>
 <zk>
 <script src="http://localhost:50000/zk-live-reload.js" defer="true"/>
-<borderlayout height="100vh" viewModel="@id('vm') @init('zk.example.UseCase2VM')">
+<borderlayout height="100vh" viewModel="@id('vm') @init('zk.example.UseCase2VM')"
+    onBookmarkChange="@command('handleBookmarkChange', bookmark=event.bookmark)">
 
     <west size="258px" border="none" collapsible="false" sclass="m-sidebar">
         <include src="~./usecase2/_sidebar.zul"/>

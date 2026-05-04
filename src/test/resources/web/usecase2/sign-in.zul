@@ -1,9 +1,25 @@
-<div sclass="m-main">
-            <div sclass="m-page-header">
-                <label sclass="m-page-title" value="Sign In"/>
-            </div>
-            <div sclass="m-card">
-                <label sclass="m-card__title" value="Sign In"/>
-                <label value="Content coming soon." style="color:#757575;font-size:14px;"/>
-            </div>
+<div sclass="m-main" style="display:flex;align-items:center;justify-content:center;min-height:calc(100vh - 64px);">
+
+    <div sclass="m-card" style="width:400px;">
+        <label value="Welcome back, Lucy!" style="font-size:22px;font-weight:700;display:block;margin-bottom:8px;"/>
+        <label value="Sign in to your account to continue" style="font-size:14px;color:#49454f;display:block;margin-bottom:4px;"/>
+        <label value="Use demo@bootlab.io / unsafepassword" style="font-size:12px;color:#757575;display:block;margin-bottom:24px;"/>
+
+        <label value="Email Address" style="font-size:13px;font-weight:600;display:block;margin-bottom:4px;"/>
+        <textbox placeholder="Email Address" style="width:100%;margin-bottom:16px;" cols="40"/>
+
+        <label value="Password" style="font-size:13px;font-weight:600;display:block;margin-bottom:4px;"/>
+        <textbox placeholder="Password" type="password" style="width:100%;margin-bottom:8px;" cols="40"/>
+
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;">
+            <checkbox label="Remember me"/>
+            <a href="#" label="Forgot password?" style="font-size:13px;color:#376fd0;"/>
         </div>
+
+        <button label="Sign in" sclass="m-btn--primary" style="width:100%;margin-bottom:16px;"/>
+
+        <label value="Don't have an account yet? " style="font-size:13px;color:#49454f;"/>
+        <a href="#" label="Sign up" style="font-size:13px;color:#376fd0;"/>
+    </div>
+
+</div>

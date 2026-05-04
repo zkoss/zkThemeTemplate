@@ -16,7 +16,7 @@
                         </row>
                         <row>
                             <label value="Date and Time" style="font-weight:500;"/>
-                            <datetimebox width="260px"/>
+                            <datebox format="yyyy/MM/dd HH:mm" width="260px"/>
                         </row>
                         <row>
                             <label value="Month" style="font-weight:500;"/>

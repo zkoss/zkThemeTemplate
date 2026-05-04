@@ -1,9 +1,65 @@
 <div sclass="m-main">
-            <div sclass="m-page-header">
-                <label sclass="m-page-title" value="Products"/>
-            </div>
-            <div sclass="m-card">
-                <label sclass="m-card__title" value="Products"/>
-                <label value="Content coming soon." style="color:#757575;font-size:14px;"/>
-            </div>
-        </div>
+
+    <div sclass="m-page-header">
+        <label sclass="m-page-title" value="Products"/>
+        <hlayout sclass="m-page-actions">
+            <button label="New Product" sclass="m-btn--primary"/>
+        </hlayout>
+    </div>
+
+    <div sclass="m-card">
+        <label sclass="m-card__title" value="Products"/>
+        <listbox checkmark="true" multiple="true">
+            <listhead>
+                <listheader label="Item Name"  width="260px"/>
+                <listheader label="Price"      width="120px"/>
+                <listheader label="Stock"      width="80px"/>
+                <listheader label="Category"   width="140px"/>
+                <listheader label="Rating"     width="100px"/>
+            </listhead>
+            <listitem>
+                <listcell label="Apple iPad Pro (Silver)"/>
+                <listcell label="$1,399.00"/>
+                <listcell label="48"/>
+                <listcell><div sclass="m-chip">Tablets</div></listcell>
+                <listcell label="4.6 / 55 Reviews"/>
+            </listitem>
+            <listitem>
+                <listcell label="Apple iPad Pro (Space Gray)"/>
+                <listcell label="$1,399.00"/>
+                <listcell label="48"/>
+                <listcell><div sclass="m-chip">Tablets</div></listcell>
+                <listcell label="4.3 / 25 Reviews"/>
+            </listitem>
+            <listitem>
+                <listcell label="Apple iPhone 15 Pro Max (Blue Titanium)"/>
+                <listcell label="$1,499.00"/>
+                <listcell label="38"/>
+                <listcell><div sclass="m-chip m-chip--primary">Smartphones</div></listcell>
+                <listcell label="4.6 / 40 Reviews"/>
+            </listitem>
+            <listitem>
+                <listcell label="Apple iPhone 15 Pro Max (Natural Titanium)"/>
+                <listcell label="$1,499.00"/>
+                <listcell label="30"/>
+                <listcell><div sclass="m-chip m-chip--primary">Smartphones</div></listcell>
+                <listcell label="4.8 / 50 Reviews"/>
+            </listitem>
+            <listitem>
+                <listcell label="Apple iPhone 15 Pro Max (White Titanium)"/>
+                <listcell label="$1,499.00"/>
+                <listcell label="45"/>
+                <listcell><div sclass="m-chip m-chip--primary">Smartphones</div></listcell>
+                <listcell label="4.9 / 60 Reviews"/>
+            </listitem>
+            <listitem>
+                <listcell label="Apple MacBook Pro 16&quot; (Silver)"/>
+                <listcell label="$2,399.00"/>
+                <listcell label="55"/>
+                <listcell><div sclass="m-chip">Notebooks</div></listcell>
+                <listcell label="4.7 / 45 Reviews"/>
+            </listitem>
+        </listbox>
+    </div>
+
+</div>

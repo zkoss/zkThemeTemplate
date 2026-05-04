@@ -97,7 +97,8 @@
 }
 
 /* Active / selected state */
-.m-sidebar .z-navitem-selected > .z-navitem-content {
+.m-sidebar .z-navitem-selected > .z-navitem-content,
+.m-sidebar .z-navitem.m-active > .z-navitem-content {
     background: rgba(0,0,0,0.15);
     color: #fff;
     border-left-color: #fff;
@@ -170,12 +171,13 @@
 .m-topbar {
     display: flex;
     align-items: center;
-    padding: 10px 20px;
+    padding: 0 24px;
     background: #ffffff;
     border-bottom: 1px solid var(--md-sys-color-outline-variant, #e0e0e0);
-    height: 56px;
+    height: 64px;
     box-sizing: border-box;
     gap: 12px;
+    flex-shrink: 0;
 }
 
 .m-topbar .z-textbox {
@@ -197,9 +199,9 @@
 
 /* ── Main content area ─────────────────────────────────────── */
 .m-main {
-    padding: 24px;
+    padding: 48px;
     background: var(--md-sys-color-surface-variant, #f7f9fc);
-    min-height: calc(100vh - 56px);
+    min-height: calc(100vh - 64px);
 }
 
 /* ── Page header ───────────────────────────────────────────── */
@@ -293,6 +295,32 @@
 .m-kpi-trend--up   { color: var(--md-sys-color-success, #2e7d32); font-weight: 500; }
 .m-kpi-trend--down { color: var(--md-sys-color-error,   #d32f2f); font-weight: 500; }
 .m-kpi-since       { color: var(--md-sys-color-on-surface-variant, #49454f); }
+
+/* 4th KPI card: primary-colored variant (Pending Orders) */
+.m-kpi-card--primary.m-card {
+    background: var(--md-sys-color-primary-container, #dce5f5);
+    position: relative;
+    overflow: hidden;
+}
+
+.m-kpi-card--primary .m-kpi-card__label {
+    color: var(--md-sys-color-primary, #376fd0);
+    font-weight: 600;
+}
+
+.m-kpi-card--primary .m-kpi-card__value {
+    color: var(--md-sys-color-primary, #376fd0);
+    font-size: 32px;
+    font-weight: 700;
+}
+
+.m-kpi-card--primary .m-kpi-trend--down {
+    color: var(--md-sys-color-error, #d32f2f);
+}
+
+.m-kpi-card--primary .m-kpi-since {
+    color: var(--md-sys-color-on-surface-variant, #49454f);
+}
 
 /* ── Chip ──────────────────────────────────────────────────── */
 .m-chip {

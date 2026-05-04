@@ -1,9 +1,183 @@
 <div sclass="m-main">
-            <div sclass="m-page-header">
-                <label sclass="m-page-title" value="Analytics Dashboard"/>
+
+    <div sclass="m-page-header">
+        <div>
+            <label sclass="m-page-title"    value="Analytics Dashboard"/>
+            <label sclass="m-page-subtitle" value="Today: April 29"/>
+        </div>
+        <hlayout sclass="m-page-actions">
+            <button label="Real-Time" sclass="m-btn--outlined"/>
+            <button label="Annual"    sclass="m-btn--primary"/>
+        </hlayout>
+    </div>
+
+    <div sclass="m-kpi-row">
+
+        <div sclass="m-card m-kpi-card">
+            <div sclass="m-kpi-card__header">
+                <label sclass="m-kpi-card__label" value="Visitors"/>
+                <div sclass="m-chip m-chip--primary">Weekly</div>
             </div>
-            <div sclass="m-card">
-                <label sclass="m-card__title" value="Analytics Dashboard"/>
-                <label value="Content coming soon." style="color:#757575;font-size:14px;"/>
+            <label sclass="m-kpi-card__value" value="24,532"/>
+            <div sclass="m-kpi-card__footer">
+                <span sclass="m-kpi-trend--up">+14%</span>
+                <span sclass="m-kpi-since">Since last week</span>
             </div>
         </div>
+
+        <div sclass="m-card m-kpi-card">
+            <div sclass="m-kpi-card__header">
+                <label sclass="m-kpi-card__label" value="Activity"/>
+                <div sclass="m-chip m-chip--primary">Weekly</div>
+            </div>
+            <label sclass="m-kpi-card__value" value="63,200"/>
+            <div sclass="m-kpi-card__footer">
+                <span sclass="m-kpi-trend--down">-12%</span>
+                <span sclass="m-kpi-since">Since last week</span>
+            </div>
+        </div>
+
+        <div sclass="m-card m-kpi-card">
+            <div sclass="m-kpi-card__header">
+                <label sclass="m-kpi-card__label" value="Real-Time"/>
+                <div sclass="m-chip m-chip--primary">Live</div>
+            </div>
+            <label sclass="m-kpi-card__value" value="1,320"/>
+            <div sclass="m-kpi-card__footer">
+                <span sclass="m-kpi-trend--down">-18%</span>
+                <span sclass="m-kpi-since">Since last week</span>
+            </div>
+        </div>
+
+        <div sclass="m-card m-kpi-card m-kpi-card--primary">
+            <div sclass="m-kpi-card__header">
+                <label sclass="m-kpi-card__label" value="Bounce Rate"/>
+            </div>
+            <label sclass="m-kpi-card__value" value="12,364"/>
+            <div sclass="m-kpi-card__footer">
+                <span sclass="m-kpi-trend--up">+27%</span>
+                <span sclass="m-kpi-since">Yearly</span>
+            </div>
+        </div>
+
+    </div>
+
+    <div sclass="m-charts-row">
+
+        <div sclass="m-card m-chart-card-main">
+            <label sclass="m-card__title" value="Mobile / Desktop"/>
+            <image src="~./usecase2/img/charts/mobile-desktop.png" sclass="m-chart-img"/>
+        </div>
+
+        <div sclass="m-card m-chart-card-side">
+            <label sclass="m-card__title" value="Source / Medium"/>
+            <label sclass="m-positive" value="+23% new visitors" style="font-size:13px;margin-bottom:12px;display:block;"/>
+            <grid sclass="m-revenue-table" mold="default">
+                <columns>
+                    <column label="Source"/>
+                    <column label="Revenue"/>
+                    <column label="Value"/>
+                </columns>
+                <rows>
+                    <row>
+                        <label value="Social"/>
+                        <label value="260"/>
+                        <label sclass="m-positive" value="+35%"/>
+                    </row>
+                    <row>
+                        <label value="Search Engines"/>
+                        <label value="125"/>
+                        <label sclass="m-negative" value="-12%"/>
+                    </row>
+                    <row>
+                        <label value="Direct"/>
+                        <label value="164"/>
+                        <label sclass="m-positive" value="+46%"/>
+                    </row>
+                </rows>
+            </grid>
+        </div>
+
+    </div>
+
+    <div sclass="m-bottom-row">
+
+        <div sclass="m-card m-bottom-card-projects">
+            <label sclass="m-card__title" value="Traffic sources"/>
+            <grid sclass="m-projects-grid" mold="default">
+                <columns>
+                    <column label="Source"/>
+                    <column label="Users"/>
+                    <column label="Sessions"/>
+                    <column label="Bounce Rate"/>
+                    <column label="Avg. Session Duration"/>
+                </columns>
+                <rows>
+                    <row>
+                        <label value="Google"/>
+                        <label value="1,023"/>
+                        <label value="1,265"/>
+                        <label value="30%"/>
+                        <label value="00:06:25"/>
+                    </row>
+                    <row>
+                        <label value="Direct"/>
+                        <label value="872"/>
+                        <label value="1,077"/>
+                        <label value="63%"/>
+                        <label value="00:09:18"/>
+                    </row>
+                    <row>
+                        <label value="X (Twitter)"/>
+                        <label value="812"/>
+                        <label value="1,003"/>
+                        <label value="28%"/>
+                        <label value="00:05:56"/>
+                    </row>
+                    <row>
+                        <label value="GitHub"/>
+                        <label value="713"/>
+                        <label value="881"/>
+                        <label value="22%"/>
+                        <label value="00:06:19"/>
+                    </row>
+                    <row>
+                        <label value="DuckDuckGo"/>
+                        <label value="693"/>
+                        <label value="856"/>
+                        <label value="56%"/>
+                        <label value="00:09:12"/>
+                    </row>
+                    <row>
+                        <label value="Facebook"/>
+                        <label value="623"/>
+                        <label value="770"/>
+                        <label value="20%"/>
+                        <label value="00:04:42"/>
+                    </row>
+                </rows>
+            </grid>
+        </div>
+
+        <div sclass="m-card m-bottom-card-chart">
+            <label sclass="m-card__title" value="Languages"/>
+            <grid sclass="m-revenue-table" mold="default">
+                <columns>
+                    <column label="Language"/>
+                    <column label="Users"/>
+                    <column label="% Users"/>
+                </columns>
+                <rows>
+                    <row><label value="en-us"/><label value="865"/><label value="47.2%"/></row>
+                    <row><label value="en-gb"/><label value="240"/><label value="13.1%"/></row>
+                    <row><label value="fr-fr"/><label value="220"/><label value="12.0%"/></row>
+                    <row><label value="es-es"/><label value="162"/><label value="8.8%"/></row>
+                    <row><label value="de-de"/><label value="86"/><label value="4.7%"/></row>
+                    <row><label value="ru-ru"/><label value="32"/><label value="1.7%"/></row>
+                </rows>
+            </grid>
+        </div>
+
+    </div>
+
+</div>

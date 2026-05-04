@@ -1,9 +1,0 @@
-<div sclass="m-main">
-            <div sclass="m-page-header">
-                <label sclass="m-page-title" value="Calendar"/>
-            </div>
-            <div sclass="m-card">
-                <label sclass="m-card__title" value="Calendar"/>
-                <label value="Content coming soon." style="color:#757575;font-size:14px;"/>
-            </div>
-        </div>

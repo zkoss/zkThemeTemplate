@@ -1,9 +1,104 @@
 <div sclass="m-main">
-            <div sclass="m-page-header">
-                <label sclass="m-page-title" value="Orders"/>
-            </div>
-            <div sclass="m-card">
-                <label sclass="m-card__title" value="Orders"/>
-                <label value="Content coming soon." style="color:#757575;font-size:14px;"/>
-            </div>
-        </div>
+
+    <div sclass="m-page-header">
+        <label sclass="m-page-title" value="Orders"/>
+        <hlayout sclass="m-page-actions">
+            <button label="New Order" sclass="m-btn--primary"/>
+        </hlayout>
+    </div>
+
+    <div sclass="m-card">
+        <label sclass="m-card__title" value="Orders"/>
+        <listbox checkmark="true" multiple="true">
+            <listhead>
+                <listheader label="Order ID"       width="100px"/>
+                <listheader label="Product"        width="200px"/>
+                <listheader label="Date"           width="120px"/>
+                <listheader label="Total"          width="100px"/>
+                <listheader label="Status"         width="120px"/>
+                <listheader label="Payment Method" width="140px"/>
+            </listhead>
+            <listitem>
+                <listcell label="#000253"/>
+                <listcell label="Salt &amp; Pepper Grinder"/>
+                <listcell label="2025-01-02"/>
+                <listcell label="$32.00"/>
+                <listcell><div sclass="m-badge m-badge--info">Shipped</div></listcell>
+                <listcell label="Visa"/>
+            </listitem>
+            <listitem>
+                <listcell label="#000254"/>
+                <listcell label="Backpack"/>
+                <listcell label="2025-01-04"/>
+                <listcell label="$130.00"/>
+                <listcell><div sclass="m-badge m-badge--info">Shipped</div></listcell>
+                <listcell label="PayPal"/>
+            </listitem>
+            <listitem>
+                <listcell label="#000255"/>
+                <listcell label="Pocket Speaker"/>
+                <listcell label="2025-01-04"/>
+                <listcell label="$80.00"/>
+                <listcell><div sclass="m-badge m-badge--error">Cancelled</div></listcell>
+                <listcell label="Mastercard"/>
+            </listitem>
+            <listitem>
+                <listcell label="#000256"/>
+                <listcell label="Glass Teapot"/>
+                <listcell label="2025-01-08"/>
+                <listcell label="$45.00"/>
+                <listcell><div sclass="m-badge m-badge--info">Shipped</div></listcell>
+                <listcell label="Visa"/>
+            </listitem>
+            <listitem>
+                <listcell label="#000257"/>
+                <listcell label="Unbreakable Water Bottle"/>
+                <listcell label="2025-01-09"/>
+                <listcell label="$40.00"/>
+                <listcell><div sclass="m-badge m-badge--info">Shipped</div></listcell>
+                <listcell label="PayPal"/>
+            </listitem>
+            <listitem>
+                <listcell label="#000258"/>
+                <listcell label="Spoon Saver"/>
+                <listcell label="2025-01-14"/>
+                <listcell label="$15.00"/>
+                <listcell><div sclass="m-badge m-badge--info">Shipped</div></listcell>
+                <listcell label="Mastercard"/>
+            </listitem>
+            <listitem>
+                <listcell label="#000259"/>
+                <listcell label="Hip Flask"/>
+                <listcell label="2025-01-16"/>
+                <listcell label="$25.00"/>
+                <listcell><div sclass="m-badge m-badge--warning">Processing</div></listcell>
+                <listcell label="Visa"/>
+            </listitem>
+            <listitem>
+                <listcell label="#000260"/>
+                <listcell label="Woven Slippers"/>
+                <listcell label="2025-01-22"/>
+                <listcell label="$20.00"/>
+                <listcell><div sclass="m-badge m-badge--info">Shipped</div></listcell>
+                <listcell label="PayPal"/>
+            </listitem>
+            <listitem>
+                <listcell label="#000261"/>
+                <listcell label="Womens Watch"/>
+                <listcell label="2025-01-22"/>
+                <listcell label="$65.00"/>
+                <listcell><div sclass="m-badge m-badge--error">Cancelled</div></listcell>
+                <listcell label="Visa"/>
+            </listitem>
+            <listitem>
+                <listcell label="#000262"/>
+                <listcell label="Over-Ear Headphones"/>
+                <listcell label="2025-01-23"/>
+                <listcell label="$210.00"/>
+                <listcell><div sclass="m-badge m-badge--info">Shipped</div></listcell>
+                <listcell label="Mastercard"/>
+            </listitem>
+        </listbox>
+    </div>
+
+</div>

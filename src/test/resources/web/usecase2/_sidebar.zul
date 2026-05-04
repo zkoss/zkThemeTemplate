@@ -44,9 +44,6 @@
         <navitem label="Tasks"    iconSclass="z-icon-check-square-o" badgeText="17"
             onClick="@command('navigate', page='~./usecase2/tasks.zul')"
             sclass="@load(vm.currentPage eq '~./usecase2/tasks.zul' ? 'm-active' : '')"/>
-        <navitem label="Calendar" iconSclass="z-icon-calendar"
-            onClick="@command('navigate', page='~./usecase2/calendar.zul')"
-            sclass="@load(vm.currentPage eq '~./usecase2/calendar.zul' ? 'm-active' : '')"/>
         <nav label="Auth" iconSclass="z-icon-user">
             <navitem label="Sign In"
                 onClick="@command('navigate', page='~./usecase2/sign-in.zul')"
