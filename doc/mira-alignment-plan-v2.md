@@ -139,16 +139,18 @@ The sidebar uses the `zkmax` navigation family to mimic Mira's collapsible secti
 
 ### Phase 5 — Verification
 
+> **Operational SOP**: [`doc/visual-parity-spiral.md`](visual-parity-spiral.md) — contains the full session loop, stop conditions, framework gap rules, and diff document format. Use that document to run each session; use this section only for the progress tracker.
+
 #### 5.1 Visual Parity Audit (per page)
-For **every** page under `usecase2/` (starting with `index.zul`), run this loop until the page is visually indistinguishable from its Mira counterpart:
 
-1. **Capture local screenshot** of the ZK page at 1440×900 viewport → `doc/mira-reports/<page>-local.png`.
-2. **Capture / locate target screenshot** of the corresponding Mira page → `doc/mira-reports/<page>-target.png`.
-3. **Diff** side-by-side. Record every visible mismatch (color, spacing, typography, icon, alignment, shadow, radius, hover state, missing element) in `doc/mira-reports/<page>-diffs.md`.
-4. **Fix** the diffs in CSS / ZUL.
-5. **Re-capture** and repeat until the diff list is empty.
+Run the **Visual Parity Spiral** (see SOP above) for every page. Each session: CAPTURE → COMPARE → AUDIT → FIX → VERIFY → DONE.
 
-A page is only considered "done" when its diff report is empty. Do NOT move to the next page with open diffs.
+**Stop conditions** (defined in the SOP):
+- Max 2 fix attempts per diff row → `🚫 BLOCKED`
+- Max 3 FIX→VERIFY loops per page → mark Done Enough and move on
+- Framework structural differences → `⚠️ FRAMEWORK`, log in `doc/mira-reports/framework-gaps.md`
+
+A page is **Done** when all P1/P2 diff rows are ✅, 🚫, or ⚠️. P3-only remainder = Done Enough.
 
 #### 5.2 Sidebar Acceptance Checks
 These are blocking checks — failure means Phase 5 is not complete:
