@@ -16,6 +16,7 @@ public class UseCase2VM {
     private static final Set<String> VALID_PAGES = Set.of(
         "default", "analytics", "saas", "pages", "projects", "orders", "products",
         "invoice-list", "invoice-detail", "tasks", "sign-in", "sign-up", "reset-password",
+        "pages-profile", "pages-settings", "pages-pricing", "pages-chat", "pages-blank",
         "accordion", "alerts", "avatars", "badges", "buttons", "cards", "chips",
         "dialogs", "lists", "menus", "pagination", "progress", "tabs", "tooltips",
         "charts-apex", "charts-chartjs", "forms-editors", "forms-pickers",

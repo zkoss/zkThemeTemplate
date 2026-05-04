@@ -12,6 +12,7 @@
             </div>
         </div>
     </div>
+    <separator bar="true"/>
 
     <!-- Row 1: Text cards with avatars, 4 columns -->
     <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-bottom:24px;">

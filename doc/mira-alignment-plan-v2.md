@@ -193,6 +193,11 @@ These are blocking checks — failure means Phase 5 is not complete:
 - [x] `invoice-list.zul`
 - [x] `invoice-detail.zul`
 - [x] `tasks.zul`
+- [x] `pages-profile.zul`
+- [x] `pages-settings.zul`
+- [x] `pages-pricing.zul`
+- [x] `pages-chat.zul`
+- [x] `pages-blank.zul`
 - ~~`calendar.zul`~~ *(removed — no ZK calendar widget)*
 - [x] `sign-in.zul`
 - [x] `sign-up.zul`

@@ -21,9 +21,23 @@
                 onClick="@command('navigate', page='~./usecase2/saas.zul')"
                 sclass="@load(vm.currentPage eq '~./usecase2/saas.zul' ? 'm-active' : '')"/>
         </nav>
-        <navitem label="Pages"    iconSclass="z-icon-file-text-o"
-            onClick="@command('navigate', page='~./usecase2/pages.zul')"
-            sclass="@load(vm.currentPage eq '~./usecase2/pages.zul' ? 'm-active' : '')"/>
+        <nav label="Pages" iconSclass="z-icon-file-text-o">
+            <navitem label="Profile"
+                onClick="@command('navigate', page='~./usecase2/pages-profile.zul')"
+                sclass="@load(vm.currentPage eq '~./usecase2/pages-profile.zul' ? 'm-active' : '')"/>
+            <navitem label="Settings"
+                onClick="@command('navigate', page='~./usecase2/pages-settings.zul')"
+                sclass="@load(vm.currentPage eq '~./usecase2/pages-settings.zul' ? 'm-active' : '')"/>
+            <navitem label="Pricing"
+                onClick="@command('navigate', page='~./usecase2/pages-pricing.zul')"
+                sclass="@load(vm.currentPage eq '~./usecase2/pages-pricing.zul' ? 'm-active' : '')"/>
+            <navitem label="Chat"
+                onClick="@command('navigate', page='~./usecase2/pages-chat.zul')"
+                sclass="@load(vm.currentPage eq '~./usecase2/pages-chat.zul' ? 'm-active' : '')"/>
+            <navitem label="Blank Page"
+                onClick="@command('navigate', page='~./usecase2/pages-blank.zul')"
+                sclass="@load(vm.currentPage eq '~./usecase2/pages-blank.zul' ? 'm-active' : '')"/>
+        </nav>
         <navitem label="Projects" iconSclass="z-icon-folder-o" badgeText="8"
             onClick="@command('navigate', page='~./usecase2/projects.zul')"
             sclass="@load(vm.currentPage eq '~./usecase2/projects.zul' ? 'm-active' : '')"/>
