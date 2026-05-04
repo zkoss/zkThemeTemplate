@@ -1,12 +1,22 @@
 <div sclass="m-main">
-            <div sclass="m-page-header">
-                <label sclass="m-page-title" value="Advanced Table"/>
+    <div sclass="m-page-header">
+        <div>
+            <label sclass="m-page-title" value="Advanced Table"/>
+            <div sclass="m-breadcrumb">
+                <a sclass="m-breadcrumb__link" href="#default">Dashboard</a>
+                <label sclass="m-breadcrumb__sep" value="/"/>
+                <a sclass="m-breadcrumb__link" href="#tables-simple">Tables</a>
+                <label sclass="m-breadcrumb__sep" value="/"/>
+                <label sclass="m-breadcrumb__current" value="Advanced Table"/>
             </div>
-            <div sclass="m-card">
+        </div>
+    </div>
+    <separator bar="true"/>
+    <div sclass="m-card">
                 <label sclass="m-card__title" value="Advanced Table"/>
                 <listbox checkmark="true" multiple="true">
                     <listhead sizable="true">
-                        <listheader label="Order ID" sort="auto" width="110px"/>
+                        <listheader label="Order ID" sort="auto" width="130px"/>
                         <listheader label="Customer" sort="auto"/>
                         <listheader label="Product" sort="auto"/>
                         <listheader label="Amount" sort="auto" width="110px"/>
