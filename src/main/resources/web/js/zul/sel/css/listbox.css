@@ -183,3 +183,42 @@
 .z-listcell .z-checkbox {
     margin: 0;
 }
+
+/* ─── Checkmark column (listbox checkmark="true") ──────────────────────── */
+/* Override the generic mask-icon approach: render as a proper checkbox box */
+.z-listitem-icon.z-icon-check::before,
+.z-listheader-icon.z-icon-check::before {
+    background-color: transparent !important;
+    -webkit-mask-image: none !important;
+    mask-image: none !important;
+    border: 1.5px solid var(--md-sys-color-outline, #79747e);
+    border-radius: 2px;
+    width: 16px !important;
+    height: 16px !important;
+    box-sizing: border-box !important;
+    vertical-align: -3px;
+}
+
+.z-listitem:hover .z-listitem-icon.z-icon-check::before {
+    border-color: var(--md-sys-color-primary, #376fd0);
+}
+
+/* Selected row: filled blue box with white checkmark */
+.z-listitem.z-listitem-selected .z-listitem-icon.z-icon-check::before,
+.z-listitem.z-selected .z-listitem-icon.z-icon-check::before {
+    background-color: var(--md-sys-color-primary, #376fd0) !important;
+    border-color: var(--md-sys-color-primary, #376fd0) !important;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E") !important;
+    background-size: 11px 11px !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+}
+
+/* Checkmark cell column — compact padding */
+.z-listitem-checkable,
+.z-listheader-checkable {
+    width: 40px;
+    padding: 0 var(--md-sys-spacing-3);
+    text-align: center;
+    vertical-align: middle;
+}

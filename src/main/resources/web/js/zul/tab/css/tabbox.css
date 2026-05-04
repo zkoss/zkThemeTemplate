@@ -122,6 +122,11 @@
     pointer-events: none;
 }
 
+/* ─── Tab scroll arrows (hidden — overflow handled by CSS scroll on .z-tabs) */
+.z-tabbox-icon {
+    display: none;
+}
+
 /* ─── Tab panels ────────────────────────────────────────────────────────── */
 .z-tabpanels {
     flex: 1;
