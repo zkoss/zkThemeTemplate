@@ -17,6 +17,7 @@ const normFiles = [
     'zul/css/base/_reset.css',
     'zul/css/base/_utilities.css',
     'zul/css/base/_badges.css',
+    'zul/css/base/_chips.css',
     'zul/css/base/_avatars.css',
     'zul/css/base/_icons.css',
     'zul/css/zk-material.css',

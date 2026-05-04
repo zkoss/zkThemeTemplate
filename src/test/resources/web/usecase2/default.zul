@@ -11,13 +11,14 @@
             <button label="Today: April 29"     sclass="m-btn--primary"/>
         </hlayout>
     </div>
+    <separator bar="true"/>
     <!-- KPI cards -->
     <div sclass="m-kpi-row">
 
         <div sclass="m-card m-kpi-card">
             <div sclass="m-kpi-card__header">
                 <label sclass="m-kpi-card__label" value="Sales Today"/>
-                <div sclass="m-chip m-chip--primary">Today</div>
+                <label sclass="m-chip m-chip--primary" value="Today"/>
             </div>
             <label sclass="m-kpi-card__value" value="2,532"/>
             <div sclass="m-kpi-card__footer">
@@ -29,7 +30,7 @@
         <div sclass="m-card m-kpi-card">
             <div sclass="m-kpi-card__header">
                 <label sclass="m-kpi-card__label" value="Visitors"/>
-                <div sclass="m-chip m-chip--primary">Annual</div>
+                <label sclass="m-chip m-chip--primary" value="Annual"/>
             </div>
             <label sclass="m-kpi-card__value" value="170,212"/>
             <div sclass="m-kpi-card__footer">
@@ -41,7 +42,7 @@
         <div sclass="m-card m-kpi-card">
             <div sclass="m-kpi-card__header">
                 <label sclass="m-kpi-card__label" value="Total Earnings"/>
-                <div sclass="m-chip m-chip--primary">Monthly</div>
+                <label sclass="m-chip m-chip--primary" value="Monthly"/>
             </div>
             <label sclass="m-kpi-card__value" value="$ 24,300"/>
             <div sclass="m-kpi-card__footer">

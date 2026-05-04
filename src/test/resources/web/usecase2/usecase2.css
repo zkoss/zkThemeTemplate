@@ -198,8 +198,11 @@
 }
 
 /* ── Main content area ─────────────────────────────────────── */
+/* Two-layer MUI Paper+Container simulation:
+   outer Paper: padding 48px all sides (background #f7f9fc)
+   inner Container: padding 0 12px horizontal → total horizontal = 60px */
 .m-main {
-    padding: 48px;
+    padding: 48px 108px;
     background: var(--md-sys-color-surface-variant, #f7f9fc);
     min-height: calc(100vh - 64px);
 }
@@ -322,20 +325,6 @@
     color: var(--md-sys-color-on-surface-variant, #49454f);
 }
 
-/* ── Chip ──────────────────────────────────────────────────── */
-.m-chip {
-    display: inline-block;
-    padding: 2px 8px;
-    border-radius: 12px;
-    font-size: 11px;
-    font-weight: 500;
-    white-space: nowrap;
-}
-
-.m-chip--primary  { background: var(--md-sys-color-primary-container, #d6e4ff); color: var(--md-sys-color-primary, #376fd0); }
-.m-chip--success  { background: #e8f5e9; color: #2e7d32; }
-.m-chip--warning  { background: #fff8e1; color: #f57c00; }
-.m-chip--error    { background: #ffebee; color: #c62828; }
 
 /* ── Chart cards row ───────────────────────────────────────── */
 .m-charts-row {
@@ -456,6 +445,13 @@
 .m-listbox .z-listcell   { font-size: 13px; padding: 10px 8px; border: none; }
 .m-listbox .z-listitem   { border-bottom: 1px solid #f5f5f5; }
 .m-listbox .z-listitem:hover { background: #f9f9f9; }
+
+/* Listbox inside a card — card provides surface boundary; strip listbox's own border/shadow/radius */
+.m-card .z-listbox {
+    border: none;
+    box-shadow: none;
+    border-radius: 0;
+}
 
 /* ── Tooltip popup ─────────────────────────────────────────── */
 .m-tooltip.z-popup {
