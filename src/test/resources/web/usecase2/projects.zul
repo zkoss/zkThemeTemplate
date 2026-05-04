@@ -1,110 +1,156 @@
 <div sclass="m-main">
 
     <div sclass="m-page-header">
-        <label sclass="m-page-title" value="Projects"/>
-        <hlayout sclass="m-page-actions">
-            <button label="New Project" sclass="m-btn--primary"/>
-        </hlayout>
+        <div>
+            <label sclass="m-page-title" value="Projects"/>
+            <div sclass="m-breadcrumb">
+                <a sclass="m-breadcrumb__link" href="#default">Dashboard</a>
+                <label sclass="m-breadcrumb__sep" value="/"/>
+                <a sclass="m-breadcrumb__link" href="#pages">Pages</a>
+                <label sclass="m-breadcrumb__sep" value="/"/>
+                <label sclass="m-breadcrumb__current" value="Projects"/>
+            </div>
+        </div>
     </div>
 
-    <div sclass="m-kpi-row" style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;">
+    <!-- Row 1: Text cards with avatars, 4 columns -->
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-bottom:24px;">
 
-        <div sclass="m-card">
-            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
-                <label sclass="m-card__title" value="Landing page redesign"/>
-                <div sclass="m-badge m-badge--success">Finished</div>
+        <div sclass="m-card m-card--project">
+            <label sclass="m-card__title" value="Landing page redesign"/>
+            <label sclass="m-badge m-badge--success" value="Finished"/>
+            <label sclass="m-card__desc" value="Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum."/>
+            <div class="m-avatar-group">
+                <image src="https://mira.bootlab.io/static/img/avatars/avatar-1.jpg" class="m-avatar m-avatar--sm" style="object-fit:cover;border:2px solid #fff;"/>
+                <image src="https://mira.bootlab.io/static/img/avatars/avatar-3.jpg" class="m-avatar m-avatar--sm" style="object-fit:cover;border:2px solid #fff;"/>
+                <image src="https://mira.bootlab.io/static/img/avatars/avatar-2.jpg" class="m-avatar m-avatar--sm" style="object-fit:cover;border:2px solid #fff;"/>
             </div>
-            <label value="Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero." style="font-size:13px;color:#49454f;display:block;margin-bottom:16px;"/>
-            <hlayout>
-                <button label="Share"      sclass="m-btn--outlined"/>
-                <button label="Learn More" sclass="m-btn--primary"/>
-            </hlayout>
+            <div sclass="m-card__actions">
+                <a sclass="m-link" >Share</a>
+                <a sclass="m-link" >Learn More</a>
+            </div>
         </div>
 
-        <div sclass="m-card">
-            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
-                <label sclass="m-card__title" value="Company posters"/>
-                <div sclass="m-badge m-badge--warning">In Progress</div>
+        <div sclass="m-card m-card--project">
+            <label sclass="m-card__title" value="Company posters"/>
+            <label sclass="m-badge m-badge--warning" value="In progress"/>
+            <label sclass="m-card__desc" value="Curabitur ligula sapien, tincidunt non, euismod vitae, posuere imperdiet, leo. Maecenas malesuada. Praesent congue erat at massa."/>
+            <div class="m-avatar-group">
+                <image src="https://mira.bootlab.io/static/img/avatars/avatar-1.jpg" class="m-avatar m-avatar--sm" style="object-fit:cover;border:2px solid #fff;"/>
+                <image src="https://mira.bootlab.io/static/img/avatars/avatar-3.jpg" class="m-avatar m-avatar--sm" style="object-fit:cover;border:2px solid #fff;"/>
+                <image src="https://mira.bootlab.io/static/img/avatars/avatar-2.jpg" class="m-avatar m-avatar--sm" style="object-fit:cover;border:2px solid #fff;"/>
             </div>
-            <label value="Curabitur ligula sapien, tincidunt non, euismod vitae, posuere imperdiet, leo. Maecenas malesuada." style="font-size:13px;color:#49454f;display:block;margin-bottom:16px;"/>
-            <hlayout>
-                <button label="Share"      sclass="m-btn--outlined"/>
-                <button label="Learn More" sclass="m-btn--primary"/>
-            </hlayout>
+            <div sclass="m-card__actions">
+                <a sclass="m-link" >Share</a>
+                <a sclass="m-link" >Learn More</a>
+            </div>
         </div>
 
-        <div sclass="m-card">
-            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
-                <label sclass="m-card__title" value="Product page design"/>
-                <div sclass="m-badge m-badge--success">Finished</div>
+        <div sclass="m-card m-card--project">
+            <label sclass="m-card__title" value="Product page design"/>
+            <label sclass="m-badge m-badge--success" value="Finished"/>
+            <label sclass="m-card__desc" value="Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum."/>
+            <div class="m-avatar-group">
+                <image src="https://mira.bootlab.io/static/img/avatars/avatar-1.jpg" class="m-avatar m-avatar--sm" style="object-fit:cover;border:2px solid #fff;"/>
+                <image src="https://mira.bootlab.io/static/img/avatars/avatar-3.jpg" class="m-avatar m-avatar--sm" style="object-fit:cover;border:2px solid #fff;"/>
+                <image src="https://mira.bootlab.io/static/img/avatars/avatar-2.jpg" class="m-avatar m-avatar--sm" style="object-fit:cover;border:2px solid #fff;"/>
             </div>
-            <label value="Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero." style="font-size:13px;color:#49454f;display:block;margin-bottom:16px;"/>
-            <hlayout>
-                <button label="Share"      sclass="m-btn--outlined"/>
-                <button label="Learn More" sclass="m-btn--primary"/>
-            </hlayout>
+            <div sclass="m-card__actions">
+                <a sclass="m-link" >Share</a>
+                <a sclass="m-link" >Learn More</a>
+            </div>
         </div>
 
-        <div sclass="m-card">
-            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
-                <label sclass="m-card__title" value="Upgrade CRM software"/>
-                <div sclass="m-badge m-badge--warning">In Progress</div>
+        <div sclass="m-card m-card--project">
+            <label sclass="m-card__title" value="Upgrade CRM software"/>
+            <label sclass="m-badge m-badge--warning" value="In progress"/>
+            <label sclass="m-card__desc" value="Nam pretium turpis et arcu. Duis arcu tortor, suscipit eget, imperdiet nec, imperdiet iaculis, ipsum. Sed aliquam ultrices mauris."/>
+            <div class="m-avatar-group">
+                <image src="https://mira.bootlab.io/static/img/avatars/avatar-1.jpg" class="m-avatar m-avatar--sm" style="object-fit:cover;border:2px solid #fff;"/>
+                <image src="https://mira.bootlab.io/static/img/avatars/avatar-3.jpg" class="m-avatar m-avatar--sm" style="object-fit:cover;border:2px solid #fff;"/>
+                <image src="https://mira.bootlab.io/static/img/avatars/avatar-2.jpg" class="m-avatar m-avatar--sm" style="object-fit:cover;border:2px solid #fff;"/>
             </div>
-            <label value="Nam pretium turpis et arcu. Duis arcu tortor, suscipit eget, imperdiet nec, imperdiet iaculis, ipsum." style="font-size:13px;color:#49454f;display:block;margin-bottom:16px;"/>
-            <hlayout>
-                <button label="Share"      sclass="m-btn--outlined"/>
-                <button label="Learn More" sclass="m-btn--primary"/>
-            </hlayout>
+            <div sclass="m-card__actions">
+                <a sclass="m-link" >Share</a>
+                <a sclass="m-link" >Learn More</a>
+            </div>
         </div>
 
-        <div sclass="m-card">
-            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+    </div>
+
+    <!-- Row 2: Image cards, 4 columns -->
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:24px;">
+        <div sclass="m-card m-card--image">
+            <image src="https://mira.bootlab.io/static/img/unsplash/unsplash-1.jpg" class="m-card__img"/>
+            <div sclass="m-card__body">
                 <label sclass="m-card__title" value="Fix form validation"/>
-                <div sclass="m-badge m-badge--warning">In Progress</div>
+                <label sclass="m-badge m-badge--warning" value="In progress"/>
+                <label sclass="m-card__desc" value="Nam pretium turpis et arcu. Duis arcu tortor, suscipit eget, imperdiet nec, imperdiet iaculis, ipsum."/>
+                <div class="m-avatar-group">
+                    <image src="https://mira.bootlab.io/static/img/avatars/avatar-1.jpg" class="m-avatar m-avatar--sm" style="object-fit:cover;border:2px solid #fff;"/>
+                    <image src="https://mira.bootlab.io/static/img/avatars/avatar-3.jpg" class="m-avatar m-avatar--sm" style="object-fit:cover;border:2px solid #fff;"/>
+                    <image src="https://mira.bootlab.io/static/img/avatars/avatar-2.jpg" class="m-avatar m-avatar--sm" style="object-fit:cover;border:2px solid #fff;"/>
+                </div>
+                <div sclass="m-card__actions">
+                    <a sclass="m-link" >Share</a>
+                    <a sclass="m-link" >Learn More</a>
+                </div>
             </div>
-            <label value="Nam pretium turpis et arcu. Duis arcu tortor, suscipit eget, imperdiet nec, imperdiet iaculis, ipsum." style="font-size:13px;color:#49454f;display:block;margin-bottom:16px;"/>
-            <hlayout>
-                <button label="Share"      sclass="m-btn--outlined"/>
-                <button label="Learn More" sclass="m-btn--primary"/>
-            </hlayout>
         </div>
 
-        <div sclass="m-card">
-            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+        <div sclass="m-card m-card--image">
+            <image src="https://mira.bootlab.io/static/img/unsplash/unsplash-2.jpg" class="m-card__img"/>
+            <div sclass="m-card__body">
                 <label sclass="m-card__title" value="New company logo"/>
-                <div sclass="m-badge m-badge--info">On Hold</div>
+                <label sclass="m-badge m-badge--error" value="On hold"/>
+                <label sclass="m-card__desc" value="Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero."/>
+                <div class="m-avatar-group">
+                    <image src="https://mira.bootlab.io/static/img/avatars/avatar-1.jpg" class="m-avatar m-avatar--sm" style="object-fit:cover;border:2px solid #fff;"/>
+                    <image src="https://mira.bootlab.io/static/img/avatars/avatar-3.jpg" class="m-avatar m-avatar--sm" style="object-fit:cover;border:2px solid #fff;"/>
+                    <image src="https://mira.bootlab.io/static/img/avatars/avatar-2.jpg" class="m-avatar m-avatar--sm" style="object-fit:cover;border:2px solid #fff;"/>
+                </div>
+                <div sclass="m-card__actions">
+                    <a sclass="m-link" >Share</a>
+                    <a sclass="m-link" >Learn More</a>
+                </div>
             </div>
-            <label value="Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero." style="font-size:13px;color:#49454f;display:block;margin-bottom:16px;"/>
-            <hlayout>
-                <button label="Share"      sclass="m-btn--outlined"/>
-                <button label="Learn More" sclass="m-btn--primary"/>
-            </hlayout>
         </div>
 
-        <div sclass="m-card">
-            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+        <div sclass="m-card m-card--image">
+            <image src="https://mira.bootlab.io/static/img/unsplash/unsplash-3.jpg" class="m-card__img"/>
+            <div sclass="m-card__body">
                 <label sclass="m-card__title" value="Upgrade to latest Maps API"/>
-                <div sclass="m-badge m-badge--success">Finished</div>
+                <label sclass="m-badge m-badge--success" value="Finished"/>
+                <label sclass="m-card__desc" value="Nam pretium turpis et arcu. Duis arcu tortor, suscipit eget, imperdiet nec, imperdiet iaculis, ipsum."/>
+                <div class="m-avatar-group">
+                    <image src="https://mira.bootlab.io/static/img/avatars/avatar-1.jpg" class="m-avatar m-avatar--sm" style="object-fit:cover;border:2px solid #fff;"/>
+                    <image src="https://mira.bootlab.io/static/img/avatars/avatar-3.jpg" class="m-avatar m-avatar--sm" style="object-fit:cover;border:2px solid #fff;"/>
+                    <image src="https://mira.bootlab.io/static/img/avatars/avatar-2.jpg" class="m-avatar m-avatar--sm" style="object-fit:cover;border:2px solid #fff;"/>
+                </div>
+                <div sclass="m-card__actions">
+                    <a sclass="m-link" >Share</a>
+                    <a sclass="m-link" >Learn More</a>
+                </div>
             </div>
-            <label value="Nam pretium turpis et arcu. Duis arcu tortor, suscipit eget, imperdiet nec, imperdiet iaculis, ipsum." style="font-size:13px;color:#49454f;display:block;margin-bottom:16px;"/>
-            <hlayout>
-                <button label="Share"      sclass="m-btn--outlined"/>
-                <button label="Learn More" sclass="m-btn--primary"/>
-            </hlayout>
         </div>
 
-        <div sclass="m-card">
-            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+        <div sclass="m-card m-card--image">
+            <image src="https://mira.bootlab.io/static/img/unsplash/unsplash-4.jpg" class="m-card__img"/>
+            <div sclass="m-card__body">
                 <label sclass="m-card__title" value="Refactor backend templates"/>
-                <div sclass="m-badge m-badge--info">On Hold</div>
+                <label sclass="m-badge m-badge--error" value="On hold"/>
+                <label sclass="m-card__desc" value="Curabitur ligula sapien, tincidunt non, euismod vitae, posuere imperdiet, leo. Maecenas malesuada."/>
+                <div class="m-avatar-group">
+                    <image src="https://mira.bootlab.io/static/img/avatars/avatar-1.jpg" class="m-avatar m-avatar--sm" style="object-fit:cover;border:2px solid #fff;"/>
+                    <image src="https://mira.bootlab.io/static/img/avatars/avatar-3.jpg" class="m-avatar m-avatar--sm" style="object-fit:cover;border:2px solid #fff;"/>
+                    <image src="https://mira.bootlab.io/static/img/avatars/avatar-2.jpg" class="m-avatar m-avatar--sm" style="object-fit:cover;border:2px solid #fff;"/>
+                </div>
+                <div sclass="m-card__actions">
+                    <a sclass="m-link" >Share</a>
+                    <a sclass="m-link" >Learn More</a>
+                </div>
             </div>
-            <label value="Curabitur ligula sapien, tincidunt non, euismod vitae, posuere imperdiet, leo. Maecenas malesuada." style="font-size:13px;color:#49454f;display:block;margin-bottom:16px;"/>
-            <hlayout>
-                <button label="Share"      sclass="m-btn--outlined"/>
-                <button label="Learn More" sclass="m-btn--primary"/>
-            </hlayout>
         </div>
-
     </div>
 
 </div>
