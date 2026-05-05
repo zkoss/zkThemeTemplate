@@ -10,7 +10,7 @@
     --md-sys-shape-corner-full: 9999px;        /* pills, FAB */
 
     /* Semantic aliases used in ZK components */
-    --md-sys-shape-button: var(--md-sys-shape-corner-small);
+    --md-sys-shape-button: var(--md-sys-shape-corner-extra-small);
     --md-sys-shape-input: var(--md-sys-shape-corner-extra-small);
     --md-sys-shape-card: var(--md-sys-shape-corner-medium);
     --md-sys-shape-dialog: var(--md-sys-shape-corner-large);

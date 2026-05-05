@@ -153,8 +153,6 @@
 
 .z-tabbox-accordion {
     display: block;
-    border: 1px solid var(--md-sys-color-outline-variant);
-    border-radius: var(--md-sys-shape-corner-medium);
     overflow: hidden;
 }
 
