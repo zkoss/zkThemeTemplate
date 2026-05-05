@@ -108,7 +108,7 @@
     margin: 2px 0 0 0;
     padding: var(--md-sys-spacing-1) 0;
     background-color: var(--md-sys-color-surface);
-    border-radius: var(--md-sys-shape-card);
+    border-radius: var(--md-sys-shape-menu);
     box-shadow: var(--md-sys-elevation-dropdown);
     border: 1px solid var(--md-sys-color-outline-variant);
     min-width: 160px;
@@ -165,6 +165,10 @@
     transition: opacity var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
 }
 
+.z-menuitem-content:hover {
+    text-decoration: none;
+}
+
 .z-menuitem-content:hover::before {
     opacity: var(--md-sys-state-hover-opacity);
 }
@@ -180,13 +184,6 @@
     color: var(--md-sys-color-on-primary-container);
 }
 
-/* Checked menuitem */
-.z-menuitem-checked .z-menuitem-content::after {
-    content: '\2713';
-    margin-left: auto;
-    font-size: 14px;
-    color: var(--md-sys-color-primary);
-}
 
 /* Disabled menuitem */
 .z-menuitem-disabled .z-menuitem-content,
@@ -196,11 +193,24 @@
     pointer-events: none;
 }
 
-/* Menuitem icon */
+/* Menuitem icon (user-provided iconSclass) */
 .z-menuitem-content [class*="z-icon-"] {
     font-size: 18px;
     flex-shrink: 0;
     color: var(--md-sys-color-on-surface-variant);
+}
+
+/* Placeholder image rendered by ZK when no user image/icon — hide it */
+.z-menuitem-image { display: none; }
+
+/* Leading check icon (always rendered when checkmark=true) — reserve space for all items */
+.z-menuitem-icon.z-icon-check {
+    visibility: hidden;
+    font-size: 16px;
+    color: var(--md-sys-color-primary);
+}
+.z-menuitem-checked .z-menuitem-icon.z-icon-check {
+    visibility: visible;
 }
 
 /* ─── Menu separator ─────────────────────────────────────────────────────── */
@@ -218,7 +228,7 @@
     margin: 0;
     padding: var(--md-sys-spacing-1) 0;
     background-color: var(--md-sys-color-surface);
-    border-radius: var(--md-sys-shape-card);
+    border-radius: var(--md-sys-shape-menu);
     box-shadow: var(--md-sys-elevation-dropdown);
     border: 1px solid var(--md-sys-color-outline-variant);
     min-width: 160px;

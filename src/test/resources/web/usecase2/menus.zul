@@ -1,53 +1,67 @@
 <div sclass="m-main">
-            <div sclass="m-page-header">
-                <label sclass="m-page-title" value="Menus"/>
-            </div>
+    <div sclass="m-page-header">
+        <label sclass="m-page-title" value="Menus"/>
+    </div>
 
-            <div sclass="m-card" style="margin-bottom:16px;">
-                <label sclass="m-card__title" value="Menubar"/>
-                <menubar sclass="m-menubar">
-                    <menu label="File">
-                        <menupopup>
-                            <menuitem label="New"   iconSclass="z-icon-file"/>
-                            <menuitem label="Open"  iconSclass="z-icon-folder-open"/>
-                            <menuitem label="Save"  iconSclass="z-icon-save"/>
-                            <menuseparator/>
-                            <menuitem label="Exit"  iconSclass="z-icon-power-off"/>
-                        </menupopup>
-                    </menu>
-                    <menu label="Edit">
-                        <menupopup>
-                            <menuitem label="Cut"   iconSclass="z-icon-scissors"/>
-                            <menuitem label="Copy"  iconSclass="z-icon-copy"/>
-                            <menuitem label="Paste" iconSclass="z-icon-clipboard"/>
-                        </menupopup>
-                    </menu>
-                    <menu label="View">
-                        <menupopup>
-                            <menuitem label="Zoom In"  iconSclass="z-icon-zoom-in"/>
-                            <menuitem label="Zoom Out" iconSclass="z-icon-zoom-out"/>
-                            <menuseparator/>
-                            <menuitem label="Full Screen" iconSclass="z-icon-expand"/>
-                        </menupopup>
-                    </menu>
-                    <menu label="Help">
-                        <menupopup>
-                            <menuitem label="Documentation" iconSclass="z-icon-book"/>
-                            <menuitem label="About"         iconSclass="z-icon-info"/>
-                        </menupopup>
-                    </menu>
-                </menubar>
-            </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start;">
 
-            <div sclass="m-card">
-                <label sclass="m-card__title" value="Context Menu (right-click on button)"/>
-                <button label="Right-click me" sclass="z-button-outlined" context="contextMenu"/>
-                <menupopup id="contextMenu">
-                    <menuitem label="View"   iconSclass="z-icon-eye"/>
-                    <menuitem label="Edit"   iconSclass="z-icon-pencil"/>
-                    <menuitem label="Copy"   iconSclass="z-icon-copy"/>
+        <!-- Left column -->
+        <div>
+            <!-- Simple menu -->
+            <div sclass="m-card" style="margin-bottom:24px;">
+                <label sclass="m-card__title" value="Simple menu"/>
+                <label value="Simple menu open over the anchor element by default" style="font-size:13px;color:#49454f;display:block;margin-bottom:16px;"/>
+                <button label="Open Menu" sclass="z-button-primary" onClick='simpleMenu.open(self, "after_start")'/>
+                <menupopup id="simpleMenu">
+                    <menuitem label="Profile"/>
+                    <menuitem label="My account"/>
                     <menuseparator/>
-                    <menuitem label="Delete" iconSclass="z-icon-trash-2" style="color:#d32f2f;"/>
+                    <menuitem label="Logout"/>
+                </menupopup>
+            </div>
+
+            <!-- Transition Menu -->
+            <div sclass="m-card">
+                <label sclass="m-card__title" value="Transition Menu"/>
+                <label value="Simple menu with different transition (fade)" style="font-size:13px;color:#49454f;display:block;margin-bottom:16px;"/>
+                <button label="Open Menu" sclass="z-button-primary" onClick='transitionMenu.open(self, "after_start")'/>
+                <menupopup id="transitionMenu">
+                    <menuitem label="Profile"/>
+                    <menuitem label="My account"/>
+                    <menuseparator/>
+                    <menuitem label="Logout"/>
                 </menupopup>
             </div>
         </div>
+
+        <!-- Right column -->
+        <div>
+            <!-- Icon Menu -->
+            <div sclass="m-card" style="margin-bottom:24px;">
+                <label sclass="m-card__title" value="Icon Menu"/>
+                <label value="Simple menu with icons" style="font-size:13px;color:#49454f;display:block;margin-bottom:16px;"/>
+                <button label="Open Menu" sclass="z-button-primary" onClick='iconMenu.open(self, "after_start")'/>
+                <menupopup id="iconMenu">
+                    <menuitem label="Profile"    iconSclass="z-icon-user"/>
+                    <menuitem label="My account" iconSclass="z-icon-settings"/>
+                    <menuseparator/>
+                    <menuitem label="Logout"     iconSclass="z-icon-log-out"/>
+                </menupopup>
+            </div>
+
+            <!-- Selected menu -->
+            <div sclass="m-card">
+                <label sclass="m-card__title" value="Selected menu"/>
+                <label value="Selected menus attempt to vertically align the currently selected menu item with the anchor element." style="font-size:13px;color:#49454f;display:block;margin-bottom:16px;"/>
+                <button label="Open Menu" sclass="z-button-primary" onClick='selectedMenu.open(self, "after_start")'/>
+                <menupopup id="selectedMenu">
+                    <menuitem label="When device is locked"/>
+                    <menuitem label="Show all notification content" checked="true"/>
+                    <menuitem label="Hide sensitive notification content"/>
+                    <menuitem label="Hide all notification content"/>
+                </menupopup>
+            </div>
+        </div>
+
+    </div>
+</div>
