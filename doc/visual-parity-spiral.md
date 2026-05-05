@@ -304,7 +304,7 @@ Legend: ✅ Done | 🔲 Pending | ⏭️ Skipped (infra/shell only)
 | `buttons.zul` | `/components/buttons` | ✅ Done | 2026-05-05 |
 | `cards.zul` | `/components/cards` | 🔲 Pending | — |
 | `chips.zul` | `/components/chips` | 🔲 Pending | — |
-| `dialogs.zul` | `/components/dialogs` | 🔲 Pending | — |
+| `dialogs.zul` | `/components/dialogs` | ✅ Done | 2026-05-05 |
 | `lists.zul` | `/components/lists` | 🔲 Pending | — |
 | `menus.zul` | `/components/menus` | 🔲 Pending | — |
 | `pagination.zul` | `/components/pagination` | 🔲 Pending | — |
