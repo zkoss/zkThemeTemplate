@@ -34,7 +34,10 @@
 
 /* ZK mask (modal overlay) */
 .z-modal-mask {
+    position: fixed;
+    inset: 0;
     background: var(--md-sys-color-scrim);
+    z-index: 1400;
 }
 
 /* Scrollbars — subtle MD3 style */
