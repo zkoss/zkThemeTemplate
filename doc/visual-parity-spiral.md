@@ -67,15 +67,26 @@ Always fix L1 before L5 — layout diffs mask spacing diffs.
 
 ### Screenshot procedure (CAPTURE and COMPARE steps)
 
-Both CAPTURE and COMPARE use the same method — html2canvas download then copy:
+#### Pre-capture: resize window to 1440×900
 
-```bash
-# In Chrome browser tab (via javascript_tool):
+Before any screenshot, resize the browser window to a consistent tall size so more content is visible per capture:
+
+```
+# Via mcp__claude-in-chrome__resize_window:
+width: 1440, height: 900
+```
+
+#### Full-page capture: html2canvas at scale 2
+
+Use `scale: 2` (double pixel density). At scale 1 individual buttons render at ~30px — at scale 2 they are ~60px, making missing rows and wrong counts visible.
+
+```js
+// In Chrome browser tab (via javascript_tool):
 const script = document.createElement('script');
 script.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
 document.head.appendChild(script);
 script.onload = () => {
-  html2canvas(document.body, { useCORS: true, scale: 1 }).then(canvas => {
+  html2canvas(document.body, { useCORS: true, scale: 2 }).then(canvas => {
     const link = document.createElement('a');
     link.download = '<page>-local.png';   // or <page>-mira-target.png
     link.href = canvas.toDataURL('image/png');
@@ -83,22 +94,35 @@ script.onload = () => {
   });
 };
 
-# Then in terminal — move from Downloads to project:
-cp ~/Downloads/<page>-local.png doc/mira/screenshot/<page>-local.png
-cp ~/Downloads/<page>-mira-target.png doc/mira/screenshot/<page>-mira-target.png
+// Then in terminal — move from Downloads to project:
+// cp ~/Downloads/<page>-local.png doc/mira/screenshot/<page>-local.png
+// cp ~/Downloads/<page>-mira-target.png doc/mira/screenshot/<page>-mira-target.png
 ```
 
-**Note**: `mcp__claude-in-chrome__computer screenshot save_to_disk:true` returns an internal session ID, not a file path — do not use it to save screenshots to disk. The html2canvas method is the correct approach.
+**Note**: `mcp__claude-in-chrome__computer screenshot save_to_disk:true` returns an internal session ID, not a file path — do not use it to save screenshots to disk. The html2canvas method is the correct approach for archiving. Use the `computer screenshot` or `zoom` action for in-session visual comparison only.
+
+#### Section-level zoom (required for component-demo pages)
+
+For pages with multiple cards (buttons, forms, chips, etc.), after the full-page compare do a **per-section zoom** using `mcp__claude-in-chrome__computer` zoom action:
+
+```
+action: zoom
+region: [x0, y0, x1, y1]   # bounding box of one card
+```
+
+Zoom local and Mira for the same card side by side. A single card at zoom resolution makes mismatched counts or wrong variants immediately obvious.
 
 ### Per-session steps
 
 ```
+0. RESIZE   — Resize both tabs to 1440×900 via mcp__claude-in-chrome__resize_window
+
 1. CAPTURE  — Navigate to http://localhost:8080/usecase2/index.zul#<page>
-              Run html2canvas in page → downloads <page>-local.png
+              Run html2canvas at scale:2 → downloads <page>-local.png
               cp ~/Downloads/<page>-local.png doc/mira/screenshot/<page>-local.png
 
 2. COMPARE  — Navigate to https://mira.bootlab.io/dashboard/<page> (or /components/<page> etc.)
-              Run html2canvas in page → downloads <page>-mira-target.png
+              Run html2canvas at scale:2 → downloads <page>-mira-target.png
               cp ~/Downloads/<page>-mira-target.png doc/mira/screenshot/<page>-mira-target.png
 
 3. AUDIT    — Read both screenshots side by side, L1 → L5.
@@ -107,6 +131,14 @@ cp ~/Downloads/<page>-mira-target.png doc/mira/screenshot/<page>-mira-target.png
               Merge into diff table at doc/mira-reports/<page>-diffs.md.
               Each row: Priority | Layer | Element/Selector | Local value | Target value
               Mark any row that is a framework gap ⚠️ FRAMEWORK immediately.
+
+              ELEMENT COUNT CHECK (mandatory for component-demo pages):
+                For each card/section, explicitly enumerate:
+                  → Mira: N rows, each row has [label1, label2, ...] items
+                  → Local: N rows, each row has [label1, label2, ...] items
+                  → Record count difference as a diff row even if layout looks "close"
+                Add a zoom screenshot of each card for side-by-side at readable resolution.
+
               For interactive components (accordion, tabs, dropdown, listbox):
                 → Explicitly check L5 state-change checklist above
                 → If needed, capture a SECOND screenshot with different state
@@ -117,8 +149,9 @@ cp ~/Downloads/<page>-mira-target.png doc/mira/screenshot/<page>-mira-target.png
               Shared CSS fixes (sidebar, card, topbar) benefit all pages — do these first
               STOP CONDITION: max 2 attempts per diff row; max 3 FIX→VERIFY loops per page
 
-5. VERIFY   — Re-screenshot local page (html2canvas method)
+5. VERIFY   — Re-screenshot local page (html2canvas at scale:2)
               Explicitly check: badge background color, badge text color, chip/label text color
+              ELEMENT COUNT RE-CHECK: zoom each changed section and count items vs Mira
               Update diff table (mark fixed rows ✅, blocked rows 🚫, framework rows ⚠️)
               If diffs remain AND loop count < 3: loop back to FIX
               If loop count = 3 OR only P3 rows remain: proceed to DONE
@@ -140,6 +173,19 @@ cp ~/Downloads/<page>-mira-target.png doc/mira/screenshot/<page>-mira-target.png
 | P2 | L2 | .m-card background | #f5f5f5 | #fff | 🚫 BLOCKED |
 | P3 | L5 | .z-icon-users size | 14px | 20px | ⚠️ FRAMEWORK |
 ```
+
+For component-demo pages, add a **Count Inventory** section above the diff table:
+
+```markdown
+## Count Inventory (component-demo pages only)
+
+| Section | Mira rows | Mira items per row | Local rows | Local items per row | Match |
+|---|---|---|---|---|---|
+| Outlined Buttons | 1 | Default/Primary/Secondary/Disabled/Link | 2 | 7+Disabled | ❌ |
+| FAB | 1 | +/✏️/Extended/🗑️disabled | 2 | 4 circles+2 extended | ❌ |
+```
+
+This count inventory is filled at AUDIT and re-checked at VERIFY before marking the page ✅ Done.
 
 Priority:
 - **P1** = layout-breaking (wrong structure, missing element, overflow)
