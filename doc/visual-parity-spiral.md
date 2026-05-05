@@ -54,33 +54,71 @@ See: `doc/mira-reports/framework-gaps.md`
 | L2 Surface | Background colors, card colors, border colors, shadows |
 | L3 Typography | font-family, font-weight, font-size, line-height, color |
 | L4 Spacing | padding, margin, gap — match px values to Mira |
-| L5 Shape & detail | border-radius, icon (correct glyph + size), hover/focus state |
+| L5 Shape & detail | border-radius, icon (correct glyph + size), hover/focus state, **border visibility on state change** |
 
 Always fix L1 before L5 — layout diffs mask spacing diffs.
+
+**L5 state-change checklist** (mandatory for interactive components — accordion, tabs, dropdown, button, checkbox):
+- Does the border appear/disappear correctly between collapsed and expanded?
+- Does background/shadow change on hover vs default?
+- Does focus ring appear correctly?
+- Does the disabled state look visually distinct?
+- Does the selected/active state differ from unselected in the RIGHT WAY (e.g. only indicator underline, NOT full background fill)?
+
+### Screenshot procedure (CAPTURE and COMPARE steps)
+
+Both CAPTURE and COMPARE use the same method — html2canvas download then copy:
+
+```bash
+# In Chrome browser tab (via javascript_tool):
+const script = document.createElement('script');
+script.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+document.head.appendChild(script);
+script.onload = () => {
+  html2canvas(document.body, { useCORS: true, scale: 1 }).then(canvas => {
+    const link = document.createElement('a');
+    link.download = '<page>-local.png';   // or <page>-mira-target.png
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+  });
+};
+
+# Then in terminal — move from Downloads to project:
+cp ~/Downloads/<page>-local.png doc/mira/screenshot/<page>-local.png
+cp ~/Downloads/<page>-mira-target.png doc/mira/screenshot/<page>-mira-target.png
+```
+
+**Note**: `mcp__claude-in-chrome__computer screenshot save_to_disk:true` returns an internal session ID, not a file path — do not use it to save screenshots to disk. The html2canvas method is the correct approach.
 
 ### Per-session steps
 
 ```
-1. CAPTURE  — Screenshot local page at 1440×900 via browser automation
-              (navigate to http://localhost:8080/usecase2/index.zul#<page>)
-              Save → doc/mira-reports/<page>-local.png
+1. CAPTURE  — Navigate to http://localhost:8080/usecase2/index.zul#<page>
+              Run html2canvas in page → downloads <page>-local.png
+              cp ~/Downloads/<page>-local.png doc/mira/screenshot/<page>-local.png
 
-2. COMPARE  — Open Mira reference page in browser
-              Save screenshot → doc/mira-reports/<page>-target.png
+2. COMPARE  — Navigate to https://mira.bootlab.io/dashboard/<page> (or /components/<page> etc.)
+              Run html2canvas in page → downloads <page>-mira-target.png
+              cp ~/Downloads/<page>-mira-target.png doc/mira/screenshot/<page>-mira-target.png
 
-3. AUDIT    — Run $critique and $layout (impeccable analysis commands) on the local page
-              to generate a structured list of UX/spacing/hierarchy issues.
-              Then do side-by-side diff against Mira target, L1 → L5.
-              Merge both sources into the diff table at doc/mira-reports/<page>-diffs.md.
+3. AUDIT    — Read both screenshots side by side, L1 → L5.
+              Always include badge color and text color as explicit audit items (known systemic issue).
+              Run $critique and $layout (impeccable analysis commands) on the local page.
+              Merge into diff table at doc/mira-reports/<page>-diffs.md.
               Each row: Priority | Layer | Element/Selector | Local value | Target value
               Mark any row that is a framework gap ⚠️ FRAMEWORK immediately.
+              For interactive components (accordion, tabs, dropdown, listbox):
+                → Explicitly check L5 state-change checklist above
+                → If needed, capture a SECOND screenshot with different state
+                  (e.g. different panel expanded, all collapsed) to verify border/bg transitions
 
 4. FIX      — Implement CSS/ZUL changes for all P1 diffs, then P2, then P3
               Touch only files relevant to the current page's issues
               Shared CSS fixes (sidebar, card, topbar) benefit all pages — do these first
               STOP CONDITION: max 2 attempts per diff row; max 3 FIX→VERIFY loops per page
 
-5. VERIFY   — Re-screenshot local page
+5. VERIFY   — Re-screenshot local page (html2canvas method)
+              Explicitly check: badge background color, badge text color, chip/label text color
               Update diff table (mark fixed rows ✅, blocked rows 🚫, framework rows ⚠️)
               If diffs remain AND loop count < 3: loop back to FIX
               If loop count = 3 OR only P3 rows remain: proceed to DONE
@@ -163,5 +201,86 @@ The `impeccable` skill's **analysis commands** accelerate the AUDIT step. Only u
 - [ ] No row has been attempted more than 2 times without resolution
 - [ ] Framework gaps documented in `doc/mira-reports/framework-gaps.md`
 - [ ] Local screenshot is visually close to target at 1440×900 (P1/P2 cleared)
+- [ ] **Badge/chip background color** matches Mira (known systemic issue — always check explicitly)
+- [ ] **Badge/chip text color** matches Mira (white-on-color vs color-on-light)
+- [ ] **Label/body text color** matches Mira (e.g. `#49454f` for secondary text, not black)
 - [ ] No regressions on previously completed pages (spot-check sidebar + one earlier page)
 - [ ] Progress tracker row updated in `doc/mira-alignment-plan-v2.md`
+
+---
+
+## Page Progress Tracker
+
+Legend: ✅ Done | 🔲 Pending | ⏭️ Skipped (infra/shell only)
+
+### Infrastructure (shared across all pages)
+| File | Description | Status | Date |
+|---|---|---|---|
+| `_sidebar.zul` | Sidebar nav shell (included by all pages) | 🔲 Pending | — |
+
+### Dashboard / Analytics
+| File | Mira Reference | Status | Date |
+|---|---|---|---|
+| `default.zul` | `/` (dashboard) | ✅ Done | 2026-05-04 |
+| `analytics.zul` | `/analytics` | 🔲 Pending | — |
+| `saas.zul` | `/saas` | 🔲 Pending | — |
+
+### Data / Operations
+| File | Mira Reference | Status | Date |
+|---|---|---|---|
+| `orders.zul` | `/orders` | 🔲 Pending | — |
+| `products.zul` | `/products` | 🔲 Pending | — |
+| `invoice-list.zul` | `/invoices` | 🔲 Pending | — |
+| `invoice-detail.zul` | `/invoices/detail` | 🔲 Pending | — |
+| `tasks.zul` | `/tasks` | 🔲 Pending | — |
+| `projects.zul` | `/projects` | ✅ Done | 2026-05-04 |
+
+### Pages / Auth
+| File | Mira Reference | Status | Date |
+|---|---|---|---|
+| `pages.zul` | `/pages` | 🔲 Pending | — |
+| `pages-profile.zul` | `/pages/profile` | 🔲 Pending | — |
+| `pages-settings.zul` | `/pages/settings` | 🔲 Pending | — |
+| `pages-pricing.zul` | `/pages/pricing` | 🔲 Pending | — |
+| `pages-chat.zul` | `/pages/chat` | 🔲 Pending | — |
+| `pages-blank.zul` | `/pages/blank` | 🔲 Pending | — |
+| `sign-in.zul` | `/auth/sign-in` | 🔲 Pending | — |
+| `sign-up.zul` | `/auth/sign-up` | 🔲 Pending | — |
+| `reset-password.zul` | `/auth/reset-password` | 🔲 Pending | — |
+
+### UI Component Demos
+| File | Mira Reference | Status | Date |
+|---|---|---|---|
+| `accordion.zul` | `/components/accordion` | ✅ Done | 2026-05-05 |
+| `alerts.zul` | `/components/alerts` | 🔲 Pending | — |
+| `avatars.zul` | `/components/avatars` | 🔲 Pending | — |
+| `badges.zul` | `/components/badges` | 🔲 Pending | — |
+| `buttons.zul` | `/components/buttons` | ✅ Done | 2026-05-05 |
+| `cards.zul` | `/components/cards` | 🔲 Pending | — |
+| `chips.zul` | `/components/chips` | 🔲 Pending | — |
+| `dialogs.zul` | `/components/dialogs` | 🔲 Pending | — |
+| `lists.zul` | `/components/lists` | 🔲 Pending | — |
+| `menus.zul` | `/components/menus` | 🔲 Pending | — |
+| `pagination.zul` | `/components/pagination` | 🔲 Pending | — |
+| `progress.zul` | `/components/progress` | 🔲 Pending | — |
+| `tabs.zul` | `/components/tabs` | 🔲 Pending | — |
+| `tooltips.zul` | `/components/tooltips` | 🔲 Pending | — |
+| `icons-lucide.zul` | `/components/icons` | 🔲 Pending | — |
+
+### Forms
+| File | Mira Reference | Status | Date |
+|---|---|---|---|
+| `forms-editors.zul` | `/forms/editors` | 🔲 Pending | — |
+| `forms-pickers.zul` | `/forms/pickers` | 🔲 Pending | — |
+| `forms-selection-controls.zul` | `/forms/selection-controls` | 🔲 Pending | — |
+| `forms-selects.zul` | `/forms/selects` | 🔲 Pending | — |
+| `forms-text-fields.zul` | `/forms/text-fields` | 🔲 Pending | — |
+
+### Charts / Tables
+| File | Mira Reference | Status | Date |
+|---|---|---|---|
+| `charts-apex.zul` | `/charts/apex` | 🔲 Pending | — |
+| `charts-chartjs.zul` | `/charts/chartjs` | 🔲 Pending | — |
+| `tables-simple.zul` | `/tables/simple` | 🔲 Pending | — |
+| `tables-advanced.zul` | `/tables/advanced` | ✅ Done | 2026-05-04 |
+| `tables-datagrid.zul` | `/tables/datagrid` | 🔲 Pending | — |
