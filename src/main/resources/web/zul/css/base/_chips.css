@@ -14,7 +14,8 @@
     line-height: 1.4;
 }
 
-.m-chip.m-chip--primary { background: #4782da; color: #fff; }
+.m-chip.m-chip--primary    { background: #4782da; color: #fff; }
+.m-chip.m-chip--on-primary { background: rgba(255,255,255,0.25); color: #fff; }
 .m-chip.m-chip--success { background: #e8f5e9; color: #2e7d32; }
 .m-chip.m-chip--warning { background: #fff8e1; color: #f57c00; }
 .m-chip.m-chip--error   { background: #ffebee; color: #c62828; }

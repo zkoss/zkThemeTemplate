@@ -31,9 +31,9 @@
                 <div sclass="m-card">
                     <label sclass="m-card__title" value="Notifications (Toasts)"/>
                     <hlayout spacing="10px">
-                        <button label="Show Success" sclass="m-btn--success" onClick='Clients.showNotification("Operation completed successfully!", "info", null, "top_right", 3000)'/>
-                        <button label="Show Warning" sclass="m-btn--warning" onClick='Clients.showNotification("Warning: Disk space is low.", "warning", null, "top_right", 3000)'/>
-                        <button label="Show Error"   sclass="m-btn--danger"  onClick='Clients.showNotification("Error: Could not save data.", "error", null, "top_right", 3000)'/>
+                        <button label="Show Success" sclass="z-button-success" onClick='Clients.showNotification("Operation completed successfully!", "info", null, "top_right", 3000)'/>
+                        <button label="Show Warning" sclass="z-button-warning" onClick='Clients.showNotification("Warning: Disk space is low.", "warning", null, "top_right", 3000)'/>
+                        <button label="Show Error"   sclass="z-button-error"  onClick='Clients.showNotification("Error: Could not save data.", "error", null, "top_right", 3000)'/>
                     </hlayout>
                 </div>
             </vlayout>

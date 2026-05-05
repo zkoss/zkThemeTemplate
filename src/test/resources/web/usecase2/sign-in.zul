@@ -3,7 +3,7 @@
     <div sclass="m-card" style="width:400px;">
         <label value="Welcome back, Lucy!" style="font-size:22px;font-weight:700;display:block;margin-bottom:8px;"/>
         <label value="Sign in to your account to continue" style="font-size:14px;color:#49454f;display:block;margin-bottom:4px;"/>
-        <label value="Use demo@bootlab.io / unsafepassword" style="font-size:12px;color:#757575;display:block;margin-bottom:24px;"/>
+        <label value="Use demo@bootlab.io and unsafepassword to sign in" style="font-size:12px;color:#757575;display:block;margin-bottom:24px;"/>
 
         <label value="Email Address" style="font-size:13px;font-weight:600;display:block;margin-bottom:4px;"/>
         <textbox placeholder="Email Address" style="width:100%;margin-bottom:16px;" cols="40"/>
@@ -16,7 +16,7 @@
             <a href="#" label="Forgot password?" style="font-size:13px;color:#376fd0;"/>
         </div>
 
-        <button label="Sign in" sclass="m-btn--primary" style="width:100%;margin-bottom:16px;"/>
+        <button label="Sign in" sclass="z-button-primary" style="width:100%;margin-bottom:16px;"/>
 
         <label value="Don't have an account yet? " style="font-size:13px;color:#49454f;"/>
         <a href="#" label="Sign up" style="font-size:13px;color:#376fd0;"/>

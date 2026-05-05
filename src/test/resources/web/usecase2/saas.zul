@@ -6,7 +6,7 @@
             <label sclass="m-page-subtitle" value="Today: April 29"/>
         </div>
         <hlayout sclass="m-page-actions">
-            <button label="Today: April 29" sclass="m-btn--primary"/>
+            <button label="Today: April 29" sclass="z-button-primary"/>
         </hlayout>
     </div>
 
@@ -51,11 +51,12 @@
         <div sclass="m-card m-kpi-card m-kpi-card--primary">
             <div sclass="m-kpi-card__header">
                 <label sclass="m-kpi-card__label" value="Pending Orders"/>
+                <div sclass="m-chip m-chip--on-primary">Real-Time</div>
             </div>
             <label sclass="m-kpi-card__value" value="22"/>
             <div sclass="m-kpi-card__footer">
                 <span sclass="m-kpi-trend--down">-6%</span>
-                <span sclass="m-kpi-since">Real-Time</span>
+                <span sclass="m-kpi-since">Since last month</span>
             </div>
         </div>
 

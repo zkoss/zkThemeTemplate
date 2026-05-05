@@ -3,7 +3,7 @@
     <div sclass="m-page-header">
         <label sclass="m-page-title" value="Orders"/>
         <hlayout sclass="m-page-actions">
-            <button label="New Order" sclass="m-btn--primary"/>
+            <button label="New Order" sclass="z-button-primary"/>
         </hlayout>
     </div>
 
@@ -11,12 +11,13 @@
         <label sclass="m-card__title" value="Orders"/>
         <listbox checkmark="true" multiple="true">
             <listhead>
-                <listheader label="Order ID"       width="100px"/>
-                <listheader label="Product"        width="200px"/>
+                <listheader label="Order ID"       hflex="min"/>
+                <listheader label="Product"/>
                 <listheader label="Date"           width="120px"/>
                 <listheader label="Total"          width="100px"/>
                 <listheader label="Status"         width="120px"/>
-                <listheader label="Payment Method" width="140px"/>
+                <listheader label="Payment Method" width="150px"/>
+                <listheader label="Actions"        width="100px"/>
             </listhead>
             <listitem>
                 <listcell label="#000253"/>
@@ -25,6 +26,7 @@
                 <listcell label="$32.00"/>
                 <listcell><div sclass="m-badge m-badge--info">Shipped</div></listcell>
                 <listcell label="Visa"/>
+                <listcell><hlayout spacing="4px"><button iconSclass="z-icon-eye" sclass="z-button-icon"/><button iconSclass="z-icon-pencil" sclass="z-button-icon"/><button iconSclass="z-icon-trash-2" sclass="z-button-icon"/></hlayout></listcell>
             </listitem>
             <listitem>
                 <listcell label="#000254"/>
@@ -33,6 +35,7 @@
                 <listcell label="$130.00"/>
                 <listcell><div sclass="m-badge m-badge--info">Shipped</div></listcell>
                 <listcell label="PayPal"/>
+                <listcell><hlayout spacing="4px"><button iconSclass="z-icon-eye" sclass="z-button-icon"/><button iconSclass="z-icon-pencil" sclass="z-button-icon"/><button iconSclass="z-icon-trash-2" sclass="z-button-icon"/></hlayout></listcell>
             </listitem>
             <listitem>
                 <listcell label="#000255"/>
@@ -41,6 +44,7 @@
                 <listcell label="$80.00"/>
                 <listcell><div sclass="m-badge m-badge--error">Cancelled</div></listcell>
                 <listcell label="Mastercard"/>
+                <listcell><hlayout spacing="4px"><button iconSclass="z-icon-eye" sclass="z-button-icon"/><button iconSclass="z-icon-pencil" sclass="z-button-icon"/><button iconSclass="z-icon-trash-2" sclass="z-button-icon"/></hlayout></listcell>
             </listitem>
             <listitem>
                 <listcell label="#000256"/>
@@ -49,6 +53,7 @@
                 <listcell label="$45.00"/>
                 <listcell><div sclass="m-badge m-badge--info">Shipped</div></listcell>
                 <listcell label="Visa"/>
+                <listcell><hlayout spacing="4px"><button iconSclass="z-icon-eye" sclass="z-button-icon"/><button iconSclass="z-icon-pencil" sclass="z-button-icon"/><button iconSclass="z-icon-trash-2" sclass="z-button-icon"/></hlayout></listcell>
             </listitem>
             <listitem>
                 <listcell label="#000257"/>
@@ -57,6 +62,7 @@
                 <listcell label="$40.00"/>
                 <listcell><div sclass="m-badge m-badge--info">Shipped</div></listcell>
                 <listcell label="PayPal"/>
+                <listcell><hlayout spacing="4px"><button iconSclass="z-icon-eye" sclass="z-button-icon"/><button iconSclass="z-icon-pencil" sclass="z-button-icon"/><button iconSclass="z-icon-trash-2" sclass="z-button-icon"/></hlayout></listcell>
             </listitem>
             <listitem>
                 <listcell label="#000258"/>
@@ -65,6 +71,7 @@
                 <listcell label="$15.00"/>
                 <listcell><div sclass="m-badge m-badge--info">Shipped</div></listcell>
                 <listcell label="Mastercard"/>
+                <listcell><hlayout spacing="4px"><button iconSclass="z-icon-eye" sclass="z-button-icon"/><button iconSclass="z-icon-pencil" sclass="z-button-icon"/><button iconSclass="z-icon-trash-2" sclass="z-button-icon"/></hlayout></listcell>
             </listitem>
             <listitem>
                 <listcell label="#000259"/>
@@ -73,6 +80,7 @@
                 <listcell label="$25.00"/>
                 <listcell><div sclass="m-badge m-badge--warning">Processing</div></listcell>
                 <listcell label="Visa"/>
+                <listcell><hlayout spacing="4px"><button iconSclass="z-icon-eye" sclass="z-button-icon"/><button iconSclass="z-icon-pencil" sclass="z-button-icon"/><button iconSclass="z-icon-trash-2" sclass="z-button-icon"/></hlayout></listcell>
             </listitem>
             <listitem>
                 <listcell label="#000260"/>
@@ -81,6 +89,7 @@
                 <listcell label="$20.00"/>
                 <listcell><div sclass="m-badge m-badge--info">Shipped</div></listcell>
                 <listcell label="PayPal"/>
+                <listcell><hlayout spacing="4px"><button iconSclass="z-icon-eye" sclass="z-button-icon"/><button iconSclass="z-icon-pencil" sclass="z-button-icon"/><button iconSclass="z-icon-trash-2" sclass="z-button-icon"/></hlayout></listcell>
             </listitem>
             <listitem>
                 <listcell label="#000261"/>
@@ -89,6 +98,7 @@
                 <listcell label="$65.00"/>
                 <listcell><div sclass="m-badge m-badge--error">Cancelled</div></listcell>
                 <listcell label="Visa"/>
+                <listcell><hlayout spacing="4px"><button iconSclass="z-icon-eye" sclass="z-button-icon"/><button iconSclass="z-icon-pencil" sclass="z-button-icon"/><button iconSclass="z-icon-trash-2" sclass="z-button-icon"/></hlayout></listcell>
             </listitem>
             <listitem>
                 <listcell label="#000262"/>
@@ -97,6 +107,7 @@
                 <listcell label="$210.00"/>
                 <listcell><div sclass="m-badge m-badge--info">Shipped</div></listcell>
                 <listcell label="Mastercard"/>
+                <listcell><hlayout spacing="4px"><button iconSclass="z-icon-eye" sclass="z-button-icon"/><button iconSclass="z-icon-pencil" sclass="z-button-icon"/><button iconSclass="z-icon-trash-2" sclass="z-button-icon"/></hlayout></listcell>
             </listitem>
         </listbox>
     </div>

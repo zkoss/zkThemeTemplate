@@ -225,18 +225,25 @@
 }
 
 .z-tabbox-accordion .z-tab.z-tab-selected {
-    color: var(--md-sys-color-primary);
-    background: var(--md-sys-color-surface-container-lowest);
+    color: var(--md-sys-color-on-surface);
+    background: var(--md-sys-color-surface);
 }
 
 .z-tabbox-accordion .z-tab.z-tab-selected .z-tab-content::after {
     transform: rotate(-135deg);
-    border-color: var(--md-sys-color-primary);
+    border-color: var(--md-sys-color-on-surface-variant);
 }
 
 /* Tab text area */
+.z-tabbox-accordion .z-tab-content {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
 .z-tabbox-accordion .z-tab-text {
     pointer-events: none;
+    flex: 1;
 }
 
 /* Expandable content cave */

@@ -3,7 +3,7 @@
     <div sclass="m-page-header">
         <label sclass="m-page-title" value="Invoices"/>
         <hlayout sclass="m-page-actions">
-            <button label="New Invoice" sclass="m-btn--primary"/>
+            <button label="New Invoice" sclass="z-button-primary"/>
         </hlayout>
     </div>
 
@@ -11,11 +11,12 @@
         <label sclass="m-card__title" value="Invoices"/>
         <listbox checkmark="true" multiple="true">
             <listhead>
-                <listheader label="Customer"   width="220px"/>
+                <listheader label="Customer"/>
                 <listheader label="Status"     width="100px"/>
-                <listheader label="ID"         width="100px"/>
+                <listheader label="ID"         hflex="min"/>
                 <listheader label="Amount"     width="110px"/>
                 <listheader label="Issue Date" width="130px"/>
+                <listheader label="Actions"    width="100px"/>
             </listhead>
             <listitem>
                 <listcell label="Anna Walley (anna@walley.com)"/>
@@ -23,6 +24,7 @@
                 <listcell label="#000112"/>
                 <listcell label="$530.00"/>
                 <listcell label="2025-01-02"/>
+                <listcell><hlayout spacing="4px"><button iconSclass="z-icon-eye" sclass="z-button-icon"/><button iconSclass="z-icon-pencil" sclass="z-button-icon"/><button iconSclass="z-icon-trash-2" sclass="z-button-icon"/></hlayout></listcell>
             </listitem>
             <listitem>
                 <listcell label="Doris Fritz (doris@fritz.com)"/>
@@ -30,6 +32,7 @@
                 <listcell label="#000114"/>
                 <listcell label="$209.00"/>
                 <listcell label="2025-02-13"/>
+                <listcell><hlayout spacing="4px"><button iconSclass="z-icon-eye" sclass="z-button-icon"/><button iconSclass="z-icon-pencil" sclass="z-button-icon"/><button iconSclass="z-icon-trash-2" sclass="z-button-icon"/></hlayout></listcell>
             </listitem>
             <listitem>
                 <listcell label="Edward Adkins (edward@adkins.com)"/>
@@ -37,6 +40,7 @@
                 <listcell label="#000117"/>
                 <listcell label="$535.00"/>
                 <listcell label="2025-03-04"/>
+                <listcell><hlayout spacing="4px"><button iconSclass="z-icon-eye" sclass="z-button-icon"/><button iconSclass="z-icon-pencil" sclass="z-button-icon"/><button iconSclass="z-icon-trash-2" sclass="z-button-icon"/></hlayout></listcell>
             </listitem>
             <listitem>
                 <listcell label="Edwin Baker (edwin@baker.com)"/>
@@ -44,6 +48,7 @@
                 <listcell label="#000115"/>
                 <listcell label="$678.00"/>
                 <listcell label="2025-02-17"/>
+                <listcell><hlayout spacing="4px"><button iconSclass="z-icon-eye" sclass="z-button-icon"/><button iconSclass="z-icon-pencil" sclass="z-button-icon"/><button iconSclass="z-icon-trash-2" sclass="z-button-icon"/></hlayout></listcell>
             </listitem>
             <listitem>
                 <listcell label="Gordon Workman (gordan@workman.com)"/>
@@ -51,6 +56,7 @@
                 <listcell label="#000119"/>
                 <listcell label="$314.00"/>
                 <listcell label="2025-03-28"/>
+                <listcell><hlayout spacing="4px"><button iconSclass="z-icon-eye" sclass="z-button-icon"/><button iconSclass="z-icon-pencil" sclass="z-button-icon"/><button iconSclass="z-icon-trash-2" sclass="z-button-icon"/></hlayout></listcell>
             </listitem>
             <listitem>
                 <listcell label="Helen Morris (helen@morris.com)"/>
@@ -58,6 +64,7 @@
                 <listcell label="#000121"/>
                 <listcell label="$892.00"/>
                 <listcell label="2025-04-01"/>
+                <listcell><hlayout spacing="4px"><button iconSclass="z-icon-eye" sclass="z-button-icon"/><button iconSclass="z-icon-pencil" sclass="z-button-icon"/><button iconSclass="z-icon-trash-2" sclass="z-button-icon"/></hlayout></listcell>
             </listitem>
             <listitem>
                 <listcell label="John Davis (john@davis.com)"/>
@@ -65,6 +72,7 @@
                 <listcell label="#000123"/>
                 <listcell label="$1,245.00"/>
                 <listcell label="2025-04-10"/>
+                <listcell><hlayout spacing="4px"><button iconSclass="z-icon-eye" sclass="z-button-icon"/><button iconSclass="z-icon-pencil" sclass="z-button-icon"/><button iconSclass="z-icon-trash-2" sclass="z-button-icon"/></hlayout></listcell>
             </listitem>
             <listitem>
                 <listcell label="Karen White (karen@white.com)"/>
@@ -72,6 +80,7 @@
                 <listcell label="#000125"/>
                 <listcell label="$467.00"/>
                 <listcell label="2025-04-15"/>
+                <listcell><hlayout spacing="4px"><button iconSclass="z-icon-eye" sclass="z-button-icon"/><button iconSclass="z-icon-pencil" sclass="z-button-icon"/><button iconSclass="z-icon-trash-2" sclass="z-button-icon"/></hlayout></listcell>
             </listitem>
         </listbox>
     </div>

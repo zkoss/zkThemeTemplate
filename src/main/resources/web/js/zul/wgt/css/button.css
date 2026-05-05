@@ -1,4 +1,4 @@
-/* MD3 Button — Filled (primary) and Outlined variants */
+/* MD3 Button — base styles + utility class system */
 
 /* ─── Base: Filled button ─────────────────────────────────────────────── */
 .z-button {
@@ -24,6 +24,7 @@
     user-select: none;
     vertical-align: middle;
     outline: none;
+    margin: 0 4px 4px 0;
     transition:
         background-color var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard),
         box-shadow var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
@@ -110,4 +111,139 @@
     line-height: var(--md-sys-typescale-label-large-line-height);
     cursor: pointer;
     white-space: nowrap;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   Utility Class System
+   All button variants are additive classes on top of .z-button.
+   Single source of truth — do not add button variants in page CSS.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* ─── Layout helper ──────────────────────────────────────────────────── */
+.z-button-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+}
+
+/* ─── Contained — color variants ─────────────────────────────────────── */
+/* (default .z-button = primary filled; these add semantic color variants) */
+.z-button-secondary.z-button { background-color: var(--md-sys-color-secondary, #4db6ac); color: #fff; }
+.z-button-success.z-button   { background-color: #2e7d32; color: #fff; }
+.z-button-warning.z-button   { background-color: #ed6c02; color: #fff; }
+.z-button-error.z-button     { background-color: #d32f2f; color: #fff; }
+.z-button-info.z-button      { background-color: #0288d1; color: #fff; }
+.z-button-light.z-button     { background-color: #f5f5f5; color: #333; border: 1px solid #e0e0e0; }
+.z-button-dark.z-button      { background-color: #212121; color: #fff; }
+
+/* State layers for color variants — white overlay on colored backgrounds */
+.z-button-secondary.z-button::before,
+.z-button-success.z-button::before,
+.z-button-warning.z-button::before,
+.z-button-error.z-button::before,
+.z-button-info.z-button::before,
+.z-button-dark.z-button::before { background-color: #fff; }
+.z-button-light.z-button::before { background-color: #000; }
+
+/* ─── Outlined — color variants ──────────────────────────────────────── */
+.z-button-outlined.z-button {
+    background-color: transparent;
+    color: var(--md-sys-color-primary);
+    border: 1px solid var(--md-sys-color-primary);
+}
+.z-button-outlined.z-button::before { background-color: var(--md-sys-color-primary); }
+
+.z-button-outlined-primary.z-button   { background-color: transparent; color: var(--md-sys-color-primary, #376fd0); border: 1px solid var(--md-sys-color-primary, #376fd0); }
+.z-button-outlined-secondary.z-button { background-color: transparent; color: var(--md-sys-color-secondary, #4db6ac); border: 1px solid var(--md-sys-color-secondary, #4db6ac); }
+.z-button-outlined-success.z-button   { background-color: transparent; color: #2e7d32; border: 1px solid #2e7d32; }
+.z-button-outlined-warning.z-button   { background-color: transparent; color: #ed6c02; border: 1px solid #ed6c02; }
+.z-button-outlined-error.z-button     { background-color: transparent; color: #d32f2f; border: 1px solid #d32f2f; }
+.z-button-outlined-info.z-button      { background-color: transparent; color: #0288d1; border: 1px solid #0288d1; }
+
+.z-button-outlined-primary.z-button::before   { background-color: var(--md-sys-color-primary); }
+.z-button-outlined-secondary.z-button::before { background-color: var(--md-sys-color-secondary, #4db6ac); }
+.z-button-outlined-success.z-button::before   { background-color: #2e7d32; }
+.z-button-outlined-warning.z-button::before   { background-color: #ed6c02; }
+.z-button-outlined-error.z-button::before     { background-color: #d32f2f; }
+.z-button-outlined-info.z-button::before      { background-color: #0288d1; }
+
+/* ─── Text — color variants ──────────────────────────────────────────── */
+.z-button-text.z-button {
+    background-color: transparent;
+    color: var(--md-sys-color-primary);
+    border: none;
+}
+.z-button-text.z-button::before { background-color: var(--md-sys-color-primary); }
+
+.z-button-text-primary.z-button   { background-color: transparent; color: var(--md-sys-color-primary, #376fd0); border: none; }
+.z-button-text-secondary.z-button { background-color: transparent; color: var(--md-sys-color-secondary, #4db6ac); border: none; }
+.z-button-text-error.z-button     { background-color: transparent; color: #d32f2f; border: none; }
+.z-button-text-info.z-button      { background-color: transparent; color: #0288d1; border: none; }
+
+.z-button-text-primary.z-button::before   { background-color: var(--md-sys-color-primary); }
+.z-button-text-secondary.z-button::before { background-color: var(--md-sys-color-secondary, #4db6ac); }
+.z-button-text-error.z-button::before     { background-color: #d32f2f; }
+.z-button-text-info.z-button::before      { background-color: #0288d1; }
+
+/* ─── Sizes ───────────────────────────────────────────────────────────── */
+.z-button-sm.z-button { min-height: 28px; padding: 0 10px; font-size: 12px; }
+.z-button-lg.z-button { min-height: 44px; padding: 0 22px; font-size: 15px; }
+
+/* Icon button size overrides (must come after base sizes to win specificity) */
+.z-button-icon.z-button-sm.z-button { width: 28px; height: 28px; min-height: 28px; padding: 0; font-size: 14px; }
+.z-button-icon.z-button-lg.z-button { width: 48px; height: 48px; min-height: 48px; padding: 0; font-size: 24px; }
+
+/* FAB xs — smaller than sm (for size demonstration row) */
+.z-button-fab.z-button-xs.z-button { width: 28px; height: 28px; min-height: 28px; font-size: 14px; }
+
+/* ─── Icon button ─────────────────────────────────────────────────────── */
+.z-button-icon.z-button {
+    background-color: transparent;
+    color: var(--md-sys-color-on-surface-variant);
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    min-height: 40px;
+    padding: 0;
+    font-size: 20px;
+}
+.z-button-icon.z-button::before { background-color: var(--md-sys-color-on-surface-variant); }
+
+/* Color variants for icon button */
+.z-button-icon.z-button-primary.z-button   { color: var(--md-sys-color-primary); }
+.z-button-icon.z-button-secondary.z-button { color: var(--md-sys-color-secondary, #4db6ac); background-color: transparent; }
+.z-button-icon.z-button-error.z-button     { color: #d32f2f; background-color: transparent; }
+
+.z-button-icon.z-button-primary.z-button::before   { background-color: var(--md-sys-color-primary); }
+.z-button-icon.z-button-secondary.z-button::before { background-color: var(--md-sys-color-secondary, #4db6ac); }
+.z-button-icon.z-button-error.z-button::before     { background-color: #d32f2f; }
+
+/* ─── FAB (Floating Action Button) ───────────────────────────────────── */
+.z-button-fab.z-button {
+    border-radius: 50%;
+    width: 56px;
+    height: 56px;
+    min-height: 56px;
+    padding: 0;
+    font-size: 24px;
+    box-shadow:
+        0px 3px 5px -1px rgba(0,0,0,0.20),
+        0px 6px 10px 0px rgba(0,0,0,0.14),
+        0px 1px 18px 0px rgba(0,0,0,0.12);
+}
+.z-button-fab.z-button-sm.z-button { width: 40px; height: 40px; min-height: 40px; font-size: 20px; }
+
+/* FAB extended (wide, with label) */
+.z-button-fab-extended.z-button {
+    border-radius: 16px;
+    height: 56px;
+    min-height: 56px;
+    padding: 0 20px;
+    gap: 8px;
+    box-shadow:
+        0px 3px 5px -1px rgba(0,0,0,0.20),
+        0px 6px 10px 0px rgba(0,0,0,0.14),
+        0px 1px 18px 0px rgba(0,0,0,0.12);
 }

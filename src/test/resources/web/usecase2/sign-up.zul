@@ -24,7 +24,7 @@
         <label value="Confirm password" style="font-size:13px;font-weight:600;display:block;margin-bottom:4px;"/>
         <textbox placeholder="Confirm password" type="password" style="width:100%;margin-bottom:24px;" cols="40"/>
 
-        <button label="Sign up" sclass="m-btn--primary" style="width:100%;margin-bottom:16px;"/>
+        <button label="Sign up" sclass="z-button-primary" style="width:100%;margin-bottom:16px;"/>
 
         <label value="Already have an account? " style="font-size:13px;color:#49454f;"/>
         <a href="#" label="Log in" style="font-size:13px;color:#376fd0;"/>

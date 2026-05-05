@@ -14,7 +14,7 @@
                         <label value="This is a basic card with a header, body, and optional footer section."/>
                     </div>
                     <div sclass="m-card__footer">
-                        <button label="Action" sclass="m-btn--primary"/>
+                        <button label="Action" sclass="z-button-primary"/>
                     </div>
                 </div>
 

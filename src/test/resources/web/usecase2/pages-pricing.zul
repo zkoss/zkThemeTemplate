@@ -28,7 +28,7 @@
                 <div style="font-size:13px;color:#49454f;padding:8px 0;border-bottom:1px solid #f0f0f0;">2 GB of storage</div>
                 <div style="font-size:13px;color:#49454f;padding:8px 0;border-bottom:1px solid #f0f0f0;">Help center access</div>
                 <div style="font-size:13px;color:#49454f;padding:8px 0;margin-bottom:24px;">Email support</div>
-                <button label="Sign up for free" sclass="m-btn--outlined" style="width:100%;"/>
+                <button label="Sign up for free" sclass="z-button-outlined" style="width:100%;"/>
             </div>
 
             <!-- Pro (Most popular) -->
@@ -41,7 +41,7 @@
                 <div style="font-size:13px;color:#49454f;padding:8px 0;border-bottom:1px solid #f0f0f0;">10 GB of storage</div>
                 <div style="font-size:13px;color:#49454f;padding:8px 0;border-bottom:1px solid #f0f0f0;">Help center access</div>
                 <div style="font-size:13px;color:#49454f;padding:8px 0;margin-bottom:24px;">Priority email support</div>
-                <button label="Get started" sclass="m-btn--primary" style="width:100%;"/>
+                <button label="Get started" sclass="z-button-primary" style="width:100%;"/>
             </div>
 
             <!-- Enterprise -->
@@ -53,7 +53,7 @@
                 <div style="font-size:13px;color:#49454f;padding:8px 0;border-bottom:1px solid #f0f0f0;">30 GB of storage</div>
                 <div style="font-size:13px;color:#49454f;padding:8px 0;border-bottom:1px solid #f0f0f0;">Help center access</div>
                 <div style="font-size:13px;color:#49454f;padding:8px 0;margin-bottom:24px;">Phone &amp; email support</div>
-                <button label="Contact us" sclass="m-btn--outlined" style="width:100%;"/>
+                <button label="Contact us" sclass="z-button-outlined" style="width:100%;"/>
             </div>
 
         </div>

@@ -9,12 +9,12 @@
         <label value="Modern WYSIWYG editor built for compatibility and extensibility." style="font-size:13px;color:#49454f;display:block;margin-bottom:16px;"/>
         <div style="border:1px solid var(--md-sys-color-outline-variant,#e0e0e0);border-radius:8px;overflow:hidden;">
             <div style="background:#f5f5f5;border-bottom:1px solid #e0e0e0;padding:8px 12px;display:flex;gap:8px;">
-                <button iconSclass="z-icon-bold"          sclass="m-btn--outlined" style="min-width:32px;padding:4px 8px;"/>
-                <button iconSclass="z-icon-italic"        sclass="m-btn--outlined" style="min-width:32px;padding:4px 8px;"/>
-                <button iconSclass="z-icon-underline"     sclass="m-btn--outlined" style="min-width:32px;padding:4px 8px;"/>
-                <button iconSclass="z-icon-list"          sclass="m-btn--outlined" style="min-width:32px;padding:4px 8px;"/>
-                <button iconSclass="z-icon-list-ordered" sclass="m-btn--outlined" style="min-width:32px;padding:4px 8px;"/>
-                <button iconSclass="z-icon-link"          sclass="m-btn--outlined" style="min-width:32px;padding:4px 8px;"/>
+                <button iconSclass="z-icon-bold"          sclass="z-button-outlined" style="min-width:32px;padding:4px 8px;"/>
+                <button iconSclass="z-icon-italic"        sclass="z-button-outlined" style="min-width:32px;padding:4px 8px;"/>
+                <button iconSclass="z-icon-underline"     sclass="z-button-outlined" style="min-width:32px;padding:4px 8px;"/>
+                <button iconSclass="z-icon-list"          sclass="z-button-outlined" style="min-width:32px;padding:4px 8px;"/>
+                <button iconSclass="z-icon-list-ordered" sclass="z-button-outlined" style="min-width:32px;padding:4px 8px;"/>
+                <button iconSclass="z-icon-link"          sclass="z-button-outlined" style="min-width:32px;padding:4px 8px;"/>
             </div>
             <textbox multiline="true" rows="8" style="width:100%;border:none;padding:12px;font-family:inherit;font-size:14px;resize:vertical;"
                 value="Write something here..."/>

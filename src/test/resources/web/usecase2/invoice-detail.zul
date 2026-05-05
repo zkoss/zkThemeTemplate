@@ -1,9 +1,9 @@
 <div sclass="m-main">
 
     <div sclass="m-page-header">
-        <label sclass="m-page-title" value="Invoice Detail"/>
+        <label sclass="m-page-title" value="Invoice #000112"/>
         <hlayout sclass="m-page-actions">
-            <button iconSclass="z-icon-printer" label="Print" sclass="m-btn--outlined"/>
+            <button iconSclass="z-icon-printer" label="Print" sclass="z-button-outlined"/>
         </hlayout>
     </div>
 

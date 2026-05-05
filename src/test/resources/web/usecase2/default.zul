@@ -7,8 +7,8 @@
             <label sclass="m-page-subtitle" value="Welcome back, Lucy! We've missed you."/>
         </div>
         <hlayout sclass="m-page-actions">
-            <button iconSclass="z-icon-refresh-cw" sclass="m-btn--outlined"/>
-            <button label="Today: April 29"     sclass="m-btn--primary"/>
+            <button iconSclass="z-icon-refresh-cw" sclass="z-button-outlined"/>
+            <button label="Today: April 29"     sclass="z-button-primary"/>
         </hlayout>
     </div>
     <separator bar="true"/>

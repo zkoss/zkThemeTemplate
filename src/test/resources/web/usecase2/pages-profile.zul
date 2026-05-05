@@ -25,8 +25,8 @@
                 <div style="font-size:16px;font-weight:600;margin-bottom:4px;">Lucy Lavender</div>
                 <div style="font-size:13px;color:#49454f;margin-bottom:16px;">Lead Developer</div>
                 <div style="display:flex;gap:8px;justify-content:center;">
-                    <button label="Follow" sclass="m-btn--outlined"/>
-                    <button label="Message" sclass="m-btn--primary"/>
+                    <button label="Follow" sclass="z-button-outlined"/>
+                    <button label="Message" sclass="z-button-primary"/>
                 </div>
             </div>
 
@@ -101,6 +101,27 @@
                     <div style="height:4px;border-radius:2px;background:#376fd0;margin-top:12px;"/>
                 </div>
             </div>
+
+            <!-- Products table -->
+            <div sclass="m-card">
+                <label sclass="m-card__title" value="Products"/>
+                <grid mold="default">
+                    <columns>
+                        <column label="Name"/>
+                        <column label="Tech"    width="100px"/>
+                        <column label="License" width="150px"/>
+                        <column label="Sales"   width="80px"/>
+                    </columns>
+                    <rows>
+                        <row><label value="AppStack"/><label value="HTML"/><label value="Single License"/><label value="76"/></row>
+                        <row><label value="Mira"/><label value="React"/><label value="Single License"/><label value="38"/></row>
+                        <row><label value="Milo"/><label value="HTML"/><label value="Single License"/><label value="43"/></row>
+                        <row><label value="Robust UI Kit"/><label value="Angular"/><label value="Single License"/><label value="27"/></row>
+                        <row><label value="Spark"/><label value="React"/><label value="Single License"/><label value="12"/></row>
+                    </rows>
+                </grid>
+            </div>
+
         </div>
 
     </div>

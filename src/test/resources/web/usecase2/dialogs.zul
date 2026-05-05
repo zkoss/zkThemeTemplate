@@ -6,9 +6,9 @@
             <div sclass="m-card">
                 <label sclass="m-card__title" value="Modal Dialogs"/>
                 <hlayout spacing="8px">
-                    <button label="Simple Dialog"   sclass="m-btn--primary"   onClick="simpleDialog.doModal()"/>
-                    <button label="Confirm Dialog"  sclass="m-btn--outlined"  onClick="confirmDialog.doModal()"/>
-                    <button label="Form Dialog"     sclass="m-btn--outlined"  onClick="formDialog.doModal()"/>
+                    <button label="Simple Dialog"   sclass="z-button-primary"   onClick="simpleDialog.doModal()"/>
+                    <button label="Confirm Dialog"  sclass="z-button-outlined"  onClick="confirmDialog.doModal()"/>
+                    <button label="Form Dialog"     sclass="z-button-outlined"  onClick="formDialog.doModal()"/>
                 </hlayout>
             </div>
 
@@ -19,8 +19,8 @@
                     <label value="Cras mattis consectetur purus sit amet fermentum." style="font-size:14px;color:#555;line-height:1.6;"/>
                     <separator/>
                     <hlayout style="justify-content:flex-end;" spacing="8px">
-                        <button label="Cancel" sclass="m-btn--outlined" onClick="simpleDialog.setVisible(false)"/>
-                        <button label="OK"     sclass="m-btn--primary"  onClick="simpleDialog.setVisible(false)"/>
+                        <button label="Cancel" sclass="z-button-outlined" onClick="simpleDialog.setVisible(false)"/>
+                        <button label="OK"     sclass="z-button-primary"  onClick="simpleDialog.setVisible(false)"/>
                     </hlayout>
                 </vlayout>
             </window>
@@ -32,8 +32,8 @@
                     <label value="Are you sure you want to proceed? This action cannot be undone." style="font-size:14px;color:#555;line-height:1.6;"/>
                     <separator/>
                     <hlayout style="justify-content:flex-end;" spacing="8px">
-                        <button label="Cancel"  sclass="m-btn--outlined" onClick="confirmDialog.setVisible(false)"/>
-                        <button label="Confirm" sclass="m-btn--danger"   onClick="confirmDialog.setVisible(false)"/>
+                        <button label="Cancel"  sclass="z-button-outlined" onClick="confirmDialog.setVisible(false)"/>
+                        <button label="Confirm" sclass="z-button-error"   onClick="confirmDialog.setVisible(false)"/>
                     </hlayout>
                 </vlayout>
             </window>
@@ -58,8 +58,8 @@
                     </vlayout>
                     <separator/>
                     <hlayout style="justify-content:flex-end;" spacing="8px">
-                        <button label="Cancel" sclass="m-btn--outlined" onClick="formDialog.setVisible(false)"/>
-                        <button label="Save"   sclass="m-btn--primary"  onClick="formDialog.setVisible(false)"/>
+                        <button label="Cancel" sclass="z-button-outlined" onClick="formDialog.setVisible(false)"/>
+                        <button label="Save"   sclass="z-button-primary"  onClick="formDialog.setVisible(false)"/>
                     </hlayout>
                 </vlayout>
             </window>

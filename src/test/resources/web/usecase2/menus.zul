@@ -41,7 +41,7 @@
 
             <div sclass="m-card">
                 <label sclass="m-card__title" value="Context Menu (right-click on button)"/>
-                <button label="Right-click me" sclass="m-btn--outlined" context="contextMenu"/>
+                <button label="Right-click me" sclass="z-button-outlined" context="contextMenu"/>
                 <menupopup id="contextMenu">
                     <menuitem label="View"   iconSclass="z-icon-eye"/>
                     <menuitem label="Edit"   iconSclass="z-icon-pencil"/>
