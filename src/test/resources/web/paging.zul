@@ -1,4 +1,47 @@
 <zk>
-	<paging totalSize="300" pageSize="5" activePage="15" detailed="true" />
-	<paging totalSize="300" pageSize="5" activePage="15" detailed="true" mold="os" />
+    <paging totalSize="300" pageSize="5" activePage="15" detailed="true"/>
+    <paging totalSize="300" pageSize="5" activePage="15" detailed="true" mold="os"/>
+    <!-- Pagination with Data Grid -->
+    <label sclass="m-card__title" value="Pagination with Data Grid"/>
+    <grid sclass="m-projects-grid" mold="default">
+        <columns>
+            <column label="#"/>
+            <column label="First Name"/>
+            <column label="Last Name"/>
+            <column label="Username"/>
+        </columns>
+        <rows>
+            <row>
+                <label value="1"/>
+                <label value="Mark"/>
+                <label value="Otto"/>
+                <label value="@mdo"/>
+            </row>
+            <row>
+                <label value="2"/>
+                <label value="Jacob"/>
+                <label value="Thornton"/>
+                <label value="@fat"/>
+            </row>
+            <row>
+                <label value="3"/>
+                <label value="Larry"/>
+                <label value="the Bird"/>
+                <label value="@twitter"/>
+            </row>
+            <row>
+                <label value="4"/>
+                <label value="John"/>
+                <label value="Smith"/>
+                <label value="@jsmith"/>
+            </row>
+            <row>
+                <label value="5"/>
+                <label value="Jane"/>
+                <label value="Doe"/>
+                <label value="@jdoe"/>
+            </row>
+        </rows>
+    </grid>
+    <paging totalSize="50" pageSize="5" mold="os" />
 </zk>

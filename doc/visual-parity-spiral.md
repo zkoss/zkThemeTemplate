@@ -380,8 +380,8 @@ Legend: ✅ Done | 🔲 Pending | ⏭️ Skipped (infra/shell only)
 | `dialogs.zul` | `/components/dialogs` | ✅ Done | 2026-05-05 |
 | `lists.zul` | `/components/lists` | 🔲 Pending | — |
 | `menus.zul` | `/components/menus` | ✅ Done | 2026-05-05 |
-| `pagination.zul` | `/components/pagination` | ✅ Done | 2026-05-05 |
-| `progress.zul` | `/components/progress` | 🔲 Pending | — |
+| `pagination.zul` | `/components/pagination` | ✅ Done | 2026-05-06 |
+| `progress.zul` | `/components/progress` | ✅ Done | 2026-05-06 |
 | `tabs.zul` | `/components/tabs` | 🔲 Pending | — |
 | `tooltips.zul` | `/components/tooltips` | 🔲 Pending | — |
 | `icons-lucide.zul` | `/components/icons` | 🔲 Pending | — |

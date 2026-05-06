@@ -3,33 +3,30 @@
                 <label sclass="m-page-title" value="Pagination"/>
             </div>
 
+            <!-- Basic Pagination: 4 rows — no-active / active / mid-active / disabled -->
             <div sclass="m-card" style="margin-bottom:16px;">
                 <label sclass="m-card__title" value="Basic Pagination"/>
-                <paging totalSize="100" pageSize="10" sclass="m-paging"/>
+                <paging totalSize="100" pageSize="10" mold="os" sclass="z-paging-os"/>
+                <paging totalSize="100" pageSize="10" mold="os" activePage="0" sclass="z-paging-os"/>
+                <paging totalSize="100" pageSize="10" mold="os" activePage="4" sclass="z-paging-os"/>
+                <paging totalSize="100" pageSize="10" mold="os" disabled="true" sclass="z-paging-os"/>
             </div>
 
+            <!-- Outlined Pagination -->
             <div sclass="m-card" style="margin-bottom:16px;">
-                <label sclass="m-card__title" value="Detailed Pagination"/>
-                <paging totalSize="200" pageSize="20" detailed="true" sclass="m-paging"/>
+                <label sclass="m-card__title" value="Outlined Pagination"/>
+                <paging totalSize="100" pageSize="10" mold="os" sclass="z-paging-os z-paging-outlined"/>
+                <paging totalSize="100" pageSize="10" mold="os" activePage="0" sclass="z-paging-os z-paging-outlined"/>
+                <paging totalSize="100" pageSize="10" mold="os" activePage="4" sclass="z-paging-os z-paging-outlined"/>
+                <paging totalSize="100" pageSize="10" mold="os" disabled="true" sclass="z-paging-os z-paging-outlined"/>
             </div>
 
-            <div sclass="m-card">
-                <label sclass="m-card__title" value="Pagination with Data Grid"/>
-                <grid sclass="m-projects-grid" mold="default">
-                    <columns>
-                        <column label="#"/>
-                        <column label="First Name"/>
-                        <column label="Last Name"/>
-                        <column label="Username"/>
-                    </columns>
-                    <rows>
-                        <row><label value="1"/><label value="Mark"/><label value="Otto"/><label value="@mdo"/></row>
-                        <row><label value="2"/><label value="Jacob"/><label value="Thornton"/><label value="@fat"/></row>
-                        <row><label value="3"/><label value="Larry"/><label value="the Bird"/><label value="@twitter"/></row>
-                        <row><label value="4"/><label value="John"/><label value="Smith"/><label value="@jsmith"/></row>
-                        <row><label value="5"/><label value="Jane"/><label value="Doe"/><label value="@jdoe"/></row>
-                    </rows>
-                </grid>
-                <paging totalSize="50" pageSize="5" sclass="m-paging"/>
+            <!-- Rounded Pagination (rectangular buttons) -->
+            <div sclass="m-card" style="margin-bottom:16px;">
+                <label sclass="m-card__title" value="Rounded Pagination"/>
+                <paging totalSize="100" pageSize="10" mold="os" sclass="z-paging-os z-paging-rounded"/>
+                <paging totalSize="100" pageSize="10" mold="os" activePage="0" sclass="z-paging-os z-paging-rounded"/>
+                <paging totalSize="100" pageSize="10" mold="os" activePage="4" sclass="z-paging-os z-paging-rounded"/>
+                <paging totalSize="100" pageSize="10" mold="os" disabled="true" sclass="z-paging-os z-paging-rounded"/>
             </div>
         </div>
