@@ -1,87 +1,86 @@
 <?page title="zk-material Use Cases"?>
 <?link rel="stylesheet" type="text/css" href="~./usecase/usecase.css"?>
 <zk>
-<borderlayout height="100vh">
+<borderlayout height="100vh" viewModel="@id('vm') @init('zk.example.UseCaseVM')">
 
     <west size="258px" border="none" collapsible="false">
         <div sclass="sidebar-nav">
             <div sclass="sidebar-brand">zk-material</div>
-
-            <label sclass="nav-section" value="Use Cases"/>
-            <a href="/usecase/dashboard.zul"       target="content-frame" sclass="nav-item">KPI Dashboard</a>
-            <a href="/usecase/app-shell.zul"        target="content-frame" sclass="nav-item">Enterprise App Shell</a>
-            <a href="/usecase/order-entry.zul"      target="content-frame" sclass="nav-item">Sales Order Entry</a>
-            <a href="/usecase/employee-grid.zul"    target="content-frame" sclass="nav-item">Employee Data Grid</a>
-            <a href="/usecase/user-profile.zul"     target="content-frame" sclass="nav-item">User Profile</a>
-            <a href="/usecase/product-browser.zul"  target="content-frame" sclass="nav-item">Product Browser</a>
-            <a href="/usecase/report-viewer.zul"    target="content-frame" sclass="nav-item">Report Viewer</a>
-            <a href="/usecase/media-manager.zul"    target="content-frame" sclass="nav-item">Media Manager</a>
-
-            <label sclass="nav-section" value="Form Controls"/>
-            <a href="/button.zul"       target="content-frame" sclass="nav-item">Button</a>
-            <a href="/combobutton.zul"  target="content-frame" sclass="nav-item">Combobutton</a>
-            <a href="/checkbox.zul"     target="content-frame" sclass="nav-item">Checkbox</a>
-            <a href="/radiogroup.zul"   target="content-frame" sclass="nav-item">Radiogroup</a>
-            <a href="/textbox.zul"      target="content-frame" sclass="nav-item">Textbox</a>
-            <a href="/combobox.zul"     target="content-frame" sclass="nav-item">Combobox</a>
-            <a href="/selectbox.zul"    target="content-frame" sclass="nav-item">Selectbox</a>
-            <a href="/datebox.zul"      target="content-frame" sclass="nav-item">Datebox</a>
-            <a href="/timebox.zul"      target="content-frame" sclass="nav-item">Timebox</a>
-            <a href="/spinner.zul"      target="content-frame" sclass="nav-item">Spinner</a>
-            <a href="/slider.zul"       target="content-frame" sclass="nav-item">Slider</a>
-            <a href="/rating.zul"       target="content-frame" sclass="nav-item">Rating</a>
-            <a href="/inputgroup.zul"   target="content-frame" sclass="nav-item">Inputgroup</a>
-            <a href="/bandbox.zul"      target="content-frame" sclass="nav-item">Bandbox</a>
-
-            <label sclass="nav-section" value="Data"/>
-            <a href="/grid.zul"              target="content-frame" sclass="nav-item">Grid</a>
-            <a href="/grid-header.zul"       target="content-frame" sclass="nav-item">Grid (Header)</a>
-            <a href="/grid-grouping.zul"     target="content-frame" sclass="nav-item">Grid (Grouping)</a>
-            <a href="/grid-detail.zul"       target="content-frame" sclass="nav-item">Grid (Detail)</a>
-            <a href="/listbox.zul"           target="content-frame" sclass="nav-item">Listbox</a>
-            <a href="/listbox-header.zul"    target="content-frame" sclass="nav-item">Listbox (Header)</a>
-            <a href="/listbox-grouping.zul"  target="content-frame" sclass="nav-item">Listbox (Grouping)</a>
-            <a href="/tree.zul"              target="content-frame" sclass="nav-item">Tree</a>
-            <a href="/tree-header.zul"       target="content-frame" sclass="nav-item">Tree (Header)</a>
-            <a href="/paging.zul"            target="content-frame" sclass="nav-item">Paging</a>
-            <a href="/biglistbox.zul"        target="content-frame" sclass="nav-item">Biglistbox</a>
-
-            <label sclass="nav-section" value="Navigation"/>
-            <a href="/menubar.zul"           target="content-frame" sclass="nav-item">Menubar</a>
-            <a href="/toolbar.zul"           target="content-frame" sclass="nav-item">Toolbar</a>
-            <a href="/tabbox.zul"            target="content-frame" sclass="nav-item">Tabbox</a>
-            <a href="/tabbox-accordion.zul"  target="content-frame" sclass="nav-item">Tabbox (Accordion)</a>
-
-            <label sclass="nav-section" value="Containers"/>
-            <a href="/window.zul"    target="content-frame" sclass="nav-item">Window</a>
-            <a href="/panel.zul"     target="content-frame" sclass="nav-item">Panel</a>
-            <a href="/groupbox.zul"  target="content-frame" sclass="nav-item">Groupbox</a>
-            <a href="/popup.zul"     target="content-frame" sclass="nav-item">Popup</a>
-            <a href="/caption.zul"   target="content-frame" sclass="nav-item">Caption</a>
-
-            <label sclass="nav-section" value="Layout"/>
-            <a href="/borderlayout.zul"    target="content-frame" sclass="nav-item">Borderlayout</a>
-            <a href="/hlayout.zul"         target="content-frame" sclass="nav-item">Hlayout / Vlayout</a>
-            <a href="/splitter.zul"        target="content-frame" sclass="nav-item">Splitter</a>
-            <a href="/anchorlayout.zul"    target="content-frame" sclass="nav-item">Anchorlayout</a>
-            <a href="/absolutelayout.zul"  target="content-frame" sclass="nav-item">Absolutelayout</a>
-
-            <label sclass="nav-section" value="Feedback"/>
-            <a href="/progressmeter.zul"  target="content-frame" sclass="nav-item">Progressmeter</a>
-            <a href="/notification.zul"   target="content-frame" sclass="nav-item">Notification</a>
-            <a href="/toast.zul"          target="content-frame" sclass="nav-item">Toast</a>
-            <a href="/messagebox.zul"     target="content-frame" sclass="nav-item">Messagebox</a>
-            <a href="/calendar.zul"       target="content-frame" sclass="nav-item">Calendar</a>
+            <navbar orient="vertical">
+                <nav label="Use Cases" open="true">
+                    <navitem label="KPI Dashboard"        onClick="@command('navigate', page='~./usecase/dashboard.zul')"/>
+                    <navitem label="Enterprise App Shell" onClick="@command('navigate', page='~./usecase/app-shell.zul')"/>
+                    <navitem label="Sales Order Entry"    onClick="@command('navigate', page='~./usecase/order-entry.zul')"/>
+                    <navitem label="Employee Data Grid"   onClick="@command('navigate', page='~./usecase/employee-grid.zul')"/>
+                    <navitem label="User Profile"         onClick="@command('navigate', page='~./usecase/user-profile.zul')"/>
+                    <navitem label="Product Browser"      onClick="@command('navigate', page='~./usecase/product-browser.zul')"/>
+                    <navitem label="Report Viewer"        onClick="@command('navigate', page='~./usecase/report-viewer.zul')"/>
+                    <navitem label="Media Manager"        onClick="@command('navigate', page='~./usecase/media-manager.zul')"/>
+                </nav>
+                <nav label="Form Controls">
+                    <navitem label="Button"       onClick="@command('navigate', page='~./button.zul')"/>
+                    <navitem label="Combobutton"  onClick="@command('navigate', page='~./combobutton.zul')"/>
+                    <navitem label="Checkbox"     onClick="@command('navigate', page='~./checkbox.zul')"/>
+                    <navitem label="Radiogroup"   onClick="@command('navigate', page='~./radiogroup.zul')"/>
+                    <navitem label="Textbox"      onClick="@command('navigate', page='~./textbox.zul')"/>
+                    <navitem label="Combobox"     onClick="@command('navigate', page='~./combobox.zul')"/>
+                    <navitem label="Selectbox"    onClick="@command('navigate', page='~./selectbox.zul')"/>
+                    <navitem label="Datebox"      onClick="@command('navigate', page='~./datebox.zul')"/>
+                    <navitem label="Timebox"      onClick="@command('navigate', page='~./timebox.zul')"/>
+                    <navitem label="Spinner"      onClick="@command('navigate', page='~./spinner.zul')"/>
+                    <navitem label="Slider"       onClick="@command('navigate', page='~./slider.zul')"/>
+                    <navitem label="Rating"       onClick="@command('navigate', page='~./rating.zul')"/>
+                    <navitem label="Inputgroup"   onClick="@command('navigate', page='~./inputgroup.zul')"/>
+                    <navitem label="Bandbox"      onClick="@command('navigate', page='~./bandbox.zul')"/>
+                </nav>
+                <nav label="Data">
+                    <navitem label="Grid"               onClick="@command('navigate', page='~./grid.zul')"/>
+                    <navitem label="Grid (Header)"      onClick="@command('navigate', page='~./grid-header.zul')"/>
+                    <navitem label="Grid (Grouping)"    onClick="@command('navigate', page='~./grid-grouping.zul')"/>
+                    <navitem label="Grid (Detail)"      onClick="@command('navigate', page='~./grid-detail.zul')"/>
+                    <navitem label="Listbox"            onClick="@command('navigate', page='~./listbox.zul')"/>
+                    <navitem label="Listbox (Header)"   onClick="@command('navigate', page='~./listbox-header.zul')"/>
+                    <navitem label="Listbox (Grouping)" onClick="@command('navigate', page='~./listbox-grouping.zul')"/>
+                    <navitem label="Tree"               onClick="@command('navigate', page='~./tree.zul')"/>
+                    <navitem label="Tree (Header)"      onClick="@command('navigate', page='~./tree-header.zul')"/>
+                    <navitem label="Paging"             onClick="@command('navigate', page='~./paging.zul')"/>
+                    <navitem label="Biglistbox"         onClick="@command('navigate', page='~./biglistbox.zul')"/>
+                </nav>
+                <nav label="Navigation">
+                    <navitem label="Menubar"            onClick="@command('navigate', page='~./menubar.zul')"/>
+                    <navitem label="Toolbar"            onClick="@command('navigate', page='~./toolbar.zul')"/>
+                    <navitem label="Tabbox"             onClick="@command('navigate', page='~./tabbox.zul')"/>
+                    <navitem label="Tabbox (Accordion)" onClick="@command('navigate', page='~./tabbox-accordion.zul')"/>
+                </nav>
+                <nav label="Containers">
+                    <navitem label="Window"   onClick="@command('navigate', page='~./window.zul')"/>
+                    <navitem label="Panel"    onClick="@command('navigate', page='~./panel.zul')"/>
+                    <navitem label="Groupbox" onClick="@command('navigate', page='~./groupbox.zul')"/>
+                    <navitem label="Popup"    onClick="@command('navigate', page='~./popup.zul')"/>
+                    <navitem label="Caption"  onClick="@command('navigate', page='~./caption.zul')"/>
+                </nav>
+                <nav label="Layout">
+                    <navitem label="Borderlayout"      onClick="@command('navigate', page='~./borderlayout.zul')"/>
+                    <navitem label="Hlayout / Vlayout" onClick="@command('navigate', page='~./hlayout.zul')"/>
+                    <navitem label="Splitter"          onClick="@command('navigate', page='~./splitter.zul')"/>
+                    <navitem label="Anchorlayout"      onClick="@command('navigate', page='~./anchorlayout.zul')"/>
+                    <navitem label="Absolutelayout"    onClick="@command('navigate', page='~./absolutelayout.zul')"/>
+                </nav>
+                <nav label="Feedback">
+                    <navitem label="Progressmeter" onClick="@command('navigate', page='~./progressmeter.zul')"/>
+                    <navitem label="Notification"  onClick="@command('navigate', page='~./notification.zul')"/>
+                    <navitem label="Toast"         onClick="@command('navigate', page='~./toast.zul')"/>
+                    <navitem label="Messagebox"    onClick="@command('navigate', page='~./messagebox.zul')"/>
+                    <navitem label="Calendar"      onClick="@command('navigate', page='~./calendar.zul')"/>
+                </nav>
+            </navbar>
         </div>
     </west>
 
-    <center border="none" autoscroll="false">
-        <html><![CDATA[
-            <iframe id="content-frame" name="content-frame"
-                src="/usecase/dashboard.zul"
-                style="width:100%;height:100%;border:none;display:block;">
-            </iframe>
-        ]]></html>
+    <center border="none" autoscroll="true">
+        <div>
+            <apply templateURI="@load(vm.currentPage)"/>
+        </div>
     </center>
 
 </borderlayout>
