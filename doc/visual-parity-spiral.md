@@ -48,6 +48,8 @@ Examples:
 
 **Action: Create CSS variant class + add to ZUL with sclass. Mark as content/CSS work, NOT framework gap.**
 
+> **Naming rule**: variant classes that go into component CSS files (`src/main/resources/`) must use the `z-` prefix (e.g., `z-paging-outlined`). See Section 1 of `mira-alignment-plan-v2.md`.
+
 ### Layer 3: Is this a true framework architectural gap?
 > "Does this require ZK to fundamentally render different DOM, handle different events, or implement React/MUI-specific behavior?"
 

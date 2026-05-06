@@ -22,6 +22,10 @@ This document combines the original dashboard alignment plan with the v2 updates
 - **(a) Simple Tables:** Use `<grid>`.
 - **(b) Selectable Tables:** Use `<listbox checkmark="true">` for tables requiring checkboxes.
 
+### CSS Class Naming Convention
+- **Framework utility classes** — classes applied via `sclass` and styled in component CSS files under `src/main/resources/` — MUST use the `z-` prefix (e.g., `z-paging-outlined`, `z-paging-rounded`).
+- **Page/layout utility classes** — used only in `usecase2/` ZUL pages and `usecase2.css` — use the `m-` prefix (e.g., `m-card`, `m-badge`).
+
 ### Navigation & Scope
 - **(a) Sidebar Inert Items:** "Maps" should be listed in the sidebar but have no navigation target.
 - **(b) Placeholder Pages:** "Documentation" and "Change Log" entries are listed but do not require content pages.
