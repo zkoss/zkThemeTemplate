@@ -1,49 +1,102 @@
 <div sclass="m-main">
-            <div sclass="m-page-header">
-                <label sclass="m-page-title" value="Tooltips"/>
-            </div>
+    <div sclass="m-page-header">
+        <label sclass="m-page-title" value="Tooltips"/>
+    </div>
 
-            <div sclass="m-card">
-                <label sclass="m-card__title" value="Hover to see tooltips"/>
+    <!-- 1. Simple Tooltips — tooltiptext attribute -->
+    <div sclass="m-card" style="margin-bottom:24px;">
+        <label sclass="m-card__title" value="Simple Tooltips"/>
+        <label value="Tooltips display informative text when users hover over, focus on, or tap an element."
+               style="font-size:13px;color:var(--md-sys-color-on-surface-variant);display:block;padding:8px 0 16px;"/>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;">
+            <button label="Delete" iconSclass="z-icon-trash-2" sclass="z-button-outlined"
+                    tooltiptext="Delete this item"/>
+            <button label="Add" iconSclass="z-icon-plus" sclass="z-button-outlined"
+                    tooltiptext="Add new item"/>
+        </div>
+    </div>
 
-                <hlayout spacing="16px" style="flex-wrap:wrap;padding:16px 0;">
-                    <!-- Tooltip via popup attribute -->
-                    <popup id="tt1" width="180px" sclass="m-tooltip">
-                        <label value="This is a tooltip! It can contain any text." style="font-size:12px;"/>
-                    </popup>
-                    <button label="Top tooltip"    sclass="z-button-outlined" tooltip="tt1, position=before_start"/>
+    <!-- 2. Triggerable Tooltips — hover (tooltip attr), click (popup attr) -->
+    <div sclass="m-card" style="margin-bottom:24px;">
+        <label sclass="m-card__title" value="Triggerable Tooltips"/>
+        <label value="You can define the types of events that cause a tooltip to show."
+               style="font-size:13px;color:var(--md-sys-color-on-surface-variant);display:block;padding:8px 0 16px;"/>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;">
+            <popup id="ttHover1" sclass="z-popup-tooltip">
+                <label value="Hover or touch"/>
+            </popup>
+            <button label="Hover or touch" sclass="z-button-outlined" tooltip="ttHover1"/>
 
-                    <popup id="tt2" width="160px" sclass="m-tooltip">
-                        <label value="Tooltip on the right side." style="font-size:12px;"/>
-                    </popup>
-                    <button label="Right tooltip"  sclass="z-button-outlined" tooltip="tt2, position=end_after"/>
+            <popup id="ttFocus" sclass="z-popup-tooltip">
+                <label value="Focus or touch"/>
+            </popup>
+            <button label="Focus or touch" sclass="z-button-outlined" tooltip="ttFocus"/>
 
-                    <popup id="tt3" width="160px" sclass="m-tooltip">
-                        <label value="Tooltip on the bottom." style="font-size:12px;"/>
-                    </popup>
-                    <button label="Bottom tooltip" sclass="z-button-outlined" tooltip="tt3, position=after_start"/>
+            <button label="Hover" sclass="z-button-outlined" tooltiptext="Hover tooltip"/>
 
-                    <popup id="tt4" width="160px" sclass="m-tooltip">
-                        <label value="Tooltip on the left." style="font-size:12px;"/>
-                    </popup>
-                    <button label="Left tooltip"   sclass="z-button-outlined" tooltip="tt4, position=start_after"/>
-                </hlayout>
+            <popup id="ttClick" sclass="z-popup-tooltip">
+                <label value="Click tooltip"/>
+            </popup>
+            <button label="Click" sclass="z-button-outlined" popup="ttClick"/>
+        </div>
+    </div>
 
-                <separator/>
+    <!-- 3. Positioned Tooltips — 12-position grid -->
+    <div sclass="m-card" style="margin-bottom:24px;">
+        <label sclass="m-card__title" value="Positioned Tooltips"/>
+        <div style="padding-top:16px;">
 
-                <label sclass="m-card__title" value="Icon tooltips"/>
-                <hlayout spacing="20px" style="padding:8px 0;align-items:center;">
-                    <popup id="tIcon1" sclass="m-tooltip"><label value="Delete this item" style="font-size:12px;"/></popup>
-                    <button iconSclass="z-icon-trash-2"  sclass="z-button-icon" tooltip="tIcon1"/>
+            <!-- Single shared popup for all 12 position buttons -->
+            <popup id="posTooltip" sclass="z-popup-tooltip"><label value="Tooltip"/></popup>
 
-                    <popup id="tIcon2" sclass="m-tooltip"><label value="Edit details" style="font-size:12px;"/></popup>
-                    <button iconSclass="z-icon-pencil"   sclass="z-button-icon" tooltip="tIcon2"/>
-
-                    <popup id="tIcon3" sclass="m-tooltip"><label value="Download file" style="font-size:12px;"/></popup>
-                    <button iconSclass="z-icon-download" sclass="z-button-icon" tooltip="tIcon3"/>
-
-                    <popup id="tIcon4" sclass="m-tooltip"><label value="Share with team" style="font-size:12px;"/></popup>
-                    <button iconSclass="z-icon-share-2" sclass="z-button-icon" tooltip="tIcon4"/>
-                </hlayout>
+            <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;max-width:520px;margin:0 auto;">
+                <!-- Row 1: top -->
+                <div/>
+                <button label="before_start"  sclass="z-button-outlined" tooltip="posTooltip, position=before_start"/>
+                <button label="before_center" sclass="z-button-outlined" tooltip="posTooltip, position=before_center"/>
+                <button label="before_end"    sclass="z-button-outlined" tooltip="posTooltip, position=before_end"/>
+                <div/>
+                <!-- Row 2 -->
+                <button label="start_before"  sclass="z-button-outlined" tooltip="posTooltip, position=start_before"/>
+                <div/><div/><div/>
+                <button label="end_before"    sclass="z-button-outlined" tooltip="posTooltip, position=end_before"/>
+                <!-- Row 3 -->
+                <button label="start_center"  sclass="z-button-outlined" tooltip="posTooltip, position=start_center"/>
+                <div/><div/><div/>
+                <button label="end_center"    sclass="z-button-outlined" tooltip="posTooltip, position=end_center"/>
+                <!-- Row 4 -->
+                <button label="start_after"   sclass="z-button-outlined" tooltip="posTooltip, position=start_after"/>
+                <div/><div/><div/>
+                <button label="end_after"     sclass="z-button-outlined" tooltip="posTooltip, position=end_after"/>
+                <!-- Row 5: bottom -->
+                <div/>
+                <button label="after_start"   sclass="z-button-outlined" tooltip="posTooltip, position=after_start"/>
+                <button label="after_center"  sclass="z-button-outlined" tooltip="posTooltip, position=after_center"/>
+                <button label="after_end"     sclass="z-button-outlined" tooltip="posTooltip, position=after_end"/>
+                <div/>
             </div>
         </div>
+    </div>
+
+    <!-- 4. Animated Tooltips — z-popup-anim-* utility classes -->
+    <div sclass="m-card">
+        <label sclass="m-card__title" value="Animated Tooltips"/>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;padding-top:16px;">
+            <popup id="ttFade" sclass="z-popup-tooltip z-popup-anim-fade">
+                <label value="Fade animation"/>
+            </popup>
+            <button label="Fade" sclass="z-button-outlined" tooltip="ttFade"/>
+
+            <popup id="ttZoom" sclass="z-popup-tooltip z-popup-anim-zoom">
+                <label value="Zoom animation"/>
+            </popup>
+            <button label="Zoom" sclass="z-button-outlined" tooltip="ttZoom"/>
+
+            <popup id="ttGrow" sclass="z-popup-tooltip z-popup-anim-grow">
+                <label value="Grow animation"/>
+            </popup>
+            <button label="Grow" sclass="z-button-outlined" tooltip="ttGrow"/>
+        </div>
+    </div>
+
+</div>

@@ -422,20 +422,6 @@
     border-radius: 0;
 }
 
-/* ── Tooltip popup ─────────────────────────────────────────── */
-.m-tooltip.z-popup {
-    background: rgba(50, 50, 50, 0.92);
-    border: none;
-    border-radius: 4px;
-    padding: 6px 10px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-}
-
-.m-tooltip.z-popup .z-label {
-    color: #ffffff;
-}
-
-
 /* ── Tabs ──────────────────────────────────────────────────── */
 .m-tabs .z-tabs      { border-bottom: 2px solid var(--md-sys-color-outline-variant, #e0e0e0); }
 .m-tabs .z-tab       { border: none; background: transparent; font-size: 14px; font-weight: 500; color: var(--md-sys-color-on-surface-variant, #49454f); padding: 12px 16px; border-bottom: 2px solid transparent; margin-bottom: -2px; }

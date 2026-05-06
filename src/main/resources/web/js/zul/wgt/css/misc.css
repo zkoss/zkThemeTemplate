@@ -58,17 +58,19 @@
     pointer-events: none;
 }
 
-/* Tooltip */
+/* Tooltip — matches MUI: rgba(97,97,97,0.92), 4px radius, 11px/500 */
 .z-tooltip {
     position: absolute;
     z-index: 2000;
-    background-color: var(--md-sys-color-inverse-surface);
-    color: var(--md-sys-color-inverse-on-surface);
-    padding: var(--md-sys-spacing-1) var(--md-sys-spacing-2);
-    border-radius: var(--md-sys-shape-corner-extra-small);
+    background-color: rgba(97, 97, 97, 0.92);
+    color: #fff;
+    padding: 4px 8px;
+    border-radius: 4px;
     font-family: var(--md-sys-typescale-font-family);
-    font-size: var(--md-sys-typescale-body-small-size);
-    white-space: nowrap;
+    font-size: 0.6875rem;
+    font-weight: 500;
+    max-width: 300px;
+    word-wrap: break-word;
     pointer-events: none;
     box-shadow: var(--md-sys-elevation-2);
 }
