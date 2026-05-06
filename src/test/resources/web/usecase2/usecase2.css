@@ -476,59 +476,6 @@
 .m-tabs .z-tab.z-tab-selected { color: var(--md-sys-color-primary, #376fd0); border-bottom-color: var(--md-sys-color-primary, #376fd0); }
 .m-tabs .z-tabpanel  { padding: 16px 0; }
 
-/* ── Paging ────────────────────────────────────────────────── */
-.m-paging.z-paging { margin-top: 12px; }
-.m-paging .z-paging-btn { border: 1px solid var(--md-sys-color-outline-variant, #e0e0e0); border-radius: 4px; padding: 4px 10px; margin: 0 2px; font-size: 13px; color: var(--md-sys-color-on-surface, #1c1b1f); }
-.m-paging .z-paging-btn.z-paging-btn-selected { background: var(--md-sys-color-primary, #376fd0); border-color: var(--md-sys-color-primary, #376fd0); color: #ffffff; }
-
-/* ── Progress ──────────────────────────────────────────────── */
-.m-progress .z-progressmeter-image { background: var(--md-sys-color-primary, #376fd0); border-radius: 4px; }
-.m-progress.z-progressmeter        { height: 8px; border-radius: 4px; background: #e0e0e0; border: none; }
-.m-progress--success .z-progressmeter-image { background: #2e7d32; }
-.m-progress--warning .z-progressmeter-image { background: #ed6c02; }
-.m-progress--error   .z-progressmeter-image { background: #d32f2f; }
-
-/* ── Spinner & Indeterminate ─────────────────────────────── */
-.m-spinner {
-    width: 40px;
-    height: 40px;
-    border: 3px solid rgba(0, 0, 0, 0.08);
-    border-top-color: var(--md-sys-color-primary, #376fd0);
-    border-radius: 50%;
-    animation: m-spinner-rotate 0.8s linear infinite;
-    display: inline-block;
-}
-
-@keyframes m-spinner-rotate {
-    to { transform: rotate(360deg); }
-}
-
-.m-spinner--sm { width: 24px; height: 24px; border-width: 2px; }
-.m-spinner--lg { width: 56px; height: 56px; border-width: 4px; }
-
-.m-progress-linear--indeterminate {
-    height: 4px;
-    width: 100%;
-    background-color: rgba(55, 111, 208, 0.1);
-    border-radius: 2px;
-    position: relative;
-    overflow: hidden;
-}
-
-.m-progress-linear--indeterminate::after {
-    content: "";
-    position: absolute;
-    height: 100%;
-    background-color: var(--md-sys-color-primary, #376fd0);
-    width: 40%;
-    animation: m-linear-indeterminate 1.5s infinite ease-in-out;
-    border-radius: 2px;
-}
-
-@keyframes m-linear-indeterminate {
-    0% { left: -40%; }
-    100% { left: 100%; }
-}
 
 /* ── Dialog (window) ───────────────────────────────────────── */
 .m-dialog.z-window { border-radius: 8px; box-shadow: 0 8px 30px rgba(0,0,0,0.16); border: none; }

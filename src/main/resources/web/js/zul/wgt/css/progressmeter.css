@@ -1,6 +1,7 @@
-/* MD3 Progress Meter (linear progress indicator) */
-/* DOM: <div class="z-progressmeter"><div class="z-progressmeter-bar" style="width:X%"/></div> */
+/* MD3 Progress Meter */
+/* DOM: <div class="z-progressmeter"><span class="z-progressmeter-image" style="width:X%"/></div> */
 
+/* ─── Base (default: thick rounded bar) ──────────────────────────────── */
 .z-progressmeter {
     display: block;
     width: 100%;
@@ -11,7 +12,6 @@
     position: relative;
 }
 
-/* ZK renders the fill as .z-progressmeter-image (inline-block span with inline width%) */
 .z-progressmeter-bar,
 .z-progressmeter-image {
     display: block !important;
@@ -20,4 +20,81 @@
     border-radius: var(--md-sys-shape-corner-full);
     transition: width var(--md-sys-motion-duration-medium2) var(--md-sys-motion-easing-standard);
     min-width: 0;
+}
+
+/* ─── Linear variant (MD3 4px flat track) ────────────────────────────── */
+.z-progressmeter-linear.z-progressmeter {
+    height: 4px;
+    border-radius: 0;
+    background: rgba(55, 111, 208, 0.2);
+    overflow: hidden;
+    position: relative;
+}
+.z-progressmeter-linear .z-progressmeter-image,
+.z-progressmeter-linear .z-progressmeter-bar {
+    background: var(--md-sys-color-primary, #376fd0);
+    border-radius: 0;
+    height: 100%;
+}
+
+/* ─── Color variants ──────────────────────────────────────────────────── */
+.z-progressmeter-secondary .z-progressmeter-image,
+.z-progressmeter-secondary .z-progressmeter-bar { background: var(--md-sys-color-secondary, #4db6ac); }
+.z-progressmeter-secondary.z-progressmeter-linear.z-progressmeter { background: rgba(77, 182, 172, 0.2); }
+
+.z-progressmeter-success .z-progressmeter-image,
+.z-progressmeter-success .z-progressmeter-bar { background: #2e7d32; }
+.z-progressmeter-success.z-progressmeter-linear.z-progressmeter { background: rgba(46, 125, 50, 0.2); }
+
+.z-progressmeter-warning .z-progressmeter-image,
+.z-progressmeter-warning .z-progressmeter-bar { background: #ed6c02; }
+.z-progressmeter-warning.z-progressmeter-linear.z-progressmeter { background: rgba(237, 108, 2, 0.2); }
+
+.z-progressmeter-error .z-progressmeter-image,
+.z-progressmeter-error .z-progressmeter-bar { background: #d32f2f; }
+.z-progressmeter-error.z-progressmeter-linear.z-progressmeter { background: rgba(211, 47, 47, 0.2); }
+
+/* ─── Linear indeterminate animation ─────────────────────────────────── */
+.z-progressmeter-linear.z-progressmeter-indeterminate .z-progressmeter-image,
+.z-progressmeter-linear.z-progressmeter-indeterminate .z-progressmeter-bar {
+    width: 40% !important;
+    position: absolute;
+    animation: z-progressmeter-linear-ind 2.1s cubic-bezier(0.65, 0.815, 0.735, 0.395) infinite;
+}
+
+/* Query = indeterminate reversed (mirror the track) */
+.z-progressmeter-query.z-progressmeter-indeterminate {
+    transform: scaleX(-1);
+}
+
+@keyframes z-progressmeter-linear-ind {
+    0%   { left: -55%; right: 100%; }
+    60%  { left: 100%; right: -90%; }
+    100% { left: 100%; right: -90%; }
+}
+
+/* ─── Circular variant (border-spin on the outer div) ────────────────── */
+/* ZK sets inline style="width:Npx" on the outer div; !important overrides it */
+.z-progressmeter-circular.z-progressmeter {
+    display: inline-block !important;
+    width: 40px !important;
+    height: 40px !important;
+    border-radius: 50%;
+    border: 3.6px solid rgba(55, 111, 208, 0.2);
+    border-top-color: var(--md-sys-color-primary, #376fd0);
+    background: transparent;
+    overflow: visible;
+    animation: z-progressmeter-circular-spin 1s linear infinite;
+}
+.z-progressmeter-circular .z-progressmeter-image,
+.z-progressmeter-circular .z-progressmeter-bar {
+    display: none !important;
+}
+.z-progressmeter-circular.z-progressmeter-secondary.z-progressmeter {
+    border-color: rgba(77, 182, 172, 0.2);
+    border-top-color: var(--md-sys-color-secondary, #4db6ac);
+}
+
+@keyframes z-progressmeter-circular-spin {
+    to { transform: rotate(360deg); }
 }

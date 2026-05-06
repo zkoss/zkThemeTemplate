@@ -1,65 +1,69 @@
 <div sclass="m-main">
-            <div sclass="m-page-header">
-                <label sclass="m-page-title" value="Progress"/>
+    <div sclass="m-page-header">
+        <label sclass="m-page-title" value="Progress"/>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start;">
+
+        <!-- Left column: Circular -->
+        <div>
+            <!-- 1. Circular Indeterminate -->
+            <div sclass="m-card" style="margin-bottom:24px;">
+                <label sclass="m-card__title" value="Circular Indeterminate"/>
+                <div style="display:flex;gap:16px;align-items:center;padding-top:12px;">
+                    <progressmeter indeterminate="true" sclass="z-progressmeter-circular"/>
+                    <progressmeter indeterminate="true" sclass="z-progressmeter-circular z-progressmeter-secondary"/>
+                </div>
             </div>
 
-            <vlayout spacing="20px">
-                <!-- Linear progress bars -->
-                <div sclass="m-card">
-                    <label sclass="m-card__title" value="Linear — Determinate"/>
-                    <vlayout spacing="12px">
-                        <hlayout>
-                            <label value="10%  " style="font-size:12px;color:#666;width:40px;"/>
-                            <progressmeter value="10"  width="300px" sclass="m-progress"/>
-                        </hlayout>
-                        <hlayout>
-                            <label value="40%  " style="font-size:12px;color:#666;width:40px;"/>
-                            <progressmeter value="40"  width="300px" sclass="m-progress"/>
-                        </hlayout>
-                        <hlayout>
-                            <label value="70%  " style="font-size:12px;color:#666;width:40px;"/>
-                            <progressmeter value="70"  width="300px" sclass="m-progress"/>
-                        </hlayout>
-                    </vlayout>
-                </div>
+            <!-- 2. Circular Determinate — FRAMEWORK GAP -->
+            <div sclass="m-card" style="margin-bottom:24px;">
+                <label sclass="m-card__title" value="Circular Determinate"/>
+                <label value="⚠ Framework gap — requires SVG stroke-dasharray; ZK progressmeter renders no SVG." style="font-size:12px;color:#999;display:block;padding-top:12px;"/>
+            </div>
 
-                <!-- Linear Indeterminate -->
-                <div sclass="m-card">
-                    <label sclass="m-card__title" value="Linear — Indeterminate"/>
-                    <div sclass="m-progress-linear--indeterminate" width="300px"/>
-                </div>
-
-                <!-- Circular Spinners -->
-                <div sclass="m-card">
-                    <label sclass="m-card__title" value="Circular — Spinners"/>
-                    <hlayout spacing="24px" style="align-items:center;">
-                        <div sclass="m-spinner m-spinner--sm"/>
-                        <div sclass="m-spinner"/>
-                        <div sclass="m-spinner m-spinner--lg"/>
-                    </hlayout>
-                </div>
-
-                <!-- Colour variants -->
-                <div sclass="m-card">
-                    <label sclass="m-card__title" value="Colour Variants"/>
-                    <vlayout spacing="12px">
-                        <hlayout>
-                            <label value="Primary   " style="font-size:12px;color:#666;width:70px;"/>
-                            <progressmeter value="65" width="300px" sclass="m-progress m-progress--primary"/>
-                        </hlayout>
-                        <hlayout>
-                            <label value="Success   " style="font-size:12px;color:#666;width:70px;"/>
-                            <progressmeter value="80" width="300px" sclass="m-progress m-progress--success"/>
-                        </hlayout>
-                        <hlayout>
-                            <label value="Warning   " style="font-size:12px;color:#666;width:70px;"/>
-                            <progressmeter value="45" width="300px" sclass="m-progress m-progress--warning"/>
-                        </hlayout>
-                        <hlayout>
-                            <label value="Error     " style="font-size:12px;color:#666;width:70px;"/>
-                            <progressmeter value="25" width="300px" sclass="m-progress m-progress--error"/>
-                        </hlayout>
-                    </vlayout>
-                </div>
-            </vlayout>
+            <!-- 3. Circular Static — FRAMEWORK GAP -->
+            <div sclass="m-card">
+                <label sclass="m-card__title" value="Circular Static"/>
+                <label value="⚠ Framework gap — requires SVG stroke-dasharray; ZK progressmeter renders no SVG." style="font-size:12px;color:#999;display:block;padding-top:12px;"/>
+            </div>
         </div>
+
+        <!-- Right column: Linear -->
+        <div>
+            <!-- 4. Linear Indeterminate -->
+            <div sclass="m-card" style="margin-bottom:24px;">
+                <label sclass="m-card__title" value="Linear Indeterminate"/>
+                <div style="padding-top:12px;">
+                    <progressmeter indeterminate="true" sclass="z-progressmeter-linear" style="margin-bottom:10px;display:block;"/>
+                    <progressmeter indeterminate="true" sclass="z-progressmeter-linear z-progressmeter-secondary" style="display:block;"/>
+                </div>
+            </div>
+
+            <!-- 5. Linear Determinate -->
+            <div sclass="m-card" style="margin-bottom:24px;">
+                <label sclass="m-card__title" value="Linear Determinate"/>
+                <div style="padding-top:12px;">
+                    <progressmeter value="8" sclass="z-progressmeter-linear" style="margin-bottom:10px;display:block;"/>
+                    <progressmeter value="8" sclass="z-progressmeter-linear z-progressmeter-secondary" style="display:block;"/>
+                </div>
+            </div>
+
+            <!-- 6. Linear Buffer — FRAMEWORK GAP -->
+            <div sclass="m-card" style="margin-bottom:24px;">
+                <label sclass="m-card__title" value="Linear Buffer"/>
+                <label value="⚠ Framework gap — requires dashed overlay + dual-bar DOM; ZK progressmeter has one inner span." style="font-size:12px;color:#999;display:block;padding-top:12px;"/>
+            </div>
+
+            <!-- 7. Linear Query -->
+            <div sclass="m-card">
+                <label sclass="m-card__title" value="Linear Query"/>
+                <div style="padding-top:12px;">
+                    <progressmeter indeterminate="true" sclass="z-progressmeter-linear z-progressmeter-query" style="margin-bottom:10px;display:block;"/>
+                    <progressmeter indeterminate="true" sclass="z-progressmeter-linear z-progressmeter-query z-progressmeter-secondary" style="display:block;"/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
