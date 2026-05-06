@@ -2,8 +2,7 @@
 <vlayout sclass="m-sidebar__inner">
 
     <div sclass="m-sidebar__brand">
-        <span sclass="m-sidebar__brand-name">Mira</span>
-        <div sclass="m-badge m-badge--info" style="font-size:9px;padding:1px 5px;">PRO</div>
+        <span sclass="m-sidebar__brand-name">ZK Material Theme</span>
     </div>
 
     <textbox sclass="m-sidebar__search" placeholder="Search topics..." readonly="true"/>
@@ -110,6 +109,7 @@
             <navitem label="Progress"
                 onClick="@command('navigate', page='~./usecase2/progress.zul')"
                 sclass="@load(vm.currentPage eq '~./usecase2/progress.zul' ? 'm-active' : '')"/>
+            <navitem label="Snackbars" disabled="true"/>
             <navitem label="Tabs"
                 onClick="@command('navigate', page='~./usecase2/tabs.zul')"
                 sclass="@load(vm.currentPage eq '~./usecase2/tabs.zul' ? 'm-active' : '')"/>
@@ -169,13 +169,12 @@
 
     <div sclass="m-sidebar__user">
         <div sclass="m-avatar m-avatar--sm" style="background:#5c7bd9;">
-            <label value="L" style="color:#fff;font-weight:600;"/>
+            <label value="H" style="color:#fff;font-weight:600;"/>
         </div>
         <div sclass="m-sidebar__user-info">
-            <div sclass="m-sidebar__user-name">Lucy Lavender</div>
+            <div sclass="m-sidebar__user-name">Hawk</div>
             <div sclass="m-sidebar__user-role">UX Designer</div>
         </div>
     </div>
-
 </vlayout>
 </zk>
