@@ -20,8 +20,7 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
-/* ZK page container */
-.z-page {
+.z-page{
     font-family: var(--zk-typescale-font-family);
     font-size: var(--zk-typescale-body-medium-size);
     color: var(--zk-color-on-background);
@@ -40,5 +39,24 @@ a:hover {
 img {
     max-width: 100%;
     vertical-align: middle;
+}
+
+/* Scrollbars — subtle MD3 style */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--zk-color-outline-variant);
+    border-radius: var(--zk-shape-corner-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--zk-color-outline);
 }
 

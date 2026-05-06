@@ -20,7 +20,6 @@ const normFiles = [
     'zul/css/base/_chips.css',
     'zul/css/base/_avatars.css',
     'zul/css/base/_icons.css',
-    'zul/css/zk-material.css',
 ];
 
 // combo.css.dsp = merged dropdown-type input components

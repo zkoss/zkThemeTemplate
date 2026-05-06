@@ -138,6 +138,14 @@
     z-index: 1400;
 }
 
+/* Modal overlay mask */
+.z-modal-mask {
+    position: fixed;
+    inset: 0;
+    background: var(--zk-color-scrim);
+    z-index: 1400;
+}
+
 /* Highlighted / focused window */
 .z-window-highlighted .z-window-header {
     background-color: var(--zk-color-primary-container);
