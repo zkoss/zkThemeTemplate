@@ -3,29 +3,29 @@
 
 .z-a {
     display: inline;
-    color: var(--md-sys-color-primary);
+    color: var(--zk-color-primary);
     text-decoration: none;
-    font-family: var(--md-sys-typescale-font-family);
+    font-family: var(--zk-typescale-font-family);
     font-size: inherit;
     font-weight: inherit;
     cursor: pointer;
-    transition: color var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
+    transition: color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
 }
 
 .z-a:hover {
     text-decoration: underline;
-    color: var(--md-sys-color-primary);
+    color: var(--zk-color-primary);
 }
 
 .z-a:focus-visible {
-    outline: 2px solid var(--md-sys-color-primary);
+    outline: 2px solid var(--zk-color-primary);
     outline-offset: 2px;
     border-radius: 2px;
 }
 
 .z-a[disabled],
 .z-a.z-a-disabled {
-    color: var(--md-sys-color-disabled);
+    color: var(--zk-color-disabled);
     cursor: not-allowed;
     pointer-events: none;
 }

@@ -4,10 +4,10 @@
 .z-groupbox {
     display: flex;
     flex-direction: column;
-    background-color: var(--md-sys-color-surface);
-    border-radius: var(--md-sys-shape-card);
-    border: 1px solid var(--md-sys-color-outline-variant);
-    box-shadow: var(--md-sys-elevation-card);
+    background-color: var(--zk-color-surface);
+    border-radius: var(--zk-shape-card);
+    border: 1px solid var(--zk-color-outline-variant);
+    box-shadow: var(--zk-elevation-card);
     overflow: hidden;
     box-sizing: border-box;
 }
@@ -15,9 +15,9 @@
 .z-groupbox-header {
     display: flex;
     align-items: center;
-    padding: var(--md-sys-spacing-3) var(--md-sys-spacing-4);
-    border-bottom: 1px solid var(--md-sys-color-outline-variant);
-    background-color: var(--md-sys-color-surface);
+    padding: var(--zk-spacing-3) var(--zk-spacing-4);
+    border-bottom: 1px solid var(--zk-color-outline-variant);
+    background-color: var(--zk-color-surface);
     min-height: 48px;
     flex-shrink: 0;
 }
@@ -25,32 +25,32 @@
 /* Caption text inside header — ZK renders text in .z-caption-content, not .z-caption-text */
 .z-groupbox-header .z-caption-text,
 .z-groupbox-header .z-caption-content {
-    font-size: var(--md-sys-typescale-title-medium-size);
-    font-weight: var(--md-sys-typescale-title-medium-weight);
-    line-height: var(--md-sys-typescale-title-medium-line-height);
-    color: var(--md-sys-color-on-surface);
+    font-size: var(--zk-typescale-title-medium-size);
+    font-weight: var(--zk-typescale-title-medium-weight);
+    line-height: var(--zk-typescale-title-medium-line-height);
+    color: var(--zk-color-on-surface);
 }
 
 /* Icons in header */
 .z-groupbox-header .z-groupbox-icon,
 .z-groupbox-header [class*="z-icon-"] {
     font-size: 16px;
-    color: var(--md-sys-color-on-surface-variant);
+    color: var(--zk-color-on-surface-variant);
     cursor: pointer;
     margin-left: auto;
     flex-shrink: 0;
-    padding: var(--md-sys-spacing-1);
-    border-radius: var(--md-sys-shape-corner-full);
+    padding: var(--zk-spacing-1);
+    border-radius: var(--zk-shape-corner-full);
 }
 
 .z-groupbox-header .z-groupbox-icon:hover,
 .z-groupbox-header [class*="z-icon-"]:hover {
-    background-color: var(--md-sys-color-surface-container);
+    background-color: var(--zk-color-surface-container);
 }
 
 .z-groupbox-body,
 .z-groupbox-content {
-    padding: var(--md-sys-spacing-4);
+    padding: var(--zk-spacing-4);
     flex: 1;
     overflow: auto;
 }

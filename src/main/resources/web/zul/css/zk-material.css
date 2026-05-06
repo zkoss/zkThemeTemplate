@@ -3,40 +3,40 @@
 /* ZK framework resets */
 .z-page,
 .z-container {
-    font-family: var(--md-sys-typescale-font-family);
-    font-size: var(--md-sys-typescale-body-medium-size);
-    color: var(--md-sys-color-on-background);
+    font-family: var(--zk-typescale-font-family);
+    font-size: var(--zk-typescale-body-medium-size);
+    color: var(--zk-color-on-background);
 }
 
 /* Remove default ZK styles that conflict with MD3 */
 .z-label {
-    font-family: var(--md-sys-typescale-font-family);
-    font-size: var(--md-sys-typescale-body-medium-size);
-    color: var(--md-sys-color-on-surface);
+    font-family: var(--zk-typescale-font-family);
+    font-size: var(--zk-typescale-body-medium-size);
+    color: var(--zk-color-on-surface);
 }
 
 /* ZK HTML element */
 .z-html {
-    font-family: var(--md-sys-typescale-font-family);
+    font-family: var(--zk-typescale-font-family);
 }
 
 /* ZK separator */
 .z-separator {
     border: 0;
-    border-top: 1px solid var(--md-sys-color-outline-variant);
-    margin: var(--md-sys-spacing-2) 0;
+    border-top: 1px solid var(--zk-color-outline-variant);
+    margin: var(--zk-spacing-2) 0;
 }
 
 /* ZK loading indicator */
 .z-loading-indicator {
-    color: var(--md-sys-color-primary);
+    color: var(--zk-color-primary);
 }
 
 /* ZK mask (modal overlay) */
 .z-modal-mask {
     position: fixed;
     inset: 0;
-    background: var(--md-sys-color-scrim);
+    background: var(--zk-color-scrim);
     z-index: 1400;
 }
 
@@ -51,10 +51,10 @@
 }
 
 ::-webkit-scrollbar-thumb {
-    background: var(--md-sys-color-outline-variant);
-    border-radius: var(--md-sys-shape-corner-full);
+    background: var(--zk-color-outline-variant);
+    border-radius: var(--zk-shape-corner-full);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: var(--md-sys-color-outline);
+    background: var(--zk-color-outline);
 }

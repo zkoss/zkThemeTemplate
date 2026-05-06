@@ -6,8 +6,8 @@
     flex-direction: row;
     align-items: center;
     min-height: 48px;
-    background-color: var(--md-sys-color-surface);
-    border-bottom: 1px solid var(--md-sys-color-outline-variant);
+    background-color: var(--zk-color-surface);
+    border-bottom: 1px solid var(--zk-color-outline-variant);
     box-sizing: border-box;
 }
 
@@ -16,15 +16,15 @@
     flex-direction: row;
     align-items: center;
     flex: 1;
-    gap: var(--md-sys-spacing-1);
-    padding: 0 var(--md-sys-spacing-4);
+    gap: var(--zk-spacing-1);
+    padding: 0 var(--zk-spacing-4);
     flex-wrap: wrap;
     min-height: inherit;
 }
 
 /* South (bottom) toolbar variant */
 .z-toolbar-south {
-    border-top: 1px solid var(--md-sys-color-outline-variant);
+    border-top: 1px solid var(--zk-color-outline-variant);
     border-bottom: none;
 }
 
@@ -32,9 +32,9 @@
 /* When the toolbar is used as a top app bar (inside .z-north),
    give it the primary app bar background and white text/icons */
 .z-north .z-toolbar {
-    background-color: var(--md-sys-color-primary);
+    background-color: var(--zk-color-primary);
     border-bottom: none;
-    color: var(--md-sys-color-on-primary);
+    color: var(--zk-color-on-primary);
 }
 
 /* Menubar inside the north toolbar: inherit transparent background */
@@ -47,23 +47,23 @@
 
 /* Menubar menu text in app bar context: on-primary color */
 .z-north .z-toolbar .z-menubar .z-menu-content {
-    color: var(--md-sys-color-on-primary);
+    color: var(--zk-color-on-primary);
 }
 
 /* Toolbarbuttons in app bar: on-primary color */
 .z-north .z-toolbar .z-toolbarbutton {
-    color: var(--md-sys-color-on-primary);
+    color: var(--zk-color-on-primary);
 }
 
 .z-north .z-toolbar .z-toolbarbutton::before {
-    background-color: var(--md-sys-color-on-primary);
+    background-color: var(--zk-color-on-primary);
 }
 
 /* App title / brand text in toolbar */
 .z-north .z-toolbar .z-span {
-    color: var(--md-sys-color-on-primary);
-    font-size: var(--md-sys-typescale-title-large-size);
-    font-weight: var(--md-sys-typescale-title-large-weight);
+    color: var(--zk-color-on-primary);
+    font-size: var(--zk-typescale-title-large-size);
+    font-weight: var(--zk-typescale-title-large-weight);
 }
 
 /* Separator in app bar */
@@ -78,8 +78,8 @@
     display: inline-block;
     width: 1px;
     height: 24px;
-    background-color: var(--md-sys-color-outline-variant);
-    margin: 0 var(--md-sys-spacing-1);
+    background-color: var(--zk-color-outline-variant);
+    margin: 0 var(--zk-spacing-1);
     flex-shrink: 0;
 }
 

@@ -9,7 +9,7 @@
     background-color: transparent;
     position: relative;
     z-index: 5;
-    transition: background-color var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
+    transition: background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
 }
 
 /* Horizontal splitter (between top/bottom) */
@@ -20,7 +20,7 @@
 }
 
 .z-splitter-horizontal:hover {
-    background-color: var(--md-sys-color-surface-container);
+    background-color: var(--zk-color-surface-container);
 }
 
 /* Vertical splitter (between left/right) */
@@ -33,15 +33,15 @@
 
 .z-splitter-vertical:hover,
 .z-splitter:not(.z-splitter-horizontal):hover {
-    background-color: var(--md-sys-color-surface-container);
+    background-color: var(--zk-color-surface-container);
 }
 
 /* Drag handle indicator */
 .z-splitter-handle {
-    background-color: var(--md-sys-color-outline-variant);
-    border-radius: var(--md-sys-shape-corner-full);
+    background-color: var(--zk-color-outline-variant);
+    border-radius: var(--zk-shape-corner-full);
     pointer-events: none;
-    transition: background-color var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
+    transition: background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
 }
 
 .z-splitter-horizontal .z-splitter-handle {
@@ -56,5 +56,5 @@
 }
 
 .z-splitter:hover .z-splitter-handle {
-    background-color: var(--md-sys-color-outline);
+    background-color: var(--zk-color-outline);
 }

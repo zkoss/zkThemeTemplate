@@ -180,27 +180,41 @@ Build output: `target/classes/web/zk-material/`
 
 ## Material Design 3 Token System
 
+### CSS Variable Naming Convention
+
+All CSS custom properties use the `--zk-` prefix. **Never use `--md-sys-*` names.**
+
+```css
+--zk-color-primary
+--zk-spacing-4
+--zk-shape-corner-small
+--zk-typescale-body-medium-size
+--zk-motion-duration-short1
+--zk-state-hover-opacity
+--zk-elevation-1
+```
+
 ### Colors
 ```css
---md-sys-color-primary
---md-sys-color-on-primary
---md-sys-color-surface
---md-sys-color-outline
+--zk-color-primary
+--zk-color-on-primary
+--zk-color-surface
+--zk-color-outline
 ```
 
 ### Spacing (4dp baseline)
 ```css
---md-sys-spacing-1: 4px
---md-sys-spacing-2: 8px
---md-sys-spacing-3: 12px
---md-sys-spacing-4: 16px
+--zk-spacing-1: 4px
+--zk-spacing-2: 8px
+--zk-spacing-3: 12px
+--zk-spacing-4: 16px
 ```
 
 ### Shape
 ```css
---md-sys-shape-corner-small: 8px
---md-sys-shape-corner-medium: 12px
---md-sys-shape-corner-large: 16px
+--zk-shape-corner-small: 8px
+--zk-shape-corner-medium: 12px
+--zk-shape-corner-large: 16px
 ```
 
 ## Component Styling Pattern
@@ -208,7 +222,7 @@ Build output: `target/classes/web/zk-material/`
 /* src/main/resources/web/js/zul/wgt/css/button.css */
 .z-{component} {
     /* Layout, Typography, Colors, Shape, Elevation using tokens */
-    color: var(--md-sys-color-primary); /* always use tokens, never hardcode hex */
+    color: var(--zk-color-primary); /* always use tokens, never hardcode hex */
 }
 .z-{component}::before { /* hover/focus overlay */ }
 .z-{component}:hover { }

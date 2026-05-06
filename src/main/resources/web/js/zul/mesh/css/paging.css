@@ -6,11 +6,11 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    gap: var(--md-sys-spacing-1);
-    padding: var(--md-sys-spacing-2) var(--md-sys-spacing-4);
-    font-family: var(--md-sys-typescale-font-family);
-    font-size: var(--md-sys-typescale-body-medium-size);
-    color: var(--md-sys-color-on-surface-variant);
+    gap: var(--zk-spacing-1);
+    padding: var(--zk-spacing-2) var(--zk-spacing-4);
+    font-family: var(--zk-typescale-font-family);
+    font-size: var(--zk-typescale-body-medium-size);
+    color: var(--zk-color-on-surface-variant);
     box-sizing: border-box;
 }
 
@@ -19,7 +19,7 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: var(--md-sys-spacing-1);
+    gap: var(--zk-spacing-1);
     list-style: none;
     margin: 0;
     padding: 0;
@@ -38,20 +38,20 @@
     justify-content: center;
     min-width: 32px;
     height: 32px;
-    padding: 0 var(--md-sys-spacing-1);
+    padding: 0 var(--zk-spacing-1);
     border: none;
     background: transparent;
-    color: var(--md-sys-color-on-surface-variant);
-    border-radius: var(--md-sys-shape-corner-full);
+    color: var(--zk-color-on-surface-variant);
+    border-radius: var(--zk-shape-corner-full);
     cursor: pointer;
-    font-family: var(--md-sys-typescale-font-family);
-    font-size: var(--md-sys-typescale-body-medium-size);
-    font-weight: var(--md-sys-typescale-body-medium-weight);
+    font-family: var(--zk-typescale-font-family);
+    font-size: var(--zk-typescale-body-medium-size);
+    font-weight: var(--zk-typescale-body-medium-weight);
     text-decoration: none;
     overflow: hidden;
     transition:
-        background-color var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard),
-        color var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
+        background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard),
+        color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
 }
 
 /* State layer overlay (::before used by hover/press; ::after used by icon in nav buttons) */
@@ -63,23 +63,23 @@
     opacity: 0;
     pointer-events: none;
     border-radius: inherit;
-    transition: opacity var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
+    transition: opacity var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
 }
 
-.z-paging-os .z-paging-button:hover::before { opacity: var(--md-sys-state-hover-opacity); }
-.z-paging-os .z-paging-button:active::before { opacity: var(--md-sys-state-pressed-opacity); }
+.z-paging-os .z-paging-button:hover::before { opacity: var(--zk-state-hover-opacity); }
+.z-paging-os .z-paging-button:active::before { opacity: var(--zk-state-pressed-opacity); }
 
 /* Active page */
 .z-paging-os .z-paging-button.z-paging-selected,
 .z-paging-os .z-paging-button.z-selected {
-    background-color: var(--md-sys-color-primary);
-    color: var(--md-sys-color-on-primary);
-    font-weight: var(--md-sys-typescale-label-large-weight);
+    background-color: var(--zk-color-primary);
+    color: var(--zk-color-on-primary);
+    font-weight: var(--zk-typescale-label-large-weight);
 }
 
 /* Disabled page number buttons (<a disabled> in os mold) */
 .z-paging-os .z-paging-button[disabled] {
-    color: var(--md-sys-color-disabled);
+    color: var(--zk-color-disabled);
     cursor: not-allowed;
     pointer-events: none;
 }
@@ -87,7 +87,7 @@
 .z-paging-os .z-paging-button.z-paging-selected[disabled],
 .z-paging-os .z-paging-button.z-selected[disabled] {
     background-color: rgba(0, 0, 0, 0.12);
-    color: var(--md-sys-color-disabled);
+    color: var(--zk-color-disabled);
 }
 
 /* ─── os mold nav buttons — replace text with chevron icons ─────────────── */
@@ -135,18 +135,18 @@
 .z-paging-os .z-paging-info {
     display: inline-flex;
     align-items: center;
-    margin-left: var(--md-sys-spacing-2);
-    font-size: var(--md-sys-typescale-body-small-size);
-    color: var(--md-sys-color-on-surface-variant);
+    margin-left: var(--zk-spacing-2);
+    font-size: var(--zk-typescale-body-small-size);
+    color: var(--zk-color-on-surface-variant);
 }
 
 /* Page text info ("Page 1 of 10") */
 .z-paging-os .z-paging-text {
     display: inline-flex;
     align-items: center;
-    padding: 0 var(--md-sys-spacing-2);
-    font-size: var(--md-sys-typescale-body-medium-size);
-    color: var(--md-sys-color-on-surface-variant);
+    padding: 0 var(--zk-spacing-2);
+    font-size: var(--zk-typescale-body-medium-size);
+    color: var(--zk-color-on-surface-variant);
     white-space: nowrap;
 }
 
@@ -154,10 +154,10 @@
 .z-paging-os .z-paging-input {
     display: inline-flex;
     align-items: center;
-    gap: var(--md-sys-spacing-1);
-    margin-left: var(--md-sys-spacing-2);
-    font-size: var(--md-sys-typescale-body-medium-size);
-    color: var(--md-sys-color-on-surface-variant);
+    gap: var(--zk-spacing-1);
+    margin-left: var(--zk-spacing-2);
+    font-size: var(--zk-typescale-body-medium-size);
+    color: var(--zk-color-on-surface-variant);
 }
 
 .z-paging-os .z-paging-input input[type="text"],
@@ -166,26 +166,26 @@
     text-align: center;
     height: 32px;
     min-height: 32px;
-    border: 1px solid var(--md-sys-color-outline);
-    border-radius: var(--md-sys-shape-input);
-    background-color: var(--md-sys-color-surface);
-    font-family: var(--md-sys-typescale-font-family);
-    font-size: var(--md-sys-typescale-body-medium-size);
-    color: var(--md-sys-color-on-surface);
+    border: 1px solid var(--zk-color-outline);
+    border-radius: var(--zk-shape-input);
+    background-color: var(--zk-color-surface);
+    font-family: var(--zk-typescale-font-family);
+    font-size: var(--zk-typescale-body-medium-size);
+    color: var(--zk-color-on-surface);
     outline: none;
-    padding: 0 var(--md-sys-spacing-1);
+    padding: 0 var(--zk-spacing-1);
 }
 
 /* ─── Outlined variant (.z-paging-outlined) ────────────────────────────── */
 .z-paging-os.z-paging-outlined .z-paging-button {
-    border: 1px solid var(--md-sys-color-outline-variant);
+    border: 1px solid var(--zk-color-outline-variant);
 }
 
 .z-paging-os.z-paging-outlined .z-paging-button.z-paging-selected,
 .z-paging-os.z-paging-outlined .z-paging-button.z-selected {
-    color: var(--md-sys-color-primary);
-    border-color: color-mix(in srgb, var(--md-sys-color-primary) 50%, transparent);
-    background-color: color-mix(in srgb, var(--md-sys-color-primary) 12%, transparent);
+    color: var(--zk-color-primary);
+    border-color: color-mix(in srgb, var(--zk-color-primary) 50%, transparent);
+    background-color: color-mix(in srgb, var(--zk-color-primary) 12%, transparent);
 }
 
 /* Nav chevron buttons in outlined variant — no border */
@@ -195,9 +195,9 @@
 
 /* ─── Rounded variant (.z-paging-rounded) — rectangular buttons ─────────── */
 .z-paging-os.z-paging-rounded .z-paging-button {
-    border-radius: var(--md-sys-shape-corner-extra-small);
+    border-radius: var(--zk-shape-corner-extra-small);
 }
 
 .z-paging-os.z-paging-rounded ul > li.z-paging-navigate .z-paging-noborder {
-    border-radius: var(--md-sys-shape-corner-extra-small);
+    border-radius: var(--zk-shape-corner-extra-small);
 }

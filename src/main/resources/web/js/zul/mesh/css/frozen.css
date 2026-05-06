@@ -13,7 +13,7 @@
     left: 0;
     overflow: hidden;
     z-index: 10;
-    background-color: var(--md-sys-color-surface);
+    background-color: var(--zk-color-surface);
 }
 
 /* Shadow to indicate frozen boundary */
@@ -31,5 +31,5 @@
 /* Frozen header cells */
 .z-frozen .z-column,
 .z-frozen .z-listheader {
-    background-color: var(--md-sys-color-surface-container-low);
+    background-color: var(--zk-color-surface-container-low);
 }

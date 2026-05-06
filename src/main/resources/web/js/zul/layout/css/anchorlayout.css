@@ -4,7 +4,7 @@
 .z-anchorlayout {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--md-sys-spacing-4);
+    gap: var(--zk-spacing-4);
     width: 100%;
     box-sizing: border-box;
     align-items: flex-start;

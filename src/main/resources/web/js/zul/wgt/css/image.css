@@ -4,7 +4,7 @@
     display: inline-block;
     max-width: 100%;
     vertical-align: middle;
-    border-radius: var(--md-sys-shape-corner-extra-small);
+    border-radius: var(--zk-shape-corner-extra-small);
 }
 
 .z-image img {

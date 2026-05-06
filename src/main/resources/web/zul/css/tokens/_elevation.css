@@ -1,38 +1,38 @@
-/* MD3 Elevation Tokens — aligned with Mira's MUI card shadows */
+/* MD3 Elevation Tokens — --zk-elevation-* — aligned with Mira's MUI card shadows */
 :root {
     /* Level 0 — no shadow */
-    --md-sys-elevation-0: none;
+    --zk-elevation-0: none;
 
     /* Level 1 — card resting (Mira's default card shadow) */
-    --md-sys-elevation-1:
+    --zk-elevation-1:
         0px 1px 3px 0px rgba(0, 0, 0, 0.12),
         0px 1px 2px 0px rgba(0, 0, 0, 0.14);
 
     /* Level 2 — card hover / dropdown */
-    --md-sys-elevation-2:
+    --zk-elevation-2:
         0px 2px 6px 0px rgba(0, 0, 0, 0.12),
         0px 1px 2px 0px rgba(0, 0, 0, 0.14);
 
     /* Level 3 — dialog / modal */
-    --md-sys-elevation-3:
+    --zk-elevation-3:
         0px 4px 12px 0px rgba(0, 0, 0, 0.12),
         0px 2px 4px 0px rgba(0, 0, 0, 0.14);
 
     /* Level 4 — navigation drawer */
-    --md-sys-elevation-4:
+    --zk-elevation-4:
         0px 6px 16px 0px rgba(0, 0, 0, 0.14),
         0px 3px 6px 0px rgba(0, 0, 0, 0.12);
 
     /* Level 5 — top app bar / window */
-    --md-sys-elevation-5:
+    --zk-elevation-5:
         0px 8px 24px 0px rgba(0, 0, 0, 0.14),
         0px 4px 8px 0px rgba(0, 0, 0, 0.12);
 
     /* Semantic aliases */
-    --md-sys-elevation-card: var(--md-sys-elevation-1);
-    --md-sys-elevation-panel: var(--md-sys-elevation-1);
-    --md-sys-elevation-dropdown: var(--md-sys-elevation-2);
-    --md-sys-elevation-dialog: var(--md-sys-elevation-3);
-    --md-sys-elevation-drawer: var(--md-sys-elevation-4);
-    --md-sys-elevation-window: var(--md-sys-elevation-3);
+    --zk-elevation-card: var(--zk-elevation-1);
+    --zk-elevation-panel: var(--zk-elevation-1);
+    --zk-elevation-dropdown: var(--zk-elevation-2);
+    --zk-elevation-dialog: var(--zk-elevation-3);
+    --zk-elevation-drawer: var(--zk-elevation-4);
+    --zk-elevation-window: var(--zk-elevation-3);
 }

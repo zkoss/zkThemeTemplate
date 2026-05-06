@@ -4,7 +4,7 @@
 .z-combobutton {
     display: inline-flex;
     align-items: stretch;
-    border-radius: var(--md-sys-shape-button);
+    border-radius: var(--zk-shape-button);
     overflow: hidden;
     box-shadow: none;
 }
@@ -17,34 +17,34 @@
     justify-content: center;
     overflow: hidden;
     min-height: 36px;
-    padding: 0 var(--md-sys-spacing-4);
+    padding: 0 var(--zk-spacing-4);
     border: none;
     border-radius: 0;
-    background-color: var(--md-sys-color-primary);
-    color: var(--md-sys-color-on-primary);
-    font-family: var(--md-sys-typescale-font-family);
-    font-size: var(--md-sys-typescale-label-large-size);
-    font-weight: var(--md-sys-typescale-label-large-weight);
-    line-height: var(--md-sys-typescale-label-large-line-height);
+    background-color: var(--zk-color-primary);
+    color: var(--zk-color-on-primary);
+    font-family: var(--zk-typescale-font-family);
+    font-size: var(--zk-typescale-label-large-size);
+    font-weight: var(--zk-typescale-label-large-weight);
+    line-height: var(--zk-typescale-label-large-line-height);
     cursor: pointer;
     white-space: nowrap;
     outline: none;
     border-right: 1px solid rgba(255, 255, 255, 0.3);
-    transition: background-color var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
+    transition: background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
 }
 
 .z-combobutton-text::before {
     content: '';
     position: absolute;
     inset: 0;
-    background-color: var(--md-sys-color-on-primary);
+    background-color: var(--zk-color-on-primary);
     opacity: 0;
     pointer-events: none;
-    transition: opacity var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
+    transition: opacity var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
 }
 
-.z-combobutton-text:hover::before { opacity: var(--md-sys-state-hover-opacity); }
-.z-combobutton-text:active::before { opacity: var(--md-sys-state-pressed-opacity); }
+.z-combobutton-text:hover::before { opacity: var(--zk-state-hover-opacity); }
+.z-combobutton-text:active::before { opacity: var(--zk-state-pressed-opacity); }
 
 /* Arrow/dropdown portion */
 .z-combobutton-arrow {
@@ -58,31 +58,31 @@
     padding: 0;
     border: none;
     border-radius: 0;
-    background-color: var(--md-sys-color-primary);
-    color: var(--md-sys-color-on-primary);
+    background-color: var(--zk-color-primary);
+    color: var(--zk-color-on-primary);
     cursor: pointer;
     outline: none;
-    transition: background-color var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
+    transition: background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
 }
 
 .z-combobutton-arrow::before {
     content: '';
     position: absolute;
     inset: 0;
-    background-color: var(--md-sys-color-on-primary);
+    background-color: var(--zk-color-on-primary);
     opacity: 0;
     pointer-events: none;
-    transition: opacity var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
+    transition: opacity var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
 }
 
-.z-combobutton-arrow:hover::before { opacity: var(--md-sys-state-hover-opacity); }
-.z-combobutton-arrow:active::before { opacity: var(--md-sys-state-pressed-opacity); }
+.z-combobutton-arrow:hover::before { opacity: var(--zk-state-hover-opacity); }
+.z-combobutton-arrow:active::before { opacity: var(--zk-state-pressed-opacity); }
 
 /* Disabled */
 .z-combobutton[disabled] .z-combobutton-text,
 .z-combobutton[disabled] .z-combobutton-arrow {
-    background-color: var(--md-sys-color-disabled-container);
-    color: var(--md-sys-color-disabled);
+    background-color: var(--zk-color-disabled-container);
+    color: var(--zk-color-disabled);
     cursor: not-allowed;
     pointer-events: none;
     border-right-color: transparent;

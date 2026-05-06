@@ -1,19 +1,19 @@
-/* MD3 Shape Tokens — corner radius aligned with Mira */
+/* MD3 Shape Tokens — --zk-shape-* — corner radius aligned with Mira */
 :root {
     /* MD3 corner radius scale */
-    --md-sys-shape-corner-none: 0px;
-    --md-sys-shape-corner-extra-small: 4px;   /* inputs, chips */
-    --md-sys-shape-corner-small: 8px;          /* buttons, text fields */
-    --md-sys-shape-corner-medium: 12px;        /* cards, panels */
-    --md-sys-shape-corner-large: 16px;         /* dialogs, drawers */
-    --md-sys-shape-corner-extra-large: 28px;   /* bottom sheets */
-    --md-sys-shape-corner-full: 9999px;        /* pills, FAB */
+    --zk-shape-corner-none: 0px;
+    --zk-shape-corner-extra-small: 4px;   /* inputs, chips */
+    --zk-shape-corner-small: 8px;          /* buttons, text fields */
+    --zk-shape-corner-medium: 12px;        /* cards, panels */
+    --zk-shape-corner-large: 16px;         /* dialogs, drawers */
+    --zk-shape-corner-extra-large: 28px;   /* bottom sheets */
+    --zk-shape-corner-full: 9999px;        /* pills, FAB */
 
     /* Semantic aliases used in ZK components */
-    --md-sys-shape-button: var(--md-sys-shape-corner-extra-small);
-    --md-sys-shape-input: var(--md-sys-shape-corner-extra-small);
-    --md-sys-shape-card: var(--md-sys-shape-corner-medium);
-    --md-sys-shape-dialog: var(--md-sys-shape-corner-large);
-    --md-sys-shape-chip: var(--md-sys-shape-corner-small);
-    --md-sys-shape-menu: var(--md-sys-shape-corner-extra-small);
+    --zk-shape-button: var(--zk-shape-corner-extra-small);
+    --zk-shape-input: var(--zk-shape-corner-extra-small);
+    --zk-shape-card: var(--zk-shape-corner-medium);
+    --zk-shape-dialog: var(--zk-shape-corner-large);
+    --zk-shape-chip: var(--zk-shape-corner-small);
+    --zk-shape-menu: var(--zk-shape-corner-extra-small);
 }

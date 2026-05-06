@@ -12,7 +12,7 @@
     height: 100%;
     overflow: hidden;
     box-sizing: border-box;
-    background-color: var(--md-sys-color-background);
+    background-color: var(--zk-color-background);
 }
 
 /* ─── All regions: absolute positioned by ZK JS ───────────────────────────── */
@@ -28,8 +28,8 @@
 
 /* ─── North (top) ─────────────────────────────────────────────────────────── */
 .z-north {
-    background-color: var(--md-sys-color-surface);
-    border-bottom: 1px solid var(--md-sys-color-outline-variant);
+    background-color: var(--zk-color-surface);
+    border-bottom: 1px solid var(--zk-color-outline-variant);
     z-index: 16;
 }
 
@@ -45,8 +45,8 @@
 
 /* ─── South (bottom) ──────────────────────────────────────────────────────── */
 .z-south {
-    background-color: var(--md-sys-color-surface);
-    border-top: 1px solid var(--md-sys-color-outline-variant);
+    background-color: var(--zk-color-surface);
+    border-top: 1px solid var(--zk-color-outline-variant);
     z-index: 14;
 }
 
@@ -62,8 +62,8 @@
 
 /* ─── West (left sidebar) ─────────────────────────────────────────────────── */
 .z-west {
-    background-color: var(--md-sys-color-surface-container-low);
-    border-right: 1px solid var(--md-sys-color-outline-variant);
+    background-color: var(--zk-color-surface-container-low);
+    border-right: 1px solid var(--zk-color-outline-variant);
     z-index: 12;
 }
 
@@ -79,8 +79,8 @@
 
 /* ─── East (right sidebar) ────────────────────────────────────────────────── */
 .z-east {
-    background-color: var(--md-sys-color-surface-container-low);
-    border-left: 1px solid var(--md-sys-color-outline-variant);
+    background-color: var(--zk-color-surface-container-low);
+    border-left: 1px solid var(--zk-color-outline-variant);
     z-index: 10;
 }
 
@@ -96,7 +96,7 @@
 
 /* ─── Center (main content) ───────────────────────────────────────────────── */
 .z-center {
-    background-color: var(--md-sys-color-background);
+    background-color: var(--zk-color-background);
     z-index: 8;
 }
 
@@ -119,10 +119,10 @@
     width: 8px;
     cursor: ew-resize;
     overflow: hidden;
-    background-color: var(--md-sys-color-outline-variant);
+    background-color: var(--zk-color-outline-variant);
     opacity: 0.4;
-    transition: opacity var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard),
-                background-color var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
+    transition: opacity var(--zk-motion-duration-short3) var(--zk-motion-easing-standard),
+                background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
     z-index: 20;
 }
 
@@ -132,10 +132,10 @@
     height: 8px;
     cursor: ns-resize;
     overflow: hidden;
-    background-color: var(--md-sys-color-outline-variant);
+    background-color: var(--zk-color-outline-variant);
     opacity: 0.4;
-    transition: opacity var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard),
-                background-color var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
+    transition: opacity var(--zk-motion-duration-short3) var(--zk-motion-easing-standard),
+                background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
 }
 
 .z-west-splitter:hover,
@@ -143,7 +143,7 @@
 .z-north-splitter:hover,
 .z-south-splitter:hover {
     opacity: 1;
-    background-color: var(--md-sys-color-primary);
+    background-color: var(--zk-color-primary);
 }
 
 /* ─── Splitter buttons (collapse toggle) ─────────────────────────────────── */
@@ -155,24 +155,24 @@
     align-items: center;
     justify-content: center;
     position: absolute;
-    background-color: var(--md-sys-color-surface);
-    border: 1px solid var(--md-sys-color-outline-variant);
-    border-radius: var(--md-sys-shape-corner-full);
+    background-color: var(--zk-color-surface);
+    border: 1px solid var(--zk-color-outline-variant);
+    border-radius: var(--zk-shape-corner-full);
     width: 20px;
     height: 20px;
     cursor: pointer;
     font-size: 10px;
-    color: var(--md-sys-color-on-surface-variant);
-    transition: background-color var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
-    box-shadow: var(--md-sys-elevation-1);
+    color: var(--zk-color-on-surface-variant);
+    transition: background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+    box-shadow: var(--zk-elevation-1);
 }
 
 .z-west-splitter-button:hover,
 .z-east-splitter-button:hover,
 .z-north-splitter-button:hover,
 .z-south-splitter-button:hover {
-    background-color: var(--md-sys-color-surface-container);
-    color: var(--md-sys-color-on-surface);
+    background-color: var(--zk-color-surface-container);
+    color: var(--zk-color-on-surface);
 }
 
 /* Hide disabled icons */
@@ -192,8 +192,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: var(--md-sys-color-surface-container);
-    border: 1px solid var(--md-sys-color-outline-variant);
+    background-color: var(--zk-color-surface-container);
+    border: 1px solid var(--zk-color-outline-variant);
     cursor: pointer;
     overflow: hidden;
     box-sizing: border-box;
@@ -203,7 +203,7 @@
 .z-south-collapsed:hover,
 .z-west-collapsed:hover,
 .z-east-collapsed:hover {
-    background-color: var(--md-sys-color-surface-container-high);
+    background-color: var(--zk-color-surface-container-high);
 }
 
 /* ─── Panel headers inside border layout regions ─────────────────────────── */
@@ -215,12 +215,12 @@
     display: flex;
     align-items: center;
     height: 40px;
-    padding: 0 var(--md-sys-spacing-3);
-    background-color: var(--md-sys-color-surface-container);
-    border-bottom: 1px solid var(--md-sys-color-outline-variant);
-    font-size: var(--md-sys-typescale-title-small-size);
-    font-weight: var(--md-sys-typescale-title-small-weight);
-    color: var(--md-sys-color-on-surface-variant);
+    padding: 0 var(--zk-spacing-3);
+    background-color: var(--zk-color-surface-container);
+    border-bottom: 1px solid var(--zk-color-outline-variant);
+    font-size: var(--zk-typescale-title-small-size);
+    font-weight: var(--zk-typescale-title-small-weight);
+    color: var(--zk-color-on-surface-variant);
     white-space: nowrap;
     overflow: hidden;
     box-sizing: border-box;
@@ -240,16 +240,16 @@
 .z-south-title,
 .z-west-title,
 .z-east-title {
-    font-size: var(--md-sys-typescale-label-medium-size);
-    font-weight: var(--md-sys-typescale-label-medium-weight);
-    color: var(--md-sys-color-on-surface-variant);
+    font-size: var(--zk-typescale-label-medium-size);
+    font-weight: var(--zk-typescale-label-medium-weight);
+    color: var(--zk-color-on-surface-variant);
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
 /* ─── Drag ghost ──────────────────────────────────────────────────────────── */
 .z-splitter-ghost {
-    background-color: var(--md-sys-color-primary);
+    background-color: var(--zk-color-primary);
     opacity: 0.3;
     position: absolute;
 }

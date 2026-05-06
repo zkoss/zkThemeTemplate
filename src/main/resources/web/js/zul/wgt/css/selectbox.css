@@ -4,16 +4,16 @@
     display: inline-flex;
     align-items: center;
     position: relative;
-    border: 1px solid var(--md-sys-color-outline);
-    border-radius: var(--md-sys-shape-input);
-    background-color: var(--md-sys-color-surface);
+    border: 1px solid var(--zk-color-outline);
+    border-radius: var(--zk-shape-input);
+    background-color: var(--zk-color-surface);
     overflow: hidden;
     min-height: 40px;
-    transition: border-color var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
+    transition: border-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
 }
 
 .z-selectbox:focus-within {
-    border-color: var(--md-sys-color-primary);
+    border-color: var(--zk-color-primary);
     border-width: 2px;
 }
 
@@ -22,18 +22,18 @@
     appearance: none;
     -webkit-appearance: none;
     flex: 1;
-    padding: 0 var(--md-sys-spacing-4);
+    padding: 0 var(--zk-spacing-4);
     border: none;
     background: transparent;
-    font-family: var(--md-sys-typescale-font-family);
-    font-size: var(--md-sys-typescale-body-medium-size);
-    color: var(--md-sys-color-on-surface);
+    font-family: var(--zk-typescale-font-family);
+    font-size: var(--zk-typescale-body-medium-size);
+    color: var(--zk-color-on-surface);
     cursor: pointer;
     min-height: 40px;
     outline: none;
 }
 
 .z-selectbox[disabled] {
-    opacity: var(--md-sys-state-disabled-opacity);
+    opacity: var(--zk-state-disabled-opacity);
     pointer-events: none;
 }

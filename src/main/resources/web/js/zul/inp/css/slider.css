@@ -12,7 +12,7 @@
 .z-slider {
     display: block;
     position: relative;
-    padding: var(--md-sys-spacing-3) 0;
+    padding: var(--zk-spacing-3) 0;
     cursor: pointer;
     user-select: none;
     box-sizing: border-box;
@@ -22,8 +22,8 @@
 .z-slider-center {
     position: relative;
     height: 4px;
-    background-color: var(--md-sys-color-surface-container-high);
-    border-radius: var(--md-sys-shape-corner-full);
+    background-color: var(--zk-color-surface-container-high);
+    border-radius: var(--zk-shape-corner-full);
     margin: 10px 10px; /* room for thumb overflow */
 }
 
@@ -33,8 +33,8 @@
     top: 0;
     left: 0;
     height: 100%;
-    background-color: var(--md-sys-color-primary);
-    border-radius: var(--md-sys-shape-corner-full);
+    background-color: var(--zk-color-primary);
+    border-radius: var(--zk-shape-corner-full);
 }
 
 /* ── Thumb (button) ───────────────────────────────────── */
@@ -45,13 +45,13 @@
     height: 20px;
     margin-top: -10px;  /* center on 4px track: shift up half thumb */
     margin-left: -10px; /* center thumb on its left position */
-    border-radius: var(--md-sys-shape-corner-full);
-    background-color: var(--md-sys-color-primary);
-    box-shadow: var(--md-sys-elevation-1);
+    border-radius: var(--zk-shape-corner-full);
+    background-color: var(--zk-color-primary);
+    box-shadow: var(--zk-elevation-1);
     cursor: grab;
     transition:
-        box-shadow var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard),
-        transform  var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
+        box-shadow var(--zk-motion-duration-short3) var(--zk-motion-easing-standard),
+        transform  var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
     /* State-layer ring */
 }
 
@@ -59,21 +59,21 @@
     content: '';
     position: absolute;
     inset: -8px;
-    border-radius: var(--md-sys-shape-corner-full);
-    background-color: var(--md-sys-color-primary);
+    border-radius: var(--zk-shape-corner-full);
+    background-color: var(--zk-color-primary);
     opacity: 0;
     pointer-events: none;
-    transition: opacity var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
+    transition: opacity var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
 }
 
 .z-slider:hover .z-slider-button::before {
-    opacity: var(--md-sys-state-hover-opacity);
+    opacity: var(--zk-state-hover-opacity);
 }
 
 .z-slider-button:active {
     cursor: grabbing;
     transform: scale(1.15);
-    box-shadow: var(--md-sys-elevation-2);
+    box-shadow: var(--zk-elevation-2);
 }
 
 /* ── Vertical slider ─────────────────────────────────── */
@@ -81,7 +81,7 @@
 .z-slider-vertical {
     display: inline-block;
     width: auto;
-    padding: 0 var(--md-sys-spacing-3);
+    padding: 0 var(--zk-spacing-3);
 }
 
 .z-slider-ver .z-slider-center,
@@ -104,7 +104,7 @@
 /* ── Disabled ────────────────────────────────────────── */
 .z-slider[disabled],
 .z-slider.z-slider-disabled {
-    opacity: var(--md-sys-state-disabled-opacity);
+    opacity: var(--zk-state-disabled-opacity);
     pointer-events: none;
     cursor: not-allowed;
 }

@@ -4,28 +4,28 @@
 .z-loading-indicator {
     display: inline-flex;
     align-items: center;
-    gap: var(--md-sys-spacing-2);
-    color: var(--md-sys-color-primary);
-    font-family: var(--md-sys-typescale-font-family);
-    font-size: var(--md-sys-typescale-body-medium-size);
+    gap: var(--zk-spacing-2);
+    color: var(--zk-color-primary);
+    font-family: var(--zk-typescale-font-family);
+    font-size: var(--zk-typescale-body-medium-size);
 }
 
 /* Notification/toast */
 .z-notification {
-    background-color: var(--md-sys-color-inverse-surface);
-    color: var(--md-sys-color-inverse-on-surface);
-    border-radius: var(--md-sys-shape-corner-extra-small);
-    padding: var(--md-sys-spacing-2) var(--md-sys-spacing-4);
-    font-family: var(--md-sys-typescale-font-family);
-    font-size: var(--md-sys-typescale-body-medium-size);
-    box-shadow: var(--md-sys-elevation-3);
+    background-color: var(--zk-color-inverse-surface);
+    color: var(--zk-color-inverse-on-surface);
+    border-radius: var(--zk-shape-corner-extra-small);
+    padding: var(--zk-spacing-2) var(--zk-spacing-4);
+    font-family: var(--zk-typescale-font-family);
+    font-size: var(--zk-typescale-body-medium-size);
+    box-shadow: var(--zk-elevation-3);
     max-width: 400px;
 }
 
 /* ZK mask overlay */
 .z-modal-mask,
 .z-mask {
-    background-color: var(--md-sys-color-scrim);
+    background-color: var(--zk-color-scrim);
     position: fixed;
     inset: 0;
     z-index: 1400;
@@ -33,23 +33,23 @@
 
 /* Focus ring utility */
 .z-focus-ring:focus-visible {
-    outline: 3px solid var(--md-sys-color-primary);
+    outline: 3px solid var(--zk-color-primary);
     outline-offset: 2px;
 }
 
 /* ZK shadow host */
 .z-shadow {
-    box-shadow: var(--md-sys-elevation-2);
+    box-shadow: var(--zk-elevation-2);
 }
 
 /* Error message style */
 .z-error-box {
-    background-color: var(--md-sys-color-error-container);
-    color: var(--md-sys-color-on-error-container);
-    border-radius: var(--md-sys-shape-corner-extra-small);
-    padding: var(--md-sys-spacing-2) var(--md-sys-spacing-3);
-    font-family: var(--md-sys-typescale-font-family);
-    font-size: var(--md-sys-typescale-body-small-size);
+    background-color: var(--zk-color-error-container);
+    color: var(--zk-color-on-error-container);
+    border-radius: var(--zk-shape-corner-extra-small);
+    padding: var(--zk-spacing-2) var(--zk-spacing-3);
+    font-family: var(--zk-typescale-font-family);
+    font-size: var(--zk-typescale-body-small-size);
 }
 
 /* ZK loading indicator inside components */
@@ -66,11 +66,11 @@
     color: #fff;
     padding: 4px 8px;
     border-radius: 4px;
-    font-family: var(--md-sys-typescale-font-family);
+    font-family: var(--zk-typescale-font-family);
     font-size: 0.6875rem;
     font-weight: 500;
     max-width: 300px;
     word-wrap: break-word;
     pointer-events: none;
-    box-shadow: var(--md-sys-elevation-2);
+    box-shadow: var(--zk-elevation-2);
 }

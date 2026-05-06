@@ -13,15 +13,15 @@
     display: block;
     width: 100%;
     height: 1px;
-    background-color: var(--md-sys-color-outline-variant);
-    margin: var(--md-sys-spacing-2) 0;
+    background-color: var(--zk-color-outline-variant);
+    margin: var(--zk-spacing-2) 0;
 }
 
 /* Horizontal (default, no bar) — acts as spacer */
 .z-separator-horizontal:not(.z-separator-horizontal-bar) {
     display: block;
     width: 100%;
-    height: var(--md-sys-spacing-2);
+    height: var(--zk-spacing-2);
     background-color: transparent;
 }
 

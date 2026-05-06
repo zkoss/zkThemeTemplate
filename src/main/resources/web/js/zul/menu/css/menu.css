@@ -8,15 +8,15 @@
     flex-direction: row;
     align-items: center;
     min-height: 48px;
-    background-color: var(--md-sys-color-primary);
-    color: var(--md-sys-color-on-primary);
-    padding: 0 var(--md-sys-spacing-4);
+    background-color: var(--zk-color-primary);
+    color: var(--zk-color-on-primary);
+    padding: 0 var(--zk-spacing-4);
     list-style: none;
     margin: 0;
-    font-family: var(--md-sys-typescale-font-family);
+    font-family: var(--zk-typescale-font-family);
     position: relative;
     z-index: 100;
-    box-shadow: var(--md-sys-elevation-2);
+    box-shadow: var(--zk-elevation-2);
 }
 
 /* ZK menubar DOM: .z-menubar > UL (no class) > LI.z-menu
@@ -49,34 +49,34 @@
 .z-menubar .z-menu-content {
     display: inline-flex;
     align-items: center;
-    gap: var(--md-sys-spacing-1);
-    padding: 0 var(--md-sys-spacing-3);
+    gap: var(--zk-spacing-1);
+    padding: 0 var(--zk-spacing-3);
     min-height: 48px;
-    color: var(--md-sys-color-on-primary);
-    font-size: var(--md-sys-typescale-title-small-size);
-    font-weight: var(--md-sys-typescale-title-small-weight);
+    color: var(--zk-color-on-primary);
+    font-size: var(--zk-typescale-title-small-size);
+    font-weight: var(--zk-typescale-title-small-weight);
     cursor: pointer;
     user-select: none;
     text-decoration: none;
     white-space: nowrap;
     position: relative;
     overflow: hidden;
-    transition: background-color var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
+    transition: background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
 }
 
 .z-menubar .z-menu-content::before {
     content: '';
     position: absolute;
     inset: 0;
-    background-color: var(--md-sys-color-on-primary);
+    background-color: var(--zk-color-on-primary);
     opacity: 0;
     pointer-events: none;
-    transition: opacity var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
+    transition: opacity var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
 }
 
 .z-menubar .z-menu-content:hover::before,
 .z-menubar .z-menu-open .z-menu-content::before {
-    opacity: var(--md-sys-state-hover-opacity);
+    opacity: var(--zk-state-hover-opacity);
 }
 
 .z-menubar .z-menu-open .z-menu-content {
@@ -94,7 +94,7 @@
 /* Menu arrow indicator */
 .z-menu-arrow {
     font-size: 12px;
-    margin-left: var(--md-sys-spacing-1);
+    margin-left: var(--zk-spacing-1);
     position: relative;
     z-index: 1;
     pointer-events: none;
@@ -106,15 +106,15 @@
     z-index: 1600;
     list-style: none;
     margin: 2px 0 0 0;
-    padding: var(--md-sys-spacing-1) 0;
-    background-color: var(--md-sys-color-surface);
-    border-radius: var(--md-sys-shape-menu);
-    box-shadow: var(--md-sys-elevation-dropdown);
-    border: 1px solid var(--md-sys-color-outline-variant);
+    padding: var(--zk-spacing-1) 0;
+    background-color: var(--zk-color-surface);
+    border-radius: var(--zk-shape-menu);
+    box-shadow: var(--zk-elevation-dropdown);
+    border: 1px solid var(--zk-color-outline-variant);
     min-width: 160px;
     overflow: hidden;
     box-sizing: border-box;
-    font-family: var(--md-sys-typescale-font-family);
+    font-family: var(--zk-typescale-font-family);
 }
 
 .z-menupopup ul,
@@ -140,11 +140,11 @@
 .z-menuitem-content {
     display: flex;
     align-items: center;
-    gap: var(--md-sys-spacing-2);
-    padding: var(--md-sys-spacing-2) var(--md-sys-spacing-4);
-    color: var(--md-sys-color-on-surface);
-    font-size: var(--md-sys-typescale-body-medium-size);
-    font-weight: var(--md-sys-typescale-body-medium-weight);
+    gap: var(--zk-spacing-2);
+    padding: var(--zk-spacing-2) var(--zk-spacing-4);
+    color: var(--zk-color-on-surface);
+    font-size: var(--zk-typescale-body-medium-size);
+    font-weight: var(--zk-typescale-body-medium-weight);
     cursor: pointer;
     text-decoration: none;
     user-select: none;
@@ -152,17 +152,17 @@
     min-height: 36px;
     position: relative;
     overflow: hidden;
-    transition: background-color var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
+    transition: background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
 }
 
 .z-menuitem-content::before {
     content: '';
     position: absolute;
     inset: 0;
-    background-color: var(--md-sys-color-on-surface);
+    background-color: var(--zk-color-on-surface);
     opacity: 0;
     pointer-events: none;
-    transition: opacity var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
+    transition: opacity var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
 }
 
 .z-menuitem-content:hover {
@@ -170,25 +170,25 @@
 }
 
 .z-menuitem-content:hover::before {
-    opacity: var(--md-sys-state-hover-opacity);
+    opacity: var(--zk-state-hover-opacity);
 }
 
 .z-menuitem-content:active::before {
-    opacity: var(--md-sys-state-pressed-opacity);
+    opacity: var(--zk-state-pressed-opacity);
 }
 
 /* Selected menuitem */
 .z-menuitem.z-menuitem-selected .z-menuitem-content,
 .z-menuitem.z-selected .z-menuitem-content {
-    background-color: var(--md-sys-color-primary-container);
-    color: var(--md-sys-color-on-primary-container);
+    background-color: var(--zk-color-primary-container);
+    color: var(--zk-color-on-primary-container);
 }
 
 
 /* Disabled menuitem */
 .z-menuitem-disabled .z-menuitem-content,
 .z-menuitem[disabled] .z-menuitem-content {
-    color: var(--md-sys-color-disabled);
+    color: var(--zk-color-disabled);
     cursor: not-allowed;
     pointer-events: none;
 }
@@ -197,7 +197,7 @@
 .z-menuitem-content [class*="z-icon-"] {
     font-size: 18px;
     flex-shrink: 0;
-    color: var(--md-sys-color-on-surface-variant);
+    color: var(--zk-color-on-surface-variant);
 }
 
 /* Placeholder image rendered by ZK when no user image/icon — hide it */
@@ -207,7 +207,7 @@
 .z-menuitem-icon.z-icon-check {
     visibility: hidden;
     font-size: 16px;
-    color: var(--md-sys-color-primary);
+    color: var(--zk-color-primary);
 }
 .z-menuitem-checked .z-menuitem-icon.z-icon-check {
     visibility: visible;
@@ -216,8 +216,8 @@
 /* ─── Menu separator ─────────────────────────────────────────────────────── */
 .z-menuseparator {
     height: 1px;
-    background-color: var(--md-sys-color-outline-variant);
-    margin: var(--md-sys-spacing-1) 0;
+    background-color: var(--zk-color-outline-variant);
+    margin: var(--zk-spacing-1) 0;
 }
 
 /* ─── Context menu popup ─────────────────────────────────────────────────── */
@@ -226,12 +226,12 @@
     z-index: 1700;
     list-style: none;
     margin: 0;
-    padding: var(--md-sys-spacing-1) 0;
-    background-color: var(--md-sys-color-surface);
-    border-radius: var(--md-sys-shape-menu);
-    box-shadow: var(--md-sys-elevation-dropdown);
-    border: 1px solid var(--md-sys-color-outline-variant);
+    padding: var(--zk-spacing-1) 0;
+    background-color: var(--zk-color-surface);
+    border-radius: var(--zk-shape-menu);
+    box-shadow: var(--zk-elevation-dropdown);
+    border: 1px solid var(--zk-color-outline-variant);
     min-width: 160px;
     overflow: hidden;
-    font-family: var(--md-sys-typescale-font-family);
+    font-family: var(--zk-typescale-font-family);
 }

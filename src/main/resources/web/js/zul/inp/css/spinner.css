@@ -6,22 +6,22 @@
     display: inline-flex;
     align-items: center;
     position: relative;
-    border: 1px solid var(--md-sys-color-outline);
-    border-radius: var(--md-sys-shape-input);
-    background-color: var(--md-sys-color-surface);
+    border: 1px solid var(--zk-color-outline);
+    border-radius: var(--zk-shape-input);
+    background-color: var(--zk-color-surface);
     min-height: 40px;
     box-sizing: border-box;
-    transition: border-color var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
+    transition: border-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
 }
 
 .z-spinner:hover,
 .z-doublespinner:hover {
-    border-color: var(--md-sys-color-on-surface);
+    border-color: var(--zk-color-on-surface);
 }
 
 .z-spinner:focus-within,
 .z-doublespinner:focus-within {
-    border-color: var(--md-sys-color-primary);
+    border-color: var(--zk-color-primary);
     border-width: 2px;
 }
 
@@ -31,12 +31,12 @@
     min-width: 0;
     border: none;
     background: transparent;
-    padding: 0 var(--md-sys-spacing-3);
+    padding: 0 var(--zk-spacing-3);
     height: 100%;
     min-height: 38px;
-    font-family: var(--md-sys-typescale-font-family);
-    font-size: var(--md-sys-typescale-body-medium-size);
-    color: var(--md-sys-color-on-surface);
+    font-family: var(--zk-typescale-font-family);
+    font-size: var(--zk-typescale-body-medium-size);
+    color: var(--zk-color-on-surface);
     outline: none;
     box-sizing: border-box;
 }
@@ -50,7 +50,7 @@
     flex-shrink: 0;
     width: 28px;
     height: 100%;
-    border-left: 1px solid var(--md-sys-color-outline-variant);
+    border-left: 1px solid var(--zk-color-outline-variant);
 }
 
 /* Up/Down buttons */
@@ -65,12 +65,12 @@
     flex: 1;
     border: none;
     background: transparent;
-    color: var(--md-sys-color-on-surface-variant);
+    color: var(--zk-color-on-surface-variant);
     cursor: pointer;
     padding: 0;
     overflow: hidden;
     font-size: 10px;
-    transition: background-color var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
+    transition: background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
 }
 
 .z-spinner-up-button::before,
@@ -83,28 +83,28 @@
     background-color: currentColor;
     opacity: 0;
     pointer-events: none;
-    transition: opacity var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
+    transition: opacity var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
 }
 
 .z-spinner-up-button:hover::before,
 .z-spinner-dn-button:hover::before,
 .z-doublespinner-up-button:hover::before,
 .z-doublespinner-dn-button:hover::before {
-    opacity: var(--md-sys-state-hover-opacity);
+    opacity: var(--zk-state-hover-opacity);
 }
 
 .z-spinner-up-button:active::before,
 .z-spinner-dn-button:active::before {
-    opacity: var(--md-sys-state-pressed-opacity);
+    opacity: var(--zk-state-pressed-opacity);
 }
 
 .z-spinner-up-button {
-    border-bottom: 1px solid var(--md-sys-color-outline-variant);
-    border-radius: 0 var(--md-sys-shape-input) 0 0;
+    border-bottom: 1px solid var(--zk-color-outline-variant);
+    border-radius: 0 var(--zk-shape-input) 0 0;
 }
 
 .z-spinner-dn-button {
-    border-radius: 0 0 var(--md-sys-shape-input) 0;
+    border-radius: 0 0 var(--zk-shape-input) 0;
 }
 
 /* Disabled */
@@ -112,6 +112,6 @@
 .z-doublespinner[disabled],
 .z-spinner.z-spinner-disabled,
 .z-doublespinner.z-doublespinner-disabled {
-    opacity: var(--md-sys-state-disabled-opacity);
+    opacity: var(--zk-state-disabled-opacity);
     pointer-events: none;
 }

@@ -5,26 +5,26 @@
 .z-panel {
     display: flex;
     flex-direction: column;
-    background-color: var(--md-sys-color-surface);
-    border-radius: var(--md-sys-shape-card);
-    box-shadow: var(--md-sys-elevation-panel);
-    border: 1px solid var(--md-sys-color-outline-variant);
+    background-color: var(--zk-color-surface);
+    border-radius: var(--zk-shape-card);
+    box-shadow: var(--zk-elevation-panel);
+    border: 1px solid var(--zk-color-outline-variant);
     overflow: hidden;
     box-sizing: border-box;
-    font-family: var(--md-sys-typescale-font-family);
+    font-family: var(--zk-typescale-font-family);
 }
 
 /* ─── Panel head ─────────────────────────────────────────────────────────── */
 .z-panel-head {
     flex-shrink: 0;
-    background-color: var(--md-sys-color-surface);
-    border-bottom: 1px solid var(--md-sys-color-outline-variant);
+    background-color: var(--zk-color-surface);
+    border-bottom: 1px solid var(--zk-color-outline-variant);
 }
 
 .z-panel-header {
     display: flex;
     align-items: center;
-    padding: var(--md-sys-spacing-3) var(--md-sys-spacing-4);
+    padding: var(--zk-spacing-3) var(--zk-spacing-4);
     min-height: 48px;
 }
 
@@ -34,17 +34,17 @@
     min-width: 0;
     display: flex;
     align-items: center;
-    gap: var(--md-sys-spacing-2);
+    gap: var(--zk-spacing-2);
 }
 
 /* ZK renders caption label as text node in .z-caption-content, not .z-caption-text */
 .z-panel-caption .z-caption-text,
 .z-panel-caption .z-caption-content,
 .z-panel-title {
-    font-size: var(--md-sys-typescale-title-medium-size);
-    font-weight: var(--md-sys-typescale-title-medium-weight);
-    line-height: var(--md-sys-typescale-title-medium-line-height);
-    color: var(--md-sys-color-on-surface);
+    font-size: var(--zk-typescale-title-medium-size);
+    font-weight: var(--zk-typescale-title-medium-weight);
+    line-height: var(--zk-typescale-title-medium-line-height);
+    color: var(--zk-color-on-surface);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -54,7 +54,7 @@
 .z-panel-icon {
     display: inline-flex;
     align-items: center;
-    gap: var(--md-sys-spacing-1);
+    gap: var(--zk-spacing-1);
     flex-shrink: 0;
 }
 
@@ -68,20 +68,20 @@
     height: 28px;
     border: none;
     background: transparent;
-    color: var(--md-sys-color-on-surface-variant);
-    border-radius: var(--md-sys-shape-corner-full);
+    color: var(--zk-color-on-surface-variant);
+    border-radius: var(--zk-shape-corner-full);
     cursor: pointer;
     font-size: 14px;
     position: relative;
     overflow: hidden;
-    transition: background-color var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
+    transition: background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
 }
 
 .z-panel-close:hover,
 .z-panel-collapse:hover,
 .z-panel-maximize:hover {
-    background-color: var(--md-sys-color-surface-container);
-    color: var(--md-sys-color-on-surface);
+    background-color: var(--zk-color-surface-container);
+    color: var(--zk-color-on-surface);
 }
 
 /* Panel toolbar area (below header) */
@@ -90,30 +90,30 @@
 .z-panel-fbar,
 .z-panel-lbar,
 .z-panel-rbar {
-    background-color: var(--md-sys-color-surface-container-low);
-    border-bottom: 1px solid var(--md-sys-color-outline-variant);
+    background-color: var(--zk-color-surface-container-low);
+    border-bottom: 1px solid var(--zk-color-outline-variant);
 }
 
 /* ─── Panel body ─────────────────────────────────────────────────────────── */
 .z-panel-body {
     flex: 1;
     overflow: auto;
-    background-color: var(--md-sys-color-surface);
+    background-color: var(--zk-color-surface);
 }
 
 /* z-panelchildren is the actual content wrapper rendered by ZK */
 .z-panelchildren {
-    padding: var(--md-sys-spacing-4);
-    color: var(--md-sys-color-on-surface);
-    font-size: var(--md-sys-typescale-body-medium-size);
+    padding: var(--zk-spacing-4);
+    color: var(--zk-color-on-surface);
+    font-size: var(--zk-typescale-body-medium-size);
     box-sizing: border-box;
 }
 
 /* legacy alias kept for completeness */
 .z-panel-content {
-    padding: var(--md-sys-spacing-4);
-    color: var(--md-sys-color-on-surface);
-    font-size: var(--md-sys-typescale-body-medium-size);
+    padding: var(--zk-spacing-4);
+    color: var(--zk-color-on-surface);
+    font-size: var(--zk-typescale-body-medium-size);
 }
 
 /* ─── Collapsed state ────────────────────────────────────────────────────── */

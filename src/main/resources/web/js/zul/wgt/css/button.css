@@ -8,15 +8,15 @@
     justify-content: center;
     overflow: hidden;
     min-height: 36px;
-    padding: 0 var(--md-sys-spacing-4);
+    padding: 0 var(--zk-spacing-4);
     border: none;
-    border-radius: var(--md-sys-shape-button);
-    background-color: var(--md-sys-color-primary);
-    color: var(--md-sys-color-on-primary);
-    font-family: var(--md-sys-typescale-font-family);
-    font-size: var(--md-sys-typescale-label-large-size);
-    font-weight: var(--md-sys-typescale-label-large-weight);
-    line-height: var(--md-sys-typescale-label-large-line-height);
+    border-radius: var(--zk-shape-button);
+    background-color: var(--zk-color-primary);
+    color: var(--zk-color-on-primary);
+    font-family: var(--zk-typescale-font-family);
+    font-size: var(--zk-typescale-label-large-size);
+    font-weight: var(--zk-typescale-label-large-weight);
+    line-height: var(--zk-typescale-label-large-line-height);
     letter-spacing: 0.01em;
     text-decoration: none;
     white-space: nowrap;
@@ -26,8 +26,8 @@
     outline: none;
     margin: 0 4px 4px 0;
     transition:
-        background-color var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard),
-        box-shadow var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
+        background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard),
+        box-shadow var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
 }
 
 /* State layer */
@@ -36,18 +36,18 @@
     position: absolute;
     inset: 0;
     border-radius: inherit;
-    background-color: var(--md-sys-color-on-primary);
+    background-color: var(--zk-color-on-primary);
     opacity: 0;
     pointer-events: none;
-    transition: opacity var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
+    transition: opacity var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
 }
 
-.z-button:hover::before { opacity: var(--md-sys-state-hover-opacity); }
-.z-button:focus-visible::before { opacity: var(--md-sys-state-focus-opacity); }
-.z-button:active::before { opacity: var(--md-sys-state-pressed-opacity); }
+.z-button:hover::before { opacity: var(--zk-state-hover-opacity); }
+.z-button:focus-visible::before { opacity: var(--zk-state-focus-opacity); }
+.z-button:active::before { opacity: var(--zk-state-pressed-opacity); }
 
 .z-button:focus-visible {
-    outline: 3px solid var(--md-sys-color-primary);
+    outline: 3px solid var(--zk-color-primary);
     outline-offset: 2px;
 }
 
@@ -55,25 +55,25 @@
 .z-button-default,
 .z-button.z-button-default {
     background-color: transparent;
-    color: var(--md-sys-color-primary);
-    border: 1px solid var(--md-sys-color-outline);
+    color: var(--zk-color-primary);
+    border: 1px solid var(--zk-color-outline);
 }
 
 .z-button-default::before,
 .z-button.z-button-default::before {
-    background-color: var(--md-sys-color-primary);
+    background-color: var(--zk-color-primary);
 }
 
 .z-button-default:focus-visible,
 .z-button.z-button-default:focus-visible {
-    border-color: var(--md-sys-color-primary);
+    border-color: var(--zk-color-primary);
 }
 
 /* ─── Disabled state ─────────────────────────────────────────────────── */
 .z-button[disabled],
 .z-button.z-button-disabled {
-    background-color: var(--md-sys-color-disabled-container);
-    color: var(--md-sys-color-disabled);
+    background-color: var(--zk-color-disabled-container);
+    color: var(--zk-color-disabled);
     border-color: transparent;
     box-shadow: none;
     cursor: not-allowed;
@@ -88,8 +88,8 @@
 .z-button-default[disabled],
 .z-button.z-button-default[disabled] {
     background-color: transparent;
-    border-color: var(--md-sys-color-disabled-container);
-    color: var(--md-sys-color-disabled);
+    border-color: var(--zk-color-disabled-container);
+    color: var(--zk-color-disabled);
 }
 
 /* ─── Upload button variant ──────────────────────────────────────────── */
@@ -100,15 +100,15 @@
     position: relative;
     overflow: hidden;
     min-height: 36px;
-    padding: 0 var(--md-sys-spacing-4);
+    padding: 0 var(--zk-spacing-4);
     border: none;
-    border-radius: var(--md-sys-shape-button);
-    background-color: var(--md-sys-color-primary);
-    color: var(--md-sys-color-on-primary);
-    font-family: var(--md-sys-typescale-font-family);
-    font-size: var(--md-sys-typescale-label-large-size);
-    font-weight: var(--md-sys-typescale-label-large-weight);
-    line-height: var(--md-sys-typescale-label-large-line-height);
+    border-radius: var(--zk-shape-button);
+    background-color: var(--zk-color-primary);
+    color: var(--zk-color-on-primary);
+    font-family: var(--zk-typescale-font-family);
+    font-size: var(--zk-typescale-label-large-size);
+    font-weight: var(--zk-typescale-label-large-weight);
+    line-height: var(--zk-typescale-label-large-line-height);
     cursor: pointer;
     white-space: nowrap;
 }
@@ -129,7 +129,7 @@
 
 /* ─── Contained — color variants ─────────────────────────────────────── */
 /* (default .z-button = primary filled; these add semantic color variants) */
-.z-button-secondary.z-button { background-color: var(--md-sys-color-secondary, #4db6ac); color: #fff; }
+.z-button-secondary.z-button { background-color: var(--zk-color-secondary, #4db6ac); color: #fff; }
 .z-button-success.z-button   { background-color: #2e7d32; color: #fff; }
 .z-button-warning.z-button   { background-color: #ed6c02; color: #fff; }
 .z-button-error.z-button     { background-color: #d32f2f; color: #fff; }
@@ -149,20 +149,20 @@
 /* ─── Outlined — color variants ──────────────────────────────────────── */
 .z-button-outlined.z-button {
     background-color: transparent;
-    color: var(--md-sys-color-primary);
-    border: 1px solid var(--md-sys-color-primary);
+    color: var(--zk-color-primary);
+    border: 1px solid var(--zk-color-primary);
 }
-.z-button-outlined.z-button::before { background-color: var(--md-sys-color-primary); }
+.z-button-outlined.z-button::before { background-color: var(--zk-color-primary); }
 
-.z-button-outlined-primary.z-button   { background-color: transparent; color: var(--md-sys-color-primary, #376fd0); border: 1px solid var(--md-sys-color-primary, #376fd0); }
-.z-button-outlined-secondary.z-button { background-color: transparent; color: var(--md-sys-color-secondary, #4db6ac); border: 1px solid var(--md-sys-color-secondary, #4db6ac); }
+.z-button-outlined-primary.z-button   { background-color: transparent; color: var(--zk-color-primary, #376fd0); border: 1px solid var(--zk-color-primary, #376fd0); }
+.z-button-outlined-secondary.z-button { background-color: transparent; color: var(--zk-color-secondary, #4db6ac); border: 1px solid var(--zk-color-secondary, #4db6ac); }
 .z-button-outlined-success.z-button   { background-color: transparent; color: #2e7d32; border: 1px solid #2e7d32; }
 .z-button-outlined-warning.z-button   { background-color: transparent; color: #ed6c02; border: 1px solid #ed6c02; }
 .z-button-outlined-error.z-button     { background-color: transparent; color: #d32f2f; border: 1px solid #d32f2f; }
 .z-button-outlined-info.z-button      { background-color: transparent; color: #0288d1; border: 1px solid #0288d1; }
 
-.z-button-outlined-primary.z-button::before   { background-color: var(--md-sys-color-primary); }
-.z-button-outlined-secondary.z-button::before { background-color: var(--md-sys-color-secondary, #4db6ac); }
+.z-button-outlined-primary.z-button::before   { background-color: var(--zk-color-primary); }
+.z-button-outlined-secondary.z-button::before { background-color: var(--zk-color-secondary, #4db6ac); }
 .z-button-outlined-success.z-button::before   { background-color: #2e7d32; }
 .z-button-outlined-warning.z-button::before   { background-color: #ed6c02; }
 .z-button-outlined-error.z-button::before     { background-color: #d32f2f; }
@@ -171,18 +171,18 @@
 /* ─── Text — color variants ──────────────────────────────────────────── */
 .z-button-text.z-button {
     background-color: transparent;
-    color: var(--md-sys-color-primary);
+    color: var(--zk-color-primary);
     border: none;
 }
-.z-button-text.z-button::before { background-color: var(--md-sys-color-primary); }
+.z-button-text.z-button::before { background-color: var(--zk-color-primary); }
 
-.z-button-text-primary.z-button   { background-color: transparent; color: var(--md-sys-color-primary, #376fd0); border: none; }
-.z-button-text-secondary.z-button { background-color: transparent; color: var(--md-sys-color-secondary, #4db6ac); border: none; }
+.z-button-text-primary.z-button   { background-color: transparent; color: var(--zk-color-primary, #376fd0); border: none; }
+.z-button-text-secondary.z-button { background-color: transparent; color: var(--zk-color-secondary, #4db6ac); border: none; }
 .z-button-text-error.z-button     { background-color: transparent; color: #d32f2f; border: none; }
 .z-button-text-info.z-button      { background-color: transparent; color: #0288d1; border: none; }
 
-.z-button-text-primary.z-button::before   { background-color: var(--md-sys-color-primary); }
-.z-button-text-secondary.z-button::before { background-color: var(--md-sys-color-secondary, #4db6ac); }
+.z-button-text-primary.z-button::before   { background-color: var(--zk-color-primary); }
+.z-button-text-secondary.z-button::before { background-color: var(--zk-color-secondary, #4db6ac); }
 .z-button-text-error.z-button::before     { background-color: #d32f2f; }
 .z-button-text-info.z-button::before      { background-color: #0288d1; }
 
@@ -200,7 +200,7 @@
 /* ─── Icon button ─────────────────────────────────────────────────────── */
 .z-button-icon.z-button {
     background-color: transparent;
-    color: var(--md-sys-color-on-surface-variant);
+    color: var(--zk-color-on-surface-variant);
     border: none;
     border-radius: 50%;
     width: 40px;
@@ -209,15 +209,15 @@
     padding: 0;
     font-size: 20px;
 }
-.z-button-icon.z-button::before { background-color: var(--md-sys-color-on-surface-variant); }
+.z-button-icon.z-button::before { background-color: var(--zk-color-on-surface-variant); }
 
 /* Color variants for icon button */
-.z-button-icon.z-button-primary.z-button   { color: var(--md-sys-color-primary); }
-.z-button-icon.z-button-secondary.z-button { color: var(--md-sys-color-secondary, #4db6ac); background-color: transparent; }
+.z-button-icon.z-button-primary.z-button   { color: var(--zk-color-primary); }
+.z-button-icon.z-button-secondary.z-button { color: var(--zk-color-secondary, #4db6ac); background-color: transparent; }
 .z-button-icon.z-button-error.z-button     { color: #d32f2f; background-color: transparent; }
 
-.z-button-icon.z-button-primary.z-button::before   { background-color: var(--md-sys-color-primary); }
-.z-button-icon.z-button-secondary.z-button::before { background-color: var(--md-sys-color-secondary, #4db6ac); }
+.z-button-icon.z-button-primary.z-button::before   { background-color: var(--zk-color-primary); }
+.z-button-icon.z-button-secondary.z-button::before { background-color: var(--zk-color-secondary, #4db6ac); }
 .z-button-icon.z-button-error.z-button::before     { background-color: #d32f2f; }
 
 /* ─── FAB (Floating Action Button) ───────────────────────────────────── */

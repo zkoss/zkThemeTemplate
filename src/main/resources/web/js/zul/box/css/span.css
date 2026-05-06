@@ -3,7 +3,7 @@
 .z-span {
     display: inline;
     box-sizing: border-box;
-    font-family: var(--md-sys-typescale-font-family);
+    font-family: var(--zk-typescale-font-family);
     font-size: inherit;
     color: inherit;
 }

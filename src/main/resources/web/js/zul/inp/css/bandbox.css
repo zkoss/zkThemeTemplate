@@ -5,20 +5,20 @@
     display: inline-flex;
     align-items: center;
     position: relative;
-    border: 1px solid var(--md-sys-color-outline);
-    border-radius: var(--md-sys-shape-input);
-    background-color: var(--md-sys-color-surface);
+    border: 1px solid var(--zk-color-outline);
+    border-radius: var(--zk-shape-input);
+    background-color: var(--zk-color-surface);
     min-height: 40px;
     box-sizing: border-box;
-    transition: border-color var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
+    transition: border-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
 }
 
 .z-bandbox:hover {
-    border-color: var(--md-sys-color-on-surface);
+    border-color: var(--zk-color-on-surface);
 }
 
 .z-bandbox:focus-within {
-    border-color: var(--md-sys-color-primary);
+    border-color: var(--zk-color-primary);
     border-width: 2px;
 }
 
@@ -27,18 +27,18 @@
     min-width: 0;
     border: none;
     background: transparent;
-    padding: 0 var(--md-sys-spacing-3);
+    padding: 0 var(--zk-spacing-3);
     height: 100%;
     min-height: 38px;
-    font-family: var(--md-sys-typescale-font-family);
-    font-size: var(--md-sys-typescale-body-medium-size);
-    color: var(--md-sys-color-on-surface);
+    font-family: var(--zk-typescale-font-family);
+    font-size: var(--zk-typescale-body-medium-size);
+    color: var(--zk-color-on-surface);
     outline: none;
     box-sizing: border-box;
 }
 
 .z-bandbox-input::placeholder {
-    color: var(--md-sys-color-on-surface-variant);
+    color: var(--zk-color-on-surface-variant);
     opacity: 1;
 }
 
@@ -51,12 +51,12 @@
     min-height: 38px;
     border: none;
     background: transparent;
-    color: var(--md-sys-color-on-surface-variant);
+    color: var(--zk-color-on-surface-variant);
     cursor: pointer;
     flex-shrink: 0;
-    border-radius: 0 var(--md-sys-shape-input) var(--md-sys-shape-input) 0;
+    border-radius: 0 var(--zk-shape-input) var(--zk-shape-input) 0;
     overflow: hidden;
-    transition: color var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
+    transition: color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
 }
 
 .z-bandbox-button::before {
@@ -66,11 +66,11 @@
     background-color: currentColor;
     opacity: 0;
     pointer-events: none;
-    transition: opacity var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
+    transition: opacity var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
 }
 
-.z-bandbox-button:hover::before { opacity: var(--md-sys-state-hover-opacity); }
-.z-bandbox-button:active::before { opacity: var(--md-sys-state-pressed-opacity); }
+.z-bandbox-button:hover::before { opacity: var(--zk-state-hover-opacity); }
+.z-bandbox-button:active::before { opacity: var(--zk-state-pressed-opacity); }
 
 /* Bandbox popup — wider than combobox */
 .z-bandbox-popup {
@@ -80,10 +80,10 @@
     z-index: 1600;
     margin: 4px 0 0 0;
     padding: 0;
-    background-color: var(--md-sys-color-surface);
-    border-radius: var(--md-sys-shape-card);
-    box-shadow: var(--md-sys-elevation-dropdown);
-    border: 1px solid var(--md-sys-color-outline-variant);
+    background-color: var(--zk-color-surface);
+    border-radius: var(--zk-shape-card);
+    box-shadow: var(--zk-elevation-dropdown);
+    border: 1px solid var(--zk-color-outline-variant);
     min-width: 300px;
     overflow: auto;
     box-sizing: border-box;
@@ -92,6 +92,6 @@
 /* Disabled */
 .z-bandbox[disabled],
 .z-bandbox.z-bandbox-disabled {
-    opacity: var(--md-sys-state-disabled-opacity);
+    opacity: var(--zk-state-disabled-opacity);
     pointer-events: none;
 }

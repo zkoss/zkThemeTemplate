@@ -9,5 +9,5 @@
     padding: 0;
     margin: 0;
     min-height: inherit;
-    font-family: var(--md-sys-typescale-font-family);
+    font-family: var(--zk-typescale-font-family);
 }

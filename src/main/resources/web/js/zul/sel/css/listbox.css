@@ -4,31 +4,31 @@
 
 .z-listbox {
     display: block;
-    background-color: var(--md-sys-color-surface);
-    border-radius: var(--md-sys-shape-card);
-    box-shadow: var(--md-sys-elevation-card);
-    border: 1px solid var(--md-sys-color-outline-variant);
+    background-color: var(--zk-color-surface);
+    border-radius: var(--zk-shape-card);
+    box-shadow: var(--zk-elevation-card);
+    border: 1px solid var(--zk-color-outline-variant);
     overflow: hidden;
     box-sizing: border-box;
-    font-family: var(--md-sys-typescale-font-family);
+    font-family: var(--zk-typescale-font-family);
 }
 
 /* ─── Header ───────────────────────────────────────────────────────────── */
 .z-listbox-header {
     overflow: hidden;
-    background-color: var(--md-sys-color-surface-container-low);
+    background-color: var(--zk-color-surface-container-low);
 }
 
 .z-listhead,
 .z-listheader {
-    padding: var(--md-sys-spacing-3) var(--md-sys-spacing-4);
-    font-size: var(--md-sys-typescale-label-large-size);
-    font-weight: var(--md-sys-typescale-label-large-weight);
-    line-height: var(--md-sys-typescale-label-large-line-height);
-    color: var(--md-sys-color-on-surface-variant);
+    padding: var(--zk-spacing-3) var(--zk-spacing-4);
+    font-size: var(--zk-typescale-label-large-size);
+    font-weight: var(--zk-typescale-label-large-weight);
+    line-height: var(--zk-typescale-label-large-line-height);
+    color: var(--zk-color-on-surface-variant);
     text-align: left;
-    border-bottom: 2px solid var(--md-sys-color-outline-variant);
-    background-color: var(--md-sys-color-surface-container-low);
+    border-bottom: 2px solid var(--zk-color-outline-variant);
+    background-color: var(--zk-color-surface-container-low);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -44,7 +44,7 @@
 }
 
 .z-listheader-sort:hover {
-    background-color: var(--md-sys-color-surface-container);
+    background-color: var(--zk-color-surface-container);
 }
 
 /* ─── Body ─────────────────────────────────────────────────────────────── */
@@ -60,8 +60,8 @@
 
 /* List item row */
 .z-listitem {
-    border-bottom: 1px solid var(--md-sys-color-outline-variant);
-    transition: background-color var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
+    border-bottom: 1px solid var(--zk-color-outline-variant);
+    transition: background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
     cursor: pointer;
 }
 
@@ -70,24 +70,24 @@
 }
 
 .z-listitem:hover {
-    background-color: var(--md-sys-color-surface-container-low);
+    background-color: var(--zk-color-surface-container-low);
 }
 
 .z-listitem.z-listitem-selected,
 .z-listitem.z-selected {
-    background-color: var(--md-sys-color-primary-container);
-    color: var(--md-sys-color-on-primary-container);
+    background-color: var(--zk-color-primary-container);
+    color: var(--zk-color-on-primary-container);
 }
 
 .z-listitem.z-listitem-selected:hover,
 .z-listitem.z-selected:hover {
-    background-color: var(--md-sys-color-primary-container);
+    background-color: var(--zk-color-primary-container);
 }
 
 /* Focus — outline on <tr> clips at cell boundaries; use box-shadow on the first cell instead */
 .z-listitem:focus-visible .z-listcell:first-child,
 .z-listitem.z-listitem-focus .z-listcell:first-child {
-    box-shadow: inset 3px 0 0 var(--md-sys-color-primary);
+    box-shadow: inset 3px 0 0 var(--zk-color-primary);
 }
 
 /* Cell */
@@ -102,10 +102,10 @@
 .z-listcell-cnt,
 .z-listcell-content {
     display: block;
-    padding: var(--md-sys-spacing-2) var(--md-sys-spacing-4);
-    font-size: var(--md-sys-typescale-body-medium-size);
-    font-weight: var(--md-sys-typescale-body-medium-weight);
-    color: var(--md-sys-color-on-surface);
+    padding: var(--zk-spacing-2) var(--zk-spacing-4);
+    font-size: var(--zk-typescale-body-medium-size);
+    font-weight: var(--zk-typescale-body-medium-weight);
+    color: var(--zk-color-on-surface);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -113,31 +113,31 @@
 
 .z-listitem.z-selected .z-listcell-cnt,
 .z-listitem.z-selected .z-listcell-content {
-    color: var(--md-sys-color-on-primary-container);
+    color: var(--zk-color-on-primary-container);
 }
 
 /* ─── Listgroup (collapsible group header rows) ────────────────────── */
 .z-listgroup td,
 .z-listgroup .z-listcell-cnt,
 .z-listgroup .z-listcell-content {
-    background-color: var(--md-sys-color-surface-container);
-    color: var(--md-sys-color-on-surface);
-    font-size: var(--md-sys-typescale-label-large-size);
-    font-weight: var(--md-sys-typescale-label-large-weight);
-    padding: var(--md-sys-spacing-2) var(--md-sys-spacing-4);
-    border-top: 1px solid var(--md-sys-color-outline-variant);
-    border-bottom: 1px solid var(--md-sys-color-outline-variant);
+    background-color: var(--zk-color-surface-container);
+    color: var(--zk-color-on-surface);
+    font-size: var(--zk-typescale-label-large-size);
+    font-weight: var(--zk-typescale-label-large-weight);
+    padding: var(--zk-spacing-2) var(--zk-spacing-4);
+    border-top: 1px solid var(--zk-color-outline-variant);
+    border-bottom: 1px solid var(--zk-color-outline-variant);
 }
 
 .z-listgroup > td:first-child {
-    border-left: 3px solid var(--md-sys-color-primary);
-    padding-left: calc(var(--md-sys-spacing-4) - 3px);
+    border-left: 3px solid var(--zk-color-primary);
+    padding-left: calc(var(--zk-spacing-4) - 3px);
 }
 
 /* Group open/close toggle arrow */
 .z-listgroup .z-listgroup-icon {
-    margin-right: var(--md-sys-spacing-2);
-    color: var(--md-sys-color-on-surface-variant);
+    margin-right: var(--zk-spacing-2);
+    color: var(--zk-color-on-surface-variant);
     font-size: 12px;
 }
 
@@ -145,38 +145,38 @@
 .z-listgroupfoot td,
 .z-listgroupfoot .z-listcell-cnt,
 .z-listgroupfoot .z-listcell-content {
-    background-color: var(--md-sys-color-surface-container);
-    color: var(--md-sys-color-on-surface);
-    font-size: var(--md-sys-typescale-body-medium-size);
-    font-weight: var(--md-sys-typescale-label-large-weight);
-    padding: var(--md-sys-spacing-2) var(--md-sys-spacing-4);
-    border-top: 1px solid var(--md-sys-color-outline-variant);
-    border-bottom: 1px solid var(--md-sys-color-outline-variant);
+    background-color: var(--zk-color-surface-container);
+    color: var(--zk-color-on-surface);
+    font-size: var(--zk-typescale-body-medium-size);
+    font-weight: var(--zk-typescale-label-large-weight);
+    padding: var(--zk-spacing-2) var(--zk-spacing-4);
+    border-top: 1px solid var(--zk-color-outline-variant);
+    border-bottom: 1px solid var(--zk-color-outline-variant);
     white-space: nowrap;
     overflow: visible;
 }
 
 /* ─── Footer ─────────────────────────────────────────────────────────── */
 .z-listbox-footer {
-    background-color: var(--md-sys-color-surface-container-low);
-    border-top: 2px solid var(--md-sys-color-outline-variant);
+    background-color: var(--zk-color-surface-container-low);
+    border-top: 2px solid var(--zk-color-outline-variant);
 }
 
 .z-listfoot .z-listfooter,
 .z-listfoot td {
-    padding: var(--md-sys-spacing-3) var(--md-sys-spacing-4);
-    font-weight: var(--md-sys-typescale-label-large-weight);
-    color: var(--md-sys-color-on-surface-variant);
-    font-size: var(--md-sys-typescale-body-medium-size);
+    padding: var(--zk-spacing-3) var(--zk-spacing-4);
+    font-weight: var(--zk-typescale-label-large-weight);
+    color: var(--zk-color-on-surface-variant);
+    font-size: var(--zk-typescale-body-medium-size);
 }
 
 /* Empty */
 .z-listbox-emph {
-    padding: var(--md-sys-spacing-8) var(--md-sys-spacing-4);
+    padding: var(--zk-spacing-8) var(--zk-spacing-4);
     text-align: center;
-    color: var(--md-sys-color-on-surface-variant);
+    color: var(--zk-color-on-surface-variant);
     font-style: italic;
-    font-size: var(--md-sys-typescale-body-medium-size);
+    font-size: var(--zk-typescale-body-medium-size);
 }
 
 /* Checkbox cell in listbox */
@@ -188,16 +188,16 @@
 /* Compact list appearance: no header, lighter separators, smaller cell padding */
 .z-listbox-plain .z-listcell-cnt,
 .z-listbox-plain .z-listcell-content {
-    font-size: var(--md-sys-typescale-body-medium-size);
-    padding: var(--md-sys-spacing-2) var(--md-sys-spacing-2);
+    font-size: var(--zk-typescale-body-medium-size);
+    padding: var(--zk-spacing-2) var(--zk-spacing-2);
 }
 
 .z-listbox-plain .z-listitem {
-    border-bottom: 1px solid var(--md-sys-color-surface-container-high);
+    border-bottom: 1px solid var(--zk-color-surface-container-high);
 }
 
 .z-listbox-plain .z-listitem:hover {
-    background-color: var(--md-sys-color-surface-container-low);
+    background-color: var(--zk-color-surface-container-low);
 }
 
 /* ─── Checkmark column (listbox checkmark="true") ──────────────────────── */
@@ -207,7 +207,7 @@
     background-color: transparent !important;
     -webkit-mask-image: none !important;
     mask-image: none !important;
-    border: 1.5px solid var(--md-sys-color-outline, #79747e);
+    border: 1.5px solid var(--zk-color-outline, #79747e);
     border-radius: 2px;
     width: 16px !important;
     height: 16px !important;
@@ -216,14 +216,14 @@
 }
 
 .z-listitem:hover .z-listitem-icon.z-icon-check::before {
-    border-color: var(--md-sys-color-primary, #376fd0);
+    border-color: var(--zk-color-primary, #376fd0);
 }
 
 /* Selected row: filled blue box with white checkmark */
 .z-listitem.z-listitem-selected .z-listitem-icon.z-icon-check::before,
 .z-listitem.z-selected .z-listitem-icon.z-icon-check::before {
-    background-color: var(--md-sys-color-primary, #376fd0) !important;
-    border-color: var(--md-sys-color-primary, #376fd0) !important;
+    background-color: var(--zk-color-primary, #376fd0) !important;
+    border-color: var(--zk-color-primary, #376fd0) !important;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E") !important;
     background-size: 11px 11px !important;
     background-repeat: no-repeat !important;
@@ -234,7 +234,7 @@
 .z-listitem-checkable,
 .z-listheader-checkable {
     width: 40px;
-    padding: 0 var(--md-sys-spacing-3);
+    padding: 0 var(--zk-spacing-3);
     text-align: center;
     vertical-align: middle;
 }

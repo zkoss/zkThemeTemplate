@@ -6,7 +6,7 @@
 .z-rating {
     display: inline-flex;
     align-items: center;
-    gap: var(--md-sys-spacing-1);
+    gap: var(--zk-spacing-1);
     line-height: 1;
     cursor: pointer;
 }
@@ -15,8 +15,8 @@
 .z-rating-icon {
     display: inline-block;
     font-size: 18px;
-    color: var(--md-sys-color-outline);
-    transition: color var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
+    color: var(--zk-color-outline);
+    transition: color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
     line-height: 1;
     cursor: pointer;
     user-select: none;
@@ -24,7 +24,7 @@
 
 /* Selected (filled) star — override icon font's hollow glyph with solid Unicode star */
 .z-rating-icon.z-rating-selected {
-    color: var(--md-sys-color-warning);
+    color: var(--zk-color-warning);
 }
 
 .z-rating-icon.z-rating-selected::before {
@@ -34,7 +34,7 @@
 
 /* Hover state for interactive rating */
 .z-rating:not(.z-rating-horizontal .z-rating-readonly) .z-rating-icon:hover {
-    color: var(--md-sys-color-warning);
+    color: var(--zk-color-warning);
     transform: scale(1.1);
 }
 
@@ -48,12 +48,12 @@
 .z-rating-star {
     display: inline-block;
     font-size: 18px;
-    color: var(--md-sys-color-outline);
+    color: var(--zk-color-outline);
     line-height: 1;
     cursor: pointer;
 }
 
 .z-rating-star.z-selected,
 .z-rating-star.z-rating-selected {
-    color: var(--md-sys-color-warning);
+    color: var(--zk-color-warning);
 }

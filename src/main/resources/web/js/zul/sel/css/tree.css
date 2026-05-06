@@ -7,19 +7,19 @@
 
 .z-tree {
     display: block;
-    background-color: var(--md-sys-color-surface);
-    border-radius: var(--md-sys-shape-card);
-    box-shadow: var(--md-sys-elevation-card);
-    border: 1px solid var(--md-sys-color-outline-variant);
+    background-color: var(--zk-color-surface);
+    border-radius: var(--zk-shape-card);
+    box-shadow: var(--zk-elevation-card);
+    border: 1px solid var(--zk-color-outline-variant);
     overflow: hidden;
     box-sizing: border-box;
-    font-family: var(--md-sys-typescale-font-family);
+    font-family: var(--zk-typescale-font-family);
 }
 
 /* ─── Header ───────────────────────────────────────────────────────────── */
 .z-tree-header {
     overflow: hidden;
-    background-color: var(--md-sys-color-surface-container-low);
+    background-color: var(--zk-color-surface-container-low);
 }
 
 .z-tree-header table {
@@ -29,17 +29,17 @@
 }
 
 .z-treecols {
-    background-color: var(--md-sys-color-surface-container-low);
+    background-color: var(--zk-color-surface-container-low);
 }
 
 .z-treecol {
-    padding: var(--md-sys-spacing-3) var(--md-sys-spacing-4);
-    font-size: var(--md-sys-typescale-label-large-size);
-    font-weight: var(--md-sys-typescale-label-large-weight);
-    color: var(--md-sys-color-on-surface-variant);
+    padding: var(--zk-spacing-3) var(--zk-spacing-4);
+    font-size: var(--zk-typescale-label-large-size);
+    font-weight: var(--zk-typescale-label-large-weight);
+    color: var(--zk-color-on-surface-variant);
     text-align: left;
-    border-bottom: 2px solid var(--md-sys-color-outline-variant);
-    background-color: var(--md-sys-color-surface-container-low);
+    border-bottom: 2px solid var(--zk-color-outline-variant);
+    background-color: var(--zk-color-surface-container-low);
     white-space: nowrap;
     user-select: none;
     vertical-align: middle;
@@ -49,17 +49,17 @@
 .z-treecol-content {
     display: flex;
     align-items: center;
-    gap: var(--md-sys-spacing-1);
-    font-size: var(--md-sys-typescale-label-large-size);
-    font-weight: var(--md-sys-typescale-label-large-weight);
-    color: var(--md-sys-color-on-surface-variant);
+    gap: var(--zk-spacing-1);
+    font-size: var(--zk-typescale-label-large-size);
+    font-weight: var(--zk-typescale-label-large-weight);
+    color: var(--zk-color-on-surface-variant);
 }
 
 /* Splitter bar between columns */
 .z-treecols-bar {
     width: 8px;
     cursor: col-resize;
-    background-color: var(--md-sys-color-outline-variant);
+    background-color: var(--zk-color-outline-variant);
 }
 
 /* ─── Body ─────────────────────────────────────────────────────────────── */
@@ -80,8 +80,8 @@
 
 /* Tree item row — TR.z-treerow */
 .z-treerow {
-    border-bottom: 1px solid var(--md-sys-color-outline-variant);
-    transition: background-color var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
+    border-bottom: 1px solid var(--zk-color-outline-variant);
+    transition: background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
     cursor: pointer;
 }
 
@@ -90,19 +90,19 @@
 }
 
 .z-treerow:hover {
-    background-color: var(--md-sys-color-surface-container-low);
+    background-color: var(--zk-color-surface-container-low);
 }
 
 .z-treerow.z-treerow-selected,
 .z-treerow.z-selected {
-    background-color: var(--md-sys-color-primary-container);
-    color: var(--md-sys-color-on-primary-container);
+    background-color: var(--zk-color-primary-container);
+    color: var(--zk-color-on-primary-container);
 }
 
 /* Focus */
 .z-treerow:focus-visible,
 .z-treerow.z-treerow-focus {
-    outline: 2px solid var(--md-sys-color-primary);
+    outline: 2px solid var(--zk-color-primary);
     outline-offset: -2px;
 }
 
@@ -117,11 +117,11 @@
 .z-treecell-content {
     display: flex;
     align-items: center;
-    gap: var(--md-sys-spacing-1);
-    padding: var(--md-sys-spacing-2) var(--md-sys-spacing-4);
-    font-size: var(--md-sys-typescale-body-medium-size);
-    font-weight: var(--md-sys-typescale-body-medium-weight);
-    color: var(--md-sys-color-on-surface);
+    gap: var(--zk-spacing-1);
+    padding: var(--zk-spacing-2) var(--zk-spacing-4);
+    font-size: var(--zk-typescale-body-medium-size);
+    font-weight: var(--zk-typescale-body-medium-weight);
+    color: var(--zk-color-on-surface);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -136,7 +136,7 @@
 }
 
 .z-treerow.z-selected .z-treecell-content {
-    color: var(--md-sys-color-on-primary-container);
+    color: var(--zk-color-on-primary-container);
 }
 
 /* ─── Toggle / expand icon ─────────────────────────────────────────────── */
@@ -148,15 +148,15 @@
     width: 20px;
     height: 20px;
     flex-shrink: 0;
-    color: var(--md-sys-color-on-surface-variant);
+    color: var(--zk-color-on-surface-variant);
     font-size: 12px;
-    border-radius: var(--md-sys-shape-corner-full);
+    border-radius: var(--zk-shape-corner-full);
     cursor: pointer;
-    transition: background-color var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
+    transition: background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
 }
 
 .z-tree-icon:hover {
-    background-color: var(--md-sys-color-surface-container);
+    background-color: var(--zk-color-surface-container);
 }
 
 /* ─── Indentation spacers ──────────────────────────────────────────────── */
@@ -176,8 +176,8 @@
 
 /* ─── Footer ────────────────────────────────────────────────────────────── */
 .z-tree-footer {
-    background-color: var(--md-sys-color-surface-container-low);
-    border-top: 2px solid var(--md-sys-color-outline-variant);
+    background-color: var(--zk-color-surface-container-low);
+    border-top: 2px solid var(--zk-color-outline-variant);
 }
 
 .z-tree-footer table {
@@ -187,9 +187,9 @@
 }
 
 .z-treefooter {
-    padding: var(--md-sys-spacing-3) var(--md-sys-spacing-4);
-    font-size: var(--md-sys-typescale-body-medium-size);
-    font-weight: var(--md-sys-typescale-label-large-weight);
-    color: var(--md-sys-color-on-surface-variant);
+    padding: var(--zk-spacing-3) var(--zk-spacing-4);
+    font-size: var(--zk-typescale-body-medium-size);
+    font-weight: var(--zk-typescale-label-large-weight);
+    color: var(--zk-color-on-surface-variant);
     vertical-align: middle;
 }

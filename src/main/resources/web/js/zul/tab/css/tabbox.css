@@ -5,8 +5,8 @@
 .z-tabbox {
     display: flex;
     flex-direction: column;
-    background-color: var(--md-sys-color-surface);
-    font-family: var(--md-sys-typescale-font-family);
+    background-color: var(--zk-color-surface);
+    font-family: var(--zk-typescale-font-family);
 }
 
 /* ─── Tab bar ───────────────────────────────────────────────────────────── */
@@ -17,8 +17,8 @@
     list-style: none;
     margin: 0;
     padding: 0;
-    border-bottom: 1px solid var(--md-sys-color-outline-variant);
-    background-color: var(--md-sys-color-surface);
+    border-bottom: 1px solid var(--zk-color-outline-variant);
+    background-color: var(--zk-color-surface);
     flex-shrink: 0;
     overflow-x: auto;
     overflow-y: hidden;
@@ -36,19 +36,19 @@
     align-items: center;
     justify-content: center;
     list-style: none;
-    padding: var(--md-sys-spacing-3) var(--md-sys-spacing-4);
+    padding: var(--zk-spacing-3) var(--zk-spacing-4);
     cursor: pointer;
-    color: var(--md-sys-color-on-surface-variant);
-    font-size: var(--md-sys-typescale-title-small-size);
-    font-weight: var(--md-sys-typescale-title-small-weight);
-    line-height: var(--md-sys-typescale-title-small-line-height);
+    color: var(--zk-color-on-surface-variant);
+    font-size: var(--zk-typescale-title-small-size);
+    font-weight: var(--zk-typescale-title-small-weight);
+    line-height: var(--zk-typescale-title-small-line-height);
     white-space: nowrap;
     user-select: none;
     border-bottom: 2px solid transparent;
     margin-bottom: -1px;
     transition:
-        color var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard),
-        border-color var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
+        color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard),
+        border-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
     overflow: hidden;
 }
 
@@ -57,22 +57,22 @@
     content: '';
     position: absolute;
     inset: 0;
-    background-color: var(--md-sys-color-primary);
+    background-color: var(--zk-color-primary);
     opacity: 0;
     pointer-events: none;
-    transition: opacity var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
+    transition: opacity var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
 }
 
 .z-tab:hover {
-    color: var(--md-sys-color-on-surface);
+    color: var(--zk-color-on-surface);
 }
 
-.z-tab:hover::before { opacity: var(--md-sys-state-hover-opacity); }
+.z-tab:hover::before { opacity: var(--zk-state-hover-opacity); }
 
 /* Selected tab */
 .z-tab.z-tab-selected {
-    color: var(--md-sys-color-primary);
-    border-bottom-color: var(--md-sys-color-primary);
+    color: var(--zk-color-primary);
+    border-bottom-color: var(--zk-color-primary);
 }
 
 /* Tab text */
@@ -81,7 +81,7 @@
     z-index: 1;
     display: inline-flex;
     align-items: center;
-    gap: var(--md-sys-spacing-1);
+    gap: var(--zk-spacing-1);
     pointer-events: none;
 }
 
@@ -101,23 +101,23 @@
     height: 16px;
     border: none;
     background: transparent;
-    color: var(--md-sys-color-on-surface-variant);
+    color: var(--zk-color-on-surface-variant);
     cursor: pointer;
-    border-radius: var(--md-sys-shape-corner-full);
+    border-radius: var(--zk-shape-corner-full);
     font-size: 12px;
-    margin-left: var(--md-sys-spacing-1);
+    margin-left: var(--zk-spacing-1);
     padding: 0;
-    transition: background-color var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
+    transition: background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
 }
 
 .z-tab-close:hover {
-    background-color: var(--md-sys-color-surface-container-high);
-    color: var(--md-sys-color-on-surface);
+    background-color: var(--zk-color-surface-container-high);
+    color: var(--zk-color-on-surface);
 }
 
 /* Disabled tab */
 .z-tab.z-tab-disabled {
-    color: var(--md-sys-color-disabled);
+    color: var(--zk-color-disabled);
     cursor: not-allowed;
     pointer-events: none;
 }
@@ -131,11 +131,11 @@
 .z-tabpanels {
     flex: 1;
     overflow: auto;
-    background-color: var(--md-sys-color-surface);
+    background-color: var(--zk-color-surface);
 }
 
 .z-tabpanel {
-    padding: var(--md-sys-spacing-3) var(--md-sys-spacing-4);
+    padding: var(--zk-spacing-3) var(--zk-spacing-4);
 }
 
 /* ─── Accordion mold ────────────────────────────────────────────────────── */
@@ -159,13 +159,13 @@
 .z-tabbox-accordion .z-tabpanels {
     display: block;
     overflow: visible;
-    background: var(--md-sys-color-surface);
+    background: var(--zk-color-surface);
     padding: 0;
 }
 
 /* Each accordion section wrapper */
 .z-tabbox-accordion .z-tabpanel {
-    border-bottom: 1px solid var(--md-sys-color-outline-variant);
+    border-bottom: 1px solid var(--zk-color-outline-variant);
     padding: 0;
 }
 
@@ -179,33 +179,33 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: var(--md-sys-spacing-3) var(--md-sys-spacing-4);
+    padding: var(--zk-spacing-3) var(--zk-spacing-4);
     cursor: pointer;
-    color: var(--md-sys-color-on-surface);
-    background: var(--md-sys-color-surface);
-    font-size: var(--md-sys-typescale-body-large-size);
-    font-weight: var(--md-sys-typescale-title-small-weight);
+    color: var(--zk-color-on-surface);
+    background: var(--zk-color-surface);
+    font-size: var(--zk-typescale-body-large-size);
+    font-weight: var(--zk-typescale-title-small-weight);
     border: none;
     margin: 0;
     overflow: hidden;
     user-select: none;
     transition:
-        color var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard),
-        background-color var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
+        color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard),
+        background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
 }
 
 .z-tabbox-accordion .z-tab::before {
     content: '';
     position: absolute;
     inset: 0;
-    background-color: var(--md-sys-color-on-surface);
+    background-color: var(--zk-color-on-surface);
     opacity: 0;
     pointer-events: none;
-    transition: opacity var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
+    transition: opacity var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
 }
 
 .z-tabbox-accordion .z-tab:hover::before {
-    opacity: var(--md-sys-state-hover-opacity);
+    opacity: var(--zk-state-hover-opacity);
 }
 
 /* Chevron arrow on the right — pure CSS, no font dependency */
@@ -214,22 +214,22 @@
     display: inline-block;
     width: 8px;
     height: 8px;
-    border-right: 2px solid var(--md-sys-color-on-surface-variant);
-    border-bottom: 2px solid var(--md-sys-color-on-surface-variant);
+    border-right: 2px solid var(--zk-color-on-surface-variant);
+    border-bottom: 2px solid var(--zk-color-on-surface-variant);
     transform: rotate(45deg);
     margin-left: auto;
     flex-shrink: 0;
-    transition: transform var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
+    transition: transform var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
 }
 
 .z-tabbox-accordion .z-tab.z-tab-selected {
-    color: var(--md-sys-color-on-surface);
-    background: var(--md-sys-color-surface);
+    color: var(--zk-color-on-surface);
+    background: var(--zk-color-surface);
 }
 
 .z-tabbox-accordion .z-tab.z-tab-selected .z-tab-content::after {
     transform: rotate(-135deg);
-    border-color: var(--md-sys-color-on-surface-variant);
+    border-color: var(--zk-color-on-surface-variant);
 }
 
 /* Tab text area */
@@ -246,9 +246,9 @@
 
 /* Expandable content cave */
 .z-tabbox-accordion .z-tabpanel > [id$="-cave"] {
-    padding: var(--md-sys-spacing-4);
-    color: var(--md-sys-color-on-surface-variant);
-    font-size: var(--md-sys-typescale-body-medium-size);
+    padding: var(--zk-spacing-4);
+    color: var(--zk-color-on-surface-variant);
+    font-size: var(--zk-typescale-body-medium-size);
     line-height: 1.6;
-    background: var(--md-sys-color-surface);
+    background: var(--zk-color-surface);
 }

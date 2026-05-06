@@ -6,8 +6,8 @@
     display: block;
     width: 100%;
     height: 8px;
-    background-color: var(--md-sys-color-surface-container-high);
-    border-radius: var(--md-sys-shape-corner-full);
+    background-color: var(--zk-color-surface-container-high);
+    border-radius: var(--zk-shape-corner-full);
     overflow: hidden;
     position: relative;
 }
@@ -16,9 +16,9 @@
 .z-progressmeter-image {
     display: block !important;
     height: 100%;
-    background-color: var(--md-sys-color-primary);
-    border-radius: var(--md-sys-shape-corner-full);
-    transition: width var(--md-sys-motion-duration-medium2) var(--md-sys-motion-easing-standard);
+    background-color: var(--zk-color-primary);
+    border-radius: var(--zk-shape-corner-full);
+    transition: width var(--zk-motion-duration-medium2) var(--zk-motion-easing-standard);
     min-width: 0;
 }
 
@@ -32,14 +32,14 @@
 }
 .z-progressmeter-linear .z-progressmeter-image,
 .z-progressmeter-linear .z-progressmeter-bar {
-    background: var(--md-sys-color-primary, #376fd0);
+    background: var(--zk-color-primary, #376fd0);
     border-radius: 0;
     height: 100%;
 }
 
 /* ─── Color variants ──────────────────────────────────────────────────── */
 .z-progressmeter-secondary .z-progressmeter-image,
-.z-progressmeter-secondary .z-progressmeter-bar { background: var(--md-sys-color-secondary, #4db6ac); }
+.z-progressmeter-secondary .z-progressmeter-bar { background: var(--zk-color-secondary, #4db6ac); }
 .z-progressmeter-secondary.z-progressmeter-linear.z-progressmeter { background: rgba(77, 182, 172, 0.2); }
 
 .z-progressmeter-success .z-progressmeter-image,
@@ -81,7 +81,7 @@
     height: 40px !important;
     border-radius: 50%;
     border: 3.6px solid rgba(55, 111, 208, 0.2);
-    border-top-color: var(--md-sys-color-primary, #376fd0);
+    border-top-color: var(--zk-color-primary, #376fd0);
     background: transparent;
     overflow: visible;
     animation: z-progressmeter-circular-spin 1s linear infinite;
@@ -92,7 +92,7 @@
 }
 .z-progressmeter-circular.z-progressmeter-secondary.z-progressmeter {
     border-color: rgba(77, 182, 172, 0.2);
-    border-top-color: var(--md-sys-color-secondary, #4db6ac);
+    border-top-color: var(--zk-color-secondary, #4db6ac);
 }
 
 @keyframes z-progressmeter-circular-spin {
