@@ -7,7 +7,7 @@
     <div sclass="m-card" style="margin-bottom:24px;">
         <label sclass="m-card__title" value="Simple Tooltips"/>
         <label value="Tooltips display informative text when users hover over, focus on, or tap an element."
-               style="font-size:13px;color:var(--md-sys-color-on-surface-variant);display:block;padding:8px 0 16px;"/>
+               style="font-size:13px;color:var(--zk-color-on-surface-variant);display:block;padding:8px 0 16px;"/>
         <div style="display:flex;gap:12px;flex-wrap:wrap;">
             <button label="Delete" iconSclass="z-icon-trash-2" sclass="z-button-outlined"
                     tooltiptext="Delete this item"/>
@@ -20,7 +20,7 @@
     <div sclass="m-card" style="margin-bottom:24px;">
         <label sclass="m-card__title" value="Triggerable Tooltips"/>
         <label value="You can define the types of events that cause a tooltip to show."
-               style="font-size:13px;color:var(--md-sys-color-on-surface-variant);display:block;padding:8px 0 16px;"/>
+               style="font-size:13px;color:var(--zk-color-on-surface-variant);display:block;padding:8px 0 16px;"/>
         <div style="display:flex;gap:12px;flex-wrap:wrap;">
             <popup id="ttHover1" sclass="z-popup-tooltip">
                 <label value="Hover or touch"/>

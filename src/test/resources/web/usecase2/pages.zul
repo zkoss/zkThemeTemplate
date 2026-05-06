@@ -48,7 +48,7 @@
                     <label value="Free" style="font-size:16px;font-weight:700;display:block;"/>
                     <label value="$0 / month" style="font-size:13px;color:#49454f;display:block;"/>
                 </div>
-                <div style="text-align:center;padding:12px;background:var(--md-sys-color-primary,#376fd0);border-radius:8px;margin-bottom:8px;">
+                <div style="text-align:center;padding:12px;background:var(--zk-color-primary,#376fd0);border-radius:8px;margin-bottom:8px;">
                     <label value="Pro" style="font-size:16px;font-weight:700;color:#fff;display:block;"/>
                     <label value="$19 / month" style="font-size:13px;color:#dce5f5;display:block;"/>
                 </div>

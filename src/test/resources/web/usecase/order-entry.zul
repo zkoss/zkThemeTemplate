@@ -13,7 +13,7 @@
 
             <!-- General Tab -->
             <tabpanel>
-                <hlayout width="100%" style="gap: var(--md-sys-spacing-4);">
+                <hlayout width="100%" style="gap: var(--zk-spacing-4);">
                     <!-- Customer Info -->
                     <groupbox hflex="1">
                         <caption label="Customer Info"/>
@@ -26,7 +26,7 @@
                                 <row>
                                     <label value="Customer ID:"/>
                                     <inputgroup>
-                                        <label value="ID:" style="padding: 0 var(--md-sys-spacing-2);"/>
+                                        <label value="ID:" style="padding: 0 var(--zk-spacing-2);"/>
                                         <intbox value="10042" width="140px"/>
                                     </inputgroup>
                                 </row>

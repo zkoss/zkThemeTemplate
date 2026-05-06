@@ -13,8 +13,8 @@ img.avatar,
     border-radius: 50%;
     object-fit: cover;
     display: block;
-    border: 3px solid var(--md-sys-color-outline-variant);
-    background-color: var(--md-sys-color-surface-container-high);
+    border: 3px solid var(--zk-color-outline-variant);
+    background-color: var(--zk-color-surface-container-high);
 }
 
 /* ============================================
@@ -23,44 +23,44 @@ img.avatar,
 .badge-ok, .badge-info {
     display: inline-block;
     padding: 2px 8px;
-    border-radius: var(--md-sys-shape-corner-full);
-    background-color: var(--md-sys-color-secondary-container);
-    color: var(--md-sys-color-on-secondary-container);
-    font-size: var(--md-sys-typescale-label-small-size);
-    font-weight: var(--md-sys-typescale-label-small-weight);
+    border-radius: var(--zk-shape-corner-full);
+    background-color: var(--zk-color-secondary-container);
+    color: var(--zk-color-on-secondary-container);
+    font-size: var(--zk-typescale-label-small-size);
+    font-weight: var(--zk-typescale-label-small-weight);
     letter-spacing: 0.5px;
     text-transform: uppercase;
     vertical-align: middle;
-    margin-right: var(--md-sys-spacing-2);
+    margin-right: var(--zk-spacing-2);
 }
 
 .badge-err, .badge-warn {
     display: inline-block;
     padding: 2px 8px;
-    border-radius: var(--md-sys-shape-corner-full);
-    font-size: var(--md-sys-typescale-label-small-size);
-    font-weight: var(--md-sys-typescale-label-small-weight);
+    border-radius: var(--zk-shape-corner-full);
+    font-size: var(--zk-typescale-label-small-size);
+    font-weight: var(--zk-typescale-label-small-weight);
     letter-spacing: 0.5px;
     text-transform: uppercase;
     vertical-align: middle;
-    margin-right: var(--md-sys-spacing-2);
+    margin-right: var(--zk-spacing-2);
 }
 
 .badge-err {
-    background-color: var(--md-sys-color-error-container);
-    color: var(--md-sys-color-on-error-container);
+    background-color: var(--zk-color-error-container);
+    color: var(--zk-color-on-error-container);
 }
 
 .badge-warn {
-    background-color: var(--md-sys-color-warning-container);
-    color: var(--md-sys-color-on-warning-container);
+    background-color: var(--zk-color-warning-container);
+    color: var(--zk-color-on-warning-container);
 }
 
 /* ============================================
    Index — Mira-Style Sidebar Shell
    ============================================ */
 .sidebar-nav {
-    background-color: var(--md-sys-color-primary);
+    background-color: var(--zk-color-primary);
     height: 100%;
     padding: 16px 0;
     overflow-y: auto;
@@ -71,7 +71,7 @@ img.avatar,
     padding: 8px 16px 16px;
     font-size: 18px;
     font-weight: 700;
-    color: var(--md-sys-color-inverse-on-surface);
+    color: var(--zk-color-inverse-on-surface);
     letter-spacing: -0.01em;
 }
 
@@ -80,7 +80,7 @@ img.avatar,
     padding: 16px 16px 4px;
     font-size: 11px;
     font-weight: 600;
-    color: var(--md-sys-color-inverse-on-surface);
+    color: var(--zk-color-inverse-on-surface);
     opacity: 0.6;
     text-transform: uppercase;
     letter-spacing: 0.08em;
@@ -93,7 +93,7 @@ img.avatar,
     padding: 10px 16px;
     margin: 0 8px 2px 0;
     border-radius: 0 24px 24px 0;
-    color: var(--md-sys-color-inverse-on-surface);
+    color: var(--zk-color-inverse-on-surface);
     font-size: 14px;
     text-decoration: none;
     transition: background-color 150ms ease;
@@ -123,16 +123,16 @@ img.avatar,
 .nav-item {
     display: flex;
     align-items: center;
-    gap: var(--md-sys-spacing-3);
-    padding: var(--md-sys-spacing-2) var(--md-sys-spacing-4);
-    border-radius: var(--md-sys-shape-corner-full);
+    gap: var(--zk-spacing-3);
+    padding: var(--zk-spacing-2) var(--zk-spacing-4);
+    border-radius: var(--zk-shape-corner-full);
     cursor: pointer;
-    color: var(--md-sys-color-on-surface-variant);
-    font-size: var(--md-sys-typescale-label-large-size);
-    font-weight: var(--md-sys-typescale-label-large-weight);
+    color: var(--zk-color-on-surface-variant);
+    font-size: var(--zk-typescale-label-large-size);
+    font-weight: var(--zk-typescale-label-large-weight);
     position: relative;
     overflow: hidden;
-    transition: color var(--md-sys-motion-duration-short1) var(--md-sys-motion-easing-standard);
+    transition: color var(--zk-motion-duration-short1) var(--zk-motion-easing-standard);
 }
 
 .nav-item::before {
@@ -140,32 +140,32 @@ img.avatar,
     position: absolute;
     inset: 0;
     border-radius: inherit;
-    background-color: var(--md-sys-color-on-surface-variant);
+    background-color: var(--zk-color-on-surface-variant);
     opacity: 0;
-    transition: opacity var(--md-sys-motion-duration-short1) var(--md-sys-motion-easing-standard);
+    transition: opacity var(--zk-motion-duration-short1) var(--zk-motion-easing-standard);
     pointer-events: none;
 }
 
 .nav-item:hover::before {
-    opacity: var(--md-sys-state-hover-opacity);
+    opacity: var(--zk-state-hover-opacity);
 }
 
 /* M3 Navigation Drawer active/selected destination */
 .nav-item--active {
-    background-color: var(--md-sys-color-secondary-container);
-    color: var(--md-sys-color-on-secondary-container);
+    background-color: var(--zk-color-secondary-container);
+    color: var(--zk-color-on-secondary-container);
 }
 
 .nav-item--active::before {
-    background-color: var(--md-sys-color-on-secondary-container);
+    background-color: var(--zk-color-on-secondary-container);
 }
 
 /* ============================================
    KPI / Metric Display
    ============================================ */
 .kpi-label {
-    color: var(--md-sys-color-on-surface-variant);
-    margin-bottom: var(--md-sys-spacing-2);
+    color: var(--zk-color-on-surface-variant);
+    margin-bottom: var(--zk-spacing-2);
 }
 
 /* KPI card: ensure panel fills its flex cell and has a min width */
@@ -175,37 +175,37 @@ img.avatar,
 
 /* Ensure panel children content has proper padding */
 .kpi-card .z-panel-content {
-    padding: var(--md-sys-spacing-4);
+    padding: var(--zk-spacing-4);
 }
 
 /* KPI big number */
 .kpi-card .z-h1 {
-    color: var(--md-sys-color-on-surface);
-    margin-bottom: var(--md-sys-spacing-1);
+    color: var(--zk-color-on-surface);
+    margin-bottom: var(--zk-spacing-1);
 }
 
 /* ============================================
    Report Page
    ============================================ */
 .report-header {
-    background-color: var(--md-sys-color-surface-container-low);
-    padding: var(--md-sys-spacing-3) var(--md-sys-spacing-4);
-    border-bottom: 2px solid var(--md-sys-color-primary);
-    margin-bottom: var(--md-sys-spacing-2);
+    background-color: var(--zk-color-surface-container-low);
+    padding: var(--zk-spacing-3) var(--zk-spacing-4);
+    border-bottom: 2px solid var(--zk-color-primary);
+    margin-bottom: var(--zk-spacing-2);
 }
 
 .report-title {
-    font-size: var(--md-sys-typescale-title-large-size);
-    font-weight: var(--md-sys-typescale-title-large-weight);
-    line-height: var(--md-sys-typescale-title-large-line-height);
-    color: var(--md-sys-color-on-surface);
-    margin-bottom: var(--md-sys-spacing-1);
+    font-size: var(--zk-typescale-title-large-size);
+    font-weight: var(--zk-typescale-title-large-weight);
+    line-height: var(--zk-typescale-title-large-line-height);
+    color: var(--zk-color-on-surface);
+    margin-bottom: var(--zk-spacing-1);
 }
 
 .report-sub {
-    font-size: var(--md-sys-typescale-body-small-size);
-    font-weight: var(--md-sys-typescale-body-small-weight);
-    color: var(--md-sys-color-on-surface-variant);
+    font-size: var(--zk-typescale-body-small-size);
+    font-weight: var(--zk-typescale-body-small-weight);
+    color: var(--zk-color-on-surface-variant);
     margin: 0;
 }
 
@@ -215,12 +215,12 @@ img.avatar,
 .status-bar {
     display: flex;
     align-items: center;
-    gap: var(--md-sys-spacing-3);
-    padding: 0 var(--md-sys-spacing-4);
+    gap: var(--zk-spacing-3);
+    padding: 0 var(--zk-spacing-4);
     height: 28px;
-    font-size: var(--md-sys-typescale-body-small-size);
-    color: var(--md-sys-color-on-surface-variant);
-    background-color: var(--md-sys-color-surface-container-low);
+    font-size: var(--zk-typescale-body-small-size);
+    color: var(--zk-color-on-surface-variant);
+    background-color: var(--zk-color-surface-container-low);
 }
 
 /* Status bar used with sclass="status-bar-inner" on hlayout */
@@ -230,11 +230,11 @@ img.avatar,
     flex-direction: row;
     align-items: center;
     height: 100%;
-    padding: 0 var(--md-sys-spacing-4);
-    gap: var(--md-sys-spacing-3);
-    font-size: var(--md-sys-typescale-body-small-size);
-    color: var(--md-sys-color-on-surface-variant);
-    background-color: var(--md-sys-color-surface-container-low);
+    padding: 0 var(--zk-spacing-4);
+    gap: var(--zk-spacing-3);
+    font-size: var(--zk-typescale-body-small-size);
+    color: var(--zk-color-on-surface-variant);
+    background-color: var(--zk-color-surface-container-low);
     box-sizing: border-box;
 }
 
@@ -242,7 +242,7 @@ img.avatar,
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: var(--md-sys-spacing-3);
+    gap: var(--zk-spacing-3);
     height: 100%;
     flex: 1;
     overflow: hidden;
@@ -251,8 +251,8 @@ img.avatar,
 /* Prevent labels in status bar from wrapping */
 .status-bar-inner .z-label {
     white-space: nowrap;
-    font-size: var(--md-sys-typescale-body-small-size);
-    color: var(--md-sys-color-on-surface-variant);
+    font-size: var(--zk-typescale-body-small-size);
+    color: var(--zk-color-on-surface-variant);
 }
 
 /* ============================================
@@ -260,24 +260,24 @@ img.avatar,
    ============================================ */
 /* The west body has no native padding; add some via the first child div */
 .z-west-body > .z-div {
-    padding: var(--md-sys-spacing-2) var(--md-sys-spacing-2);
+    padding: var(--zk-spacing-2) var(--zk-spacing-2);
 }
 
 /* ============================================
    Misc Demo Helpers
    ============================================ */
 .section-hint {
-    color: var(--md-sys-color-on-surface-variant);
-    margin-bottom: var(--md-sys-spacing-2);
+    color: var(--zk-color-on-surface-variant);
+    margin-bottom: var(--zk-spacing-2);
 }
 
 .html-snippet-preview {
-    padding: var(--md-sys-spacing-2);
-    background-color: var(--md-sys-color-surface-container-low);
-    border: 1px solid var(--md-sys-color-outline-variant);
-    border-radius: var(--md-sys-shape-corner-extra-small);
-    font-size: var(--md-sys-typescale-body-small-size);
-    color: var(--md-sys-color-on-surface);
+    padding: var(--zk-spacing-2);
+    background-color: var(--zk-color-surface-container-low);
+    border: 1px solid var(--zk-color-outline-variant);
+    border-radius: var(--zk-shape-corner-extra-small);
+    font-size: var(--zk-typescale-body-small-size);
+    color: var(--zk-color-on-surface);
 }
 
 /* ============================================
@@ -298,7 +298,7 @@ img.avatar,
 
 /* Ensure the tabpanel vlayout content has proper background on page-content tabbox */
 .z-tabbox.page-content .z-tabpanels {
-    background-color: var(--md-sys-color-surface-container-lowest);
+    background-color: var(--zk-color-surface-container-lowest);
 }
 
 /* ============================================
@@ -310,11 +310,11 @@ img.avatar,
 .page-content {
     display: flex;
     flex-direction: column;
-    gap: var(--md-sys-spacing-4);
-    padding: var(--md-sys-spacing-4);
+    gap: var(--zk-spacing-4);
+    padding: var(--zk-spacing-4);
     box-sizing: border-box;
     min-height: 100%;
-    background-color: var(--md-sys-color-surface-container-lowest);
+    background-color: var(--zk-color-surface-container-lowest);
 }
 
 /* When page-content is applied to a tabbox, reset padding/gap to avoid
@@ -329,7 +329,7 @@ img.avatar,
     display: flex !important;
     flex-direction: row !important;
     flex-wrap: wrap !important;
-    gap: var(--md-sys-spacing-4) !important;
+    gap: var(--zk-spacing-4) !important;
     box-sizing: border-box;
 }
 
@@ -347,13 +347,13 @@ img.avatar,
 
 .md-text-center { text-align: center !important; }
 .md-text-right  { text-align: right !important; }
-.md-text-primary { color: var(--md-sys-color-primary) !important; }
+.md-text-primary { color: var(--zk-color-primary) !important; }
 
-.md-py-3 { padding-top: var(--md-sys-spacing-3) !important; padding-bottom: var(--md-sys-spacing-3) !important; }
-.md-m-2  { margin: var(--md-sys-spacing-2) !important; }
+.md-py-3 { padding-top: var(--zk-spacing-3) !important; padding-bottom: var(--zk-spacing-3) !important; }
+.md-m-2  { margin: var(--zk-spacing-2) !important; }
 
 .md-flex      { display: flex !important; }
 .md-flex-wrap { flex-wrap: wrap !important; }
-.md-gap-4     { gap: var(--md-sys-spacing-4) !important; }
+.md-gap-4     { gap: var(--zk-spacing-4) !important; }
 
 .md-icon-xl { font-size: 48px !important; }

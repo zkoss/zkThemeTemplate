@@ -20,8 +20,8 @@
 
                 <!-- Card with image -->
                 <div sclass="m-card" style="width:300px;padding:0;overflow:hidden;">
-                    <div style="background:var(--md-sys-color-primary-container,#d6e4ff);height:120px;display:flex;align-items:center;justify-content:center;">
-                        <label value="Image Placeholder" style="color:var(--md-sys-color-primary,#376fd0);"/>
+                    <div style="background:var(--zk-color-primary-container,#d6e4ff);height:120px;display:flex;align-items:center;justify-content:center;">
+                        <label value="Image Placeholder" style="color:var(--zk-color-primary,#376fd0);"/>
                     </div>
                     <div sclass="m-card__body" style="padding:16px;">
                         <label sclass="m-card__title" value="Card with Image"/>

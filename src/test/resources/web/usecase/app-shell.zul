@@ -105,7 +105,7 @@
         <div sclass="status-bar">
             <span>Status: </span>
             <label value="Ready" id="statusLabel"/>
-            <span style="margin-left: var(--md-sys-spacing-4);">Last updated: 2026-03-20 09:00</span>
+            <span style="margin-left: var(--zk-spacing-4);">Last updated: 2026-03-20 09:00</span>
         </div>
     </south>
 </borderlayout>
