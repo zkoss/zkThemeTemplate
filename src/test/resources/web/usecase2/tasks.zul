@@ -9,7 +9,7 @@
         <div>
             <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
                 <label style="font-size:15px;font-weight:600;color:#1a1a2e;" value="Backlog"/>
-                <div sclass="m-chip m-chip--neutral">4</div>
+                <div sclass="z-chip z-chip-neutral">4</div>
             </div>
             <div style="display:flex;flex-direction:column;gap:12px;">
                 <div sclass="m-card" style="padding:16px;">
@@ -37,7 +37,7 @@
                     <div style="font-size:13px;font-weight:500;margin-bottom:8px;">Migrate database to new schema</div>
                     <div style="display:flex;justify-content:space-between;align-items:center;">
                         <span style="font-size:11px;color:#757575;">James Dalton</span>
-                        <div sclass="m-badge m-badge--error" style="font-size:10px;">Blocked</div>
+                        <div sclass="z-badge z-badge-error" style="font-size:10px;">Blocked</div>
                     </div>
                 </div>
             </div>
@@ -47,7 +47,7 @@
         <div>
             <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
                 <label style="font-size:15px;font-weight:600;color:#1a1a2e;" value="In Progress"/>
-                <div sclass="m-chip m-chip--warning" style="background:#fff3e0;color:#e65100;">2</div>
+                <div sclass="z-chip z-chip-warning" style="background:#fff3e0;color:#e65100;">2</div>
             </div>
             <div style="display:flex;flex-direction:column;gap:12px;">
                 <div sclass="m-card" style="padding:16px;">
@@ -71,7 +71,7 @@
         <div>
             <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
                 <label style="font-size:15px;font-weight:600;color:#1a1a2e;" value="Completed"/>
-                <div sclass="m-chip m-chip--success" style="background:#e8f5e9;color:#1b5e20;">2</div>
+                <div sclass="z-chip z-chip-success" style="background:#e8f5e9;color:#1b5e20;">2</div>
             </div>
             <div style="display:flex;flex-direction:column;gap:12px;">
                 <div sclass="m-card" style="padding:16px;">

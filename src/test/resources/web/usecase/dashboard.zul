@@ -8,7 +8,7 @@
 
         <!-- Page toolbar -->
         <toolbar>
-            <label value="Operations Dashboard" sclass="fs-3"/>
+            <label value="Operations Dashboard" sclass="z-h2"/>
             <separator/>
             <toolbarbutton label="Refresh" iconSclass="z-icon-refresh"/>
             <toolbarbutton label="Settings" iconSclass="z-icon-cog" sclass="md-push-right"/>
@@ -20,8 +20,8 @@
             <panel title="Orders Today" border="normal" sclass="kpi-card md-flex-1" >
                 <panelchildren>
                     <vlayout>
-                        <div sclass="fs-1">248</div>
-                        <div sclass="kpi-label fs-6">Daily target: 300</div>
+                        <div sclass="z-h1">248</div>
+                        <div sclass="kpi-label z-h6">Daily target: 300</div>
                         <progressmeter value="83" width="160px"/>
                         <label value="83% of target"/>
                     </vlayout>
@@ -33,8 +33,8 @@
                 <panelchildren>
                     <vlayout>
                         <rating max="5" rating="4" readonly="true"/>
-                        <div sclass="fs-1">4.2</div>
-                        <div sclass="kpi-label fs-6">out of 5.0 (342 reviews)</div>
+                        <div sclass="z-h1">4.2</div>
+                        <div sclass="kpi-label z-h6">out of 5.0 (342 reviews)</div>
                     </vlayout>
                 </panelchildren>
             </panel>
@@ -43,8 +43,8 @@
             <panel title="Server Load" border="normal" sclass="kpi-card md-flex-1">
                 <panelchildren>
                     <vlayout>
-                        <div sclass="fs-1">67%</div>
-                        <div sclass="kpi-label fs-6">CPU utilization</div>
+                        <div sclass="z-h1">67%</div>
+                        <div sclass="kpi-label z-h6">CPU utilization</div>
                         <progressmeter value="67"/>
                         <label value="Normal range: 0-80%"/>
                     </vlayout>
@@ -55,8 +55,8 @@
             <panel title="Revenue" border="normal" sclass="kpi-card md-flex-1">
                 <panelchildren>
                     <vlayout>
-                        <div sclass="fs-1">$84.2K</div>
-                        <div sclass="kpi-label fs-6">Month to date</div>
+                        <div sclass="z-h1">$84.2K</div>
+                        <div sclass="kpi-label z-h6">Month to date</div>
                         <label value="Target: $120K"/>
                     </vlayout>
                 </panelchildren>

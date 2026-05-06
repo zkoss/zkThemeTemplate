@@ -33,7 +33,7 @@
                 <div sclass="m-card m-kpi-card" style="width:220px;">
                     <div sclass="m-kpi-card__header">
                         <label sclass="m-kpi-card__label" value="Sales Today"/>
-                        <div sclass="m-chip m-chip--primary">Today</div>
+                        <div sclass="z-chip z-chip-primary">Today</div>
                     </div>
                     <label sclass="m-kpi-card__value" value="2,532"/>
                     <div sclass="m-kpi-card__footer">

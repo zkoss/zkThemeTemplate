@@ -42,11 +42,3 @@ img {
     vertical-align: middle;
 }
 
-/* Typography scale utilities
-   Applied to the element and its inner .z-label so ZK label components inherit the size. */
-.fs-1, .fs-1 .z-label { font-size: var(--md-fs-1) !important; }
-.fs-2, .fs-2 .z-label { font-size: var(--md-fs-2) !important; }
-.fs-3, .fs-3 .z-label { font-size: var(--md-fs-3) !important; }
-.fs-4, .fs-4 .z-label { font-size: var(--md-fs-4) !important; }
-.fs-5, .fs-5 .z-label { font-size: var(--md-fs-5) !important; }
-.fs-6, .fs-6 .z-label { font-size: var(--md-fs-6) !important; }

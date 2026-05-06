@@ -19,12 +19,12 @@
 
         <div sclass="m-card m-card--project">
             <label sclass="m-card__title" value="Landing page redesign"/>
-            <label sclass="m-badge m-badge--success" value="Finished"/>
+            <label sclass="z-badge z-badge-success" value="Finished"/>
             <label sclass="m-card__desc" value="Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum."/>
-            <div class="m-avatar-group">
-                <image src="https://mira.bootlab.io/static/img/avatars/avatar-1.jpg" class="m-avatar m-avatar--sm"/>
-                <image src="https://mira.bootlab.io/static/img/avatars/avatar-3.jpg" class="m-avatar m-avatar--sm"/>
-                <image src="https://mira.bootlab.io/static/img/avatars/avatar-2.jpg" class="m-avatar m-avatar--sm"/>
+            <div class="z-avatar-group">
+                <image src="https://mira.bootlab.io/static/img/avatars/avatar-1.jpg" class="z-avatar z-avatar-sm"/>
+                <image src="https://mira.bootlab.io/static/img/avatars/avatar-3.jpg" class="z-avatar z-avatar-sm"/>
+                <image src="https://mira.bootlab.io/static/img/avatars/avatar-2.jpg" class="z-avatar z-avatar-sm"/>
             </div>
             <div sclass="m-card__actions">
                 <a sclass="m-link" >Share</a>
@@ -34,12 +34,12 @@
 
         <div sclass="m-card m-card--project">
             <label sclass="m-card__title" value="Company posters"/>
-            <label sclass="m-badge m-badge--warning" value="In progress"/>
+            <label sclass="z-badge z-badge-warning" value="In progress"/>
             <label sclass="m-card__desc" value="Curabitur ligula sapien, tincidunt non, euismod vitae, posuere imperdiet, leo. Maecenas malesuada. Praesent congue erat at massa."/>
-            <div class="m-avatar-group">
-                <image src="https://mira.bootlab.io/static/img/avatars/avatar-1.jpg" class="m-avatar m-avatar--sm"/>
-                <image src="https://mira.bootlab.io/static/img/avatars/avatar-3.jpg" class="m-avatar m-avatar--sm"/>
-                <image src="https://mira.bootlab.io/static/img/avatars/avatar-2.jpg" class="m-avatar m-avatar--sm"/>
+            <div class="z-avatar-group">
+                <image src="https://mira.bootlab.io/static/img/avatars/avatar-1.jpg" class="z-avatar z-avatar-sm"/>
+                <image src="https://mira.bootlab.io/static/img/avatars/avatar-3.jpg" class="z-avatar z-avatar-sm"/>
+                <image src="https://mira.bootlab.io/static/img/avatars/avatar-2.jpg" class="z-avatar z-avatar-sm"/>
             </div>
             <div sclass="m-card__actions">
                 <a sclass="m-link" >Share</a>
@@ -49,12 +49,12 @@
 
         <div sclass="m-card m-card--project">
             <label sclass="m-card__title" value="Product page design"/>
-            <label sclass="m-badge m-badge--success" value="Finished"/>
+            <label sclass="z-badge z-badge-success" value="Finished"/>
             <label sclass="m-card__desc" value="Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum."/>
-            <div class="m-avatar-group">
-                <image src="https://mira.bootlab.io/static/img/avatars/avatar-1.jpg" class="m-avatar m-avatar--sm"/>
-                <image src="https://mira.bootlab.io/static/img/avatars/avatar-3.jpg" class="m-avatar m-avatar--sm"/>
-                <image src="https://mira.bootlab.io/static/img/avatars/avatar-2.jpg" class="m-avatar m-avatar--sm"/>
+            <div class="z-avatar-group">
+                <image src="https://mira.bootlab.io/static/img/avatars/avatar-1.jpg" class="z-avatar z-avatar-sm"/>
+                <image src="https://mira.bootlab.io/static/img/avatars/avatar-3.jpg" class="z-avatar z-avatar-sm"/>
+                <image src="https://mira.bootlab.io/static/img/avatars/avatar-2.jpg" class="z-avatar z-avatar-sm"/>
             </div>
             <div sclass="m-card__actions">
                 <a sclass="m-link" >Share</a>
@@ -64,12 +64,12 @@
 
         <div sclass="m-card m-card--project">
             <label sclass="m-card__title" value="Upgrade CRM software"/>
-            <label sclass="m-badge m-badge--warning" value="In progress"/>
+            <label sclass="z-badge z-badge-warning" value="In progress"/>
             <label sclass="m-card__desc" value="Nam pretium turpis et arcu. Duis arcu tortor, suscipit eget, imperdiet nec, imperdiet iaculis, ipsum. Sed aliquam ultrices mauris."/>
-            <div class="m-avatar-group">
-                <image src="https://mira.bootlab.io/static/img/avatars/avatar-1.jpg" class="m-avatar m-avatar--sm"/>
-                <image src="https://mira.bootlab.io/static/img/avatars/avatar-3.jpg" class="m-avatar m-avatar--sm"/>
-                <image src="https://mira.bootlab.io/static/img/avatars/avatar-2.jpg" class="m-avatar m-avatar--sm"/>
+            <div class="z-avatar-group">
+                <image src="https://mira.bootlab.io/static/img/avatars/avatar-1.jpg" class="z-avatar z-avatar-sm"/>
+                <image src="https://mira.bootlab.io/static/img/avatars/avatar-3.jpg" class="z-avatar z-avatar-sm"/>
+                <image src="https://mira.bootlab.io/static/img/avatars/avatar-2.jpg" class="z-avatar z-avatar-sm"/>
             </div>
             <div sclass="m-card__actions">
                 <a sclass="m-link" >Share</a>
@@ -85,12 +85,12 @@
             <image src="https://mira.bootlab.io/static/img/unsplash/unsplash-1.jpg" class="m-card__img"/>
             <div sclass="m-card__body">
                 <label sclass="m-card__title" value="Fix form validation"/>
-                <label sclass="m-badge m-badge--warning" value="In progress"/>
+                <label sclass="z-badge z-badge-warning" value="In progress"/>
                 <label sclass="m-card__desc" value="Nam pretium turpis et arcu. Duis arcu tortor, suscipit eget, imperdiet nec, imperdiet iaculis, ipsum."/>
-                <div class="m-avatar-group">
-                    <image src="https://mira.bootlab.io/static/img/avatars/avatar-1.jpg" class="m-avatar m-avatar--sm"/>
-                    <image src="https://mira.bootlab.io/static/img/avatars/avatar-3.jpg" class="m-avatar m-avatar--sm"/>
-                    <image src="https://mira.bootlab.io/static/img/avatars/avatar-2.jpg" class="m-avatar m-avatar--sm"/>
+                <div class="z-avatar-group">
+                    <image src="https://mira.bootlab.io/static/img/avatars/avatar-1.jpg" class="z-avatar z-avatar-sm"/>
+                    <image src="https://mira.bootlab.io/static/img/avatars/avatar-3.jpg" class="z-avatar z-avatar-sm"/>
+                    <image src="https://mira.bootlab.io/static/img/avatars/avatar-2.jpg" class="z-avatar z-avatar-sm"/>
                 </div>
                 <div sclass="m-card__actions">
                     <a sclass="m-link" >Share</a>
@@ -103,12 +103,12 @@
             <image src="https://mira.bootlab.io/static/img/unsplash/unsplash-2.jpg" class="m-card__img"/>
             <div sclass="m-card__body">
                 <label sclass="m-card__title" value="New company logo"/>
-                <label sclass="m-badge m-badge--error" value="On hold"/>
+                <label sclass="z-badge z-badge-error" value="On hold"/>
                 <label sclass="m-card__desc" value="Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero."/>
-                <div class="m-avatar-group">
-                    <image src="https://mira.bootlab.io/static/img/avatars/avatar-1.jpg" class="m-avatar m-avatar--sm"/>
-                    <image src="https://mira.bootlab.io/static/img/avatars/avatar-3.jpg" class="m-avatar m-avatar--sm"/>
-                    <image src="https://mira.bootlab.io/static/img/avatars/avatar-2.jpg" class="m-avatar m-avatar--sm"/>
+                <div class="z-avatar-group">
+                    <image src="https://mira.bootlab.io/static/img/avatars/avatar-1.jpg" class="z-avatar z-avatar-sm"/>
+                    <image src="https://mira.bootlab.io/static/img/avatars/avatar-3.jpg" class="z-avatar z-avatar-sm"/>
+                    <image src="https://mira.bootlab.io/static/img/avatars/avatar-2.jpg" class="z-avatar z-avatar-sm"/>
                 </div>
                 <div sclass="m-card__actions">
                     <a sclass="m-link" >Share</a>
@@ -121,12 +121,12 @@
             <image src="https://mira.bootlab.io/static/img/unsplash/unsplash-3.jpg" class="m-card__img"/>
             <div sclass="m-card__body">
                 <label sclass="m-card__title" value="Upgrade to latest Maps API"/>
-                <label sclass="m-badge m-badge--success" value="Finished"/>
+                <label sclass="z-badge z-badge-success" value="Finished"/>
                 <label sclass="m-card__desc" value="Nam pretium turpis et arcu. Duis arcu tortor, suscipit eget, imperdiet nec, imperdiet iaculis, ipsum."/>
-                <div class="m-avatar-group">
-                    <image src="https://mira.bootlab.io/static/img/avatars/avatar-1.jpg" class="m-avatar m-avatar--sm"/>
-                    <image src="https://mira.bootlab.io/static/img/avatars/avatar-3.jpg" class="m-avatar m-avatar--sm"/>
-                    <image src="https://mira.bootlab.io/static/img/avatars/avatar-2.jpg" class="m-avatar m-avatar--sm"/>
+                <div class="z-avatar-group">
+                    <image src="https://mira.bootlab.io/static/img/avatars/avatar-1.jpg" class="z-avatar z-avatar-sm"/>
+                    <image src="https://mira.bootlab.io/static/img/avatars/avatar-3.jpg" class="z-avatar z-avatar-sm"/>
+                    <image src="https://mira.bootlab.io/static/img/avatars/avatar-2.jpg" class="z-avatar z-avatar-sm"/>
                 </div>
                 <div sclass="m-card__actions">
                     <a sclass="m-link" >Share</a>
@@ -139,12 +139,12 @@
             <image src="https://mira.bootlab.io/static/img/unsplash/unsplash-4.jpg" class="m-card__img"/>
             <div sclass="m-card__body">
                 <label sclass="m-card__title" value="Refactor backend templates"/>
-                <label sclass="m-badge m-badge--error" value="On hold"/>
+                <label sclass="z-badge z-badge-error" value="On hold"/>
                 <label sclass="m-card__desc" value="Curabitur ligula sapien, tincidunt non, euismod vitae, posuere imperdiet, leo. Maecenas malesuada."/>
-                <div class="m-avatar-group">
-                    <image src="https://mira.bootlab.io/static/img/avatars/avatar-1.jpg" class="m-avatar m-avatar--sm"/>
-                    <image src="https://mira.bootlab.io/static/img/avatars/avatar-3.jpg" class="m-avatar m-avatar--sm"/>
-                    <image src="https://mira.bootlab.io/static/img/avatars/avatar-2.jpg" class="m-avatar m-avatar--sm"/>
+                <div class="z-avatar-group">
+                    <image src="https://mira.bootlab.io/static/img/avatars/avatar-1.jpg" class="z-avatar z-avatar-sm"/>
+                    <image src="https://mira.bootlab.io/static/img/avatars/avatar-3.jpg" class="z-avatar z-avatar-sm"/>
+                    <image src="https://mira.bootlab.io/static/img/avatars/avatar-2.jpg" class="z-avatar z-avatar-sm"/>
                 </div>
                 <div sclass="m-card__actions">
                     <a sclass="m-link" >Share</a>

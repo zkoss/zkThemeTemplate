@@ -22,7 +22,7 @@
                 <listcell label="Apple iPad Pro (Silver)"/>
                 <listcell label="$1,399.00"/>
                 <listcell label="48"/>
-                <listcell><div sclass="m-chip">Tablets</div></listcell>
+                <listcell><div sclass="z-chip">Tablets</div></listcell>
                 <listcell label="4.6 of 55 Reviews"/>
                 <listcell><hlayout spacing="4px"><button iconSclass="z-icon-eye" sclass="z-button-icon"/><button iconSclass="z-icon-pencil" sclass="z-button-icon"/><button iconSclass="z-icon-trash-2" sclass="z-button-icon"/></hlayout></listcell>
             </listitem>
@@ -30,7 +30,7 @@
                 <listcell label="Apple iPad Pro (Space Gray)"/>
                 <listcell label="$1,399.00"/>
                 <listcell label="48"/>
-                <listcell><div sclass="m-chip">Tablets</div></listcell>
+                <listcell><div sclass="z-chip">Tablets</div></listcell>
                 <listcell label="4.3 of 25 Reviews"/>
                 <listcell><hlayout spacing="4px"><button iconSclass="z-icon-eye" sclass="z-button-icon"/><button iconSclass="z-icon-pencil" sclass="z-button-icon"/><button iconSclass="z-icon-trash-2" sclass="z-button-icon"/></hlayout></listcell>
             </listitem>
@@ -38,7 +38,7 @@
                 <listcell label="Apple iPhone 15 Pro Max (Blue Titanium)"/>
                 <listcell label="$1,499.00"/>
                 <listcell label="38"/>
-                <listcell><div sclass="m-chip m-chip--primary">Smartphones</div></listcell>
+                <listcell><div sclass="z-chip z-chip-primary">Smartphones</div></listcell>
                 <listcell label="4.6 of 40 Reviews"/>
                 <listcell><hlayout spacing="4px"><button iconSclass="z-icon-eye" sclass="z-button-icon"/><button iconSclass="z-icon-pencil" sclass="z-button-icon"/><button iconSclass="z-icon-trash-2" sclass="z-button-icon"/></hlayout></listcell>
             </listitem>
@@ -46,7 +46,7 @@
                 <listcell label="Apple iPhone 15 Pro Max (Natural Titanium)"/>
                 <listcell label="$1,499.00"/>
                 <listcell label="30"/>
-                <listcell><div sclass="m-chip m-chip--primary">Smartphones</div></listcell>
+                <listcell><div sclass="z-chip z-chip-primary">Smartphones</div></listcell>
                 <listcell label="4.8 of 50 Reviews"/>
                 <listcell><hlayout spacing="4px"><button iconSclass="z-icon-eye" sclass="z-button-icon"/><button iconSclass="z-icon-pencil" sclass="z-button-icon"/><button iconSclass="z-icon-trash-2" sclass="z-button-icon"/></hlayout></listcell>
             </listitem>
@@ -54,7 +54,7 @@
                 <listcell label="Apple iPhone 15 Pro Max (White Titanium)"/>
                 <listcell label="$1,499.00"/>
                 <listcell label="45"/>
-                <listcell><div sclass="m-chip m-chip--primary">Smartphones</div></listcell>
+                <listcell><div sclass="z-chip z-chip-primary">Smartphones</div></listcell>
                 <listcell label="4.9 of 60 Reviews"/>
                 <listcell><hlayout spacing="4px"><button iconSclass="z-icon-eye" sclass="z-button-icon"/><button iconSclass="z-icon-pencil" sclass="z-button-icon"/><button iconSclass="z-icon-trash-2" sclass="z-button-icon"/></hlayout></listcell>
             </listitem>
@@ -62,7 +62,7 @@
                 <listcell label="Apple MacBook Pro 16&quot; (Silver)"/>
                 <listcell label="$2,399.00"/>
                 <listcell label="55"/>
-                <listcell><div sclass="m-chip">Notebooks</div></listcell>
+                <listcell><div sclass="z-chip">Notebooks</div></listcell>
                 <listcell label="4.7 of 45 Reviews"/>
                 <listcell><hlayout spacing="4px"><button iconSclass="z-icon-eye" sclass="z-button-icon"/><button iconSclass="z-icon-pencil" sclass="z-button-icon"/><button iconSclass="z-icon-trash-2" sclass="z-button-icon"/></hlayout></listcell>
             </listitem>

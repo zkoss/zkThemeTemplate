@@ -16,7 +16,7 @@
                 <div sclass="m-topbar-right">
                     <button iconSclass="z-icon-mail" sclass="z-button-icon"/>
                     <button iconSclass="z-icon-bell"     sclass="z-button-icon"/>
-                    <div sclass="m-avatar m-avatar--sm" style="background:#5c7bd9;">
+                    <div sclass="z-avatar z-avatar-sm" style="background:#5c7bd9;">
                         <label value="L" style="color:#fff;font-weight:600;"/>
                     </div>
                 </div>

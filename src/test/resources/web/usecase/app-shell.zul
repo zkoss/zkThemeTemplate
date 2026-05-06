@@ -5,7 +5,7 @@
 <borderlayout height="100vh">
     <north size="48px" border="none">
         <toolbar>
-            <span sclass="fs-3">ERP Portal</span>
+            <span sclass="z-h2">ERP Portal</span>
             <separator orient="vertical"/>
             <menubar>
                 <menu label="File">
@@ -73,10 +73,10 @@
             <tabpanels>
                 <tabpanel>
                     <vlayout>
-                        <label value="Welcome to the Dashboard" sclass="fs-4"/>
+                        <label value="Welcome to the Dashboard" sclass="z-h3"/>
                         <div>
                             <span>Current user: </span>
-                            <span sclass="fs-4">Administrator</span>
+                            <span sclass="z-h3">Administrator</span>
                         </div>
                         <label value="Select a menu item on the left to get started."/>
                     </vlayout>

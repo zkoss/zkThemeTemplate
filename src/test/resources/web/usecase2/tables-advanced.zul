@@ -29,7 +29,7 @@
                         <listcell label="Wireless Headphones"/>
                         <listcell label="$129.99"/>
                         <listcell label="Apr 20, 2025"/>
-                        <listcell><div sclass="m-badge m-badge--success">Shipped</div></listcell>
+                        <listcell><div sclass="z-badge z-badge-success">Shipped</div></listcell>
                     </listitem>
                     <listitem>
                         <listcell label="#10002"/>
@@ -37,7 +37,7 @@
                         <listcell label="Ergonomic Chair"/>
                         <listcell label="$349.00"/>
                         <listcell label="Apr 21, 2025"/>
-                        <listcell><div sclass="m-badge m-badge--warning">Processing</div></listcell>
+                        <listcell><div sclass="z-badge z-badge-warning">Processing</div></listcell>
                     </listitem>
                     <listitem>
                         <listcell label="#10003"/>
@@ -45,7 +45,7 @@
                         <listcell label="USB-C Hub"/>
                         <listcell label="$59.95"/>
                         <listcell label="Apr 22, 2025"/>
-                        <listcell><div sclass="m-badge m-badge--success">Delivered</div></listcell>
+                        <listcell><div sclass="z-badge z-badge-success">Delivered</div></listcell>
                     </listitem>
                     <listitem>
                         <listcell label="#10004"/>
@@ -53,7 +53,7 @@
                         <listcell label="Mechanical Keyboard"/>
                         <listcell label="$199.00"/>
                         <listcell label="Apr 23, 2025"/>
-                        <listcell><div sclass="m-badge m-badge--error">Cancelled</div></listcell>
+                        <listcell><div sclass="z-badge z-badge-error">Cancelled</div></listcell>
                     </listitem>
                     <listitem>
                         <listcell label="#10005"/>
@@ -61,7 +61,7 @@
                         <listcell label="Standing Desk"/>
                         <listcell label="$599.00"/>
                         <listcell label="Apr 24, 2025"/>
-                        <listcell><div sclass="m-badge m-badge--info">Pending</div></listcell>
+                        <listcell><div sclass="z-badge z-badge-info">Pending</div></listcell>
                     </listitem>
                     <listitem>
                         <listcell label="#10006"/>
@@ -69,7 +69,7 @@
                         <listcell label="Monitor 27in"/>
                         <listcell label="$449.99"/>
                         <listcell label="Apr 25, 2025"/>
-                        <listcell><div sclass="m-badge m-badge--success">Shipped</div></listcell>
+                        <listcell><div sclass="z-badge z-badge-success">Shipped</div></listcell>
                     </listitem>
                 </listbox>
             </div>

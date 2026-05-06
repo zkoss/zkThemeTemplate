@@ -6,7 +6,7 @@
     <!-- Left: Category Tree (25%) -->
     <vlayout width="320px" vflex="1">
         <toolbar>
-            <label value="Categories" sclass="fs-5"/>
+            <label value="Categories" sclass="z-h4"/>
         </toolbar>
         <tree vflex="1" hflex="1">
             <treecols>
@@ -192,7 +192,7 @@
     <!-- Product detail popup -->
     <popup id="productDetailPopup" width="360px">
         <vlayout>
-            <label value="Product Details" sclass="fs-4"/>
+            <label value="Product Details" sclass="z-h3"/>
             <span sclass="z-icon-file md-icon-xl"/>
             <html content="&lt;p&gt;&lt;strong&gt;Laptop 15-inch Pro&lt;/strong&gt;&lt;br/&gt;High-performance laptop with 16GB RAM, 512GB SSD, and Intel i7 processor. Ideal for enterprise workloads.&lt;/p&gt;"/>
             <hlayout>

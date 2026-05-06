@@ -18,7 +18,7 @@
             <label sclass="m-card__title" value="Profile Details"/>
             <div style="text-align:center;padding:16px 0;">
                 <div style="width:96px;height:96px;border-radius:50%;overflow:hidden;margin:0 auto 12px;">
-                    <div sclass="m-avatar" style="width:96px;height:96px;background:#5c7bd9;font-size:36px;">
+                    <div sclass="z-avatar" style="width:96px;height:96px;background:#5c7bd9;font-size:36px;">
                         <label value="L" style="color:#fff;font-weight:600;"/>
                     </div>
                 </div>
@@ -35,15 +35,15 @@
             <div style="padding:12px 0;">
                 <label sclass="m-card__title" value="Skills"/>
                 <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;">
-                    <div sclass="m-chip">HTML</div>
-                    <div sclass="m-chip">JavaScript</div>
-                    <div sclass="m-chip">Sass</div>
-                    <div sclass="m-chip">React</div>
-                    <div sclass="m-chip">Redux</div>
-                    <div sclass="m-chip">Next.js</div>
-                    <div sclass="m-chip">Material UI</div>
-                    <div sclass="m-chip">UI</div>
-                    <div sclass="m-chip">UX</div>
+                    <div sclass="z-chip">HTML</div>
+                    <div sclass="z-chip">JavaScript</div>
+                    <div sclass="z-chip">Sass</div>
+                    <div sclass="z-chip">React</div>
+                    <div sclass="z-chip">Redux</div>
+                    <div sclass="z-chip">Next.js</div>
+                    <div sclass="z-chip">Material UI</div>
+                    <div sclass="z-chip">UI</div>
+                    <div sclass="z-chip">UX</div>
                 </div>
             </div>
 

@@ -525,8 +525,8 @@
 }
 
 /* badge spacing inside project cards */
-.m-card--project .m-badge,
-.m-card--image .m-badge {
+.m-card--project .z-badge,
+.m-card--image .z-badge {
     margin-top: 6px;
     align-self: flex-start;
 }

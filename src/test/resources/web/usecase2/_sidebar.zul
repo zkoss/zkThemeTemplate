@@ -5,7 +5,7 @@
         <span sclass="m-sidebar__brand-name">ZK Material Theme</span>
     </div>
 
-    <textbox sclass="m-sidebar__search" placeholder="Search topics..." readonly="true"/>
+    <textbox sclass="m-sidebar__search" placeholder="Search topics..." />
 
     <div sclass="m-nav-section">Pages</div>
     <navbar orient="vertical" sclass="m-sidebar">
@@ -168,7 +168,7 @@
     </navbar>
 
     <div sclass="m-sidebar__user">
-        <div sclass="m-avatar m-avatar--sm" style="background:#5c7bd9;">
+        <div sclass="z-avatar z-avatar-sm" style="background:#5c7bd9;">
             <label value="H" style="color:#fff;font-weight:600;"/>
         </div>
         <div sclass="m-sidebar__user-info">

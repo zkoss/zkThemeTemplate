@@ -1,10 +1,10 @@
 /* ── Status Chip Utility ─────────────────────────────────────────
-   Usage: sclass="m-chip m-chip--primary" (on any ZK component)
+   Usage: sclass="z-chip z-chip-primary" (on any ZK component)
    ZK <label> is preferred — renders as <span> with no extra wrapper.
    Matches Mira/MUI Chip (height ~20px, border-radius 6px).
    Two-class selectors beat .z-label specificity, keeping label color correct.
 ─────────────────────────────────────────────────────────────── */
-.m-chip {
+.z-chip {
     display: inline-block;
     padding: 2px 8px;
     border-radius: 6px;
@@ -14,10 +14,10 @@
     line-height: 1.4;
 }
 
-.m-chip.m-chip--primary    { background: #4782da; color: #fff; }
-.m-chip.m-chip--on-primary { background: rgba(255,255,255,0.25); color: #fff; }
-.m-chip.m-chip--success { background: #e8f5e9; color: #2e7d32; }
-.m-chip.m-chip--warning { background: #fff8e1; color: #f57c00; }
-.m-chip.m-chip--error   { background: #ffebee; color: #c62828; }
-.m-chip.m-chip--neutral { background: #f5f5f5; color: #616161; }
-.m-chip.m-chip--info    { background: #e3f2fd; color: #0277bd; }
+.z-chip.z-chip-primary    { background: #4782da; color: #fff; }
+.z-chip.z-chip-on-primary { background: rgba(255,255,255,0.25); color: #fff; }
+.z-chip.z-chip-success { background: #e8f5e9; color: #2e7d32; }
+.z-chip.z-chip-warning { background: #fff8e1; color: #f57c00; }
+.z-chip.z-chip-error   { background: #ffebee; color: #c62828; }
+.z-chip.z-chip-neutral { background: #f5f5f5; color: #616161; }
+.z-chip.z-chip-info    { background: #e3f2fd; color: #0277bd; }

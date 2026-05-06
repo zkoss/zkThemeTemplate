@@ -20,7 +20,7 @@
             </listhead>
             <listitem>
                 <listcell label="Anna Walley (anna@walley.com)"/>
-                <listcell><div sclass="m-badge m-badge--info">Sent</div></listcell>
+                <listcell><div sclass="z-badge z-badge-info">Sent</div></listcell>
                 <listcell label="#000112"/>
                 <listcell label="$530.00"/>
                 <listcell label="2025-01-02"/>
@@ -28,7 +28,7 @@
             </listitem>
             <listitem>
                 <listcell label="Doris Fritz (doris@fritz.com)"/>
-                <listcell><div sclass="m-badge m-badge--error">Void</div></listcell>
+                <listcell><div sclass="z-badge z-badge-error">Void</div></listcell>
                 <listcell label="#000114"/>
                 <listcell label="$209.00"/>
                 <listcell label="2025-02-13"/>
@@ -36,7 +36,7 @@
             </listitem>
             <listitem>
                 <listcell label="Edward Adkins (edward@adkins.com)"/>
-                <listcell><div sclass="m-badge m-badge--success">Paid</div></listcell>
+                <listcell><div sclass="z-badge z-badge-success">Paid</div></listcell>
                 <listcell label="#000117"/>
                 <listcell label="$535.00"/>
                 <listcell label="2025-03-04"/>
@@ -44,7 +44,7 @@
             </listitem>
             <listitem>
                 <listcell label="Edwin Baker (edwin@baker.com)"/>
-                <listcell><div sclass="m-badge m-badge--success">Paid</div></listcell>
+                <listcell><div sclass="z-badge z-badge-success">Paid</div></listcell>
                 <listcell label="#000115"/>
                 <listcell label="$678.00"/>
                 <listcell label="2025-02-17"/>
@@ -52,7 +52,7 @@
             </listitem>
             <listitem>
                 <listcell label="Gordon Workman (gordan@workman.com)"/>
-                <listcell><div sclass="m-badge m-badge--info">Sent</div></listcell>
+                <listcell><div sclass="z-badge z-badge-info">Sent</div></listcell>
                 <listcell label="#000119"/>
                 <listcell label="$314.00"/>
                 <listcell label="2025-03-28"/>
@@ -60,7 +60,7 @@
             </listitem>
             <listitem>
                 <listcell label="Helen Morris (helen@morris.com)"/>
-                <listcell><div sclass="m-badge m-badge--warning">Pending</div></listcell>
+                <listcell><div sclass="z-badge z-badge-warning">Pending</div></listcell>
                 <listcell label="#000121"/>
                 <listcell label="$892.00"/>
                 <listcell label="2025-04-01"/>
@@ -68,7 +68,7 @@
             </listitem>
             <listitem>
                 <listcell label="John Davis (john@davis.com)"/>
-                <listcell><div sclass="m-badge m-badge--success">Paid</div></listcell>
+                <listcell><div sclass="z-badge z-badge-success">Paid</div></listcell>
                 <listcell label="#000123"/>
                 <listcell label="$1,245.00"/>
                 <listcell label="2025-04-10"/>
@@ -76,7 +76,7 @@
             </listitem>
             <listitem>
                 <listcell label="Karen White (karen@white.com)"/>
-                <listcell><div sclass="m-badge m-badge--info">Sent</div></listcell>
+                <listcell><div sclass="z-badge z-badge-info">Sent</div></listcell>
                 <listcell label="#000125"/>
                 <listcell label="$467.00"/>
                 <listcell label="2025-04-15"/>

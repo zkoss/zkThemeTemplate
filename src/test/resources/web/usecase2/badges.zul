@@ -6,11 +6,11 @@
             <div sclass="m-card">
                 <label sclass="m-card__title" value="Color Variants"/>
                 <hlayout spacing="8px" style="flex-wrap:wrap;">
-                    <div sclass="m-badge m-badge--success">Done</div>
-                    <div sclass="m-badge m-badge--warning">In Progress</div>
-                    <div sclass="m-badge m-badge--error">Cancelled</div>
-                    <div sclass="m-badge m-badge--info">New</div>
-                    <div sclass="m-badge m-badge--neutral">Archived</div>
+                    <div sclass="z-badge z-badge-success">Done</div>
+                    <div sclass="z-badge z-badge-warning">In Progress</div>
+                    <div sclass="z-badge z-badge-error">Cancelled</div>
+                    <div sclass="z-badge z-badge-info">New</div>
+                    <div sclass="z-badge z-badge-neutral">Archived</div>
                 </hlayout>
 
                 <separator/>
@@ -19,15 +19,15 @@
                 <vlayout spacing="8px">
                     <hlayout>
                         <label value="Project Aurora  "/>
-                        <div sclass="m-badge m-badge--success">Done</div>
+                        <div sclass="z-badge z-badge-success">Done</div>
                     </hlayout>
                     <hlayout>
                         <label value="Project Eagle   "/>
-                        <div sclass="m-badge m-badge--warning">In Progress</div>
+                        <div sclass="z-badge z-badge-warning">In Progress</div>
                     </hlayout>
                     <hlayout>
                         <label value="Project Omega   "/>
-                        <div sclass="m-badge m-badge--error">Cancelled</div>
+                        <div sclass="z-badge z-badge-error">Cancelled</div>
                     </hlayout>
                 </vlayout>
             </div>

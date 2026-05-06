@@ -18,7 +18,7 @@
         <div sclass="m-card m-kpi-card">
             <div sclass="m-kpi-card__header">
                 <label sclass="m-kpi-card__label" value="Visitors"/>
-                <div sclass="m-chip m-chip--primary">Weekly</div>
+                <div sclass="z-chip z-chip-primary">Weekly</div>
             </div>
             <label sclass="m-kpi-card__value" value="24,532"/>
             <div sclass="m-kpi-card__footer">
@@ -30,7 +30,7 @@
         <div sclass="m-card m-kpi-card">
             <div sclass="m-kpi-card__header">
                 <label sclass="m-kpi-card__label" value="Activity"/>
-                <div sclass="m-chip m-chip--primary">Annual</div>
+                <div sclass="z-chip z-chip-primary">Annual</div>
             </div>
             <label sclass="m-kpi-card__value" value="63,200"/>
             <div sclass="m-kpi-card__footer">
@@ -42,7 +42,7 @@
         <div sclass="m-card m-kpi-card">
             <div sclass="m-kpi-card__header">
                 <label sclass="m-kpi-card__label" value="Real-Time"/>
-                <div sclass="m-chip m-chip--primary">Monthly</div>
+                <div sclass="z-chip z-chip-primary">Monthly</div>
             </div>
             <label sclass="m-kpi-card__value" value="1,320"/>
             <div sclass="m-kpi-card__footer">
@@ -54,7 +54,7 @@
         <div sclass="m-card m-kpi-card m-kpi-card--primary">
             <div sclass="m-kpi-card__header">
                 <label sclass="m-kpi-card__label" value="Bounce"/>
-                <div sclass="m-chip m-chip--on-primary">Yearly</div>
+                <div sclass="z-chip z-chip-on-primary">Yearly</div>
             </div>
             <label sclass="m-kpi-card__value" value="12,364"/>
             <div sclass="m-kpi-card__footer">

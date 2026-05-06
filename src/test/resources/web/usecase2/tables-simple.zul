@@ -18,42 +18,42 @@
                             <label value="Alice Johnson"/>
                             <label value="alice@example.com"/>
                             <label value="Admin"/>
-                            <div sclass="m-badge m-badge--success">Active</div>
+                            <div sclass="z-badge z-badge-success">Active</div>
                         </row>
                         <row>
                             <label value="002"/>
                             <label value="Bob Williams"/>
                             <label value="bob@example.com"/>
                             <label value="Editor"/>
-                            <div sclass="m-badge m-badge--success">Active</div>
+                            <div sclass="z-badge z-badge-success">Active</div>
                         </row>
                         <row>
                             <label value="003"/>
                             <label value="Carol Davis"/>
                             <label value="carol@example.com"/>
                             <label value="Viewer"/>
-                            <div sclass="m-badge m-badge--warning">Pending</div>
+                            <div sclass="z-badge z-badge-warning">Pending</div>
                         </row>
                         <row>
                             <label value="004"/>
                             <label value="David Brown"/>
                             <label value="david@example.com"/>
                             <label value="Editor"/>
-                            <div sclass="m-badge m-badge--error">Inactive</div>
+                            <div sclass="z-badge z-badge-error">Inactive</div>
                         </row>
                         <row>
                             <label value="005"/>
                             <label value="Eva Martinez"/>
                             <label value="eva@example.com"/>
                             <label value="Admin"/>
-                            <div sclass="m-badge m-badge--success">Active</div>
+                            <div sclass="z-badge z-badge-success">Active</div>
                         </row>
                         <row>
                             <label value="006"/>
                             <label value="Frank Wilson"/>
                             <label value="frank@example.com"/>
                             <label value="Viewer"/>
-                            <div sclass="m-badge m-badge--success">Active</div>
+                            <div sclass="z-badge z-badge-success">Active</div>
                         </row>
                     </rows>
                 </grid>

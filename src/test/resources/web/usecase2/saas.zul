@@ -15,7 +15,7 @@
         <div sclass="m-card m-kpi-card">
             <div sclass="m-kpi-card__header">
                 <label sclass="m-kpi-card__label" value="Income"/>
-                <div sclass="m-chip m-chip--primary">Monthly</div>
+                <div sclass="z-chip z-chip-primary">Monthly</div>
             </div>
             <label sclass="m-kpi-card__value" value="$37,500"/>
             <div sclass="m-kpi-card__footer">
@@ -27,7 +27,7 @@
         <div sclass="m-card m-kpi-card">
             <div sclass="m-kpi-card__header">
                 <label sclass="m-kpi-card__label" value="Visitors"/>
-                <div sclass="m-chip m-chip--primary">Annual</div>
+                <div sclass="z-chip z-chip-primary">Annual</div>
             </div>
             <label sclass="m-kpi-card__value" value="150,121"/>
             <div sclass="m-kpi-card__footer">
@@ -39,7 +39,7 @@
         <div sclass="m-card m-kpi-card">
             <div sclass="m-kpi-card__header">
                 <label sclass="m-kpi-card__label" value="Completed Orders"/>
-                <div sclass="m-chip m-chip--primary">Weekly</div>
+                <div sclass="z-chip z-chip-primary">Weekly</div>
             </div>
             <label sclass="m-kpi-card__value" value="12,432"/>
             <div sclass="m-kpi-card__footer">
@@ -51,7 +51,7 @@
         <div sclass="m-card m-kpi-card m-kpi-card--primary">
             <div sclass="m-kpi-card__header">
                 <label sclass="m-kpi-card__label" value="Pending Orders"/>
-                <div sclass="m-chip m-chip--on-primary">Real-Time</div>
+                <div sclass="z-chip z-chip-on-primary">Real-Time</div>
             </div>
             <label sclass="m-kpi-card__value" value="22"/>
             <div sclass="m-kpi-card__footer">
@@ -100,13 +100,13 @@
                 <column label="Sales"/>
             </columns>
             <rows>
-                <row><label value="Aurora"/><label value="Single License"/><div sclass="m-chip m-chip--primary">React</div><label value="12"/><label value="1,205"/></row>
-                <row><label value="Canary"/><label value="Single License"/><div sclass="m-chip m-chip--primary">React</div><label value="1"/><label value="410"/></row>
-                <row><label value="Eagle"/><label value="Extended License"/><div sclass="m-chip">Angular</div><label value="2"/><label value="108"/></row>
-                <row><label value="Fireball"/><label value="Single License"/><div sclass="m-chip m-chip--primary">React</div><label value="3"/><label value="360"/></row>
-                <row><label value="Omega"/><label value="Single License"/><div sclass="m-chip">Angular</div><label value="6"/><label value="712"/></row>
-                <row><label value="Yoda"/><label value="Extended License"/><div sclass="m-chip">Angular</div><label value="15"/><label value="1,502"/></row>
-                <row><label value="Zulu"/><label value="Extended License"/><div sclass="m-chip">Angular</div><label value="2"/><label value="480"/></row>
+                <row><label value="Aurora"/><label value="Single License"/><div sclass="z-chip z-chip-primary">React</div><label value="12"/><label value="1,205"/></row>
+                <row><label value="Canary"/><label value="Single License"/><div sclass="z-chip z-chip-primary">React</div><label value="1"/><label value="410"/></row>
+                <row><label value="Eagle"/><label value="Extended License"/><div sclass="z-chip">Angular</div><label value="2"/><label value="108"/></row>
+                <row><label value="Fireball"/><label value="Single License"/><div sclass="z-chip z-chip-primary">React</div><label value="3"/><label value="360"/></row>
+                <row><label value="Omega"/><label value="Single License"/><div sclass="z-chip">Angular</div><label value="6"/><label value="712"/></row>
+                <row><label value="Yoda"/><label value="Extended License"/><div sclass="z-chip">Angular</div><label value="15"/><label value="1,502"/></row>
+                <row><label value="Zulu"/><label value="Extended License"/><div sclass="z-chip">Angular</div><label value="2"/><label value="480"/></row>
             </rows>
         </grid>
     </div>

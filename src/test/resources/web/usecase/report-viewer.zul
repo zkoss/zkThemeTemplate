@@ -4,7 +4,7 @@
 <!-- Export options popup -->
 <popup id="exportPopup" width="240px">
     <vlayout>
-        <label value="Choose Export Format" sclass="fs-5"/>
+        <label value="Choose Export Format" sclass="z-h4"/>
         <radiogroup>
             <radio label="PDF" checked="true"/>
             <radio label="Excel (XLSX)"/>
