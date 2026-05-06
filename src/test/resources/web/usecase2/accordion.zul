@@ -8,7 +8,7 @@
         <div sclass="m-card">
             <label sclass="m-card__title" value="Simple Expansion Panel"/>
             <label value="A lightweight container that may either stand alone or be connected to a larger surface, such as a card." style="font-size:13px;color:#49454f;display:block;margin-bottom:16px;"/>
-            <tabbox mold="accordion" sclass="m-accordion" width="100%">
+            <tabbox mold="accordion" width="100%">
                 <tabs>
                     <tab label="Expansion Panel 1"/>
                     <tab label="Expansion Panel 2"/>
@@ -29,7 +29,7 @@
         <div sclass="m-card">
             <label sclass="m-card__title" value="Controlled Expansion Panel"/>
             <label value="Extend the default panel behavior to create an accordion with the Accordion component." style="font-size:13px;color:#49454f;display:block;margin-bottom:16px;"/>
-            <tabbox mold="accordion" sclass="m-accordion" width="100%">
+            <tabbox mold="accordion" width="100%">
                 <tabs>
                     <tab label="General settings"/>
                     <tab label="Users"/>

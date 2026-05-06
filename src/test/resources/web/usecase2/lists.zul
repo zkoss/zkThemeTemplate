@@ -42,7 +42,7 @@
                 <!-- Checkable list (listbox) -->
                 <div sclass="m-card" style="flex:1;">
                     <label sclass="m-card__title" value="Checkable List"/>
-                    <listbox checkmark="true" sclass="m-listbox" multiple="true">
+                    <listbox checkmark="true" sclass="z-listbox-plain" multiple="true">
                         <listitem><listcell label="Buy groceries"/></listitem>
                         <listitem><listcell label="Walk the dog"/></listitem>
                         <listitem><listcell label="Read a book"/></listitem>

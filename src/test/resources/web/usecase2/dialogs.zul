@@ -43,7 +43,7 @@
 
     <!-- Simple dialog — user selection list -->
     <window id="simpleDialog" title="Select an account"  mode="modal"
-            sclass="m-dialog" visible="false" width="320px">
+            visible="false" width="320px">
         <listbox width="100%" style="border:none;" onSelect="simpleDialog.setVisible(false)">
             <listitem>
                 <listcell>
@@ -74,7 +74,7 @@
 
     <!-- Alert dialog — no close button, requires action -->
     <window id="alertDialog" title="Use Google's location service?" closable="false" mode="modal"
-            sclass="m-dialog" visible="false" width="420px">
+            visible="false" width="420px">
         <vlayout style="padding:16px 20px 8px;">
             <label value="Let Google help apps determine location. This means sending anonymous location data to Google, even when no apps are running." style="font-size:14px;color:#555;line-height:1.6;"/>
             <separator/>
@@ -87,7 +87,7 @@
 
     <!-- Optional sizes dialog — demonstrates wider/narrower widths -->
     <window id="sizeDialog" title="Optional Sizes"  mode="modal"
-            sclass="m-dialog" visible="false" width="600px">
+            visible="false" width="600px">
         <vlayout style="padding:16px 20px;">
             <label value="This dialog demonstrates the maxWidth option. The dialog will not get any wider than sm (600px) regardless of the content." style="font-size:14px;color:#555;line-height:1.6;"/>
             <separator/>
@@ -100,7 +100,7 @@
 
     <!-- Form dialog -->
     <window id="formDialog" title="Subscribe" mode="modal"
-            sclass="m-dialog" visible="false" width="500px">
+            visible="false" width="500px">
         <vlayout style="padding:16px 20px;" spacing="12px">
             <label value="To subscribe to this website, please enter your email address here. We will send updates occasionally." style="font-size:14px;color:#555;line-height:1.6;"/>
             <vlayout>
