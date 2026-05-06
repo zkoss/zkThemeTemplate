@@ -20,6 +20,58 @@ All UseCase2 pages exist and routing works. The visual gap between the ZK implem
 
 ### Framework limitation stop
 - If a diff is caused by a **fundamental ZK vs MUI structural difference** (see section below), mark the row `⚠️ FRAMEWORK` immediately, document it in `doc/mira-reports/framework-gaps.md`, and do not attempt to fix it.
+- **IMPORTANT: Apply the 3-layer triage before marking FRAMEWORK** (see section below).
+
+---
+
+## 3-Layer Gap Triage (run this BEFORE marking ⚠️ FRAMEWORK)
+
+When Mira shows something that local doesn't, ask these questions in order:
+
+### Layer 1: Is this a ZUL content gap?
+> "Can I add this to the ZUL page by adding more ZK components or attributes?"
+
+Examples:
+- Mira shows 3 rows of the same component in different states → add more `<paging activePage="3"/>` etc.
+- Mira shows a disabled row → add `disabled="true"` variant in ZUL
+- Mira shows a section with more items → add more ZUL content
+
+**Action: Fix it in ZUL. NOT a framework gap.**
+
+### Layer 2: Is this a CSS variant gap?
+> "Can I achieve this look by adding a CSS class variant (sclass + new CSS rule)?"
+
+Examples:
+- Mira shows outlined buttons → can add `.z-paging-outlined` variant with border CSS
+- Mira shows smaller size → can add `.z-paging-sm` variant with reduced sizing
+- Mira shows a rounded style → can add `.z-paging-rounded` variant
+
+**Action: Create CSS variant class + add to ZUL with sclass. Mark as content/CSS work, NOT framework gap.**
+
+### Layer 3: Is this a true framework architectural gap?
+> "Does this require ZK to fundamentally render different DOM, handle different events, or implement React/MUI-specific behavior?"
+
+Examples:
+- MUI ripple animation on click → ZK has no ripple system
+- Ellipsis (`...`) in pagination → ZK os mold doesn't generate ellipsis nodes
+- Floating label input → ZK textbox DOM structure is fundamentally different
+- Portal-rendered dropdown → ZK uses its own popup mechanism
+
+**Action: Mark ⚠️ FRAMEWORK immediately. Document in framework-gaps.md.**
+
+### Decision tree summary
+
+```
+Diff found
+  └─ Can I add ZUL content (more components/attributes)?
+       YES → Fix in ZUL (ZUL content gap)
+       NO  → Can I add a CSS variant class?
+              YES → Create CSS variant (CSS gap)
+              NO  → True architectural difference → ⚠️ FRAMEWORK
+```
+
+**Lesson**: "Mira shows 5 sections, local shows 3" is NOT automatically a framework gap.
+It is a ZUL content gap unless proven otherwise.
 
 ---
 
@@ -117,20 +169,41 @@ Zoom local and Mira for the same card side by side. A single card at zoom resolu
 ```
 0. RESIZE   — Resize both tabs to 1440×900 via mcp__claude-in-chrome__resize_window
 
-1. CAPTURE  — Navigate to http://localhost:8080/usecase2/index.zul#<page>
+1. REPLICATE — Before any screenshot, read the Mira reference page at
+               https://mira.bootlab.io/components/<page> (or /dashboard/<page> etc.)
+               Inventory every section and state it shows:
+                 → How many cards/sections?
+                 → What variants are shown per section? (e.g. default/outlined/rounded)
+                 → What states per variant? (e.g. page 1 / mid / last)
+                 → Any disabled or special states?
+               Then open src/test/resources/web/usecase2/<page>.zul and replicate that
+               structure using ZK components:
+                 → Add missing sections (cards) to the ZUL
+                 → For each variant: add the right sclass + CSS if it doesn't exist
+                 → For each state: add the component with the right attributes
+               Apply 3-Layer Gap Triage immediately for anything that can't be replicated:
+                 ZUL content gap? → fix in ZUL
+                 CSS variant gap? → create CSS class + add to ZUL
+                 True FRAMEWORK gap? → mark ⚠️ and document; skip in ZUL
+               STOP: Do NOT proceed to CAPTURE until the ZUL has the correct section/variant
+               structure. Visual styling can be wrong — content completeness must be right.
+
+2. CAPTURE  — Navigate to http://localhost:8080/usecase2/index.zul#<page>
               Run html2canvas at scale:2 → downloads <page>-local.png
               cp ~/Downloads/<page>-local.png doc/mira/screenshot/<page>-local.png
 
-2. COMPARE  — Navigate to https://mira.bootlab.io/dashboard/<page> (or /components/<page> etc.)
+3. COMPARE  — Navigate to https://mira.bootlab.io/dashboard/<page> (or /components/<page> etc.)
               Run html2canvas at scale:2 → downloads <page>-mira-target.png
               cp ~/Downloads/<page>-mira-target.png doc/mira/screenshot/<page>-mira-target.png
 
-3. AUDIT    — Read both screenshots side by side, L1 → L5.
+4. AUDIT    — Read both screenshots side by side, L1 → L5.
               Always include badge color and text color as explicit audit items (known systemic issue).
               Run $critique and $layout (impeccable analysis commands) on the local page.
               Merge into diff table at doc/mira-reports/<page>-diffs.md.
               Each row: Priority | Layer | Element/Selector | Local value | Target value
-              Mark any row that is a framework gap ⚠️ FRAMEWORK immediately.
+              For EVERY diff row: run the 3-Layer Gap Triage (ZUL content? → CSS variant? → FRAMEWORK?).
+              Only mark ⚠️ FRAMEWORK after ruling out both ZUL content fix and CSS variant fix.
+              "Mira shows N sections / N variants / N states" is a ZUL content gap until proven otherwise.
 
               ELEMENT COUNT CHECK (mandatory for component-demo pages):
                 For each card/section, explicitly enumerate:
@@ -144,19 +217,19 @@ Zoom local and Mira for the same card side by side. A single card at zoom resolu
                 → If needed, capture a SECOND screenshot with different state
                   (e.g. different panel expanded, all collapsed) to verify border/bg transitions
 
-4. FIX      — Implement CSS/ZUL changes for all P1 diffs, then P2, then P3
+5. FIX      — Implement CSS/ZUL changes for all P1 diffs, then P2, then P3
               Touch only files relevant to the current page's issues
               Shared CSS fixes (sidebar, card, topbar) benefit all pages — do these first
               STOP CONDITION: max 2 attempts per diff row; max 3 FIX→VERIFY loops per page
 
-5. VERIFY   — Re-screenshot local page (html2canvas at scale:2)
+6. VERIFY   — Re-screenshot local page (html2canvas at scale:2)
               Explicitly check: badge background color, badge text color, chip/label text color
               ELEMENT COUNT RE-CHECK: zoom each changed section and count items vs Mira
               Update diff table (mark fixed rows ✅, blocked rows 🚫, framework rows ⚠️)
               If diffs remain AND loop count < 3: loop back to FIX
               If loop count = 3 OR only P3 rows remain: proceed to DONE
 
-6. DONE     — Mark page ✅ in progress tracker
+7. DONE     — Mark page ✅ in progress tracker
               Any 🚫 BLOCKED or ⚠️ FRAMEWORK rows → copy to framework-gaps.md
 ```
 
@@ -306,8 +379,8 @@ Legend: ✅ Done | 🔲 Pending | ⏭️ Skipped (infra/shell only)
 | `chips.zul` | `/components/chips` | 🔲 Pending | — |
 | `dialogs.zul` | `/components/dialogs` | ✅ Done | 2026-05-05 |
 | `lists.zul` | `/components/lists` | 🔲 Pending | — |
-| `menus.zul` | `/components/menus` | 🔲 Pending | — |
-| `pagination.zul` | `/components/pagination` | 🔲 Pending | — |
+| `menus.zul` | `/components/menus` | ✅ Done | 2026-05-05 |
+| `pagination.zul` | `/components/pagination` | ✅ Done | 2026-05-05 |
 | `progress.zul` | `/components/progress` | 🔲 Pending | — |
 | `tabs.zul` | `/components/tabs` | 🔲 Pending | — |
 | `tooltips.zul` | `/components/tooltips` | 🔲 Pending | — |
