@@ -247,3 +247,18 @@
         0px 6px 10px 0px rgba(0,0,0,0.14),
         0px 1px 18px 0px rgba(0,0,0,0.12);
 }
+
+/* ─── Editor toolbar button — minimal, borderless, for WYSIWYG toolbars ── */
+.m-editor-toolbar-btn.z-button {
+    background-color: transparent;
+    color: var(--zk-color-on-surface-variant, #49454f);
+    border: none;
+    border-radius: 4px;
+    padding: 4px 6px;
+    min-width: 28px;
+    min-height: 28px;
+    height: 28px;
+    font-size: 14px;
+}
+.m-editor-toolbar-btn.z-button::before { background-color: var(--zk-color-on-surface); }
+.m-editor-toolbar-btn.z-button:hover::before { opacity: var(--zk-state-hover-opacity, 0.08); }

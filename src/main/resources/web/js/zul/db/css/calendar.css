@@ -34,7 +34,6 @@
     justify-content: space-between;
     padding: var(--zk-spacing-2) var(--zk-spacing-3);
     background-color: var(--zk-color-surface);
-    border-bottom: 1px solid var(--zk-color-outline-variant);
     min-height: 48px;
     box-sizing: border-box;
 }
@@ -60,6 +59,15 @@
 
 .z-calendar-text {
     pointer-events: none;
+}
+
+/* Map ZK's angle-left/right to Lucide chevron-left/right SVGs */
+.z-icon-angle-left {
+    --_icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m15 18-6-6 6-6'/%3E%3C/svg%3E");
+}
+
+.z-icon-angle-right {
+    --_icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m9 18 6-6-6-6'/%3E%3C/svg%3E");
 }
 
 /* Prev/Next navigation icons */
@@ -100,15 +108,22 @@
     text-align: center;
     vertical-align: middle;
     height: 32px;
-    font-size: var(--zk-typescale-label-medium-size);
     font-weight: var(--zk-typescale-label-medium-weight);
     color: var(--zk-color-on-surface-variant);
     padding: 0;
+    /* Show only the first letter of "Sun", "Mon", etc. → S M T W T F S */
+    font-size: 0;
 }
 
-/* Weekend day-of-week header */
+.z-calendar-body thead th::first-letter,
+.z-calendar-weekday::first-letter,
+.z-calendar-weekend::first-letter {
+    font-size: var(--zk-typescale-label-medium-size);
+}
+
+/* Weekend day-of-week header — same color as weekdays (no red) */
 .z-calendar-body thead th.z-calendar-weekend {
-    color: var(--zk-color-error);
+    color: var(--zk-color-on-surface-variant);
 }
 
 /* ─── Day cells (TD) ─────────────────────────────────────────────────────── */
@@ -134,27 +149,29 @@
     background-color: color-mix(in srgb, var(--zk-color-on-surface) 8%, transparent);
 }
 
-/* Weekend day color */
+/* Weekend day color — same as weekdays, no red */
 .z-calendar-body tbody td.z-calendar-weekend {
-    color: var(--zk-color-error);
-    opacity: 0.8;
+    color: var(--zk-color-on-surface);
+    opacity: 1;
 }
 
-/* Outside-month days (greyed) */
-.z-calendar-cell.z-calendar-outside {
-    color: var(--zk-color-on-surface-variant);
-    opacity: 0.4;
+/* Outside-month days — hidden like MUI DateCalendar (cells remain for grid layout) */
+/* Use tbody td specificity to beat the .z-calendar-weekend opacity:1 override */
+.z-calendar-body tbody td.z-calendar-outside,
+.z-calendar-body tbody td.z-calendar-outside.z-calendar-weekend {
+    opacity: 0;
+    pointer-events: none;
 }
 
-/* Today */
+/* Today — light tint circle, colored text (matches Mira's soft lavender style) */
 .z-calendar-cell.z-today {
-    background-color: var(--zk-color-primary-container);
-    color: var(--zk-color-on-primary-container);
+    background-color: color-mix(in srgb, var(--zk-color-primary) 14%, transparent);
+    color: var(--zk-color-primary);
     font-weight: var(--zk-typescale-label-large-weight);
 }
 
 .z-calendar-cell.z-today:hover {
-    background-color: color-mix(in srgb, var(--zk-color-primary-container) 85%, var(--zk-color-on-primary-container));
+    background-color: color-mix(in srgb, var(--zk-color-primary) 22%, transparent);
 }
 
 /* Selected day */

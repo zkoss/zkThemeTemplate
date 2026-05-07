@@ -1,5 +1,20 @@
 /* MD3 Timebox — time picker input */
-/* DOM: <span class="z-timebox"><input class="z-timebox-input"><button class="z-timebox-button"><i class="z-icon-clock"/></button></span> */
+/* DOM: <span class="z-timebox"><input class="z-timebox-input">
+     <span class="z-timebox-button">
+       <a class="z-timebox-icon z-timebox-up"><i class="z-icon-angle-up"/></a>
+       <i class="z-timebox-separator"/>
+       <a class="z-timebox-icon z-timebox-down"><i class="z-icon-angle-down"/></a>
+     </span>
+   </span> */
+
+/* Map ZK's angle-up/down to Lucide chevron-up/down SVGs */
+.z-icon-angle-up {
+    --_icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m18 15-6-6-6 6'/%3E%3C/svg%3E");
+}
+
+.z-icon-angle-down {
+    --_icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+}
 
 .z-timebox {
     display: inline-flex;
@@ -43,34 +58,46 @@
 }
 
 .z-timebox-button {
-    position: relative;
     display: inline-flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 36px;
+    width: 32px;
     min-height: 38px;
     border: none;
-    background: transparent;
+    background: transparent !important;
+    background-color: transparent !important;
     color: var(--zk-color-on-surface-variant);
-    cursor: pointer;
     flex-shrink: 0;
     border-radius: 0 var(--zk-shape-input) var(--zk-shape-input) 0;
     overflow: hidden;
-    transition: color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
 }
 
-.z-timebox-button::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-color: currentColor;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+/* Up/down icon links */
+.z-timebox-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 17px;
+    cursor: pointer;
+    color: var(--zk-color-on-surface-variant);
+    text-decoration: none;
+    transition: background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
 }
 
-.z-timebox-button:hover::before { opacity: var(--zk-state-hover-opacity); }
-.z-timebox-button:active::before { opacity: var(--zk-state-pressed-opacity); }
+.z-timebox-icon:hover {
+    background-color: color-mix(in srgb, var(--zk-color-on-surface) 8%, transparent);
+    color: var(--zk-color-on-surface);
+}
+
+/* Separator line between up/down */
+.z-timebox-separator {
+    display: block;
+    height: 1px;
+    width: 100%;
+    background-color: var(--zk-color-outline-variant);
+}
 
 /* Disabled */
 .z-timebox[disabled],

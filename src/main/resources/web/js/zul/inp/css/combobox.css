@@ -46,6 +46,43 @@
     opacity: 1;
 }
 
+/* ─── Dropdown arrow icon (ZK renders z-icon-caret-down, Lucide has chevron-down) ─── */
+.z-combobox-icon,
+.z-combobox-button .z-icon-caret-down {
+    --_icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    background-color: currentColor;
+    -webkit-mask-image: var(--_icon);
+    -webkit-mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-image: var(--_icon);
+    mask-size: contain;
+    mask-repeat: no-repeat;
+    mask-position: center;
+    font-size: 14px;
+}
+
+/* Suppress any Font Awesome glyph on the caret-down icon */
+.z-combobox-button .z-icon-caret-down::before {
+    content: '';
+    font-family: inherit;
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    background-color: currentColor;
+    -webkit-mask-image: var(--_icon);
+    -webkit-mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-image: var(--_icon);
+    mask-size: contain;
+    mask-repeat: no-repeat;
+    mask-position: center;
+}
+
 /* ─── Dropdown button ─────────────────────────────────────────────────── */
 .z-combobox-button {
     position: relative;

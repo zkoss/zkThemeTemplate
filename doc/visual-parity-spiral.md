@@ -119,6 +119,15 @@ Always fix L1 before L5 — layout diffs mask spacing diffs.
 - Does the disabled state look visually distinct?
 - Does the selected/active state differ from unselected in the RIGHT WAY (e.g. only indicator underline, NOT full background fill)?
 
+**L5 popup/overlay checklist** (mandatory for components with transient popups — datebox calendar, combobox dropdown, bandbox panel, timebox spinner):
+- Popup container: correct background color, **exact border-radius px value** (not just "rounded"), elevation shadow, border (or borderless)?
+- Popup contents: typography, cell sizes, spacing, colors match reference?
+- Popup trigger state: does the input border/style change correctly when popup is open?
+- **Calendar today indicator**: ring outline (border) vs filled background — these are different patterns; do NOT assume "highlighted" means filled.
+- **Calendar selected indicator**: filled background vs ring outline — verify which is which (today ≠ selected).
+- Use `getComputedStyle` on `.z-datebox-popup` and `.z-calendar-cell.z-today` to get exact pixel values; do not rely on visual estimation of border-radius alone.
+- See **Popup state capture** section below for how to screenshot these states.
+
 ### Screenshot procedure (CAPTURE and COMPARE steps)
 
 #### Pre-capture: resize window to 1440×900
@@ -166,6 +175,36 @@ region: [x0, y0, x1, y1]   # bounding box of one card
 
 Zoom local and Mira for the same card side by side. A single card at zoom resolution makes mismatched counts or wrong variants immediately obvious.
 
+#### Popup state capture (required when page has popup components)
+
+html2canvas captures the page at rest — popup overlays are invisible in a standard capture. For any page with datebox, combobox, bandbox, or timebox components:
+
+1. **Identify popup components** during REPLICATE (see step 1 below).
+2. **Force-open the popup via JS** before running html2canvas:
+
+```js
+// Example: open a datebox calendar popup
+document.querySelector('.z-datebox-button').click();
+
+// Example: open a combobox dropdown
+document.querySelector('.z-combobox-button').click();
+
+// Then wait for ZK's popup animation, then capture:
+setTimeout(() => {
+  html2canvas(document.body, { useCORS: true, scale: 2 }).then(canvas => {
+    const link = document.createElement('a');
+    link.download = '<page>-popup-datebox-local.png';
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+  });
+}, 400);
+```
+
+3. Do the same on the Mira side to get `<page>-popup-datebox-mira-target.png`.
+4. Compare popup screenshots separately — include popup diff rows in the diff table with element prefix `popup:` (e.g. `popup:.z-calendar`).
+
+**Note**: If JS click doesn't open the popup (ZK event system may require a real DOM event), use `mcp__claude-in-chrome__find` + `mcp__claude-in-chrome__computer` click on the trigger button, then immediately take a `computer screenshot` zoom of the popup region for visual comparison. Use the zoom action rather than html2canvas for popup-only comparisons.
+
 ### Per-session steps
 
 ```
@@ -178,6 +217,9 @@ Zoom local and Mira for the same card side by side. A single card at zoom resolu
                  → What variants are shown per section? (e.g. default/outlined/rounded)
                  → What states per variant? (e.g. page 1 / mid / last)
                  → Any disabled or special states?
+                 → POPUP INVENTORY: Does any section show a component with an open popup?
+                   (datebox calendar open, combobox dropdown open, etc.)
+                   If yes, flag these components — they need separate popup-state captures.
                Then open src/test/resources/web/usecase2/<page>.zul and replicate that
                structure using ZK components:
                  → Add missing sections (cards) to the ZUL
@@ -193,10 +235,16 @@ Zoom local and Mira for the same card side by side. A single card at zoom resolu
 2. CAPTURE  — Navigate to http://localhost:8080/usecase2/index.zul#<page>
               Run html2canvas at scale:2 → downloads <page>-local.png
               cp ~/Downloads/<page>-local.png doc/mira/screenshot/<page>-local.png
+              POPUP CAPTURE (if flagged in step 1):
+                For each flagged popup component, follow the "Popup state capture" procedure
+                above to produce <page>-popup-<component>-local.png
 
 3. COMPARE  — Navigate to https://mira.bootlab.io/dashboard/<page> (or /components/<page> etc.)
               Run html2canvas at scale:2 → downloads <page>-mira-target.png
               cp ~/Downloads/<page>-mira-target.png doc/mira/screenshot/<page>-mira-target.png
+              POPUP CAPTURE (if flagged in step 1):
+                Click to open the same popup on the Mira side, then capture
+                <page>-popup-<component>-mira-target.png
 
 4. AUDIT    — Read both screenshots side by side, L1 → L5.
               Always include badge color and text color as explicit audit items (known systemic issue).
@@ -218,6 +266,13 @@ Zoom local and Mira for the same card side by side. A single card at zoom resolu
                 → Explicitly check L5 state-change checklist above
                 → If needed, capture a SECOND screenshot with different state
                   (e.g. different panel expanded, all collapsed) to verify border/bg transitions
+
+              For popup components (datebox, combobox, bandbox, timebox):
+                → Compare popup screenshots using L5 popup/overlay checklist above
+                → Add popup diff rows to the diff table with element prefix "popup:"
+                  e.g. | P2 | L2 | popup:.z-calendar | border: 1px solid | border: none |
+                → Popup diffs are often CSS-fixable (background, shadow, border-radius,
+                  cell styling) — apply 3-Layer Triage before marking FRAMEWORK
 
 5. FIX      — Implement CSS/ZUL changes for all P1 diffs, then P2, then P3
               Touch only files relevant to the current page's issues
@@ -391,11 +446,11 @@ Legend: ✅ Done | 🔲 Pending | ⏭️ Skipped (infra/shell only)
 ### Forms
 | File | Mira Reference | Status | Date |
 |---|---|---|---|
-| `forms-editors.zul` | `/forms/editors` | 🔲 Pending | — |
-| `forms-pickers.zul` | `/forms/pickers` | 🔲 Pending | — |
-| `forms-selection-controls.zul` | `/forms/selection-controls` | 🔲 Pending | — |
-| `forms-selects.zul` | `/forms/selects` | 🔲 Pending | — |
-| `forms-text-fields.zul` | `/forms/text-fields` | 🔲 Pending | — |
+| `forms-editors.zul` | `/forms/editors` | ✅ Done | 2026-05-06 |
+| `forms-pickers.zul` | `/forms/pickers` | ✅ Done | 2026-05-06 |
+| `forms-selection-controls.zul` | `/forms/selection-controls` | ✅ Done | 2026-05-06 |
+| `forms-selects.zul` | `/forms/selects` | ✅ Done | 2026-05-06 |
+| `forms-text-fields.zul` | `/forms/text-fields` | ✅ Done | 2026-05-06 |
 
 ### Charts / Tables
 | File | Mira Reference | Status | Date |
