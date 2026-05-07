@@ -1,25 +1,73 @@
+<?link rel="stylesheet" type="text/css" href="/usecase2/usecase2.css"?>
 <div sclass="m-main">
-            <div sclass="m-page-header">
-                <label sclass="m-page-title" value="Selection Controls"/>
-            </div>
-            <div sclass="m-card">
-                <label sclass="m-card__title" value="Checkboxes"/>
-                <vlayout spacing="8px">
-                    <checkbox label="Default checkbox" checked="false"/>
-                    <checkbox label="Checked checkbox" checked="true"/>
-                    <checkbox label="Disabled checkbox" disabled="true"/>
-                    <checkbox label="Checked and disabled" checked="true" disabled="true"/>
-                </vlayout>
-            </div>
-            <div sclass="m-card" style="margin-top:16px;">
-                <label sclass="m-card__title" value="Radio Buttons"/>
-                <vlayout spacing="8px">
-                    <radiogroup>
-                        <radio label="Option A" checked="true"/>
-                        <radio label="Option B"/>
-                        <radio label="Option C"/>
-                        <radio label="Disabled option" disabled="true"/>
-                    </radiogroup>
-                </vlayout>
+    <div sclass="m-page-header">
+        <label sclass="m-page-title" value="Selection Controls"/>
+    </div>
+
+    <!-- Row 1: Radio Buttons (left) + Checkboxes (right) -->
+    <div sclass="m-pickers-row">
+        <div sclass="m-card m-pickers-card">
+            <label sclass="m-card__title" value="Radio Buttons"/>
+            <label sclass="m-pickers-desc" value="Radio buttons allow the user to select one option from a set."/>
+            <label sclass="m-selection-group-label" value="Gender"/>
+            <vlayout spacing="4px">
+                <radiogroup orient="vertical">
+                    <radio label="Female" checked="true"/>
+                    <radio label="Male"/>
+                    <radio label="Other"/>
+                    <radio label="(Disabled option)" disabled="true"/>
+                </radiogroup>
+            </vlayout>
+        </div>
+
+        <div sclass="m-card m-pickers-card">
+            <label sclass="m-card__title" value="Checkboxes"/>
+            <label sclass="m-pickers-desc" value="Checkboxes allow the user to select one or more items from a set."/>
+            <label sclass="m-selection-group-label" value="Assign responsibility"/>
+            <vlayout spacing="4px">
+                <checkbox label="Gilad Gray" checked="true"/>
+                <checkbox label="Jason Killian"/>
+                <checkbox label="Antoine Llorca"/>
+            </vlayout>
+        </div>
+    </div>
+
+    <!-- Row 2: Switches (left) + Label placement (right) -->
+    <div sclass="m-pickers-row">
+        <div sclass="m-card m-pickers-card">
+            <label sclass="m-card__title" value="Switches"/>
+            <label sclass="m-pickers-desc" value="Switches toggle the state of a single setting on or off."/>
+            <label sclass="m-selection-group-label" value="Assign responsibility"/>
+            <vlayout spacing="4px">
+                <checkbox sclass="z-checkbox-switch" label="Gilad Gray" checked="true"/>
+                <checkbox sclass="z-checkbox-switch" label="Jason Killian"/>
+                <checkbox sclass="z-checkbox-switch" label="Antoine Llorca"/>
+            </vlayout>
+        </div>
+
+        <div sclass="m-card m-pickers-card">
+            <label sclass="m-card__title" value="Label placement"/>
+            <label sclass="m-pickers-desc" value="You can change the placement of the label."/>
+            <div sclass="m-label-placement-grid">
+                <!-- Top label -->
+                <div sclass="m-label-placement-item">
+                    <label sclass="m-label-placement-text" value="Top"/>
+                    <radio sclass="z-radio-label-top"/>
+                </div>
+                <!-- Start label -->
+                <div sclass="m-label-placement-item">
+                    <radio label="Start"/>
+                </div>
+                <!-- Bottom label -->
+                <div sclass="m-label-placement-item">
+                    <radio sclass="z-radio-label-bottom"/>
+                    <label sclass="m-label-placement-text" value="Bottom"/>
+                </div>
+                <!-- End label -->
+                <div sclass="m-label-placement-item">
+                    <radio label="End"/>
+                </div>
             </div>
         </div>
+    </div>
+</div>

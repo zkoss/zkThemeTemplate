@@ -565,3 +565,177 @@
     word-break: break-all;
 }
 
+/* ── Forms Pickers page ─────────────────────────────────────── */
+.m-pickers-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+    align-items: start;
+}
+
+.m-pickers-card {
+    padding: 20px;
+}
+
+.m-pickers-desc {
+    font-size: 12px;
+    color: var(--zk-color-on-surface-variant, #49454f);
+    margin: 0 0 16px 0;
+    line-height: 1.5;
+    display: block;
+    white-space: normal;
+}
+
+/* ── Forms Selection Controls page ─────────────────────────── */
+.m-selection-group-label {
+    display: block;
+    font-size: 12px;
+    color: var(--zk-color-on-surface-variant, #49454f);
+    margin-bottom: 8px;
+    font-weight: 400;
+}
+
+/* Switch toggle variant — styled checkbox that looks like MUI Switch */
+.z-checkbox-switch input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 34px;
+    height: 14px;
+    min-width: 34px;
+    border-radius: 7px;
+    background-color: rgba(0, 0, 0, 0.38);
+    border: none;
+    position: relative;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.z-checkbox-switch input[type="checkbox"]::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #fafafa;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+    top: -3px;
+    left: -1px;
+    display: block;
+    background-image: none;
+    transition: left 0.15s ease, background-color 0.15s ease;
+}
+
+.z-checkbox-switch input[type="checkbox"]:checked {
+    background-color: rgba(55, 111, 208, 0.5);
+    border-color: transparent;
+}
+
+.z-checkbox-switch input[type="checkbox"]:checked::after {
+    left: 15px;
+    background-color: var(--zk-color-primary, #376fd0);
+    background-image: none;
+}
+
+/* Label placement grid */
+.m-label-placement-grid {
+    display: grid;
+    grid-template-columns: auto auto;
+    gap: 8px 24px;
+    align-items: center;
+    justify-content: start;
+}
+
+.m-label-placement-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.m-label-placement-text {
+    font-size: 13px;
+    color: var(--zk-color-on-surface, #1c1b1f);
+}
+
+/* Horizontal label placement items */
+.m-label-placement-item:nth-child(2),
+.m-label-placement-item:nth-child(4) {
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+}
+
+.m-pickers-field {
+    display: flex;
+    align-items: center;
+}
+
+.m-pickers-static {
+    display: flex;
+    justify-content: center;
+    padding: 8px 0;
+}
+
+.m-pickers-static--time {
+    align-items: center;
+    min-height: 100px;
+}
+
+/* Keep calendar in static mode contained within card */
+.m-pickers-card--static .z-calendar {
+    border: none;
+    box-shadow: none;
+    width: 100%;
+    max-width: 320px;
+}
+
+
+/* ── Forms Selects page ─────────────────────────────────────── */
+.m-selects-right-col {
+    display: flex;
+    flex-direction: column;
+}
+
+.m-selects-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 12px;
+    align-items: start;
+}
+
+.m-selects-field {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.m-selects-label {
+    font-size: 11px;
+    color: var(--zk-color-primary, #376fd0);
+    display: block;
+    margin-bottom: 2px;
+}
+
+.m-selects-caption {
+    font-size: 11px;
+    color: var(--zk-color-on-surface-variant, #49454f);
+    display: block;
+}
+
+.m-selects-helper {
+    font-size: 11px;
+    color: var(--zk-color-on-surface-variant, #49454f);
+    display: block;
+}
+
+/* Error state for combobox */
+.z-combobox-error .z-combobox-input,
+.z-combobox-error {
+    border-color: var(--zk-color-error, #d32f2f) !important;
+}
+
+.z-error-text {
+    color: var(--zk-color-error, #d32f2f) !important;
+}

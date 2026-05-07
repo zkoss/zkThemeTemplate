@@ -1,32 +1,59 @@
 <div sclass="m-main">
-            <div sclass="m-page-header">
-                <label sclass="m-page-title" value="Pickers"/>
-            </div>
-            <div sclass="m-card">
-                <label sclass="m-card__title" value="Pickers"/>
-                <grid>
-                    <rows>
-                        <row>
-                            <label value="Date" style="font-weight:500;"/>
-                            <datebox width="260px" placeholder="Select date"/>
-                        </row>
-                        <row>
-                            <label value="Time" style="font-weight:500;"/>
-                            <timebox width="260px"/>
-                        </row>
-                        <row>
-                            <label value="Date and Time" style="font-weight:500;"/>
-                            <datebox format="yyyy/MM/dd HH:mm" width="260px"/>
-                        </row>
-                        <row>
-                            <label value="Month" style="font-weight:500;"/>
-                            <datebox format="yyyy/MM" width="260px"/>
-                        </row>
-                        <row>
-                            <label value="Quantity" style="font-weight:500;"/>
-                            <spinner value="1" step="1" width="260px"/>
-                        </row>
-                    </rows>
-                </grid>
+    <div sclass="m-page-header">
+        <label sclass="m-page-title" value="Pickers"/>
+    </div>
+
+    <!-- Row 1: Date picker + Date picker Static mode -->
+    <div sclass="m-pickers-row">
+        <div sclass="m-card m-pickers-card">
+            <label sclass="m-card__title" value="Date picker"/>
+            <label sclass="m-pickers-desc" value="The date picker is rendered as a modal dialog on mobile, and a textbox with a popup on desktop."/>
+            <div sclass="m-pickers-field">
+                <datebox width="260px" placeholder="Basic example"/>
             </div>
         </div>
+        <div sclass="m-card m-pickers-card m-pickers-card--static">
+            <label sclass="m-card__title" value="Date picker | Static mode"/>
+            <label sclass="m-pickers-desc" value="It's possible to render any date picker without the modal/popover and text field. This can be helpful when building custom popover/modal containers."/>
+            <div sclass="m-pickers-static">
+                <calendar/>
+            </div>
+        </div>
+    </div>
+
+    <!-- Row 2: Date time picker + Date time picker Static mode -->
+    <div sclass="m-pickers-row">
+        <div sclass="m-card m-pickers-card">
+            <label sclass="m-card__title" value="Date time picker"/>
+            <label sclass="m-pickers-desc" value="It's possible to render any date picker without the modal/popover and text field. This can be helpful when building custom popover/modal containers."/>
+            <div sclass="m-pickers-field">
+                <datebox format="MM/dd/yyyy hh:mm aa" width="260px" placeholder="DateTimePicker"/>
+            </div>
+        </div>
+        <div sclass="m-card m-pickers-card m-pickers-card--static">
+            <label sclass="m-card__title" value="Date time picker | Static mode"/>
+            <label sclass="m-pickers-desc" value="It's possible to render any date &amp; time picker inline. This will enable building custom popover/modal containers."/>
+            <div sclass="m-pickers-static">
+                <calendar/>
+            </div>
+        </div>
+    </div>
+
+    <!-- Row 3: Time picker + Time picker Static mode -->
+    <div sclass="m-pickers-row">
+        <div sclass="m-card m-pickers-card">
+            <label sclass="m-card__title" value="Time picker"/>
+            <label sclass="m-pickers-desc" value="The date picker is rendered as a modal dialog on mobile, and a textbox with a popup on desktop."/>
+            <div sclass="m-pickers-field">
+                <timebox width="260px" placeholder="Basic example"/>
+            </div>
+        </div>
+        <div sclass="m-card m-pickers-card m-pickers-card--static">
+            <label sclass="m-card__title" value="Time picker | Static mode"/>
+            <label sclass="m-pickers-desc" value="It's possible to render any time picker inline. This will enable building custom popover/modal containers."/>
+            <div sclass="m-pickers-static m-pickers-static--time">
+                <timebox width="200px"/>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,44 +1,92 @@
+<?link rel="stylesheet" type="text/css" href="/usecase2/usecase2.css"?>
 <div sclass="m-main">
-            <div sclass="m-page-header">
-                <label sclass="m-page-title" value="Text Fields"/>
+    <div sclass="m-page-header">
+        <label sclass="m-page-title" value="Text Fields"/>
+    </div>
+
+    <!-- Card 1: Text Fields (standard/filled style) -->
+    <div sclass="m-card" style="margin-bottom:16px;">
+        <label sclass="m-card__title" value="Text Fields"/>
+        <label sclass="m-pickers-desc" value="The TextField wrapper component is a complete form control including a label, input and help text."/>
+
+        <!-- Row 1: Required / Disabled / Password / Read Only -->
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:12px;margin-bottom:12px;align-items:start;">
+            <div>
+                <label value="Required *" style="font-size:11px;color:var(--zk-color-on-surface-variant,#49454f);display:block;margin-bottom:4px;"/>
+                <textbox width="100%" value="Hello World"/>
             </div>
-            <div sclass="m-card">
-                <label sclass="m-card__title" value="Text Fields"/>
-                <grid>
-                    <rows>
-                        <row>
-                            <label value="First Name" style="font-weight:500;"/>
-                            <textbox placeholder="Enter first name" width="260px"/>
-                        </row>
-                        <row>
-                            <label value="Last Name" style="font-weight:500;"/>
-                            <textbox placeholder="Enter last name" width="260px"/>
-                        </row>
-                        <row>
-                            <label value="Email" style="font-weight:500;"/>
-                            <textbox type="email" placeholder="email@example.com" width="260px"/>
-                        </row>
-                        <row>
-                            <label value="Password" style="font-weight:500;"/>
-                            <textbox type="password" placeholder="Enter password" width="260px"/>
-                        </row>
-                        <row>
-                            <label value="Phone" style="font-weight:500;"/>
-                            <intbox placeholder="Phone number" width="260px"/>
-                        </row>
-                        <row>
-                            <label value="Amount" style="font-weight:500;"/>
-                            <decimalbox placeholder="0.00" width="260px"/>
-                        </row>
-                        <row>
-                            <label value="Description" style="font-weight:500;"/>
-                            <textbox multiline="true" rows="4" placeholder="Enter description..." width="260px"/>
-                        </row>
-                        <row>
-                            <label value="Disabled Field" style="font-weight:500;"/>
-                            <textbox value="Read only content" disabled="true" width="260px"/>
-                        </row>
-                    </rows>
-                </grid>
+            <div>
+                <label value="Disabled" style="font-size:11px;color:var(--zk-color-on-surface-variant,#49454f);display:block;margin-bottom:4px;"/>
+                <textbox width="100%" value="Hello World" disabled="true"/>
+            </div>
+            <div>
+                <label value="Password" style="font-size:11px;color:var(--zk-color-on-surface-variant,#49454f);display:block;margin-bottom:4px;"/>
+                <textbox width="100%" type="password" placeholder="Password"/>
+            </div>
+            <div>
+                <label value="Read Only" style="font-size:11px;color:var(--zk-color-on-surface-variant,#49454f);display:block;margin-bottom:4px;"/>
+                <textbox width="100%" value="Hello World" readonly="true"/>
             </div>
         </div>
+
+        <!-- Row 2: Number / Search field / Helper text -->
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:12px;align-items:start;">
+            <div>
+                <label value="Number" style="font-size:11px;color:var(--zk-color-on-surface-variant,#49454f);display:block;margin-bottom:4px;"/>
+                <intbox width="100%"/>
+            </div>
+            <div>
+                <textbox width="100%" placeholder="Search field"/>
+            </div>
+            <div>
+                <label value="Helper text" style="font-size:11px;color:var(--zk-color-on-surface-variant,#49454f);display:block;margin-bottom:4px;"/>
+                <textbox width="100%" value="Default Value"/>
+                <label value="Some important text" style="font-size:11px;color:var(--zk-color-on-surface-variant,#49454f);display:block;margin-top:4px;"/>
+            </div>
+            <div/>
+        </div>
+    </div>
+
+    <!-- Card 2: Outlined Text Fields -->
+    <div sclass="m-card">
+        <label sclass="m-card__title" value="Outlined Text Fields"/>
+        <label sclass="m-pickers-desc" value="TextField supports outlined styling."/>
+
+        <!-- Row 1: Required / Disabled / Password / Read Only -->
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:12px;margin-bottom:12px;align-items:start;">
+            <div>
+                <label value="Required *" style="font-size:11px;color:var(--zk-color-on-surface-variant,#49454f);display:block;margin-bottom:4px;"/>
+                <textbox sclass="z-textbox-outlined" width="100%" value="Hello World"/>
+            </div>
+            <div>
+                <label value="Disabled" style="font-size:11px;color:var(--zk-color-on-surface-variant,#49454f);display:block;margin-bottom:4px;"/>
+                <textbox sclass="z-textbox-outlined" width="100%" value="Hello World" disabled="true"/>
+            </div>
+            <div>
+                <label value="Password" style="font-size:11px;color:var(--zk-color-on-surface-variant,#49454f);display:block;margin-bottom:4px;"/>
+                <textbox sclass="z-textbox-outlined" width="100%" type="password" placeholder="Password"/>
+            </div>
+            <div>
+                <label value="Read Only" style="font-size:11px;color:var(--zk-color-on-surface-variant,#49454f);display:block;margin-bottom:4px;"/>
+                <textbox sclass="z-textbox-outlined" width="100%" value="Hello World" readonly="true"/>
+            </div>
+        </div>
+
+        <!-- Row 2: Number / Search field / Helper text -->
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:12px;align-items:start;">
+            <div>
+                <label value="Number" style="font-size:11px;color:var(--zk-color-on-surface-variant,#49454f);display:block;margin-bottom:4px;"/>
+                <intbox sclass="z-textbox-outlined" width="100%"/>
+            </div>
+            <div>
+                <textbox sclass="z-textbox-outlined" width="100%" placeholder="Search field"/>
+            </div>
+            <div>
+                <label value="Helper text" style="font-size:11px;color:var(--zk-color-on-surface-variant,#49454f);display:block;margin-bottom:4px;"/>
+                <textbox sclass="z-textbox-outlined" width="100%" value="Default Value"/>
+                <label value="Some important text" style="font-size:11px;color:var(--zk-color-on-surface-variant,#49454f);display:block;margin-top:4px;"/>
+            </div>
+            <div/>
+        </div>
+    </div>
+</div>

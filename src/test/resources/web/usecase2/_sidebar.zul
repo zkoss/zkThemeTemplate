@@ -126,21 +126,21 @@
                 sclass="@load(vm.currentPage eq '~./usecase2/charts-chartjs.zul' ? 'm-active' : '')"/>
         </nav>
         <nav label="Forms" iconSclass="z-icon-square-pen">
-            <navitem label="Text Fields"
-                onClick="@command('navigate', page='~./usecase2/forms-text-fields.zul')"
-                sclass="@load(vm.currentPage eq '~./usecase2/forms-text-fields.zul' ? 'm-active' : '')"/>
-            <navitem label="Selects"
-                onClick="@command('navigate', page='~./usecase2/forms-selects.zul')"
-                sclass="@load(vm.currentPage eq '~./usecase2/forms-selects.zul' ? 'm-active' : '')"/>
             <navitem label="Pickers"
                 onClick="@command('navigate', page='~./usecase2/forms-pickers.zul')"
                 sclass="@load(vm.currentPage eq '~./usecase2/forms-pickers.zul' ? 'm-active' : '')"/>
-            <navitem label="Editors"
-                onClick="@command('navigate', page='~./usecase2/forms-editors.zul')"
-                sclass="@load(vm.currentPage eq '~./usecase2/forms-editors.zul' ? 'm-active' : '')"/>
             <navitem label="Selection Controls"
                 onClick="@command('navigate', page='~./usecase2/forms-selection-controls.zul')"
                 sclass="@load(vm.currentPage eq '~./usecase2/forms-selection-controls.zul' ? 'm-active' : '')"/>
+            <navitem label="Selects"
+                onClick="@command('navigate', page='~./usecase2/forms-selects.zul')"
+                sclass="@load(vm.currentPage eq '~./usecase2/forms-selects.zul' ? 'm-active' : '')"/>
+            <navitem label="Text Fields"
+                onClick="@command('navigate', page='~./usecase2/forms-text-fields.zul')"
+                sclass="@load(vm.currentPage eq '~./usecase2/forms-text-fields.zul' ? 'm-active' : '')"/>
+            <navitem label="Editors"
+                onClick="@command('navigate', page='~./usecase2/forms-editors.zul')"
+                sclass="@load(vm.currentPage eq '~./usecase2/forms-editors.zul' ? 'm-active' : '')"/>
         </nav>
         <nav label="Tables" iconSclass="z-icon-table">
             <navitem label="Simple Table"

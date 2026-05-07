@@ -1,31 +1,47 @@
+<?link rel="stylesheet" type="text/css" href="/usecase2/usecase2.css"?>
 <div sclass="m-main">
 
     <div sclass="m-page-header">
         <label sclass="m-page-title" value="Editors"/>
     </div>
 
-    <div sclass="m-card" style="margin-bottom:24px;">
+    <!-- Quill card -->
+    <div sclass="m-card" style="margin-bottom:16px;">
         <label sclass="m-card__title" value="Quill"/>
-        <label value="Modern WYSIWYG editor built for compatibility and extensibility." style="font-size:13px;color:#49454f;display:block;margin-bottom:16px;"/>
-        <div style="border:1px solid var(--zk-color-outline-variant,#e0e0e0);border-radius:8px;overflow:hidden;">
-            <div style="background:#f5f5f5;border-bottom:1px solid #e0e0e0;padding:8px 12px;display:flex;gap:8px;">
-                <button iconSclass="z-icon-bold"          sclass="z-button-outlined" style="min-width:32px;padding:4px 8px;"/>
-                <button iconSclass="z-icon-italic"        sclass="z-button-outlined" style="min-width:32px;padding:4px 8px;"/>
-                <button iconSclass="z-icon-underline"     sclass="z-button-outlined" style="min-width:32px;padding:4px 8px;"/>
-                <button iconSclass="z-icon-list"          sclass="z-button-outlined" style="min-width:32px;padding:4px 8px;"/>
-                <button iconSclass="z-icon-list-ordered" sclass="z-button-outlined" style="min-width:32px;padding:4px 8px;"/>
-                <button iconSclass="z-icon-link"          sclass="z-button-outlined" style="min-width:32px;padding:4px 8px;"/>
+        <label sclass="m-pickers-desc" value="Modern WYSIWYG editor built for compatibility and extensibility."/>
+        <div style="border:1px solid var(--zk-color-outline-variant,#cac4d0);border-radius:8px;overflow:hidden;">
+            <!-- Toolbar -->
+            <div style="background:#fafafa;border-bottom:1px solid var(--zk-color-outline-variant,#e0e0e0);padding:6px 8px;display:flex;align-items:center;gap:4px;flex-wrap:wrap;">
+                <!-- Text style dropdown -->
+                <combobox width="110px" value="Normal" readonly="true" style="height:30px;min-height:30px;font-size:13px;">
+                    <comboitem label="Normal"/>
+                    <comboitem label="Heading 1"/>
+                    <comboitem label="Heading 2"/>
+                </combobox>
+                <!-- Format buttons — plain, no border like Quill's actual toolbar -->
+                <button iconSclass="z-icon-bold"          sclass="m-editor-toolbar-btn"/>
+                <button iconSclass="z-icon-italic"        sclass="m-editor-toolbar-btn"/>
+                <button iconSclass="z-icon-underline"     sclass="m-editor-toolbar-btn"/>
+                <button iconSclass="z-icon-link"          sclass="m-editor-toolbar-btn"/>
+                <button iconSclass="z-icon-list-ordered"  sclass="m-editor-toolbar-btn"/>
+                <button iconSclass="z-icon-list"          sclass="m-editor-toolbar-btn"/>
+                <button iconSclass="z-icon-remove-formatting" sclass="m-editor-toolbar-btn"/>
             </div>
-            <textbox multiline="true" rows="8" style="width:100%;border:none;padding:12px;font-family:inherit;font-size:14px;resize:vertical;"
-                value="Write something here..."/>
+            <!-- Editor content area -->
+            <textbox multiline="true" rows="8"
+                style="width:100%;border:none;box-shadow:none;border-radius:0;padding:12px 16px;font-family:inherit;font-size:14px;color:#9e9e9e;resize:vertical;outline:none;"
+                placeholder="Type something.."/>
         </div>
     </div>
 
+    <!-- Bubble card -->
     <div sclass="m-card">
         <label sclass="m-card__title" value="Bubble"/>
-        <label value="Bubble is a simple tooltip based theme for Quill." style="font-size:13px;color:#49454f;display:block;margin-bottom:16px;"/>
-        <div style="border:1px solid var(--zk-color-outline-variant,#e0e0e0);border-radius:8px;padding:16px;min-height:120px;font-size:14px;color:#49454f;">
-            <label value="Select text to see the bubble toolbar appear." style="font-style:italic;color:#9e9e9e;"/>
+        <label sclass="m-pickers-desc" value="Bubble is a simple tooltip based theme for Quill."/>
+        <div style="border:1px solid var(--zk-color-outline-variant,#cac4d0);border-radius:8px;min-height:120px;padding:16px;font-size:14px;">
+            <textbox multiline="true" rows="4"
+                style="width:100%;border:none;box-shadow:none;border-radius:0;padding:0;font-family:inherit;font-size:14px;font-style:italic;color:#9e9e9e;resize:none;outline:none;"
+                placeholder="Compose an epic..."/>
         </div>
     </div>
 
