@@ -1,10 +1,12 @@
 <?page title="zk-material Use Cases"?>
 <?link rel="stylesheet" type="text/css" href="~./usecase/usecase.css"?>
 <zk>
-<borderlayout height="100vh" viewModel="@id('vm') @init('zk.example.UseCaseVM')">
+<script src="http://localhost:50000/zk-live-reload.js" defer="true"/>
+<borderlayout height="100vh" viewModel="@id('vm') @init('zk.example.UseCaseVM')"
+    onBookmarkChange="@command('handleBookmarkChange', bookmark=event.bookmark)">
 
     <west size="258px" border="none" collapsible="false">
-        <div sclass="sidebar-nav">
+        <div>
             <div sclass="sidebar-brand">zk-material</div>
             <navbar orient="vertical">
                 <nav label="Use Cases" open="true">
@@ -70,7 +72,7 @@
                     <navitem label="Progressmeter" onClick="@command('navigate', page='~./progressmeter.zul')"/>
                     <navitem label="Notification"  onClick="@command('navigate', page='~./notification.zul')"/>
                     <navitem label="Toast"         onClick="@command('navigate', page='~./toast.zul')"/>
-                    <navitem label="Messagebox"    onClick="@command('navigate', page='~./messagebox.zul')"/>
+                    <navitem label="Messagebox"    onClick="@command('navigate', page='~./usecase/messagebox.zul')"/>
                     <navitem label="Calendar"      onClick="@command('navigate', page='~./calendar.zul')"/>
                 </nav>
             </navbar>
