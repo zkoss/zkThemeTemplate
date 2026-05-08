@@ -97,6 +97,21 @@ http://localhost:8080/{component-name}.zul
 
 Preview ZUL files are located at `src/test/resources/web/*.zul`.
 
+### UseCase SPA (Component Browser)
+The UseCase SPA supports hash-based deep linking — append `#<bookmark>` to jump directly to any sidebar page:
+```
+http://localhost:8080/usecase/index.zul#<bookmark>
+```
+
+Bookmark keys use the **full sub-path after `~./`**, without `.zul`:
+- Use-case pages: `usecase/dashboard`, `usecase/app-shell`, `usecase/order-entry`, `usecase/employee-grid`, `usecase/user-profile`, `usecase/product-browser`, `usecase/report-viewer`, `usecase/media-manager`
+- Feedback: `usecase/messagebox`
+- Root component pages: `button`, `combobutton`, `checkbox`, `radiogroup`, `textbox`, `combobox`, `selectbox`, `datebox`, `timebox`, `spinner`, `slider`, `rating`, `inputgroup`, `bandbox`, `grid`, `grid-header`, `grid-grouping`, `grid-detail`, `listbox`, `listbox-header`, `listbox-grouping`, `tree`, `tree-header`, `paging`, `biglistbox`, `menubar`, `toolbar`, `tabbox`, `tabbox-accordion`, `window`, `panel`, `groupbox`, `popup`, `caption`, `borderlayout`, `hlayout`, `splitter`, `anchorlayout`, `absolutelayout`, `progressmeter`, `notification`, `toast`, `calendar`
+
+Example: `http://localhost:8080/usecase/index.zul#usecase/dashboard`
+
+**VM**: `UseCaseVM.java` — same pattern as `UseCase2VM` (`@Init` restores bookmark, `navigate` command sets bookmark, `handleBookmarkChange` command responds to browser back/forward). Reconstruction: `"~./" + bookmark + ".zul"`.
+
 ### UseCase2 SPA (Mira Dashboard)
 The UseCase2 SPA supports hash-based deep linking — append `#<pagename>` to jump directly to any sidebar page:
 ```

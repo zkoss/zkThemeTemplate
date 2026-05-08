@@ -125,7 +125,7 @@ Always fix L1 before L5 — layout diffs mask spacing diffs.
 - Popup trigger state: does the input border/style change correctly when popup is open?
 - **Calendar today indicator**: ring outline (border) vs filled background — these are different patterns; do NOT assume "highlighted" means filled.
 - **Calendar selected indicator**: filled background vs ring outline — verify which is which (today ≠ selected).
-- Use `getComputedStyle` on `.z-datebox-popup` and `.z-calendar-cell.z-today` to get exact pixel values; do not rely on visual estimation of border-radius alone.
+- For every popup property value: run `getComputedStyle` on the live Mira element **and** look up the MUI CSS class — do not rely on visual estimation of any value (see **Exact value measurement** below).
 - See **Popup state capture** section below for how to screenshot these states.
 
 ### Screenshot procedure (CAPTURE and COMPARE steps)
@@ -255,6 +255,29 @@ setTimeout(() => {
               Only mark ⚠️ FRAMEWORK after ruling out both ZUL content fix and CSS variant fix.
               "Mira shows N sections / N variants / N states" is a ZUL content gap until proven otherwise.
 
+              EXACT VALUE MEASUREMENT (mandatory before writing any "Target" value in a diff row):
+                Do NOT guess property values from screenshots alone. For every diff row, measure
+                the target value using BOTH methods:
+
+                Method A — getComputedStyle on the live Mira page:
+                  Open the Mira tab, open the popup/component if needed, then in JS console:
+                    getComputedStyle(document.querySelector('<mira-selector>')).borderRadius
+                    getComputedStyle(document.querySelector('<mira-selector>')).padding
+                    // etc. for whichever property is in question
+                  This gives the exact runtime computed value (e.g. "4px", "12px 16px").
+
+                Method B — MUI static CSS class lookup:
+                  1. Check INDEX.md for the ZK component → MUI class mapping:
+                       /Users/hawk/Documents/workspace/THEME/material-ui-7.3.1/static-css-output/INDEX.md
+                  2. grep the static CSS files for the relevant MuiXxx class:
+                       grep -r "MuiPaper-root\|MuiPickersPopper" \
+                         /Users/hawk/Documents/workspace/THEME/material-ui-7.3.1/static-css-output/
+                  3. Read the matching file for exact property values.
+
+                Rule: if both methods agree → use that value. If they disagree → trust
+                getComputedStyle (runtime value reflects theme overrides; static CSS may be base).
+                Only write the "Target" column after confirming the value with at least Method A.
+
               ELEMENT COUNT CHECK (mandatory for component-demo pages):
                 For each card/section, explicitly enumerate:
                   → Mira: N rows, each row has [label1, label2, ...] items
@@ -274,9 +297,12 @@ setTimeout(() => {
                 → Popup diffs are often CSS-fixable (background, shadow, border-radius,
                   cell styling) — apply 3-Layer Triage before marking FRAMEWORK
 
-5. FIX      — Implement CSS/ZUL changes for all P1 diffs, then P2, then P3
-              Touch only files relevant to the current page's issues
-              Shared CSS fixes (sidebar, card, topbar) benefit all pages — do these first
+5. FIX      — Before writing any CSS value, confirm it with both exact measurement methods
+              from step 4 (getComputedStyle on Mira + MUI static CSS lookup).
+              Do not derive values from screenshots or MD3 knowledge alone — measure first.
+              Implement CSS/ZUL changes for all P1 diffs, then P2, then P3.
+              Touch only files relevant to the current page's issues.
+              Shared CSS fixes (sidebar, card, topbar) benefit all pages — do these first.
               STOP CONDITION: max 2 attempts per diff row; max 3 FIX→VERIFY loops per page
 
 6. VERIFY   — Re-screenshot local page (html2canvas at scale:2)
