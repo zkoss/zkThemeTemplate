@@ -1,6 +1,6 @@
-/* MD3 Color Tokens — --zk-color-* — aligned with Mira dashboard (blue-indigo palette) */
+/* MD3 Color Tokens — --zk-color-* — blue-indigo palette */
 :root {
-    /* Primary — Mira #376fd0 blue */
+    /* Primary — #376fd0 blue */
     --zk-color-primary: #376fd0;
     --zk-color-on-primary: #ffffff;
     --zk-color-primary-container: #d6e4ff;
@@ -30,7 +30,7 @@
     --zk-color-warning-container: #ffe0b2;
     --zk-color-on-warning-container: #7a3900;
 
-    /* Surface & Background — Mira uses #f7f9fc page bg */
+    /* Surface & Background */
     --zk-color-background: #f7f9fc;
     --zk-color-on-background: rgba(0, 0, 0, 0.87);
     --zk-color-surface: #ffffff;
@@ -69,7 +69,7 @@
     --zk-color-disabled: rgba(0, 0, 0, 0.38);
     --zk-color-disabled-container: rgba(0, 0, 0, 0.12);
 
-    /* Status colors — badge/chip semantic palette (matches Mira MUI computed values) */
+    /* Status colors — badge/chip semantic palette */
     --zk-color-status-success: #4caf50;
     --zk-color-status-warning: #ff9800;
     --zk-color-status-error:   #ef5350;

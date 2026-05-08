@@ -21,7 +21,7 @@
 }
 
 /* ─── Tooltip-style popup ─────────────────────────────────────────────────── */
-/* Matches MUI Tooltip: rgba(97,97,97,0.92) bg, 4px radius, 11px/500 text */
+/* Tooltip-style popup: dark bg, small radius, small text */
 .z-popup-tooltip.z-popup {
     background-color: rgba(97, 97, 97, 0.92);
     color: #fff;

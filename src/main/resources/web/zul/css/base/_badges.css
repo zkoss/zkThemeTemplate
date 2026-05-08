@@ -1,7 +1,7 @@
 /* ── Status Badge Utility ───────────────────────────────────────
    Usage: sclass="z-badge z-badge-success" (on any ZK component)
    ZK <label> is preferred — renders as <span> with no extra wrapper.
-   Dimensions match Mira/MUI Chip (height ~26px, border-radius 6px).
+   Dimensions: height ~26px, border-radius 6px.
 ─────────────────────────────────────────────────────────────── */
 .z-badge {
     display: inline-block;

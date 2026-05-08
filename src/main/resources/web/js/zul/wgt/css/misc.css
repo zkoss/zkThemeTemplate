@@ -58,7 +58,7 @@
     pointer-events: none;
 }
 
-/* Tooltip — matches MUI: rgba(97,97,97,0.92), 4px radius, 11px/500 */
+/* Tooltip */
 .z-tooltip {
     position: absolute;
     z-index: 2000;

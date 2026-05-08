@@ -193,7 +193,7 @@
 }
 
 /* ─── Standard (underline-only) variant ──────────────────────────────────── */
-/* Matches MUI Select standard variant: bottom border only, no box */
+/* Standard variant: bottom border only, no box */
 .z-combobox.z-combobox-standard {
     border: none;
     border-radius: 0;

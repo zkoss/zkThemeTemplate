@@ -1,7 +1,7 @@
 /* ── Status Chip Utility ─────────────────────────────────────────
    Usage: sclass="z-chip z-chip-primary" (on any ZK component)
    ZK <label> is preferred — renders as <span> with no extra wrapper.
-   Matches Mira/MUI Chip (height ~20px, border-radius 6px).
+   Dimensions: height ~20px, border-radius 6px.
    Two-class selectors beat .z-label specificity, keeping label color correct.
 ─────────────────────────────────────────────────────────────── */
 .z-chip {

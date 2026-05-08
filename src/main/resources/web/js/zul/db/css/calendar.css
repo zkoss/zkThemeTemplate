@@ -155,7 +155,7 @@
     opacity: 1;
 }
 
-/* Outside-month days — hidden like MUI DateCalendar (cells remain for grid layout) */
+/* Outside-month days — hidden (cells remain for grid layout) */
 /* Use tbody td specificity to beat the .z-calendar-weekend opacity:1 override */
 .z-calendar-body tbody td.z-calendar-outside,
 .z-calendar-body tbody td.z-calendar-outside.z-calendar-weekend {
@@ -163,7 +163,7 @@
     pointer-events: none;
 }
 
-/* Today — outline ring only (Mira: transparent bg + 1px dark border ring, no fill) */
+/* Today — outline ring only (transparent bg + 1px dark border ring, no fill) */
 .z-calendar-cell.z-today {
     background-color: transparent;
     color: var(--zk-color-on-surface);
