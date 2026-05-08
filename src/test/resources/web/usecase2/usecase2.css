@@ -732,3 +732,12 @@
 .m-grid-customized .z-grid-odd {
     background-color: rgba(0, 0, 0, 0.024);
 }
+
+/* ── tables-advanced: listbox numeric column alignment ─────────────── */
+/* .z-listheader starts at Dessert (pos 1); checkmark uses a different class */
+.m-listbox-numeric-cols .z-listheader:not(:first-child) { text-align: right; }
+/* .z-listcell starts at Dessert (pos 1); target the inner cnt via parent TD */
+.m-listbox-numeric-cols .z-listcell:not(:first-child) .z-listcell-cnt,
+.m-listbox-numeric-cols .z-listcell:not(:first-child) .z-listcell-content { text-align: right; }
+
+.m-listbox-dense { --zk-listbox-cell-padding: 6px 16px; }

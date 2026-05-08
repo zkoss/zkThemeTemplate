@@ -3,6 +3,7 @@
         .z-grid > .z-grid-body > table > tbody > tr.z-row > td.z-row-inner */
 
 .z-grid {
+    --zk-grid-cell-padding: var(--zk-spacing-4);
     display: block;
     background-color: var(--zk-color-surface);
     overflow: hidden;
@@ -79,7 +80,7 @@
 /* Column header cell */
 .z-column,
 .z-listheader {
-    padding: var(--zk-spacing-4);
+    padding: var(--zk-grid-cell-padding);
     font-family: var(--zk-typescale-font-family);
     font-size: var(--zk-typescale-label-large-size);
     font-weight: var(--zk-typescale-label-large-weight);
@@ -171,7 +172,7 @@
 /* Cell */
 .z-row-inner,
 .z-cell {
-    padding: var(--zk-spacing-4);
+    padding: var(--zk-grid-cell-padding);
     font-family: var(--zk-typescale-font-family);
     font-size: var(--zk-typescale-body-medium-size);
     font-weight: var(--zk-typescale-body-medium-weight);

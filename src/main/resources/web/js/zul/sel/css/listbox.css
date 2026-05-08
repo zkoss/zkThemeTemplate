@@ -3,6 +3,7 @@
         .z-listbox > .z-listbox-body > table > tbody > .z-listitem > td.z-listcell > .z-listcell-cnt */
 
 .z-listbox {
+    --zk-listbox-cell-padding: var(--zk-spacing-4);
     display: block;
     background-color: var(--zk-color-surface);
     border-radius: var(--zk-shape-card);
@@ -16,19 +17,19 @@
 /* ─── Header ───────────────────────────────────────────────────────────── */
 .z-listbox-header {
     overflow: hidden;
-    background-color: var(--zk-color-surface-container-low);
+    background-color: transparent;
 }
 
 .z-listhead,
 .z-listheader {
-    padding: var(--zk-spacing-3) var(--zk-spacing-4);
+    padding: var(--zk-listbox-cell-padding);
     font-size: var(--zk-typescale-label-large-size);
     font-weight: var(--zk-typescale-label-large-weight);
     line-height: var(--zk-typescale-label-large-line-height);
     color: var(--zk-color-on-surface-variant);
     text-align: left;
-    border-bottom: 2px solid var(--zk-color-outline-variant);
-    background-color: var(--zk-color-surface-container-low);
+    border-bottom: 1px solid var(--zk-color-outline-variant);
+    background-color: transparent;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -47,11 +48,49 @@
     background-color: var(--zk-color-surface-container);
 }
 
+/* Sort icon: pinned to center-top of header cell */
+.z-listheader-sorticon {
+    position: absolute;
+    top: 2px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none;
+}
+
+/* Sort direction icons */
+.z-listheader-sorticon .z-icon-caret-up,
+.z-listheader-sorticon .z-icon-caret-down {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    background-color: var(--zk-color-on-surface-variant);
+    -webkit-mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-size: contain;
+    mask-repeat: no-repeat;
+    mask-position: center;
+}
+
+.z-listheader-sorticon .z-icon-caret-up {
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m18 15-6-6-6 6'/%3E%3C/svg%3E");
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m18 15-6-6-6 6'/%3E%3C/svg%3E");
+}
+
+.z-listheader-sorticon .z-icon-caret-down {
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+}
+
 /* ─── Body ─────────────────────────────────────────────────────────────── */
 .z-listbox-body {
     overflow: auto;
 }
 
+.z-listbox-header table,
 .z-listbox-body table {
     width: 100%;
     border-collapse: collapse;
@@ -102,7 +141,7 @@
 .z-listcell-cnt,
 .z-listcell-content {
     display: block;
-    padding: var(--zk-spacing-2) var(--zk-spacing-4);
+    padding: var(--zk-listbox-cell-padding);
     font-size: var(--zk-typescale-body-medium-size);
     font-weight: var(--zk-typescale-body-medium-weight);
     color: var(--zk-color-on-surface);
@@ -230,6 +269,16 @@
     background-position: center !important;
 }
 
+/* Header "select all" checkbox — checked state */
+.z-listheader-checkable.z-listheader-checked .z-listheader-icon.z-icon-check::before {
+    background-color: var(--zk-color-primary, #376fd0) !important;
+    border-color: var(--zk-color-primary, #376fd0) !important;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E") !important;
+    background-size: 11px 11px !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+}
+
 /* Checkmark cell column — compact padding */
 .z-listitem-checkable,
 .z-listheader-checkable {
@@ -237,4 +286,122 @@
     padding: 0 var(--zk-spacing-3);
     text-align: center;
     vertical-align: middle;
+}
+
+
+/* ─── Built-in paging (listbox mold="paging") ──────────────────────────── */
+.z-listbox-paging-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0 var(--zk-spacing-4);
+    min-height: 52px;
+    border-top: 1px solid var(--zk-color-outline-variant);
+    font-family: var(--zk-typescale-font-family);
+    font-size: var(--zk-typescale-body-small-size);
+    color: var(--zk-color-on-surface-variant);
+}
+
+.z-listbox-paging-bottom .z-paging {
+    display: flex;
+    align-items: center;
+}
+
+.z-listbox-paging-bottom .z-paging ul {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: var(--zk-spacing-1);
+}
+
+.z-listbox-paging-bottom .z-paging ul li {
+    display: flex;
+    align-items: center;
+}
+
+/* Prev / Next icon buttons */
+.z-listbox-paging-bottom .z-paging-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    border-radius: var(--zk-shape-corner-full);
+    color: var(--zk-color-on-surface-variant);
+    transition: background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+}
+
+.z-listbox-paging-bottom .z-paging-button:not(:disabled):hover {
+    background-color: color-mix(in srgb, var(--zk-color-on-surface) 8%, transparent);
+}
+
+.z-listbox-paging-bottom .z-paging-button:disabled,
+.z-listbox-paging-bottom .z-paging-button[disabled] {
+    opacity: 0.38;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/* Paging navigation icon glyphs */
+.z-listbox-paging-bottom .z-paging-icon {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-color: currentColor;
+    -webkit-mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-size: contain;
+    mask-repeat: no-repeat;
+    mask-position: center;
+    vertical-align: middle;
+}
+
+.z-listbox-paging-bottom .z-icon-angle-left {
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m15 18-6-6 6-6'/%3E%3C/svg%3E");
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m15 18-6-6 6-6'/%3E%3C/svg%3E");
+}
+
+.z-listbox-paging-bottom .z-icon-angle-right {
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m9 18 6-6-6-6'/%3E%3C/svg%3E");
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m9 18 6-6-6-6'/%3E%3C/svg%3E");
+}
+
+.z-listbox-paging-bottom .z-icon-angle-double-left {
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m11 17-5-5 5-5'/%3E%3Cpath d='m18 17-5-5 5-5'/%3E%3C/svg%3E");
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m11 17-5-5 5-5'/%3E%3Cpath d='m18 17-5-5 5-5'/%3E%3C/svg%3E");
+}
+
+.z-listbox-paging-bottom .z-icon-angle-double-right {
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 17 5-5-5-5'/%3E%3Cpath d='m13 17 5-5-5-5'/%3E%3C/svg%3E");
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 17 5-5-5-5'/%3E%3Cpath d='m13 17 5-5-5-5'/%3E%3C/svg%3E");
+}
+
+/* "1 / 2" page info */
+.z-listbox-paging-bottom .z-paging-input {
+    width: 32px;
+    height: 28px;
+    border: 1px solid var(--zk-color-outline-variant);
+    border-radius: var(--zk-shape-corner-extra-small);
+    text-align: center;
+    font-family: var(--zk-typescale-font-family);
+    font-size: var(--zk-typescale-body-small-size);
+    color: var(--zk-color-on-surface);
+    background: var(--zk-color-surface);
+    padding: 0 var(--zk-spacing-1);
+    box-sizing: border-box;
+    outline: none;
+}
+
+.z-listbox-paging-bottom .z-paging-text {
+    color: var(--zk-color-on-surface-variant);
+    font-size: var(--zk-typescale-body-small-size);
+    white-space: nowrap;
+    padding: 0 var(--zk-spacing-1);
 }

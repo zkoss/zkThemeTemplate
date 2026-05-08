@@ -12,65 +12,159 @@
         </div>
     </div>
     <separator bar="true"/>
+
+    <!-- Card 1: Nutrition Table (normal padding) -->
+    <div sclass="m-card" style="margin-bottom:24px;">
+        <label sclass="m-card__title" value="Nutrition"/>
+        <listbox checkmark="true" multiple="true" mold="paging" pageSize="10" sclass="m-listbox-numeric-cols">
+            <listhead sizable="true">
+                <listheader label="Dessert (100g serving)" sort="auto"/>
+                <listheader label="Calories" sort="auto"/>
+                <listheader label="Fat (g)" sort="auto"/>
+                <listheader label="Carbs (g)" sort="auto"/>
+                <listheader label="Protein (g)" sort="auto"/>
+            </listhead>
+            <listitem>
+                <listcell label="Frozen yoghurt"/>
+                <listcell label="159"/>
+                <listcell label="6"/>
+                <listcell label="24"/>
+                <listcell label="4"/>
+            </listitem>
+            <listitem>
+                <listcell label="Ice cream sandwich"/>
+                <listcell label="237"/>
+                <listcell label="9"/>
+                <listcell label="37"/>
+                <listcell label="4.3"/>
+            </listitem>
+            <listitem>
+                <listcell label="Eclair"/>
+                <listcell label="262"/>
+                <listcell label="16"/>
+                <listcell label="24"/>
+                <listcell label="6"/>
+            </listitem>
+            <listitem>
+                <listcell label="Cupcake"/>
+                <listcell label="305"/>
+                <listcell label="3.7"/>
+                <listcell label="67"/>
+                <listcell label="4.3"/>
+            </listitem>
+            <listitem>
+                <listcell label="Marshmallow"/>
+                <listcell label="318"/>
+                <listcell label="0"/>
+                <listcell label="81"/>
+                <listcell label="2"/>
+            </listitem>
+            <listitem>
+                <listcell label="Gingerbread"/>
+                <listcell label="356"/>
+                <listcell label="16"/>
+                <listcell label="49"/>
+                <listcell label="3.9"/>
+            </listitem>
+            <listitem>
+                <listcell label="Nougat"/>
+                <listcell label="360"/>
+                <listcell label="19"/>
+                <listcell label="9"/>
+                <listcell label="37"/>
+            </listitem>
+            <listitem>
+                <listcell label="Jelly Bean"/>
+                <listcell label="375"/>
+                <listcell label="0"/>
+                <listcell label="94"/>
+                <listcell label="0"/>
+            </listitem>
+            <listitem>
+                <listcell label="Lollipop"/>
+                <listcell label="392"/>
+                <listcell label="0.2"/>
+                <listcell label="98"/>
+                <listcell label="0"/>
+            </listitem>
+            <listitem>
+                <listcell label="Honeycomb"/>
+                <listcell label="408"/>
+                <listcell label="3.2"/>
+                <listcell label="87"/>
+                <listcell label="6.5"/>
+            </listitem>
+            <listitem>
+                <listcell label="Donut"/>
+                <listcell label="452"/>
+                <listcell label="25"/>
+                <listcell label="51"/>
+                <listcell label="5"/>
+            </listitem>
+            <listitem>
+                <listcell label="KitKat"/>
+                <listcell label="518"/>
+                <listcell label="26"/>
+                <listcell label="65"/>
+                <listcell label="7"/>
+            </listitem>
+            <listitem>
+                <listcell label="Apple Pie"/>
+                <listcell label="237"/>
+                <listcell label="9"/>
+                <listcell label="37"/>
+                <listcell label="4.3"/>
+            </listitem>
+        </listbox>
+    </div>
+
+    <!-- Card 2: Dense padding variant -->
     <div sclass="m-card">
-                <label sclass="m-card__title" value="Advanced Table"/>
-                <listbox checkmark="true" multiple="true">
-                    <listhead sizable="true">
-                        <listheader label="Order ID" sort="auto" width="130px"/>
-                        <listheader label="Customer" sort="auto"/>
-                        <listheader label="Product" sort="auto"/>
-                        <listheader label="Amount" sort="auto" width="110px"/>
-                        <listheader label="Date" sort="auto" width="120px"/>
-                        <listheader label="Status" width="120px"/>
-                    </listhead>
-                    <listitem>
-                        <listcell label="#10001"/>
-                        <listcell label="Alice Johnson"/>
-                        <listcell label="Wireless Headphones"/>
-                        <listcell label="$129.99"/>
-                        <listcell label="Apr 20, 2025"/>
-                        <listcell><div sclass="z-badge z-badge-success">Shipped</div></listcell>
-                    </listitem>
-                    <listitem>
-                        <listcell label="#10002"/>
-                        <listcell label="Bob Williams"/>
-                        <listcell label="Ergonomic Chair"/>
-                        <listcell label="$349.00"/>
-                        <listcell label="Apr 21, 2025"/>
-                        <listcell><div sclass="z-badge z-badge-warning">Processing</div></listcell>
-                    </listitem>
-                    <listitem>
-                        <listcell label="#10003"/>
-                        <listcell label="Carol Davis"/>
-                        <listcell label="USB-C Hub"/>
-                        <listcell label="$59.95"/>
-                        <listcell label="Apr 22, 2025"/>
-                        <listcell><div sclass="z-badge z-badge-success">Delivered</div></listcell>
-                    </listitem>
-                    <listitem>
-                        <listcell label="#10004"/>
-                        <listcell label="David Brown"/>
-                        <listcell label="Mechanical Keyboard"/>
-                        <listcell label="$199.00"/>
-                        <listcell label="Apr 23, 2025"/>
-                        <listcell><div sclass="z-badge z-badge-error">Cancelled</div></listcell>
-                    </listitem>
-                    <listitem>
-                        <listcell label="#10005"/>
-                        <listcell label="Eva Martinez"/>
-                        <listcell label="Standing Desk"/>
-                        <listcell label="$599.00"/>
-                        <listcell label="Apr 24, 2025"/>
-                        <listcell><div sclass="z-badge z-badge-info">Pending</div></listcell>
-                    </listitem>
-                    <listitem>
-                        <listcell label="#10006"/>
-                        <listcell label="Frank Wilson"/>
-                        <listcell label="Monitor 27in"/>
-                        <listcell label="$449.99"/>
-                        <listcell label="Apr 25, 2025"/>
-                        <listcell><div sclass="z-badge z-badge-success">Shipped</div></listcell>
-                    </listitem>
-                </listbox>
-            </div>
-        </div>
+        <label sclass="m-card__title" value="Dense padding"/>
+        <listbox checkmark="true" multiple="true" sclass="m-listbox-numeric-cols m-listbox-dense">
+            <listhead sizable="true">
+                <listheader label="Dessert (100g serving)" sort="auto"/>
+                <listheader label="Calories" sort="auto"/>
+                <listheader label="Fat (g)" sort="auto"/>
+                <listheader label="Carbs (g)" sort="auto"/>
+                <listheader label="Protein (g)" sort="auto"/>
+            </listhead>
+            <listitem>
+                <listcell label="Frozen yoghurt"/>
+                <listcell label="159"/>
+                <listcell label="6"/>
+                <listcell label="24"/>
+                <listcell label="4"/>
+            </listitem>
+            <listitem>
+                <listcell label="Ice cream sandwich"/>
+                <listcell label="237"/>
+                <listcell label="9"/>
+                <listcell label="37"/>
+                <listcell label="4.3"/>
+            </listitem>
+            <listitem>
+                <listcell label="Eclair"/>
+                <listcell label="262"/>
+                <listcell label="16"/>
+                <listcell label="24"/>
+                <listcell label="6"/>
+            </listitem>
+            <listitem>
+                <listcell label="Cupcake"/>
+                <listcell label="305"/>
+                <listcell label="3.7"/>
+                <listcell label="67"/>
+                <listcell label="4.3"/>
+            </listitem>
+            <listitem>
+                <listcell label="Marshmallow"/>
+                <listcell label="318"/>
+                <listcell label="0"/>
+                <listcell label="81"/>
+                <listcell label="2"/>
+            </listitem>
+        </listbox>
+    </div>
+
+</div>

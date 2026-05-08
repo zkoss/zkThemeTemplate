@@ -319,10 +319,17 @@ setTimeout(() => {
 
               For table/grid pages — mandatory extra checks:
                 → Cell padding: getComputedStyle(miraEl).padding on .MuiTableCell-root
-                  vs getComputedStyle(localEl).padding on .z-row-inner — do NOT skip this.
-                → Grid header background: MUI Table header is transparent (rgba(0,0,0,0))
-                  by default. If local .z-grid-header/.z-column shows a tinted background,
-                  that is a real P2 diff at the component level — fix it, don't accept as P3.
+                  vs getComputedStyle(localEl).padding on .z-row-inner/.z-listcell-cnt — do NOT skip this.
+                → Grid/Listbox header background: MUI Table header is transparent (rgba(0,0,0,0))
+                  by default. If local .z-grid-header/.z-column/.z-listbox-header/.z-listheader shows
+                  a tinted background, that is a real P2 diff — fix it, don't accept as P3.
+                → Listbox sort icon: ZK renders <i id="...-sort-icon"> inside .z-listheader-sorticon.
+                  When sorted, the icon gets class z-icon-caret-up or z-icon-caret-down. Add CSS
+                  using SVG mask-image for these classes. The sorticon div is FIRST in the DOM —
+                  do NOT use order:2 (that moves it after the text). Use margin-right (not margin-left).
+                → Listbox cell alignment via :not(:first-child): NEVER apply :not(:first-child)
+                  to .z-listcell-cnt — it is always first-child of its TD, so it never matches.
+                  Instead target the TD: .z-listcell:not(:first-child) .z-listcell-cnt.
 
 5. FIX      — Before writing any CSS value, confirm it with both exact measurement methods
               from step 4 (getComputedStyle on Mira + MUI static CSS lookup).
@@ -332,6 +339,9 @@ setTimeout(() => {
                 → Alternating row colors: ZK Grid/Listbox auto-applies z-grid-odd / z-listbox-odd
                   to every other row via stripe(). Target these classes in CSS — never use
                   :nth-child to simulate what ZK already does natively.
+                → Cell padding density: expose padding as a CSS variable on the root component
+                  (--zk-listbox-cell-padding, --zk-grid-cell-padding) so a dense variant can
+                  override it with a page-level class: .m-listbox-dense { --zk-listbox-cell-padding: 6px 16px; }
               Touch only files relevant to the current page's issues.
               Shared CSS fixes (sidebar, card, topbar) benefit all pages — do these first.
               STOP CONDITION: max 2 attempts per diff row; max 3 FIX→VERIFY loops per page
@@ -515,5 +525,5 @@ Legend: ✅ Done | 🔲 Pending | ⏭️ Skipped (infra/shell only)
 | `charts-apex.zul` | `/charts/apex` | 🔲 Pending | — |
 | `charts-chartjs.zul` | `/charts/chartjs` | 🔲 Pending | — |
 | `tables-simple.zul` | `/tables/simple` | ✅ Done | 2026-05-08 |
-| `tables-advanced.zul` | `/tables/advanced` | ✅ Done | 2026-05-04 |
+| `tables-advanced.zul` | `/tables/advanced` | ✅ Done | 2026-05-08 |
 | `tables-datagrid.zul` | `/tables/datagrid` | 🔲 Pending | — |
