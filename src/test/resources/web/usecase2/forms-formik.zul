@@ -1,0 +1,45 @@
+<?link rel="stylesheet" type="text/css" href="/usecase2/usecase2.css"?>
+<div sclass="m-main">
+
+    <div sclass="m-page-header">
+        <label sclass="m-page-title" value="Formik"/>
+    </div>
+
+    <div sclass="m-card">
+        <label sclass="m-card__title" value="Formik"/>
+        <label sclass="m-pickers-desc" value="Formik example with Yup validation"/>
+
+        <!-- Row 1: First Name / Last Name (2-col) -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:16px;">
+            <div>
+                <label value="First Name" style="font-size:12px;color:var(--zk-color-on-surface-variant,#49454f);display:block;margin-bottom:6px;"/>
+                <textbox width="100%" value="Lucy"/>
+            </div>
+            <div>
+                <label value="Last Name" style="font-size:12px;color:var(--zk-color-on-surface-variant,#49454f);display:block;margin-bottom:6px;"/>
+                <textbox width="100%" value="Lavender"/>
+            </div>
+        </div>
+
+        <!-- Email -->
+        <div style="margin-bottom:16px;">
+            <label value="Email" style="font-size:12px;color:var(--zk-color-on-surface-variant,#49454f);display:block;margin-bottom:6px;"/>
+            <textbox width="100%" value="lucylavender@gmail.com"/>
+        </div>
+
+        <!-- Password -->
+        <div style="margin-bottom:16px;">
+            <label value="Password" style="font-size:12px;color:var(--zk-color-on-surface-variant,#49454f);display:block;margin-bottom:6px;"/>
+            <textbox width="100%" type="password" value="mypassword123"/>
+        </div>
+
+        <!-- Confirm password -->
+        <div style="margin-bottom:24px;">
+            <label value="Confirm password" style="font-size:12px;color:var(--zk-color-on-surface-variant,#49454f);display:block;margin-bottom:6px;"/>
+            <textbox width="100%" type="password" value="mypassword123"/>
+        </div>
+
+        <button label="Save changes" sclass="z-button-primary"/>
+    </div>
+
+</div>

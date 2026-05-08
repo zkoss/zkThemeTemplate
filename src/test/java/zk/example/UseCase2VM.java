@@ -19,8 +19,8 @@ public class UseCase2VM {
         "pages-profile", "pages-settings", "pages-pricing", "pages-chat", "pages-blank",
         "accordion", "alerts", "avatars", "badges", "buttons", "cards", "chips",
         "dialogs", "lists", "menus", "pagination", "progress", "tabs", "tooltips",
-        "charts-apex", "charts-chartjs", "forms-editors", "forms-pickers",
-        "forms-selection-controls", "forms-selects", "forms-text-fields",
+        "charts-apex", "charts-chartjs", "forms-pickers",
+        "forms-selection-controls", "forms-selects", "forms-text-fields", "forms-formik",
         "tables-simple", "tables-advanced", "tables-datagrid", "icons-lucide"
     );
 

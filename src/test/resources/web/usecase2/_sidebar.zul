@@ -138,9 +138,10 @@
             <navitem label="Text Fields"
                 onClick="@command('navigate', page='~./usecase2/forms-text-fields.zul')"
                 sclass="@load(vm.currentPage eq '~./usecase2/forms-text-fields.zul' ? 'm-active' : '')"/>
-            <navitem label="Editors"
-                onClick="@command('navigate', page='~./usecase2/forms-editors.zul')"
-                sclass="@load(vm.currentPage eq '~./usecase2/forms-editors.zul' ? 'm-active' : '')"/>
+            <navitem label="Editors"/>
+            <navitem label="Formik"
+                onClick="@command('navigate', page='~./usecase2/forms-formik.zul')"
+                sclass="@load(vm.currentPage eq '~./usecase2/forms-formik.zul' ? 'm-active' : '')"/>
         </nav>
         <nav label="Tables" iconSclass="z-icon-table">
             <navitem label="Simple Table"
