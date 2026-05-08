@@ -588,46 +588,6 @@
     font-weight: 400;
 }
 
-/* Switch toggle variant — styled checkbox that looks like MUI Switch */
-.z-checkbox-switch input[type="checkbox"] {
-    appearance: none;
-    -webkit-appearance: none;
-    width: 34px;
-    height: 14px;
-    min-width: 34px;
-    border-radius: 7px;
-    background-color: rgba(0, 0, 0, 0.38);
-    border: none;
-    position: relative;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-}
-
-.z-checkbox-switch input[type="checkbox"]::after {
-    content: '';
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background-color: #fafafa;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.4);
-    top: -3px;
-    left: -1px;
-    display: block;
-    background-image: none;
-    transition: left 0.15s ease, background-color 0.15s ease;
-}
-
-.z-checkbox-switch input[type="checkbox"]:checked {
-    background-color: rgba(55, 111, 208, 0.5);
-    border-color: transparent;
-}
-
-.z-checkbox-switch input[type="checkbox"]:checked::after {
-    left: 15px;
-    background-color: var(--zk-color-primary, #376fd0);
-    background-image: none;
-}
 
 /* Label placement grid — 4 radio elements directly in a 2-col grid */
 .m-label-placement-grid {
