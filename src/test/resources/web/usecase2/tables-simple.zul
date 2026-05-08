@@ -1,61 +1,111 @@
 <div sclass="m-main">
-            <div sclass="m-page-header">
-                <label sclass="m-page-title" value="Simple Table"/>
-            </div>
-            <div sclass="m-card">
-                <label sclass="m-card__title" value="Simple Table"/>
-                <grid mold="default">
-                    <columns>
-                        <column label="ID" width="80px"/>
-                        <column label="Name"/>
-                        <column label="Email"/>
-                        <column label="Role" width="140px"/>
-                        <column label="Status" width="110px"/>
-                    </columns>
-                    <rows>
-                        <row>
-                            <label value="001"/>
-                            <label value="Alice Johnson"/>
-                            <label value="alice@example.com"/>
-                            <label value="Admin"/>
-                            <div sclass="z-badge z-badge-success">Active</div>
-                        </row>
-                        <row>
-                            <label value="002"/>
-                            <label value="Bob Williams"/>
-                            <label value="bob@example.com"/>
-                            <label value="Editor"/>
-                            <div sclass="z-badge z-badge-success">Active</div>
-                        </row>
-                        <row>
-                            <label value="003"/>
-                            <label value="Carol Davis"/>
-                            <label value="carol@example.com"/>
-                            <label value="Viewer"/>
-                            <div sclass="z-badge z-badge-warning">Pending</div>
-                        </row>
-                        <row>
-                            <label value="004"/>
-                            <label value="David Brown"/>
-                            <label value="david@example.com"/>
-                            <label value="Editor"/>
-                            <div sclass="z-badge z-badge-error">Inactive</div>
-                        </row>
-                        <row>
-                            <label value="005"/>
-                            <label value="Eva Martinez"/>
-                            <label value="eva@example.com"/>
-                            <label value="Admin"/>
-                            <div sclass="z-badge z-badge-success">Active</div>
-                        </row>
-                        <row>
-                            <label value="006"/>
-                            <label value="Frank Wilson"/>
-                            <label value="frank@example.com"/>
-                            <label value="Viewer"/>
-                            <div sclass="z-badge z-badge-success">Active</div>
-                        </row>
-                    </rows>
-                </grid>
-            </div>
-        </div>
+
+    <div sclass="m-page-header">
+        <label sclass="m-page-title" value="Simple Table"/>
+    </div>
+
+    <!-- Card 1: Simple Table -->
+    <div sclass="m-card" style="margin-bottom:24px;">
+        <label sclass="m-card__title" value="Simple Table"/>
+        <label sclass="m-card__desc" value="A simple example with no frills." style="margin-bottom:16px;"/>
+        <grid mold="default" sclass="m-grid-numeric-cols">
+            <columns>
+                <column label="Dessert (100g serving)"/>
+                <column label="Calories" align="right"/>
+                <column label="Fat (g)" align="right"/>
+                <column label="Carbs (g)" align="right"/>
+                <column label="Protein (g)" align="right"/>
+            </columns>
+            <rows>
+                <row>
+                    <label value="Frozen yoghurt"/>
+                    <label value="159"/>
+                    <label value="6"/>
+                    <label value="24"/>
+                    <label value="4"/>
+                </row>
+                <row>
+                    <label value="Ice cream sandwich"/>
+                    <label value="237"/>
+                    <label value="9"/>
+                    <label value="37"/>
+                    <label value="4.3"/>
+                </row>
+                <row>
+                    <label value="Eclair"/>
+                    <label value="262"/>
+                    <label value="16"/>
+                    <label value="24"/>
+                    <label value="6"/>
+                </row>
+                <row>
+                    <label value="Cupcake"/>
+                    <label value="305"/>
+                    <label value="3.7"/>
+                    <label value="67"/>
+                    <label value="4.3"/>
+                </row>
+                <row>
+                    <label value="Gingerbread"/>
+                    <label value="356"/>
+                    <label value="16"/>
+                    <label value="49"/>
+                    <label value="3.9"/>
+                </row>
+            </rows>
+        </grid>
+    </div>
+
+    <!-- Card 2: Customized Table -->
+    <div sclass="m-card">
+        <label sclass="m-card__title" value="Customized Table"/>
+        <label sclass="m-card__desc" value="If you have been reading the overrides documentation page but you are not confident jumping in, here are examples of how you can change the look of a TableCell." style="margin-bottom:16px;"/>
+        <grid mold="default" sclass="m-grid-numeric-cols m-grid-customized">
+            <columns>
+                <column label="Dessert (100g serving)"/>
+                <column label="Calories" align="right"/>
+                <column label="Fat (g)" align="right"/>
+                <column label="Carbs (g)" align="right"/>
+                <column label="Protein (g)" align="right"/>
+            </columns>
+            <rows>
+                <row>
+                    <label value="Frozen yoghurt"/>
+                    <label value="159"/>
+                    <label value="6"/>
+                    <label value="24"/>
+                    <label value="4"/>
+                </row>
+                <row>
+                    <label value="Ice cream sandwich"/>
+                    <label value="237"/>
+                    <label value="9"/>
+                    <label value="37"/>
+                    <label value="4.3"/>
+                </row>
+                <row>
+                    <label value="Eclair"/>
+                    <label value="262"/>
+                    <label value="16"/>
+                    <label value="24"/>
+                    <label value="6"/>
+                </row>
+                <row>
+                    <label value="Cupcake"/>
+                    <label value="305"/>
+                    <label value="3.7"/>
+                    <label value="67"/>
+                    <label value="4.3"/>
+                </row>
+                <row>
+                    <label value="Gingerbread"/>
+                    <label value="356"/>
+                    <label value="16"/>
+                    <label value="49"/>
+                    <label value="3.9"/>
+                </row>
+            </rows>
+        </grid>
+    </div>
+
+</div>

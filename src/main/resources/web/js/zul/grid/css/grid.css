@@ -67,7 +67,7 @@
 /* ─── Header area ───────────────────────────────────────────────────────── */
 .z-grid-header {
     overflow: hidden;
-    background-color: var(--zk-color-surface-container-low);
+    background-color: transparent;
 }
 
 .z-grid-header-inner {
@@ -79,15 +79,15 @@
 /* Column header cell */
 .z-column,
 .z-listheader {
-    padding: var(--zk-spacing-3) var(--zk-spacing-4);
+    padding: var(--zk-spacing-4);
     font-family: var(--zk-typescale-font-family);
     font-size: var(--zk-typescale-label-large-size);
     font-weight: var(--zk-typescale-label-large-weight);
     line-height: var(--zk-typescale-label-large-line-height);
     color: var(--zk-color-on-surface-variant);
     text-align: left;
-    border-bottom: 2px solid var(--zk-color-outline-variant);
-    background-color: var(--zk-color-surface-container-low);
+    border-bottom: 1px solid var(--zk-color-outline-variant);
+    background-color: transparent;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -171,7 +171,7 @@
 /* Cell */
 .z-row-inner,
 .z-cell {
-    padding: var(--zk-spacing-2) var(--zk-spacing-4);
+    padding: var(--zk-spacing-4);
     font-family: var(--zk-typescale-font-family);
     font-size: var(--zk-typescale-body-medium-size);
     font-weight: var(--zk-typescale-body-medium-weight);
@@ -187,6 +187,7 @@
 .z-grid-striped .z-row:nth-child(even) {
     background-color: var(--zk-color-surface-container-lowest);
 }
+
 
 /* ─── Foot area ─────────────────────────────────────────────────────────── */
 .z-grid-foot {

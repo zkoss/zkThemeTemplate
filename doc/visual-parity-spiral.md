@@ -48,7 +48,11 @@ Examples:
 
 **Action: Create CSS variant class + add to ZUL with sclass. Mark as content/CSS work, NOT framework gap.**
 
-> **Naming rule**: variant classes that go into component CSS files (`src/main/resources/`) must use the `z-` prefix (e.g., `z-paging-outlined`). See Section 1 of `mira-alignment-plan-v2.md`.
+> **Naming rule**:
+> - Variant classes in **component CSS files** (`src/main/resources/`) → `z-` prefix (e.g., `z-paging-outlined`)
+> - Variant classes in **page-level CSS** (`usecase2.css`) and ZUL `sclass` → `m-` prefix (e.g., `m-grid-numeric-cols`)
+>
+> One-off visual styles that only appear on a single demo page belong in `usecase2.css`, NOT in component CSS files. Only promote CSS to component files if it would be useful across real-world applications.
 
 ### Layer 3: Is this a true framework architectural gap?
 > "Does this require ZK to fundamentally render different DOM, handle different events, or implement React/MUI-specific behavior?"
@@ -313,10 +317,21 @@ setTimeout(() => {
                 → Popup diffs are often CSS-fixable (background, shadow, border-radius,
                   cell styling) — apply 3-Layer Triage before marking FRAMEWORK
 
+              For table/grid pages — mandatory extra checks:
+                → Cell padding: getComputedStyle(miraEl).padding on .MuiTableCell-root
+                  vs getComputedStyle(localEl).padding on .z-row-inner — do NOT skip this.
+                → Grid header background: MUI Table header is transparent (rgba(0,0,0,0))
+                  by default. If local .z-grid-header/.z-column shows a tinted background,
+                  that is a real P2 diff at the component level — fix it, don't accept as P3.
+
 5. FIX      — Before writing any CSS value, confirm it with both exact measurement methods
               from step 4 (getComputedStyle on Mira + MUI static CSS lookup).
               Do not derive values from screenshots or MD3 knowledge alone — measure first.
               Implement CSS/ZUL changes for all P1 diffs, then P2, then P3.
+              Before writing CSS workarounds, check ZK built-in mechanisms first:
+                → Alternating row colors: ZK Grid/Listbox auto-applies z-grid-odd / z-listbox-odd
+                  to every other row via stripe(). Target these classes in CSS — never use
+                  :nth-child to simulate what ZK already does natively.
               Touch only files relevant to the current page's issues.
               Shared CSS fixes (sidebar, card, topbar) benefit all pages — do these first.
               STOP CONDITION: max 2 attempts per diff row; max 3 FIX→VERIFY loops per page
@@ -499,6 +514,6 @@ Legend: ✅ Done | 🔲 Pending | ⏭️ Skipped (infra/shell only)
 |---|---|---|---|
 | `charts-apex.zul` | `/charts/apex` | 🔲 Pending | — |
 | `charts-chartjs.zul` | `/charts/chartjs` | 🔲 Pending | — |
-| `tables-simple.zul` | `/tables/simple` | 🔲 Pending | — |
+| `tables-simple.zul` | `/tables/simple` | ✅ Done | 2026-05-08 |
 | `tables-advanced.zul` | `/tables/advanced` | ✅ Done | 2026-05-04 |
 | `tables-datagrid.zul` | `/tables/datagrid` | 🔲 Pending | — |

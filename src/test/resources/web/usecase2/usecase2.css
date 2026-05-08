@@ -713,3 +713,22 @@
 .z-error-text {
     color: var(--zk-color-error) !important;
 }
+
+/* ── tables-simple: grid variants ──────────────────────────────────── */
+.m-grid-numeric-cols .z-column:not(:first-child) {
+    text-align: right;
+}
+
+.m-grid-numeric-cols .z-row-inner:not(:first-child) {
+    text-align: right;
+}
+
+.m-grid-customized .z-grid-header,
+.m-grid-customized .z-column {
+    background-color: #000000;
+    color: #ffffff;
+}
+
+.m-grid-customized .z-grid-odd {
+    background-color: rgba(0, 0, 0, 0.024);
+}
