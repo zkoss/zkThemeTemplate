@@ -637,33 +637,13 @@
     background-image: none;
 }
 
-/* Label placement grid */
+/* Label placement grid — 4 radio elements directly in a 2-col grid */
 .m-label-placement-grid {
     display: grid;
     grid-template-columns: auto auto;
     gap: 8px 24px;
     align-items: center;
     justify-content: start;
-}
-
-.m-label-placement-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
-}
-
-.m-label-placement-text {
-    font-size: 13px;
-    color: var(--zk-color-on-surface, #1c1b1f);
-}
-
-/* Horizontal label placement items */
-.m-label-placement-item:nth-child(2),
-.m-label-placement-item:nth-child(4) {
-    flex-direction: row;
-    align-items: center;
-    gap: 8px;
 }
 
 .m-pickers-field {

@@ -49,24 +49,10 @@
             <label sclass="m-card__title" value="Label placement"/>
             <label sclass="m-pickers-desc" value="You can change the placement of the label."/>
             <div sclass="m-label-placement-grid">
-                <!-- Top label -->
-                <div sclass="m-label-placement-item">
-                    <label sclass="m-label-placement-text" value="Top"/>
-                    <radio sclass="z-radio-label-top"/>
-                </div>
-                <!-- Start label -->
-                <div sclass="m-label-placement-item">
-                    <radio label="Start"/>
-                </div>
-                <!-- Bottom label -->
-                <div sclass="m-label-placement-item">
-                    <radio sclass="z-radio-label-bottom"/>
-                    <label sclass="m-label-placement-text" value="Bottom"/>
-                </div>
-                <!-- End label -->
-                <div sclass="m-label-placement-item">
-                    <radio label="End"/>
-                </div>
+                <radio label="Top"    sclass="z-radio-label-top"/>
+                <radio label="Start"  sclass="z-radio-label-start"/>
+                <radio label="Bottom" sclass="z-radio-label-bottom"/>
+                <radio label="End"/>
             </div>
         </div>
     </div>

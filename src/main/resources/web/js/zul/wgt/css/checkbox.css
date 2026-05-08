@@ -1,5 +1,6 @@
-/* MD3 Checkbox */
-/* DOM: <label class="z-checkbox"><input type="checkbox"><span class="z-checkbox-content">Label</span></label> */
+/* MD3 Checkbox + Radio */
+/* Checkbox DOM: <label class="z-checkbox"><input type="checkbox"><span class="z-checkbox-content">Label</span></label> */
+/* Radio DOM:    <span class="z-radio"><input type="radio"><label class="z-radio-content">Label</label><br></span> */
 
 .z-checkbox {
     display: inline-flex;
@@ -82,4 +83,102 @@
     cursor: not-allowed;
     opacity: var(--zk-state-disabled-opacity);
     pointer-events: none;
+}
+
+/* ─── Radio ──────────────────────────────────────────────────────────────── */
+
+.z-radio {
+    display: flex;
+    align-items: center;
+    gap: var(--zk-spacing-2);
+    cursor: pointer;
+    font-family: var(--zk-typescale-font-family);
+    font-size: var(--zk-typescale-body-medium-size);
+    font-weight: var(--zk-typescale-body-medium-weight);
+    line-height: var(--zk-typescale-body-medium-line-height);
+    color: var(--zk-color-on-surface);
+    user-select: none;
+    min-height: 40px;
+}
+
+/* ZK appends a <br> after each radio — hide it in flex context */
+.z-radio br {
+    display: none;
+}
+
+.z-radio input[type="radio"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    min-width: 20px;
+    border: 2px solid var(--zk-color-outline);
+    border-radius: 50%;
+    background-color: transparent;
+    cursor: pointer;
+    position: relative;
+    flex-shrink: 0;
+    transition: border-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+}
+
+/* Inner dot — scales in on checked */
+.z-radio input[type="radio"]::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: var(--zk-color-primary);
+    transition: transform var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+}
+
+.z-radio input[type="radio"]:checked {
+    border-color: var(--zk-color-primary);
+}
+
+.z-radio input[type="radio"]:checked::before {
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.z-radio input[type="radio"]:focus-visible {
+    outline: 3px solid var(--zk-color-primary);
+    outline-offset: 2px;
+}
+
+.z-radio-content {
+    font-family: var(--zk-typescale-font-family);
+    font-size: var(--zk-typescale-body-medium-size);
+    color: var(--zk-color-on-surface);
+}
+
+.z-radio[disabled],
+.z-radio.z-radio-disabled {
+    cursor: not-allowed;
+    opacity: var(--zk-state-disabled-opacity);
+    pointer-events: none;
+}
+
+/* ─── Label placement variants ──────────────────────────────── */
+/* Start: label to the LEFT of radio */
+.z-radio.z-radio-label-start {
+    flex-direction: row-reverse;
+}
+
+/* Top: label ABOVE radio */
+.z-radio.z-radio-label-top {
+    flex-direction: column-reverse;
+    align-items: center;
+    min-height: auto;
+    gap: var(--zk-spacing-1);
+}
+
+/* Bottom: label BELOW radio */
+.z-radio.z-radio-label-bottom {
+    flex-direction: column;
+    align-items: center;
+    min-height: auto;
+    gap: var(--zk-spacing-1);
 }
