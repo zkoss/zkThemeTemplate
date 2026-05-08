@@ -119,7 +119,7 @@ Always fix L1 before L5 — layout diffs mask spacing diffs.
 - Does the disabled state look visually distinct?
 - Does the selected/active state differ from unselected in the RIGHT WAY (e.g. only indicator underline, NOT full background fill)?
 
-**L5 popup/overlay checklist** (mandatory for components with transient popups — datebox calendar, combobox dropdown, bandbox panel, timebox spinner):
+**L5 popup/overlay checklist** (mandatory — these ZK component types ALWAYS have a popup, no exception: `combobox`, `datebox`, `timebox`, `bandbox`, `spinner`):
 - Popup container: correct background color, **exact border-radius px value** (not just "rounded"), elevation shadow, border (or borderless)?
 - Popup contents: typography, cell sizes, spacing, colors match reference?
 - Popup trigger state: does the input border/style change correctly when popup is open?
@@ -217,9 +217,6 @@ setTimeout(() => {
                  → What variants are shown per section? (e.g. default/outlined/rounded)
                  → What states per variant? (e.g. page 1 / mid / last)
                  → Any disabled or special states?
-                 → POPUP INVENTORY: Does any section show a component with an open popup?
-                   (datebox calendar open, combobox dropdown open, etc.)
-                   If yes, flag these components — they need separate popup-state captures.
                Then open src/test/resources/web/usecase2/<page>.zul and replicate that
                structure using ZK components:
                  → Add missing sections (cards) to the ZUL
@@ -229,8 +226,27 @@ setTimeout(() => {
                  ZUL content gap? → fix in ZUL
                  CSS variant gap? → create CSS class + add to ZUL
                  True FRAMEWORK gap? → mark ⚠️ and document; skip in ZUL
+
+               ┌─ MANDATORY POPUP GATE ──────────────────────────────────────────────┐
+               │ Before proceeding to CAPTURE, answer ALL of the following:           │
+               │                                                                      │
+               │ RULE: These ZK components ALWAYS have a popup — no need to check:   │
+               │   combobox (dropdown list)   datebox (calendar)                      │
+               │   timebox (spinner)          bandbox (panel)    spinner (up/down)    │
+               │                                                                      │
+               │ Checklist:                                                           │
+               │   [ ] Does the ZUL contain any of the above components?             │
+               │       YES → list each one: _______________________________           │
+               │       NO  → write "no popup components" and proceed                  │
+               │   [ ] For each popup component listed above:                        │
+               │       - Planned local popup capture: <page>-popup-<comp>-local.png  │
+               │       - Planned Mira popup capture:  <page>-popup-<comp>-mira.png   │
+               │                                                                      │
+               │ STOP: Do NOT proceed to CAPTURE until this gate is filled out.      │
+               └──────────────────────────────────────────────────────────────────────┘
+
                STOP: Do NOT proceed to CAPTURE until the ZUL has the correct section/variant
-               structure. Visual styling can be wrong — content completeness must be right.
+               structure AND the popup gate above is complete.
 
 2. CAPTURE  — Navigate to http://localhost:8080/usecase2/index.zul#<page>
               Run html2canvas at scale:2 → downloads <page>-local.png
@@ -475,7 +491,7 @@ Legend: ✅ Done | 🔲 Pending | ⏭️ Skipped (infra/shell only)
 | `forms-editors.zul` | `/forms/editors` | ✅ Done | 2026-05-06 |
 | `forms-pickers.zul` | `/forms/pickers` | ✅ Done | 2026-05-06 |
 | `forms-selection-controls.zul` | `/forms/selection-controls` | ✅ Done | 2026-05-06 |
-| `forms-selects.zul` | `/forms/selects` | ✅ Done | 2026-05-06 |
+| `forms-selects.zul` | `/forms/selects` | ✅ Done | 2026-05-08 |
 | `forms-text-fields.zul` | `/forms/text-fields` | ✅ Done | 2026-05-06 |
 
 ### Charts / Tables
