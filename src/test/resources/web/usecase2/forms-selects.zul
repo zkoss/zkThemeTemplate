@@ -110,9 +110,9 @@
         <div style="display:flex;flex-direction:column;gap:16px;">
             <div sclass="m-card m-pickers-card">
                 <label sclass="m-card__title" value="Multiple Select"/>
-                <label sclass="m-pickers-desc" value="The Select component can handle multiple selections."/>
+                <label sclass="m-pickers-desc" value="The Select component can handle multiple selections. It's enabled with the multiple property."/>
 
-                <!-- Name + Tag row -->
+                <!-- Name + Tag row — ⚠️ FRAMEWORK: ZK combobox is single-select only; MUI Select multiple not replicable -->
                 <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">
                     <combobox width="100%" placeholder="Name" readonly="true">
                         <comboitem label="Oliver Hansen"/><comboitem label="Van Henry"/>

@@ -115,16 +115,23 @@
 .z-combobox-button:active::before { opacity: var(--zk-state-pressed-opacity); }
 
 /* ─── Popup dropdown ──────────────────────────────────────────────────── */
+/* ZK renders: <div class="z-combobox-popup"><ul class="z-combobox-content"><li class="z-comboitem">...</li></ul></div> */
+.z-combobox-content {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
 .z-combobox-popup {
     position: absolute;
     z-index: 1600;
     list-style: none;
     margin: 4px 0 0 0;
-    padding: var(--zk-spacing-1) 0;
+    padding: 0;
     background-color: var(--zk-color-surface);
-    border-radius: var(--zk-shape-card);
-    box-shadow: var(--zk-elevation-dropdown);
-    border: 1px solid var(--zk-color-outline-variant);
+    border-radius: var(--zk-shape-menu);
+    box-shadow: none;
+    border: 1px solid rgba(0, 0, 0, 0.12);
     max-height: 280px;
     overflow-y: auto;
     overflow-x: hidden;
@@ -135,7 +142,7 @@
 .z-comboitem {
     display: flex;
     align-items: center;
-    padding: var(--zk-spacing-2) var(--zk-spacing-4);
+    padding: 6px var(--zk-spacing-4);
     font-family: var(--zk-typescale-font-family);
     font-size: var(--zk-typescale-body-medium-size);
     color: var(--zk-color-on-surface);
@@ -166,4 +173,82 @@
 .z-combobox[disabled] .z-combobox-input,
 .z-combobox.z-combobox-disabled .z-combobox-input {
     cursor: not-allowed;
+}
+
+/* ─── Error variant ───────────────────────────────────────────────────────── */
+.z-combobox.z-combobox-error {
+    border-color: var(--zk-color-error);
+}
+
+.z-combobox.z-combobox-error:hover {
+    border-color: var(--zk-color-error);
+}
+
+.z-combobox.z-combobox-error:focus-within {
+    border-color: var(--zk-color-error);
+}
+
+.z-combobox.z-combobox-error .z-combobox-input {
+    color: var(--zk-color-error);
+}
+
+/* ─── Standard (underline-only) variant ──────────────────────────────────── */
+/* Matches MUI Select standard variant: bottom border only, no box */
+.z-combobox.z-combobox-standard {
+    border: none;
+    border-radius: 0;
+    background-color: transparent;
+    min-height: 32px;
+    position: relative;
+}
+
+/* Static bottom line */
+.z-combobox.z-combobox-standard::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border-bottom: 1px solid var(--zk-color-outline);
+    pointer-events: none;
+    transition: border-bottom-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+}
+
+/* Animated focus indicator */
+.z-combobox.z-combobox-standard::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border-bottom: 2px solid var(--zk-color-primary);
+    transform: scaleX(0);
+    transition: transform var(--zk-motion-duration-medium2) var(--zk-motion-easing-standard);
+    pointer-events: none;
+}
+
+.z-combobox.z-combobox-standard:focus-within::after {
+    transform: scaleX(1);
+}
+
+/* Override base hover/focus-within that set all-sides border */
+.z-combobox.z-combobox-standard:hover,
+.z-combobox.z-combobox-standard:focus-within {
+    border: none;
+    border-radius: 0;
+}
+
+.z-combobox.z-combobox-standard:hover::before {
+    border-bottom-width: 2px;
+    border-bottom-color: var(--zk-color-on-surface);
+}
+
+.z-combobox.z-combobox-standard .z-combobox-input {
+    padding: 4px 0 5px 0;
+    min-height: 30px;
+}
+
+.z-combobox.z-combobox-standard .z-combobox-button {
+    border-radius: 0;
+    min-height: 30px;
 }

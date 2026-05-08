@@ -710,12 +710,6 @@
     display: block;
 }
 
-/* Error state for combobox */
-.z-combobox-error .z-combobox-input,
-.z-combobox-error {
-    border-color: var(--zk-color-error, #d32f2f) !important;
-}
-
 .z-error-text {
-    color: var(--zk-color-error, #d32f2f) !important;
+    color: var(--zk-color-error) !important;
 }
