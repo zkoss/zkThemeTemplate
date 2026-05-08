@@ -150,9 +150,6 @@
             <navitem label="Advanced Table"
                 onClick="@command('navigate', page='~./usecase2/tables-advanced.zul')"
                 sclass="@load(vm.currentPage eq '~./usecase2/tables-advanced.zul' ? 'm-active' : '')"/>
-            <navitem label="Data Grid"
-                onClick="@command('navigate', page='~./usecase2/tables-datagrid.zul')"
-                sclass="@load(vm.currentPage eq '~./usecase2/tables-datagrid.zul' ? 'm-active' : '')"/>
         </nav>
         <nav label="Icons" iconSclass="z-icon-smile">
             <navitem label="Lucide Icons"
