@@ -90,7 +90,7 @@
     position: absolute;
     z-index: 1700;
     background-color: var(--zk-color-surface);
-    border-radius: var(--zk-shape-card);
+    border-radius: 4px;
     box-shadow: var(--zk-elevation-dialog);
     border: none;
     overflow: hidden;
@@ -101,6 +101,14 @@
 .z-datebox-popup .z-calendar {
     width: 320px;
     border: none;
+    border-bottom: 1px solid var(--zk-color-outline-variant);
     box-shadow: none;
     border-radius: 0;
+}
+
+/* Time section inside datebox popup — padding + section separation */
+.z-datebox-popup .z-timebox {
+    display: flex;
+    width: calc(100% - 32px);
+    margin: 12px 16px 16px;
 }

@@ -163,15 +163,16 @@
     pointer-events: none;
 }
 
-/* Today — light tint circle, colored text (matches Mira's soft lavender style) */
+/* Today — outline ring only (Mira: transparent bg + 1px dark border ring, no fill) */
 .z-calendar-cell.z-today {
-    background-color: color-mix(in srgb, var(--zk-color-primary) 14%, transparent);
-    color: var(--zk-color-primary);
+    background-color: transparent;
+    color: var(--zk-color-on-surface);
     font-weight: var(--zk-typescale-label-large-weight);
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--zk-color-on-surface) 60%, transparent);
 }
 
 .z-calendar-cell.z-today:hover {
-    background-color: color-mix(in srgb, var(--zk-color-primary) 22%, transparent);
+    background-color: color-mix(in srgb, var(--zk-color-on-surface) 8%, transparent);
 }
 
 /* Selected day */
