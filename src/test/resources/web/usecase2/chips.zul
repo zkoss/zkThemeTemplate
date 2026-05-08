@@ -3,8 +3,8 @@
                 <label sclass="m-page-title" value="Chips"/>
             </div>
 
-            <div sclass="m-card">
-                <label sclass="m-card__title" value="Filled Chips"/>
+            <div sclass="z-card">
+                <label sclass="z-card__title" value="Filled Chips"/>
                 <hlayout spacing="8px" style="flex-wrap:wrap;">
                     <div sclass="z-chip z-chip-primary">Today</div>
                     <div sclass="z-chip z-chip-success">Active</div>
@@ -14,7 +14,7 @@
 
                 <separator/>
 
-                <label sclass="m-card__title" value="Period Chips"/>
+                <label sclass="z-card__title" value="Period Chips"/>
                 <hlayout spacing="8px">
                     <div sclass="z-chip z-chip-primary">Today</div>
                     <div sclass="z-chip z-chip-primary">Annual</div>

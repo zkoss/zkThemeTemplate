@@ -11,7 +11,7 @@
         </div>
     </div>
 
-    <div sclass="m-card" style="padding:0;overflow:hidden;">
+    <div sclass="z-card" style="padding:0;overflow:hidden;">
         <div style="display:grid;grid-template-columns:260px 1fr;height:600px;">
 
             <!-- Contacts panel -->

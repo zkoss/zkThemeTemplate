@@ -8,15 +8,15 @@
         <!-- Left column -->
         <div>
             <!-- Simple Dialogs -->
-            <div sclass="m-card" style="margin-bottom:24px;">
-                <label sclass="m-card__title" value="Simple Dialogs"/>
+            <div sclass="z-card" style="margin-bottom:24px;">
+                <label sclass="z-card__title" value="Simple Dialogs"/>
                 <label value="Simple dialogs can provide additional details or actions about a list item." style="font-size:13px;color:#49454f;display:block;margin-bottom:16px;"/>
                 <button label="Open simple dialog" sclass="z-button-primary" onClick="simpleDialog.doModal()"/>
             </div>
 
             <!-- Alerts -->
-            <div sclass="m-card">
-                <label sclass="m-card__title" value="Alerts"/>
+            <div sclass="z-card">
+                <label sclass="z-card__title" value="Alerts"/>
                 <label value="Alerts are urgent interruptions, requiring acknowledgement, that inform the user about a situation." style="font-size:13px;color:#49454f;display:block;margin-bottom:16px;"/>
                 <button label="Open alert dialog" sclass="z-button-primary" onClick="alertDialog.doModal()"/>
             </div>
@@ -25,15 +25,15 @@
         <!-- Right column -->
         <div>
             <!-- Optional Sizes -->
-            <div sclass="m-card" style="margin-bottom:24px;">
-                <label sclass="m-card__title" value="Optional Sizes"/>
+            <div sclass="z-card" style="margin-bottom:24px;">
+                <label sclass="z-card__title" value="Optional Sizes"/>
                 <label value="You can set a dialog maximum width by using the maxWidth enumerable in combination with the fullWidth boolean." style="font-size:13px;color:#49454f;display:block;margin-bottom:16px;"/>
                 <button label="Open max-width dialog" sclass="z-button-outlined" onClick="sizeDialog.doModal()"/>
             </div>
 
             <!-- Form Dialogs -->
-            <div sclass="m-card">
-                <label sclass="m-card__title" value="Form Dialogs"/>
+            <div sclass="z-card">
+                <label sclass="z-card__title" value="Form Dialogs"/>
                 <label value="Form dialogs allow users to fill out form fields within a dialog." style="font-size:13px;color:#49454f;display:block;margin-bottom:16px;"/>
                 <button label="Open form dialog" sclass="z-button-primary" onClick="formDialog.doModal()"/>
             </div>

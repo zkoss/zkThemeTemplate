@@ -110,9 +110,6 @@
                 onClick="@command('navigate', page='~./usecase2/progress.zul')"
                 sclass="@load(vm.currentPage eq '~./usecase2/progress.zul' ? 'm-active' : '')"/>
             <navitem label="Snackbars" disabled="true"/>
-            <navitem label="Tabs"
-                onClick="@command('navigate', page='~./usecase2/tabs.zul')"
-                sclass="@load(vm.currentPage eq '~./usecase2/tabs.zul' ? 'm-active' : '')"/>
             <navitem label="Tooltips"
                 onClick="@command('navigate', page='~./usecase2/tooltips.zul')"
                 sclass="@load(vm.currentPage eq '~./usecase2/tooltips.zul' ? 'm-active' : '')"/>

@@ -12,7 +12,7 @@
     /* Semantic aliases used in ZK components */
     --zk-shape-button: var(--zk-shape-corner-extra-small);
     --zk-shape-input: var(--zk-shape-corner-extra-small);
-    --zk-shape-card: var(--zk-shape-corner-medium);
+    --zk-shape-card: 6px;
     --zk-shape-dialog: var(--zk-shape-corner-large);
     --zk-shape-chip: var(--zk-shape-corner-small);
     --zk-shape-menu: var(--zk-shape-corner-extra-small);

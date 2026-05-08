@@ -12,28 +12,28 @@
                 <div sclass="z-chip z-chip-neutral">4</div>
             </div>
             <div style="display:flex;flex-direction:column;gap:12px;">
-                <div sclass="m-card" style="padding:16px;">
+                <div sclass="z-card" style="padding:16px;">
                     <div style="font-size:13px;font-weight:500;margin-bottom:8px;">Update user onboarding flow</div>
                     <div style="display:flex;justify-content:space-between;align-items:center;">
                         <span style="font-size:11px;color:#757575;">James Dalton</span>
                         <span style="font-size:11px;color:#757575;">May 5, 2025</span>
                     </div>
                 </div>
-                <div sclass="m-card" style="padding:16px;">
+                <div sclass="z-card" style="padding:16px;">
                     <div style="font-size:13px;font-weight:500;margin-bottom:8px;">Write API documentation</div>
                     <div style="display:flex;justify-content:space-between;align-items:center;">
                         <span style="font-size:11px;color:#757575;">Sallie Love</span>
                         <span style="font-size:11px;color:#757575;">May 10, 2025</span>
                     </div>
                 </div>
-                <div sclass="m-card" style="padding:16px;">
+                <div sclass="z-card" style="padding:16px;">
                     <div style="font-size:13px;font-weight:500;margin-bottom:8px;">Review Q2 analytics report</div>
                     <div style="display:flex;justify-content:space-between;align-items:center;">
                         <span style="font-size:11px;color:#757575;">Matthew Winters</span>
                         <span style="font-size:11px;color:#757575;">May 20, 2025</span>
                     </div>
                 </div>
-                <div sclass="m-card" style="padding:16px;">
+                <div sclass="z-card" style="padding:16px;">
                     <div style="font-size:13px;font-weight:500;margin-bottom:8px;">Migrate database to new schema</div>
                     <div style="display:flex;justify-content:space-between;align-items:center;">
                         <span style="font-size:11px;color:#757575;">James Dalton</span>
@@ -50,14 +50,14 @@
                 <div sclass="z-chip z-chip-warning" style="background:#fff3e0;color:#e65100;">2</div>
             </div>
             <div style="display:flex;flex-direction:column;gap:12px;">
-                <div sclass="m-card" style="padding:16px;">
+                <div sclass="z-card" style="padding:16px;">
                     <div style="font-size:13px;font-weight:500;margin-bottom:8px;">Design new dashboard wireframes</div>
                     <div style="display:flex;justify-content:space-between;align-items:center;">
                         <span style="font-size:11px;color:#757575;">Lucy Lavender</span>
                         <span style="font-size:11px;color:#757575;">Apr 30, 2025</span>
                     </div>
                 </div>
-                <div sclass="m-card" style="padding:16px;">
+                <div sclass="z-card" style="padding:16px;">
                     <div style="font-size:13px;font-weight:500;margin-bottom:8px;">Conduct usability testing sessions</div>
                     <div style="display:flex;justify-content:space-between;align-items:center;">
                         <span style="font-size:11px;color:#757575;">Raymond Ennis</span>
@@ -74,14 +74,14 @@
                 <div sclass="z-chip z-chip-success" style="background:#e8f5e9;color:#1b5e20;">2</div>
             </div>
             <div style="display:flex;flex-direction:column;gap:12px;">
-                <div sclass="m-card" style="padding:16px;">
+                <div sclass="z-card" style="padding:16px;">
                     <div style="font-size:13px;font-weight:500;margin-bottom:8px;">Fix login page responsiveness</div>
                     <div style="display:flex;justify-content:space-between;align-items:center;">
                         <span style="font-size:11px;color:#757575;">Tracy Mack</span>
                         <span style="font-size:11px;color:#757575;">Apr 28, 2025</span>
                     </div>
                 </div>
-                <div sclass="m-card" style="padding:16px;">
+                <div sclass="z-card" style="padding:16px;">
                     <div style="font-size:13px;font-weight:500;margin-bottom:8px;">Deploy staging environment update</div>
                     <div style="display:flex;justify-content:space-between;align-items:center;">
                         <span style="font-size:11px;color:#757575;">Glenda Jang</span>

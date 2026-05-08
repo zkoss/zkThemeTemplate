@@ -6,8 +6,8 @@
             <hlayout spacing="16px" style="align-items:flex-start;">
 
                 <!-- Simple list -->
-                <div sclass="m-card" style="flex:1;">
-                    <label sclass="m-card__title" value="Simple List"/>
+                <div sclass="z-card" style="flex:1;">
+                    <label sclass="z-card__title" value="Simple List"/>
                     <div sclass="m-list">
                         <div sclass="m-list__item">Inbox</div>
                         <div sclass="m-list__item">Starred</div>
@@ -17,8 +17,8 @@
                 </div>
 
                 <!-- List with icons -->
-                <div sclass="m-card" style="flex:1;">
-                    <label sclass="m-card__title" value="List with Icons"/>
+                <div sclass="z-card" style="flex:1;">
+                    <label sclass="z-card__title" value="List with Icons"/>
                     <div sclass="m-list">
                         <div sclass="m-list__item">
                             <span sclass="z-icon-mail m-list__icon"/>
@@ -40,8 +40,8 @@
                 </div>
 
                 <!-- Checkable list (listbox) -->
-                <div sclass="m-card" style="flex:1;">
-                    <label sclass="m-card__title" value="Checkable List"/>
+                <div sclass="z-card" style="flex:1;">
+                    <label sclass="z-card__title" value="Checkable List"/>
                     <listbox checkmark="true" sclass="z-listbox-plain" multiple="true">
                         <listitem><listcell label="Buy groceries"/></listitem>
                         <listitem><listcell label="Walk the dog"/></listitem>

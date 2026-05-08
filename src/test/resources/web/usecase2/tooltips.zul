@@ -4,8 +4,8 @@
     </div>
 
     <!-- 1. Simple Tooltips — tooltiptext attribute -->
-    <div sclass="m-card" style="margin-bottom:24px;">
-        <label sclass="m-card__title" value="Simple Tooltips"/>
+    <div sclass="z-card" style="margin-bottom:24px;">
+        <label sclass="z-card__title" value="Simple Tooltips"/>
         <label value="Tooltips display informative text when users hover over, focus on, or tap an element."
                style="font-size:13px;color:var(--zk-color-on-surface-variant);display:block;padding:8px 0 16px;"/>
         <div style="display:flex;gap:12px;flex-wrap:wrap;">
@@ -17,8 +17,8 @@
     </div>
 
     <!-- 2. Triggerable Tooltips — hover (tooltip attr), click (popup attr) -->
-    <div sclass="m-card" style="margin-bottom:24px;">
-        <label sclass="m-card__title" value="Triggerable Tooltips"/>
+    <div sclass="z-card" style="margin-bottom:24px;">
+        <label sclass="z-card__title" value="Triggerable Tooltips"/>
         <label value="You can define the types of events that cause a tooltip to show."
                style="font-size:13px;color:var(--zk-color-on-surface-variant);display:block;padding:8px 0 16px;"/>
         <div style="display:flex;gap:12px;flex-wrap:wrap;">
@@ -42,8 +42,8 @@
     </div>
 
     <!-- 3. Positioned Tooltips — 12-position grid -->
-    <div sclass="m-card" style="margin-bottom:24px;">
-        <label sclass="m-card__title" value="Positioned Tooltips"/>
+    <div sclass="z-card" style="margin-bottom:24px;">
+        <label sclass="z-card__title" value="Positioned Tooltips"/>
         <div style="padding-top:16px;">
 
             <!-- Single shared popup for all 12 position buttons -->
@@ -79,8 +79,8 @@
     </div>
 
     <!-- 4. Animated Tooltips — z-popup-anim-* utility classes -->
-    <div sclass="m-card">
-        <label sclass="m-card__title" value="Animated Tooltips"/>
+    <div sclass="z-card">
+        <label sclass="z-card__title" value="Animated Tooltips"/>
         <div style="display:flex;gap:12px;flex-wrap:wrap;padding-top:16px;">
             <popup id="ttFade" sclass="z-popup-tooltip z-popup-anim-fade">
                 <label value="Fade animation"/>

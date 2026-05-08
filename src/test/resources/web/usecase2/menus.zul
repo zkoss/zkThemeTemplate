@@ -8,8 +8,8 @@
         <!-- Left column -->
         <div>
             <!-- Simple menu -->
-            <div sclass="m-card" style="margin-bottom:24px;">
-                <label sclass="m-card__title" value="Simple menu"/>
+            <div sclass="z-card" style="margin-bottom:24px;">
+                <label sclass="z-card__title" value="Simple menu"/>
                 <label value="Simple menu open over the anchor element by default" style="font-size:13px;color:#49454f;display:block;margin-bottom:16px;"/>
                 <button label="Open Menu" sclass="z-button-primary" onClick='simpleMenu.open(self, "after_start")'/>
                 <menupopup id="simpleMenu">
@@ -21,8 +21,8 @@
             </div>
 
             <!-- Transition Menu -->
-            <div sclass="m-card">
-                <label sclass="m-card__title" value="Transition Menu"/>
+            <div sclass="z-card">
+                <label sclass="z-card__title" value="Transition Menu"/>
                 <label value="Simple menu with different transition (fade)" style="font-size:13px;color:#49454f;display:block;margin-bottom:16px;"/>
                 <button label="Open Menu" sclass="z-button-primary" onClick='transitionMenu.open(self, "after_start")'/>
                 <menupopup id="transitionMenu">
@@ -37,8 +37,8 @@
         <!-- Right column -->
         <div>
             <!-- Icon Menu -->
-            <div sclass="m-card" style="margin-bottom:24px;">
-                <label sclass="m-card__title" value="Icon Menu"/>
+            <div sclass="z-card" style="margin-bottom:24px;">
+                <label sclass="z-card__title" value="Icon Menu"/>
                 <label value="Simple menu with icons" style="font-size:13px;color:#49454f;display:block;margin-bottom:16px;"/>
                 <button label="Open Menu" sclass="z-button-primary" onClick='iconMenu.open(self, "after_start")'/>
                 <menupopup id="iconMenu">
@@ -50,8 +50,8 @@
             </div>
 
             <!-- Selected menu -->
-            <div sclass="m-card">
-                <label sclass="m-card__title" value="Selected menu"/>
+            <div sclass="z-card">
+                <label sclass="z-card__title" value="Selected menu"/>
                 <label value="Selected menus attempt to vertically align the currently selected menu item with the anchor element." style="font-size:13px;color:#49454f;display:block;margin-bottom:16px;"/>
                 <button label="Open Menu" sclass="z-button-primary" onClick='selectedMenu.open(self, "after_start")'/>
                 <menupopup id="selectedMenu">

@@ -14,8 +14,8 @@
     <separator bar="true"/>
 
     <!-- Card 1: Nutrition Table (normal padding) -->
-    <div sclass="m-card" style="margin-bottom:24px;">
-        <label sclass="m-card__title" value="Nutrition"/>
+    <div sclass="z-card" style="margin-bottom:24px;">
+        <label sclass="z-card__title" value="Nutrition"/>
         <listbox checkmark="true" multiple="true" mold="paging" pageSize="10" sclass="m-listbox-numeric-cols">
             <listhead sizable="true">
                 <listheader label="Dessert (100g serving)" sort="auto"/>
@@ -119,8 +119,8 @@
     </div>
 
     <!-- Card 2: Dense padding variant -->
-    <div sclass="m-card">
-        <label sclass="m-card__title" value="Dense padding"/>
+    <div sclass="z-card">
+        <label sclass="z-card__title" value="Dense padding"/>
         <listbox checkmark="true" multiple="true" sclass="m-listbox-numeric-cols m-listbox-dense">
             <listhead sizable="true">
                 <listheader label="Dessert (100g serving)" sort="auto"/>

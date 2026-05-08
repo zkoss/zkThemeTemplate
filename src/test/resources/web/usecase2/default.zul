@@ -15,7 +15,7 @@
     <!-- KPI cards -->
     <div sclass="m-kpi-row">
 
-        <div sclass="m-card m-kpi-card">
+        <div sclass="z-card m-kpi-card">
             <div sclass="m-kpi-card__header">
                 <label sclass="m-kpi-card__label" value="Sales Today"/>
                 <label sclass="z-chip z-chip-primary" value="Today"/>
@@ -27,7 +27,7 @@
             </div>
         </div>
 
-        <div sclass="m-card m-kpi-card">
+        <div sclass="z-card m-kpi-card">
             <div sclass="m-kpi-card__header">
                 <label sclass="m-kpi-card__label" value="Visitors"/>
                 <label sclass="z-chip z-chip-primary" value="Annual"/>
@@ -39,7 +39,7 @@
             </div>
         </div>
 
-        <div sclass="m-card m-kpi-card">
+        <div sclass="z-card m-kpi-card">
             <div sclass="m-kpi-card__header">
                 <label sclass="m-kpi-card__label" value="Total Earnings"/>
                 <label sclass="z-chip z-chip-primary" value="Monthly"/>
@@ -51,7 +51,7 @@
             </div>
         </div>
 
-        <div sclass="m-card m-kpi-card m-kpi-card--primary">
+        <div sclass="z-card m-kpi-card m-kpi-card--primary">
             <div sclass="m-kpi-card__header">
                 <label sclass="m-kpi-card__label" value="Pending Orders"/>
             </div>
@@ -67,13 +67,13 @@
     <!-- Charts row: Total Revenue + Weekly Sales -->
     <div sclass="m-charts-row">
 
-        <div sclass="m-card m-chart-card-main">
-            <label sclass="m-card__title" value="Total revenue"/>
+        <div sclass="z-card m-chart-card-main">
+            <label sclass="z-card__title" value="Total revenue"/>
             <image src="~./usecase2/img/charts/total-revenue.png" sclass="m-chart-img"/>
         </div>
 
-        <div sclass="m-card m-chart-card-side">
-            <label sclass="m-card__title" value="Weekly sales"/>
+        <div sclass="z-card m-chart-card-side">
+            <label sclass="z-card__title" value="Weekly sales"/>
             <image src="~./usecase2/img/charts/weekly-sales.png" sclass="m-chart-img"/>
 
             <grid sclass="m-revenue-table" mold="default">
@@ -112,13 +112,13 @@
     <!-- Bottom row: Mobile/Desktop + Latest Projects -->
     <div sclass="m-bottom-row">
 
-        <div sclass="m-bottom-card-chart m-card">
-            <label sclass="m-card__title" value="Mobile / Desktop"/>
+        <div sclass="m-bottom-card-chart z-card">
+            <label sclass="z-card__title" value="Mobile / Desktop"/>
             <image src="~./usecase2/img/charts/mobile-desktop.png" sclass="m-chart-img"/>
         </div>
 
-        <div sclass="m-card m-bottom-card-projects">
-            <label sclass="m-card__title" value="Latest projects"/>
+        <div sclass="z-card m-bottom-card-projects">
+            <label sclass="z-card__title" value="Latest projects"/>
             <grid sclass="m-projects-grid" mold="default">
                 <columns>
                     <column label="Name"/>

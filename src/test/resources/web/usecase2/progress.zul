@@ -8,8 +8,8 @@
         <!-- Left column: Circular -->
         <div>
             <!-- 1. Circular Indeterminate -->
-            <div sclass="m-card" style="margin-bottom:24px;">
-                <label sclass="m-card__title" value="Circular Indeterminate"/>
+            <div sclass="z-card" style="margin-bottom:24px;">
+                <label sclass="z-card__title" value="Circular Indeterminate"/>
                 <div style="display:flex;gap:16px;align-items:center;padding-top:12px;">
                     <progressmeter indeterminate="true" sclass="z-progressmeter-circular"/>
                     <progressmeter indeterminate="true" sclass="z-progressmeter-circular z-progressmeter-secondary"/>
@@ -17,14 +17,14 @@
             </div>
 
             <!-- 2. Circular Determinate — FRAMEWORK GAP -->
-            <div sclass="m-card" style="margin-bottom:24px;">
-                <label sclass="m-card__title" value="Circular Determinate"/>
+            <div sclass="z-card" style="margin-bottom:24px;">
+                <label sclass="z-card__title" value="Circular Determinate"/>
                 <label value="⚠ Framework gap — requires SVG stroke-dasharray; ZK progressmeter renders no SVG." style="font-size:12px;color:#999;display:block;padding-top:12px;"/>
             </div>
 
             <!-- 3. Circular Static — FRAMEWORK GAP -->
-            <div sclass="m-card">
-                <label sclass="m-card__title" value="Circular Static"/>
+            <div sclass="z-card">
+                <label sclass="z-card__title" value="Circular Static"/>
                 <label value="⚠ Framework gap — requires SVG stroke-dasharray; ZK progressmeter renders no SVG." style="font-size:12px;color:#999;display:block;padding-top:12px;"/>
             </div>
         </div>
@@ -32,8 +32,8 @@
         <!-- Right column: Linear -->
         <div>
             <!-- 4. Linear Indeterminate -->
-            <div sclass="m-card" style="margin-bottom:24px;">
-                <label sclass="m-card__title" value="Linear Indeterminate"/>
+            <div sclass="z-card" style="margin-bottom:24px;">
+                <label sclass="z-card__title" value="Linear Indeterminate"/>
                 <div style="padding-top:12px;">
                     <progressmeter indeterminate="true" sclass="z-progressmeter-linear" style="margin-bottom:10px;display:block;"/>
                     <progressmeter indeterminate="true" sclass="z-progressmeter-linear z-progressmeter-secondary" style="display:block;"/>
@@ -41,8 +41,8 @@
             </div>
 
             <!-- 5. Linear Determinate -->
-            <div sclass="m-card" style="margin-bottom:24px;">
-                <label sclass="m-card__title" value="Linear Determinate"/>
+            <div sclass="z-card" style="margin-bottom:24px;">
+                <label sclass="z-card__title" value="Linear Determinate"/>
                 <div style="padding-top:12px;">
                     <progressmeter value="8" sclass="z-progressmeter-linear" style="margin-bottom:10px;display:block;"/>
                     <progressmeter value="8" sclass="z-progressmeter-linear z-progressmeter-secondary" style="display:block;"/>
@@ -50,14 +50,14 @@
             </div>
 
             <!-- 6. Linear Buffer — FRAMEWORK GAP -->
-            <div sclass="m-card" style="margin-bottom:24px;">
-                <label sclass="m-card__title" value="Linear Buffer"/>
+            <div sclass="z-card" style="margin-bottom:24px;">
+                <label sclass="z-card__title" value="Linear Buffer"/>
                 <label value="⚠ Framework gap — requires dashed overlay + dual-bar DOM; ZK progressmeter has one inner span." style="font-size:12px;color:#999;display:block;padding-top:12px;"/>
             </div>
 
             <!-- 7. Linear Query -->
-            <div sclass="m-card">
-                <label sclass="m-card__title" value="Linear Query"/>
+            <div sclass="z-card">
+                <label sclass="z-card__title" value="Linear Query"/>
                 <div style="padding-top:12px;">
                     <progressmeter indeterminate="true" sclass="z-progressmeter-linear z-progressmeter-query" style="margin-bottom:10px;display:block;"/>
                     <progressmeter indeterminate="true" sclass="z-progressmeter-linear z-progressmeter-query z-progressmeter-secondary" style="display:block;"/>

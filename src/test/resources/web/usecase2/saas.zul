@@ -12,7 +12,7 @@
 
     <div sclass="m-kpi-row">
 
-        <div sclass="m-card m-kpi-card">
+        <div sclass="z-card m-kpi-card">
             <div sclass="m-kpi-card__header">
                 <label sclass="m-kpi-card__label" value="Income"/>
                 <div sclass="z-chip z-chip-primary">Monthly</div>
@@ -24,7 +24,7 @@
             </div>
         </div>
 
-        <div sclass="m-card m-kpi-card">
+        <div sclass="z-card m-kpi-card">
             <div sclass="m-kpi-card__header">
                 <label sclass="m-kpi-card__label" value="Visitors"/>
                 <div sclass="z-chip z-chip-primary">Annual</div>
@@ -36,7 +36,7 @@
             </div>
         </div>
 
-        <div sclass="m-card m-kpi-card">
+        <div sclass="z-card m-kpi-card">
             <div sclass="m-kpi-card__header">
                 <label sclass="m-kpi-card__label" value="Completed Orders"/>
                 <div sclass="z-chip z-chip-primary">Weekly</div>
@@ -48,7 +48,7 @@
             </div>
         </div>
 
-        <div sclass="m-card m-kpi-card m-kpi-card--primary">
+        <div sclass="z-card m-kpi-card m-kpi-card--primary">
             <div sclass="m-kpi-card__header">
                 <label sclass="m-kpi-card__label" value="Pending Orders"/>
                 <div sclass="z-chip z-chip-on-primary">Real-Time</div>
@@ -64,13 +64,13 @@
 
     <div sclass="m-charts-row">
 
-        <div sclass="m-card m-chart-card-main">
-            <label sclass="m-card__title" value="Sales / Revenue"/>
+        <div sclass="z-card m-chart-card-main">
+            <label sclass="z-card__title" value="Sales / Revenue"/>
             <image src="~./usecase2/img/charts/total-revenue.png" sclass="m-chart-img"/>
         </div>
 
-        <div sclass="m-card m-chart-card-side">
-            <label sclass="m-card__title" value="Weekly sales"/>
+        <div sclass="z-card m-chart-card-side">
+            <label sclass="z-card__title" value="Weekly sales"/>
             <image src="~./usecase2/img/charts/weekly-sales.png" sclass="m-chart-img"/>
             <grid sclass="m-revenue-table" mold="default">
                 <columns>
@@ -89,8 +89,8 @@
 
     </div>
 
-    <div sclass="m-card">
-        <label sclass="m-card__title" value="Latest products"/>
+    <div sclass="z-card">
+        <label sclass="z-card__title" value="Latest products"/>
         <grid sclass="m-projects-grid" mold="default">
             <columns>
                 <column label="Product Name"/>

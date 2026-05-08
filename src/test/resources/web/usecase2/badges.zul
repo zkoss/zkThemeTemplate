@@ -3,8 +3,8 @@
                 <label sclass="m-page-title" value="Badges"/>
             </div>
 
-            <div sclass="m-card">
-                <label sclass="m-card__title" value="Color Variants"/>
+            <div sclass="z-card">
+                <label sclass="z-card__title" value="Color Variants"/>
                 <hlayout spacing="8px" style="flex-wrap:wrap;">
                     <div sclass="z-badge z-badge-success">Done</div>
                     <div sclass="z-badge z-badge-warning">In Progress</div>
@@ -15,7 +15,7 @@
 
                 <separator/>
 
-                <label sclass="m-card__title" value="Inline with text"/>
+                <label sclass="z-card__title" value="Inline with text"/>
                 <vlayout spacing="8px">
                     <hlayout>
                         <label value="Project Aurora  "/>

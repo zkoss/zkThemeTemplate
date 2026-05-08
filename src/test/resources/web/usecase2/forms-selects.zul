@@ -7,8 +7,8 @@
     <!-- Row 1: Simple Select (left) + Multiple Select / Controlled (right) -->
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start;">
         <!-- Simple Select -->
-        <div sclass="m-card m-pickers-card">
-            <label sclass="m-card__title" value="Simple Select"/>
+        <div sclass="z-card m-pickers-card">
+            <label sclass="z-card__title" value="Simple Select"/>
             <label sclass="m-pickers-desc" value="Menus are positioned over their emitting elements such that the currently selected menu item appears on top of the emitting element."/>
 
             <!-- Row 1: default + with helper text -->
@@ -108,8 +108,8 @@
 
         <!-- Right column: Multiple Select + Controlled open Select -->
         <div style="display:flex;flex-direction:column;gap:16px;">
-            <div sclass="m-card m-pickers-card">
-                <label sclass="m-card__title" value="Multiple Select"/>
+            <div sclass="z-card m-pickers-card">
+                <label sclass="z-card__title" value="Multiple Select"/>
                 <label sclass="m-pickers-desc" value="The Select component can handle multiple selections. It's enabled with the multiple property."/>
 
                 <!-- Name + Tag row — ⚠️ FRAMEWORK: ZK combobox is single-select only; MUI Select multiple not replicable -->
@@ -128,8 +128,8 @@
                 </combobox>
             </div>
 
-            <div sclass="m-card m-pickers-card">
-                <label sclass="m-card__title" value="Controlled open Select"/>
+            <div sclass="z-card m-pickers-card">
+                <label sclass="z-card__title" value="Controlled open Select"/>
                 <label sclass="m-pickers-desc" value="Open select with button."/>
                 <button sclass="z-button-contained" label="Open the select" style="margin-bottom:16px;"/>
                 <combobox width="100%" placeholder="Age" readonly="true">
@@ -140,8 +140,8 @@
     </div>
 
     <!-- With a Dialog -->
-    <div sclass="m-card m-pickers-card" style="margin-top:16px;">
-        <label sclass="m-card__title" value="With a Dialog"/>
+    <div sclass="z-card m-pickers-card" style="margin-top:16px;">
+        <label sclass="z-card__title" value="With a Dialog"/>
         <label sclass="m-pickers-desc" value="While it's discouraged by the Material Design specification, you can use a select inside a dialog."/>
         <button sclass="z-button-contained" label="Open select dialog"/>
     </div>

@@ -29,7 +29,7 @@
         0px 4px 8px 0px rgba(0, 0, 0, 0.12);
 
     /* Semantic aliases */
-    --zk-elevation-card: var(--zk-elevation-1);
+    --zk-elevation-card: 0 1px 3px rgba(0, 0, 0, 0.08);
     --zk-elevation-panel: var(--zk-elevation-1);
     --zk-elevation-dropdown: var(--zk-elevation-2);
     --zk-elevation-dialog: var(--zk-elevation-3);

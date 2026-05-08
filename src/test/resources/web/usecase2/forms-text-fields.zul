@@ -5,8 +5,8 @@
     </div>
 
     <!-- Card 1: Text Fields (standard/filled style) -->
-    <div sclass="m-card" style="margin-bottom:16px;">
-        <label sclass="m-card__title" value="Text Fields"/>
+    <div sclass="z-card" style="margin-bottom:16px;">
+        <label sclass="z-card__title" value="Text Fields"/>
         <label sclass="m-pickers-desc" value="The TextField wrapper component is a complete form control including a label, input and help text."/>
 
         <!-- Row 1: Required / Disabled / Password / Read Only -->
@@ -48,8 +48,8 @@
     </div>
 
     <!-- Card 2: Outlined Text Fields -->
-    <div sclass="m-card">
-        <label sclass="m-card__title" value="Outlined Text Fields"/>
+    <div sclass="z-card">
+        <label sclass="z-card__title" value="Outlined Text Fields"/>
         <label sclass="m-pickers-desc" value="TextField supports outlined styling."/>
 
         <!-- Row 1: Required / Disabled / Password / Read Only -->

@@ -236,15 +236,7 @@
 }
 
 /* ── Card ──────────────────────────────────────────────────── */
-.m-card {
-    background: #ffffff;
-    border-radius: 6px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-    padding: 16px;
-    box-sizing: border-box;
-}
-
-.m-card__title {
+.z-card__title {
     font-size: 14px;
     font-weight: 600;
     color: var(--zk-color-on-surface, #1c1b1f);
@@ -300,7 +292,7 @@
 .m-kpi-since       { color: var(--zk-color-on-surface-variant, #49454f); }
 
 /* 4th KPI card: primary-colored variant (Pending Orders) */
-.m-kpi-card--primary.m-card {
+.m-kpi-card--primary.z-card {
     background: var(--zk-color-primary-container, #dce5f5);
     position: relative;
     overflow: hidden;
@@ -416,7 +408,7 @@
 
 
 /* Listbox inside a card — card provides surface boundary; strip listbox's own border/shadow/radius */
-.m-card .z-listbox {
+.z-card .z-listbox {
     border: none;
     box-shadow: none;
     border-radius: 0;
@@ -469,12 +461,12 @@
 }
 
 /* ── Project card layout ───────────────────────────────────── */
-.m-card--project {
+.z-card--project {
     display: flex;
     flex-direction: column;
 }
 
-.m-card__desc.z-label {
+.z-card__desc.z-label {
     font-size: 13px;
     color: var(--zk-color-on-surface-variant, #49454f);
     display: block;
@@ -485,7 +477,7 @@
 
 /* ── Avatar group (overlapping circles) ────────────────────── */
 /* ── Card action links ─────────────────────────────────────── */
-.m-card__actions {
+.z-card__actions {
     display: flex;
     gap: 16px;
     margin-top: 16px;
@@ -506,27 +498,27 @@
 }
 
 /* ── Image card ────────────────────────────────────────────── */
-.m-card--image {
+.z-card--image {
     padding: 0;
     overflow: hidden;
 }
 
-.m-card__img {
+.z-card__img {
     width: 100%;
     height: 160px;
     object-fit: cover;
     display: block;
 }
 
-.m-card--image .m-card__body {
+.z-card--image .z-card__body {
     padding: 16px;
     display: flex;
     flex-direction: column;
 }
 
 /* badge spacing inside project cards */
-.m-card--project .z-badge,
-.m-card--image .z-badge {
+.z-card--project .z-badge,
+.z-card--image .z-badge {
     margin-top: 6px;
     align-self: flex-start;
 }
@@ -710,9 +702,6 @@
     display: block;
 }
 
-.z-error-text {
-    color: var(--zk-color-error) !important;
-}
 
 /* ── tables-simple: grid variants ──────────────────────────────────── */
 .m-grid-numeric-cols .z-column:not(:first-child) {

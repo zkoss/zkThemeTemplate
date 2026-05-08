@@ -5,9 +5,9 @@
     </div>
 
     <!-- Card 1: Simple Table -->
-    <div sclass="m-card" style="margin-bottom:24px;">
-        <label sclass="m-card__title" value="Simple Table"/>
-        <label sclass="m-card__desc" value="A simple example with no frills." style="margin-bottom:16px;"/>
+    <div sclass="z-card" style="margin-bottom:24px;">
+        <label sclass="z-card__title" value="Simple Table"/>
+        <label sclass="z-card__desc" value="A simple example with no frills." style="margin-bottom:16px;"/>
         <grid mold="default" sclass="m-grid-numeric-cols">
             <columns>
                 <column label="Dessert (100g serving)"/>
@@ -57,9 +57,9 @@
     </div>
 
     <!-- Card 2: Customized Table -->
-    <div sclass="m-card">
-        <label sclass="m-card__title" value="Customized Table"/>
-        <label sclass="m-card__desc" value="If you have been reading the overrides documentation page but you are not confident jumping in, here are examples of how you can change the look of a TableCell." style="margin-bottom:16px;"/>
+    <div sclass="z-card">
+        <label sclass="z-card__title" value="Customized Table"/>
+        <label sclass="z-card__desc" value="If you have been reading the overrides documentation page but you are not confident jumping in, here are examples of how you can change the look of a TableCell." style="margin-bottom:16px;"/>
         <grid mold="default" sclass="m-grid-numeric-cols m-grid-customized">
             <columns>
                 <column label="Dessert (100g serving)"/>

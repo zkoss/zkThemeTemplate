@@ -49,8 +49,9 @@
    ============================================ */
 .z-card {
     background-color: var(--zk-color-surface);
-    border-radius: var(--zk-shape-corner-medium);
-    box-shadow: var(--zk-elevation-1);
+    border-radius: var(--zk-shape-card);
+    box-shadow: var(--zk-elevation-card);
+    padding: var(--zk-spacing-4);
     overflow: hidden;
 }
 

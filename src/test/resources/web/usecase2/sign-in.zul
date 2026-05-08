@@ -1,6 +1,6 @@
 <div sclass="m-main" style="display:flex;align-items:center;justify-content:center;min-height:calc(100vh - 64px);">
 
-    <div sclass="m-card" style="width:400px;">
+    <div sclass="z-card" style="width:400px;">
         <label value="Welcome back, Lucy!" style="font-size:22px;font-weight:700;display:block;margin-bottom:8px;"/>
         <label value="Sign in to your account to continue" style="font-size:14px;color:#49454f;display:block;margin-bottom:4px;"/>
         <label value="Use demo@bootlab.io and unsafepassword to sign in" style="font-size:12px;color:#757575;display:block;margin-bottom:24px;"/>

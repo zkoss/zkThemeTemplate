@@ -6,8 +6,8 @@
     </div>
 
     <!-- Quill card -->
-    <div sclass="m-card" style="margin-bottom:16px;">
-        <label sclass="m-card__title" value="Quill"/>
+    <div sclass="z-card" style="margin-bottom:16px;">
+        <label sclass="z-card__title" value="Quill"/>
         <label sclass="m-pickers-desc" value="Modern WYSIWYG editor built for compatibility and extensibility."/>
         <div style="border:1px solid var(--zk-color-outline-variant,#cac4d0);border-radius:8px;overflow:hidden;">
             <!-- Toolbar -->
@@ -35,8 +35,8 @@
     </div>
 
     <!-- Bubble card -->
-    <div sclass="m-card">
-        <label sclass="m-card__title" value="Bubble"/>
+    <div sclass="z-card">
+        <label sclass="z-card__title" value="Bubble"/>
         <label sclass="m-pickers-desc" value="Bubble is a simple tooltip based theme for Quill."/>
         <div style="border:1px solid var(--zk-color-outline-variant,#cac4d0);border-radius:8px;min-height:120px;padding:16px;font-size:14px;">
             <textbox multiline="true" rows="4"

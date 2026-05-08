@@ -11,8 +11,8 @@
         </div>
     </div>
 
-    <div sclass="m-card">
-        <label sclass="m-card__title" value="Empty card"/>
+    <div sclass="z-card">
+        <label sclass="z-card__title" value="Empty card"/>
         <label value="Empty card" style="font-size:13px;color:#49454f;"/>
     </div>
 

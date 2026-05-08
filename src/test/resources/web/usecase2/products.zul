@@ -7,8 +7,8 @@
         </hlayout>
     </div>
 
-    <div sclass="m-card">
-        <label sclass="m-card__title" value="Products"/>
+    <div sclass="z-card">
+        <label sclass="z-card__title" value="Products"/>
         <listbox checkmark="true" multiple="true">
             <listhead>
                 <listheader label="Item Name"/>

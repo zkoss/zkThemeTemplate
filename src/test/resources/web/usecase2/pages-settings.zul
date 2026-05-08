@@ -12,8 +12,8 @@
     </div>
 
     <!-- Public info -->
-    <div sclass="m-card" style="margin-bottom:24px;">
-        <label sclass="m-card__title" value="Public info"/>
+    <div sclass="z-card" style="margin-bottom:24px;">
+        <label sclass="z-card__title" value="Public info"/>
         <div style="display:grid;grid-template-columns:1fr auto;gap:32px;align-items:start;">
             <div>
                 <div style="margin-bottom:16px;">
@@ -38,8 +38,8 @@
     </div>
 
     <!-- Private info -->
-    <div sclass="m-card">
-        <label sclass="m-card__title" value="Private info"/>
+    <div sclass="z-card">
+        <label sclass="z-card__title" value="Private info"/>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
             <div>
                 <label value="First name" style="font-size:12px;color:#49454f;display:block;margin-bottom:6px;"/>

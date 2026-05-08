@@ -5,8 +5,8 @@
         <label sclass="m-page-title" value="Formik"/>
     </div>
 
-    <div sclass="m-card">
-        <label sclass="m-card__title" value="Formik"/>
+    <div sclass="z-card">
+        <label sclass="z-card__title" value="Formik"/>
         <label sclass="m-pickers-desc" value="Formik example with Yup validation"/>
 
         <!-- Row 1: First Name / Last Name (2-col) -->
