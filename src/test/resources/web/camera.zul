@@ -1,32 +1,34 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
-camera.zul
-
-        Purpose:
-                
-        Description:
-                
-        History:
-                Wed Oct 31 11:20:07 CST 2018, Created by charlesqiu
-
-Copyright (C) 2018 Potix Corporation. All Rights Reserved.
-
--->
-<zk>
-	<vlayout>
-		<camera id="camera" width="600px" maxsize="-1"
-				onCreate="self.requestCamera()"
-				onSnapshotUpload='image.setContent(event.getMedia())'>
-			<attribute name="onVideoUpload">
-				Filedownload.save(event.getMedia());
-			</attribute>
-		</camera>
-		<hlayout>
-			<button label="Record" onClick="camera.start()"/>
-			<button label="Pause" onClick="camera.pause()"/>
-			<button label="Stop and Download" onClick="camera.stop()"/>
-			<button label="Snapshot" onClick="camera.snapshot()"/>
-		</hlayout>
-		<image id="image"/>
-	</vlayout>
+<?page title="Camera" contentType="text/html;charset=UTF-8"?>
+<zk xmlns:h="native">
+<h:link rel="stylesheet" href="pv.css"/>
+<div sclass="z-p-8">
+    <div sclass="z-border-bottom z-fs-title-lg z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Camera</div>
+    <div sclass="z-mb-6">
+        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Live Camera</div>
+        <div sclass="z-py-3 z-d-flex z-flex-col z-gap-4">
+            <camera id="camera" width="480px" maxsize="-1"
+                    onCreate="self.requestCamera()"
+                    onSnapshotUpload="image.setContent(event.getMedia())">
+                <attribute name="onVideoUpload">
+                    Filedownload.save(event.getMedia());
+                </attribute>
+            </camera>
+        </div>
+    </div>
+    <div sclass="z-mb-6">
+        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Controls</div>
+        <div sclass="z-py-3 z-d-flex z-gap-4 z-flex-wrap">
+            <button label="Record" onClick="camera.start()"/>
+            <button label="Pause" onClick="camera.pause()"/>
+            <button label="Stop and Download" onClick="camera.stop()"/>
+            <button label="Snapshot" onClick="camera.snapshot()"/>
+        </div>
+    </div>
+    <div sclass="z-mb-6">
+        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Snapshot Result</div>
+        <div sclass="z-py-3">
+            <image id="image"/>
+        </div>
+    </div>
+</div>
 </zk>

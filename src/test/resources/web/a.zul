@@ -1,25 +1,26 @@
-<zk>
-	<div>
-		Normal: <a href="http://www.zkoss.org" label="ZK" />
-		/ <a href="http://www.zkoss.xyz" label="Unknown" />
-	</div>
-	<div>
-		Disabled: <a href="http://www.zkoss.org" disabled="true" label="ZK" />
-		/ <a href="http://www.zkoss.xyz" disabled="true" label="Unknown" />
-	</div>
-	<window>
-		<caption>
-			<div>
-				Normal: <a href="http://www.zkoss.org" label="ZK" />
-				/ <a href="http://www.zkoss.xyz" label="Unknown" />
-			</div>
-			<div>
-				Disabled: <a href="http://www.zkoss.org" disabled="true" label="ZK" />
-				/ <a href="http://www.zkoss.xyz" disabled="true" label="Unknown" />
-			</div>
-		</caption>
-	</window>
-	<combobox>
-		<comboitem />
-	</combobox>
+<?page title="A (Link)" contentType="text/html;charset=UTF-8"?>
+<zk xmlns:h="native">
+<h:link rel="stylesheet" href="pv.css"/>
+<div sclass="z-p-8">
+    <div sclass="z-border-bottom z-fs-title-lg z-fw-medium z-text-on-surface z-mb-8 z-pb-3">A (Link)</div>
+
+    <div sclass="z-mb-6 pv-cols-2">
+        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">States</div>
+        <div sclass="pv-col-header-row z-pb-1">
+            <div/>
+            <div sclass="z-fs-label-sm z-fw-semibold z-text-secondary">Default</div>
+            <div sclass="z-fs-label-sm z-fw-semibold z-text-secondary">Disabled</div>
+        </div>
+        <div sclass="pv-row z-py-2 z-border-bottom">
+            <div sclass="z-fs-label-md z-text-secondary">Text link</div>
+            <div><a href="https://www.zkoss.org" label="ZK Framework"/></div>
+            <div><a href="https://www.zkoss.org" label="ZK Framework" disabled="true"/></div>
+        </div>
+        <div sclass="pv-row z-py-2 z-border-bottom">
+            <div sclass="z-fs-label-md z-text-secondary">With icon</div>
+            <div><a href="https://www.zkoss.org" label="ZK" iconSclass="z-icon-external-link"/></div>
+            <div><a href="https://www.zkoss.org" label="ZK" iconSclass="z-icon-external-link" disabled="true"/></div>
+        </div>
+    </div>
+</div>
 </zk>

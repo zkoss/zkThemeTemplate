@@ -1,190 +1,63 @@
-<zk xmlns:ca="client/attribute">
-	<zscript><![CDATA[
-		Object o = new Object[100];
-		Object o1 = new Object[100];
-		Object o2 = new Object[100];
-		Object o3 = new Object[100];
-	]]></zscript>
-	Default Scroll-bar (mouse over)
-	<hlayout>
-		<grid width="200px" height="200px" ca:data-embedscrollbar="false">
-			<custom-attributes org.zkoss.zul.nativebar="false" />
-			<columns>
-				<column label="col 1" width="100px" />
-				<column label="col 2" width="100px" />
-				<column label="col 3" width="100px" />
-				<column label="col 4" width="100px" />
-			</columns>
-			<rows>
-				<row forEach="${o}">
-					<label value="item ${forEachStatus.index}" />
-					<label value="item ${forEachStatus.index}" />
-					<label value="item ${forEachStatus.index}" />
-					<label value="item ${forEachStatus.index}" />
-				</row>
-			</rows>
-		</grid>
-		<grid width="200px" height="200px" ca:data-embedscrollbar="false">
-			<custom-attributes org.zkoss.zul.nativebar="false" />
-			<columns>
-				<column label="col 1" width="100px" />
-				<column label="col 2" width="100px" />
-				<column label="col 3" width="100px" />
-				<column label="col 4" width="100px" />
-			</columns>
-			<rows>
-				<row forEach="${o}">
-					<label value="item ${forEachStatus.index}" />
-					<label value="item ${forEachStatus.index}" />
-					<label value="item ${forEachStatus.index}" />
-					<label value="item ${forEachStatus.index}" />
-				</row>
-			</rows>
-			<foot>
-				<footer label="footer 1" />
-				<footer label="footer 2" />
-				<footer label="footer 3" />
-				<footer label="footer 4" />
-			</foot>
-		</grid>
-		<grid width="360px" mold="paging" pageSize="5" ca:data-embedscrollbar="false">
-			<custom-attributes org.zkoss.zul.nativebar="false" />
-			<columns>
-				<column label="col 1" width="100px" />
-				<column label="col 2" width="100px" />
-				<column label="col 3" width="100px" />
-				<column label="col 4" width="100px" />
-			</columns>
-			<rows>
-				<row forEach="${o}">
-					<label value="item ${forEachStatus.index}" />
-					<label value="item ${forEachStatus.index}" />
-					<label value="item ${forEachStatus.index}" />
-					<label value="item ${forEachStatus.index}" />
-				</row>
-			</rows>
-		</grid>
-	</hlayout>
-	<separator bar="true" spacing="10px" />
-	Embedded Scroll-bar (mouse over)
-	<hlayout>
-		<grid width="200px" height="200px" ca:data-embedscrollbar="true">
-			<custom-attributes org.zkoss.zul.nativebar="false" />
-			<columns>
-				<column label="col 1" width="100px" />
-				<column label="col 2" width="100px" />
-				<column label="col 3" width="100px" />
-				<column label="col 4" width="100px" />
-			</columns>
-			<rows>
-				<row forEach="${o}">
-					<label value="item ${forEachStatus.index}" />
-					<label value="item ${forEachStatus.index}" />
-					<label value="item ${forEachStatus.index}" />
-					<label value="item ${forEachStatus.index}" />
-				</row>
-			</rows>
-		</grid>
-		<grid width="200px" height="200px" ca:data-embedscrollbar="true">
-			<custom-attributes org.zkoss.zul.nativebar="false" />
-			<columns>
-				<column label="col 1" width="100px" />
-				<column label="col 2" width="100px" />
-				<column label="col 3" width="100px" />
-				<column label="col 4" width="100px" />
-			</columns>
-			<rows>
-				<row forEach="${o}">
-					<label value="item ${forEachStatus.index}" />
-					<label value="item ${forEachStatus.index}" />
-					<label value="item ${forEachStatus.index}" />
-					<label value="item ${forEachStatus.index}" />
-				</row>
-			</rows>
-			<foot>
-				<footer label="footer 1" />
-				<footer label="footer 2" />
-				<footer label="footer 3" />
-				<footer label="footer 4" />
-			</foot>
-		</grid>
-		<grid width="360px" mold="paging" pageSize="5" ca:data-embedscrollbar="true">
-			<custom-attributes org.zkoss.zul.nativebar="false" />
-			<columns>
-				<column label="col 1" width="100px" />
-				<column label="col 2" width="100px" />
-				<column label="col 3" width="100px" />
-				<column label="col 4" width="100px" />
-			</columns>
-			<rows>
-				<row forEach="${o}">
-					<label value="item ${forEachStatus.index}" />
-					<label value="item ${forEachStatus.index}" />
-					<label value="item ${forEachStatus.index}" />
-					<label value="item ${forEachStatus.index}" />
-				</row>
-			</rows>
-		</grid>
-	</hlayout>
-	<separator bar="true" spacing="10px" />
-	Browser Native Scroll-bar
-	<hlayout>
-		<grid width="200px" height="200px">
-			<custom-attributes org.zkoss.zul.nativebar="true" />
-			<columns>
-				<column label="col 1" width="100px" />
-				<column label="col 2" width="100px" />
-				<column label="col 3" width="100px" />
-				<column label="col 4" width="100px" />
-			</columns>
-			<rows>
-				<row forEach="${o}">
-					<label value="item ${forEachStatus.index}" />
-					<label value="item ${forEachStatus.index}" />
-					<label value="item ${forEachStatus.index}" />
-					<label value="item ${forEachStatus.index}" />
-				</row>
-			</rows>
-		</grid>
-		<grid width="200px" height="200px">
-			<custom-attributes org.zkoss.zul.nativebar="true" />
-			<columns>
-				<column label="col 1" width="100px" />
-				<column label="col 2" width="100px" />
-				<column label="col 3" width="100px" />
-				<column label="col 4" width="100px" />
-			</columns>
-			<rows>
-				<row forEach="${o}">
-					<label value="item ${forEachStatus.index}" />
-					<label value="item ${forEachStatus.index}" />
-					<label value="item ${forEachStatus.index}" />
-					<label value="item ${forEachStatus.index}" />
-				</row>
-			</rows>
-			<foot>
-				<footer label="footer 1" />
-				<footer label="footer 2" />
-				<footer label="footer 3" />
-				<footer label="footer 4" />
-			</foot>
-		</grid>
-		<grid width="360px" mold="paging" pageSize="5">
-			<custom-attributes org.zkoss.zul.nativebar="true" />
-			<columns>
-				<column label="col 1" width="100px" />
-				<column label="col 2" width="100px" />
-				<column label="col 3" width="100px" />
-				<column label="col 4" width="100px" />
-			</columns>
-			<rows>
-				<row forEach="${o}">
-					<label value="item ${forEachStatus.index}" />
-					<label value="item ${forEachStatus.index}" />
-					<label value="item ${forEachStatus.index}" />
-					<label value="item ${forEachStatus.index}" />
-				</row>
-			</rows>
-		</grid>
-	</hlayout>
+<?page title="Scrollbar" contentType="text/html;charset=UTF-8"?>
+<zk xmlns:h="native" xmlns:ca="client/attribute">
+<h:link rel="stylesheet" href="pv.css"/>
+<zscript><![CDATA[
+    Object[] rows = new Object[50];
+]]></zscript>
+<div sclass="z-p-8">
+    <div sclass="z-border-bottom z-fs-title-lg z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Scrollbar</div>
+    <div sclass="z-mb-6">
+        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Default (Mouse Over)</div>
+        <div sclass="z-d-flex z-align-end z-flex-wrap z-gap-6 z-py-3">
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <grid width="240px" height="200px" ca:data-embedscrollbar="false">
+                    <custom-attributes org.zkoss.zul.nativebar="false"/>
+                    <columns>
+                        <column label="Column 1" width="120px"/>
+                        <column label="Column 2" width="120px"/>
+                    </columns>
+                    <rows>
+                        <row forEach="${rows}">
+                            <label value="Item ${forEachStatus.index}"/>
+                            <label value="Value ${forEachStatus.index}"/>
+                        </row>
+                    </rows>
+                </grid>
+                <div sclass="z-fs-label-sm z-text-secondary">ZK scrollbar</div>
+            </div>
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <grid width="240px" height="200px" ca:data-embedscrollbar="true">
+                    <custom-attributes org.zkoss.zul.nativebar="false"/>
+                    <columns>
+                        <column label="Column 1" width="120px"/>
+                        <column label="Column 2" width="120px"/>
+                    </columns>
+                    <rows>
+                        <row forEach="${rows}">
+                            <label value="Item ${forEachStatus.index}"/>
+                            <label value="Value ${forEachStatus.index}"/>
+                        </row>
+                    </rows>
+                </grid>
+                <div sclass="z-fs-label-sm z-text-secondary">Embedded scrollbar</div>
+            </div>
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <grid width="240px" height="200px">
+                    <custom-attributes org.zkoss.zul.nativebar="true"/>
+                    <columns>
+                        <column label="Column 1" width="120px"/>
+                        <column label="Column 2" width="120px"/>
+                    </columns>
+                    <rows>
+                        <row forEach="${rows}">
+                            <label value="Item ${forEachStatus.index}"/>
+                            <label value="Value ${forEachStatus.index}"/>
+                        </row>
+                    </rows>
+                </grid>
+                <div sclass="z-fs-label-sm z-text-secondary">Native scrollbar</div>
+            </div>
+        </div>
+    </div>
+</div>
 </zk>

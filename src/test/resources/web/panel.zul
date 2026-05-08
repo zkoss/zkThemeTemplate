@@ -1,73 +1,68 @@
 <?page title="Panel" contentType="text/html;charset=UTF-8"?>
-<zk>
-	<hbox spacing="0">
-		<panel border="rounded" height="300px" width="300px"
-			maximizable="true" minimizable="true" collapsible="true" closable="true"
-			title="Panel (with frame)">
-			<toolbar mold="panel">Toolbar</toolbar>
-			<panelchildren>
-				Panel Content
-			</panelchildren>
-			<toolbar>Toolbar</toolbar>
-			<toolbar mold="panel">Toolbar</toolbar>
-		</panel>
-		<separator orient="vertical" spacing="10px" />
-		<panel border="normal" height="300px" width="300px" 
-			maximizable="true" minimizable="true" collapsible="true" closable="true"
-			title="Panel (no frame)">
-			<toolbar mold="panel">Toolbar</toolbar>
-			<panelchildren>
-				* Note: Please ignore the look of this panel, as this is a rare use case. This panel is included here for completeness of Toolbar/Frame combination.
-			</panelchildren>
-			<toolbar>Toolbar</toolbar>
-			<toolbar mold="panel">Toolbar</toolbar>
-		</panel>
-		<separator orient="vertical" spacing="10px" />
-		<panel border="rounded" height="300px" width="300px">
-			<toolbar mold="panel">Toolbar</toolbar>
-			<panelchildren>
-				Panel Content
-			</panelchildren>
-			<toolbar>Toolbar</toolbar>
-			<toolbar mold="panel">Toolbar</toolbar>
-		</panel>
-		<separator orient="vertical" spacing="10px" />
-		<panel border="normal" height="300px" width="300px">
-			<toolbar mold="panel">Toolbar</toolbar>
-			<panelchildren>
-				Panel Content
-			</panelchildren>
-			<toolbar>Toolbar</toolbar>
-			<toolbar mold="panel">Toolbar</toolbar>
-		</panel>
-	</hbox>
-	<separator spacing="10px" />
-	<hbox spacing="0">
-		<panel border="rounded" height="300px" width="300px"
-			maximizable="true" minimizable="true" collapsible="true" closable="true"
-			title="Panel (with frame)">
-			<panelchildren>
-				Panel Content
-			</panelchildren>
-		</panel>
-		<separator orient="vertical" spacing="10px" />
-		<panel border="normal" height="300px" width="300px" title="Panel (no frame)"
-			maximizable="true" minimizable="true" collapsible="true" closable="true">
-			<panelchildren>
-				Panel Content
-			</panelchildren>
-		</panel>
-		<separator orient="vertical" spacing="10px" />
-		<panel border="rounded" height="300px" width="300px">
-			<panelchildren>
-				Panel Content
-			</panelchildren>
-		</panel>
-		<separator orient="vertical" spacing="10px" />
-		<panel border="normal" height="300px" width="300px">
-			<panelchildren>
-				Panel Content
-			</panelchildren>
-		</panel>
-	</hbox>
+<zk xmlns:h="native">
+<h:link rel="stylesheet" href="pv.css"/>
+<div sclass="z-p-8">
+    <div sclass="z-border-bottom z-fs-title-lg z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Panel</div>
+
+    <div sclass="z-mb-6">
+        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Rounded Border — Full Controls</div>
+        <div sclass="z-d-flex z-align-end z-flex-wrap z-gap-6 z-py-3">
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <panel border="rounded" height="250px" width="280px"
+                    maximizable="true" minimizable="true" collapsible="true" closable="true"
+                    title="Panel (rounded)">
+                    <toolbar mold="panel">Toolbar</toolbar>
+                    <panelchildren>Panel Content</panelchildren>
+                    <toolbar mold="panel">Footer Toolbar</toolbar>
+                </panel>
+                <div sclass="z-fs-label-sm z-text-secondary">border="rounded"</div>
+            </div>
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <panel border="normal" height="250px" width="280px"
+                    maximizable="true" minimizable="true" collapsible="true" closable="true"
+                    title="Panel (normal)">
+                    <toolbar mold="panel">Toolbar</toolbar>
+                    <panelchildren>Panel Content</panelchildren>
+                    <toolbar mold="panel">Footer Toolbar</toolbar>
+                </panel>
+                <div sclass="z-fs-label-sm z-text-secondary">border="normal"</div>
+            </div>
+        </div>
+    </div>
+
+    <div sclass="z-mb-6">
+        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Without Toolbar</div>
+        <div sclass="z-d-flex z-align-end z-flex-wrap z-gap-6 z-py-3">
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <panel border="rounded" height="200px" width="280px"
+                    maximizable="true" minimizable="true" collapsible="true" closable="true"
+                    title="Panel (rounded)">
+                    <panelchildren>Panel Content</panelchildren>
+                </panel>
+                <div sclass="z-fs-label-sm z-text-secondary">border="rounded"</div>
+            </div>
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <panel border="normal" height="200px" width="280px"
+                    maximizable="true" minimizable="true" collapsible="true" closable="true"
+                    title="Panel (normal)">
+                    <panelchildren>Panel Content</panelchildren>
+                </panel>
+                <div sclass="z-fs-label-sm z-text-secondary">border="normal"</div>
+            </div>
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <panel border="rounded" height="200px" width="280px">
+                    <panelchildren>Panel Content (no title)</panelchildren>
+                </panel>
+                <div sclass="z-fs-label-sm z-text-secondary">No title, rounded</div>
+            </div>
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <panel border="normal" height="200px" width="280px">
+                    <panelchildren>Panel Content (no title)</panelchildren>
+                </panel>
+                <div sclass="z-fs-label-sm z-text-secondary">No title, normal</div>
+            </div>
+        </div>
+    </div>
+
+</div>
 </zk>

@@ -1,31 +1,32 @@
-<zk xmlns:w="client">
-	<style>
-		span.loading-btn {
-			border: 1px solid #669999;
-			border-radius: 3px; 
-			-moz-border-radius: 3px; 
-			-webkit-border-radius: 3px; 
-			color: #669999;
-			cursor: pointer !important;
-		}
-	</style>
-	<div style="z-index: 50">
-		<div id="loading_div" width="300px" height="300px" style="border: 1px solid black">
-			Dummy Div
-		</div>
-		<separator />
-		<div width="300px" height="300px" style="border: 1px solid #888888">
-			Renderer Defer: <span renderdefer="500000">Done</span>
-		</div>
-		<separator />
-		<button label="Show Busy (Global)">
-			<attribute w:name="onClick"><![CDATA[
-				zAu.cmd0.showBusy('loading <span class="loading-btn" onClick="zAu.cmd0.clearBusy()">Close</span>');
-			]]></attribute>
-		</button>
-	</div>
-	<script defer="true"><![CDATA[
-		var div = zk.Widget.$('$loading_div');
-		zAu.cmd0.showBusy(div.uuid, 'loading');
-	]]></script>
+<?page title="Loading" contentType="text/html;charset=UTF-8"?>
+<zk xmlns:h="native" xmlns:w="client">
+<h:link rel="stylesheet" href="pv.css"/>
+<div sclass="z-p-8">
+    <div sclass="z-border-bottom z-fs-title-lg z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Loading</div>
+    <div sclass="z-mb-6">
+        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Global Busy</div>
+        <div sclass="z-py-3 z-d-flex z-gap-4 z-flex-wrap">
+            <button label="Show Busy">
+                <attribute w:name="onClick"><![CDATA[
+                    zAu.cmd0.showBusy('Loading...');
+                    setTimeout(function() { zAu.cmd0.clearBusy(); }, 2000);
+                ]]></attribute>
+            </button>
+            <button label="Clear Busy">
+                <attribute w:name="onClick"><![CDATA[
+                    zAu.cmd0.clearBusy();
+                ]]></attribute>
+            </button>
+        </div>
+    </div>
+    <div sclass="z-mb-6">
+        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Render Defer</div>
+        <div sclass="z-py-3 z-d-flex z-flex-col z-gap-4">
+            <div sclass="z-fs-label-md z-text-secondary">Content with renderdefer="2000" — renders after a 2-second delay:</div>
+            <div sclass="z-d-flex z-align-center z-gap-2">
+                <span renderdefer="2000">Deferred content loaded</span>
+            </div>
+        </div>
+    </div>
+</div>
 </zk>

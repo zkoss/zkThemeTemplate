@@ -1,50 +1,54 @@
-<?page title="Toolbar" contentType="text/html;charset=UTF-8"?>
-<zk>
-	<hbox>
-		<window title="Window" border="normal" height="300px" width="300px">
-			<toolbar orient="vertical">
-				<toolbarbutton label="Button 1" image="~./img/volumn.gif"/>
-				<toolbarbutton label="Button 2" image="~./img/network.gif"/>
-			</toolbar>
-			Window Content
-		</window>
-		<panel title="Panel" border="rounded" height="300px" width="300px">
-			<toolbar orient="vertical">
-				<toolbarbutton label="Button 1" image="~./img/volumn.gif"/>
-				<toolbarbutton label="Button 2" image="~./img/network.gif"/>
-			</toolbar>
-			<panelchildren >
-				Panel Content
-				(For Toolbar in panel mold, see Panel demo.)
-			</panelchildren>
-			<toolbar orient="vertical">
-				<toolbarbutton label="Button 1" image="~./img/volumn.gif"/>
-				<toolbarbutton label="Button 2" image="~./img/network.gif"/>
-			</toolbar>
-		</panel>
-	</hbox>
-	<separator />
-	<hbox>
-		<window title="Window" border="normal" height="300px" width="300px">
-			<toolbar orient="vertical">
-				<toolbarbutton label="Button 1" />
-				<toolbarbutton label="Button 2" />
-			</toolbar>
-			Window Content
-		</window>
-		<panel title="Panel" border="rounded" height="300px" width="300px">
-			<toolbar orient="vertical">
-				<toolbarbutton label="Button 1" />
-				<toolbarbutton label="Button 2" />
-			</toolbar>
-			<panelchildren >
-				Panel Content
-				(For Toolbar in panel mold, see Panel demo.)
-			</panelchildren>
-			<toolbar orient="vertical">
-				<toolbarbutton label="Button 1" />
-				<toolbarbutton label="Button 2" />
-			</toolbar>
-		</panel>
-	</hbox>
+<?page title="Toolbar Vertical" contentType="text/html;charset=UTF-8"?>
+<zk xmlns:h="native">
+<h:link rel="stylesheet" href="pv.css"/>
+<div sclass="z-p-8">
+    <div sclass="z-border-bottom z-fs-title-lg z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Toolbar (Vertical)</div>
+
+    <div sclass="z-mb-6">
+        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">With Images</div>
+        <div sclass="z-d-flex z-align-start z-flex-wrap z-gap-6 z-py-3">
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <toolbar orient="vertical">
+                    <toolbarbutton label="Button 1" image="~./img/volumn.gif"/>
+                    <toolbarbutton label="Button 2" image="~./img/network.gif"/>
+                </toolbar>
+                <div sclass="z-fs-label-sm z-text-secondary">Vertical with images</div>
+            </div>
+        </div>
+    </div>
+
+    <div sclass="z-mb-6">
+        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Text Only</div>
+        <div sclass="z-d-flex z-align-start z-flex-wrap z-gap-6 z-py-3">
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <toolbar orient="vertical">
+                    <toolbarbutton label="Button 1" />
+                    <toolbarbutton label="Button 2" />
+                </toolbar>
+                <div sclass="z-fs-label-sm z-text-secondary">Vertical text only</div>
+            </div>
+        </div>
+    </div>
+
+    <div sclass="z-mb-6">
+        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Panel Mold Vertical</div>
+        <div sclass="z-d-flex z-align-start z-flex-wrap z-gap-6 z-py-3">
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <toolbar orient="vertical" mold="panel">
+                    <toolbarbutton label="Button 1" image="~./img/volumn.gif"/>
+                    <toolbarbutton label="Button 2" image="~./img/network.gif"/>
+                </toolbar>
+                <div sclass="z-fs-label-sm z-text-secondary">Panel mold with images</div>
+            </div>
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <toolbar orient="vertical" mold="panel">
+                    <toolbarbutton label="Button 1" />
+                    <toolbarbutton label="Button 2" />
+                </toolbar>
+                <div sclass="z-fs-label-sm z-text-secondary">Panel mold text only</div>
+            </div>
+        </div>
+    </div>
+
+</div>
 </zk>

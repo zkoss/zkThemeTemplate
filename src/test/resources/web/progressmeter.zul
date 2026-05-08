@@ -1,28 +1,49 @@
 <?page title="Progressmeter" contentType="text/html;charset=UTF-8"?>
-<zk xmlns:w="http://www.zkoss.org/2005/zk/client">
-	<hbox>
-		<window title="Progressmeter" border="normal" width="300px" height="300px">
-			<vbox>
-				Progressmeter:
-				<progressmeter value="50" width="200px" />
-			</vbox>
-		</window>
-		<window title="Progressmeter" border="normal" width="300px" height="300px">
-			<vbox>
-				Progressmeter: (You can try different value)
-				<hbox spacing="0">
-					<progressmeter id="pm" value="50" width="200px" />
-					<separator orient="vertical" spacing="3px" />
-					<label id="lb" value="50" />/100
-				</hbox>
-				<slider curpos="50">
-					<attribute w:name="onScroll"><![CDATA[
-						var pos = this.getCurpos();
-						this.$f("pm").setValue(pos); 
-						this.$f("lb").setValue(pos);
-					]]></attribute>
-				</slider>
-			</vbox>
-		</window>
-	</hbox>
+<zk xmlns:h="native" xmlns:w="http://www.zkoss.org/2005/zk/client">
+<h:link rel="stylesheet" href="pv.css"/>
+<div sclass="z-p-8">
+    <div sclass="z-border-bottom z-fs-title-lg z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Progressmeter</div>
+    <div sclass="z-mb-6">
+        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Values</div>
+        <div sclass="z-d-flex z-align-end z-flex-wrap z-gap-6 z-py-3">
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <progressmeter value="0" width="200px"/>
+                <div sclass="z-fs-label-sm z-text-secondary">0%</div>
+            </div>
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <progressmeter value="25" width="200px"/>
+                <div sclass="z-fs-label-sm z-text-secondary">25%</div>
+            </div>
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <progressmeter value="50" width="200px"/>
+                <div sclass="z-fs-label-sm z-text-secondary">50%</div>
+            </div>
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <progressmeter value="75" width="200px"/>
+                <div sclass="z-fs-label-sm z-text-secondary">75%</div>
+            </div>
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <progressmeter value="100" width="200px"/>
+                <div sclass="z-fs-label-sm z-text-secondary">100%</div>
+            </div>
+        </div>
+    </div>
+    <div sclass="z-mb-6">
+        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Interactive</div>
+        <div sclass="z-d-flex z-flex-col z-gap-3 z-py-3">
+            <div sclass="z-d-flex z-align-center z-gap-3">
+                <progressmeter id="pm" value="50" width="200px"/>
+                <label id="lb" value="50"/><span sclass="z-fs-label-sm z-text-secondary">/100</span>
+            </div>
+            <slider curpos="50" width="200px">
+                <attribute w:name="onScroll"><![CDATA[
+                    var pos = this.getCurpos();
+                    this.$f("pm").setValue(pos);
+                    this.$f("lb").setValue(pos);
+                ]]></attribute>
+            </slider>
+            <div sclass="z-fs-label-sm z-text-secondary">Drag slider to change value</div>
+        </div>
+    </div>
+</div>
 </zk>

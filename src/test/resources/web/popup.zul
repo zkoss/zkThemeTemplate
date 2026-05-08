@@ -1,45 +1,51 @@
 <?page title="Popup" contentType="text/html;charset=UTF-8"?>
-<zk>
-	<style>
-		.labelbox {
-			border: 1px solid #CCCCCC;
-			padding: 10px;
-			margin: 5px;
-		}
-	</style>
-	<hbox>
-		<window title="Popup" border="normal" width="300px" height="300px">
-			<vbox>
-				<button label="Show Popup" popup="p1" />
-				<button label="Show Popup with fixed size" popup="p2" />
-			</vbox>
-		</window>
-		<window title="Tooltip, Context" border="normal" width="300px" height="300px">
-			<vbox>
-				<div sclass="labelbox" tooltip="p1">
-					<label value="Tooltip (mouse over)" />
-				</div>
-				<div sclass="labelbox" context="p1">
-					<label value="Context (right click)" />
-				</div>
-			</vbox>
-		</window>
-		<window title="Tooltiptext" border="normal" width="300px" height="300px">
-			<vbox>
-				<div sclass="labelbox" tooltiptext="Tooltip Message">
-					<label value="Tooltiptext (mouse over)" />
-				</div>
-			</vbox>
-			Note: Tooltiptext is not a Popup.
-		</window>
-	</hbox>
-	Note: for Errorbox, please visit Input (Basic, Errbox).
-	<popup id="p1">
-		<div>Popup Content</div>
-		<div>Second Line</div>
-	</popup>
-	<popup id="p2" width="200px" height="200px">
-		<div>Popup Content</div>
-		<div>Second Line</div>
-	</popup>
+<zk xmlns:h="native">
+<h:link rel="stylesheet" href="pv.css"/>
+<div sclass="z-p-8">
+    <div sclass="z-border-bottom z-fs-title-lg z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Popup</div>
+
+    <div sclass="z-mb-6">
+        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Popup (popup attribute)</div>
+        <div sclass="z-py-3">
+            <button label="Show Popup" popup="p1" />
+            <button label="Show Popup (fixed size)" popup="p2" />
+        </div>
+    </div>
+
+    <div sclass="z-mb-6">
+        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Tooltip (mouse over)</div>
+        <div sclass="z-py-3">
+            <div tooltip="p1" style="display:inline-block; border:1px solid var(--zk-color-outline); padding:8px 16px; border-radius:4px; cursor:default;">
+                <label value="Hover me — tooltip uses Popup" />
+            </div>
+        </div>
+    </div>
+
+    <div sclass="z-mb-6">
+        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Context Menu (right click)</div>
+        <div sclass="z-py-3">
+            <div context="p1" style="display:inline-block; border:1px solid var(--zk-color-outline); padding:8px 16px; border-radius:4px; cursor:default;">
+                <label value="Right-click me — context uses Popup" />
+            </div>
+        </div>
+    </div>
+
+    <div sclass="z-mb-6">
+        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Tooltiptext (native tooltip)</div>
+        <div sclass="z-py-3">
+            <div tooltiptext="Native browser tooltip message" style="display:inline-block; border:1px solid var(--zk-color-outline); padding:8px 16px; border-radius:4px; cursor:default;">
+                <label value="Hover me — tooltiptext (not a Popup)" />
+            </div>
+        </div>
+    </div>
+
+    <popup id="p1">
+        <div>Popup Content</div>
+        <div>Second Line</div>
+    </popup>
+    <popup id="p2" width="200px" height="200px">
+        <div>Popup Content (fixed size)</div>
+        <div>Second Line</div>
+    </popup>
+</div>
 </zk>

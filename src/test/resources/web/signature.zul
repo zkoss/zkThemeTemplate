@@ -1,32 +1,38 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
-signature.zul
-
-        Purpose:
-                
-        Description:
-                
-        History:
-                Tue Oct 30 17:46:37 CST 2018, Created by charlesqiu
-
-Copyright (C) 2018 Potix Corporation. All Rights Reserved.
-
--->
-<zk>
-	<vlayout>
-		<label value="Write down your name"/>
-		<signature id="signature" width="600px" height="200px"
-				   onSave="image.content = event.media"
-				   undoLabel="Undo" saveLabel="Save" clearLabel="Clear"/>
-		<hlayout>
-			<label value="Change pen color: "/>
-			<colorbox onChange='signature.penColor = self.value'/>
-			<label value="Change background color: "/>
-			<colorbox onChange='signature.backgroundColor = self.value' color="#FFFFFF"/>
-			<label value="Change pen size: "/>
-			<intbox onChange="signature.penSize = self.value"/>
-		</hlayout>
-		<label value="Click save to see the signature"/>
-		<image id="image" width="600px" height="200px" style="border: 1px solid black;"/>
-	</vlayout>
+<?page title="Signature" contentType="text/html;charset=UTF-8"?>
+<zk xmlns:h="native">
+<h:link rel="stylesheet" href="pv.css"/>
+<div sclass="z-p-8">
+    <div sclass="z-border-bottom z-fs-title-lg z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Signature</div>
+    <div sclass="z-mb-6">
+        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Signature Pad</div>
+        <div sclass="z-py-3 z-d-flex z-flex-col z-gap-4">
+            <signature id="signature" width="600px" height="200px"
+                       onSave="image.content = event.media"
+                       undoLabel="Undo" saveLabel="Save" clearLabel="Clear"/>
+        </div>
+    </div>
+    <div sclass="z-mb-6">
+        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Customization</div>
+        <div sclass="z-d-flex z-align-end z-flex-wrap z-gap-6 z-py-3">
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <colorbox onChange="signature.penColor = self.value"/>
+                <div sclass="z-fs-label-sm z-text-secondary">Pen color</div>
+            </div>
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <colorbox onChange="signature.backgroundColor = self.value" color="#FFFFFF"/>
+                <div sclass="z-fs-label-sm z-text-secondary">Background color</div>
+            </div>
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <intbox onChange="signature.penSize = self.value" width="80px"/>
+                <div sclass="z-fs-label-sm z-text-secondary">Pen size</div>
+            </div>
+        </div>
+    </div>
+    <div sclass="z-mb-6">
+        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Saved Signature</div>
+        <div sclass="z-py-3">
+            <image id="image" width="600px" height="200px" style="border: 1px solid var(--zk-color-outline);"/>
+        </div>
+    </div>
+</div>
 </zk>

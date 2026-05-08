@@ -1,22 +1,25 @@
-<goldenlayout id="gl" hflex="1" height="800px" orient="vertical">
-    <attribute name="areas">
-        A B C
-        A B C
-        D D D
-    </attribute>
-    <goldenpanel id="project" area="A" title="Project" closable="false">
-        A
-    </goldenpanel>
-    <goldenpanel id="files" area="A" title="Files">
-        A
-    </goldenpanel>
-    <goldenpanel id="main" area="B" title="Main" droppable="false">
-        B
-    </goldenpanel>
-    <goldenpanel id="side" area="C" title="Side">
-        C
-    </goldenpanel>
-    <goldenpanel id="console" area="D" title="Console" draggable="true">
-        D
-    </goldenpanel>
-</goldenlayout>
+<?page title="Goldenlayout" contentType="text/html;charset=UTF-8"?>
+<zk xmlns:h="native">
+<h:link rel="stylesheet" href="pv.css"/>
+<div sclass="z-p-8">
+    <div sclass="z-border-bottom z-fs-title-lg z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Goldenlayout</div>
+
+    <div sclass="z-mb-6">
+        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Area Layout</div>
+        <div sclass="z-py-3">
+            <goldenlayout hflex="1" height="500px" orient="vertical">
+                <attribute name="areas">
+                    A B C
+                    A B C
+                    D D D
+                </attribute>
+                <goldenpanel area="A" title="Project" closable="false">Project panel</goldenpanel>
+                <goldenpanel area="A" title="Files">Files panel</goldenpanel>
+                <goldenpanel area="B" title="Main" droppable="false">Main panel</goldenpanel>
+                <goldenpanel area="C" title="Side">Side panel</goldenpanel>
+                <goldenpanel area="D" title="Console" draggable="true">Console panel</goldenpanel>
+            </goldenlayout>
+        </div>
+    </div>
+</div>
+</zk>

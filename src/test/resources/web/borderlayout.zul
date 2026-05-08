@@ -1,20 +1,31 @@
 <?page title="Borderlayout" contentType="text/html;charset=UTF-8"?>
-<zk>
-	<borderlayout>
-		<center>
-			Center Content
-		</center>
-		<west title="West" size="20%" splittable="true" collapsible="true">
-			West Content
-		</west>
-		<east title="East" size="20%" splittable="true" collapsible="true">
-			East Content
-		</east>
-		<north title="North" size="20%" splittable="true" collapsible="true">
-			North Content
-		</north>
-		<south title="South" size="20%" splittable="true" collapsible="true">
-			South Content
-		</south>
-	</borderlayout>
+<zk xmlns:h="native">
+<h:link rel="stylesheet" href="pv.css"/>
+<div sclass="z-p-8">
+    <div sclass="z-border-bottom z-fs-title-lg z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Borderlayout</div>
+
+    <div sclass="z-mb-6">
+        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Basic — North / South / East / West / Center</div>
+        <div sclass="z-py-3">
+            <borderlayout height="400px">
+                <center>
+                    Center Content
+                </center>
+                <west title="West" size="20%" splittable="true" collapsible="true">
+                    West Content
+                </west>
+                <east title="East" size="20%" splittable="true" collapsible="true">
+                    East Content
+                </east>
+                <north title="North" size="15%" splittable="true" collapsible="true">
+                    North Content
+                </north>
+                <south title="South" size="15%" splittable="true" collapsible="true">
+                    South Content
+                </south>
+            </borderlayout>
+        </div>
+    </div>
+
+</div>
 </zk>

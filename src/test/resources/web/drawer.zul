@@ -1,21 +1,33 @@
-<zk>
-  <button label="Show File Info" onClick="fi.open()"/>
-  <drawer id="fi" title="File information">
-    <grid>
-      <rows>
-        <row>
-          <label value="Name"/>
-          1.jpg
-        </row>
-        <row>
-          <label value="Size"/>
-          1.8 Megabytes
-        </row>
-        <row>
-          <label value="Dimensions"/>
-          1920x1080
-        </row>
-      </rows>
-    </grid>
-  </drawer>
+<?page title="Drawer" contentType="text/html;charset=UTF-8"?>
+<zk xmlns:h="native">
+<h:link rel="stylesheet" href="pv.css"/>
+<div sclass="z-p-8">
+    <div sclass="z-border-bottom z-fs-title-lg z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Drawer</div>
+
+    <div sclass="z-mb-6">
+        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Basic Drawer</div>
+        <div sclass="z-py-3">
+            <button label="Show File Info" onClick="fi.open()"/>
+            <drawer id="fi" title="File information">
+                <grid>
+                    <rows>
+                        <row>
+                            <label value="Name"/>
+                            1.jpg
+                        </row>
+                        <row>
+                            <label value="Size"/>
+                            1.8 Megabytes
+                        </row>
+                        <row>
+                            <label value="Dimensions"/>
+                            1920x1080
+                        </row>
+                    </rows>
+                </grid>
+            </drawer>
+        </div>
+    </div>
+
+</div>
 </zk>

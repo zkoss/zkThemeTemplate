@@ -1,38 +1,51 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
-checkbox-mold.zul
+<?page title="Checkbox (Molds)" contentType="text/html;charset=UTF-8"?>
+<zk xmlns:h="native">
+<h:link rel="stylesheet" href="pv.css"/>
+<div sclass="z-p-8">
+    <div sclass="z-border-bottom z-fs-title-lg z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Checkbox Molds</div>
 
-        Purpose:
-                
-        Description:
-                
-        History:
-                Wed Oct 31 14:10:54 CST 2018, Created by charlesqiu
+    <div sclass="z-mb-6 pv-cols-3">
+        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Switch</div>
+        <div sclass="pv-col-header-row z-pb-1">
+            <div/>
+            <div sclass="z-fs-label-sm z-fw-semibold z-text-secondary">Default</div>
+            <div sclass="z-fs-label-sm z-fw-semibold z-text-secondary">Checked</div>
+            <div sclass="z-fs-label-sm z-fw-semibold z-text-secondary">Disabled</div>
+        </div>
+        <div sclass="pv-row z-py-2 z-border-bottom">
+            <div sclass="z-fs-label-md z-text-secondary">No label</div>
+            <div><checkbox mold="switch"/></div>
+            <div><checkbox mold="switch" checked="true"/></div>
+            <div><checkbox mold="switch" disabled="true"/></div>
+        </div>
+        <div sclass="pv-row z-py-2 z-border-bottom">
+            <div sclass="z-fs-label-md z-text-secondary">With label</div>
+            <div><checkbox mold="switch" label="Switch"/></div>
+            <div><checkbox mold="switch" checked="true" label="Switch"/></div>
+            <div><checkbox mold="switch" disabled="true" label="Switch"/></div>
+        </div>
+    </div>
 
-Copyright (C) 2018 Potix Corporation. All Rights Reserved.
-
--->
-<zk>
-	<hlayout>
-		<window title="Checkbox (switch)" hflex="1">
-			<vlayout>
-				Default
-				<checkbox mold="switch" label="Checkbox"/>
-				Checked
-				<checkbox mold="switch" checked="true" label="Checkbox"/>
-				Disabled
-				<checkbox mold="switch" disabled="true" label="Checkbox"/>
-			</vlayout>
-		</window>
-		<window title="Checkbox (toggle)" hflex="1">
-			<vlayout>
-				Default
-				<checkbox mold="toggle" label="Checkbox"/>
-				Checked
-				<checkbox mold="toggle" checked="true" label="Checkbox"/>
-				Disabled
-				<checkbox mold="toggle" disabled="true" label="Checkbox"/>
-			</vlayout>
-		</window>
-	</hlayout>
+    <div sclass="z-mb-6 pv-cols-3">
+        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Toggle</div>
+        <div sclass="pv-col-header-row z-pb-1">
+            <div/>
+            <div sclass="z-fs-label-sm z-fw-semibold z-text-secondary">Default</div>
+            <div sclass="z-fs-label-sm z-fw-semibold z-text-secondary">Checked</div>
+            <div sclass="z-fs-label-sm z-fw-semibold z-text-secondary">Disabled</div>
+        </div>
+        <div sclass="pv-row z-py-2 z-border-bottom">
+            <div sclass="z-fs-label-md z-text-secondary">No label</div>
+            <div><checkbox mold="toggle"/></div>
+            <div><checkbox mold="toggle" checked="true"/></div>
+            <div><checkbox mold="toggle" disabled="true"/></div>
+        </div>
+        <div sclass="pv-row z-py-2 z-border-bottom">
+            <div sclass="z-fs-label-md z-text-secondary">With label</div>
+            <div><checkbox mold="toggle" label="Toggle"/></div>
+            <div><checkbox mold="toggle" checked="true" label="Toggle"/></div>
+            <div><checkbox mold="toggle" disabled="true" label="Toggle"/></div>
+        </div>
+    </div>
+</div>
 </zk>

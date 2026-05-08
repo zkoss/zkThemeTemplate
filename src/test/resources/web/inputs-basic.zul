@@ -1,42 +1,67 @@
-<?page title="Basic Inputs, Errorbox" contentType="text/html;charset=UTF-8"?>
-<zk>
-	<hbox>
-		<vbox>
-			<window title="Basic Inputs" sclass="center-bg-win"
-				border="normal" width="300px" height="300px">
-				<vbox>
-					Intbox:
-					<div><intbox value="123" /> (Normal)</div>
-					<div><intbox value="123" disabled="true" /> (Disabled)</div>
-					<div><intbox value="123" readonly="true" /> (Read Only)</div>
-					<div><intbox value="123" inplace="true" /> (Inplace)</div>
-				</vbox>
-				<separator />
-				Note: This includes Decimalbox, Doublebox, Intbox, Longbox and Textbox. They all use the same style.
-			</window>
-			<window title="Textbox" border="normal" sclass="center-bg-win"
-				width="300px" height="300px">
-				<vbox>
-					Textbox:
-					<div><textbox value="abc" /> (Normal)</div>
-					<div><textbox multiline="true" rows="4" placeholder="placeholder" /> (Multiline)</div>
-				</vbox>
-				<separator />
-			</window>
-		</vbox>
-		<window width="150px" height="300px" />
-		<vbox>
-			<separator spacing="150px" />
-			<window title="Error Box" border="normal" sclass="center-bg-win"
-				width="300px" height="300px">
-				<vbox>
-					For showing error box:
-					<div><textbox constraint="/^`````````$/" /> (Normal)</div>
-					<div><textbox inplace="true" constraint="/^`````````$/,after_end" /> (Inplace)</div>
-				</vbox>
-				<separator />
-				Note: please click on the textbox and then click somewhere else.
-			</window>
-		</vbox>
-	</hbox>
+<?page title="Basic Inputs" contentType="text/html;charset=UTF-8"?>
+<zk xmlns:h="native">
+<h:link rel="stylesheet" href="pv.css"/>
+<div sclass="z-p-8">
+    <div sclass="z-border-bottom z-fs-title-lg z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Basic Inputs</div>
+
+    <div sclass="z-mb-6 pv-cols-4">
+        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">States</div>
+        <div sclass="pv-col-header-row z-pb-1">
+            <div/>
+            <div sclass="z-fs-label-sm z-fw-semibold z-text-secondary">Default</div>
+            <div sclass="z-fs-label-sm z-fw-semibold z-text-secondary">Disabled</div>
+            <div sclass="z-fs-label-sm z-fw-semibold z-text-secondary">Readonly</div>
+            <div sclass="z-fs-label-sm z-fw-semibold z-text-secondary">Inplace</div>
+        </div>
+        <div sclass="pv-row z-py-2 z-border-bottom">
+            <div sclass="z-fs-label-md z-text-secondary">Textbox</div>
+            <div><textbox value="Hello"/></div>
+            <div><textbox value="Hello" disabled="true"/></div>
+            <div><textbox value="Hello" readonly="true"/></div>
+            <div><textbox value="Hello" inplace="true"/></div>
+        </div>
+        <div sclass="pv-row z-py-2 z-border-bottom">
+            <div sclass="z-fs-label-md z-text-secondary">Intbox</div>
+            <div><intbox value="42"/></div>
+            <div><intbox value="42" disabled="true"/></div>
+            <div><intbox value="42" readonly="true"/></div>
+            <div><intbox value="42" inplace="true"/></div>
+        </div>
+        <div sclass="pv-row z-py-2 z-border-bottom">
+            <div sclass="z-fs-label-md z-text-secondary">Longbox</div>
+            <div><longbox value="1000"/></div>
+            <div><longbox value="1000" disabled="true"/></div>
+            <div><longbox value="1000" readonly="true"/></div>
+            <div><longbox value="1000" inplace="true"/></div>
+        </div>
+        <div sclass="pv-row z-py-2 z-border-bottom">
+            <div sclass="z-fs-label-md z-text-secondary">Decimalbox</div>
+            <div><decimalbox value="3.14"/></div>
+            <div><decimalbox value="3.14" disabled="true"/></div>
+            <div><decimalbox value="3.14" readonly="true"/></div>
+            <div><decimalbox value="3.14" inplace="true"/></div>
+        </div>
+        <div sclass="pv-row z-py-2 z-border-bottom">
+            <div sclass="z-fs-label-md z-text-secondary">Doublebox</div>
+            <div><doublebox value="2.718"/></div>
+            <div><doublebox value="2.718" disabled="true"/></div>
+            <div><doublebox value="2.718" readonly="true"/></div>
+            <div><doublebox value="2.718" inplace="true"/></div>
+        </div>
+    </div>
+
+    <div sclass="z-mb-6">
+        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Error Box</div>
+        <div sclass="z-d-flex z-align-end z-flex-wrap z-gap-6 z-py-3">
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <textbox constraint="/^[A-Z]+$/" value="abc"/>
+                <div sclass="z-fs-label-sm z-text-secondary">Invalid (leave field to see error)</div>
+            </div>
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <textbox constraint="/^[A-Z]+$/,after_end" inplace="true" value="abc"/>
+                <div sclass="z-fs-label-sm z-text-secondary">Inplace + error after_end</div>
+            </div>
+        </div>
+    </div>
+</div>
 </zk>

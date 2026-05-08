@@ -1,11 +1,22 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<zk>
-	<video id="video" width="600px" src="~./media/video.mp4" poster="~./img/ZK-Logo.gif"
-		   controls="true"/>
-	<!--ZK-6030 -->
-	<hlayout>
-		<button label="Play" onClick="video.play()"/>
-		<button label="Stop" onClick="video.stop()"/>
-		<button label="Pause" onClick="video.pause()"/>
-	</hlayout>
+<?page title="Video" contentType="text/html;charset=UTF-8"?>
+<zk xmlns:h="native">
+<h:link rel="stylesheet" href="pv.css"/>
+<div sclass="z-p-8">
+    <div sclass="z-border-bottom z-fs-title-lg z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Video</div>
+    <div sclass="z-mb-6">
+        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Player</div>
+        <div sclass="z-py-3 z-d-flex z-flex-col z-gap-4">
+            <div sclass="z-fs-label-sm z-text-secondary">Note: provide a valid video URL via src attribute (e.g. an .mp4 file).</div>
+            <video id="video" width="480px" src="~./media/video.mp4" poster="~./img/ZK-Logo.gif" controls="true"/>
+        </div>
+    </div>
+    <div sclass="z-mb-6">
+        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Controls</div>
+        <div sclass="z-py-3 z-d-flex z-gap-4 z-flex-wrap">
+            <button label="Play" onClick="video.play()"/>
+            <button label="Pause" onClick="video.pause()"/>
+            <button label="Stop" onClick="video.stop()"/>
+        </div>
+    </div>
+</div>
 </zk>

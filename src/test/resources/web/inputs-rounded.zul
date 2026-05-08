@@ -1,189 +1,53 @@
-<?page title="Combo Inputs (Rounded)" contentType="text/html;charset=UTF-8"?>
-<zk>
-	<hbox>
-		<window title="Rounded Mold" sclass="center-bg-win"
-			border="normal" width="300px" vflex="min">
-			<vbox style="padding: 10px 0;">	
-				Combobox:
-				<combobox mold="rounded">
-					<comboitem label="Comboitem 1" />
-					<comboitem label="Comboitem 2" />
-					<comboitem label="Comboitem 3" />
-				</combobox>
-				<combobox mold="rounded" buttonVisible="false">
-					<comboitem label="Comboitem 1" />
-					<comboitem label="Comboitem 2" />
-					<comboitem label="Comboitem 3" />
-				</combobox>
-				Datebox:
-				<datebox mold="rounded" />
-				<datebox mold="rounded" buttonVisible="false" />
-				Bandbox:
-				<bandbox mold="rounded">
-					<bandpopup>Bandpopup Content</bandpopup>
-				</bandbox>
-				<bandbox mold="rounded" buttonVisible="false">
-					<bandpopup>Bandpopup Content</bandpopup>
-				</bandbox>
-				Timebox:
-				<timebox mold="rounded" />
-				<timebox mold="rounded" buttonVisible="false" />
-				Spinner:
-				<spinner mold="rounded" />
-				<spinner mold="rounded" buttonVisible="false" />
-				Doublespinner:
-				<doublespinner mold="rounded" />
-				<doublespinner mold="rounded" buttonVisible="false" />
-				Decimalbox:
-				<decimalbox mold="rounded"/>
-				Doublebox:
-				<doublebox mold="rounded"/>
-				Intbox:
-				<intbox mold="rounded"/>
-				Longbox:
-				<longbox mold="rounded"/>
-				Textbox:
-				<textbox mold="rounded"/>
-				<textbox mold="rounded" multiline="true" rows="2" />
-			</vbox>
-		</window>
-		<window title="Rounded Mold, Disabled" sclass="center-bg-win"
-			border="normal" width="300px" vflex="min">
-			<vbox style="padding: 10px 0;">
-				Combobox:
-				<combobox mold="rounded" disabled="true">
-					<comboitem label="Comboitem 1" />
-					<comboitem label="Comboitem 2" />
-					<comboitem label="Comboitem 3" />
-				</combobox>
-				<combobox mold="rounded" disabled="true" buttonVisible="false">
-					<comboitem label="Comboitem 1" />
-					<comboitem label="Comboitem 2" />
-					<comboitem label="Comboitem 3" />
-				</combobox>
-				Datebox:
-				<datebox mold="rounded" disabled="true" />
-				<datebox mold="rounded" disabled="true" buttonVisible="false" />
-				Bandbox:
-				<bandbox mold="rounded" disabled="true">
-					<bandpopup>Bandpopup Content</bandpopup>
-				</bandbox>
-				<bandbox mold="rounded" disabled="true" buttonVisible="false">
-					<bandpopup>Bandpopup Content</bandpopup>
-				</bandbox>
-				Timebox:
-				<timebox mold="rounded" disabled="true" />
-				<timebox mold="rounded" disabled="true" buttonVisible="false" />
-				Spinner:
-				<spinner mold="rounded" disabled="true" />
-				<spinner mold="rounded" disabled="true" buttonVisible="false" />
-				Doublespinner:
-				<doublespinner mold="rounded" disabled="true" />
-				<doublespinner mold="rounded" disabled="true" buttonVisible="false" />
-				Decimalbox:
-				<decimalbox mold="rounded" disabled="true"/>
-				Doublebox:
-				<doublebox mold="rounded" disabled="true"/>
-				Intbox:
-				<intbox mold="rounded" disabled="true"/>
-				Longbox:
-				<longbox mold="rounded" disabled="true"/>
-				Textbox:
-				<textbox mold="rounded" disabled="true"/>
-				<textbox mold="rounded" disabled="true" multiline="true" rows="2" />
-			</vbox>
-		</window>
-		<window title="Rounded Mold, Read Only" sclass="center-bg-win"
-			border="normal" width="300px" vflex="min">
-			<vbox style="padding: 10px 0;">
-				Combobox:
-				<combobox readonly="true" mold="rounded">
-					<comboitem label="Comboitem 1" />
-					<comboitem label="Comboitem 2" />
-					<comboitem label="Comboitem 3" />
-				</combobox>
-				<combobox readonly="true" mold="rounded" buttonVisible="false">
-					<comboitem label="Comboitem 1" />
-					<comboitem label="Comboitem 2" />
-					<comboitem label="Comboitem 3" />
-				</combobox>
-				Datebox:
-				<datebox readonly="true" mold="rounded" />
-				<datebox readonly="true" mold="rounded" buttonVisible="false" />
-				Bandbox:
-				<bandbox readonly="true" mold="rounded">
-					<bandpopup>Bandpopup Content</bandpopup>
-				</bandbox>
-				<bandbox readonly="true" mold="rounded" buttonVisible="false">
-					<bandpopup>Bandpopup Content</bandpopup>
-				</bandbox>
-				Timebox:
-				<timebox readonly="true" mold="rounded" />
-				<timebox readonly="true" mold="rounded" buttonVisible="false" />
-				Spinner:
-				<spinner readonly="true" mold="rounded" />
-				<spinner readonly="true" mold="rounded" buttonVisible="false" />
-				Doublespinner:
-				<doublespinner mold="rounded" readonly="true" />
-				<doublespinner mold="rounded" readonly="true" buttonVisible="false" />
-				Decimalbox:
-				<decimalbox mold="rounded" readonly="true"/>
-				Doublebox:
-				<doublebox mold="rounded" readonly="true"/>
-				Intbox:
-				<intbox mold="rounded" readonly="true"/>
-				Longbox:
-				<longbox mold="rounded" readonly="true"/>
-				Textbox:
-				<textbox mold="rounded" readonly="true"/>
-				<textbox mold="rounded" readonly="true" multiline="true" rows="2" />
-			</vbox>
-		</window>
-		<window title="Rounded Mold" sclass="center-bg-win"
-			border="normal" width="300px" vflex="min">
-			<vbox style="padding: 10px 0;">
-				Combobox:
-				<combobox inplace="true" mold="rounded">
-					<comboitem label="Comboitem 1" />
-					<comboitem label="Comboitem 2" />
-					<comboitem label="Comboitem 3" />
-				</combobox>
-				<combobox inplace="true" mold="rounded" buttonVisible="false">
-					<comboitem label="Comboitem 1" />
-					<comboitem label="Comboitem 2" />
-					<comboitem label="Comboitem 3" />
-				</combobox>
-				Datebox:
-				<datebox inplace="true" mold="rounded" />
-				<datebox inplace="true" mold="rounded" buttonVisible="false" />
-				Bandbox:
-				<bandbox inplace="true" mold="rounded">
-					<bandpopup>Bandpopup Content</bandpopup>
-				</bandbox>
-				<bandbox inplace="true" mold="rounded" buttonVisible="false">
-					<bandpopup>Bandpopup Content</bandpopup>
-				</bandbox>
-				Timebox:
-				<timebox inplace="true" mold="rounded" />
-				<timebox inplace="true" mold="rounded" buttonVisible="false" />
-				Spinner:
-				<spinner inplace="true" mold="rounded" />
-				<spinner inplace="true" mold="rounded" buttonVisible="false" />
-				Doublespinner:
-				<doublespinner mold="rounded" inplace="true" />
-				<doublespinner mold="rounded" inplace="true" buttonVisible="false" />
-				Decimalbox:
-				<decimalbox mold="rounded" inplace="true"/>
-				Doublebox:
-				<doublebox mold="rounded" inplace="true"/>
-				Intbox:
-				<intbox mold="rounded" inplace="true"/>
-				Longbox:
-				<longbox mold="rounded" inplace="true"/>
-				Textbox:
-				<textbox mold="rounded" inplace="true"/>
-				<textbox mold="rounded" inplace="true" multiline="true" rows="2" />
-			</vbox>
-		</window>
-	</hbox>
+<?page title="Rounded Inputs" contentType="text/html;charset=UTF-8"?>
+<zk xmlns:h="native">
+<h:link rel="stylesheet" href="pv.css"/>
+<div sclass="z-p-8">
+    <div sclass="z-border-bottom z-fs-title-lg z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Rounded Inputs</div>
+
+    <div sclass="z-mb-6 pv-cols-4">
+        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">States</div>
+        <div sclass="pv-col-header-row z-pb-1">
+            <div/>
+            <div sclass="z-fs-label-sm z-fw-semibold z-text-secondary">Default</div>
+            <div sclass="z-fs-label-sm z-fw-semibold z-text-secondary">Disabled</div>
+            <div sclass="z-fs-label-sm z-fw-semibold z-text-secondary">Readonly</div>
+            <div sclass="z-fs-label-sm z-fw-semibold z-text-secondary">Inplace</div>
+        </div>
+        <div sclass="pv-row z-py-2 z-border-bottom">
+            <div sclass="z-fs-label-md z-text-secondary">Textbox</div>
+            <div><textbox mold="rounded" value="Hello"/></div>
+            <div><textbox mold="rounded" disabled="true" value="Hello"/></div>
+            <div><textbox mold="rounded" readonly="true" value="Hello"/></div>
+            <div><textbox mold="rounded" inplace="true" value="Hello"/></div>
+        </div>
+        <div sclass="pv-row z-py-2 z-border-bottom">
+            <div sclass="z-fs-label-md z-text-secondary">Combobox</div>
+            <div><combobox mold="rounded"><comboitem label="Item 1"/></combobox></div>
+            <div><combobox mold="rounded" disabled="true"><comboitem label="Item 1"/></combobox></div>
+            <div><combobox mold="rounded" readonly="true"><comboitem label="Item 1"/></combobox></div>
+            <div><combobox mold="rounded" inplace="true"><comboitem label="Item 1"/></combobox></div>
+        </div>
+        <div sclass="pv-row z-py-2 z-border-bottom">
+            <div sclass="z-fs-label-md z-text-secondary">Datebox</div>
+            <div><datebox mold="rounded"/></div>
+            <div><datebox mold="rounded" disabled="true"/></div>
+            <div><datebox mold="rounded" readonly="true"/></div>
+            <div><datebox mold="rounded" inplace="true"/></div>
+        </div>
+        <div sclass="pv-row z-py-2 z-border-bottom">
+            <div sclass="z-fs-label-md z-text-secondary">Spinner</div>
+            <div><spinner mold="rounded"/></div>
+            <div><spinner mold="rounded" disabled="true"/></div>
+            <div><spinner mold="rounded" readonly="true"/></div>
+            <div><spinner mold="rounded" inplace="true"/></div>
+        </div>
+        <div sclass="pv-row z-py-2 z-border-bottom">
+            <div sclass="z-fs-label-md z-text-secondary">Bandbox</div>
+            <div><bandbox mold="rounded"><bandpopup>Content</bandpopup></bandbox></div>
+            <div><bandbox mold="rounded" disabled="true"><bandpopup>Content</bandpopup></bandbox></div>
+            <div><bandbox mold="rounded" readonly="true"><bandpopup>Content</bandpopup></bandbox></div>
+            <div><bandbox mold="rounded" inplace="true"><bandpopup>Content</bandpopup></bandbox></div>
+        </div>
+    </div>
+</div>
 </zk>

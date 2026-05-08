@@ -1,34 +1,39 @@
 <?page title="Slider" contentType="text/html;charset=UTF-8"?>
-<zk xmlns:ca="client/attribute">
-	<hbox>
-		<window title="Slider: Horizontal" sclass="center-bg-win"
-			border="normal" width="300px" height="300px">
-			<vbox>
-				<slider />
-				<slider mold="sphere" />
-				<slider mold="scale" />
-			</vbox>
-		</window>
-		<window title="Slider: Vertical" sclass="center-bg-win"
-			border="normal" width="300px" height="300px">
-			<hbox>
-				<slider orient="vertical" />
-				<slider mold="sphere" orient="vertical" />
-				<slider mold="scale" orient="vertical" /><!-- No effect by design -->
-			</hbox>
-		</window>
-		<window title="Slider: Animation"
-				border="normal" width="300px" height="300px">
-			<vbox>
-				<slider pageIncrement="5" />
-				<slider pageIncrement="20" />
-				<slider ca:data-animationspeed="0"/>
-				<slider ca:data-animationspeed="200"/>
-				<slider ca:data-animationspeed="1000"/>
-			</vbox>
-		</window>
-	</hbox>
-	<window title="Long long slider" width="900px" border="normal">
-		<slider mold="scale" width="400px" />
-	</window>
+<zk xmlns:h="native">
+<h:link rel="stylesheet" href="pv.css"/>
+<div sclass="z-p-8">
+    <div sclass="z-border-bottom z-fs-title-lg z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Slider</div>
+
+    <div sclass="z-mb-6">
+        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Horizontal</div>
+        <div sclass="z-d-flex z-flex-col z-align-start z-gap-4 z-py-3">
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <slider width="200px"/>
+                <div sclass="z-fs-label-sm z-text-secondary">Default</div>
+            </div>
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <slider width="200px" mold="sphere"/>
+                <div sclass="z-fs-label-sm z-text-secondary">Sphere</div>
+            </div>
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <slider width="200px" mold="scale"/>
+                <div sclass="z-fs-label-sm z-text-secondary">Scale</div>
+            </div>
+        </div>
+    </div>
+
+    <div sclass="z-mb-6">
+        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Vertical</div>
+        <div sclass="z-d-flex z-align-end z-flex-wrap z-gap-6 z-py-3">
+            <div sclass="z-d-flex z-flex-col z-align-center z-gap-2">
+                <slider orient="vertical" height="120px"/>
+                <div sclass="z-fs-label-sm z-text-secondary">Default</div>
+            </div>
+            <div sclass="z-d-flex z-flex-col z-align-center z-gap-2">
+                <slider orient="vertical" mold="sphere" height="120px"/>
+                <div sclass="z-fs-label-sm z-text-secondary">Sphere</div>
+            </div>
+        </div>
+    </div>
+</div>
 </zk>

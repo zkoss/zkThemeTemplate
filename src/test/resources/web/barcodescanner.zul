@@ -1,22 +1,18 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
-barcodescanner.zul
-
-	Purpose:
-		
-	Description:
-		
-	History:
-		Tue Oct 30 16:56:18 CST 2018, Created by rudyhuang
-
-Copyright (C) 2018 Potix Corporation. All Rights Reserved.
-
--->
-<zk>
-    <barcodescanner type="QR"
-                    width="500px" height="500px"
-                    continuous="false"
-                    onDetect="result.value = event.result"/>
-    <separator/>
-    QR code scan result: <label id="result"/>
+<?page title="Barcode Scanner" contentType="text/html;charset=UTF-8"?>
+<zk xmlns:h="native">
+<h:link rel="stylesheet" href="pv.css"/>
+<div sclass="z-p-8">
+    <div sclass="z-border-bottom z-fs-title-lg z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Barcode Scanner</div>
+    <div sclass="z-mb-6">
+        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">QR Code Scanner</div>
+        <div sclass="z-py-3 z-d-flex z-flex-col z-gap-4">
+            <barcodescanner type="QR" width="400px" height="400px" continuous="false"
+                            onDetect="result.value = event.result"/>
+            <div sclass="z-d-flex z-align-center z-gap-3">
+                <div sclass="z-fs-label-md z-text-secondary">Scan result:</div>
+                <label id="result"/>
+            </div>
+        </div>
+    </div>
+</div>
 </zk>

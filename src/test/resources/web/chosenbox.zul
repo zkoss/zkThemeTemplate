@@ -1,108 +1,34 @@
-<zk xmlns:n="native">
-	<zscript><![CDATA[
-		import org.zkoss.zul.*;
-		import org.zkoss.zkmax.zul.Chosenbox;
-		import java.util.*;
-		
-		ListModel model = new ListModelList(new String[] {
-			"Apple", "Banana", "Super Apple", "Super Banana","Cantaloupe",
-			"Carambola",
-			"Casaba",
-			"Cascara",
-			"Cherry",
-			"Chestnut",
-			"Coconut",
-			"Codlin",
-			"Core",
-			"Cranberry",
-			"Cumquat",
-			"Damson",
-			"Date",
-			"Dew",
-			"Durian",
-			"Casaba",
-			"Cascara",
-			"Cherry",
-			"Chestnut",
-			"Coconut",
-			"Codlin",
-			"Core",
-			"Cranberry",
-			"Cumquat",
-			"Damson",
-			"Date",
-			"Dew",
-			"Durian","Fig",
-			"Filbert",
-			"Flat",
-			"Foxnut",
-			"Ginkgo",
-			"Gooseberry",
-			"Grape",
-			"Grapefruit",
-			"Guava",
-			"Haw",
-			"Herbaceous",
-			"Hickory",
-			"Honey-dew",
-			"Juicy",
-			"Kernel",
-			"Kiwifruit","Lemon",
-			"Lichee",
-			"Longan",
-			"Loquat",
-			"Lotus",
-			"Mandarin",
-			"Mango",
-			"Mangosteen",
-			"Marc",
-			"Melon",
-			"Mini",
-			"Nectarine",
-			"Newton",
-			"Nucleus"
-		});
-		model.multiple = true;
-		model.addToSelection("Apple");
-		model.addToSelection("Banana");
-	]]></zscript>
-	<n:table>
-		<n:tr>
-			<n:td>
-				<label>Base</label>
-			</n:td>
-			<n:td>
-				<chosenbox width="300px" creatable="true" model="${model}" onSelect="" 
-					noResultsText="No Result" />
-			</n:td>
-		</n:tr>
-		<n:tr>
-			<n:td>
-				<label>Disabled</label>
-			</n:td>
-			<n:td>
-				<chosenbox width="300px" creatable="true" model="${model}" onSelect="" 
-					disabled="true" />
-			</n:td>
-		</n:tr>
-		<n:tr>
-			<n:td>
-				<label>No Model</label>
-			</n:td>
-			<n:td>
-				<chosenbox width="300px" creatable="true" onSelect="" 
-					noResultsText="No Result" createMessage="Create New" />
-			</n:td>
-		</n:tr>
-	</n:table>
-	<zscript><![CDATA[
-ListModelList model1 = new ListModelList(Locale.getAvailableLocales());
-ListModelList model2 = new ListModelList(Locale.getAvailableLocales());
-model2.setMultiple(true);
-model2.addToSelection(model2.get(1));
-model2.addToSelection(model2.get(2));
-    ]]></zscript>
-	<chosenbox model="${model1}" width="300px"/>
-	<chosenbox model="${model1}" width="300px" disabled="true"/>
-	<chosenbox model="${model2}" width="300px" />
+<?page title="Chosenbox" contentType="text/html;charset=UTF-8"?>
+<zk xmlns:h="native">
+<h:link rel="stylesheet" href="pv.css"/>
+<zscript><![CDATA[
+ListModelList chosenModel = new ListModelList(new String[]{
+    "Apple", "Banana", "Cherry", "Date", "Elderberry", "Fig", "Grape"
+});
+chosenModel.setMultiple(true);
+chosenModel.addToSelection(chosenModel.get(0));
+chosenModel.addToSelection(chosenModel.get(1));
+]]></zscript>
+<div sclass="z-p-8">
+    <div sclass="z-border-bottom z-fs-title-lg z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Chosenbox</div>
+
+    <div sclass="z-mb-6 pv-cols-2">
+        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">States</div>
+        <div sclass="pv-col-header-row z-pb-1">
+            <div/>
+            <div sclass="z-fs-label-sm z-fw-semibold z-text-secondary">Default</div>
+            <div sclass="z-fs-label-sm z-fw-semibold z-text-secondary">Disabled</div>
+        </div>
+        <div sclass="pv-row z-py-2 z-border-bottom">
+            <div sclass="z-fs-label-md z-text-secondary">Multiple</div>
+            <div><chosenbox model="${chosenModel}" width="240px"/></div>
+            <div><chosenbox model="${chosenModel}" disabled="true" width="240px"/></div>
+        </div>
+        <div sclass="pv-row z-py-2 z-border-bottom">
+            <div sclass="z-fs-label-md z-text-secondary">Creatable</div>
+            <div><chosenbox creatable="true" noResultsText="No results" createMessage="Add new" width="240px"/></div>
+            <div>—</div>
+        </div>
+    </div>
+</div>
 </zk>

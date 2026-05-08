@@ -1,55 +1,48 @@
-<?link rel="stylesheet" type="text/css" href="/less/combobutton.css.dsp"?>
 <?page title="Combobutton" contentType="text/html;charset=UTF-8"?>
-<zk>
-	<hlayout>
-		<window title="Combobutton" border="normal" hflex="1" height="300px">
-			<combobutton label="Combobutton Popup" image="~./img/volumn.gif">
-				<popup>
-					Popup Content
-				</popup>
-			</combobutton>
-			<separator />
-			<combobutton label="Combobutton Menupopup" image="~./img/volumn.gif">
-				<menupopup>
-					<menuitem label="Index" />
-					<menu label="About">
-						<menupopup>
-							<menuitem label="About ZK" />
-							<menuitem label="About Potix" />
-						</menupopup>
-					</menu>
-				</menupopup>
-			</combobutton>
-			<separator />
-			<combobutton label="Disabled Combobutton" disabled="true" image="~./img/volumn.gif">
-			</combobutton>
-		</window>
-		<window title="Combobutton mold=toolbar" border="normal" hflex="2" height="300px">
-			<toolbar>
-				<combobutton label="Combobutton" image="~./img/volumn.gif" mold="toolbar">
-					<menupopup>
-						<menuitem label="Index" />
-						<menu label="About">
-							<menupopup>
-								<menuitem label="About ZK" />
-								<menuitem label="About Potix" />
-							</menupopup>
-						</menu>
-					</menupopup>
-				</combobutton>
-				<combobutton label="Disabled Combobutton" disabled="true" image="~./img/volumn.gif" mold="toolbar">
-					<menupopup>
-						<menuitem label="Index" />
-						<menu label="About">
-							<menupopup>
-								<menuitem label="About ZK" />
-								<menuitem label="About Potix" />
-							</menupopup>
-						</menu>
-					</menupopup>
-				</combobutton>
-				<toolbarbutton label="ToolbarButton" iconSclass="z-icon-gear" mode="toggle" />
-			</toolbar>
-		</window>
-	</hlayout>
+<zk xmlns:h="native">
+<h:link rel="stylesheet" href="pv.css"/>
+<div sclass="z-p-8">
+    <div sclass="z-border-bottom z-fs-title-lg z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Combobutton</div>
+
+    <div sclass="z-mb-6 pv-cols-2">
+        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">States</div>
+        <div sclass="pv-col-header-row z-pb-1">
+            <div/>
+            <div sclass="z-fs-label-sm z-fw-semibold z-text-secondary">Default</div>
+            <div sclass="z-fs-label-sm z-fw-semibold z-text-secondary">Disabled</div>
+        </div>
+        <div sclass="pv-row z-py-2 z-border-bottom">
+            <div sclass="z-fs-label-md z-text-secondary">Default</div>
+            <div>
+                <combobutton label="Options">
+                    <menupopup>
+                        <menuitem label="Edit"/>
+                        <menuitem label="Delete"/>
+                    </menupopup>
+                </combobutton>
+            </div>
+            <div>
+                <combobutton label="Options" disabled="true">
+                    <menupopup><menuitem label="Edit"/></menupopup>
+                </combobutton>
+            </div>
+        </div>
+        <div sclass="pv-row z-py-2 z-border-bottom">
+            <div sclass="z-fs-label-md z-text-secondary">Toolbar mold</div>
+            <div>
+                <combobutton label="Options" mold="toolbar">
+                    <menupopup>
+                        <menuitem label="Edit"/>
+                        <menuitem label="Delete"/>
+                    </menupopup>
+                </combobutton>
+            </div>
+            <div>
+                <combobutton label="Options" mold="toolbar" disabled="true">
+                    <menupopup><menuitem label="Edit"/></menupopup>
+                </combobutton>
+            </div>
+        </div>
+    </div>
+</div>
 </zk>

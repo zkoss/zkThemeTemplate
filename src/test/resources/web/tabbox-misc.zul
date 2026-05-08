@@ -1,35 +1,143 @@
-<?page title="Tabbox" contentType="text/html;charset=UTF-8"?>
-<zk>
-	<hlayout>
-		<window title="Tabbox, tabscroll=false"
-			border="normal" width="400px" height="400px">
-			<tabbox tabscroll="false" height="100%">
-				<tabs>
-					<tab label="Tab 1" />
-					<tab label="Tab 2" />
-					<tab label="Tab 3" />
-				</tabs>
-				<tabpanels>
-					<tabpanel>Tabpanel 1 Content</tabpanel>
-					<tabpanel>Tabpanel 2 Content</tabpanel>
-					<tabpanel>Tabpanel 3 Content</tabpanel>
-				</tabpanels>
-			</tabbox>
-		</window>
-		<window title="Tabbox, tabscroll=false" sclass="center-bg-win" 
-			border="normal" width="400px" height="400px">
-			<tabbox tabscroll="false" orient="vertical" height="100%">
-				<tabs width="100px">
-					<tab label="Tab 1" />
-					<tab label="Tab 2" />
-					<tab label="Tab 3" />
-				</tabs>
-				<tabpanels>
-					<tabpanel>Tabpanel 1 Content</tabpanel>
-					<tabpanel>Tabpanel 2 Content</tabpanel>
-					<tabpanel>Tabpanel 3 Content</tabpanel>
-				</tabpanels>
-			</tabbox>
-		</window>
-	</hlayout>
+<?page title="Tabbox Misc" contentType="text/html;charset=UTF-8"?>
+<zk xmlns:h="native">
+<h:link rel="stylesheet" href="pv.css"/>
+<div sclass="z-p-8">
+    <div sclass="z-border-bottom z-fs-title-lg z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Tabbox — Misc Features</div>
+
+    <div sclass="z-mb-6">
+        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Accordion with Caption in Tab</div>
+        <div sclass="z-py-3">
+            <tabbox width="450px" mold="accordion">
+                <tabs>
+                    <tab label="Tab 2" closable="true" image="~./img/live.gif">
+                        <caption label="search" image="~./img/live.gif">
+                            <combobox>
+                                <comboitem label="item 1" />
+                                <comboitem label="item 2" />
+                                <comboitem label="item 3" />
+                                <comboitem label="item 4" />
+                            </combobox>
+                        </caption>
+                    </tab>
+                    <tab closable="true">
+                        <caption hflex="min" label="search" image="~./img/live.gif">
+                            <textbox />
+                            <combobox>
+                                <comboitem label="item 1" />
+                                <comboitem label="item 2" />
+                                <comboitem label="item 3" />
+                                <comboitem label="item 4" />
+                            </combobox>
+                        </caption>
+                    </tab>
+                    <tab closable="true" label="Tab3" />
+                </tabs>
+                <toolbar width="90px">
+                    <toolbarbutton image="~./img/live.gif" onClick='alert("Live")' />
+                    <toolbarbutton image="~./img/defender.gif" onClick='alert("Defender")' />
+                    <toolbarbutton image="~./img/battery.gif" onClick='alert("Battery")' />
+                </toolbar>
+                <tabpanels>
+                    <tabpanel>This is panel 1</tabpanel>
+                    <tabpanel>This is panel 2 — The second panel</tabpanel>
+                    <tabpanel>This is panel 3</tabpanel>
+                    <tabpanel>This is panel 4</tabpanel>
+                    <tabpanel>This is panel 5</tabpanel>
+                </tabpanels>
+            </tabbox>
+        </div>
+    </div>
+
+    <div sclass="z-mb-6">
+        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Horizontal with Caption in Tab</div>
+        <div sclass="z-py-3">
+            <tabbox width="680px">
+                <tabs>
+                    <tab label="Tab 1" closable="true" />
+                    <tab label="Tab 2" closable="true" image="~./img/live.gif">
+                        <caption label="search" hflex="min" image="~./img/live.gif">
+                            <custom-attributes org.zkoss.zul.image.preload="true" />
+                        </caption>
+                    </tab>
+                    <tab closable="true">
+                        <caption hflex="min" label="search">
+                            <textbox />
+                        </caption>
+                    </tab>
+                    <tab label="Tab 4" closable="true">
+                        <caption hflex="min" label="search">
+                            <combobox>
+                                <comboitem label="item 1" />
+                                <comboitem label="item 2" />
+                                <comboitem label="item 3" />
+                                <comboitem label="item 4" />
+                            </combobox>
+                        </caption>
+                    </tab>
+                    <tab label="Tab 5" closable="true" />
+                </tabs>
+                <toolbar width="230px">
+                    <toolbarbutton image="~./img/live.gif" onClick='alert("Live")' />
+                    <toolbarbutton image="~./img/defender.gif" onClick='alert("Defender")' />
+                    <toolbarbutton image="~./img/battery.gif" onClick='alert("Battery")' />
+                </toolbar>
+                <tabpanels>
+                    <tabpanel>This is panel 1</tabpanel>
+                    <tabpanel>This is panel 2 — The second panel</tabpanel>
+                    <tabpanel>This is panel 3</tabpanel>
+                    <tabpanel>This is panel 4</tabpanel>
+                    <tabpanel>This is panel 5</tabpanel>
+                </tabpanels>
+            </tabbox>
+        </div>
+    </div>
+
+    <div sclass="z-mb-6">
+        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Nested Accordion + Vertical</div>
+        <div sclass="z-py-3">
+            <tabbox id="tb" width="500px" mold="accordion">
+                <tabs>
+                    <tab height="60px" label="Tab 1" />
+                    <tab label="Tab 2" />
+                </tabs>
+                <tabpanels>
+                    <tabpanel>
+                        <tabbox id="tb2" orient="vertical">
+                            <custom-attributes org.zkoss.zul.image.preload="true"/>
+                            <tabs width="250px">
+                                <tab label="Tab 2" closable="true" image="~./img/live.gif">
+                                    <caption hflex="1" label="search" image="~./img/live.gif">
+                                        <textbox hflex="1" />
+                                    </caption>
+                                </tab>
+                                <tab closable="true">
+                                    <caption hflex="1" label="search" image="~./img/live.gif">
+                                        <textbox hflex="1" />
+                                    </caption>
+                                </tab>
+                                <tab>
+                                    <caption hflex="1" label="search" image="~./img/live.gif">
+                                        <textbox hflex="1" />
+                                    </caption>
+                                </tab>
+                                <tab label="D" closable="true" />
+                                <tab label="D" />
+                                <tab label="E" />
+                            </tabs>
+                            <tabpanels>
+                                <tabpanel>This is panel A</tabpanel>
+                                <tabpanel>This is panel B</tabpanel>
+                                <tabpanel>This is panel C</tabpanel>
+                                <tabpanel>This is panel D</tabpanel>
+                                <tabpanel>This is panel E</tabpanel>
+                            </tabpanels>
+                        </tabbox>
+                    </tabpanel>
+                    <tabpanel>This is panel 2 — The second panel</tabpanel>
+                </tabpanels>
+            </tabbox>
+        </div>
+    </div>
+
+</div>
 </zk>

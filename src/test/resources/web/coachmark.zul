@@ -1,8 +1,19 @@
 <?page title="Coachmark" contentType="text/html;charset=UTF-8"?>
-<zk>
-	<button id="infoButton" label="Information" />
-	<coachmark target="infoButton" onTargetClick="self.close()">
-		<label>Wellcome! click here for more information!</label>
-		<button style="display: block;margin: 10px auto 0" label="got it!" onClick="self.parent.close()"/>
-	</coachmark>
+<zk xmlns:h="native">
+<h:link rel="stylesheet" href="pv.css"/>
+<div sclass="z-p-8">
+    <div sclass="z-border-bottom z-fs-title-lg z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Coachmark</div>
+
+    <div sclass="z-mb-6">
+        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Basic Coachmark</div>
+        <div sclass="z-py-3">
+            <button id="infoButton" label="Information" />
+            <coachmark target="infoButton" onTargetClick="self.close()">
+                <label>Welcome! Click here for more information!</label>
+                <button style="display: block;margin: 10px auto 0" label="Got it!" onClick="self.parent.close()"/>
+            </coachmark>
+        </div>
+    </div>
+
+</div>
 </zk>

@@ -1,34 +1,60 @@
-<?page title="Inputs-Combobox" contentType="text/html;charset=UTF-8"?>
-<zk>
-	Simple Combobox:
-	<combobox>
-		<comboitem label="Comboitem 1" />
-		<comboitem label="Comboitem 2" />
-		<comboitem label="Comboitem 3" />
-	</combobox>
-	<separator />
-	Comboitem with description:
-	<combobox>
-		<comboitem label="Comboitem 1" description="Description of the great Comboitem 1." />
-		<comboitem label="Comboitem 2" description="Description of the great Comboitem 2." />
-		<comboitem label="Comboitem 3" description="Description of the great Comboitem 3." />
-	</combobox>
-	<separator />
-	Comboitem with icon:
-	<combobox>
-		<comboitem label="Comboitem 1" image="~./img/search.png" />
-		<comboitem label="Comboitem 2" iconSclass="z-icon-apple" />
-		<comboitem label="Comboitem 3" image="~./img/search.png" />
-	</combobox>
-	<separator />
-	Comboitem with description and icon:
-	<combobox>
-		<comboitem label="Comboitem 1" image="~./img/search.png"
-				   description="Description of the great Comboitem 1." />
-		<comboitem label="Comboitem 2" iconSclass="z-icon-android"
-				   description="Description of the great Comboitem 2." />
-		<comboitem label="Comboitem 3" image="~./img/search.png"
-				   description="Description of the great Comboitem 3." />
-	</combobox>
-	<combobox disabled="true"/>
+<?page title="Combobox" contentType="text/html;charset=UTF-8"?>
+<zk xmlns:h="native">
+<h:link rel="stylesheet" href="pv.css"/>
+<div sclass="z-p-8">
+    <div sclass="z-border-bottom z-fs-title-lg z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Combobox</div>
+
+    <div sclass="z-mb-6 pv-cols-4">
+        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">States</div>
+        <div sclass="pv-col-header-row z-pb-1">
+            <div/>
+            <div sclass="z-fs-label-sm z-fw-semibold z-text-secondary">Default</div>
+            <div sclass="z-fs-label-sm z-fw-semibold z-text-secondary">Disabled</div>
+            <div sclass="z-fs-label-sm z-fw-semibold z-text-secondary">Readonly</div>
+            <div sclass="z-fs-label-sm z-fw-semibold z-text-secondary">Inplace</div>
+        </div>
+        <div sclass="pv-row z-py-2 z-border-bottom">
+            <div sclass="z-fs-label-md z-text-secondary">Default</div>
+            <div><combobox><comboitem label="Item 1"/><comboitem label="Item 2"/></combobox></div>
+            <div><combobox disabled="true"><comboitem label="Item 1"/><comboitem label="Item 2"/></combobox></div>
+            <div><combobox readonly="true"><comboitem label="Item 1"/><comboitem label="Item 2"/></combobox></div>
+            <div><combobox inplace="true"><comboitem label="Item 1"/><comboitem label="Item 2"/></combobox></div>
+        </div>
+        <div sclass="pv-row z-py-2 z-border-bottom">
+            <div sclass="z-fs-label-md z-text-secondary">No button</div>
+            <div><combobox buttonVisible="false"><comboitem label="Item 1"/></combobox></div>
+            <div><combobox buttonVisible="false" disabled="true"><comboitem label="Item 1"/></combobox></div>
+            <div><combobox buttonVisible="false" readonly="true"><comboitem label="Item 1"/></combobox></div>
+            <div>—</div>
+        </div>
+    </div>
+
+    <div sclass="z-mb-6">
+        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Comboitem Variants</div>
+        <div sclass="z-d-flex z-align-end z-flex-wrap z-gap-6 z-py-3">
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <combobox>
+                    <comboitem label="Item 1"/>
+                    <comboitem label="Item 2"/>
+                    <comboitem label="Item 3"/>
+                </combobox>
+                <div sclass="z-fs-label-sm z-text-secondary">Plain</div>
+            </div>
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <combobox>
+                    <comboitem label="Item 1" description="Description of item 1"/>
+                    <comboitem label="Item 2" description="Description of item 2"/>
+                </combobox>
+                <div sclass="z-fs-label-sm z-text-secondary">With description</div>
+            </div>
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <combobox>
+                    <comboitem label="Item 1" iconSclass="z-icon-apple"/>
+                    <comboitem label="Item 2" iconSclass="z-icon-android"/>
+                </combobox>
+                <div sclass="z-fs-label-sm z-text-secondary">With icon</div>
+            </div>
+        </div>
+    </div>
+</div>
 </zk>

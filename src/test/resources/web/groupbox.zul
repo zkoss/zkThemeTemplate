@@ -1,32 +1,60 @@
 <?page title="Groupbox" contentType="text/html;charset=UTF-8"?>
-<zk>
-	<hbox>
-		<groupbox width="300px" height="300px">
-			<caption image="~./img/volumn.gif" label="Caption" />
-			Groupbox Content
-		</groupbox>
-		<groupbox width="300px" height="300px">
-			<caption label="Caption" />
-			Groupbox Content
-		</groupbox>
-		<groupbox width="300px" height="300px" title="Title">
-			Groupbox Content (wo/ caption)
-		</groupbox>
-		<groupbox width="300px" height="300px" title="Title">
-			<caption label="Caption" />
-			Groupbox Content (caption + title mixed)
-		</groupbox>
-	</hbox>
-	<separator />
-	<hbox>
-		<groupbox width="300px" height="300px">
-			<caption image="~./img/volumn.gif" />
-			Groupbox Content
-		</groupbox>
-		<groupbox width="300px" height="300px">
-			Groupbox Content
-		</groupbox>
-	</hbox>
-	<separator />
-	Note: we kept the original design, which uses native fieldset and caption html element.
+<zk xmlns:h="native">
+<h:link rel="stylesheet" href="pv.css"/>
+<div sclass="z-p-8">
+    <div sclass="z-border-bottom z-fs-title-lg z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Groupbox</div>
+
+    <div sclass="z-mb-6 pv-cols-2">
+        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">States</div>
+        <div sclass="pv-col-header-row z-pb-1">
+            <div/>
+            <div sclass="z-fs-label-sm z-fw-semibold z-text-secondary">Caption + Image</div>
+            <div sclass="z-fs-label-sm z-fw-semibold z-text-secondary">Caption Only</div>
+        </div>
+        <div sclass="pv-row z-py-2 z-border-bottom">
+            <div sclass="z-fs-label-md z-text-secondary">Default</div>
+            <div>
+                <groupbox width="240px" height="150px">
+                    <caption image="~./img/volumn.gif" label="Caption" />
+                    Groupbox Content
+                </groupbox>
+            </div>
+            <div>
+                <groupbox width="240px" height="150px">
+                    <caption label="Caption" />
+                    Groupbox Content
+                </groupbox>
+            </div>
+        </div>
+        <div sclass="pv-row z-py-2 z-border-bottom">
+            <div sclass="z-fs-label-md z-text-secondary">Title Attr</div>
+            <div>
+                <groupbox width="240px" height="150px" title="Title">
+                    Groupbox Content (title attr, no caption)
+                </groupbox>
+            </div>
+            <div>
+                <groupbox width="240px" height="150px" title="Title">
+                    <caption label="Caption" />
+                    Groupbox Content (caption + title)
+                </groupbox>
+            </div>
+        </div>
+        <div sclass="pv-row z-py-2 z-border-bottom">
+            <div sclass="z-fs-label-md z-text-secondary">Image Only</div>
+            <div>
+                <groupbox width="240px" height="150px">
+                    <caption image="~./img/volumn.gif" />
+                    Groupbox Content
+                </groupbox>
+            </div>
+            <div>
+                <groupbox width="240px" height="150px">
+                    Groupbox Content (no caption)
+                </groupbox>
+            </div>
+        </div>
+    </div>
+
+</div>
 </zk>

@@ -1,12 +1,57 @@
 <?page title="Textbox" contentType="text/html;charset=UTF-8"?>
-<zk>
-	<textbox value="text..." />
-	<textbox value="secret" type="password" />
-	<textbox constraint="/.+@.+\.[a-z]+/: Please enter an e-mail address" />
-	<textbox rows="5" cols="40">
-	    <attribute name="value">
-	text line1... 
-	text line2...
-	    </attribute>
-	</textbox>
+<zk xmlns:h="native">
+<h:link rel="stylesheet" href="pv.css"/>
+<div sclass="z-p-8">
+    <div sclass="z-border-bottom z-fs-title-lg z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Textbox</div>
+
+    <div sclass="z-mb-6 pv-cols-4">
+        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">States</div>
+        <div sclass="pv-col-header-row z-pb-1">
+            <div/>
+            <div sclass="z-fs-label-sm z-fw-semibold z-text-secondary">Default</div>
+            <div sclass="z-fs-label-sm z-fw-semibold z-text-secondary">Disabled</div>
+            <div sclass="z-fs-label-sm z-fw-semibold z-text-secondary">Readonly</div>
+            <div sclass="z-fs-label-sm z-fw-semibold z-text-secondary">Inplace</div>
+        </div>
+        <div sclass="pv-row z-py-2 z-border-bottom">
+            <div sclass="z-fs-label-md z-text-secondary">Text</div>
+            <div><textbox value="Hello"/></div>
+            <div><textbox value="Hello" disabled="true"/></div>
+            <div><textbox value="Hello" readonly="true"/></div>
+            <div><textbox value="Hello" inplace="true"/></div>
+        </div>
+        <div sclass="pv-row z-py-2 z-border-bottom">
+            <div sclass="z-fs-label-md z-text-secondary">Password</div>
+            <div><textbox value="secret" type="password"/></div>
+            <div><textbox value="secret" type="password" disabled="true"/></div>
+            <div><textbox value="secret" type="password" readonly="true"/></div>
+            <div><textbox value="secret" type="password" inplace="true"/></div>
+        </div>
+        <div sclass="pv-row z-py-2 z-border-bottom">
+            <div sclass="z-fs-label-md z-text-secondary">Placeholder</div>
+            <div><textbox placeholder="Enter text"/></div>
+            <div><textbox placeholder="Enter text" disabled="true"/></div>
+            <div><textbox placeholder="Enter text" readonly="true"/></div>
+            <div><textbox placeholder="Enter text" inplace="true"/></div>
+        </div>
+    </div>
+
+    <div sclass="z-mb-6">
+        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Multiline</div>
+        <div sclass="z-d-flex z-align-end z-flex-wrap z-gap-6 z-py-3">
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <textbox rows="4" cols="30" value="Line 1&#10;Line 2&#10;Line 3"/>
+                <div sclass="z-fs-label-sm z-text-secondary">Default</div>
+            </div>
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <textbox rows="4" cols="30" value="Line 1&#10;Line 2" disabled="true"/>
+                <div sclass="z-fs-label-sm z-text-secondary">Disabled</div>
+            </div>
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <textbox rows="4" cols="30" value="Line 1&#10;Line 2" readonly="true"/>
+                <div sclass="z-fs-label-sm z-text-secondary">Readonly</div>
+            </div>
+        </div>
+    </div>
+</div>
 </zk>

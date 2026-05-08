@@ -1,22 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?page title="Splitlayout" contentType="text/html;charset=UTF-8"?>
-<zk>
-    <splitlayout height="50vh" hflex="1" collapse="before">
-        <window title="Window 1" border="normal" vflex="1">
-            Drag/drop the splitter, it should work fine.
-        </window>
-        <splitlayout orient="horizontal" vflex="2" collapse="after">
-            <window title="Window 2" border="normal" hflex="1" vflex="1">
-                Hello, World!
-            </window>
-            <splitlayout hflex="1" vflex="1">
-                <window title="Window 3" border="normal" hflex="1" vflex="1">
-                    Hello, World!
+<zk xmlns:h="native">
+<h:link rel="stylesheet" href="pv.css"/>
+<div sclass="z-p-8">
+    <div sclass="z-border-bottom z-fs-title-lg z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Splitlayout</div>
+
+    <div sclass="z-mb-6">
+        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Nested Split Panes</div>
+        <div sclass="z-py-3">
+            <splitlayout height="400px" hflex="1" collapse="before">
+                <window title="Pane 1" border="normal" vflex="1">
+                    Drag the splitter — collapse="before"
                 </window>
-                <window title="Window 4" border="normal" hflex="1" vflex="1">
-                    Hello, World!
-                </window>
+                <splitlayout orient="horizontal" vflex="2" collapse="after">
+                    <window title="Pane 2" border="normal" hflex="1" vflex="1">
+                        Top-right pane — collapse="after"
+                    </window>
+                    <splitlayout hflex="1" vflex="1">
+                        <window title="Pane 3" border="normal" hflex="1" vflex="1">
+                            Bottom-left
+                        </window>
+                        <window title="Pane 4" border="normal" hflex="1" vflex="1">
+                            Bottom-right
+                        </window>
+                    </splitlayout>
+                </splitlayout>
             </splitlayout>
-        </splitlayout>
-    </splitlayout>
+        </div>
+    </div>
+
+</div>
 </zk>

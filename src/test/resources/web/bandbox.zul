@@ -1,89 +1,32 @@
 <?page title="Bandbox" contentType="text/html;charset=UTF-8"?>
-<zk>
-	<hbox>
-		<window title="Bandbox (Default mold)" sclass="center-bg-win"
-			border="normal" width="300px" height="600px">
-			<vbox>
-				Simple Bandbox:
-				<bandbox>
-					<bandpopup>
-						Bandbox Content
-					</bandpopup>
-				</bandbox>
-				<separator />
-				Grid in Bandbox:
-				<bandbox>
-					<bandpopup>
-						<vbox>
-							<hbox align="middle">
-								Search
-								<textbox />
-							</hbox>
-							<listbox width="200px">
-								<listhead>
-									<listheader label="Name" />
-									<listheader label="Description" />
-								</listhead>
-								<listitem>
-									<listcell label="John" />
-									<listcell label="CEO" />
-								</listitem>
-								<listitem>
-									<listcell label="Joe" />
-									<listcell label="Engineer" />
-								</listitem>
-								<listitem>
-									<listcell label="Mary" />
-									<listcell label="Supervisor" />
-								</listitem>
-							</listbox>
-						</vbox>
-					</bandpopup>
-				</bandbox>
-				<separator />
-			</vbox>
-		</window>
-		<window title="Bandbox (Rounded mold)" sclass="center-bg-win"
-			border="normal" width="300px" height="600px">
-			<vbox>
-				Simple Bandbox:
-				<bandbox mold="rounded">
-					<bandpopup>
-						Bandbox Content
-					</bandpopup>
-				</bandbox>
-				<separator />
-				Grid in Bandbox:
-				<bandbox mold="rounded">
-					<bandpopup>
-						<vbox>
-							<hbox>
-								Search
-								<textbox />
-							</hbox>
-							<listbox width="200px">
-								<listhead>
-									<listheader label="Name" />
-									<listheader label="Description" />
-								</listhead>
-								<listitem>
-									<listcell label="John" />
-									<listcell label="CEO" />
-								</listitem>
-								<listitem>
-									<listcell label="Joe" />
-									<listcell label="Engineer" />
-								</listitem>
-								<listitem>
-									<listcell label="Mary" />
-									<listcell label="Supervisor" />
-								</listitem>
-							</listbox>
-						</vbox>
-					</bandpopup>
-				</bandbox>
-				<separator />
-			</vbox>
-		</window>
-	</hbox>
+<zk xmlns:h="native">
+<h:link rel="stylesheet" href="pv.css"/>
+<div sclass="z-p-8">
+    <div sclass="z-border-bottom z-fs-title-lg z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Bandbox</div>
+
+    <div sclass="z-mb-6 pv-cols-4">
+        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">States</div>
+        <div sclass="pv-col-header-row z-pb-1">
+            <div/>
+            <div sclass="z-fs-label-sm z-fw-semibold z-text-secondary">Default</div>
+            <div sclass="z-fs-label-sm z-fw-semibold z-text-secondary">Disabled</div>
+            <div sclass="z-fs-label-sm z-fw-semibold z-text-secondary">Readonly</div>
+            <div sclass="z-fs-label-sm z-fw-semibold z-text-secondary">Inplace</div>
+        </div>
+        <div sclass="pv-row z-py-2 z-border-bottom">
+            <div sclass="z-fs-label-md z-text-secondary">Default</div>
+            <div><bandbox><bandpopup>Content</bandpopup></bandbox></div>
+            <div><bandbox disabled="true"><bandpopup>Content</bandpopup></bandbox></div>
+            <div><bandbox readonly="true"><bandpopup>Content</bandpopup></bandbox></div>
+            <div><bandbox inplace="true"><bandpopup>Content</bandpopup></bandbox></div>
+        </div>
+        <div sclass="pv-row z-py-2 z-border-bottom">
+            <div sclass="z-fs-label-md z-text-secondary">No button</div>
+            <div><bandbox buttonVisible="false"><bandpopup>Content</bandpopup></bandbox></div>
+            <div><bandbox buttonVisible="false" disabled="true"><bandpopup>Content</bandpopup></bandbox></div>
+            <div><bandbox buttonVisible="false" readonly="true"><bandpopup>Content</bandpopup></bandbox></div>
+            <div>—</div>
+        </div>
+    </div>
+</div>
 </zk>

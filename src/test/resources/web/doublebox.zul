@@ -1,4 +1,32 @@
 <?page title="Doublebox" contentType="text/html;charset=UTF-8"?>
-<zk>
-	<doublebox value="2.3"/>
+<zk xmlns:h="native">
+<h:link rel="stylesheet" href="pv.css"/>
+<div sclass="z-p-8">
+    <div sclass="z-border-bottom z-fs-title-lg z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Doublebox</div>
+
+    <div sclass="z-mb-6 pv-cols-4">
+        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">States</div>
+        <div sclass="pv-col-header-row z-pb-1">
+            <div/>
+            <div sclass="z-fs-label-sm z-fw-semibold z-text-secondary">Default</div>
+            <div sclass="z-fs-label-sm z-fw-semibold z-text-secondary">Disabled</div>
+            <div sclass="z-fs-label-sm z-fw-semibold z-text-secondary">Readonly</div>
+            <div sclass="z-fs-label-sm z-fw-semibold z-text-secondary">Inplace</div>
+        </div>
+        <div sclass="pv-row z-py-2 z-border-bottom">
+            <div sclass="z-fs-label-md z-text-secondary">Value</div>
+            <div><doublebox value="2.718"/></div>
+            <div><doublebox value="2.718" disabled="true"/></div>
+            <div><doublebox value="2.718" readonly="true"/></div>
+            <div><doublebox value="2.718" inplace="true"/></div>
+        </div>
+        <div sclass="pv-row z-py-2 z-border-bottom">
+            <div sclass="z-fs-label-md z-text-secondary">Placeholder</div>
+            <div><doublebox placeholder="Enter value"/></div>
+            <div><doublebox placeholder="Enter value" disabled="true"/></div>
+            <div><doublebox placeholder="Enter value" readonly="true"/></div>
+            <div><doublebox placeholder="Enter value" inplace="true"/></div>
+        </div>
+    </div>
+</div>
 </zk>

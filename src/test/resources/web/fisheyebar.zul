@@ -1,18 +1,37 @@
 <?page title="Fisheyebar" contentType="text/html;charset=UTF-8"?>
-<zk>
-	<div>
-		<checkbox label="AttachEdge bottom" onCheck='fsb.attachEdge=self.checked?"bottom":"top"' />
-		<checkbox label="Vertical orient" onCheck='fsb.orient=self.checked?"vertical":"horizontal"' />
-	</div>
-	<separator />
-	Note: The label of Fisheyebar is the only theme element that can be customized.
-	<fisheyebar id="fsb"
-				attachEdge="bottom" itemWidth="80" itemHeight="80" itemMaxHeight="160" itemMaxWidth="160">
-		<fisheye image="~./img/Centigrade-Widget-Icons/FolderABlue-128x128.png" label="Folder" />
-		<fisheye image="~./img/Centigrade-Widget-Icons/ReadingGlass-128x128.png" label="Reading Glasses" />
-		<fisheye image="~./img/Centigrade-Widget-Icons/Briefcase-128x128.png" label="Project" />
-		<fisheye image="~./img/Centigrade-Widget-Icons/MailboxFlag-128x128.png" label="Email" />
-		<fisheye image="~./img/Centigrade-Widget-Icons/Globe-128x128.png" label="Globe" />
-		<fisheye image="~./img/Centigrade-Widget-Icons/Spyglass-128x128.png" label="Spyglass" />
-	</fisheyebar>
+<zk xmlns:h="native">
+<h:link rel="stylesheet" href="pv.css"/>
+<div sclass="z-p-8">
+    <div sclass="z-border-bottom z-fs-title-lg z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Fisheyebar</div>
+
+    <div sclass="z-mb-6">
+        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Controls</div>
+        <div sclass="z-d-flex z-align-end z-flex-wrap z-gap-6 z-py-3">
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <checkbox label="AttachEdge bottom" onCheck='fsb.attachEdge=self.checked?"bottom":"top"' />
+                <div sclass="z-fs-label-sm z-text-secondary">Toggle attach edge</div>
+            </div>
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <checkbox label="Vertical orient" onCheck='fsb.orient=self.checked?"vertical":"horizontal"' />
+                <div sclass="z-fs-label-sm z-text-secondary">Toggle orientation</div>
+            </div>
+        </div>
+    </div>
+
+    <div sclass="z-mb-6">
+        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Fisheyebar</div>
+        <div sclass="z-py-3">
+            <fisheyebar id="fsb"
+                        attachEdge="bottom" itemWidth="80" itemHeight="80" itemMaxHeight="160" itemMaxWidth="160">
+                <fisheye image="~./img/Centigrade-Widget-Icons/FolderABlue-128x128.png" label="Folder" />
+                <fisheye image="~./img/Centigrade-Widget-Icons/ReadingGlass-128x128.png" label="Reading Glasses" />
+                <fisheye image="~./img/Centigrade-Widget-Icons/Briefcase-128x128.png" label="Project" />
+                <fisheye image="~./img/Centigrade-Widget-Icons/MailboxFlag-128x128.png" label="Email" />
+                <fisheye image="~./img/Centigrade-Widget-Icons/Globe-128x128.png" label="Globe" />
+                <fisheye image="~./img/Centigrade-Widget-Icons/Spyglass-128x128.png" label="Spyglass" />
+            </fisheyebar>
+        </div>
+    </div>
+
+</div>
 </zk>

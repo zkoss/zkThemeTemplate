@@ -1,40 +1,55 @@
 <?page title="Button" contentType="text/html;charset=UTF-8"?>
-<zk>
-	<style>
-	.z-button {
-		margin-top: 4px;
-	}
-	</style>
-	<hbox>
-		<window title="Button" sclass="center-bg-win"
-			border="normal" width="300px" height="300px">
-			<div>
-				<button label="Button" />
-				<button image="~./img/volumn.gif" />
-				<button label="Button" image="~./img/volumn.gif" />
-				<button label="Button" iconSclass="z-icon-volume-up" />
-				<button label="Button" orient="vertical" iconSclass="z-icon-gear" />
-			</div>
-		</window>
-		<window title="Button with longer label" sclass="center-bg-win"
-			border="normal" width="300px" height="300px">
-			<button label="Long Long Button" />
-		</window>
-		<window title="Large Button" sclass="center-bg-win"
-			border="normal" width="300px" height="300px">
-			<button label="Button" width="100px" height="50px" />
-		</window>
-	</hbox>
-	<separator />
-	<hbox>
-		<window title="Button with Hover Image" sclass="center-bg-win"
-			border="normal" width="300px" height="300px">
-			<button label="Button" image="~./img/volumn.gif"
-					hoverImage="~./img/network.gif" />
-		</window>
-		<window title="Button with Disable" sclass="center-bg-win"
-			border="normal" width="300px" height="300px">
-			<button label="Button" disabled="true" />
-		</window>
-	</hbox>
+<zk xmlns:h="native">
+<h:link rel="stylesheet" href="pv.css"/>
+<div sclass="z-p-8">
+    <div sclass="z-border-bottom z-fs-title-lg z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Button</div>
+
+    <div sclass="z-mb-6 pv-cols-2">
+        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">States</div>
+        <div sclass="pv-col-header-row z-pb-1">
+            <div/>
+            <div sclass="z-fs-label-sm z-fw-semibold z-text-secondary">Default</div>
+            <div sclass="z-fs-label-sm z-fw-semibold z-text-secondary">Disabled</div>
+        </div>
+        <div sclass="pv-row z-py-2 z-border-bottom">
+            <div sclass="z-fs-label-md z-text-secondary">Text only</div>
+            <div><button label="Button"/></div>
+            <div><button label="Button" disabled="true"/></div>
+        </div>
+        <div sclass="pv-row z-py-2 z-border-bottom">
+            <div sclass="z-fs-label-md z-text-secondary">With icon</div>
+            <div><button label="Button" iconSclass="z-icon-volume-up"/></div>
+            <div><button label="Button" iconSclass="z-icon-volume-up" disabled="true"/></div>
+        </div>
+        <div sclass="pv-row z-py-2 z-border-bottom">
+            <div sclass="z-fs-label-md z-text-secondary">Icon only</div>
+            <div><button iconSclass="z-icon-gear"/></div>
+            <div><button iconSclass="z-icon-gear" disabled="true"/></div>
+        </div>
+        <div sclass="pv-row z-py-2 z-border-bottom">
+            <div sclass="z-fs-label-md z-text-secondary">Vertical</div>
+            <div><button label="Button" orient="vertical" iconSclass="z-icon-gear"/></div>
+            <div><button label="Button" orient="vertical" iconSclass="z-icon-gear" disabled="true"/></div>
+        </div>
+        <div sclass="pv-row z-py-2 z-border-bottom">
+            <div sclass="z-fs-label-md z-text-secondary">Long label</div>
+            <div><button label="Long Long Button"/></div>
+            <div><button label="Long Long Button" disabled="true"/></div>
+        </div>
+    </div>
+
+    <div sclass="z-mb-6">
+        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Sizes</div>
+        <div sclass="z-d-flex z-align-end z-flex-wrap z-gap-6 z-py-3">
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <button label="Button"/>
+                <div sclass="z-fs-label-sm z-text-secondary">Default</div>
+            </div>
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <button label="Button" width="120px" height="48px"/>
+                <div sclass="z-fs-label-sm z-text-secondary">Custom size</div>
+            </div>
+        </div>
+    </div>
+</div>
 </zk>

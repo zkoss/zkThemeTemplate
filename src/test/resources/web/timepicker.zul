@@ -1,36 +1,43 @@
-<zk>
-	<zscript><![CDATA[
-		import java.util.Calendar;
-		import java.util.Date;
-		
-		Date time = new Date();
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(new Date());
-		calendar.set(0, 0, 0, 10, 10);
-		Date min = calendar.getTime();
-		calendar.set(0, 0, 0, 12, 10);
-		Date max = calendar.getTime();
-	]]></zscript>
-	<vlayout>
-		<hlayout>
-			<label value="HH:mm" />
-			<timepicker format="HH:mm" value="${time}" width="200px"/>
-		</hlayout>
-		<hlayout>
-			<label value="HH:mm a" />
-			<timepicker format="HH:mm a" value="${time}" min="${min}" width="200px" interval="3600" />
-		</hlayout>
-		<hlayout>
-			<label value="HH:mm:ss" />
-			<timepicker format="HH:mm:ss" value="${time}" min="${min}" max="${max}" width="200px" interval="3600" />
-		</hlayout>
-		<hlayout>
-			<label value="HH:mm:ss a" />
-			<timepicker format="HH:mm:ss a" value="${time}" width="200px"/>
-		</hlayout>
-		<hlayout>
-			<label value="hh:mm:ss a" />
-			<timepicker format="hh:mm:ss a" value="${time}" width="200px"/>
-		</hlayout>
-	</vlayout>
+<?page title="Timepicker" contentType="text/html;charset=UTF-8"?>
+<zk xmlns:h="native">
+<h:link rel="stylesheet" href="pv.css"/>
+<div sclass="z-p-8">
+    <div sclass="z-border-bottom z-fs-title-lg z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Timepicker</div>
+
+    <div sclass="z-mb-6">
+        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Formats</div>
+        <div sclass="z-d-flex z-align-end z-flex-wrap z-gap-6 z-py-3">
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <timepicker format="HH:mm" width="160px"/>
+                <div sclass="z-fs-label-sm z-text-secondary">HH:mm</div>
+            </div>
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <timepicker format="HH:mm a" width="160px"/>
+                <div sclass="z-fs-label-sm z-text-secondary">HH:mm a</div>
+            </div>
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <timepicker format="HH:mm:ss" width="160px"/>
+                <div sclass="z-fs-label-sm z-text-secondary">HH:mm:ss</div>
+            </div>
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <timepicker format="hh:mm:ss a" width="160px"/>
+                <div sclass="z-fs-label-sm z-text-secondary">hh:mm:ss a</div>
+            </div>
+        </div>
+    </div>
+
+    <div sclass="z-mb-6 pv-cols-2">
+        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">States</div>
+        <div sclass="pv-col-header-row z-pb-1">
+            <div/>
+            <div sclass="z-fs-label-sm z-fw-semibold z-text-secondary">Default</div>
+            <div sclass="z-fs-label-sm z-fw-semibold z-text-secondary">Disabled</div>
+        </div>
+        <div sclass="pv-row z-py-2 z-border-bottom">
+            <div sclass="z-fs-label-md z-text-secondary">Default</div>
+            <div><timepicker format="HH:mm" width="160px"/></div>
+            <div><timepicker format="HH:mm" disabled="true" width="160px"/></div>
+        </div>
+    </div>
+</div>
 </zk>

@@ -1,12 +1,33 @@
-<zk>
-    <zscript>
-        <![CDATA[
-        String[] userName = { "Tony", "Ryan", "Jumper", "Wing", "Sam" };
-        ListModelList model4Selectbox = new ListModelList(userName);
-    ]]></zscript>
-    <selectbox model="${model4Selectbox}" onSelect='alert(model.get(event.getData()));'>
-        <template name="model">
-            Name is ${each}
-        </template>
-    </selectbox>
+<?page title="Selectbox" contentType="text/html;charset=UTF-8"?>
+<zk xmlns:h="native">
+<h:link rel="stylesheet" href="pv.css"/>
+<zscript>
+String[] selectNames = {"Alice", "Bob", "Charlie", "David", "Eve"};
+ListModelList selectModel = new ListModelList(selectNames);
+</zscript>
+<div sclass="z-p-8">
+    <div sclass="z-border-bottom z-fs-title-lg z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Selectbox</div>
+
+    <div sclass="z-mb-6 pv-cols-2">
+        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">States</div>
+        <div sclass="pv-col-header-row z-pb-1">
+            <div/>
+            <div sclass="z-fs-label-sm z-fw-semibold z-text-secondary">Default</div>
+            <div sclass="z-fs-label-sm z-fw-semibold z-text-secondary">Disabled</div>
+        </div>
+        <div sclass="pv-row z-py-2 z-border-bottom">
+            <div sclass="z-fs-label-md z-text-secondary">Default</div>
+            <div>
+                <selectbox model="${selectModel}">
+                    <template name="model">${each}</template>
+                </selectbox>
+            </div>
+            <div>
+                <selectbox model="${selectModel}" disabled="true">
+                    <template name="model">${each}</template>
+                </selectbox>
+            </div>
+        </div>
+    </div>
+</div>
 </zk>

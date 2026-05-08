@@ -1,4 +1,32 @@
 <?page title="Timebox" contentType="text/html;charset=UTF-8"?>
-<zk>
-	<timebox cols="11"/>
+<zk xmlns:h="native">
+<h:link rel="stylesheet" href="pv.css"/>
+<div sclass="z-p-8">
+    <div sclass="z-border-bottom z-fs-title-lg z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Timebox</div>
+
+    <div sclass="z-mb-6 pv-cols-4">
+        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">States</div>
+        <div sclass="pv-col-header-row z-pb-1">
+            <div/>
+            <div sclass="z-fs-label-sm z-fw-semibold z-text-secondary">Default</div>
+            <div sclass="z-fs-label-sm z-fw-semibold z-text-secondary">Disabled</div>
+            <div sclass="z-fs-label-sm z-fw-semibold z-text-secondary">Readonly</div>
+            <div sclass="z-fs-label-sm z-fw-semibold z-text-secondary">Inplace</div>
+        </div>
+        <div sclass="pv-row z-py-2 z-border-bottom">
+            <div sclass="z-fs-label-md z-text-secondary">Default</div>
+            <div><timebox/></div>
+            <div><timebox disabled="true"/></div>
+            <div><timebox readonly="true"/></div>
+            <div><timebox inplace="true"/></div>
+        </div>
+        <div sclass="pv-row z-py-2 z-border-bottom">
+            <div sclass="z-fs-label-md z-text-secondary">No button</div>
+            <div><timebox buttonVisible="false"/></div>
+            <div><timebox buttonVisible="false" disabled="true"/></div>
+            <div><timebox buttonVisible="false" readonly="true"/></div>
+            <div>—</div>
+        </div>
+    </div>
+</div>
 </zk>

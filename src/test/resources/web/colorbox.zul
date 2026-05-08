@@ -1,32 +1,26 @@
 <?page title="Colorbox" contentType="text/html;charset=UTF-8"?>
-<zk>
-<hbox>
-<window title="Colorbox" sclass="center-bg-win"
-	border="normal" width="300px" height="300px" >
-	<colorbox />
-</window>
-<window title="Colorbox inside menu" sclass="center-bg-win"
-	border="normal" width="300px" height="300px">
-	<menubar id="menubar" width="100%">
-		<menu image="~./img/Centigrade-Widget-Icons/Spyglass-16x16.png">
-			<menupopup>
-				<menuitem label="Index" onClick="alert(self.label)" />
-				<menu label="Color Picker" content="#color=#184dc6"/>
-			</menupopup>
-		</menu>
-	</menubar>
-</window>
-<window title="colorbox in toolbar" sclass="center-bg-win"
-	border="normal" width="300px" height="300px" >
-	<hbox height="100%" align="stretch">
-		<toolbar orient="vertical" width="38px" height="100%">
-			<colorbox width="30px" height="20px" color="#FFFFFF">
-			</colorbox>
-			<toolbarbutton iconSclass="z-icon-android" />
-			<colorbox color="#000000">
-			</colorbox>
-		</toolbar>
-	</hbox>
-</window>
-</hbox>
+<zk xmlns:h="native">
+<h:link rel="stylesheet" href="pv.css"/>
+<div sclass="z-p-8">
+    <div sclass="z-border-bottom z-fs-title-lg z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Colorbox</div>
+
+    <div sclass="z-mb-6 pv-cols-2">
+        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">States</div>
+        <div sclass="pv-col-header-row z-pb-1">
+            <div/>
+            <div sclass="z-fs-label-sm z-fw-semibold z-text-secondary">Default</div>
+            <div sclass="z-fs-label-sm z-fw-semibold z-text-secondary">Disabled</div>
+        </div>
+        <div sclass="pv-row z-py-2 z-border-bottom">
+            <div sclass="z-fs-label-md z-text-secondary">Color picker</div>
+            <div><colorbox/></div>
+            <div><colorbox disabled="true"/></div>
+        </div>
+        <div sclass="pv-row z-py-2 z-border-bottom">
+            <div sclass="z-fs-label-md z-text-secondary">With value</div>
+            <div><colorbox color="#184dc6"/></div>
+            <div><colorbox color="#184dc6" disabled="true"/></div>
+        </div>
+    </div>
+</div>
 </zk>

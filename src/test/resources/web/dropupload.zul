@@ -1,9 +1,37 @@
 <?page title="Dropupload" contentType="text/html;charset=UTF-8"?>
-<zk>
-	<dropupload maxsize="5120" detection="none" onUpload="doSomething(event)">
-	        <attribute name="content"><![CDATA[
-	            <b>Drop Here</b><br/>
-	            size < 5MB
-	        ]]></attribute>
-	    </dropupload>
+<zk xmlns:h="native">
+<h:link rel="stylesheet" href="pv.css"/>
+<div sclass="z-p-8">
+    <div sclass="z-border-bottom z-fs-title-lg z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Dropupload</div>
+    <div sclass="z-mb-6 pv-cols-2">
+        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">States</div>
+        <div sclass="pv-col-header-row z-pb-1">
+            <div/>
+            <div sclass="z-fs-label-sm z-fw-semibold z-text-secondary">Default</div>
+            <div sclass="z-fs-label-sm z-fw-semibold z-text-secondary">Disabled</div>
+        </div>
+        <div sclass="pv-row z-py-2 z-border-bottom">
+            <div sclass="z-fs-label-md z-text-secondary">Drop Zone</div>
+            <div>
+                <dropupload maxsize="5120" detection="none">
+                    <attribute name="content"><![CDATA[
+                        <b>Drop Here</b><br/>
+                        size &lt; 5MB
+                    ]]></attribute>
+                    <attribute name="onUpload">
+                        org.zkoss.util.media.Media media = event.getMedia();
+                    </attribute>
+                </dropupload>
+            </div>
+            <div>
+                <dropupload maxsize="5120" detection="none" disabled="true">
+                    <attribute name="content"><![CDATA[
+                        <b>Drop Here</b><br/>
+                        size &lt; 5MB
+                    ]]></attribute>
+                </dropupload>
+            </div>
+        </div>
+    </div>
+</div>
 </zk>

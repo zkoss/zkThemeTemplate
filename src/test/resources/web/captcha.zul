@@ -1,6 +1,29 @@
 <?page title="Captcha" contentType="text/html;charset=UTF-8"?>
-<zk>
-	<vbox>
-	     <captcha id="cpa" length="5" width="200px" height="50px"/>
-	 </vbox>
+<zk xmlns:h="native">
+<h:link rel="stylesheet" href="pv.css"/>
+<div sclass="z-p-8">
+    <div sclass="z-border-bottom z-fs-title-lg z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Captcha</div>
+    <div sclass="z-mb-6">
+        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Verify</div>
+        <div sclass="z-py-3 z-d-flex z-flex-col z-gap-4">
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-3">
+                <captcha id="cpa" length="5" width="200px" height="50px"/>
+                <div sclass="z-d-flex z-align-center z-gap-3">
+                    <textbox id="answer" width="120px" placeholder="Enter text"/>
+                    <button label="Verify">
+                        <attribute name="onClick">
+                            if (cpa.getValue().equalsIgnoreCase(answer.getValue())) {
+                                Clients.showNotification("Correct!", "info", null, "top_right", 2000, true);
+                            } else {
+                                Clients.showNotification("Incorrect, try again.", "error", null, "top_right", 2000, true);
+                                cpa.regenerate();
+                            }
+                        </attribute>
+                    </button>
+                    <button label="Refresh" onClick="cpa.regenerate()"/>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </zk>
