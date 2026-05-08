@@ -1,88 +1,143 @@
-/* MD3 Messagebox — dialog/alert component */
-/* DOM: .z-messagebox > .z-messagebox-window > .z-window-header + .z-window-content */
+/* MD3 Messagebox
+   DOM: .z-messagebox-window.z-window
+          > .z-window-header.z-window-header-move > .z-window-icons
+          > .z-window-content
+              > .z-messagebox-viewport.z-div   (icon + message row)
+                  > .z-messagebox-icon.z-messagebox-{information|exclamation|error|question}.z-div
+                  > .z-messagebox.z-div > .z-label
+              > .z-messagebox-buttons.z-hlayout
+                  > button.z-messagebox-button.z-button  */
 
-.z-messagebox {
-    position: fixed;
-    inset: 0;
-    z-index: 1500;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.z-messagebox-window,
-.z-messagebox .z-window {
+/* Dialog window overrides */
+.z-messagebox-window.z-window {
     background-color: var(--zk-color-surface);
     border-radius: var(--zk-shape-dialog);
     box-shadow: var(--zk-elevation-dialog);
     border: none;
-    overflow: hidden;
-    box-sizing: border-box;
     max-width: 560px;
     min-width: 280px;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
+    width: 480px;
     font-family: var(--zk-typescale-font-family);
+    overflow: hidden;
 }
 
-/* Messagebox title bar */
-.z-messagebox .z-window-header {
+/* Title bar */
+.z-messagebox-window .z-window-header {
+    background-color: var(--zk-color-surface);
+    padding: var(--zk-spacing-3) var(--zk-spacing-4) var(--zk-spacing-3) var(--zk-spacing-6);
+    border-bottom: 1px solid var(--zk-color-outline-variant);
+    min-height: 56px;
     display: flex;
     align-items: center;
-    padding: var(--zk-spacing-4) var(--zk-spacing-6);
-    border-bottom: 1px solid var(--zk-color-outline-variant);
-    background-color: var(--zk-color-surface);
-    min-height: 56px;
-    flex-shrink: 0;
 }
 
-.z-messagebox .z-caption-text,
-.z-messagebox-title {
+.z-messagebox-window .z-caption-text {
     font-size: var(--zk-typescale-title-medium-size);
     font-weight: var(--zk-typescale-title-medium-weight);
-    line-height: var(--zk-typescale-title-medium-line-height);
     color: var(--zk-color-on-surface);
-    flex: 1;
 }
 
-/* Messagebox body content */
-.z-messagebox .z-window-content {
+/* Content area — remove default window padding */
+.z-messagebox-window .z-window-content {
+    background-color: var(--zk-color-surface);
+    padding: 0;
+    overflow: visible;
+}
+
+/* Viewport: flex row — icon on left, message on right */
+.z-messagebox-viewport {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--zk-spacing-3);
     padding: var(--zk-spacing-4) var(--zk-spacing-6);
+    overflow: auto;
+    white-space: nowrap;
+}
+
+/* Message text container */
+.z-messagebox {
+    display: inline-block;
+    white-space: normal;
+    word-break: break-word;
     color: var(--zk-color-on-surface-variant);
     font-size: var(--zk-typescale-body-medium-size);
     line-height: var(--zk-typescale-body-medium-line-height);
-    flex: 1;
 }
 
-/* Messagebox icon area */
-.z-messagebox-cnt {
-    display: flex;
-    align-items: flex-start;
-    gap: var(--zk-spacing-4);
+.z-messagebox .z-label {
+    white-space: pre-wrap;
+    word-break: break-word;
+    display: block;
 }
 
+/* Icon container — base */
 .z-messagebox-icon {
     flex-shrink: 0;
-    font-size: 28px;
+    width: 28px;
+    height: 28px;
+    display: inline-block;
 }
 
-.z-messagebox-icon-info { color: var(--zk-color-primary); }
-.z-messagebox-icon-warn { color: var(--zk-color-warning); }
-.z-messagebox-icon-error { color: var(--zk-color-error); }
-.z-messagebox-icon-question { color: var(--zk-color-secondary); }
+.z-messagebox-icon::before {
+    content: '';
+    display: block;
+    width: 28px;
+    height: 28px;
+    background-color: currentColor;
+    -webkit-mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-size: contain;
+    mask-repeat: no-repeat;
+    mask-position: center;
+}
+
+/* Information icon */
+.z-messagebox-information {
+    color: var(--zk-color-primary);
+}
+.z-messagebox-information::before {
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='M12 16v-4'/%3E%3Cpath d='M12 8h.01'/%3E%3C/svg%3E");
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='M12 16v-4'/%3E%3Cpath d='M12 8h.01'/%3E%3C/svg%3E");
+}
+
+/* Exclamation / Warning icon */
+.z-messagebox-exclamation {
+    color: var(--zk-color-warning);
+}
+.z-messagebox-exclamation::before {
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cline x1='12' x2='12' y1='8' y2='12'/%3E%3Cline x1='12' x2='12.01' y1='16' y2='16'/%3E%3C/svg%3E");
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cline x1='12' x2='12' y1='8' y2='12'/%3E%3Cline x1='12' x2='12.01' y1='16' y2='16'/%3E%3C/svg%3E");
+}
+
+/* Error icon */
+.z-messagebox-error {
+    color: var(--zk-color-error);
+}
+.z-messagebox-error::before {
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='m15 9-6 6'/%3E%3Cpath d='m9 9 6 6'/%3E%3C/svg%3E");
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='m15 9-6 6'/%3E%3Cpath d='m9 9 6 6'/%3E%3C/svg%3E");
+}
+
+/* Question icon */
+.z-messagebox-question {
+    color: var(--zk-color-secondary);
+}
+.z-messagebox-question::before {
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3'/%3E%3Cpath d='M12 17h.01'/%3E%3C/svg%3E");
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3'/%3E%3Cpath d='M12 17h.01'/%3E%3C/svg%3E");
+}
 
 /* Button row */
-.z-messagebox-btn {
+.z-messagebox-buttons {
     display: flex;
     align-items: center;
     justify-content: flex-end;
     gap: var(--zk-spacing-2);
-    padding: var(--zk-spacing-2) var(--zk-spacing-6) var(--zk-spacing-4);
+    padding: var(--zk-spacing-2) var(--zk-spacing-4) var(--zk-spacing-4);
     border-top: 1px solid var(--zk-color-outline-variant);
-    flex-shrink: 0;
 }
 
-.z-messagebox-btn .z-button {
+.z-messagebox-button {
     min-width: 64px;
 }
