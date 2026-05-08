@@ -121,7 +121,7 @@ http://localhost:8080/usecase2/index.zul#<pagename>
 
 Example: `http://localhost:8080/usecase2/index.zul#analytics`
 
-Valid page names: `default`, `analytics`, `saas`, `pages`, `projects`, `orders`, `products`, `invoice-list`, `invoice-detail`, `tasks`, `sign-in`, `sign-up`, `reset-password`, `pages-profile`, `pages-settings`, `pages-pricing`, `pages-chat`, `pages-blank`, `accordion`, `alerts`, `avatars`, `badges`, `buttons`, `cards`, `chips`, `dialogs`, `lists`, `menus`, `pagination`, `progress`, `tabs`, `tooltips`, `charts-apex`, `charts-chartjs`, `forms-pickers`, `forms-selection-controls`, `forms-selects`, `forms-text-fields`, `forms-formik`, `tables-simple`, `tables-advanced`, `tables-datagrid`, `icons-lucide`
+Valid page names: `default`, `analytics`, `saas`, `pages`, `projects`, `orders`, `products`, `invoice-list`, `invoice-detail`, `tasks`, `sign-in`, `sign-up`, `reset-password`, `pages-profile`, `pages-settings`, `pages-pricing`, `pages-chat`, `pages-blank`, `accordion`, `alerts`, `avatars`, `badges`, `buttons`, `cards`, `chips`, `dialogs`, `lists`, `menus`, `pagination`, `progress`, `tabs`, `tooltips`, `charts-apex`, `charts-chartjs`, `forms-pickers`, `forms-selection-controls`, `forms-selects`, `forms-text-fields`, `forms-formik`, `tables-simple`, `tables-advanced`, `icons-lucide`
 
 Note: `forms-editors` sidebar item exists but is non-functional (no navigation) — ZK has no Quill equivalent.
 
