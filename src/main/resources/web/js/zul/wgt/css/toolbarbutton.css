@@ -72,3 +72,13 @@
     color: var(--zk-color-primary);
     background-color: var(--zk-color-primary-container);
 }
+
+/* Checked (toggle) state */
+.z-toolbarbutton-checked {
+    background-color: var(--zk-color-secondary-container);
+    color: var(--zk-color-on-secondary-container);
+}
+
+.z-toolbarbutton-checked::before {
+    opacity: 0;
+}

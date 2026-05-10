@@ -201,3 +201,10 @@
 .z-paging-os.z-paging-rounded ul > li.z-paging-navigate .z-paging-noborder {
     border-radius: var(--zk-shape-corner-extra-small);
 }
+
+/* ─── Disabled page count text ───────────────────────────────────────────── */
+.z-paging-text-disabled {
+    color: var(--zk-color-disabled);
+    pointer-events: none;
+    cursor: default;
+}

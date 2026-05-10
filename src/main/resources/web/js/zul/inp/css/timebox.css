@@ -105,3 +105,29 @@
     opacity: var(--zk-state-disabled-opacity);
     pointer-events: none;
 }
+
+/* ─── Invalid variant ─────────────────────────────────────────────────────── */
+.z-timebox.z-timebox-invalid {
+    border-color: var(--zk-color-error);
+}
+
+.z-timebox.z-timebox-invalid:hover {
+    border-color: var(--zk-color-error);
+}
+
+.z-timebox.z-timebox-invalid:focus-within {
+    border-color: var(--zk-color-error);
+    border-width: 2px;
+}
+
+/* ─── Readonly variant ────────────────────────────────────────────────────── */
+.z-timebox[readonly],
+.z-timebox.z-timebox-readonly {
+    background-color: var(--zk-color-surface-container-low);
+    border-color: var(--zk-color-outline-variant);
+}
+
+.z-timebox.z-timebox-readonly .z-timebox-button {
+    pointer-events: none;
+    opacity: 0.6;
+}

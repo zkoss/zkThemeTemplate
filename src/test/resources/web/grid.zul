@@ -9,6 +9,28 @@ dsc = Comparators.dscRowDetailComparator;
 <div sclass="z-p-8">
     <div sclass="z-border-bottom z-fs-title-lg z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Grid</div>
 
+    <div sclass="pv-section">
+        <div sclass="pv-section-title">Grid — State Gallery</div>
+
+        <div sclass="pv-state-gallery pv-variant-default">
+            <div sclass="pv-state-col">
+                <div sclass="pv-state-label">Row States</div>
+                <grid width="360px">
+                    <columns>
+                        <column label="Name" width="180px"/>
+                        <column label="Status" width="180px"/>
+                    </columns>
+                    <rows>
+                        <row><label value="Default Row"/><label value="Normal"/></row>
+                        <row sclass="z-row-selected"><label value="Selected Row"/><label value="Active"/></row>
+                        <row><label value="Odd Stripe Row"/><label value="Normal"/></row>
+                        <row><label value="Even Row"/><label value="Normal"/></row>
+                    </rows>
+                </grid>
+            </div>
+        </div>
+    </div>
+
     <div sclass="z-mb-6">
         <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Basic</div>
         <div sclass="z-py-3">

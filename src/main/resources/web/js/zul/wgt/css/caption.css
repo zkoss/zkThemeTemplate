@@ -42,3 +42,8 @@
     color: var(--zk-color-primary);
     flex-shrink: 0;
 }
+
+.z-caption-readonly {
+    color: var(--zk-color-on-surface-variant);
+    pointer-events: none;
+}

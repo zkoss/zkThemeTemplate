@@ -4,6 +4,33 @@
 <div sclass="z-p-8">
     <div sclass="z-border-bottom z-fs-title-lg z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Checkbox</div>
 
+    <div sclass="pv-section">
+        <div sclass="pv-section-title">Checkbox — State Gallery</div>
+
+        <div sclass="pv-state-gallery pv-variant-default">
+            <div sclass="pv-state-col">
+                <div sclass="pv-state-label">Unchecked</div>
+                <checkbox label="Label"/>
+            </div>
+            <div sclass="pv-state-col">
+                <div sclass="pv-state-label">Checked</div>
+                <checkbox label="Label" checked="true"/>
+            </div>
+            <div sclass="pv-state-col">
+                <div sclass="pv-state-label">Indeterminate</div>
+                <checkbox label="Label" indeterminate="true"/>
+            </div>
+            <div sclass="pv-state-col">
+                <div sclass="pv-state-label">Disabled</div>
+                <checkbox label="Label" disabled="true"/>
+            </div>
+            <div sclass="pv-state-col">
+                <div sclass="pv-state-label">Dis+Checked</div>
+                <checkbox label="Label" disabled="true" checked="true"/>
+            </div>
+        </div>
+    </div>
+
     <div sclass="z-mb-6 pv-cols-4">
         <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">States</div>
         <div sclass="pv-col-header-row z-pb-1">

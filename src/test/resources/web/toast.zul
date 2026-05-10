@@ -8,6 +8,38 @@
 ]]></zscript>
 <div sclass="z-p-8">
     <div sclass="z-border-bottom z-fs-title-lg z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Toast</div>
+
+    <div sclass="pv-section">
+        <div sclass="pv-section-title">Toast — State Gallery</div>
+
+        <div sclass="pv-state-gallery pv-variant-default">
+            <div sclass="pv-state-col">
+                <div sclass="pv-state-label">Default</div>
+                <h:div class="z-toast">
+                    <h:div class="z-toast-content">Toast message</h:div>
+                </h:div>
+            </div>
+            <div sclass="pv-state-col">
+                <div sclass="pv-state-label">Info</div>
+                <h:div class="z-toast z-toast-info">
+                    <h:div class="z-toast-content">Info message <h:span class="z-toast-close">✕</h:span></h:div>
+                </h:div>
+            </div>
+            <div sclass="pv-state-col">
+                <div sclass="pv-state-label">Warning</div>
+                <h:div class="z-toast z-toast-warning">
+                    <h:div class="z-toast-content">Warning message <h:span class="z-toast-close">✕</h:span></h:div>
+                </h:div>
+            </div>
+            <div sclass="pv-state-col">
+                <div sclass="pv-state-label">Error</div>
+                <h:div class="z-toast z-toast-error">
+                    <h:div class="z-toast-content">Error message <h:span class="z-toast-close">✕</h:span></h:div>
+                </h:div>
+            </div>
+        </div>
+    </div>
+
     <div sclass="z-mb-6">
         <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Types</div>
         <div sclass="z-py-3 z-d-flex z-gap-4 z-flex-wrap">

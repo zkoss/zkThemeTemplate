@@ -1,0 +1,55 @@
+<?page title="Errorbox" contentType="text/html;charset=UTF-8"?>
+<zk xmlns:h="native">
+<h:link rel="stylesheet" href="pv.css"/>
+<div sclass="z-p-8">
+    <div sclass="z-border-bottom z-fs-title-lg z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Errorbox</div>
+
+    <div sclass="pv-section">
+        <div sclass="pv-section-title">Errorbox — State Gallery</div>
+
+        <div sclass="pv-state-gallery pv-variant-default">
+            <div sclass="pv-state-col">
+                <div sclass="pv-state-label">Default</div>
+                <h:div class="z-errorbox" style="position:relative;width:260px;">
+                    <h:div class="z-errorbox-content">Value is required</h:div>
+                </h:div>
+            </div>
+            <div sclass="pv-state-col">
+                <div sclass="pv-state-label">With arrow (down)</div>
+                <h:div class="z-errorbox" style="position:relative;width:260px;">
+                    <h:div class="z-errorbox-pointer z-errorbox-down"/>
+                    <h:div class="z-errorbox-content">Please enter a valid value</h:div>
+                </h:div>
+            </div>
+            <div sclass="pv-state-col">
+                <div sclass="pv-state-label">Closable</div>
+                <h:div class="z-errorbox" style="position:relative;width:260px;">
+                    <h:div class="z-errorbox-content">
+                        Field cannot be empty
+                        <h:span class="z-errorbox-close">✕</h:span>
+                    </h:div>
+                </h:div>
+            </div>
+        </div>
+    </div>
+
+    <div sclass="z-mb-6">
+        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Live Constraint Validation</div>
+        <div sclass="z-fs-label-sm z-text-secondary z-mb-4">Leave the field empty and press Tab or click outside to trigger a real errorbox.</div>
+        <div sclass="z-py-3 z-d-flex z-align-start z-flex-wrap z-gap-6">
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <textbox placeholder="Required field" constraint="no empty" width="200px"/>
+                <div sclass="z-fs-label-sm z-text-secondary">no empty</div>
+            </div>
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <textbox placeholder="Email" constraint="/.+@.+\..+/: Invalid email" width="200px"/>
+                <div sclass="z-fs-label-sm z-text-secondary">regex pattern</div>
+            </div>
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <intbox placeholder="1–100" constraint="min 1 max 100" width="200px"/>
+                <div sclass="z-fs-label-sm z-text-secondary">min max range</div>
+            </div>
+        </div>
+    </div>
+</div>
+</zk>

@@ -127,6 +127,14 @@
     display: none;
 }
 
+.z-tabbox-scroll,
+.z-tabbox-left-scroll,
+.z-tabbox-right-scroll,
+.z-tabbox-up-scroll,
+.z-tabbox-down-scroll {
+    display: none;
+}
+
 /* ─── Tab panels ────────────────────────────────────────────────────────── */
 .z-tabpanels {
     flex: 1;
@@ -251,4 +259,70 @@
     font-size: var(--zk-typescale-body-medium-size);
     line-height: 1.6;
     background: var(--zk-color-surface);
+}
+
+/* ─── Placement molds ───────────────────────────────────────────────────── */
+.z-tabbox-top .z-tabs {
+    border-bottom: 1px solid var(--zk-color-outline-variant);
+}
+
+.z-tabbox-bottom {
+    flex-direction: column-reverse;
+}
+
+.z-tabbox-bottom .z-tabs {
+    border-top: 1px solid var(--zk-color-outline-variant);
+    border-bottom: none;
+}
+
+.z-tabbox-left {
+    flex-direction: row;
+}
+
+.z-tabbox-left .z-tabs {
+    flex-direction: column;
+    border-bottom: none;
+    border-right: 1px solid var(--zk-color-outline-variant);
+    min-width: 120px;
+    width: auto;
+}
+
+.z-tabbox-right {
+    flex-direction: row-reverse;
+}
+
+.z-tabbox-right .z-tabs {
+    flex-direction: column;
+    border-bottom: none;
+    border-left: 1px solid var(--zk-color-outline-variant);
+    min-width: 120px;
+    width: auto;
+}
+
+.z-tabs-content {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.z-tabs-space {
+    flex: 1;
+}
+
+.z-tabpanel-content {
+    padding: var(--zk-spacing-3) var(--zk-spacing-4);
+    color: var(--zk-color-on-surface);
+}
+
+.z-tab-icon {
+    font-size: 18px;
+    flex-shrink: 0;
+}
+
+.z-tab-image {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    vertical-align: middle;
 }

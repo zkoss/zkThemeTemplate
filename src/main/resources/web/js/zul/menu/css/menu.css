@@ -235,3 +235,84 @@
     overflow: hidden;
     font-family: var(--zk-typescale-font-family);
 }
+
+/* Selected top-level menu (open state) */
+.z-menu-selected > .z-menu-content {
+    background-color: rgba(255, 255, 255, 0.12);
+    color: var(--zk-color-on-primary);
+}
+
+/* Shadow variant on menupopup (explicit class applied by ZK) */
+.z-menu-shadow,
+.z-menupopup-shadow {
+    box-shadow: var(--zk-elevation-dropdown);
+}
+
+/* Menuitem checkable — reserves space for checkmark icon */
+.z-menuitem-checkable .z-menuitem-icon {
+    visibility: hidden;
+    font-size: 16px;
+    color: var(--zk-color-primary);
+}
+
+.z-menuitem-checkable.z-menuitem-checked .z-menuitem-icon {
+    visibility: visible;
+}
+
+/* Scrollable menubar — outer layout */
+.z-menubar-scroll {
+    overflow: hidden;
+    position: relative;
+}
+
+.z-menubar-body {
+    margin: 0 var(--zk-spacing-5);
+    overflow: hidden;
+    position: relative;
+}
+
+.z-menubar-content {
+    width: 5000px;
+}
+
+/* Menubar scroll arrow buttons */
+.z-menubar-scrollable {
+    width: 24px;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    cursor: pointer;
+    z-index: 25;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--zk-color-on-primary);
+    transition: background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+}
+
+.z-menubar-scrollable:hover {
+    background-color: rgba(255, 255, 255, 0.12);
+}
+
+.z-menubar-left {
+    left: 0;
+    right: auto;
+}
+
+.z-menubar-right {
+    right: 0;
+}
+
+.z-menubar-icon {
+    font-size: 18px;
+    color: inherit;
+    pointer-events: none;
+}
+
+/* Menupopup named separator (same as .z-menuseparator) */
+.z-menupopup-separator {
+    height: 1px;
+    background-color: var(--zk-color-outline-variant);
+    margin: var(--zk-spacing-1) 0;
+}

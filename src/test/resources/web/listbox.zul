@@ -4,6 +4,52 @@
 <div sclass="z-p-8">
     <div sclass="z-border-bottom z-fs-title-lg z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Listbox</div>
 
+    <div sclass="pv-section">
+        <div sclass="pv-section-title">Listbox — State Gallery</div>
+
+        <div sclass="pv-state-gallery pv-variant-default">
+            <div sclass="pv-state-col">
+                <div sclass="pv-state-label">Row States</div>
+                <listbox width="280px">
+                    <listhead><listheader label="Name"/><listheader label="Role"/></listhead>
+                    <listitem>
+                        <listcell label="Default Row"/><listcell label="Normal"/>
+                    </listitem>
+                    <listitem selected="true">
+                        <listcell label="Selected Row"/><listcell label="Active"/>
+                    </listitem>
+                    <listitem disabled="true">
+                        <listcell label="Disabled Row"/><listcell label="N/A"/>
+                    </listitem>
+                    <listitem>
+                        <listcell label="Odd Stripe Row"/><listcell label="Normal"/>
+                    </listitem>
+                </listbox>
+            </div>
+        </div>
+
+        <div sclass="pv-state-gallery pv-variant-checkmark">
+            <div sclass="pv-state-col">
+                <div sclass="pv-state-label">Checkmark</div>
+                <listbox width="280px" multiple="true" checkmark="true">
+                    <listhead><listheader label="Name"/><listheader label="Role"/></listhead>
+                    <listitem>
+                        <listcell label="Default Row"/><listcell label="Normal"/>
+                    </listitem>
+                    <listitem selected="true">
+                        <listcell label="Selected Row"/><listcell label="Active"/>
+                    </listitem>
+                    <listitem disabled="true">
+                        <listcell label="Disabled Row"/><listcell label="N/A"/>
+                    </listitem>
+                    <listitem>
+                        <listcell label="Odd Stripe Row"/><listcell label="Normal"/>
+                    </listitem>
+                </listbox>
+            </div>
+        </div>
+    </div>
+
     <div sclass="z-mb-6">
         <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Standard</div>
         <div sclass="z-py-3">

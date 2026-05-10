@@ -57,3 +57,13 @@
 .z-rating-star.z-rating-selected {
     color: var(--zk-color-warning);
 }
+
+.z-rating-disabled {
+    opacity: var(--zk-state-disabled-opacity);
+    pointer-events: none;
+    cursor: default;
+}
+
+.z-rating-vertical {
+    flex-direction: column;
+}

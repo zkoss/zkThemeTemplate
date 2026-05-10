@@ -1,0 +1,99 @@
+/* MD3 Toast / Snackbar */
+
+.z-toast {
+    position: relative;
+    will-change: opacity;
+}
+
+.z-toast-content {
+    font-family: var(--zk-typescale-font-family);
+    font-size: var(--zk-typescale-body-medium-size);
+    font-weight: var(--zk-typescale-body-medium-weight);
+    display: flex;
+    align-items: center;
+    gap: var(--zk-spacing-3);
+    min-width: 280px;
+    max-width: 560px;
+    min-height: 48px;
+    padding: var(--zk-spacing-3) var(--zk-spacing-4);
+    border-radius: var(--zk-shape-corner-extra-small);
+    box-shadow: var(--zk-elevation-3);
+    position: relative;
+    overflow: hidden;
+    background-color: var(--zk-color-inverse-surface);
+    color: var(--zk-color-inverse-on-surface);
+}
+
+.z-toast-icon {
+    flex-shrink: 0;
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.z-toast-close {
+    flex-shrink: 0;
+    cursor: pointer;
+    font-size: 16px;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    opacity: 0.7;
+    margin-left: auto;
+    color: inherit;
+}
+
+.z-toast-close:hover {
+    opacity: 1;
+}
+
+/* ─── Semantic variants ─────────────────────────────────────────────────── */
+.z-toast-info .z-toast-content {
+    background-color: var(--zk-color-surface-container-highest);
+    color: var(--zk-color-on-surface);
+    border-left: 4px solid var(--zk-color-status-info);
+}
+.z-toast-info .z-toast-icon { color: var(--zk-color-status-info); }
+
+.z-toast-warning .z-toast-content {
+    background-color: var(--zk-color-warning-container);
+    color: var(--zk-color-on-warning-container);
+    border-left: 4px solid var(--zk-color-warning);
+}
+.z-toast-warning .z-toast-icon { color: var(--zk-color-warning); }
+
+.z-toast-error .z-toast-content {
+    background-color: var(--zk-color-error-container);
+    color: var(--zk-color-on-error-container);
+    border-left: 4px solid var(--zk-color-error);
+}
+.z-toast-error .z-toast-icon { color: var(--zk-color-error); }
+
+/* ─── Position container ─────────────────────────────────────────────────── */
+.z-toast-position {
+    display: flex;
+    position: fixed;
+    flex-direction: column;
+    z-index: 1800;
+    gap: var(--zk-spacing-2);
+    padding: var(--zk-spacing-3);
+    pointer-events: none;
+}
+
+.z-toast-position > .z-toast {
+    pointer-events: auto;
+}
+
+.z-toast-position-top-left     { flex-direction: column-reverse; top: 0; left: 0; }
+.z-toast-position-top-center   { flex-direction: column-reverse; top: 0; left: 50%; transform: translateX(-50%); }
+.z-toast-position-top-right    { flex-direction: column-reverse; top: 0; right: 0; }
+.z-toast-position-middle-left  { top: 50%; transform: translateY(-50%); left: 0; }
+.z-toast-position-middle-center { top: 50%; left: 50%; transform: translate(-50%, -50%); }
+.z-toast-position-middle-right { top: 50%; transform: translateY(-50%); right: 0; }
+.z-toast-position-bottom-left   { bottom: 0; left: 0; }
+.z-toast-position-bottom-center { bottom: 0; left: 50%; transform: translateX(-50%); }
+.z-toast-position-bottom-right  { bottom: 0; right: 0; }

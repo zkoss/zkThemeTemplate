@@ -60,3 +60,35 @@
 .z-groupbox-closed .z-groupbox-content {
     display: none;
 }
+
+.z-groupbox-collapsed .z-groupbox-body,
+.z-groupbox-collapsed .z-groupbox-content {
+    display: none;
+}
+
+.z-groupbox-notitle .z-groupbox-header {
+    display: none;
+}
+
+.z-groupbox-readonly .z-groupbox-header {
+    pointer-events: none;
+}
+
+.z-groupbox-title {
+    display: flex;
+    align-items: center;
+    gap: var(--zk-spacing-2);
+}
+
+.z-groupbox-title-content {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.z-groupbox-title-readonly {
+    pointer-events: none;
+    color: var(--zk-color-on-surface-variant);
+}

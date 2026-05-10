@@ -156,3 +156,29 @@
 .z-window-highlighted .z-window-header .z-label {
     color: var(--zk-color-on-primary-container);
 }
+
+.z-window-noborder {
+    border: none;
+    box-shadow: none;
+}
+
+.z-window-noborder .z-window-header {
+    border-bottom: none;
+}
+
+.z-window-noheader .z-window-header {
+    display: none;
+}
+
+.z-window-move-ghost {
+    opacity: 0.5;
+    outline: 2px solid var(--zk-color-primary);
+    outline-offset: -2px;
+}
+
+.z-window-resize-faker {
+    position: fixed;
+    inset: 0;
+    z-index: 1500;
+    cursor: se-resize;
+}

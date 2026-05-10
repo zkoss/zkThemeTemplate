@@ -115,3 +115,35 @@
     opacity: var(--zk-state-disabled-opacity);
     pointer-events: none;
 }
+
+/* ─── Invalid variant ─────────────────────────────────────────────────────── */
+.z-spinner.z-spinner-invalid,
+.z-doublespinner.z-doublespinner-invalid {
+    border-color: var(--zk-color-error);
+}
+
+.z-spinner.z-spinner-invalid:hover,
+.z-doublespinner.z-doublespinner-invalid:hover {
+    border-color: var(--zk-color-error);
+}
+
+.z-spinner.z-spinner-invalid:focus-within,
+.z-doublespinner.z-doublespinner-invalid:focus-within {
+    border-color: var(--zk-color-error);
+    border-width: 2px;
+}
+
+/* ─── Readonly variant ────────────────────────────────────────────────────── */
+.z-spinner[readonly],
+.z-doublespinner[readonly],
+.z-spinner.z-spinner-readonly,
+.z-doublespinner.z-doublespinner-readonly {
+    background-color: var(--zk-color-surface-container-low);
+    border-color: var(--zk-color-outline-variant);
+}
+
+.z-spinner.z-spinner-readonly .z-spinner-btn,
+.z-doublespinner.z-doublespinner-readonly .z-doublespinner-btn {
+    pointer-events: none;
+    opacity: 0.6;
+}

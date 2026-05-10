@@ -95,3 +95,39 @@
     opacity: var(--zk-state-disabled-opacity);
     pointer-events: none;
 }
+
+/* ─── Invalid variant ─────────────────────────────────────────────────────── */
+.z-bandbox.z-bandbox-invalid {
+    border-color: var(--zk-color-error);
+}
+
+.z-bandbox.z-bandbox-invalid:hover {
+    border-color: var(--zk-color-error);
+}
+
+.z-bandbox.z-bandbox-invalid:focus-within {
+    border-color: var(--zk-color-error);
+    border-width: 2px;
+}
+
+/* ─── Readonly variant ────────────────────────────────────────────────────── */
+.z-bandbox[readonly],
+.z-bandbox.z-bandbox-readonly {
+    background-color: var(--zk-color-surface-container-low);
+    border-color: var(--zk-color-outline-variant);
+}
+
+.z-bandbox.z-bandbox-readonly .z-bandbox-button {
+    pointer-events: none;
+    opacity: 0.6;
+}
+
+/* ─── Open state ──────────────────────────────────────────────────────────── */
+.z-bandbox.z-bandbox-open {
+    border-color: var(--zk-color-primary);
+    border-width: 2px;
+}
+
+.z-bandbox.z-bandbox-open .z-bandbox-button [class*="z-icon-"] {
+    transform: rotate(180deg);
+}

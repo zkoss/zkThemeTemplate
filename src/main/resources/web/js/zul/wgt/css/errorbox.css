@@ -1,0 +1,75 @@
+/* MD3 Errorbox — inline field validation tooltip */
+
+.z-errorbox {
+    color: var(--zk-color-on-error-container);
+    width: 260px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1600;
+}
+
+.z-errorbox-content {
+    font-family: var(--zk-typescale-font-family);
+    font-size: var(--zk-typescale-body-small-size);
+    font-weight: var(--zk-typescale-body-small-weight);
+    color: var(--zk-color-on-error-container);
+    width: 100%;
+    border: 1px solid var(--zk-color-error);
+    border-radius: var(--zk-shape-corner-extra-small);
+    padding: var(--zk-spacing-2) var(--zk-spacing-4) var(--zk-spacing-2) 32px;
+    background: var(--zk-color-error-container);
+    position: relative;
+    overflow: hidden;
+    cursor: move;
+    box-shadow: var(--zk-elevation-2);
+}
+
+.z-errorbox > .z-errorbox-icon {
+    font-size: 16px;
+    color: var(--zk-color-error);
+    position: absolute;
+    top: 50%;
+    left: var(--zk-spacing-2);
+    transform: translateY(-50%);
+    z-index: 2;
+}
+
+.z-errorbox-close {
+    font-size: var(--zk-typescale-body-medium-size);
+    width: 16px;
+    height: 16px;
+    padding: 0 1px;
+    position: absolute;
+    top: var(--zk-spacing-2);
+    right: var(--zk-spacing-2);
+    cursor: pointer;
+    opacity: 0.6;
+    color: var(--zk-color-on-error-container);
+}
+
+.z-errorbox-close:hover {
+    opacity: 1;
+}
+
+/* ─── Arrow pointer ──────────────────────────────────────────────────────── */
+.z-errorbox-pointer {
+    display: none;
+    width: 0;
+    height: 0;
+    border: 6px solid transparent;
+    position: absolute;
+    z-index: 100;
+}
+
+.z-errorbox-left,
+.z-errorbox-right,
+.z-errorbox-up,
+.z-errorbox-down {
+    border: 6px solid transparent;
+}
+
+.z-errorbox-left  { border-right-color: var(--zk-color-error-container); }
+.z-errorbox-right { border-left-color:  var(--zk-color-error-container); }
+.z-errorbox-up    { border-bottom-color: var(--zk-color-error-container); }
+.z-errorbox-down  { border-top-color:   var(--zk-color-error-container); }

@@ -254,3 +254,105 @@
     font-style: italic;
     font-size: var(--zk-typescale-body-medium-size);
 }
+
+/* ─── Odd row stripe ─────────────────────────────────────────────────────── */
+.z-grid-odd .z-row:nth-child(odd) {
+    background-color: var(--zk-color-surface-container-lowest);
+}
+
+/* ─── Empty body ─────────────────────────────────────────────────────────── */
+.z-grid-emptybody {
+    display: block;
+    width: 100%;
+}
+
+.z-grid-emptybody-content {
+    padding: var(--zk-spacing-8) var(--zk-spacing-4);
+    text-align: center;
+    color: var(--zk-color-on-surface-variant);
+    font-size: var(--zk-typescale-body-medium-size);
+    font-style: italic;
+}
+
+/* ─── Loading overlay ────────────────────────────────────────────────────── */
+.z-grid-loading {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(255, 255, 255, 0.6);
+    z-index: 10;
+}
+
+/* ─── Footer row ─────────────────────────────────────────────────────────── */
+.z-grid-footer {
+    background-color: var(--zk-color-surface-container-low);
+    border-top: 1px solid var(--zk-color-outline-variant);
+}
+
+.z-grid-footer .z-cell,
+.z-footer .z-cell {
+    padding: var(--zk-spacing-2) var(--zk-spacing-4);
+    font-size: var(--zk-typescale-body-small-size);
+    font-weight: var(--zk-typescale-label-large-weight);
+    color: var(--zk-color-on-surface-variant);
+}
+
+.z-group.z-group-open {
+    background-color: var(--zk-color-surface-container-low);
+}
+
+.z-column-sorticon {
+    display: inline-flex;
+    align-items: center;
+    margin-left: var(--zk-spacing-1);
+    font-size: 12px;
+    color: var(--zk-color-on-surface-variant);
+    vertical-align: middle;
+}
+
+.z-column-sizing {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    cursor: col-resize;
+}
+
+.z-columns {
+    background-color: transparent;
+}
+
+.z-columns-bar {
+    background-color: var(--zk-color-surface-container);
+    border-bottom: 1px solid var(--zk-color-outline-variant);
+}
+
+.z-columns-border {
+    border-right: 1px solid var(--zk-color-outline-variant);
+}
+
+.z-groupfoot-content {
+    display: flex;
+    align-items: center;
+    gap: var(--zk-spacing-2);
+}
+
+.z-groupfoot-inner {
+    flex: 1;
+}
+
+.z-cell-hidden-column {
+    display: none;
+}
+
+.z-grid-paging-top .z-paging {
+    border-bottom: 1px solid var(--zk-color-outline-variant);
+    border-top: none;
+}
+
+.z-grid-paging-bottom .z-paging {
+    border-top: 1px solid var(--zk-color-outline-variant);
+}

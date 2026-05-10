@@ -405,3 +405,84 @@
     white-space: nowrap;
     padding: 0 var(--zk-spacing-1);
 }
+
+/* ─── Odd row stripe ─────────────────────────────────────────────────────── */
+.z-listbox-odd .z-listitem:nth-child(odd) {
+    background-color: var(--zk-color-surface-container-lowest);
+}
+
+/* ─── Empty body ─────────────────────────────────────────────────────────── */
+.z-listbox-emptybody {
+    display: block;
+    width: 100%;
+}
+
+.z-listbox-emptybody-content {
+    padding: var(--zk-spacing-8) var(--zk-spacing-4);
+    text-align: center;
+    color: var(--zk-color-on-surface-variant);
+    font-size: var(--zk-typescale-body-medium-size);
+    font-style: italic;
+}
+
+/* ─── Loading overlay ────────────────────────────────────────────────────── */
+.z-listbox-loading {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(255, 255, 255, 0.6);
+    z-index: 10;
+}
+
+/* ─── Disabled listitem ──────────────────────────────────────────────────── */
+.z-listitem.z-listitem-disabled .z-listcell-content,
+.z-listitem[disabled] .z-listcell-content {
+    color: var(--zk-color-disabled);
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/* ─── Radio mode listitem ────────────────────────────────────────────────── */
+.z-listitem-radio .z-listcell:first-child {
+    padding-left: calc(var(--zk-spacing-4) + 4px);
+}
+
+.z-listgroup.z-listgroup-open {
+    background-color: var(--zk-color-surface-container);
+}
+
+.z-listgroup.z-listgroup-selected {
+    background-color: var(--zk-color-primary-container);
+    color: var(--zk-color-on-primary-container);
+}
+
+.z-listgroup-checkable .z-listcell:first-child {
+    padding-left: calc(var(--zk-spacing-4) + 4px);
+}
+
+.z-listgroup-content {
+    display: flex;
+    align-items: center;
+    gap: var(--zk-spacing-2);
+}
+
+.z-listgroup-inner {
+    display: flex;
+    align-items: center;
+    flex: 1;
+}
+
+.z-listcell-hidden-header {
+    display: none;
+}
+
+.z-listhead-bar {
+    background-color: var(--zk-color-surface-container);
+    border-bottom: 1px solid var(--zk-color-outline-variant);
+}
+
+.z-listhead-border {
+    border-right: 1px solid var(--zk-color-outline-variant);
+}

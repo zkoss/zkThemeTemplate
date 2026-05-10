@@ -4,6 +4,25 @@
 <div sclass="z-p-8">
     <div sclass="z-border-bottom z-fs-title-lg z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Combobox</div>
 
+    <div sclass="pv-section">
+        <div sclass="pv-section-title">Combobox — State Gallery</div>
+
+        <div sclass="pv-state-gallery pv-variant-default">
+            <div sclass="pv-state-col">
+                <div sclass="pv-state-label">Default</div>
+                <combobox><comboitem label="Item 1"/><comboitem label="Item 2"/></combobox>
+            </div>
+            <div sclass="pv-state-col">
+                <div sclass="pv-state-label">Disabled</div>
+                <combobox disabled="true"><comboitem label="Item 1"/><comboitem label="Item 2"/></combobox>
+            </div>
+            <div sclass="pv-state-col">
+                <div sclass="pv-state-label">Readonly</div>
+                <combobox readonly="true"><comboitem label="Item 1"/><comboitem label="Item 2"/></combobox>
+            </div>
+        </div>
+    </div>
+
     <div sclass="z-mb-6 pv-cols-4">
         <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">States</div>
         <div sclass="pv-col-header-row z-pb-1">

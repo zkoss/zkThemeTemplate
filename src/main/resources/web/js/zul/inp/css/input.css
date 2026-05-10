@@ -113,3 +113,28 @@ textarea.z-textbox {
     resize: vertical;
     line-height: var(--zk-typescale-body-medium-line-height);
 }
+
+/* ─── Constraint violation invalid state (numeric boxes) ────────────────── */
+.z-intbox.z-intbox-invalid,
+.z-decimalbox.z-decimalbox-invalid,
+.z-doublebox.z-doublebox-invalid,
+.z-longbox.z-longbox-invalid {
+    border-color: var(--zk-color-error);
+}
+
+.z-intbox.z-intbox-invalid:focus,
+.z-decimalbox.z-decimalbox-invalid:focus,
+.z-doublebox.z-doublebox-invalid:focus,
+.z-longbox.z-longbox-invalid:focus {
+    border-color: var(--zk-color-error);
+    border-width: 2px;
+}
+
+.z-textbox-invalid,
+.z-textbox.z-textbox-invalid {
+    border-color: var(--zk-color-error);
+}
+
+.z-radiogroup-vertical .z-radio {
+    display: flex;
+}

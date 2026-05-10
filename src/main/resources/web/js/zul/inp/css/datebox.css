@@ -73,9 +73,20 @@
 .z-datebox-button:active::before { opacity: var(--zk-state-pressed-opacity); }
 
 /* Readonly */
+.z-datebox[readonly],
+.z-datebox.z-datebox-readonly {
+    background-color: var(--zk-color-surface-container-low);
+    border-color: var(--zk-color-outline-variant);
+}
+
 .z-datebox-readonly .z-datebox-input,
 .z-datebox.z-datebox-readonly .z-datebox-input {
     color: var(--zk-color-on-surface-variant);
+}
+
+.z-datebox.z-datebox-readonly .z-datebox-button {
+    pointer-events: none;
+    opacity: 0.6;
 }
 
 /* Disabled */
@@ -83,6 +94,30 @@
 .z-datebox.z-datebox-disabled {
     opacity: var(--zk-state-disabled-opacity);
     pointer-events: none;
+}
+
+/* ─── Invalid variant ─────────────────────────────────────────────────────── */
+.z-datebox.z-datebox-invalid {
+    border-color: var(--zk-color-error);
+}
+
+.z-datebox.z-datebox-invalid:hover {
+    border-color: var(--zk-color-error);
+}
+
+.z-datebox.z-datebox-invalid:focus-within {
+    border-color: var(--zk-color-error);
+    border-width: 2px;
+}
+
+/* ─── Open state ──────────────────────────────────────────────────────────── */
+.z-datebox.z-datebox-open {
+    border-color: var(--zk-color-primary);
+    border-width: 2px;
+}
+
+.z-datebox.z-datebox-open .z-datebox-button [class*="z-icon-"] {
+    transform: rotate(180deg);
 }
 
 /* ─── Calendar popup ──────────────────────────────────────────────────── */

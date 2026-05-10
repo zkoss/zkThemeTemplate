@@ -6,6 +6,36 @@
 ]]></zscript>
 <div sclass="z-p-8">
     <div sclass="z-border-bottom z-fs-title-lg z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Scrollbar</div>
+
+    <div sclass="pv-section">
+        <div sclass="pv-section-title">Scrollbar — State Gallery</div>
+
+        <div sclass="pv-state-gallery pv-variant-default">
+            <div sclass="pv-state-col">
+                <div sclass="pv-state-label">Vertical</div>
+                <h:div style="position:relative;width:16px;height:120px;background:var(--zk-color-surface-container-low);border-radius:4px;">
+                    <h:div class="z-scrollbar z-scrollbar-vertical" style="display:block;right:0;">
+                        <h:div class="z-scrollbar-wrapper" style="top:0;height:100%;">
+                            <h:div class="z-scrollbar-rail"/>
+                            <h:div class="z-scrollbar-indicator" style="height:40px;top:20px;"/>
+                        </h:div>
+                    </h:div>
+                </h:div>
+            </div>
+            <div sclass="pv-state-col">
+                <div sclass="pv-state-label">Horizontal</div>
+                <h:div style="position:relative;width:120px;height:16px;background:var(--zk-color-surface-container-low);border-radius:4px;">
+                    <h:div class="z-scrollbar z-scrollbar-horizontal" style="display:block;bottom:0;">
+                        <h:div class="z-scrollbar-wrapper" style="left:0;width:100%;">
+                            <h:div class="z-scrollbar-rail"/>
+                            <h:div class="z-scrollbar-indicator" style="width:40px;left:20px;"/>
+                        </h:div>
+                    </h:div>
+                </h:div>
+            </div>
+        </div>
+    </div>
+
     <div sclass="z-mb-6">
         <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Default (Mouse Over)</div>
         <div sclass="z-d-flex z-align-end z-flex-wrap z-gap-6 z-py-3">

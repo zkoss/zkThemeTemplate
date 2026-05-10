@@ -4,6 +4,28 @@
 <div sclass="z-p-8">
     <div sclass="z-border-bottom z-fs-title-lg z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Tabbox</div>
 
+    <div sclass="pv-section">
+        <div sclass="pv-section-title">Tabbox — State Gallery</div>
+
+        <div sclass="pv-state-gallery pv-variant-default">
+            <div sclass="pv-state-col">
+                <div sclass="pv-state-label">Tab States</div>
+                <tabbox width="360px">
+                    <tabs>
+                        <tab label="Default"/>
+                        <tab label="Selected" selected="true"/>
+                        <tab label="Disabled" disabled="true"/>
+                    </tabs>
+                    <tabpanels>
+                        <tabpanel>Default tab content</tabpanel>
+                        <tabpanel>Selected tab content</tabpanel>
+                        <tabpanel>Disabled tab content</tabpanel>
+                    </tabpanels>
+                </tabbox>
+            </div>
+        </div>
+    </div>
+
     <div sclass="z-mb-6">
         <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Horizontal with Toolbar</div>
         <div sclass="z-d-flex z-align-start z-flex-wrap z-gap-6 z-py-3">

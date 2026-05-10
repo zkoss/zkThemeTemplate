@@ -87,3 +87,8 @@
     pointer-events: none;
     border-right-color: transparent;
 }
+
+.z-combobutton-open .z-combobutton-arrow [class*="z-icon-"] {
+    transform: rotate(180deg);
+    transition: transform var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+}

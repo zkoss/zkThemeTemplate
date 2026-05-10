@@ -92,3 +92,117 @@
     background-color: transparent;
     border: none;
 }
+
+/* Toolbar content alignment zones */
+.z-toolbar-start {
+    justify-content: flex-start;
+}
+
+.z-toolbar-center {
+    justify-content: center;
+}
+
+.z-toolbar-end {
+    justify-content: flex-end;
+}
+
+/* Vertical orientation */
+.z-toolbar-vertical {
+    flex-direction: column;
+    align-items: flex-start;
+    min-height: unset;
+    border-bottom: none;
+    border-right: 1px solid var(--zk-color-outline-variant);
+}
+
+.z-toolbar-vertical .z-toolbar-content {
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+/* Toolbar inside panel (transparent, no border) */
+.z-toolbar-panel .z-toolbar-horizontal,
+.z-toolbar-panel .z-toolbar-vertical {
+    background-color: transparent;
+    border: none;
+}
+
+/* Toolbar inside tabbox (positioned at top-right corner of the tab strip) */
+.z-toolbar-tabs {
+    position: absolute;
+    right: 0;
+    top: 0;
+    background-color: transparent;
+    border: none;
+    min-height: 40px;
+    z-index: 1;
+    overflow: hidden;
+}
+
+/* Overflow popup container */
+.z-toolbar-overflowpopup {
+    position: relative;
+    flex-shrink: 0;
+}
+
+.z-toolbar-overflowpopup-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    color: var(--zk-color-on-surface-variant);
+    border-radius: var(--zk-shape-corner-full);
+    position: relative;
+    overflow: hidden;
+    transition: background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+}
+
+.z-toolbar-overflowpopup-button::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-color: currentColor;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.z-toolbar-overflowpopup-button:hover::before {
+    opacity: var(--zk-state-hover-opacity);
+}
+
+.z-toolbar-overflowpopup-off > .z-toolbar-overflowpopup-button {
+    display: none;
+}
+
+.z-toolbar-overflowpopup-on > .z-toolbar-overflowpopup-button {
+    display: inline-flex;
+}
+
+/* Overflow item popup */
+.z-toolbar-popup {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    z-index: 1600;
+    margin-top: var(--zk-spacing-1);
+    padding: var(--zk-spacing-1) 0;
+    background-color: var(--zk-color-surface);
+    border-radius: var(--zk-shape-menu);
+    box-shadow: var(--zk-elevation-dropdown);
+    border: 1px solid var(--zk-color-outline-variant);
+    min-width: 160px;
+    overflow: auto;
+    max-height: 350px;
+}
+
+.z-toolbar-popup-open {
+    visibility: visible;
+}
+
+.z-toolbar-popup-close {
+    visibility: hidden;
+}

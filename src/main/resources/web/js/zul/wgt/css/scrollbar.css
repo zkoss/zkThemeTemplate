@@ -1,0 +1,124 @@
+/* MD3 Scrollbar — custom overlay scrollbar widget */
+
+.z-scrollbar {
+    display: none;
+    position: absolute;
+    line-height: 1;
+    z-index: 100;
+}
+
+.z-scrollbar-wrapper {
+    position: absolute;
+}
+
+.z-scrollbar-rail {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    border-radius: 4px;
+}
+
+.z-scrollbar-indicator {
+    border-radius: 4px;
+    background-color: var(--zk-color-outline);
+    opacity: 0.5;
+    position: absolute;
+    cursor: pointer;
+    z-index: 100;
+    transition: opacity var(--zk-motion-duration-short2) ease,
+                background-color var(--zk-motion-duration-short2) ease;
+}
+
+.z-scrollbar-indicator:hover {
+    background-color: var(--zk-color-on-surface-variant);
+    opacity: 0.8;
+}
+
+.z-scrollbar-icon {
+    display: none;
+    color: var(--zk-color-on-surface-variant);
+    width: 16px;
+    height: 16px;
+    position: absolute;
+}
+
+/* ─── Vertical ───────────────────────────────────────────────────────────── */
+.z-scrollbar-vertical {
+    width: 8px;
+    height: 100%;
+    top: 0;
+    right: 0;
+    margin-right: 2px;
+}
+
+.z-scrollbar-vertical .z-scrollbar-wrapper {
+    width: 100%;
+    top: 0;
+    left: 0;
+    bottom: 0;
+}
+
+.z-scrollbar-vertical .z-scrollbar-rail {
+    width: 4px;
+    left: 2px;
+}
+
+.z-scrollbar-vertical .z-scrollbar-indicator {
+    width: 6px;
+    left: 1px;
+}
+
+.z-scrollbar-vertical-embed {
+    border-radius: 4px;
+    background-color: var(--zk-color-outline-variant);
+    position: absolute;
+    width: 4px;
+    top: 0;
+    right: 0;
+    height: 100%;
+}
+
+/* ─── Horizontal ─────────────────────────────────────────────────────────── */
+.z-scrollbar-horizontal {
+    width: 100%;
+    height: 8px;
+    left: 0;
+    bottom: 0;
+    margin-bottom: 2px;
+}
+
+.z-scrollbar-horizontal .z-scrollbar-wrapper {
+    height: 100%;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.z-scrollbar-horizontal .z-scrollbar-rail {
+    height: 4px;
+    top: 2px;
+}
+
+.z-scrollbar-horizontal .z-scrollbar-indicator {
+    height: 6px;
+    top: 1px;
+}
+
+.z-scrollbar-horizontal-embed {
+    border-radius: 4px;
+    background-color: var(--zk-color-outline-variant);
+    position: absolute;
+    height: 4px;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+}
+
+/* Up/down/left/right arrow buttons — hidden in modern flat design */
+.z-scrollbar-up,
+.z-scrollbar-down,
+.z-scrollbar-left,
+.z-scrollbar-right {
+    display: none;
+}
