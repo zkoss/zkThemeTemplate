@@ -25,7 +25,6 @@
                     <navitem label="Button"           onClick="@command('navigate', page='~./button.zul')"/>
                     <navitem label="Cascader"         onClick="@command('navigate', page='~./cascader.zul')"/>
                     <navitem label="Checkbox"         onClick="@command('navigate', page='~./checkbox.zul')"/>
-                    <navitem label="Checkbox (Mold)"  onClick="@command('navigate', page='~./checkbox-mold.zul')"/>
                     <navitem label="Chosenbox"        onClick="@command('navigate', page='~./chosenbox.zul')"/>
                     <navitem label="Colorbox"         onClick="@command('navigate', page='~./colorbox.zul')"/>
                     <navitem label="Combobox"         onClick="@command('navigate', page='~./combobox.zul')"/>

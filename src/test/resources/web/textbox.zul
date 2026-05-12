@@ -36,7 +36,7 @@
             <div><textbox placeholder="Enter text" disabled="true"/></div>
             <div><textbox placeholder="Enter text" readonly="true"/></div>
             <div><textbox placeholder="type something" sclass="z-textbox-invalid"/></div>
-            <div><textbox placeholder="Enter text" inplace="true"/></div>
+            <div><textbox placeholder="Enter text" inplace="true" value="Hello"/></div>
         </div>
     </div>
 

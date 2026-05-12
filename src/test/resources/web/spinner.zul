@@ -29,9 +29,9 @@
         </div>
         <div sclass="pv-row z-py-2 z-border-bottom">
             <div sclass="z-fs-label-md z-text-secondary">Inplace</div>
-            <div><spinner inplace="true"/></div>
-            <div><spinner inplace="true" disabled="true"/></div>
-            <div><spinner inplace="true" readonly="true"/></div>
+            <div><spinner inplace="true" value="5"/></div>
+            <div><spinner inplace="true" disabled="true" value="5"/></div>
+            <div><spinner inplace="true" readonly="true" value="5"/></div>
             <div>—</div>
         </div>
     </div>

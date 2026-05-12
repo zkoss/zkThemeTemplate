@@ -1,6 +1,7 @@
 <?page title="Datebox" contentType="text/html;charset=UTF-8"?>
 <zk xmlns:h="native">
 <h:link rel="stylesheet" href="pv.css"/>
+<zscript><![CDATA[java.util.Date sampleDate = new java.util.Date(125, 0, 15);]]></zscript>
 <div sclass="z-p-8">
     <div sclass="z-border-bottom z-fs-title-lg z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Datebox</div>
 
@@ -29,9 +30,9 @@
         </div>
         <div sclass="pv-row z-py-2 z-border-bottom">
             <div sclass="z-fs-label-md z-text-secondary">Inplace</div>
-            <div><datebox inplace="true"/></div>
-            <div><datebox inplace="true" disabled="true"/></div>
-            <div><datebox inplace="true" readonly="true"/></div>
+            <div><datebox inplace="true" value="${sampleDate}"/></div>
+            <div><datebox inplace="true" disabled="true" value="${sampleDate}"/></div>
+            <div><datebox inplace="true" readonly="true" value="${sampleDate}"/></div>
             <div>—</div>
         </div>
     </div>

@@ -18,7 +18,7 @@
             <div><doublespinner step="0.5"/></div>
             <div><doublespinner step="0.5" disabled="true"/></div>
             <div><doublespinner step="0.5" readonly="true"/></div>
-            <div><doublespinner step="0.5" inplace="true"/></div>
+            <div><doublespinner step="0.5" inplace="true" value="3.5"/></div>
         </div>
         <div sclass="pv-row z-py-2 z-border-bottom">
             <div sclass="z-fs-label-md z-text-secondary">No button</div>

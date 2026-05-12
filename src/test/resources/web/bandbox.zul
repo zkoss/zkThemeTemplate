@@ -18,7 +18,7 @@
             <div><bandbox><bandpopup>Content</bandpopup></bandbox></div>
             <div><bandbox disabled="true"><bandpopup>Content</bandpopup></bandbox></div>
             <div><bandbox readonly="true"><bandpopup>Content</bandpopup></bandbox></div>
-            <div><bandbox inplace="true"><bandpopup>Content</bandpopup></bandbox></div>
+            <div><bandbox inplace="true" value="Selected"><bandpopup>Content</bandpopup></bandbox></div>
         </div>
         <div sclass="pv-row z-py-2 z-border-bottom">
             <div sclass="z-fs-label-md z-text-secondary">No button</div>

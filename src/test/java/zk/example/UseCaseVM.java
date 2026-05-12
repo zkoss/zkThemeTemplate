@@ -22,7 +22,7 @@ public class UseCaseVM {
                 "usecase/report-viewer", "usecase/media-manager"}) {
             PAGE_TO_NAV.put(p, "Use Cases");
         }
-for (String p : new String[]{"button", "combobutton", "checkbox", "checkbox-mold", "radiogroup",
+        for (String p : new String[]{"button", "combobutton", "checkbox", "radiogroup",
                 "textbox", "intbox", "longbox", "decimalbox", "doublebox", "combobox", "selectbox",
                 "chosenbox", "searchbox", "cascader", "datebox", "timebox", "timepicker", "spinner",
                 "doublespinner", "colorbox", "bandbox", "slider", "rangeslider", "multislider",

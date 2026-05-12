@@ -1,6 +1,10 @@
 <?page title="Combo Inputs" contentType="text/html;charset=UTF-8"?>
 <zk xmlns:h="native">
 <h:link rel="stylesheet" href="pv.css"/>
+<zscript><![CDATA[
+    java.util.Date sampleDate = new java.util.Date(125, 0, 15);
+    java.util.Date sampleTime = new java.util.Date(0, 0, 1, 10, 30, 0);
+]]></zscript>
 <div sclass="z-p-8">
     <div sclass="z-border-bottom z-fs-title-lg z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Combo Inputs</div>
 
@@ -18,56 +22,56 @@
             <div><combobox><comboitem label="Item 1"/><comboitem label="Item 2"/></combobox></div>
             <div><combobox disabled="true"><comboitem label="Item 1"/><comboitem label="Item 2"/></combobox></div>
             <div><combobox readonly="true"><comboitem label="Item 1"/><comboitem label="Item 2"/></combobox></div>
-            <div><combobox inplace="true"><comboitem label="Item 1"/><comboitem label="Item 2"/></combobox></div>
+            <div><combobox inplace="true" value="Item 1"><comboitem label="Item 1"/><comboitem label="Item 2"/></combobox></div>
         </div>
         <div sclass="pv-row z-py-2 z-border-bottom">
             <div sclass="z-fs-label-md z-text-secondary">Datebox</div>
             <div><datebox/></div>
             <div><datebox disabled="true"/></div>
             <div><datebox readonly="true"/></div>
-            <div><datebox inplace="true"/></div>
+            <div><datebox inplace="true" value="${sampleDate}"/></div>
         </div>
         <div sclass="pv-row z-py-2 z-border-bottom">
             <div sclass="z-fs-label-md z-text-secondary">Timebox</div>
             <div><timebox/></div>
             <div><timebox disabled="true"/></div>
             <div><timebox readonly="true"/></div>
-            <div><timebox inplace="true"/></div>
+            <div><timebox inplace="true" value="${sampleTime}"/></div>
         </div>
         <div sclass="pv-row z-py-2 z-border-bottom">
             <div sclass="z-fs-label-md z-text-secondary">Bandbox</div>
             <div><bandbox><bandpopup>Content</bandpopup></bandbox></div>
             <div><bandbox disabled="true"><bandpopup>Content</bandpopup></bandbox></div>
             <div><bandbox readonly="true"><bandpopup>Content</bandpopup></bandbox></div>
-            <div><bandbox inplace="true"><bandpopup>Content</bandpopup></bandbox></div>
+            <div><bandbox inplace="true" value="Selected"><bandpopup>Content</bandpopup></bandbox></div>
         </div>
         <div sclass="pv-row z-py-2 z-border-bottom">
             <div sclass="z-fs-label-md z-text-secondary">Spinner</div>
             <div><spinner/></div>
             <div><spinner disabled="true"/></div>
             <div><spinner readonly="true"/></div>
-            <div><spinner inplace="true"/></div>
+            <div><spinner inplace="true" value="5"/></div>
         </div>
         <div sclass="pv-row z-py-2 z-border-bottom">
             <div sclass="z-fs-label-md z-text-secondary">Doublespinner</div>
             <div><doublespinner/></div>
             <div><doublespinner disabled="true"/></div>
             <div><doublespinner readonly="true"/></div>
-            <div><doublespinner inplace="true"/></div>
+            <div><doublespinner inplace="true" value="3.5"/></div>
         </div>
         <div sclass="pv-row z-py-2 z-border-bottom">
             <div sclass="z-fs-label-md z-text-secondary">Intbox</div>
             <div><intbox/></div>
             <div><intbox disabled="true"/></div>
             <div><intbox readonly="true"/></div>
-            <div><intbox inplace="true"/></div>
+            <div><intbox inplace="true" value="42"/></div>
         </div>
         <div sclass="pv-row z-py-2 z-border-bottom">
             <div sclass="z-fs-label-md z-text-secondary">Longbox</div>
             <div><longbox/></div>
             <div><longbox disabled="true"/></div>
             <div><longbox readonly="true"/></div>
-            <div><longbox inplace="true"/></div>
+            <div><longbox inplace="true" value="1000"/></div>
         </div>
         <div sclass="pv-row z-py-2 z-border-bottom">
             <div sclass="z-fs-label-md z-text-secondary">Colorbox</div>
