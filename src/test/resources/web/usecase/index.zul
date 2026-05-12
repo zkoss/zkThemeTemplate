@@ -85,15 +85,11 @@
                     <navitem label="Toolbar (Vertical)"    onClick="@command('navigate', page='~./toolbar-vertical.zul')"/>
                 </nav>
                 <nav label="Containers" open="@load(vm.openNavLabel eq 'Containers')">
-                    <navitem label="Caption"            onClick="@command('navigate', page='~./caption.zul')"/>
-                    <navitem label="Groupbox"           onClick="@command('navigate', page='~./groupbox.zul')"/>
-                    <navitem label="Groupbox (3D)"      onClick="@command('navigate', page='~./groupbox-3d.zul')"/>
-                    <navitem label="Panel"              onClick="@command('navigate', page='~./panel.zul')"/>
-                    <navitem label="Panel (Misc)"       onClick="@command('navigate', page='~./panel-misc.zul')"/>
-                    <navitem label="Panel (No Border)"  onClick="@command('navigate', page='~./panel-noborder.zul')"/>
-                    <navitem label="Popup"              onClick="@command('navigate', page='~./popup.zul')"/>
-                    <navitem label="Window"             onClick="@command('navigate', page='~./window.zul')"/>
-                    <navitem label="Window (No Border)" onClick="@command('navigate', page='~./window-noborder.zul')"/>
+                    <navitem label="Caption"  onClick="@command('navigate', page='~./caption.zul')"/>
+                    <navitem label="Groupbox" onClick="@command('navigate', page='~./groupbox.zul')"/>
+                    <navitem label="Panel"    onClick="@command('navigate', page='~./panel.zul')"/>
+                    <navitem label="Popup"    onClick="@command('navigate', page='~./popup.zul')"/>
+                    <navitem label="Window"   onClick="@command('navigate', page='~./window.zul')"/>
                 </nav>
                 <nav label="Layout" open="@load(vm.openNavLabel eq 'Layout')">
                     <navitem label="Absolutelayout"      onClick="@command('navigate', page='~./absolutelayout.zul')"/>

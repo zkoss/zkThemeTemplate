@@ -39,8 +39,7 @@ public class UseCaseVM {
                 "fisheyebar", "coachmark", "stepbar", "drawer"}) {
             PAGE_TO_NAV.put(p, "Navigation");
         }
-        for (String p : new String[]{"window", "window-noborder", "panel", "panel-misc",
-                "panel-noborder", "groupbox", "groupbox-3d", "popup", "caption"}) {
+        for (String p : new String[]{"window", "panel", "groupbox", "popup", "caption"}) {
             PAGE_TO_NAV.put(p, "Containers");
         }
         for (String p : new String[]{"borderlayout", "borderlayout-misc", "hlayout", "vlayout",

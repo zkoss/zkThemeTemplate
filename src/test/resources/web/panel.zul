@@ -44,6 +44,22 @@
     </div>
 
     <div sclass="z-mb-6">
+        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">No Border — Full Controls</div>
+        <div sclass="z-d-flex z-align-end z-flex-wrap z-gap-6 z-py-3">
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <panel height="250px" width="280px"
+                    maximizable="true" minimizable="true" collapsible="true" closable="true"
+                    title="Panel (no border)">
+                    <toolbar mold="panel">Toolbar</toolbar>
+                    <panelchildren>Panel Content</panelchildren>
+                    <toolbar mold="panel">Footer Toolbar</toolbar>
+                </panel>
+                <div sclass="z-fs-label-sm z-text-secondary">No border, with title</div>
+            </div>
+        </div>
+    </div>
+
+    <div sclass="z-mb-6">
         <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Without Toolbar</div>
         <div sclass="z-d-flex z-align-end z-flex-wrap z-gap-6 z-py-3">
             <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
@@ -63,6 +79,14 @@
                 <div sclass="z-fs-label-sm z-text-secondary">border="normal"</div>
             </div>
             <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <panel height="200px" width="280px"
+                    maximizable="true" minimizable="true" collapsible="true" closable="true"
+                    title="Panel (no border)">
+                    <panelchildren>Panel Content</panelchildren>
+                </panel>
+                <div sclass="z-fs-label-sm z-text-secondary">No border, with title</div>
+            </div>
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
                 <panel border="rounded" height="200px" width="280px">
                     <panelchildren>Panel Content (no title)</panelchildren>
                 </panel>
@@ -74,6 +98,23 @@
                 </panel>
                 <div sclass="z-fs-label-sm z-text-secondary">No title, normal</div>
             </div>
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <panel height="200px" width="280px">
+                    <panelchildren>Panel Content (no title)</panelchildren>
+                </panel>
+                <div sclass="z-fs-label-sm z-text-secondary">No title, no border</div>
+            </div>
+        </div>
+    </div>
+
+    <div sclass="z-mb-6">
+        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Overflow / Scroll</div>
+        <div sclass="z-py-3">
+            <panel title="Panel with Overflow Content" border="normal" width="300px" height="200px">
+                <panelchildren style="overflow:auto;">
+                    <label style="white-space:nowrap" value="-------------------------------------------------------------------------------------------"/>
+                </panelchildren>
+            </panel>
         </div>
     </div>
 

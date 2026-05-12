@@ -5,7 +5,7 @@
     <div sclass="z-border-bottom z-fs-title-lg z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Groupbox</div>
 
     <div sclass="z-mb-6 pv-cols-2">
-        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">States</div>
+        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Default Mold</div>
         <div sclass="pv-col-header-row z-pb-1">
             <div/>
             <div sclass="z-fs-label-sm z-fw-semibold z-text-secondary">Caption + Image</div>
@@ -52,6 +52,58 @@
                 <groupbox width="240px" height="150px">
                     Groupbox Content (no caption)
                 </groupbox>
+            </div>
+        </div>
+    </div>
+
+    <div sclass="z-mb-6">
+        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">3D Mold — Caption Variants</div>
+        <div sclass="z-d-flex z-align-end z-flex-wrap z-gap-6 z-py-3">
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <groupbox width="240px" height="150px" mold="3d">
+                    <caption image="~./img/volumn.gif" label="Caption" />
+                    Groupbox Content
+                </groupbox>
+                <div sclass="z-fs-label-sm z-text-secondary">Caption + Image</div>
+            </div>
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <groupbox width="240px" height="150px" mold="3d">
+                    <caption label="Caption" />
+                    Groupbox Content
+                </groupbox>
+                <div sclass="z-fs-label-sm z-text-secondary">Caption Only</div>
+            </div>
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <groupbox width="240px" height="150px" mold="3d" title="Title">
+                    Groupbox Content
+                </groupbox>
+                <div sclass="z-fs-label-sm z-text-secondary">Title Attr (no caption)</div>
+            </div>
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <groupbox width="240px" height="150px" mold="3d" title="Title">
+                    <caption label="Caption" />
+                    Groupbox Content
+                </groupbox>
+                <div sclass="z-fs-label-sm z-text-secondary">Caption + Title mixed</div>
+            </div>
+        </div>
+    </div>
+
+    <div sclass="z-mb-6">
+        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">3D Mold — Edge Cases</div>
+        <div sclass="z-d-flex z-align-end z-flex-wrap z-gap-6 z-py-3">
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <groupbox width="240px" height="150px" mold="3d">
+                    <caption image="~./img/volumn.gif" />
+                    Groupbox Content
+                </groupbox>
+                <div sclass="z-fs-label-sm z-text-secondary">Image only caption</div>
+            </div>
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <groupbox width="240px" height="150px" mold="3d">
+                    Groupbox Content
+                </groupbox>
+                <div sclass="z-fs-label-sm z-text-secondary">No caption</div>
             </div>
         </div>
     </div>

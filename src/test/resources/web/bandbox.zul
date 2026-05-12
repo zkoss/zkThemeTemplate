@@ -25,7 +25,7 @@
             <div><bandbox buttonVisible="false"><bandpopup>Content</bandpopup></bandbox></div>
             <div><bandbox buttonVisible="false" disabled="true"><bandpopup>Content</bandpopup></bandbox></div>
             <div><bandbox buttonVisible="false" readonly="true"><bandpopup>Content</bandpopup></bandbox></div>
-            <div>—</div>
+            <div><bandbox buttonVisible="false" inplace="true" value="Selected"><bandpopup>Content</bandpopup></bandbox></div>
         </div>
     </div>
 </div>

@@ -62,14 +62,14 @@
                 <toolbar>
                     <toolbarbutton label="New" iconSclass="z-icon-file"/>
                     <toolbarbutton label="Open" iconSclass="z-icon-folder-open"/>
-                    <toolbarseparator/>
+                    <separator/>
                     <toolbarbutton label="Cut" iconSclass="z-icon-scissors"/>
                     <toolbarbutton label="Copy" iconSclass="z-icon-copy"/>
                     <toolbarbutton label="Paste" iconSclass="z-icon-clipboard"/>
                     <separator/>
                     <toolbarbutton label="Help" iconSclass="z-icon-help-circle"/>
                 </toolbar>
-                <div sclass="z-fs-label-sm z-text-secondary">Toolbarseparator (divider) + separator (spacer)</div>
+                <div sclass="z-fs-label-sm z-text-secondary">separator (divider) + separator (spacer)</div>
             </div>
         </div>
     </div>
