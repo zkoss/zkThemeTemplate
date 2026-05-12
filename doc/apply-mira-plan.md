@@ -76,73 +76,73 @@ Status: `⬜ Not Started` | `🔄 In Progress` | `✅ Verified` | `⚠️ ZK Con
 
 | Component | Preview ZUL | usecase URL | CSS File | States to verify | Status |
 |-----------|------------|-------------|----------|-----------------|--------|
-| textbox / textarea | `textbox.zul` | `#textbox` | `inp/css/input.css` | default, hover, focus, disabled, readonly, invalid | ⬜ |
-| intbox / decimalbox / doublebox / longbox | `intbox.zul` etc. | `#intbox` / `#decimalbox` / `#doublebox` / `#longbox` | `inp/css/input.css` | default, hover, focus, disabled, readonly, invalid | ⬜ |
-| combobox | `combobox.zul` | `#combobox` | `inp/css/combobox.css` | default, open, disabled, readonly, invalid | ⬜ |
-| datebox | `datebox.zul` | `#datebox` | `inp/css/datebox.css` | default, open, disabled, readonly, invalid | ⬜ |
-| timebox | `timebox.zul` | `#timebox` | `inp/css/timebox.css` | default, focus, disabled, readonly, invalid | ⬜ |
-| spinner / doublespinner | `spinner.zul` | `#spinner` | `inp/css/spinner.css` | default, focus, disabled, readonly, invalid | ⬜ |
-| bandbox | `bandbox.zul` | `#bandbox` | `inp/css/bandbox.css` | default, open, disabled, readonly, invalid | ⬜ |
-| selectbox | `selectbox.zul` | `#selectbox` | `sel/css/selectbox.css` | default, open, disabled | ⬜ |
-| slider | `slider.zul` | `#slider` | `inp/css/slider.css` | default, hover, focus, disabled | ⬜ |
-| rating | `rating.zul` | `#rating` | `wgt/css/rating.css` | default, hover, disabled, readonly, vertical | ⬜ |
-| inputgroup | `inputgroup.zul` | `#inputgroup` | `wgt/css/inputgroup.css` | all addon variants | ⬜ |
+| textbox / textarea | `textbox.zul` | `#textbox` | `inp/css/input.css` | default, hover, focus, disabled, readonly, invalid | 🔄 CSS fixed; needs visual verify |
+| intbox / decimalbox / doublebox / longbox | `intbox.zul` etc. | `#intbox` / `#decimalbox` / `#doublebox` / `#longbox` | `inp/css/input.css` | default, hover, focus, disabled, readonly, invalid | 🔄 CSS fixed; needs visual verify |
+| combobox | `combobox.zul` | `#combobox` | `inp/css/combobox.css` | default, open, disabled, readonly, invalid | 🔄 CSS fixed; needs visual verify |
+| datebox | `datebox.zul` | `#datebox` | `inp/css/datebox.css` | default, open, disabled, readonly, invalid | 🔄 CSS fixed; needs visual verify |
+| timebox | `timebox.zul` | `#timebox` | `inp/css/timebox.css` | default, focus, disabled, readonly, invalid | 🔄 CSS fixed; needs visual verify |
+| spinner / doublespinner | `spinner.zul` | `#spinner` | `inp/css/spinner.css` | default, focus, disabled, readonly, invalid | 🔄 CSS fixed (wrong class names in original — full rewrite); needs visual verify |
+| bandbox | `bandbox.zul` | `#bandbox` | `inp/css/bandbox.css` | default, open, disabled, readonly, invalid | 🔄 CSS fixed; needs visual verify |
+| selectbox | `selectbox.zul` | `#selectbox` | `sel/css/selectbox.css` | default, open, disabled | 🔄 CSS fixed (wrong DOM model — full rewrite); needs visual verify |
+| slider | `slider.zul` | `#slider` | `inp/css/slider.css` | default, hover, focus, disabled | 🔄 CSS fixed; needs visual verify |
+| rating | `rating.zul` | `#rating` | `wgt/css/rating.css` | default, hover, disabled, readonly, vertical | 🔄 CSS fixed (wrong JS class names); needs visual verify |
+| inputgroup | `inputgroup.zul` | `#inputgroup` | `wgt/css/inputgroup.css` | all addon variants | 🔄 CSS fixed (wrong addon class, wrong border model); needs visual verify |
 
 ### Group B — Selection Controls
 
 | Component | Preview ZUL | usecase URL | CSS File | States to verify | Status |
 |-----------|------------|-------------|----------|-----------------|--------|
-| checkbox | `checkbox.zul` | `#checkbox` | `wgt/css/checkbox.css` | default, checked, indeterminate, disabled, hover, focus | ⬜ |
-| radiogroup | `radiogroup.zul` | `#radiogroup` | `wgt/css/radiogroup.css` | default, selected, disabled, vertical layout | ⬜ |
+| checkbox | `checkbox.zul` | `#checkbox` | `wgt/css/checkbox.css` | default, checked, indeterminate, disabled, hover, focus | 🔄 CSS fixed (wrong DOM model — full rewrite); needs visual verify |
+| radiogroup | `radiogroup.zul` | `#radiogroup` | `wgt/css/radiogroup.css` | default, selected, disabled, vertical layout | 🔄 CSS fixed (consolidated into checkbox.css per lang.xml); needs visual verify |
 
 ### Group C — Data Display
 
 | Component | Preview ZUL | usecase URL | CSS File | States to verify | Status |
 |-----------|------------|-------------|----------|-----------------|--------|
-| grid | `grid.zul`, `grid-header.zul`, `grid-grouping.zul`, `grid-detail.zul` | `#grid` | `grid/css/grid.css` | row hover, selected, disabled, grouping, odd-even, frozen, empty | ⬜ |
-| listbox | `listbox.zul`, `listbox-header.zul`, `listbox-grouping.zul` | `#listbox` | `sel/css/listbox.css` | row hover, selected, disabled, grouping | ⬜ |
-| tree | `tree.zul`, `tree-header.zul` | `#tree` | `sel/css/tree.css` | row hover, selected, open/closed, disabled | ⬜ |
-| paging | `paging.zul` | `#paging` | `mesh/css/paging.css` | default, current page, disabled pages | ⬜ |
-| calendar | `calendar.zul` | `#calendar` | `db/css/calendar.css` | default, today, selected, out-range, disabled | ⬜ |
+| grid | `grid.zul`, `grid-header.zul`, `grid-grouping.zul`, `grid-detail.zul` | `#grid` | `grid/css/grid.css` | row hover, selected, disabled, grouping, odd-even, frozen, empty | 🔄 CSS fixed (wrong odd-row selector, wrong hover, missing selected text color); needs visual verify |
+| listbox | `listbox.zul`, `listbox-header.zul`, `listbox-grouping.zul` | `#listbox` | `sel/css/listbox.css` | row hover, selected, disabled, grouping | 🔄 CSS fixed (same issues as grid); needs visual verify |
+| tree | `tree.zul`, `tree-header.zul` | `#tree` | `sel/css/tree.css` | row hover, selected, open/closed, disabled | 🔄 CSS fixed; needs visual verify |
+| paging | `paging.zul` | `#paging` | `mesh/css/paging.css` | default, current page, disabled pages | 🔄 CSS fixed; needs visual verify |
+| calendar | `calendar.zul` | `#calendar` | `db/css/calendar.css` | default, today, selected, out-range, disabled | 🔄 CSS fixed (wrong class names throughout — full rewrite); needs visual verify |
 
 ### Group D — Navigation
 
 | Component | Preview ZUL | usecase URL | CSS File | States to verify | Status |
 |-----------|------------|-------------|----------|-----------------|--------|
-| menubar | `menubar.zul` | `#menubar` | `menu/css/menu.css` | default, hover, open, submenu, disabled item, separator | ⬜ |
-| toolbar | `toolbar.zul`, `toolbar-vertical.zul` | `#toolbar` | `wgt/css/toolbar.css` | default, app-bar variant, vertical, overflow | ⬜ |
-| tabbox | `tabbox.zul`, `tabbox-accordion.zul` | `#tabbox` | `tab/css/tabbox.css` | default, selected, disabled tab, accordion mold, card mold | ⬜ |
+| menubar | `menubar.zul` | `#menubar` | `menu/css/menu.css` | default, hover, open, submenu, disabled item, separator | 🔄 CSS fixed (wrong open-state class, missing disabled anchor, blank-image suppression); needs visual verify |
+| toolbar | `toolbar.zul`, `toolbar-vertical.zul` | `#toolbar` | `wgt/css/toolbar.css` | default, app-bar variant, vertical, overflow | 🔄 CSS fixed; needs visual verify |
+| tabbox | `tabbox.zul`, `tabbox-accordion.zul` | `#tabbox` | `tab/css/tabbox.css` | default, selected, disabled tab, accordion mold, card mold | 🔄 CSS fixed (wrong close-button class, accordion selected bg); needs visual verify |
 
 ### Group E — Buttons
 
 | Component | Preview ZUL | usecase URL | CSS File | States to verify | Mira ref | Status |
 |-----------|------------|-------------|----------|-----------------|----------|--------|
-| button | `button.zul` | `#button` | `wgt/css/button.css` | contained/outlined/text, hover, focus, disabled | `components-buttons.html` | ⬜ |
-| combobutton | `combobutton.zul` | `#combobutton` | `wgt/css/combobutton.css` | default, open, disabled | — | ⬜ |
-| toolbarbutton | (in `toolbar.zul`) | `#toolbar` | `wgt/css/toolbarbutton.css` | default, hover, checked, disabled | — | ⬜ |
+| button | `button.zul` | `#button` | `wgt/css/button.css` | contained/outlined/text, hover, focus, disabled | `components-buttons.html` | 🔄 CSS fixed; needs visual verify |
+| combobutton | `combobutton.zul` | `#combobutton` | `wgt/css/combobutton.css` | default, open, disabled | — | 🔄 CSS fixed (full rewrite — wrong DOM class names in original); needs visual verify |
+| toolbarbutton | (in `toolbar.zul`) | `#toolbar` | `wgt/css/toolbarbutton.css` | default, hover, checked, disabled | — | 🔄 CSS fixed (color, shape, state-layer all wrong); needs visual verify |
 
 ### Group F — Containers / Windows
 
 | Component | Preview ZUL | usecase URL | CSS File | States to verify | Status |
 |-----------|------------|-------------|----------|-----------------|--------|
-| window | `window.zul`, `window-noborder.zul` | `#window` | `wnd/window.css` | default, modal, maximized, minimized, noborder, noheader | ⬜ |
-| panel | `panel.zul`, `panel-noborder.zul`, `panel-misc.zul` | `#panel` | `wnd/panel.css` | default, collapsed, noborder, shadow | ⬜ |
-| groupbox | `groupbox.zul`, `groupbox-3d.zul` | `#groupbox` | `wgt/css/groupbox.css` | default, open, closed, noborder | ⬜ |
-| popup | `popup.zul` | `#popup` | `wnd/popup.css` | default visible | ⬜ |
-| borderlayout | `borderlayout.zul` | `#borderlayout` | `layout/css/borderlayout.css` | all 5 regions visible | ⬜ |
-| splitter | `splitter.zul` | `#splitter` | `layout/css/splitter.css` | horizontal, vertical, open/closed | ⬜ |
-| caption | `caption.zul` | `#caption` | `wgt/css/caption.css` | default, with icon | ⬜ |
+| window | `window.zul`, `window-noborder.zul` | `#window` | `wnd/window.css` | default, modal, maximized, minimized, noborder, noheader | 🔄 CSS fixed; needs visual verify |
+| panel | `panel.zul`, `panel-noborder.zul`, `panel-misc.zul` | `#panel` | `wnd/panel.css` | default, collapsed, noborder, shadow | 🔄 CSS fixed (wrong toolbar class names tbar/bbar → top/bottom/footer); needs visual verify |
+| groupbox | `groupbox.zul`, `groupbox-3d.zul` | `#groupbox` | `wgt/css/groupbox.css` | default, open, closed, noborder | 🔄 CSS fixed (wrong collapse class, missing 3D mold); needs visual verify |
+| popup | `popup.zul` | `#popup` | `wnd/popup.css` | default visible | ✅ No gaps found |
+| borderlayout | `borderlayout.zul` | `#borderlayout` | `layout/css/borderlayout.css` | all 5 regions visible | ✅ No gaps found |
+| splitter | `splitter.zul` | `#splitter` | `layout/css/splitter.css` | horizontal, vertical, open/closed | 🔄 CSS fixed (entire file wrong — full rewrite); needs visual verify |
+| caption | `caption.zul` | `#caption` | `wgt/css/caption.css` | default, with icon | ✅ No gaps found |
 
 ### Group G — Feedback / Overlay
 
 | Component | Preview ZUL | usecase URL | CSS File | States to verify | Status |
 |-----------|------------|-------------|----------|-----------------|--------|
-| notification | `notification.zul` | `#notification` | `wgt/css/notification.css` | info/success/warning/error variants | ⬜ |
-| toast | `toast.zul` | `#toast` | `wgt/css/toast.css` | all variants | ⬜ |
-| progressmeter | `progressmeter.zul` | `#progressmeter` | `wgt/css/progressmeter.css` | default, complete, indeterminate | ⬜ |
-| errorbox | `errorbox.zul` | `#errorbox` | `wgt/css/errorbox.css` | default | ⬜ |
-| loadingbar | `loadingbar.zul` | `#loadingbar` | `wgt/css/loadingbar.css` | default | ⬜ |
-| messagebox | `messagebox.zul` | `#messagebox` | `wnd/messagebox.css` | info/question/warning/error | ⬜ |
+| notification | `notification.zul` | `#notification` | `wgt/css/notification.css` | info/success/warning/error variants | 🔄 CSS fixed (icon positioning, border-radius); needs visual verify |
+| toast | `toast.zul` | `#toast` | `wgt/css/toast.css` | all variants | 🔄 CSS fixed (icon absolute positioning, position wrapper); needs visual verify |
+| progressmeter | `progressmeter.zul` | `#progressmeter` | `wgt/css/progressmeter.css` | default, complete, indeterminate | 🔄 CSS fixed (wrong fill class, hardcoded colors); needs visual verify |
+| errorbox | `errorbox.zul` | `#errorbox` | `wgt/css/errorbox.css` | default | 🔄 CSS fixed (icon positioning); needs visual verify |
+| loadingbar | `loadingbar.zul` | `#loadingbar` | `wgt/css/loadingbar.css` | default | 🔄 CSS fixed (wrong indeterminate structure); needs visual verify |
+| messagebox | `messagebox.zul` | `#messagebox` | `wnd/messagebox.css` | info/question/warning/error | 🔄 CSS fixed (text wrapping, button layout); needs visual verify |
 
 ### Group H — 8 Use-Case Scenario Pages
 
