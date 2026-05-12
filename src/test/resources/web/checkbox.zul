@@ -34,6 +34,20 @@
             <div><checkbox label="Checkbox" indeterminate="true" disabled="true"/></div>
             <div/>
         </div>
+        <div sclass="pv-row z-py-2 z-border-bottom">
+            <div sclass="z-fs-label-md z-text-secondary">Switch</div>
+            <div><checkbox mold="switch" label="Off"/></div>
+            <div><checkbox mold="switch" label="On" checked="true"/></div>
+            <div><checkbox mold="switch" label="Disabled" disabled="true"/></div>
+            <div><checkbox mold="switch" label="Dis+On" disabled="true" checked="true"/></div>
+        </div>
+        <div sclass="pv-row z-py-2 z-border-bottom">
+            <div sclass="z-fs-label-md z-text-secondary">Toggle</div>
+            <div><checkbox mold="toggle" label="Off"/></div>
+            <div><checkbox mold="toggle" label="On" checked="true"/></div>
+            <div><checkbox mold="toggle" label="Disabled" disabled="true"/></div>
+            <div><checkbox mold="toggle" label="Dis+On" disabled="true" checked="true"/></div>
+        </div>
     </div>
 </div>
 </zk>

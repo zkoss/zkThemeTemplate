@@ -52,12 +52,16 @@
         <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Sizes</div>
         <div sclass="z-d-flex z-align-end z-flex-wrap z-gap-6 z-py-3">
             <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <button label="Button" sclass="z-button-sm"/>
+                <div sclass="z-fs-label-sm z-text-secondary">Small</div>
+            </div>
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
                 <button label="Button"/>
                 <div sclass="z-fs-label-sm z-text-secondary">Default</div>
             </div>
             <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <button label="Button" width="120px" height="48px"/>
-                <div sclass="z-fs-label-sm z-text-secondary">Custom size</div>
+                <button label="Button" sclass="z-button-lg"/>
+                <div sclass="z-fs-label-sm z-text-secondary">Large</div>
             </div>
         </div>
     </div>
