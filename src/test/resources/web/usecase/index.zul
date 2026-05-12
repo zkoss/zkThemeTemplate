@@ -11,140 +11,140 @@
             <div sclass="sidebar-brand">zk-material</div>
             <navbar orient="vertical">
                 <nav label="Use Cases" open="@load(vm.openNavLabel eq 'Use Cases')">
-                    <navitem label="KPI Dashboard"        onClick="@command('navigate', page='~./usecase/dashboard.zul')"/>
-                    <navitem label="Enterprise App Shell" onClick="@command('navigate', page='~./usecase/app-shell.zul')"/>
-                    <navitem label="Sales Order Entry"    onClick="@command('navigate', page='~./usecase/order-entry.zul')"/>
                     <navitem label="Employee Data Grid"   onClick="@command('navigate', page='~./usecase/employee-grid.zul')"/>
-                    <navitem label="User Profile"         onClick="@command('navigate', page='~./usecase/user-profile.zul')"/>
+                    <navitem label="Enterprise App Shell" onClick="@command('navigate', page='~./usecase/app-shell.zul')"/>
+                    <navitem label="KPI Dashboard"        onClick="@command('navigate', page='~./usecase/dashboard.zul')"/>
+                    <navitem label="Media Manager"        onClick="@command('navigate', page='~./usecase/media-manager.zul')"/>
                     <navitem label="Product Browser"      onClick="@command('navigate', page='~./usecase/product-browser.zul')"/>
                     <navitem label="Report Viewer"        onClick="@command('navigate', page='~./usecase/report-viewer.zul')"/>
-                    <navitem label="Media Manager"        onClick="@command('navigate', page='~./usecase/media-manager.zul')"/>
+                    <navitem label="Sales Order Entry"    onClick="@command('navigate', page='~./usecase/order-entry.zul')"/>
+                    <navitem label="User Profile"         onClick="@command('navigate', page='~./usecase/user-profile.zul')"/>
                 </nav>
-<nav label="Form Controls" open="@load(vm.openNavLabel eq 'Form Controls')">
+                <nav label="Form Controls" open="@load(vm.openNavLabel eq 'Form Controls')">
+                    <navitem label="Bandbox"          onClick="@command('navigate', page='~./bandbox.zul')"/>
                     <navitem label="Button"           onClick="@command('navigate', page='~./button.zul')"/>
-                    <navitem label="Combobutton"      onClick="@command('navigate', page='~./combobutton.zul')"/>
+                    <navitem label="Cascader"         onClick="@command('navigate', page='~./cascader.zul')"/>
                     <navitem label="Checkbox"         onClick="@command('navigate', page='~./checkbox.zul')"/>
                     <navitem label="Checkbox (Mold)"  onClick="@command('navigate', page='~./checkbox-mold.zul')"/>
-                    <navitem label="Radiogroup"       onClick="@command('navigate', page='~./radiogroup.zul')"/>
-                    <navitem label="Textbox"          onClick="@command('navigate', page='~./textbox.zul')"/>
-                    <navitem label="Intbox"           onClick="@command('navigate', page='~./intbox.zul')"/>
-                    <navitem label="Longbox"          onClick="@command('navigate', page='~./longbox.zul')"/>
+                    <navitem label="Chosenbox"        onClick="@command('navigate', page='~./chosenbox.zul')"/>
+                    <navitem label="Colorbox"         onClick="@command('navigate', page='~./colorbox.zul')"/>
+                    <navitem label="Combobox"         onClick="@command('navigate', page='~./combobox.zul')"/>
+                    <navitem label="Combobutton"      onClick="@command('navigate', page='~./combobutton.zul')"/>
+                    <navitem label="Datebox"          onClick="@command('navigate', page='~./datebox.zul')"/>
                     <navitem label="Decimalbox"       onClick="@command('navigate', page='~./decimalbox.zul')"/>
                     <navitem label="Doublebox"        onClick="@command('navigate', page='~./doublebox.zul')"/>
-                    <navitem label="Combobox"         onClick="@command('navigate', page='~./combobox.zul')"/>
-                    <navitem label="Selectbox"        onClick="@command('navigate', page='~./selectbox.zul')"/>
-                    <navitem label="Chosenbox"        onClick="@command('navigate', page='~./chosenbox.zul')"/>
-                    <navitem label="Searchbox"        onClick="@command('navigate', page='~./searchbox.zul')"/>
-                    <navitem label="Cascader"         onClick="@command('navigate', page='~./cascader.zul')"/>
-                    <navitem label="Datebox"          onClick="@command('navigate', page='~./datebox.zul')"/>
-                    <navitem label="Timebox"          onClick="@command('navigate', page='~./timebox.zul')"/>
-                    <navitem label="Timepicker"       onClick="@command('navigate', page='~./timepicker.zul')"/>
-                    <navitem label="Spinner"          onClick="@command('navigate', page='~./spinner.zul')"/>
                     <navitem label="Doublespinner"    onClick="@command('navigate', page='~./doublespinner.zul')"/>
-                    <navitem label="Colorbox"         onClick="@command('navigate', page='~./colorbox.zul')"/>
-                    <navitem label="Bandbox"          onClick="@command('navigate', page='~./bandbox.zul')"/>
-                    <navitem label="Slider"           onClick="@command('navigate', page='~./slider.zul')"/>
-                    <navitem label="Rangeslider"      onClick="@command('navigate', page='~./rangeslider.zul')"/>
-                    <navitem label="Multislider"      onClick="@command('navigate', page='~./multislider.zul')"/>
-                    <navitem label="Rating"           onClick="@command('navigate', page='~./rating.zul')"/>
                     <navitem label="Inputgroup"       onClick="@command('navigate', page='~./inputgroup.zul')"/>
                     <navitem label="Inputs"           onClick="@command('navigate', page='~./inputs.zul')"/>
                     <navitem label="Inputs (Basic)"   onClick="@command('navigate', page='~./inputs-basic.zul')"/>
                     <navitem label="Inputs (Rounded)" onClick="@command('navigate', page='~./inputs-rounded.zul')"/>
+                    <navitem label="Intbox"           onClick="@command('navigate', page='~./intbox.zul')"/>
                     <navitem label="Link"             onClick="@command('navigate', page='~./a.zul')"/>
+                    <navitem label="Longbox"          onClick="@command('navigate', page='~./longbox.zul')"/>
+                    <navitem label="Multislider"      onClick="@command('navigate', page='~./multislider.zul')"/>
+                    <navitem label="Radiogroup"       onClick="@command('navigate', page='~./radiogroup.zul')"/>
+                    <navitem label="Rangeslider"      onClick="@command('navigate', page='~./rangeslider.zul')"/>
+                    <navitem label="Rating"           onClick="@command('navigate', page='~./rating.zul')"/>
+                    <navitem label="Searchbox"        onClick="@command('navigate', page='~./searchbox.zul')"/>
+                    <navitem label="Selectbox"        onClick="@command('navigate', page='~./selectbox.zul')"/>
+                    <navitem label="Slider"           onClick="@command('navigate', page='~./slider.zul')"/>
+                    <navitem label="Spinner"          onClick="@command('navigate', page='~./spinner.zul')"/>
+                    <navitem label="Textbox"          onClick="@command('navigate', page='~./textbox.zul')"/>
+                    <navitem label="Timebox"          onClick="@command('navigate', page='~./timebox.zul')"/>
+                    <navitem label="Timepicker"       onClick="@command('navigate', page='~./timepicker.zul')"/>
                 </nav>
                 <nav label="Data" open="@load(vm.openNavLabel eq 'Data')">
+                    <navitem label="Biglistbox"             onClick="@command('navigate', page='~./biglistbox.zul')"/>
                     <navitem label="Grid"                   onClick="@command('navigate', page='~./grid.zul')"/>
-                    <navitem label="Grid (Header)"          onClick="@command('navigate', page='~./grid-header.zul')"/>
-                    <navitem label="Grid (Grouping)"        onClick="@command('navigate', page='~./grid-grouping.zul')"/>
-                    <navitem label="Grid (Live Grouping)"   onClick="@command('navigate', page='~./grid-livegrouping.zul')"/>
                     <navitem label="Grid (Detail)"          onClick="@command('navigate', page='~./grid-detail.zul')"/>
+                    <navitem label="Grid (Grouping)"        onClick="@command('navigate', page='~./grid-grouping.zul')"/>
+                    <navitem label="Grid (Header)"          onClick="@command('navigate', page='~./grid-header.zul')"/>
+                    <navitem label="Grid (Live Grouping)"   onClick="@command('navigate', page='~./grid-livegrouping.zul')"/>
                     <navitem label="Grid (Paging)"          onClick="@command('navigate', page='~./grid-paging.zul')"/>
                     <navitem label="Listbox"                onClick="@command('navigate', page='~./listbox.zul')"/>
-                    <navitem label="Listbox (Header)"       onClick="@command('navigate', page='~./listbox-header.zul')"/>
                     <navitem label="Listbox (Grouping)"     onClick="@command('navigate', page='~./listbox-grouping.zul')"/>
+                    <navitem label="Listbox (Header)"       onClick="@command('navigate', page='~./listbox-header.zul')"/>
+                    <navitem label="Organigram"             onClick="@command('navigate', page='~./organigram.zul')"/>
+                    <navitem label="Paging"                 onClick="@command('navigate', page='~./paging.zul')"/>
                     <navitem label="Tree"                   onClick="@command('navigate', page='~./tree.zul')"/>
                     <navitem label="Tree (Header)"          onClick="@command('navigate', page='~./tree-header.zul')"/>
-                    <navitem label="Paging"                 onClick="@command('navigate', page='~./paging.zul')"/>
-                    <navitem label="Biglistbox"             onClick="@command('navigate', page='~./biglistbox.zul')"/>
-                    <navitem label="Organigram"             onClick="@command('navigate', page='~./organigram.zul')"/>
                 </nav>
                 <nav label="Navigation" open="@load(vm.openNavLabel eq 'Navigation')">
+                    <navitem label="Anchornav"             onClick="@command('navigate', page='~./anchornav.zul')"/>
+                    <navitem label="Coachmark"             onClick="@command('navigate', page='~./coachmark.zul')"/>
+                    <navitem label="Drawer"                onClick="@command('navigate', page='~./drawer.zul')"/>
+                    <navitem label="Fisheyebar"            onClick="@command('navigate', page='~./fisheyebar.zul')"/>
                     <navitem label="Menubar"               onClick="@command('navigate', page='~./menubar.zul')"/>
-                    <navitem label="Toolbar"               onClick="@command('navigate', page='~./toolbar.zul')"/>
-                    <navitem label="Toolbar (Vertical)"    onClick="@command('navigate', page='~./toolbar-vertical.zul')"/>
+                    <navitem label="Navbar"                onClick="@command('navigate', page='~./navbar.zul')"/>
+                    <navitem label="Stepbar"               onClick="@command('navigate', page='~./stepbar.zul')"/>
                     <navitem label="Tabbox"                onClick="@command('navigate', page='~./tabbox.zul')"/>
                     <navitem label="Tabbox 2"              onClick="@command('navigate', page='~./tabbox-2.zul')"/>
                     <navitem label="Tabbox (Accordion)"    onClick="@command('navigate', page='~./tabbox-accordion.zul')"/>
                     <navitem label="Tabbox (Misc)"         onClick="@command('navigate', page='~./tabbox-misc.zul')"/>
                     <navitem label="Tabbox (Tabchildren)"  onClick="@command('navigate', page='~./tabbox-tabchildren.zul')"/>
-                    <navitem label="Navbar"                onClick="@command('navigate', page='~./navbar.zul')"/>
-                    <navitem label="Anchornav"             onClick="@command('navigate', page='~./anchornav.zul')"/>
-                    <navitem label="Fisheyebar"            onClick="@command('navigate', page='~./fisheyebar.zul')"/>
-                    <navitem label="Coachmark"             onClick="@command('navigate', page='~./coachmark.zul')"/>
-                    <navitem label="Stepbar"               onClick="@command('navigate', page='~./stepbar.zul')"/>
-                    <navitem label="Drawer"                onClick="@command('navigate', page='~./drawer.zul')"/>
+                    <navitem label="Toolbar"               onClick="@command('navigate', page='~./toolbar.zul')"/>
+                    <navitem label="Toolbar (Vertical)"    onClick="@command('navigate', page='~./toolbar-vertical.zul')"/>
                 </nav>
                 <nav label="Containers" open="@load(vm.openNavLabel eq 'Containers')">
-                    <navitem label="Window"             onClick="@command('navigate', page='~./window.zul')"/>
-                    <navitem label="Window (No Border)" onClick="@command('navigate', page='~./window-noborder.zul')"/>
+                    <navitem label="Caption"            onClick="@command('navigate', page='~./caption.zul')"/>
+                    <navitem label="Groupbox"           onClick="@command('navigate', page='~./groupbox.zul')"/>
+                    <navitem label="Groupbox (3D)"      onClick="@command('navigate', page='~./groupbox-3d.zul')"/>
                     <navitem label="Panel"              onClick="@command('navigate', page='~./panel.zul')"/>
                     <navitem label="Panel (Misc)"       onClick="@command('navigate', page='~./panel-misc.zul')"/>
                     <navitem label="Panel (No Border)"  onClick="@command('navigate', page='~./panel-noborder.zul')"/>
-                    <navitem label="Groupbox"           onClick="@command('navigate', page='~./groupbox.zul')"/>
-                    <navitem label="Groupbox (3D)"      onClick="@command('navigate', page='~./groupbox-3d.zul')"/>
                     <navitem label="Popup"              onClick="@command('navigate', page='~./popup.zul')"/>
-                    <navitem label="Caption"            onClick="@command('navigate', page='~./caption.zul')"/>
+                    <navitem label="Window"             onClick="@command('navigate', page='~./window.zul')"/>
+                    <navitem label="Window (No Border)" onClick="@command('navigate', page='~./window-noborder.zul')"/>
                 </nav>
                 <nav label="Layout" open="@load(vm.openNavLabel eq 'Layout')">
+                    <navitem label="Absolutelayout"      onClick="@command('navigate', page='~./absolutelayout.zul')"/>
+                    <navitem label="Anchorlayout"        onClick="@command('navigate', page='~./anchorlayout.zul')"/>
+                    <navitem label="Area"                onClick="@command('navigate', page='~./area.zul')"/>
                     <navitem label="Borderlayout"        onClick="@command('navigate', page='~./borderlayout.zul')"/>
                     <navitem label="Borderlayout (Misc)" onClick="@command('navigate', page='~./borderlayout-misc.zul')"/>
-                    <navitem label="Hlayout"             onClick="@command('navigate', page='~./hlayout.zul')"/>
-                    <navitem label="Vlayout"             onClick="@command('navigate', page='~./vlayout.zul')"/>
-                    <navitem label="Splitter"            onClick="@command('navigate', page='~./splitter.zul')"/>
-                    <navitem label="Splitlayout"         onClick="@command('navigate', page='~./splitlayout.zul')"/>
-                    <navitem label="Anchorlayout"        onClick="@command('navigate', page='~./anchorlayout.zul')"/>
-                    <navitem label="Absolutelayout"      onClick="@command('navigate', page='~./absolutelayout.zul')"/>
-                    <navitem label="Columnlayout"        onClick="@command('navigate', page='~./columnlayout.zul')"/>
-                    <navitem label="Rowlayout"           onClick="@command('navigate', page='~./rowlayout.zul')"/>
-                    <navitem label="Linelayout"          onClick="@command('navigate', page='~./linelayout.zul')"/>
-                    <navitem label="Tablelayout"         onClick="@command('navigate', page='~./tablelayout.zul')"/>
                     <navitem label="Cardlayout"          onClick="@command('navigate', page='~./cardlayout.zul')"/>
+                    <navitem label="Columnlayout"        onClick="@command('navigate', page='~./columnlayout.zul')"/>
                     <navitem label="Goldenlayout"        onClick="@command('navigate', page='~./goldenlayout.zul')"/>
+                    <navitem label="Hlayout"             onClick="@command('navigate', page='~./hlayout.zul')"/>
+                    <navitem label="Linelayout"          onClick="@command('navigate', page='~./linelayout.zul')"/>
                     <navitem label="Portallayout"        onClick="@command('navigate', page='~./portallayout.zul')"/>
+                    <navitem label="Rowlayout"           onClick="@command('navigate', page='~./rowlayout.zul')"/>
                     <navitem label="Scrollview"          onClick="@command('navigate', page='~./scrollview.zul')"/>
                     <navitem label="Space"               onClick="@command('navigate', page='~./space.zul')"/>
-                    <navitem label="Area"                onClick="@command('navigate', page='~./area.zul')"/>
+                    <navitem label="Splitlayout"         onClick="@command('navigate', page='~./splitlayout.zul')"/>
+                    <navitem label="Splitter"            onClick="@command('navigate', page='~./splitter.zul')"/>
+                    <navitem label="Tablelayout"         onClick="@command('navigate', page='~./tablelayout.zul')"/>
+                    <navitem label="Vlayout"             onClick="@command('navigate', page='~./vlayout.zul')"/>
                 </nav>
                 <nav label="Feedback" open="@load(vm.openNavLabel eq 'Feedback')">
-                    <navitem label="Progressmeter" onClick="@command('navigate', page='~./progressmeter.zul')"/>
-                    <navitem label="Notification"  onClick="@command('navigate', page='~./notification.zul')"/>
-                    <navitem label="Toast"         onClick="@command('navigate', page='~./toast.zul')"/>
-                    <navitem label="Loadingbar"    onClick="@command('navigate', page='~./loadingbar.zul')"/>
-                    <navitem label="Messagebox"    onClick="@command('navigate', page='~./messagebox.zul')"/>
-                    <navitem label="Loading"       onClick="@command('navigate', page='~./loading.zul')"/>
-                    <navitem label="Separator"     onClick="@command('navigate', page='~./separator.zul')"/>
-                    <navitem label="Scrollbar"     onClick="@command('navigate', page='~./scrollbar.zul')"/>
                     <navitem label="Calendar"      onClick="@command('navigate', page='~./calendar.zul')"/>
                     <navitem label="Error"         onClick="@command('navigate', page='~./error.zul')"/>
                     <navitem label="Errorbox"      onClick="@command('navigate', page='~./errorbox.zul')"/>
+                    <navitem label="Loading"       onClick="@command('navigate', page='~./loading.zul')"/>
+                    <navitem label="Loadingbar"    onClick="@command('navigate', page='~./loadingbar.zul')"/>
+                    <navitem label="Messagebox"    onClick="@command('navigate', page='~./messagebox.zul')"/>
+                    <navitem label="Notification"  onClick="@command('navigate', page='~./notification.zul')"/>
+                    <navitem label="Progressmeter" onClick="@command('navigate', page='~./progressmeter.zul')"/>
+                    <navitem label="Scrollbar"     onClick="@command('navigate', page='~./scrollbar.zul')"/>
+                    <navitem label="Separator"     onClick="@command('navigate', page='~./separator.zul')"/>
+                    <navitem label="Toast"         onClick="@command('navigate', page='~./toast.zul')"/>
                 </nav>
                 <nav label="Media &amp; Upload" open="@load(vm.openNavLabel eq 'Media &amp; Upload')">
-                    <navitem label="File Upload"     onClick="@command('navigate', page='~./fileupload.zul')"/>
-                    <navitem label="Drop Upload"     onClick="@command('navigate', page='~./dropupload.zul')"/>
                     <navitem label="Audio"           onClick="@command('navigate', page='~./audio.zul')"/>
-                    <navitem label="Video"           onClick="@command('navigate', page='~./video.zul')"/>
-                    <navitem label="Camera"          onClick="@command('navigate', page='~./camera.zul')"/>
                     <navitem label="Barcode"         onClick="@command('navigate', page='~./barcode.zul')"/>
                     <navitem label="Barcode Scanner" onClick="@command('navigate', page='~./barcodescanner.zul')"/>
-                    <navitem label="Imagemap"        onClick="@command('navigate', page='~./imagemap.zul')"/>
-                    <navitem label="PDF Viewer"      onClick="@command('navigate', page='~./pdfviewer.zul')"/>
-                    <navitem label="Cropper"         onClick="@command('navigate', page='~./cropper.zul')"/>
-                    <navitem label="Signature"       onClick="@command('navigate', page='~./signature.zul')"/>
-                    <navitem label="TBEditor"        onClick="@command('navigate', page='~./tbeditor.zul')"/>
+                    <navitem label="Camera"          onClick="@command('navigate', page='~./camera.zul')"/>
                     <navitem label="Captcha"         onClick="@command('navigate', page='~./captcha.zul')"/>
+                    <navitem label="Cropper"         onClick="@command('navigate', page='~./cropper.zul')"/>
+                    <navitem label="Drop Upload"     onClick="@command('navigate', page='~./dropupload.zul')"/>
+                    <navitem label="File Upload"     onClick="@command('navigate', page='~./fileupload.zul')"/>
                     <navitem label="HTML"            onClick="@command('navigate', page='~./html.zul')"/>
                     <navitem label="Iframe"          onClick="@command('navigate', page='~./iframe.zul')"/>
+                    <navitem label="Imagemap"        onClick="@command('navigate', page='~./imagemap.zul')"/>
+                    <navitem label="PDF Viewer"      onClick="@command('navigate', page='~./pdfviewer.zul')"/>
+                    <navitem label="Signature"       onClick="@command('navigate', page='~./signature.zul')"/>
+                    <navitem label="TBEditor"        onClick="@command('navigate', page='~./tbeditor.zul')"/>
+                    <navitem label="Video"           onClick="@command('navigate', page='~./video.zul')"/>
                 </nav>
             </navbar>
         </div>
