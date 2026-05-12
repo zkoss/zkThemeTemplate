@@ -1,6 +1,6 @@
 /* MD3 Grid — data table component */
 /* DOM: .z-grid > .z-grid-header > table.z-grid-header-inner > thead > tr > th.z-column
-        .z-grid > .z-grid-body > table > tbody > tr.z-row > td.z-row-inner */
+        .z-grid > .z-grid-body > table > tbody > tr.z-row > td.z-row-inner > div.z-row-content */
 
 .z-grid {
     --zk-grid-cell-padding: var(--zk-spacing-4);
@@ -10,6 +10,8 @@
     box-sizing: border-box;
     width: 100%;
     font-family: var(--zk-typescale-font-family);
+    border-radius: var(--zk-shape-card);
+    box-shadow: var(--zk-elevation-card);
 }
 
 /* Standalone card grid — opt-in card appearance */
@@ -78,8 +80,7 @@
 }
 
 /* Column header cell */
-.z-column,
-.z-listheader {
+.z-column {
     padding: var(--zk-grid-cell-padding);
     font-family: var(--zk-typescale-font-family);
     font-size: var(--zk-typescale-label-large-size);
@@ -87,8 +88,8 @@
     line-height: var(--zk-typescale-label-large-line-height);
     color: var(--zk-color-on-surface-variant);
     text-align: left;
+    background-color: var(--zk-color-surface-container-low);
     border-bottom: 1px solid var(--zk-color-outline-variant);
-    background-color: transparent;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -145,8 +146,9 @@
     table-layout: fixed;
 }
 
-/* Row */
+/* Row — TR.z-row */
 .z-row {
+    background-color: var(--zk-color-surface);
     border-bottom: 1px solid var(--zk-color-outline-variant);
     transition: background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
 }
@@ -155,22 +157,65 @@
     border-bottom: none;
 }
 
+/* Row hover: MD3 state layer rgba(on-surface, 0.04) for surfaces */
 .z-row:hover {
-    background-color: var(--zk-color-surface-container-low);
+    background-color: rgba(0, 0, 0, 0.04);
 }
 
+/* Odd striping: ZK applies z-row-odd class directly on TR */
+.z-row-odd {
+    background-color: var(--zk-color-surface-container-lowest);
+}
+
+.z-row-odd:hover {
+    background-color: color-mix(in srgb, var(--zk-color-on-surface) 8%, var(--zk-color-surface-container-lowest));
+}
+
+/* Selected row */
 .z-row.z-row-selected,
 .z-row.z-selected {
     background-color: var(--zk-color-primary-container);
 }
 
-.z-row.z-row-selected:hover,
-.z-row.z-selected:hover {
-    background-color: var(--zk-color-primary-container);
+/* Selected row text color via cell */
+.z-row.z-row-selected .z-row-inner,
+.z-row.z-row-selected .z-row-content,
+.z-row.z-selected .z-row-inner,
+.z-row.z-selected .z-row-content {
+    color: var(--zk-color-on-primary-container);
 }
 
-/* Cell */
-.z-row-inner,
+/* Selected + hover: slightly darker tint */
+.z-row.z-row-selected:hover,
+.z-row.z-selected:hover {
+    background-color: color-mix(in srgb, var(--zk-color-on-primary-container) 8%, var(--zk-color-primary-container));
+}
+
+/* Disabled row */
+.z-row.z-row-disabled,
+.z-row[disabled] {
+    opacity: var(--zk-state-disabled-opacity, 0.38);
+    pointer-events: none;
+}
+
+/* Focus: ZK uses z-row-focus class added by ItemWidget */
+.z-row.z-row-focus {
+    outline: 2px solid var(--zk-color-primary);
+    outline-offset: -2px;
+}
+
+/* Cell — TD.z-row-inner contains DIV.z-row-content */
+.z-row-inner {
+    padding: 0;
+    vertical-align: middle;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    box-sizing: border-box;
+}
+
+/* Content div inside the TD */
+.z-row-content,
 .z-cell {
     padding: var(--zk-grid-cell-padding);
     font-family: var(--zk-typescale-font-family);
@@ -184,11 +229,10 @@
     box-sizing: border-box;
 }
 
-/* Even/odd striping (optional, disabled by default) */
+/* Legacy: even/odd striping via grid sclass (fallback, prefer z-row-odd) */
 .z-grid-striped .z-row:nth-child(even) {
     background-color: var(--zk-color-surface-container-lowest);
 }
-
 
 /* ─── Foot area ─────────────────────────────────────────────────────────── */
 .z-grid-foot {
@@ -202,12 +246,17 @@
     color: var(--zk-color-on-surface-variant);
 }
 
-/* ─── Group rows ────────────────────────────────────────────────────────── */
-/* .z-group is a TR; .z-group-inner is the TD; .z-group-content is inner div */
+/* ─── Group rows (zkex.grid.Group) ──────────────────────────────────────── */
+/* .z-group is a TR rendered by zkex; .z-group-inner is the TD */
 .z-group {
-    background-color: var(--zk-color-surface-container-low);
+    background-color: var(--zk-color-surface-container);
     border-top: 1px solid var(--zk-color-outline-variant);
     border-bottom: 1px solid var(--zk-color-outline-variant);
+    cursor: pointer;
+}
+
+.z-group:hover {
+    background-color: color-mix(in srgb, var(--zk-color-on-surface) 8%, var(--zk-color-surface-container));
 }
 
 .z-group-inner {
@@ -215,7 +264,7 @@
     font-family: var(--zk-typescale-font-family);
     font-size: var(--zk-typescale-label-large-size);
     font-weight: var(--zk-typescale-label-large-weight);
-    color: var(--zk-color-on-surface-variant);
+    color: var(--zk-color-on-surface);
 }
 
 .z-group-content {
@@ -239,7 +288,8 @@
     border-bottom: 1px solid var(--zk-color-outline-variant);
 }
 
-.z-groupfoot .z-cell {
+.z-groupfoot .z-cell,
+.z-groupfoot .z-row-content {
     padding: var(--zk-spacing-2) var(--zk-spacing-4);
     font-size: var(--zk-typescale-body-small-size);
     font-style: italic;
@@ -255,7 +305,13 @@
     font-size: var(--zk-typescale-body-medium-size);
 }
 
-/* ─── Odd row stripe ─────────────────────────────────────────────────────── */
+/* ─── Legacy odd row stripe via parent sclass (z-grid-odd) ──────────────── */
+/* Kept for backward compat; ZK normally applies z-row-odd directly on TR */
+/* Container itself must be transparent — striping applies only to child rows */
+.z-grid-odd {
+    background-color: transparent;
+}
+
 .z-grid-odd .z-row:nth-child(odd) {
     background-color: var(--zk-color-surface-container-lowest);
 }
@@ -292,7 +348,9 @@
 }
 
 .z-grid-footer .z-cell,
-.z-footer .z-cell {
+.z-footer .z-cell,
+.z-grid-footer .z-row-content,
+.z-footer .z-row-content {
     padding: var(--zk-spacing-2) var(--zk-spacing-4);
     font-size: var(--zk-typescale-body-small-size);
     font-weight: var(--zk-typescale-label-large-weight);
@@ -300,7 +358,7 @@
 }
 
 .z-group.z-group-open {
-    background-color: var(--zk-color-surface-container-low);
+    background-color: var(--zk-color-surface-container);
 }
 
 .z-column-sorticon {

@@ -1,8 +1,15 @@
 <?page title="Order Entry Form"?>
+<?link rel="stylesheet" type="text/css" href="~./usecase/usecase.css"?>
 <zk>
-<window title="New Sales Order" border="normal" >
 
-    <tabbox width="100%">
+<vlayout hflex="1" sclass="page-content">
+
+    <!-- Page header toolbar -->
+    <toolbar>
+        <label value="New Sales Order" sclass="z-h2"/>
+    </toolbar>
+
+    <tabbox hflex="1">
         <tabs>
             <tab label="General"/>
             <tab label="Line Items"/>
@@ -14,9 +21,9 @@
             <!-- General Tab -->
             <tabpanel>
                 <hlayout width="100%" style="gap: var(--zk-spacing-4);">
-                    <!-- Customer Info -->
-                    <groupbox hflex="1">
-                        <caption label="Customer Info"/>
+                    <!-- Customer Info — was groupbox -->
+                    <div hflex="1" sclass="section-card">
+                        <label value="Customer Info" sclass="section-title"/>
                         <grid>
                             <rows>
                                 <row>
@@ -49,11 +56,11 @@
                                 </row>
                             </rows>
                         </grid>
-                    </groupbox>
+                    </div>
 
-                    <!-- Order Details -->
-                    <groupbox hflex="1">
-                        <caption label="Order Details"/>
+                    <!-- Order Details — was groupbox -->
+                    <div hflex="1" sclass="section-card">
+                        <label value="Order Details" sclass="section-title"/>
                         <grid>
                             <rows>
                                 <row>
@@ -98,11 +105,11 @@
                                 </row>
                             </rows>
                         </grid>
-                    </groupbox>
+                    </div>
                 </hlayout>
             </tabpanel>
 
-            <!-- Line Items Tab -->
+            <!-- Line Items Tab — keep as-is (listbox, no groupboxes) -->
             <tabpanel>
                 <vlayout>
                     <listbox width="100%">
@@ -164,7 +171,7 @@
                 </vlayout>
             </tabpanel>
 
-            <!-- Shipping Tab -->
+            <!-- Shipping Tab — keep as-is (no groupboxes) -->
             <tabpanel>
                 <vlayout>
                     <label value="Shipping Address" sclass="z-h4"/>
@@ -200,7 +207,7 @@
                 </vlayout>
             </tabpanel>
 
-            <!-- Attachments Tab -->
+            <!-- Attachments Tab — keep as-is -->
             <tabpanel>
                 <vlayout>
                     <label value="Upload supporting documents:" sclass="z-h4"/>
@@ -242,5 +249,5 @@
         <button label="Cancel"/>
     </hlayout>
 
-</window>
+</vlayout>
 </zk>

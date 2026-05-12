@@ -4,7 +4,7 @@
 <div sclass="z-p-8">
     <div sclass="z-border-bottom z-fs-title-lg z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Combo Inputs</div>
 
-    <div sclass="z-mb-6 pv-cols-4">
+    <div sclass="z-mb-6 pv-cols-4-wide">
         <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">States</div>
         <div sclass="pv-col-header-row z-pb-1">
             <div/>
@@ -73,12 +73,12 @@
             <div sclass="z-fs-label-md z-text-secondary">Colorbox</div>
             <div><colorbox/></div>
             <div><colorbox disabled="true"/></div>
-            <div><colorbox readonly="true"/></div>
+            <div><colorbox/></div>
             <div>—</div>
         </div>
     </div>
 
-    <div sclass="z-mb-6 pv-cols-2">
+    <div sclass="z-mb-6 pv-cols-2-wide">
         <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Without Button</div>
         <div sclass="pv-col-header-row z-pb-1">
             <div/>

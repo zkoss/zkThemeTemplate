@@ -1,0 +1,16 @@
+.z-signature {
+    border: 1px solid var(--zk-color-outline);
+    border-radius: 4px;
+    background-color: var(--zk-color-surface);
+    transition: border-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.z-signature:focus-within {
+    border-color: var(--zk-color-primary);
+    border-width: 2px;
+}
+
+.z-signature[disabled],
+.z-signature.z-signature-disabled {
+    opacity: 0.38;
+}

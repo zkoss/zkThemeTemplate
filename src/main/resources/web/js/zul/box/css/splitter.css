@@ -1,60 +1,147 @@
-/* MD3 Splitter — resize handle between panes */
-/* DOM: <div class="z-splitter"><div class="z-splitter-handle"/></div> */
+/* MD3 Splitter — resize/collapse handle between hbox/vbox panes
+   DOM (inside hbox/vbox table):
+     tr.z-splitter-outer > td.z-splitter-outer > .z-splitter.z-splitter-horizontal
+     .z-splitter > .z-splitter-button > <i.z-splitter-icon.z-icon-ellipsis-v> x3
+   Orientation:
+     z-splitter-horizontal = vertical drag handle (col-resize cursor) inside hbox
+     z-splitter-vertical   = horizontal drag handle (row-resize cursor) inside vbox
+   State: z-splitter-nosplitter added when collapsed (collapse="before/after") */
 
+/* ─── Table cell wrapper sizing ───────────────────────────────────────────── */
+/* ZK reads offsetWidth/offsetHeight for layout math — sizes must be explicit */
+tr.z-splitter-outer > td {
+    height: 8px;
+    max-height: 8px;
+}
+
+td.z-splitter-outer {
+    width: 8px;
+    max-width: 8px;
+    padding: 0;
+}
+
+/* ─── Splitter base ───────────────────────────────────────────────────────── */
 .z-splitter {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    background-color: transparent;
+    border: 1px solid var(--zk-color-outline-variant);
+    background-color: var(--zk-color-surface-variant);
     position: relative;
-    z-index: 5;
+    overflow: hidden;
     transition: background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
 }
 
-/* Horizontal splitter (between top/bottom) */
+.z-splitter:hover {
+    background-color: color-mix(in srgb, var(--zk-color-primary) 12%, var(--zk-color-surface-variant));
+}
+
+/* ─── Horizontal splitter (inside hbox — vertical bar, col-resize) ────────── */
+/* z-splitter-horizontal means it divides horizontally (left | right) */
 .z-splitter-horizontal {
-    width: 100%;
-    height: 8px;
-    cursor: row-resize;
-}
-
-.z-splitter-horizontal:hover {
-    background-color: var(--zk-color-surface-container);
-}
-
-/* Vertical splitter (between left/right) */
-.z-splitter-vertical,
-.z-splitter:not(.z-splitter-horizontal) {
     width: 8px;
-    height: 100%;
+    border-width: 0 1px;
+    overflow: hidden;
     cursor: col-resize;
 }
 
-.z-splitter-vertical:hover,
-.z-splitter:not(.z-splitter-horizontal):hover {
-    background-color: var(--zk-color-surface-container);
+.z-splitter-horizontal > .z-splitter-button {
+    width: 8px;
+    height: 30px;
+    border-width: 1px 0;
 }
 
-/* Drag handle indicator */
-.z-splitter-handle {
-    background-color: var(--zk-color-outline-variant);
-    border-radius: var(--zk-shape-corner-full);
-    pointer-events: none;
-    transition: background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+/* ─── Vertical splitter (inside vbox — horizontal bar, row-resize) ────────── */
+/* z-splitter-vertical means it divides vertically (top / bottom) */
+.z-splitter-vertical {
+    height: 8px;
+    border-width: 1px 0;
+    overflow: hidden;
+    cursor: row-resize;
 }
 
-.z-splitter-horizontal .z-splitter-handle {
-    width: 40px;
-    height: 4px;
+.z-splitter-vertical > .z-splitter-button {
+    width: 30px;
+    height: 8px;
+    border-width: 0 1px;
 }
 
-.z-splitter-vertical .z-splitter-handle,
-.z-splitter:not(.z-splitter-horizontal) .z-splitter-handle {
-    width: 4px;
-    height: 40px;
+/* ─── Button (collapse toggle handle) ────────────────────────────────────── */
+.z-splitter-button {
+    color: var(--zk-color-on-surface-variant);
+    display: inline-block;
+    position: relative;
+    vertical-align: top;
+    cursor: pointer;
+    border: 1px solid var(--zk-color-outline-variant);
+    background-color: var(--zk-color-surface);
+    border-radius: 2px;
 }
 
-.z-splitter:hover .z-splitter-handle {
-    background-color: var(--zk-color-outline);
+.z-splitter-button-disabled {
+    border: 0;
+    cursor: default;
+}
+
+.z-splitter-vertical .z-splitter-button-disabled {
+    cursor: row-resize;
+}
+
+.z-splitter-horizontal .z-splitter-button-disabled {
+    cursor: col-resize;
+}
+
+/* ─── Icon dots (gripper marks) ───────────────────────────────────────────── */
+.z-splitter-icon {
+    font-size: 14px;
+    position: absolute;
+    color: var(--zk-color-on-surface-variant);
+}
+
+/* Horizontal splitter icons — ellipsis-v (3 dots vertical = gripper for col-resize) */
+.z-splitter-horizontal .z-splitter-icon {
+    top: 8px;
+    left: -3px;
+}
+
+.z-splitter-horizontal .z-splitter-icon.z-icon-ellipsis-v {
+    top: -21px;
+    left: 2px;
+    cursor: col-resize;
+    visibility: hidden;
+}
+
+.z-splitter-horizontal .z-splitter-icon.z-icon-ellipsis-v ~ .z-splitter-icon.z-icon-ellipsis-v {
+    top: 39px;
+}
+
+/* Vertical splitter icons — ellipsis-h (3 dots horizontal = gripper for row-resize) */
+.z-splitter-vertical .z-splitter-icon {
+    font-size: 14px;
+    line-height: normal;
+    top: -4px;
+    left: 9px;
+}
+
+.z-splitter-vertical .z-splitter-icon.z-icon-ellipsis-h {
+    top: -2px;
+    left: -16px;
+    cursor: row-resize;
+    visibility: hidden;
+}
+
+.z-splitter-vertical .z-splitter-icon.z-icon-ellipsis-h ~ .z-splitter-icon.z-icon-ellipsis-h {
+    left: 36px;
+}
+
+.z-splitter:hover .z-splitter-button {
+    color: var(--zk-color-primary);
+}
+
+/* ─── Collapsed (nosplitter) state ────────────────────────────────────────── */
+.z-splitter-nosplitter {
+    cursor: default;
+}
+
+/* ─── Drag ghost ──────────────────────────────────────────────────────────── */
+.z-splitter-ghost {
+    background: var(--zk-color-primary) !important;
+    opacity: 0.3;
 }

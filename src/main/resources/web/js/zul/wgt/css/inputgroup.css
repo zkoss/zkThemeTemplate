@@ -1,43 +1,45 @@
-/* MD3 Input Group — input + addon(s) in a single row */
+/* MD3 Input Group — input + addon(s) combined into a single field
+ * DOM: <div class="z-inputgroup [z-inputgroup-vertical]">
+ *        <!-- Labels/icons wrapped as: -->
+ *        <div class="z-inputgroup-text">label text or icon</div>
+ *        <!-- Buttons/inputs rendered directly (no wrapper div):  -->
+ *        <input class="z-textbox ..."/>
+ *        <button class="z-button ..."/>
+ *      </div>
+ * Notes:
+ *  - Label/non-input children get z-inputgroup-text wrapper (from encloseChildHTML_)
+ *  - Border radius applied to :first-child/:last-child only
+ *  - All middle children get border-radius: 0 to connect seamlessly
+ */
 
 .z-inputgroup {
     display: inline-flex;
     align-items: stretch;
-    border: 1px solid var(--zk-color-outline);
-    border-radius: var(--zk-shape-input);
-    overflow: hidden;
-    background-color: var(--zk-color-surface);
-    transition: border-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
 }
 
-.z-inputgroup:focus-within {
-    border-color: var(--zk-color-primary);
-    border-width: 2px;
+/* Remove border-radius from all direct children — override per first/last below */
+.z-inputgroup > :nth-child(n) {
+    border-radius: 0;
 }
 
-/* Addon label/text placed before/after the input */
-.z-inputgroup-addon {
-    display: inline-flex;
-    align-items: center;
-    padding: 0 var(--zk-spacing-3);
-    background-color: var(--zk-color-surface-container);
-    color: var(--zk-color-on-surface-variant);
-    font-family: var(--zk-typescale-font-family);
-    font-size: var(--zk-typescale-body-medium-size);
-    white-space: nowrap;
-    flex-shrink: 0;
+/* Left-edge child gets left border-radius (horizontal layout) */
+.z-inputgroup:not(.z-inputgroup-vertical) > :first-child {
+    border-top-left-radius: var(--zk-shape-input);
+    border-bottom-left-radius: var(--zk-shape-input);
 }
 
-/* Input inside inputgroup — remove its own border */
-.z-inputgroup .z-textbox,
-.z-inputgroup input {
-    border: none !important;
-    border-radius: 0 !important;
-    outline: none !important;
-    flex: 1;
-    min-width: 0;
+/* Right-edge child gets right border-radius (horizontal layout) */
+.z-inputgroup:not(.z-inputgroup-vertical) > :last-child {
+    border-top-right-radius: var(--zk-shape-input);
+    border-bottom-right-radius: var(--zk-shape-input);
 }
 
+/* Flatten child heights in horizontal mode */
+.z-inputgroup:not(.z-inputgroup-vertical) > :nth-child(n) {
+    height: auto;
+}
+
+/* Text/label addon — the z-inputgroup-text wrapper div */
 .z-inputgroup-text {
     display: inline-flex;
     align-items: center;
@@ -46,17 +48,66 @@
     background-color: var(--zk-color-surface-container-low);
     border: 1px solid var(--zk-color-outline);
     color: var(--zk-color-on-surface-variant);
+    font-family: var(--zk-typescale-font-family);
     font-size: var(--zk-typescale-body-medium-size);
     white-space: nowrap;
     box-sizing: border-box;
+    flex-shrink: 0;
 }
 
+/* Collapse duplicate adjacent borders between text addons and inputs */
+.z-inputgroup .z-inputgroup-text + .z-inputgroup-text,
+.z-inputgroup .z-inputgroup-text + .z-textbox,
+.z-inputgroup .z-inputgroup-text + .z-combobox,
+.z-inputgroup .z-inputgroup-text + .z-combobox .z-combobox-input {
+    border-left: none;
+}
+
+/* Input inside inputgroup — integrate with the group border */
+.z-inputgroup .z-textbox,
+.z-inputgroup .z-combobox .z-combobox-input {
+    border: 1px solid var(--zk-color-outline);
+    border-radius: 0;
+    flex: 1;
+    min-width: 0;
+    height: auto;
+    min-height: 40px;
+    box-sizing: border-box;
+}
+
+/* When input is last child, its right border shows (handled by :last-child above) */
+/* When input is first child, its left border-radius shows */
+
+/* Remove ZK's default textarea height override when multiline */
+.z-inputgroup textarea.z-textbox {
+    min-height: 80px;
+    height: auto;
+    resize: vertical;
+}
+
+/* Focus ring: highlight the whole group when any input is focused */
+.z-inputgroup:focus-within {
+    outline: 2px solid var(--zk-color-primary);
+    outline-offset: 0;
+    border-radius: var(--zk-shape-input);
+}
+
+/* Vertical orientation */
 .z-inputgroup-vertical {
     flex-direction: column;
     align-items: stretch;
 }
 
+.z-inputgroup-vertical > :first-child {
+    border-top-left-radius: var(--zk-shape-input);
+    border-top-right-radius: var(--zk-shape-input);
+}
+
+.z-inputgroup-vertical > :last-child {
+    border-bottom-left-radius: var(--zk-shape-input);
+    border-bottom-right-radius: var(--zk-shape-input);
+}
+
 .z-inputgroup-vertical .z-inputgroup-text {
     justify-content: center;
-    border-right: 1px solid var(--zk-color-outline);
 }

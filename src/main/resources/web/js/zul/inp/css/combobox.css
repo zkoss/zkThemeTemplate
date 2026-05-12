@@ -1,25 +1,24 @@
 /* MD3 Combobox — dropdown text field */
-/* DOM: <span class="z-combobox"><input class="z-combobox-input"><button class="z-combobox-button"><i class="z-icon-caret-down"/></button><ul class="z-combobox-popup">...</ul></span> */
+/* DOM: <span class="z-combobox"><input class="z-combobox-input"><a class="z-combobox-button"><i class="z-combobox-icon z-icon-caret-down"></i></a><div class="z-combobox-popup">...</div></span> */
 
 /* ─── Wrapper ─────────────────────────────────────────────────────────── */
 .z-combobox {
     display: inline-flex;
     align-items: center;
     position: relative;
-    border: 1px solid var(--zk-color-outline);
-    border-radius: var(--zk-shape-input);
     background-color: var(--zk-color-surface);
     min-height: 40px;
     overflow: visible;
     box-sizing: border-box;
-    transition: border-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
 }
 
-.z-combobox:hover {
+.z-combobox:hover .z-combobox-input,
+.z-combobox:hover .z-combobox-button {
     border-color: var(--zk-color-on-surface);
 }
 
-.z-combobox:focus-within {
+.z-combobox:focus-within .z-combobox-input,
+.z-combobox:focus-within .z-combobox-button {
     border-color: var(--zk-color-primary);
     border-width: 2px;
 }
@@ -28,17 +27,21 @@
 .z-combobox-input {
     flex: 1;
     min-width: 0;
-    border: none;
+    border: 1px solid var(--zk-color-outline);
+    border-right: none;
+    border-radius: var(--zk-shape-input) 0 0 var(--zk-shape-input);
     background: transparent;
     padding: 0 var(--zk-spacing-3);
     height: 100%;
-    min-height: 38px;
+    min-height: 40px;
     font-family: var(--zk-typescale-font-family);
     font-size: var(--zk-typescale-body-medium-size);
     font-weight: var(--zk-typescale-body-medium-weight);
     color: var(--zk-color-on-surface);
     outline: none;
     box-sizing: border-box;
+    transition: border-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard),
+                border-width var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
 }
 
 .z-combobox-input::placeholder {
@@ -89,15 +92,18 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 36px;
-    min-height: 38px;
-    border: none;
+    width: 32px;
+    min-height: 40px;
+    border: 1px solid var(--zk-color-outline);
+    border-left: none;
     background: transparent;
     color: var(--zk-color-on-surface-variant);
     cursor: pointer;
     flex-shrink: 0;
     border-radius: 0 var(--zk-shape-input) var(--zk-shape-input) 0;
-    transition: color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+    transition: color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard),
+                border-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard),
+                border-width var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
     overflow: hidden;
 }
 
@@ -130,8 +136,8 @@
     padding: 0;
     background-color: var(--zk-color-surface);
     border-radius: var(--zk-shape-menu);
-    box-shadow: none;
-    border: 1px solid rgba(0, 0, 0, 0.12);
+    box-shadow: var(--zk-elevation-dropdown);
+    border: none;
     max-height: 280px;
     overflow-y: auto;
     overflow-x: hidden;
@@ -142,7 +148,7 @@
 .z-comboitem {
     display: flex;
     align-items: center;
-    padding: 6px var(--zk-spacing-4);
+    padding: var(--zk-spacing-2) var(--zk-spacing-4);
     font-family: var(--zk-typescale-font-family);
     font-size: var(--zk-typescale-body-medium-size);
     color: var(--zk-color-on-surface);
@@ -154,7 +160,7 @@
 }
 
 .z-comboitem:hover {
-    background-color: var(--zk-color-surface-container);
+    background-color: rgba(0, 0, 0, 0.08);
 }
 
 .z-comboitem.z-comboitem-selected,
@@ -168,6 +174,14 @@
 .z-combobox.z-combobox-disabled {
     opacity: var(--zk-state-disabled-opacity);
     pointer-events: none;
+    cursor: not-allowed;
+}
+
+.z-combobox[disabled]:hover .z-combobox-input,
+.z-combobox[disabled]:hover .z-combobox-button,
+.z-combobox.z-combobox-disabled:hover .z-combobox-input,
+.z-combobox.z-combobox-disabled:hover .z-combobox-button {
+    border-color: var(--zk-color-outline);
 }
 
 .z-combobox[disabled] .z-combobox-input,
@@ -176,15 +190,18 @@
 }
 
 /* ─── Error variant ───────────────────────────────────────────────────────── */
-.z-combobox.z-combobox-error {
+.z-combobox.z-combobox-error .z-combobox-input,
+.z-combobox.z-combobox-error .z-combobox-button {
     border-color: var(--zk-color-error);
 }
 
-.z-combobox.z-combobox-error:hover {
+.z-combobox.z-combobox-error:hover .z-combobox-input,
+.z-combobox.z-combobox-error:hover .z-combobox-button {
     border-color: var(--zk-color-error);
 }
 
-.z-combobox.z-combobox-error:focus-within {
+.z-combobox.z-combobox-error:focus-within .z-combobox-input,
+.z-combobox.z-combobox-error:focus-within .z-combobox-button {
     border-color: var(--zk-color-error);
 }
 
@@ -195,8 +212,6 @@
 /* ─── Standard (underline-only) variant ──────────────────────────────────── */
 /* Standard variant: bottom border only, no box */
 .z-combobox.z-combobox-standard {
-    border: none;
-    border-radius: 0;
     background-color: transparent;
     min-height: 32px;
     position: relative;
@@ -231,9 +246,15 @@
     transform: scaleX(1);
 }
 
-/* Override base hover/focus-within that set all-sides border */
-.z-combobox.z-combobox-standard:hover,
-.z-combobox.z-combobox-standard:focus-within {
+.z-combobox.z-combobox-standard:hover .z-combobox-input,
+.z-combobox.z-combobox-standard:hover .z-combobox-button,
+.z-combobox.z-combobox-standard:focus-within .z-combobox-input,
+.z-combobox.z-combobox-standard:focus-within .z-combobox-button {
+    border: none;
+}
+
+.z-combobox.z-combobox-standard .z-combobox-input,
+.z-combobox.z-combobox-standard .z-combobox-button {
     border: none;
     border-radius: 0;
 }
@@ -254,15 +275,18 @@
 }
 
 /* ─── Invalid variant ─────────────────────────────────────────────────────── */
-.z-combobox.z-combobox-invalid {
+.z-combobox.z-combobox-invalid .z-combobox-input,
+.z-combobox.z-combobox-invalid .z-combobox-button {
     border-color: var(--zk-color-error);
 }
 
-.z-combobox.z-combobox-invalid:hover {
+.z-combobox.z-combobox-invalid:hover .z-combobox-input,
+.z-combobox.z-combobox-invalid:hover .z-combobox-button {
     border-color: var(--zk-color-error);
 }
 
-.z-combobox.z-combobox-invalid:focus-within {
+.z-combobox.z-combobox-invalid:focus-within .z-combobox-input,
+.z-combobox.z-combobox-invalid:focus-within .z-combobox-button {
     border-color: var(--zk-color-error);
     border-width: 2px;
 }
@@ -271,7 +295,32 @@
 .z-combobox[readonly],
 .z-combobox.z-combobox-readonly {
     background-color: var(--zk-color-surface-container-low);
+}
+
+.z-combobox[readonly] .z-combobox-input,
+.z-combobox[readonly] .z-combobox-button,
+.z-combobox.z-combobox-readonly .z-combobox-input,
+.z-combobox.z-combobox-readonly .z-combobox-button {
     border-color: var(--zk-color-outline-variant);
+}
+
+/* Suppress hover border change on readonly */
+.z-combobox[readonly]:hover,
+.z-combobox.z-combobox-readonly:hover {
+    cursor: default;
+}
+
+.z-combobox[readonly]:hover .z-combobox-input,
+.z-combobox[readonly]:hover .z-combobox-button,
+.z-combobox.z-combobox-readonly:hover .z-combobox-input,
+.z-combobox.z-combobox-readonly:hover .z-combobox-button {
+    border-color: var(--zk-color-outline-variant);
+}
+
+.z-combobox[readonly] .z-combobox-input,
+.z-combobox.z-combobox-readonly .z-combobox-input {
+    color: var(--zk-color-on-surface-variant);
+    cursor: default;
 }
 
 .z-combobox.z-combobox-readonly .z-combobox-button {
@@ -280,7 +329,8 @@
 }
 
 /* ─── Open state ──────────────────────────────────────────────────────────── */
-.z-combobox.z-combobox-open {
+.z-combobox.z-combobox-open .z-combobox-input,
+.z-combobox.z-combobox-open .z-combobox-button {
     border-color: var(--zk-color-primary);
     border-width: 2px;
 }

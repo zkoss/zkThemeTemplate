@@ -1,7 +1,13 @@
-/* MD3 Rating component — star rating */
-/* DOM: <div class="z-rating z-rating-horizontal">
-          <i class="z-rating-icon z-icon-star [z-rating-selected] [z-rating-readonly]"></i>
-        </div> */
+/* MD3 Rating component — star rating
+ * DOM: <div class="z-rating z-rating-horizontal|z-rating-vertical" role="slider">
+ *        <i class="z-rating-icon z-icon-star [z-rating-selected] [z-rating-hover]
+ *                  [z-rating-disabled] [z-rating-readonly]" aria-hidden="true"></i>
+ *      </div>
+ * Notes:
+ *  - z-rating-selected/hover/disabled/readonly are on each <i> child, not the wrapper
+ *  - z-rating-hover is toggled by JS on mouseover (all icons up to cursor position)
+ *  - default icon font is z-icon-star (icon font, hollow star glyph)
+ */
 
 .z-rating {
     display: inline-flex;
@@ -11,59 +17,58 @@
     cursor: pointer;
 }
 
-/* Each star icon */
+/* Each star icon — default is outline/empty */
 .z-rating-icon {
-    display: inline-block;
-    font-size: 18px;
-    color: var(--zk-color-outline);
-    transition: color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    width: 32px;
+    height: 32px;
+    color: var(--zk-color-disabled);
+    transition:
+        color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard),
+        transform var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
     line-height: 1;
     cursor: pointer;
     user-select: none;
+    border-radius: 50%;
 }
 
-/* Selected (filled) star — override icon font's hollow glyph with solid Unicode star */
+/* Selected (filled) star — primary color */
 .z-rating-icon.z-rating-selected {
-    color: var(--zk-color-warning);
+    color: var(--zk-color-primary);
 }
 
-.z-rating-icon.z-rating-selected::before {
-    content: '\2605';
-    font-family: Arial, Helvetica, sans-serif;
-}
-
-/* Hover state for interactive rating */
-.z-rating:not(.z-rating-horizontal .z-rating-readonly) .z-rating-icon:hover {
-    color: var(--zk-color-warning);
+/* Hover preview — JS adds z-rating-hover to icons up to mouse position */
+.z-rating-icon.z-rating-hover {
+    color: var(--zk-color-primary);
     transform: scale(1.1);
 }
 
-/* Readonly — no hover effects */
+/* Disabled — on each <i> element */
+.z-rating-icon.z-rating-disabled {
+    opacity: var(--zk-state-disabled-opacity);
+    cursor: default;
+    pointer-events: none;
+    transform: none;
+}
+
+/* Readonly — no hover or click, but full opacity to show rating state */
 .z-rating-icon.z-rating-readonly {
     cursor: default;
     pointer-events: none;
+    transform: none;
 }
 
-/* Legacy selectors kept for compatibility */
-.z-rating-star {
-    display: inline-block;
-    font-size: 18px;
-    color: var(--zk-color-outline);
-    line-height: 1;
-    cursor: pointer;
-}
-
-.z-rating-star.z-selected,
-.z-rating-star.z-rating-selected {
-    color: var(--zk-color-warning);
-}
-
-.z-rating-disabled {
-    opacity: var(--zk-state-disabled-opacity);
-    pointer-events: none;
-    cursor: default;
-}
-
+/* Vertical orientation */
 .z-rating-vertical {
     flex-direction: column;
+    align-items: center;
+}
+
+/* Vertical reverses render order so first star is at bottom visually;
+   no special CSS needed — JS handles data-rate values */
+.z-rating-vertical .z-rating-icon {
+    display: flex;
 }

@@ -1,11 +1,14 @@
 /* MD3 Timebox — time picker input */
-/* DOM: <span class="z-timebox"><input class="z-timebox-input">
-     <span class="z-timebox-button">
-       <a class="z-timebox-icon z-timebox-up"><i class="z-icon-angle-up"/></a>
-       <i class="z-timebox-separator"/>
-       <a class="z-timebox-icon z-timebox-down"><i class="z-icon-angle-down"/></a>
+/* DOM (shares Spinner mold):
+   <span class="z-timebox [z-timebox-disabled] [z-timebox-readonly]">
+     <input id="uuid-real" class="z-timebox-input [z-timebox-invalid]">
+     <span id="uuid-btn" class="z-timebox-button">
+       <a id="uuid-btn-up" class="z-timebox-icon z-timebox-up"><i class="z-icon-angle-up"/></a>
+       <i class="z-timebox-separator"></i>
+       <a id="uuid-btn-down" class="z-timebox-icon z-timebox-down"><i class="z-icon-angle-down"/></a>
      </span>
-   </span> */
+   </span>
+*/
 
 /* Map ZK's angle-up/down to Lucide chevron-up/down SVGs */
 .z-icon-angle-up {
@@ -57,6 +60,40 @@
     opacity: 1;
 }
 
+/* Invalid — class is added to the wrapper element by ZK JS at runtime */
+.z-timebox-invalid .z-timebox-input {
+    color: var(--zk-color-error);
+}
+
+/* When ZK JS sets invalid on input child, propagate border to wrapper */
+.z-timebox:has(.z-timebox-invalid) {
+    border-color: var(--zk-color-error);
+}
+
+.z-timebox:has(.z-timebox-invalid):hover {
+    border-color: var(--zk-color-error);
+}
+
+.z-timebox:has(.z-timebox-invalid):focus-within {
+    border-color: var(--zk-color-error);
+    border-width: 2px;
+}
+
+/* When sclass="z-timebox-invalid" is on the wrapper (server-side approach) */
+.z-timebox.z-timebox-invalid {
+    border-color: var(--zk-color-error);
+}
+
+.z-timebox.z-timebox-invalid:hover {
+    border-color: var(--zk-color-error);
+}
+
+.z-timebox.z-timebox-invalid:focus-within {
+    border-color: var(--zk-color-error);
+    border-width: 2px;
+}
+
+/* Button container */
 .z-timebox-button {
     display: inline-flex;
     flex-direction: column;
@@ -65,8 +102,7 @@
     width: 32px;
     min-height: 38px;
     border: none;
-    background: transparent !important;
-    background-color: transparent !important;
+    background: transparent;
     color: var(--zk-color-on-surface-variant);
     flex-shrink: 0;
     border-radius: 0 var(--zk-shape-input) var(--zk-shape-input) 0;
@@ -99,35 +135,30 @@
     background-color: var(--zk-color-outline-variant);
 }
 
-/* Disabled */
-.z-timebox[disabled],
-.z-timebox.z-timebox-disabled {
-    opacity: var(--zk-state-disabled-opacity);
-    pointer-events: none;
-}
-
-/* ─── Invalid variant ─────────────────────────────────────────────────────── */
-.z-timebox.z-timebox-invalid {
-    border-color: var(--zk-color-error);
-}
-
-.z-timebox.z-timebox-invalid:hover {
-    border-color: var(--zk-color-error);
-}
-
-.z-timebox.z-timebox-invalid:focus-within {
-    border-color: var(--zk-color-error);
-    border-width: 2px;
-}
-
-/* ─── Readonly variant ────────────────────────────────────────────────────── */
-.z-timebox[readonly],
+/* ─── Readonly ─────────────────────────────────────────────────────────────── */
 .z-timebox.z-timebox-readonly {
     background-color: var(--zk-color-surface-container-low);
     border-color: var(--zk-color-outline-variant);
 }
 
+.z-timebox.z-timebox-readonly .z-timebox-input {
+    color: var(--zk-color-on-surface-variant);
+}
+
+.z-timebox.z-timebox-readonly:hover {
+    border-color: var(--zk-color-outline-variant);
+}
+
 .z-timebox.z-timebox-readonly .z-timebox-button {
     pointer-events: none;
-    opacity: 0.6;
+    opacity: 0.5;
+}
+
+/* ─── Disabled ─────────────────────────────────────────────────────────────── */
+.z-timebox.z-timebox-disabled {
+    opacity: var(--zk-state-disabled-opacity);
+    pointer-events: none;
+    cursor: not-allowed;
+    background-color: var(--zk-color-surface-container-low);
+    border-color: var(--zk-color-outline-variant);
 }

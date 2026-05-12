@@ -1,7 +1,27 @@
 /* MD3 Tabbox — tab navigation */
-/* DOM: .z-tabbox > .z-tabs > .z-tab[.z-tab-selected] > .z-tab-text
-        .z-tabbox > .z-tabpanels > .z-tabpanel */
+/*
+ * Standard mold DOM:
+ *   div.z-tabbox[.z-tabbox-top/.z-tabbox-bottom/.z-tabbox-left/.z-tabbox-right]
+ *     div.z-tabs
+ *       ul.z-tabs-content  (role="tablist")
+ *         li.z-tab[.z-tab-selected/.z-tab-disabled]
+ *           div.z-tab-content
+ *             [div.z-tab-button  (close button, only when closable=true)]
+ *             span.z-tab-text
+ *     div.z-tabpanels
+ *       div.z-tabpanel
+ *
+ * Accordion mold DOM:
+ *   div.z-tabbox.z-tabbox-accordion
+ *     div.z-tabpanels
+ *       div.z-tabpanel.z-tabpanel-content   ← section wrapper (gets .z-tabpanel-content in accordion)
+ *         div.z-tab[.z-tab-selected/.z-tab-disabled]   ← accordion header/trigger
+ *           div.z-tab-content
+ *             span.z-tab-text
+ *         div#uuid-cave                     ← expandable content area
+ */
 
+/* ─── Outer container ───────────────────────────────────────────────────── */
 .z-tabbox {
     display: flex;
     flex-direction: column;
@@ -9,24 +29,32 @@
     font-family: var(--zk-typescale-font-family);
 }
 
-/* ─── Tab bar ───────────────────────────────────────────────────────────── */
+/* ─── Tab bar (.z-tabs) ─────────────────────────────────────────────────── */
 .z-tabs {
+    position: relative;
+    border-bottom: 1px solid var(--zk-color-outline-variant);
+    background-color: var(--zk-color-surface);
+    flex-shrink: 0;
+    overflow: hidden;   /* ZK manages scroll via JS scroll buttons */
+    min-height: 48px;
+    line-height: 1;
+}
+
+/* Inner tab list */
+.z-tabs-content {
     display: flex;
     flex-direction: row;
+    flex-wrap: nowrap;
     align-items: stretch;
     list-style: none;
     margin: 0;
     padding: 0;
-    border-bottom: 1px solid var(--zk-color-outline-variant);
-    background-color: var(--zk-color-surface);
-    flex-shrink: 0;
-    overflow-x: auto;
-    overflow-y: hidden;
-    scrollbar-width: none;
+    min-height: 48px;
 }
 
-.z-tabs::-webkit-scrollbar {
-    display: none;
+/* Spacer element ZK inserts */
+.z-tabs-space {
+    flex: 1;
 }
 
 /* ─── Individual tab ────────────────────────────────────────────────────── */
@@ -36,20 +64,21 @@
     align-items: center;
     justify-content: center;
     list-style: none;
-    padding: var(--zk-spacing-3) var(--zk-spacing-4);
+    min-height: 48px;
     cursor: pointer;
     color: var(--zk-color-on-surface-variant);
-    font-size: var(--zk-typescale-title-small-size);
-    font-weight: var(--zk-typescale-title-small-weight);
-    line-height: var(--zk-typescale-title-small-line-height);
+    font-size: var(--zk-typescale-label-large-size);
+    font-weight: var(--zk-typescale-label-large-weight);
+    line-height: var(--zk-typescale-label-large-line-height);
     white-space: nowrap;
     user-select: none;
     border-bottom: 2px solid transparent;
     margin-bottom: -1px;
+    overflow: hidden;
+    background: transparent;
     transition:
         color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard),
         border-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
-    overflow: hidden;
 }
 
 /* State layer */
@@ -68,30 +97,46 @@
 }
 
 .z-tab:hover::before { opacity: var(--zk-state-hover-opacity); }
+.z-tab:focus-visible::before { opacity: var(--zk-state-focus-opacity); }
 
-/* Selected tab */
+/* ─── Selected tab ───────────────────────────────────────────────────────── */
 .z-tab.z-tab-selected {
     color: var(--zk-color-primary);
     border-bottom-color: var(--zk-color-primary);
 }
 
-/* Tab text */
-.z-tab-text {
+/* ─── Disabled tab ───────────────────────────────────────────────────────── */
+.z-tab.z-tab-disabled {
+    color: var(--zk-color-disabled);
+    opacity: var(--zk-state-disabled-opacity);
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/* ─── Tab inner content wrapper ─────────────────────────────────────────── */
+.z-tab-content {
+    display: flex;
+    align-items: center;
+    gap: var(--zk-spacing-1);
+    padding: var(--zk-spacing-3) var(--zk-spacing-4);
     position: relative;
     z-index: 1;
+    pointer-events: none;
+}
+
+/* ─── Tab text label ─────────────────────────────────────────────────────── */
+.z-tab-text {
     display: inline-flex;
     align-items: center;
     gap: var(--zk-spacing-1);
     pointer-events: none;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
-/* Hide close button in accordion (not meaningful in accordion layout) */
-.z-tabbox-accordion .z-tab-button {
-    display: none;
-}
-
-/* Tab close button */
-.z-tab-close {
+/* ─── Tab close button (.z-tab-button, not z-tab-close) ─────────────────── */
+.z-tab-button {
     position: relative;
     z-index: 1;
     display: inline-flex;
@@ -107,27 +152,40 @@
     font-size: 12px;
     margin-left: var(--zk-spacing-1);
     padding: 0;
+    pointer-events: auto;
     transition: background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
 }
 
-.z-tab-close:hover {
-    background-color: var(--zk-color-surface-container-high);
+.z-tab-button:hover {
+    background-color: color-mix(in srgb, var(--zk-color-on-surface) 12%, transparent);
     color: var(--zk-color-on-surface);
 }
 
-/* Disabled tab */
-.z-tab.z-tab-disabled {
-    color: var(--zk-color-disabled);
-    cursor: not-allowed;
-    pointer-events: none;
+.z-tab-selected .z-tab-button {
+    color: var(--zk-color-primary);
 }
 
-/* ─── Tab scroll arrows (hidden — overflow handled by CSS scroll on .z-tabs) */
-.z-tabbox-icon {
-    display: none;
+.z-tab-selected .z-tab-button:hover {
+    background-color: color-mix(in srgb, var(--zk-color-primary) 12%, transparent);
 }
 
-.z-tabbox-scroll,
+/* ─── Tab icon / image ───────────────────────────────────────────────────── */
+.z-tab-icon {
+    font-size: 18px;
+    flex-shrink: 0;
+    position: static;
+    transform: none;
+}
+
+.z-tab-image {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    vertical-align: middle;
+}
+
+/* ─── Tab scroll arrows (hidden — ZK JS manages scroll) ─────────────────── */
+.z-tabbox-icon,
 .z-tabbox-left-scroll,
 .z-tabbox-right-scroll,
 .z-tabbox-up-scroll,
@@ -135,33 +193,124 @@
     display: none;
 }
 
-/* ─── Tab panels ────────────────────────────────────────────────────────── */
+/* ─── Tab panels container ───────────────────────────────────────────────── */
 .z-tabpanels {
     flex: 1;
     overflow: auto;
     background-color: var(--zk-color-surface);
+    position: relative;
+    border: 1px solid var(--zk-color-outline-variant);
+    border-top: none;
+    border-radius: 0 0 var(--zk-shape-card) var(--zk-shape-card);
 }
 
 .z-tabpanel {
-    padding: var(--zk-spacing-3) var(--zk-spacing-4);
+    padding: var(--zk-spacing-4);
+    background-color: var(--zk-color-surface);
+    min-height: 80px;
+    color: var(--zk-color-on-surface);
 }
 
-/* ─── Accordion mold ────────────────────────────────────────────────────── */
+/* ─── Placement molds ────────────────────────────────────────────────────── */
+.z-tabbox-top .z-tabs {
+    border-bottom: 1px solid var(--zk-color-outline-variant);
+}
+
+.z-tabbox-bottom {
+    flex-direction: column-reverse;
+}
+
+.z-tabbox-bottom .z-tabs {
+    border-top: 1px solid var(--zk-color-outline-variant);
+    border-bottom: none;
+}
+
+.z-tabbox-bottom .z-tab {
+    border-bottom: none;
+    border-top: 2px solid transparent;
+    margin-top: -1px;
+    margin-bottom: 0;
+}
+
+.z-tabbox-bottom .z-tab.z-tab-selected {
+    border-top-color: var(--zk-color-primary);
+}
+
+.z-tabbox-left {
+    flex-direction: row;
+}
+
+.z-tabbox-left .z-tabs {
+    flex-direction: column;
+    border-bottom: none;
+    border-right: 1px solid var(--zk-color-outline-variant);
+    min-width: 120px;
+    width: auto;
+    overflow: visible;
+}
+
+.z-tabbox-left .z-tabs-content {
+    flex-direction: column;
+}
+
+.z-tabbox-left .z-tab {
+    border-bottom: none;
+    border-right: 2px solid transparent;
+    margin-bottom: 0;
+    margin-right: -1px;
+    justify-content: flex-start;
+}
+
+.z-tabbox-left .z-tab.z-tab-selected {
+    border-right-color: var(--zk-color-primary);
+    color: var(--zk-color-primary);
+}
+
+.z-tabbox-right {
+    flex-direction: row-reverse;
+}
+
+.z-tabbox-right .z-tabs {
+    flex-direction: column;
+    border-bottom: none;
+    border-left: 1px solid var(--zk-color-outline-variant);
+    min-width: 120px;
+    width: auto;
+    overflow: visible;
+}
+
+.z-tabbox-right .z-tabs-content {
+    flex-direction: column;
+}
+
+.z-tabbox-right .z-tab {
+    border-bottom: none;
+    border-left: 2px solid transparent;
+    margin-bottom: 0;
+    margin-left: -1px;
+    justify-content: flex-start;
+}
+
+.z-tabbox-right .z-tab.z-tab-selected {
+    border-left-color: var(--zk-color-primary);
+    color: var(--zk-color-primary);
+}
+
+/* ─── Accordion mold ─────────────────────────────────────────────────────── */
 /*
- * In accordion mode the DOM is completely different:
- *   div.z-tabbox.z-tabbox-accordion
- *     div.z-tabpanels
- *       div.z-tabpanel          ← outer wrapper for each section
- *         div.z-tab             ← accordion header (trigger)
- *           div.z-tab-content
- *         div#uuid-cave         ← expandable content area
- *
- * There is NO .z-tabs wrapper — each .z-tab lives directly inside its .z-tabpanel.
+ * In accordion mode:
+ *   - .z-tabbox-accordion class added by ZK to the outer div
+ *   - .z-tabs is NOT rendered
+ *   - Each section is: .z-tabpanel.z-tabpanel-content
+ *       > .z-tab (accordion header)
+ *       > div#uuid-cave (expandable content)
  */
 
 .z-tabbox-accordion {
     display: block;
     overflow: hidden;
+    border: 1px solid var(--zk-color-outline-variant);
+    border-radius: var(--zk-shape-card);
 }
 
 .z-tabbox-accordion .z-tabpanels {
@@ -181,19 +330,22 @@
     border-bottom: none;
 }
 
-/* Accordion header (the tab that acts as a trigger) */
+/* Accordion header (the .z-tab that acts as expand trigger) */
 .z-tabbox-accordion .z-tab {
     position: relative;
     display: flex;
     align-items: center;
-    justify-content: space-between;
     padding: var(--zk-spacing-3) var(--zk-spacing-4);
+    min-height: 52px;
     cursor: pointer;
     color: var(--zk-color-on-surface);
     background: var(--zk-color-surface);
     font-size: var(--zk-typescale-body-large-size);
     font-weight: var(--zk-typescale-title-small-weight);
     border: none;
+    border-bottom: none;
+    border-right: none;
+    border-left: none;
     margin: 0;
     overflow: hidden;
     user-select: none;
@@ -216,7 +368,42 @@
     opacity: var(--zk-state-hover-opacity);
 }
 
-/* Chevron arrow on the right — pure CSS, no font dependency */
+/* Selected (expanded) accordion header */
+.z-tabbox-accordion .z-tab.z-tab-selected {
+    color: var(--zk-color-on-primary-container);
+    background-color: var(--zk-color-primary-container);
+}
+
+.z-tabbox-accordion .z-tab.z-tab-selected::before {
+    background-color: var(--zk-color-on-primary-container);
+}
+
+/* Disabled accordion header */
+.z-tabbox-accordion .z-tab.z-tab-disabled {
+    color: var(--zk-color-disabled);
+    opacity: var(--zk-state-disabled-opacity);
+    cursor: not-allowed;
+    pointer-events: none;
+    background: var(--zk-color-surface);
+}
+
+/* Inner content row (text + chevron) */
+.z-tabbox-accordion .z-tab-content {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    gap: var(--zk-spacing-2);
+    position: relative;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.z-tabbox-accordion .z-tab-text {
+    flex: 1;
+    pointer-events: none;
+}
+
+/* Chevron — right-side arrow via ::after on .z-tab-content */
 .z-tabbox-accordion .z-tab-content::after {
     content: '';
     display: inline-block;
@@ -225,104 +412,25 @@
     border-right: 2px solid var(--zk-color-on-surface-variant);
     border-bottom: 2px solid var(--zk-color-on-surface-variant);
     transform: rotate(45deg);
-    margin-left: auto;
     flex-shrink: 0;
     transition: transform var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
 }
 
-.z-tabbox-accordion .z-tab.z-tab-selected {
-    color: var(--zk-color-on-surface);
-    background: var(--zk-color-surface);
-}
-
 .z-tabbox-accordion .z-tab.z-tab-selected .z-tab-content::after {
     transform: rotate(-135deg);
-    border-color: var(--zk-color-on-surface-variant);
+    border-color: var(--zk-color-on-primary-container);
 }
 
-/* Tab text area */
-.z-tabbox-accordion .z-tab-content {
-    display: flex;
-    align-items: center;
-    width: 100%;
+/* Accordion close button (when closable=true) — hidden in this mold */
+.z-tabbox-accordion .z-tab-button {
+    display: none;
 }
 
-.z-tabbox-accordion .z-tab-text {
-    pointer-events: none;
-    flex: 1;
-}
-
-/* Expandable content cave */
+/* Expandable content area (div#uuid-cave inside .z-tabpanel) */
 .z-tabbox-accordion .z-tabpanel > [id$="-cave"] {
     padding: var(--zk-spacing-4);
     color: var(--zk-color-on-surface-variant);
     font-size: var(--zk-typescale-body-medium-size);
     line-height: 1.6;
     background: var(--zk-color-surface);
-}
-
-/* ─── Placement molds ───────────────────────────────────────────────────── */
-.z-tabbox-top .z-tabs {
-    border-bottom: 1px solid var(--zk-color-outline-variant);
-}
-
-.z-tabbox-bottom {
-    flex-direction: column-reverse;
-}
-
-.z-tabbox-bottom .z-tabs {
-    border-top: 1px solid var(--zk-color-outline-variant);
-    border-bottom: none;
-}
-
-.z-tabbox-left {
-    flex-direction: row;
-}
-
-.z-tabbox-left .z-tabs {
-    flex-direction: column;
-    border-bottom: none;
-    border-right: 1px solid var(--zk-color-outline-variant);
-    min-width: 120px;
-    width: auto;
-}
-
-.z-tabbox-right {
-    flex-direction: row-reverse;
-}
-
-.z-tabbox-right .z-tabs {
-    flex-direction: column;
-    border-bottom: none;
-    border-left: 1px solid var(--zk-color-outline-variant);
-    min-width: 120px;
-    width: auto;
-}
-
-.z-tabs-content {
-    display: flex;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-
-.z-tabs-space {
-    flex: 1;
-}
-
-.z-tabpanel-content {
-    padding: var(--zk-spacing-3) var(--zk-spacing-4);
-    color: var(--zk-color-on-surface);
-}
-
-.z-tab-icon {
-    font-size: 18px;
-    flex-shrink: 0;
-}
-
-.z-tab-image {
-    width: 20px;
-    height: 20px;
-    flex-shrink: 0;
-    vertical-align: middle;
 }

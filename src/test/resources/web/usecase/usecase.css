@@ -173,15 +173,29 @@ img.avatar,
     min-width: 180px;
 }
 
-/* Ensure panel children content has proper padding */
-.kpi-card .z-panel-content {
-    padding: var(--zk-spacing-4);
-}
-
 /* KPI big number */
 .kpi-card .z-h1 {
     color: var(--zk-color-on-surface);
     margin-bottom: var(--zk-spacing-1);
+}
+
+/* ============================================
+   Flat Section Cards (replaces Groupbox/Panel borders)
+   ============================================ */
+.section-card {
+    background-color: var(--zk-color-surface);
+    border-radius: var(--zk-shape-corner-medium);
+    box-shadow: var(--zk-elevation-card);
+    padding: var(--zk-spacing-4);
+}
+
+.section-title {
+    display: block;
+    font-size: var(--zk-typescale-title-small-size);
+    font-weight: var(--zk-typescale-title-small-weight);
+    color: var(--zk-color-on-surface);
+    line-height: var(--zk-typescale-title-small-line-height);
+    margin-bottom: var(--zk-spacing-3);
 }
 
 /* ============================================

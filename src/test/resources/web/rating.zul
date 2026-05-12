@@ -40,5 +40,23 @@
             </div>
         </div>
     </div>
+
+    <div sclass="z-mb-6">
+        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Vertical</div>
+        <div sclass="z-d-flex z-align-start z-flex-wrap z-gap-6 z-py-3">
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <rating orient="vertical" rating="3"/>
+                <div sclass="z-fs-label-sm z-text-secondary">Vertical (3/5)</div>
+            </div>
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <rating orient="vertical" rating="3" disabled="true"/>
+                <div sclass="z-fs-label-sm z-text-secondary">Vertical disabled</div>
+            </div>
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <rating orient="vertical" rating="3" readonly="true"/>
+                <div sclass="z-fs-label-sm z-text-secondary">Vertical readonly</div>
+            </div>
+        </div>
+    </div>
 </div>
 </zk>

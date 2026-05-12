@@ -26,6 +26,13 @@
                 </inputgroup>
                 <div sclass="z-fs-label-sm z-text-secondary">With multiline</div>
             </div>
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <inputgroup>
+                    <textbox placeholder="Search"/>
+                    <button label="Go" sclass="z-button-primary"/>
+                </inputgroup>
+                <div sclass="z-fs-label-sm z-text-secondary">Input + Button</div>
+            </div>
         </div>
     </div>
 </div>

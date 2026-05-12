@@ -4,46 +4,34 @@
 <div sclass="z-p-8">
     <div sclass="z-border-bottom z-fs-title-lg z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Timebox</div>
 
-    <div sclass="pv-section">
-        <div sclass="pv-section-title">Timebox — State Gallery</div>
-
-        <div sclass="pv-state-gallery pv-variant-default">
-            <div sclass="pv-state-col">
-                <div sclass="pv-state-label">Default</div>
-                <timebox/>
-            </div>
-            <div sclass="pv-state-col">
-                <div sclass="pv-state-label">Disabled</div>
-                <timebox disabled="true"/>
-            </div>
-            <div sclass="pv-state-col">
-                <div sclass="pv-state-label">Readonly</div>
-                <timebox readonly="true"/>
-            </div>
-        </div>
-    </div>
-
-    <div sclass="z-mb-6 pv-cols-4">
+    <div sclass="z-mb-6 pv-cols-5">
         <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">States</div>
         <div sclass="pv-col-header-row z-pb-1">
             <div/>
             <div sclass="z-fs-label-sm z-fw-semibold z-text-secondary">Default</div>
             <div sclass="z-fs-label-sm z-fw-semibold z-text-secondary">Disabled</div>
             <div sclass="z-fs-label-sm z-fw-semibold z-text-secondary">Readonly</div>
-            <div sclass="z-fs-label-sm z-fw-semibold z-text-secondary">Inplace</div>
+            <div sclass="z-fs-label-sm z-fw-semibold z-text-secondary">Invalid</div>
         </div>
         <div sclass="pv-row z-py-2 z-border-bottom">
-            <div sclass="z-fs-label-md z-text-secondary">Default</div>
+            <div sclass="z-fs-label-md z-text-secondary">With button</div>
             <div><timebox/></div>
             <div><timebox disabled="true"/></div>
             <div><timebox readonly="true"/></div>
-            <div><timebox inplace="true"/></div>
+            <div><timebox sclass="z-timebox-invalid"/></div>
         </div>
         <div sclass="pv-row z-py-2 z-border-bottom">
             <div sclass="z-fs-label-md z-text-secondary">No button</div>
             <div><timebox buttonVisible="false"/></div>
             <div><timebox buttonVisible="false" disabled="true"/></div>
             <div><timebox buttonVisible="false" readonly="true"/></div>
+            <div><timebox buttonVisible="false" sclass="z-timebox-invalid"/></div>
+        </div>
+        <div sclass="pv-row z-py-2 z-border-bottom">
+            <div sclass="z-fs-label-md z-text-secondary">Inplace</div>
+            <div><timebox inplace="true"/></div>
+            <div><timebox inplace="true" disabled="true"/></div>
+            <div><timebox inplace="true" readonly="true"/></div>
             <div>—</div>
         </div>
     </div>

@@ -10,11 +10,11 @@
             <menubar>
                 <menu label="File">
                     <menupopup>
-                        <menuitem label="New" iconSclass="z-icon-file-o"/>
-                        <menuitem label="Open" iconSclass="z-icon-folder-open-o"/>
+                        <menuitem label="New" iconSclass="z-icon-file"/>
+                        <menuitem label="Open" iconSclass="z-icon-folder-open"/>
                         <menuitem label="Save" iconSclass="z-icon-save"/>
                         <menuseparator/>
-                        <menuitem label="Exit" iconSclass="z-icon-sign-out"/>
+                        <menuitem label="Exit" iconSclass="z-icon-log-out"/>
                     </menupopup>
                 </menu>
                 <menu label="Edit">
@@ -49,13 +49,13 @@
                 </menu>
             </menubar>
             <toolbarbutton label="Profile" iconSclass="z-icon-user" sclass="md-push-right"/>
-            <toolbarbutton label="Logout" iconSclass="z-icon-sign-out"/>
+            <toolbarbutton label="Logout" iconSclass="z-icon-log-out"/>
         </toolbar>
     </north>
 
-    <west size="200px" title="Navigation" collapsible="true" splittable="true">
+    <west size="200px" collapsible="true" splittable="true">
         <div>
-            <div sclass="nav-item nav-item--active"><span sclass="z-icon-dashboard"/> Dashboard</div>
+            <div sclass="nav-item nav-item--active"><span sclass="z-icon-layout-dashboard"/> Dashboard</div>
             <div sclass="nav-item"><span sclass="z-icon-users"/> Employees</div>
             <div sclass="nav-item"><span sclass="z-icon-shopping-cart"/> Orders</div>
             <div sclass="nav-item"><span sclass="z-icon-bar-chart"/> Reports</div>
@@ -97,7 +97,7 @@
         </tabbox>
     </center>
 
-    <east size="400px" title="Calendar" collapsible="true" splittable="true">
+    <east size="400px" collapsible="true" splittable="true">
         <calendar/>
     </east>
 

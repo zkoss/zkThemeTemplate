@@ -20,6 +20,13 @@ const normFiles = [
     'zul/css/base/_chips.css',
     'zul/css/base/_avatars.css',
     'zul/css/base/_icons.css',
+    // Notification has no css-uri mold registration in lang.xml (moldOnly, no mold element),
+    // so it must be bundled here to ensure styles are always loaded.
+    'js/zul/wgt/css/notification.css',
+    // Toast (zkmax moldOnly) has no css-uri in lang.xml, same pattern as notification.
+    'js/zul/wgt/css/toast.css',
+    // Captcha has no css-uri in lang.xml (mold only), must be bundled here.
+    'js/zul/wgt/css/captcha.css',
 ];
 
 // combo.css.dsp = merged dropdown-type input components
@@ -34,11 +41,20 @@ const comboFiles = [
 // footer.css.dsp = loaded last by WCS
 const footerFiles = [
     'js/zul/wgt/css/toolbarbutton.css',
+    'js/zul/wgt/css/loadingbar.css',
     'js/zul/wnd/css/messagebox.css',
 ];
 
+// Files merged into another CSS file (excluded from 1:1 auto-scan).
+// splitter.css is merged into box.css because lang.xml registers no css-uri for splitter.
+// errorbox.css is merged into input.css because lang.xml registers no css-uri for errorbox.
+const extraMergedFiles = [
+    'js/zul/box/css/splitter.css',
+    'js/zul/wgt/css/errorbox.css',
+];
+
 // Files that are merged (excluded from 1:1 auto-scan)
-const mergedFiles = new Set([...comboFiles, ...footerFiles]);
+const mergedFiles = new Set([...normFiles.filter(f => f.startsWith('js/')), ...comboFiles, ...footerFiles, ...extraMergedFiles]);
 
 // Empty stubs for unimplemented zkex/zkmax/font components.
 // These prevent FileNotFoundException errors at runtime.
@@ -50,7 +66,6 @@ const stubPaths = [
     'js/zkex/inp/css/colorbox.css.dsp',
     'js/zkex/layout/css/columnlayout.css.dsp',
     'js/zkex/menu/css/fisheye.css.dsp',
-    'js/zkex/pdfviewer/css/pdfviewer.css.dsp',
     'js/zkex/slider/css/rangeslider.css.dsp',
     'js/zkex/slider/css/sliderbuttons.css.dsp',
     // zkmax
@@ -79,14 +94,11 @@ const stubPaths = [
     'js/zkmax/sel/css/tree.css.dsp',
     'js/zkmax/wgt/css/drawer.css.dsp',
     'js/zkmax/wgt/css/dropupload.css.dsp',
-    'js/zkmax/wgt/css/signature.css.dsp',
     'js/zkmax/wgt/css/stepbar.css.dsp',
     'js/zkmax/barscanner/css/barcodescanner.css.dsp',
     'js/zkmax/big/css/biglistbox.css.dsp',
     'js/zkmax/cropper/css/cropper.css.dsp',
-    'js/zkmax/goldenlayout/css/goldenlayout.css.dsp',
     'js/zkmax/grid/css/grid.css.dsp',
-    'js/zkmax/signature/css/signature.css.dsp',
     'js/zkmax/slider/css/multislider.css.dsp',
     'js/zkmax/tbeditor/css/tbeditor.css.dsp',
 ];
@@ -116,13 +128,74 @@ function getLucideIcons() {
         .map(f => f.replace('.svg', ''));
 }
 
+// Font Awesome name → Lucide name aliases.
+// ZK widget JS emits FA class names (e.g. z-icon-caret-down); these redirect them to
+// the correct Lucide SVG that is already generated above.
+const FA_TO_LUCIDE = {
+    // ZK built-in widget icons
+    'caret-down':          'chevron-down',
+    'caret-left':          'chevron-left',
+    'caret-right':         'chevron-right',
+    'caret-up':            'chevron-up',
+    'angle-left':          'chevron-left',
+    'angle-right':         'chevron-right',
+    'angle-double-down':   'chevrons-down',
+    'angle-double-left':   'chevrons-left',
+    'angle-double-right':  'chevrons-right',
+    'angle-double-up':     'chevrons-up',
+    'ellipsis-h':          'ellipsis',
+    'ellipsis-v':          'ellipsis-vertical',
+    'exclamation-circle':  'circle-alert',
+    'exclamation-triangle':'triangle-alert',
+    'info-circle':         'info',
+    'reorder':             'grip-vertical',
+    'stack':               'layers',
+    'times-circle':        'circle-x',
+    // Common FA icons used in preview pages
+    'gear':                'settings',
+    'volume-up':           'volume-2',
+    'clock-o':             'clock',
+    'edit':                'pencil',
+    'envelope':            'mail',
+    'file-o':              'file',
+    'file-text-o':         'file-text',
+    'file-pdf-o':          'file-type',
+    'folder-open-o':       'folder-open',
+    'help-circle':         'circle-help',
+    'keyboard-o':          'keyboard',
+    'power-off':           'power',
+    'print':               'printer',
+    'question':            'circle-help',
+    'question-circle':     'circle-help',
+    'refresh':             'refresh-cw',
+    'rotate-left':         'rotate-ccw',
+    'share':               'share-2',
+    'sign-out':            'log-out',
+    'tachometer':          'gauge',
+    'th':                  'layout-grid',
+    'th-list':             'layout-list',
+    'cube':                'box',
+    'bar-chart':           'bar-chart-2',
+    'android':             'smartphone',
+    'dashboard':           'layout-dashboard',
+    'times':               'x',
+};
+
 function generateLucideIconsCSS(iconNames) {
     const iconsDir = path.join(__dirname, '..', 'node_modules/lucide-static/icons');
+    const iconMap = {};
     let css = '/* Lucide icon classes — auto-generated from lucide-static; class name = z-icon-{lucide-name} */\n';
     for (const name of iconNames) {
         const svg = fs.readFileSync(path.join(iconsDir, name + '.svg'), 'utf8');
         const encoded = encodeSvgForCss(minifySvg(svg));
+        iconMap[name] = encoded;
         css += `.z-icon-${name}{--_icon:url("data:image/svg+xml,${encoded}")}\n`;
+    }
+    css += '/* FA → Lucide aliases: ZK widget JS emits FA class names; redirect to Lucide SVG */\n';
+    for (const [fa, lucide] of Object.entries(FA_TO_LUCIDE)) {
+        if (iconMap[lucide]) {
+            css += `.z-icon-${fa}{--_icon:url("data:image/svg+xml,${iconMap[lucide]}")}\n`;
+        }
     }
     return css;
 }
@@ -218,6 +291,19 @@ function build() {
     if (fs.existsSync(jsZkmaxDir)) {
         const zkmaxCssFiles = scanCssFiles(jsZkmaxDir, webDir);
         for (const relPath of zkmaxCssFiles) {
+            const content = readFile(relPath);
+            if (content) {
+                writeDsp(relPath + '.dsp', content);
+                console.log(`  ${relPath}.dsp`);
+            }
+        }
+    }
+
+    // 2c. Auto-scan js/zkex/**/css/*.css → 1:1 *.css.dsp (overrides stubs)
+    const jsZkexDir = path.join(webDir, 'js/zkex');
+    if (fs.existsSync(jsZkexDir)) {
+        const zkexCssFiles = scanCssFiles(jsZkexDir, webDir);
+        for (const relPath of zkexCssFiles) {
             const content = readFile(relPath);
             if (content) {
                 writeDsp(relPath + '.dsp', content);

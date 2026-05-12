@@ -1,13 +1,13 @@
 /* MD3 Listbox — selection list component */
-/* DOM: .z-listbox > .z-listbox-header > .z-listheader
-        .z-listbox > .z-listbox-body > table > tbody > .z-listitem > td.z-listcell > .z-listcell-cnt */
+/* DOM: .z-listbox > .z-listbox-header > table > thead > tr.z-listhead > th.z-listheader
+        .z-listbox > .z-listbox-body > table > tbody > tr.z-listitem > td.z-listcell > div.z-listcell-content */
 
 .z-listbox {
     --zk-listbox-cell-padding: var(--zk-spacing-4);
     display: block;
     background-color: var(--zk-color-surface);
     border-radius: var(--zk-shape-card);
-    box-shadow: var(--zk-elevation-card);
+    box-shadow: rgba(50,50,93,0.024) 0px 2px 5px -1px, rgba(0,0,0,0.05) 0px 1px 3px -1px;
     border: 1px solid var(--zk-color-outline-variant);
     overflow: hidden;
     box-sizing: border-box;
@@ -20,7 +20,6 @@
     background-color: transparent;
 }
 
-.z-listhead,
 .z-listheader {
     padding: var(--zk-listbox-cell-padding);
     font-size: var(--zk-typescale-label-large-size);
@@ -28,8 +27,8 @@
     line-height: var(--zk-typescale-label-large-line-height);
     color: var(--zk-color-on-surface-variant);
     text-align: left;
+    background-color: var(--zk-color-surface-container-low);
     border-bottom: 1px solid var(--zk-color-outline-variant);
-    background-color: transparent;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -38,6 +37,10 @@
     position: relative;
     box-sizing: border-box;
     cursor: default;
+}
+
+.z-listhead {
+    background-color: var(--zk-color-surface-container-low);
 }
 
 .z-listheader-sort {
@@ -99,6 +102,7 @@
 
 /* List item row */
 .z-listitem {
+    background-color: var(--zk-color-surface);
     border-bottom: 1px solid var(--zk-color-outline-variant);
     transition: background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
     cursor: pointer;
@@ -108,19 +112,30 @@
     border-bottom: none;
 }
 
+/* Row hover: MD3 state layer rgba(on-surface, 0.08) */
 .z-listitem:hover {
-    background-color: var(--zk-color-surface-container-low);
+    background-color: color-mix(in srgb, var(--zk-color-on-surface) 8%, var(--zk-color-surface));
 }
 
+/* Odd striping: ZK applies z-listitem-odd class directly on TR */
+.z-listitem-odd {
+    background-color: var(--zk-color-surface-container-lowest);
+}
+
+.z-listitem-odd:hover {
+    background-color: color-mix(in srgb, var(--zk-color-on-surface) 8%, var(--zk-color-surface-container-lowest));
+}
+
+/* Selected row */
 .z-listitem.z-listitem-selected,
 .z-listitem.z-selected {
-    background-color: var(--zk-color-primary-container);
-    color: var(--zk-color-on-primary-container);
+    background-color: rgba(55,111,208,0.12);
 }
 
+/* Selected + hover: slightly darker tint */
 .z-listitem.z-listitem-selected:hover,
 .z-listitem.z-selected:hover {
-    background-color: var(--zk-color-primary-container);
+    background-color: color-mix(in srgb, var(--zk-color-on-primary-container) 8%, var(--zk-color-primary-container));
 }
 
 /* Focus — outline on <tr> clips at cell boundaries; use box-shadow on the first cell instead */
@@ -150,9 +165,11 @@
     text-overflow: ellipsis;
 }
 
+.z-listitem.z-listitem-selected .z-listcell-cnt,
+.z-listitem.z-listitem-selected .z-listcell-content,
 .z-listitem.z-selected .z-listcell-cnt,
 .z-listitem.z-selected .z-listcell-content {
-    color: var(--zk-color-on-primary-container);
+    color: var(--zk-color-on-surface);
 }
 
 /* ─── Listgroup (collapsible group header rows) ────────────────────── */
@@ -406,7 +423,8 @@
     padding: 0 var(--zk-spacing-1);
 }
 
-/* ─── Odd row stripe ─────────────────────────────────────────────────────── */
+/* ─── Odd row stripe via parent sclass (legacy fallback) ─────────────────── */
+/* ZK normally applies z-listitem-odd directly on the TR; this covers the legacy parent-sclass approach */
 .z-listbox-odd .z-listitem:nth-child(odd) {
     background-color: var(--zk-color-surface-container-lowest);
 }
@@ -437,11 +455,12 @@
 }
 
 /* ─── Disabled listitem ──────────────────────────────────────────────────── */
-.z-listitem.z-listitem-disabled .z-listcell-content,
-.z-listitem[disabled] .z-listcell-content {
-    color: var(--zk-color-disabled);
-    cursor: not-allowed;
+/* ZK applies z-listitem-disabled on TR via ItemWidget.domClass_ */
+.z-listitem.z-listitem-disabled,
+.z-listitem[disabled] {
+    opacity: var(--zk-state-disabled-opacity, 0.38);
     pointer-events: none;
+    cursor: not-allowed;
 }
 
 /* ─── Radio mode listitem ────────────────────────────────────────────────── */

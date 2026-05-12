@@ -22,10 +22,10 @@
     <north size="48px" border="none">
         <toolbar>
             <toolbarbutton label="Run Report" iconSclass="z-icon-play"/>
-            <toolbarbutton label="Export PDF" iconSclass="z-icon-file-pdf-o"/>
-            <toolbarbutton label="Export CSV" iconSclass="z-icon-file-text-o" popup="exportPopup, type=toggle"/>
+            <toolbarbutton label="Export PDF" iconSclass="z-icon-file-type"/>
+            <toolbarbutton label="Export CSV" iconSclass="z-icon-file-text" popup="exportPopup, type=toggle"/>
             <separator/>
-            <toolbarbutton label="Print" iconSclass="z-icon-print"/>
+            <toolbarbutton label="Print" iconSclass="z-icon-printer"/>
             <separator/>
             <label value="Template:"/>
             <combobox value="Q1 Revenue Summary" width="200px">
@@ -39,9 +39,9 @@
 
     <!-- West: Report Parameters -->
     <west size="340px" title="Parameters" collapsible="true" splittable="true">
-        <vlayout hflex="1">
-            <groupbox>
-                <caption label="Date Range"/>
+        <vlayout hflex="1" style="gap: var(--zk-spacing-3); padding: var(--zk-spacing-2);">
+            <div sclass="section-card">
+                <label value="Date Range" sclass="section-title"/>
                 <grid>
                     <rows>
                         <row>
@@ -55,10 +55,10 @@
                     </rows>
                 </grid>
                 <calendar/>
-            </groupbox>
+            </div>
 
-            <groupbox>
-                <caption label="Filters"/>
+            <div sclass="section-card">
+                <label value="Filters" sclass="section-title"/>
                 <grid>
                     <rows>
                         <row>
@@ -100,7 +100,7 @@
                 </grid>
                 <separator/>
                 <button label="Run Report" iconSclass="z-icon-play" width="100%"/>
-            </groupbox>
+            </div>
         </vlayout>
     </west>
 
@@ -184,19 +184,15 @@
 
     <!-- East: Actions panel -->
     <east size="180px" title="Actions" collapsible="true">
-        <panel title="Quick Actions" border="normal">
-            <panelchildren>
-                <vlayout>
-                    <toolbarbutton label="Save Report" iconSclass="z-icon-save"/>
-                    <toolbarbutton label="Schedule" iconSclass="z-icon-clock-o"/>
-                    <toolbarbutton label="Share" iconSclass="z-icon-share"/>
-                    <toolbarbutton label="Audit Trail" iconSclass="z-icon-history"/>
-                    <separator/>
-                    <a label="View Documentation" href="#" iconSclass="z-icon-question-circle"/>
-                    <a label="ZK Reports Guide" href="#" iconSclass="z-icon-book"/>
-                </vlayout>
-            </panelchildren>
-        </panel>
+        <vlayout style="padding: var(--zk-spacing-3);">
+            <toolbarbutton label="Save Report" iconSclass="z-icon-save"/>
+            <toolbarbutton label="Schedule" iconSclass="z-icon-clock"/>
+            <toolbarbutton label="Share" iconSclass="z-icon-share"/>
+            <toolbarbutton label="Audit Trail" iconSclass="z-icon-history"/>
+            <separator/>
+            <a label="View Documentation" href="#" iconSclass="z-icon-circle-help"/>
+            <a label="ZK Reports Guide" href="#" iconSclass="z-icon-book"/>
+        </vlayout>
     </east>
 
     <!-- South: Status bar -->

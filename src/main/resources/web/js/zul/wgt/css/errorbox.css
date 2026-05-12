@@ -1,4 +1,13 @@
-/* MD3 Errorbox — inline field validation tooltip */
+/* MD3 Errorbox — inline field validation tooltip (extends Notification)
+   DOM: <div class="z-errorbox">
+          <div class="z-errorbox-pointer [z-errorbox-up|down|left|right]"/>
+          <i class="z-errorbox-icon z-icon-exclamation-triangle"/>
+          <div class="z-errorbox-content" title="…">message text</div>
+          <div class="z-errorbox-close">
+            <i class="z-errorbox-icon z-icon-times"/>
+          </div>
+        </div>
+*/
 
 .z-errorbox {
     color: var(--zk-color-on-error-container);
@@ -7,17 +16,21 @@
     top: 0;
     left: 0;
     z-index: 1600;
+    display: table;
 }
 
+/* ─── Content box ───────────────────────────────────────────────────────── */
 .z-errorbox-content {
     font-family: var(--zk-typescale-font-family);
     font-size: var(--zk-typescale-body-small-size);
     font-weight: var(--zk-typescale-body-small-weight);
+    line-height: 1.4;
     color: var(--zk-color-on-error-container);
     width: 100%;
     border: 1px solid var(--zk-color-error);
     border-radius: var(--zk-shape-corner-extra-small);
-    padding: var(--zk-spacing-2) var(--zk-spacing-4) var(--zk-spacing-2) 32px;
+    /* left padding leaves room for icon */
+    padding: var(--zk-spacing-2) 28px var(--zk-spacing-2) 28px;
     background: var(--zk-color-error-container);
     position: relative;
     overflow: hidden;
@@ -25,31 +38,42 @@
     box-shadow: var(--zk-elevation-2);
 }
 
-.z-errorbox > .z-errorbox-icon {
-    font-size: 16px;
-    color: var(--zk-color-error);
+/* ─── Icon (direct sibling before content, absolute inside errorbox) ─────── */
+.z-errorbox-icon {
     position: absolute;
+    z-index: 2;
+    font-size: 14px;
+    width: 14px;
+    height: 14px;
+    line-height: 14px;
     top: 50%;
     left: var(--zk-spacing-2);
-    transform: translateY(-50%);
-    z-index: 2;
+    margin-top: -7px;
+    color: var(--zk-color-error);
 }
 
+/* ─── Close button ──────────────────────────────────────────────────────── */
 .z-errorbox-close {
-    font-size: var(--zk-typescale-body-medium-size);
-    width: 16px;
-    height: 16px;
+    font-size: 14px;
+    width: 18px;
+    height: 18px;
     padding: 0 1px;
     position: absolute;
-    top: var(--zk-spacing-2);
-    right: var(--zk-spacing-2);
+    top: 50%;
+    right: var(--zk-spacing-1);
+    margin-top: -9px;
     cursor: pointer;
     opacity: 0.6;
     color: var(--zk-color-on-error-container);
 }
 
-.z-errorbox-close:hover {
-    opacity: 1;
+.z-errorbox-close:hover { opacity: 1; }
+
+/* Close icon inside close button */
+.z-errorbox-close > .z-errorbox-icon {
+    position: static;
+    margin-top: 0;
+    color: inherit;
 }
 
 /* ─── Arrow pointer ──────────────────────────────────────────────────────── */
@@ -69,7 +93,14 @@
     border: 6px solid transparent;
 }
 
-.z-errorbox-left  { border-right-color: var(--zk-color-error-container); }
-.z-errorbox-right { border-left-color:  var(--zk-color-error-container); }
+/* Arrow colors match error-container */
+.z-errorbox-left  { border-right-color:  var(--zk-color-error-container); }
+.z-errorbox-right { border-left-color:   var(--zk-color-error-container); }
 .z-errorbox-up    { border-bottom-color: var(--zk-color-error-container); }
-.z-errorbox-down  { border-top-color:   var(--zk-color-error-container); }
+.z-errorbox-down  { border-top-color:    var(--zk-color-error-container); }
+
+/* When pointer is present, content renders as table-cell (mirrors notification) */
+.z-errorbox-pointer ~ .z-errorbox-content {
+    display: table-cell;
+    vertical-align: middle;
+}

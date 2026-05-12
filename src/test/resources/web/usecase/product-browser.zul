@@ -100,7 +100,7 @@
     <vlayout hflex="1" vflex="1">
         <toolbar>
             <toolbarbutton label="List View" iconSclass="z-icon-list"/>
-            <toolbarbutton label="Grid View" iconSclass="z-icon-th"/>
+            <toolbarbutton label="Grid View" iconSclass="z-icon-layout-grid"/>
             <separator/>
             <label value="Search:"/>
             <textbox placeholder="Search products..." width="200px"/>

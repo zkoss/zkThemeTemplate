@@ -1,0 +1,5 @@
+.z-goldenlayout {
+    border-radius: var(--zk-shape-card);
+    box-shadow: var(--zk-elevation-card);
+    overflow: hidden;
+}

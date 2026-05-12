@@ -10,65 +10,61 @@
         <toolbar>
             <label value="Operations Dashboard" sclass="z-h2"/>
             <separator/>
-            <toolbarbutton label="Refresh" iconSclass="z-icon-refresh"/>
+            <toolbarbutton label="Refresh" iconSclass="z-icon-refresh-cw"/>
             <toolbarbutton label="Settings" iconSclass="z-icon-cog" sclass="md-push-right"/>
         </toolbar>
 
         <!-- KPI Cards row -->
         <div sclass="md-hbox">
             <!-- KPI 1: Orders Today -->
-            <panel title="Orders Today" border="normal" sclass="kpi-card md-flex-1" >
-                <panelchildren>
-                    <vlayout>
-                        <div sclass="z-h1">248</div>
-                        <div sclass="kpi-label z-h6">Daily target: 300</div>
-                        <progressmeter value="83" width="160px"/>
-                        <label value="83% of target"/>
-                    </vlayout>
-                </panelchildren>
-            </panel>
+            <div sclass="kpi-card md-flex-1 section-card">
+                <label value="Orders Today" sclass="section-title"/>
+                <vlayout>
+                    <div sclass="z-h1">248</div>
+                    <div sclass="kpi-label z-h6">Daily target: 300</div>
+                    <progressmeter value="83" width="160px"/>
+                    <label value="83% of target"/>
+                </vlayout>
+            </div>
 
             <!-- KPI 2: Customer Satisfaction -->
-            <panel title="Customer Satisfaction" border="normal" sclass="kpi-card md-flex-1">
-                <panelchildren>
-                    <vlayout>
-                        <rating max="5" rating="4" readonly="true"/>
-                        <div sclass="z-h1">4.2</div>
-                        <div sclass="kpi-label z-h6">out of 5.0 (342 reviews)</div>
-                    </vlayout>
-                </panelchildren>
-            </panel>
+            <div sclass="kpi-card md-flex-1 section-card">
+                <label value="Customer Satisfaction" sclass="section-title"/>
+                <vlayout>
+                    <rating max="5" rating="4" readonly="true"/>
+                    <div sclass="z-h1">4.2</div>
+                    <div sclass="kpi-label z-h6">out of 5.0 (342 reviews)</div>
+                </vlayout>
+            </div>
 
             <!-- KPI 3: Server Load -->
-            <panel title="Server Load" border="normal" sclass="kpi-card md-flex-1">
-                <panelchildren>
-                    <vlayout>
-                        <div sclass="z-h1">67%</div>
-                        <div sclass="kpi-label z-h6">CPU utilization</div>
-                        <progressmeter value="67"/>
-                        <label value="Normal range: 0-80%"/>
-                    </vlayout>
-                </panelchildren>
-            </panel>
+            <div sclass="kpi-card md-flex-1 section-card">
+                <label value="Server Load" sclass="section-title"/>
+                <vlayout>
+                    <div sclass="z-h1">67%</div>
+                    <div sclass="kpi-label z-h6">CPU utilization</div>
+                    <progressmeter value="67"/>
+                    <label value="Normal range: 0-80%"/>
+                </vlayout>
+            </div>
 
             <!-- KPI 4: Revenue -->
-            <panel title="Revenue" border="normal" sclass="kpi-card md-flex-1">
-                <panelchildren>
-                    <vlayout>
-                        <div sclass="z-h1">$84.2K</div>
-                        <div sclass="kpi-label z-h6">Month to date</div>
-                        <label value="Target: $120K"/>
-                    </vlayout>
-                </panelchildren>
-            </panel>
+            <div sclass="kpi-card md-flex-1 section-card">
+                <label value="Revenue" sclass="section-title"/>
+                <vlayout>
+                    <div sclass="z-h1">$84.2K</div>
+                    <div sclass="kpi-label z-h6">Month to date</div>
+                    <label value="Target: $120K"/>
+                </vlayout>
+            </div>
         </div>
 
         <!-- Secondary panels -->
         <div sclass="md-hbox">
 
             <!-- Recent Alerts -->
-            <groupbox sclass="md-flex-1">
-                <caption label="Recent Alerts"/>
+            <div sclass="md-flex-1 section-card">
+                <label value="Recent Alerts" sclass="section-title"/>
                 <listbox hflex="1" rows="6">
                     <listitem>
                         <listcell>
@@ -101,11 +97,11 @@
                         </listcell>
                     </listitem>
                 </listbox>
-            </groupbox>
+            </div>
 
             <!-- System Status -->
-            <groupbox width="300px">
-                <caption label="System Status"/>
+            <div sclass="section-card" width="300px">
+                <label value="System Status" sclass="section-title"/>
                 <grid>
                     <columns>
                         <column label="Service" hflex="1"/>
@@ -134,7 +130,7 @@
                         </row>
                     </rows>
                 </grid>
-            </groupbox>
+            </div>
 
         </div>
     </vlayout>

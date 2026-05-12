@@ -1,0 +1,6 @@
+.z-pdfviewer {
+    background-color: var(--zk-color-surface-container-low);
+    border: 1px solid var(--zk-color-outline-variant);
+    border-radius: var(--zk-shape-corner-small);
+    overflow: hidden;
+}

@@ -1,39 +1,69 @@
-/* MD3 Selectbox — styled select component */
+/* MD3 Selectbox — lightweight dropdown (renders as a single <select> element) */
+/* DOM: <select class="z-selectbox"> <option>...</option> </select> */
 
+/* Chevron-down SVG arrow (encoded, color-independent mask approach not possible on
+   background-image since SVG fill must be a literal color, not a CSS variable.
+   We use a neutral dark arrow via stroke color matching on-surface-variant at ~60% opacity) */
 .z-selectbox {
-    display: inline-flex;
-    align-items: center;
-    position: relative;
-    border: 1px solid var(--zk-color-outline);
-    border-radius: var(--zk-shape-input);
-    background-color: var(--zk-color-surface);
-    overflow: hidden;
+    /* Layout */
+    display: inline-block;
     min-height: 40px;
-    transition: border-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
-}
+    min-width: 120px;
+    box-sizing: border-box;
+    padding: 0 36px 0 var(--zk-spacing-3);
+    vertical-align: middle;
 
-.z-selectbox:focus-within {
-    border-color: var(--zk-color-primary);
-    border-width: 2px;
-}
-
-.z-selectbox select,
-.z-selectbox-select {
-    appearance: none;
-    -webkit-appearance: none;
-    flex: 1;
-    padding: 0 var(--zk-spacing-4);
-    border: none;
-    background: transparent;
+    /* Typography */
     font-family: var(--zk-typescale-font-family);
     font-size: var(--zk-typescale-body-medium-size);
+    font-weight: var(--zk-typescale-body-medium-weight);
+    line-height: 1.5;
     color: var(--zk-color-on-surface);
+
+    /* Surface */
+    background-color: var(--zk-color-surface);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    background-size: 20px 20px;
+
+    /* Shape */
+    border: 1px solid var(--zk-color-outline);
+    border-radius: var(--zk-shape-input);
+
+    /* Interaction */
     cursor: pointer;
-    min-height: 40px;
+    outline: none;
+    appearance: none;
+    -webkit-appearance: none;
+
+    /* Transition */
+    transition:
+        border-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard),
+        border-width var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+}
+
+/* Remove IE dropdown arrow */
+.z-selectbox::-ms-expand {
+    display: none;
+}
+
+.z-selectbox:hover {
+    border-color: var(--zk-color-on-surface);
+}
+
+.z-selectbox:focus,
+.z-selectbox:focus-visible {
+    border-color: var(--zk-color-primary);
+    border-width: 2px;
     outline: none;
 }
 
-.z-selectbox[disabled] {
+/* ─── Disabled ────────────────────────────────────────────────────────── */
+.z-selectbox[disabled],
+.z-selectbox:disabled {
     opacity: var(--zk-state-disabled-opacity);
     pointer-events: none;
+    cursor: not-allowed;
+    background-color: var(--zk-color-surface-container-low);
 }

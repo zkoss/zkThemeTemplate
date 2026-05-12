@@ -10,14 +10,14 @@
             <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
                 <navbar orient="vertical">
                     <navitem label="Home" iconSclass="z-icon-home"/>
-                    <nav label="Get Started" iconSclass="z-icon-th-list" badgeText="3">
+                    <nav label="Get Started" iconSclass="z-icon-layout-list" badgeText="3">
                         <navitem label="Step One" />
                         <navitem label="Step Two" />
                         <navitem label="Step Three" />
                     </nav>
                     <navitem label="About" iconSclass="z-icon-flag"/>
                     <navseparator/>
-                    <nav label="Contact" iconSclass="z-icon-envelope" badgeText="5">
+                    <nav label="Contact" iconSclass="z-icon-mail" badgeText="5">
                         <navitem label="Reply" iconSclass="z-icon-reply" />
                         <navitem label="Reply all" iconSclass="z-icon-reply-all"/>
                         <navitem label="Inbox" iconSclass="z-icon-inbox"/>
@@ -25,7 +25,7 @@
                         <navseparator/>
                         <nav label="Settings" iconSclass="z-icon-cog" badgeText=">>">
                             <navitem label="Edit profile" iconSclass="z-icon-user"/>
-                            <navitem label="Keyboard shortcuts" iconSclass="z-icon-keyboard-o"/>
+                            <navitem label="Keyboard shortcuts" iconSclass="z-icon-keyboard"/>
                             <navitem label="Change password" iconSclass="z-icon-key"/>
                         </nav>
                     </nav>
@@ -42,14 +42,14 @@
                 </div>
                 <navbar id="vn1" orient="vertical" collapsed="true">
                     <navitem label="Home" iconSclass="z-icon-home"/>
-                    <nav label="Get Started" iconSclass="z-icon-th-list" badgeText="3">
+                    <nav label="Get Started" iconSclass="z-icon-layout-list" badgeText="3">
                         <navitem label="Step One" />
                         <navitem label="Step Two" />
                         <navitem label="Step Three" />
                     </nav>
                     <navitem label="About" iconSclass="z-icon-flag"/>
                     <navseparator/>
-                    <nav label="Contact" iconSclass="z-icon-envelope" badgeText="5">
+                    <nav label="Contact" iconSclass="z-icon-mail" badgeText="5">
                         <navitem label="Reply" iconSclass="z-icon-reply" />
                         <navitem label="Reply all" iconSclass="z-icon-reply-all"/>
                         <navitem label="Inbox" iconSclass="z-icon-inbox"/>
@@ -57,7 +57,7 @@
                         <navseparator/>
                         <nav label="Settings" iconSclass="z-icon-cog" badgeText=">>">
                             <navitem label="Edit profile" iconSclass="z-icon-user"/>
-                            <navitem label="Keyboard shortcuts" iconSclass="z-icon-keyboard-o"/>
+                            <navitem label="Keyboard shortcuts" iconSclass="z-icon-keyboard"/>
                             <navitem label="Change password" iconSclass="z-icon-key"/>
                         </nav>
                     </nav>
@@ -74,14 +74,14 @@
                 </div>
                 <navbar id="vn2" orient="vertical" collapsed="true" hflex="min">
                     <navitem label="Home" iconSclass="z-icon-home"/>
-                    <nav label="Get Started" iconSclass="z-icon-th-list">
+                    <nav label="Get Started" iconSclass="z-icon-layout-list">
                         <navitem label="Step One" />
                         <navitem label="Step Two" />
                         <navitem label="Step Three" />
                     </nav>
                     <navitem label="About" iconSclass="z-icon-flag"/>
                     <navseparator/>
-                    <nav label="Contact" iconSclass="z-icon-envelope">
+                    <nav label="Contact" iconSclass="z-icon-mail">
                         <navitem label="Reply" iconSclass="z-icon-reply" />
                         <navitem label="Reply all" iconSclass="z-icon-reply-all"/>
                         <navitem label="Inbox" iconSclass="z-icon-inbox"/>
@@ -89,7 +89,7 @@
                         <navseparator/>
                         <nav label="Settings" iconSclass="z-icon-cog">
                             <navitem label="Edit profile" iconSclass="z-icon-user"/>
-                            <navitem label="Keyboard shortcuts" iconSclass="z-icon-keyboard-o"/>
+                            <navitem label="Keyboard shortcuts" iconSclass="z-icon-keyboard"/>
                             <navitem label="Change password" iconSclass="z-icon-key"/>
                         </nav>
                     </nav>
@@ -107,14 +107,14 @@
             <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
                 <navbar orient="horizontal">
                     <navitem label="Home" iconSclass="z-icon-home"/>
-                    <nav label="Get Started" iconSclass="z-icon-th-list" badgeText="3">
+                    <nav label="Get Started" iconSclass="z-icon-layout-list" badgeText="3">
                         <navitem label="Step One"/>
                         <navitem label="Step Two"/>
                         <navitem label="Step Three"/>
                     </nav>
                     <navitem label="About" iconSclass="z-icon-flag"/>
                     <navseparator/>
-                    <nav label="Contact" iconSclass="z-icon-envelope" badgeText="5">
+                    <nav label="Contact" iconSclass="z-icon-mail" badgeText="5">
                         <navitem label="Reply" iconSclass="z-icon-reply" />
                         <navitem label="Reply all" iconSclass="z-icon-reply-all"/>
                         <navitem label="Inbox" iconSclass="z-icon-inbox"/>
@@ -122,7 +122,7 @@
                         <navseparator/>
                         <nav label="Settings" iconSclass="z-icon-cog" badgeText=">>">
                             <navitem label="Edit profile" iconSclass="z-icon-user"/>
-                            <navitem label="Keyboard shortcuts" iconSclass="z-icon-keyboard-o"/>
+                            <navitem label="Keyboard shortcuts" iconSclass="z-icon-keyboard"/>
                             <navitem label="Change password" iconSclass="z-icon-key"/>
                         </nav>
                     </nav>
@@ -139,14 +139,14 @@
                 </div>
                 <navbar id="hn1" collapsed="true">
                     <navitem label="Home" iconSclass="z-icon-home" />
-                    <nav label="Get Started" iconSclass="z-icon-th-list" badgeText="3">
+                    <nav label="Get Started" iconSclass="z-icon-layout-list" badgeText="3">
                         <navitem label="Step One"/>
                         <navitem label="Step Two"/>
                         <navitem label="Step Three"/>
                     </nav>
                     <navitem label="About" iconSclass="z-icon-flag"/>
                     <navseparator/>
-                    <nav label="Contact" iconSclass="z-icon-envelope" badgeText="5">
+                    <nav label="Contact" iconSclass="z-icon-mail" badgeText="5">
                         <navitem label="Reply" iconSclass="z-icon-reply" />
                         <navitem label="Reply all" iconSclass="z-icon-reply-all"/>
                         <navitem label="Inbox" iconSclass="z-icon-inbox"/>
@@ -154,7 +154,7 @@
                         <navseparator/>
                         <nav label="Settings" iconSclass="z-icon-cog" badgeText=">>">
                             <navitem label="Edit profile" iconSclass="z-icon-user"/>
-                            <navitem label="Keyboard shortcuts" iconSclass="z-icon-keyboard-o"/>
+                            <navitem label="Keyboard shortcuts" iconSclass="z-icon-keyboard"/>
                             <navitem label="Change password" iconSclass="z-icon-key"/>
                         </nav>
                     </nav>
@@ -166,8 +166,8 @@
             <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
                 <navbar>
                     <navitem label="Home" iconSclass="z-icon-home"/>
-                    <navitem label="Dashboard" iconSclass="z-icon-tachometer"/>
-                    <navitem label="Products" iconSclass="z-icon-cube"/>
+                    <navitem label="Dashboard" iconSclass="z-icon-gauge"/>
+                    <navitem label="Products" iconSclass="z-icon-box"/>
                     <navitem label="Orders" iconSclass="z-icon-shopping-cart"/>
                     <navitem label="Reports" iconSclass="z-icon-bar-chart"/>
                     <navitem label="Settings" iconSclass="z-icon-cog"/>

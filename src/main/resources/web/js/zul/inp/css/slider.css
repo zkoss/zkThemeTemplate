@@ -1,11 +1,12 @@
-/* MD3 Slider — range input */
-/* Real ZK DOM:
+/* MD3 Slider — range input with track and thumb */
+/* Real ZK DOM (horizontal):
    <div class="z-slider z-slider-horizontal" role="slider">
      <div id="{uuid}-inner" class="z-slider-center">
-       <div id="{uuid}-area"  class="z-slider-area" style="position:absolute; width:{px}"></div>
+       <div id="{uuid}-area"  class="z-slider-area"   style="position:absolute; width:{px}"></div>
        <div id="{uuid}-btn"   class="z-slider-button" style="left:{px}"></div>
      </div>
    </div>
+   Vertical adds z-slider-vertical instead of z-slider-horizontal.
 */
 
 /* ── Outer container ──────────────────────────────────── */
@@ -19,15 +20,17 @@
 }
 
 /* ── Track wrapper (center) ───────────────────────────── */
+/* ZK JS sets width/height of .z-slider-center via _fixSize() */
 .z-slider-center {
     position: relative;
     height: 4px;
-    background-color: var(--zk-color-surface-container-high);
+    background-color: var(--zk-color-outline-variant);
     border-radius: var(--zk-shape-corner-full);
-    margin: 10px 10px; /* room for thumb overflow */
+    /* horizontal: small vertical margin so thumb doesn't clip parent */
+    margin-block: 10px;
 }
 
-/* ── Filled portion of track (area) ──────────────────── */
+/* ── Filled portion of track (active fill) ────────────── */
 .z-slider-area {
     position: absolute;
     top: 0;
@@ -37,24 +40,27 @@
     border-radius: var(--zk-shape-corner-full);
 }
 
-/* ── Thumb (button) ───────────────────────────────────── */
+/* ── Thumb ────────────────────────────────────────────── */
+/* ZK JS positions .z-slider-button with left:{px} relative to .z-slider-center */
 .z-slider-button {
     position: absolute;
     top: 50%;
     width: 20px;
     height: 20px;
-    margin-top: -10px;  /* center on 4px track: shift up half thumb */
-    margin-left: -10px; /* center thumb on its left position */
+    /* center the 20px thumb on the 4px track */
+    margin-top: -10px;
+    /* center thumb on its JS-set left position */
+    margin-left: -10px;
     border-radius: var(--zk-shape-corner-full);
     background-color: var(--zk-color-primary);
     box-shadow: var(--zk-elevation-1);
     cursor: grab;
     transition:
         box-shadow var(--zk-motion-duration-short3) var(--zk-motion-easing-standard),
-        transform  var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
-    /* State-layer ring */
+        transform   var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
 }
 
+/* State-layer ring (hover / focus) */
 .z-slider-button::before {
     content: '';
     position: absolute;
@@ -70,41 +76,87 @@
     opacity: var(--zk-state-hover-opacity);
 }
 
+.z-slider:focus-within .z-slider-button::before {
+    opacity: var(--zk-state-focus-opacity);
+}
+
 .z-slider-button:active {
     cursor: grabbing;
     transform: scale(1.15);
     box-shadow: var(--zk-elevation-2);
 }
 
-/* ── Vertical slider ─────────────────────────────────── */
-.z-slider-ver,
+/* ── Horizontal slider ────────────────────────────────── */
+.z-slider-horizontal {
+    /* default width comes from ZK attribute width="" or style; override min */
+    min-width: 120px;
+}
+
+.z-slider-horizontal .z-slider-center {
+    width: 100%;
+    height: 4px;
+}
+
+/* ── Vertical slider ──────────────────────────────────── */
 .z-slider-vertical {
     display: inline-block;
     width: auto;
     padding: 0 var(--zk-spacing-3);
 }
 
-.z-slider-ver .z-slider-center,
 .z-slider-vertical .z-slider-center {
     width: 4px;
     height: 100%;
-    margin: 10px 10px;
+    margin-block: 0;
+    margin-inline: 10px;
 }
 
-.z-slider-ver .z-slider-button,
+/* Vertical area fills upward from bottom */
+.z-slider-vertical .z-slider-area {
+    width: 100%;
+    height: auto; /* ZK JS sets height directly */
+    bottom: 0;
+    top: auto;
+}
+
+/* Vertical thumb: left-center, JS sets top */
 .z-slider-vertical .z-slider-button {
     left: 50%;
     top: auto;
-    bottom: 0;
-    transform: translateX(-50%);
     margin-left: -10px;
-    margin-bottom: -10px;
+    margin-top: 0;
 }
 
-/* ── Disabled ────────────────────────────────────────── */
+/* ── Sphere mold — circular thumb ────────────────────── */
+.z-slider-sphere .z-slider-button {
+    border-radius: 50%;
+}
+
+/* ── Disabled ─────────────────────────────────────────── */
 .z-slider[disabled],
 .z-slider.z-slider-disabled {
     opacity: var(--zk-state-disabled-opacity);
     pointer-events: none;
     cursor: not-allowed;
+}
+
+.z-slider[disabled] .z-slider-button,
+.z-slider.z-slider-disabled .z-slider-button {
+    cursor: not-allowed;
+}
+
+/* ── Tooltip (slidetip) ───────────────────────────────── */
+/* ZK renders: <div id="zul_slidetip" class="z-slider-popup"> */
+.z-slider-popup {
+    position: absolute;
+    z-index: 60000;
+    padding: 4px 8px;
+    background-color: var(--zk-color-inverse-surface);
+    color: var(--zk-color-inverse-on-surface);
+    font-family: var(--zk-typescale-font-family);
+    font-size: var(--zk-typescale-label-small-size);
+    border-radius: var(--zk-shape-corner-extra-small);
+    box-shadow: var(--zk-elevation-1);
+    pointer-events: none;
+    white-space: nowrap;
 }

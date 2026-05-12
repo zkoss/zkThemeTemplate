@@ -4,7 +4,7 @@
     position: absolute;
     z-index: 1600;
     background-color: var(--zk-color-surface);
-    border-radius: var(--zk-shape-card);
+    border-radius: var(--zk-shape-menu);
     box-shadow: var(--zk-elevation-dropdown);
     border: 1px solid var(--zk-color-outline-variant);
     overflow: auto;

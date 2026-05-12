@@ -80,6 +80,7 @@
 
 /* Tree item row — TR.z-treerow */
 .z-treerow {
+    background-color: var(--zk-color-surface);
     border-bottom: 1px solid var(--zk-color-outline-variant);
     transition: background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
     cursor: pointer;
@@ -89,14 +90,35 @@
     border-bottom: none;
 }
 
+/* Row hover: MD3 state layer rgba(on-surface, 0.08) */
 .z-treerow:hover {
-    background-color: var(--zk-color-surface-container-low);
+    background-color: color-mix(in srgb, var(--zk-color-on-surface) 8%, var(--zk-color-surface));
 }
 
+/* Selected row — z-treerow-selected set by Treerow.domClass_ */
 .z-treerow.z-treerow-selected,
 .z-treerow.z-selected {
     background-color: var(--zk-color-primary-container);
+}
+
+/* Selected row text color via cell content */
+.z-treerow.z-treerow-selected .z-treecell-content,
+.z-treerow.z-selected .z-treecell-content {
     color: var(--zk-color-on-primary-container);
+}
+
+/* Selected + hover: slightly darker tint */
+.z-treerow.z-treerow-selected:hover,
+.z-treerow.z-selected:hover {
+    background-color: color-mix(in srgb, var(--zk-color-on-primary-container) 8%, var(--zk-color-primary-container));
+}
+
+/* Disabled row — z-treerow-disabled set by Treerow.domClass_ */
+.z-treerow.z-treerow-disabled,
+.z-treerow[disabled] {
+    opacity: var(--zk-state-disabled-opacity, 0.38);
+    pointer-events: none;
+    cursor: not-allowed;
 }
 
 /* Focus */
@@ -125,7 +147,8 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    min-height: 36px;
+    min-height: 52px;
+    box-sizing: border-box;
 }
 
 .z-treecell-text {
@@ -133,10 +156,6 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     flex: 1;
-}
-
-.z-treerow.z-selected .z-treecell-content {
-    color: var(--zk-color-on-primary-container);
 }
 
 /* ─── Toggle / expand icon ─────────────────────────────────────────────── */
@@ -149,7 +168,7 @@
     height: 20px;
     flex-shrink: 0;
     color: var(--zk-color-on-surface-variant);
-    font-size: 12px;
+    font-size: 16px;
     border-radius: var(--zk-shape-corner-full);
     cursor: pointer;
     transition: background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
@@ -157,6 +176,35 @@
 
 .z-tree-icon:hover {
     background-color: var(--zk-color-surface-container);
+}
+
+/* Rotation transition: unified chevron-right SVG rotates 90deg on open */
+.z-tree-icon i {
+    --_chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m9 18 6-6-6-6'/%3E%3C/svg%3E");
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    background-color: currentColor;
+    -webkit-mask-image: var(--_chevron);
+    -webkit-mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-image: var(--_chevron);
+    mask-size: contain;
+    mask-repeat: no-repeat;
+    mask-position: center;
+    transform: rotate(0deg);
+    transition: transform var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+}
+
+/* Suppress Font Awesome glyph — SVG mask is the visual */
+.z-tree-icon i::before {
+    content: '';
+}
+
+/* Open state: rotate 90deg to point downward */
+.z-tree-icon i.z-tree-open {
+    transform: rotate(90deg);
 }
 
 /* ─── Indentation spacers ──────────────────────────────────────────────── */
@@ -194,12 +242,7 @@
     vertical-align: middle;
 }
 
-.z-treerow.z-treerow-disabled .z-treecell-content,
-.z-treerow[disabled] .z-treecell-content {
-    color: var(--zk-color-disabled);
-    cursor: not-allowed;
-    pointer-events: none;
-}
+/* Disabled state handled at TR level in row section above */
 
 .z-treerow.z-treerow-checkable .z-treecell:first-child .z-treecell-content {
     padding-left: calc(var(--zk-spacing-4) + 20px);

@@ -1,13 +1,18 @@
-/* MD3 Panel — card-style container with header */
-/* DOM: .z-panel > .z-panel-head > .z-panel-header > .z-panel-caption + .z-panel-icon
-        .z-panel > .z-panel-body > .z-panel-content */
+/* MD3 Panel — card-style container with header
+   DOM (with title): .z-panel > .z-panel-head > .z-panel-header > .z-caption >
+                       .z-caption-content + .z-panel-icons > buttons
+   DOM (no title):   .z-panel > .z-panel-drag-button (minus icon, move handle)
+   Panel body:       .z-panel > .z-panel-body > .z-panel-top? + .z-panelchildren + .z-panel-bottom? + .z-panel-footer?
+   Control button base class: z-panel-icon ($s('icon')). Additional specific classes:
+     z-panel-expand (collapse toggle), z-panel-close, z-panel-maximize, z-panel-minimize.
+   State classes on root: z-panel-collapsed, z-panel-noborder, z-panel-noheader, z-panel-noframe */
 
 .z-panel {
     display: flex;
     flex-direction: column;
     background-color: var(--zk-color-surface);
     border-radius: var(--zk-shape-card);
-    box-shadow: var(--zk-elevation-panel);
+    box-shadow: rgba(50,50,93,0.024) 0px 2px 5px -1px, rgba(0,0,0,0.05) 0px 1px 3px -1px;
     border: 1px solid var(--zk-color-outline-variant);
     overflow: hidden;
     box-sizing: border-box;
@@ -24,23 +29,29 @@
 .z-panel-header {
     display: flex;
     align-items: center;
-    padding: var(--zk-spacing-3) var(--zk-spacing-4);
+    padding: var(--zk-spacing-4);
     min-height: 48px;
+    /* Typography for title text node */
+    font-size: var(--zk-typescale-title-medium-size);
+    font-weight: var(--zk-typescale-title-medium-weight);
+    line-height: var(--zk-typescale-title-medium-line-height);
+    color: var(--zk-color-on-surface);
 }
 
-/* Panel title */
-.z-panel-caption {
+.z-panel-header-move {
+    cursor: move;
+}
+
+/* .z-caption is the caption child widget — flex: 1 to fill header, icons push right */
+.z-panel-header .z-caption {
     flex: 1;
     min-width: 0;
-    display: flex;
-    align-items: center;
-    gap: var(--zk-spacing-2);
 }
 
-/* ZK renders caption label as text node in .z-caption-content, not .z-caption-text */
-.z-panel-caption .z-caption-text,
-.z-panel-caption .z-caption-content,
-.z-panel-title {
+/* Caption text inside .z-caption-content or direct .z-label children */
+.z-panel-header .z-caption-content,
+.z-panel-header .z-caption-text,
+.z-panel-header .z-label {
     font-size: var(--zk-typescale-title-medium-size);
     font-weight: var(--zk-typescale-title-medium-weight);
     line-height: var(--zk-typescale-title-medium-line-height);
@@ -50,17 +61,20 @@
     text-overflow: ellipsis;
 }
 
-/* Panel control icons (collapse, close) */
-.z-panel-icon {
+/* ─── Control icons container ────────────────────────────────────────────── */
+/* Rendered by caption.js mold as p.$s('icons') = z-panel-icons */
+.z-panel-icons {
     display: inline-flex;
     align-items: center;
     gap: var(--zk-spacing-1);
     flex-shrink: 0;
+    margin-left: auto;
 }
 
-.z-panel-close,
-.z-panel-collapse,
-.z-panel-maximize {
+/* ─── Individual control buttons ─────────────────────────────────────────── */
+/* z-panel-icon is the base class ($s('icon')) on every control button.
+   Additional specific classes: z-panel-expand, z-panel-close, z-panel-maximize, z-panel-minimize. */
+.z-panel-icon {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -74,24 +88,30 @@
     font-size: 14px;
     position: relative;
     overflow: hidden;
-    transition: background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+    transition: background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard),
+                color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
 }
 
-.z-panel-close:hover,
-.z-panel-collapse:hover,
-.z-panel-maximize:hover {
+.z-panel-icon:hover {
     background-color: var(--zk-color-surface-container);
     color: var(--zk-color-on-surface);
 }
 
-/* Panel toolbar area (below header) */
-.z-panel-tbar,
-.z-panel-bbar,
-.z-panel-fbar,
-.z-panel-lbar,
-.z-panel-rbar {
+/* ─── Panel toolbar wrappers ─────────────────────────────────────────────── */
+/* Rendered by panel mold: $s('top'), $s('bottom'), $s('footer') */
+.z-panel-top,
+.z-panel-bottom,
+.z-panel-footer {
     background-color: var(--zk-color-surface-container-low);
     border-bottom: 1px solid var(--zk-color-outline-variant);
+}
+
+/* Drag handle shown when panel has no title */
+.z-panel-drag-button {
+    cursor: move;
+    padding: 0 var(--zk-spacing-1);
+    color: var(--zk-color-on-surface-variant);
+    opacity: 0.6;
 }
 
 /* ─── Panel body ─────────────────────────────────────────────────────────── */
@@ -101,26 +121,21 @@
     background-color: var(--zk-color-surface);
 }
 
-/* z-panelchildren is the actual content wrapper rendered by ZK */
+/* z-panelchildren is the content wrapper rendered by ZK inside z-panel-body */
 .z-panelchildren {
-    padding: var(--zk-spacing-4);
+    padding: var(--zk-spacing-4) var(--zk-spacing-4) var(--zk-spacing-6);
     color: var(--zk-color-on-surface);
     font-size: var(--zk-typescale-body-medium-size);
     box-sizing: border-box;
 }
 
-/* legacy alias kept for completeness */
-.z-panel-content {
-    padding: var(--zk-spacing-4);
-    color: var(--zk-color-on-surface);
-    font-size: var(--zk-typescale-body-medium-size);
-}
-
-/* ─── Collapsed state ────────────────────────────────────────────────────── */
+/* ─── State classes ──────────────────────────────────────────────────────── */
+/* Collapsed: z-panel-collapsed added to root; body hidden (also via inline display:none at initial render) */
 .z-panel-collapsed .z-panel-body {
     display: none;
 }
 
+/* Noborder: no border or shadow */
 .z-panel-noborder {
     border: none;
     box-shadow: none;
@@ -130,21 +145,17 @@
     border-bottom: none;
 }
 
+/* Shadow: elevated shadow for floating panels */
 .z-panel-shadow {
     box-shadow: var(--zk-elevation-dialog);
 }
 
-.z-panel-minimize .z-panel-body {
-    display: none;
+/* Noframe: non-rounded border (border="normal" in ZK, not "rounded") */
+.z-panel-noframe {
+    border-radius: 0;
 }
 
-.z-panel-drag-button {
-    cursor: move;
-    padding: 0 var(--zk-spacing-1);
-    color: var(--zk-color-on-surface-variant);
-    opacity: 0.6;
-}
-
+/* ─── Drag / resize utilities ────────────────────────────────────────────── */
 .z-panel-move-ghost {
     opacity: 0.5;
     outline: 2px solid var(--zk-color-primary);
@@ -163,35 +174,4 @@
     inset: 0;
     z-index: 1500;
     cursor: se-resize;
-}
-
-.z-panel-expand {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 28px;
-    height: 28px;
-    border: none;
-    background: transparent;
-    color: var(--zk-color-on-surface-variant);
-    border-radius: var(--zk-shape-corner-full);
-    cursor: pointer;
-    font-size: 14px;
-    transition: background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
-}
-
-.z-panel-expand:hover {
-    background-color: var(--zk-color-surface-container);
-    color: var(--zk-color-on-surface);
-}
-
-.z-panel-icons {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--zk-spacing-1);
-    flex-shrink: 0;
-}
-
-.z-panel-header-move {
-    cursor: move;
 }

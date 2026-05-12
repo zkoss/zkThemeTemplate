@@ -8,7 +8,8 @@
     justify-content: center;
     overflow: hidden;
     min-height: 36px;
-    padding: 0 var(--zk-spacing-4);
+    padding: 6px var(--zk-spacing-4);
+    box-shadow: rgba(50,50,93,0.024) 0px 2px 5px -1px, rgba(0,0,0,0.05) 0px 1px 3px -1px;
     border: none;
     border-radius: var(--zk-shape-button);
     background-color: var(--zk-color-primary);
@@ -47,7 +48,7 @@
 .z-button:active::before { opacity: var(--zk-state-pressed-opacity); }
 
 .z-button:focus-visible {
-    outline: 3px solid var(--zk-color-primary);
+    outline: 2px solid var(--zk-color-primary);
     outline-offset: 2px;
 }
 
@@ -89,6 +90,19 @@
 .z-button.z-button-default[disabled] {
     background-color: transparent;
     border-color: var(--zk-color-disabled-container);
+    color: var(--zk-color-disabled);
+}
+
+/* Disabled overrides for outlined and text utility variants */
+.z-button-outlined.z-button[disabled] {
+    background-color: transparent;
+    border-color: var(--zk-color-disabled-container);
+    color: var(--zk-color-disabled);
+}
+
+.z-button-text.z-button[disabled] {
+    background-color: transparent;
+    border: none;
     color: var(--zk-color-disabled);
 }
 
@@ -247,6 +261,16 @@
         0px 6px 10px 0px rgba(0,0,0,0.14),
         0px 1px 18px 0px rgba(0,0,0,0.12);
 }
+
+/* ─── Vertical orient — icon stacked above label ────────────────────────── */
+.z-button:has(br) {
+    flex-direction: column;
+    gap: 2px;
+    padding: 8px 16px;
+    min-height: 48px;
+    line-height: 1;
+}
+.z-button:has(br) br { display: none; }
 
 /* ─── Editor toolbar button — minimal, borderless, for WYSIWYG toolbars ── */
 .m-editor-toolbar-btn.z-button {

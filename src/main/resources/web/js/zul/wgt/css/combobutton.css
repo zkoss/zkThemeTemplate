@@ -1,23 +1,38 @@
 /* MD3 Combobutton — split button (primary action + dropdown arrow) */
-/* DOM: <span class="z-combobutton"><button class="z-combobutton-text">Label</button><button class="z-combobutton-arrow"><i class="z-icon-caret-down"/></button></span> */
+/*
+ * ZK DOM structure (verified from ZK source):
+ *   <span class="z-combobutton [z-combobutton-toolbar] [z-combobutton-open]">
+ *     <span class="z-combobutton-content">   ← main label + image area (positon:relative)
+ *       <img class="z-combobutton-image"/>     ← optional image
+ *       label text
+ *       <span class="z-combobutton-button">   ← dropdown arrow area (position:absolute, right)
+ *         <i class="z-combobutton-icon z-icon-caret-down"/>
+ *       </span>
+ *     </span>
+ *   </span>
+ */
 
 .z-combobutton {
     display: inline-flex;
     align-items: stretch;
     border-radius: var(--zk-shape-button);
     overflow: hidden;
+    cursor: pointer;
+    vertical-align: middle;
     box-shadow: none;
+    position: relative;
 }
 
-/* Main button portion */
-.z-combobutton-text {
+/* Main content area — acts as the filled button */
+.z-combobutton-content {
     position: relative;
     display: inline-flex;
     align-items: center;
-    justify-content: center;
     overflow: hidden;
     min-height: 36px;
     padding: 0 var(--zk-spacing-4);
+    /* Leave room on the right for the arrow button */
+    padding-right: calc(var(--zk-spacing-4) + 32px);
     border: none;
     border-radius: 0;
     background-color: var(--zk-color-primary);
@@ -26,14 +41,13 @@
     font-size: var(--zk-typescale-label-large-size);
     font-weight: var(--zk-typescale-label-large-weight);
     line-height: var(--zk-typescale-label-large-line-height);
-    cursor: pointer;
     white-space: nowrap;
-    outline: none;
-    border-right: 1px solid rgba(255, 255, 255, 0.3);
+    user-select: none;
     transition: background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
 }
 
-.z-combobutton-text::before {
+/* State layer for main content */
+.z-combobutton-content::before {
     content: '';
     position: absolute;
     inset: 0;
@@ -43,52 +57,95 @@
     transition: opacity var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
 }
 
-.z-combobutton-text:hover::before { opacity: var(--zk-state-hover-opacity); }
-.z-combobutton-text:active::before { opacity: var(--zk-state-pressed-opacity); }
+.z-combobutton:hover .z-combobutton-content::before { opacity: var(--zk-state-hover-opacity); }
+.z-combobutton:active .z-combobutton-content::before { opacity: var(--zk-state-pressed-opacity); }
+.z-combobutton:focus-within .z-combobutton-content::before { opacity: var(--zk-state-focus-opacity); }
 
-/* Arrow/dropdown portion */
-.z-combobutton-arrow {
-    position: relative;
-    display: inline-flex;
+/* Dropdown arrow portion — positioned absolutely on the right */
+.z-combobutton-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 32px;
+    height: 100%;
+    display: flex;
     align-items: center;
     justify-content: center;
-    overflow: hidden;
-    min-height: 36px;
-    width: 32px;
-    padding: 0;
-    border: none;
-    border-radius: 0;
+    border-left: 1px solid rgba(255, 255, 255, 0.3);
     background-color: var(--zk-color-primary);
     color: var(--zk-color-on-primary);
-    cursor: pointer;
-    outline: none;
+    pointer-events: none; /* clicks go through to the parent .z-combobutton */
+    z-index: 1;
     transition: background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
 }
 
-.z-combobutton-arrow::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-color: var(--zk-color-on-primary);
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+/* Icon inside arrow area */
+.z-combobutton-icon {
+    font-size: 14px;
+    transition: transform var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
 }
 
-.z-combobutton-arrow:hover::before { opacity: var(--zk-state-hover-opacity); }
-.z-combobutton-arrow:active::before { opacity: var(--zk-state-pressed-opacity); }
+/* Open state — rotate the arrow icon */
+.z-combobutton-open .z-combobutton-icon {
+    transform: rotate(180deg);
+}
 
-/* Disabled */
-.z-combobutton[disabled] .z-combobutton-text,
-.z-combobutton[disabled] .z-combobutton-arrow {
+/* Open state — pressed appearance on the wrapper */
+.z-combobutton-open .z-combobutton-content::before {
+    opacity: var(--zk-state-pressed-opacity);
+}
+
+/* ─── Toolbar mold ─────────────────────────────────────────────────────── */
+.z-combobutton-toolbar {
+    box-shadow: none;
+}
+
+.z-combobutton-toolbar .z-combobutton-content {
+    background-color: transparent;
+    color: var(--zk-color-on-surface-variant);
+    border: 1px solid var(--zk-color-outline);
+}
+
+.z-combobutton-toolbar .z-combobutton-content::before {
+    background-color: var(--zk-color-on-surface-variant);
+}
+
+.z-combobutton-toolbar .z-combobutton-button {
+    background-color: transparent;
+    color: var(--zk-color-on-surface-variant);
+    border-left-color: var(--zk-color-outline);
+}
+
+/* ─── Disabled state ──────────────────────────────────────────────────── */
+.z-combobutton[disabled] {
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+.z-combobutton[disabled] .z-combobutton-content {
     background-color: var(--zk-color-disabled-container);
     color: var(--zk-color-disabled);
     cursor: not-allowed;
-    pointer-events: none;
-    border-right-color: transparent;
 }
 
-.z-combobutton-open .z-combobutton-arrow [class*="z-icon-"] {
-    transform: rotate(180deg);
-    transition: transform var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+.z-combobutton[disabled] .z-combobutton-content::before {
+    display: none;
+}
+
+.z-combobutton[disabled] .z-combobutton-button {
+    background-color: var(--zk-color-disabled-container);
+    color: var(--zk-color-disabled);
+    border-left-color: transparent;
+}
+
+.z-combobutton-toolbar[disabled] .z-combobutton-content {
+    background-color: transparent;
+    border-color: var(--zk-color-disabled-container);
+    color: var(--zk-color-disabled);
+}
+
+.z-combobutton-toolbar[disabled] .z-combobutton-button {
+    background-color: transparent;
+    border-left-color: var(--zk-color-disabled-container);
+    color: var(--zk-color-disabled);
 }

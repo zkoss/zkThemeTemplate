@@ -59,8 +59,17 @@
 .pv-cols-2 > .pv-col-header-row,
 .pv-cols-2 > .pv-row { grid-template-columns: 120px repeat(2, 160px); }
 
+.pv-cols-2-wide > .pv-col-header-row,
+.pv-cols-2-wide > .pv-row { grid-template-columns: 150px repeat(2, 220px); }
+
 .pv-cols-3 > .pv-col-header-row,
 .pv-cols-3 > .pv-row { grid-template-columns: 120px repeat(3, 160px); }
 
 .pv-cols-4 > .pv-col-header-row,
 .pv-cols-4 > .pv-row { grid-template-columns: 120px repeat(4, 160px); }
+
+.pv-cols-4-wide > .pv-col-header-row,
+.pv-cols-4-wide > .pv-row { grid-template-columns: 150px repeat(4, 220px); }
+
+.pv-cols-5 > .pv-col-header-row,
+.pv-cols-5 > .pv-row { grid-template-columns: 120px repeat(5, 160px); }

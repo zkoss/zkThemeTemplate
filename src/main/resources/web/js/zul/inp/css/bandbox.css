@@ -1,6 +1,8 @@
-/* MD3 Bandbox — combo input with custom popup (wider than combobox) */
-/* DOM: <span class="z-bandbox"><input class="z-bandbox-input"><button class="z-bandbox-button"><i class="z-icon-search"/></button></span> */
+/* MD3 Bandbox — combo input with custom band popup */
+/* DOM: .z-bandbox > (.z-bandbox-input + .z-bandbox-button > .z-bandbox-icon.z-icon-search)
+        + .z-bandbox-popup > .z-bandpopup */
 
+/* ─── Wrapper ─────────────────────────────────────────────────────────── */
 .z-bandbox {
     display: inline-flex;
     align-items: center;
@@ -20,8 +22,10 @@
 .z-bandbox:focus-within {
     border-color: var(--zk-color-primary);
     border-width: 2px;
+    transition: none;
 }
 
+/* ─── Input field ─────────────────────────────────────────────────────── */
 .z-bandbox-input {
     flex: 1;
     min-width: 0;
@@ -42,6 +46,8 @@
     opacity: 1;
 }
 
+/* ─── Toggle button (search icon) ────────────────────────────────────── */
+/* Bandbox uses z-icon-search — no caret rotation on open */
 .z-bandbox-button {
     position: relative;
     display: inline-flex;
@@ -72,16 +78,15 @@
 .z-bandbox-button:hover::before { opacity: var(--zk-state-hover-opacity); }
 .z-bandbox-button:active::before { opacity: var(--zk-state-pressed-opacity); }
 
-/* Bandbox popup — wider than combobox */
+/* ─── Band popup container ────────────────────────────────────────────── */
+/* ZK renders: <div id="{uuid}-pp" class="z-bandbox-popup" style="display:none"> */
 .z-bandbox-popup {
     position: absolute;
-    top: 100%;
-    left: -1px;
     z-index: 1600;
     margin: 4px 0 0 0;
-    padding: 0;
+    padding: var(--zk-spacing-2);
     background-color: var(--zk-color-surface);
-    border-radius: var(--zk-shape-card);
+    border-radius: var(--zk-shape-menu);
     box-shadow: var(--zk-elevation-dropdown);
     border: 1px solid var(--zk-color-outline-variant);
     min-width: 300px;
@@ -89,14 +94,14 @@
     box-sizing: border-box;
 }
 
-/* Disabled */
+/* ─── Disabled ────────────────────────────────────────────────────────── */
 .z-bandbox[disabled],
 .z-bandbox.z-bandbox-disabled {
     opacity: var(--zk-state-disabled-opacity);
     pointer-events: none;
 }
 
-/* ─── Invalid variant ─────────────────────────────────────────────────────── */
+/* ─── Invalid variant ─────────────────────────────────────────────────── */
 .z-bandbox.z-bandbox-invalid {
     border-color: var(--zk-color-error);
 }
@@ -110,11 +115,17 @@
     border-width: 2px;
 }
 
-/* ─── Readonly variant ────────────────────────────────────────────────────── */
+/* ─── Readonly variant ────────────────────────────────────────────────── */
 .z-bandbox[readonly],
 .z-bandbox.z-bandbox-readonly {
     background-color: var(--zk-color-surface-container-low);
     border-color: var(--zk-color-outline-variant);
+}
+
+.z-bandbox[readonly]:hover,
+.z-bandbox.z-bandbox-readonly:hover {
+    border-color: var(--zk-color-outline-variant);
+    cursor: default;
 }
 
 .z-bandbox.z-bandbox-readonly .z-bandbox-button {
@@ -122,12 +133,18 @@
     opacity: 0.6;
 }
 
-/* ─── Open state ──────────────────────────────────────────────────────────── */
+/* ─── Open state ──────────────────────────────────────────────────────── */
 .z-bandbox.z-bandbox-open {
     border-color: var(--zk-color-primary);
     border-width: 2px;
 }
 
-.z-bandbox.z-bandbox-open .z-bandbox-button [class*="z-icon-"] {
-    transform: rotate(180deg);
+/* ─── Bandpopup ───────────────────────────────────────────────────────── */
+/* bandpopup.css is never served (no <css> in lang.xml); rules must live here */
+.z-bandpopup {
+    background-color: var(--zk-color-surface);
+    border: 1px solid var(--zk-color-outline-variant);
+    border-radius: var(--zk-shape-corner-small);
+    box-shadow: var(--zk-elevation-2);
+    padding: var(--zk-spacing-4);
 }

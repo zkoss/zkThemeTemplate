@@ -86,7 +86,11 @@
 .z-longbox[disabled],
 .z-passwordbox[disabled],
 .z-textbox.z-textbox-disabled,
-.z-intbox.z-intbox-disabled {
+.z-intbox.z-intbox-disabled,
+.z-decimalbox.z-decimalbox-disabled,
+.z-doublebox.z-doublebox-disabled,
+.z-longbox.z-longbox-disabled,
+.z-passwordbox.z-passwordbox-disabled {
     opacity: var(--zk-state-disabled-opacity);
     background-color: var(--zk-color-surface-container-low);
     border-color: var(--zk-color-outline-variant);
@@ -94,7 +98,33 @@
     pointer-events: none;
 }
 
-/* Error state */
+/* Suppress hover border change when disabled or readonly */
+.z-textbox[disabled]:hover,
+.z-intbox[disabled]:hover,
+.z-decimalbox[disabled]:hover,
+.z-doublebox[disabled]:hover,
+.z-longbox[disabled]:hover,
+.z-passwordbox[disabled]:hover,
+.z-textbox.z-textbox-disabled:hover,
+.z-intbox.z-intbox-disabled:hover,
+.z-decimalbox.z-decimalbox-disabled:hover,
+.z-doublebox.z-doublebox-disabled:hover,
+.z-longbox.z-longbox-disabled:hover,
+.z-passwordbox.z-passwordbox-disabled:hover {
+    border-color: var(--zk-color-outline-variant);
+}
+
+.z-textbox[readonly]:hover,
+.z-intbox[readonly]:hover,
+.z-decimalbox[readonly]:hover,
+.z-doublebox[readonly]:hover,
+.z-longbox[readonly]:hover,
+.z-passwordbox[readonly]:hover {
+    border-color: var(--zk-color-outline-variant);
+    cursor: default;
+}
+
+/* Error state (sclass="z-error" applied by developer) */
 .z-textbox.z-error,
 .z-intbox.z-error,
 .z-textbox-error {
@@ -104,6 +134,8 @@
 .z-textbox.z-error:focus,
 .z-intbox.z-error:focus {
     border-color: var(--zk-color-error);
+    border-width: 2px;
+    padding: 0 calc(var(--zk-spacing-3) - 1px);
 }
 
 /* Textarea */
@@ -135,6 +167,124 @@ textarea.z-textbox {
     border-color: var(--zk-color-error);
 }
 
-.z-radiogroup-vertical .z-radio {
-    display: flex;
+.z-textbox.z-textbox-invalid:focus,
+.z-textbox.z-textbox-invalid:focus-visible {
+    border-color: var(--zk-color-error);
+    border-width: 2px;
+    padding: 0 calc(var(--zk-spacing-3) - 1px);
+}
+
+/* Passwordbox invalid (same ZK pattern as intbox) */
+.z-passwordbox.z-passwordbox-invalid {
+    border-color: var(--zk-color-error);
+}
+
+.z-passwordbox.z-passwordbox-invalid:focus {
+    border-color: var(--zk-color-error);
+    border-width: 2px;
+    padding: 0 calc(var(--zk-spacing-3) - 1px);
+}
+
+/* ─── Errorbox ───────────────────────────────────────────────────────────── */
+/* Errorbox is a JS-only widget with no <css-uri> in lang.xml, so its rules   */
+/* are merged here to ensure delivery via input.css.dsp.                      */
+
+/* MD3 Errorbox — inline field validation tooltip (extends Notification)
+   DOM: <div class="z-errorbox">
+          <div class="z-errorbox-pointer [z-errorbox-up|down|left|right]"/>
+          <i class="z-errorbox-icon z-icon-exclamation-triangle"/>
+          <div class="z-errorbox-content" title="…">message text</div>
+          <div class="z-errorbox-close">
+            <i class="z-errorbox-icon z-icon-times"/>
+          </div>
+        </div>
+*/
+
+.z-errorbox {
+    color: var(--zk-color-on-error-container);
+    width: 260px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1600;
+    display: table;
+}
+
+.z-errorbox-content {
+    font-family: var(--zk-typescale-font-family);
+    font-size: var(--zk-typescale-body-small-size);
+    font-weight: var(--zk-typescale-body-small-weight);
+    line-height: 1.4;
+    color: var(--zk-color-on-error-container);
+    width: 100%;
+    border: 1px solid var(--zk-color-error);
+    border-radius: var(--zk-shape-corner-extra-small);
+    /* left padding leaves room for icon */
+    padding: var(--zk-spacing-2) 28px var(--zk-spacing-2) 28px;
+    background: var(--zk-color-error-container);
+    position: relative;
+    overflow: hidden;
+    cursor: move;
+    box-shadow: var(--zk-elevation-2);
+}
+
+.z-errorbox-icon {
+    position: absolute;
+    z-index: 2;
+    font-size: 14px;
+    width: 14px;
+    height: 14px;
+    line-height: 14px;
+    top: 50%;
+    left: var(--zk-spacing-2);
+    margin-top: -7px;
+    color: var(--zk-color-error);
+}
+
+.z-errorbox-close {
+    font-size: 14px;
+    width: 18px;
+    height: 18px;
+    padding: 0 1px;
+    position: absolute;
+    top: 50%;
+    right: var(--zk-spacing-1);
+    margin-top: -9px;
+    cursor: pointer;
+    opacity: 0.6;
+    color: var(--zk-color-on-error-container);
+}
+
+.z-errorbox-close:hover { opacity: 1; }
+
+.z-errorbox-close > .z-errorbox-icon {
+    position: static;
+    margin-top: 0;
+    color: inherit;
+}
+
+.z-errorbox-pointer {
+    display: none;
+    width: 0;
+    height: 0;
+    border: 6px solid transparent;
+    position: absolute;
+    z-index: 100;
+}
+
+.z-errorbox-left,
+.z-errorbox-right,
+.z-errorbox-up,
+.z-errorbox-down {
+    border: 6px solid transparent;
+}
+
+.z-errorbox-left  { border-right-color:  var(--zk-color-error-container); }
+.z-errorbox-right { border-left-color:   var(--zk-color-error-container); }
+.z-errorbox-up    { border-bottom-color: var(--zk-color-error-container); }
+.z-errorbox-down  { border-top-color:    var(--zk-color-error-container); }
+
+.z-errorbox-pointer ~ .z-errorbox-content {
+    display: table-cell;
+    vertical-align: middle;
 }

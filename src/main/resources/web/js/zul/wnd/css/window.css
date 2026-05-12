@@ -1,6 +1,12 @@
-/* MD3 Window — modal/floating window component */
-/* DOM: .z-window > .z-window-header > .z-window-caption + .z-window-icon
-        .z-window > .z-window-content */
+/* MD3 Window — modal/floating window component
+   DOM (title-only): .z-window > .z-window-header > text + .z-window-icons > buttons
+   DOM (with caption child): .z-window > .z-window-header > .z-caption >
+                               .z-caption-content + .z-window-icons > buttons
+   Window mode classes on root: z-window-embedded | z-window-overlapped | z-window-modal |
+                                 z-window-popup | z-window-highlighted
+   Border classes on root:      z-window-noborder | z-window-noheader
+   Each control button has: z-window-icon (base) + z-window-close | z-window-maximize |
+                             z-window-minimize. Maximized button also gets z-window-maximized. */
 
 .z-window {
     display: flex;
@@ -15,47 +21,58 @@
     position: relative;
 }
 
-/* Embedded window (not modal) */
+/* Embedded window has card-level chrome */
 .z-window-embedded {
-    box-shadow: var(--zk-elevation-card);
+    box-shadow: var(--zk-elevation-3);
     border: 1px solid var(--zk-color-outline-variant);
-    border-radius: var(--zk-shape-card);
+    border-radius: var(--zk-shape-corner-extra-small);
+}
+
+/* Overlapped and popup windows float — elevation 3 */
+.z-window-overlapped,
+.z-window-popup {
+    box-shadow: var(--zk-elevation-3);
+    border: 1px solid var(--zk-color-outline-variant);
+}
+
+/* Modal dialog — top elevation */
+.z-window-modal {
+    box-shadow: var(--zk-elevation-dialog);
 }
 
 /* ─── Header ─────────────────────────────────────────────────────────────── */
 .z-window-header {
     display: flex;
     align-items: center;
-    padding: var(--zk-spacing-4) var(--zk-spacing-6);
+    padding: var(--zk-spacing-4);
     border-bottom: 1px solid var(--zk-color-outline-variant);
     background-color: var(--zk-color-surface);
     flex-shrink: 0;
     min-height: 56px;
     position: relative;
     cursor: default;
-}
-
-/* Draggable header */
-.z-window-modal .z-window-header,
-.z-window-overlapped .z-window-header {
-    cursor: move;
-}
-
-.z-window-caption {
-    flex: 1;
-    min-width: 0;
-}
-
-/* Caption text — ZK renders window title as a plain text node directly in header,
-   so we style the header itself for typography, plus keep .z-caption-text/.z-label
-   as fallback selectors for titled windows. */
-.z-window-header {
+    /* Typography for the title text node */
     font-size: var(--zk-typescale-title-medium-size);
     font-weight: var(--zk-typescale-title-medium-weight);
     line-height: var(--zk-typescale-title-medium-line-height);
     color: var(--zk-color-on-surface);
 }
 
+/* Draggable header on floating windows */
+.z-window-modal .z-window-header,
+.z-window-overlapped .z-window-header,
+.z-window-header-move {
+    cursor: move;
+}
+
+/* .z-caption is the caption child widget wrapper */
+.z-window-header .z-caption {
+    flex: 1;
+    min-width: 0;
+}
+
+/* Caption text — works for both .z-caption-content (text node container) and .z-label children */
+.z-window-header .z-caption-content,
 .z-window-header .z-caption-text,
 .z-window-header .z-label {
     font-size: var(--zk-typescale-title-medium-size);
@@ -67,20 +84,20 @@
     text-overflow: ellipsis;
 }
 
-/* Window control icons (close, minimize, maximize)
-   ZK renders this as .z-window-icons (plural) */
-.z-window-icon,
+/* ─── Control icons container ────────────────────────────────────────────── */
+/* z-window-icons is rendered by p.$s('icons') in ButtonRenderer / caption mold */
 .z-window-icons {
     display: inline-flex;
     align-items: center;
     gap: var(--zk-spacing-1);
     flex-shrink: 0;
+    margin-left: auto;
 }
 
-.z-window-close,
-.z-window-maximize,
-.z-window-minimize,
-.z-window-sizable {
+/* ─── Individual control buttons ─────────────────────────────────────────── */
+/* z-window-icon is the base class ($s('icon')) applied to every button.
+   Specific classes z-window-close / z-window-maximize / z-window-minimize are also applied. */
+.z-window-icon {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -94,20 +111,24 @@
     font-size: 16px;
     position: relative;
     overflow: hidden;
-    transition: background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+    transition: background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard),
+                color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
 }
 
-.z-window-close:hover,
-.z-window-maximize:hover,
-.z-window-minimize:hover,
-.z-window-sizable:hover {
+.z-window-icon:hover {
     background-color: var(--zk-color-surface-container);
     color: var(--zk-color-on-surface);
 }
 
+/* Close button gets error tint on hover */
 .z-window-close:hover {
     background-color: var(--zk-color-error-container);
     color: var(--zk-color-on-error-container);
+}
+
+/* Maximized state — button icon switches; no extra visual needed */
+.z-window-maximized {
+    /* icon is swapped by JS; no additional style required */
 }
 
 /* ─── Content ────────────────────────────────────────────────────────────── */
@@ -130,15 +151,7 @@
     opacity: 0.3;
 }
 
-/* ─── Modal shadow ───────────────────────────────────────────────────────── */
-.z-window-modal-backdrop {
-    position: fixed;
-    inset: 0;
-    background-color: var(--zk-color-scrim);
-    z-index: 1400;
-}
-
-/* Modal overlay mask */
+/* ─── Modal overlay mask (created by ZK as z-modal-mask or via FullMask) ─── */
 .z-modal-mask {
     position: fixed;
     inset: 0;
@@ -146,17 +159,19 @@
     z-index: 1400;
 }
 
-/* Highlighted / focused window */
+/* ─── Highlighted mode ───────────────────────────────────────────────────── */
 .z-window-highlighted .z-window-header {
     background-color: var(--zk-color-primary-container);
     color: var(--zk-color-on-primary-container);
 }
 
+.z-window-highlighted .z-window-header .z-caption-content,
 .z-window-highlighted .z-window-header .z-caption-text,
 .z-window-highlighted .z-window-header .z-label {
     color: var(--zk-color-on-primary-container);
 }
 
+/* ─── Border variants ────────────────────────────────────────────────────── */
 .z-window-noborder {
     border: none;
     box-shadow: none;
@@ -170,6 +185,7 @@
     display: none;
 }
 
+/* ─── Drag / resize utilities ────────────────────────────────────────────── */
 .z-window-move-ghost {
     opacity: 0.5;
     outline: 2px solid var(--zk-color-primary);

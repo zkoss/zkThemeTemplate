@@ -14,8 +14,8 @@
         <tabpanel>
             <vlayout>
                 <!-- Floor plan imagemap -->
-                <groupbox>
-                    <caption label="Site Map Navigation"/>
+                <div sclass="section-card">
+                    <label value="Site Map Navigation" sclass="section-title"/>
                     <vlayout>
                         <label value="Click a department area to navigate:" sclass="section-hint z-h6"/>
                         <imagemap src="~./img/floor-plan.png"
@@ -30,7 +30,7 @@
                                   tooltiptext="Executive Suite"/>
                         </imagemap>
                     </vlayout>
-                </groupbox>
+                </div>
 
                 <!-- Thumbnail gallery -->
                 <toolbar>
@@ -39,7 +39,7 @@
                 </toolbar>
                 <toolbar>
                     <toolbarbutton iconSclass="z-icon-arrow-up" tooltiptext="Move Up"/>
-                    <toolbarbutton iconSclass="z-icon-envelope" tooltiptext="Send"/>
+                    <toolbarbutton iconSclass="z-icon-mail" tooltiptext="Send"/>
                     <toolbarbutton iconSclass="z-icon-paperclip" tooltiptext="Attach"/>
                     <toolbarbutton iconSclass="z-icon-arrow-down" tooltiptext="Move Down"/>
                 </toolbar>
@@ -89,14 +89,14 @@
                 </listbox>
 
                 <!-- Audio player with track -->
-                <groupbox>
-                    <caption label="Player"/>
+                <div sclass="section-card">
+                    <label value="Player" sclass="section-title"/>
                     <audio src="" controls="true" hflex="1"/>
-                </groupbox>
+                </div>
 
                 <!-- Upload audio form -->
-                <groupbox>
-                    <caption label="Upload Audio"/>
+                <div sclass="section-card">
+                    <label value="Upload Audio" sclass="section-title"/>
                     <grid width="440px">
                         <rows>
                             <row>
@@ -127,15 +127,15 @@
                             </row>
                         </rows>
                     </grid>
-                </groupbox>
+                </div>
             </vlayout>
         </tabpanel>
 
         <!-- Embedded Content Tab -->
         <tabpanel>
             <vlayout>
-                <groupbox>
-                    <caption label="External Preview"/>
+                <div sclass="section-card">
+                    <label value="External Preview" sclass="section-title"/>
                     <vlayout>
                         <div>
                             <span sclass="section-hint z-h6">Enter an embed URL and click Load to preview external content securely.</span>
@@ -162,7 +162,7 @@
                             <span>Only content from approved domains is allowed.</span>
                         </div>
                     </vlayout>
-                </groupbox>
+                </div>
             </vlayout>
         </tabpanel>
 
