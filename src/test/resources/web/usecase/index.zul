@@ -10,7 +10,7 @@
         <div>
             <div sclass="sidebar-brand">zk-material</div>
             <navbar orient="vertical">
-                <nav label="Use Cases" open="true">
+                <nav label="Use Cases" open="@load(vm.openNavLabel eq 'Use Cases')">
                     <navitem label="KPI Dashboard"        onClick="@command('navigate', page='~./usecase/dashboard.zul')"/>
                     <navitem label="Enterprise App Shell" onClick="@command('navigate', page='~./usecase/app-shell.zul')"/>
                     <navitem label="Sales Order Entry"    onClick="@command('navigate', page='~./usecase/order-entry.zul')"/>
@@ -20,10 +20,7 @@
                     <navitem label="Report Viewer"        onClick="@command('navigate', page='~./usecase/report-viewer.zul')"/>
                     <navitem label="Media Manager"        onClick="@command('navigate', page='~./usecase/media-manager.zul')"/>
                 </nav>
-                <nav label="Overview">
-                    <navitem label="Overview" onClick="@command('navigate', page='~./overview.zul')"/>
-                </nav>
-                <nav label="Form Controls">
+<nav label="Form Controls" open="@load(vm.openNavLabel eq 'Form Controls')">
                     <navitem label="Button"           onClick="@command('navigate', page='~./button.zul')"/>
                     <navitem label="Combobutton"      onClick="@command('navigate', page='~./combobutton.zul')"/>
                     <navitem label="Checkbox"         onClick="@command('navigate', page='~./checkbox.zul')"/>
@@ -56,7 +53,7 @@
                     <navitem label="Inputs (Rounded)" onClick="@command('navigate', page='~./inputs-rounded.zul')"/>
                     <navitem label="Link"             onClick="@command('navigate', page='~./a.zul')"/>
                 </nav>
-                <nav label="Data">
+                <nav label="Data" open="@load(vm.openNavLabel eq 'Data')">
                     <navitem label="Grid"                   onClick="@command('navigate', page='~./grid.zul')"/>
                     <navitem label="Grid (Header)"          onClick="@command('navigate', page='~./grid-header.zul')"/>
                     <navitem label="Grid (Grouping)"        onClick="@command('navigate', page='~./grid-grouping.zul')"/>
@@ -72,7 +69,7 @@
                     <navitem label="Biglistbox"             onClick="@command('navigate', page='~./biglistbox.zul')"/>
                     <navitem label="Organigram"             onClick="@command('navigate', page='~./organigram.zul')"/>
                 </nav>
-                <nav label="Navigation">
+                <nav label="Navigation" open="@load(vm.openNavLabel eq 'Navigation')">
                     <navitem label="Menubar"               onClick="@command('navigate', page='~./menubar.zul')"/>
                     <navitem label="Toolbar"               onClick="@command('navigate', page='~./toolbar.zul')"/>
                     <navitem label="Toolbar (Vertical)"    onClick="@command('navigate', page='~./toolbar-vertical.zul')"/>
@@ -88,7 +85,7 @@
                     <navitem label="Stepbar"               onClick="@command('navigate', page='~./stepbar.zul')"/>
                     <navitem label="Drawer"                onClick="@command('navigate', page='~./drawer.zul')"/>
                 </nav>
-                <nav label="Containers">
+                <nav label="Containers" open="@load(vm.openNavLabel eq 'Containers')">
                     <navitem label="Window"             onClick="@command('navigate', page='~./window.zul')"/>
                     <navitem label="Window (No Border)" onClick="@command('navigate', page='~./window-noborder.zul')"/>
                     <navitem label="Panel"              onClick="@command('navigate', page='~./panel.zul')"/>
@@ -99,7 +96,7 @@
                     <navitem label="Popup"              onClick="@command('navigate', page='~./popup.zul')"/>
                     <navitem label="Caption"            onClick="@command('navigate', page='~./caption.zul')"/>
                 </nav>
-                <nav label="Layout">
+                <nav label="Layout" open="@load(vm.openNavLabel eq 'Layout')">
                     <navitem label="Borderlayout"        onClick="@command('navigate', page='~./borderlayout.zul')"/>
                     <navitem label="Borderlayout (Misc)" onClick="@command('navigate', page='~./borderlayout-misc.zul')"/>
                     <navitem label="Hlayout"             onClick="@command('navigate', page='~./hlayout.zul')"/>
@@ -119,7 +116,7 @@
                     <navitem label="Space"               onClick="@command('navigate', page='~./space.zul')"/>
                     <navitem label="Area"                onClick="@command('navigate', page='~./area.zul')"/>
                 </nav>
-                <nav label="Feedback">
+                <nav label="Feedback" open="@load(vm.openNavLabel eq 'Feedback')">
                     <navitem label="Progressmeter" onClick="@command('navigate', page='~./progressmeter.zul')"/>
                     <navitem label="Notification"  onClick="@command('navigate', page='~./notification.zul')"/>
                     <navitem label="Toast"         onClick="@command('navigate', page='~./toast.zul')"/>
@@ -132,7 +129,7 @@
                     <navitem label="Error"         onClick="@command('navigate', page='~./error.zul')"/>
                     <navitem label="Errorbox"      onClick="@command('navigate', page='~./errorbox.zul')"/>
                 </nav>
-                <nav label="Media &amp; Upload">
+                <nav label="Media &amp; Upload" open="@load(vm.openNavLabel eq 'Media &amp; Upload')">
                     <navitem label="File Upload"     onClick="@command('navigate', page='~./fileupload.zul')"/>
                     <navitem label="Drop Upload"     onClick="@command('navigate', page='~./dropupload.zul')"/>
                     <navitem label="Audio"           onClick="@command('navigate', page='~./audio.zul')"/>
