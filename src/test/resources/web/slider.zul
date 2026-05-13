@@ -4,36 +4,43 @@
 <div sclass="z-p-8">
     <div sclass="z-border-bottom z-fs-title-lg z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Slider</div>
 
-    <div sclass="z-mb-6">
-        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Horizontal</div>
-        <div sclass="z-d-flex z-flex-col z-align-start z-gap-4 z-py-3">
-            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <slider width="200px"/>
-                <div sclass="z-fs-label-sm z-text-secondary">Default</div>
+    <apply templateURI="~./pv/matrix.zul" title="Horizontal"
+           cols="${['Default','Disabled']}" colsSuffix="-wide"
+           rowsTemplate="slider-horizontal-rows">
+        <template name="slider-horizontal-rows">
+            <div sclass="pv-row z-py-2 z-border-bottom">
+                <div sclass="z-fs-label-md z-text-secondary">Default</div>
+                <div><slider width="200px"/></div>
+                <div><slider width="200px" disabled="true"/></div>
             </div>
-            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <slider width="200px" mold="sphere"/>
-                <div sclass="z-fs-label-sm z-text-secondary">Sphere</div>
+            <div sclass="pv-row z-py-2 z-border-bottom">
+                <div sclass="z-fs-label-md z-text-secondary">Sphere</div>
+                <div><slider width="200px" mold="sphere"/></div>
+                <div><slider width="200px" mold="sphere" disabled="true"/></div>
             </div>
-            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <slider width="200px" mold="scale"/>
-                <div sclass="z-fs-label-sm z-text-secondary">Scale</div>
+            <div sclass="pv-row z-py-2 z-border-bottom">
+                <div sclass="z-fs-label-md z-text-secondary">Scale</div>
+                <div><slider width="200px" mold="scale"/></div>
+                <div><slider width="200px" mold="scale" disabled="true"/></div>
             </div>
-        </div>
-    </div>
+        </template>
+    </apply>
 
-    <div sclass="z-mb-6">
-        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Vertical</div>
-        <div sclass="z-d-flex z-align-end z-flex-wrap z-gap-6 z-py-3">
-            <div sclass="z-d-flex z-flex-col z-align-center z-gap-2">
-                <slider orient="vertical" height="120px"/>
-                <div sclass="z-fs-label-sm z-text-secondary">Default</div>
+    <apply templateURI="~./pv/matrix.zul" title="Vertical"
+           cols="${['Default','Disabled']}" colsSuffix="-wide"
+           rowsTemplate="slider-vertical-rows">
+        <template name="slider-vertical-rows">
+            <div sclass="pv-row z-py-2 z-border-bottom">
+                <div sclass="z-fs-label-md z-text-secondary">Default</div>
+                <div><slider orient="vertical" height="120px"/></div>
+                <div><slider orient="vertical" height="120px" disabled="true"/></div>
             </div>
-            <div sclass="z-d-flex z-flex-col z-align-center z-gap-2">
-                <slider orient="vertical" mold="sphere" height="120px"/>
-                <div sclass="z-fs-label-sm z-text-secondary">Sphere</div>
+            <div sclass="pv-row z-py-2 z-border-bottom">
+                <div sclass="z-fs-label-md z-text-secondary">Sphere</div>
+                <div><slider orient="vertical" mold="sphere" height="120px"/></div>
+                <div><slider orient="vertical" mold="sphere" height="120px" disabled="true"/></div>
             </div>
-        </div>
-    </div>
+        </template>
+    </apply>
 </div>
 </zk>

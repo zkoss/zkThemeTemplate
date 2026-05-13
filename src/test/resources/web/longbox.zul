@@ -4,29 +4,27 @@
 <div sclass="z-p-8">
     <div sclass="z-border-bottom z-fs-title-lg z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Longbox</div>
 
-    <div sclass="z-mb-6 pv-cols-4">
-        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">States</div>
-        <div sclass="pv-col-header-row z-pb-1">
-            <div/>
-            <div sclass="z-fs-label-sm z-fw-semibold z-text-secondary">Default</div>
-            <div sclass="z-fs-label-sm z-fw-semibold z-text-secondary">Disabled</div>
-            <div sclass="z-fs-label-sm z-fw-semibold z-text-secondary">Readonly</div>
-            <div sclass="z-fs-label-sm z-fw-semibold z-text-secondary">Inplace</div>
-        </div>
-        <div sclass="pv-row z-py-2 z-border-bottom">
-            <div sclass="z-fs-label-md z-text-secondary">Value</div>
-            <div><longbox value="1000"/></div>
-            <div><longbox value="1000" disabled="true"/></div>
-            <div><longbox value="1000" readonly="true"/></div>
-            <div><longbox value="1000" inplace="true"/></div>
-        </div>
-        <div sclass="pv-row z-py-2 z-border-bottom">
-            <div sclass="z-fs-label-md z-text-secondary">Placeholder</div>
-            <div><longbox placeholder="Enter number"/></div>
-            <div><longbox placeholder="Enter number" disabled="true"/></div>
-            <div><longbox placeholder="Enter number" readonly="true"/></div>
-            <div><longbox placeholder="Enter number" inplace="true"/></div>
-        </div>
-    </div>
+    <apply templateURI="~./pv/matrix.zul" title="States"
+           cols="${['Default','Disabled','Readonly','Invalid','Inplace']}"
+           rowsTemplate="longbox-rows">
+        <template name="longbox-rows">
+            <div sclass="pv-row z-py-2 z-border-bottom">
+                <div sclass="z-fs-label-md z-text-secondary">Value</div>
+                <div><longbox value="1000"/></div>
+                <div><longbox value="1000" disabled="true"/></div>
+                <div><longbox value="1000" readonly="true"/></div>
+                <div><longbox value="1000" sclass="z-longbox-invalid"/></div>
+                <div><longbox value="1000" inplace="true"/></div>
+            </div>
+            <div sclass="pv-row z-py-2 z-border-bottom">
+                <div sclass="z-fs-label-md z-text-secondary">Placeholder</div>
+                <div><longbox placeholder="Enter number"/></div>
+                <div><longbox placeholder="Enter number" disabled="true"/></div>
+                <div><longbox placeholder="Enter number" readonly="true"/></div>
+                <div><longbox placeholder="Enter number" sclass="z-longbox-invalid"/></div>
+                <div><longbox placeholder="Enter number" inplace="true"/></div>
+            </div>
+        </template>
+    </apply>
 </div>
 </zk>

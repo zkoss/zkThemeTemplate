@@ -4,33 +4,28 @@
 <div sclass="z-p-8">
     <div sclass="z-border-bottom z-fs-title-lg z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Combobox</div>
 
-    <div sclass="z-mb-6 pv-cols-5">
-        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">States</div>
-        <div sclass="pv-col-header-row z-pb-1">
-            <div/>
-            <div sclass="z-fs-label-sm z-fw-semibold z-text-secondary">Default</div>
-            <div sclass="z-fs-label-sm z-fw-semibold z-text-secondary">Disabled</div>
-            <div sclass="z-fs-label-sm z-fw-semibold z-text-secondary">Readonly</div>
-            <div sclass="z-fs-label-sm z-fw-semibold z-text-secondary">Invalid</div>
-            <div sclass="z-fs-label-sm z-fw-semibold z-text-secondary">Inplace</div>
-        </div>
-        <div sclass="pv-row z-py-2 z-border-bottom">
-            <div sclass="z-fs-label-md z-text-secondary">Default</div>
-            <div><combobox><comboitem label="Item 1"/><comboitem label="Item 2"/></combobox></div>
-            <div><combobox disabled="true"><comboitem label="Item 1"/><comboitem label="Item 2"/></combobox></div>
-            <div><combobox readonly="true"><comboitem label="Item 1"/><comboitem label="Item 2"/></combobox></div>
-            <div><combobox sclass="z-combobox-invalid"><comboitem label="Item 1"/><comboitem label="Item 2"/></combobox></div>
-            <div><combobox inplace="true" value="Item 1"><comboitem label="Item 1"/><comboitem label="Item 2"/></combobox></div>
-        </div>
-        <div sclass="pv-row z-py-2 z-border-bottom">
-            <div sclass="z-fs-label-md z-text-secondary">No button</div>
-            <div><combobox buttonVisible="false"><comboitem label="Item 1"/></combobox></div>
-            <div><combobox buttonVisible="false" disabled="true"><comboitem label="Item 1"/></combobox></div>
-            <div><combobox buttonVisible="false" readonly="true"><comboitem label="Item 1"/></combobox></div>
-            <div><combobox buttonVisible="false" sclass="z-combobox-invalid"><comboitem label="Item 1"/></combobox></div>
-            <div>—</div>
-        </div>
-    </div>
+    <apply templateURI="~./pv/matrix.zul" title="States"
+           cols="${['Default','Disabled','Readonly','Invalid','Inplace']}"
+           rowsTemplate="combobox-rows">
+        <template name="combobox-rows">
+            <div sclass="pv-row z-py-2 z-border-bottom">
+                <div sclass="z-fs-label-md z-text-secondary">Default</div>
+                <div><combobox><comboitem label="Item 1"/><comboitem label="Item 2"/></combobox></div>
+                <div><combobox disabled="true"><comboitem label="Item 1"/><comboitem label="Item 2"/></combobox></div>
+                <div><combobox readonly="true"><comboitem label="Item 1"/><comboitem label="Item 2"/></combobox></div>
+                <div><combobox sclass="z-combobox-invalid"><comboitem label="Item 1"/><comboitem label="Item 2"/></combobox></div>
+                <div><combobox inplace="true" value="Item 1"><comboitem label="Item 1"/><comboitem label="Item 2"/></combobox></div>
+            </div>
+            <div sclass="pv-row z-py-2 z-border-bottom">
+                <div sclass="z-fs-label-md z-text-secondary">No button</div>
+                <div><combobox buttonVisible="false"><comboitem label="Item 1"/></combobox></div>
+                <div><combobox buttonVisible="false" disabled="true"><comboitem label="Item 1"/></combobox></div>
+                <div><combobox buttonVisible="false" readonly="true"><comboitem label="Item 1"/></combobox></div>
+                <div><combobox buttonVisible="false" sclass="z-combobox-invalid"><comboitem label="Item 1"/></combobox></div>
+                <div>—</div>
+            </div>
+        </template>
+    </apply>
 
     <div sclass="z-mb-6">
         <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Comboitem Variants</div>

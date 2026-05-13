@@ -4,58 +4,48 @@
 <div sclass="z-p-8">
     <div sclass="z-border-bottom z-fs-title-lg z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Textbox</div>
 
-    <div sclass="z-mb-6 pv-cols-5">
-        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">States</div>
-        <div sclass="pv-col-header-row z-pb-1">
-            <div/>
-            <div sclass="z-fs-label-sm z-fw-semibold z-text-secondary">Default</div>
-            <div sclass="z-fs-label-sm z-fw-semibold z-text-secondary">Disabled</div>
-            <div sclass="z-fs-label-sm z-fw-semibold z-text-secondary">Readonly</div>
-            <div sclass="z-fs-label-sm z-fw-semibold z-text-secondary">Invalid</div>
-            <div sclass="z-fs-label-sm z-fw-semibold z-text-secondary">Inplace</div>
-        </div>
-        <div sclass="pv-row z-py-2 z-border-bottom">
-            <div sclass="z-fs-label-md z-text-secondary">Text</div>
-            <div><textbox value="Hello"/></div>
-            <div><textbox value="Hello" disabled="true"/></div>
-            <div><textbox value="Hello" readonly="true"/></div>
-            <div><textbox value="bad input" sclass="z-textbox-invalid"/></div>
-            <div><textbox value="Hello" inplace="true"/></div>
-        </div>
-        <div sclass="pv-row z-py-2 z-border-bottom">
-            <div sclass="z-fs-label-md z-text-secondary">Password</div>
-            <div><textbox value="secret" type="password"/></div>
-            <div><textbox value="secret" type="password" disabled="true"/></div>
-            <div><textbox value="secret" type="password" readonly="true"/></div>
-            <div><textbox value="bad" type="password" sclass="z-textbox-invalid"/></div>
-            <div><textbox value="secret" type="password" inplace="true"/></div>
-        </div>
-        <div sclass="pv-row z-py-2 z-border-bottom">
-            <div sclass="z-fs-label-md z-text-secondary">Placeholder</div>
-            <div><textbox placeholder="Enter text"/></div>
-            <div><textbox placeholder="Enter text" disabled="true"/></div>
-            <div><textbox placeholder="Enter text" readonly="true"/></div>
-            <div><textbox placeholder="type something" sclass="z-textbox-invalid"/></div>
-            <div><textbox placeholder="Enter text" inplace="true" value="Hello"/></div>
-        </div>
-    </div>
+    <apply templateURI="~./pv/matrix.zul" title="States"
+           cols="${['Default','Disabled','Readonly','Invalid','Inplace']}"
+           rowsTemplate="textbox-rows">
+        <template name="textbox-rows">
+            <div sclass="pv-row z-py-2 z-border-bottom">
+                <div sclass="z-fs-label-md z-text-secondary">Text</div>
+                <div><textbox value="Hello" /></div>
+                <div><textbox value="Hello" disabled="true"/></div>
+                <div><textbox value="Hello" readonly="true"/></div>
+                <div><textbox value="bad input" sclass="z-textbox-invalid"/></div>
+                <div><textbox value="Hello" inplace="true"/></div>
+            </div>
+            <div sclass="pv-row z-py-2 z-border-bottom">
+                <div sclass="z-fs-label-md z-text-secondary">Password</div>
+                <div><textbox value="secret" type="password"/></div>
+                <div><textbox value="secret" type="password" disabled="true"/></div>
+                <div><textbox value="secret" type="password" readonly="true"/></div>
+                <div><textbox value="bad" type="password" sclass="z-textbox-invalid"/></div>
+                <div><textbox value="secret" type="password" inplace="true"/></div>
+            </div>
+            <div sclass="pv-row z-py-2 z-border-bottom">
+                <div sclass="z-fs-label-md z-text-secondary">Placeholder</div>
+                <div><textbox placeholder="Enter text"/></div>
+                <div><textbox placeholder="Enter text" disabled="true"/></div>
+                <div><textbox placeholder="Enter text" readonly="true"/></div>
+                <div><textbox placeholder="type something" sclass="z-textbox-invalid"/></div>
+                <div><textbox placeholder="Enter text" inplace="true" value="Hello"/></div>
+            </div>
+        </template>
+    </apply>
 
-    <div sclass="z-mb-6">
-        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Multiline</div>
-        <div sclass="z-d-flex z-align-end z-flex-wrap z-gap-6 z-py-3">
-            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <textbox rows="4" cols="30" value="Line 1&#10;Line 2&#10;Line 3"/>
-                <div sclass="z-fs-label-sm z-text-secondary">Default</div>
+    <apply templateURI="~./pv/matrix.zul" title="Multiline"
+           cols="${['Default','Disabled','Readonly']}"
+           rowsTemplate="textbox-multiline-rows">
+        <template name="textbox-multiline-rows">
+            <div sclass="pv-row z-py-2 z-border-bottom">
+                <div/>
+                <div><textbox rows="4" value="Line 1&#10;Line 2&#10;Line 3"/></div>
+                <div><textbox rows="4" value="Line 1&#10;Line 2" disabled="true"/></div>
+                <div><textbox rows="4" value="Line 1&#10;Line 2" readonly="true"/></div>
             </div>
-            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <textbox rows="4" cols="30" value="Line 1&#10;Line 2" disabled="true"/>
-                <div sclass="z-fs-label-sm z-text-secondary">Disabled</div>
-            </div>
-            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <textbox rows="4" cols="30" value="Line 1&#10;Line 2" readonly="true"/>
-                <div sclass="z-fs-label-sm z-text-secondary">Readonly</div>
-            </div>
-        </div>
-    </div>
+        </template>
+    </apply>
 </div>
 </zk>

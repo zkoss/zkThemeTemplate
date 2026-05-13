@@ -4,23 +4,21 @@
 <div sclass="z-p-8">
     <div sclass="z-border-bottom z-fs-title-lg z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Colorbox</div>
 
-    <div sclass="z-mb-6 pv-cols-2">
-        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">States</div>
-        <div sclass="pv-col-header-row z-pb-1">
-            <div/>
-            <div sclass="z-fs-label-sm z-fw-semibold z-text-secondary">Default</div>
-            <div sclass="z-fs-label-sm z-fw-semibold z-text-secondary">Disabled</div>
-        </div>
-        <div sclass="pv-row z-py-2 z-border-bottom">
-            <div sclass="z-fs-label-md z-text-secondary">Color picker</div>
-            <div><colorbox/></div>
-            <div><colorbox disabled="true"/></div>
-        </div>
-        <div sclass="pv-row z-py-2 z-border-bottom">
-            <div sclass="z-fs-label-md z-text-secondary">With value</div>
-            <div><colorbox color="#184dc6"/></div>
-            <div><colorbox color="#184dc6" disabled="true"/></div>
-        </div>
-    </div>
+    <apply templateURI="~./pv/matrix.zul" title="States"
+           cols="${['Default','Disabled']}"
+           rowsTemplate="colorbox-rows">
+        <template name="colorbox-rows">
+            <div sclass="pv-row z-py-2 z-border-bottom">
+                <div sclass="z-fs-label-md z-text-secondary">Color picker</div>
+                <div><colorbox/></div>
+                <div><colorbox disabled="true"/></div>
+            </div>
+            <div sclass="pv-row z-py-2 z-border-bottom">
+                <div sclass="z-fs-label-md z-text-secondary">With value</div>
+                <div><colorbox color="#184dc6"/></div>
+                <div><colorbox color="#184dc6" disabled="true"/></div>
+            </div>
+        </template>
+    </apply>
 </div>
 </zk>

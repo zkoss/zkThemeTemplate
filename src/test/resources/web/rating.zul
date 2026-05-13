@@ -4,24 +4,18 @@
 <div sclass="z-p-8">
     <div sclass="z-border-bottom z-fs-title-lg z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Rating</div>
 
-    <div sclass="z-mb-6 pv-cols-2">
-        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">States</div>
-        <div sclass="pv-col-header-row z-pb-1">
-            <div/>
-            <div sclass="z-fs-label-sm z-fw-semibold z-text-secondary">Default</div>
-            <div sclass="z-fs-label-sm z-fw-semibold z-text-secondary">Disabled</div>
-        </div>
-        <div sclass="pv-row z-py-2 z-border-bottom">
-            <div sclass="z-fs-label-md z-text-secondary">3 stars</div>
-            <div><rating rating="3"/></div>
-            <div><rating rating="3" disabled="true"/></div>
-        </div>
-        <div sclass="pv-row z-py-2 z-border-bottom">
-            <div sclass="z-fs-label-md z-text-secondary">Readonly</div>
-            <div><rating rating="4" readonly="true"/></div>
-            <div>—</div>
-        </div>
-    </div>
+    <apply templateURI="~./pv/matrix.zul" title="States"
+           cols="${['Default','Disabled','Readonly']}"
+           rowsTemplate="rating-rows">
+        <template name="rating-rows">
+            <div sclass="pv-row z-py-2 z-border-bottom">
+                <div sclass="z-fs-label-md z-text-secondary">3 stars</div>
+                <div><rating rating="3"/></div>
+                <div><rating rating="3" disabled="true"/></div>
+                <div><rating rating="3" readonly="true"/></div>
+            </div>
+        </template>
+    </apply>
 
     <div sclass="z-mb-6">
         <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Max Stars</div>
