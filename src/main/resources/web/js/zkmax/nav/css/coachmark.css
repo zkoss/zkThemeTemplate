@@ -1,0 +1,7 @@
+.z-coachmark-content {
+    background-color: var(--zk-color-primary);
+    color: var(--zk-color-on-primary);
+    border-radius: var(--zk-shape-card);
+    box-shadow: var(--zk-elevation-2);
+    padding: var(--zk-spacing-4);
+}

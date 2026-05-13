@@ -1,0 +1,46 @@
+/* MD3 BigListbox — virtual/lazy-loading data grid component */
+/* DOM: .z-biglistbox > .z-biglistbox-head > table > thead > tr > th.z-biglistbox-header
+        .z-biglistbox > .z-biglistbox-body > table > tbody > tr.z-biglistbox-row > td */
+
+.z-biglistbox {
+    display: block;
+    background-color: var(--zk-color-surface);
+    border: 1px solid var(--zk-color-outline-variant);
+    border-radius: var(--zk-shape-card);
+    overflow: hidden;
+    box-sizing: border-box;
+    font-family: var(--zk-typescale-font-family);
+}
+
+/* ─── Header ───────────────────────────────────────────────────────────── */
+.z-biglistbox-header {
+    padding: var(--zk-spacing-2) var(--zk-spacing-4);
+    font-size: var(--zk-typescale-label-large-size);
+    font-weight: var(--zk-typescale-label-large-weight);
+    color: var(--zk-color-on-surface-variant);
+    text-align: left;
+    background-color: transparent;
+    border-bottom: 1px solid var(--zk-color-outline-variant);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    user-select: none;
+    vertical-align: middle;
+    box-sizing: border-box;
+    cursor: default;
+}
+
+/* ─── Rows ─────────────────────────────────────────────────────────────── */
+.z-biglistbox-row:hover {
+    background-color: rgba(0, 0, 0, 0.04);
+}
+
+/* ─── Cells ────────────────────────────────────────────────────────────── */
+.z-biglistbox-row td {
+    padding: var(--zk-spacing-2) var(--zk-spacing-4);
+    font-size: var(--zk-typescale-body-medium-size);
+    color: var(--zk-color-on-surface);
+    border-bottom: 1px solid var(--zk-color-outline-variant);
+    box-sizing: border-box;
+    vertical-align: middle;
+}

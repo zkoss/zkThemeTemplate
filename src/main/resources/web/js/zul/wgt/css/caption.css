@@ -15,7 +15,7 @@
     gap: var(--zk-spacing-2);
     min-width: 0;
     font-family: var(--zk-typescale-font-family);
-    font-size: var(--zk-typescale-title-medium-size);
+    font-size: var(--zk-typescale-label-large-size);
     font-weight: var(--zk-typescale-title-medium-weight);
     line-height: var(--zk-typescale-title-medium-line-height);
     color: var(--zk-color-on-surface);
@@ -27,7 +27,7 @@
 /* Also target .z-caption-text for cases where ZK does render it */
 .z-caption-text {
     font-family: var(--zk-typescale-font-family);
-    font-size: var(--zk-typescale-title-medium-size);
+    font-size: var(--zk-typescale-label-large-size);
     font-weight: var(--zk-typescale-title-medium-weight);
     line-height: var(--zk-typescale-title-medium-line-height);
     color: var(--zk-color-on-surface);

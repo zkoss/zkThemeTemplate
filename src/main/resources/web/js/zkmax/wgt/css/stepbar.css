@@ -1,0 +1,62 @@
+/* Stepbar — MD3 stepper indicator */
+
+.z-stepbar {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--zk-spacing-4);
+}
+
+.z-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+}
+
+.z-step-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--zk-spacing-2);
+}
+
+/* Step indicator circle */
+.z-step-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--zk-typescale-label-medium-size, 12px);
+    font-weight: 500;
+    color: var(--zk-color-on-primary);
+    flex-shrink: 0;
+}
+
+/* Inactive step circle */
+.z-step-icon-empty {
+    background-color: var(--zk-color-disabled);
+}
+
+/* Active step circle */
+.z-step-active .z-step-icon {
+    background-color: var(--zk-color-primary);
+}
+
+/* Completed step circle */
+.z-step-complete .z-step-icon {
+    background-color: var(--zk-color-primary);
+}
+
+/* Step label */
+.z-step-title {
+    font-size: var(--zk-typescale-label-medium-size, 12px);
+    color: var(--zk-color-on-surface-variant);
+    text-align: center;
+}
+
+.z-step-active .z-step-title {
+    color: var(--zk-color-primary);
+    font-weight: 500;
+}

@@ -1,0 +1,12 @@
+.z-timepicker {
+    border: 1px solid var(--zk-color-outline);
+    border-radius: var(--zk-shape-corner-extra-small);
+}
+
+.z-timepicker-input {
+    font-size: var(--zk-typescale-body-medium-size);
+}
+
+.z-timepicker-disabled {
+    opacity: 0.38;
+}

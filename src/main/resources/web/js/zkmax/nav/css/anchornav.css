@@ -1,0 +1,29 @@
+/* MD3 Anchornav — zkmax anchor navigation component */
+/*
+ * DOM structure:
+ *   div.z-anchornav
+ *     div.z-anchornav-cave
+ *       div.z-listbox
+ *         div.z-listbox-body
+ *           table
+ *             tr.z-listitem[.z-listitem-selected]
+ *               td.z-listcell
+ *                 div.z-listcell-content
+ *                   a.z-a
+ */
+
+/* ─── Item link — default state ──────────────────────────────────────────── */
+.z-anchornav .z-a {
+    font-size: var(--zk-typescale-label-large-size);
+    color: var(--zk-color-on-surface-variant);
+    text-decoration: none;
+}
+
+/* ─── Active/selected item ───────────────────────────────────────────────── */
+.z-anchornav .z-listitem-selected {
+    border-left: 3px solid var(--zk-color-primary);
+}
+
+.z-anchornav .z-listitem-selected .z-a {
+    color: var(--zk-color-primary);
+}

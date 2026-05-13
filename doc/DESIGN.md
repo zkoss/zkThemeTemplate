@@ -201,3 +201,39 @@ ZK renders `orient="vertical"` as `icon + <br/> + label` inside the `<button>` e
 ```
 
 Do not remove the `:has(br)` selector or replace it with a class-based selector — no such class exists in ZK's output.
+
+### Checkbox — mold state class naming
+
+For non-default molds, ZK prefixes the state class with the mold name. The selector pattern is **`z-checkbox-{mold}-{state}`**, not `z-checkbox-{state}`.
+
+| mold | unchecked class | checked class | disabled class |
+|------|----------------|---------------|----------------|
+| default | `z-checkbox-off` | `z-checkbox-on` | `z-checkbox-disabled` |
+| switch | `z-checkbox-switch-off` | `z-checkbox-switch-on` | `z-checkbox-switch-disabled` |
+| toggle | `z-checkbox-toggle-off` | `z-checkbox-toggle-on` | `z-checkbox-toggle-disabled` |
+
+**Critical:** Using `.z-checkbox-switch.z-checkbox-on` (unprefixed state) will NEVER match the switch mold DOM. Always use `.z-checkbox-switch-on` (mold-prefixed state) as the selector.
+
+### Combobutton — dropdown button click routing
+
+ZK's `Combobutton.doClick_()` checks `evt.domTarget` against `this.$n('btn')` (= element with id `{uuid}-btn`) to decide whether to open the popup or fire `onClick`. The `.z-combobutton-button` element must have `pointer-events: auto` (the default) so that clicks on the arrow area register on that element. Setting `pointer-events: none` causes clicks to pass through to `.z-combobutton-content`, bypassing the popup-open branch and firing `onClick` instead.
+
+### Bandbox — popup double border
+
+DOM structure: `<span class="z-bandbox">` → `<div class="z-bandbox-popup">` → `<div class="z-bandpopup">`.
+
+`.z-bandbox-popup` is the sole visual frame (border, border-radius, box-shadow, background). **Never add a border or box-shadow to `.z-bandpopup`** — it is the inner content wrapper and any such styling will produce a double border.
+
+### Bandbox — buttonVisible="false" class target
+
+When `buttonVisible="false"`, ZK calls `RoundUtl.buttonVisible(wgt, false)` which adds `z-bandbox-disabled` to the `<a>` button element (`$n('btn')`), NOT to the root `<span>`.
+
+The correct hide selector is: `.z-bandbox-button.z-bandbox-disabled { display: none; }`
+
+Do not confuse with `.z-bandbox.z-bandbox-disabled` (used when the whole component is disabled).
+
+### Bandbox — inplace editing class
+
+When `inplace="true"` and the input is blurred, ZK adds `z-bandbox-inplace` to the root `<span>` element. On focus, the class is removed and the full input appearance is restored.
+
+Style `.z-bandbox.z-bandbox-inplace` to look like plain text: transparent border, transparent background, no box-shadow, hidden button. Do not style the child input or button separately — targeting the root state class is sufficient.

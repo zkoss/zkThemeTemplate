@@ -1,0 +1,92 @@
+/* MD3 Drawer — sliding panel overlay
+   DOM: .z-drawer (full-viewport positioning container)
+          .z-drawer-mask  (backdrop scrim)
+          .z-drawer-real  (the visible sliding panel)
+            .z-drawer-header (title area)
+            .z-drawer-container > .z-drawer-cave (content area)
+   Open state: .z-drawer-open on root
+   Variants: .z-drawer-right (default), .z-drawer-left, .z-drawer-top, .z-drawer-bottom */
+
+.z-drawer {
+    position: fixed;
+    inset: 0;
+    z-index: 1200;
+    pointer-events: none;
+}
+
+.z-drawer-open {
+    pointer-events: auto;
+}
+
+/* ─── Mask / backdrop scrim ──────────────────────────────────────────────── */
+.z-drawer-mask {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.32);
+}
+
+/* ─── Real panel (visible sliding surface) ───────────────────────────────── */
+.z-drawer-real {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--zk-color-surface);
+    box-shadow: var(--zk-elevation-3);
+    overflow: hidden;
+    font-family: var(--zk-typescale-font-family);
+}
+
+/* Right drawer (default) */
+.z-drawer-right .z-drawer-real {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 320px;
+}
+
+/* Left drawer */
+.z-drawer-left .z-drawer-real {
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 320px;
+}
+
+/* Top drawer */
+.z-drawer-top .z-drawer-real {
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 40%;
+}
+
+/* Bottom drawer */
+.z-drawer-bottom .z-drawer-real {
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 40%;
+}
+
+/* ─── Header ─────────────────────────────────────────────────────────────── */
+.z-drawer-header {
+    display: flex;
+    align-items: center;
+    padding: 16px 24px;
+    flex-shrink: 0;
+    border-bottom: 1px solid var(--zk-color-outline-variant);
+    font-size: var(--zk-typescale-title-medium-size);
+    font-weight: var(--zk-typescale-title-medium-weight);
+    line-height: var(--zk-typescale-title-medium-line-height);
+    color: var(--zk-color-on-surface);
+}
+
+/* ─── Content area ───────────────────────────────────────────────────────── */
+.z-drawer-container {
+    flex: 1;
+    overflow: auto;
+}
+
+.z-drawer-cave {
+    padding: var(--zk-spacing-4);
+}

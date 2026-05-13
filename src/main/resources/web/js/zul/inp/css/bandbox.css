@@ -21,7 +21,7 @@
 
 .z-bandbox:focus-within {
     border-color: var(--zk-color-primary);
-    border-width: 2px;
+    box-shadow: 0 0 0 1px var(--zk-color-primary);
     transition: none;
 }
 
@@ -94,6 +94,28 @@
     box-sizing: border-box;
 }
 
+/* ─── Button hidden (buttonVisible="false") ──────────────────────────── */
+/* ZK adds z-bandbox-disabled to the <a> button element when buttonVisible=false */
+.z-bandbox-button.z-bandbox-disabled {
+    display: none;
+}
+
+/* ─── Inplace editing (inplace="true") ───────────────────────────────── */
+/* ZK adds z-bandbox-inplace to root when blurred; removes it on focus */
+.z-bandbox.z-bandbox-inplace {
+    border-color: transparent;
+    background-color: transparent;
+    box-shadow: none;
+}
+
+.z-bandbox.z-bandbox-inplace:hover {
+    border-color: transparent;
+}
+
+.z-bandbox.z-bandbox-inplace .z-bandbox-button {
+    display: none;
+}
+
 /* ─── Disabled ────────────────────────────────────────────────────────── */
 .z-bandbox[disabled],
 .z-bandbox.z-bandbox-disabled {
@@ -112,7 +134,7 @@
 
 .z-bandbox.z-bandbox-invalid:focus-within {
     border-color: var(--zk-color-error);
-    border-width: 2px;
+    box-shadow: 0 0 0 1px var(--zk-color-error);
 }
 
 /* ─── Readonly variant ────────────────────────────────────────────────── */
@@ -136,15 +158,13 @@
 /* ─── Open state ──────────────────────────────────────────────────────── */
 .z-bandbox.z-bandbox-open {
     border-color: var(--zk-color-primary);
-    border-width: 2px;
+    box-shadow: 0 0 0 1px var(--zk-color-primary);
 }
 
 /* ─── Bandpopup ───────────────────────────────────────────────────────── */
 /* bandpopup.css is never served (no <css> in lang.xml); rules must live here */
+/* .z-bandbox-popup already provides border/shadow/radius — no second border here */
 .z-bandpopup {
     background-color: var(--zk-color-surface);
-    border: 1px solid var(--zk-color-outline-variant);
-    border-radius: var(--zk-shape-corner-small);
-    box-shadow: var(--zk-elevation-2);
     padding: var(--zk-spacing-4);
 }

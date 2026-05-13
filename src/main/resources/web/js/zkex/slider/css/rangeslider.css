@@ -1,0 +1,64 @@
+/* MD3 RangeSlider — component-level tokens mapped to base --zk-* tokens.
+   The ZK stock DSP (rangeslider.css.dsp) consumes all --zk-rangeslider-* vars;
+   this file supplies them so no hex values appear in the DSP output. */
+
+:root {
+    /* Track */
+    --zk-rangeslider-inner-size: 4px;
+    --zk-rangeslider-border-radius: 2px;
+    --zk-rangeslider-track-color: var(--zk-color-outline-variant);
+    --zk-rangeslider-empty-background-color: var(--zk-color-surface);
+
+    /* Thumb (sliderbuttons-button) */
+    --zk-rangeslider-button-size: 20px;
+    --zk-rangeslider-button-color: var(--zk-color-primary);
+    --zk-rangeslider-button-border-width: 0px;
+    --zk-rangeslider-shadow-color: rgba(0, 0, 0, 0.2);
+
+    /* Thumb states */
+    --zk-rangeslider-button-hover-color: var(--zk-color-primary);
+    --zk-rangeslider-button-active-color: var(--zk-color-primary);
+    --zk-rangeslider-button-focus-border-color: var(--zk-color-primary);
+
+    /* Horizontal layout */
+    --zk-rangeslider-horizontal-button-margin-top: -8px;
+    --zk-rangeslider-horizontal-button-margin-left: -10px;
+
+    /* Scale marks */
+    --zk-rangeslider-dot-size: 8px;
+    --zk-rangeslider-dot-border-width: 2px;
+    --zk-rangeslider-label-font-size: var(--zk-typescale-label-small-size);
+
+    /* Mark dot positions (horizontal) */
+    --zk-rangeslider-horizontal-mark-dot-position-top: -2px;
+    --zk-rangeslider-horizontal-mark-label-position-top: 14px;
+
+    /* Tooltip */
+    --zk-rangeslider-tooltip-border-radius: var(--zk-shape-corner-extra-small);
+    --zk-rangeslider-tooltip-background-color: var(--zk-color-inverse-surface);
+    --zk-rangeslider-horizontal-tooltip-position-top: -36px;
+    --zk-rangeslider-horizontal-tooltip-padding: 4px 8px;
+    --zk-rangeslider-vertical-tooltip-position-left: -60px;
+    --zk-rangeslider-vertical-tooltip-padding: 4px 8px;
+
+    /* Disabled */
+    --zk-rangeslider-disabled-track-color: var(--zk-color-disabled);
+    --zk-rangeslider-disabled-button-color: var(--zk-color-disabled);
+    --zk-rangeslider-disabled-tooltip-background-color: var(--zk-color-disabled);
+}
+
+/* Track structural rules — consume the tokens defined above */
+.z-rangeslider-inner,
+.z-rangeslider-center {
+    position: relative;
+    width: 100%;
+    height: var(--zk-rangeslider-inner-size);
+    border-radius: var(--zk-rangeslider-border-radius);
+    background-color: var(--zk-rangeslider-track-color);
+}
+
+.z-rangeslider-track {
+    position: absolute;
+    height: 100%;
+    background-color: var(--zk-rangeslider-track-color);
+}

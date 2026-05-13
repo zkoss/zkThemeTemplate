@@ -69,6 +69,10 @@
     opacity: var(--zk-state-hover-opacity);
 }
 
+.z-navitem-content:hover {
+    background-color: rgba(0, 0, 0, 0.08);
+}
+
 .z-nav-content:active::before,
 .z-navitem-content:active::before {
     opacity: var(--zk-state-pressed-opacity);
@@ -95,7 +99,7 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    font-size: var(--zk-typescale-body-medium-size);
+    font-size: var(--zk-typescale-label-large-size);
     font-weight: var(--zk-typescale-body-medium-weight);
 }
 
@@ -116,6 +120,15 @@
     line-height: 1;
     margin-left: auto;
     flex-shrink: 0;
+}
+
+/* ─── Nav group header label ─────────────────────────────────────────────── */
+.z-nav-header {
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+    color: var(--zk-color-on-surface-variant);
+    padding: 8px var(--zk-spacing-4) 4px;
 }
 
 /* ─── Collapsible nav group ──────────────────────────────────────────────── */
@@ -161,7 +174,7 @@
 .z-navitem-selected > .z-navitem-content,
 .z-navitem.z-navitem-selected > .z-navitem-content {
     color: var(--zk-color-primary);
-    background-color: var(--zk-color-secondary-container);
+    background-color: color-mix(in srgb, var(--zk-color-primary) 12%, transparent);
     font-weight: 600;
 }
 

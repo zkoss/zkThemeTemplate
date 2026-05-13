@@ -1,0 +1,10 @@
+.z-cropper {
+    border: 1px solid var(--zk-color-outline-variant);
+    border-radius: var(--zk-shape-corner-extra-small);
+    overflow: hidden;
+}
+
+.z-cropper-toolbar {
+    background-color: var(--zk-color-surface);
+    border-top: 1px solid var(--zk-color-outline-variant);
+}

@@ -1,0 +1,13 @@
+/* tbeditor — MD3 outlined editor wrapper */
+
+.z-tbeditor {
+    border: 1px solid var(--zk-color-outline);
+    border-radius: var(--zk-shape-corner-extra-small);
+    overflow: hidden;
+}
+
+/* Toolbar (actual DOM element: .z-tbeditor-button-pane) */
+.z-tbeditor-button-pane {
+    background-color: var(--zk-color-surface-variant);
+    border-bottom: 1px solid var(--zk-color-outline-variant);
+}

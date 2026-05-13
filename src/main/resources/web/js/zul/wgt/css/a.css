@@ -26,6 +26,7 @@
 .z-a[disabled],
 .z-a.z-a-disabled {
     color: var(--zk-color-disabled);
+    opacity: var(--zk-state-disabled-opacity);
     cursor: not-allowed;
     pointer-events: none;
 }

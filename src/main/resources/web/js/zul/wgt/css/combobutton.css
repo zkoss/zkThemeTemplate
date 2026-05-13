@@ -74,7 +74,6 @@
     border-left: 1px solid rgba(255, 255, 255, 0.3);
     background-color: var(--zk-color-primary);
     color: var(--zk-color-on-primary);
-    pointer-events: none; /* clicks go through to the parent .z-combobutton */
     z-index: 1;
     transition: background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
 }

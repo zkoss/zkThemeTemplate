@@ -12,7 +12,7 @@
     height: 100%;
     overflow: hidden;
     box-sizing: border-box;
-    background-color: var(--zk-color-background);
+    background-color: transparent;
 }
 
 /* ─── All regions: absolute positioned by ZK JS ───────────────────────────── */

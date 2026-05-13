@@ -1,0 +1,199 @@
+/* MD3 Chosenbox — multi-select input with chip tokens for selected items */
+/* DOM: .z-chosenbox > .z-chosenbox-item* + .z-chosenbox-input + .z-chosenbox-popup */
+/* Each chip: .z-chosenbox-item > .z-chosenbox-item-content
+                                + .z-chosenbox-button > .z-chosenbox-icon.z-icon-times */
+
+/* ─── Wrapper ─────────────────────────────────────────────────────────── */
+.z-chosenbox {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px;
+    position: relative;
+    min-height: 40px;
+    padding: 4px 6px;
+    border: 1px solid var(--zk-color-outline);
+    border-radius: var(--zk-shape-input);
+    background-color: var(--zk-color-surface);
+    cursor: text;
+    box-sizing: border-box;
+    transition: border-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+}
+
+.z-chosenbox:hover {
+    border-color: var(--zk-color-on-surface);
+}
+
+.z-chosenbox-focus {
+    border-color: var(--zk-color-primary);
+    box-shadow: 0 0 0 1px var(--zk-color-primary);
+    transition: none;
+}
+
+/* ─── Selected chip ───────────────────────────────────────────────────── */
+.z-chosenbox-item {
+    display: inline-flex;
+    align-items: center;
+    height: 28px;
+    padding: 0 4px 0 10px;
+    border-radius: var(--zk-shape-corner-extra-small);
+    background-color: var(--zk-color-surface-container-high);
+    cursor: default;
+    flex-shrink: 0;
+    user-select: none;
+    gap: 2px;
+}
+
+.z-chosenbox-item-focus {
+    background-color: var(--zk-color-primary-container);
+}
+
+.z-chosenbox-item-content {
+    font-family: var(--zk-typescale-font-family);
+    font-size: var(--zk-typescale-label-large-size);
+    font-weight: var(--zk-typescale-label-large-weight);
+    color: var(--zk-color-on-surface);
+    white-space: nowrap;
+}
+
+/* ─── Chip delete button ──────────────────────────────────────────────── */
+.z-chosenbox-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+}
+
+.z-chosenbox-button:hover {
+    background-color: rgba(0, 0, 0, 0.12);
+}
+
+.z-chosenbox-icon {
+    font-size: 14px;
+    color: var(--zk-color-on-surface-variant);
+}
+
+/* ─── Input ───────────────────────────────────────────────────────────── */
+.z-chosenbox-input {
+    flex: 1;
+    min-width: 60px;
+    height: 28px;
+    border: none;
+    background: transparent;
+    outline: none;
+    padding: 0 4px;
+    font-family: var(--zk-typescale-font-family);
+    font-size: var(--zk-typescale-body-medium-size);
+    color: var(--zk-color-on-surface);
+    box-shadow: none;
+}
+
+.z-chosenbox-input::placeholder {
+    color: var(--zk-color-on-surface-variant);
+}
+
+.z-chosenbox-textcontent {
+    display: none;
+}
+
+/* ─── Popup ───────────────────────────────────────────────────────────── */
+.z-chosenbox-popup {
+    position: absolute;
+    z-index: 1600;
+    background-color: var(--zk-color-surface);
+    border: 1px solid var(--zk-color-outline-variant);
+    border-radius: var(--zk-shape-menu);
+    overflow: auto;
+    box-sizing: border-box;
+    min-width: 100%;
+    max-height: 280px;
+}
+
+.z-chosenbox-popup-hidden {
+    display: none;
+}
+
+.z-chosenbox-shadow {
+    box-shadow: var(--zk-elevation-dropdown);
+}
+
+/* ─── Popup option ────────────────────────────────────────────────────── */
+.z-chosenbox-select {
+    display: block;
+}
+
+.z-chosenbox-option {
+    display: flex;
+    align-items: center;
+    height: 36px;
+    padding: 0 var(--zk-spacing-3);
+    cursor: pointer;
+    font-family: var(--zk-typescale-font-family);
+    font-size: var(--zk-typescale-body-medium-size);
+    color: var(--zk-color-on-surface);
+    box-sizing: border-box;
+    transition: background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+}
+
+.z-chosenbox-option:hover,
+.z-chosenbox-option-hover {
+    background-color: rgba(0, 0, 0, 0.04);
+}
+
+.z-chosenbox-empty {
+    padding: var(--zk-spacing-2) var(--zk-spacing-3);
+    font-family: var(--zk-typescale-font-family);
+    font-size: var(--zk-typescale-body-medium-size);
+    color: var(--zk-color-on-surface-variant);
+}
+
+.z-chosenbox-empty-creatable {
+    display: flex;
+    align-items: center;
+    height: 36px;
+    padding: 0 var(--zk-spacing-3);
+    cursor: pointer;
+    font-family: var(--zk-typescale-font-family);
+    font-size: var(--zk-typescale-body-medium-size);
+    color: var(--zk-color-primary);
+    gap: var(--zk-spacing-2);
+}
+
+.z-chosenbox-empty-creatable:hover {
+    background-color: rgba(0, 0, 0, 0.04);
+}
+
+.z-chosenbox-create {
+    font-size: 16px;
+    color: var(--zk-color-primary);
+}
+
+/* ─── Disabled ────────────────────────────────────────────────────────── */
+.z-chosenbox-disabled {
+    opacity: var(--zk-state-disabled-opacity);
+    pointer-events: none;
+    cursor: default;
+    background-color: var(--zk-color-surface-container-low);
+}
+
+.z-chosenbox-disabled .z-chosenbox-item {
+    padding-right: 10px;
+}
+
+.z-chosenbox-disabled .z-chosenbox-button {
+    display: none;
+}
+
+/* ─── Misc hidden helpers ─────────────────────────────────────────────── */
+.z-chosenbox-hide {
+    display: none;
+}
+
+.z-chosenbox-inplace {
+    display: none;
+}

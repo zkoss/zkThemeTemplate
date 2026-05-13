@@ -1,0 +1,53 @@
+/* MD3 Searchbox — text input with search trigger button */
+/* DOM: .z-searchbox > .z-searchbox-search + .z-searchbox-icon(button) */
+
+/* ─── Wrapper ─────────────────────────────────────────────────────────── */
+.z-searchbox {
+    display: inline-flex;
+    align-items: center;
+    position: relative;
+    height: 40px;
+    border: 1px solid var(--zk-color-outline);
+    border-radius: var(--zk-shape-input);
+    background-color: var(--zk-color-surface);
+    box-sizing: border-box;
+    outline: none;
+    transition: border-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+}
+
+.z-searchbox:hover {
+    border-color: var(--zk-color-on-surface);
+}
+
+.z-searchbox-focus,
+.z-searchbox-open {
+    border-color: var(--zk-color-primary);
+    box-shadow: 0 0 0 1px var(--zk-color-primary);
+    transition: none;
+}
+
+/* ─── Search input ────────────────────────────────────────────────────── */
+.z-searchbox-search {
+    flex: 1;
+    min-width: 0;
+    height: 100%;
+    padding: 0 var(--zk-spacing-3);
+    border: none;
+    outline: none;
+    background: transparent;
+    font-family: var(--zk-typescale-font-family);
+    font-size: var(--zk-typescale-body-medium-size);
+    color: var(--zk-color-on-surface);
+    box-sizing: border-box;
+}
+
+.z-searchbox-search::placeholder {
+    color: var(--zk-color-on-surface-variant);
+}
+
+/* ─── Disabled ────────────────────────────────────────────────────────── */
+.z-searchbox-disabled {
+    opacity: var(--zk-state-disabled-opacity);
+    pointer-events: none;
+    cursor: default;
+}

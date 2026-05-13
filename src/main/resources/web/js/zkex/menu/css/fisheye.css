@@ -1,0 +1,55 @@
+/* MD3 Fisheyebar
+ *
+ * DOM structure:
+ *   <div class="z-fisheyebar">
+ *     <div class="z-fisheye">
+ *       <img class="z-fisheye-image">
+ *       <span class="z-fisheye-text">Label</span>
+ *     </div>
+ *   </div>
+ *
+ * Magnification is JS-driven (zul.menu.Fisheye sets inline width/height on mousemove).
+ * CSS transform is not used — transitions apply to width/height via inline style changes.
+ */
+
+/* ─── Container ───────────────────────────────────────────────────────────── */
+.z-fisheyebar {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    background-color: transparent;
+    padding: var(--zk-spacing-2) var(--zk-spacing-4);
+    gap: var(--zk-spacing-2);
+}
+
+/* ─── Individual item ─────────────────────────────────────────────────────── */
+.z-fisheye {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    cursor: pointer;
+    transition: width var(--zk-motion-duration-short3) var(--zk-motion-easing-standard),
+                height var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+}
+
+/* ─── Image / icon ────────────────────────────────────────────────────────── */
+.z-fisheye-image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: var(--zk-shape-corner-extra-small);
+    transition: inherit;
+}
+
+/* ─── Label ───────────────────────────────────────────────────────────────── */
+.z-fisheye-text {
+    font-size: 13px;
+    font-family: var(--zk-typescale-body-medium-font);
+    color: var(--zk-color-on-surface);
+    text-align: center;
+    white-space: nowrap;
+    margin-top: var(--zk-spacing-1);
+    line-height: 1.2;
+}

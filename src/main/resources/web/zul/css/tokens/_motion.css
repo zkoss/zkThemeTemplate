@@ -13,7 +13,7 @@
     --zk-motion-duration-long2: 500ms;
 
     /* Easing */
-    --zk-motion-easing-standard: cubic-bezier(0.2, 0, 0, 1);
+    --zk-motion-easing-standard: cubic-bezier(0.4, 0, 0.2, 1);
     --zk-motion-easing-standard-decelerate: cubic-bezier(0, 0, 0, 1);
     --zk-motion-easing-standard-accelerate: cubic-bezier(0.3, 0, 1, 1);
     --zk-motion-easing-emphasized: cubic-bezier(0.2, 0, 0, 1);

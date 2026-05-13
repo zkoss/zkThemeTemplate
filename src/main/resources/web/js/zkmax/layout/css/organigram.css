@@ -1,0 +1,19 @@
+.z-organigram {
+    font-family: var(--zk-typescale-font-family);
+}
+
+.z-orgitem {
+    background-color: var(--zk-color-surface);
+    border: 1px solid var(--zk-color-outline-variant);
+    border-radius: var(--zk-shape-card);
+    box-shadow: var(--zk-elevation-1);
+    overflow: hidden;
+}
+
+.z-orgnode {
+    background-color: var(--zk-color-primary);
+    color: var(--zk-color-on-primary);
+    padding: var(--zk-spacing-2) var(--zk-spacing-3);
+    font-size: var(--zk-typescale-body-medium-size);
+    font-weight: 500;
+}

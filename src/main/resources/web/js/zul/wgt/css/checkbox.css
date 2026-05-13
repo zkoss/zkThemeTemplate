@@ -273,7 +273,7 @@
 .z-radio-content {
     cursor: pointer;
     font-family: var(--zk-typescale-font-family);
-    font-size: var(--zk-typescale-body-medium-size);
+    font-size: var(--zk-typescale-label-large-size);
     font-weight: var(--zk-typescale-body-medium-weight);
     line-height: var(--zk-typescale-body-medium-line-height);
     color: var(--zk-color-on-surface);
@@ -392,6 +392,7 @@
     border-radius: 16px;
     background-color: var(--zk-color-surface-variant);
     border: 2px solid var(--zk-color-outline);
+    overflow: hidden;
     cursor: pointer;
     flex-shrink: 0;
     margin: 4px;
@@ -426,14 +427,13 @@
 }
 
 /* Switch ON state */
-.z-checkbox-switch.z-checkbox-on > .z-checkbox-mold {
+.z-checkbox-switch-on > .z-checkbox-mold {
     background-color: var(--zk-color-primary);
     border-color: var(--zk-color-primary);
-    opacity: 1;
 }
 
-.z-checkbox-switch.z-checkbox-on > .z-checkbox-mold::after {
-    left: calc(100% - 20px);
+.z-checkbox-switch-on > .z-checkbox-mold::after {
+    left: calc(100% - 28px);
     width: 24px;
     height: 24px;
     top: 50%;
@@ -443,8 +443,85 @@
 }
 
 /* Switch disabled */
-.z-checkbox-switch.z-checkbox-disabled {
+.z-checkbox-switch-disabled {
     cursor: not-allowed;
     pointer-events: none;
+    opacity: var(--zk-state-disabled-opacity);
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Toggle mold  (mold="toggle")
+   DOM: .z-checkbox.z-checkbox-toggle.z-checkbox-toggle-{off|on}[.z-checkbox-toggle-disabled]
+     > input[type="checkbox"] (hidden)
+     > .z-checkbox-mold  ← the entire visual button
+     > .z-checkbox-content
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.z-checkbox-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--zk-spacing-2);
+    cursor: pointer;
+    user-select: none;
+    min-height: unset;
+}
+
+.z-checkbox-toggle input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.z-checkbox-toggle > .z-checkbox-mold {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    height: auto;
+    min-width: unset;
+    min-height: 36px;
+    padding: 6px 16px;
+    border-radius: var(--zk-shape-button);
+    border: 1px solid var(--zk-color-outline);
+    background-color: transparent;
+    color: var(--zk-color-primary);
+    font-size: var(--zk-typescale-label-large-size);
+    font-weight: var(--zk-typescale-label-large-weight);
+    cursor: pointer;
+    flex-shrink: 0;
+    margin: 0;
+    transition:
+        background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard),
+        box-shadow var(--zk-motion-duration-short3) var(--zk-motion-easing-standard),
+        color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+}
+
+/* Cancel out the default mold ::before (checkbox state-layer ring) */
+.z-checkbox-toggle > .z-checkbox-mold::before,
+.z-checkbox-toggle > .z-checkbox-mold::after {
+    display: none;
+}
+
+/* OFF hover */
+.z-checkbox-toggle-off:not(.z-checkbox-toggle-disabled) > .z-checkbox-mold:hover {
+    background-color: color-mix(in srgb, var(--zk-color-primary) 8%, transparent);
+}
+
+/* ON — filled / pressed in */
+.z-checkbox-toggle-on > .z-checkbox-mold {
+    background-color: var(--zk-color-primary);
+    color: var(--zk-color-on-primary);
+    border-color: var(--zk-color-primary);
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.18);
+}
+
+/* Disabled */
+.z-checkbox-toggle-disabled {
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+.z-checkbox-toggle-disabled > .z-checkbox-mold {
     opacity: var(--zk-state-disabled-opacity);
 }

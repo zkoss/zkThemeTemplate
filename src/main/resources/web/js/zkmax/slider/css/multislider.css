@@ -1,0 +1,192 @@
+/* MD3 Multislider — multiple-range slider with track, areas, and thumbs */
+/* Real ZK DOM (horizontal):
+   <div class="z-multislider z-multislider-horizontal">
+     <div class="z-multislider-inner">
+       <div class="z-multislider-track"></div>
+       <div class="z-sliderbuttons">
+         <div class="z-sliderbuttons-area" style="left:{px}; width:{px}"></div>
+         <div class="z-sliderbuttons-button" style="left:{px}"></div>
+         <div class="z-sliderbuttons-button" style="left:{px}"></div>
+         <div class="z-sliderbuttons-tooltip"></div>
+       </div>
+     </div>
+   </div>
+*/
+
+/* ── Outer container ──────────────────────────────────── */
+.z-multislider {
+    display: block;
+    position: relative;
+    padding: var(--zk-spacing-3) 0;
+    cursor: pointer;
+    user-select: none;
+    box-sizing: border-box;
+}
+
+/* ── Inner container ──────────────────────────────────── */
+.z-multislider-inner {
+    position: relative;
+}
+
+/* ── Track rail ───────────────────────────────────────── */
+.z-multislider-track {
+    position: relative;
+    height: 4px;
+    background-color: var(--zk-color-outline-variant);
+    border-radius: var(--zk-shape-corner-full);
+    margin-block: 10px;
+}
+
+/* ── Horizontal orientation ───────────────────────────── */
+.z-multislider-horizontal {
+    min-width: 120px;
+}
+
+.z-multislider-horizontal .z-multislider-track {
+    width: 100%;
+    height: 4px;
+}
+
+/* ── Vertical orientation ─────────────────────────────── */
+.z-multislider-vertical {
+    display: inline-block;
+    width: auto;
+    padding: 0 var(--zk-spacing-3);
+}
+
+.z-multislider-vertical .z-multislider-track {
+    width: 4px;
+    height: 100%;
+    margin-block: 0;
+    margin-inline: 10px;
+}
+
+/* ── Range container (.z-sliderbuttons) ───────────────── */
+.z-sliderbuttons {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* ── Filled range between thumbs ─────────────────────── */
+.z-sliderbuttons-area {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    background-color: var(--zk-color-primary);
+    border-radius: var(--zk-shape-corner-full);
+}
+
+/* ── Thumb handle ─────────────────────────────────────── */
+.z-sliderbuttons-button {
+    position: absolute;
+    top: 50%;
+    width: 20px;
+    height: 20px;
+    margin-top: -10px;
+    margin-left: -10px;
+    border-radius: 50%;
+    background-color: var(--zk-color-primary);
+    box-shadow: var(--zk-elevation-1);
+    cursor: grab;
+    transition:
+        box-shadow var(--zk-motion-duration-short3) var(--zk-motion-easing-standard),
+        transform   var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+}
+
+/* State-layer ring (hover / focus) */
+.z-sliderbuttons-button::before {
+    content: '';
+    position: absolute;
+    inset: -8px;
+    border-radius: 50%;
+    background-color: var(--zk-color-primary);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+}
+
+.z-multislider:hover .z-sliderbuttons-button::before {
+    opacity: var(--zk-state-hover-opacity);
+}
+
+.z-multislider:focus-within .z-sliderbuttons-button::before {
+    opacity: var(--zk-state-focus-opacity);
+}
+
+.z-sliderbuttons-button:active {
+    cursor: grabbing;
+    transform: scale(1.15);
+    box-shadow: var(--zk-elevation-2);
+}
+
+/* ── Vertical thumb: left-centered, JS sets top ──────── */
+.z-multislider-vertical .z-sliderbuttons-button {
+    left: 50%;
+    top: auto;
+    margin-left: -10px;
+    margin-top: 0;
+}
+
+/* ── Vertical area fills from bottom ─────────────────── */
+.z-multislider-vertical .z-sliderbuttons-area {
+    width: 100%;
+    height: auto;
+    bottom: 0;
+    top: auto;
+}
+
+/* ── Tooltip above thumb ──────────────────────────────── */
+.z-sliderbuttons-tooltip {
+    position: absolute;
+    z-index: 60000;
+    padding: 4px 8px;
+    background-color: var(--zk-color-inverse-surface);
+    color: var(--zk-color-inverse-on-surface);
+    font-family: var(--zk-typescale-font-family);
+    font-size: var(--zk-typescale-label-small-size);
+    border-radius: var(--zk-shape-corner-extra-small);
+    box-shadow: var(--zk-elevation-1);
+    pointer-events: none;
+    white-space: nowrap;
+}
+
+/* ── Marks ────────────────────────────────────────────── */
+.z-multislider-marks {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.z-multislider-mark {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    border-radius: 1px;
+    background-color: var(--zk-color-outline-variant);
+    top: 50%;
+    transform: translate(-1px, -50%);
+}
+
+.z-multislider-mark-label {
+    position: absolute;
+    top: 30px;
+    font-family: var(--zk-typescale-font-family);
+    font-size: var(--zk-typescale-label-small-size);
+    color: var(--zk-color-on-surface-variant);
+    white-space: nowrap;
+    transform: translateX(-50%);
+}
+
+/* ── Disabled ─────────────────────────────────────────── */
+.z-multislider[disabled],
+.z-multislider.z-multislider-disabled {
+    opacity: var(--zk-state-disabled-opacity);
+    pointer-events: none;
+    cursor: not-allowed;
+}
