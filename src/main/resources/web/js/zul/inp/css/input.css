@@ -185,6 +185,28 @@ textarea.z-textbox {
     padding: 0 calc(var(--zk-spacing-3) - 1px);
 }
 
+/* ─── Inplace ────────────────────────────────────────────────────────────── */
+/* ZK adds z-{comp}-inplace on blur, removes on focus — class never coexists with :focus */
+.z-textbox.z-textbox-inplace,
+.z-intbox.z-intbox-inplace,
+.z-decimalbox.z-decimalbox-inplace,
+.z-doublebox.z-doublebox-inplace,
+.z-longbox.z-longbox-inplace,
+.z-passwordbox.z-passwordbox-inplace {
+    border-color: transparent;
+    background-color: transparent;
+    box-shadow: none;
+}
+
+.z-textbox.z-textbox-inplace:hover,
+.z-intbox.z-intbox-inplace:hover,
+.z-decimalbox.z-decimalbox-inplace:hover,
+.z-doublebox.z-doublebox-inplace:hover,
+.z-longbox.z-longbox-inplace:hover,
+.z-passwordbox.z-passwordbox-inplace:hover {
+    border-color: transparent;
+}
+
 /* ─── Errorbox ───────────────────────────────────────────────────────────── */
 /* Errorbox is a JS-only widget with no <css-uri> in lang.xml, so its rules   */
 /* are merged here to ensure delivery via input.css.dsp.                      */

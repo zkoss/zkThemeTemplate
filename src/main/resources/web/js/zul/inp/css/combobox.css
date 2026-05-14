@@ -350,3 +350,22 @@
 .z-combobox-empty-search-message-hidden {
     display: none;
 }
+
+/* ─── Inplace ─────────────────────────────────────────────────────────── */
+.z-combobox.z-combobox-inplace {
+    background-color: transparent;
+}
+
+.z-combobox.z-combobox-inplace .z-combobox-input {
+    border-color: transparent;
+    background-color: transparent;
+    box-shadow: none;
+}
+
+.z-combobox.z-combobox-inplace:hover .z-combobox-input {
+    border-color: transparent;
+}
+
+.z-combobox.z-combobox-inplace .z-combobox-button {
+    display: none;
+}

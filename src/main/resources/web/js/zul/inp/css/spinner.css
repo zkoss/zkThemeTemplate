@@ -188,6 +188,24 @@
     opacity: 0.5;
 }
 
+/* ─── Inplace ──────────────────────────────────────────────────────────────── */
+.z-spinner.z-spinner-inplace,
+.z-doublespinner.z-doublespinner-inplace {
+    border-color: transparent;
+    background-color: transparent;
+    box-shadow: none;
+}
+
+.z-spinner.z-spinner-inplace:hover,
+.z-doublespinner.z-doublespinner-inplace:hover {
+    border-color: transparent;
+}
+
+.z-spinner.z-spinner-inplace .z-spinner-button,
+.z-doublespinner.z-doublespinner-inplace .z-doublespinner-button {
+    display: none;
+}
+
 /* ─── Disabled ─────────────────────────────────────────────────────────────── */
 .z-spinner.z-spinner-disabled,
 .z-doublespinner.z-doublespinner-disabled {

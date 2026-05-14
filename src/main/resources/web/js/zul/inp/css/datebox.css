@@ -155,6 +155,21 @@
     color: var(--zk-color-primary);
 }
 
+/* ─── Inplace ──────────────────────────────────────────────────────────────── */
+.z-datebox.z-datebox-inplace {
+    border-color: transparent;
+    background-color: transparent;
+    box-shadow: none;
+}
+
+.z-datebox.z-datebox-inplace:hover {
+    border-color: transparent;
+}
+
+.z-datebox.z-datebox-inplace .z-datebox-button {
+    display: none;
+}
+
 /* ─── Calendar popup ───────────────────────────────────────────────────────── */
 .z-datebox-popup {
     position: absolute;

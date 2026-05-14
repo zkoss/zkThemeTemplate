@@ -154,6 +154,21 @@
     opacity: 0.5;
 }
 
+/* ─── Inplace ──────────────────────────────────────────────────────────────── */
+.z-timebox.z-timebox-inplace {
+    border-color: transparent;
+    background-color: transparent;
+    box-shadow: none;
+}
+
+.z-timebox.z-timebox-inplace:hover {
+    border-color: transparent;
+}
+
+.z-timebox.z-timebox-inplace .z-timebox-button {
+    display: none;
+}
+
 /* ─── Disabled ─────────────────────────────────────────────────────────────── */
 .z-timebox.z-timebox-disabled {
     opacity: var(--zk-state-disabled-opacity);
