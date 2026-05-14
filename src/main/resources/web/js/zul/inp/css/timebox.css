@@ -102,6 +102,7 @@
     width: 32px;
     min-height: 38px;
     border: none;
+    border-left: 1px solid var(--zk-color-outline);
     background: transparent;
     color: var(--zk-color-on-surface-variant);
     flex-shrink: 0;

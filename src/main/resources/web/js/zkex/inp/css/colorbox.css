@@ -1,17 +1,27 @@
-/* MD3 Color Picker (Outlined) — Colorbox */
-/* DOM: <span class="z-colorbox"> <button class="z-colorbox-button"> */
+/* MD3 Color Picker (Outlined) — Colorbox closed state + popup
+   DOM (from mold/colorbox.js):
+     <div class="z-colorbox">
+       <i  class="z-colorbox-current" style="background-color: …">&nbsp;</i>   ← swatch
+       <span class="z-colorbox-button">
+         <i class="z-colorbox-icon z-icon-caret-down"></i>                     ← chevron
+       </span>
+       <div class="z-colorbox-popup">…picker / palette…</div>                  ← detached to <body>
+     </div>
+   See `.claude/skills/zk-component-rules/components/colorbox.md` for the full DOM. */
 
+/* ─── Root frame ──────────────────────────────────────────────────────── */
 .z-colorbox {
     display: inline-flex;
-    align-items: center;
+    align-items: stretch;
+    width: 40px;
     height: 36px;
-    min-height: 36px;
+    padding: 3px;
+    gap: 2px;
     border: 1px solid var(--zk-color-outline);
     border-radius: var(--zk-shape-input);
     background-color: var(--zk-color-surface);
     box-sizing: border-box;
     vertical-align: middle;
-    overflow: hidden;
     cursor: pointer;
     transition:
         border-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
@@ -21,7 +31,49 @@
     border-color: var(--zk-color-on-surface);
 }
 
-/* Disabled */
+/* ─── Color swatch ────────────────────────────────────────────────────── */
+.z-colorbox-current {
+    flex: 1;
+    min-width: 0;
+    align-self: stretch;
+    border: 1px solid var(--zk-color-outline-variant);
+    border-radius: 2px;
+    box-sizing: border-box;
+}
+
+/* ─── Caret button ────────────────────────────────────────────────────── */
+.z-colorbox-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 14px;
+    align-self: stretch;
+    background: transparent;
+    border: none;
+    padding: 0;
+    color: var(--zk-color-on-surface-variant);
+}
+
+/* ─── Caret icon (chevron via local SVG mask; no z-icon-caret-down alias). */
+.z-colorbox-icon {
+    --_icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    background-color: currentColor;
+    -webkit-mask-image: var(--_icon);
+    -webkit-mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-image: var(--_icon);
+    mask-size: contain;
+    mask-repeat: no-repeat;
+    mask-position: center;
+}
+
+.z-colorbox-icon::before { content: none; }
+
+/* ─── Disabled ────────────────────────────────────────────────────────── */
 .z-colorbox-disabled,
 .z-colorbox[disabled] {
     opacity: var(--zk-state-disabled-opacity);
@@ -34,12 +86,363 @@
     border-color: var(--zk-color-outline);
 }
 
-.z-colorbox-button {
+/* ─── Popup chrome ────────────────────────────────────────────────────── */
+/* DO NOT add `width: 100%` / `min-width: 100%` — popup is detached to <body>
+   at runtime. ZK sets the width inline. */
+.z-colorbox-popup {
+    position: absolute;
+    z-index: 1600;
+    background-color: var(--zk-color-surface);
+    border: 1px solid var(--zk-color-outline-variant);
+    border-radius: var(--zk-shape-menu);
+    box-shadow: var(--zk-elevation-dropdown);
+    box-sizing: border-box;
+    overflow: visible;
+    padding: 8px;
+}
+
+/* ─── Tab icons (palette / picker toggles) ────────────────────────────── */
+.z-colorbox-paletteicon,
+.z-colorbox-pickericon {
+    position: absolute;
+    top: 8px;
+    width: 28px;
+    height: 28px;
+    /* Icons render BEFORE `.z-colorpicker`/`.z-colorpalette` in DOM. Without an
+       explicit stacking context the next-sibling picker/palette paints on top
+       of these absolutely-positioned icons (z-index auto + later DOM order =
+       higher paint order), and the user's click goes to the picker/palette
+       behind them. Raising z-index puts the icons back on top so clicks reach
+       the bound `openPalette` / `openPicker` handlers. */
+    z-index: 1;
+    cursor: pointer;
+    border-radius: var(--zk-shape-corner-small);
+    color: var(--zk-color-on-surface-variant);
+    background-color: transparent;
+    transition:
+        background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard),
+        color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+}
+
+.z-colorbox-paletteicon { left: 8px; }
+.z-colorbox-pickericon  { left: 44px; }
+
+/* Hover state-layer — MD3 8% on-surface overlay. The unselected tab gets a
+   subtle wash; the selected tab is already filled so we deepen it slightly. */
+.z-colorbox-paletteicon:hover,
+.z-colorbox-pickericon:hover {
+    background-color: color-mix(in srgb, var(--zk-color-on-surface) 8%, transparent);
+    color: var(--zk-color-on-surface);
+}
+
+/* Selected tab — primary-container fill */
+.z-colorpalette-popup .z-colorbox-paletteicon,
+.z-colorpicker-popup  .z-colorbox-pickericon {
+    color: var(--zk-color-on-primary-container);
+    background-color: var(--zk-color-primary-container);
+}
+
+/* Selected + hover — keep primary-container but deepen via mix overlay */
+.z-colorpalette-popup .z-colorbox-paletteicon:hover,
+.z-colorpicker-popup  .z-colorbox-pickericon:hover {
+    background-color: color-mix(in srgb, var(--zk-color-on-primary-container) 8%, var(--zk-color-primary-container));
+    color: var(--zk-color-on-primary-container);
+}
+
+.z-colorbox-paletteicon::before,
+.z-colorbox-pickericon::before {
+    content: '';
     display: block;
     width: 100%;
     height: 100%;
+    background-color: currentColor;
+    -webkit-mask-position: center;
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-size: 18px 18px;
+    mask-position: center;
+    mask-repeat: no-repeat;
+    mask-size: 18px 18px;
+    font-family: inherit;
+}
+
+/* Lucide layout-grid — palette toggle */
+.z-colorbox-paletteicon::before {
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect width='7' height='7' x='3' y='3' rx='1'/%3E%3Crect width='7' height='7' x='14' y='3' rx='1'/%3E%3Crect width='7' height='7' x='14' y='14' rx='1'/%3E%3Crect width='7' height='7' x='3' y='14' rx='1'/%3E%3C/svg%3E");
+            mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect width='7' height='7' x='3' y='3' rx='1'/%3E%3Crect width='7' height='7' x='14' y='3' rx='1'/%3E%3Crect width='7' height='7' x='14' y='14' rx='1'/%3E%3Crect width='7' height='7' x='3' y='14' rx='1'/%3E%3C/svg%3E");
+}
+
+/* Lucide palette (artist palette w/ dots) — picker toggle */
+.z-colorbox-pickericon::before {
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='13.5' cy='6.5' r='.5' fill='currentColor'/%3E%3Ccircle cx='17.5' cy='10.5' r='.5' fill='currentColor'/%3E%3Ccircle cx='8.5' cy='7.5' r='.5' fill='currentColor'/%3E%3Ccircle cx='6.5' cy='12.5' r='.5' fill='currentColor'/%3E%3Cpath d='M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z'/%3E%3C/svg%3E");
+            mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='13.5' cy='6.5' r='.5' fill='currentColor'/%3E%3Ccircle cx='17.5' cy='10.5' r='.5' fill='currentColor'/%3E%3Ccircle cx='8.5' cy='7.5' r='.5' fill='currentColor'/%3E%3Ccircle cx='6.5' cy='12.5' r='.5' fill='currentColor'/%3E%3Cpath d='M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z'/%3E%3C/svg%3E");
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   PALETTE — grid of preset colors
+   ═══════════════════════════════════════════════════════════════════════ */
+.z-colorpalette {
+    width: 340px;
+    height: 300px;
+    padding: 8px;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.z-colorpalette-head {
+    position: relative;
+    height: 50px;
+}
+
+.z-colorpalette-newcolor {
+    width: 35px;
+    height: 35px;
+    border-radius: var(--zk-shape-corner-extra-small);
+    border: 1px solid var(--zk-color-outline-variant);
+    position: absolute;
+    right: 100px;
+    top: 0;
+    box-sizing: border-box;
+}
+
+.z-colorpalette-input,
+.z-colorpalette-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.z-colorpalette-input {
+    width: 96px;
+    height: 35px;
+    margin: 0;
+    padding: 0 8px;
+    border: 1px solid var(--zk-color-outline);
+    border-radius: var(--zk-shape-input);
+    background-color: var(--zk-color-surface);
+    font-family: var(--zk-typescale-font-family);
+    font-size: var(--zk-typescale-body-medium-size);
+    color: var(--zk-color-on-surface);
+    box-sizing: border-box;
+    outline: none;
+}
+
+.z-colorpalette-input:focus {
+    border-color: var(--zk-color-primary);
+    box-shadow: 0 0 0 1px var(--zk-color-primary);
+}
+
+.z-colorpalette-color {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 1px solid var(--zk-color-outline-variant);
+    border-radius: 2px;
+    cursor: pointer;
+    float: left;
+    margin: 1px;
+    box-sizing: border-box;
+}
+
+.z-colorpalette-color:hover {
+    border-color: var(--zk-color-on-surface);
+}
+
+.z-colorpalette-selected {
+    border: 2px solid var(--zk-color-primary);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   PICKER — HSV gradient + hue bar + RGB/HSV/HEX inputs
+   Sprite URLs use a relative path: the CSS lives at
+     /zkau/web/{ver}/zk-material/js/zkex/inp/css/colorbox.css.dsp
+   and the sprites at
+     /zkau/web/{ver}/zkex/img/colorbox/*.png
+   So `../../../../../zkex/img/colorbox/...` resolves correctly.
+   Geometry mirrors the default ZK profile.
+   ═══════════════════════════════════════════════════════════════════════ */
+.z-colorpicker {
+    width: 310px;
+    height: 460px;
+    padding: 8px;
+    box-sizing: border-box;
+    position: relative;
+    overflow: hidden;
+}
+
+.z-colorpicker-main {
+    position: relative;
+    height: 256px;
+    top: 50px;
+}
+
+.z-colorpicker-info {
+    position: relative;
+    height: 122px;
+    margin-top: 16px;
+    top: 50px;
+}
+
+.z-colorpicker-gradient {
+    width: 256px;
+    height: 256px;
+    border: 1px solid var(--zk-color-outline-variant);
+    position: absolute;
+    left: 0;
+    top: 0;
+    cursor: crosshair;
+    box-sizing: border-box;
+}
+
+.z-colorpicker-overlay {
+    width: 256px;
+    height: 256px;
+    background-image: url(/zkau/web/zkex/img/colorbox/colorpicker_gradient.png);
+}
+
+.z-colorpicker-bar {
+    width: 12px;
+    height: 256px;
+    border: 1px solid var(--zk-color-outline-variant);
+    background-image: url(/zkau/web/zkex/img/colorbox/colorpicker_hue.png);
+    position: absolute;
+    left: 7px;
+    overflow: hidden;
+    cursor: row-resize;
+    box-sizing: border-box;
+}
+
+.z-colorpicker-circle {
+    width: 11px;
+    height: 11px;
+    margin: -5px 0 0 -5px;
+    background-image: url(/zkau/web/zkex/img/colorbox/colorpicker_select.gif);
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+}
+
+.z-colorpicker-hue {
+    width: 27px;
+    height: 256px;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.z-colorpicker-arrows {
+    width: 27px;
+    height: 9px;
+    margin: -4px 0 0 0;
+    background-image: url(/zkau/web/zkex/img/colorbox/colorpicker_arrows.gif);
+    position: absolute;
+    left: 0;
+    overflow: hidden;
+    cursor: row-resize;
+}
+
+.z-colorpicker-color {
+    width: 72px;
+    height: 70px;
+    padding: 2px;
+    border: 1px solid var(--zk-color-outline-variant);
+    border-radius: var(--zk-shape-corner-extra-small);
+    background: transparent;
+    position: absolute;
+    top: 0;
+    right: 0;
+    box-sizing: border-box;
+}
+
+.z-colorpicker-newcolor,
+.z-colorpicker-current {
+    width: 66px;
+    height: 32px;
+    border: 1px solid var(--zk-color-outline-variant);
+    position: relative;
+    box-sizing: border-box;
+}
+
+.z-colorpicker-rgb,
+.z-colorpicker-hsv,
+.z-colorpicker-hex {
+    position: absolute;
+    left: 0;
+}
+
+.z-colorpicker-rgb { top: 0; }
+.z-colorpicker-hsv { top: 43px; }
+.z-colorpicker-hex { top: 86px; }
+
+.z-colorpicker-rgb .z-colorpicker-input,
+.z-colorpicker-hsv .z-colorpicker-input {
+    width: 48px;
+    margin-left: 8px;
+    margin-right: 0;
+}
+
+.z-colorpicker-hex .z-colorpicker-input {
+    width: 160px;
+    margin-left: 8px;
+}
+
+.z-colorpicker-text,
+.z-colorpicker-input {
+    font-family: var(--zk-typescale-font-family);
+    font-size: var(--zk-typescale-body-medium-size);
+    color: var(--zk-color-on-surface);
+}
+
+.z-colorpicker-text {
+    display: inline-block;
+    width: 35px;
+}
+
+.z-colorpicker-input {
+    height: 35px;
+    padding: 0 8px;
+    text-align: center;
+    border: 1px solid var(--zk-color-outline);
+    border-radius: var(--zk-shape-input);
+    background-color: var(--zk-color-surface);
+    box-sizing: border-box;
+    outline: none;
+}
+
+.z-colorpicker-input:focus {
+    border-color: var(--zk-color-primary);
+    box-shadow: 0 0 0 1px var(--zk-color-primary);
+}
+
+.z-colorpicker-r, .z-colorpicker-g, .z-colorpicker-b,
+.z-colorpicker-h, .z-colorpicker-s, .z-colorpicker-v {
+    display: inline;
+}
+
+.z-colorpicker-r-text, .z-colorpicker-g-text, .z-colorpicker-b-text,
+.z-colorpicker-h-text, .z-colorpicker-s-text, .z-colorpicker-v-text {
+    display: none;
+}
+
+.z-colorpicker-button {
+    position: absolute;
+    top: 84px;
+    right: 0;
+    width: 72px;
+    height: 36px;
+    cursor: pointer;
     border: none;
-    padding: 0;
-    cursor: inherit;
-    background-color: transparent;
+    border-radius: var(--zk-shape-corner-small);
+    background-color: var(--zk-color-primary);
+    color: var(--zk-color-on-primary);
+    font-family: var(--zk-typescale-font-family);
+    font-size: var(--zk-typescale-label-large-size);
+    font-weight: var(--zk-typescale-label-large-weight);
+}
+
+/* ZK toggles `.z-colorpalette-popup` / `.z-colorpicker-popup` on the
+   `.z-colorbox-popup` root depending on which mode is active. */
+.z-colorpalette-popup .z-colorpicker,
+.z-colorpicker-popup  .z-colorpalette {
+    display: none;
 }

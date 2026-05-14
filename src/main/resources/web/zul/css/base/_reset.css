@@ -8,11 +8,17 @@
 }
 
 html {
+    /* min-height so floating popups (colorbox / combobox / datebox …) can be
+       dismissed by clicking the empty area below the page content. Without this,
+       <html>/<body> collapse to content height and the bottom of the viewport
+       receives no click event. */
+    min-height: 100%;
     font-size: 14px;
     -webkit-text-size-adjust: 100%;
 }
 
 body {
+    min-height: 100vh;
     margin: 0;
     font-family: var(--zk-typescale-font-family);
     font-size: var(--zk-typescale-body-medium-size);
@@ -36,7 +42,11 @@ a {
     text-decoration: none;
 }
 
-a:hover {
+/* Underline only proper content anchors (used inside prose). ZK widgets render
+   many clickable UI elements as `<a>` (menuitem-content, toolbarbutton, tab,
+   listitem, treerow, …) where a hover underline is wrong. Scope underline to
+   anchors that have an explicit href but no `.z-*` widget class. */
+a[href]:not([class*="z-"]):hover {
     text-decoration: underline;
 }
 

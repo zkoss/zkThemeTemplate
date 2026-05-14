@@ -1,64 +1,253 @@
-/* MD3 RangeSlider — component-level tokens mapped to base --zk-* tokens.
-   The ZK stock DSP (rangeslider.css.dsp) consumes all --zk-rangeslider-* vars;
-   this file supplies them so no hex values appear in the DSP output. */
+/* MD3 RangeSlider (zkex) — outline tokens + structural rules.
+   The stock ZK rangeslider.css.dsp is REPLACED by this theme version, so this
+   file must provide ALL structural rules (mark layout, orientation, button
+   geometry) — without them marks stack vertically and vertical track collapses.
+
+   Real ZK DOM (horizontal):
+     <div class="z-rangeslider z-rangeslider-horizontal">
+       <div class="z-rangeslider-inner">                  ← track rail
+         <div class="z-rangeslider-track"></div>          ← filled portion
+         <div class="z-rangeslider-marks">                ← marks container
+           <div class="z-rangeslider-mark" style="left:X%">
+             <div class="z-rangeslider-mark-dot"></div>
+             <div class="z-rangeslider-mark-label">…</div>
+           </div>
+           …
+         </div>
+         <div class="z-sliderbuttons">
+           <div class="z-sliderbuttons-area" style="left:X; width:Y"></div>
+           <div class="z-sliderbuttons-button" style="left:X"></div>
+           <div class="z-sliderbuttons-button" style="left:Y"></div>
+           <div class="z-sliderbuttons-tooltip"></div>
+         </div>
+       </div>
+     </div>
+   Vertical swaps width/height and uses left/top axis. */
 
 :root {
-    /* Track */
     --zk-rangeslider-inner-size: 4px;
-    --zk-rangeslider-border-radius: 2px;
+    --zk-rangeslider-border-radius: var(--zk-shape-corner-full);
     --zk-rangeslider-track-color: var(--zk-color-outline-variant);
-    --zk-rangeslider-empty-background-color: var(--zk-color-surface);
-
-    /* Thumb (sliderbuttons-button) */
     --zk-rangeslider-button-size: 20px;
     --zk-rangeslider-button-color: var(--zk-color-primary);
-    --zk-rangeslider-button-border-width: 0px;
-    --zk-rangeslider-shadow-color: rgba(0, 0, 0, 0.2);
-
-    /* Thumb states */
-    --zk-rangeslider-button-hover-color: var(--zk-color-primary);
-    --zk-rangeslider-button-active-color: var(--zk-color-primary);
-    --zk-rangeslider-button-focus-border-color: var(--zk-color-primary);
-
-    /* Horizontal layout */
-    --zk-rangeslider-horizontal-button-margin-top: -8px;
-    --zk-rangeslider-horizontal-button-margin-left: -10px;
-
-    /* Scale marks */
+    --zk-rangeslider-area-color: var(--zk-color-primary);
+    --zk-rangeslider-tooltip-bg: var(--zk-color-inverse-surface);
+    --zk-rangeslider-tooltip-color: var(--zk-color-inverse-on-surface);
     --zk-rangeslider-dot-size: 8px;
     --zk-rangeslider-dot-border-width: 2px;
-    --zk-rangeslider-label-font-size: var(--zk-typescale-label-small-size);
-
-    /* Mark dot positions (horizontal) */
-    --zk-rangeslider-horizontal-mark-dot-position-top: -2px;
-    --zk-rangeslider-horizontal-mark-label-position-top: 14px;
-
-    /* Tooltip */
-    --zk-rangeslider-tooltip-border-radius: var(--zk-shape-corner-extra-small);
-    --zk-rangeslider-tooltip-background-color: var(--zk-color-inverse-surface);
-    --zk-rangeslider-horizontal-tooltip-position-top: -36px;
-    --zk-rangeslider-horizontal-tooltip-padding: 4px 8px;
-    --zk-rangeslider-vertical-tooltip-position-left: -60px;
-    --zk-rangeslider-vertical-tooltip-padding: 4px 8px;
-
-    /* Disabled */
-    --zk-rangeslider-disabled-track-color: var(--zk-color-disabled);
-    --zk-rangeslider-disabled-button-color: var(--zk-color-disabled);
-    --zk-rangeslider-disabled-tooltip-background-color: var(--zk-color-disabled);
 }
 
-/* Track structural rules — consume the tokens defined above */
+/* ─── Outer container ───────────────────────────────────────────────── */
+.z-rangeslider {
+    position: relative;
+    cursor: pointer;
+    user-select: none;
+    box-sizing: border-box;
+}
+
+.z-rangeslider-horizontal { width: 300px; padding: 10px 0; }
+.z-rangeslider-vertical   { height: 300px; padding: 0 10px; display: inline-block; }
+
+/* ─── Inner (sizing container) ──────────────────────────────────────── */
+/* The inner is just a positioning shell — no background. The visible rail is
+   `.z-rangeslider-track`, which ZK's drag handler reads via `track.width()` /
+   `.height()` to derive slider size. If track has no measurable width/height
+   the drag math divides by zero and snaps to 100%. */
 .z-rangeslider-inner,
 .z-rangeslider-center {
     position: relative;
-    width: 100%;
-    height: var(--zk-rangeslider-inner-size);
-    border-radius: var(--zk-rangeslider-border-radius);
-    background-color: var(--zk-rangeslider-track-color);
+    box-sizing: border-box;
 }
 
+.z-rangeslider-horizontal .z-rangeslider-inner {
+    width: 100%;
+    height: var(--zk-rangeslider-inner-size);
+}
+
+.z-rangeslider-vertical .z-rangeslider-inner {
+    width: var(--zk-rangeslider-inner-size);
+    height: 100%;
+}
+
+/* ─── Track rail (background fill of inner) ─────────────────────────── */
 .z-rangeslider-track {
     position: absolute;
-    height: 100%;
+    inset: 0;
     background-color: var(--zk-rangeslider-track-color);
+    border-radius: var(--zk-rangeslider-border-radius);
+}
+
+/* ─── Sliderbuttons (thumb container) ───────────────────────────────── */
+.z-sliderbuttons {
+    position: absolute;
+    inset: 0;
+}
+
+.z-sliderbuttons-area {
+    position: absolute;
+    background-color: var(--zk-rangeslider-area-color);
+    border-radius: var(--zk-rangeslider-border-radius);
+    z-index: 1;
+}
+
+.z-rangeslider-horizontal .z-sliderbuttons-area { top: 0; height: 100%; }
+.z-rangeslider-vertical   .z-sliderbuttons-area { left: 0; width: 100%; }
+
+/* ─── Thumb ─────────────────────────────────────────────────────────── */
+.z-sliderbuttons-button {
+    position: absolute;
+    width: var(--zk-rangeslider-button-size);
+    height: var(--zk-rangeslider-button-size);
+    border-radius: 50%;
+    background-color: var(--zk-rangeslider-button-color);
+    box-shadow: var(--zk-elevation-1);
+    cursor: grab;
+    z-index: 2;
+    transition:
+        box-shadow var(--zk-motion-duration-short3) var(--zk-motion-easing-standard),
+        transform var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+}
+
+.z-sliderbuttons-button:active {
+    cursor: grabbing;
+    transform: scale(1.15);
+    box-shadow: var(--zk-elevation-2);
+}
+
+.z-rangeslider-horizontal .z-sliderbuttons-button {
+    top: 50%;
+    margin-top: calc(var(--zk-rangeslider-button-size) / -2);
+    margin-left: calc(var(--zk-rangeslider-button-size) / -2);
+}
+
+.z-rangeslider-vertical .z-sliderbuttons-button {
+    left: 50%;
+    margin-left: calc(var(--zk-rangeslider-button-size) / -2);
+    margin-top: calc(var(--zk-rangeslider-button-size) / -2);
+}
+
+/* State ring */
+.z-sliderbuttons-button::before {
+    content: '';
+    position: absolute;
+    inset: -8px;
+    border-radius: 50%;
+    background-color: var(--zk-rangeslider-button-color);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+}
+
+.z-rangeslider:hover         .z-sliderbuttons-button::before { opacity: var(--zk-state-hover-opacity); }
+.z-rangeslider:focus-within  .z-sliderbuttons-button::before { opacity: var(--zk-state-focus-opacity); }
+
+/* ─── Marks ─────────────────────────────────────────────────────────── */
+.z-rangeslider-marks {
+    position: relative;
+    pointer-events: none;
+}
+
+.z-rangeslider-horizontal .z-rangeslider-marks { width: 100%; }
+.z-rangeslider-vertical   .z-rangeslider-marks { height: 100%; }
+
+/* Mark is positioned absolute on the track via inline `left: X%` / `top: X%`. */
+.z-rangeslider-mark {
+    position: absolute;
+}
+
+.z-rangeslider-mark-dot {
+    position: absolute;
+    width: var(--zk-rangeslider-dot-size);
+    height: var(--zk-rangeslider-dot-size);
+    background-color: var(--zk-color-surface);
+    border: var(--zk-rangeslider-dot-border-width) solid var(--zk-rangeslider-track-color);
+    border-radius: 50%;
+    box-sizing: border-box;
+}
+
+.z-rangeslider-horizontal .z-rangeslider-mark-dot {
+    top: -2px;
+    transform: translateX(-50%);
+}
+
+.z-rangeslider-vertical .z-rangeslider-mark-dot {
+    left: -2px;
+    transform: translateY(-50%);
+}
+
+.z-rangeslider-mark-active .z-rangeslider-mark-dot {
+    border-color: var(--zk-color-primary);
+    z-index: 1;
+}
+
+.z-rangeslider-mark-label {
+    position: absolute;
+    color: var(--zk-color-on-surface-variant);
+    font-family: var(--zk-typescale-font-family);
+    font-size: var(--zk-typescale-label-small-size);
+    text-align: center;
+    white-space: nowrap;
+}
+
+.z-rangeslider-horizontal .z-rangeslider-mark-label {
+    top: 14px;
+    transform: translateX(-50%);
+}
+
+.z-rangeslider-vertical .z-rangeslider-mark-label {
+    left: 22px;
+    transform: translateY(-50%);
+}
+
+/* ─── Tooltip ───────────────────────────────────────────────────────── */
+/* Hidden by default. Shown only when hovering the thumb (or grabbing it).
+   MD3 / MUI Slider pattern: value indicator appears on interaction, not
+   permanently on screen. */
+.z-sliderbuttons-tooltip {
+    position: absolute;
+    padding: 4px 8px;
+    background-color: var(--zk-rangeslider-tooltip-bg);
+    color: var(--zk-rangeslider-tooltip-color);
+    border-radius: var(--zk-shape-corner-extra-small);
+    box-shadow: var(--zk-elevation-1);
+    font-family: var(--zk-typescale-font-family);
+    font-size: var(--zk-typescale-label-small-size);
+    pointer-events: none;
+    white-space: nowrap;
+    z-index: 60000;
+    opacity: 0;
+    visibility: hidden;
+    transition:
+        opacity var(--zk-motion-duration-short3) var(--zk-motion-easing-standard),
+        visibility 0s linear var(--zk-motion-duration-short3);
+}
+
+.z-sliderbuttons-button:hover .z-sliderbuttons-tooltip,
+.z-sliderbuttons-button:active .z-sliderbuttons-tooltip,
+.z-sliderbuttons-button:focus-visible .z-sliderbuttons-tooltip {
+    opacity: 1;
+    visibility: visible;
+    transition-delay: 0s;
+}
+
+.z-rangeslider-horizontal .z-sliderbuttons-tooltip {
+    top: -36px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.z-rangeslider-vertical .z-sliderbuttons-tooltip {
+    /* Same clearance as horizontal `top: -36px`: keep tooltip near the thumb
+       on both axes for symmetric spacing. */
+    left: -40px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+/* ─── Disabled ──────────────────────────────────────────────────────── */
+.z-rangeslider[disabled],
+.z-rangeslider.z-rangeslider-disabled {
+    opacity: var(--zk-state-disabled-opacity);
+    pointer-events: none;
+    cursor: not-allowed;
 }

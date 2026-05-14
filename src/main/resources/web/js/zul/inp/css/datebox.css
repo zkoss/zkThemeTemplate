@@ -186,11 +186,13 @@
     border: none;
     overflow: hidden;
     box-sizing: border-box;
-    min-width: 280px;
+    /* Let the popup auto-fit the calendar (which has its own max-width: 268px
+       in calendar.css). Forcing min-width here leaves a horizontal strip of
+       blank popup background to the right of the calendar — looks like a
+       phantom border. */
 }
 
 .z-datebox-popup .z-calendar {
-    width: 320px;
     border: none;
     border-bottom: 1px solid var(--zk-color-outline-variant);
     box-shadow: none;

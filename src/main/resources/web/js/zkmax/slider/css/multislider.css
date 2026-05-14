@@ -28,13 +28,31 @@
     position: relative;
 }
 
+/* Horizontal: inner is the full-width track wrapper */
+.z-multislider-horizontal .z-multislider-inner {
+    width: 100%;
+    height: var(--zk-rangeslider-inner-size, 4px);
+}
+
+/* Vertical: inner must fill the parent height so the 4-px-wide track has
+   somewhere to draw. Without `height: 100%` the inner collapses to 0 and the
+   track is invisible. */
+.z-multislider-vertical .z-multislider-inner {
+    width: var(--zk-rangeslider-inner-size, 4px);
+    height: 100%;
+    margin: 12px 30px 12px 12px;
+}
+
 /* ── Track rail ───────────────────────────────────────── */
+/* No margin: the track must overlay the filled area exactly. `.z-sliderbuttons`
+   is `inset: 0` of inner, and `.z-sliderbuttons-area` is positioned within it,
+   so any margin on the track shifts it relative to the area and produces TWO
+   visible lines (one grey track, one blue area). */
 .z-multislider-track {
-    position: relative;
-    height: 4px;
+    position: absolute;
+    inset: 0;
     background-color: var(--zk-color-outline-variant);
     border-radius: var(--zk-shape-corner-full);
-    margin-block: 10px;
 }
 
 /* ── Horizontal orientation ───────────────────────────── */
@@ -42,23 +60,11 @@
     min-width: 120px;
 }
 
-.z-multislider-horizontal .z-multislider-track {
-    width: 100%;
-    height: 4px;
-}
-
 /* ── Vertical orientation ─────────────────────────────── */
 .z-multislider-vertical {
     display: inline-block;
     width: auto;
     padding: 0 var(--zk-spacing-3);
-}
-
-.z-multislider-vertical .z-multislider-track {
-    width: 4px;
-    height: 100%;
-    margin-block: 0;
-    margin-inline: 10px;
 }
 
 /* ── Range container (.z-sliderbuttons) ───────────────── */
@@ -138,7 +144,7 @@
     top: auto;
 }
 
-/* ── Tooltip above thumb ──────────────────────────────── */
+/* ── Tooltip above thumb (hidden by default, hover-only) ──────────── */
 .z-sliderbuttons-tooltip {
     position: absolute;
     z-index: 60000;
@@ -151,6 +157,34 @@
     box-shadow: var(--zk-elevation-1);
     pointer-events: none;
     white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition:
+        opacity var(--zk-motion-duration-short3) var(--zk-motion-easing-standard),
+        visibility 0s linear var(--zk-motion-duration-short3);
+}
+
+/* Horizontal: tooltip above thumb. Vertical: tooltip left of thumb.
+   Offsets mirror rangeslider so the value indicator never sits on top of the
+   thumb (-36 vertical clearance / -40 horizontal clearance). */
+.z-multislider-horizontal .z-sliderbuttons-tooltip {
+    top: -36px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.z-multislider-vertical .z-sliderbuttons-tooltip {
+    left: -40px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.z-sliderbuttons-button:hover .z-sliderbuttons-tooltip,
+.z-sliderbuttons-button:active .z-sliderbuttons-tooltip,
+.z-sliderbuttons-button:focus-visible .z-sliderbuttons-tooltip {
+    opacity: 1;
+    visibility: visible;
+    transition-delay: 0s;
 }
 
 /* ── Marks ────────────────────────────────────────────── */

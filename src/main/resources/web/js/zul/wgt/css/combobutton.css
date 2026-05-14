@@ -95,14 +95,19 @@
 }
 
 /* ─── Toolbar mold ─────────────────────────────────────────────────────── */
+/* Border lives on the root so the rounded corners are part of the same element
+   that draws the outline — without this the corners show 4 gaps where the
+   inner rectangular border on `.z-combobutton-content` is clipped by the
+   root's `border-radius + overflow: hidden`. */
 .z-combobutton-toolbar {
     box-shadow: none;
+    border: 1px solid var(--zk-color-outline);
 }
 
 .z-combobutton-toolbar .z-combobutton-content {
     background-color: transparent;
     color: var(--zk-color-on-surface-variant);
-    border: 1px solid var(--zk-color-outline);
+    border: none;
 }
 
 .z-combobutton-toolbar .z-combobutton-content::before {
