@@ -3,56 +3,6 @@
 <h:link rel="stylesheet" href="pv.css"/>
 <div sclass="z-p-8">
     <div sclass="z-border-bottom z-fs-title-lg z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Combobox</div>
-
-    <apply templateURI="~./pv/matrix.zul" title="States"
-           cols="${['Default','Disabled','Readonly','Invalid','Inplace']}"
-           rowsTemplate="combobox-rows">
-        <template name="combobox-rows">
-            <div sclass="pv-row z-py-2 z-border-bottom">
-                <div sclass="z-fs-label-md z-text-secondary">Default</div>
-                <div><combobox><comboitem label="Item 1"/><comboitem label="Item 2"/></combobox></div>
-                <div><combobox disabled="true"><comboitem label="Item 1"/><comboitem label="Item 2"/></combobox></div>
-                <div><combobox readonly="true"><comboitem label="Item 1"/><comboitem label="Item 2"/></combobox></div>
-                <div><combobox sclass="z-combobox-invalid"><comboitem label="Item 1"/><comboitem label="Item 2"/></combobox></div>
-                <div><combobox inplace="true" value="Item 1"><comboitem label="Item 1"/><comboitem label="Item 2"/></combobox></div>
-            </div>
-            <div sclass="pv-row z-py-2 z-border-bottom">
-                <div sclass="z-fs-label-md z-text-secondary">No button</div>
-                <div><combobox buttonVisible="false"><comboitem label="Item 1"/></combobox></div>
-                <div><combobox buttonVisible="false" disabled="true"><comboitem label="Item 1"/></combobox></div>
-                <div><combobox buttonVisible="false" readonly="true"><comboitem label="Item 1"/></combobox></div>
-                <div><combobox buttonVisible="false" sclass="z-combobox-invalid"><comboitem label="Item 1"/></combobox></div>
-                <div>—</div>
-            </div>
-        </template>
-    </apply>
-
-    <div sclass="z-mb-6">
-        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Comboitem Variants</div>
-        <div sclass="z-d-flex z-align-end z-flex-wrap z-gap-6 z-py-3">
-            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <combobox>
-                    <comboitem label="Item 1"/>
-                    <comboitem label="Item 2"/>
-                    <comboitem label="Item 3"/>
-                </combobox>
-                <div sclass="z-fs-label-sm z-text-secondary">Plain</div>
-            </div>
-            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <combobox>
-                    <comboitem label="Item 1" description="Description of item 1"/>
-                    <comboitem label="Item 2" description="Description of item 2"/>
-                </combobox>
-                <div sclass="z-fs-label-sm z-text-secondary">With description</div>
-            </div>
-            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <combobox>
-                    <comboitem label="Item 1" iconSclass="z-icon-apple"/>
-                    <comboitem label="Item 2" iconSclass="z-icon-smartphone"/>
-                </combobox>
-                <div sclass="z-fs-label-sm z-text-secondary">With icon</div>
-            </div>
-        </div>
-    </div>
+    <apply templateURI="~./pv/combobox-content.zul"/>
 </div>
 </zk>

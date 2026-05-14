@@ -1,0 +1,13 @@
+<zk>
+<apply templateURI="~./pv/matrix.zul" title="States"
+       cols="${['Default','Disabled']}" colsSuffix="-wide"
+       rowsTemplate="cascader-rows">
+    <template name="cascader-rows">
+        <div sclass="pv-row z-py-2 z-border-bottom">
+            <div sclass="z-fs-label-md z-text-secondary">Default</div>
+            <div><cascader model="${cascaderModel}" width="200px"/></div>
+            <div><cascader model="${cascaderModel}" disabled="true" width="200px"/></div>
+        </div>
+    </template>
+</apply>
+</zk>

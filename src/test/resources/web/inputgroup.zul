@@ -3,37 +3,6 @@
 <h:link rel="stylesheet" href="pv.css"/>
 <div sclass="z-p-8">
     <div sclass="z-border-bottom z-fs-title-lg z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Input Group</div>
-
-    <div sclass="z-mb-6">
-        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Examples</div>
-        <div sclass="z-d-flex z-flex-col z-align-start z-gap-4 z-py-3">
-            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <inputgroup>@<textbox/></inputgroup>
-                <div sclass="z-fs-label-sm z-text-secondary">Prefix text</div>
-            </div>
-            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <inputgroup><textbox placeholder="Recipient's username"/>@example.com</inputgroup>
-                <div sclass="z-fs-label-sm z-text-secondary">Suffix text</div>
-            </div>
-            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <inputgroup>$<textbox/>.00</inputgroup>
-                <div sclass="z-fs-label-sm z-text-secondary">Both sides</div>
-            </div>
-            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <inputgroup>
-                    With textarea
-                    <textbox multiline="true" rows="3" cols="30"/>
-                </inputgroup>
-                <div sclass="z-fs-label-sm z-text-secondary">With multiline</div>
-            </div>
-            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <inputgroup>
-                    <textbox placeholder="Search"/>
-                    <button label="Go" sclass="z-button-primary"/>
-                </inputgroup>
-                <div sclass="z-fs-label-sm z-text-secondary">Input + Button</div>
-            </div>
-        </div>
-    </div>
+    <apply templateURI="~./pv/inputgroup-content.zul"/>
 </div>
 </zk>

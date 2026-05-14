@@ -1,0 +1,18 @@
+<zk>
+<apply templateURI="~./pv/matrix.zul" title="States"
+       cols="${['Default','Disabled']}"
+       rowsTemplate="colorbox-rows">
+    <template name="colorbox-rows">
+        <div sclass="pv-row z-py-2 z-border-bottom">
+            <div sclass="z-fs-label-md z-text-secondary">Color picker</div>
+            <div><colorbox/></div>
+            <div><colorbox disabled="true"/></div>
+        </div>
+        <div sclass="pv-row z-py-2 z-border-bottom">
+            <div sclass="z-fs-label-md z-text-secondary">With value</div>
+            <div><colorbox color="#184dc6"/></div>
+            <div><colorbox color="#184dc6" disabled="true"/></div>
+        </div>
+    </template>
+</apply>
+</zk>

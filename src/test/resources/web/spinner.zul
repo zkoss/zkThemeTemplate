@@ -3,61 +3,6 @@
 <h:link rel="stylesheet" href="pv.css"/>
 <div sclass="z-p-8">
     <div sclass="z-border-bottom z-fs-title-lg z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Spinner</div>
-
-    <apply templateURI="~./pv/matrix.zul" title="States — Spinner"
-           cols="${['Default','Disabled','Readonly','Invalid']}"
-           rowsTemplate="spinner-rows">
-        <template name="spinner-rows">
-            <div sclass="pv-row z-py-2 z-border-bottom">
-                <div sclass="z-fs-label-md z-text-secondary">With buttons</div>
-                <div><spinner/></div>
-                <div><spinner disabled="true"/></div>
-                <div><spinner readonly="true"/></div>
-                <div><spinner sclass="z-spinner-invalid"/></div>
-            </div>
-            <div sclass="pv-row z-py-2 z-border-bottom">
-                <div sclass="z-fs-label-md z-text-secondary">No buttons</div>
-                <div><spinner buttonVisible="false"/></div>
-                <div><spinner buttonVisible="false" disabled="true"/></div>
-                <div><spinner buttonVisible="false" readonly="true"/></div>
-                <div><spinner buttonVisible="false" sclass="z-spinner-invalid"/></div>
-            </div>
-            <div sclass="pv-row z-py-2 z-border-bottom">
-                <div sclass="z-fs-label-md z-text-secondary">Inplace</div>
-                <div><spinner inplace="true" value="5"/></div>
-                <div><spinner inplace="true" disabled="true" value="5"/></div>
-                <div><spinner inplace="true" readonly="true" value="5"/></div>
-                <div>—</div>
-            </div>
-        </template>
-    </apply>
-
-    <apply templateURI="~./pv/matrix.zul" title="States — Doublespinner"
-           cols="${['Default','Disabled','Readonly','Invalid']}"
-           rowsTemplate="doublespinner-spinner-rows">
-        <template name="doublespinner-spinner-rows">
-            <div sclass="pv-row z-py-2 z-border-bottom">
-                <div sclass="z-fs-label-md z-text-secondary">With buttons</div>
-                <div><doublespinner/></div>
-                <div><doublespinner disabled="true"/></div>
-                <div><doublespinner readonly="true"/></div>
-                <div><doublespinner sclass="z-doublespinner-invalid"/></div>
-            </div>
-            <div sclass="pv-row z-py-2 z-border-bottom">
-                <div sclass="z-fs-label-md z-text-secondary">No buttons</div>
-                <div><doublespinner buttonVisible="false"/></div>
-                <div><doublespinner buttonVisible="false" disabled="true"/></div>
-                <div><doublespinner buttonVisible="false" readonly="true"/></div>
-                <div>—</div>
-            </div>
-            <div sclass="pv-row z-py-2 z-border-bottom">
-                <div sclass="z-fs-label-md z-text-secondary">Inplace</div>
-                <div><doublespinner inplace="true" value="3.5"/></div>
-                <div><doublespinner inplace="true" disabled="true" value="3.5"/></div>
-                <div><doublespinner inplace="true" readonly="true" value="3.5"/></div>
-                <div>—</div>
-            </div>
-        </template>
-    </apply>
+    <apply templateURI="~./pv/spinner-content.zul"/>
 </div>
 </zk>

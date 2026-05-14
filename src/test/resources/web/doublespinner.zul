@@ -3,33 +3,6 @@
 <h:link rel="stylesheet" href="pv.css"/>
 <div sclass="z-p-8">
     <div sclass="z-border-bottom z-fs-title-lg z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Doublespinner</div>
-
-    <apply templateURI="~./pv/matrix.zul" title="States"
-           cols="${['Default','Disabled','Readonly','Invalid']}"
-           rowsTemplate="doublespinner-rows">
-        <template name="doublespinner-rows">
-            <div sclass="pv-row z-py-2 z-border-bottom">
-                <div sclass="z-fs-label-md z-text-secondary">With buttons</div>
-                <div><doublespinner step="0.5"/></div>
-                <div><doublespinner step="0.5" disabled="true"/></div>
-                <div><doublespinner step="0.5" readonly="true"/></div>
-                <div><doublespinner step="0.5" sclass="z-doublespinner-invalid"/></div>
-            </div>
-            <div sclass="pv-row z-py-2 z-border-bottom">
-                <div sclass="z-fs-label-md z-text-secondary">No button</div>
-                <div><doublespinner buttonVisible="false"/></div>
-                <div><doublespinner buttonVisible="false" disabled="true"/></div>
-                <div><doublespinner buttonVisible="false" readonly="true"/></div>
-                <div>—</div>
-            </div>
-            <div sclass="pv-row z-py-2 z-border-bottom">
-                <div sclass="z-fs-label-md z-text-secondary">Inplace</div>
-                <div><doublespinner inplace="true" value="3.5"/></div>
-                <div><doublespinner inplace="true" disabled="true" value="3.5"/></div>
-                <div><doublespinner inplace="true" readonly="true" value="3.5"/></div>
-                <div>—</div>
-            </div>
-        </template>
-    </apply>
+    <apply templateURI="~./pv/doublespinner-content.zul"/>
 </div>
 </zk>

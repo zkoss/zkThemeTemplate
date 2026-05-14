@@ -35,7 +35,6 @@
                     <navitem label="Doublespinner"    onClick="@command('navigate', page='~./doublespinner.zul')"/>
                     <navitem label="Inputgroup"       onClick="@command('navigate', page='~./inputgroup.zul')"/>
                     <navitem label="Inputs"           onClick="@command('navigate', page='~./inputs.zul')"/>
-                    <navitem label="Inputs (Basic)"   onClick="@command('navigate', page='~./inputs-basic.zul')"/>
                     <navitem label="Inputs (Rounded)" onClick="@command('navigate', page='~./inputs-rounded.zul')"/>
                     <navitem label="Intbox"           onClick="@command('navigate', page='~./intbox.zul')"/>
                     <navitem label="Link"             onClick="@command('navigate', page='~./a.zul')"/>

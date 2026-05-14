@@ -1,0 +1,18 @@
+<zk>
+<apply templateURI="~./pv/matrix.zul" title="States"
+       cols="${['Default','Disabled']}" colsSuffix="-wide"
+       rowsTemplate="chosenbox-rows">
+    <template name="chosenbox-rows">
+        <div sclass="pv-row z-py-2 z-border-bottom">
+            <div sclass="z-fs-label-md z-text-secondary">Multiple</div>
+            <div><chosenbox model="${chosenModel}" width="200px"/></div>
+            <div><chosenbox model="${chosenModel}" disabled="true" width="200px"/></div>
+        </div>
+        <div sclass="pv-row z-py-2 z-border-bottom">
+            <div sclass="z-fs-label-md z-text-secondary">Creatable</div>
+            <div><chosenbox creatable="true" noResultsText="No results" createMessage="Add new" width="200px"/></div>
+            <div>—</div>
+        </div>
+    </template>
+</apply>
+</zk>

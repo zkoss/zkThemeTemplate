@@ -4,33 +4,6 @@
 <zscript><![CDATA[java.util.Date sampleTime = new java.util.Date(0, 0, 1, 10, 30, 0);]]></zscript>
 <div sclass="z-p-8">
     <div sclass="z-border-bottom z-fs-title-lg z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Timebox</div>
-
-    <apply templateURI="~./pv/matrix.zul" title="States"
-           cols="${['Default','Disabled','Readonly','Invalid']}"
-           rowsTemplate="timebox-rows">
-        <template name="timebox-rows">
-            <div sclass="pv-row z-py-2 z-border-bottom">
-                <div sclass="z-fs-label-md z-text-secondary">With button</div>
-                <div><timebox/></div>
-                <div><timebox disabled="true"/></div>
-                <div><timebox readonly="true"/></div>
-                <div><timebox sclass="z-timebox-invalid"/></div>
-            </div>
-            <div sclass="pv-row z-py-2 z-border-bottom">
-                <div sclass="z-fs-label-md z-text-secondary">No button</div>
-                <div><timebox buttonVisible="false"/></div>
-                <div><timebox buttonVisible="false" disabled="true"/></div>
-                <div><timebox buttonVisible="false" readonly="true"/></div>
-                <div><timebox buttonVisible="false" sclass="z-timebox-invalid"/></div>
-            </div>
-            <div sclass="pv-row z-py-2 z-border-bottom">
-                <div sclass="z-fs-label-md z-text-secondary">Inplace</div>
-                <div><timebox inplace="true" value="${sampleTime}"/></div>
-                <div><timebox inplace="true" disabled="true" value="${sampleTime}"/></div>
-                <div><timebox inplace="true" readonly="true" value="${sampleTime}"/></div>
-                <div>—</div>
-            </div>
-        </template>
-    </apply>
+    <apply templateURI="~./pv/timebox-content.zul"/>
 </div>
 </zk>

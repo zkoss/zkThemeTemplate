@@ -1,0 +1,21 @@
+<zk>
+<apply templateURI="~./pv/matrix.zul" title="States"
+       cols="${['Default','Disabled']}"
+       rowsTemplate="selectbox-rows">
+    <template name="selectbox-rows">
+        <div sclass="pv-row z-py-2 z-border-bottom">
+            <div sclass="z-fs-label-md z-text-secondary">Default</div>
+            <div>
+                <selectbox model="${selectModel}">
+                    <template name="model">${each}</template>
+                </selectbox>
+            </div>
+            <div>
+                <selectbox model="${selectModel}" disabled="true">
+                    <template name="model">${each}</template>
+                </selectbox>
+            </div>
+        </div>
+    </template>
+</apply>
+</zk>

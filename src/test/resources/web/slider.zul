@@ -3,44 +3,6 @@
 <h:link rel="stylesheet" href="pv.css"/>
 <div sclass="z-p-8">
     <div sclass="z-border-bottom z-fs-title-lg z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Slider</div>
-
-    <apply templateURI="~./pv/matrix.zul" title="Horizontal"
-           cols="${['Default','Disabled']}" colsSuffix="-wide"
-           rowsTemplate="slider-horizontal-rows">
-        <template name="slider-horizontal-rows">
-            <div sclass="pv-row z-py-2 z-border-bottom">
-                <div sclass="z-fs-label-md z-text-secondary">Default</div>
-                <div><slider width="200px"/></div>
-                <div><slider width="200px" disabled="true"/></div>
-            </div>
-            <div sclass="pv-row z-py-2 z-border-bottom">
-                <div sclass="z-fs-label-md z-text-secondary">Sphere</div>
-                <div><slider width="200px" mold="sphere"/></div>
-                <div><slider width="200px" mold="sphere" disabled="true"/></div>
-            </div>
-            <div sclass="pv-row z-py-2 z-border-bottom">
-                <div sclass="z-fs-label-md z-text-secondary">Scale</div>
-                <div><slider width="200px" mold="scale"/></div>
-                <div><slider width="200px" mold="scale" disabled="true"/></div>
-            </div>
-        </template>
-    </apply>
-
-    <apply templateURI="~./pv/matrix.zul" title="Vertical"
-           cols="${['Default','Disabled']}" colsSuffix="-wide"
-           rowsTemplate="slider-vertical-rows">
-        <template name="slider-vertical-rows">
-            <div sclass="pv-row z-py-2 z-border-bottom">
-                <div sclass="z-fs-label-md z-text-secondary">Default</div>
-                <div><slider orient="vertical" height="120px"/></div>
-                <div><slider orient="vertical" height="120px" disabled="true"/></div>
-            </div>
-            <div sclass="pv-row z-py-2 z-border-bottom">
-                <div sclass="z-fs-label-md z-text-secondary">Sphere</div>
-                <div><slider orient="vertical" mold="sphere" height="120px"/></div>
-                <div><slider orient="vertical" mold="sphere" height="120px" disabled="true"/></div>
-            </div>
-        </template>
-    </apply>
+    <apply templateURI="~./pv/slider-content.zul"/>
 </div>
 </zk>

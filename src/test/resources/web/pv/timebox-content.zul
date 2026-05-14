@@ -1,0 +1,24 @@
+<zk>
+<apply templateURI="~./pv/matrix.zul" title="States"
+       cols="${['Default','Disabled','Readonly','Invalid','Inplace']}"
+       rowsTemplate="timebox-rows">
+    <template name="timebox-rows">
+        <div sclass="pv-row z-py-2 z-border-bottom">
+            <div sclass="z-fs-label-md z-text-secondary">With button</div>
+            <div><timebox/></div>
+            <div><timebox disabled="true"/></div>
+            <div><timebox readonly="true"/></div>
+            <div><timebox sclass="z-timebox-invalid"/></div>
+            <div><timebox inplace="true" value="${sampleTime}"/></div>
+        </div>
+        <div sclass="pv-row z-py-2 z-border-bottom">
+            <div sclass="z-fs-label-md z-text-secondary">No button</div>
+            <div><timebox buttonVisible="false"/></div>
+            <div><timebox buttonVisible="false" disabled="true"/></div>
+            <div><timebox buttonVisible="false" readonly="true"/></div>
+            <div><timebox buttonVisible="false" sclass="z-timebox-invalid"/></div>
+            <div><timebox buttonVisible="false" inplace="true" value="${sampleTime}"/></div>
+        </div>
+    </template>
+</apply>
+</zk>

@@ -56,6 +56,9 @@
     align-items: start;
 }
 
+.pv-cols-1 > .pv-col-header-row,
+.pv-cols-1 > .pv-row { grid-template-columns: 120px 200px; }
+
 .pv-cols-2 > .pv-col-header-row,
 .pv-cols-2 > .pv-row { grid-template-columns: 120px repeat(2, 160px); }
 
@@ -73,3 +76,18 @@
 
 .pv-cols-5 > .pv-col-header-row,
 .pv-cols-5 > .pv-row { grid-template-columns: 120px repeat(5, 160px); }
+
+/* Make inline-flex ZK components (bandbox, combobox, datebox, …) fill their grid cell */
+.pv-row > div > .z-bandbox,
+.pv-row > div > .z-combobox,
+.pv-row > div > .z-datebox,
+.pv-row > div > .z-timebox,
+.pv-row > div > .z-spinner,
+.pv-row > div > .z-doublespinner,
+.pv-row > div > .z-textbox,
+.pv-row > div > .z-intbox,
+.pv-row > div > .z-longbox,
+.pv-row > div > .z-doublebox,
+.pv-row > div > .z-decimalbox,
+.pv-row > div > .z-searchbox,
+.pv-row > div > .z-selectbox { width: 100%; }

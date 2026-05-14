@@ -1,0 +1,24 @@
+<zk>
+<apply templateURI="~./pv/matrix.zul" title="States"
+       cols="${['Default','Disabled','Readonly','Invalid','Inplace']}"
+       rowsTemplate="bandbox-rows">
+    <template name="bandbox-rows">
+        <div sclass="pv-row z-py-2 z-border-bottom">
+            <div sclass="z-fs-label-md z-text-secondary">Default</div>
+            <div><bandbox><bandpopup>Content</bandpopup></bandbox></div>
+            <div><bandbox disabled="true"><bandpopup>Content</bandpopup></bandbox></div>
+            <div><bandbox readonly="true"><bandpopup>Content</bandpopup></bandbox></div>
+            <div><bandbox sclass="z-bandbox-invalid"><bandpopup>Content</bandpopup></bandbox></div>
+            <div><bandbox inplace="true" value="Selected"><bandpopup>Content</bandpopup></bandbox></div>
+        </div>
+        <div sclass="pv-row z-py-2 z-border-bottom">
+            <div sclass="z-fs-label-md z-text-secondary">No button</div>
+            <div><bandbox buttonVisible="false"><bandpopup>Content</bandpopup></bandbox></div>
+            <div><bandbox buttonVisible="false" disabled="true"><bandpopup>Content</bandpopup></bandbox></div>
+            <div><bandbox buttonVisible="false" readonly="true"><bandpopup>Content</bandpopup></bandbox></div>
+            <div><bandbox buttonVisible="false" sclass="z-bandbox-invalid"><bandpopup>Content</bandpopup></bandbox></div>
+            <div><bandbox buttonVisible="false" inplace="true" value="Selected"><bandpopup>Content</bandpopup></bandbox></div>
+        </div>
+    </template>
+</apply>
+</zk>

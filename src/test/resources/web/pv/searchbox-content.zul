@@ -1,0 +1,19 @@
+<zk>
+<apply templateURI="~./pv/matrix.zul" title="States"
+       cols="${['Default','Disabled']}"
+       rowsTemplate="searchbox-rows">
+    <template name="searchbox-rows">
+        <div sclass="pv-row z-py-2 z-border-bottom">
+            <div sclass="z-fs-label-md z-text-secondary">Default</div>
+            <div>
+                <searchbox model="${searchModel}" placeholder="Search regions..." autoclose="true">
+                    <template name="model"><html><![CDATA[<i class="z-icon-globe"></i> ${each}]]></html></template>
+                </searchbox>
+            </div>
+            <div>
+                <searchbox model="${searchModel}" placeholder="Search regions..." disabled="true"/>
+            </div>
+        </div>
+    </template>
+</apply>
+</zk>
