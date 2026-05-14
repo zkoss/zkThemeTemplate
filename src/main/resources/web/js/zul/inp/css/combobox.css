@@ -351,6 +351,20 @@
     display: none;
 }
 
+/* ─── Button hidden (buttonVisible="false") ──────────────────────────── */
+/* ZK adds z-combobox-disabled to the <a> button element when buttonVisible=false,
+   and z-combobox-input-full to the input. Combobox uses split-border pattern
+   (input + button each carry half the border), so hiding the button leaves the
+   input's right edge open — restore the right border + full corner radius. */
+.z-combobox-button.z-combobox-disabled {
+    display: none;
+}
+
+.z-combobox-input.z-combobox-input-full {
+    border-right: 1px solid var(--zk-color-outline);
+    border-radius: var(--zk-shape-input);
+}
+
 /* ─── Inplace ─────────────────────────────────────────────────────────── */
 .z-combobox.z-combobox-inplace {
     background-color: transparent;

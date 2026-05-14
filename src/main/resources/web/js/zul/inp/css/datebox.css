@@ -155,6 +155,12 @@
     color: var(--zk-color-primary);
 }
 
+/* ─── Button hidden (buttonVisible="false") ──────────────────────────── */
+/* ZK adds z-datebox-disabled to the <a> button element when buttonVisible=false */
+.z-datebox-button.z-datebox-disabled {
+    display: none;
+}
+
 /* ─── Inplace ──────────────────────────────────────────────────────────────── */
 .z-datebox.z-datebox-inplace {
     border-color: transparent;

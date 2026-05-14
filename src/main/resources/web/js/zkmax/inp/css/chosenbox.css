@@ -102,6 +102,10 @@
 }
 
 /* ─── Popup ───────────────────────────────────────────────────────────── */
+/* ZK detaches this popup to <body> at runtime and sets `style="width: <trigger-width>px"`
+   inline. Do not add `width: 100%` / `min-width: 100%` here — that resolves to body width
+   and the popup will span the entire viewport. See
+   `.claude/skills/zk-component-rules/reference/floating-popup-in-body.md`. */
 .z-chosenbox-popup {
     position: absolute;
     z-index: 1600;
@@ -110,7 +114,6 @@
     border-radius: var(--zk-shape-menu);
     overflow: auto;
     box-sizing: border-box;
-    min-width: 100%;
     max-height: 280px;
 }
 
@@ -130,8 +133,8 @@
 .z-chosenbox-option {
     display: flex;
     align-items: center;
-    height: 36px;
-    padding: 0 var(--zk-spacing-3);
+    min-height: 36px;
+    padding: 6px var(--zk-spacing-4);
     cursor: pointer;
     font-family: var(--zk-typescale-font-family);
     font-size: var(--zk-typescale-body-medium-size);
@@ -155,8 +158,8 @@
 .z-chosenbox-empty-creatable {
     display: flex;
     align-items: center;
-    height: 36px;
-    padding: 0 var(--zk-spacing-3);
+    min-height: 36px;
+    padding: 6px var(--zk-spacing-4);
     cursor: pointer;
     font-family: var(--zk-typescale-font-family);
     font-size: var(--zk-typescale-body-medium-size);
