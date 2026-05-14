@@ -4,7 +4,7 @@
        rowsTemplate="colorbox-rows">
     <template name="colorbox-rows">
         <div sclass="pv-row z-py-2 z-border-bottom">
-            <div sclass="z-fs-label-md z-text-secondary">Color picker</div>
+            <div sclass="z-fs-label-md z-text-secondary">Default (palette)</div>
             <div><colorbox/></div>
             <div><colorbox disabled="true"/></div>
         </div>
@@ -12,6 +12,11 @@
             <div sclass="z-fs-label-md z-text-secondary">With value</div>
             <div><colorbox color="#184dc6"/></div>
             <div><colorbox color="#184dc6" disabled="true"/></div>
+        </div>
+        <div sclass="pv-row z-py-2 z-border-bottom">
+            <div sclass="z-fs-label-md z-text-secondary">Open swatch</div>
+            <div><colorbox color="#990000"/></div>
+            <div>—</div>
         </div>
     </template>
 </apply>

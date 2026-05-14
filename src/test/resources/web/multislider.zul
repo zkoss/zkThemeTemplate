@@ -8,7 +8,7 @@
         <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Horizontal</div>
         <div sclass="z-d-flex z-flex-col z-align-start z-gap-4 z-py-3">
             <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <multislider width="300px">
+                <multislider width="500px">
                     <sliderbuttons startValue="10" endValue="70"/>
                     <sliderbuttons startValue="20" endValue="50"/>
                     <sliderbuttons startValue="30" endValue="40"/>
@@ -22,7 +22,7 @@
         <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Vertical</div>
         <div sclass="z-d-flex z-align-end z-flex-wrap z-gap-6 z-py-3">
             <div sclass="z-d-flex z-flex-col z-align-center z-gap-2">
-                <multislider min="5" max="120" orient="vertical" height="160px">
+                <multislider min="5" max="120" orient="vertical" height="500px">
                     <sliderbuttons startValue="5" endValue="100"/>
                     <sliderbuttons startValue="20" endValue="50"/>
                 </multislider>
