@@ -107,7 +107,7 @@
        the picker never has `:open` — that was hiding the popup forever.
        Correct form: chain `:open` on the select side, e.g. `select:open::picker(select)`. */
     .z-selectbox::picker(select) {
-        background-color: var(--zk-color-surface-container);
+        background-color: var(--zk-color-surface);
         color: var(--zk-color-on-surface);
         border: 1px solid var(--zk-color-outline-variant);
         border-radius: var(--zk-shape-corner-medium);

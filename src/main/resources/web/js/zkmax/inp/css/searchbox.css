@@ -113,7 +113,7 @@
     flex-direction: column;
     box-sizing: border-box;
     padding: var(--zk-spacing-2);
-    background-color: var(--zk-color-surface-container);
+    background-color: var(--zk-color-surface);
     color: var(--zk-color-on-surface);
     border-radius: var(--zk-shape-corner-medium);
     box-shadow: var(--zk-elevation-3);

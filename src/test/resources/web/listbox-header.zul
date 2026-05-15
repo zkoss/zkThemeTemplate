@@ -347,10 +347,8 @@
             <listbox>
                 <auxhead>
                     <auxheader colspan="2">
-                        <label id="span">ss</label>
                         <textbox onChange='span.value = self.value' />
                         <datebox />
-                        ssss
                     </auxheader>
                 </auxhead>
                 <listhead sizable="true">

@@ -9,7 +9,6 @@
 .z-longbox,
 .z-passwordbox {
     display: inline-block;
-    width: 100%;
     min-height: 40px;
     padding: 0 var(--zk-spacing-3);
     border: 1px solid var(--zk-color-outline);
