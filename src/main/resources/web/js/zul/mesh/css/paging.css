@@ -121,16 +121,34 @@
     pointer-events: none;
 }
 
-/* First / Prev ← */
+/* Per-direction icons. OS mold emits 4 nav buttons in order:
+   First (1st child), Prev (2nd), [page-number li's...], Next (last-1), Last (last).
+   `.z-paging-navigate:nth-child(N)` matches the element at position N that is
+   ALSO a navigate-type li — works because page-number li's never occupy
+   positions 1, 2, last-1, or last. */
+
+/* First button — chevrons-left (double left) */
 .z-paging-os ul > li.z-paging-navigate:first-child .z-paging-noborder::after {
+    -webkit-mask-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='m11 17-5-5 5-5'/><path d='m18 17-5-5 5-5'/></svg>");
+    mask-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='m11 17-5-5 5-5'/><path d='m18 17-5-5 5-5'/></svg>");
+}
+
+/* Prev button — chevron-left */
+.z-paging-os ul > li.z-paging-navigate:nth-child(2) .z-paging-noborder::after {
     -webkit-mask-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='m15 18-6-6 6-6'/></svg>");
     mask-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='m15 18-6-6 6-6'/></svg>");
 }
 
-/* Next / Last → */
-.z-paging-os ul > li.z-paging-navigate:last-child .z-paging-noborder::after {
+/* Next button — chevron-right */
+.z-paging-os ul > li.z-paging-navigate:nth-last-child(2) .z-paging-noborder::after {
     -webkit-mask-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='m9 18 6-6-6-6'/></svg>");
     mask-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='m9 18 6-6-6-6'/></svg>");
+}
+
+/* Last button — chevrons-right (double right) */
+.z-paging-os ul > li.z-paging-navigate:last-child .z-paging-noborder::after {
+    -webkit-mask-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='m6 17 5-5-5-5'/><path d='m13 17 5-5-5-5'/></svg>");
+    mask-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='m6 17 5-5-5-5'/><path d='m13 17 5-5-5-5'/></svg>");
 }
 
 /* ─── Default mold nav icons (angle-left/right from ZK icon font) ────────── */

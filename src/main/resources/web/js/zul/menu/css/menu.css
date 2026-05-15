@@ -47,13 +47,16 @@
  */
 
 /* ─── Menubar container ──────────────────────────────────────────────────── */
+/* MD3 navigation/top-app-bar surface tone: surface-container + on-surface text.
+   (Previously transparent bg + on-primary text — rendered white-on-white on
+   surface pages where no primary container wrapped the menubar.) */
 .z-menubar {
     display: flex;
     flex-direction: row;
     align-items: center;
     min-height: 48px;
-    background-color: transparent;
-    color: var(--zk-color-on-primary);
+    background-color: var(--zk-color-surface-container);
+    color: var(--zk-color-on-surface);
     padding: 0 var(--zk-spacing-4);
     box-sizing: border-box;
     position: relative;
@@ -121,7 +124,7 @@
     gap: var(--zk-spacing-1);
     padding: var(--zk-spacing-2) var(--zk-spacing-4);
     min-height: 48px;
-    color: var(--zk-color-on-primary);
+    color: var(--zk-color-on-surface);
     font-size: var(--zk-typescale-title-small-size);
     font-weight: var(--zk-typescale-title-small-weight);
     cursor: pointer;
@@ -138,7 +141,7 @@
     content: '';
     position: absolute;
     inset: 0;
-    background-color: var(--zk-color-on-primary);
+    background-color: var(--zk-color-on-surface);
     opacity: 0;
     pointer-events: none;
     transition: opacity var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
@@ -182,7 +185,7 @@
     gap: var(--zk-spacing-1);
     padding: 0 var(--zk-spacing-3);
     min-height: 48px;
-    color: var(--zk-color-on-primary);
+    color: var(--zk-color-on-surface);
     font-size: var(--zk-typescale-title-small-size);
     font-weight: var(--zk-typescale-title-small-weight);
     cursor: pointer;
@@ -198,7 +201,7 @@
     content: '';
     position: absolute;
     inset: 0;
-    background-color: var(--zk-color-on-primary);
+    background-color: var(--zk-color-on-surface);
     opacity: 0;
     pointer-events: none;
     transition: opacity var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);

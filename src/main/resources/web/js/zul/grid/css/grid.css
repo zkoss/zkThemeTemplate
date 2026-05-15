@@ -31,39 +31,11 @@
     white-space: nowrap;
 }
 
-/* ─── Auxiliary header row (auxhead / auxheader) ─────────────────────────── */
-.z-auxhead {
-    background-color: var(--zk-color-surface-container);
-}
+/* Auxhead / auxheader rules live in mesh/css/auxhead.css.
+   Frozen-pane styles live in mesh/css/frozen.css. */
 
-.z-auxheader {
-    padding: var(--zk-spacing-2) var(--zk-spacing-4);
-    font-family: var(--zk-typescale-font-family);
-    font-size: var(--zk-typescale-label-medium-size);
-    font-weight: var(--zk-typescale-label-large-weight);
-    color: var(--zk-color-on-surface-variant);
-    text-align: center;
-    border-bottom: 1px solid var(--zk-color-outline-variant);
-    border-inline-end: 1px solid var(--zk-color-outline-variant);
-    background-color: var(--zk-color-surface-container);
-    vertical-align: middle;
-    white-space: nowrap;
-    box-sizing: border-box;
-}
-
-.z-auxheader:last-child {
-    border-inline-end: none;
-}
-
-/* Frozen column spacer in auxhead */
-.z-auxheader.z-frozen-col {
-    background-color: var(--zk-color-surface-container-low);
-    border-inline-end: 2px solid var(--zk-color-outline-variant);
-}
-
-/* Auxhead bar (scroll spacer column) */
 .z-auxhead-bar {
-    background-color: var(--zk-color-surface-container);
+    background-color: transparent;
     border-bottom: 1px solid var(--zk-color-outline-variant);
 }
 
@@ -79,7 +51,7 @@
     table-layout: fixed;
 }
 
-/* Column header cell */
+/* Column header cell — Mira / MD3 Data Table: no fill, hierarchy via weight + divider */
 .z-column {
     padding: var(--zk-grid-cell-padding);
     font-family: var(--zk-typescale-font-family);
@@ -88,7 +60,7 @@
     line-height: var(--zk-typescale-label-large-line-height);
     color: var(--zk-color-on-surface-variant);
     text-align: left;
-    background-color: var(--zk-color-surface-container-low);
+    background-color: transparent;
     border-bottom: 1px solid var(--zk-color-outline-variant);
     white-space: nowrap;
     overflow: hidden;
@@ -105,7 +77,7 @@
 }
 
 .z-column-sort:hover {
-    background-color: var(--zk-color-surface-container);
+    background-color: color-mix(in srgb, var(--zk-color-on-surface) 8%, transparent);
 }
 
 .z-column .z-column-sort-icon,
@@ -114,6 +86,55 @@
     margin-left: var(--zk-spacing-1);
     color: var(--zk-color-on-surface-variant);
     vertical-align: middle;
+}
+
+/* ─── Column-button (menupopup trigger) ─────────────────────────────────────
+   Only rendered when <column menupopup="..."> is set. Position:
+   absolute at the right edge of the column header. MD3 pattern:
+   progressive disclosure — invisible by default, fade in on column hover
+   (matches the ZK `.z-column-hover` JS class AND the CSS `:hover` state).
+   Icon-button styling: 24x24 with circular state-layer on its own hover. */
+.z-column .z-column-button {
+    position: absolute;
+    top: 50%;
+    right: var(--zk-spacing-1);
+    transform: translateY(-50%);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    border: none;
+    border-radius: var(--zk-shape-corner-full);
+    background-color: transparent;
+    color: var(--zk-color-on-surface-variant);
+    font-size: 14px;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity var(--zk-motion-duration-short3) var(--zk-motion-easing-standard),
+                background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+    z-index: 2;
+}
+
+.z-column:hover .z-column-button,
+.z-column.z-column-hover .z-column-button,
+.z-column .z-column-button:focus-visible {
+    opacity: 1;
+}
+
+.z-column .z-column-button:hover {
+    background-color: color-mix(in srgb, var(--zk-color-on-surface) 8%, transparent);
+}
+
+.z-column .z-column-button:focus-visible {
+    outline: 2px solid var(--zk-color-primary);
+    outline-offset: 1px;
+}
+
+.z-column .z-column-button [class*="z-icon-"] {
+    font-size: 16px;
+    margin-left: 0;
 }
 
 /* Column separator for resize */
@@ -137,6 +158,17 @@
 .z-grid-body {
     overflow: auto;
     max-height: 100%;
+    /* position:relative anchors .z-focus-a (see listbox.css for rationale). */
+    position: relative;
+}
+
+.z-grid .z-focus-a {
+    position: absolute;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    opacity: 0;
+    pointer-events: none;
 }
 
 .z-grid-body table,
@@ -171,25 +203,8 @@
     background-color: color-mix(in srgb, var(--zk-color-on-surface) 8%, var(--zk-color-surface-container-lowest));
 }
 
-/* Selected row */
-.z-row.z-row-selected,
-.z-row.z-selected {
-    background-color: var(--zk-color-primary-container);
-}
-
-/* Selected row text color via cell */
-.z-row.z-row-selected .z-row-inner,
-.z-row.z-row-selected .z-row-content,
-.z-row.z-selected .z-row-inner,
-.z-row.z-selected .z-row-content {
-    color: var(--zk-color-on-primary-container);
-}
-
-/* Selected + hover: slightly darker tint */
-.z-row.z-row-selected:hover,
-.z-row.z-selected:hover {
-    background-color: color-mix(in srgb, var(--zk-color-on-primary-container) 8%, var(--zk-color-primary-container));
-}
+/* Grid does NOT support row selection — listbox/tree do, but Grid widget
+   never emits .z-row-selected. Do not add selection rules here. */
 
 /* Disabled row */
 .z-row.z-row-disabled,
@@ -244,6 +259,26 @@
 .z-foot .z-row-inner {
     font-weight: var(--zk-typescale-label-large-weight);
     color: var(--zk-color-on-surface-variant);
+}
+
+/* Footer cell content — match body cell padding so text isn't cramped.
+   Actual DOM: TR.z-foot > TD.z-footer > DIV.z-footer-content. Padding
+   belongs on the content div, not the TD. */
+.z-foot .z-footer {
+    padding: 0;
+    vertical-align: middle;
+}
+
+.z-foot .z-footer-content {
+    padding: var(--zk-grid-cell-padding);
+    font-family: var(--zk-typescale-font-family);
+    font-size: var(--zk-typescale-body-medium-size);
+    font-weight: var(--zk-typescale-label-large-weight);
+    color: var(--zk-color-on-surface-variant);
+}
+
+.z-foot .z-foot-bar {
+    padding: 0;
 }
 
 /* ─── Group rows (zkex.grid.Group) ──────────────────────────────────────── */
@@ -351,7 +386,7 @@
 .z-footer .z-cell,
 .z-grid-footer .z-row-content,
 .z-footer .z-row-content {
-    padding: var(--zk-spacing-2) var(--zk-spacing-4);
+    padding: var(--zk-grid-cell-padding);
     font-size: var(--zk-typescale-body-small-size);
     font-weight: var(--zk-typescale-label-large-weight);
     color: var(--zk-color-on-surface-variant);

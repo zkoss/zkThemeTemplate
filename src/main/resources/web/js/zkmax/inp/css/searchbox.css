@@ -1,16 +1,41 @@
-/* MD3 Searchbox — text input with search trigger button */
-/* DOM: .z-searchbox > .z-searchbox-search + .z-searchbox-icon(button) */
+/* MD3 Searchbox — multi-select dropdown with detached search popup
+   DOM (from zkmax/inp/mold/searchbox.js + Searchbox.ts._redrawpp):
 
-/* ─── Wrapper ─────────────────────────────────────────────────────────── */
+   <div class="z-searchbox [z-searchbox-disabled] [z-searchbox-open] [z-searchbox-focus]" tabindex>
+     <div class="z-searchbox-label">…joined labels…</div>
+     <div class="z-searchbox-placeholder">…</div>
+     <i class="z-searchbox-icon z-searchbox-clear z-icon-times"></i>
+     <i class="z-searchbox-icon z-icon-caret-down"></i>
+     <div class="z-searchbox-popup z-searchbox-shadow">
+       <input class="z-searchbox-search" placeholder="Type to search">
+       <ul class="z-searchbox-cave">
+         <li class="z-searchbox-item [z-searchbox-selected] [z-searchbox-active]">
+           <i class="z-searchbox-item-check"></i>  ← only when multiple
+           …content…
+         </li>
+       </ul>
+     </div>
+   </div>
+
+   Popup detaches to <body> on open() via makeVParent().
+*/
+
+/* ── Trigger (closed state) ───────────────────────────────────────────── */
 .z-searchbox {
     display: inline-flex;
     align-items: center;
+    gap: var(--zk-spacing-2);
     position: relative;
-    height: 40px;
+    min-height: 40px;
+    padding: 0 var(--zk-spacing-3);
     border: 1px solid var(--zk-color-outline);
     border-radius: var(--zk-shape-input);
     background-color: var(--zk-color-surface);
+    color: var(--zk-color-on-surface);
+    font-family: var(--zk-typescale-font-family);
+    font-size: var(--zk-typescale-body-medium-size);
     box-sizing: border-box;
+    cursor: pointer;
     outline: none;
     transition: border-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
 }
@@ -26,28 +51,176 @@
     transition: none;
 }
 
-/* ─── Search input ────────────────────────────────────────────────────── */
-.z-searchbox-search {
+/* ── Selected-label + placeholder text inside the trigger ─────────────── */
+.z-searchbox-label,
+.z-searchbox-placeholder {
     flex: 1;
     min-width: 0;
-    height: 100%;
-    padding: 0 var(--zk-spacing-3);
-    border: none;
-    outline: none;
-    background: transparent;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    line-height: 38px; /* match trigger inner height */
+}
+
+.z-searchbox-placeholder {
+    color: var(--zk-color-on-surface-variant);
+}
+
+/* ── Icons inside the trigger ─────────────────────────────────────────── */
+.z-searchbox > .z-searchbox-icon {
+    flex: none;
+    width: 20px;
+    height: 20px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--zk-color-on-surface-variant);
+    cursor: pointer;
+    border-radius: var(--zk-shape-corner-full);
+    transition: color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard),
+                background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+}
+
+.z-searchbox > .z-searchbox-icon:hover {
+    color: var(--zk-color-on-surface);
+    background-color: color-mix(in srgb, var(--zk-color-on-surface) 8%, transparent);
+}
+
+.z-searchbox > .z-searchbox-icon::before {
+    font-size: 18px;
+    line-height: 1;
+}
+
+/* Clear icon visibility is controlled by JS (inline style display:inline-block/none).
+   CSS only styles its appearance. */
+
+/* ── Disabled ─────────────────────────────────────────────────────────── */
+.z-searchbox[disabled],
+.z-searchbox.z-searchbox-disabled {
+    opacity: var(--zk-state-disabled-opacity);
+    pointer-events: none;
+    cursor: default;
+    background-color: var(--zk-color-surface-container);
+}
+
+/* ── Popup (detached to body) ─────────────────────────────────────────── */
+/* Mold renders the popup with no inline display style; without this rule it
+   would render visible next to every searchbox on first paint. ZK's open()
+   uses slideDown which sets inline display:block, overriding this default. */
+.z-searchbox-popup {
+    position: absolute;
+    display: none;
+    flex-direction: column;
+    box-sizing: border-box;
+    padding: var(--zk-spacing-2);
+    background-color: var(--zk-color-surface-container);
+    color: var(--zk-color-on-surface);
+    border-radius: var(--zk-shape-corner-medium);
+    box-shadow: var(--zk-elevation-3);
     font-family: var(--zk-typescale-font-family);
     font-size: var(--zk-typescale-body-medium-size);
-    color: var(--zk-color-on-surface);
+    /* min-width inline-set to trigger width by JS; do NOT add width:100%/min-width:100% */
+    z-index: 88000;
+    overflow: hidden;
+}
+
+.z-searchbox-open .z-searchbox-popup {
+    display: flex;
+}
+
+/* ── Search input inside popup ────────────────────────────────────────── */
+.z-searchbox-search {
     box-sizing: border-box;
+    width: 100%;
+    height: 36px;
+    margin-bottom: var(--zk-spacing-2);
+    padding: 0 var(--zk-spacing-3);
+    border: 1px solid var(--zk-color-outline);
+    border-radius: var(--zk-shape-input);
+    background-color: var(--zk-color-surface);
+    color: var(--zk-color-on-surface);
+    font-family: inherit;
+    font-size: inherit;
+    outline: none;
+    transition: border-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+}
+
+.z-searchbox-search:focus {
+    border-color: var(--zk-color-primary);
+    box-shadow: 0 0 0 1px var(--zk-color-primary);
 }
 
 .z-searchbox-search::placeholder {
     color: var(--zk-color-on-surface-variant);
 }
 
-/* ─── Disabled ────────────────────────────────────────────────────────── */
-.z-searchbox-disabled {
-    opacity: var(--zk-state-disabled-opacity);
-    pointer-events: none;
-    cursor: default;
+/* ── Item list ────────────────────────────────────────────────────────── */
+.z-searchbox-cave {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    max-height: 320px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.z-searchbox-item {
+    display: flex;
+    align-items: center;
+    gap: var(--zk-spacing-2);
+    padding: var(--zk-spacing-2) var(--zk-spacing-3);
+    border-radius: var(--zk-shape-corner-small);
+    cursor: pointer;
+    color: var(--zk-color-on-surface);
+    transition: background-color var(--zk-motion-duration-short2) var(--zk-motion-easing-standard);
+}
+
+.z-searchbox-item:hover {
+    background-color: color-mix(in srgb, var(--zk-color-on-surface) 8%, transparent);
+}
+
+/* Keyboard-active highlight (Arrow Up/Down moves this class) */
+.z-searchbox-active {
+    background-color: color-mix(in srgb, var(--zk-color-on-surface) 12%, transparent);
+}
+
+.z-searchbox-selected {
+    color: var(--zk-color-on-secondary-container);
+    background-color: var(--zk-color-secondary-container);
+}
+
+.z-searchbox-selected:hover {
+    background-color: color-mix(in srgb, var(--zk-color-on-secondary-container) 8%, var(--zk-color-secondary-container));
+}
+
+/* ── Multi-select checkbox icon (only rendered when multiple="true") ─── */
+.z-searchbox-item-check {
+    flex: none;
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--zk-color-outline);
+    border-radius: var(--zk-shape-corner-extra-small);
+    background-color: transparent;
+    box-sizing: border-box;
+    transition: border-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard),
+                background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+    position: relative;
+}
+
+.z-searchbox-selected .z-searchbox-item-check {
+    border-color: var(--zk-color-primary);
+    background-color: var(--zk-color-primary);
+}
+
+.z-searchbox-selected .z-searchbox-item-check::after {
+    content: '';
+    position: absolute;
+    left: 3px;
+    top: 0;
+    width: 6px;
+    height: 10px;
+    border: solid var(--zk-color-on-primary);
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
 }

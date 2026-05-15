@@ -16,10 +16,10 @@
     font-family: var(--zk-typescale-font-family);
 }
 
-/* ─── Header ───────────────────────────────────────────────────────────── */
+/* ─── Header ─ Mira / MD3 Data Table: no fill, hierarchy via weight + divider */
 .z-tree-header {
     overflow: hidden;
-    background-color: var(--zk-color-surface-container-low);
+    background-color: transparent;
 }
 
 .z-tree-header table {
@@ -29,7 +29,7 @@
 }
 
 .z-treecols {
-    background-color: var(--zk-color-surface-container-low);
+    background-color: transparent;
 }
 
 .z-treecol {
@@ -38,8 +38,8 @@
     font-weight: var(--zk-typescale-label-large-weight);
     color: var(--zk-color-on-surface-variant);
     text-align: left;
-    border-bottom: 2px solid var(--zk-color-outline-variant);
-    background-color: var(--zk-color-surface-container-low);
+    border-bottom: 1px solid var(--zk-color-outline-variant);
+    background-color: transparent;
     white-space: nowrap;
     user-select: none;
     vertical-align: middle;
@@ -65,6 +65,17 @@
 /* ─── Body ─────────────────────────────────────────────────────────────── */
 .z-tree-body {
     overflow: auto;
+    /* position:relative anchors .z-focus-a (see listbox.css for rationale). */
+    position: relative;
+}
+
+.z-tree .z-focus-a {
+    position: absolute;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    opacity: 0;
+    pointer-events: none;
 }
 
 .z-tree-body table {

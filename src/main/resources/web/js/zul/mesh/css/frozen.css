@@ -1,35 +1,98 @@
-/* MD3 Frozen — sticky/frozen column styles for grid/listbox */
+/* MD3 Frozen columns — shared across grid / listbox / tree (mesh widgets).
 
-/* Frozen column container */
+   ZK <frozen columns="N"> mechanism (NOT CSS position:sticky):
+   - First N column cells & header cells get class .z-frozen-col.
+   - Mesh root gets .z-grid-frozen / .z-listbox-frozen.
+   - A separate scroll tray sits beneath the body:
+       .z-frozen
+         > .z-frozen-body
+         > .z-frozen-inner   (the actual scrollbar host; ZK JS sets inline
+                              height/width and listens to scrollLeft to
+                              translateX the non-frozen columns)
+         > .z-frozen-right
+         > .z-clear
+
+   Theme rules:
+   - Style the scrollbar (WebKit) so it matches tonal surfaces.
+   - Mark the frozen pane boundary on the LAST .z-frozen-col cell of each row
+     with an inline-end divider + small box-shadow elevation. */
+
+/* Scroll tray — ZK JS sets inline height (~6-15px depending on the native
+   scrollbar size jq.scrollbarWidth() returns; modern macOS overlay scrollbars
+   collapse to ~6px which is too thin to see). We force a min-height so the
+   themed WebKit scrollbar reads at a usable size, then let the native scroll
+   position drive ZK's column translateX. */
 .z-frozen {
-    position: relative;
-    overflow: hidden;
-}
-
-/* Frozen cells (sticky left columns) */
-.z-frozen-inner {
-    position: absolute;
-    top: 0;
-    left: 0;
-    overflow: hidden;
-    z-index: 10;
     background-color: var(--zk-color-surface);
+    border-top: 1px solid var(--zk-color-outline-variant);
+    overflow: hidden;
+    /* min-height forces the tray height even when ZK inline-styles a thinner
+       value (macOS overlay scrollbars collapse to ~6px). */
+    min-height: 12px;
 }
 
-/* Shadow to indicate frozen boundary */
-.z-frozen-inner::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    width: 8px;
-    background: linear-gradient(to right, rgba(0, 0, 0, 0.08), transparent);
-    pointer-events: none;
-}
-
-/* Frozen header cells */
-.z-frozen .z-column,
-.z-frozen .z-listheader {
+/* .z-frozen-body — the spacer aligned beneath the frozen columns.
+   IMPORTANT: float:left so .z-frozen-inner sits immediately to its right
+   (this is ZK's documented layout — see ZK's mesh/less/frozen.less).
+   Visual indicator: faint surface-container-low tint to mark the frozen
+   pane edge continuing below the data rows. */
+.z-frozen-body {
+    float: left;
+    overflow: hidden;
     background-color: var(--zk-color-surface-container-low);
+    border-inline-end: 1px solid var(--zk-color-outline-variant);
+    box-shadow: 2px 0 4px -1px color-mix(in srgb, var(--zk-color-shadow, #000) 12%, transparent);
+    min-height: 12px;
+}
+
+.z-frozen-inner {
+    /* `overflow-x: scroll` reserves the horizontal scrollbar so it stays
+       visible. ZK JS sizes width inline; we just ensure visible scrollbar
+       height via min-height (10px scrollbar + 2px breathing room). */
+    overflow-x: scroll;
+    overflow-y: hidden;
+    min-height: 12px;
+}
+
+.z-frozen-inner > div {
+    height: 100%;
+}
+
+.z-frozen-right {
+    float: right;
+    overflow: hidden;
+}
+
+.z-clear {
+    clear: both;
+}
+
+/* WebKit scrollbar tokens */
+.z-frozen-inner::-webkit-scrollbar {
+    height: 10px;
+}
+
+.z-frozen-inner::-webkit-scrollbar-track {
+    background-color: var(--zk-color-surface-container-low);
+}
+
+.z-frozen-inner::-webkit-scrollbar-thumb {
+    background-color: var(--zk-color-outline-variant);
+    border-radius: var(--zk-shape-corner-full);
+}
+
+.z-frozen-inner::-webkit-scrollbar-thumb:hover {
+    background-color: var(--zk-color-on-surface-variant);
+}
+
+/* Frozen pane boundary — last .z-frozen-col cell in each row.
+   `:not(:has(+ .z-frozen-col))` selects the rightmost frozen cell. */
+.z-column.z-frozen-col:not(:has(+ .z-frozen-col)),
+.z-row-inner.z-frozen-col:not(:has(+ .z-frozen-col)),
+.z-listheader.z-frozen-col:not(:has(+ .z-frozen-col)),
+.z-listcell.z-frozen-col:not(:has(+ .z-frozen-col)),
+.z-treecol.z-frozen-col:not(:has(+ .z-frozen-col)),
+.z-treecell.z-frozen-col:not(:has(+ .z-frozen-col)) {
+    border-inline-end: 1px solid var(--zk-color-outline-variant);
+    box-shadow: 2px 0 4px -1px color-mix(in srgb, var(--zk-color-shadow, #000) 12%, transparent);
 }

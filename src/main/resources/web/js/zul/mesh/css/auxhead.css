@@ -1,21 +1,23 @@
-/* MD3 Auxhead — auxiliary/grouped column header row */
-/* DOM: TR.z-auxhead > TH.z-auxheader > div.z-auxheader-content */
+/* MD3 Auxhead — auxiliary multi-level column header row (ZK-only).
+   DOM: TR.z-auxhead > TH.z-auxheader (with colspan) > DIV.z-auxheader-content
+   Design (see doc/DESIGN.md): faint tonal band on the ROW, cells transparent.
+   The band gives a 4th hierarchy tier (auxhead-row → header-row → body → footer)
+   without competing with the column-header divider. */
 
 .z-auxhead {
-    background-color: var(--zk-color-surface-container) !important;
+    background-color: var(--zk-color-surface-container-low);
     border-bottom: 1px solid var(--zk-color-outline-variant);
 }
 
-/* TH cell */
 .z-auxheader {
     padding: var(--zk-spacing-2) var(--zk-spacing-4);
     font-family: var(--zk-typescale-font-family);
     font-size: var(--zk-typescale-label-medium-size);
-    font-weight: var(--zk-typescale-label-medium-weight);
+    font-weight: var(--zk-typescale-label-large-weight);
     color: var(--zk-color-on-surface-variant);
     text-align: center;
-    background-color: var(--zk-color-surface-container);
-    border-right: 1px solid var(--zk-color-outline-variant);
+    background-color: transparent;
+    border-inline-end: 1px solid var(--zk-color-outline-variant);
     vertical-align: middle;
     white-space: nowrap;
     overflow: hidden;
@@ -24,10 +26,14 @@
 }
 
 .z-auxheader:last-child {
-    border-right: none;
+    border-inline-end: none;
 }
 
-/* Inner content wrapper */
 .z-auxheader-content {
     display: block;
+}
+
+/* Frozen-aligned auxheader cell — stronger right-edge boundary marker */
+.z-auxheader.z-frozen-col:not(:has(+ .z-frozen-col)) {
+    border-inline-end: 2px solid var(--zk-color-outline-variant);
 }

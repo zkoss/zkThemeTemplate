@@ -111,12 +111,13 @@
     margin-inline: 10px;
 }
 
-/* Vertical area fills upward from bottom */
+/* Vertical area fills downward from top (ZK _fixPos sets area.height = btn.top, so
+   area must anchor at top to grow toward the thumb). min=top, max=bottom. */
 .z-slider-vertical .z-slider-area {
     width: 100%;
     height: auto; /* ZK JS sets height directly */
-    bottom: 0;
-    top: auto;
+    top: 0;
+    bottom: auto;
 }
 
 /* Vertical thumb: left-center, JS sets top */
