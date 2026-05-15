@@ -7,7 +7,7 @@
     <div sclass="z-mb-6">
         <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Auxhead + Listhead Combinations</div>
         <div sclass="z-py-3">
-            <hbox>
+            <div style="display:flex; gap:16px; align-items:flex-start;">
                 <listbox width="400px">
                     <auxhead>
                         <auxheader label="A+B" colspan="2" />
@@ -85,14 +85,14 @@
                         <listfooter label="footer 3" />
                     </listfoot>
                 </listbox>
-            </hbox>
+            </div>
         </div>
     </div>
 
     <div sclass="z-mb-6">
         <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Sorting and Resizable Headers</div>
         <div sclass="z-py-3">
-            <hbox>
+            <div style="display:flex; gap:16px; align-items:flex-start;">
                 <listbox width="400px">
                     <listhead sizable="true">
                         <listheader align="center" width="40px"
@@ -194,14 +194,14 @@
                         <listfooter label="image" image="~./img/Centigrade-Widget-Icons/BookBlue-16x16.png" hoverImage="~./img/Centigrade-Widget-Icons/BookGreen-16x16.png"/>
                     </listfoot>
                 </listbox>
-            </hbox>
+            </div>
         </div>
     </div>
 
     <div sclass="z-mb-6">
         <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Grouping</div>
         <div sclass="z-py-3">
-            <hbox>
+            <div style="display:flex; gap:16px; align-items:flex-start;">
                 <listbox width="400px">
                     <listhead sizable="true">
                         <listheader label="Brand" />
@@ -337,7 +337,7 @@
                         </listgroupfoot>
                     </listbox>
                 </vbox>
-            </hbox>
+            </div>
         </div>
     </div>
 

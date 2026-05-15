@@ -33,10 +33,7 @@
                 <rows>
                     <row>
                         1
-                        <listbox mold="select">
-                            <listitem label="AB"/>
-                            <listitem label="CD"/>
-                        </listbox>
+                        <intbox/>
                         <datebox/>
                         <textbox rows="3"/>
                     </row>

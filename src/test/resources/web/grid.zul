@@ -99,20 +99,21 @@ dsc = Comparators.dscRowDetailComparator;
     <div sclass="z-mb-6">
         <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Frozen Columns</div>
         <div sclass="z-py-3">
-            <grid height="200px">
+            <grid>
                 <frozen columns="2"/>
                 <columns>
                     <column label="Col A" width="200px"/>
                     <column label="Col B" width="200px"/>
-                    <column label="Col C" width="200px"/>
-                    <column label="Col D" width="200px"/>
-                    <column label="Col E" width="200px"/>
+                    <column label="Col C" width="400px"/>
+                    <column label="Col D" width="400px"/>
+                    <column label="Col E" width="400px"/>
+                    <column label="Col F" width="400px"/>
                 </columns>
                 <rows>
-                    <row><cell>A1</cell><cell>B1</cell><cell>C1</cell><cell>D1</cell><cell>E1</cell></row>
-                    <row><cell>A2</cell><cell>B2</cell><cell>C2</cell><cell>D2</cell><cell>E2</cell></row>
-                    <row><cell>A3</cell><cell>B3</cell><cell>C3</cell><cell>D3</cell><cell>E3</cell></row>
-                    <row><cell>A4</cell><cell>B4</cell><cell>C4</cell><cell>D4</cell><cell>E4</cell></row>
+                    <row><cell>A1</cell><cell>B1</cell><cell>C1</cell><cell>D1</cell><cell>E1</cell><cell>E1</cell></row>
+                    <row><cell>A2</cell><cell>B2</cell><cell>C2</cell><cell>D2</cell><cell>E2</cell><cell>E1</cell></row>
+                    <row><cell>A3</cell><cell>B3</cell><cell>C3</cell><cell>D3</cell><cell>E3</cell><cell>E1</cell></row>
+                    <row><cell>A4</cell><cell>B4</cell><cell>C4</cell><cell>D4</cell><cell>E4</cell><cell>E1</cell></row>
                 </rows>
             </grid>
         </div>

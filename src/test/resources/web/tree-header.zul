@@ -13,7 +13,7 @@
     <div sclass="z-mb-6">
         <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Auxhead + Treecols Combinations</div>
         <div sclass="z-py-3">
-            <hbox>
+            <div style="display:flex; gap:16px; align-items:flex-start;">
                 <tree width="400px">
                     <auxhead>
                         <auxheader label="A+B" colspan="2"/>
@@ -158,14 +158,14 @@
                         <treefooter label="footer 3"/>
                     </treefoot>
                 </tree>
-            </hbox>
+            </div>
         </div>
     </div>
 
     <div sclass="z-mb-6">
         <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Treecols Only and Auxhead Only</div>
         <div sclass="z-py-3">
-            <hbox>
+            <div style="display:flex; gap:16px; align-items:flex-start;">
                 <tree width="400px">
                     <treecols>
                         <treecol label="Align Left" align="left"/>
@@ -233,7 +233,7 @@
                         <treefooter label="footer 3"/>
                     </treefoot>
                 </tree>
-            </hbox>
+            </div>
         </div>
     </div>
 

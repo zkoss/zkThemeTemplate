@@ -1,6 +1,23 @@
 <?page title="Grid Live Grouping" contentType="text/html;charset=UTF-8"?>
 <zk xmlns:h="native">
 <h:link rel="stylesheet" href="pv.css"/>
+    <div sclass="z-p-8">
+        <div sclass="z-border-bottom z-fs-title-lg z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Grid Live Grouping</div>
+
+        <div sclass="z-mb-6">
+            <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Email Inbox by Date</div>
+            <div sclass="z-py-3">
+                <grid id="lb1" height="400px">
+                    <columns sizable="true">
+                        <column hflex="min" label="From"/>
+                        <column hflex="1" label="Subject"/>
+                        <column hflex="min" label="Received"/>
+                        <column width="100px" label="Size"/>
+                    </columns>
+                </grid>
+            </div>
+        </div>
+    </div>
 <zscript><![CDATA[
 import zk.example.LiveGroupRenderer;
 import org.zkoss.zul.SimpleGroupsModel;
@@ -62,21 +79,4 @@ String[][][] datas = new String[][][]{
 lb1.setModel(new SimpleGroupsModel(datas, new String[]{"Date: Today", "Date: Yesterday", "Date: Last Week"}));
 lb1.setRowRenderer(new LiveGroupRenderer());
 ]]></zscript>
-<div sclass="z-p-8">
-    <div sclass="z-border-bottom z-fs-title-lg z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Grid Live Grouping</div>
-
-    <div sclass="z-mb-6">
-        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Email Inbox by Date</div>
-        <div sclass="z-py-3">
-            <grid id="lb1" height="400px">
-                <columns sizable="true">
-                    <column hflex="min" label="From"/>
-                    <column hflex="1" label="Subject"/>
-                    <column hflex="min" label="Received"/>
-                    <column width="100px" label="Size"/>
-                </columns>
-            </grid>
-        </div>
-    </div>
-</div>
 </zk>
