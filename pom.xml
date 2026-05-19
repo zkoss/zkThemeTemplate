@@ -149,6 +149,16 @@
 							<classpathScope>test</classpathScope>
 						</configuration>
 					</execution>
+					<execution>
+						<id>preview-app-iceblue</id>
+						<goals>
+							<goal>java</goal>
+						</goals>
+						<configuration>
+							<mainClass>zk.example.iceblue.ThemePreviewIceblueApp</mainClass>
+							<classpathScope>test</classpathScope>
+						</configuration>
+					</execution>
 					<execution> <!-- continuous compile/watch CSS files -->
 						<id>watch-css</id>
 						<phase>process-resources</phase>

@@ -224,6 +224,42 @@ After the user fixes the token, they run `npm run build:css` and re-dispatch the
 
 ---
 
+## Spec-Author phase (pre-loop)
+
+Before the ralph-loop can run on a component, that component must have a user-approved theme contract. The spec-author phase produces it.
+
+### When to run `zk-spec-author <component>`
+
+Trigger spec-author when either condition holds for the component's bundle:
+
+- The bundle's frontmatter is missing a `rules:` line (no link to a skill component file).
+- The bundle's frontmatter has `contract-approved: false` (or the line is missing entirely).
+
+The orchestrator should NOT dispatch the evaluator on such a component — the evaluator's §0a gate will refuse with `BLOCKED: contract-approved=false`. Route to spec-author instead.
+
+### Approval gate
+
+After `zk-spec-author <component>` produces (or updates) the artifacts:
+
+1. `.claude/skills/zk-component-rules/components/<component>.md` (structural facts only — DOM tree, state classes, composition invariants).
+2. `tasks/bundles/<component>.md` (theme contract — tokens, references, expected values, State matrix).
+3. `doc/contracts/<component>.html` (static mockup rendered with `--zk-*` tokens).
+4. `doc/contracts/baselines/<component>-iceblue.png` (iceblue reference screenshot).
+
+…the **user** reviews items 1 and 3 side-by-side against item 4. Only the user may flip `contract-approved: true` in the bundle's frontmatter. The orchestrator never flips this flag autonomously.
+
+Once approved, the orchestrator re-enters the main loop normally; the evaluator's §0a gate now passes and measurement proceeds.
+
+### js-source-hash drift recovery
+
+If the evaluator returns status `BLOCKED: js-source drift — re-run zk-spec-author <component>` (and appends a `js-drift` entry to `tasks/skill-gaps.md`), the underlying ZK JS source has changed since the contract was authored. The recovery flow:
+
+1. Re-run `zk-spec-author <component>`. The agent re-reads the JS source, re-derives the structural section, refreshes the bundle's `js-source-hash:` field, and (if structural facts changed) flips `contract-approved:` back to `false`.
+2. If `contract-approved:` was flipped to `false`, repeat the approval gate above. If spec-author determined the structural facts were unchanged, it may keep `contract-approved: true` after refreshing only the hash — but the user should still spot-check.
+3. The orchestrator resumes the main loop; the evaluator's §0a and §0b gates both pass and measurement proceeds.
+
+---
+
 ## When the orchestrator should ask the user
 
 - Token escalation accumulates ≥ 3 components blocked on the same token (probably a real spec issue).

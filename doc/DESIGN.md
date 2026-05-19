@@ -148,6 +148,44 @@ Tokens:
 
 Rule: **table rows are ~52px** (16px padding all sides + 13px text + line-height). Inputs ~39px inner height. Buttons ~35px.
 
+### Table-header background: no fill
+
+Grid, Listbox, and Tree headers share **one rule**: **no background color**. Header cells inherit the body surface; visual hierarchy comes from three signals:
+
+| Signal | Value |
+|--------|-------|
+| Font weight | 500 (label-large, `--zk-typescale-label-large-weight`) |
+| Text color  | `--zk-color-on-surface-variant` (slightly muted vs row body) |
+| Divider     | `1px solid --zk-color-outline-variant` border-bottom under the header row |
+
+**Why no fill?**
+
+1. **Mira reference (MUI Simple Table)** — `MuiTableCell-head` has only `font-weight: 500` and the table's body `border-bottom`; no `background-color`. Our reference theme set the precedent.
+2. **MD3 Data Table spec** — Material Design 3 Data Tables use the same `surface` color for header and body; differentiation is typography + dividers, not fills. Fills are reserved for selected / hovered / pinned rows.
+3. **Density & calm** — Enterprise dashboards often stack 3–5 tables on one screen. A tinted header on every table creates visual noise; an unfilled header keeps the eye on the data.
+
+If a future variant needs strong header separation (e.g. for sticky-header reporting tables on a busy background), introduce a `--zk-grid-header-fill` token rather than re-instating the global fill.
+
+This rule is **uniform across grid / listbox / tree**. Do not let one diverge from the others.
+
+### Auxhead: faint tonal band on the row (ZK-only)
+
+ZK's `<auxhead>` is a multi-level header row (no native HTML equivalent) used to group columns under a span (e.g. `<auxheader colspan="2">`). With column headers now transparent, the auxhead row needs **one** distinguishing signal so the multi-level structure reads at a glance.
+
+**Decision**: apply a faint band on the auxhead **row** only:
+
+| Element | Background |
+|---------|------------|
+| `.z-auxhead` (TR) | `--zk-color-surface-container-low` (faint tonal tint) |
+| `.z-auxheader` (TH) | `transparent` |
+| `.z-column` (TH below) | `transparent` |
+
+The faint band on the row visually anchors the parent grouping; transparent cells let `colspan` groupings inherit the band cleanly. This is the same banding pattern Excel and financial tables use for category rows above leaf columns.
+
+**Why a tinted row (not a stronger border)**: the boundary between auxhead and columns is already a `1px outline-variant` border, and a thicker border would compete with the column-header divider. The tonal band gives a 4th hierarchy tier (row band → header row → body rows → footer) without adding linework.
+
+If a future use-case needs auxhead to match the column-header transparency exactly, downgrade to typographic-only hierarchy (label-large weight on auxheader, label-medium on column) — but keep the rule symmetric across grid / listbox / tree.
+
 ---
 
 ## 11. Border Rules
