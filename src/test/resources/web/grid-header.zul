@@ -245,7 +245,7 @@
                         </row>
                         <row>
                             <label value="Type:" />
-                            <hbox>
+                            <div>
                                 <listbox rows="1" mold="select">
                                     <listitem label="Java Files,(*.java)" />
                                     <listitem label="All Files,(*.*)" />

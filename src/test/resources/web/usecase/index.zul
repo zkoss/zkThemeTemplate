@@ -76,12 +76,8 @@
                     <navitem label="Navbar"                onClick="@command('navigate', page='~./navbar.zul')"/>
                     <navitem label="Stepbar"               onClick="@command('navigate', page='~./stepbar.zul')"/>
                     <navitem label="Tabbox"                onClick="@command('navigate', page='~./tabbox.zul')"/>
-                    <navitem label="Tabbox 2"              onClick="@command('navigate', page='~./tabbox-2.zul')"/>
-                    <navitem label="Tabbox (Accordion)"    onClick="@command('navigate', page='~./tabbox-accordion.zul')"/>
                     <navitem label="Tabbox (Misc)"         onClick="@command('navigate', page='~./tabbox-misc.zul')"/>
-                    <navitem label="Tabbox (Tabchildren)"  onClick="@command('navigate', page='~./tabbox-tabchildren.zul')"/>
                     <navitem label="Toolbar"               onClick="@command('navigate', page='~./toolbar.zul')"/>
-                    <navitem label="Toolbar (Vertical)"    onClick="@command('navigate', page='~./toolbar-vertical.zul')"/>
                 </nav>
                 <nav label="Containers" open="@load(vm.openNavLabel eq 'Containers')">
                     <navitem label="Caption"  onClick="@command('navigate', page='~./caption.zul')"/>

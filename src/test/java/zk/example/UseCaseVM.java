@@ -34,8 +34,8 @@ public class UseCaseVM {
                 "tree", "tree-header", "paging", "biglistbox", "organigram"}) {
             PAGE_TO_NAV.put(p, "Data");
         }
-        for (String p : new String[]{"menubar", "toolbar", "toolbar-vertical", "tabbox", "tabbox-2",
-                "tabbox-accordion", "tabbox-misc", "tabbox-tabchildren", "navbar", "anchornav",
+        for (String p : new String[]{"menubar", "toolbar", "tabbox", "tabbox-misc",
+                "navbar", "anchornav",
                 "fisheyebar", "coachmark", "stepbar", "drawer"}) {
             PAGE_TO_NAV.put(p, "Navigation");
         }
