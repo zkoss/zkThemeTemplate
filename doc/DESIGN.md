@@ -1,4 +1,4 @@
-# DESIGN.md — zk-material Design Language Spec
+# DESIGN.md — Marble Design Language Spec
 
 Distilled from existing token files, component CSS, and the 49 Mira HTML reference pages.
 Use this as the rulebook when styling a component that Mira does not cover.

@@ -23,6 +23,7 @@
 
 /* ─── Outer container ───────────────────────────────────────────────────── */
 .z-tabbox {
+    position: relative;  /* anchor for absolutely-positioned scroll arrows */
     display: flex;
     flex-direction: column;
     background-color: var(--zk-color-surface);
@@ -64,6 +65,7 @@
     align-items: center;
     justify-content: center;
     list-style: none;
+    flex-shrink: 0;   /* keeps natural width so ZK JS can detect overflow */
     min-height: 48px;
     cursor: pointer;
     color: var(--zk-color-on-surface-variant);
@@ -184,13 +186,52 @@
     vertical-align: middle;
 }
 
-/* ─── Tab scroll arrows (hidden — ZK JS manages scroll) ─────────────────── */
-.z-tabbox-icon,
+/* ─── Tab scroll arrows ─────────────────────────────────────────────────── */
+/* Hidden by default; shown only when ZK adds .z-tabbox-scroll to the root. */
 .z-tabbox-left-scroll,
 .z-tabbox-right-scroll,
 .z-tabbox-up-scroll,
 .z-tabbox-down-scroll {
     display: none;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border: none;
+    background: transparent;
+    color: var(--zk-color-on-surface-variant);
+    cursor: pointer;
+    transition: background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+}
+
+/* Horizontal scroll buttons: visible when overflow detected */
+.z-tabbox-scroll > .z-tabbox-left-scroll,
+.z-tabbox-scroll > .z-tabbox-right-scroll {
+    display: flex;
+    width: 40px;
+    min-height: 48px;
+}
+
+/* Vertical scroll buttons: visible when overflow detected */
+.z-tabbox-scroll > .z-tabbox-up-scroll,
+.z-tabbox-scroll > .z-tabbox-down-scroll {
+    display: flex;
+    height: 40px;
+}
+
+/* Chevron glyph inside scroll buttons */
+.z-tabbox-left-scroll > i,
+.z-tabbox-right-scroll > i,
+.z-tabbox-up-scroll > i,
+.z-tabbox-down-scroll > i {
+    font-size: var(--zk-typescale-body-medium-size);
+}
+
+/* Hover state-layer tint on scroll buttons */
+.z-tabbox-left-scroll:hover,
+.z-tabbox-right-scroll:hover,
+.z-tabbox-up-scroll:hover,
+.z-tabbox-down-scroll:hover {
+    background-color: color-mix(in srgb, var(--zk-color-primary) var(--zk-state-hover-opacity-pct, 8%), transparent);
 }
 
 /* ─── Tab panels container ───────────────────────────────────────────────── */
@@ -216,13 +257,18 @@
     border-bottom: 1px solid var(--zk-color-outline-variant);
 }
 
-.z-tabbox-bottom {
-    flex-direction: column-reverse;
-}
-
+/* Bottom orientation: ZK mold renders tabpanels FIRST then tabs in DOM,
+   so default flex column order already places panels on top, tabs on bottom. */
 .z-tabbox-bottom .z-tabs {
     border-top: 1px solid var(--zk-color-outline-variant);
     border-bottom: none;
+}
+
+/* Tabpanels border adjustment for bottom: border is on top/sides/none at bottom */
+.z-tabbox-bottom .z-tabpanels {
+    border-top: 1px solid var(--zk-color-outline-variant);
+    border-bottom: none;
+    border-radius: var(--zk-shape-card) var(--zk-shape-card) 0 0;
 }
 
 .z-tabbox-bottom .z-tab {
@@ -236,24 +282,29 @@
     border-top-color: var(--zk-color-primary);
 }
 
-.z-tabbox-left {
+/* orient="vertical" → z-tabbox-vertical; orient="left" → z-tabbox-left */
+.z-tabbox-left,
+.z-tabbox-vertical {
     flex-direction: row;
 }
 
-.z-tabbox-left .z-tabs {
+.z-tabbox-left .z-tabs,
+.z-tabbox-vertical .z-tabs {
     flex-direction: column;
     border-bottom: none;
     border-right: 1px solid var(--zk-color-outline-variant);
     min-width: 120px;
     width: auto;
-    overflow: visible;
+    overflow: hidden;
 }
 
-.z-tabbox-left .z-tabs-content {
+.z-tabbox-left .z-tabs-content,
+.z-tabbox-vertical .z-tabs-content {
     flex-direction: column;
 }
 
-.z-tabbox-left .z-tab {
+.z-tabbox-left .z-tab,
+.z-tabbox-vertical .z-tab {
     border-bottom: none;
     border-right: 2px solid transparent;
     margin-bottom: 0;
@@ -261,7 +312,8 @@
     justify-content: flex-start;
 }
 
-.z-tabbox-left .z-tab.z-tab-selected {
+.z-tabbox-left .z-tab.z-tab-selected,
+.z-tabbox-vertical .z-tab.z-tab-selected {
     border-right-color: var(--zk-color-primary);
     color: var(--zk-color-primary);
 }
@@ -276,7 +328,7 @@
     border-left: 1px solid var(--zk-color-outline-variant);
     min-width: 120px;
     width: auto;
-    overflow: visible;
+    overflow: hidden;
 }
 
 .z-tabbox-right .z-tabs-content {
@@ -310,7 +362,7 @@
     display: block;
     overflow: hidden;
     border: 1px solid var(--zk-color-outline-variant);
-    border-radius: var(--zk-shape-card);
+    border-radius: var(--zk-shape-corner-medium);
 }
 
 .z-tabbox-accordion .z-tabpanels {
@@ -419,11 +471,6 @@
 .z-tabbox-accordion .z-tab.z-tab-selected .z-tab-content::after {
     transform: rotate(-135deg);
     border-color: var(--zk-color-on-primary-container);
-}
-
-/* Accordion close button (when closable=true) — hidden in this mold */
-.z-tabbox-accordion .z-tab-button {
-    display: none;
 }
 
 /* Expandable content area (div#uuid-cave inside .z-tabpanel) */

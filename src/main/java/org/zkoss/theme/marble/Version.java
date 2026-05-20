@@ -16,7 +16,7 @@ Copyright (C) 2010 Potix Corporation. All Rights Reserved.
 	it will be useful, but WITHOUT ANY WARRANTY.
 }}IS_RIGHT
 */
-package org.zkoss.theme.zkmaterial;
+package org.zkoss.theme.marble;
 
 /**
  *  The version of the theme.

@@ -1,4 +1,4 @@
-package org.zkoss.theme.zkmaterial;
+package org.zkoss.theme.marble;
 
 import org.zkoss.web.fn.ServletFns;
 import org.zkoss.zk.ui.Execution;
@@ -7,7 +7,7 @@ import org.zkoss.zk.ui.util.ThemeProvider;
 import java.util.*;
 
 // this class is made as a workaround for ZK-6024 load theme-based font-awesome.css.dsp from a wrong path
-public class ZkMaterialThemeProvider implements ThemeProvider {
+public class MarbleThemeProvider implements ThemeProvider {
     @Override
     public Collection<Object> getThemeURIs(Execution exec, List<Object> uris) {
         return uris;

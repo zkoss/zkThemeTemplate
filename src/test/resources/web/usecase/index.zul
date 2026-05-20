@@ -1,4 +1,4 @@
-<?page title="zk-material Use Cases"?>
+<?page title="Marble Use Cases"?>
 <?link rel="stylesheet" type="text/css" href="~./usecase/usecase.css"?>
 <?link rel="stylesheet" type="text/css" href="~./pv.css"?>
 <zk>
@@ -8,7 +8,7 @@
 
     <west size="258px" border="none" collapsible="false">
         <div>
-            <div sclass="sidebar-brand">zk-material</div>
+            <div sclass="sidebar-brand">Marble</div>
             <navbar orient="vertical">
                 <nav label="Use Cases" open="@load(vm.openNavLabel eq 'Use Cases')">
                     <navitem label="Employee Data Grid"   onClick="@command('navigate', page='~./usecase/employee-grid.zul')"/>

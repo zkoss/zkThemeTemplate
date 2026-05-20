@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <config>
-	<config-name>zk-material</config-name><!-- used to resolve dependency -->
+	<config-name>marble</config-name><!-- used to resolve dependency -->
 	<depends>zul</depends>
 	<version>
-		<version-class>org.zkoss.theme.zkmaterial.Version</version-class>
+		<version-class>org.zkoss.theme.marble.Version</version-class>
 		<version-uid>1.0.0</version-uid>
 	</version>
 
 	<listener>
-		<listener-class>org.zkoss.theme.zkmaterial.ZkMaterialThemeWebAppInit</listener-class>
+		<listener-class>org.zkoss.theme.marble.MarbleThemeWebAppInit</listener-class>
 	</listener>
 </config>

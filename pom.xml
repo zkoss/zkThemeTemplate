@@ -2,7 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.zkoss.theme</groupId>
-	<artifactId>zk-material</artifactId>
+	<artifactId>marble</artifactId>
 	<version>1.0.0</version>
 	<properties>
 		<maven.compiler.source>11</maven.compiler.source>
@@ -17,11 +17,11 @@
 		<zktheme.theme.outputDirectory>${project.build.outputDirectory}/web/${project.artifactId}</zktheme.theme.outputDirectory>
 	</properties>
 	<packaging>jar</packaging>
-	<name>zk-material</name>
+	<name>marble</name>
 	<scm>
 		<url>https://mavensync.zkoss.org/maven2</url>
 	</scm>
-	<description>Material Design theme for ZK Framework</description>
+	<description>Material Design theme</description>
 	<licenses>
 		<license>
 			<name>GNU LESSER GENERAL PUBLIC LICENSE, Version 3</name>
@@ -157,6 +157,16 @@
 						<configuration>
 							<mainClass>zk.example.iceblue.ThemePreviewIceblueApp</mainClass>
 							<classpathScope>test</classpathScope>
+						</configuration>
+					</execution>
+					<execution> <!-- lint: preview ZULs may only use Lucide icon names (Rule 2 of doc/icon-policy.md) -->
+						<id>check-icon-coverage</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<configuration>
+							<executable>${project.basedir}/scripts/check-icon-coverage.sh</executable>
 						</configuration>
 					</execution>
 					<execution> <!-- continuous compile/watch CSS files -->

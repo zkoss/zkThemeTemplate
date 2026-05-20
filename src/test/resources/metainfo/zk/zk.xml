@@ -1,5 +1,5 @@
 <zk>
-    <config-name>zk-material-preview</config-name>
+    <config-name>marble-preview</config-name>
     <client-config>
         <debug-js>true</debug-js>
     </client-config>

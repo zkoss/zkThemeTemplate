@@ -254,7 +254,7 @@
 /* ═══════════════════════════════════════════════════════════════════════
    PICKER — HSV gradient + hue bar + RGB/HSV/HEX inputs
    Sprite URLs use a relative path: the CSS lives at
-     /zkau/web/{ver}/zk-material/js/zkex/inp/css/colorbox.css.dsp
+     /zkau/web/{ver}/marble/js/zkex/inp/css/colorbox.css.dsp
    and the sprites at
      /zkau/web/{ver}/zkex/img/colorbox/*.png
    So `../../../../../zkex/img/colorbox/...` resolves correctly.

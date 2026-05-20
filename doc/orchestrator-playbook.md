@@ -55,7 +55,7 @@ Compute two batches from `tasks/work-status.md`:
 **Generator batch (serial, 1 at a time):**
 - All rows in `NEEDS_FIX` status WITH an Action-required section that is not flagged `TOKEN_FIX_REQUIRED`
 - Pick exactly 1 per outer loop iteration
-- Build serialization: `npm run build:css` writes to `target/classes/web/zk-material/` non-atomically; concurrent builds race. Even though different Generators edit different CSS source files, their builds would clobber each other.
+- Build serialization: `npm run build:css` writes to `target/classes/web/marble/` non-atomically; concurrent builds race. Even though different Generators edit different CSS source files, their builds would clobber each other.
 
 ### Step 2 — Dispatch the Evaluator batch (parallel)
 

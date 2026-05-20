@@ -4,17 +4,17 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is **zk-material** - a Material Design 3 theme for ZK Framework targeting enterprise customers. The project uses pure CSS (no LESS) with CSS Custom Properties for theming.
+This is **Marble** - a Material Design theme for ZK Framework targeting enterprise customers, visually aligned with MUI (React Material UI). The project uses pure CSS (no LESS) with CSS Custom Properties for theming.
 
-- **Theme Name**: `zk-material`
+- **Theme Name**: `marble`
 - **Version**: 1.0.0
 - **ZK Version**: 10.2.1-jakarta
-- **Design System**: Material Design 3 (Material You)
+- **Design System**: Material Design (MUI-aligned; tokens follow MD3 naming, visual values follow MUI v7)
 - **Spring Boot Version**: 3.2.6 (for preview app)
 - **Browser Support**: Modern browsers only (last 2 versions of Chrome, Firefox, Safari, Edge)
 
 ### Project Goals
-Create a modern, accessible, and high-quality MD3 theme that enables enterprise users to build visually appealing ZK applications.
+Create a modern, accessible, and high-quality Material Design theme (visually aligned with MUI) that enables enterprise users to build visually appealing ZK applications.
 
 ### Workflow
 Claude acts as project manager coordinating subagents:
@@ -25,7 +25,7 @@ Claude acts as project manager coordinating subagents:
 ### Key Decisions
 | Decision | Choice | Rationale |
 |----------|--------|-----------|
-| Theme Name | `zk-material` | Clear, descriptive name |
+| Theme Name | `marble` | Short, distinct brand name (Ma- prefix retains soft link to Material) |
 | Styling Language | Pure CSS | Simpler tooling, no LESS dependency |
 | Dark Theme | Light only (initial) | Reduce scope, add dark later |
 | DOM Research | Browser + ZK source | Both approaches for accuracy |
@@ -173,7 +173,7 @@ src/main/resources/web/
 │   │   ├── _reset.css
 │   │   ├── _utilities.css
 │   │   └── _icons.css
-│   └── zk-material.css       # Global entry styles
+│   └── marble.css            # Global entry styles
 └── js/zul/                   # Component CSS (auto-scanned → *.css.dsp 1:1)
     ├── box/css/
     ├── db/css/
@@ -187,11 +187,11 @@ src/main/resources/web/
     ├── wgt/css/              # toolbarbutton → footer.css.dsp
     └── wnd/css/
 ```
-Build output: `target/classes/web/zk-material/`
+Build output: `target/classes/web/marble/`
 
 ### Java Integration
-- `ZkMaterialThemeWebAppInit.java`: Registers theme with ZK framework
-- `ZkMaterialThemeProvider.java`: Theme provider implementation
+- `MarbleThemeWebAppInit.java`: Registers theme with ZK framework
+- `MarbleThemeProvider.java`: Theme provider implementation
 - `Version.java`: Theme version information
 - `config.xml`, `lang-addon.xml`, `zk.xml`: ZK configuration
 

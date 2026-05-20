@@ -1,12 +1,12 @@
 {
-  "name": "zk-material-theme",
+  "name": "marble-theme",
   "version": "1.0.0",
   "private": true,
   "scripts": {
     "build:css": "node scripts/build-css.js",
     "build:css:dev": "node scripts/build-css.js --dev",
     "watch": "node scripts/watch-css.js",
-    "minify": "cleancss -o target/classes/web/zk-material/css/zk-material.min.css target/classes/web/zk-material/css/zk-material.css",
+    "minify": "cleancss -o target/classes/web/marble/css/marble.min.css target/classes/web/marble/css/marble.css",
     "screenshot:test": "playwright test --config src/test/playwright/playwright.config.ts",
     "screenshot:update": "playwright test --config src/test/playwright/playwright.config.ts --update-snapshots"
   },

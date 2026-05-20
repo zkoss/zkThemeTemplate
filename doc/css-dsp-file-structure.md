@@ -1,10 +1,10 @@
 # CSS DSP File Structure
 
-This document defines all required `*.css.dsp` files for the **zk-material** theme, based on the Ice Blue Compact theme (`iceblue_c-10.3.0.1`) as the reference product.
+This document defines all required `*.css.dsp` files for the **marble** theme, based on the Ice Blue Compact theme (`iceblue_c-10.3.0.1`) as the reference product.
 
 All files reside under:
 ```
-src/main/resources/web/zk-material/
+src/main/resources/web/marble/
 ```
 
 ---

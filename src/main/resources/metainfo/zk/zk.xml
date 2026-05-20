@@ -1,6 +1,6 @@
 <zk>
-    <config-name>zk-material</config-name>
+    <config-name>marble</config-name>
     <desktop-config>
-        <theme-provider-class>org.zkoss.theme.zkmaterial.ZkMaterialThemeProvider</theme-provider-class>
+        <theme-provider-class>org.zkoss.theme.marble.MarbleThemeProvider</theme-provider-class>
     </desktop-config>
 </zk>

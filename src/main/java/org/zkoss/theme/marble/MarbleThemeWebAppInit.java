@@ -1,4 +1,4 @@
-/* ZkMaterialThemeWebAppInit.java
+/* MarbleThemeWebAppInit.java
 
 	Purpose:
 
@@ -14,7 +14,7 @@ Copyright (C) 2010 Potix Corporation. All Rights Reserved.
 	it will be useful, but WITHOUT ANY WARRANTY.
 }}IS_RIGHT
 */
-package org.zkoss.theme.zkmaterial;
+package org.zkoss.theme.marble;
 
 import org.zkoss.zk.ui.WebApp;
 import org.zkoss.zk.ui.WebApps;
@@ -27,10 +27,10 @@ import org.zkoss.zul.theme.Themes;
  * Library property setting, Theme provider setting and Component definition setting
  *
  */
-public class ZkMaterialThemeWebAppInit implements WebAppInit {
+public class MarbleThemeWebAppInit implements WebAppInit {
 
-	private final static String THEME_NAME = "zk-material";
-	private final static String THEME_DISPLAY = "ZK Material";
+	private final static String THEME_NAME = "marble";
+	private final static String THEME_DISPLAY = "Marble";
 	private final static int THEME_PRIORITY = 700;
 
 	public void init(WebApp webapp) throws Exception {

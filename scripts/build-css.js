@@ -4,7 +4,7 @@ const fs = require('fs');
 const path = require('path');
 
 const webDir = path.join(__dirname, '..', 'src/main/resources/web');
-const themeDir = path.join(__dirname, '..', 'target/classes/web/zk-material');
+const themeDir = path.join(__dirname, '..', 'target/classes/web/marble');
 
 // norm.css.dsp = tokens + base + global styles (loaded first by WCS)
 const normFiles = [

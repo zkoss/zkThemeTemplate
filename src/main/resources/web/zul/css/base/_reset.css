@@ -2,7 +2,7 @@
    User styles (no layer) always win over both. */
 @layer zk-components, zk-utilities;
 
-/* CSS Reset for zk-material — normalize browser defaults */
+/* CSS Reset for marble — normalize browser defaults */
 *, *::before, *::after {
     box-sizing: border-box;
 }
