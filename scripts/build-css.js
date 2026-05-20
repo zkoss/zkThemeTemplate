@@ -65,6 +65,10 @@ const stubPaths = [
     'js/zkex/grid/css/grid.css.dsp',
     'js/zkex/inp/css/colorbox.css.dsp',
     'js/zkex/layout/css/columnlayout.css.dsp',
+    // sliderbuttons widget is nested in rangeslider/multislider; its styles live in
+    // rangeslider.css / multislider.css, so this stub just prevents a 404 from ZK's
+    // per-widget CSS lookup.
+    'js/zkex/slider/css/sliderbuttons.css.dsp',
     // zkmax
     'zkmax/css/tablet.css.dsp',
     'js/zkmax/inp/css/cascader.css.dsp',
