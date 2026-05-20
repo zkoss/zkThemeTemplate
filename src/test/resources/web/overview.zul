@@ -69,34 +69,34 @@
     </div>
     <div sclass="z-mb-6">
         <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Form Inputs</div>
-        <div sclass="z-d-flex z-align-end z-flex-wrap z-gap-6 z-py-3">
+        <div sclass="z-d-flex z-align-start z-flex-wrap z-gap-6 z-py-3">
             <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <doublebox width="160px"/>
                 <div sclass="z-fs-label-sm z-text-secondary">Doublebox</div>
+                <doublebox width="160px"/>
             </div>
             <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <datebox width="160px"/>
                 <div sclass="z-fs-label-sm z-text-secondary">Datebox</div>
+                <datebox width="160px"/>
             </div>
             <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <bandbox width="160px"/>
                 <div sclass="z-fs-label-sm z-text-secondary">Bandbox</div>
+                <bandbox width="160px"/>
             </div>
             <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <combobox width="160px"/>
                 <div sclass="z-fs-label-sm z-text-secondary">Combobox</div>
+                <combobox width="160px"/>
             </div>
             <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <timebox width="160px"/>
                 <div sclass="z-fs-label-sm z-text-secondary">Timebox</div>
+                <timebox width="160px"/>
             </div>
             <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <spinner width="120px"/>
                 <div sclass="z-fs-label-sm z-text-secondary">Spinner</div>
+                <spinner width="120px"/>
             </div>
             <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <doublespinner width="120px"/>
                 <div sclass="z-fs-label-sm z-text-secondary">Doublespinner</div>
+                <doublespinner width="120px"/>
             </div>
         </div>
     </div>

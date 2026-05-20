@@ -54,6 +54,7 @@ dsc = Comparators.dscRowDetailComparator;
         <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Auxhead</div>
         <div sclass="z-d-flex z-align-start z-flex-wrap z-gap-6 z-py-3">
             <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <div sclass="z-fs-label-sm z-text-secondary">Auxhead above columns</div>
                 <grid hflex="min">
                     <auxhead>
                         <auxheader label="A+B" colspan="2"/>
@@ -74,9 +75,9 @@ dsc = Comparators.dscRowDetailComparator;
                         <footer label="Footer 3"/>
                     </foot>
                 </grid>
-                <div sclass="z-fs-label-sm z-text-secondary">Auxhead above columns</div>
             </div>
             <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <div sclass="z-fs-label-sm z-text-secondary">Auxhead below columns</div>
                 <grid hflex="min">
                     <columns>
                         <column label="Left" align="left" width="100px"/>
@@ -91,7 +92,6 @@ dsc = Comparators.dscRowDetailComparator;
                         <row><label value="AA01"/><label value="BB01"/><label value="CC01"/></row>
                     </rows>
                 </grid>
-                <div sclass="z-fs-label-sm z-text-secondary">Auxhead below columns</div>
             </div>
         </div>
     </div>

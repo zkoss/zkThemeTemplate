@@ -38,16 +38,16 @@
         <div sclass="z-fs-label-sm z-text-secondary z-mb-4">Leave the field empty and press Tab or click outside to trigger a real errorbox.</div>
         <div sclass="z-py-3 z-d-flex z-align-start z-flex-wrap z-gap-6">
             <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <textbox placeholder="Required field" constraint="no empty" width="200px"/>
                 <div sclass="z-fs-label-sm z-text-secondary">no empty</div>
+                <textbox placeholder="Required field" constraint="no empty" width="200px"/>
             </div>
             <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <textbox placeholder="Email" constraint="/.+@.+\..+/: Invalid email" width="200px"/>
                 <div sclass="z-fs-label-sm z-text-secondary">regex pattern</div>
+                <textbox placeholder="Email" constraint="/.+@.+\..+/: Invalid email" width="200px"/>
             </div>
             <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <intbox placeholder="1–100" constraint="min 1 max 100" width="200px"/>
                 <div sclass="z-fs-label-sm z-text-secondary">min max range</div>
+                <intbox placeholder="1–100" constraint="min 1 max 100" width="200px"/>
             </div>
         </div>
     </div>

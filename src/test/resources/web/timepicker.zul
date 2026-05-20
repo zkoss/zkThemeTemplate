@@ -6,22 +6,22 @@
 
     <div sclass="z-mb-6">
         <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Formats</div>
-        <div sclass="z-d-flex z-align-end z-flex-wrap z-gap-6 z-py-3">
+        <div sclass="z-d-flex z-align-start z-flex-wrap z-gap-6 z-py-3">
             <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <timepicker format="HH:mm" width="160px"/>
                 <div sclass="z-fs-label-sm z-text-secondary">HH:mm</div>
+                <timepicker format="HH:mm" width="160px"/>
             </div>
             <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <timepicker format="HH:mm a" width="160px"/>
                 <div sclass="z-fs-label-sm z-text-secondary">HH:mm a</div>
+                <timepicker format="HH:mm a" width="160px"/>
             </div>
             <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <timepicker format="HH:mm:ss" width="160px"/>
                 <div sclass="z-fs-label-sm z-text-secondary">HH:mm:ss</div>
+                <timepicker format="HH:mm:ss" width="160px"/>
             </div>
             <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <timepicker format="hh:mm:ss a" width="160px"/>
                 <div sclass="z-fs-label-sm z-text-secondary">hh:mm:ss a</div>
+                <timepicker format="hh:mm:ss a" width="160px"/>
             </div>
         </div>
     </div>

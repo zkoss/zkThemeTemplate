@@ -8,40 +8,40 @@
     <div sclass="z-border-bottom z-fs-title-lg z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Calendar</div>
     <div sclass="z-mb-6">
         <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Variants</div>
-        <div sclass="z-d-flex z-align-end z-flex-wrap z-gap-6 z-py-3">
+        <div sclass="z-d-flex z-align-start z-flex-wrap z-gap-6 z-py-3">
             <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <calendar/>
                 <div sclass="z-fs-label-sm z-text-secondary">Default</div>
+                <calendar/>
             </div>
             <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <calendar weekOfYear="true"/>
                 <div sclass="z-fs-label-sm z-text-secondary">Week of year</div>
+                <calendar weekOfYear="true"/>
             </div>
             <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <calendar showTodayLink="true"/>
                 <div sclass="z-fs-label-sm z-text-secondary">Today link</div>
+                <calendar showTodayLink="true"/>
             </div>
         </div>
     </div>
     <div sclass="z-mb-6">
         <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">With Datebox</div>
-        <div sclass="z-d-flex z-align-end z-flex-wrap z-gap-6 z-py-3">
+        <div sclass="z-d-flex z-align-start z-flex-wrap z-gap-6 z-py-3">
             <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <div sclass="z-fs-label-sm z-text-secondary">Calendar + datebox (GMT±8)</div>
                 <calendar/>
                 <datebox id="db" width="220px" format="yyyy/MM/dd a hh:mm:ss"
                          displayedTimeZones="GMT+8,GMT-8"/>
                 <zscript>db.value = new Date();</zscript>
-                <div sclass="z-fs-label-sm z-text-secondary">Calendar + datebox (GMT±8)</div>
             </div>
             <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <div sclass="z-fs-label-sm z-text-secondary">Week of year</div>
                 <calendar weekOfYear="true"/>
                 <datebox weekOfYear="true"/>
-                <div sclass="z-fs-label-sm z-text-secondary">Week of year</div>
             </div>
             <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <div sclass="z-fs-label-sm z-text-secondary">Today link</div>
                 <calendar showTodayLink="true"/>
                 <datebox showTodayLink="true" todayLinkLabel="Choose today"/>
-                <div sclass="z-fs-label-sm z-text-secondary">Today link</div>
             </div>
         </div>
     </div>

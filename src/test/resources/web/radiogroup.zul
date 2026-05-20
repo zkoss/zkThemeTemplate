@@ -31,22 +31,22 @@
 
     <div sclass="z-mb-6">
         <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Group</div>
-        <div sclass="z-d-flex z-align-end z-flex-wrap z-gap-6 z-py-3">
+        <div sclass="z-d-flex z-align-start z-flex-wrap z-gap-6 z-py-3">
             <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <div sclass="z-fs-label-sm z-text-secondary">Default</div>
                 <radiogroup>
                     <radio label="Apple"/>
                     <radio label="Orange"/>
                     <radio label="Banana"/>
                 </radiogroup>
-                <div sclass="z-fs-label-sm z-text-secondary">Default</div>
             </div>
             <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <div sclass="z-fs-label-sm z-text-secondary">With selection + disabled</div>
                 <radiogroup>
                     <radio label="Apple" checked="true"/>
                     <radio label="Orange"/>
                     <radio label="Banana" disabled="true"/>
                 </radiogroup>
-                <div sclass="z-fs-label-sm z-text-secondary">With selection + disabled</div>
             </div>
         </div>
     </div>

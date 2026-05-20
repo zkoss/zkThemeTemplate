@@ -5,26 +5,26 @@
     <div sclass="z-border-bottom z-fs-title-lg z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Progressmeter</div>
     <div sclass="z-mb-6">
         <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Values</div>
-        <div sclass="z-d-flex z-align-end z-flex-wrap z-gap-6 z-py-3">
+        <div sclass="z-d-flex z-align-start z-flex-wrap z-gap-6 z-py-3">
             <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <progressmeter value="0" width="200px"/>
                 <div sclass="z-fs-label-sm z-text-secondary">0%</div>
+                <progressmeter value="0" width="200px"/>
             </div>
             <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <progressmeter value="25" width="200px"/>
                 <div sclass="z-fs-label-sm z-text-secondary">25%</div>
+                <progressmeter value="25" width="200px"/>
             </div>
             <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <progressmeter value="50" width="200px"/>
                 <div sclass="z-fs-label-sm z-text-secondary">50%</div>
+                <progressmeter value="50" width="200px"/>
             </div>
             <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <progressmeter value="75" width="200px"/>
                 <div sclass="z-fs-label-sm z-text-secondary">75%</div>
+                <progressmeter value="75" width="200px"/>
             </div>
             <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <progressmeter value="100" width="200px"/>
                 <div sclass="z-fs-label-sm z-text-secondary">100%</div>
+                <progressmeter value="100" width="200px"/>
             </div>
         </div>
     </div>

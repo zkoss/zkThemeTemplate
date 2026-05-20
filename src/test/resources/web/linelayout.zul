@@ -14,8 +14,9 @@
 
     <div sclass="z-mb-6">
         <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Timeline with Model</div>
-        <div sclass="z-d-flex z-align-end z-flex-wrap z-gap-6 z-py-3">
+        <div sclass="z-d-flex z-align-start z-flex-wrap z-gap-6 z-py-3">
             <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <div sclass="z-fs-label-sm z-text-secondary">Quarterly milestones</div>
                 <linelayout model="${model4LineLayout}" height="200px">
                     <template name="model">
                         <lineitem>
@@ -23,7 +24,6 @@
                         </lineitem>
                     </template>
                 </linelayout>
-                <div sclass="z-fs-label-sm z-text-secondary">Quarterly milestones</div>
             </div>
         </div>
     </div>

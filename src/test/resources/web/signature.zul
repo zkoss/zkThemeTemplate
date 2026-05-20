@@ -13,18 +13,18 @@
     </div>
     <div sclass="z-mb-6">
         <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Customization</div>
-        <div sclass="z-d-flex z-align-end z-flex-wrap z-gap-6 z-py-3">
+        <div sclass="z-d-flex z-align-start z-flex-wrap z-gap-6 z-py-3">
             <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <colorbox onChange="signature.penColor = self.value"/>
                 <div sclass="z-fs-label-sm z-text-secondary">Pen color</div>
+                <colorbox onChange="signature.penColor = self.value"/>
             </div>
             <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <colorbox onChange="signature.backgroundColor = self.value" color="#FFFFFF"/>
                 <div sclass="z-fs-label-sm z-text-secondary">Background color</div>
+                <colorbox onChange="signature.backgroundColor = self.value" color="#FFFFFF"/>
             </div>
             <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <intbox onChange="signature.penSize = self.value" width="80px"/>
                 <div sclass="z-fs-label-sm z-text-secondary">Pen size</div>
+                <intbox onChange="signature.penSize = self.value" width="80px"/>
             </div>
         </div>
     </div>

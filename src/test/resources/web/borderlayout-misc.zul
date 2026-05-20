@@ -36,8 +36,9 @@
 
     <div sclass="z-mb-6">
         <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Auto Scroll and Margins</div>
-        <div sclass="z-d-flex z-align-end z-flex-wrap z-gap-6 z-py-3">
+        <div sclass="z-d-flex z-align-start z-flex-wrap z-gap-6 z-py-3">
             <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <div sclass="z-fs-label-sm z-text-secondary">autoscroll="true"</div>
                 <window title="Auto Scroll" border="normal" width="300px" height="300px">
                     <borderlayout xmlns:ca="client/attribute">
                         <center autoscroll="true" ca:data-embedscrollbar="true">
@@ -61,9 +62,9 @@
                         <west size="20%">West Content</west>
                     </borderlayout>
                 </window>
-                <div sclass="z-fs-label-sm z-text-secondary">autoscroll="true"</div>
             </div>
             <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <div sclass="z-fs-label-sm z-text-secondary">center margins="10,10,10,10"</div>
                 <window title="Margins: 10px" border="normal" width="300px" height="300px">
                     <borderlayout>
                         <center margins="10,10,10,10">Center Content</center>
@@ -73,9 +74,9 @@
                         <west size="20%">West Content</west>
                     </borderlayout>
                 </window>
-                <div sclass="z-fs-label-sm z-text-secondary">center margins="10,10,10,10"</div>
             </div>
             <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <div sclass="z-fs-label-sm z-text-secondary">east/west cmargins="10,10,10,10"</div>
                 <window title="Cmargins: 10px" border="normal" width="300px" height="300px">
                     <borderlayout>
                         <center>Center Content</center>
@@ -85,7 +86,6 @@
                         <west title="West" size="20%" collapsible="true" cmargins="10,10,10,10">West Content</west>
                     </borderlayout>
                 </window>
-                <div sclass="z-fs-label-sm z-text-secondary">east/west cmargins="10,10,10,10"</div>
             </div>
         </div>
     </div>
