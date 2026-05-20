@@ -8,9 +8,9 @@
         <div sclass="pv-section-title">Tabbox — State Gallery</div>
 
         <div sclass="pv-state-gallery pv-variant-default">
-            <div sclass="pv-state-col">
+            <div sclass="pv-state-col z-flex-1">
                 <div sclass="pv-state-label">Tab States</div>
-                <tabbox width="360px">
+                <tabbox width="100%">
                     <tabs>
                         <tab label="Default"/>
                         <tab label="Selected" selected="true"/>
@@ -29,8 +29,8 @@
     <div sclass="z-mb-6">
         <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Horizontal with Toolbar</div>
         <div sclass="z-d-flex z-align-start z-flex-wrap z-gap-6 z-py-3">
-            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <tabbox height="200px" width="500px">
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2 z-flex-1">
+                <tabbox height="200px"  width="100%">
                     <toolbar>
                         <toolbarbutton label="Button 1" image="~./img/volumn.gif" />
                         <toolbarbutton label="New" iconSclass="z-icon-file"/>
@@ -60,8 +60,8 @@
     <div sclass="z-mb-6">
         <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Horizontal with Tab Images</div>
         <div sclass="z-d-flex z-align-start z-flex-wrap z-gap-6 z-py-3">
-            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <tabbox height="200px" width="400px">
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2 z-flex-1">
+                <tabbox height="200px" width="100%">
                     <tabs>
                         <tab label="Tab1" closable="true" image="~./img/volumn.gif" />
                         <tab label="Tab2" closable="true" image="~./img/volumn.gif" />
@@ -85,8 +85,8 @@
     <div sclass="z-mb-6">
         <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Vertical Left</div>
         <div sclass="z-d-flex z-align-start z-flex-wrap z-gap-6 z-py-3">
-            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <tabbox height="250px" width="350px" orient="vertical">
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2 z-flex-1">
+                <tabbox height="250px" width="100%" orient="vertical">
                     <tabs width="80px">
                         <tab label="Tab1" closable="true" />
                         <tab label="Tab2" closable="true" />
@@ -114,8 +114,8 @@
                 </tabbox>
                 <div sclass="z-fs-label-sm z-text-secondary">Vertical left (many tabs)</div>
             </div>
-            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <tabbox height="200px" width="350px" orient="vertical">
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2 z-flex-1">
+                <tabbox height="200px" width="100%" orient="vertical">
                     <tabs width="80px">
                         <tab label="Tab1 ZK" closable="true" />
                         <tab label="Tab2" closable="true" />
@@ -139,8 +139,8 @@
     <div sclass="z-mb-6">
         <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Vertical Right</div>
         <div sclass="z-d-flex z-align-start z-flex-wrap z-gap-6 z-py-3">
-            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <tabbox height="250px" width="350px" orient="right">
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2 z-flex-1">
+                <tabbox height="250px" width="100%" orient="right">
                     <tabs width="80px">
                         <tab label="Tab1" closable="true" />
                         <tab label="Tab2" closable="true" />
@@ -168,8 +168,8 @@
                 </tabbox>
                 <div sclass="z-fs-label-sm z-text-secondary">Vertical right (many tabs)</div>
             </div>
-            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <tabbox height="200px" width="350px" orient="right">
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2 z-flex-1">
+                <tabbox height="200px" width="100%" orient="right">
                     <tabs width="80px">
                         <tab label="Tab1 ZK" closable="true" />
                         <tab label="Tab2" closable="true" />
@@ -193,8 +193,8 @@
     <div sclass="z-mb-6">
         <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Bottom with Toolbar</div>
         <div sclass="z-d-flex z-align-start z-flex-wrap z-gap-6 z-py-3">
-            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <tabbox height="200px" width="400px" orient="bottom">
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2 z-flex-1">
+                <tabbox height="200px" width="100%" orient="bottom">
                     <toolbar>
                         <toolbarbutton label="Button 1" image="~./img/volumn.gif" />
                     </toolbar>
@@ -215,8 +215,8 @@
                 </tabbox>
                 <div sclass="z-fs-label-sm z-text-secondary">Bottom tabs with toolbar</div>
             </div>
-            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <tabbox height="200px" width="350px" orient="bottom">
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2 z-flex-1">
+                <tabbox height="200px" width="100%" orient="bottom">
                     <toolbar>
                         <toolbarbutton label="Button 1" image="~./img/volumn.gif" />
                     </toolbar>
@@ -239,8 +239,8 @@
     <div sclass="z-mb-6">
         <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Horizontal — Scroll (many tabs)</div>
         <div sclass="z-d-flex z-align-start z-flex-wrap z-gap-6 z-py-3">
-            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <tabbox height="200px" width="360px">
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2 z-flex-1">
+                <tabbox height="200px" width="100%">
                     <tabs>
                         <tab label="Overview" />
                         <tab label="Account" />
@@ -266,8 +266,8 @@
                 </tabbox>
                 <div sclass="z-fs-label-sm z-text-secondary">Horizontal scroll arrows</div>
             </div>
-            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <tabbox height="200px" width="360px">
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2 z-flex-1">
+                <tabbox height="200px" width="100%">
                     <toolbar>
                         <toolbarbutton label="Add" iconSclass="z-icon-plus"/>
                     </toolbar>
@@ -300,8 +300,8 @@
     <div sclass="z-mb-6">
         <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Icon-only Tabs</div>
         <div sclass="z-d-flex z-align-start z-flex-wrap z-gap-6 z-py-3">
-            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <tabbox height="200px" width="360px">
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2 z-flex-1">
+                <tabbox height="200px" width="100%">
                     <tabs>
                         <tab iconSclass="z-icon-home" />
                         <tab iconSclass="z-icon-user" />
@@ -319,8 +319,8 @@
                 </tabbox>
                 <div sclass="z-fs-label-sm z-text-secondary">Icon-only (horizontal)</div>
             </div>
-            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <tabbox height="200px" width="360px" orient="vertical">
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2 z-flex-1">
+                <tabbox height="200px" width="100%" orient="vertical">
                     <tabs width="48px">
                         <tab iconSclass="z-icon-home" />
                         <tab iconSclass="z-icon-user" />
@@ -342,8 +342,8 @@
     <div sclass="z-mb-6">
         <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Bottom — plain</div>
         <div sclass="z-d-flex z-align-start z-flex-wrap z-gap-6 z-py-3">
-            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <tabbox height="200px" width="360px" orient="bottom">
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2 z-flex-1">
+                <tabbox height="200px" width="100%" orient="bottom">
                     <tabs>
                         <tab label="Overview" />
                         <tab label="Details" />
@@ -357,8 +357,8 @@
                 </tabbox>
                 <div sclass="z-fs-label-sm z-text-secondary">Bottom, no toolbar</div>
             </div>
-            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <tabbox height="200px" width="360px" orient="bottom">
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2 z-flex-1">
+                <tabbox height="200px" width="100%" orient="bottom">
                     <tabs>
                         <tab label="Overview" />
                         <tab label="Account" />
@@ -386,8 +386,8 @@
     <div sclass="z-mb-6">
         <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">tabscroll=false</div>
         <div sclass="z-d-flex z-align-start z-flex-wrap z-gap-6 z-py-3">
-            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <tabbox tabscroll="false" height="200px" width="360px">
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2 z-flex-1">
+                <tabbox tabscroll="false" height="200px" width="100%">
                     <tabs>
                         <tab label="Overview" />
                         <tab label="Account" />
@@ -409,8 +409,8 @@
                 </tabbox>
                 <div sclass="z-fs-label-sm z-text-secondary">Horizontal, tabscroll=false (overflow clips)</div>
             </div>
-            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <tabbox tabscroll="false" orient="vertical" height="160px" width="360px">
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2 z-flex-1">
+                <tabbox tabscroll="false" orient="vertical" height="160px" width="100%">
                     <tabs width="100px">
                         <tab label="Overview" />
                         <tab label="Account" />
@@ -434,8 +434,8 @@
     <div sclass="z-mb-6">
         <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Accordion Mold</div>
         <div sclass="z-d-flex z-align-start z-flex-wrap z-gap-6 z-py-3">
-            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <tabbox height="300px" width="350px" mold="accordion">
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2 z-flex-1">
+                <tabbox height="300px" width="100%" mold="accordion">
                     <tabs>
                         <tab label="Tab1" closable="true" />
                         <tab label="Tab2" closable="true" />
@@ -453,8 +453,8 @@
                 </tabbox>
                 <div sclass="z-fs-label-sm z-text-secondary">Text only (disabled + closable states)</div>
             </div>
-            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <tabbox height="300px" width="350px" mold="accordion">
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2 z-flex-1">
+                <tabbox height="300px" width="100%" mold="accordion">
                     <tabs>
                         <tab label="Tab1" image="~./img/volumn.gif" closable="true" />
                         <tab label="Tab2" image="~./img/volumn.gif" closable="true" />
