@@ -6,11 +6,11 @@ Companion docs: `doc/harness-plan.md` (architecture), `tasks/work-status.md` (st
 
 ---
 
-## Bundle selector convention
+## Contract selector convention
 
-Preview pages render many instances of each component in different states. Bundles MUST use **structural anchor selectors** that point at exactly the canonical instance for each state (default, disabled, readonly, invalid, etc.), not bare class selectors.
+Preview pages render many instances of each component in different states. Contracts MUST use **structural anchor selectors** that point at exactly the canonical instance for each state (default, disabled, readonly, invalid, etc.), not bare class selectors.
 
-See `tasks/bundles/textbox.md` Preview Anchors section as the reference example. When you write a new bundle or fix a flaky one, anchor on:
+See `doc/contracts/textbox.md` Preview Anchors section as the reference example. When you write a new contract or fix a flaky one, anchor on:
 - `.pv-state-gallery.pv-variant-default .pv-state-col:nth-child(N)` for components that use the standard state gallery
 - a text-match on `.pv-state-label` as fallback if positional indexing isn't reliable
 - explicit attribute filters (e.g. `[readonly]`, `[disabled]`) when the variant isn't in a state gallery
@@ -230,10 +230,10 @@ Before the ralph-loop can run on a component, that component must have a user-ap
 
 ### When to run `zk-spec-author <component>`
 
-Trigger spec-author when either condition holds for the component's bundle:
+Trigger spec-author when either condition holds for the component's contract:
 
-- The bundle's frontmatter is missing a `rules:` line (no link to a skill component file).
-- The bundle's frontmatter has `contract-approved: false` (or the line is missing entirely).
+- The contract's frontmatter is missing a `rules:` line (no link to a skill component file).
+- The contract's frontmatter has `contract-approved: false` (or the line is missing entirely).
 
 The orchestrator should NOT dispatch the evaluator on such a component — the evaluator's §0a gate will refuse with `BLOCKED: contract-approved=false`. Route to spec-author instead.
 
@@ -242,11 +242,11 @@ The orchestrator should NOT dispatch the evaluator on such a component — the e
 After `zk-spec-author <component>` produces (or updates) the artifacts:
 
 1. `.claude/skills/zk-component-rules/components/<component>.md` (structural facts only — DOM tree, state classes, composition invariants).
-2. `tasks/bundles/<component>.md` (theme contract — tokens, references, expected values, State matrix).
+2. `doc/contracts/<component>.md` (theme contract — tokens, references, expected values, State matrix).
 3. `doc/contracts/<component>.html` (static mockup rendered with `--zk-*` tokens).
 4. `doc/contracts/baselines/<component>-iceblue.png` (iceblue reference screenshot).
 
-…the **user** reviews items 1 and 3 side-by-side against item 4. Only the user may flip `contract-approved: true` in the bundle's frontmatter. The orchestrator never flips this flag autonomously.
+…the **user** reviews items 1 and 3 side-by-side against item 4. Only the user may flip `contract-approved: true` in the contract's frontmatter. The orchestrator never flips this flag autonomously.
 
 Once approved, the orchestrator re-enters the main loop normally; the evaluator's §0a gate now passes and measurement proceeds.
 
@@ -254,7 +254,7 @@ Once approved, the orchestrator re-enters the main loop normally; the evaluator'
 
 If the evaluator returns status `BLOCKED: js-source drift — re-run zk-spec-author <component>` (and appends a `js-drift` entry to `tasks/skill-gaps.md`), the underlying ZK JS source has changed since the contract was authored. The recovery flow:
 
-1. Re-run `zk-spec-author <component>`. The agent re-reads the JS source, re-derives the structural section, refreshes the bundle's `js-source-hash:` field, and (if structural facts changed) flips `contract-approved:` back to `false`.
+1. Re-run `zk-spec-author <component>`. The agent re-reads the JS source, re-derives the structural section, refreshes the contract's `js-source-hash:` field, and (if structural facts changed) flips `contract-approved:` back to `false`.
 2. If `contract-approved:` was flipped to `false`, repeat the approval gate above. If spec-author determined the structural facts were unchanged, it may keep `contract-approved: true` after refreshing only the hash — but the user should still spot-check.
 3. The orchestrator resumes the main loop; the evaluator's §0a and §0b gates both pass and measurement proceeds.
 
