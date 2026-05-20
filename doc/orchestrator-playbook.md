@@ -117,7 +117,7 @@ Pick the highest-priority `NEEDS_FIX` component (per group order). Verify no oth
 Task(
   description="Generate fix for textbox",
   subagent_type="zk-theme-generator",
-  prompt="Component: textbox\n\nFollow your agent definition: read eval report, print contract, edit input.css, run npm run build:css, write build receipt."
+  prompt="Component: textbox\n\nFollow your agent definition: read eval report, print contract, edit input.css, run npm run build:css, write gen report."
 )
 ```
 
@@ -125,7 +125,7 @@ Wait for it to return.
 
 ### Step 6 — Handle Generator result
 
-Read `tasks/build-receipts/<component>.md`:
+Read `tasks/gen-reports/<component>.md`:
 
 - **`build: PASS`** with `Sibling impact: RE_EVAL_NEEDED for: ...`:
   - For each sibling listed, edit `tasks/work-status.md` to flip that sibling's status to `RE_EVAL_NEEDED`.

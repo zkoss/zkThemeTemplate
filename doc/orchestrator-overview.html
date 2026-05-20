@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<title>Orchestrator Playbook - 流程圖與概要</title>
+<style>
+  body {
+    font-family: -apple-system, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    background: #f7f8fa;
+    color: #1f2328;
+    margin: 0;
+    padding: 32px;
+    line-height: 1.6;
+  }
+  h1 { font-size: 26px; margin: 0 0 8px; }
+  h2 { font-size: 20px; margin-top: 36px; border-bottom: 2px solid #d0d7de; padding-bottom: 6px; }
+  h3 { font-size: 16px; margin-top: 24px; }
+  .subtitle { color: #57606a; margin-bottom: 24px; }
+
+  /* Flowchart */
+  .flow {
+    display: grid;
+    gap: 14px;
+    max-width: 980px;
+  }
+  .row {
+    display: flex;
+    align-items: stretch;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .node {
+    flex: 1;
+    min-width: 200px;
+    background: #fff;
+    border: 1.5px solid #d0d7de;
+    border-radius: 10px;
+    padding: 12px 14px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+  }
+  .node .tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 999px;
+    margin-bottom: 6px;
+  }
+  .node .title { font-weight: 600; font-size: 15px; margin-bottom: 4px; }
+  .node .desc { font-size: 13px; color: #57606a; }
+
+  .tag-orch { background: #ddf4ff; color: #0969da; }
+  .tag-agent { background: #fff8c5; color: #9a6700; }
+  .tag-user { background: #ffe5e5; color: #cf222e; }
+  .tag-file { background: #dafbe1; color: #1a7f37; }
+  .tag-decision { background: #fbefff; color: #8250df; }
+
+  .arrow {
+    text-align: center;
+    color: #57606a;
+    font-size: 22px;
+    margin: -4px 0;
+  }
+  .arrow-right {
+    align-self: center;
+    color: #57606a;
+    font-size: 22px;
+    padding: 0 4px;
+  }
+
+  .branch {
+    border-left: 3px dashed #d0d7de;
+    margin-left: 12px;
+    padding-left: 16px;
+  }
+
+  /* Tables */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0;
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+  }
+  th, td {
+    padding: 10px 12px;
+    text-align: left;
+    border-bottom: 1px solid #eaeef2;
+    font-size: 13px;
+    vertical-align: top;
+  }
+  th { background: #f6f8fa; font-weight: 600; }
+  tr:last-child td { border-bottom: none; }
+  code {
+    background: #eff1f3;
+    padding: 1px 5px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  }
+
+  .legend {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin: 16px 0 24px;
+    font-size: 13px;
+  }
+  .legend span {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .swatch {
+    width: 14px;
+    height: 14px;
+    border-radius: 3px;
+    display: inline-block;
+  }
+
+  .callout {
+    background: #fff8c5;
+    border-left: 4px solid #d4a72c;
+    padding: 12px 16px;
+    border-radius: 4px;
+    margin: 16px 0;
+    font-size: 13px;
+  }
+  .callout-info {
+    background: #ddf4ff;
+    border-left-color: #0969da;
+  }
+
+  .terminal-states {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin: 8px 0;
+  }
+  .state {
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    font-family: ui-monospace, monospace;
+  }
+  .state-ok { background: #dafbe1; color: #1a7f37; }
+  .state-warn { background: #fff1cc; color: #9a6700; }
+  .state-block { background: #ffe5e5; color: #cf222e; }
+  .state-progress { background: #ddf4ff; color: #0969da; }
+</style>
+</head>
+<body>
+
+<h1>Orchestrator Playbook — 流程圖與概要</h1>
+<p class="subtitle">ZK-Material 主題驗證 Harness 的整體運作架構，由主 Claude session 作為 Orchestrator 協調 Spec-Author、Evaluator 與 Generator 三類 Agent。</p>
+
+<div class="legend">
+  <span><i class="swatch tag-orch" style="background:#ddf4ff"></i>Orchestrator 動作</span>
+  <span><i class="swatch tag-agent" style="background:#fff8c5"></i>Subagent</span>
+  <span><i class="swatch tag-user" style="background:#ffe5e5"></i>使用者介入</span>
+  <span><i class="swatch tag-file" style="background:#dafbe1"></i>檔案產出</span>
+  <span><i class="swatch tag-decision" style="background:#fbefff"></i>判斷分支</span>
+</div>
+
+<h2>一、整體流程圖</h2>
+
+<div class="flow">
+
+  <div class="row">
+    <div class="node">
+      <span class="tag tag-orch">Orchestrator</span>
+      <div class="title">Pre-flight 預檢</div>
+      <div class="desc">
+        1. 檢查 Preview App (<code>localhost:8080</code>) 是否啟動<br>
+        2. 確認 <code>zk-theme-evaluator</code> / <code>zk-theme-generator</code> 已註冊<br>
+        3. 讀取 <code>tasks/work-status.md</code>
+      </div>
+    </div>
+  </div>
+
+  <div class="arrow">↓</div>
+
+  <div class="row">
+    <div class="node">
+      <span class="tag tag-decision">Decision</span>
+      <div class="title">該元件有 Contract 嗎？</div>
+      <div class="desc">
+        檢查 <code>doc/contracts/&lt;component&gt;.md</code> 的 frontmatter：<br>
+        • 缺少 <code>rules:</code> 行，或<br>
+        • <code>contract-approved: false</code>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="node" style="background:#fcfaff">
+      <span class="tag tag-decision">否 → Spec-Author 階段</span>
+      <div class="title">→ 進入 Spec-Author Phase</div>
+    </div>
+    <div class="arrow-right">→</div>
+    <div class="node" style="background:#f0f9ff">
+      <span class="tag tag-decision">是 → 進入主迴圈</span>
+      <div class="title">→ 跳到 Main Loop</div>
+    </div>
+  </div>
+
+  <div class="branch">
+    <h3>A. Spec-Author Phase (pre-loop)</h3>
+    <div class="row">
+      <div class="node">
+        <span class="tag tag-agent">Subagent</span>
+        <div class="title">zk-spec-author &lt;component&gt;</div>
+        <div class="desc">讀 ZK JS 源碼，產出結構性事實 + 主題契約</div>
+      </div>
+    </div>
+    <div class="arrow">↓ 產出</div>
+    <div class="row">
+      <div class="node">
+        <span class="tag tag-file">檔案</span>
+        <div class="title">.claude/skills/zk-component-rules/components/&lt;comp&gt;.md</div>
+        <div class="desc">結構事實（DOM tree、state classes、composition invariants）</div>
+      </div>
+      <div class="node">
+        <span class="tag tag-file">檔案</span>
+        <div class="title">doc/contracts/&lt;comp&gt;.md</div>
+        <div class="desc">主題契約（tokens、expected values、State matrix、Preview Anchors）</div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="node">
+        <span class="tag tag-file">檔案</span>
+        <div class="title">doc/contracts/&lt;comp&gt;.html</div>
+        <div class="desc">靜態 mockup（用 <code>--zk-*</code> tokens 渲染）</div>
+      </div>
+      <div class="node">
+        <span class="tag tag-file">檔案</span>
+        <div class="title">doc/contracts/baselines/&lt;comp&gt;-iceblue.png</div>
+        <div class="desc">iceblue 參考截圖</div>
+      </div>
+    </div>
+    <div class="arrow">↓</div>
+    <div class="row">
+      <div class="node">
+        <span class="tag tag-user">使用者</span>
+        <div class="title">人工核可 (Approval Gate)</div>
+        <div class="desc">使用者比對 mockup vs. iceblue baseline，手動把 frontmatter 改為 <code>contract-approved: true</code>。Orchestrator 不會自動翻轉此 flag。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="arrow">↓</div>
+
+  <h3 style="margin-left:0">B. Main Loop（重複到所有 row 都是終態）</h3>
+
+  <div class="row">
+    <div class="node">
+      <span class="tag tag-orch">Step 1</span>
+      <div class="title">挑選 work batch</div>
+      <div class="desc">
+        <b>Evaluator batch</b>：最多 4 個並行（RE_EVAL_NEEDED 優先 → PENDING/NEEDS_FIX）<br>
+        <b>Generator batch</b>：嚴格 1 個序列（避免 <code>npm run build:css</code> race）
+      </div>
+    </div>
+  </div>
+
+  <div class="arrow">↓</div>
+
+  <div class="row">
+    <div class="node">
+      <span class="tag tag-orch">Step 2</span>
+      <div class="title">並行 Dispatch Evaluator</div>
+      <div class="desc">一個訊息內發 4 個 Task() call → 並行執行</div>
+    </div>
+    <div class="arrow-right">→</div>
+    <div class="node">
+      <span class="tag tag-agent">Subagent</span>
+      <div class="title">zk-theme-evaluator</div>
+      <div class="desc">用 Chrome 量測 computed style，比對 contract 期望值，產生 eval report</div>
+    </div>
+  </div>
+
+  <div class="arrow">↓</div>
+
+  <div class="row">
+    <div class="node">
+      <span class="tag tag-orch">Step 3-4</span>
+      <div class="title">合併結果 + Triage</div>
+      <div class="desc">re-read <code>work-status.md</code>，處理 file-write race；依 status 分流</div>
+    </div>
+  </div>
+
+  <div class="arrow">↓ 依結果分流</div>
+
+  <div class="row">
+    <div class="node" style="background:#f6fff8">
+      <span class="tag" style="background:#dafbe1;color:#1a7f37">VERIFIED</span>
+      <div class="title">標記完成</div>
+    </div>
+    <div class="node" style="background:#fffaf0">
+      <span class="tag" style="background:#fff1cc;color:#9a6700">NEEDS_FIX</span>
+      <div class="title">送 Generator (Step 5)</div>
+    </div>
+    <div class="node" style="background:#fff5f5">
+      <span class="tag" style="background:#ffe5e5;color:#cf222e">TOKEN_FIX</span>
+      <div class="title">升級到 <code>tasks/token-issues.md</code></div>
+    </div>
+    <div class="node" style="background:#fff5f5">
+      <span class="tag" style="background:#ffe5e5;color:#cf222e">STALLED / BLOCKED</span>
+      <div class="title">寫入 <code>tasks/escalation.md</code>，停止</div>
+    </div>
+  </div>
+
+  <div class="arrow">↓ (僅 NEEDS_FIX 路徑)</div>
+
+  <div class="row">
+    <div class="node">
+      <span class="tag tag-orch">Step 5</span>
+      <div class="title">序列 Dispatch Generator</div>
+      <div class="desc">一次只 1 個，避免 build race</div>
+    </div>
+    <div class="arrow-right">→</div>
+    <div class="node">
+      <span class="tag tag-agent">Subagent</span>
+      <div class="title">zk-theme-generator</div>
+      <div class="desc">讀 eval report → print contract → 編輯 CSS → <code>npm run build:css</code> → 寫 gen report</div>
+    </div>
+  </div>
+
+  <div class="arrow">↓</div>
+
+  <div class="row">
+    <div class="node">
+      <span class="tag tag-orch">Step 6-7</span>
+      <div class="title">處理 Gen Report 並回到 Step 1</div>
+      <div class="desc">
+        • <b>PASS</b> → 元件 + sibling 都翻成 <code>RE_EVAL_NEEDED</code><br>
+        • <b>FAIL</b> → 停止迴圈，回報錯誤
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<h2>二、涉及的 Agent</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th style="width:200px">Agent</th>
+      <th style="width:120px">角色</th>
+      <th style="width:120px">並行性</th>
+      <th>負責的工作</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>Orchestrator</code><br>（主 Claude session）</td>
+      <td>協調者</td>
+      <td>單一</td>
+      <td>讀 status file、決定 batch、dispatch agent、合併結果、處理 token/library 升級、決定是否停止迴圈</td>
+    </tr>
+    <tr>
+      <td><code>zk-spec-author</code></td>
+      <td>規格作者</td>
+      <td>每元件呼叫 1 次</td>
+      <td>讀 ZK JS 源碼，產出元件結構事實、主題契約、HTML mockup、iceblue baseline。在 ralph-loop 開始前執行</td>
+    </tr>
+    <tr>
+      <td><code>zk-theme-evaluator</code></td>
+      <td>檢驗者（read-only）</td>
+      <td>最多 4 並行</td>
+      <td>用 Chrome 量測 computed CSS、比對 contract 期望值、寫 eval report、更新 status row。<b>不可以編輯 CSS</b></td>
+    </tr>
+    <tr>
+      <td><code>zk-theme-generator</code></td>
+      <td>實作者（write）</td>
+      <td>嚴格序列（1 次 1 個）</td>
+      <td>依 eval report 修 CSS → 跑 <code>npm run build:css</code> → 寫 gen report。<b>不可以瀏覽或量測</b></td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>三、涉及的 Skills</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th style="width:240px">Skill</th>
+      <th>用途</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>zk-component-rules</code></td>
+      <td>ZK 元件的結構性事實（DOM、state classes、CSS 檔案 bundling、quirks）— 與主題無關。Spec-Author 與 Evaluator 都會讀取，做為驗證 ZK 行為的依據</td>
+    </tr>
+    <tr>
+      <td><code>zk-consultant</code> / <code>zk-technical-writer</code></td>
+      <td>輔助技能：ZK 框架知識諮詢與文件撰寫（不直接參與 main loop）</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>四、Plan / 文件結構</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th style="width:300px">檔案</th>
+      <th style="width:90px">寫入者</th>
+      <th>內容</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>doc/orchestrator-playbook.md</code></td>
+      <td>人</td>
+      <td>主流程指南（這份）— Orchestrator 的操作說明書</td>
+    </tr>
+    <tr>
+      <td><code>doc/harness-plan.md</code></td>
+      <td>人</td>
+      <td>Harness 整體架構說明（companion doc）</td>
+    </tr>
+    <tr>
+      <td><code>tasks/work-status.md</code></td>
+      <td>Orchestrator + Evaluator</td>
+      <td><b>狀態真實來源</b>。每元件一行，紀錄當前 status（<code>PENDING</code>、<code>NEEDS_FIX</code>、<code>FIXING</code>、<code>RE_EVAL_NEEDED</code>、<code>VERIFIED</code>、<code>ESCALATED_TOKEN_FIX</code>、<code>STALLED</code>…）</td>
+    </tr>
+    <tr>
+      <td><code>doc/contracts/&lt;comp&gt;.md</code></td>
+      <td>Spec-Author</td>
+      <td>主題契約：tokens、references、expected values、State matrix、Preview Anchors。frontmatter 含 <code>contract-approved:</code> flag</td>
+    </tr>
+    <tr>
+      <td><code>tasks/eval-reports/&lt;comp&gt;.md</code></td>
+      <td>Evaluator</td>
+      <td>單一元件量測結果（每元件單一作者，無 race）。包含 PASS/FAIL 檢查項與 Action-required section</td>
+    </tr>
+    <tr>
+      <td><code>tasks/gen-reports/&lt;comp&gt;.md</code></td>
+      <td>Generator</td>
+      <td>build 結果記錄：<code>build: PASS/FAIL</code>、sibling impact（哪些兄弟元件需要 re-eval）</td>
+    </tr>
+    <tr>
+      <td><code>tasks/token-issues.md</code></td>
+      <td>Orchestrator</td>
+      <td>Token 升級紀錄：當 Evaluator 標示 <code>TOKEN_FIX_REQUIRED</code> 時寫入，需要使用者手動修 <code>--zk-*</code> token</td>
+    </tr>
+    <tr>
+      <td><code>tasks/library-config-issues.md</code></td>
+      <td>Orchestrator</td>
+      <td>需修改 widget <code>.ts</code> / <code>.java</code>（非 CSS）的升級紀錄</td>
+    </tr>
+    <tr>
+      <td><code>tasks/escalation.md</code></td>
+      <td>Orchestrator</td>
+      <td>STALLED / OSCILLATING 元件的失敗歷史，需使用者介入</td>
+    </tr>
+    <tr>
+      <td><code>tasks/skill-gaps.md</code></td>
+      <td>Evaluator</td>
+      <td>JS source 漂移紀錄（js-drift），觸發重新呼叫 spec-author</td>
+    </tr>
+    <tr>
+      <td><code>.claude/skills/zk-component-rules/components/&lt;comp&gt;.md</code></td>
+      <td>Spec-Author</td>
+      <td>ZK-portable 結構事實（與主題無關）</td>
+    </tr>
+    <tr>
+      <td><code>doc/contracts/&lt;comp&gt;.html</code></td>
+      <td>Spec-Author</td>
+      <td>靜態 HTML mockup（用 token 渲染預期外觀）</td>
+    </tr>
+    <tr>
+      <td><code>doc/contracts/baselines/&lt;comp&gt;-iceblue.png</code></td>
+      <td>Spec-Author</td>
+      <td>iceblue 主題的參考截圖（核可比對基準）</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>五、Status 狀態機</h2>
+
+<div class="terminal-states">
+  <span class="state state-progress">PENDING</span>
+  <span class="state state-progress">FIXING</span>
+  <span class="state state-progress">RE_EVAL_NEEDED</span>
+  <span class="state state-warn">NEEDS_FIX</span>
+  <span class="state state-ok">VERIFIED ✓</span>
+  <span class="state state-warn">ESCALATED_TOKEN_FIX</span>
+  <span class="state state-warn">ESCALATED_LIBRARY_CONFIG</span>
+  <span class="state state-block">STALLED</span>
+  <span class="state state-block">OSCILLATING</span>
+  <span class="state state-block">BLOCKED</span>
+  <span class="state state-block">EVALUATING_BLOCKED</span>
+</div>
+
+<p style="font-size:13px; color:#57606a">
+<b>終態</b>（迴圈停止條件）：<code>VERIFIED</code>、<code>STALLED</code>、<code>OSCILLATING</code>、<code>CONSTRAINT</code>、<code>ESCALATED_TOKEN_FIX</code>。
+</p>
+
+<h2>六、關鍵並行/序列規則</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>階段</th>
+      <th>並行度</th>
+      <th>原因</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Evaluator</td>
+      <td>最多 4 並行</td>
+      <td>每個 Evaluator 用獨立 Chrome tab；eval report 一檔一元件無 race；status file 的小 race 可恢復</td>
+    </tr>
+    <tr>
+      <td>Generator</td>
+      <td>嚴格序列 1</td>
+      <td><code>npm run build:css</code> 寫入 <code>target/</code> 是 non-atomic；並行 build 會互相覆蓋</td>
+    </tr>
+    <tr>
+      <td>Eval + Gen 同一輪</td>
+      <td>可</td>
+      <td>Evaluator 只讀 CSS；Generator 寫 CSS。若針對不同元件則不衝突</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>七、停止條件（Orchestrator 主動停下並回報使用者）</h2>
+
+<ol style="font-size:14px">
+  <li>所有 row 都進入終態</li>
+  <li><code>tasks/escalation.md</code> 有新項目</li>
+  <li>Generator build 失敗</li>
+  <li>Preview app 死掉（任一 <code>EVALUATING_BLOCKED</code>）</li>
+  <li>使用者輸入 <code>/stop</code> 或中斷</li>
+  <li>連續 5 個以上元件 verified 完成 — 建議與使用者 checkpoint</li>
+  <li>≥ 3 個元件被同一個 token 阻擋（可能是真實規格問題）</li>
+</ol>
+
+<div class="callout callout-info">
+<b>核心設計概念：</b>把「<b>實作（Generator）</b>」和「<b>驗證（Evaluator）</b>」徹底分離，並讓「<b>規格（Spec-Author）</b>」先於兩者產出契約。使用者只需審核契約一次，後續迴圈就能自動跑到 VERIFIED 或升級到需人工介入的狀態。
+</div>
+
+<div class="callout">
+<b>使用者必須親自做的事：</b>
+<ul style="margin:6px 0">
+  <li>啟動 Preview App（<code>withjdk.sh 17 mvn test exec:java@preview-app</code>）</li>
+  <li>審核每個元件的 contract → 翻轉 <code>contract-approved: true</code></li>
+  <li>處理 <code>tasks/token-issues.md</code> 裡的 token 修正（影響整個 theme）</li>
+  <li>處理 <code>tasks/library-config-issues.md</code> 的 widget 程式碼修改</li>
+  <li>處理 <code>tasks/escalation.md</code> 的 STALLED / OSCILLATING 元件</li>
+</ul>
+</div>
+
+</body>
+</html>
