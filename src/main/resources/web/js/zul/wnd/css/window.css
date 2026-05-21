@@ -8,36 +8,39 @@
    Each control button has: z-window-icon (base) + z-window-close | z-window-maximize |
                              z-window-minimize. Maximized button also gets z-window-maximized. */
 
+/* Base chrome — frame + radius only. NO box-shadow here; mode classes own elevation.
+   See doc/window-design-rules.md: elevation is driven by `mode`, never by `border`. */
 .z-window {
     display: flex;
     flex-direction: column;
     background-color: var(--zk-color-surface);
-    border-radius: var(--zk-shape-dialog);
-    box-shadow: var(--zk-elevation-dialog);
-    border: none;
+    border-radius: var(--zk-shape-corner-extra-small);
+    border: 1px solid var(--zk-color-outline-variant);
     overflow: hidden;
     box-sizing: border-box;
     font-family: var(--zk-typescale-font-family);
     position: relative;
 }
 
-/* Embedded window has card-level chrome */
+/* ─── Mode-driven elevation ──────────────────────────────────────────────────
+   embedded   = inline (flat, no shadow)
+   overlapped = floating panel        → elevation-2
+   popup      = transient floating    → elevation-2
+   highlighted= emphasized floating   → elevation-3
+   modal      = blocking dialog       → elevation-3 (+ scrim via .z-modal-mask)
+*/
 .z-window-embedded {
-    box-shadow: var(--zk-elevation-3);
-    border: 1px solid var(--zk-color-outline-variant);
-    border-radius: var(--zk-shape-corner-extra-small);
+    box-shadow: none;
 }
 
-/* Overlapped and popup windows float — elevation 3 */
 .z-window-overlapped,
 .z-window-popup {
-    box-shadow: var(--zk-elevation-3);
-    border: 1px solid var(--zk-color-outline-variant);
+    box-shadow: var(--zk-elevation-2);
 }
 
-/* Modal dialog — top elevation */
+.z-window-highlighted,
 .z-window-modal {
-    box-shadow: var(--zk-elevation-dialog);
+    box-shadow: var(--zk-elevation-3);
 }
 
 /* ─── Header ─────────────────────────────────────────────────────────────── */
@@ -171,10 +174,11 @@
     color: var(--zk-color-on-primary-container);
 }
 
-/* ─── Border variants ────────────────────────────────────────────────────── */
+/* ─── Border variants ──────────────────────────────────────────────────────
+   `border` attribute controls outline + header separator ONLY.
+   It must NOT touch box-shadow — elevation is owned by the mode class. */
 .z-window-noborder {
     border: none;
-    box-shadow: none;
 }
 
 .z-window-noborder .z-window-header {

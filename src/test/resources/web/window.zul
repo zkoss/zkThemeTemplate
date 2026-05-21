@@ -61,16 +61,16 @@
                 <div sclass="z-fs-label-sm z-text-secondary">Normal border, mode="overlapped"</div>
                 <window title="Overlapped" border="normal" mode="overlapped"
                     closable="true" sizable="true" maximizable="true" minimizable="true"
-                    width="300px" height="180px">
-                    Window Content
+                    width="300px" height="180px" position="right, bottom">
+                    position="right, bottom"
                 </window>
             </div>
             <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
                 <div sclass="z-fs-label-sm z-text-secondary">No border, mode="overlapped"</div>
                 <window title="Overlapped" mode="overlapped"
                     closable="true" sizable="true" maximizable="true" minimizable="true"
-                    width="300px" height="180px">
-                    Window Content
+                    width="300px" height="180px" position="right, top">
+                    position="right, top"
                 </window>
             </div>
         </div>
@@ -81,45 +81,45 @@
         <div sclass="z-d-flex z-align-start z-flex-wrap z-gap-6 z-py-3">
             <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
                 <div sclass="z-fs-label-sm z-text-secondary">Normal border, mode="popup"</div>
-                <window id="popup-normal" title="Window: Popup" border="normal" mode="popup"
+                <window id="popup_normal" title="Window: Popup" border="normal" mode="popup"
                     closable="true" sizable="true" maximizable="true" minimizable="true"
                     width="300px" height="180px">
                     Window Content
                 </window>
-                <button label="Show Popup" onClick="popup-normal.doPopup();"/>
+                <button label="Show Popup" onClick="popup_normal.doPopup();"/>
             </div>
             <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
                 <div sclass="z-fs-label-sm z-text-secondary">No border, mode="popup"</div>
-                <window id="popup-nb" title="Window: Popup" mode="popup"
+                <window id="popup_nb" title="Window: Popup" mode="popup"
                     closable="true" sizable="true" maximizable="true" minimizable="true"
                     width="300px" height="180px">
-                    Window Content
+                    mode="popup" , no border
                 </window>
-                <button label="Show Popup" onClick="popup-nb.doPopup();"/>
+                <button label="Show Popup" onClick="popup_nb.doPopup();"/>
             </div>
             <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
                 <div sclass="z-fs-label-sm z-text-secondary">Normal border, mode="modal"</div>
-                <window id="modal-normal" title="Window: Modal" border="normal" visible="false"
+                <window id="modal_normal" title="Window: Modal" border="normal" visible="false"
                     closable="true" sizable="true" maximizable="true" minimizable="true"
                     width="300px" height="180px">
                     <vbox>
                         <div>Window Content</div>
-                        <div><button label="Close" onClick="modal-normal.visible = false;"/></div>
+                        <div><button label="Close" onClick="modal_normal.visible = false;"/></div>
                     </vbox>
                 </window>
-                <button label="Show Modal" onClick="modal-normal.doModal();"/>
+                <button label="Show Modal" onClick="modal_normal.doModal();"/>
             </div>
             <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
                 <div sclass="z-fs-label-sm z-text-secondary">No border, mode="modal"</div>
-                <window id="modal-nb" title="Window: Modal" visible="false"
+                <window id="modal_nb" title="Window: Modal" visible="false"
                     closable="true" sizable="true" maximizable="true" minimizable="true"
                     width="300px" height="180px">
-                    <vbox>
-                        <div>Window Content</div>
-                        <div><button label="Close" onClick="modal-nb.visible = false;"/></div>
-                    </vbox>
+                    <vlayout>
+                        <div>No border</div>
+                        <div><button label="Close" onClick="modal_nb.visible = false;"/></div>
+                    </vlayout>
                 </window>
-                <button label="Show Modal" onClick="modal-nb.doModal();"/>
+                <button label="Show Modal" onClick="modal_nb.doModal();"/>
             </div>
         </div>
     </div>
