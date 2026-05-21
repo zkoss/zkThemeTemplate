@@ -136,6 +136,15 @@
                     <navitem label="TBEditor"        onClick="@command('navigate', page='~./tbeditor.zul')"/>
                     <navitem label="Video"           onClick="@command('navigate', page='~./video.zul')"/>
                 </nav>
+                <nav label="Utility CSS" open="@load(vm.openNavLabel eq 'Utility CSS')">
+                    <navitem label="Colors"             onClick="@command('navigate', page='~./usecase/utility/colors.zul')"/>
+                    <navitem label="Typography"         onClick="@command('navigate', page='~./usecase/utility/typography.zul')"/>
+                    <navitem label="Spacing"            onClick="@command('navigate', page='~./usecase/utility/spacing.zul')"/>
+                    <navitem label="Layout"             onClick="@command('navigate', page='~./usecase/utility/layout.zul')"/>
+                    <navitem label="Border &amp; Shape" onClick="@command('navigate', page='~./usecase/utility/borders.zul')"/>
+                    <navitem label="Elevation"          onClick="@command('navigate', page='~./usecase/utility/elevation.zul')"/>
+                    <navitem label="Components"         onClick="@command('navigate', page='~./usecase/utility/components.zul')"/>
+                </nav>                
             </navbar>
         </div>
     </west>

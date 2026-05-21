@@ -1,0 +1,142 @@
+<?page title="Component Utilities"?>
+<zk>
+<style src="~./usecase/usecase.css"/>
+<vlayout hflex="1" sclass="page-content">
+
+    <toolbar>
+        <label value="Component Utilities" sclass="z-h2"/>
+    </toolbar>
+
+    <!-- z-chip -->
+    <div sclass="section-card">
+        <label value="Chip  (.z-chip)" sclass="section-title"/>
+        <label value="Status chips are small inline labels for categories, tags, and statuses. Apply on ZK &lt;label&gt; for a clean span with no extra wrapper." sclass="z-text-secondary z-fs-body-sm z-mb-3"/>
+        <div sclass="z-d-flex z-gap-3 z-flex-wrap z-align-center z-mb-3">
+            <label value="Primary"  sclass="z-chip z-chip-primary"/>
+            <label value="Success"  sclass="z-chip z-chip-success"/>
+            <label value="Warning"  sclass="z-chip z-chip-warning"/>
+            <label value="Error"    sclass="z-chip z-chip-error"/>
+            <label value="Info"     sclass="z-chip z-chip-info"/>
+            <label value="Neutral"  sclass="z-chip z-chip-neutral"/>
+        </div>
+        <div sclass="z-bg-primary z-p-3 z-rounded-md z-d-inline-flex z-gap-3 z-align-center">
+            <label value="On Primary" sclass="z-chip z-chip-on-primary"/>
+            <label value=".z-chip-on-primary — for use on primary backgrounds" sclass="z-text-on-primary z-fs-label-sm"/>
+        </div>
+        <div sclass="z-mt-3">
+            <label value="Usage: sclass=&quot;z-chip z-chip-success&quot;" sclass="z-text-muted z-fs-label-md z-bg-surface-variant z-p-2 z-rounded"/>
+        </div>
+    </div>
+
+    <!-- z-badge -->
+    <div sclass="section-card">
+        <label value="Badge  (.z-badge)" sclass="section-title"/>
+        <label value="Badges are slightly larger than chips and always carry a solid background for strong visual prominence." sclass="z-text-secondary z-fs-body-sm z-mb-3"/>
+        <div sclass="z-d-flex z-gap-3 z-flex-wrap z-align-center z-mb-3">
+            <label value="Success" sclass="z-badge z-badge-success"/>
+            <label value="Warning" sclass="z-badge z-badge-warning"/>
+            <label value="Error"   sclass="z-badge z-badge-error"/>
+            <label value="Info"    sclass="z-badge z-badge-info"/>
+            <label value="Neutral" sclass="z-badge z-badge-neutral"/>
+        </div>
+        <div sclass="z-d-flex z-gap-6 z-mt-3">
+            <div sclass="z-d-flex z-align-center z-gap-2">
+                <label value="Order #1042"/>
+                <label value="Shipped" sclass="z-badge z-badge-success"/>
+            </div>
+            <div sclass="z-d-flex z-align-center z-gap-2">
+                <label value="Order #1043"/>
+                <label value="Pending" sclass="z-badge z-badge-warning"/>
+            </div>
+            <div sclass="z-d-flex z-align-center z-gap-2">
+                <label value="Order #1044"/>
+                <label value="Cancelled" sclass="z-badge z-badge-error"/>
+            </div>
+        </div>
+        <div sclass="z-mt-3">
+            <label value="Usage: sclass=&quot;z-badge z-badge-warning&quot;" sclass="z-text-muted z-fs-label-md z-bg-surface-variant z-p-2 z-rounded"/>
+        </div>
+    </div>
+
+    <!-- z-avatar -->
+    <div sclass="section-card">
+        <label value="Avatar  (.z-avatar)" sclass="section-title"/>
+        <label value="Circular containers for user photos or initials. Apply on ZK &lt;image&gt; (photo) or &lt;div&gt; (initials). Three sizes: -sm 36px / -md 44px / -lg 56px." sclass="z-text-secondary z-fs-body-sm z-mb-3"/>
+
+        <div sclass="z-d-flex z-gap-6 z-align-end z-mb-4">
+            <div style="text-align:center">
+                <div sclass="z-avatar z-avatar-sm"><label value="AB" sclass="z-fw-medium z-fs-label-sm"/></div>
+                <div sclass="z-text-muted z-fs-label-sm z-mt-1">-sm 36px</div>
+            </div>
+            <div style="text-align:center">
+                <div sclass="z-avatar z-avatar-md"><label value="AB" sclass="z-fw-medium z-fs-body-sm"/></div>
+                <div sclass="z-text-muted z-fs-label-sm z-mt-1">-md 44px</div>
+            </div>
+            <div style="text-align:center">
+                <div sclass="z-avatar z-avatar-lg"><label value="AB" sclass="z-fw-medium z-fs-body-lg"/></div>
+                <div sclass="z-text-muted z-fs-label-sm z-mt-1">-lg 56px</div>
+            </div>
+        </div>
+
+        <!-- Colored initials avatars -->
+        <label value="Initials Avatars" sclass="z-h6 z-mb-2"/>
+        <div sclass="z-d-flex z-gap-3 z-mb-4">
+            <div sclass="z-avatar z-avatar-md" style="background:var(--zk-color-primary)"><label value="HW" sclass="z-fw-bold z-fs-label-lg z-text-on-primary"/></div>
+            <div sclass="z-avatar z-avatar-md" style="background:var(--zk-color-secondary)"><label value="JL" sclass="z-fw-bold z-fs-label-lg z-text-on-secondary"/></div>
+            <div sclass="z-avatar z-avatar-md" style="background:var(--zk-color-tertiary, #7c4dff)"><label value="MK" sclass="z-fw-bold z-fs-label-lg" style="color:#fff"/></div>
+            <div sclass="z-avatar z-avatar-md" style="background:var(--zk-color-status-success)"><label value="SA" sclass="z-fw-bold z-fs-label-lg z-text-on-status"/></div>
+        </div>
+
+        <!-- Avatar Group -->
+        <label value="Avatar Group  (.z-avatar-group)" sclass="z-h6 z-mb-2"/>
+        <div sclass="z-avatar-group" style="justify-content:flex-start;margin-top:0">
+            <div sclass="z-avatar z-avatar-md" style="background:var(--zk-color-primary)"><label value="HW" sclass="z-fw-bold z-fs-label-lg z-text-on-primary"/></div>
+            <div sclass="z-avatar z-avatar-md" style="background:var(--zk-color-secondary)"><label value="JL" sclass="z-fw-bold z-fs-label-lg z-text-on-secondary"/></div>
+            <div sclass="z-avatar z-avatar-md z-bg-primary-container"><label value="MK" sclass="z-fw-bold z-fs-label-lg"/></div>
+            <div sclass="z-avatar z-avatar-md z-bg-surface-variant"><label value="+3" sclass="z-fw-bold z-fs-label-sm z-text-secondary"/></div>
+        </div>
+        <label value=".z-avatar-group — overlapping avatars with -8px left margin" sclass="z-text-muted z-fs-label-sm z-mt-2"/>
+    </div>
+
+    <!-- z-card -->
+    <div sclass="section-card">
+        <label value="Card  (.z-card)" sclass="section-title"/>
+        <label value="A surface container with background-color, border-radius (--zk-shape-card), and elevation shadow (--zk-elevation-card) from the design token system." sclass="z-text-secondary z-fs-body-sm z-mb-3"/>
+        <div sclass="z-d-flex z-gap-4 z-flex-wrap z-align-start">
+
+            <div sclass="z-card" style="width:240px">
+                <label value="Simple Card" sclass="z-h5 z-d-block z-mb-2"/>
+                <label value="Apply .z-card to any ZK &lt;div&gt; to get a standard elevated surface." sclass="z-text-secondary z-fs-body-sm"/>
+            </div>
+
+            <div sclass="z-card" style="width:240px">
+                <div sclass="z-d-flex z-align-center z-gap-3 z-mb-3">
+                    <div sclass="z-avatar z-avatar-md z-bg-primary"><label value="HC" sclass="z-fw-bold z-fs-label-lg z-text-on-primary"/></div>
+                    <div>
+                        <label value="Hawk Chen" sclass="z-fw-semibold z-d-block"/>
+                        <label value="hawkchen@potix.com" sclass="z-text-muted z-fs-label-sm"/>
+                    </div>
+                </div>
+                <div sclass="z-d-flex z-gap-2">
+                    <label value="Admin" sclass="z-chip z-chip-primary"/>
+                    <label value="Active" sclass="z-chip z-chip-success"/>
+                </div>
+            </div>
+
+            <div sclass="z-card" style="width:240px">
+                <label value="Order #1042" sclass="z-h5 z-d-block z-mb-2"/>
+                <label value="Shipped" sclass="z-badge z-badge-success z-mb-3"/>
+                <vlayout>
+                    <label value="3 items · $124.50" sclass="z-text-secondary z-fs-body-sm"/>
+                    <label value="ETA: Jun 15, 2026" sclass="z-text-muted z-fs-label-md"/>
+                </vlayout>
+            </div>
+
+        </div>
+        <div sclass="z-mt-3">
+            <label value="Usage: sclass=&quot;z-card&quot;" sclass="z-text-muted z-fs-label-md z-bg-surface-variant z-p-2 z-rounded"/>
+        </div>
+    </div>
+
+</vlayout>
+</zk>
