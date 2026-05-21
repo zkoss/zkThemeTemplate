@@ -62,20 +62,21 @@
     pointer-events: none;
 }
 
-/* Checked (toggle) state — secondary container background */
+/* Checked (toggle) state — primary container background, aligned with other
+   selection states across the theme (listitem/treerow/menu/comboitem/paging) */
 .z-toolbarbutton-checked {
-    background-color: var(--zk-color-secondary-container);
-    color: var(--zk-color-on-secondary-container);
+    background-color: var(--zk-color-primary-container);
+    color: var(--zk-color-on-primary-container);
 }
 
-/* Checked + hover/focus still show state layer (currentColor now = on-secondary-container) */
+/* Checked + hover/focus still show state layer (currentColor now = on-primary-container) */
 .z-toolbarbutton-checked:hover::before       { opacity: var(--zk-state-hover-opacity); }
 .z-toolbarbutton-checked:focus-visible::before { opacity: var(--zk-state-focus-opacity); }
 .z-toolbarbutton-checked:active::before      { opacity: var(--zk-state-pressed-opacity); }
 
-/* Checked focus ring uses secondary */
+/* Checked focus ring uses primary */
 .z-toolbarbutton-checked:focus-visible {
-    outline-color: var(--zk-color-secondary-container);
+    outline-color: var(--zk-color-primary);
 }
 
 /* Disabled state — apply opacity to the entire element */
