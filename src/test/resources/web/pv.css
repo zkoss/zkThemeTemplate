@@ -65,6 +65,9 @@
 .pv-cols-2-wide > .pv-col-header-row,
 .pv-cols-2-wide > .pv-row { grid-template-columns: 150px repeat(2, 220px); }
 
+.pv-cols-2-xl > .pv-col-header-row,
+.pv-cols-2-xl > .pv-row { grid-template-columns: 120px repeat(2, 260px); }
+
 .pv-cols-3 > .pv-col-header-row,
 .pv-cols-3 > .pv-row { grid-template-columns: 120px repeat(3, 160px); }
 
