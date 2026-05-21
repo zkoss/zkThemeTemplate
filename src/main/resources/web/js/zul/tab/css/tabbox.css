@@ -22,12 +22,29 @@
  */
 
 /* ─── Outer container ───────────────────────────────────────────────────── */
+/* flex-column relies on toolbar AND scroll arrows being position:absolute
+ * (out of flex flow). ZK's Tabs._scrollcheck calculates .z-tabs inline
+ * width as (tabbox.contentWidth - toolbar.offsetWidth); that arithmetic
+ * is only correct when the toolbar overlays (absolute) rather than sharing
+ * the flex row. */
 .z-tabbox {
-    position: relative;  /* anchor for absolutely-positioned scroll arrows */
+    position: relative;  /* anchor for absolutely-positioned scroll arrows + toolbar */
     display: flex;
     flex-direction: column;
     background-color: var(--zk-color-surface);
     font-family: var(--zk-typescale-font-family);
+}
+
+/* overflow:hidden only on strip molds (top/bottom/left/right). Accordion
+ * mode must allow content to grow vertically — its panels lay out in
+ * normal flow and the root height should follow content (or scroll if
+ * the user constrains it via height=). */
+.z-tabbox-top,
+.z-tabbox-bottom,
+.z-tabbox-left,
+.z-tabbox-right,
+.z-tabbox-vertical {
+    overflow: hidden;
 }
 
 /* ─── Tab bar (.z-tabs) ─────────────────────────────────────────────────── */
@@ -193,6 +210,7 @@
 .z-tabbox-up-scroll,
 .z-tabbox-down-scroll {
     display: none;
+    position: absolute;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
@@ -200,7 +218,25 @@
     background: transparent;
     color: var(--zk-color-on-surface-variant);
     cursor: pointer;
+    z-index: 1;
     transition: background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+}
+
+/* Directional edge anchors — buttons overlay the strip ends (c22b).
+ * Up/down scroll buttons MUST follow the tabs' side: left for orient=left,
+ * right for orient=right. Default `left: 0` covers .z-tabbox-left and
+ * .z-tabbox-vertical (legacy alias for left); .z-tabbox-right overrides
+ * to anchor right. Regression-prone — keep .z-tabbox-right override pair
+ * in sync with .z-tabbox-left/.z-tabbox-vertical defaults. (c22j) */
+.z-tabbox-left-scroll  { left: 0;   top: 0;    }
+.z-tabbox-right-scroll { right: 0;  top: 0;    }
+.z-tabbox-up-scroll    { left: 0;   top: 0;    width: 100%; }
+.z-tabbox-down-scroll  { left: 0;   bottom: 0; width: 100%; }
+
+.z-tabbox-right > .z-tabbox-up-scroll,
+.z-tabbox-right > .z-tabbox-down-scroll {
+    left: auto;
+    right: 0;
 }
 
 /* Horizontal scroll buttons: visible when overflow detected */
@@ -211,11 +247,32 @@
     min-height: 48px;
 }
 
-/* Vertical scroll buttons: visible when overflow detected */
+/* Vertical scroll buttons: visible when overflow detected.
+ * ZK's Tabs._scrollcheck sets inline `style.width` on these to match
+ * `.z-tabs.style.width` (which may be the user-provided <tabs width="..."> value).
+ * That can render narrower than the rendered strip when our CSS applies a
+ * `min-width: 120px` to `.z-tabs`, producing a visible step. Enforce the
+ * same min-width on the buttons so they always span the rendered strip. */
 .z-tabbox-scroll > .z-tabbox-up-scroll,
 .z-tabbox-scroll > .z-tabbox-down-scroll {
     display: flex;
     height: 40px;
+    min-width: 120px;
+}
+
+/* Strip margin: reserve 40px at each end so the absolute-positioned scroll
+ * arrows overlay the strip's leading/trailing edge without disturbing ZK's
+ * inline width calc (tabs.style.width = tbx.offsetWidth - toolbarWidth).
+ * Margin (not padding) is required because ZK's width is set on the .z-tabs
+ * content box; padding would compound and shrink the usable area. (c22c/c22d) */
+.z-tabbox-scroll.z-tabbox-top > .z-tabs,
+.z-tabbox-scroll.z-tabbox-bottom > .z-tabs {
+    margin: 0 40px;
+}
+
+.z-tabbox-scroll.z-tabbox-left > .z-tabs,
+.z-tabbox-scroll.z-tabbox-right > .z-tabs {
+    margin: 40px 0;
 }
 
 /* Chevron glyph inside scroll buttons */
@@ -232,6 +289,25 @@
 .z-tabbox-up-scroll:hover,
 .z-tabbox-down-scroll:hover {
     background-color: color-mix(in srgb, var(--zk-color-primary) var(--zk-state-hover-opacity-pct, 8%), transparent);
+}
+
+/* ─── Toolbar nested in tabbox ─────────────────────────────────────────────
+ * ZK's Toolbar.domClass_ appends `.z-toolbar-tabs` when the toolbar's
+ * parent is a Tabbox. The toolbar must be absolutely positioned so ZK's
+ * inline width calc (tabs.style.width = tabbox.offsetWidth - toolbar.offsetWidth)
+ * works — the toolbar OVERLAYS the right portion of the tab strip's row
+ * rather than consuming a flex row of its own. */
+.z-tabbox > .z-toolbar.z-toolbar-tabs {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 1;
+    background-color: var(--zk-color-surface);
+}
+
+.z-tabbox-bottom > .z-toolbar.z-toolbar-tabs {
+    top: auto;
+    bottom: 0;
 }
 
 /* ─── Tab panels container ───────────────────────────────────────────────── */
@@ -360,9 +436,18 @@
 
 .z-tabbox-accordion {
     display: block;
-    overflow: hidden;
+    /* No `overflow: hidden` here — it interferes with `jq.slideDown` height
+     * measurement on the inner `.z-tabpanel-content` when the tabbox carries an
+     * explicit height (e.g. height="300px"). The animation gets stuck at
+     * height:0 and never restores natural height. See doc/skill-gaps.md
+     * 2026-05-21 entry. */
     border: 1px solid var(--zk-color-outline-variant);
-    border-radius: var(--zk-shape-corner-medium);
+    /* No border-radius — MD3 expansion-panel groups render flat at the edges.
+     * Adding radius to the parent while children (.z-tab headers, panel-content)
+     * remain square produces sharp corners peeking out from under the rounded
+     * container. We can't `overflow: hidden` to clip (slideDown breaks), and
+     * rounding the first/last children adds fragile sibling-position math.
+     * Flat container per MD style is the simpler, correct choice. (c22k) */
 }
 
 .z-tabbox-accordion .z-tabpanels {
@@ -372,23 +457,32 @@
     padding: 0;
 }
 
-/* Each accordion section wrapper */
+/* Each accordion section wrapper.
+ * Override the base `.z-tabpanel { min-height: 80px }` — in accordion mode
+ * the section's intrinsic height should be just its header (~52px) when the
+ * cave is collapsed. Without this reset, ZK's `Tabpanel._fixPanelHgh`
+ * subtracts inflated sibling offsetHeights from the tabbox height and
+ * clamps the selected cave's height to 0 (B50-ZK-298 path). */
 .z-tabbox-accordion .z-tabpanel {
     border-bottom: 1px solid var(--zk-color-outline-variant);
     padding: 0;
+    min-height: 0;
 }
 
 .z-tabbox-accordion .z-tabpanel:last-child {
     border-bottom: none;
 }
 
-/* Accordion header (the .z-tab that acts as expand trigger) */
+/* Accordion header (the .z-tab that acts as expand trigger).
+ * MD3 expansion panel header: 48px minimum. Kept tight so that several
+ * collapsed sections fit inside a height-constrained tabbox — otherwise
+ * ZK's `Tabpanel._fixPanelHgh` clamps the selected cave height to 0. */
 .z-tabbox-accordion .z-tab {
     position: relative;
     display: flex;
     align-items: center;
-    padding: var(--zk-spacing-3) var(--zk-spacing-4);
-    min-height: 52px;
+    padding: var(--zk-spacing-2) var(--zk-spacing-4);
+    min-height: 48px;
     cursor: pointer;
     color: var(--zk-color-on-surface);
     background: var(--zk-color-surface);
@@ -439,12 +533,17 @@
     background: var(--zk-color-surface);
 }
 
-/* Inner content row (text + chevron) */
+/* Inner content row (text + chevron).
+ * Override the base `.z-tab-content { padding: 12px 16px }` — in accordion
+ * mode the outer `.z-tab` already supplies vertical padding, so double-
+ * padding bloats the header to ~60px and starves the cave of vertical
+ * space inside a height-constrained tabbox. */
 .z-tabbox-accordion .z-tab-content {
     display: flex;
     align-items: center;
     width: 100%;
     gap: var(--zk-spacing-2);
+    padding: 0;
     position: relative;
     z-index: 1;
     pointer-events: none;
