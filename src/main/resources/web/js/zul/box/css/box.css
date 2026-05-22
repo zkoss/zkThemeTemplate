@@ -78,7 +78,7 @@ td.z-splitter-outer {
 /* z-splitter-horizontal means it divides horizontally (left | right) */
 .z-splitter-horizontal {
     width: 8px;
-    border-width: 0 1px;
+    border-width: 0 1px 1px;
     overflow: hidden;
     cursor: col-resize;
 }

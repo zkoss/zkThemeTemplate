@@ -46,10 +46,8 @@ const footerFiles = [
 ];
 
 // Files merged into another CSS file (excluded from 1:1 auto-scan).
-// splitter.css is merged into box.css because lang.xml registers no css-uri for splitter.
 // errorbox.css is merged into input.css because lang.xml registers no css-uri for errorbox.
 const extraMergedFiles = [
-    'js/zul/box/css/splitter.css',
     'js/zul/wgt/css/errorbox.css',
 ];
 
