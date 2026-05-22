@@ -106,7 +106,12 @@
 
 /* ─── Collapsed state ────────────────────────────────────────────────────── */
 /* z-groupbox-collapsed is added to root by ZK JS ($s('collapsed')) when default mold is closed.
-   ZK also sets display:none inline on .z-groupbox-content at initial render when _open=false. */
+   ZK also sets display:none inline on .z-groupbox-content at initial render when _open=false.
+   !important overrides any inline height="Xpx" set via ZUL attribute. */
+.z-groupbox-collapsed {
+    height: auto !important;
+}
+
 .z-groupbox-collapsed .z-groupbox-content {
     display: none;
 }

@@ -136,6 +136,7 @@ Located in `doc/` directory:
 | [usecase-driven-iteration.md](doc/usecase-driven-iteration.md) | Use-case driven iteration workflow (OBSERVE→AUDIT→FIX→VERIFY) |
 | [preview-page-descriptions.md](doc/preview-page-descriptions.md) | ZUL page descriptions for 8 use-case enterprise scenarios |
 | [zk-edition-components.md](doc/zk-edition-components.md) | Components by ZK edition (CE/PE/EE) |
+| [window-design-rules.md](doc/window-design-rules.md) | Window mode↔elevation mapping; `border` must not drive shadow |
 | [mira/](doc/mira/) | 49 Mira HTML reference pages + MUI stylesheet (index-BnB_Ifri.css) |
 
 ### External CSS Reference
