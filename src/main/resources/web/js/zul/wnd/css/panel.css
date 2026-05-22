@@ -103,15 +103,23 @@
 .z-panel-bottom,
 .z-panel-footer {
     background-color: var(--zk-color-surface-container-low);
+}
+
+/* Top toolbar separates from content below */
+.z-panel-top {
     border-bottom: 1px solid var(--zk-color-outline-variant);
 }
 
-/* Drag handle shown when panel has no title */
+/* Bottom toolbar and footer separate from content above */
+.z-panel-bottom,
+.z-panel-footer {
+    border-top: 1px solid var(--zk-color-outline-variant);
+}
+
+/* Drag handle shown when panel has no title — hidden visually (DK parity),
+   kept in DOM for JS drag wiring. Sibling body fills remaining flex space via flex:1. */
 .z-panel-drag-button {
-    cursor: move;
-    padding: 0 var(--zk-spacing-1);
-    color: var(--zk-color-on-surface-variant);
-    opacity: 0.6;
+    display: none;
 }
 
 /* ─── Panel body ─────────────────────────────────────────────────────────── */
@@ -130,7 +138,12 @@
 }
 
 /* ─── State classes ──────────────────────────────────────────────────────── */
-/* Collapsed: z-panel-collapsed added to root; body hidden (also via inline display:none at initial render) */
+/* Collapsed: z-panel-collapsed added to root; body hidden (also via inline display:none at initial render).
+   height: auto !important overrides any inline height="Xpx" set via ZUL attribute. */
+.z-panel-collapsed {
+    height: auto !important;
+}
+
 .z-panel-collapsed .z-panel-body {
     display: none;
 }

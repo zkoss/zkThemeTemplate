@@ -112,7 +112,7 @@
         <div sclass="z-py-3">
             <panel title="Panel with Overflow Content" border="normal" width="300px" height="200px">
                 <panelchildren style="overflow:auto;">
-                    <label style="white-space:nowrap" value="-------------------------------------------------------------------------------------------"/>
+                    <label style="white-space:nowrap" value="The Panel component in ZK is a versatile container that serves as a foundational building block for application-oriented user interfaces. It offers a variety of structural components such as top, bottom, and foot toolbars, along with distinct header, footer, and body sections."/>
                 </panelchildren>
             </panel>
         </div>
