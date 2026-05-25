@@ -85,6 +85,73 @@
     background-color: var(--zk-color-on-surface-variant);
 }
 
+/* ── Frozen column cell backgrounds ─────────────────────────────────────────
+   ZK applies `transform:translate3d(scrollLeft,0,0); z-index:1` inline on
+   the first N cells of each row, keeping them in place while the table scrolls.
+   Those cells paint ABOVE non-frozen cells (z-index:1 > z-index:auto), but
+   their default transparent background still reveals non-frozen content behind.
+
+   Header cells: targeted by .z-frozen-col (set by ZK on TH elements only).
+   Body cells: ZK sets inline z-index/transform but does NOT add .z-frozen-col,
+   so target them via the frozen container class + background-color:inherit so
+   each cell copies its row's computed background color. */
+
+/* Header — explicit surface fill */
+.z-column.z-frozen-col,
+.z-listheader.z-frozen-col,
+.z-treecol.z-frozen-col {
+    background-color: var(--zk-color-surface);
+}
+
+/* Body cells in a frozen grid — inherit the row background so every state
+   (normal, odd-stripe) is covered automatically.
+   NOTE: .z-grid-frozen is the scroll-tray widget (child of .z-grid), NOT
+   an ancestor of the row cells. Use :has() to reach the grid root. */
+.z-grid:has(.z-grid-frozen) .z-row .z-cell,
+.z-grid:has(.z-grid-frozen) .z-row .z-row-inner {
+    background-color: inherit;
+}
+
+/* The grid hover uses a semi-transparent rgba that would break inheritance;
+   replace with an opaque color-mix equivalent inside frozen grids only. */
+.z-grid:has(.z-grid-frozen) .z-row:hover {
+    background-color: color-mix(in srgb, var(--zk-color-on-surface) 4%, var(--zk-color-surface));
+}
+
+.z-grid:has(.z-grid-frozen) .z-row-odd:hover {
+    background-color: color-mix(in srgb, var(--zk-color-on-surface) 8%, var(--zk-color-surface-container-lowest));
+}
+
+/* Body cells in a frozen listbox */
+.z-listbox:has(.z-listbox-frozen) .z-listitem .z-listcell {
+    background-color: inherit;
+}
+
+/* Body cells in a frozen tree */
+.z-tree:has(.z-tree-frozen) .z-treerow .z-treecell {
+    background-color: inherit;
+}
+
+/* Footer cells in a frozen tree — must be opaque so frozen footer cells
+   properly cover non-frozen cells scrolled behind them. */
+.z-tree:has(.z-tree-frozen) .z-treefoot .z-treefooter {
+    background-color: var(--zk-color-surface-container-low);
+}
+
+/* ZK applies .z-grid-odd to even TR elements. The general .z-row:hover rule
+   in frozen.css uses surface as the base, but even rows need surface-container-lowest.
+   Override here so even-row frozen cells inherit the correct opaque hover color. */
+.z-grid:has(.z-grid-frozen) .z-row.z-grid-odd:hover {
+    background-color: color-mix(in srgb, var(--zk-color-on-surface) 8%, var(--zk-color-surface-container-lowest));
+}
+
+/* Listbox selected state uses a semi-transparent rgba; replace with opaque
+   color-mix inside frozen listboxes so inherited cell backgrounds are solid. */
+.z-listbox:has(.z-listbox-frozen) .z-listitem.z-listitem-selected,
+.z-listbox:has(.z-listbox-frozen) .z-listitem.z-selected {
+    background-color: color-mix(in srgb, var(--zk-color-primary) 12%, var(--zk-color-surface));
+}
+
 /* Frozen pane boundary — last .z-frozen-col cell in each row.
    `:not(:has(+ .z-frozen-col))` selects the rightmost frozen cell. */
 .z-column.z-frozen-col:not(:has(+ .z-frozen-col)),

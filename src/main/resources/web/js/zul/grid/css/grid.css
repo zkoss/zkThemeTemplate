@@ -340,9 +340,21 @@
     font-size: var(--zk-typescale-body-medium-size);
 }
 
-/* ─── Legacy odd row stripe via parent sclass (z-grid-odd) ──────────────── */
-/* Kept for backward compat; ZK normally applies z-row-odd directly on TR */
-/* Container itself must be transparent — striping applies only to child rows */
+/* ─── Row striping: ZK applies .z-grid-odd directly on even TR elements ──── */
+/* ZK's Row widget adds .z-grid-odd to every other <row> in the body.
+   Specificity 0,2,0 overrides the bare .z-grid-odd rule (0,1,0) below,
+   giving even TRs an explicit OPAQUE background so frozen-cell inherit works. */
+.z-row.z-grid-odd {
+    background-color: var(--zk-color-surface-container-lowest);
+}
+
+.z-row.z-grid-odd:hover {
+    background-color: color-mix(in srgb, var(--zk-color-on-surface) 8%, var(--zk-color-surface-container-lowest));
+}
+
+/* ─── Legacy: sclass="z-grid-odd" on the <grid> container ───────────────── */
+/* When the grid DIV itself carries .z-grid-odd the container is transparent;
+   child rows get the stripe via nth-child. */
 .z-grid-odd {
     background-color: transparent;
 }

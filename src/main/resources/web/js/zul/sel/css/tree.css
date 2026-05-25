@@ -22,9 +22,12 @@
     background-color: transparent;
 }
 
+/* Header table uses separate borders so box-shadow and border-inline-end
+   on frozen-col TH cells are visible (border-collapse:collapse clips them). */
 .z-tree-header table {
     width: 100%;
-    border-collapse: collapse;
+    border-collapse: separate;
+    border-spacing: 0;
     table-layout: fixed;
 }
 
@@ -237,6 +240,9 @@
 .z-tree-footer {
     background-color: var(--zk-color-surface-container-low);
     border-top: 2px solid var(--zk-color-outline-variant);
+    /* overflow-x:hidden lets ZK's efoot.scrollLeft sync work so frozen footer
+       cells stay in place when the body scrolls horizontally. */
+    overflow-x: hidden;
 }
 
 .z-tree-footer table {

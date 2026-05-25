@@ -168,7 +168,15 @@
     pointer-events: none;
 }
 
-.z-listbox-header table,
+/* Header table uses separate borders so box-shadow and border-inline-end
+   on frozen-col TH cells are visible (border-collapse:collapse clips them). */
+.z-listbox-header table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    table-layout: fixed;
+}
+
 .z-listbox-body table {
     width: 100%;
     border-collapse: collapse;
