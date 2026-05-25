@@ -126,9 +126,9 @@
                 <listhead>
                     <listheader label="Col A" width="200px"/>
                     <listheader label="Col B" width="200px"/>
-                    <listheader label="Col C" width="200px"/>
-                    <listheader label="Col D" width="200px"/>
-                    <listheader label="Col E" width="200px"/>
+                    <listheader label="Col C" width="500px"/>
+                    <listheader label="Col D" width="500px"/>
+                    <listheader label="Col E" width="500px"/>
                 </listhead>
                 <listitem><listcell>A1</listcell><listcell>B1</listcell><listcell>C1</listcell><listcell>D1</listcell><listcell>E1</listcell></listitem>
                 <listitem><listcell>A2</listcell><listcell>B2</listcell><listcell>C2</listcell><listcell>D2</listcell><listcell>E2</listcell></listitem>

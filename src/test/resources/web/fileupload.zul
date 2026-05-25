@@ -23,19 +23,6 @@
                 <fileupload label="Upload" disabled="true"/>
             </div>
         </div>
-        <div sclass="pv-row z-py-2 z-border-bottom">
-            <div sclass="z-fs-label-md z-text-secondary">Multiple</div>
-            <div>
-                <fileupload label="Upload Multiple" multiple="true">
-                    <attribute name="onUpload">
-                        org.zkoss.util.media.Media media = event.getMedia();
-                    </attribute>
-                </fileupload>
-            </div>
-            <div>
-                <fileupload label="Upload Multiple" multiple="true" disabled="true"/>
-            </div>
-        </div>
     </div>
 </div>
 </zk>
