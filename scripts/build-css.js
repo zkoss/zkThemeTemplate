@@ -8,6 +8,7 @@ const themeDir = path.join(__dirname, '..', 'target/classes/web/marble');
 
 // norm.css.dsp = tokens + base + global styles (loaded first by WCS)
 const normFiles = [
+    'zul/css/tokens/_fonts.css',
     'zul/css/tokens/_colors.css',
     'zul/css/tokens/_typography.css',
     'zul/css/tokens/_spacing.css',
