@@ -215,7 +215,12 @@
     justify-content: center;
     flex-shrink: 0;
     border: none;
-    background: transparent;
+    /* Opaque strip-coloured background so a partially-scrolled tab slides
+     * cleanly *under* the arrow instead of bleeding through it. ZK reserves
+     * arrow space via _getArrowSize() but its measurement can lag our rendered
+     * arrow width, leaving the last tab a few px under the arrow — the opaque
+     * fill makes that the intended MUI "tab scrolls under the button" look. */
+    background-color: var(--zk-color-surface);
     color: var(--zk-color-on-surface-variant);
     cursor: pointer;
     z-index: 1;
@@ -288,7 +293,7 @@
 .z-tabbox-right-scroll:hover,
 .z-tabbox-up-scroll:hover,
 .z-tabbox-down-scroll:hover {
-    background-color: color-mix(in srgb, var(--zk-color-primary) var(--zk-state-hover-opacity-pct, 8%), transparent);
+    background-color: color-mix(in srgb, var(--zk-color-primary) var(--zk-state-hover-opacity-pct, 8%), var(--zk-color-surface));
 }
 
 /* ─── Toolbar nested in tabbox ─────────────────────────────────────────────
