@@ -1,13 +1,180 @@
 /* tbeditor — MD3 outlined editor wrapper */
 
-.z-tbeditor {
+/* ── Box (Trumbowyg-injected outer wrapper) ─────────────────────────────── */
+.z-tbeditor-box {
+    display: flex;
+    flex-direction: column;
     border: 1px solid var(--zk-color-outline);
-    border-radius: var(--zk-shape-corner-extra-small);
+    border-radius: var(--zk-shape-corner-small);
+    overflow: hidden;
+    box-shadow: var(--zk-elevation-1);
+    background-color: var(--zk-color-surface);
+    min-height: 300px;
+}
+
+/* Focus state — highlight the wrapper, not the contenteditable (avoids the
+ * browser's default focus ring spanning the whole editor canvas). */
+.z-tbeditor-box:focus-within {
+    border-color: var(--zk-color-primary);
+}
+
+/* ── Toolbar / Button Pane ───────────────────────────────────────────────── */
+.z-tbeditor-button-pane {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    background-color: var(--zk-color-surface-container);
+    border-bottom: 1px solid var(--zk-color-outline-variant);
+    padding: 0 var(--zk-spacing-1);
+    min-height: 36px;
+    list-style: none;
+    margin: 0;
+    position: relative;
+}
+
+/* Toolbar buttons — reset and sizing */
+.z-tbeditor-button-pane button {
+    width: 35px;
+    height: 35px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    border-radius: var(--zk-shape-corner-small);
+    transition: background-color var(--zk-motion-duration-short2) var(--zk-motion-easing-standard);
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* SVG icon default fill */
+.z-tbeditor-button-pane svg {
+    fill: var(--zk-color-on-surface-variant);
+}
+
+/* Button hover / focus */
+.z-tbeditor-button-pane button:hover,
+.z-tbeditor-button-pane button:focus {
+    background-color: color-mix(in srgb, var(--zk-color-primary) calc(var(--zk-state-hover-opacity) * 100%), transparent);
+}
+
+/* SVG on hover and active */
+.z-tbeditor-button-pane button:hover svg,
+.z-tbeditor-button-pane button.z-tbeditor-active svg {
+    fill: var(--zk-color-primary);
+}
+
+/* Active (toggled formatting command) */
+.z-tbeditor-button-pane button.z-tbeditor-active {
+    background-color: var(--zk-color-primary-container);
+}
+
+/* ── Button groups — must flow horizontally in the toolbar row ───────────── */
+.z-tbeditor-button-group {
+    display: inline-flex;
+    align-items: center;
+}
+
+/* ── Button group separator ──────────────────────────────────────────────── */
+.z-tbeditor-button-group:not(:empty) + .z-tbeditor-button-group::before {
+    content: '';
+    display: inline-block;
+    width: 1px;
+    height: 35px;
+    background-color: var(--zk-color-outline-variant);
+    margin: 0 var(--zk-spacing-1);
+    vertical-align: middle;
+}
+
+/* ── Editor canvas ───────────────────────────────────────────────────────── */
+.z-tbeditor-editor {
+    background-color: var(--zk-color-surface);
+    color: var(--zk-color-on-surface);
+    font-size: var(--zk-typescale-body-medium-size);
+    padding: var(--zk-spacing-4);
+    outline: none;
+}
+
+/* Placeholder text (contenteditable empty state) */
+.z-tbeditor-editor[contenteditable=true]:empty:not(:focus)::before {
+    content: attr(placeholder);
+    color: var(--zk-color-disabled);
+}
+
+/* ── Disabled state ──────────────────────────────────────────────────────── */
+.z-tbeditor-disabled .z-tbeditor-button-pane button:not(.z-tbeditor-not-disable) {
+    opacity: 0.38;
+    cursor: default;
+    pointer-events: none;
+}
+
+.z-tbeditor-disabled .z-tbeditor-box {
+    border-color: var(--zk-color-outline-variant);
+}
+
+/* ── Fullscreen mode ─────────────────────────────────────────────────────── */
+/* The widget JS toggles .z-tbeditor-fullscreen on the box and
+ * .z-tbeditor-body-fullscreen on <body>; the theme must supply the actual
+ * fixed-position layout (the class alone does nothing without it). */
+body.z-tbeditor-body-fullscreen {
     overflow: hidden;
 }
 
-/* Toolbar (actual DOM element: .z-tbeditor-button-pane) */
-.z-tbeditor-button-pane {
-    background-color: var(--zk-color-surface-variant);
-    border-bottom: 1px solid var(--zk-color-outline-variant);
+.z-tbeditor-box.z-tbeditor-fullscreen {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    z-index: 99999;
+}
+
+.z-tbeditor-fullscreen .z-tbeditor-editor {
+    flex: 1 1 auto;
+    overflow: auto;
+}
+
+/* ── Dropdown ────────────────────────────────────────────────────────────── */
+/* Compact vertical menu — must constrain width and each row's height, else the
+ * formatting buttons inherit the editor's block sizing and render oversized. */
+.z-tbeditor-dropdown {
+    width: 200px;
+    padding: var(--zk-spacing-1) 0;
+    background-color: var(--zk-color-surface);
+    border: 1px solid var(--zk-color-outline-variant);
+    border-radius: var(--zk-shape-corner-small);
+    box-shadow: var(--zk-elevation-2);
+}
+
+.z-tbeditor-dropdown button {
+    display: block;
+    width: 100%;
+    height: 36px;
+    line-height: 36px;
+    padding: 0 var(--zk-spacing-3);
+    text-align: left;
+    font-size: var(--zk-typescale-body-medium-size);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: var(--zk-color-on-surface);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.z-tbeditor-dropdown button svg {
+    float: left;
+    width: 18px;
+    height: 18px;
+    margin-right: var(--zk-spacing-3);
+    fill: var(--zk-color-on-surface-variant);
+}
+
+.z-tbeditor-dropdown button:hover,
+.z-tbeditor-dropdown button:focus {
+    background-color: var(--zk-color-surface-container);
 }
