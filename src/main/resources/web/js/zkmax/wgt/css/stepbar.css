@@ -1,62 +1,176 @@
 /* Stepbar — MD3 stepper indicator */
 
+/* ── Stepbar root ── */
 .z-stepbar {
     display: flex;
-    align-items: flex-start;
-    gap: var(--zk-spacing-4);
+    align-items: center;
+    gap: 0;
+    padding: var(--zk-spacing-2) 0;
+    background: transparent;
+    font-family: var(--zk-typescale-font-family);
 }
 
+/* ── Step item ── */
+/*
+ * .z-step is a flex row: [::before connector] [.z-step-content]
+ * The ::before pseudo-element occupies flex:1 between the previous step's
+ * .z-step-content and this step's .z-step-content, acting as the connector line.
+ * The first step has no leading connector (display:none on ::before).
+ */
 .z-step {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
-    flex: 1;
+    flex: 1 1 auto;
+    isolation: isolate;
 }
 
+.z-step:first-child {
+    flex: 0 1 auto;
+}
+
+/* ── Step connector (pseudo-element on each step except first) ── */
+.z-step::before {
+    content: '';
+    flex: 1;
+    height: 2px;
+    margin: 0 var(--zk-spacing-3);
+    background-color: var(--zk-color-outline-variant);
+    transition: background-color var(--zk-motion-duration-short2) var(--zk-motion-easing-standard);
+    box-sizing: border-box;
+}
+
+.z-step:first-child::before {
+    display: none;
+}
+
+/* Lit connector — active step (the segment leading into the active step) */
+.z-stepbar-linear .z-step-active::before {
+    background-color: var(--zk-color-primary);
+}
+
+/* Lit connector — complete step */
+.z-stepbar-linear .z-step-complete::before {
+    background-color: var(--zk-color-primary);
+}
+
+/* ── Step content wrapper (always present) ── */
 .z-step-content {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
     gap: var(--zk-spacing-2);
 }
 
-/* Step indicator circle */
-.z-step-icon {
-    width: 28px;
-    height: 28px;
+/* ── Step indicator circle ── */
+.z-step-content > .z-step-icon {
+    width: 24px;
+    height: 24px;
     border-radius: 50%;
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    font-size: var(--zk-typescale-label-medium-size, 12px);
-    font-weight: 500;
+    font-size: 16px;
     color: var(--zk-color-on-primary);
     flex-shrink: 0;
+    box-sizing: border-box;
+    transition:
+        background-color var(--zk-motion-duration-short2) var(--zk-motion-easing-standard),
+        border-color var(--zk-motion-duration-short2) var(--zk-motion-easing-standard),
+        color var(--zk-motion-duration-short2) var(--zk-motion-easing-standard);
 }
 
-/* Inactive step circle */
-.z-step-icon-empty {
-    background-color: var(--zk-color-disabled);
+/* ── Upcoming step circle (default — no state class) ── */
+.z-step-content > .z-step-icon-empty {
+    background-color: transparent;
+    border: 2px solid var(--zk-color-primary);
+    color: transparent;
 }
 
-/* Active step circle */
-.z-step-active .z-step-icon {
+/* ── Active step circle ── */
+.z-step-active .z-step-content > .z-step-icon {
     background-color: var(--zk-color-primary);
+    border: 2px solid var(--zk-color-primary);
+    color: var(--zk-color-on-primary);
 }
 
-/* Completed step circle */
-.z-step-complete .z-step-icon {
+/* ── Complete step circle ── */
+.z-step-complete .z-step-content > .z-step-icon {
     background-color: var(--zk-color-primary);
+    border: 2px solid var(--zk-color-primary);
+    color: var(--zk-color-on-primary);
 }
 
-/* Step label */
-.z-step-title {
-    font-size: var(--zk-typescale-label-medium-size, 12px);
+/* ── Error step circle ── */
+.z-step-error .z-step-content > .z-step-icon {
+    background-color: var(--zk-color-error);
+    border: 2px solid var(--zk-color-error);
+    color: var(--zk-color-on-error);
+}
+
+/* ── Step title ── */
+.z-step-content > .z-step-title {
+    font-size: var(--zk-typescale-body-medium-size);
+    font-weight: var(--zk-typescale-body-medium-weight);
+    line-height: var(--zk-typescale-body-medium-line-height);
     color: var(--zk-color-on-surface-variant);
-    text-align: center;
+    white-space: nowrap;
 }
 
-.z-step-active .z-step-title {
-    color: var(--zk-color-primary);
-    font-weight: 500;
+/* Active title */
+.z-step-active .z-step-content > .z-step-title {
+    color: var(--zk-color-on-surface);
+    font-weight: var(--zk-typescale-label-large-weight);
+}
+
+/* Complete title */
+.z-step-complete .z-step-content > .z-step-title {
+    color: var(--zk-color-on-surface-variant);
+}
+
+/* Error title */
+.z-step-error .z-step-content > .z-step-title {
+    color: var(--zk-color-error);
+}
+
+/* ── Non-linear mode: steps are clickable ── */
+.z-stepbar:not(.z-stepbar-linear) .z-step {
+    cursor: pointer;
+}
+
+/* ── Vertical orientation ── */
+.z-stepbar-vertical {
+    flex-direction: column;
+}
+
+.z-stepbar-vertical .z-step {
+    flex-direction: row;
+    flex: 0 1 auto;
+}
+
+/*
+ * In vertical mode the connector pseudo-element becomes a vertical stripe.
+ * Width ↔ height roles swap: width=2px (stroke), height=auto/flex:1 (fills gap).
+ * The flex:1 is on the step itself (column flex context), so the ::before
+ * needs to fill the column. We use a dedicated min-height and align-self:stretch.
+ */
+.z-stepbar-vertical .z-step::before {
+    width: 2px;
+    height: auto;
+    min-height: var(--zk-spacing-4);
+    flex: 1;
+    margin: calc(-1 * var(--zk-spacing-3)) var(--zk-spacing-3) 0 var(--zk-spacing-3);
+    align-self: stretch;
+}
+
+.z-stepbar-vertical .z-step:first-child::before {
+    display: none;
+}
+
+.z-stepbar-vertical.z-stepbar-linear .z-step-active::before {
+    background-color: var(--zk-color-primary);
+}
+
+.z-stepbar-vertical.z-stepbar-linear .z-step-complete::before {
+    background-color: var(--zk-color-primary);
 }
