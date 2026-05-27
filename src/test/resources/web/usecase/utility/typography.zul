@@ -1,7 +1,7 @@
 <?page title="Typography Utilities"?>
 <zk>
 <style src="~./usecase/usecase.css"/>
-<vlayout hflex="1" sclass="page-content">
+<vlayout hflex="1" sclass="z-d-flex z-flex-col z-gap-4 z-p-4 z-bg-surface-low">
 
     <toolbar>
         <label value="Typography Utilities" sclass="z-h2"/>
@@ -9,7 +9,7 @@
 
     <!-- Heading Utilities -->
     <div sclass="section-card">
-        <label value="Heading Utilities  (.z-h1 — .z-h7)" sclass="section-title"/>
+        <label value="Heading Utilities  (.z-h1 — .z-h7)" sclass="z-d-block z-fs-title-sm z-fw-medium z-text-on-surface z-mb-3"/>
         <vlayout>
             <div sclass="z-d-flex z-align-baseline z-gap-3">
                 <label value="Heading 1 — Display Large" sclass="z-h1"/>
@@ -44,7 +44,7 @@
 
     <!-- MD3 Type Scale -->
     <div sclass="section-card">
-        <label value="MD3 Font Size Scale  (.z-fs-*)" sclass="section-title"/>
+        <label value="MD3 Font Size Scale  (.z-fs-*)" sclass="z-d-block z-fs-title-sm z-fw-medium z-text-on-surface z-mb-3"/>
         <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px 24px">
             <div sclass="z-d-flex z-align-baseline z-gap-2"><label value="Aa" sclass="z-fs-display-lg"/><label value=".z-fs-display-lg" sclass="z-text-muted z-fs-label-sm"/></div>
             <div sclass="z-d-flex z-align-baseline z-gap-2"><label value="Aa" sclass="z-fs-display-md"/><label value=".z-fs-display-md" sclass="z-text-muted z-fs-label-sm"/></div>
@@ -66,7 +66,7 @@
 
     <!-- Font Weight -->
     <div sclass="section-card">
-        <label value="Font Weight  (.z-fw-*)" sclass="section-title"/>
+        <label value="Font Weight  (.z-fw-*)" sclass="z-d-block z-fs-title-sm z-fw-medium z-text-on-surface z-mb-3"/>
         <div sclass="z-d-flex z-gap-6 z-flex-wrap">
             <div>
                 <label value="Light 300" sclass="z-fw-light z-fs-title-lg z-text-on-surface z-d-block"/>
@@ -93,7 +93,7 @@
 
     <!-- Text Alignment -->
     <div sclass="section-card">
-        <label value="Text Alignment  (.z-text-start / center / end)" sclass="section-title"/>
+        <label value="Text Alignment  (.z-text-start / center / end)" sclass="z-d-block z-fs-title-sm z-fw-medium z-text-on-surface z-mb-3"/>
         <vlayout>
             <div sclass="z-border z-rounded-md z-p-3 z-text-start"><label value="Start aligned — .z-text-start"/></div>
             <div sclass="z-border z-rounded-md z-p-3 z-text-center"><label value="Center aligned — .z-text-center"/></div>
@@ -103,7 +103,7 @@
 
     <!-- Text Transform -->
     <div sclass="section-card">
-        <label value="Text Transform  (.z-text-uppercase / lowercase / capitalize / none)" sclass="section-title"/>
+        <label value="Text Transform  (.z-text-uppercase / lowercase / capitalize / none)" sclass="z-d-block z-fs-title-sm z-fw-medium z-text-on-surface z-mb-3"/>
         <div sclass="z-d-flex z-gap-6 z-flex-wrap">
             <div>
                 <label value="uppercase text" sclass="z-text-uppercase z-fw-medium z-d-block"/>
@@ -122,7 +122,7 @@
 
     <!-- Font Style & Line Height -->
     <div sclass="section-card">
-        <label value="Font Style &amp; Line Height" sclass="section-title"/>
+        <label value="Font Style &amp; Line Height" sclass="z-d-block z-fs-title-sm z-fw-medium z-text-on-surface z-mb-3"/>
         <div sclass="z-d-flex z-gap-6 z-flex-wrap">
             <div>
                 <label value="Italic text sample" sclass="z-fst-italic z-fs-body-lg z-d-block"/>
@@ -145,7 +145,7 @@
 
     <!-- Truncation -->
     <div sclass="section-card">
-        <label value="Text Truncation  (.z-text-truncate)" sclass="section-title"/>
+        <label value="Text Truncation  (.z-text-truncate)" sclass="z-d-block z-fs-title-sm z-fw-medium z-text-on-surface z-mb-3"/>
         <div sclass="z-text-truncate z-border z-rounded-md z-p-3" style="max-width:320px">
             <label value="This is a very long text that will be truncated with an ellipsis at the end of the line when it overflows the container width"/>
         </div>

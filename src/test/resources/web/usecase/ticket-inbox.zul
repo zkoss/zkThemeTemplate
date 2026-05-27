@@ -10,7 +10,7 @@
 .msg-bubble { background: var(--zk-color-surface-container-low); border-radius: 12px; padding: 10px 14px; }
 .msg-bubble-me { background: var(--zk-color-primary-container); color: var(--zk-color-on-primary-container); border-radius: 12px; padding: 10px 14px; }
 </style>
-<vlayout hflex="1" sclass="page-content">
+<vlayout hflex="1" sclass="z-d-flex z-flex-col z-gap-4 z-p-4 z-bg-surface-low">
 
     <label value="Support Tickets" sclass="z-h2"/>
 

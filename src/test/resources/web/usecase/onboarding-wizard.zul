@@ -1,7 +1,7 @@
 <?page title="Onboarding Wizard"?>
 <zk>
 <style src="~./usecase/usecase.css"/>
-<vlayout hflex="1" sclass="page-content">
+<vlayout hflex="1" sclass="z-d-flex z-flex-col z-gap-4 z-p-4 z-bg-surface-low">
 
     <label value="Account Setup" sclass="z-h2"/>
 
@@ -17,7 +17,7 @@
 
     <!-- Only the current step's form is shown (progressive disclosure) -->
     <div sclass="z-card">
-        <label value="Step 2 — Profile" sclass="section-title"/>
+        <label value="Step 2 — Profile" sclass="z-d-block z-fs-title-sm z-fw-medium z-text-on-surface z-mb-3"/>
         <grid hflex="1" sclass="z-border-0">
             <columns>
                 <column width="160px"/>

@@ -1,7 +1,7 @@
 <?page title="Color Utilities"?>
 <zk>
 <style src="~./usecase/usecase.css"/>
-<vlayout hflex="1" sclass="page-content">
+<vlayout hflex="1" sclass="z-d-flex z-flex-col z-gap-4 z-p-4 z-bg-surface-low">
 
     <toolbar>
         <label value="Color Utilities" sclass="z-h2"/>
@@ -9,7 +9,7 @@
 
     <!-- Text Colors -->
     <div sclass="section-card">
-        <label value="Text Colors" sclass="section-title"/>
+        <label value="Text Colors" sclass="z-d-block z-fs-title-sm z-fw-medium z-text-on-surface z-mb-3"/>
         <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px">
             <div sclass="z-d-flex z-align-center z-gap-2">
                 <label value="Sample Text" sclass="z-text-primary z-fw-medium"/>
@@ -56,7 +56,7 @@
 
     <!-- Background Colors -->
     <div sclass="section-card">
-        <label value="Background Colors" sclass="section-title"/>
+        <label value="Background Colors" sclass="z-d-block z-fs-title-sm z-fw-medium z-text-on-surface z-mb-3"/>
         <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px">
             <div sclass="z-bg-primary z-p-3 z-rounded-md z-text-center">
                 <label value=".z-bg-primary" sclass="z-fw-medium"/>
@@ -105,7 +105,7 @@
 
     <!-- Inverse text on dark background -->
     <div sclass="section-card">
-        <label value="Inverse Text" sclass="section-title"/>
+        <label value="Inverse Text" sclass="z-d-block z-fs-title-sm z-fw-medium z-text-on-surface z-mb-3"/>
         <div sclass="z-bg-primary z-p-4 z-rounded-md z-d-inline-block">
             <label value=".z-text-inverse — readable on dark backgrounds" sclass="z-text-inverse z-fw-medium"/>
         </div>

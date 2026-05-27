@@ -79,63 +79,6 @@ img.avatar,
 }
 
 /* ============================================
-   App Shell — Navigation Sidebar Items (M3 Navigation Drawer)
-   ============================================ */
-.nav-item {
-    display: flex;
-    align-items: center;
-    gap: var(--zk-spacing-3);
-    padding: var(--zk-spacing-2) var(--zk-spacing-4);
-    border-radius: var(--zk-shape-corner-full);
-    cursor: pointer;
-    color: var(--zk-color-on-surface-variant);
-    font-size: var(--zk-typescale-label-large-size);
-    font-weight: var(--zk-typescale-label-large-weight);
-    position: relative;
-    overflow: hidden;
-    transition: color var(--zk-motion-duration-short1) var(--zk-motion-easing-standard);
-}
-
-.nav-item::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    background-color: var(--zk-color-on-surface-variant);
-    opacity: 0;
-    transition: opacity var(--zk-motion-duration-short1) var(--zk-motion-easing-standard);
-    pointer-events: none;
-}
-
-.nav-item:hover::before {
-    opacity: var(--zk-state-hover-opacity);
-}
-
-/* M3 Navigation Drawer active/selected destination */
-.nav-item--active {
-    background-color: var(--zk-color-secondary-container);
-    color: var(--zk-color-on-secondary-container);
-}
-
-.nav-item--active::before {
-    background-color: var(--zk-color-on-secondary-container);
-}
-
-/* ============================================
-   KPI / Metric Display
-   ============================================ */
-/* KPI card: ensure panel fills its flex cell and has a min width */
-.kpi-card {
-    min-width: 180px;
-}
-
-/* KPI big number */
-.kpi-card .z-h1 {
-    color: var(--zk-color-on-surface);
-    margin-bottom: var(--zk-spacing-1);
-}
-
-/* ============================================
    Flat Section Cards (replaces Groupbox/Panel borders)
    ============================================ */
 .section-card {
@@ -143,15 +86,6 @@ img.avatar,
     border-radius: var(--zk-shape-corner-medium);
     box-shadow: var(--zk-elevation-card);
     padding: var(--zk-spacing-4);
-}
-
-.section-title {
-    display: block;
-    font-size: var(--zk-typescale-title-small-size);
-    font-weight: var(--zk-typescale-title-small-weight);
-    color: var(--zk-color-on-surface);
-    line-height: var(--zk-typescale-title-small-line-height);
-    margin-bottom: var(--zk-spacing-3);
 }
 
 /* ============================================
@@ -276,33 +210,10 @@ img.avatar,
     border-top: none;
 }
 
-/* Ensure the tabpanel vlayout content has proper background on page-content tabbox */
-.z-tabbox.page-content .z-tabpanels {
-    background-color: var(--zk-color-surface-container-lowest);
-}
-
 /* ============================================
    Page-level layout helpers
    (moved from _utilities.css — usecase-only)
    ============================================ */
-
-/* Page-level container — full-width vertical column with spacing */
-.page-content {
-    display: flex;
-    flex-direction: column;
-    gap: var(--zk-spacing-4);
-    padding: var(--zk-spacing-4);
-    box-sizing: border-box;
-    min-height: 100%;
-    background-color: var(--zk-color-surface-container-low);
-}
-
-/* When page-content is applied to a tabbox, reset padding/gap to avoid
-   indenting the tab bar — the tabbox manages its own internal layout. */
-.z-tabbox.page-content {
-    padding: 0;
-    gap: 0;
-}
 
 .md-text-right  { text-align: right !important; }
 

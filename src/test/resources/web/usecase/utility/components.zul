@@ -1,7 +1,7 @@
 <?page title="Component Utilities"?>
 <zk>
 <style src="~./usecase/usecase.css"/>
-<vlayout hflex="1" sclass="page-content">
+<vlayout hflex="1" sclass="z-d-flex z-flex-col z-gap-4 z-p-4 z-bg-surface-low">
 
     <toolbar>
         <label value="Component Utilities" sclass="z-h2"/>
@@ -9,7 +9,7 @@
 
     <!-- z-chip -->
     <div sclass="section-card">
-        <label value="Chip  (.z-chip)" sclass="section-title"/>
+        <label value="Chip  (.z-chip)" sclass="z-d-block z-fs-title-sm z-fw-medium z-text-on-surface z-mb-3"/>
         <label value="Status chips are small inline labels for categories, tags, and statuses. Apply on ZK &lt;label&gt; for a clean span with no extra wrapper." sclass="z-text-secondary z-fs-body-sm z-mb-3"/>
         <div sclass="z-d-flex z-gap-3 z-flex-wrap z-align-center z-mb-3">
             <label value="Primary"  sclass="z-chip z-chip-primary"/>
@@ -30,7 +30,7 @@
 
     <!-- z-badge -->
     <div sclass="section-card">
-        <label value="Badge  (.z-badge)" sclass="section-title"/>
+        <label value="Badge  (.z-badge)" sclass="z-d-block z-fs-title-sm z-fw-medium z-text-on-surface z-mb-3"/>
         <label value="Badges are slightly larger than chips and always carry a solid background for strong visual prominence." sclass="z-text-secondary z-fs-body-sm z-mb-3"/>
         <div sclass="z-d-flex z-gap-3 z-flex-wrap z-align-center z-mb-3">
             <label value="Success" sclass="z-badge z-badge-success"/>
@@ -60,7 +60,7 @@
 
     <!-- z-avatar -->
     <div sclass="section-card">
-        <label value="Avatar  (.z-avatar)" sclass="section-title"/>
+        <label value="Avatar  (.z-avatar)" sclass="z-d-block z-fs-title-sm z-fw-medium z-text-on-surface z-mb-3"/>
         <label value="Circular containers for user photos or initials. Apply on ZK &lt;image&gt; (photo) or &lt;div&gt; (initials). Three sizes: -sm 36px / -md 44px / -lg 56px." sclass="z-text-secondary z-fs-body-sm z-mb-3"/>
 
         <div sclass="z-d-flex z-gap-6 z-align-end z-mb-4">
@@ -100,7 +100,7 @@
 
     <!-- z-card -->
     <div sclass="section-card">
-        <label value="Card  (.z-card)" sclass="section-title"/>
+        <label value="Card  (.z-card)" sclass="z-d-block z-fs-title-sm z-fw-medium z-text-on-surface z-mb-3"/>
         <label value="A surface container with background-color, border-radius (--zk-shape-card), and elevation shadow (--zk-elevation-card) from the design token system." sclass="z-text-secondary z-fs-body-sm z-mb-3"/>
         <div sclass="z-d-flex z-gap-4 z-flex-wrap z-align-start">
 

@@ -18,7 +18,7 @@
     display: inline-block;
 }
 </style>
-<vlayout hflex="1" sclass="page-content">
+<vlayout hflex="1" sclass="z-d-flex z-flex-col z-gap-4 z-p-4 z-bg-surface-low">
 
     <toolbar>
         <label value="Spacing Utilities" sclass="z-h2"/>
@@ -26,7 +26,7 @@
 
     <!-- Scale reference -->
     <div sclass="section-card">
-        <label value="Spacing Scale" sclass="section-title"/>
+        <label value="Spacing Scale" sclass="z-d-block z-fs-title-sm z-fw-medium z-text-on-surface z-mb-3"/>
         <label value="All spacing utilities use the 4 dp baseline grid." sclass="z-text-secondary z-fs-body-sm z-mb-3"/>
         <div style="display:grid;grid-template-columns:repeat(8,1fr);gap:12px;text-align:center">
             <div>
@@ -90,7 +90,7 @@
 
     <!-- Padding -->
     <div sclass="section-card">
-        <label value="Padding  (.z-p-* / .z-px-* / .z-py-* / .z-pt-* / .z-pb-* / .z-ps-* / .z-pe-*)" sclass="section-title"/>
+        <label value="Padding  (.z-p-* / .z-px-* / .z-py-* / .z-pt-* / .z-pb-* / .z-ps-* / .z-pe-*)" sclass="z-d-block z-fs-title-sm z-fw-medium z-text-on-surface z-mb-3"/>
         <div sclass="z-d-flex z-gap-4 z-flex-wrap">
             <div style="text-align:center">
                 <div class="u-demo-outer"><div sclass="u-demo-box z-p-4"><label value="z-p-4"/></div></div>
@@ -113,7 +113,7 @@
 
     <!-- Margin -->
     <div sclass="section-card">
-        <label value="Margin  (.z-m-* / .z-mx-* / .z-my-* / .z-mt-* / .z-mb-* / .z-ms-* / .z-me-*)" sclass="section-title"/>
+        <label value="Margin  (.z-m-* / .z-mx-* / .z-my-* / .z-mt-* / .z-mb-* / .z-ms-* / .z-me-*)" sclass="z-d-block z-fs-title-sm z-fw-medium z-text-on-surface z-mb-3"/>
         <label value="Each box below has the utility class applied — the gap between boxes shows the margin." sclass="z-text-secondary z-fs-body-sm z-mb-3"/>
         <div sclass="z-bg-surface-variant z-p-2 z-rounded-md" style="display:inline-block">
             <div sclass="u-demo-box" style="display:inline-block;padding:8px 12px"><label value="z-mt-0"/></div>
@@ -132,7 +132,7 @@
 
     <!-- Class reference table -->
     <div sclass="section-card">
-        <label value="Padding Class Reference" sclass="section-title"/>
+        <label value="Padding Class Reference" sclass="z-d-block z-fs-title-sm z-fw-medium z-text-on-surface z-mb-3"/>
         <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:4px 16px">
             <label value=".z-p-0 — 0" sclass="z-fs-label-md z-text-secondary"/>
             <label value=".z-px-0 — 0" sclass="z-fs-label-md z-text-secondary"/>

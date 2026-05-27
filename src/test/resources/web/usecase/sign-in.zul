@@ -1,7 +1,7 @@
 <?page title="Sign In"?>
 <zk>
 <style src="~./usecase/usecase.css"/>
-<vlayout hflex="1" sclass="page-content">
+<vlayout hflex="1" sclass="z-d-flex z-flex-col z-gap-4 z-p-4 z-bg-surface-low">
 
     <!-- Centered using layout utilities (flex-1 + justify/align center) -->
     <div sclass="z-d-flex z-flex-1 z-justify-center z-align-center">

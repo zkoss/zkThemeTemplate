@@ -20,7 +20,7 @@
     border: 1px solid var(--zk-color-outline-variant);
 }
 </style>
-<vlayout hflex="1" sclass="page-content">
+<vlayout hflex="1" sclass="z-d-flex z-flex-col z-gap-4 z-p-4 z-bg-surface-low">
 
     <toolbar>
         <label value="Layout Utilities" sclass="z-h2"/>
@@ -28,7 +28,7 @@
 
     <!-- Display -->
     <div sclass="section-card">
-        <label value="Display  (.z-d-*)" sclass="section-title"/>
+        <label value="Display  (.z-d-*)" sclass="z-d-block z-fs-title-sm z-fw-medium z-text-on-surface z-mb-3"/>
         <div sclass="z-d-flex z-gap-4 z-flex-wrap z-align-center">
             <div>
                 <div class="u-demo-bg">
@@ -51,7 +51,7 @@
 
     <!-- Flex Direction -->
     <div sclass="section-card">
-        <label value="Flex Direction  (.z-flex-row / .z-flex-col)" sclass="section-title"/>
+        <label value="Flex Direction  (.z-flex-row / .z-flex-col)" sclass="z-d-block z-fs-title-sm z-fw-medium z-text-on-surface z-mb-3"/>
         <div sclass="z-d-flex z-gap-6">
             <div>
                 <div class="u-demo-bg z-d-flex z-flex-row z-gap-2">
@@ -82,7 +82,7 @@
 
     <!-- Justify Content -->
     <div sclass="section-card">
-        <label value="Justify Content  (.z-justify-*)" sclass="section-title"/>
+        <label value="Justify Content  (.z-justify-*)" sclass="z-d-block z-fs-title-sm z-fw-medium z-text-on-surface z-mb-3"/>
         <vlayout sclass="z-gap-3">
             <div>
                 <div class="u-demo-bg z-d-flex z-justify-start z-gap-2">
@@ -119,7 +119,7 @@
 
     <!-- Align Items -->
     <div sclass="section-card">
-        <label value="Align Items  (.z-align-*)" sclass="section-title"/>
+        <label value="Align Items  (.z-align-*)" sclass="z-d-block z-fs-title-sm z-fw-medium z-text-on-surface z-mb-3"/>
         <div sclass="z-d-flex z-gap-4">
             <div>
                 <div class="u-demo-bg z-d-flex z-align-start z-gap-2" style="height:80px">
@@ -150,7 +150,7 @@
 
     <!-- Flex Grow / Fill -->
     <div sclass="section-card">
-        <label value="Flex Grow &amp; Fill  (.z-flex-1 / .z-flex-auto / .z-flex-none)" sclass="section-title"/>
+        <label value="Flex Grow &amp; Fill  (.z-flex-1 / .z-flex-auto / .z-flex-none)" sclass="z-d-block z-fs-title-sm z-fw-medium z-text-on-surface z-mb-3"/>
         <vlayout sclass="z-gap-3">
             <div>
                 <div class="u-demo-bg z-d-flex z-gap-2">
@@ -173,7 +173,7 @@
 
     <!-- Gap -->
     <div sclass="section-card">
-        <label value="Gap  (.z-gap-* / .z-col-gap-* / .z-row-gap-*)" sclass="section-title"/>
+        <label value="Gap  (.z-gap-* / .z-col-gap-* / .z-row-gap-*)" sclass="z-d-block z-fs-title-sm z-fw-medium z-text-on-surface z-mb-3"/>
         <div sclass="z-d-flex z-gap-6 z-flex-wrap">
             <div>
                 <div class="u-demo-bg z-d-flex z-gap-1">
@@ -198,7 +198,7 @@
 
     <!-- Flex Wrap -->
     <div sclass="section-card">
-        <label value="Flex Wrap  (.z-flex-wrap / .z-flex-nowrap)" sclass="section-title"/>
+        <label value="Flex Wrap  (.z-flex-wrap / .z-flex-nowrap)" sclass="z-d-block z-fs-title-sm z-fw-medium z-text-on-surface z-mb-3"/>
         <div sclass="z-d-flex z-gap-4">
             <div style="max-width:300px">
                 <div class="u-demo-bg z-d-flex z-flex-wrap z-gap-2">

@@ -2,27 +2,26 @@
 <zk>
 <style src="~./usecase/usecase.css"/>
 <style>
-.settings-nav .nav-item { cursor: pointer; margin-bottom: 4px; }
 .pref-row { display: flex; align-items: center; gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--zk-color-outline-variant); }
 .pref-row:last-child { border-bottom: none; }
 </style>
-<vlayout hflex="1" sclass="page-content">
+<vlayout hflex="1" sclass="z-d-flex z-flex-col z-gap-4 z-p-4 z-bg-surface-low">
 
     <label value="Settings" sclass="z-h2"/>
 
     <hlayout hflex="1" vflex="1" spacing="16px">
 
         <!-- Sub-nav -->
-        <div sclass="z-card settings-nav" width="220px" vflex="1">
-            <div sclass="nav-item nav-item--active">Profile</div>
-            <div sclass="nav-item">Notifications</div>
-            <div sclass="nav-item">Security</div>
-            <div sclass="nav-item">Appearance</div>
-        </div>
+        <navbar orient="vertical" sclass="z-card" width="220px" vflex="1">
+            <navitem label="Profile" selected="true"/>
+            <navitem label="Notifications"/>
+            <navitem label="Security"/>
+            <navitem label="Appearance"/>
+        </navbar>
 
         <!-- Preference panel -->
         <div sclass="z-card z-flex-1 z-min-w-0" vflex="1">
-            <label value="Notifications" sclass="section-title"/>
+            <label value="Notifications" sclass="z-d-block z-fs-title-sm z-fw-medium z-text-on-surface z-mb-3"/>
 
             <div sclass="pref-row">
                 <div sclass="z-d-flex z-flex-col z-flex-1 z-min-w-0">

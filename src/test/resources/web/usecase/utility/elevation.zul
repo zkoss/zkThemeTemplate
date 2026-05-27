@@ -1,7 +1,7 @@
 <?page title="Elevation Utilities"?>
 <zk>
 <style src="~./usecase/usecase.css"/>
-<vlayout hflex="1" sclass="page-content">
+<vlayout hflex="1" sclass="z-d-flex z-flex-col z-gap-4 z-p-4 z-bg-surface-low">
 
     <toolbar>
         <label value="Elevation Utilities" sclass="z-h2"/>
@@ -9,7 +9,7 @@
 
     <!-- Elevation Scale -->
     <div sclass="section-card">
-        <label value="Elevation Shadow Scale  (.z-elevation-0 — .z-elevation-3)" sclass="section-title"/>
+        <label value="Elevation Shadow Scale  (.z-elevation-0 — .z-elevation-3)" sclass="z-d-block z-fs-title-sm z-fw-medium z-text-on-surface z-mb-3"/>
         <label value="Higher elevation values render deeper shadows, conveying layers closer to the user." sclass="z-text-secondary z-fs-body-sm z-mb-4"/>
         <div sclass="z-d-flex z-gap-6 z-flex-wrap z-align-start">
 
@@ -62,7 +62,7 @@
 
     <!-- Elevation on dark background -->
     <div sclass="section-card">
-        <label value="Elevation on Tinted Background" sclass="section-title"/>
+        <label value="Elevation on Tinted Background" sclass="z-d-block z-fs-title-sm z-fw-medium z-text-on-surface z-mb-3"/>
         <div sclass="z-bg-primary z-p-6 z-rounded-md z-d-flex z-gap-6 z-flex-wrap">
             <div sclass="z-elevation-1 z-bg-surface z-rounded-md z-p-4" style="width:120px;text-align:center">
                 <label value="Level 1" sclass="z-h6 z-d-block z-text-on-surface"/>
@@ -78,7 +78,7 @@
 
     <!-- Practical use -->
     <div sclass="section-card">
-        <label value="Practical Usage" sclass="section-title"/>
+        <label value="Practical Usage" sclass="z-d-block z-fs-title-sm z-fw-medium z-text-on-surface z-mb-3"/>
         <div sclass="z-d-flex z-gap-4 z-flex-wrap z-align-start">
 
             <div sclass="z-elevation-1 z-bg-surface z-rounded-md z-p-4" style="width:220px">
