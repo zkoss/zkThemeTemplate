@@ -4,15 +4,15 @@
 <vlayout hflex="1" sclass="page-content">
 
     <!-- Page header -->
-    <div sclass="md-hbox z-align-center">
+    <div sclass="z-d-flex z-flex-row z-flex-wrap z-gap-4 z-align-center">
         <label value="Inventory" sclass="z-h2"/>
-        <button label="Add Item" iconSclass="z-icon-plus" sclass="md-push-right"/>
+        <button label="Add Item" iconSclass="z-icon-plus" sclass="z-ms-auto"/>
     </div>
 
     <!-- Filter toolbar -->
     <div sclass="z-card">
-        <div sclass="md-hbox z-align-center">
-            <textbox placeholder="Search SKU or product…" hflex="1" sclass="md-flex-1"/>
+        <div sclass="z-d-flex z-flex-row z-flex-wrap z-gap-4 z-align-center">
+            <textbox placeholder="Search SKU or product…" hflex="1" sclass="z-flex-1 z-min-w-0"/>
             <combobox placeholder="Category" readonly="true">
                 <comboitem label="All Categories"/>
                 <comboitem label="Fasteners"/>

@@ -79,7 +79,7 @@
         </div>
 
         <!-- Detail pane -->
-        <div sclass="z-card md-flex-1" vflex="1">
+        <div sclass="z-card z-flex-1 z-min-w-0" vflex="1">
             <vlayout hflex="1" vflex="1" spacing="12px">
                 <div>
                     <label value="Login fails after password reset" sclass="z-h4 z-d-block"/>
@@ -94,14 +94,14 @@
                         <label value="After resetting my password I get 'invalid credentials' even with the new one." sclass="z-d-block"/>
                         <label value="Dana · 10:24" sclass="z-fs-label-sm z-text-muted"/>
                     </div>
-                    <div sclass="msg-bubble-me md-push-right" style="max-width:80%">
+                    <div sclass="msg-bubble-me z-ms-auto" style="max-width:80%">
                         <label value="Thanks Dana — can you confirm whether you used the link from the latest email?" sclass="z-d-block"/>
                         <label value="You · 10:31" sclass="z-fs-label-sm"/>
                     </div>
                 </vlayout>
 
-                <div sclass="md-hbox z-align-center">
-                    <textbox placeholder="Type a reply…" hflex="1" sclass="md-flex-1"/>
+                <div sclass="z-d-flex z-flex-row z-flex-wrap z-gap-4 z-align-center">
+                    <textbox placeholder="Type a reply…" hflex="1" sclass="z-flex-1 z-min-w-0"/>
                     <button label="Send" sclass="z-button-primary"/>
                 </div>
             </vlayout>

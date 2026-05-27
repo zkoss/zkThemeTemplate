@@ -5,7 +5,6 @@
 .settings-nav .nav-item { cursor: pointer; margin-bottom: 4px; }
 .pref-row { display: flex; align-items: center; gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--zk-color-outline-variant); }
 .pref-row:last-child { border-bottom: none; }
-.pref-text { display: flex; flex-direction: column; flex: 1 1 0; min-width: 0; }
 </style>
 <vlayout hflex="1" sclass="page-content">
 
@@ -22,11 +21,11 @@
         </div>
 
         <!-- Preference panel -->
-        <div sclass="z-card md-flex-1" vflex="1">
+        <div sclass="z-card z-flex-1 z-min-w-0" vflex="1">
             <label value="Notifications" sclass="section-title"/>
 
             <div sclass="pref-row">
-                <div sclass="pref-text">
+                <div sclass="z-d-flex z-flex-col z-flex-1 z-min-w-0">
                     <label value="Email alerts" sclass="z-fw-medium"/>
                     <label value="Receive an email when stock runs low" sclass="z-fs-label-sm z-text-muted"/>
                 </div>
@@ -34,7 +33,7 @@
             </div>
 
             <div sclass="pref-row">
-                <div sclass="pref-text">
+                <div sclass="z-d-flex z-flex-col z-flex-1 z-min-w-0">
                     <label value="Push notifications" sclass="z-fw-medium"/>
                     <label value="Browser push for new support tickets" sclass="z-fs-label-sm z-text-muted"/>
                 </div>
@@ -42,7 +41,7 @@
             </div>
 
             <div sclass="pref-row">
-                <div sclass="pref-text">
+                <div sclass="z-d-flex z-flex-col z-flex-1 z-min-w-0">
                     <label value="Digest frequency" sclass="z-fw-medium"/>
                     <label value="How often to send the activity summary" sclass="z-fs-label-sm z-text-muted"/>
                 </div>
@@ -54,15 +53,15 @@
             </div>
 
             <div sclass="pref-row">
-                <div sclass="pref-text">
+                <div sclass="z-d-flex z-flex-col z-flex-1 z-min-w-0">
                     <label value="Alert volume" sclass="z-fw-medium"/>
                     <label value="Sound level for in-app alerts" sclass="z-fs-label-sm z-text-muted"/>
                 </div>
                 <slider curpos="60" width="180px"/>
             </div>
 
-            <div sclass="md-hbox z-align-center z-mt-4">
-                <button label="Cancel" sclass="md-push-right"/>
+            <div sclass="z-d-flex z-flex-row z-flex-wrap z-gap-4 z-align-center z-mt-4">
+                <button label="Cancel" sclass="z-ms-auto"/>
                 <button label="Save Changes" sclass="z-button-primary"/>
             </div>
         </div>

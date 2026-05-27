@@ -18,45 +18,6 @@ img.avatar,
 }
 
 /* ============================================
-   Badge / Status Chips
-   ============================================ */
-.badge-ok, .badge-info {
-    display: inline-block;
-    padding: 2px 8px;
-    border-radius: var(--zk-shape-corner-full);
-    background-color: var(--zk-color-secondary-container);
-    color: var(--zk-color-on-secondary-container);
-    font-size: var(--zk-typescale-label-small-size);
-    font-weight: var(--zk-typescale-label-small-weight);
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-    vertical-align: middle;
-    margin-right: var(--zk-spacing-2);
-}
-
-.badge-err, .badge-warn {
-    display: inline-block;
-    padding: 2px 8px;
-    border-radius: var(--zk-shape-corner-full);
-    font-size: var(--zk-typescale-label-small-size);
-    font-weight: var(--zk-typescale-label-small-weight);
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-    vertical-align: middle;
-    margin-right: var(--zk-spacing-2);
-}
-
-.badge-err {
-    background-color: var(--zk-color-error-container);
-    color: var(--zk-color-on-error-container);
-}
-
-.badge-warn {
-    background-color: var(--zk-color-warning-container);
-    color: var(--zk-color-on-warning-container);
-}
-
-/* ============================================
    Index — Mira-Style Sidebar Shell
    ============================================ */
 .sidebar-nav {
@@ -163,11 +124,6 @@ img.avatar,
 /* ============================================
    KPI / Metric Display
    ============================================ */
-.kpi-label {
-    color: var(--zk-color-on-surface-variant);
-    margin-bottom: var(--zk-spacing-2);
-}
-
 /* KPI card: ensure panel fills its flex cell and has a min width */
 .kpi-card {
     min-width: 180px;
@@ -348,30 +304,7 @@ img.avatar,
     gap: 0;
 }
 
-/* Horizontal flex row with MD3 gap */
-.md-hbox {
-    display: flex !important;
-    flex-direction: row !important;
-    flex-wrap: wrap !important;
-    gap: var(--zk-spacing-4) !important;
-    box-sizing: border-box;
-}
-
-/* Flex child that takes equal share of available space */
-.md-flex-1 {
-    flex: 1 1 0 !important;
-    min-width: 0;
-    box-sizing: border-box;
-}
-
-/* Push subsequent sibling(s) to the right end of a flex row */
-.md-push-right {
-    margin-left: auto !important;
-}
-
-.md-text-center { text-align: center !important; }
 .md-text-right  { text-align: right !important; }
-.md-text-primary { color: var(--zk-color-primary) !important; }
 
 .md-py-3 { padding-top: var(--zk-spacing-3) !important; padding-bottom: var(--zk-spacing-3) !important; }
 .md-m-2  { margin: var(--zk-spacing-2) !important; }
