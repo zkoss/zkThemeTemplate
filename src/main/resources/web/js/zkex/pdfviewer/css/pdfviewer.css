@@ -1,6 +1,143 @@
+/* Root wrapper */
 .z-pdfviewer {
-    background-color: var(--zk-color-surface-container-low);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    background-color: var(--zk-color-surface);
     border: 1px solid var(--zk-color-outline-variant);
-    border-radius: var(--zk-shape-corner-small);
+    border-radius: var(--zk-shape-corner-medium);
     overflow: hidden;
+}
+
+/* Scrollable page canvas area */
+.z-pdfviewer-container {
+    flex: 1;
+    overflow: auto;
+    background-color: var(--zk-color-surface-variant);
+}
+
+/* Individual PDF page wrapper */
+.z-pdfviewer-page {
+    position: relative;
+    margin: 0 auto;
+    box-shadow: var(--zk-elevation-2);
+}
+
+/* Text selection overlay — structural opacity must not be removed */
+.z-pdfviewer-text-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0.2;
+}
+
+/* PDF link annotation layer — required for clickable PDF links */
+.z-pdfviewer-annotation-layer .linkAnnotation {
+    position: absolute;
+}
+
+.z-pdfviewer-annotation-layer .linkAnnotation > a {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* Floating toolbar — absolutely positioned, bottom-centred, hidden by default */
+.z-pdfviewer-toolbar {
+    position: absolute;
+    bottom: 1em;
+    left: 50%;
+    transform: translateX(-50%);
+    display: inline-flex;
+    align-items: center;
+    background-color: var(--zk-color-surface-container-high);
+    border-radius: var(--zk-shape-corner-full);
+    padding: var(--zk-spacing-2) var(--zk-spacing-3);
+    box-shadow: var(--zk-elevation-3);
+    opacity: 0;
+    transition: opacity var(--zk-motion-duration-short3) var(--zk-motion-easing-legacy);
+}
+
+/* Progressive toolbar reveal */
+.z-pdfviewer:hover .z-pdfviewer-toolbar {
+    opacity: 0.5;
+}
+
+.z-pdfviewer:hover .z-pdfviewer-toolbar:hover {
+    opacity: 1;
+}
+
+.z-pdfviewer:focus-within .z-pdfviewer-toolbar {
+    opacity: 1;
+}
+
+/* Toolbar icon buttons */
+.z-pdfviewer-toolbar-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border: none;
+    border-radius: var(--zk-shape-corner-small);
+    background-color: transparent;
+    color: var(--zk-color-on-surface);
+    cursor: pointer;
+    padding: 0;
+}
+
+.z-pdfviewer-toolbar-button > i {
+    pointer-events: none;
+}
+
+.z-pdfviewer-toolbar-button:hover {
+    background-color: color-mix(in srgb, var(--zk-color-on-surface) calc(var(--zk-state-hover-opacity) * 100%), transparent);
+}
+
+.z-pdfviewer-toolbar-button:active {
+    background-color: color-mix(in srgb, var(--zk-color-on-surface) calc(var(--zk-state-pressed-opacity) * 100%), transparent);
+}
+
+.z-pdfviewer-toolbar-button[disabled] {
+    color: var(--zk-color-disabled);
+    cursor: default;
+    pointer-events: none;
+}
+
+/* Toolbar separator — vertical hairline */
+.z-pdfviewer-toolbar-separator {
+    display: inline-block;
+    width: 1px;
+    height: 1.5em;
+    vertical-align: middle;
+    border-left: 1px solid var(--zk-color-outline-variant);
+    margin: 0 var(--zk-spacing-1);
+}
+
+/* Page-number input — suppress native spin arrows */
+.z-pdfviewer-toolbar-page-active {
+    -moz-appearance: textfield;
+    appearance: textfield;
+}
+
+.z-pdfviewer-toolbar-page-active::-webkit-inner-spin-button,
+.z-pdfviewer-toolbar-page-active::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    display: none;
+}
+
+/* Fullscreen state */
+.z-pdfviewer:fullscreen {
+    border-radius: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* Fullscreen icon swap: expand → compress */
+.z-pdfviewer:fullscreen .z-pdfviewer-toolbar-fullscreen > i::before {
+    content: '\f066';
 }

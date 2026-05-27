@@ -161,6 +161,7 @@ const FA_TO_LUCIDE = {
     'question-circle':     'circle-help',
     'refresh':             'refresh-cw',
     'rotate-left':         'rotate-ccw',
+    'rotate-right':        'rotate-cw',
     'share':               'share-2',
     'sign-out':            'log-out',
     'tachometer':          'gauge',
