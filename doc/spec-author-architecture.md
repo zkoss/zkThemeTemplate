@@ -5,7 +5,7 @@
 
 ## Context
 
-The current ralph-loop (`doc/orchestrator-playbook.md` → `zk-theme-evaluator` + `zk-theme-generator`) verifies CSS by measuring DOM and comparing against a target. For ~30 components, the target is a Mira HTML mockup or MUI CSS file. For ~50 ZK-unique components without any Material analog — `stepbar`, `organigram`, `pdfviewer`, `signature`, `tbeditor`, `cascader`, `cropper`, `barcode`, `biglistbox`, `anchorlayout`, `dropupload`, `captcha`, `fisheyebar`, `coachmark`, `goldenlayout`, etc. — the loop styles "blind". The evaluator has nothing authoritative to assert against; the generator hallucinates a target; bugs surface only on manual visual review and are logged retroactively in `tasks/skill-gaps.md` (86+ entries today).
+The current ralph-loop (`doc/orchestrator-playbook.md` → `zk-theme-evaluator` + `zk-theme-generator`) verifies CSS by measuring DOM and comparing against a target. For ~30 components, the target is a Mira HTML mockup or MUI CSS file. For ~50 ZK-unique components without any Material analog — `stepbar`, `organigram`, `pdfviewer`, `signature`, `tbeditor`, `cascader`, `cropper`, `barcode`, `biglistbox`, `anchorlayout`, `dropupload`, `captcha`, `fisheyebar`, `coachmark`, `goldenlayout`, etc. — the loop styles "blind". The evaluator has nothing authoritative to assert against; the generator hallucinates a target; bugs surface only on manual visual review and are logged retroactively in `doc/skill-gaps.md` (86+ entries today).
 
 Auditing the existing artifacts also surfaced a structural problem: the 76 files under `doc/contracts/` are **mixed-content** — they conflate ZK structural facts (DOM, selectors, state enumeration, sibling decomposition) with theme-specific assertions (`rgb(55,111,208)`, MUI/Mira references, `var(--zk-color-*)` tokens). This violates the explicit scope boundary documented in `.claude/skills/zk-component-rules/SKILL.md` §82-93 and creates drift risk: when zk-component-rules and a contract disagree about DOM structure, the loop can't tell which is canonical.
 
@@ -30,7 +30,7 @@ Going forward, **every component-knowledge document falls into exactly one of tw
 **Audience:** This theme's evaluator and generator. Sibling themes do not read these.
 **Lifecycle:** Re-authored per theme.
 
-**Rule:** Any future doc must declare its category in the first line. Operational artifacts (`tasks/eval-reports/`, `tasks/gen-reports/`, `tasks/work-status.md`, `tasks/skill-gaps.md`) are orthogonal — they are not knowledge documents and don't pick a category.
+**Rule:** Any future doc must declare its category in the first line. Operational artifacts (`tasks/eval-reports/`, `tasks/gen-reports/`, `tasks/work-status.md`, `doc/skill-gaps.md`) are orthogonal — they are not knowledge documents and don't pick a category.
 
 ## Approach
 

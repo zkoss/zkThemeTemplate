@@ -42,7 +42,7 @@ A single gap may need fixes at multiple layers. `inplace` needed all three:
 
 ### Step 1 — Log it before fixing it
 
-Append a row to `tasks/skill-gaps.md`:
+Append a row to `doc/skill-gaps.md`:
 
 ```markdown
 | date | component(s) | gap | why-harness-missed-it | layer | fix-location |
@@ -51,6 +51,8 @@ Append a row to `tasks/skill-gaps.md`:
 ```
 
 The log is append-only. Never edit past rows.
+
+**Encode the gap as a failing assertion before writing any CSS.** Add the missed check as a new row in `doc/contracts/<comp>.md` (or a corrected check in the skill's component file) *first* — the evaluator should now fail on the next run. This proves the harness can *see* the gap; only then fix the CSS. If the gap is that an existing row asserts the wrong value, correct that row instead of adding a new one. Fixing CSS before the assertion exists means the next sibling sweep silently re-introduces the same bug.
 
 ### Step 2 — Apply the decision rule
 
@@ -100,7 +102,7 @@ Contracts are per-component. Without a skill rule, a new component contract is w
 
 ## Triage: which artifact owns the gap?
 
-After the two-category split (spec-author pipeline), every `tasks/skill-gaps.md` row routes to exactly one of three artifacts. Pick the artifact before writing any fix.
+After the two-category split (spec-author pipeline), every `doc/skill-gaps.md` row routes to exactly one of three artifacts. Pick the artifact before writing any fix.
 
 | Symptom | Root cause | Fix location |
 |---------|------------|--------------|
@@ -114,7 +116,7 @@ The `js-drift` tag is special: it indicates the evaluator detected a `js-source-
 
 ## Periodic review
 
-After every N components verified (say, 10), scan `tasks/skill-gaps.md` for clusters:
+After every N components verified (say, 10), scan `doc/skill-gaps.md` for clusters:
 
 - **Same root cause appears 3+ times?** That's a missing top-level rule. Promote it to a `reference/` file even if no individual gap requires it.
 - **All gaps in one quarter target the agent layer?** The agents are under-specified. Audit the §1.3 / §1.5 checklists.

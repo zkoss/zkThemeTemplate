@@ -10,7 +10,7 @@ This is the canonical lookup for valid `z-icon-*` class names in this theme.
 
 See `doc/icon-policy.md` for the full policy.
 
-## FA → Lucide aliases (49 entries, from `scripts/build-css.js` `FA_TO_LUCIDE`)
+## FA → Lucide aliases (50 entries, from `scripts/build-css.js` `FA_TO_LUCIDE`)
 
 These exist solely to absorb FontAwesome-style class names that ZK widget JS emits at runtime (e.g. `z-icon-caret-down`). Do NOT use these names in new preview/example ZULs — write the Lucide name directly.
 
@@ -54,6 +54,7 @@ These exist solely to absorb FontAwesome-style class names that ZK widget JS emi
 | `z-icon-question-circle` | `circle-help` |
 | `z-icon-refresh` | `refresh-cw` |
 | `z-icon-rotate-left` | `rotate-ccw` |
+| `z-icon-rotate-right` | `rotate-cw` |
 | `z-icon-share` | `share-2` |
 | `z-icon-sign-out` | `log-out` |
 | `z-icon-tachometer` | `gauge` |
