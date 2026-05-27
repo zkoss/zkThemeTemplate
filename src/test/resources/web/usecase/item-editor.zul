@@ -1,0 +1,109 @@
+<?page title="Item Editor"?>
+<zk>
+<style src="~./usecase/usecase.css"/>
+<vlayout hflex="1" sclass="page-content">
+
+    <div sclass="md-hbox z-align-center">
+        <label value="Edit Item" sclass="z-h2"/>
+        <label value="SKU FST-0481" sclass="z-chip z-chip-neutral md-push-right"/>
+    </div>
+
+    <div sclass="z-card">
+
+        <!-- Basic Info -->
+        <label value="Basic Info" sclass="section-title"/>
+        <grid hflex="1" sclass="z-border-0">
+            <columns>
+                <column width="180px"/>
+                <column/>
+            </columns>
+            <rows>
+                <row>
+                    <label value="Product Name *"/>
+                    <textbox value="M6 Hex Bolt (100pk)" hflex="1"/>
+                </row>
+                <row>
+                    <label value="SKU *"/>
+                    <hlayout>
+                        <textbox value="" hflex="1" sclass="z-bg-error-container"/>
+                        <label value="SKU is required" sclass="z-text-error z-fs-label-sm z-align-center"/>
+                    </hlayout>
+                </row>
+                <row>
+                    <label value="Category"/>
+                    <combobox value="Fasteners" readonly="true" hflex="1">
+                        <comboitem label="Fasteners"/>
+                        <comboitem label="Tools"/>
+                        <comboitem label="Safety Gear"/>
+                        <comboitem label="Packaging"/>
+                    </combobox>
+                </row>
+                <row>
+                    <label value="Supplier"/>
+                    <textbox value="Acme Industrial Co." hflex="1"/>
+                </row>
+            </rows>
+        </grid>
+
+        <!-- Stock -->
+        <label value="Stock" sclass="section-title z-mt-4"/>
+        <div sclass="md-hbox">
+            <div sclass="md-flex-1">
+                <label value="Quantity" sclass="z-d-block z-mb-1 z-text-muted z-fs-label-sm"/>
+                <spinner value="1240" hflex="1"/>
+            </div>
+            <div sclass="md-flex-1">
+                <label value="Reorder Level" sclass="z-d-block z-mb-1 z-text-muted z-fs-label-sm"/>
+                <spinner value="200" hflex="1"/>
+            </div>
+            <div sclass="md-flex-1">
+                <label value="Unit" sclass="z-d-block z-mb-1 z-text-muted z-fs-label-sm"/>
+                <combobox value="Pack" readonly="true" hflex="1">
+                    <comboitem label="Each"/>
+                    <comboitem label="Pack"/>
+                    <comboitem label="Box"/>
+                </combobox>
+            </div>
+        </div>
+
+        <!-- Pricing -->
+        <label value="Pricing" sclass="section-title z-mt-4"/>
+        <div sclass="md-hbox">
+            <div sclass="md-flex-1">
+                <label value="Cost" sclass="z-d-block z-mb-1 z-text-muted z-fs-label-sm"/>
+                <decimalbox value="3.40" format="#,##0.00" hflex="1"/>
+            </div>
+            <div sclass="md-flex-1">
+                <label value="Price" sclass="z-d-block z-mb-1 z-text-muted z-fs-label-sm"/>
+                <decimalbox value="5.99" format="#,##0.00" hflex="1"/>
+            </div>
+        </div>
+
+        <!-- Options -->
+        <label value="Options" sclass="section-title z-mt-4"/>
+        <checkbox label="Active (available for ordering)" checked="true"/>
+        <div sclass="z-mt-2">
+            <label value="Storage Type" sclass="z-d-block z-mb-1 z-text-muted z-fs-label-sm"/>
+            <radiogroup>
+                <radio label="Ambient" selected="true"/>
+                <radio label="Refrigerated"/>
+                <radio label="Hazmat"/>
+            </radiogroup>
+        </div>
+        <div sclass="z-mt-2">
+            <label value="Notes" sclass="z-d-block z-mb-1 z-text-muted z-fs-label-sm"/>
+            <textbox multiline="true" rows="3" hflex="1" placeholder="Internal notes…"/>
+        </div>
+    </div>
+
+    <!-- Action bar.
+         GAP: spec asks for a *sticky* bottom action bar. No utility class pins an element to
+         the viewport bottom; this renders as a normal trailing bar. Consider a .z-sticky-bottom
+         utility (position: sticky; bottom: 0) if a pinned bar is desired. -->
+    <div sclass="z-card md-hbox z-align-center">
+        <button label="Cancel" sclass="md-push-right"/>
+        <button label="Save" sclass="z-button-primary"/>
+    </div>
+
+</vlayout>
+</zk>

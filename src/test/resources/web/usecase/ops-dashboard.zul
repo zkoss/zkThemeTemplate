@@ -1,0 +1,69 @@
+<?page title="Operations Dashboard"?>
+<zk>
+<style src="~./usecase/usecase.css"/>
+<style>
+.chart-placeholder {
+    height: 220px;
+    border: 1px dashed var(--zk-color-outline-variant);
+    border-radius: var(--zk-shape-corner-medium);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--zk-color-on-surface-variant);
+    background: var(--zk-color-surface-container-lowest);
+}
+.trend-up { color: var(--zk-color-success); }
+.trend-down { color: var(--zk-color-error); }
+</style>
+<vlayout hflex="1" sclass="page-content">
+
+    <label value="Operations Dashboard" sclass="z-h2"/>
+
+    <!-- KPI cards -->
+    <div sclass="md-hbox">
+        <div sclass="kpi-card md-flex-1 z-card">
+            <label value="Orders Today" sclass="kpi-label z-fs-label-md"/>
+            <label value="312" sclass="z-h1"/>
+            <label value="↑ 8.4% vs yesterday" sclass="z-fs-label-sm trend-up"/>
+        </div>
+        <div sclass="kpi-card md-flex-1 z-card">
+            <label value="Fulfilled" sclass="kpi-label z-fs-label-md"/>
+            <label value="287" sclass="z-h1"/>
+            <label value="↑ 5.1%" sclass="z-fs-label-sm trend-up"/>
+        </div>
+        <div sclass="kpi-card md-flex-1 z-card">
+            <label value="Low Stock SKUs" sclass="kpi-label z-fs-label-md"/>
+            <label value="14" sclass="z-h1"/>
+            <label value="↓ 2 since last week" sclass="z-fs-label-sm trend-down"/>
+        </div>
+        <div sclass="kpi-card md-flex-1 z-card">
+            <label value="Open Tickets" sclass="kpi-label z-fs-label-md"/>
+            <label value="9" sclass="z-h1"/>
+            <label value="↑ 3 today" sclass="z-fs-label-sm trend-down"/>
+        </div>
+    </div>
+
+    <!-- Chart + activity -->
+    <div sclass="md-hbox">
+        <div sclass="z-card md-flex-1" style="flex:2 1 0">
+            <label value="Throughput (last 7 days)" sclass="section-title"/>
+            <!-- GAP: real charting needs the <charts> component (ZK Charts / Highcharts).
+                 Shown as a static placeholder to keep this demo dependency-free. -->
+            <div sclass="chart-placeholder">
+                <label value="Chart placeholder"/>
+            </div>
+        </div>
+        <div sclass="z-card md-flex-1">
+            <label value="Recent Activity" sclass="section-title"/>
+            <listbox sclass="z-border-0">
+                <listitem><listcell><label value="Order #4821 shipped"/></listcell></listitem>
+                <listitem><listcell><label value="SKU TLS-2207 marked low"/></listcell></listitem>
+                <listitem><listcell><label value="Ticket #218 closed"/></listcell></listitem>
+                <listitem><listcell><label value="Order #4820 packed"/></listcell></listitem>
+                <listitem><listcell><label value="Supplier Acme updated"/></listcell></listitem>
+            </listbox>
+        </div>
+    </div>
+
+</vlayout>
+</zk>

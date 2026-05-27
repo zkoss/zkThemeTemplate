@@ -1,0 +1,113 @@
+<?page title="Support Ticket Inbox"?>
+<zk>
+<style src="~./usecase/usecase.css"/>
+<style>
+.ticket-row { display: flex; flex-direction: column; gap: 2px; padding: 4px 0; }
+.ticket-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; margin-right: 6px; }
+.dot-high { background: var(--zk-color-error); }
+.dot-med  { background: var(--zk-color-warning); }
+.dot-low  { background: var(--zk-color-outline); }
+.msg-bubble { background: var(--zk-color-surface-container-low); border-radius: 12px; padding: 10px 14px; }
+.msg-bubble-me { background: var(--zk-color-primary-container); color: var(--zk-color-on-primary-container); border-radius: 12px; padding: 10px 14px; }
+</style>
+<vlayout hflex="1" sclass="page-content">
+
+    <label value="Support Tickets" sclass="z-h2"/>
+
+    <hlayout hflex="1" vflex="1" spacing="16px">
+
+        <!-- Master list -->
+        <div sclass="z-card z-p-0" width="340px" vflex="1" style="overflow:auto">
+            <listbox vflex="1" sclass="z-border-0">
+                <listitem selected="true">
+                    <listcell>
+                        <div sclass="ticket-row">
+                            <div>
+                                <span sclass="ticket-dot dot-high"/>
+                                <label value="Login fails after password reset" sclass="z-fw-medium"/>
+                            </div>
+                            <div sclass="z-fs-label-sm z-text-muted">
+                                <label value="Dana Lee · 10:24"/>
+                                <label value="Open" sclass="z-chip z-chip-info z-ms-2"/>
+                            </div>
+                        </div>
+                    </listcell>
+                </listitem>
+                <listitem>
+                    <listcell>
+                        <div sclass="ticket-row">
+                            <div>
+                                <span sclass="ticket-dot dot-med"/>
+                                <label value="Invoice PDF not downloading"/>
+                            </div>
+                            <div sclass="z-fs-label-sm z-text-muted">
+                                <label value="Marco P. · 09:51"/>
+                                <label value="Pending" sclass="z-chip z-chip-warning z-ms-2"/>
+                            </div>
+                        </div>
+                    </listcell>
+                </listitem>
+                <listitem>
+                    <listcell>
+                        <div sclass="ticket-row">
+                            <div>
+                                <span sclass="ticket-dot dot-low"/>
+                                <label value="Feature request: dark mode"/>
+                            </div>
+                            <div sclass="z-fs-label-sm z-text-muted">
+                                <label value="Sara K. · Yesterday"/>
+                                <label value="Open" sclass="z-chip z-chip-info z-ms-2"/>
+                            </div>
+                        </div>
+                    </listcell>
+                </listitem>
+                <listitem>
+                    <listcell>
+                        <div sclass="ticket-row">
+                            <div>
+                                <span sclass="ticket-dot dot-low"/>
+                                <label value="Thanks for the quick fix!"/>
+                            </div>
+                            <div sclass="z-fs-label-sm z-text-muted">
+                                <label value="Owen T. · Mon"/>
+                                <label value="Closed" sclass="z-chip z-chip-neutral z-ms-2"/>
+                            </div>
+                        </div>
+                    </listcell>
+                </listitem>
+            </listbox>
+        </div>
+
+        <!-- Detail pane -->
+        <div sclass="z-card md-flex-1" vflex="1">
+            <vlayout hflex="1" vflex="1" spacing="12px">
+                <div>
+                    <label value="Login fails after password reset" sclass="z-h4 z-d-block"/>
+                    <div sclass="z-fs-label-sm z-text-muted z-mt-1">
+                        <label value="Dana Lee · dana@example.com"/>
+                        <label value="Open" sclass="z-chip z-chip-info z-ms-2"/>
+                    </div>
+                </div>
+
+                <vlayout hflex="1" vflex="1" spacing="10px" style="overflow:auto">
+                    <div sclass="msg-bubble">
+                        <label value="After resetting my password I get 'invalid credentials' even with the new one." sclass="z-d-block"/>
+                        <label value="Dana · 10:24" sclass="z-fs-label-sm z-text-muted"/>
+                    </div>
+                    <div sclass="msg-bubble-me md-push-right" style="max-width:80%">
+                        <label value="Thanks Dana — can you confirm whether you used the link from the latest email?" sclass="z-d-block"/>
+                        <label value="You · 10:31" sclass="z-fs-label-sm"/>
+                    </div>
+                </vlayout>
+
+                <div sclass="md-hbox z-align-center">
+                    <textbox placeholder="Type a reply…" hflex="1" sclass="md-flex-1"/>
+                    <button label="Send" sclass="z-button-primary"/>
+                </div>
+            </vlayout>
+        </div>
+
+    </hlayout>
+
+</vlayout>
+</zk>

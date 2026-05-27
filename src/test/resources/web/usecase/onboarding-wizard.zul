@@ -1,0 +1,62 @@
+<?page title="Onboarding Wizard"?>
+<zk>
+<style src="~./usecase/usecase.css"/>
+<vlayout hflex="1" sclass="page-content">
+
+    <label value="Account Setup" sclass="z-h2"/>
+
+    <div sclass="z-card">
+        <!-- stepbar is an EE (zkmax) component -->
+        <stepbar activeIndex="1" hflex="1">
+            <step title="Account"/>
+            <step title="Profile"/>
+            <step title="Preferences"/>
+            <step title="Done"/>
+        </stepbar>
+    </div>
+
+    <!-- Only the current step's form is shown (progressive disclosure) -->
+    <div sclass="z-card">
+        <label value="Step 2 — Profile" sclass="section-title"/>
+        <grid hflex="1" sclass="z-border-0">
+            <columns>
+                <column width="160px"/>
+                <column/>
+            </columns>
+            <rows>
+                <row>
+                    <label value="Full Name"/>
+                    <textbox value="Dana Lee" hflex="1"/>
+                </row>
+                <row>
+                    <label value="Job Title"/>
+                    <textbox value="Warehouse Manager" hflex="1"/>
+                </row>
+                <row>
+                    <label value="Department"/>
+                    <combobox value="Operations" readonly="true" hflex="1">
+                        <comboitem label="Operations"/>
+                        <comboitem label="Sales"/>
+                        <comboitem label="Support"/>
+                    </combobox>
+                </row>
+                <row>
+                    <label value="Time Zone"/>
+                    <combobox value="GMT+8 Taipei" readonly="true" hflex="1">
+                        <comboitem label="GMT+8 Taipei"/>
+                        <comboitem label="GMT+0 London"/>
+                        <comboitem label="GMT-5 New York"/>
+                    </combobox>
+                </row>
+            </rows>
+        </grid>
+    </div>
+
+    <!-- Wizard nav -->
+    <div sclass="z-card md-hbox z-align-center">
+        <button label="Back"/>
+        <button label="Next" sclass="z-button-primary md-push-right"/>
+    </div>
+
+</vlayout>
+</zk>

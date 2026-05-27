@@ -1,0 +1,43 @@
+<?page title="Sign In"?>
+<zk>
+<style src="~./usecase/usecase.css"/>
+<vlayout hflex="1" sclass="page-content">
+
+    <!-- Centered using layout utilities (flex-1 + justify/align center) -->
+    <div sclass="z-d-flex z-flex-1 z-justify-center z-align-center">
+        <div sclass="z-card" width="360px">
+            <vlayout hflex="1" spacing="16px">
+
+                <div sclass="md-text-center">
+                    <label value="Marble" sclass="z-h3 md-text-primary z-d-block"/>
+                    <label value="Sign in to your account" sclass="z-text-muted z-fs-body-sm"/>
+                </div>
+
+                <div>
+                    <label value="Email" sclass="z-d-block z-mb-1 z-text-muted z-fs-label-sm"/>
+                    <textbox placeholder="you@example.com" hflex="1"/>
+                </div>
+
+                <div>
+                    <label value="Password" sclass="z-d-block z-mb-1 z-text-muted z-fs-label-sm"/>
+                    <textbox type="password" placeholder="••••••••" hflex="1"/>
+                </div>
+
+                <div sclass="md-hbox z-align-center">
+                    <checkbox label="Remember me" checked="true"/>
+                    <a label="Forgot password?" sclass="md-push-right z-fs-label-sm"/>
+                </div>
+
+                <button label="Sign In" sclass="z-button-primary" hflex="1"/>
+
+                <div sclass="md-text-center z-fs-label-sm z-text-muted">
+                    <label value="Don't have an account? "/>
+                    <a label="Sign up"/>
+                </div>
+
+            </vlayout>
+        </div>
+    </div>
+
+</vlayout>
+</zk>

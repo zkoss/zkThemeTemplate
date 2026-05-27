@@ -1,0 +1,73 @@
+<?page title="Account Settings"?>
+<zk>
+<style src="~./usecase/usecase.css"/>
+<style>
+.settings-nav .nav-item { cursor: pointer; margin-bottom: 4px; }
+.pref-row { display: flex; align-items: center; gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--zk-color-outline-variant); }
+.pref-row:last-child { border-bottom: none; }
+.pref-text { display: flex; flex-direction: column; flex: 1 1 0; min-width: 0; }
+</style>
+<vlayout hflex="1" sclass="page-content">
+
+    <label value="Settings" sclass="z-h2"/>
+
+    <hlayout hflex="1" vflex="1" spacing="16px">
+
+        <!-- Sub-nav -->
+        <div sclass="z-card settings-nav" width="220px" vflex="1">
+            <div sclass="nav-item nav-item--active">Profile</div>
+            <div sclass="nav-item">Notifications</div>
+            <div sclass="nav-item">Security</div>
+            <div sclass="nav-item">Appearance</div>
+        </div>
+
+        <!-- Preference panel -->
+        <div sclass="z-card md-flex-1" vflex="1">
+            <label value="Notifications" sclass="section-title"/>
+
+            <div sclass="pref-row">
+                <div sclass="pref-text">
+                    <label value="Email alerts" sclass="z-fw-medium"/>
+                    <label value="Receive an email when stock runs low" sclass="z-fs-label-sm z-text-muted"/>
+                </div>
+                <checkbox mold="switch" checked="true"/>
+            </div>
+
+            <div sclass="pref-row">
+                <div sclass="pref-text">
+                    <label value="Push notifications" sclass="z-fw-medium"/>
+                    <label value="Browser push for new support tickets" sclass="z-fs-label-sm z-text-muted"/>
+                </div>
+                <checkbox mold="switch"/>
+            </div>
+
+            <div sclass="pref-row">
+                <div sclass="pref-text">
+                    <label value="Digest frequency" sclass="z-fw-medium"/>
+                    <label value="How often to send the activity summary" sclass="z-fs-label-sm z-text-muted"/>
+                </div>
+                <combobox value="Daily" readonly="true" width="160px">
+                    <comboitem label="Realtime"/>
+                    <comboitem label="Daily"/>
+                    <comboitem label="Weekly"/>
+                </combobox>
+            </div>
+
+            <div sclass="pref-row">
+                <div sclass="pref-text">
+                    <label value="Alert volume" sclass="z-fw-medium"/>
+                    <label value="Sound level for in-app alerts" sclass="z-fs-label-sm z-text-muted"/>
+                </div>
+                <slider curpos="60" width="180px"/>
+            </div>
+
+            <div sclass="md-hbox z-align-center z-mt-4">
+                <button label="Cancel" sclass="md-push-right"/>
+                <button label="Save Changes" sclass="z-button-primary"/>
+            </div>
+        </div>
+
+    </hlayout>
+
+</vlayout>
+</zk>

@@ -11,15 +11,15 @@ import java.util.Map;
 
 public class UseCaseVM {
 
-    private static final String DEFAULT_PAGE = "~./usecase/dashboard.zul";
+    private static final String DEFAULT_PAGE = "~./usecase/inventory-table.zul";
     private static final String DEFAULT_NAV = "Use Cases";
 
     private static final Map<String, String> PAGE_TO_NAV;
     static {
         PAGE_TO_NAV = new HashMap<>();
-        for (String p : new String[]{"usecase/dashboard", "usecase/app-shell", "usecase/order-entry",
-                "usecase/employee-grid", "usecase/user-profile", "usecase/product-browser",
-                "usecase/report-viewer", "usecase/media-manager"}) {
+        for (String p : new String[]{"usecase/inventory-table", "usecase/item-editor",
+                "usecase/ticket-inbox", "usecase/ops-dashboard", "usecase/onboarding-wizard",
+                "usecase/account-settings", "usecase/sign-in"}) {
             PAGE_TO_NAV.put(p, "Use Cases");
         }
         for (String p : new String[]{"button", "combobutton", "checkbox", "radiogroup",

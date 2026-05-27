@@ -11,14 +11,13 @@
             <div sclass="sidebar-brand">Marble</div>
             <navbar orient="vertical">
                 <nav label="Use Cases" open="@load(vm.openNavLabel eq 'Use Cases')">
-                    <navitem label="Employee Data Grid"   onClick="@command('navigate', page='~./usecase/employee-grid.zul')"/>
-                    <navitem label="Enterprise App Shell" onClick="@command('navigate', page='~./usecase/app-shell.zul')"/>
-                    <navitem label="KPI Dashboard"        onClick="@command('navigate', page='~./usecase/dashboard.zul')"/>
-                    <navitem label="Media Manager"        onClick="@command('navigate', page='~./usecase/media-manager.zul')"/>
-                    <navitem label="Product Browser"      onClick="@command('navigate', page='~./usecase/product-browser.zul')"/>
-                    <navitem label="Report Viewer"        onClick="@command('navigate', page='~./usecase/report-viewer.zul')"/>
-                    <navitem label="Sales Order Entry"    onClick="@command('navigate', page='~./usecase/order-entry.zul')"/>
-                    <navitem label="User Profile"         onClick="@command('navigate', page='~./usecase/user-profile.zul')"/>
+                    <navitem label="Inventory Table"      onClick="@command('navigate', page='~./usecase/inventory-table.zul')"/>
+                    <navitem label="Item Editor"          onClick="@command('navigate', page='~./usecase/item-editor.zul')"/>
+                    <navitem label="Support Ticket Inbox" onClick="@command('navigate', page='~./usecase/ticket-inbox.zul')"/>
+                    <navitem label="Operations Dashboard" onClick="@command('navigate', page='~./usecase/ops-dashboard.zul')"/>
+                    <navitem label="Onboarding Wizard"    onClick="@command('navigate', page='~./usecase/onboarding-wizard.zul')"/>
+                    <navitem label="Account Settings"     onClick="@command('navigate', page='~./usecase/account-settings.zul')"/>
+                    <navitem label="Sign-In"              onClick="@command('navigate', page='~./usecase/sign-in.zul')"/>
                 </nav>
                 <nav label="Form Controls" open="@load(vm.openNavLabel eq 'Form Controls')">
                     <navitem label="Bandbox"          onClick="@command('navigate', page='~./bandbox.zul')"/>
