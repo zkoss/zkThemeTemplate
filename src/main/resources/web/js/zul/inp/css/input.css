@@ -145,6 +145,15 @@ textarea.z-textbox {
     line-height: var(--zk-typescale-body-medium-line-height);
 }
 
+/* The shared focus rule above resets padding to `0 …`, which would wipe the
+ * textarea's vertical padding and make its height visibly jump on focus.
+ * Re-assert vertical padding here; the -1px on each axis absorbs the 1px→2px
+ * border growth so the box height stays constant. */
+textarea.z-textbox:focus,
+textarea.z-textbox:focus-visible {
+    padding: calc(var(--zk-spacing-2) - 1px) calc(var(--zk-spacing-3) - 1px);
+}
+
 /* ─── Constraint violation invalid state (numeric boxes) ────────────────── */
 .z-intbox.z-intbox-invalid,
 .z-decimalbox.z-decimalbox-invalid,

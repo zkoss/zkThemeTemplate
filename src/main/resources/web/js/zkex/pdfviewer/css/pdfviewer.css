@@ -17,9 +17,12 @@
 }
 
 /* Individual PDF page wrapper */
+/* Vertical margin gives the page breathing room from the canvas edges and a
+ * gap between stacked pages — without it the first page abuts the top edge
+ * (most visible in fullscreen, where the canvas fills the screen). */
 .z-pdfviewer-page {
     position: relative;
-    margin: 0 auto;
+    margin: var(--zk-spacing-4) auto;
     box-shadow: var(--zk-elevation-2);
 }
 

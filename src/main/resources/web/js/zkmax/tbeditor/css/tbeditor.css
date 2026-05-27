@@ -4,6 +4,9 @@
 .z-tbeditor-box {
     display: flex;
     flex-direction: column;
+    /* Trumbowyg positions the formatting/link dropdowns absolutely with
+     * top/left relative to this box, so it must be the offset parent. */
+    position: relative;
     border: 1px solid var(--zk-color-outline);
     border-radius: var(--zk-shape-corner-small);
     overflow: hidden;
@@ -34,6 +37,7 @@
 
 /* Toolbar buttons — reset and sizing */
 .z-tbeditor-button-pane button {
+    position: relative;
     width: 35px;
     height: 35px;
     background: transparent;
@@ -45,6 +49,19 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
+}
+
+/* Dropdown affordance — small downward caret at the bottom-right of any
+ * button that opens a dropdown (formatting, link). */
+.z-tbeditor-button-pane .z-tbeditor-open-dropdown::after {
+    content: '';
+    position: absolute;
+    right: 3px;
+    bottom: 4px;
+    width: 0;
+    height: 0;
+    border: 3px solid transparent;
+    border-top-color: var(--zk-color-on-surface-variant);
 }
 
 /* SVG icon default fill */
@@ -101,6 +118,37 @@
     color: var(--zk-color-disabled);
 }
 
+/* ── Source textarea (Trumbowyg HTML view) ───────────────────────────────── */
+/* The raw-HTML <textarea> sits in the DOM at all times. Without resetting it,
+ * the browser's native textarea border renders as a stray box under the
+ * toolbar. In WYSIWYG mode it must collapse to nothing; in HTML view
+ * (.z-tbeditor-editor-hidden) it replaces the editor. */
+.z-tbeditor-textarea {
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 300px;
+    padding: var(--zk-spacing-4);
+    border: none;
+    outline: none;
+    resize: none;
+    background-color: var(--zk-color-surface);
+    color: var(--zk-color-on-surface);
+    font-family: monospace;
+    font-size: var(--zk-typescale-body-medium-size);
+}
+
+.z-tbeditor-box.z-tbeditor-editor-visible .z-tbeditor-textarea {
+    height: 1px !important;
+    min-height: 0 !important;
+    padding: 0 !important;
+    opacity: 0 !important;
+    background: none;
+}
+
+.z-tbeditor-box.z-tbeditor-editor-hidden .z-tbeditor-editor {
+    display: none;
+}
+
 /* ── Disabled state ──────────────────────────────────────────────────────── */
 .z-tbeditor-disabled .z-tbeditor-button-pane button:not(.z-tbeditor-not-disable) {
     opacity: 0.38;
@@ -145,29 +193,30 @@ body.z-tbeditor-body-fullscreen {
     padding: var(--zk-spacing-1) 0;
     background-color: var(--zk-color-surface);
     border: 1px solid var(--zk-color-outline-variant);
-    border-radius: var(--zk-shape-corner-small);
+    /* Same radius token as every other floating menu popup (combobox, bandbox,
+     * selectbox) so all dropdowns share one corner shape. */
+    border-radius: var(--zk-shape-menu);
     box-shadow: var(--zk-elevation-2);
 }
 
 .z-tbeditor-dropdown button {
-    display: block;
+    display: flex;
+    align-items: center;
     width: 100%;
     height: 36px;
-    line-height: 36px;
     padding: 0 var(--zk-spacing-3);
-    text-align: left;
     font-size: var(--zk-typescale-body-medium-size);
     white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
     color: var(--zk-color-on-surface);
     background: transparent;
     border: none;
     cursor: pointer;
 }
 
+/* Flex child + fixed size keeps the glyph vertically centred on the label's
+ * line (float:left would top-align it against the taller line box). */
 .z-tbeditor-dropdown button svg {
-    float: left;
+    flex: 0 0 auto;
     width: 18px;
     height: 18px;
     margin-right: var(--zk-spacing-3);

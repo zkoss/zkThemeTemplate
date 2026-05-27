@@ -1,19 +1,162 @@
+/* ── Root container ─────────────────────────────────────────────────────── */
 .z-organigram {
+    display: block;
+    overflow: auto;
+    padding: var(--zk-spacing-2);
     font-family: var(--zk-typescale-font-family);
 }
 
+/* ── Generation row ─────────────────────────────────────────────────────── */
+/* The top margin opens a gap between the parent node's bottom and the bus
+ * (`.z-orgitem::before`, drawn at the children row's top edge). The parent's
+ * drop-out line (`.z-orgnode:not(:only-child)::after`) bridges that gap. */
+.z-orgchildren {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    margin-top: var(--zk-spacing-3);
+}
+
+/* ── Item frame (branch container) ─────────────────────────────────────── */
 .z-orgitem {
+    flex: auto;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    padding-top: var(--zk-spacing-3);
+}
+
+/* ── Horizontal bus segment (::before) ─────────────────────────────────── */
+.z-orgchildren:not(:only-child) > .z-orgitem::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    border-top: 1px solid var(--zk-color-outline-variant);
+}
+
+/* First child: bus occupies right half only */
+.z-orgchildren:not(:only-child) > .z-orgitem:first-child::before {
+    width: 50%;
+    left: 50%;
+}
+
+/* Last child: bus occupies left half only */
+.z-orgchildren:not(:only-child) > .z-orgitem:last-child::before {
+    width: 50%;
+}
+
+/* ── Vertical drop-down (from bus into child node, ::after) ─────────────── */
+.z-orgchildren:not(:only-child) > .z-orgitem::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    height: var(--zk-spacing-3);
+    border-left: 1px solid var(--zk-color-outline-variant);
+}
+
+/* ── Vertical drop-out (from a parent node down to the horizontal bus, ::after) ── */
+/* A parent node's `.z-orgnode` always has an `.z-orgchildren` sibling, so
+ * `:not(:only-child)` selects exactly the nodes that have children; leaf nodes
+ * (whose `.z-orgnode` is the orgitem's only child) draw nothing. The line spans
+ * the gap that `.z-orgchildren`'s top margin opened, meeting the bus below. */
+.z-orgitem > .z-orgnode:not(:only-child)::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    height: var(--zk-spacing-3);
+    border-left: 1px solid var(--zk-color-outline-variant);
+}
+
+/* ── Node card (the visible chip) ───────────────────────────────────────── */
+.z-orgnode {
+    align-self: center;
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--zk-spacing-2);
+    min-width: 64px;
+    padding: var(--zk-spacing-2) var(--zk-spacing-3);
+    margin: 0 var(--zk-spacing-2);
     background-color: var(--zk-color-surface);
     border: 1px solid var(--zk-color-outline-variant);
     border-radius: var(--zk-shape-card);
-    box-shadow: var(--zk-elevation-1);
-    overflow: hidden;
+    color: var(--zk-color-on-surface);
+    font-size: var(--zk-typescale-body-medium-size);
+    line-height: var(--zk-typescale-body-medium-line-height);
+    cursor: pointer;
+    box-shadow: none;
+    transition:
+        background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-legacy),
+        border-color var(--zk-motion-duration-short3) var(--zk-motion-easing-legacy),
+        box-shadow var(--zk-motion-duration-short3) var(--zk-motion-easing-legacy);
 }
 
-.z-orgnode {
-    background-color: var(--zk-color-primary);
-    color: var(--zk-color-on-primary);
-    padding: var(--zk-spacing-2) var(--zk-spacing-3);
-    font-size: var(--zk-typescale-body-medium-size);
-    font-weight: 500;
+/* ── Hover state (eligible items only) ─────────────────────────────────── */
+.z-orgitem:not(.z-orgitem-disabled):not(.z-orgitem-selected) > .z-orgnode:hover {
+    background-color: rgba(0, 0, 0, 0.04);
+    border-color: var(--zk-color-on-surface);
+}
+
+/* ── Focus-visible ──────────────────────────────────────────────────────── */
+.z-orgnode:focus-visible {
+    outline: 2px solid var(--zk-color-primary);
+    outline-offset: -2px;
+}
+
+/* ── Selected state ─────────────────────────────────────────────────────── */
+.z-orgitem-selected > .z-orgnode {
+    background-color: var(--zk-color-primary-container);
+    border-color: var(--zk-color-primary);
+    color: var(--zk-color-on-primary-container);
+}
+
+/* ── Disabled state ─────────────────────────────────────────────────────── */
+.z-orgitem-disabled > .z-orgnode {
+    opacity: var(--zk-state-disabled-opacity);
+    cursor: default;
+    background-color: var(--zk-color-surface);
+}
+
+/* ── Non-selectable ─────────────────────────────────────────────────────── */
+.z-orgitem-non-selectable > .z-orgnode {
+    cursor: default;
+}
+
+/* ── Closed branch ──────────────────────────────────────────────────────── */
+.z-orgitem-close > .z-orgchildren {
+    display: none;
+}
+
+.z-orgitem-close > .z-orgnode::after {
+    display: none;
+}
+
+/* ── Expand/collapse icon ───────────────────────────────────────────────── */
+.z-orgnode-icon {
+    position: absolute;
+    right: var(--zk-spacing-1);
+    bottom: var(--zk-spacing-1);
+    width: 12px;
+    height: 12px;
+    font-size: 12px;
+    color: var(--zk-color-on-surface-variant);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Hide icon on leaf nodes (no plus/minus glyph) */
+.z-orgnode > i.z-orgnode-icon:not(.z-icon-plus):not(.z-icon-minus) {
+    display: none;
+}
+
+/* Icon picks up selected item text color */
+.z-orgitem-selected > .z-orgnode > .z-orgnode-icon {
+    color: var(--zk-color-on-primary-container);
 }
