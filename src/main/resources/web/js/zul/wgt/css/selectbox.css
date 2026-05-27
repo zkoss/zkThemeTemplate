@@ -110,7 +110,9 @@
         background-color: var(--zk-color-surface);
         color: var(--zk-color-on-surface);
         border: 1px solid var(--zk-color-outline-variant);
-        border-radius: var(--zk-shape-corner-medium);
+        /* Same radius token as every other floating menu popup (combobox,
+           bandbox, menu, tbeditor) so all popups share one corner shape. */
+        border-radius: var(--zk-shape-menu);
         box-shadow: var(--zk-elevation-3);
         padding: var(--zk-spacing-1);
         margin: 0;

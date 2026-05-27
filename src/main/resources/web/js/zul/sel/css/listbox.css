@@ -625,3 +625,179 @@ td.z-listgroup-inner {
 .z-listhead-border {
     border-right: 1px solid var(--zk-color-outline-variant);
 }
+
+/* ─── Select mold ──────────────────────────────────────────────────────────
+   `<listbox mold="select">` renders as a native `<select class="z-select">`
+   with `<option class="z-option">` children — structurally identical to
+   Selectbox (`.z-selectbox`). Mirror Selectbox's styling so both native-select
+   controls look the same. (Kept here, not in selectbox.css, because that file's
+   bundle only loads when a Selectbox widget is on the page.) */
+.z-select {
+    display: inline-block;
+    min-height: 40px;
+    min-width: 120px;
+    box-sizing: border-box;
+    padding: 0 36px 0 var(--zk-spacing-3);
+    vertical-align: middle;
+    font-family: var(--zk-typescale-font-family);
+    font-size: var(--zk-typescale-body-medium-size);
+    font-weight: var(--zk-typescale-body-medium-weight);
+    line-height: 1.5;
+    color: var(--zk-color-on-surface);
+    background-color: var(--zk-color-surface);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    background-size: 20px 20px;
+    border: 1px solid var(--zk-color-outline);
+    border-radius: var(--zk-shape-input);
+    cursor: pointer;
+    outline: none;
+    appearance: none;
+    -webkit-appearance: none;
+    transition:
+        border-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard),
+        border-width var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+}
+
+.z-select::-ms-expand {
+    display: none;
+}
+
+.z-select:hover {
+    border-color: var(--zk-color-on-surface);
+}
+
+.z-select:focus,
+.z-select:focus-visible {
+    border-color: var(--zk-color-primary);
+    border-width: 2px;
+    outline: none;
+}
+
+.z-select[disabled],
+.z-select:disabled {
+    opacity: var(--zk-state-disabled-opacity);
+    pointer-events: none;
+    cursor: not-allowed;
+    background-color: var(--zk-color-surface-container-low);
+}
+
+/* Customizable Select (Chrome 130+) — opt-in styled popup, identical to Selectbox. */
+@supports (appearance: base-select) {
+    .z-select,
+    .z-select::picker(select) {
+        appearance: base-select;
+    }
+
+    .z-select {
+        background-image: none;
+        padding-right: var(--zk-spacing-3);
+        display: inline-flex;
+        align-items: center;
+        gap: var(--zk-spacing-2);
+    }
+
+    .z-select::picker-icon {
+        color: var(--zk-color-on-surface-variant);
+        font-size: 16px;
+        transition: transform var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+    }
+
+    .z-select:open::picker-icon {
+        transform: rotate(180deg);
+    }
+
+    .z-select::picker(select) {
+        background-color: var(--zk-color-surface);
+        color: var(--zk-color-on-surface);
+        border: 1px solid var(--zk-color-outline-variant);
+        /* Same radius token as every other floating menu popup (combobox,
+           bandbox, menu, tbeditor) so all popups share one corner shape. */
+        border-radius: var(--zk-shape-menu);
+        box-shadow: var(--zk-elevation-3);
+        padding: var(--zk-spacing-1);
+        margin: 0;
+        min-width: anchor-size(width);
+        opacity: 0;
+        transform: translateY(-4px);
+        transition:
+            opacity var(--zk-motion-duration-short3) var(--zk-motion-easing-standard),
+            transform var(--zk-motion-duration-short3) var(--zk-motion-easing-standard),
+            display var(--zk-motion-duration-short3) allow-discrete,
+            overlay var(--zk-motion-duration-short3) allow-discrete;
+    }
+
+    .z-select:open::picker(select) {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    @starting-style {
+        .z-select:open::picker(select) {
+            opacity: 0;
+            transform: translateY(-4px);
+        }
+    }
+
+    .z-select option {
+        display: flex;
+        align-items: center;
+        gap: var(--zk-spacing-2);
+        padding: var(--zk-spacing-2) var(--zk-spacing-3);
+        border-radius: var(--zk-shape-corner-small);
+        font-size: var(--zk-typescale-body-medium-size);
+        font-family: var(--zk-typescale-font-family);
+        color: var(--zk-color-on-surface);
+        cursor: pointer;
+        transition: background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+    }
+
+    .z-select option:hover,
+    .z-select option:focus {
+        background-color: color-mix(in srgb, var(--zk-color-on-surface) 8%, transparent);
+        outline: none;
+    }
+
+    .z-select option:active {
+        background-color: color-mix(in srgb, var(--zk-color-on-surface) 12%, transparent);
+    }
+
+    .z-select option:checked {
+        background-color: var(--zk-color-secondary-container);
+        color: var(--zk-color-on-secondary-container);
+    }
+
+    .z-select option:checked:hover {
+        background-color: color-mix(in srgb, var(--zk-color-on-secondary-container) 8%, var(--zk-color-secondary-container));
+    }
+
+    .z-select option::checkmark {
+        order: -1;
+        content: '';
+        width: 18px;
+        height: 18px;
+        flex-shrink: 0;
+        background-color: currentColor;
+        -webkit-mask-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><path d='M20 6 9 17l-5-5'/></svg>");
+        -webkit-mask-size: contain;
+        -webkit-mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+        mask-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><path d='M20 6 9 17l-5-5'/></svg>");
+        mask-size: contain;
+        mask-repeat: no-repeat;
+        mask-position: center;
+        opacity: 0;
+    }
+
+    .z-select option:checked::checkmark {
+        opacity: 1;
+    }
+
+    .z-select selectedcontent {
+        font-family: var(--zk-typescale-font-family);
+        font-size: var(--zk-typescale-body-medium-size);
+        color: var(--zk-color-on-surface);
+        flex: 1;
+    }
+}
