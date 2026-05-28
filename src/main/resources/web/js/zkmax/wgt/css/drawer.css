@@ -23,9 +23,19 @@
     position: absolute;
     inset: 0;
     background-color: rgba(0, 0, 0, 0.32);
+    opacity: 0;
+    transition: opacity var(--zk-motion-duration-medium2) var(--zk-motion-easing-standard);
+}
+
+.z-drawer-open .z-drawer-mask {
+    opacity: 1;
 }
 
 /* ─── Real panel (visible sliding surface) ───────────────────────────────── */
+/* The slide transition is REQUIRED for closing to work: ZK's setVisible(false)
+   removes .z-drawer-open then waits for a `transitionend` on .z-drawer-real
+   before setting display:none. Without a transform transition here the event
+   never fires and the drawer stays open (mask click appears to do nothing). */
 .z-drawer-real {
     position: absolute;
     display: flex;
@@ -34,6 +44,7 @@
     box-shadow: var(--zk-elevation-3);
     overflow: hidden;
     font-family: var(--zk-typescale-font-family);
+    transition: transform var(--zk-motion-duration-medium2) var(--zk-motion-easing-emphasized);
 }
 
 /* Right drawer (default) */
@@ -42,6 +53,7 @@
     right: 0;
     bottom: 0;
     width: 320px;
+    transform: translateX(100%);
 }
 
 /* Left drawer */
@@ -50,6 +62,7 @@
     left: 0;
     bottom: 0;
     width: 320px;
+    transform: translateX(-100%);
 }
 
 /* Top drawer */
@@ -58,6 +71,7 @@
     left: 0;
     right: 0;
     height: 40%;
+    transform: translateY(-100%);
 }
 
 /* Bottom drawer */
@@ -66,6 +80,18 @@
     left: 0;
     right: 0;
     height: 40%;
+    transform: translateY(100%);
+}
+
+/* Open state — panel slides into view.
+   Compound selectors (both classes on the root) outrank the per-direction
+   closed rules above; a descendant `.z-drawer-open .z-drawer-real` would only
+   tie on specificity and lose, leaving the panel stuck off-screen. */
+.z-drawer-open.z-drawer-right .z-drawer-real,
+.z-drawer-open.z-drawer-left .z-drawer-real,
+.z-drawer-open.z-drawer-top .z-drawer-real,
+.z-drawer-open.z-drawer-bottom .z-drawer-real {
+    transform: none;
 }
 
 /* ─── Header ─────────────────────────────────────────────────────────────── */

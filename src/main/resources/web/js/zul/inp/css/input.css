@@ -250,7 +250,7 @@ textarea.z-textbox:focus-visible {
     border: 1px solid var(--zk-color-error);
     border-radius: var(--zk-shape-corner-extra-small);
     /* left padding leaves room for icon */
-    padding: var(--zk-spacing-2) 28px var(--zk-spacing-2) 28px;
+    padding: var(--zk-spacing-2) 28px var(--zk-spacing-2) 34px;
     background: var(--zk-color-error-container);
     position: relative;
     overflow: hidden;
@@ -266,7 +266,7 @@ textarea.z-textbox:focus-visible {
     height: 14px;
     line-height: 14px;
     top: 50%;
-    left: var(--zk-spacing-2);
+    left: var(--zk-spacing-3);
     margin-top: -7px;
     color: var(--zk-color-error);
 }
@@ -293,8 +293,13 @@ textarea.z-textbox:focus-visible {
     color: inherit;
 }
 
+/* ZK reveals the pointer with jQuery .show() (Errorbox._fixarrow), which only
+   clears an inline display value — it cannot win against a stylesheet
+   `display:none`. So the base must stay visible; with all four borders
+   transparent the triangle is invisible until a direction class colours one
+   side, which is exactly when ZK wants it shown. */
 .z-errorbox-pointer {
-    display: none;
+    display: block;
     width: 0;
     height: 0;
     border: 6px solid transparent;
@@ -309,10 +314,12 @@ textarea.z-textbox:focus-visible {
     border: 6px solid transparent;
 }
 
-.z-errorbox-left  { border-right-color:  var(--zk-color-error-container); }
-.z-errorbox-right { border-left-color:   var(--zk-color-error-container); }
-.z-errorbox-up    { border-bottom-color: var(--zk-color-error-container); }
-.z-errorbox-down  { border-top-color:    var(--zk-color-error-container); }
+/* Arrow colour matches the error border so it reads as a clear beak pointing
+   at the source field (error-container is too faint to see on a light page). */
+.z-errorbox-left  { border-right-color:  var(--zk-color-error); }
+.z-errorbox-right { border-left-color:   var(--zk-color-error); }
+.z-errorbox-up    { border-bottom-color: var(--zk-color-error); }
+.z-errorbox-down  { border-top-color:    var(--zk-color-error); }
 
 .z-errorbox-pointer ~ .z-errorbox-content {
     display: table-cell;

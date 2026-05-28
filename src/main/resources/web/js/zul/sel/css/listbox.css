@@ -110,15 +110,12 @@
     margin-left: 0;
 }
 
-/* Sort icon: pinned to center-top of header cell */
+/* Sort icon: inline next to the header label (mirrors grid's .z-column-sorticon). */
 .z-listheader-sorticon {
-    position: absolute;
-    top: 2px;
-    left: 0;
-    right: 0;
-    display: flex;
-    justify-content: center;
+    display: inline-flex;
     align-items: center;
+    margin-left: var(--zk-spacing-1);
+    vertical-align: middle;
     pointer-events: none;
 }
 

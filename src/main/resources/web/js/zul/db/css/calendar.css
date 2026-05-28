@@ -129,8 +129,12 @@
     position: relative;
     text-align: center;
     vertical-align: middle;
-    height: 36px;
-    padding: 2px;
+    height: 40px;
+    /* padding + content-box clip keep the highlight a centred circle with
+       breathing room on every side instead of a cell-filling block that
+       touches its neighbours and the grid edges. */
+    padding: 4px 3px;
+    background-clip: content-box;
     font-size: var(--zk-typescale-body-medium-size);
     font-weight: var(--zk-typescale-body-medium-weight);
     color: var(--zk-color-on-surface);
@@ -169,8 +173,19 @@
 }
 
 /* ─── Today's date cell (z-calendar-today class added by ZK when present) ── */
-.z-calendar-cell.z-calendar-today {
-    outline: 1px solid var(--zk-color-primary);
+/* A circular ring centred on the cell so it matches the round selected/hover
+   highlight (a rectangular outline would break the circle motif). */
+.z-calendar-cell.z-calendar-today::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 32px;
+    height: 32px;
+    transform: translate(-50%, -50%);
+    border: 1px solid var(--zk-color-primary);
+    border-radius: 50%;
+    pointer-events: none;
 }
 
 /* ─── Disabled day cells ─────────────────────────────────────────────────── */
@@ -217,6 +232,8 @@
     font-size: var(--zk-typescale-body-medium-size);
     border-radius: var(--zk-shape-button);
     padding: 0 var(--zk-spacing-2);
+    /* month/year/decade chips fill the whole cell (pill), not a circle */
+    background-clip: border-box;
 }
 
 /* ─── Today link footer (showTodayLink=true) ─────────────────────────────── */
