@@ -199,6 +199,145 @@
     </div>
 
     <div sclass="z-mb-6">
+        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Auxheader Rowspan</div>
+        <div sclass="z-py-3">
+            <div style="display:flex; gap:16px; align-items:flex-start;">
+                <grid width="360px">
+                    <auxhead>
+                        <auxheader label="Group A" colspan="2"/>
+                        <auxheader label="Detail" rowspan="2"/>
+                    </auxhead>
+                    <auxhead>
+                        <auxheader label="Sub-A1"/>
+                        <auxheader label="Sub-A2"/>
+                    </auxhead>
+                    <columns>
+                        <column label="Col 1" width="100px"/>
+                        <column label="Col 2" width="100px"/>
+                        <column label="Col 3" width="100px"/>
+                    </columns>
+                    <rows>
+                        <row><label value="R1C1"/><label value="R1C2"/><label value="R1C3"/></row>
+                        <row><label value="R2C1"/><label value="R2C2"/><label value="R2C3"/></row>
+                    </rows>
+                </grid>
+
+                <grid width="360px">
+                    <auxhead>
+                        <auxheader label="Span2Rows" rowspan="2"/>
+                        <auxheader label="B+C" colspan="2"/>
+                    </auxhead>
+                    <auxhead>
+                        <auxheader label="B"/>
+                        <auxheader label="C"/>
+                    </auxhead>
+                    <columns>
+                        <column label="Name" width="120px"/>
+                        <column label="Value" width="120px"/>
+                        <column label="Unit" width="80px"/>
+                    </columns>
+                    <rows>
+                        <row><label value="Alpha"/><label value="42"/><label value="kg"/></row>
+                        <row><label value="Beta"/><label value="18"/><label value="m"/></row>
+                    </rows>
+                </grid>
+            </div>
+        </div>
+    </div>
+
+    <div sclass="z-mb-6">
+        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">sizedByContent + Span Column</div>
+        <div sclass="z-py-3">
+            <div style="display:flex; gap:16px; align-items:flex-start;">
+                <grid sizedByContent="true">
+                    <columns sizable="true">
+                        <column label="ID"/>
+                        <column label="Product Name"/>
+                        <column label="Price"/>
+                    </columns>
+                    <rows>
+                        <row><label value="001"/><label value="Widget Pro X"/><label value="$49.99"/></row>
+                        <row><label value="002"/><label value="Gadget Mini"/><label value="$9.99"/></row>
+                        <row><label value="003"/><label value="Super Long Product Name Here"/><label value="$199.00"/></row>
+                    </rows>
+                </grid>
+
+                <grid width="400px" span="true" sizedByContent="true">
+                    <columns>
+                        <column label="Fixed" width="100px"/>
+                        <column label="Span (grid span=true)"/>
+                        <column label="Fixed2" width="80px"/>
+                    </columns>
+                    <rows>
+                        <row><label value="A"/><label value="This column stretches to fill remaining space"/><label value="Z"/></row>
+                        <row><label value="B"/><label value="Short"/><label value="Y"/></row>
+                    </rows>
+                </grid>
+            </div>
+        </div>
+    </div>
+
+    <div sclass="z-mb-6">
+        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Frozen Right (Start Columns Scroll)</div>
+        <div sclass="z-py-3">
+            <grid width="500px">
+                <frozen columns="2" start="1"/>
+                <columns>
+                    <column label="ID" width="80px"/>
+                    <column label="Product" width="160px"/>
+                    <column label="Category" width="140px"/>
+                    <column label="Stock" width="100px"/>
+                    <column label="Price" width="100px"/>
+                    <column label="Action" width="120px"/>
+                </columns>
+                <rows>
+                    <row><label value="001"/><label value="Widget Pro X"/><label value="Electronics"/><label value="120"/><label value="$49.99"/><label value="Edit"/></row>
+                    <row><label value="002"/><label value="Gadget Mini"/><label value="Accessories"/><label value="45"/><label value="$9.99"/><label value="Edit"/></row>
+                    <row><label value="003"/><label value="SuperLong Name Product"/><label value="Furniture"/><label value="8"/><label value="$199.00"/><label value="Edit"/></row>
+                    <row><label value="004"/><label value="Basic Stand"/><label value="Office"/><label value="200"/><label value="$24.50"/><label value="Edit"/></row>
+                </rows>
+            </grid>
+        </div>
+    </div>
+
+    <div sclass="z-mb-6">
+        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Sticky Header (z-sticky-header)</div>
+        <div sclass="z-py-3">
+            <div style="height:200px; overflow-y:auto; border:1px solid var(--zk-color-outline);">
+                <grid sclass="z-sticky-header" width="500px">
+                    <columns>
+                        <column label="Row #" width="80px"/>
+                        <column label="Subject"/>
+                        <column label="Date" width="130px"/>
+                    </columns>
+                    <rows>
+                        <row><label value="1"/><label value="Introduction to ZK Framework"/><label value="2024-01-01"/></row>
+                        <row><label value="2"/><label value="Building Reactive UIs"/><label value="2024-01-02"/></row>
+                        <row><label value="3"/><label value="Data Binding in MVVM"/><label value="2024-01-03"/></row>
+                        <row><label value="4"/><label value="Component Lifecycle"/><label value="2024-01-04"/></row>
+                        <row><label value="5"/><label value="Custom CSS Themes"/><label value="2024-01-05"/></row>
+                        <row><label value="6"/><label value="Grid and Listbox"/><label value="2024-01-06"/></row>
+                        <row><label value="7"/><label value="Tree Component"/><label value="2024-01-07"/></row>
+                        <row><label value="8"/><label value="Tabbox and Panels"/><label value="2024-01-08"/></row>
+                        <row><label value="9"/><label value="Event Handling"/><label value="2024-01-09"/></row>
+                        <row><label value="10"/><label value="Server Push"/><label value="2024-01-10"/></row>
+                        <row><label value="11"/><label value="Security Configuration"/><label value="2024-01-11"/></row>
+                        <row><label value="12"/><label value="Spring Integration"/><label value="2024-01-12"/></row>
+                        <row><label value="13"/><label value="Hibernate ORM"/><label value="2024-01-13"/></row>
+                        <row><label value="14"/><label value="Testing ZK Apps"/><label value="2024-01-14"/></row>
+                        <row><label value="15"/><label value="Deployment Guide"/><label value="2024-01-15"/></row>
+                        <row><label value="16"/><label value="Performance Tuning"/><label value="2024-01-16"/></row>
+                        <row><label value="17"/><label value="Accessibility Tips"/><label value="2024-01-17"/></row>
+                        <row><label value="18"/><label value="Internationalization"/><label value="2024-01-18"/></row>
+                        <row><label value="19"/><label value="Client-Side Widgets"/><label value="2024-01-19"/></row>
+                        <row><label value="20"/><label value="Release Notes 10.x"/><label value="2024-01-20"/></row>
+                    </rows>
+                </grid>
+            </div>
+        </div>
+    </div>
+
+    <div sclass="z-mb-6">
         <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Embedded Components in Header</div>
         <div sclass="z-py-3">
             <div style="display:flex; gap:16px; align-items:flex-start;">

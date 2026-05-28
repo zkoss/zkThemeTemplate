@@ -1,4 +1,12 @@
 <zk>
+<zscript><![CDATA[
+    import org.zkoss.zul.ListModelList;
+    ListModelList chosenboxEmpty = new ListModelList(new String[]{
+        "Apple", "Banana", "Cherry", "Date", "Elderberry"
+    });
+    chosenboxEmpty.setMultiple(true);
+]]></zscript>
+
 <apply templateURI="~./pv/matrix.zul" title="States"
        cols="${['Default','Disabled']}" colsSuffix="-wide"
        rowsTemplate="chosenbox-rows">
@@ -15,4 +23,18 @@
         </div>
     </template>
 </apply>
+
+<div sclass="z-mb-6">
+    <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Messages and Placeholder</div>
+    <div sclass="z-d-flex z-flex-wrap z-gap-6 z-py-3">
+        <div sclass="z-d-flex z-flex-col z-gap-2">
+            <label sclass="z-fs-label-sm z-text-secondary">emptyMessage (nothing selected)</label>
+            <chosenbox model="${chosenboxEmpty}" emptyMessage="Pick one or more…" width="220px"/>
+        </div>
+        <div sclass="z-d-flex z-flex-col z-gap-2">
+            <label sclass="z-fs-label-sm z-text-secondary">createMessage + noResultsText</label>
+            <chosenbox model="${chosenboxEmpty}" creatable="true" createMessage="Add new {0}" noResultsText="No matches found" width="220px"/>
+        </div>
+    </div>
+</div>
 </zk>

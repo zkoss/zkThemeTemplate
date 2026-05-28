@@ -4,6 +4,27 @@
 <div sclass="z-p-8" style="height:100vh;display:flex;flex-direction:column;">
     <div sclass="z-border-bottom z-fs-title-lg z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Biglistbox</div>
 
+    <div sclass="z-mb-6">
+        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">oddRowSclass Striping</div>
+        <div sclass="z-py-3">
+            <div sclass="z-fs-label-sm z-text-secondary z-mb-2">oddRowSclass="z-biglistbox-odd" (5 rows)</div>
+            <zscript>
+                import zk.example.FakerMatrixModel;
+                FakerMatrixModel stripedModel = new FakerMatrixModel(5, 5);
+            </zscript>
+            <biglistbox id="stripedBiglist" oddRowSclass="z-biglistbox-odd"
+                        model="${stripedModel}"
+                        hflex="1" height="200px" colWidth="130px">
+                <template name="heads">
+                    <html><![CDATA[<div>${each[matrixInfo[0]]}</div>]]></html>
+                </template>
+                <template name="rows">
+                    <html><![CDATA[<div>${each[matrixInfo[0]]}</div>]]></html>
+                </template>
+            </biglistbox>
+        </div>
+    </div>
+
     <div sclass="z-mb-4">
         <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Controls</div>
         <vlayout apply="zk.example.BiglistboxComposer">

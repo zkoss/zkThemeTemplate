@@ -177,5 +177,27 @@
         </div>
     </div>
 
+
+    <div sclass="z-mb-6">
+        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Autoclose=false (Multiple Groups Open)</div>
+        <div sclass="z-d-flex z-align-start z-flex-wrap z-gap-6 z-py-3">
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <div sclass="z-fs-label-sm z-text-secondary">autoclose="false" — both nav groups expanded simultaneously</div>
+                <navbar orient="vertical" autoclose="false">
+                    <nav label="Documents" iconSclass="z-icon-folder-open" open="true">
+                        <navitem label="Reports"/>
+                        <navitem label="Invoices"/>
+                        <navitem label="Contracts"/>
+                    </nav>
+                    <nav label="Settings" iconSclass="z-icon-cog" open="true">
+                        <navitem label="Profile"/>
+                        <navitem label="Security"/>
+                        <navitem label="Notifications"/>
+                    </nav>
+                    <navitem label="Logout" iconSclass="z-icon-power-off"/>
+                </navbar>
+            </div>
+        </div>
+    </div>
 </div>
 </zk>

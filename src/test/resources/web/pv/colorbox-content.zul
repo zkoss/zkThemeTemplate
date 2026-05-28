@@ -20,4 +20,19 @@
         </div>
     </template>
 </apply>
+
+<div sclass="z-mb-6">
+    <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Colorbox in Menu</div>
+    <div sclass="z-py-3">
+        <menubar>
+            <menuitem label="Color" popup="colorPopup"/>
+        </menubar>
+        <popup id="colorPopup">
+            <vbox spacing="8" style="padding:8px;">
+                <label value="Pick a colour:"/>
+                <colorbox/>
+            </vbox>
+        </popup>
+    </div>
+</div>
 </zk>

@@ -49,5 +49,23 @@
             <div><checkbox mold="toggle" label="Dis+On" disabled="true" checked="true"/></div>
         </div>
     </div>
+
+    <div sclass="z-mb-6">
+        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Tristate Mold</div>
+        <div sclass="z-d-flex z-align-start z-flex-wrap z-gap-6 z-py-3">
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <div sclass="z-fs-label-sm z-text-secondary">mold="tristate" (unchecked)</div>
+                <checkbox mold="tristate" label="Tristate"/>
+            </div>
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <div sclass="z-fs-label-sm z-text-secondary">mold="tristate" checked</div>
+                <checkbox mold="tristate" label="Tristate" checked="true"/>
+            </div>
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <div sclass="z-fs-label-sm z-text-secondary">mold="tristate" indeterminate</div>
+                <checkbox mold="tristate" label="Tristate" indeterminate="true"/>
+            </div>
+        </div>
+    </div>
 </div>
 </zk>

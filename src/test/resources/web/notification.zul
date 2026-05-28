@@ -39,6 +39,7 @@
             <button label="Info" onClick='Clients.showNotification("This is an info message.", Clients.NOTIFICATION_TYPE_INFO, null, "top_right", 3000, true)'/>
             <button label="Warning" onClick='Clients.showNotification("This is a warning.", Clients.NOTIFICATION_TYPE_WARNING, null, "top_right", 3000, true)'/>
             <button label="Error" onClick='Clients.showNotification("This is an error.", Clients.NOTIFICATION_TYPE_ERROR, null, "top_right", 3000, true)'/>
+            <button label="Success" onClick='Clients.showNotification("Operation succeeded", "success", null, "top_center", 3000, true)'/>
         </div>
     </div>
     <div sclass="z-mb-6">

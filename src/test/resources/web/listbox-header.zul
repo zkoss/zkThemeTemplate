@@ -379,6 +379,206 @@
     </div>
 
     <div sclass="z-mb-6">
+        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Select Mold with Optgroup (listgroup)</div>
+        <div sclass="z-py-3">
+            <div style="display:flex; gap:16px; align-items:flex-start;">
+                <listbox mold="select" rows="1">
+                    <listgroup label="Fruits"/>
+                    <listitem label="Apple"/>
+                    <listitem label="Banana"/>
+                    <listitem label="Mango"/>
+                    <listgroup label="Vegetables"/>
+                    <listitem label="Carrot"/>
+                    <listitem label="Broccoli"/>
+                    <listgroup label="Grains"/>
+                    <listitem label="Rice"/>
+                    <listitem label="Wheat"/>
+                </listbox>
+
+                <listbox mold="select" rows="4">
+                    <listgroup label="Frontend"/>
+                    <listitem label="React"/>
+                    <listitem label="Vue"/>
+                    <listitem label="ZK Framework"/>
+                    <listgroup label="Backend"/>
+                    <listitem label="Spring Boot"/>
+                    <listitem label="Django"/>
+                </listbox>
+            </div>
+        </div>
+    </div>
+
+    <div sclass="z-mb-6">
+        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Auxheader Rowspan</div>
+        <div sclass="z-py-3">
+            <div style="display:flex; gap:16px; align-items:flex-start;">
+                <listbox width="400px">
+                    <auxhead>
+                        <auxheader label="Group A" colspan="2"/>
+                        <auxheader label="Detail" rowspan="2"/>
+                    </auxhead>
+                    <auxhead>
+                        <auxheader label="Sub-A1"/>
+                        <auxheader label="Sub-A2"/>
+                    </auxhead>
+                    <listhead>
+                        <listheader label="Col 1"/>
+                        <listheader label="Col 2"/>
+                        <listheader label="Col 3"/>
+                    </listhead>
+                    <listitem>
+                        <listcell label="R1C1"/>
+                        <listcell label="R1C2"/>
+                        <listcell label="R1C3"/>
+                    </listitem>
+                    <listitem>
+                        <listcell label="R2C1"/>
+                        <listcell label="R2C2"/>
+                        <listcell label="R2C3"/>
+                    </listitem>
+                </listbox>
+
+                <listbox width="400px">
+                    <auxhead>
+                        <auxheader label="Span2Rows" rowspan="2"/>
+                        <auxheader label="B+C" colspan="2"/>
+                    </auxhead>
+                    <auxhead>
+                        <auxheader label="B"/>
+                        <auxheader label="C"/>
+                    </auxhead>
+                    <listhead>
+                        <listheader label="Name"/>
+                        <listheader label="Value"/>
+                        <listheader label="Unit"/>
+                    </listhead>
+                    <listitem>
+                        <listcell label="Alpha"/>
+                        <listcell label="42"/>
+                        <listcell label="kg"/>
+                    </listitem>
+                    <listitem>
+                        <listcell label="Beta"/>
+                        <listcell label="18"/>
+                        <listcell label="m"/>
+                    </listitem>
+                </listbox>
+            </div>
+        </div>
+    </div>
+
+    <div sclass="z-mb-6">
+        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">sizedByContent + Span Header</div>
+        <div sclass="z-py-3">
+            <div style="display:flex; gap:16px; align-items:flex-start;">
+                <listbox sizedByContent="true">
+                    <listhead sizable="true">
+                        <listheader label="ID"/>
+                        <listheader label="Product Name"/>
+                        <listheader label="Price"/>
+                    </listhead>
+                    <listitem>
+                        <listcell label="001"/>
+                        <listcell label="Widget Pro X"/>
+                        <listcell label="$49.99"/>
+                    </listitem>
+                    <listitem>
+                        <listcell label="002"/>
+                        <listcell label="Super Long Product Name Here"/>
+                        <listcell label="$199.00"/>
+                    </listitem>
+                </listbox>
+
+                <listbox width="420px" span="true" sizedByContent="true">
+                    <listhead>
+                        <listheader label="Fixed" width="100px"/>
+                        <listheader label="Span (listbox span=true)"/>
+                        <listheader label="Fixed2" width="80px"/>
+                    </listhead>
+                    <listitem>
+                        <listcell label="A"/>
+                        <listcell label="This column stretches to fill remaining space"/>
+                        <listcell label="Z"/>
+                    </listitem>
+                    <listitem>
+                        <listcell label="B"/>
+                        <listcell label="Short"/>
+                        <listcell label="Y"/>
+                    </listitem>
+                </listbox>
+            </div>
+        </div>
+    </div>
+
+    <div sclass="z-mb-6">
+        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Frozen Right (Start Columns Scroll)</div>
+        <div sclass="z-py-3">
+            <listbox width="500px">
+                <frozen columns="2" start="1"/>
+                <listhead>
+                    <listheader label="ID" width="70px"/>
+                    <listheader label="Product" width="160px"/>
+                    <listheader label="Category" width="140px"/>
+                    <listheader label="Stock" width="90px"/>
+                    <listheader label="Price" width="100px"/>
+                    <listheader label="Action" width="110px"/>
+                </listhead>
+                <listitem>
+                    <listcell label="001"/><listcell label="Widget Pro X"/><listcell label="Electronics"/>
+                    <listcell label="120"/><listcell label="$49.99"/><listcell label="Edit"/>
+                </listitem>
+                <listitem>
+                    <listcell label="002"/><listcell label="Gadget Mini"/><listcell label="Accessories"/>
+                    <listcell label="45"/><listcell label="$9.99"/><listcell label="Edit"/>
+                </listitem>
+                <listitem>
+                    <listcell label="003"/><listcell label="SuperLong Name"/><listcell label="Furniture"/>
+                    <listcell label="8"/><listcell label="$199.00"/><listcell label="Edit"/>
+                </listitem>
+                <listitem>
+                    <listcell label="004"/><listcell label="Basic Stand"/><listcell label="Office"/>
+                    <listcell label="200"/><listcell label="$24.50"/><listcell label="Edit"/>
+                </listitem>
+            </listbox>
+        </div>
+    </div>
+
+    <div sclass="z-mb-6">
+        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Sticky Header (z-sticky-header)</div>
+        <div sclass="z-py-3">
+            <div style="height:200px; overflow-y:auto; border:1px solid var(--zk-color-outline);">
+                <listbox sclass="z-sticky-header" width="500px">
+                    <listhead>
+                        <listheader label="Row #" width="70px"/>
+                        <listheader label="Subject"/>
+                        <listheader label="Date" width="130px"/>
+                    </listhead>
+                    <listitem><listcell label="1"/><listcell label="Introduction to ZK Framework"/><listcell label="2024-01-01"/></listitem>
+                    <listitem><listcell label="2"/><listcell label="Building Reactive UIs"/><listcell label="2024-01-02"/></listitem>
+                    <listitem><listcell label="3"/><listcell label="Data Binding in MVVM"/><listcell label="2024-01-03"/></listitem>
+                    <listitem><listcell label="4"/><listcell label="Component Lifecycle"/><listcell label="2024-01-04"/></listitem>
+                    <listitem><listcell label="5"/><listcell label="Custom CSS Themes"/><listcell label="2024-01-05"/></listitem>
+                    <listitem><listcell label="6"/><listcell label="Grid and Listbox"/><listcell label="2024-01-06"/></listitem>
+                    <listitem><listcell label="7"/><listcell label="Tree Component"/><listcell label="2024-01-07"/></listitem>
+                    <listitem><listcell label="8"/><listcell label="Tabbox and Panels"/><listcell label="2024-01-08"/></listitem>
+                    <listitem><listcell label="9"/><listcell label="Event Handling"/><listcell label="2024-01-09"/></listitem>
+                    <listitem><listcell label="10"/><listcell label="Server Push"/><listcell label="2024-01-10"/></listitem>
+                    <listitem><listcell label="11"/><listcell label="Security Configuration"/><listcell label="2024-01-11"/></listitem>
+                    <listitem><listcell label="12"/><listcell label="Spring Integration"/><listcell label="2024-01-12"/></listitem>
+                    <listitem><listcell label="13"/><listcell label="Hibernate ORM"/><listcell label="2024-01-13"/></listitem>
+                    <listitem><listcell label="14"/><listcell label="Testing ZK Apps"/><listcell label="2024-01-14"/></listitem>
+                    <listitem><listcell label="15"/><listcell label="Deployment Guide"/><listcell label="2024-01-15"/></listitem>
+                    <listitem><listcell label="16"/><listcell label="Performance Tuning"/><listcell label="2024-01-16"/></listitem>
+                    <listitem><listcell label="17"/><listcell label="Accessibility Tips"/><listcell label="2024-01-17"/></listitem>
+                    <listitem><listcell label="18"/><listcell label="Internationalization"/><listcell label="2024-01-18"/></listitem>
+                    <listitem><listcell label="19"/><listcell label="Client-Side Widgets"/><listcell label="2024-01-19"/></listitem>
+                    <listitem><listcell label="20"/><listcell label="Release Notes 10.x"/><listcell label="2024-01-20"/></listitem>
+                </listbox>
+            </div>
+        </div>
+    </div>
+
+    <div sclass="z-mb-6">
         <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Complex Header with Embedded Components</div>
         <div sclass="z-py-3">
             <listbox>

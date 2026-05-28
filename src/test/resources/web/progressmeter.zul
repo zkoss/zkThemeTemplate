@@ -45,5 +45,15 @@
             <div sclass="z-fs-label-sm z-text-secondary">Drag slider to change value</div>
         </div>
     </div>
+
+    <div sclass="z-mb-6">
+        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Indeterminate</div>
+        <div sclass="z-d-flex z-align-start z-flex-wrap z-gap-6 z-py-3">
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <div sclass="z-fs-label-sm z-text-secondary">indeterminate="true" (animated)</div>
+                <progressmeter indeterminate="true" width="200px"/>
+            </div>
+        </div>
+    </div>
 </div>
 </zk>

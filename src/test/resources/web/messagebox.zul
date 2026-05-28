@@ -62,5 +62,25 @@
             </button>
         </div>
     </div>
+    <div sclass="z-mb-6">
+        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Extended Button Sets</div>
+        <div sclass="z-py-3 z-d-flex z-gap-4 z-flex-wrap">
+            <button label="YES / NO">
+                <attribute name="onClick">
+                    Messagebox.show("Apply changes?", "Confirm", Messagebox.YES | Messagebox.NO, Messagebox.QUESTION);
+                </attribute>
+            </button>
+            <button label="YES / NO / CANCEL">
+                <attribute name="onClick">
+                    Messagebox.show("Save before exit?", "Confirm", Messagebox.YES | Messagebox.NO | Messagebox.CANCEL, Messagebox.QUESTION);
+                </attribute>
+            </button>
+            <button label="Buttonless">
+                <attribute name="onClick">
+                    Messagebox.show("Working…", "Please wait", 0, Messagebox.INFORMATION);
+                </attribute>
+            </button>
+        </div>
+    </div>
 </div>
 </zk>

@@ -1,6 +1,14 @@
 <?page title="Rangeslider" contentType="text/html;charset=UTF-8"?>
 <zk xmlns:h="native">
 <h:link rel="stylesheet" href="pv.css"/>
+<zscript><![CDATA[
+    java.util.LinkedHashMap rangeMarks = new java.util.LinkedHashMap();
+    rangeMarks.put(0, "Start");
+    rangeMarks.put(25, "Q1");
+    rangeMarks.put(50, "Mid");
+    rangeMarks.put(75, "Q3");
+    rangeMarks.put(100, "End");
+]]></zscript>
 <div sclass="z-p-8">
     <div sclass="z-border-bottom z-fs-title-lg z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Rangeslider</div>
 
@@ -33,6 +41,24 @@
             <div sclass="z-d-flex z-flex-col z-align-center z-gap-6">
                 <rangeslider orient="vertical" startValue="20" endValue="80" markScale="20" height="500px"/>
                 <div sclass="z-fs-label-sm z-text-secondary">With scale marks</div>
+            </div>
+        </div>
+    </div>
+
+    <div sclass="z-mb-6">
+        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Marks / Disabled / Tooltip Visible</div>
+        <div sclass="z-d-flex z-flex-col z-align-start z-gap-8 z-py-3">
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <rangeslider startValue="25" endValue="75" marks="${rangeMarks}" width="500px"/>
+                <div sclass="z-fs-label-sm z-text-secondary">Custom text marks (Start/Q1/Mid/Q3/End)</div>
+            </div>
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <rangeslider startValue="20" endValue="80" disabled="true" width="500px"/>
+                <div sclass="z-fs-label-sm z-text-secondary">Disabled</div>
+            </div>
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <rangeslider startValue="30" endValue="70" tooltipVisible="true" width="500px"/>
+                <div sclass="z-fs-label-sm z-text-secondary">Always-visible tooltips</div>
             </div>
         </div>
     </div>

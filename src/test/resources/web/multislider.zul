@@ -1,6 +1,14 @@
 <?page title="Multislider" contentType="text/html;charset=UTF-8"?>
 <zk xmlns:h="native">
 <h:link rel="stylesheet" href="pv.css"/>
+<zscript><![CDATA[
+    java.util.LinkedHashMap marks = new java.util.LinkedHashMap();
+    marks.put(0, "Min");
+    marks.put(25, "Low");
+    marks.put(50, "Mid");
+    marks.put(75, "High");
+    marks.put(100, "Max");
+]]></zscript>
 <div sclass="z-p-8">
     <div sclass="z-border-bottom z-fs-title-lg z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Multislider</div>
 
@@ -31,6 +39,36 @@
                 <div/>
                 <div/>
                 <div sclass="z-fs-label-sm z-text-secondary">2 ranges</div>
+            </div>
+        </div>
+    </div>
+
+    <div sclass="z-mb-6">
+        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Marks / Disabled / Tooltip Visible</div>
+        <div sclass="z-d-flex z-flex-col z-align-start z-gap-8 z-py-3">
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <multislider width="500px" markScale="10">
+                    <sliderbuttons startValue="20" endValue="60"/>
+                </multislider>
+                <div sclass="z-fs-label-sm z-text-secondary">Numeric tick labels every 10 (markScale)</div>
+            </div>
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <multislider width="500px" marks="${marks}">
+                    <sliderbuttons startValue="25" endValue="75"/>
+                </multislider>
+                <div sclass="z-fs-label-sm z-text-secondary">Custom text marks (Min/Low/Mid/High/Max)</div>
+            </div>
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <multislider width="500px" disabled="true">
+                    <sliderbuttons startValue="20" endValue="60"/>
+                </multislider>
+                <div sclass="z-fs-label-sm z-text-secondary">Disabled</div>
+            </div>
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <multislider width="500px" tooltipVisible="true">
+                    <sliderbuttons startValue="30" endValue="70"/>
+                </multislider>
+                <div sclass="z-fs-label-sm z-text-secondary">Always-visible tooltips</div>
             </div>
         </div>
     </div>

@@ -7,18 +7,16 @@
     <div sclass="z-mb-6">
         <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Card Switching</div>
         <div sclass="z-py-3">
-            <cardlayout id="card" width="300px" height="200px" style="border:3px solid orange" selectedIndex="1">
+            <cardlayout id="card" width="300px" height="200px" selectedIndex="1" sclass="z-border">
                 <div vflex="1" hflex="1" style="background-color:yellow;padding:20px">Card 1</div>
                 <div vflex="1" hflex="1" style="background-color:green;color:white;padding:20px">Card 2</div>
                 <div vflex="1" hflex="1" style="background-color:skyblue;padding:20px">Card 3</div>
             </cardlayout>
-            <hlayout sclass="z-mt-4">
                 <button onClick="card.previous()">Previous</button>
                 <button onClick="card.next()">Next</button>
                 <button onClick='card.setOrient("horizontal".equals(card.getOrient()) ? "vertical" : "horizontal")'>
                     Toggle Orient
                 </button>
-            </hlayout>
         </div>
     </div>
 

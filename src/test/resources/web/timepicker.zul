@@ -1,6 +1,11 @@
 <?page title="Timepicker" contentType="text/html;charset=UTF-8"?>
 <zk xmlns:h="native">
 <h:link rel="stylesheet" href="pv.css"/>
+<zscript><![CDATA[
+    java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("HH:mm");
+    java.util.Date time0930 = sdf.parse("09:30");
+    java.util.Date time1800 = sdf.parse("18:00");
+]]></zscript>
 <div sclass="z-p-8">
     <div sclass="z-border-bottom z-fs-title-lg z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Timepicker</div>
 
@@ -37,6 +42,23 @@
             <div sclass="z-fs-label-md z-text-secondary">Default</div>
             <div><timepicker format="HH:mm" width="160px"/></div>
             <div><timepicker format="HH:mm" disabled="true" width="160px"/></div>
+        </div>
+        <div sclass="pv-row z-py-2 z-border-bottom">
+            <div sclass="z-fs-label-md z-text-secondary">Readonly</div>
+            <div><timepicker format="HH:mm" readonly="true" value="${time0930}" width="160px"/></div>
+            <div>—</div>
+        </div>
+        <div sclass="pv-row z-py-2 z-border-bottom">
+            <div sclass="z-fs-label-md z-text-secondary">Inplace</div>
+            <div><timepicker format="HH:mm" inplace="true" value="${time0930}" width="160px"/></div>
+            <div>—</div>
+        </div>
+        <div sclass="pv-row z-py-2 z-border-bottom">
+            <div sclass="z-fs-label-md z-text-secondary">Invalid (constraint violated)</div>
+            <div><timepicker format="HH:mm" value="${time1800}" width="160px">
+                <attribute name="onCreate">self.setErrorMessage("Must be before 17:00");</attribute>
+            </timepicker></div>
+            <div>—</div>
         </div>
     </div>
 </div>

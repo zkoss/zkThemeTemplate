@@ -46,6 +46,7 @@
             <button label="Info" onClick='Toast.show("This is an info toast.", Clients.NOTIFICATION_TYPE_INFO, "top_right", 3000, true)'/>
             <button label="Warning" onClick='Toast.show("This is a warning toast.", Clients.NOTIFICATION_TYPE_WARNING, "top_right", 3000, true)'/>
             <button label="Error" onClick='Toast.show("This is an error toast.", Clients.NOTIFICATION_TYPE_ERROR, "top_right", 3000, true)'/>
+            <button label="Success" onClick='Toast.show("Operation succeeded", "success", "top_right", 3000, true)'/>
         </div>
     </div>
     <div sclass="z-mb-6">
@@ -54,7 +55,11 @@
             <button label="Top Left" onClick='Toast.show("Top left toast", Clients.NOTIFICATION_TYPE_INFO, "top_left", 3000, true)'/>
             <button label="Top Center" onClick='Toast.show("Top center toast", Clients.NOTIFICATION_TYPE_INFO, "top_center", 3000, true)'/>
             <button label="Top Right" onClick='Toast.show("Top right toast", Clients.NOTIFICATION_TYPE_INFO, "top_right", 3000, true)'/>
+            <button label="Middle Left" onClick='Toast.show("Middle left toast", Clients.NOTIFICATION_TYPE_INFO, "middle_left", 3000, true)'/>
+            <button label="Middle Center" onClick='Toast.show("Middle center toast", Clients.NOTIFICATION_TYPE_INFO, "middle_center", 3000, true)'/>
+            <button label="Middle Right" onClick='Toast.show("Middle right toast", Clients.NOTIFICATION_TYPE_INFO, "middle_right", 3000, true)'/>
             <button label="Bottom Left" onClick='Toast.show("Bottom left toast", Clients.NOTIFICATION_TYPE_INFO, "bottom_left", 3000, true)'/>
+            <button label="Bottom Center" onClick='Toast.show("Bottom center toast", Clients.NOTIFICATION_TYPE_INFO, "bottom_center", 3000, true)'/>
             <button label="Bottom Right" onClick='Toast.show("Bottom right toast", Clients.NOTIFICATION_TYPE_INFO, "bottom_right", 3000, true)'/>
         </div>
     </div>

@@ -32,4 +32,18 @@
         </div>
     </template>
 </apply>
+
+<div sclass="z-mb-6">
+    <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Knob Mold (PE)</div>
+    <div sclass="z-d-flex z-align-start z-gap-6 z-py-3">
+        <div sclass="z-d-flex z-flex-col z-align-center z-gap-2">
+            <slider mold="knob" curpos="40"/>
+            <div sclass="z-fs-label-sm z-text-secondary">40%</div>
+        </div>
+        <div sclass="z-d-flex z-flex-col z-align-center z-gap-2">
+            <slider mold="knob" curpos="75"/>
+            <div sclass="z-fs-label-sm z-text-secondary">75%</div>
+        </div>
+    </div>
+</div>
 </zk>

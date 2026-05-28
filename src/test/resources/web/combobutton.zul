@@ -44,5 +44,30 @@
             </div>
         </div>
     </div>
+
+    <div sclass="z-mb-6">
+        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Popup Child + Image + Reverse</div>
+        <div sclass="z-d-flex z-align-start z-flex-wrap z-gap-6 z-py-3">
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <div sclass="z-fs-label-sm z-text-secondary">Popup child + image</div>
+                <combobutton label="Actions" image="~./img/Centigrade-Widget-Icons/BookBlue-16x16.png">
+                    <popup width="200px">
+                        <vbox>
+                            <label value="Custom popup body"/>
+                            <button label="Inner"/>
+                        </vbox>
+                    </popup>
+                </combobutton>
+            </div>
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <div sclass="z-fs-label-sm z-text-secondary">dir="reverse" (label first, image after)</div>
+                <combobutton label="Actions" image="~./img/Centigrade-Widget-Icons/BookBlue-16x16.png" dir="reverse">
+                    <menupopup>
+                        <menuitem label="One"/>
+                    </menupopup>
+                </combobutton>
+            </div>
+        </div>
+    </div>
 </div>
 </zk>
