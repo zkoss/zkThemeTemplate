@@ -19,9 +19,10 @@
                     <navitem label="Account Settings"     onClick="@command('navigate', page='~./usecase/account-settings.zul')"/>
                     <navitem label="Sign-In"              onClick="@command('navigate', page='~./usecase/sign-in.zul')"/>
                 </nav>
-                <nav label="Form Controls" open="@load(vm.openNavLabel eq 'Form Controls')">
+                <nav label="Inputs" open="@load(vm.openNavLabel eq 'Inputs')">
                     <navitem label="Bandbox"          onClick="@command('navigate', page='~./bandbox.zul')"/>
                     <navitem label="Button"           onClick="@command('navigate', page='~./button.zul')"/>
+                    <navitem label="Calendar"         onClick="@command('navigate', page='~./calendar.zul')"/>
                     <navitem label="Cascader"         onClick="@command('navigate', page='~./cascader.zul')"/>
                     <navitem label="Checkbox"         onClick="@command('navigate', page='~./checkbox.zul')"/>
                     <navitem label="Chosenbox"        onClick="@command('navigate', page='~./chosenbox.zul')"/>
@@ -105,7 +106,6 @@
                     <navitem label="Vlayout"             onClick="@command('navigate', page='~./vlayout.zul')"/>
                 </nav>
                 <nav label="Feedback" open="@load(vm.openNavLabel eq 'Feedback')">
-                    <navitem label="Calendar"      onClick="@command('navigate', page='~./calendar.zul')"/>
                     <navitem label="Error"         onClick="@command('navigate', page='~./error.zul')"/>
                     <navitem label="Errorbox"      onClick="@command('navigate', page='~./errorbox.zul')"/>
                     <navitem label="Loading"       onClick="@command('navigate', page='~./loading.zul')"/>
