@@ -1,0 +1,33 @@
+/* Cardlayout — structural rules required for the JS card-shift to work.
+ *
+ * DOM:
+ *   <div class="z-cardlayout">
+ *     <div class="z-cardlayout-inner" id="{uuid}-{childUuid}-chdex"
+ *          role="group" aria-roledescription="slide" aria-labelledby="{childUuid}">
+ *       <!-- one child widget -->
+ *     </div>
+ *     ... (one .z-cardlayout-inner per child)
+ *   </div>
+ *
+ * JS positioning model (Cardlayout.ts):
+ *   _setChdexPosition() writes `chdex.style.left` (horizontal orient) or
+ *   `chdex.style.top` (vertical orient) = (childIndex - selectedIndex) * size.
+ *   That means the inner MUST be `position: absolute` for those offsets to
+ *   take effect; otherwise every child renders in normal flow and stacks.
+ *   `_animateShift()` then animates the parent's inner-list top/left for
+ *   sliding between cards — also requires absolute positioning underneath.
+ */
+
+.z-cardlayout {
+    position: relative;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.z-cardlayout-inner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    box-sizing: border-box;
+}
