@@ -238,6 +238,55 @@
     </div>
 
     <div sclass="z-mb-6">
+        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Static Sort Direction</div>
+        <div sclass="z-py-3">
+            <div style="display:flex; gap:16px; align-items:flex-start;">
+                <tree width="300px">
+                    <treecols>
+                        <treecol label="Name (asc)" sort="auto" sortDirection="ascending"/>
+                        <treecol label="Type" sort="auto"/>
+                    </treecols>
+                    <treechildren>
+                        <treeitem>
+                            <treerow>
+                                <treecell label="alpha"/>
+                                <treecell label="folder"/>
+                            </treerow>
+                        </treeitem>
+                        <treeitem>
+                            <treerow>
+                                <treecell label="beta"/>
+                                <treecell label="file"/>
+                            </treerow>
+                        </treeitem>
+                    </treechildren>
+                </tree>
+
+                <tree width="300px">
+                    <treecols>
+                        <treecol label="Name" sort="auto"/>
+                        <treecol label="Type (desc)" sort="auto" sortDirection="descending"/>
+                    </treecols>
+                    <treechildren>
+                        <treeitem>
+                            <treerow>
+                                <treecell label="beta"/>
+                                <treecell label="folder"/>
+                            </treerow>
+                        </treeitem>
+                        <treeitem>
+                            <treerow>
+                                <treecell label="alpha"/>
+                                <treecell label="file"/>
+                            </treerow>
+                        </treeitem>
+                    </treechildren>
+                </tree>
+            </div>
+        </div>
+    </div>
+
+    <div sclass="z-mb-6">
         <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Live Data with Paging</div>
         <div sclass="z-py-3">
             <radiogroup onCheck="tree.pagingPosition = self.selectedItem.label;">

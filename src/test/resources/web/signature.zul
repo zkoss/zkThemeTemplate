@@ -24,7 +24,7 @@
             </div>
             <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
                 <div sclass="z-fs-label-sm z-text-secondary">Pen size</div>
-                <intbox onChange="signature.penSize = self.value" width="80px"/>
+                <spinner onChange="signature.penSize = self.value" value="1"/>
             </div>
         </div>
     </div>

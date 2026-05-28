@@ -158,6 +158,47 @@
     </div>
 
     <div sclass="z-mb-6">
+        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Static Sort Direction</div>
+        <div sclass="z-py-3">
+            <div style="display:flex; gap:16px; align-items:flex-start;">
+                <grid width="300px">
+                    <columns>
+                        <column label="Subject (asc)" sort="auto" sortDirection="ascending"/>
+                        <column label="Received" sort="auto"/>
+                    </columns>
+                    <rows>
+                        <row>
+                            <label value="Style Guide for ZK 3.5 released"/>
+                            <label value="2008/11/14"/>
+                        </row>
+                        <row>
+                            <label value="ZK Jet 0.8.0 is released"/>
+                            <label value="2008/11/17"/>
+                        </row>
+                    </rows>
+                </grid>
+
+                <grid width="300px">
+                    <columns>
+                        <column label="Subject" sort="auto"/>
+                        <column label="Received (desc)" sort="auto" sortDirection="descending"/>
+                    </columns>
+                    <rows>
+                        <row>
+                            <label value="ZK Jet 0.8.0 is released"/>
+                            <label value="2008/11/17"/>
+                        </row>
+                        <row>
+                            <label value="Style Guide for ZK 3.5 released"/>
+                            <label value="2008/11/14"/>
+                        </row>
+                    </rows>
+                </grid>
+            </div>
+        </div>
+    </div>
+
+    <div sclass="z-mb-6">
         <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Embedded Components in Header</div>
         <div sclass="z-py-3">
             <div style="display:flex; gap:16px; align-items:flex-start;">

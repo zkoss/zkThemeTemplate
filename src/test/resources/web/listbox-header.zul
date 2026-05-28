@@ -199,6 +199,43 @@
     </div>
 
     <div sclass="z-mb-6">
+        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Static Sort Direction</div>
+        <div sclass="z-py-3">
+            <div style="display:flex; gap:16px; align-items:flex-start;">
+                <listbox width="400px">
+                    <listhead>
+                        <listheader label="Subject (asc)" sort="auto" sortDirection="ascending" />
+                        <listheader label="Received" sort="auto" />
+                    </listhead>
+                    <listitem>
+                        <listcell label="Style Guide for ZK 3.5 released" />
+                        <listcell label="2008/11/14 13:23:07" />
+                    </listitem>
+                    <listitem>
+                        <listcell label="ZK Jet 0.8.0 is released" />
+                        <listcell label="2008/11/17 17:41:29" />
+                    </listitem>
+                </listbox>
+
+                <listbox width="400px">
+                    <listhead>
+                        <listheader label="Subject" sort="auto" />
+                        <listheader label="Received (desc)" sort="auto" sortDirection="descending" />
+                    </listhead>
+                    <listitem>
+                        <listcell label="ZK Jet 0.8.0 is released" />
+                        <listcell label="2008/11/17 17:41:29" />
+                    </listitem>
+                    <listitem>
+                        <listcell label="Style Guide for ZK 3.5 released" />
+                        <listcell label="2008/11/14 13:23:07" />
+                    </listitem>
+                </listbox>
+            </div>
+        </div>
+    </div>
+
+    <div sclass="z-mb-6">
         <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Grouping</div>
         <div sclass="z-py-3">
             <div style="display:flex; gap:16px; align-items:flex-start;">
