@@ -29,18 +29,17 @@
     min-width: 0;
 }
 
-/* Vertical layout */
+/* Vertical layout — `.z-vlayout-inner` is rendered as a <div> by ZK, so block
+   flow already stacks children vertically and gives each `width: 100%`. No
+   `display: flex` needed on the root. Inter-item spacing is provided by ZK's
+   inline `padding-bottom` on each `.z-vlayout-inner` (driven by the `spacing`
+   attribute, default 5px). Do NOT add a parent `gap` here: it stacks on top
+   of ZK's inline padding and prevents `spacing="0"` from collapsing to 0. */
 .z-vlayout {
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
     box-sizing: border-box;
-    gap: var(--zk-spacing-4);
 }
 
-/* vlayout wraps each child in z-vlayout-inner; stretch it to full width */
 .z-vlayout-inner {
-    width: 100%;
     box-sizing: border-box;
 }
 
