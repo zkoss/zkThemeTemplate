@@ -90,7 +90,6 @@
                     <navitem label="Anchorlayout"        onClick="@command('navigate', page='~./anchorlayout.zul')"/>
                     <navitem label="Area"                onClick="@command('navigate', page='~./area.zul')"/>
                     <navitem label="Borderlayout"        onClick="@command('navigate', page='~./borderlayout.zul')"/>
-                    <navitem label="Borderlayout (Misc)" onClick="@command('navigate', page='~./borderlayout-misc.zul')"/>
                     <navitem label="Cardlayout"          onClick="@command('navigate', page='~./cardlayout.zul')"/>
                     <navitem label="Columnlayout"        onClick="@command('navigate', page='~./columnlayout.zul')"/>
                     <navitem label="Goldenlayout"        onClick="@command('navigate', page='~./goldenlayout.zul')"/>

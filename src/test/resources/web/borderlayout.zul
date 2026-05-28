@@ -27,5 +27,81 @@
         </div>
     </div>
 
+    <div sclass="z-mb-6">
+        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">With Region Titles</div>
+        <div sclass="z-py-3">
+            <borderlayout height="300px">
+                <center title="Center">Center Content</center>
+                <north size="20%" title="North">North Content</north>
+                <south size="20%" title="South">South Content</south>
+                <east size="20%" title="East">East Content</east>
+                <west size="20%" title="West">West Content</west>
+            </borderlayout>
+        </div>
+    </div>
+
+    <div sclass="z-mb-6">
+        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">No Region Borders</div>
+        <div sclass="z-py-3">
+            <borderlayout height="300px">
+                <center border="none">Center Content</center>
+                <north size="20%" border="none">North Content</north>
+                <south size="20%" border="none">South Content</south>
+                <east size="20%" border="none">East Content</east>
+                <west size="20%" border="none">West Content</west>
+            </borderlayout>
+        </div>
+    </div>
+
+    <div sclass="z-mb-6">
+        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Auto Scroll and Margins</div>
+        <div sclass="z-d-flex z-flex-col z-gap-6 z-py-3">
+            <div sclass="z-d-flex z-flex-col z-gap-2">
+                <div sclass="z-fs-label-sm z-text-secondary">autoscroll="true"</div>
+                <borderlayout xmlns:ca="client/attribute" height="300px">
+                    <center autoscroll="true" ca:data-embedscrollbar="true">
+                        <vbox id="box">
+                            <label value="Center" />
+                            <label value="Content" />
+                            <label value="is" />
+                            <label value="very" />
+                            <label value="very" />
+                            <label value="very" />
+                            <label value="very" />
+                            <label value="very" />
+                            <label value="long" />
+                            <label value="long" />
+                            <label value="long" />
+                        </vbox>
+                    </center>
+                    <north size="20%">North Content</north>
+                    <south size="20%">South Content</south>
+                    <east size="20%">East Content</east>
+                    <west size="20%">West Content</west>
+                </borderlayout>
+            </div>
+            <div sclass="z-d-flex z-flex-col z-gap-2">
+                <div sclass="z-fs-label-sm z-text-secondary">center margins="10,10,10,10"</div>
+                <borderlayout height="300px">
+                    <center margins="10,10,10,10">Center Content</center>
+                    <north size="20%">North Content</north>
+                    <south size="20%">South Content</south>
+                    <east size="20%">East Content</east>
+                    <west size="20%">West Content</west>
+                </borderlayout>
+            </div>
+            <div sclass="z-d-flex z-flex-col z-gap-2">
+                <div sclass="z-fs-label-sm z-text-secondary">east/west cmargins="10,10,10,10"</div>
+                <borderlayout height="300px">
+                    <center>Center Content</center>
+                    <north size="20%">North Content</north>
+                    <south size="20%">South Content</south>
+                    <east title="East" size="20%" collapsible="true" cmargins="10,10,10,10">East Content</east>
+                    <west title="West" size="20%" collapsible="true" cmargins="10,10,10,10">West Content</west>
+                </borderlayout>
+            </div>
+        </div>
+    </div>
+
 </div>
 </zk>
