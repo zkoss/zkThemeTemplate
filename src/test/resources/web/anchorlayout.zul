@@ -2,10 +2,10 @@
 <zk xmlns:h="native">
 <h:link rel="stylesheet" href="pv.css"/>
 <div sclass="z-p-8">
-    <div sclass="z-border-bottom z-fs-title-lg z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Anchorlayout</div>
+    <div sclass="z-border-bottom z-text-xl z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Anchorlayout</div>
 
     <div sclass="z-mb-6">
-        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Anchor-based Sizing</div>
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Anchor-based Sizing</div>
         <div sclass="z-py-3">
             <anchorlayout id="al" style="height:480px; overflow:auto; display:block;">
                 <anchorchildren height="200px" anchor="-100">

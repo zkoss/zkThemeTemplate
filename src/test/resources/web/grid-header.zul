@@ -2,10 +2,10 @@
 <zk xmlns:h="native">
 <h:link rel="stylesheet" href="pv.css"/>
 <div sclass="z-p-8">
-    <div sclass="z-border-bottom z-fs-title-lg z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Grid Header</div>
+    <div sclass="z-border-bottom z-text-xl z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Grid Header</div>
 
     <div sclass="z-mb-6">
-        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Auxhead + Column Combinations</div>
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Auxhead + Column Combinations</div>
         <div sclass="z-py-3">
             <div style="display:flex; gap:16px; align-items:flex-start;">
                 <grid width="300px">
@@ -96,7 +96,7 @@
     </div>
 
     <div sclass="z-mb-6">
-        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Column / Auxhead Only</div>
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Column / Auxhead Only</div>
         <div sclass="z-py-3">
             <div style="display:flex; gap:16px; align-items:flex-start;">
                 <grid width="300px">
@@ -158,7 +158,7 @@
     </div>
 
     <div sclass="z-mb-6">
-        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Static Sort Direction</div>
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Static Sort Direction</div>
         <div sclass="z-py-3">
             <div style="display:flex; gap:16px; align-items:flex-start;">
                 <grid width="300px">
@@ -199,7 +199,7 @@
     </div>
 
     <div sclass="z-mb-6">
-        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Auxheader Rowspan</div>
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Auxheader Rowspan</div>
         <div sclass="z-py-3">
             <div style="display:flex; gap:16px; align-items:flex-start;">
                 <grid width="360px">
@@ -246,7 +246,7 @@
     </div>
 
     <div sclass="z-mb-6">
-        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">sizedByContent + Span Column</div>
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">sizedByContent + Span Column</div>
         <div sclass="z-py-3">
             <div style="display:flex; gap:16px; align-items:flex-start;">
                 <grid sizedByContent="true">
@@ -278,7 +278,7 @@
     </div>
 
     <div sclass="z-mb-6">
-        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Frozen Right (Start Columns Scroll)</div>
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Frozen Right (Start Columns Scroll)</div>
         <div sclass="z-py-3">
             <grid width="500px">
                 <frozen columns="2" start="1"/>
@@ -301,7 +301,7 @@
     </div>
 
     <div sclass="z-mb-6">
-        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Sticky Header (z-sticky-header)</div>
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Sticky Header (z-sticky-header)</div>
         <div sclass="z-py-3">
             <div style="height:200px; overflow-y:auto; border:1px solid var(--zk-color-outline);">
                 <grid sclass="z-sticky-header" width="500px">
@@ -338,7 +338,7 @@
     </div>
 
     <div sclass="z-mb-6">
-        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Embedded Components in Header</div>
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Embedded Components in Header</div>
         <div sclass="z-py-3">
             <div style="display:flex; gap:16px; align-items:flex-start;">
                 <grid width="600px">

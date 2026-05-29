@@ -26,7 +26,7 @@
                                 <span sclass="ticket-dot dot-high"/>
                                 <label value="Login fails after password reset" sclass="z-fw-medium"/>
                             </div>
-                            <div sclass="z-fs-label-sm z-text-muted">
+                            <div sclass="z-text-xs z-text-muted">
                                 <label value="Dana Lee · 10:24"/>
                                 <label value="Open" sclass="z-chip z-chip-info z-ms-2"/>
                             </div>
@@ -40,7 +40,7 @@
                                 <span sclass="ticket-dot dot-med"/>
                                 <label value="Invoice PDF not downloading"/>
                             </div>
-                            <div sclass="z-fs-label-sm z-text-muted">
+                            <div sclass="z-text-xs z-text-muted">
                                 <label value="Marco P. · 09:51"/>
                                 <label value="Pending" sclass="z-chip z-chip-warning z-ms-2"/>
                             </div>
@@ -54,7 +54,7 @@
                                 <span sclass="ticket-dot dot-low"/>
                                 <label value="Feature request: dark mode"/>
                             </div>
-                            <div sclass="z-fs-label-sm z-text-muted">
+                            <div sclass="z-text-xs z-text-muted">
                                 <label value="Sara K. · Yesterday"/>
                                 <label value="Open" sclass="z-chip z-chip-info z-ms-2"/>
                             </div>
@@ -68,7 +68,7 @@
                                 <span sclass="ticket-dot dot-low"/>
                                 <label value="Thanks for the quick fix!"/>
                             </div>
-                            <div sclass="z-fs-label-sm z-text-muted">
+                            <div sclass="z-text-xs z-text-muted">
                                 <label value="Owen T. · Mon"/>
                                 <label value="Closed" sclass="z-chip z-chip-neutral z-ms-2"/>
                             </div>
@@ -83,7 +83,7 @@
             <vlayout hflex="1" vflex="1" spacing="12px">
                 <div>
                     <label value="Login fails after password reset" sclass="z-h4 z-d-block"/>
-                    <div sclass="z-fs-label-sm z-text-muted z-mt-1">
+                    <div sclass="z-text-xs z-text-muted z-mt-1">
                         <label value="Dana Lee · dana@example.com"/>
                         <label value="Open" sclass="z-chip z-chip-info z-ms-2"/>
                     </div>
@@ -92,11 +92,11 @@
                 <vlayout hflex="1" vflex="1" spacing="10px" style="overflow:auto">
                     <div sclass="msg-bubble">
                         <label value="After resetting my password I get 'invalid credentials' even with the new one." sclass="z-d-block"/>
-                        <label value="Dana · 10:24" sclass="z-fs-label-sm z-text-muted"/>
+                        <label value="Dana · 10:24" sclass="z-text-xs z-text-muted"/>
                     </div>
                     <div sclass="msg-bubble-me z-ms-auto" style="max-width:80%">
                         <label value="Thanks Dana — can you confirm whether you used the link from the latest email?" sclass="z-d-block"/>
-                        <label value="You · 10:31" sclass="z-fs-label-sm"/>
+                        <label value="You · 10:31" sclass="z-text-xs"/>
                     </div>
                 </vlayout>
 

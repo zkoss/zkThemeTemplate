@@ -2,9 +2,9 @@
 <zk xmlns:h="native" xmlns:w="client">
 <h:link rel="stylesheet" href="pv.css"/>
 <div sclass="z-p-8">
-    <div sclass="z-border-bottom z-fs-title-lg z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Loading</div>
+    <div sclass="z-border-bottom z-text-xl z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Loading</div>
     <div sclass="z-mb-6">
-        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Global Busy</div>
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Global Busy</div>
         <div sclass="z-py-3 z-d-flex z-gap-4 z-flex-wrap">
             <button label="Show Busy">
                 <attribute w:name="onClick"><![CDATA[
@@ -20,9 +20,9 @@
         </div>
     </div>
     <div sclass="z-mb-6">
-        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Render Defer</div>
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Render Defer</div>
         <div sclass="z-py-3 z-d-flex z-flex-col z-gap-4">
-            <div sclass="z-fs-label-md z-text-secondary">Content with renderdefer="2000" — renders after a 2-second delay:</div>
+            <div sclass="z-text-sm z-text-secondary">Content with renderdefer="2000" — renders after a 2-second delay:</div>
             <div sclass="z-d-flex z-align-center z-gap-2">
                 <span renderdefer="2000">Deferred content loaded</span>
             </div>

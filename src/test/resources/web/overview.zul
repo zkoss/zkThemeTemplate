@@ -12,9 +12,9 @@
     model.multiple = true;
 ]]></zscript>
 <div sclass="z-p-8">
-    <div sclass="z-border-bottom z-fs-title-lg z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Overview</div>
+    <div sclass="z-border-bottom z-text-xl z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Overview</div>
     <div sclass="z-mb-6">
-        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Tabbox</div>
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Tabbox</div>
         <div sclass="z-py-3 z-d-flex z-gap-6">
             <tabbox hflex="1" style="min-height:120px">
                 <tabs>
@@ -39,7 +39,7 @@
         </div>
     </div>
     <div sclass="z-mb-6">
-        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Data Components</div>
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Data Components</div>
         <div sclass="z-py-3 z-d-flex z-gap-6">
             <grid model="${model}" hflex="1" mold="paging" pageSize="10" style="min-height:200px">
                 <auxhead>
@@ -68,47 +68,47 @@
         </div>
     </div>
     <div sclass="z-mb-6">
-        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Form Inputs</div>
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Form Inputs</div>
         <div sclass="z-d-flex z-align-start z-flex-wrap z-gap-6 z-py-3">
             <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <div sclass="z-fs-label-sm z-text-secondary">Doublebox</div>
+                <div sclass="z-text-xs z-text-secondary">Doublebox</div>
                 <doublebox width="160px"/>
             </div>
             <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <div sclass="z-fs-label-sm z-text-secondary">Datebox</div>
+                <div sclass="z-text-xs z-text-secondary">Datebox</div>
                 <datebox width="160px"/>
             </div>
             <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <div sclass="z-fs-label-sm z-text-secondary">Bandbox</div>
+                <div sclass="z-text-xs z-text-secondary">Bandbox</div>
                 <bandbox width="160px"/>
             </div>
             <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <div sclass="z-fs-label-sm z-text-secondary">Combobox</div>
+                <div sclass="z-text-xs z-text-secondary">Combobox</div>
                 <combobox width="160px"/>
             </div>
             <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <div sclass="z-fs-label-sm z-text-secondary">Timebox</div>
+                <div sclass="z-text-xs z-text-secondary">Timebox</div>
                 <timebox width="160px"/>
             </div>
             <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <div sclass="z-fs-label-sm z-text-secondary">Spinner</div>
+                <div sclass="z-text-xs z-text-secondary">Spinner</div>
                 <spinner width="120px"/>
             </div>
             <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <div sclass="z-fs-label-sm z-text-secondary">Doublespinner</div>
+                <div sclass="z-text-xs z-text-secondary">Doublespinner</div>
                 <doublespinner width="120px"/>
             </div>
         </div>
     </div>
     <div sclass="z-mb-6">
-        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Buttons</div>
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Buttons</div>
         <div sclass="z-py-3 z-d-flex z-gap-4 z-flex-wrap">
             <button label="Button"/>
             <combobutton label="Combobutton"/>
         </div>
     </div>
     <div sclass="z-mb-6">
-        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Menubar</div>
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Menubar</div>
         <div sclass="z-py-3">
             <menubar>
                 <menu label="Menu">

@@ -2,13 +2,13 @@
 <zk xmlns:h="native">
 <h:link rel="stylesheet" href="pv.css"/>
 <div sclass="z-p-8">
-    <div sclass="z-border-bottom z-fs-title-lg z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Caption</div>
+    <div sclass="z-border-bottom z-text-xl z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Caption</div>
 
     <div sclass="z-mb-6">
-        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Caption in Window and Panel</div>
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Caption in Window and Panel</div>
         <div sclass="z-d-flex z-align-start z-flex-wrap z-gap-6 z-py-3">
             <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <div sclass="z-fs-label-sm z-text-secondary">Window with caption</div>
+                <div sclass="z-text-xs z-text-secondary">Window with caption</div>
                 <window width="380px" height="200px" border="normal">
                     <caption label="Title" image="~./img/volumn.gif">
                         Caption Content
@@ -18,7 +18,7 @@
                 </window>
             </div>
             <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <div sclass="z-fs-label-sm z-text-secondary">Panel with caption</div>
+                <div sclass="z-text-xs z-text-secondary">Panel with caption</div>
                 <panel width="380px" height="200px" border="normal">
                     <caption label="Title" image="~./img/volumn.gif">
                         Caption Content
@@ -33,10 +33,10 @@
     </div>
 
     <div sclass="z-mb-6">
-        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Caption in Groupbox</div>
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Caption in Groupbox</div>
         <div sclass="z-d-flex z-align-start z-flex-wrap z-gap-6 z-py-3">
             <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <div sclass="z-fs-label-sm z-text-secondary">Groupbox (default mold)</div>
+                <div sclass="z-text-xs z-text-secondary">Groupbox (default mold)</div>
                 <groupbox width="380px" height="200px">
                     <caption label="Title" image="~./img/volumn.gif">
                         Caption Content
@@ -46,7 +46,7 @@
                 </groupbox>
             </div>
             <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <div sclass="z-fs-label-sm z-text-secondary">Groupbox (3d mold)</div>
+                <div sclass="z-text-xs z-text-secondary">Groupbox (3d mold)</div>
                 <groupbox width="380px" height="200px" mold="3d">
                     <caption label="Title" image="~./img/volumn.gif">
                         Caption Content

@@ -2,7 +2,7 @@
 <zk xmlns:h="native">
 <h:link rel="stylesheet" href="pv.css"/>
 <div sclass="z-p-8">
-    <div sclass="z-border-bottom z-fs-title-lg z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Listbox</div>
+    <div sclass="z-border-bottom z-text-xl z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Listbox</div>
 
     <div sclass="pv-section">
         <div sclass="pv-section-title">Listbox — State Gallery</div>
@@ -51,7 +51,7 @@
     </div>
 
     <div sclass="z-mb-6">
-        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Standard</div>
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Standard</div>
         <div sclass="z-py-3">
             <listbox>
                 <listhead sizable="true">
@@ -83,7 +83,7 @@
     </div>
 
     <div sclass="z-mb-6">
-        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Checkmarks</div>
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Checkmarks</div>
         <div sclass="z-py-3">
             <listbox multiple="true" checkmark="true">
                 <listhead menupopup="auto">
@@ -107,7 +107,7 @@
     </div>
 
     <div sclass="z-mb-6">
-        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Select Mold</div>
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Select Mold</div>
         <div sclass="z-py-3">
             <listbox rows="1" mold="select">
                 <listitem label="Inbox"/>
@@ -119,7 +119,7 @@
     </div>
 
     <div sclass="z-mb-6">
-        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Frozen Columns</div>
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Frozen Columns</div>
         <div sclass="z-py-3">
             <listbox>
                 <frozen columns="2"/>
@@ -138,7 +138,7 @@
     </div>
 
     <div sclass="z-mb-6">
-        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Empty State</div>
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Empty State</div>
         <div sclass="z-py-3">
             <listbox emptyMessage="This listbox is empty.">
                 <listhead><listheader label="Name"/></listhead>

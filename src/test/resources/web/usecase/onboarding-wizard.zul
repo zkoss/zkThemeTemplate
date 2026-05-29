@@ -17,7 +17,7 @@
 
     <!-- Only the current step's form is shown (progressive disclosure) -->
     <div sclass="z-card">
-        <label value="Step 2 — Profile" sclass="z-d-block z-fs-title-sm z-fw-medium z-text-on-surface z-mb-3"/>
+        <label value="Step 2 — Profile" sclass="z-d-block z-text-base z-fw-medium z-text-on-surface z-mb-3"/>
         <grid hflex="1" sclass="z-border-0">
             <columns>
                 <column width="160px"/>

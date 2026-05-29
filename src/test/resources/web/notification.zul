@@ -6,7 +6,7 @@
     import org.zkoss.zul.*;
 ]]></zscript>
 <div sclass="z-p-8">
-    <div sclass="z-border-bottom z-fs-title-lg z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Notification</div>
+    <div sclass="z-border-bottom z-text-xl z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Notification</div>
 
     <div sclass="pv-section">
         <div sclass="pv-section-title">Notification — State Gallery</div>
@@ -34,7 +34,7 @@
     </div>
 
     <div sclass="z-mb-6">
-        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Types</div>
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Types</div>
         <div sclass="z-py-3 z-d-flex z-gap-4 z-flex-wrap">
             <button label="Info" onClick='Clients.showNotification("This is an info message.", Clients.NOTIFICATION_TYPE_INFO, null, "top_right", 3000, true)'/>
             <button label="Warning" onClick='Clients.showNotification("This is a warning.", Clients.NOTIFICATION_TYPE_WARNING, null, "top_right", 3000, true)'/>
@@ -43,7 +43,7 @@
         </div>
     </div>
     <div sclass="z-mb-6">
-        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Positions</div>
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Positions</div>
         <div sclass="z-py-3 z-d-flex z-gap-4 z-flex-wrap">
             <button label="Top Left" onClick='Clients.showNotification("Top left notification", Clients.NOTIFICATION_TYPE_INFO, null, "top_left", 3000, true)'/>
             <button label="Top Center" onClick='Clients.showNotification("Top center notification", Clients.NOTIFICATION_TYPE_INFO, null, "top_center", 3000, true)'/>
@@ -54,7 +54,7 @@
         </div>
     </div>
     <div sclass="z-mb-6">
-        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Options</div>
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Options</div>
         <div sclass="z-py-3 z-d-flex z-gap-4 z-flex-wrap">
             <button label="With HTML content" onClick='Clients.showNotification("Also possible to do &lt;span style=&quot;font-weight:bold&quot;&gt;HTML&lt;/span&gt;.", Clients.NOTIFICATION_TYPE_INFO, null, "top_right", 3000, true)'/>
             <button label="Non-closable" onClick='Clients.showNotification("This notification cannot be dismissed (auto-closes in 2s).", Clients.NOTIFICATION_TYPE_INFO, null, "top_right", 2000, false)'/>

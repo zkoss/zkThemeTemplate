@@ -28,7 +28,7 @@
 
     <!-- Display -->
     <div sclass="section-card">
-        <label value="Display  (.z-d-*)" sclass="z-d-block z-fs-title-sm z-fw-medium z-text-on-surface z-mb-3"/>
+        <label value="Display  (.z-d-*)" sclass="z-d-block z-text-base z-fw-medium z-text-on-surface z-mb-3"/>
         <div sclass="z-d-flex z-gap-4 z-flex-wrap z-align-center">
             <div>
                 <div class="u-demo-bg">
@@ -36,7 +36,7 @@
                     <div class="u-box z-d-inline" style="margin-right:4px">z-d-inline</div>
                     <div class="u-box z-d-inline">z-d-inline</div>
                 </div>
-                <label value=".z-d-block / .z-d-inline" sclass="z-text-muted z-fs-label-sm z-mt-1"/>
+                <label value=".z-d-block / .z-d-inline" sclass="z-text-muted z-text-xs z-mt-1"/>
             </div>
             <div>
                 <div class="u-demo-bg z-d-flex z-gap-2">
@@ -44,14 +44,14 @@
                     <div class="u-box">Item 2</div>
                     <div class="u-box">Item 3</div>
                 </div>
-                <label value=".z-d-flex" sclass="z-text-muted z-fs-label-sm z-mt-1"/>
+                <label value=".z-d-flex" sclass="z-text-muted z-text-xs z-mt-1"/>
             </div>
         </div>
     </div>
 
     <!-- Flex Direction -->
     <div sclass="section-card">
-        <label value="Flex Direction  (.z-flex-row / .z-flex-col)" sclass="z-d-block z-fs-title-sm z-fw-medium z-text-on-surface z-mb-3"/>
+        <label value="Flex Direction  (.z-flex-row / .z-flex-col)" sclass="z-d-block z-text-base z-fw-medium z-text-on-surface z-mb-3"/>
         <div sclass="z-d-flex z-gap-6">
             <div>
                 <div class="u-demo-bg z-d-flex z-flex-row z-gap-2">
@@ -59,7 +59,7 @@
                     <div class="u-box">B</div>
                     <div class="u-box">C</div>
                 </div>
-                <label value=".z-flex-row" sclass="z-text-muted z-fs-label-sm z-mt-1"/>
+                <label value=".z-flex-row" sclass="z-text-muted z-text-xs z-mt-1"/>
             </div>
             <div>
                 <div class="u-demo-bg z-d-flex z-flex-col z-gap-2" style="width:80px">
@@ -67,7 +67,7 @@
                     <div class="u-box z-text-center">B</div>
                     <div class="u-box z-text-center">C</div>
                 </div>
-                <label value=".z-flex-col" sclass="z-text-muted z-fs-label-sm z-mt-1"/>
+                <label value=".z-flex-col" sclass="z-text-muted z-text-xs z-mt-1"/>
             </div>
             <div>
                 <div class="u-demo-bg z-d-flex z-flex-row-reverse z-gap-2">
@@ -75,82 +75,82 @@
                     <div class="u-box">B</div>
                     <div class="u-box">C</div>
                 </div>
-                <label value=".z-flex-row-reverse" sclass="z-text-muted z-fs-label-sm z-mt-1"/>
+                <label value=".z-flex-row-reverse" sclass="z-text-muted z-text-xs z-mt-1"/>
             </div>
         </div>
     </div>
 
     <!-- Justify Content -->
     <div sclass="section-card">
-        <label value="Justify Content  (.z-justify-*)" sclass="z-d-block z-fs-title-sm z-fw-medium z-text-on-surface z-mb-3"/>
+        <label value="Justify Content  (.z-justify-*)" sclass="z-d-block z-text-base z-fw-medium z-text-on-surface z-mb-3"/>
         <vlayout sclass="z-gap-3">
             <div>
                 <div class="u-demo-bg z-d-flex z-justify-start z-gap-2">
                     <div class="u-box">A</div><div class="u-box">B</div><div class="u-box">C</div>
                 </div>
-                <label value=".z-justify-start" sclass="z-text-muted z-fs-label-sm"/>
+                <label value=".z-justify-start" sclass="z-text-muted z-text-xs"/>
             </div>
             <div>
                 <div class="u-demo-bg z-d-flex z-justify-center z-gap-2">
                     <div class="u-box">A</div><div class="u-box">B</div><div class="u-box">C</div>
                 </div>
-                <label value=".z-justify-center" sclass="z-text-muted z-fs-label-sm"/>
+                <label value=".z-justify-center" sclass="z-text-muted z-text-xs"/>
             </div>
             <div>
                 <div class="u-demo-bg z-d-flex z-justify-end z-gap-2">
                     <div class="u-box">A</div><div class="u-box">B</div><div class="u-box">C</div>
                 </div>
-                <label value=".z-justify-end" sclass="z-text-muted z-fs-label-sm"/>
+                <label value=".z-justify-end" sclass="z-text-muted z-text-xs"/>
             </div>
             <div>
                 <div class="u-demo-bg z-d-flex z-justify-between">
                     <div class="u-box">A</div><div class="u-box">B</div><div class="u-box">C</div>
                 </div>
-                <label value=".z-justify-between" sclass="z-text-muted z-fs-label-sm"/>
+                <label value=".z-justify-between" sclass="z-text-muted z-text-xs"/>
             </div>
             <div>
                 <div class="u-demo-bg z-d-flex z-justify-evenly">
                     <div class="u-box">A</div><div class="u-box">B</div><div class="u-box">C</div>
                 </div>
-                <label value=".z-justify-evenly" sclass="z-text-muted z-fs-label-sm"/>
+                <label value=".z-justify-evenly" sclass="z-text-muted z-text-xs"/>
             </div>
         </vlayout>
     </div>
 
     <!-- Align Items -->
     <div sclass="section-card">
-        <label value="Align Items  (.z-align-*)" sclass="z-d-block z-fs-title-sm z-fw-medium z-text-on-surface z-mb-3"/>
+        <label value="Align Items  (.z-align-*)" sclass="z-d-block z-text-base z-fw-medium z-text-on-surface z-mb-3"/>
         <div sclass="z-d-flex z-gap-4">
             <div>
                 <div class="u-demo-bg z-d-flex z-align-start z-gap-2" style="height:80px">
                     <div class="u-box">A</div><div class="u-box u-box-lg">B</div><div class="u-box">C</div>
                 </div>
-                <label value=".z-align-start" sclass="z-text-muted z-fs-label-sm"/>
+                <label value=".z-align-start" sclass="z-text-muted z-text-xs"/>
             </div>
             <div>
                 <div class="u-demo-bg z-d-flex z-align-center z-gap-2" style="height:80px">
                     <div class="u-box">A</div><div class="u-box u-box-lg">B</div><div class="u-box">C</div>
                 </div>
-                <label value=".z-align-center" sclass="z-text-muted z-fs-label-sm"/>
+                <label value=".z-align-center" sclass="z-text-muted z-text-xs"/>
             </div>
             <div>
                 <div class="u-demo-bg z-d-flex z-align-end z-gap-2" style="height:80px">
                     <div class="u-box">A</div><div class="u-box u-box-lg">B</div><div class="u-box">C</div>
                 </div>
-                <label value=".z-align-end" sclass="z-text-muted z-fs-label-sm"/>
+                <label value=".z-align-end" sclass="z-text-muted z-text-xs"/>
             </div>
             <div>
                 <div class="u-demo-bg z-d-flex z-align-stretch z-gap-2" style="height:80px">
                     <div class="u-box" style="height:auto">A</div><div class="u-box u-box-lg" style="height:auto">B</div><div class="u-box" style="height:auto">C</div>
                 </div>
-                <label value=".z-align-stretch" sclass="z-text-muted z-fs-label-sm"/>
+                <label value=".z-align-stretch" sclass="z-text-muted z-text-xs"/>
             </div>
         </div>
     </div>
 
     <!-- Flex Grow / Fill -->
     <div sclass="section-card">
-        <label value="Flex Grow &amp; Fill  (.z-flex-1 / .z-flex-auto / .z-flex-none)" sclass="z-d-block z-fs-title-sm z-fw-medium z-text-on-surface z-mb-3"/>
+        <label value="Flex Grow &amp; Fill  (.z-flex-1 / .z-flex-auto / .z-flex-none)" sclass="z-d-block z-text-base z-fw-medium z-text-on-surface z-mb-3"/>
         <vlayout sclass="z-gap-3">
             <div>
                 <div class="u-demo-bg z-d-flex z-gap-2">
@@ -158,7 +158,7 @@
                     <div class="u-box">fixed</div>
                     <div class="u-box z-flex-1">z-flex-1 (grows)</div>
                 </div>
-                <label value=".z-flex-1 — flex:1 1 0; equal share of available space" sclass="z-text-muted z-fs-label-sm"/>
+                <label value=".z-flex-1 — flex:1 1 0; equal share of available space" sclass="z-text-muted z-text-xs"/>
             </div>
             <div>
                 <div class="u-demo-bg z-d-flex z-gap-2">
@@ -166,39 +166,39 @@
                     <div class="u-box z-flex-1">z-flex-1 (takes rest)</div>
                     <div class="u-box z-flex-none">z-flex-none</div>
                 </div>
-                <label value=".z-flex-none — flex:none; does not grow or shrink" sclass="z-text-muted z-fs-label-sm"/>
+                <label value=".z-flex-none — flex:none; does not grow or shrink" sclass="z-text-muted z-text-xs"/>
             </div>
         </vlayout>
     </div>
 
     <!-- Gap -->
     <div sclass="section-card">
-        <label value="Gap  (.z-gap-* / .z-col-gap-* / .z-row-gap-*)" sclass="z-d-block z-fs-title-sm z-fw-medium z-text-on-surface z-mb-3"/>
+        <label value="Gap  (.z-gap-* / .z-col-gap-* / .z-row-gap-*)" sclass="z-d-block z-text-base z-fw-medium z-text-on-surface z-mb-3"/>
         <div sclass="z-d-flex z-gap-6 z-flex-wrap">
             <div>
                 <div class="u-demo-bg z-d-flex z-gap-1">
                     <div class="u-box">A</div><div class="u-box">B</div><div class="u-box">C</div>
                 </div>
-                <label value=".z-gap-1 (4px)" sclass="z-text-muted z-fs-label-sm"/>
+                <label value=".z-gap-1 (4px)" sclass="z-text-muted z-text-xs"/>
             </div>
             <div>
                 <div class="u-demo-bg z-d-flex z-gap-3">
                     <div class="u-box">A</div><div class="u-box">B</div><div class="u-box">C</div>
                 </div>
-                <label value=".z-gap-3 (12px)" sclass="z-text-muted z-fs-label-sm"/>
+                <label value=".z-gap-3 (12px)" sclass="z-text-muted z-text-xs"/>
             </div>
             <div>
                 <div class="u-demo-bg z-d-flex z-gap-6">
                     <div class="u-box">A</div><div class="u-box">B</div><div class="u-box">C</div>
                 </div>
-                <label value=".z-gap-6 (24px)" sclass="z-text-muted z-fs-label-sm"/>
+                <label value=".z-gap-6 (24px)" sclass="z-text-muted z-text-xs"/>
             </div>
         </div>
     </div>
 
     <!-- Flex Wrap -->
     <div sclass="section-card">
-        <label value="Flex Wrap  (.z-flex-wrap / .z-flex-nowrap)" sclass="z-d-block z-fs-title-sm z-fw-medium z-text-on-surface z-mb-3"/>
+        <label value="Flex Wrap  (.z-flex-wrap / .z-flex-nowrap)" sclass="z-d-block z-text-base z-fw-medium z-text-on-surface z-mb-3"/>
         <div sclass="z-d-flex z-gap-4">
             <div style="max-width:300px">
                 <div class="u-demo-bg z-d-flex z-flex-wrap z-gap-2">
@@ -206,14 +206,14 @@
                     <div class="u-box">Item Three</div><div class="u-box">Item Four</div>
                     <div class="u-box">Item Five</div>
                 </div>
-                <label value=".z-flex-wrap — wraps to next row" sclass="z-text-muted z-fs-label-sm"/>
+                <label value=".z-flex-wrap — wraps to next row" sclass="z-text-muted z-text-xs"/>
             </div>
             <div style="max-width:300px;overflow:hidden">
                 <div class="u-demo-bg z-d-flex z-flex-nowrap z-gap-2" style="overflow:hidden">
                     <div class="u-box z-flex-shrink-0">Item One</div><div class="u-box z-flex-shrink-0">Item Two</div>
                     <div class="u-box z-flex-shrink-0">Item Three</div><div class="u-box z-flex-shrink-0">Item Four</div>
                 </div>
-                <label value=".z-flex-nowrap — stays on one row, overflows" sclass="z-text-muted z-fs-label-sm"/>
+                <label value=".z-flex-nowrap — stays on one row, overflows" sclass="z-text-muted z-text-xs"/>
             </div>
         </div>
     </div>

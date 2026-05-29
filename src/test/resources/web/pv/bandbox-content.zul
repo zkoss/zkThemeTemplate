@@ -4,7 +4,7 @@
        rowsTemplate="bandbox-rows">
     <template name="bandbox-rows">
         <div sclass="pv-row z-py-2 z-border-bottom">
-            <div sclass="z-fs-label-md z-text-secondary">Default</div>
+            <div sclass="z-text-sm z-text-secondary">Default</div>
             <div><bandbox><bandpopup>Content</bandpopup></bandbox></div>
             <div><bandbox disabled="true"><bandpopup>Content</bandpopup></bandbox></div>
             <div><bandbox readonly="true"><bandpopup>Content</bandpopup></bandbox></div>
@@ -12,7 +12,7 @@
             <div><bandbox inplace="true" value="Selected"><bandpopup>Content</bandpopup></bandbox></div>
         </div>
         <div sclass="pv-row z-py-2 z-border-bottom">
-            <div sclass="z-fs-label-md z-text-secondary">No button</div>
+            <div sclass="z-text-sm z-text-secondary">No button</div>
             <div><bandbox buttonVisible="false"><bandpopup>Content</bandpopup></bandbox></div>
             <div><bandbox buttonVisible="false" disabled="true"><bandpopup>Content</bandpopup></bandbox></div>
             <div><bandbox buttonVisible="false" readonly="true"><bandpopup>Content</bandpopup></bandbox></div>
@@ -23,10 +23,10 @@
 </apply>
 
 <div sclass="z-mb-6">
-    <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Bandpopup with Rich Content (Listbox)</div>
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Bandpopup with Rich Content (Listbox)</div>
     <div sclass="z-d-flex z-flex-wrap z-gap-6 z-py-3">
         <div sclass="z-d-flex z-flex-col z-gap-2">
-            <label sclass="z-fs-label-sm z-text-secondary">Listbox in bandpopup</label>
+            <label sclass="z-text-xs z-text-secondary">Listbox in bandpopup</label>
             <bandbox>
                 <bandpopup width="280px">
                     <listbox height="180px">

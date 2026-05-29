@@ -7,7 +7,7 @@
     BinaryTreeModel btm = new BinaryTreeModel(new ArrayList(new BigList(1000)));
 </zscript>
 <div sclass="z-p-8">
-    <div sclass="z-border-bottom z-fs-title-lg z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Tree</div>
+    <div sclass="z-border-bottom z-text-xl z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Tree</div>
 
     <div sclass="pv-section">
         <div sclass="pv-section-title">Tree — State Gallery</div>
@@ -44,7 +44,7 @@
     </div>
 
     <div sclass="z-mb-6">
-        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Basic Tree</div>
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Basic Tree</div>
         <div sclass="z-py-3">
             <tree id="tree" width="400px" rows="8">
                 <treecols sizable="true">
@@ -112,14 +112,14 @@
     </div>
 
     <div sclass="z-mb-6">
-        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Tree Live Data</div>
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Tree Live Data</div>
         <div sclass="z-py-3">
             <tree id="tree2" model="&#36;{btm}"/>
         </div>
     </div>
 
     <div sclass="z-mb-6">
-        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Tree with Checkmark</div>
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Tree with Checkmark</div>
         <div sclass="z-py-3">
             <div sclass="z-hstack z-mb-3">
                 <button label="Toggle checkmark" onClick="tree3.checkmark = !tree3.checkmark;"/>
@@ -183,7 +183,7 @@
     </div>
 
     <div sclass="z-mb-6">
-        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Paging with Tree</div>
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Paging with Tree</div>
         <div sclass="z-py-3">
             <div sclass="z-hstack z-mb-3">
                 <radiogroup onCheck="tree4.pagingPosition = self.selectedItem.label;">
@@ -207,7 +207,7 @@
     </div>
 
     <div sclass="z-mb-6">
-        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Frozen Columns</div>
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Frozen Columns</div>
         <div sclass="z-py-3">
             <tree>
                 <frozen columns="2"/>

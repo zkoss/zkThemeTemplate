@@ -11,9 +11,9 @@
         "-by James Joyce, from Ulysses at Project Gutenberg";
 ]]></zscript>
 <div sclass="z-p-8">
-    <div sclass="z-border-bottom z-fs-title-lg z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Messagebox</div>
+    <div sclass="z-border-bottom z-text-xl z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Messagebox</div>
     <div sclass="z-mb-6">
-        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Types</div>
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Types</div>
         <div sclass="z-py-3 z-d-flex z-gap-4 z-flex-wrap">
             <button label="Information">
                 <attribute name="onClick">
@@ -38,7 +38,7 @@
         </div>
     </div>
     <div sclass="z-mb-6">
-        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Multi-line Messages</div>
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Multi-line Messages</div>
         <div sclass="z-py-3 z-d-flex z-gap-4 z-flex-wrap">
             <button label="Multi-line Warning">
                 <attribute name="onClick">
@@ -53,7 +53,7 @@
         </div>
     </div>
     <div sclass="z-mb-6">
-        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Long Message</div>
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Long Message</div>
         <div sclass="z-py-3 z-d-flex z-gap-4 z-flex-wrap">
             <button label="Long Text (Ulysses)">
                 <attribute name="onClick">
@@ -63,7 +63,7 @@
         </div>
     </div>
     <div sclass="z-mb-6">
-        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Extended Button Sets</div>
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Extended Button Sets</div>
         <div sclass="z-py-3 z-d-flex z-gap-4 z-flex-wrap">
             <button label="YES / NO">
                 <attribute name="onClick">

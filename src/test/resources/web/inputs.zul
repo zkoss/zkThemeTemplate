@@ -26,60 +26,60 @@ DefaultTreeModel cascaderModel = new DefaultTreeModel(new DefaultTreeNode("ROOT"
     )));
 ]]></zscript>
 <div sclass="z-p-8">
-    <div sclass="z-border-bottom z-fs-title-lg z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Inputs</div>
+    <div sclass="z-border-bottom z-text-xl z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Inputs</div>
 
-    <div sclass="z-fs-title-sm z-fw-medium z-text-on-surface z-mt-6 z-mb-2">Textbox</div>
+    <div sclass="z-text-base z-fw-medium z-text-on-surface z-mt-6 z-mb-2">Textbox</div>
     <apply templateURI="~./pv/textbox-content.zul"/>
 
-    <div sclass="z-fs-title-sm z-fw-medium z-text-on-surface z-mt-6 z-mb-2">Intbox</div>
+    <div sclass="z-text-base z-fw-medium z-text-on-surface z-mt-6 z-mb-2">Intbox</div>
     <apply templateURI="~./pv/intbox-content.zul"/>
 
-    <div sclass="z-fs-title-sm z-fw-medium z-text-on-surface z-mt-6 z-mb-2">Longbox</div>
+    <div sclass="z-text-base z-fw-medium z-text-on-surface z-mt-6 z-mb-2">Longbox</div>
     <apply templateURI="~./pv/longbox-content.zul"/>
 
-    <div sclass="z-fs-title-sm z-fw-medium z-text-on-surface z-mt-6 z-mb-2">Decimalbox</div>
+    <div sclass="z-text-base z-fw-medium z-text-on-surface z-mt-6 z-mb-2">Decimalbox</div>
     <apply templateURI="~./pv/decimalbox-content.zul"/>
 
-    <div sclass="z-fs-title-sm z-fw-medium z-text-on-surface z-mt-6 z-mb-2">Doublebox</div>
+    <div sclass="z-text-base z-fw-medium z-text-on-surface z-mt-6 z-mb-2">Doublebox</div>
     <apply templateURI="~./pv/doublebox-content.zul"/>
 
-    <div sclass="z-fs-title-sm z-fw-medium z-text-on-surface z-mt-6 z-mb-2">Combobox</div>
+    <div sclass="z-text-base z-fw-medium z-text-on-surface z-mt-6 z-mb-2">Combobox</div>
     <apply templateURI="~./pv/combobox-content.zul"/>
 
-    <div sclass="z-fs-title-sm z-fw-medium z-text-on-surface z-mt-6 z-mb-2">Datebox</div>
+    <div sclass="z-text-base z-fw-medium z-text-on-surface z-mt-6 z-mb-2">Datebox</div>
     <apply templateURI="~./pv/datebox-content.zul"/>
 
-    <div sclass="z-fs-title-sm z-fw-medium z-text-on-surface z-mt-6 z-mb-2">Timebox</div>
+    <div sclass="z-text-base z-fw-medium z-text-on-surface z-mt-6 z-mb-2">Timebox</div>
     <apply templateURI="~./pv/timebox-content.zul"/>
 
-    <div sclass="z-fs-title-sm z-fw-medium z-text-on-surface z-mt-6 z-mb-2">Bandbox</div>
+    <div sclass="z-text-base z-fw-medium z-text-on-surface z-mt-6 z-mb-2">Bandbox</div>
     <apply templateURI="~./pv/bandbox-content.zul"/>
 
-    <div sclass="z-fs-title-sm z-fw-medium z-text-on-surface z-mt-6 z-mb-2">Spinner</div>
+    <div sclass="z-text-base z-fw-medium z-text-on-surface z-mt-6 z-mb-2">Spinner</div>
     <apply templateURI="~./pv/spinner-content.zul"/>
 
-    <div sclass="z-fs-title-sm z-fw-medium z-text-on-surface z-mt-6 z-mb-2">Selectbox</div>
+    <div sclass="z-text-base z-fw-medium z-text-on-surface z-mt-6 z-mb-2">Selectbox</div>
     <apply templateURI="~./pv/selectbox-content.zul"/>
 
-    <div sclass="z-fs-title-sm z-fw-medium z-text-on-surface z-mt-6 z-mb-2">Searchbox</div>
+    <div sclass="z-text-base z-fw-medium z-text-on-surface z-mt-6 z-mb-2">Searchbox</div>
     <apply templateURI="~./pv/searchbox-content.zul"/>
 
-    <div sclass="z-fs-title-sm z-fw-medium z-text-on-surface z-mt-6 z-mb-2">Chosenbox</div>
+    <div sclass="z-text-base z-fw-medium z-text-on-surface z-mt-6 z-mb-2">Chosenbox</div>
     <apply templateURI="~./pv/chosenbox-content.zul"/>
 
-    <div sclass="z-fs-title-sm z-fw-medium z-text-on-surface z-mt-6 z-mb-2">Cascader</div>
+    <div sclass="z-text-base z-fw-medium z-text-on-surface z-mt-6 z-mb-2">Cascader</div>
     <apply templateURI="~./pv/cascader-content.zul"/>
 
-    <div sclass="z-fs-title-sm z-fw-medium z-text-on-surface z-mt-6 z-mb-2">Colorbox</div>
+    <div sclass="z-text-base z-fw-medium z-text-on-surface z-mt-6 z-mb-2">Colorbox</div>
     <apply templateURI="~./pv/colorbox-content.zul"/>
 
-    <div sclass="z-fs-title-sm z-fw-medium z-text-on-surface z-mt-6 z-mb-2">Slider</div>
+    <div sclass="z-text-base z-fw-medium z-text-on-surface z-mt-6 z-mb-2">Slider</div>
     <apply templateURI="~./pv/slider-content.zul"/>
 
-    <div sclass="z-fs-title-sm z-fw-medium z-text-on-surface z-mt-6 z-mb-2">Rating</div>
+    <div sclass="z-text-base z-fw-medium z-text-on-surface z-mt-6 z-mb-2">Rating</div>
     <apply templateURI="~./pv/rating-content.zul"/>
 
-    <div sclass="z-fs-title-sm z-fw-medium z-text-on-surface z-mt-6 z-mb-2">Input Group</div>
+    <div sclass="z-text-base z-fw-medium z-text-on-surface z-mt-6 z-mb-2">Input Group</div>
     <apply templateURI="~./pv/inputgroup-content.zul"/>
 </div>
 </zk>

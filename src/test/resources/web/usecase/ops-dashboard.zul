@@ -20,31 +20,31 @@
     <!-- KPI cards -->
     <div sclass="z-d-flex z-flex-row z-flex-wrap z-gap-4">
         <div sclass="z-flex-1 z-min-w-0 z-card">
-            <label value="Orders Today" sclass="z-text-muted z-mb-2 z-fs-label-md"/>
+            <label value="Orders Today" sclass="z-text-muted z-mb-2 z-text-sm"/>
             <label value="312" sclass="z-h1"/>
-            <label value="↑ 8.4% vs yesterday" sclass="z-fs-label-sm z-text-success"/>
+            <label value="↑ 8.4% vs yesterday" sclass="z-text-xs z-text-success"/>
         </div>
         <div sclass="z-flex-1 z-min-w-0 z-card">
-            <label value="Fulfilled" sclass="z-text-muted z-mb-2 z-fs-label-md"/>
+            <label value="Fulfilled" sclass="z-text-muted z-mb-2 z-text-sm"/>
             <label value="287" sclass="z-h1"/>
-            <label value="↑ 5.1%" sclass="z-fs-label-sm z-text-success"/>
+            <label value="↑ 5.1%" sclass="z-text-xs z-text-success"/>
         </div>
         <div sclass="z-flex-1 z-min-w-0 z-card">
-            <label value="Low Stock SKUs" sclass="z-text-muted z-mb-2 z-fs-label-md"/>
+            <label value="Low Stock SKUs" sclass="z-text-muted z-mb-2 z-text-sm"/>
             <label value="14" sclass="z-h1"/>
-            <label value="↓ 2 since last week" sclass="z-fs-label-sm z-text-error"/>
+            <label value="↓ 2 since last week" sclass="z-text-xs z-text-error"/>
         </div>
         <div sclass="z-flex-1 z-min-w-0 z-card">
-            <label value="Open Tickets" sclass="z-text-muted z-mb-2 z-fs-label-md"/>
+            <label value="Open Tickets" sclass="z-text-muted z-mb-2 z-text-sm"/>
             <label value="9" sclass="z-h1"/>
-            <label value="↑ 3 today" sclass="z-fs-label-sm z-text-error"/>
+            <label value="↑ 3 today" sclass="z-text-xs z-text-error"/>
         </div>
     </div>
 
     <!-- Chart + activity -->
     <div sclass="z-d-flex z-flex-row z-flex-wrap z-gap-4">
         <div sclass="z-card z-flex-1 z-min-w-0" style="flex:2 1 0">
-            <label value="Throughput (last 7 days)" sclass="z-d-block z-fs-title-sm z-fw-medium z-text-on-surface z-mb-3"/>
+            <label value="Throughput (last 7 days)" sclass="z-d-block z-text-base z-fw-medium z-text-on-surface z-mb-3"/>
             <!-- GAP: real charting needs the <charts> component (ZK Charts / Highcharts).
                  Shown as a static placeholder to keep this demo dependency-free. -->
             <div sclass="chart-placeholder">
@@ -52,7 +52,7 @@
             </div>
         </div>
         <div sclass="z-card z-flex-1 z-min-w-0">
-            <label value="Recent Activity" sclass="z-d-block z-fs-title-sm z-fw-medium z-text-on-surface z-mb-3"/>
+            <label value="Recent Activity" sclass="z-d-block z-text-base z-fw-medium z-text-on-surface z-mb-3"/>
             <listbox sclass="z-border-0">
                 <listitem><listcell><label value="Order #4821 shipped"/></listcell></listitem>
                 <listitem><listcell><label value="SKU TLS-2207 marked low"/></listcell></listitem>

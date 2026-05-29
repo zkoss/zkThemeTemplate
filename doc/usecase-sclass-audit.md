@@ -36,7 +36,7 @@ item-editor, and utility/components render identically.
 | Removed class | Replaced by (utility combo) | Dropped rule (no visual change) |
 |---------------|-----------------------------|----------------------------------|
 | `page-content` | `z-d-flex z-flex-col z-gap-4 z-p-4 z-bg-surface-low` | `min-height:100%` dropped; `box-sizing:border-box` is already global via `_reset.css` (`*`) |
-| `section-title` | `z-d-block z-fs-title-sm z-fw-medium z-text-on-surface z-mb-3` | per-typescale `line-height:20px` dropped (title-small weight = 500 = `z-fw-medium`) |
+| `section-title` | `z-d-block z-text-base z-fw-medium z-text-on-surface z-mb-3` | per-typescale `line-height:20px` dropped (title-small weight = 500 = `z-fw-medium`) |
 | `kpi-card` | *(class deleted, kept `z-flex-1 z-min-w-0 z-card`)* | `min-width:180px` was already overridden by the co-applied `z-min-w-0` (utilities win in the layer order), so removal is a true no-op |
 
 Also removed the now-dead `.z-tabbox.page-content` / `.z-tabbox.page-content .z-tabpanels`

@@ -7,7 +7,7 @@ asc = Comparators.ascRowDetailComparator;
 dsc = Comparators.dscRowDetailComparator;
 </zscript>
 <div sclass="z-p-8">
-    <div sclass="z-border-bottom z-fs-title-lg z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Grid</div>
+    <div sclass="z-border-bottom z-text-xl z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Grid</div>
 
     <div sclass="pv-section">
         <div sclass="pv-section-title">Grid — State Gallery</div>
@@ -32,7 +32,7 @@ dsc = Comparators.dscRowDetailComparator;
     </div>
 
     <div sclass="z-mb-6">
-        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Basic</div>
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Basic</div>
         <div sclass="z-py-3">
             <grid>
                 <columns menupopup="auto" sizable="true">
@@ -51,10 +51,10 @@ dsc = Comparators.dscRowDetailComparator;
     </div>
 
     <div sclass="z-mb-6">
-        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Auxhead</div>
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Auxhead</div>
         <div sclass="z-d-flex z-align-start z-flex-wrap z-gap-6 z-py-3">
             <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <div sclass="z-fs-label-sm z-text-secondary">Auxhead above columns</div>
+                <div sclass="z-text-xs z-text-secondary">Auxhead above columns</div>
                 <grid hflex="min">
                     <auxhead>
                         <auxheader label="A+B" colspan="2"/>
@@ -77,7 +77,7 @@ dsc = Comparators.dscRowDetailComparator;
                 </grid>
             </div>
             <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <div sclass="z-fs-label-sm z-text-secondary">Auxhead below columns</div>
+                <div sclass="z-text-xs z-text-secondary">Auxhead below columns</div>
                 <grid hflex="min">
                     <columns>
                         <column label="Left" align="left" width="100px"/>
@@ -97,7 +97,7 @@ dsc = Comparators.dscRowDetailComparator;
     </div>
 
     <div sclass="z-mb-6">
-        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Frozen Columns</div>
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Frozen Columns</div>
         <div sclass="z-py-3">
             <grid>
                 <frozen columns="2"/>
@@ -120,7 +120,7 @@ dsc = Comparators.dscRowDetailComparator;
     </div>
 
     <div sclass="z-mb-6">
-        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Empty State</div>
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Empty State</div>
         <div sclass="z-py-3">
             <grid emptyMessage="This grid is empty.">
                 <columns><column label="Name"/><column label="Value"/></columns>

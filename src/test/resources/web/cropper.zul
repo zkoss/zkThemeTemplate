@@ -2,16 +2,16 @@
 <zk xmlns:h="native">
 <h:link rel="stylesheet" href="pv.css"/>
 <div sclass="z-p-8">
-    <div sclass="z-border-bottom z-fs-title-lg z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Cropper</div>
+    <div sclass="z-border-bottom z-text-xl z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Cropper</div>
     <div sclass="z-mb-6">
-        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Image Cropper</div>
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Image Cropper</div>
         <div sclass="z-py-3 z-d-flex z-flex-col z-gap-4">
             <cropper x="50" y="100" w="100" h="100" onCrop="img.setContent(event.getMedia())"
                      width="600px" toolbarVisible="true" src="~./img/sun.jpg"/>
         </div>
     </div>
     <div sclass="z-mb-6">
-        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Cropped Result</div>
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Cropped Result</div>
         <div sclass="z-py-3">
             <image id="img"/>
         </div>

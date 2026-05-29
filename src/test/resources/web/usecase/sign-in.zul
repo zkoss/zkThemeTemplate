@@ -10,27 +10,27 @@
 
                 <div sclass="z-text-center">
                     <label value="Marble" sclass="z-h3 z-text-primary z-d-block"/>
-                    <label value="Sign in to your account" sclass="z-text-muted z-fs-body-sm"/>
+                    <label value="Sign in to your account" sclass="z-text-muted z-text-sm"/>
                 </div>
 
                 <div>
-                    <label value="Email" sclass="z-d-block z-mb-1 z-text-muted z-fs-label-sm"/>
+                    <label value="Email" sclass="z-d-block z-mb-1 z-text-muted z-text-xs"/>
                     <textbox placeholder="you@example.com" hflex="1"/>
                 </div>
 
                 <div>
-                    <label value="Password" sclass="z-d-block z-mb-1 z-text-muted z-fs-label-sm"/>
+                    <label value="Password" sclass="z-d-block z-mb-1 z-text-muted z-text-xs"/>
                     <textbox type="password" placeholder="••••••••" hflex="1"/>
                 </div>
 
                 <div sclass="z-d-flex z-flex-row z-flex-wrap z-gap-4 z-align-center">
                     <checkbox label="Remember me" checked="true"/>
-                    <a label="Forgot password?" sclass="z-ms-auto z-fs-label-sm"/>
+                    <a label="Forgot password?" sclass="z-ms-auto z-text-xs"/>
                 </div>
 
                 <button label="Sign In" sclass="z-button-primary" hflex="1"/>
 
-                <div sclass="z-text-center z-fs-label-sm z-text-muted">
+                <div sclass="z-text-center z-text-xs z-text-muted">
                     <label value="Don't have an account? "/>
                     <a label="Sign up"/>
                 </div>

@@ -5,34 +5,34 @@
 ]]></zscript>
 
 <div sclass="z-mb-6">
-    <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Calendar Popup Variants</div>
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Calendar Popup Variants</div>
     <div sclass="z-d-flex z-flex-wrap z-gap-6 z-py-3">
         <div sclass="z-d-flex z-flex-col z-gap-2">
-            <label sclass="z-fs-label-sm z-text-secondary">Today link</label>
+            <label sclass="z-text-xs z-text-secondary">Today link</label>
             <datebox showTodayLink="true"/>
         </div>
         <div sclass="z-d-flex z-flex-col z-gap-2">
-            <label sclass="z-fs-label-sm z-text-secondary">Week of year</label>
+            <label sclass="z-text-xs z-text-secondary">Week of year</label>
             <datebox weekOfYear="true"/>
         </div>
         <div sclass="z-d-flex z-flex-col z-gap-2">
-            <label sclass="z-fs-label-sm z-text-secondary">Time in popup (yyyy/MM/dd HH:mm)</label>
+            <label sclass="z-text-xs z-text-secondary">Time in popup (yyyy/MM/dd HH:mm)</label>
             <datebox format="yyyy/MM/dd HH:mm"/>
         </div>
         <div sclass="z-d-flex z-flex-col z-gap-2">
-            <label sclass="z-fs-label-sm z-text-secondary">Timezone selector</label>
+            <label sclass="z-text-xs z-text-secondary">Timezone selector</label>
             <datebox displayedTimeZones="GMT-8,GMT,GMT+8"/>
         </div>
         <div sclass="z-d-flex z-flex-col z-gap-2">
-            <label sclass="z-fs-label-sm z-text-secondary">Month grid (selectLevel=month)</label>
+            <label sclass="z-text-xs z-text-secondary">Month grid (selectLevel=month)</label>
             <datebox selectLevel="month"/>
         </div>
         <div sclass="z-d-flex z-flex-col z-gap-2">
-            <label sclass="z-fs-label-sm z-text-secondary">Year grid (selectLevel=year)</label>
+            <label sclass="z-text-xs z-text-secondary">Year grid (selectLevel=year)</label>
             <datebox selectLevel="year"/>
         </div>
         <div sclass="z-d-flex z-flex-col z-gap-2">
-            <label sclass="z-fs-label-sm z-text-secondary">ROC calendar (locale=zh_TW)</label>
+            <label sclass="z-text-xs z-text-secondary">ROC calendar (locale=zh_TW)</label>
             <datebox locale="zh_TW"/>
         </div>
     </div>
@@ -43,7 +43,7 @@
        rowsTemplate="datebox-rows">
     <template name="datebox-rows">
         <div sclass="pv-row z-py-2 z-border-bottom">
-            <div sclass="z-fs-label-md z-text-secondary">With button</div>
+            <div sclass="z-text-sm z-text-secondary">With button</div>
             <div><datebox/></div>
             <div><datebox disabled="true"/></div>
             <div><datebox readonly="true"/></div>
@@ -51,7 +51,7 @@
             <div><datebox inplace="true" value="${sampleDate}"/></div>
         </div>
         <div sclass="pv-row z-py-2 z-border-bottom">
-            <div sclass="z-fs-label-md z-text-secondary">No button</div>
+            <div sclass="z-text-sm z-text-secondary">No button</div>
             <div><datebox buttonVisible="false"/></div>
             <div><datebox buttonVisible="false" disabled="true"/></div>
             <div><datebox buttonVisible="false" readonly="true"/></div>

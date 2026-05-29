@@ -21,12 +21,12 @@
 
         <!-- Preference panel -->
         <div sclass="z-card z-flex-1 z-min-w-0" vflex="1">
-            <label value="Notifications" sclass="z-d-block z-fs-title-sm z-fw-medium z-text-on-surface z-mb-3"/>
+            <label value="Notifications" sclass="z-d-block z-text-base z-fw-medium z-text-on-surface z-mb-3"/>
 
             <div sclass="pref-row">
                 <div sclass="z-d-flex z-flex-col z-flex-1 z-min-w-0">
                     <label value="Email alerts" sclass="z-fw-medium"/>
-                    <label value="Receive an email when stock runs low" sclass="z-fs-label-sm z-text-muted"/>
+                    <label value="Receive an email when stock runs low" sclass="z-text-xs z-text-muted"/>
                 </div>
                 <checkbox mold="switch" checked="true"/>
             </div>
@@ -34,7 +34,7 @@
             <div sclass="pref-row">
                 <div sclass="z-d-flex z-flex-col z-flex-1 z-min-w-0">
                     <label value="Push notifications" sclass="z-fw-medium"/>
-                    <label value="Browser push for new support tickets" sclass="z-fs-label-sm z-text-muted"/>
+                    <label value="Browser push for new support tickets" sclass="z-text-xs z-text-muted"/>
                 </div>
                 <checkbox mold="switch"/>
             </div>
@@ -42,7 +42,7 @@
             <div sclass="pref-row">
                 <div sclass="z-d-flex z-flex-col z-flex-1 z-min-w-0">
                     <label value="Digest frequency" sclass="z-fw-medium"/>
-                    <label value="How often to send the activity summary" sclass="z-fs-label-sm z-text-muted"/>
+                    <label value="How often to send the activity summary" sclass="z-text-xs z-text-muted"/>
                 </div>
                 <combobox value="Daily" readonly="true" width="160px">
                     <comboitem label="Realtime"/>
@@ -54,7 +54,7 @@
             <div sclass="pref-row">
                 <div sclass="z-d-flex z-flex-col z-flex-1 z-min-w-0">
                     <label value="Alert volume" sclass="z-fw-medium"/>
-                    <label value="Sound level for in-app alerts" sclass="z-fs-label-sm z-text-muted"/>
+                    <label value="Sound level for in-app alerts" sclass="z-text-xs z-text-muted"/>
                 </div>
                 <slider curpos="60" width="180px"/>
             </div>

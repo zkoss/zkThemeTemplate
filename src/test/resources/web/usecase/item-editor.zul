@@ -11,7 +11,7 @@
     <div sclass="z-card">
 
         <!-- Basic Info -->
-        <label value="Basic Info" sclass="z-d-block z-fs-title-sm z-fw-medium z-text-on-surface z-mb-3"/>
+        <label value="Basic Info" sclass="z-d-block z-text-base z-fw-medium z-text-on-surface z-mb-3"/>
         <grid hflex="1" sclass="z-border-0">
             <columns>
                 <column width="180px"/>
@@ -26,7 +26,7 @@
                     <label value="SKU *"/>
                     <hlayout>
                         <textbox value="" hflex="1" sclass="z-bg-error-container"/>
-                        <label value="SKU is required" sclass="z-text-error z-fs-label-sm z-align-center"/>
+                        <label value="SKU is required" sclass="z-text-error z-text-xs z-align-center"/>
                     </hlayout>
                 </row>
                 <row>
@@ -46,18 +46,18 @@
         </grid>
 
         <!-- Stock -->
-        <label value="Stock" sclass="z-d-block z-fs-title-sm z-fw-medium z-text-on-surface z-mb-3 z-mt-4"/>
+        <label value="Stock" sclass="z-d-block z-text-base z-fw-medium z-text-on-surface z-mb-3 z-mt-4"/>
         <div sclass="z-d-flex z-flex-row z-flex-wrap z-gap-4">
             <div sclass="z-flex-1 z-min-w-0">
-                <label value="Quantity" sclass="z-d-block z-mb-1 z-text-muted z-fs-label-sm"/>
+                <label value="Quantity" sclass="z-d-block z-mb-1 z-text-muted z-text-xs"/>
                 <spinner value="1240" hflex="1"/>
             </div>
             <div sclass="z-flex-1 z-min-w-0">
-                <label value="Reorder Level" sclass="z-d-block z-mb-1 z-text-muted z-fs-label-sm"/>
+                <label value="Reorder Level" sclass="z-d-block z-mb-1 z-text-muted z-text-xs"/>
                 <spinner value="200" hflex="1"/>
             </div>
             <div sclass="z-flex-1 z-min-w-0">
-                <label value="Unit" sclass="z-d-block z-mb-1 z-text-muted z-fs-label-sm"/>
+                <label value="Unit" sclass="z-d-block z-mb-1 z-text-muted z-text-xs"/>
                 <combobox value="Pack" readonly="true" hflex="1">
                     <comboitem label="Each"/>
                     <comboitem label="Pack"/>
@@ -67,23 +67,23 @@
         </div>
 
         <!-- Pricing -->
-        <label value="Pricing" sclass="z-d-block z-fs-title-sm z-fw-medium z-text-on-surface z-mb-3 z-mt-4"/>
+        <label value="Pricing" sclass="z-d-block z-text-base z-fw-medium z-text-on-surface z-mb-3 z-mt-4"/>
         <div sclass="z-d-flex z-flex-row z-flex-wrap z-gap-4">
             <div sclass="z-flex-1 z-min-w-0">
-                <label value="Cost" sclass="z-d-block z-mb-1 z-text-muted z-fs-label-sm"/>
+                <label value="Cost" sclass="z-d-block z-mb-1 z-text-muted z-text-xs"/>
                 <decimalbox value="3.40" format="#,##0.00" hflex="1"/>
             </div>
             <div sclass="z-flex-1 z-min-w-0">
-                <label value="Price" sclass="z-d-block z-mb-1 z-text-muted z-fs-label-sm"/>
+                <label value="Price" sclass="z-d-block z-mb-1 z-text-muted z-text-xs"/>
                 <decimalbox value="5.99" format="#,##0.00" hflex="1"/>
             </div>
         </div>
 
         <!-- Options -->
-        <label value="Options" sclass="z-d-block z-fs-title-sm z-fw-medium z-text-on-surface z-mb-3 z-mt-4"/>
+        <label value="Options" sclass="z-d-block z-text-base z-fw-medium z-text-on-surface z-mb-3 z-mt-4"/>
         <checkbox label="Active (available for ordering)" checked="true"/>
         <div sclass="z-mt-2">
-            <label value="Storage Type" sclass="z-d-block z-mb-1 z-text-muted z-fs-label-sm"/>
+            <label value="Storage Type" sclass="z-d-block z-mb-1 z-text-muted z-text-xs"/>
             <radiogroup>
                 <radio label="Ambient" selected="true"/>
                 <radio label="Refrigerated"/>
@@ -91,7 +91,7 @@
             </radiogroup>
         </div>
         <div sclass="z-mt-2">
-            <label value="Notes" sclass="z-d-block z-mb-1 z-text-muted z-fs-label-sm"/>
+            <label value="Notes" sclass="z-d-block z-mb-1 z-text-muted z-text-xs"/>
             <textbox multiline="true" rows="3" hflex="1" placeholder="Internal notes…"/>
         </div>
     </div>

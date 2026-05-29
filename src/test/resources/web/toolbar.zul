@@ -2,13 +2,13 @@
 <zk xmlns:h="native">
 <h:link rel="stylesheet" href="pv.css"/>
 <div sclass="z-p-8">
-    <div sclass="z-border-bottom z-fs-title-lg z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Toolbar</div>
+    <div sclass="z-border-bottom z-text-xl z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Toolbar</div>
 
     <div sclass="z-mb-6">
-        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">With Icons</div>
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">With Icons</div>
         <div sclass="z-d-flex z-align-start z-flex-wrap z-gap-6 z-py-3">
             <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <div sclass="z-fs-label-sm z-text-secondary">Mixed (icon + image + link)</div>
+                <div sclass="z-text-xs z-text-secondary">Mixed (icon + image + link)</div>
                 <toolbar>
                     <toolbarbutton label="Button 1" iconSclass="z-icon-volume-2"/>
                     <toolbarbutton label="Button 2" mode="toggle" checked="true" image="~./img/network.gif"/>
@@ -16,7 +16,7 @@
                 </toolbar>
             </div>
             <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <div sclass="z-fs-label-sm z-text-secondary">With images</div>
+                <div sclass="z-text-xs z-text-secondary">With images</div>
                 <toolbar>
                     <toolbarbutton label="Button 1" image="~./img/volumn.gif"/>
                     <toolbarbutton label="Button 2" mode="toggle" checked="true" image="~./img/network.gif"/>
@@ -26,10 +26,10 @@
     </div>
 
     <div sclass="z-mb-6">
-        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Text Only</div>
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Text Only</div>
         <div sclass="z-d-flex z-align-start z-flex-wrap z-gap-6 z-py-3">
             <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <div sclass="z-fs-label-sm z-text-secondary">Default, checked, disabled, checked+disabled</div>
+                <div sclass="z-text-xs z-text-secondary">Default, checked, disabled, checked+disabled</div>
                 <toolbar>
                     <toolbarbutton label="Button 1" />
                     <toolbarbutton label="Button 2" mode="toggle" checked="true" />
@@ -41,10 +41,10 @@
     </div>
 
     <div sclass="z-mb-6">
-        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Icon Only</div>
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Icon Only</div>
         <div sclass="z-d-flex z-align-start z-flex-wrap z-gap-6 z-py-3">
             <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <div sclass="z-fs-label-sm z-text-secondary">Icon-only: default, default, checked, disabled</div>
+                <div sclass="z-text-xs z-text-secondary">Icon-only: default, default, checked, disabled</div>
                 <toolbar>
                     <toolbarbutton iconSclass="z-icon-search" tooltiptext="Search"/>
                     <toolbarbutton iconSclass="z-icon-edit" tooltiptext="Edit"/>
@@ -56,10 +56,10 @@
     </div>
 
     <div sclass="z-mb-6">
-        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">With Separator</div>
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">With Separator</div>
         <div sclass="z-d-flex z-align-start z-flex-wrap z-gap-6 z-py-3">
             <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <div sclass="z-fs-label-sm z-text-secondary">separator (divider) + separator (spacer)</div>
+                <div sclass="z-text-xs z-text-secondary">separator (divider) + separator (spacer)</div>
                 <toolbar>
                     <toolbarbutton label="New" iconSclass="z-icon-file"/>
                     <toolbarbutton label="Open" iconSclass="z-icon-folder-open"/>
@@ -75,17 +75,17 @@
     </div>
 
     <div sclass="z-mb-6">
-        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Panel Mold</div>
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Panel Mold</div>
         <div sclass="z-d-flex z-align-start z-flex-wrap z-gap-6 z-py-3">
             <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <div sclass="z-fs-label-sm z-text-secondary">Panel mold with images</div>
+                <div sclass="z-text-xs z-text-secondary">Panel mold with images</div>
                 <toolbar mold="panel">
                     <toolbarbutton label="Button 1" image="~./img/volumn.gif"/>
                     <toolbarbutton label="Button 2" mode="toggle" checked="true" image="~./img/network.gif"/>
                 </toolbar>
             </div>
             <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <div sclass="z-fs-label-sm z-text-secondary">Panel mold text only</div>
+                <div sclass="z-text-xs z-text-secondary">Panel mold text only</div>
                 <toolbar mold="panel">
                     <toolbarbutton label="Button 1" />
                     <toolbarbutton label="Button 2" mode="toggle" checked="true" />
@@ -95,17 +95,17 @@
     </div>
 
     <div sclass="z-mb-6">
-        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Vertical</div>
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Vertical</div>
         <div sclass="z-d-flex z-align-start z-flex-wrap z-gap-6 z-py-3">
             <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <div sclass="z-fs-label-sm z-text-secondary">With icon / image</div>
+                <div sclass="z-text-xs z-text-secondary">With icon / image</div>
                 <toolbar orient="vertical">
                     <toolbarbutton label="Button 1" iconSclass="z-icon-volume-2"/>
                     <toolbarbutton label="Button 2" mode="toggle" checked="true" image="~./img/network.gif"/>
                 </toolbar>
             </div>
             <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <div sclass="z-fs-label-sm z-text-secondary">Text only: default, checked, disabled</div>
+                <div sclass="z-text-xs z-text-secondary">Text only: default, checked, disabled</div>
                 <toolbar orient="vertical">
                     <toolbarbutton label="Button 1" />
                     <toolbarbutton label="Button 2" mode="toggle" checked="true" />
@@ -113,7 +113,7 @@
                 </toolbar>
             </div>
             <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <div sclass="z-fs-label-sm z-text-secondary">Icon only</div>
+                <div sclass="z-text-xs z-text-secondary">Icon only</div>
                 <toolbar orient="vertical">
                     <toolbarbutton iconSclass="z-icon-search" tooltiptext="Search"/>
                     <toolbarbutton iconSclass="z-icon-edit" tooltiptext="Edit"/>
@@ -122,7 +122,7 @@
                 </toolbar>
             </div>
             <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <div sclass="z-fs-label-sm z-text-secondary">With separator</div>
+                <div sclass="z-text-xs z-text-secondary">With separator</div>
                 <toolbar orient="vertical">
                     <toolbarbutton label="New" iconSclass="z-icon-file"/>
                     <toolbarbutton label="Open" iconSclass="z-icon-folder-open"/>
@@ -132,7 +132,7 @@
                 </toolbar>
             </div>
             <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <div sclass="z-fs-label-sm z-text-secondary">Panel mold</div>
+                <div sclass="z-text-xs z-text-secondary">Panel mold</div>
                 <toolbar orient="vertical" mold="panel">
                     <toolbarbutton label="Button 1" image="~./img/volumn.gif"/>
                     <toolbarbutton label="Button 2" image="~./img/network.gif"/>
@@ -143,10 +143,10 @@
 
 
     <div sclass="z-mb-6">
-        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Overflow Popup</div>
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Overflow Popup</div>
         <div sclass="z-d-flex z-align-start z-flex-wrap z-gap-6 z-py-3">
             <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <div sclass="z-fs-label-sm z-text-secondary">overflowPopup="true" (300px wide, 12 buttons)</div>
+                <div sclass="z-text-xs z-text-secondary">overflowPopup="true" (300px wide, 12 buttons)</div>
                 <toolbar width="300px" overflowPopup="true">
                     <toolbarbutton label="New"/>
                     <toolbarbutton label="Open"/>

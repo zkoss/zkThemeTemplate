@@ -2,13 +2,13 @@
 <zk xmlns:h="native">
 <h:link rel="stylesheet" href="pv.css"/>
 <div sclass="z-p-8">
-    <div sclass="z-border-bottom z-fs-title-lg z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Stepbar</div>
+    <div sclass="z-border-bottom z-text-xl z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Stepbar</div>
 
     <div sclass="z-mb-6">
-        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Basic Stepbar</div>
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Basic Stepbar</div>
         <div sclass="z-d-flex z-align-start z-flex-wrap z-gap-6 z-py-3">
             <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <div sclass="z-fs-label-sm z-text-secondary">Active: first step</div>
+                <div sclass="z-text-xs z-text-secondary">Active: first step</div>
                 <stepbar activeIndex="0" width="600px">
                     <step title="First Step" />
                     <step title="Second Step" />
@@ -19,10 +19,10 @@
     </div>
 
     <div sclass="z-mb-6">
-        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Active Index Variants</div>
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Active Index Variants</div>
         <div sclass="z-d-flex z-flex-col z-gap-6 z-py-3">
             <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <div sclass="z-fs-label-sm z-text-secondary">Active: second step</div>
+                <div sclass="z-text-xs z-text-secondary">Active: second step</div>
                 <stepbar activeIndex="1" width="600px">
                     <step title="First Step" />
                     <step title="Second Step" />
@@ -30,7 +30,7 @@
                 </stepbar>
             </div>
             <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <div sclass="z-fs-label-sm z-text-secondary">Active: third step (complete)</div>
+                <div sclass="z-text-xs z-text-secondary">Active: third step (complete)</div>
                 <stepbar activeIndex="2" width="600px">
                     <step title="First Step" />
                     <step title="Second Step" />

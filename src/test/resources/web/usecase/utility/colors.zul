@@ -9,54 +9,54 @@
 
     <!-- Text Colors -->
     <div sclass="section-card">
-        <label value="Text Colors" sclass="z-d-block z-fs-title-sm z-fw-medium z-text-on-surface z-mb-3"/>
+        <label value="Text Colors" sclass="z-d-block z-text-base z-fw-medium z-text-on-surface z-mb-3"/>
         <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px">
             <div sclass="z-d-flex z-align-center z-gap-2">
                 <label value="Sample Text" sclass="z-text-primary z-fw-medium"/>
-                <label value=".z-text-primary" sclass="z-text-secondary z-fs-label-md"/>
+                <label value=".z-text-primary" sclass="z-text-secondary z-text-sm"/>
             </div>
             <div sclass="z-d-flex z-align-center z-gap-2">
                 <label value="Sample Text" sclass="z-text-secondary z-fw-medium"/>
-                <label value=".z-text-secondary" sclass="z-text-secondary z-fs-label-md"/>
+                <label value=".z-text-secondary" sclass="z-text-secondary z-text-sm"/>
             </div>
             <div sclass="z-d-flex z-align-center z-gap-2">
                 <label value="Sample Text" sclass="z-text-muted z-fw-medium"/>
-                <label value=".z-text-muted" sclass="z-text-secondary z-fs-label-md"/>
+                <label value=".z-text-muted" sclass="z-text-secondary z-text-sm"/>
             </div>
             <div sclass="z-d-flex z-align-center z-gap-2">
                 <label value="Sample Text" sclass="z-text-success z-fw-medium"/>
-                <label value=".z-text-success" sclass="z-text-secondary z-fs-label-md"/>
+                <label value=".z-text-success" sclass="z-text-secondary z-text-sm"/>
             </div>
             <div sclass="z-d-flex z-align-center z-gap-2">
                 <label value="Sample Text" sclass="z-text-warning z-fw-medium"/>
-                <label value=".z-text-warning" sclass="z-text-secondary z-fs-label-md"/>
+                <label value=".z-text-warning" sclass="z-text-secondary z-text-sm"/>
             </div>
             <div sclass="z-d-flex z-align-center z-gap-2">
                 <label value="Sample Text" sclass="z-text-error z-fw-medium"/>
-                <label value=".z-text-error" sclass="z-text-secondary z-fs-label-md"/>
+                <label value=".z-text-error" sclass="z-text-secondary z-text-sm"/>
             </div>
             <div sclass="z-d-flex z-align-center z-gap-2">
                 <label value="Sample Text" sclass="z-text-info z-fw-medium"/>
-                <label value=".z-text-info" sclass="z-text-secondary z-fs-label-md"/>
+                <label value=".z-text-info" sclass="z-text-secondary z-text-sm"/>
             </div>
             <div sclass="z-d-flex z-align-center z-gap-2">
                 <label value="Sample Text" sclass="z-text-neutral z-fw-medium"/>
-                <label value=".z-text-neutral" sclass="z-text-secondary z-fs-label-md"/>
+                <label value=".z-text-neutral" sclass="z-text-secondary z-text-sm"/>
             </div>
             <div sclass="z-d-flex z-align-center z-gap-2">
                 <label value="Sample Text" sclass="z-text-disabled z-fw-medium"/>
-                <label value=".z-text-disabled" sclass="z-text-secondary z-fs-label-md"/>
+                <label value=".z-text-disabled" sclass="z-text-secondary z-text-sm"/>
             </div>
             <div sclass="z-d-flex z-align-center z-gap-2">
                 <label value="Sample Text" sclass="z-text-on-surface z-fw-medium"/>
-                <label value=".z-text-on-surface" sclass="z-text-secondary z-fs-label-md"/>
+                <label value=".z-text-on-surface" sclass="z-text-secondary z-text-sm"/>
             </div>
         </div>
     </div>
 
     <!-- Background Colors -->
     <div sclass="section-card">
-        <label value="Background Colors" sclass="z-d-block z-fs-title-sm z-fw-medium z-text-on-surface z-mb-3"/>
+        <label value="Background Colors" sclass="z-d-block z-text-base z-fw-medium z-text-on-surface z-mb-3"/>
         <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px">
             <div sclass="z-bg-primary z-p-3 z-rounded-md z-text-center">
                 <label value=".z-bg-primary" sclass="z-fw-medium"/>
@@ -105,7 +105,7 @@
 
     <!-- Inverse text on dark background -->
     <div sclass="section-card">
-        <label value="Inverse Text" sclass="z-d-block z-fs-title-sm z-fw-medium z-text-on-surface z-mb-3"/>
+        <label value="Inverse Text" sclass="z-d-block z-text-base z-fw-medium z-text-on-surface z-mb-3"/>
         <div sclass="z-bg-primary z-p-4 z-rounded-md z-d-inline-block">
             <label value=".z-text-inverse — readable on dark backgrounds" sclass="z-text-inverse z-fw-medium"/>
         </div>

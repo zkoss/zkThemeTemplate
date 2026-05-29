@@ -2,7 +2,7 @@
 <zk xmlns:h="native">
 <h:link rel="stylesheet" href="pv.css"/>
 <div sclass="z-p-8">
-    <div sclass="z-border-bottom z-fs-title-lg z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Panel</div>
+    <div sclass="z-border-bottom z-text-xl z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Panel</div>
 
     <div sclass="pv-section">
         <div sclass="pv-section-title">Panel — State Gallery</div>
@@ -18,10 +18,10 @@
     </div>
 
     <div sclass="z-mb-6">
-        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Rounded Border — Full Controls</div>
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Rounded Border — Full Controls</div>
         <div sclass="z-d-flex z-align-start z-flex-wrap z-gap-6 z-py-3">
             <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <div sclass="z-fs-label-sm z-text-secondary">border="rounded"</div>
+                <div sclass="z-text-xs z-text-secondary">border="rounded"</div>
                 <panel border="rounded" height="250px" width="280px"
                     maximizable="true" minimizable="true" collapsible="true" closable="true"
                     title="Panel (rounded)">
@@ -31,7 +31,7 @@
                 </panel>
             </div>
             <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <div sclass="z-fs-label-sm z-text-secondary">border="normal"</div>
+                <div sclass="z-text-xs z-text-secondary">border="normal"</div>
                 <panel border="normal" height="250px" width="280px"
                     maximizable="true" minimizable="true" collapsible="true" closable="true"
                     title="Panel (normal)">
@@ -44,10 +44,10 @@
     </div>
 
     <div sclass="z-mb-6">
-        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">No Border — Full Controls</div>
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">No Border — Full Controls</div>
         <div sclass="z-d-flex z-align-start z-flex-wrap z-gap-6 z-py-3">
             <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <div sclass="z-fs-label-sm z-text-secondary">No border, with title</div>
+                <div sclass="z-text-xs z-text-secondary">No border, with title</div>
                 <panel height="250px" width="280px"
                     maximizable="true" minimizable="true" collapsible="true" closable="true"
                     title="Panel (no border)">
@@ -60,10 +60,10 @@
     </div>
 
     <div sclass="z-mb-6">
-        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Without Toolbar</div>
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Without Toolbar</div>
         <div sclass="z-d-flex z-align-start z-flex-wrap z-gap-6 z-py-3">
             <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <div sclass="z-fs-label-sm z-text-secondary">border="rounded"</div>
+                <div sclass="z-text-xs z-text-secondary">border="rounded"</div>
                 <panel border="rounded" height="200px" width="280px"
                     maximizable="true" minimizable="true" collapsible="true" closable="true"
                     title="Panel (rounded)">
@@ -71,7 +71,7 @@
                 </panel>
             </div>
             <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <div sclass="z-fs-label-sm z-text-secondary">border="normal"</div>
+                <div sclass="z-text-xs z-text-secondary">border="normal"</div>
                 <panel border="normal" height="200px" width="280px"
                     maximizable="true" minimizable="true" collapsible="true" closable="true"
                     title="Panel (normal)">
@@ -79,7 +79,7 @@
                 </panel>
             </div>
             <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <div sclass="z-fs-label-sm z-text-secondary">No border, with title</div>
+                <div sclass="z-text-xs z-text-secondary">No border, with title</div>
                 <panel height="200px" width="280px"
                     maximizable="true" minimizable="true" collapsible="true" closable="true"
                     title="Panel (no border)">
@@ -87,19 +87,19 @@
                 </panel>
             </div>
             <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <div sclass="z-fs-label-sm z-text-secondary">No title, rounded</div>
+                <div sclass="z-text-xs z-text-secondary">No title, rounded</div>
                 <panel border="rounded" height="200px" width="280px">
                     <panelchildren>Panel Content (no title)</panelchildren>
                 </panel>
             </div>
             <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <div sclass="z-fs-label-sm z-text-secondary">No title, normal</div>
+                <div sclass="z-text-xs z-text-secondary">No title, normal</div>
                 <panel border="normal" height="200px" width="280px">
                     <panelchildren>Panel Content (no title)</panelchildren>
                 </panel>
             </div>
             <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <div sclass="z-fs-label-sm z-text-secondary">No title, no border</div>
+                <div sclass="z-text-xs z-text-secondary">No title, no border</div>
                 <panel height="200px" width="280px">
                     <panelchildren>Panel Content (no title)</panelchildren>
                 </panel>
@@ -108,7 +108,7 @@
     </div>
 
     <div sclass="z-mb-6">
-        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Overflow / Scroll</div>
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Overflow / Scroll</div>
         <div sclass="z-py-3">
             <panel title="Panel with Overflow Content" border="normal" width="300px" height="200px">
                 <panelchildren style="overflow:auto;">

@@ -7,7 +7,7 @@
     import org.zkoss.zul.*;
 ]]></zscript>
 <div sclass="z-p-8">
-    <div sclass="z-border-bottom z-fs-title-lg z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Toast</div>
+    <div sclass="z-border-bottom z-text-xl z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Toast</div>
 
     <div sclass="pv-section">
         <div sclass="pv-section-title">Toast — State Gallery</div>
@@ -41,7 +41,7 @@
     </div>
 
     <div sclass="z-mb-6">
-        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Types</div>
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Types</div>
         <div sclass="z-py-3 z-d-flex z-gap-4 z-flex-wrap">
             <button label="Info" onClick='Toast.show("This is an info toast.", Clients.NOTIFICATION_TYPE_INFO, "top_right", 3000, true)'/>
             <button label="Warning" onClick='Toast.show("This is a warning toast.", Clients.NOTIFICATION_TYPE_WARNING, "top_right", 3000, true)'/>
@@ -50,7 +50,7 @@
         </div>
     </div>
     <div sclass="z-mb-6">
-        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Positions</div>
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Positions</div>
         <div sclass="z-py-3 z-d-flex z-gap-4 z-flex-wrap">
             <button label="Top Left" onClick='Toast.show("Top left toast", Clients.NOTIFICATION_TYPE_INFO, "top_left", 3000, true)'/>
             <button label="Top Center" onClick='Toast.show("Top center toast", Clients.NOTIFICATION_TYPE_INFO, "top_center", 3000, true)'/>
@@ -64,7 +64,7 @@
         </div>
     </div>
     <div sclass="z-mb-6">
-        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Options</div>
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Options</div>
         <div sclass="z-py-3 z-d-flex z-gap-4 z-flex-wrap">
             <button label="Persistent (closable)" onClick='Toast.show("Click X to dismiss this toast.", Clients.NOTIFICATION_TYPE_INFO, "top_right", -1, true)'/>
             <button label="With HTML" onClick='Toast.show("Toast with &lt;b&gt;bold&lt;/b&gt; content.", Clients.NOTIFICATION_TYPE_INFO, "top_right", 3000, false)'/>

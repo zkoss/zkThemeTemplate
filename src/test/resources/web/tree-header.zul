@@ -41,10 +41,10 @@
     tristateModel.addToSelection(childB2);
 ]]></zscript>
 <div sclass="z-p-8">
-    <div sclass="z-border-bottom z-fs-title-lg z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Tree Header</div>
+    <div sclass="z-border-bottom z-text-xl z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Tree Header</div>
 
     <div sclass="z-mb-6">
-        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Auxhead + Treecols Combinations</div>
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Auxhead + Treecols Combinations</div>
         <div sclass="z-py-3">
             <div style="display:flex; gap:16px; align-items:flex-start;">
                 <tree width="400px">
@@ -196,7 +196,7 @@
     </div>
 
     <div sclass="z-mb-6">
-        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Treecols Only and Auxhead Only</div>
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Treecols Only and Auxhead Only</div>
         <div sclass="z-py-3">
             <div style="display:flex; gap:16px; align-items:flex-start;">
                 <tree width="400px">
@@ -271,7 +271,7 @@
     </div>
 
     <div sclass="z-mb-6">
-        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Static Sort Direction</div>
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Static Sort Direction</div>
         <div sclass="z-py-3">
             <div style="display:flex; gap:16px; align-items:flex-start;">
                 <tree width="300px">
@@ -320,7 +320,7 @@
     </div>
 
     <div sclass="z-mb-6">
-        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Tristate Selection (PARTIAL)</div>
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Tristate Selection (PARTIAL)</div>
         <div sclass="z-py-3">
             <tree model="${tristateModel}" checkmark="true" multiple="true" width="320px">
                 <treecols>
@@ -331,7 +331,7 @@
     </div>
 
     <div sclass="z-mb-6">
-        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">sizedByContent + Span Treecol</div>
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">sizedByContent + Span Treecol</div>
         <div sclass="z-py-3">
             <div style="display:flex; gap:16px; align-items:flex-start;">
                 <tree sizedByContent="true">
@@ -397,7 +397,7 @@
     </div>
 
     <div sclass="z-mb-6">
-        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Frozen Right (Start Columns Scroll)</div>
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Frozen Right (Start Columns Scroll)</div>
         <div sclass="z-py-3">
             <tree width="500px">
                 <frozen columns="2" start="1"/>
@@ -464,7 +464,7 @@
     </div>
 
     <div sclass="z-mb-6">
-        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Sticky Header (z-sticky-header)</div>
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Sticky Header (z-sticky-header)</div>
         <div sclass="z-py-3">
             <div style="height:200px; overflow-y:auto; border:1px solid var(--zk-color-outline);">
                 <tree sclass="z-sticky-header" width="460px">
@@ -506,7 +506,7 @@
     </div>
 
     <div sclass="z-mb-6">
-        <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Live Data with Paging</div>
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Live Data with Paging</div>
         <div sclass="z-py-3">
             <div sclass="z-hstack z-mb-3">
                 <radiogroup onCheck="tree.pagingPosition = self.selectedItem.label;">

@@ -11,25 +11,37 @@
 .z-fw-semibold{ font-weight: 600; }
 .z-fw-bold    { font-weight: 700; }
 
-/* Font Size (MD3 typescale) */
-.z-fs-display-lg  { font-size: var(--zk-typescale-display-large-size); }
-.z-fs-display-md  { font-size: var(--zk-typescale-display-medium-size); }
-.z-fs-display-sm  { font-size: var(--zk-typescale-display-small-size); }
-.z-fs-headline-lg { font-size: var(--zk-typescale-headline-large-size); }
-.z-fs-headline-md { font-size: var(--zk-typescale-headline-medium-size); }
-.z-fs-headline-sm { font-size: var(--zk-typescale-headline-small-size); }
-.z-fs-title-lg    { font-size: var(--zk-typescale-title-large-size); }
-.z-fs-title-md    { font-size: var(--zk-typescale-title-medium-size); }
-.z-fs-title-sm    { font-size: var(--zk-typescale-title-small-size); }
-.z-fs-body-lg     { font-size: var(--zk-typescale-body-large-size); }
-.z-fs-body-md     { font-size: var(--zk-typescale-body-medium-size); }
-.z-fs-body-sm     { font-size: var(--zk-typescale-body-small-size); }
-.z-fs-label-lg    { font-size: var(--zk-typescale-label-large-size); }
-.z-fs-label-md    { font-size: var(--zk-typescale-label-medium-size); }
-.z-fs-label-sm    { font-size: var(--zk-typescale-label-small-size); }
-
-/* shorthand alias (legacy) */
-.z-text-sm { font-size: var(--zk-typescale-body-small-size); }
+/* Font Size — pure size scale (T-shirt naming).
+   Values map to MD3 typescale sizes from tokens/_typography.css;
+   sizes appearing in multiple roles share one utility (e.g. 16px = title-md = body-lg).
+   ┌──────────────┬─────┬──────────────────────────────────┐
+   │ class        │ px  │ MD3 typescale role(s)            │
+   ├──────────────┼─────┼──────────────────────────────────┤
+   │ z-text-xs    │ 11  │ label-small                      │
+   │ z-text-sm    │ 12  │ body-small, label-medium         │
+   │ z-text-md    │ 13  │ body-medium (default body)       │
+   │ z-text-base  │ 14  │ title-small, label-large         │
+   │ z-text-lg    │ 16  │ title-medium, body-large         │
+   │ z-text-xl    │ 22  │ title-large                      │
+   │ z-text-2xl   │ 24  │ headline-small                   │
+   │ z-text-3xl   │ 28  │ headline-medium                  │
+   │ z-text-4xl   │ 32  │ headline-large                   │
+   │ z-text-5xl   │ 36  │ display-small                    │
+   │ z-text-6xl   │ 45  │ display-medium                   │
+   │ z-text-7xl   │ 57  │ display-large                    │
+   └──────────────┴─────┴──────────────────────────────────┘ */
+.z-text-xs   { font-size: var(--zk-typescale-label-small-size); }
+.z-text-sm   { font-size: var(--zk-typescale-body-small-size); }
+.z-text-md   { font-size: var(--zk-typescale-body-medium-size); }
+.z-text-base { font-size: var(--zk-typescale-title-small-size); }
+.z-text-lg   { font-size: var(--zk-typescale-title-medium-size); }
+.z-text-xl   { font-size: var(--zk-typescale-title-large-size); }
+.z-text-2xl  { font-size: var(--zk-typescale-headline-small-size); }
+.z-text-3xl  { font-size: var(--zk-typescale-headline-medium-size); }
+.z-text-4xl  { font-size: var(--zk-typescale-headline-large-size); }
+.z-text-5xl  { font-size: var(--zk-typescale-display-small-size); }
+.z-text-6xl  { font-size: var(--zk-typescale-display-medium-size); }
+.z-text-7xl  { font-size: var(--zk-typescale-display-large-size); }
 
 /* Text Alignment */
 .z-text-start  { text-align: start; }
