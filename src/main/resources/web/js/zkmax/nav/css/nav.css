@@ -29,17 +29,19 @@
     background: transparent;
 }
 
-/* Navbar renders on a surface card so it aligns with the other surface
-   components (panel, groupbox, grid…) instead of blending into the page. */
+/* Navbar uses MD3 Navigation Drawer surface tone — `surface-container-low` —
+   so it reads as navigation chrome distinct from page content. Per MD3 spec,
+   navigation containers (Drawer / Bar / Rail) always carry a tonal step;
+   inheriting the parent surface would only be appropriate inside an already-
+   tinted region. When nesting inside another tinted container, override with
+   `background-color: transparent` at the use site rather than at the widget
+   level. */
 .z-navbar {
     display: block;
     position: relative;
     font-family: var(--zk-typescale-font-family);
     font-size: var(--zk-typescale-body-medium-size);
-    background-color: var(--zk-color-surface);
-    border: 1px solid var(--zk-color-outline-variant);
-    border-radius: var(--zk-shape-card);
-    padding: var(--zk-spacing-2);
+    background-color: var(--zk-color-surface-container-low);
     box-sizing: border-box;
 }
 

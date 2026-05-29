@@ -47,9 +47,11 @@
  */
 
 /* ─── Menubar container ──────────────────────────────────────────────────── */
-/* MD3 navigation/top-app-bar surface tone: surface-container + on-surface text.
-   (Previously transparent bg + on-primary text — rendered white-on-white on
-   surface pages where no primary container wrapped the menubar.) */
+/* Menubar carries an MD3 Top-App-Bar / Menu Bar surface tone — `surface-container`
+   — so it reads as navigation chrome distinct from content surfaces (Window,
+   Panel, Grid, Listbox all sit on `surface`). Text stays `on-surface` for high
+   contrast on the tinted bar. Override with `transparent` at the use site if
+   the menubar is embedded in an already-tinted region. */
 .z-menubar {
     display: flex;
     flex-direction: row;
@@ -61,7 +63,6 @@
     box-sizing: border-box;
     position: relative;
     z-index: 100;
-    box-shadow: var(--zk-elevation-2);
     font-family: var(--zk-typescale-font-family);
 }
 
