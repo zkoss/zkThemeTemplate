@@ -149,14 +149,19 @@
     transition: color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
 }
 
-/* Hover/selected disc — fixed 36×36 circle centred on the cell, behind the text */
+/* Hover/selected disc — fixed 32×32 circle centred on the cell, behind the text.
+ * Sized 4px smaller than the 38px-wide TD so the leftmost/rightmost selected
+ * day's disc has ~3px breathing room from the calendar's outer border instead
+ * of nearly touching it. Stays fixed-size (does NOT scale with cell width)
+ * so the same disc renders identically in the default 7-col view and the
+ * week-of-year 8-col view (where columns shrink). */
 .z-calendar-cell::before {
     content: '';
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 36px;
-    height: 36px;
+    width: 32px;
+    height: 32px;
     transform: translate(-50%, -50%);
     border-radius: 50%;
     background-color: transparent;
@@ -208,8 +213,8 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 32px;
-    height: 32px;
+    width: 28px;
+    height: 28px;
     transform: translate(-50%, -50%);
     border: 1px solid var(--zk-color-primary);
     border-radius: 50%;
@@ -276,15 +281,18 @@
 }
 
 /* Month / Year / Decade pill: override the day-cell circular disc to a
- * cell-filling pill (these chips are content-shaped, not date-circle-shaped). */
+ * cell-shaped pill (these chips are content-shaped, not date-circle-shaped).
+ * `inset: 4px` keeps the pill 4px short of each cell edge so neighbouring
+ * pills don't paint edge-to-edge and the selected pill doesn't touch the
+ * popup border — both produced a visually "fused" grid that read as a
+ * single block instead of selectable items. */
 .z-calendar-body.z-calendar-month .z-calendar-cell::before,
 .z-calendar-body.z-calendar-year .z-calendar-cell::before,
 .z-calendar-body.z-calendar-decade .z-calendar-cell::before {
-    top: 0;
-    left: 0;
+    inset: 4px;
     transform: none;
-    width: 100%;
-    height: 100%;
+    width: auto;
+    height: auto;
     border-radius: var(--zk-shape-button);
 }
 
