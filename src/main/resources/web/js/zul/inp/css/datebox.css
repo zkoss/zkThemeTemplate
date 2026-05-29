@@ -176,7 +176,20 @@
     display: none;
 }
 
-/* ─── Calendar popup ───────────────────────────────────────────────────────── */
+/* ─── Calendar popup ─────────────────────────────────────────────────────────
+ * MD3 picker rule: the popup is the ONE and ONLY elevated surface. Everything
+ * inside (calendar, timebox, timezone select) is "flat content" on that
+ * surface — no nested cards, no internal dividers. A multi-card popup makes
+ * the user's eye chase boundaries instead of values.
+ *
+ * Practical implication for this file:
+ *   1. .z-datebox-popup carries the shadow + radius (below).
+ *   2. .z-datebox-popup .z-calendar overrides calendar.css's standalone
+ *      card-style (border + shadow) so the calendar reads as flat content
+ *      inside the popup, not as a card-within-a-card.
+ *   3. timebox input + timezone select use a "filled-on-surface" border
+ *      treatment (transparent border at rest, primary on focus).
+ */
 .z-datebox-popup {
     position: absolute;
     z-index: 1700;
@@ -192,11 +205,15 @@
        phantom border. */
 }
 
+/* Calendar-in-popup: flat content. Overrides calendar.css's standalone styling
+ * (which gives .z-calendar its own card border + elevation-2 shadow for use
+ * outside the datebox). No border, no shadow, no radius, transparent bg —
+ * the popup itself is the surface. */
 .z-datebox-popup .z-calendar {
+    background: transparent;
     border: none;
-    border-bottom: 1px solid var(--zk-color-outline-variant);
-    box-shadow: none;
     border-radius: 0;
+    box-shadow: none;
 }
 
 /* Time section inside datebox popup */
@@ -204,6 +221,18 @@
     display: flex;
     width: calc(100% - 32px);
     margin: 12px 16px 16px;
+}
+
+/* Filled-on-surface input treatment inside the popup: no resting border so
+ * timebox/timezone don't read as nested cards; focus shows a primary border
+ * for the affordance. */
+.z-datebox-popup .z-timebox .z-timebox-input,
+.z-datebox-popup .z-datebox-timezone > select {
+    border-color: transparent;
+}
+.z-datebox-popup .z-timebox .z-timebox-input:focus,
+.z-datebox-popup .z-datebox-timezone > select:focus {
+    border-color: var(--zk-color-primary);
 }
 
 /* ─── Timezone selector (rendered when `timezones=` attribute set) ──────────

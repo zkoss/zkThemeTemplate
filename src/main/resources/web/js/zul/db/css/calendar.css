@@ -262,7 +262,17 @@
     position: absolute;
 }
 
-.z-datebox-popup .z-calendar {
+/* Standalone calendar (used outside of .z-datebox-popup) gets its own card
+ * shell — border + radius + shadow — so it looks like a self-contained
+ * component when dropped into a page or panel.
+ *
+ * INSIDE .z-datebox-popup the popup is already the elevated surface, so
+ * datebox.css overrides ALL of these back to flat content (no border, no
+ * shadow, no radius, transparent bg). The :not() guard below makes sure
+ * this rule doesn't bleed into the popup case and force authors to override
+ * three properties twice.
+ * See MD3 selection / picker guidance and tasks/design-review-2026-05-29.md §2a. */
+.z-calendar:not(.z-datebox-popup .z-calendar) {
     background: var(--zk-color-surface);
     border: 1px solid var(--zk-color-outline-variant);
     border-radius: var(--zk-shape-card);

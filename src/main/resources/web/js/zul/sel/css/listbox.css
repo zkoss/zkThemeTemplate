@@ -206,13 +206,19 @@
     background-color: color-mix(in srgb, var(--zk-color-on-surface) 8%, var(--zk-color-surface-container-lowest));
 }
 
-/* Selected row */
+/* Selected row
+ * MD3 selection family: LIST-ROW ("the row I'm on") — must use primary-container
+ * with on-primary-container text. Same family as combobox dropdown / tree row /
+ * menu item / searchbox dropdown; deliberately different from chip (secondary-
+ * container) and single-point picker (filled primary disc, e.g. calendar day).
+ * See reference/selected-state-families.md. */
 .z-listitem.z-listitem-selected,
 .z-listitem.z-selected {
-    background-color: rgba(55,111,208,0.12);
+    background-color: var(--zk-color-primary-container);
+    color: var(--zk-color-on-primary-container);
 }
 
-/* Selected + hover: slightly darker tint */
+/* Selected + hover: state layer on top of primary-container */
 .z-listitem.z-listitem-selected:hover,
 .z-listitem.z-selected:hover {
     background-color: color-mix(in srgb, var(--zk-color-on-primary-container) 8%, var(--zk-color-primary-container));
@@ -245,11 +251,13 @@
     text-overflow: ellipsis;
 }
 
+/* Cell text in selected row uses on-primary-container (the paired text token
+ * for primary-container background). MD3 colour-role pairing rule. */
 .z-listitem.z-listitem-selected .z-listcell-cnt,
 .z-listitem.z-listitem-selected .z-listcell-content,
 .z-listitem.z-selected .z-listcell-cnt,
 .z-listitem.z-selected .z-listcell-content {
-    color: var(--zk-color-on-surface);
+    color: var(--zk-color-on-primary-container);
 }
 
 /* ─── Listgroup (collapsible group header rows) ────────────────────── */

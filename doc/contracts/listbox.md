@@ -14,9 +14,20 @@ zk-version: 10.2.1-jakarta
 
 ## Expected values
 Mirror grid expected values c1–c12 with selectors → `.z-listitem`, `.z-listcell`, `.z-listheader`.
-Plus selection:
-- `.z-listitem-selected` background-color = primary-container tint (`rgba(55,111,208,0.12)` approx)
-- `.z-listitem-selected` color = on-surface (not on-primary; tint is light)
+
+### Selection (list-row family)
+Listbox row is the LIST-ROW selection family per
+`reference/selected-state-families.md`. MUST use `primary-container` background
+and `on-primary-container` text — never a hardcoded rgba, never
+`secondary-container`. (Pre-2026-05-29 the CSS shipped a hardcoded
+`rgba(55,111,208,0.12)`; if the evaluator sees that literal again, FAIL.)
+
+| id | selector | property | expected |
+|----|----------|----------|----------|
+| s1 | `.z-listitem.z-listitem-selected` | background-color | `rgb(214, 228, 255)` (= `--zk-color-primary-container`) |
+| s2 | `.z-listitem.z-listitem-selected .z-listcell-content` | color | `rgb(0, 28, 61)` (= `--zk-color-on-primary-container`) |
+| s3 | `.z-listitem.z-listitem-selected` | background-color | MUST NOT be `rgba(55, 111, 208, 0.12)` (the pre-fix hardcoded literal) |
+| s4 | `.z-listitem.z-listitem-selected` | background-color | MUST NOT be `rgb(178, 223, 219)` (= `--zk-color-secondary-container`) — wrong family |
 
 ## States to evaluate
 - [ ] default rows, header, hover, selected, focus, disabled, striped, frozen columns

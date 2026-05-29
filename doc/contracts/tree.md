@@ -17,6 +17,17 @@ Mirror listbox/grid metrics. Plus:
 - `.z-tree-icon` size 16–18px, rotation transition on open.
 - Indent per level: 20–24px.
 
+### Selection (list-row family)
+Tree row is the LIST-ROW selection family per
+`reference/selected-state-families.md` — same as listbox / combobox dropdown /
+menu / searchbox dropdown.
+
+| id | selector | property | expected |
+|----|----------|----------|----------|
+| s1 | `.z-treerow-selected` (or `.z-treerow.z-treerow-selected`) | background-color | `rgb(214, 228, 255)` (= `--zk-color-primary-container`) |
+| s2 | `.z-treerow-selected .z-treecell-content` | color | `rgb(0, 28, 61)` (= `--zk-color-on-primary-container`) |
+| s3 | `.z-treerow-selected` | background-color | MUST NOT be `rgb(178, 223, 219)` (= `--zk-color-secondary-container`) — wrong family |
+
 ## States to evaluate
 - [ ] default, hover, selected, focus, expanded, collapsed, disabled, frozen columns
 

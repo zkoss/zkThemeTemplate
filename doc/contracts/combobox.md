@@ -27,7 +27,9 @@ zk-version: 10.2.1-jakarta
 | c10 | `.z-combobox-popup` | border-radius | 4px |
 | c11 | `.z-comboitem` | padding | 8px ≤ px ≤ 12px vertically |
 | c12 | `.z-comboitem:hover` | background-color | tinted (rgba(0,0,0,~0.04)) |
-| c13 | `.z-comboitem-selected` | background-color | primary container tint |
+| c13 | `.z-comboitem-selected` | background-color | `rgb(214, 228, 255)` (= `--zk-color-primary-container`) — LIST-ROW family, see `reference/selected-state-families.md` |
+| c14 | `.z-comboitem-selected` | color | `rgb(0, 28, 61)` (= `--zk-color-on-primary-container`) |
+| c15 | `.z-comboitem-selected` | background-color | MUST NOT be `rgb(178, 223, 219)` (= `--zk-color-secondary-container`) — wrong family |
 
 ## States to evaluate
 - [ ] default

@@ -184,13 +184,19 @@
     background-color: color-mix(in srgb, var(--zk-color-on-surface) 12%, transparent);
 }
 
+/* MD3 selection family: LIST-ROW.
+ * The searchbox dropdown is a list of options the user navigates with the
+ * keyboard — semantically the same as listbox / combobox dropdown / menu /
+ * tree, so it shares the same primary-container background. This is NOT the
+ * chip family (secondary-container) — those are filter tags, not list rows.
+ * See reference/selected-state-families.md. */
 .z-searchbox-selected {
-    color: var(--zk-color-on-secondary-container);
-    background-color: var(--zk-color-secondary-container);
+    color: var(--zk-color-on-primary-container);
+    background-color: var(--zk-color-primary-container);
 }
 
 .z-searchbox-selected:hover {
-    background-color: color-mix(in srgb, var(--zk-color-on-secondary-container) 8%, var(--zk-color-secondary-container));
+    background-color: color-mix(in srgb, var(--zk-color-on-primary-container) 8%, var(--zk-color-primary-container));
 }
 
 /* ── Multi-select checkbox icon (only rendered when multiple="true") ─── */

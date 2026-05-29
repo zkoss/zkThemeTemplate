@@ -32,8 +32,8 @@
             <datebox selectLevel="year"/>
         </div>
         <div sclass="z-d-flex z-flex-col z-gap-2">
-            <label sclass="z-fs-label-sm z-text-secondary">ROC calendar (locale=zh_TW_TW)</label>
-            <datebox locale="zh_TW_TW"/>
+            <label sclass="z-fs-label-sm z-text-secondary">ROC calendar (locale=zh_TW)</label>
+            <datebox locale="zh_TW"/>
         </div>
     </div>
 </div>
