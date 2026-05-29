@@ -138,6 +138,7 @@
                     <navitem label="Colors"             onClick="@command('navigate', page='~./usecase/utility/colors.zul')"/>
                     <navitem label="Typography"         onClick="@command('navigate', page='~./usecase/utility/typography.zul')"/>
                     <navitem label="Spacing"            onClick="@command('navigate', page='~./usecase/utility/spacing.zul')"/>
+                    <navitem label="Stack"              onClick="@command('navigate', page='~./usecase/utility/stack.zul')"/>
                     <navitem label="Layout"             onClick="@command('navigate', page='~./usecase/utility/layout.zul')"/>
                     <navitem label="Border &amp; Shape" onClick="@command('navigate', page='~./usecase/utility/borders.zul')"/>
                     <navitem label="Elevation"          onClick="@command('navigate', page='~./usecase/utility/elevation.zul')"/>

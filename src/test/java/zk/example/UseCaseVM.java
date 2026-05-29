@@ -60,9 +60,9 @@ public class UseCaseVM {
         }
         for (String p : new String[]{
                 "usecase/utility/colors", "usecase/utility/typography",
-                "usecase/utility/spacing", "usecase/utility/layout",
-                "usecase/utility/borders", "usecase/utility/elevation",
-                "usecase/utility/components"}) {
+                "usecase/utility/spacing", "usecase/utility/stack",
+                "usecase/utility/layout", "usecase/utility/borders",
+                "usecase/utility/elevation", "usecase/utility/components"}) {
             PAGE_TO_NAV.put(p, "Utility CSS");
         }
     }

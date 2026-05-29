@@ -1,0 +1,233 @@
+<?page title="Stack Utilities"?>
+<zk xmlns:h="native">
+<style src="~./usecase/usecase.css"/>
+<style>
+.u-stack-item {
+    background: var(--zk-color-primary-container);
+    color: var(--zk-color-on-primary-container);
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-size: 13px;
+    font-weight: 500;
+}
+.u-stack-frame {
+    background: var(--zk-color-surface-variant);
+    border-radius: 8px;
+    padding: 12px;
+}
+.u-block {
+    background: var(--zk-color-secondary-container);
+    color: var(--zk-color-on-secondary-container);
+    padding: 16px;
+    border-radius: 6px;
+    text-align: center;
+}
+</style>
+<vlayout hflex="1" sclass="z-d-flex z-flex-col z-gap-4 z-p-4 z-bg-surface-low">
+
+    <toolbar>
+        <label value="Stack Utilities" sclass="z-h2"/>
+    </toolbar>
+
+    <!-- Concept -->
+    <div sclass="section-card">
+        <label value="Concept" sclass="z-d-block z-fs-title-sm z-fw-medium z-text-on-surface z-mb-3"/>
+        <label sclass="z-d-block z-text-secondary z-fs-body-md z-mb-2"
+               value="Marble has two opt-in container utilities for grouping items with consistent spacing. Naming follows Bootstrap 5 / SwiftUI."/>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+            <div sclass="z-bg-surface z-p-4 z-rounded-md">
+                <label value=".z-vstack — vertical group" sclass="z-d-block z-fs-title-sm z-fw-semibold z-mb-2"/>
+                <label sclass="z-d-block z-text-secondary z-fs-body-sm z-mb-3"
+                       value="Lobotomized Owl pattern. Every child except the first gets margin-top. Use for stacked items in a column."/>
+                <html><![CDATA[<pre style="margin:0;font-size:12px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:var(--zk-color-surface-variant);color:var(--zk-color-on-surface);padding:8px;border-radius:4px;white-space:pre;overflow:auto">&lt;div sclass="z-vstack"&gt;
+  &lt;textbox/&gt;
+  &lt;textbox/&gt;
+  &lt;button label="Submit"/&gt;
+&lt;/div&gt;</pre>]]></html>
+            </div>
+            <div sclass="z-bg-surface z-p-4 z-rounded-md">
+                <label value=".z-hstack — horizontal group" sclass="z-d-block z-fs-title-sm z-fw-semibold z-mb-2"/>
+                <label sclass="z-d-block z-text-secondary z-fs-body-sm z-mb-3"
+                       value="display:flex + gap + wrap. Use for buttons / chips / atomic widgets in a row."/>
+                <html><![CDATA[<pre style="margin:0;font-size:12px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:var(--zk-color-surface-variant);color:var(--zk-color-on-surface);padding:8px;border-radius:4px;white-space:pre;overflow:auto">&lt;div sclass="z-hstack"&gt;
+  &lt;button label="Save"/&gt;
+  &lt;button label="Cancel"/&gt;
+&lt;/div&gt;</pre>]]></html>
+            </div>
+        </div>
+    </div>
+
+    <!-- z-vstack demo -->
+    <div sclass="section-card">
+        <label value=".z-vstack — vertical stack" sclass="z-d-block z-fs-title-sm z-fw-medium z-text-on-surface z-mb-3"/>
+        <label sclass="z-d-block z-text-secondary z-fs-body-sm z-mb-3"
+               value="Five size variants. Default = 12px (z-vstack), sm = 8px, md = 16px, lg = 24px, 0 = none."/>
+        <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:16px">
+            <div>
+                <label value=".z-vstack-sm  (8px)" sclass="z-d-block z-fs-label-md z-text-secondary z-mb-2"/>
+                <div sclass="u-stack-frame z-vstack-sm">
+                    <div sclass="u-stack-item">Item 1</div>
+                    <div sclass="u-stack-item">Item 2</div>
+                    <div sclass="u-stack-item">Item 3</div>
+                </div>
+            </div>
+            <div>
+                <label value=".z-vstack    (12px)" sclass="z-d-block z-fs-label-md z-text-secondary z-mb-2"/>
+                <div sclass="u-stack-frame z-vstack">
+                    <div sclass="u-stack-item">Item 1</div>
+                    <div sclass="u-stack-item">Item 2</div>
+                    <div sclass="u-stack-item">Item 3</div>
+                </div>
+            </div>
+            <div>
+                <label value=".z-vstack-md (16px)" sclass="z-d-block z-fs-label-md z-text-secondary z-mb-2"/>
+                <div sclass="u-stack-frame z-vstack-md">
+                    <div sclass="u-stack-item">Item 1</div>
+                    <div sclass="u-stack-item">Item 2</div>
+                    <div sclass="u-stack-item">Item 3</div>
+                </div>
+            </div>
+            <div>
+                <label value=".z-vstack-lg (24px)" sclass="z-d-block z-fs-label-md z-text-secondary z-mb-2"/>
+                <div sclass="u-stack-frame z-vstack-lg">
+                    <div sclass="u-stack-item">Item 1</div>
+                    <div sclass="u-stack-item">Item 2</div>
+                    <div sclass="u-stack-item">Item 3</div>
+                </div>
+            </div>
+            <div>
+                <label value=".z-vstack-0   (0)" sclass="z-d-block z-fs-label-md z-text-secondary z-mb-2"/>
+                <div sclass="u-stack-frame z-vstack-0">
+                    <div sclass="u-stack-item">Item 1</div>
+                    <div sclass="u-stack-item">Item 2</div>
+                    <div sclass="u-stack-item">Item 3</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- z-hstack demo -->
+    <div sclass="section-card">
+        <label value=".z-hstack — horizontal stack" sclass="z-d-block z-fs-title-sm z-fw-medium z-text-on-surface z-mb-3"/>
+        <label sclass="z-d-block z-text-secondary z-fs-body-sm z-mb-3"
+               value="Four size variants. Wraps automatically when the row overflows. Default = 12px, sm = 8px, md = 16px, lg = 24px."/>
+
+        <label value=".z-hstack-sm  (8px)" sclass="z-d-block z-fs-label-md z-text-secondary z-mb-2"/>
+        <div sclass="u-stack-frame z-hstack-sm z-mb-3">
+            <button label="Save"/>
+            <button label="Cancel"/>
+            <button label="Discard"/>
+        </div>
+
+        <label value=".z-hstack    (12px)" sclass="z-d-block z-fs-label-md z-text-secondary z-mb-2"/>
+        <div sclass="u-stack-frame z-hstack z-mb-3">
+            <button label="Save"/>
+            <button label="Cancel"/>
+            <button label="Discard"/>
+        </div>
+
+        <label value=".z-hstack-md (16px)" sclass="z-d-block z-fs-label-md z-text-secondary z-mb-2"/>
+        <div sclass="u-stack-frame z-hstack-md z-mb-3">
+            <button label="Save"/>
+            <button label="Cancel"/>
+            <button label="Discard"/>
+        </div>
+
+        <label value=".z-hstack-lg (24px)" sclass="z-d-block z-fs-label-md z-text-secondary z-mb-2"/>
+        <div sclass="u-stack-frame z-hstack-lg">
+            <button label="Save"/>
+            <button label="Cancel"/>
+            <button label="Discard"/>
+        </div>
+    </div>
+
+    <!-- Mixed example -->
+    <div sclass="section-card">
+        <label value="Real-world Example — Form Actions" sclass="z-d-block z-fs-title-sm z-fw-medium z-text-on-surface z-mb-3"/>
+        <label sclass="z-d-block z-text-secondary z-fs-body-sm z-mb-3"
+               value="Stack form rows vertically with .z-vstack, then group the action buttons horizontally with .z-hstack."/>
+        <div sclass="z-bg-surface z-p-4 z-rounded-md" style="max-width:480px">
+            <div sclass="z-vstack-md">
+                <div>
+                    <label value="Name" sclass="z-d-block z-fs-label-md z-text-secondary z-mb-1"/>
+                    <textbox hflex="1" value="Hawk Chen"/>
+                </div>
+                <div>
+                    <label value="Email" sclass="z-d-block z-fs-label-md z-text-secondary z-mb-1"/>
+                    <textbox hflex="1" value="hawk@example.com"/>
+                </div>
+                <div>
+                    <label value="Notes" sclass="z-d-block z-fs-label-md z-text-secondary z-mb-1"/>
+                    <textbox hflex="1" rows="3"/>
+                </div>
+                <div sclass="z-hstack">
+                    <button label="Save"/>
+                    <button label="Cancel" sclass="z-button-default"/>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Default rhythm vs opt-in -->
+    <div sclass="section-card">
+        <label value="Default Rhythm vs Opt-in Stack" sclass="z-d-block z-fs-title-sm z-fw-medium z-text-on-surface z-mb-3"/>
+        <label sclass="z-d-block z-text-secondary z-fs-body-sm z-mb-3"
+               value="Block-level container widgets (cardlayout, panel, window, grid, listbox, tree, tabbox, …) already have 12px margin-block-end by default — no .z-vstack needed. Use .z-vstack only when grouping arbitrary children (form rows, sections, atomic widgets)."/>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+            <div>
+                <label value="Default rhythm — no wrapper needed" sclass="z-d-block z-fs-label-md z-fw-semibold z-mb-2"/>
+                <div sclass="u-stack-frame">
+                    <panel title="Panel A" border="normal">
+                        <panelchildren style="padding:12px">Block widget #1</panelchildren>
+                    </panel>
+                    <panel title="Panel B" border="normal">
+                        <panelchildren style="padding:12px">Block widget #2</panelchildren>
+                    </panel>
+                    <panel title="Panel C" border="normal">
+                        <panelchildren style="padding:12px">Block widget #3</panelchildren>
+                    </panel>
+                </div>
+                <label sclass="z-d-block z-text-secondary z-fs-label-sm z-mt-2"
+                       value="No sclass on the container. Each panel has 12px margin-block-end."/>
+            </div>
+            <div>
+                <label value="Opt-in stack — for atomic widgets" sclass="z-d-block z-fs-label-md z-fw-semibold z-mb-2"/>
+                <div sclass="u-stack-frame z-vstack">
+                    <textbox hflex="1" placeholder="textbox #1"/>
+                    <textbox hflex="1" placeholder="textbox #2"/>
+                    <textbox hflex="1" placeholder="textbox #3"/>
+                </div>
+                <label sclass="z-d-block z-text-secondary z-fs-label-sm z-mt-2"
+                       value="Atomic widgets (textbox, button, checkbox) have no built-in margin — wrap in .z-vstack."/>
+            </div>
+        </div>
+    </div>
+
+    <!-- Class reference -->
+    <div sclass="section-card">
+        <label value="Class Reference" sclass="z-d-block z-fs-title-sm z-fw-medium z-text-on-surface z-mb-3"/>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px">
+            <div>
+                <label value="Vertical (margin-top on child #2+)" sclass="z-d-block z-fs-label-md z-fw-semibold z-mb-2"/>
+                <div style="display:grid;grid-template-columns:auto 1fr;gap:6px 16px">
+                    <label value=".z-vstack-sm" sclass="z-fs-label-md z-text-secondary"/><label value="8px"  sclass="z-fs-label-md"/>
+                    <label value=".z-vstack"    sclass="z-fs-label-md z-text-secondary"/><label value="12px (default)" sclass="z-fs-label-md"/>
+                    <label value=".z-vstack-md" sclass="z-fs-label-md z-text-secondary"/><label value="16px" sclass="z-fs-label-md"/>
+                    <label value=".z-vstack-lg" sclass="z-fs-label-md z-text-secondary"/><label value="24px" sclass="z-fs-label-md"/>
+                    <label value=".z-vstack-0"  sclass="z-fs-label-md z-text-secondary"/><label value="0 (escape hatch)" sclass="z-fs-label-md"/>
+                </div>
+            </div>
+            <div>
+                <label value="Horizontal (flex + gap, wraps)" sclass="z-d-block z-fs-label-md z-fw-semibold z-mb-2"/>
+                <div style="display:grid;grid-template-columns:auto 1fr;gap:6px 16px">
+                    <label value=".z-hstack-sm" sclass="z-fs-label-md z-text-secondary"/><label value="8px"  sclass="z-fs-label-md"/>
+                    <label value=".z-hstack"    sclass="z-fs-label-md z-text-secondary"/><label value="12px (default)" sclass="z-fs-label-md"/>
+                    <label value=".z-hstack-md" sclass="z-fs-label-md z-text-secondary"/><label value="16px" sclass="z-fs-label-md"/>
+                    <label value=".z-hstack-lg" sclass="z-fs-label-md z-text-secondary"/><label value="24px" sclass="z-fs-label-md"/>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</vlayout>
+</zk>

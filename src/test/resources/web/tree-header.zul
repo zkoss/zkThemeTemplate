@@ -508,16 +508,18 @@
     <div sclass="z-mb-6">
         <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Live Data with Paging</div>
         <div sclass="z-py-3">
-            <radiogroup onCheck="tree.pagingPosition = self.selectedItem.label;">
-                <radio label="top"/>
-                <radio label="bottom" checked="true"/>
-                <radio label="both"/>
-            </radiogroup>
-            <button label="Change Paging Mold">
-                <attribute name="onClick">
-                    tree.pagingChild.mold = "os".equals(tree.pagingChild.mold) ? "default" : "os";
-                </attribute>
-            </button>
+            <div sclass="z-hstack z-mb-3">
+                <radiogroup onCheck="tree.pagingPosition = self.selectedItem.label;">
+                    <radio label="top"/>
+                    <radio label="bottom" checked="true"/>
+                    <radio label="both"/>
+                </radiogroup>
+                <button label="Change Paging Mold">
+                    <attribute name="onClick">
+                        tree.pagingChild.mold = "os".equals(tree.pagingChild.mold) ? "default" : "os";
+                    </attribute>
+                </button>
+            </div>
             <tree id="tree" model="&#36;{btm}" width="400px" mold="paging" pageSize="3">
                 <treecols>
                     <treecol label="Align Left" align="left" />

@@ -440,4 +440,107 @@
 .z-h6 { font-size: 0.875rem; font-weight: 600; line-height: 1.4;  }
 .z-h7 { font-size: 0.75rem;  font-weight: 500; line-height: 1.4;  }
 
+/* ============================================
+   Stack utilities — opt-in container spacing
+   ============================================
+   Naming aligns with Bootstrap 5 / SwiftUI: `vstack` = vertical group,
+   `hstack` = horizontal group. The axis is in the name so users don't
+   have to memorize which is which.
+
+   ── .z-vstack — vertical stack ─────────────────────────────────────
+   Lobotomized Owl pattern: every direct child gets top-margin except
+   the first. Use when you need consistent gap between stacked items
+   (e.g. cards in a sidebar, form fields, sections of a page).
+
+     <div sclass="z-vstack">
+       <textbox/>
+       <textbox/>
+       <button label="Submit"/>
+     </div>
+
+   Size variants: z-vstack-sm (8px), default (12px), z-vstack-md (16px),
+   z-vstack-lg (24px), z-vstack-0 (none — collapse rhythm for nested use). */
+.z-vstack > * + * { margin-top: var(--zk-spacing-3); }
+.z-vstack-sm > * + * { margin-top: var(--zk-spacing-2); }
+.z-vstack-md > * + * { margin-top: var(--zk-spacing-4); }
+.z-vstack-lg > * + * { margin-top: var(--zk-spacing-6); }
+.z-vstack-0 > * + * { margin-top: 0; }
+
+/* ── .z-hstack — horizontal stack (flex + gap, wraps) ──────────────
+   The canonical pattern for spacing buttons / chips / atomic widgets
+   in a row. Mirrors Bootstrap `.hstack`, SwiftUI `HStack`, MUI
+   `<Stack direction="row">`.
+
+     <div sclass="z-hstack">
+       <button label="Save"/>
+       <button label="Cancel"/>
+     </div>
+
+   Size variants: z-hstack-sm (8px), default (12px), z-hstack-md (16px),
+   z-hstack-lg (24px). For other gaps use .z-gap-* with .z-d-flex. */
+.z-hstack,
+.z-hstack-sm,
+.z-hstack-md,
+.z-hstack-lg {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+.z-hstack    { gap: var(--zk-spacing-3); }
+.z-hstack-sm { gap: var(--zk-spacing-2); }
+.z-hstack-md { gap: var(--zk-spacing-4); }
+.z-hstack-lg { gap: var(--zk-spacing-6); }
+
 } /* end @layer zk-utilities */
+
+/* ============================================================
+   Default Vertical Rhythm — "looks good without sclass"
+   (Bootstrap-style: margin-bottom on block-level container widgets)
+   ============================================================
+   ZK's users are mostly back-end engineers who do not want to fight CSS to
+   get sensible default spacing. Bootstrap's reboot gives every block-flow
+   element (`<p>`, `<h1-6>`, `<table>`, …) a default `margin-bottom`; we
+   mirror that for the **block-level container widgets** of ZK.
+
+   Scope rule (see doc/spacing-policy.md):
+   - APPLIES to "section-level" container widgets that the page author
+     typically uses as a standalone block (cardlayout, panel, window,
+     groupbox, fieldset, borderlayout, grid, listbox, tree, tabbox,
+     vlayout, anchorlayout, absolutelayout, portallayout, splitlayout).
+   - DOES NOT apply to atomic widgets (button, checkbox, textbox, label…)
+     or to widgets typically embedded inline / inside a cell or row
+     (hlayout, progressmeter, image, iframe, html, badge, chip). Those
+     would conflict with toolbar/menubar flex-gap, grid cell alignment,
+     or form-row layout.
+   - HORIZONTAL rhythm is NEVER auto. Use `.z-hstack` / `<hlayout>` /
+     `<toolbar>` (all flex+gap) to space buttons in a row.
+
+   This block is DELIBERATELY OUTSIDE `@layer zk-utilities`. Component CSS
+   like `.z-button { margin: 0 }` is also unlayered, so layered defaults
+   are silently overridden by component resets. Keeping the rhythm
+   unlayered puts it on equal footing — last-declared in source order
+   wins, and this file is bundled after the per-component CSS via
+   norm.css.dsp. */
+
+.z-cardlayout,
+.z-borderlayout,
+.z-vlayout,
+.z-panel,
+.z-window,
+.z-groupbox,
+.z-fieldset,
+.z-grid,
+.z-listbox,
+.z-tree,
+.z-tabbox,
+.z-anchorlayout,
+.z-absolutelayout,
+.z-portallayout,
+.z-splitlayout {
+    margin-block-end: var(--zk-spacing-3);
+}
+
+/* Escape hatch — apply to a widget (sclass="z-mb-0") to opt out of rhythm
+   for a single instance, e.g. when it is the visual last element of a card
+   and the card already has its own padding. */
+.z-mb-0 { margin-block-end: 0 !important; }

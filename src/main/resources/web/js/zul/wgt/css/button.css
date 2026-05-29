@@ -25,7 +25,10 @@
     user-select: none;
     vertical-align: middle;
     outline: none;
-    margin: 0 4px 4px 0;
+    /* No built-in margin. For horizontal spacing wrap buttons in
+       <hlayout>, <toolbar>, or a `<div sclass="z-hstack">` container
+       (all flex+gap). See doc/spacing-policy.md. */
+    margin: 0;
     transition:
         background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard),
         box-shadow var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);

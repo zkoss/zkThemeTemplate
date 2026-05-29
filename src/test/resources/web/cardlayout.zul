@@ -12,11 +12,16 @@
                 <div vflex="1" hflex="1" style="background-color:green;color:white;padding:20px">Card 2</div>
                 <div vflex="1" hflex="1" style="background-color:skyblue;padding:20px">Card 3</div>
             </cardlayout>
+            <!-- Horizontal button row: wrap in z-hstack (flex + gap).
+                 Mirrors Bootstrap .hstack and SwiftUI HStack.
+                 See doc/spacing-policy.md. -->
+            <div sclass="z-hstack">
                 <button onClick="card.previous()">Previous</button>
                 <button onClick="card.next()">Next</button>
                 <button onClick='card.setOrient("horizontal".equals(card.getOrient()) ? "vertical" : "horizontal")'>
                     Toggle Orient
                 </button>
+            </div>
         </div>
     </div>
 

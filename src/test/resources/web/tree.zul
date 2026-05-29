@@ -121,8 +121,10 @@
     <div sclass="z-mb-6">
         <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Tree with Checkmark</div>
         <div sclass="z-py-3">
-            <button label="Toggle checkmark" onClick="tree3.checkmark = !tree3.checkmark;"/>
-            <button label="Toggle multiple" onClick="tree3.multiple = !tree3.multiple;"/>
+            <div sclass="z-hstack z-mb-3">
+                <button label="Toggle checkmark" onClick="tree3.checkmark = !tree3.checkmark;"/>
+                <button label="Toggle multiple" onClick="tree3.multiple = !tree3.multiple;"/>
+            </div>
             <tree id="tree3" rows="5" multiple="true" checkmark="true">
                 <treecols>
                     <treecol label="Name"/>
@@ -183,16 +185,18 @@
     <div sclass="z-mb-6">
         <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Paging with Tree</div>
         <div sclass="z-py-3">
-            <radiogroup onCheck="tree4.pagingPosition = self.selectedItem.label;">
-                <radio label="top"/>
-                <radio label="bottom" checked="true"/>
-                <radio label="both"/>
-            </radiogroup>
-            <button label="Change Paging Mold">
-                <attribute name="onClick">
-                    tree4.pagingChild.mold = "os".equals(tree4.pagingChild.mold) ? "default" : "os";
-                </attribute>
-            </button>
+            <div sclass="z-hstack z-mb-3">
+                <radiogroup onCheck="tree4.pagingPosition = self.selectedItem.label;">
+                    <radio label="top"/>
+                    <radio label="bottom" checked="true"/>
+                    <radio label="both"/>
+                </radiogroup>
+                <button label="Change Paging Mold">
+                    <attribute name="onClick">
+                        tree4.pagingChild.mold = "os".equals(tree4.pagingChild.mold) ? "default" : "os";
+                    </attribute>
+                </button>
+            </div>
             <tree id="tree4" mold="paging" pageSize="15" model="&#36;{btm}">
                 <attribute name="onCreate">
                     tree4.renderItemByPath(new int[]{1,1,1,1,1,1,1,1,1,1,1,1});

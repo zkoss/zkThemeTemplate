@@ -7,22 +7,24 @@
     <div sclass="z-mb-6">
         <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Paging Position and Mold</div>
         <div sclass="z-py-3">
-            Paging position:
-            <radiogroup onCheck="grid.pagingPosition = self.selectedItem.label;">
-                <radio label="top" />
-                <radio label="bottom" checked="true" />
-                <radio label="both" />
-            </radiogroup>
-            <button label="Change Paging Mold">
-                <attribute name="onClick">
-                grid.pagingChild.mold = "os".equals(grid.pagingChild.mold) ? "default" : "os";
-                </attribute>
-            </button>
-            <button label="Change Paging Disabled">
-                <attribute name="onClick">
-                grid.pagingDisabled = !grid.pagingDisabled;
-                </attribute>
-            </button>
+            <div sclass="z-hstack z-mb-3">
+                Paging position:
+                <radiogroup onCheck="grid.pagingPosition = self.selectedItem.label;">
+                    <radio label="top" />
+                    <radio label="bottom" checked="true" />
+                    <radio label="both" />
+                </radiogroup>
+                <button label="Change Paging Mold">
+                    <attribute name="onClick">
+                    grid.pagingChild.mold = "os".equals(grid.pagingChild.mold) ? "default" : "os";
+                    </attribute>
+                </button>
+                <button label="Change Paging Disabled">
+                    <attribute name="onClick">
+                    grid.pagingDisabled = !grid.pagingDisabled;
+                    </attribute>
+                </button>
+            </div>
             <grid id="grid" mold="paging" pageSize="3">
                 <columns>
                     <column label="Index"/>
