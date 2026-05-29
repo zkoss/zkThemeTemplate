@@ -162,13 +162,17 @@
         background-color: color-mix(in srgb, var(--zk-color-on-surface) 12%, transparent);
     }
 
+    /* MD3 list-row family — selectbox option is an arrow-key-navigable
+     * dropdown row, same as combobox / listbox / searchbox dropdowns. Must
+     * use primary-container, NOT secondary-container (that's the chip
+     * family). See reference/selected-state-families.md. */
     .z-selectbox option:checked {
-        background-color: var(--zk-color-secondary-container);
-        color: var(--zk-color-on-secondary-container);
+        background-color: var(--zk-color-primary-container);
+        color: var(--zk-color-on-primary-container);
     }
 
     .z-selectbox option:checked:hover {
-        background-color: color-mix(in srgb, var(--zk-color-on-secondary-container) 8%, var(--zk-color-secondary-container));
+        background-color: color-mix(in srgb, var(--zk-color-on-primary-container) 8%, var(--zk-color-primary-container));
     }
 
     /* Spec-provided checkmark marker for the selected option */

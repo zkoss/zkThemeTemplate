@@ -25,6 +25,9 @@ zk-version: 10.2.1-jakarta
 | c8 | `.z-selectbox:focus` | border-color | rgb(55, 111, 208) |
 | c9 | `.z-selectbox:focus` | border-width | 2px |
 | c10 | `.z-selectbox[disabled]` | opacity | 0.38 |
+| c11 | `.z-selectbox option:checked` | background-color | rgb(<primary-container-rgb>) (list-row family) |
+| c12 | `.z-selectbox option:checked` | color | rgb(<on-primary-container-rgb>) |
 
 ## States to evaluate
 - [ ] default, hover, focus-visible, disabled
+- [ ] option:checked must use the list-row family (primary-container), NOT the chip family (secondary-container). See `reference/selected-state-families.md`.

@@ -3,6 +3,14 @@
  * These classes are specific to the usecase demo pages only.
  */
 
+/* Usecase pages override the default white --zk-color-background so the
+   navbar (surface-container-low) and content cards (surface = white) read
+   as distinct tonal layers. Without this tint, navbar + body + cards would
+   all collapse onto the same surface. */
+body {
+    background-color: var(--zk-color-surface-container);
+}
+
 /* ============================================
    User Profile — Avatar
    ============================================ */
