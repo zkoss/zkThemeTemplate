@@ -26,15 +26,21 @@
     box-sizing: border-box;
 }
 
+/* ─── Region edge borders ─────────────────────────────────────────────────── *
+ * Region borders on the splittable edges (north→bottom, south→top, west→right,
+ * east→left) are intentionally OMITTED here — the inter-region divider is
+ * painted by the splitter strip's `::before` hairline (see "Splitter divider"
+ * section below). Drawing both produces a visible double-paint at idle and a
+ * stacking conflict at hover. If a region is non-splittable AND the author
+ * needs an explicit boundary, add it on the page (e.g. `<style>` block or
+ * sclass override). 99% of layouts have splitters, so this is the right
+ * default.
+ * ─────────────────────────────────────────────────────────────────────────── */
+
 /* ─── North (top) ─────────────────────────────────────────────────────────── */
 .z-north {
     background-color: var(--zk-color-surface);
-    border-bottom: 1px solid var(--zk-color-outline-variant);
     z-index: 16;
-}
-
-.z-north-noborder {
-    border-bottom: none;
 }
 
 .z-north-body {
@@ -46,12 +52,7 @@
 /* ─── South (bottom) ──────────────────────────────────────────────────────── */
 .z-south {
     background-color: var(--zk-color-surface);
-    border-top: 1px solid var(--zk-color-outline-variant);
     z-index: 14;
-}
-
-.z-south-noborder {
-    border-top: none;
 }
 
 .z-south-body {
@@ -63,12 +64,7 @@
 /* ─── West (left sidebar) ─────────────────────────────────────────────────── */
 .z-west {
     background-color: var(--zk-color-surface-container-low);
-    border-right: 1px solid var(--zk-color-outline-variant);
     z-index: 12;
-}
-
-.z-west-noborder {
-    border-right: none;
 }
 
 .z-west-body {
@@ -80,12 +76,7 @@
 /* ─── East (right sidebar) ────────────────────────────────────────────────── */
 .z-east {
     background-color: var(--zk-color-surface-container-low);
-    border-left: 1px solid var(--zk-color-outline-variant);
     z-index: 10;
-}
-
-.z-east-noborder {
-    border-left: none;
 }
 
 .z-east-body {
@@ -110,69 +101,209 @@
     box-sizing: border-box;
 }
 
-/* ─── Splitters — MUST have explicit small width/height for JS offset calc ── */
-/* ZK reads split.offsetWidth / split.offsetHeight for layout calculations.
-   Without explicit size, they expand to 100% and break JS positioning. */
+/* ─── Splitters — MUST have explicit small width/height for JS offset calc ── *
+ * ZK reads split.offsetWidth / split.offsetHeight for layout calculations,
+ * so the strip MUST occupy real space (6px) — that also gives the user a
+ * comfortable mouse hit target.
+ *
+ * Splitter divider (idle vs. hover):
+ *   The 6px strip is itself transparent, but a `::before` paints a centred
+ *   1px hairline (outline-variant) along the long axis at idle. On hover the
+ *   hairline thickens to 3px and shifts to `primary` for a clear "drag me"
+ *   affordance. The region's own border on this edge is OMITTED upstream so
+ *   the divider is painted exactly once (by this pseudo-element).
+ * ─────────────────────────────────────────────────────────────────────────── */
 .z-west-splitter,
 .z-east-splitter {
     position: absolute;
-    width: 8px;
+    width: 6px;
     cursor: ew-resize;
-    overflow: hidden;
-    background-color: var(--zk-color-outline-variant);
-    opacity: 0.4;
-    transition: opacity var(--zk-motion-duration-short3) var(--zk-motion-easing-standard),
-                background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+    overflow: visible;
+    background-color: transparent;
     z-index: 20;
 }
 
 .z-north-splitter,
 .z-south-splitter {
     position: absolute;
-    height: 8px;
+    height: 6px;
     cursor: ns-resize;
-    overflow: hidden;
-    background-color: var(--zk-color-outline-variant);
-    opacity: 0.4;
-    transition: opacity var(--zk-motion-duration-short3) var(--zk-motion-easing-standard),
-                background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+    overflow: visible;
+    background-color: transparent;
 }
 
-.z-west-splitter:hover,
-.z-east-splitter:hover,
-.z-north-splitter:hover,
-.z-south-splitter:hover {
-    opacity: 1;
+/* Vertical splitter divider — 1px wide line centred on the strip's x-axis */
+.z-west-splitter::before,
+.z-east-splitter::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 1px;
+    transform: translateX(-50%);
+    background-color: var(--zk-color-outline-variant);
+    transition:
+        width var(--zk-motion-duration-short3) var(--zk-motion-easing-standard),
+        background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+    pointer-events: none;
+}
+
+/* Horizontal splitter divider — 1px tall line centred on the strip's y-axis */
+.z-north-splitter::before,
+.z-south-splitter::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    height: 1px;
+    transform: translateY(-50%);
+    background-color: var(--zk-color-outline-variant);
+    transition:
+        height var(--zk-motion-duration-short3) var(--zk-motion-easing-standard),
+        background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+    pointer-events: none;
+}
+
+.z-west-splitter:hover::before,
+.z-east-splitter:hover::before {
+    width: 3px;
+    background-color: var(--zk-color-primary);
+}
+
+.z-north-splitter:hover::before,
+.z-south-splitter:hover::before {
+    height: 3px;
     background-color: var(--zk-color-primary);
 }
 
 /* ─── Splitter buttons (collapse toggle) ─────────────────────────────────── */
+/* ZK mold (layoutregion.js) renders the button with 3 stacked icons:
+ *   <span class="z-{pos}-splitter-button">
+ *     <i class="z-{pos}-icon z-icon-ellipsis-{v|h}"></i>   ← grip dot 1
+ *     <i class="z-{pos}-icon z-icon-caret-{up|down|left|right}"></i>  ← caret
+ *     <i class="z-{pos}-icon z-icon-ellipsis-{v|h}"></i>   ← grip dot 2
+ *   </span>
+ *
+ * MD3 redesign: Filled-tonal button. Surface-container-highest fill (no
+ * border) for the Material “filled icon button” feel; primary fill on hover;
+ * elevation-2 → elevation-3 lift. Three icons stay (grip · caret · grip) so
+ * the button reads as a drag-handle plus a collapse affordance. */
+/* Splitter button geometry rationale (W/E vertical pill, N/S horizontal pill)
+ *
+ * MD3 has no formal "Splitter Button" component. The icon set (grip · caret ·
+ * grip) and the two actions (drag-to-resize, click-to-collapse) are FIXED by
+ * the ZK mold and cannot be changed. The most faithful MD3 mapping is the
+ * Filled Tonal Icon Button treatment:
+ *   container : surface-container-highest, no border, fully-rounded
+ *   content   : on-surface-variant
+ *   hover     : primary fill + on-primary content + elevation lift
+ *   focus     : primary outline ring (focus-visible only — see below)
+ *
+ * Centring on the strip axis:
+ *   The splitter strip is 6px wide; the button is 20px wide. ZK's JS only
+ *   sets the inline `top:` (vertical centre) — it does NOT set `left:`, so
+ *   the button anchors to the strip's left edge and visually leans 14px to
+ *   one side. MD3 affordance rule: the actuator sits on the AXIS of the
+ *   thing it controls. Fix: a negative margin of -(button - strip)/2 = -7px
+ *   pulls the pill back to the strip's centreline.
+ *   Same logic for N/S where the long axis is horizontal. */
 .z-west-splitter-button,
-.z-east-splitter-button,
+.z-east-splitter-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    position: absolute;
+    background-color: var(--zk-color-surface-container-highest);
+    border: none;
+    border-radius: var(--zk-shape-corner-full);
+    width: 20px;
+    height: 64px;
+    margin-left: -7px;        /* (20 − 6) / 2 — centre the pill on the 6px strip */
+    cursor: pointer;
+    color: var(--zk-color-on-surface-variant);
+    box-shadow: var(--zk-elevation-2);
+    transition:
+        background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard),
+        color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard),
+        box-shadow var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+}
+
 .z-north-splitter-button,
 .z-south-splitter-button {
     display: flex;
+    flex-direction: row;
     align-items: center;
     justify-content: center;
+    gap: 4px;
     position: absolute;
-    background-color: var(--zk-color-surface);
-    border: 1px solid var(--zk-color-outline-variant);
+    background-color: var(--zk-color-surface-container-highest);
+    border: none;
     border-radius: var(--zk-shape-corner-full);
-    width: 20px;
+    width: 64px;
     height: 20px;
+    margin-top: -7px;         /* (20 − 6) / 2 — centre the pill on the 6px strip */
     cursor: pointer;
-    font-size: 10px;
     color: var(--zk-color-on-surface-variant);
-    transition: background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
-    box-shadow: var(--zk-elevation-1);
+    box-shadow: var(--zk-elevation-2);
+    transition:
+        background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard),
+        color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard),
+        box-shadow var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
 }
 
 .z-west-splitter-button:hover,
 .z-east-splitter-button:hover,
 .z-north-splitter-button:hover,
 .z-south-splitter-button:hover {
-    background-color: var(--zk-color-surface-container);
-    color: var(--zk-color-on-surface);
+    background-color: var(--zk-color-primary);
+    color: var(--zk-color-on-primary);
+    box-shadow: var(--zk-elevation-3);
+}
+
+/* Keyboard-focus ring. :focus-visible (not :focus) — the ring should appear
+ * only when the user is navigating with the keyboard, not when they click
+ * with a mouse. MD3 a11y guideline. */
+.z-west-splitter-button:focus-visible,
+.z-east-splitter-button:focus-visible,
+.z-north-splitter-button:focus-visible,
+.z-south-splitter-button:focus-visible {
+    outline: 2px solid var(--zk-color-primary);
+    outline-offset: 2px;
+}
+
+/* Splitter grip dots (`⋮` west/east, `⋯` north/south) MUST be readable —
+   they are the affordance that signals the button is draggable AND the
+   neighbouring strip is a resize handle. Render at the same size as the
+   caret so the three glyphs are visually balanced inside the pill. */
+.z-west-icon,
+.z-east-icon,
+.z-north-icon,
+.z-south-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    line-height: 1;
+    color: inherit;
+}
+
+.z-west-icon.z-icon-ellipsis-v,
+.z-east-icon.z-icon-ellipsis-v,
+.z-north-icon.z-icon-ellipsis-h,
+.z-south-icon.z-icon-ellipsis-h {
+    opacity: 1;
+}
+
+.z-west-icon.z-icon-caret-left,
+.z-east-icon.z-icon-caret-right,
+.z-north-icon.z-icon-caret-up,
+.z-south-icon.z-icon-caret-down {
+    font-size: 12px;
+    opacity: 0.85;
 }
 
 /* Hide disabled icons */
@@ -206,7 +337,14 @@
     background-color: var(--zk-color-surface-container-high);
 }
 
-/* ─── Panel headers inside border layout regions ─────────────────────────── */
+/* ─── Panel headers inside border layout regions ───────────────────────────
+ * MD3 Navigation Drawer subsection pattern: the section title and its
+ * trailing affordance (here, the collapse-angle icon) are GROUPED at the
+ * leading edge, separated by an 8dp gap — NOT pushed to opposite ends like
+ * a Top App Bar. This reads as "label + chevron belong to the same control"
+ * rather than "title on one side, action far away" (which previously felt
+ * disconnected when title text was short).
+ * 16dp horizontal inset (--zk-spacing-4), 8dp gap (--zk-spacing-2). */
 .z-north-header,
 .z-south-header,
 .z-west-header,
@@ -214,8 +352,10 @@
 .z-center-header {
     display: flex;
     align-items: center;
+    justify-content: flex-start;
+    gap: var(--zk-spacing-2);
     height: 40px;
-    padding: 0 var(--zk-spacing-3);
+    padding: 0 var(--zk-spacing-4);
     background-color: var(--zk-color-surface-container);
     border-bottom: 1px solid var(--zk-color-outline-variant);
     font-size: var(--zk-typescale-title-small-size);
