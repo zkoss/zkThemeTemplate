@@ -1,0 +1,29 @@
+/* Columnlayout — inline-block columns whose widths come from ZK inline styles.
+   ZK renders each column as <div class="z-columnchildren" style="width:33%">
+   <div class="z-columnchildren-content">…children…</div></div>.
+   Do NOT use display:flex on .z-columnchildren — `flex: 1` would override the
+   user-set width attribute. See Columnchildren.ts + mold/columnchildren.js. */
+.z-columnlayout {
+    white-space: nowrap;
+    box-sizing: border-box;
+}
+
+.z-columnlayout,
+.z-columnchildren,
+.z-columnchildren-content {
+    overflow: hidden;
+}
+
+.z-columnchildren {
+    display: inline-block;
+    vertical-align: top;
+    height: 100%;
+    white-space: initial;
+    box-sizing: border-box;
+}
+
+.z-columnchildren-content {
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+}

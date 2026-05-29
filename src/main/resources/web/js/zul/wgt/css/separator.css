@@ -31,3 +31,18 @@
     background-color: transparent;
     vertical-align: middle;
 }
+
+/* Vertical bar divider (<space bar="true"> or <separator orient="vertical" bar="true">).
+   Space.ts defaults orient to "vertical", so <space bar="true"> always lands here.
+   ZK writes the widget's `spacing` attribute as inline `width`; force 1px so the
+   divider is always a hairline (symmetric with .z-separator-horizontal-bar, which
+   pins `height: 1px`). Use margin for the visual gap. */
+.z-separator-vertical-bar {
+    display: inline-block;
+    width: 1px !important;
+    min-height: 1em;
+    background-color: var(--zk-color-outline-variant);
+    margin: 0 var(--zk-spacing-2);
+    vertical-align: middle;
+    align-self: stretch;
+}
