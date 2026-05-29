@@ -160,11 +160,11 @@ Located in `doc/` directory:
 ## Project Rules
 
 ### Styling ZUL Pages: Prefer Built-in Utility Classes
-When writing or editing a ZUL page (especially under `src/test/resources/web/`), use the project's built-in utility classes from `src/main/resources/web/zul/css/base/_utilities.css` (the `z-*` family: `z-d-flex`, `z-p-3`, `z-gap-4`, `z-bg-surface-variant`, `z-rounded`, `z-vstack`, `z-hstack`, `z-fs-body-sm`, `z-fw-medium`, etc.) instead of inventing page-local CSS classes inside an inline `<style>` block.
+When writing or editing a ZUL page (especially under `src/test/resources/web/`), use the project's built-in utility classes from `src/main/resources/web/zul/css/utility/*.css` (the `z-*` family: `z-d-flex`, `z-p-3`, `z-gap-4`, `z-bg-surface-variant`, `z-rounded`, `z-vstack`, `z-hstack`, `z-fs-body-sm`, `z-fw-medium`, etc.) instead of inventing page-local CSS classes inside an inline `<style>` block.
 
 - **Do**: Compose a sclass from existing `z-*` utilities — e.g. `sclass="z-bg-surface-variant z-rounded z-p-3"` instead of `.u-stack-frame { background:…; border-radius:…; padding:…; }`.
 - **Don't**: Hard-code color/spacing/typography values inside a per-page `<style>` block when an equivalent utility exists.
-- **If no utility fits**: Stop and raise it for discussion before adding new CSS — the gap is signal that a new utility might belong in `_utilities.css`, or that a real component variant should be added to component CSS.
+- **If no utility fits**: Stop and raise it for discussion before adding new CSS — the gap is signal that a new utility might belong in the appropriate `zul/css/utility/_*.css` file, or that a real component variant should be added to component CSS.
 
 This keeps preview/use-case pages consistent with the theme tokens, prevents value drift, and surfaces missing utilities as a discussion instead of silently fragmenting style.
 
@@ -183,8 +183,17 @@ src/main/resources/web/
 │   │   └── _motion.css
 │   ├── base/                 # Foundation styles (bundled → norm.css.dsp)
 │   │   ├── _reset.css
-│   │   ├── _utilities.css
 │   │   └── _icons.css
+│   ├── utility/              # Utility classes, split by sidebar Utility CSS category
+│   │   ├── _colors.css
+│   │   ├── _elevation.css
+│   │   ├── _components.css   # .z-card
+│   │   ├── _spacing.css      # padding + margin
+│   │   ├── _layout.css       # display, grid, flex, gap, sizing, position
+│   │   ├── _typography.css   # weight, size, align, transform, headings
+│   │   ├── _borders.css      # border + rounded
+│   │   ├── _stack.css        # vstack/hstack
+│   │   └── _rhythm.css       # unlayered default margin-block-end
 │   └── marble.css            # Global entry styles
 └── js/zul/                   # Component CSS (auto-scanned → *.css.dsp 1:1)
     ├── box/css/

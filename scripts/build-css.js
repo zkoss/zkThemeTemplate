@@ -16,7 +16,18 @@ const normFiles = [
     'zul/css/tokens/_motion.css',
     'zul/css/tokens/_shape.css',
     'zul/css/base/_reset.css',
-    'zul/css/base/_utilities.css',
+    // Utility CSS — split by sidebar category (see usecase/index.zul "Utility CSS").
+    // _rhythm.css MUST come last: it is intentionally unlayered so component
+    // CSS can override it; later source order also wins ties.
+    'zul/css/utility/_colors.css',
+    'zul/css/utility/_elevation.css',
+    'zul/css/utility/_components.css',
+    'zul/css/utility/_spacing.css',
+    'zul/css/utility/_layout.css',
+    'zul/css/utility/_typography.css',
+    'zul/css/utility/_borders.css',
+    'zul/css/utility/_stack.css',
+    'zul/css/utility/_rhythm.css',
     'zul/css/base/_badges.css',
     'zul/css/base/_chips.css',
     'zul/css/base/_avatars.css',

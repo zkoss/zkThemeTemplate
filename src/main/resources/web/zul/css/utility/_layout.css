@@ -1,0 +1,163 @@
+/* MD3 Utility Classes — Layout (display, grid, flex, gap, sizing, overflow, position, truncation) */
+
+@layer zk-utilities {
+
+/* ============================================
+   Display
+   ============================================ */
+.z-d-none         { display: none; }
+.z-d-block        { display: block; }
+.z-d-inline       { display: inline; }
+.z-d-inline-block { display: inline-block; }
+.z-d-flex         { display: flex; }
+.z-d-inline-flex  { display: inline-flex; }
+.z-d-grid         { display: grid; }
+
+/* ============================================
+   Grid — template columns
+   `minmax(0, 1fr)` lets children shrink below their min-content width,
+   preventing long inline content from forcing column overflow.
+   ============================================ */
+.z-grid-cols-1 { grid-template-columns: repeat(1, minmax(0, 1fr)); }
+.z-grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.z-grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.z-grid-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.z-grid-cols-5 { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+.z-grid-cols-6 { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+.z-grid-cols-auto-1fr { grid-template-columns: auto 1fr; }
+
+/* ============================================
+   Flex — direction & wrap
+   ============================================ */
+.z-flex-row         { flex-direction: row; }
+.z-flex-col         { flex-direction: column; }
+.z-flex-row-reverse { flex-direction: row-reverse; }
+.z-flex-col-reverse { flex-direction: column-reverse; }
+.z-flex-wrap        { flex-wrap: wrap; }
+.z-flex-nowrap      { flex-wrap: nowrap; }
+
+/* Flex — justify-content */
+.z-justify-start   { justify-content: flex-start; }
+.z-justify-center  { justify-content: center; }
+.z-justify-end     { justify-content: flex-end; }
+.z-justify-between { justify-content: space-between; }
+.z-justify-around  { justify-content: space-around; }
+.z-justify-evenly  { justify-content: space-evenly; }
+
+/* Flex — align-items */
+.z-align-start    { align-items: flex-start; }
+.z-align-center   { align-items: center; }
+.z-align-end      { align-items: flex-end; }
+.z-align-stretch  { align-items: stretch; }
+.z-align-baseline { align-items: baseline; }
+
+/* Flex — grow / shrink / fill */
+.z-flex-1       { flex: 1 1 0; }
+.z-flex-auto    { flex: 1 1 auto; }
+.z-flex-none    { flex: none; }
+.z-flex-grow-0  { flex-grow: 0; }
+.z-flex-grow-1  { flex-grow: 1; }
+.z-flex-shrink-0{ flex-shrink: 0; }
+.z-flex-shrink-1{ flex-shrink: 1; }
+
+/* ============================================
+   Gap
+   ============================================ */
+.z-gap-0 { gap: var(--zk-spacing-0); }
+.z-gap-1 { gap: var(--zk-spacing-1); }
+.z-gap-2 { gap: var(--zk-spacing-2); }
+.z-gap-3 { gap: var(--zk-spacing-3); }
+.z-gap-4 { gap: var(--zk-spacing-4); }
+.z-gap-5 { gap: var(--zk-spacing-5); }
+.z-gap-6 { gap: var(--zk-spacing-6); }
+.z-gap-8 { gap: var(--zk-spacing-8); }
+
+.z-col-gap-0 { column-gap: var(--zk-spacing-0); }
+.z-col-gap-1 { column-gap: var(--zk-spacing-1); }
+.z-col-gap-2 { column-gap: var(--zk-spacing-2); }
+.z-col-gap-3 { column-gap: var(--zk-spacing-3); }
+.z-col-gap-4 { column-gap: var(--zk-spacing-4); }
+
+.z-row-gap-0 { row-gap: var(--zk-spacing-0); }
+.z-row-gap-1 { row-gap: var(--zk-spacing-1); }
+.z-row-gap-2 { row-gap: var(--zk-spacing-2); }
+.z-row-gap-3 { row-gap: var(--zk-spacing-3); }
+.z-row-gap-4 { row-gap: var(--zk-spacing-4); }
+
+/* ============================================
+   Width & Height
+   ============================================ */
+.z-w-25   { width: 25%; }
+.z-w-50   { width: 50%; }
+.z-w-75   { width: 75%; }
+.z-w-full { width: 100%; }
+.z-w-auto { width: auto; }
+.z-min-w-0{ min-width: 0; }
+
+.z-h-25   { height: 25%; }
+.z-h-50   { height: 50%; }
+.z-h-75   { height: 75%; }
+.z-h-full { height: 100%; }
+.z-h-auto { height: auto; }
+.z-min-h-0{ min-height: 0; }
+
+/* ============================================
+   Overflow
+   ============================================ */
+.z-overflow-auto    { overflow: auto; }
+.z-overflow-hidden  { overflow: hidden; }
+.z-overflow-visible { overflow: visible; }
+.z-overflow-scroll  { overflow: scroll; }
+.z-overflow-x-auto  { overflow-x: auto; }
+.z-overflow-x-hidden{ overflow-x: hidden; }
+.z-overflow-y-auto  { overflow-y: auto; }
+.z-overflow-y-hidden{ overflow-y: hidden; }
+
+/* ============================================
+   Position
+   ============================================ */
+.z-position-static  { position: static; }
+.z-position-relative{ position: relative; }
+.z-position-absolute{ position: absolute; }
+.z-position-fixed   { position: fixed; }
+.z-position-sticky  { position: sticky; }
+
+.z-top-0    { top: 0; }
+.z-bottom-0 { bottom: 0; }
+.z-start-0  { inset-inline-start: 0; }
+.z-end-0    { inset-inline-end: 0; }
+
+/* Float */
+.z-float-start { float: inline-start; }
+.z-float-end   { float: inline-end; }
+.z-float-none  { float: none; }
+
+.z-clearfix::after {
+    display: block;
+    content: '';
+    clear: both;
+}
+
+/* ============================================
+   Truncation & Accessibility
+   ============================================ */
+.z-text-truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.z-visually-hidden,
+.z-sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+} /* end @layer zk-utilities */
