@@ -4,18 +4,22 @@
 <div sclass="z-p-8">
     <div sclass="z-border-bottom z-fs-title-lg z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Borderlayout</div>
 
+    <!-- ZK layout primitives (borderlayout, vlayout, div, etc.) have NO default
+         padding by design — see doc/component-dom-structures.md. Use the
+         z-p-* utility classes from base/_utilities.css on the inner content
+         wrapper, NOT on the layout primitive itself. -->
     <div sclass="z-mb-6">
         <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Basic — North / South / East / West / Center</div>
         <div sclass="z-py-3">
             <borderlayout height="400px">
                 <center>
-                    Center Content
+                    <div sclass="z-p-4">Center Content</div>
                 </center>
                 <west title="West" size="20%" splittable="true" collapsible="true">
-                    West Content
+                    <div sclass="z-p-4">West Content</div>
                 </west>
                 <east title="East" size="20%" splittable="true" collapsible="true">
-                    East Content
+                    <div sclass="z-p-4">East Content</div>
                 </east>
                 <north title="North" size="15%" splittable="true" collapsible="true">
                     North Content
@@ -31,11 +35,11 @@
         <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">With Region Titles</div>
         <div sclass="z-py-3">
             <borderlayout height="300px">
-                <center title="Center">Center Content</center>
+                <center title="Center"><div sclass="z-p-4">Center Content</div></center>
                 <north size="20%" title="North">North Content</north>
                 <south size="20%" title="South">South Content</south>
-                <east size="20%" title="East">East Content</east>
-                <west size="20%" title="West">West Content</west>
+                <east size="20%" title="East"><div sclass="z-p-4">East Content</div></east>
+                <west size="20%" title="West"><div sclass="z-p-4">West Content</div></west>
             </borderlayout>
         </div>
     </div>
@@ -44,11 +48,11 @@
         <div sclass="z-fs-label-sm z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">No Region Borders</div>
         <div sclass="z-py-3">
             <borderlayout height="300px">
-                <center border="none">Center Content</center>
+                <center border="none"><div sclass="z-p-4">Center Content</div></center>
                 <north size="20%" border="none">North Content</north>
                 <south size="20%" border="none">South Content</south>
-                <east size="20%" border="none">East Content</east>
-                <west size="20%" border="none">West Content</west>
+                <east size="20%" border="none"><div sclass="z-p-4">East Content</div></east>
+                <west size="20%" border="none"><div sclass="z-p-4">West Content</div></west>
             </borderlayout>
         </div>
     </div>
