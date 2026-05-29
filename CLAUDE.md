@@ -157,6 +157,17 @@ Located in `doc/` directory:
 6. **Build**: `npm run build:css`
 7. **Verify**: `withjdk.sh 17 mvn test exec:java@preview-app`, then screenshot use-case pages
 
+## Project Rules
+
+### Styling ZUL Pages: Prefer Built-in Utility Classes
+When writing or editing a ZUL page (especially under `src/test/resources/web/`), use the project's built-in utility classes from `src/main/resources/web/zul/css/base/_utilities.css` (the `z-*` family: `z-d-flex`, `z-p-3`, `z-gap-4`, `z-bg-surface-variant`, `z-rounded`, `z-vstack`, `z-hstack`, `z-fs-body-sm`, `z-fw-medium`, etc.) instead of inventing page-local CSS classes inside an inline `<style>` block.
+
+- **Do**: Compose a sclass from existing `z-*` utilities — e.g. `sclass="z-bg-surface-variant z-rounded z-p-3"` instead of `.u-stack-frame { background:…; border-radius:…; padding:…; }`.
+- **Don't**: Hard-code color/spacing/typography values inside a per-page `<style>` block when an equivalent utility exists.
+- **If no utility fits**: Stop and raise it for discussion before adding new CSS — the gap is signal that a new utility might belong in `_utilities.css`, or that a real component variant should be added to component CSS.
+
+This keeps preview/use-case pages consistent with the theme tokens, prevents value drift, and surfaces missing utilities as a discussion instead of silently fragmenting style.
+
 ## Architecture and Structure
 
 ### CSS Structure
