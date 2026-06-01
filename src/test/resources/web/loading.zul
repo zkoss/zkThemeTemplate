@@ -1,35 +1,22 @@
 <?page title="Loading" contentType="text/html;charset=UTF-8"?>
 <zk xmlns:h="native" xmlns:w="client">
 <h:link rel="stylesheet" href="pv.css"/>
-<div sclass="z-p-8">
+<div sclass="z-p-8" apply="zk.example.LoadingComposer">
     <div sclass="z-border-bottom z-text-xl z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Loading</div>
     <div sclass="z-mb-6">
         <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Global Busy</div>
         <div sclass="z-py-3 z-d-flex z-gap-4 z-flex-wrap">
-            <button label="Show Busy">
-                <attribute w:name="onClick"><![CDATA[
-                    zAu.cmd0.showBusy('Loading...');
-                    setTimeout(function() { zAu.cmd0.clearBusy(); }, 14000);
-                ]]></attribute>
-            </button>
+            <button id="showGlobalBusyBtn" label="Show Busy"/>
+            <timer id="clearGlobalTimer" delay="14000" repeats="false" running="false"/>
         </div>
     </div>
     <div sclass="z-mb-6">
         <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Component Busy</div>
         <div sclass="z-py-3 z-d-flex z-gap-4 z-flex-wrap z-mb-4">
-            <button label="Show Busy">
-                <attribute w:name="onClick"><![CDATA[
-                    var wgt = zk.Widget.$('$demoWin');
-                    wgt.showBusy('Processing...');
-                    setTimeout(function() { wgt.clearBusy(); }, 15000);
-                ]]></attribute>
-            </button>
-            <button label="Clear Busy">
-                <attribute w:name="onClick"><![CDATA[
-                    zk.Widget.$('$demoWin').clearBusy();
-                ]]></attribute>
-            </button>
+            <button id="showBusyBtn" label="Show Busy"/>
+            <button id="clearBusyBtn" label="Clear Busy"/>
         </div>
+        <timer id="clearTimer" delay="15000" repeats="false" running="false"/>
         <window id="demoWin" title="Demo Window" border="normal" width="400px">
             <div sclass="z-p-4 z-d-flex z-flex-col z-gap-3">
                 <div sclass="z-text-sm z-text-secondary">This window demonstrates a component-level busy indicator.</div>
