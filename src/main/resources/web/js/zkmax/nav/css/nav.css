@@ -112,7 +112,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
     font-size: var(--zk-typescale-label-large-size);
-    font-weight: var(--zk-typescale-body-medium-weight);
+    font-weight: var(--zk-typescale-label-large-weight);
 }
 
 /* ─── Badge (info) ───────────────────────────────────────────────────────── */

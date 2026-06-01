@@ -36,9 +36,15 @@ public class MarbleThemeProvider implements ThemeProvider {
         if (FONT_AWESOME_DSP.equals(uri)) {
             return null; // skip — Marble does not use Font Awesome
         }
-        //the paths that a theme can have
+        //the paths that a theme can have. Marble ships themed CSS for all three
+        //widget namespaces (js/zul, js/zkmax, js/zkex); without rewriting zkmax
+        //and zkex too, ZK serves its stock default CSS for those components
+        //(e.g. navbar's .z-nav-text would resolve to Helvetica Neue / 18px from
+        //the default LESS profile instead of Marble's MD3 typescale).
         if (uri.startsWith("~./zul/") // a patch for ZK-6024
-                || uri.startsWith("~./js/zul/")) {
+                || uri.startsWith("~./js/zul/")
+                || uri.startsWith("~./js/zkmax/")
+                || uri.startsWith("~./js/zkex/")) {
 
             uri = ServletFns.resolveThemeURL(uri);
         }
