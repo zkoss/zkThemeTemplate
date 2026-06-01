@@ -14,27 +14,27 @@
 
         <div sclass="pv-state-gallery pv-variant-default">
             <div sclass="pv-state-col">
-                <div sclass="pv-state-label">Default</div>
-                <h:div class="z-toast">
-                    <h:div class="z-toast-content">Toast message</h:div>
-                </h:div>
-            </div>
-            <div sclass="pv-state-col">
                 <div sclass="pv-state-label">Info</div>
                 <h:div class="z-toast z-toast-info">
-                    <h:div class="z-toast-content">Info message <h:span class="z-toast-close">✕</h:span></h:div>
+                    <h:i class="z-toast-icon z-icon-info-circle"></h:i>
+                    <h:div class="z-toast-content">Info message</h:div>
+                    <h:div class="z-toast-close"><h:i class="z-toast-icon z-icon-times"></h:i></h:div>
                 </h:div>
             </div>
             <div sclass="pv-state-col">
                 <div sclass="pv-state-label">Warning</div>
                 <h:div class="z-toast z-toast-warning">
-                    <h:div class="z-toast-content">Warning message <h:span class="z-toast-close">✕</h:span></h:div>
+                    <h:i class="z-toast-icon z-icon-exclamation-circle"></h:i>
+                    <h:div class="z-toast-content">Warning message</h:div>
+                    <h:div class="z-toast-close"><h:i class="z-toast-icon z-icon-times"></h:i></h:div>
                 </h:div>
             </div>
             <div sclass="pv-state-col">
                 <div sclass="pv-state-label">Error</div>
                 <h:div class="z-toast z-toast-error">
-                    <h:div class="z-toast-content">Error message <h:span class="z-toast-close">✕</h:span></h:div>
+                    <h:i class="z-toast-icon z-icon-times-circle"></h:i>
+                    <h:div class="z-toast-content">Error message</h:div>
+                    <h:div class="z-toast-close"><h:i class="z-toast-icon z-icon-times"></h:i></h:div>
                 </h:div>
             </div>
         </div>
@@ -46,7 +46,6 @@
             <button label="Info" onClick='Toast.show("This is an info toast.", Clients.NOTIFICATION_TYPE_INFO, "top_right", 3000, true)'/>
             <button label="Warning" onClick='Toast.show("This is a warning toast.", Clients.NOTIFICATION_TYPE_WARNING, "top_right", 3000, true)'/>
             <button label="Error" onClick='Toast.show("This is an error toast.", Clients.NOTIFICATION_TYPE_ERROR, "top_right", 3000, true)'/>
-            <button label="Success" onClick='Toast.show("Operation succeeded", "success", "top_right", 3000, true)'/>
         </div>
     </div>
     <div sclass="z-mb-6">

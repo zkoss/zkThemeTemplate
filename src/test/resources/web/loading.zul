@@ -9,15 +9,44 @@
             <button label="Show Busy">
                 <attribute w:name="onClick"><![CDATA[
                     zAu.cmd0.showBusy('Loading...');
-                    setTimeout(function() { zAu.cmd0.clearBusy(); }, 2000);
+                    setTimeout(function() { zAu.cmd0.clearBusy(); }, 14000);
+                ]]></attribute>
+            </button>
+        </div>
+    </div>
+    <div sclass="z-mb-6">
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Component Busy</div>
+        <div sclass="z-py-3 z-d-flex z-gap-4 z-flex-wrap z-mb-4">
+            <button label="Show Busy">
+                <attribute w:name="onClick"><![CDATA[
+                    var wgt = zk.Widget.$('$demoWin');
+                    wgt.showBusy('Processing...');
+                    setTimeout(function() { wgt.clearBusy(); }, 15000);
                 ]]></attribute>
             </button>
             <button label="Clear Busy">
                 <attribute w:name="onClick"><![CDATA[
-                    zAu.cmd0.clearBusy();
+                    zk.Widget.$('$demoWin').clearBusy();
                 ]]></attribute>
             </button>
         </div>
+        <window id="demoWin" title="Demo Window" border="normal" width="400px">
+            <div sclass="z-p-4 z-d-flex z-flex-col z-gap-3">
+                <div sclass="z-text-sm z-text-secondary">This window demonstrates a component-level busy indicator.</div>
+                <div sclass="z-d-flex z-align-center z-gap-2">
+                    <label value="Name:" sclass="z-fw-medium" width="60px"/>
+                    <textbox value="John Doe" readonly="true" hflex="1"/>
+                </div>
+                <div sclass="z-d-flex z-align-center z-gap-2">
+                    <label value="Email:" sclass="z-fw-medium" width="60px"/>
+                    <textbox value="john@example.com" readonly="true" hflex="1"/>
+                </div>
+                <div sclass="z-d-flex z-align-center z-gap-2">
+                    <label value="Role:" sclass="z-fw-medium" width="60px"/>
+                    <textbox value="Administrator" readonly="true" hflex="1"/>
+                </div>
+            </div>
+        </window>
     </div>
     <div sclass="z-mb-6">
         <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Render Defer</div>

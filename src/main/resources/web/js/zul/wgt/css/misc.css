@@ -1,13 +1,54 @@
 /* Miscellaneous shared ZK widget styles */
 
-/* ZK loading / busy indicator */
+/* ZK busy box (showBusy / progressbox)
+   DOM:
+     <div id="zk_showBusy" role="alert">
+       <div class="z-modal-mask"></div>
+       <div class="z-loading">
+         <div class="z-loading-indicator">
+           <span class="z-loading-icon"></span> Loading...
+         </div>
+       </div>
+     </div>
+   The JS positions `.z-loading` via inline left/top to center it on screen;
+   it MUST be position: absolute so those inline values take effect, and its
+   z-index MUST be above `.z-modal-mask` (1400) to remain visible above the
+   scrim. */
+.z-loading {
+    position: absolute;
+    z-index: 1450;
+    background-color: var(--zk-color-surface-container-high);
+    color: var(--zk-color-on-surface);
+    border-radius: var(--zk-shape-corner-medium);
+    box-shadow: var(--zk-elevation-3);
+    padding: var(--zk-spacing-4) var(--zk-spacing-6);
+    font-family: var(--zk-typescale-font-family);
+    white-space: nowrap;
+    cursor: wait;
+}
+
 .z-loading-indicator {
     display: inline-flex;
     align-items: center;
-    gap: var(--zk-spacing-2);
-    color: var(--zk-color-primary);
+    gap: var(--zk-spacing-3);
+    color: var(--zk-color-on-surface);
     font-family: var(--zk-typescale-font-family);
     font-size: var(--zk-typescale-body-medium-size);
+}
+
+/* Spinner — CSS-only circular indeterminate progress */
+.z-loading-icon {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--zk-color-primary-container);
+    border-top-color: var(--zk-color-primary);
+    border-radius: 50%;
+    animation: z-loading-spin 0.8s linear infinite;
+}
+
+@keyframes z-loading-spin {
+    to { transform: rotate(360deg); }
 }
 
 /* Notification/toast */

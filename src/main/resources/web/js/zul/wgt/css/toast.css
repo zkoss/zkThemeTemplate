@@ -15,13 +15,17 @@
 }
 
 /* ─── Content box ───────────────────────────────────────────────────────── */
+/* padding-left reserves room for the absolute-positioned `.z-toast-icon`
+   (sibling at left:16px width:20px) plus the 4px accent stripe at left:0;
+   padding-right reserves room for the absolute-positioned close button
+   (sibling at right:12px width:20px). */
 .z-toast-content {
     font-family: var(--zk-typescale-font-family);
     font-size: var(--zk-typescale-body-medium-size);
     font-weight: var(--zk-typescale-body-medium-weight);
     width: 320px;
     min-height: 48px;
-    padding: 8px 16px;
+    padding: 12px 48px;
     border-radius: var(--zk-shape-corner-extra-small);
     box-shadow: var(--zk-elevation-3);
     position: relative;
