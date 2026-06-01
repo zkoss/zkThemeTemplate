@@ -18,6 +18,7 @@ package org.zkoss.theme.marble;
 
 import org.zkoss.zk.ui.WebApp;
 import org.zkoss.zk.ui.WebApps;
+import org.zkoss.zk.ui.util.Configuration;
 import org.zkoss.zk.ui.util.WebAppInit;
 import org.zkoss.zkmax.theme.ResponsiveThemeRegistry;
 import org.zkoss.zul.theme.Themes;
@@ -40,5 +41,16 @@ public class MarbleThemeWebAppInit implements WebAppInit {
 		if ("EE".equals(edition)) {
 			Themes.register(ResponsiveThemeRegistry.TABLET_PREFIX + THEME_NAME, THEME_DISPLAY, THEME_PRIORITY);
 		}
+
+		// ZK-1671: <theme-provider-class> in our metainfo/zk/zk.xml is loaded
+		// from a jar and can be silently overridden by StandardThemeProvider
+		// depending on jar load order. WcsExtendlet then runs without our
+		// beforeWidgetCSS, so ~./zul/font/font-awesome.css.dsp is included
+		// verbatim and the FA banner ships in zk.wcs.
+		// Wire the provider explicitly here and lock it with
+		// setCustomThemeProvider(true) so no later init can replace it.
+		Configuration config = webapp.getConfiguration();
+		config.setThemeProvider(new MarbleThemeProvider());
+		config.setCustomThemeProvider(true);
 	}
 }

@@ -13,8 +13,6 @@ public class LoadingComposer extends SelectorComposer<Component> {
     @Wire
     private Window demoWin;
     @Wire
-    private Timer clearTimer;
-    @Wire
     private Timer clearGlobalTimer;
 
     @Listen("onClick = #showGlobalBusyBtn")
@@ -32,18 +30,10 @@ public class LoadingComposer extends SelectorComposer<Component> {
     @Listen("onClick = #showBusyBtn")
     public void showBusy() {
         Clients.showBusy(demoWin, "Processing...");
-        clearTimer.setRunning(true);
     }
 
     @Listen("onClick = #clearBusyBtn")
     public void clearBusy() {
         Clients.clearBusy(demoWin);
-        clearTimer.setRunning(false);
-    }
-
-    @Listen("onTimer = #clearTimer")
-    public void onTimer() {
-        Clients.clearBusy(demoWin);
-        clearTimer.setRunning(false);
     }
 }

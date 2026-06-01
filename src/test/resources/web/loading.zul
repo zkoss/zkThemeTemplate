@@ -16,7 +16,7 @@
             <button id="showBusyBtn" label="Show Busy"/>
             <button id="clearBusyBtn" label="Clear Busy"/>
         </div>
-        <timer id="clearTimer" delay="15000" repeats="false" running="false"/>
+        <div sclass="z-text-sm z-text-secondary z-mb-4">點擊 Show Busy 後，請往下捲動頁面，確認 busy mask 是否跟著 window 一起移動。</div>
         <window id="demoWin" title="Demo Window" border="normal" width="400px">
             <div sclass="z-p-4 z-d-flex z-flex-col z-gap-3">
                 <div sclass="z-text-sm z-text-secondary">This window demonstrates a component-level busy indicator.</div>
@@ -44,5 +44,6 @@
             </div>
         </div>
     </div>
+    <space height="200px"/> <!-- add vertical space for scrolling -->
 </div>
 </zk>
