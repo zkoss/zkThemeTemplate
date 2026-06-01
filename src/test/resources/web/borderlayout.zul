@@ -64,7 +64,7 @@
                 <div sclass="z-text-xs z-text-secondary">autoscroll="true"</div>
                 <borderlayout xmlns:ca="client/attribute" height="300px">
                     <center autoscroll="true" ca:data-embedscrollbar="true">
-                        <vbox id="box">
+                        <vlayout id="box">
                             <label value="Center" />
                             <label value="Content" />
                             <label value="is" />
@@ -76,7 +76,7 @@
                             <label value="long" />
                             <label value="long" />
                             <label value="long" />
-                        </vbox>
+                        </vlayout>
                     </center>
                     <north size="20%">North Content</north>
                     <south size="20%">South Content</south>
