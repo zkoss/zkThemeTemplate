@@ -183,57 +183,82 @@
    .z-error starts `display:none`; ZK calls jq(...).slideDown(1000) to reveal it.
    Subsequent error pushes append <div class="newmessage"> (also display:none),
    then ZK renames to .message and slideDown(600) reveals each. */
+/* Aligned with `.z-messagebox-window` (the project's dialog pattern):
+   - `surface` background + `--zk-shape-dialog` corner + `--zk-elevation-dialog`
+     shadow, no outline border (MD3 dialogs rely on elevation, not borders)
+   - header with error icon + title (error color for emphasis) + close/refresh
+     icon buttons; separated from the message list by `outline-variant`
+   - message rows separated by `outline-variant` (same divider as messagebox) */
 .z-error {
     display: none;
     position: fixed;
     top: var(--zk-spacing-4);
     left: 50%;
     transform: translateX(-50%);
-    width: 450px;
+    width: 480px;
     max-width: calc(100vw - var(--zk-spacing-8));
-    padding: var(--zk-spacing-3) var(--zk-spacing-4);
-    color: var(--zk-color-on-error-container);
-    background-color: var(--zk-color-error-container);
-    border: 1px solid var(--zk-color-error);
-    border-radius: var(--zk-shape-corner-medium);
-    box-shadow: var(--zk-elevation-3);
+    color: var(--zk-color-on-surface);
+    background-color: var(--zk-color-surface);
+    border-radius: var(--zk-shape-dialog);
+    box-shadow: var(--zk-elevation-dialog);
     font-family: var(--zk-typescale-font-family);
+    overflow: hidden;
     z-index: 9999999;
 }
 
 .z-error #zk_err-p {
     display: flex;
     align-items: center;
-    height: 28px;
-    margin-bottom: var(--zk-spacing-2);
+    gap: var(--zk-spacing-3);
+    min-height: 56px;
+    padding: var(--zk-spacing-3) var(--zk-spacing-4) var(--zk-spacing-3) var(--zk-spacing-6);
+    border-bottom: 1px solid var(--zk-color-outline-variant);
     cursor: move;
+}
+
+/* Error icon — same SVG as `.z-messagebox-error` for cross-component consistency. */
+.z-error #zk_err-p::before {
+    content: '';
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    background-color: var(--zk-color-error);
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='m15 9-6 6'/%3E%3Cpath d='m9 9 6 6'/%3E%3C/svg%3E");
+    -webkit-mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='m15 9-6 6'/%3E%3Cpath d='m9 9 6 6'/%3E%3C/svg%3E");
+    mask-size: contain;
+    mask-repeat: no-repeat;
+    mask-position: center;
 }
 
 .z-error .errornumbers {
     flex: 1;
     font-weight: var(--zk-typescale-title-medium-weight);
     font-size: var(--zk-typescale-title-medium-size);
-    color: var(--zk-color-on-error-container);
+    color: var(--zk-color-error);
 }
 
 .z-error .button {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 24px;
-    height: 24px;
-    margin-left: var(--zk-spacing-1);
+    width: 32px;
+    height: 32px;
     cursor: pointer;
-    color: var(--zk-color-on-error-container);
+    color: var(--zk-color-on-surface-variant);
     border-radius: var(--zk-shape-corner-full);
     transition: background-color var(--zk-motion-duration-short1) var(--zk-motion-easing-standard);
 }
 
 .z-error .button:hover {
-    background-color: color-mix(in srgb, var(--zk-color-on-error-container) 12%, transparent);
+    background-color: color-mix(in srgb, var(--zk-color-on-surface) 8%, transparent);
 }
 
 .z-error .messagecontent {
+    padding: var(--zk-spacing-3) var(--zk-spacing-6) var(--zk-spacing-4);
+    color: var(--zk-color-on-surface-variant);
     font-size: var(--zk-typescale-body-medium-size);
     line-height: var(--zk-typescale-body-medium-line-height);
 }
@@ -245,9 +270,9 @@
 }
 
 .z-error .messages .message {
-    margin-top: var(--zk-spacing-2);
-    padding-top: var(--zk-spacing-2);
-    border-top: 1px solid color-mix(in srgb, var(--zk-color-on-error-container) 18%, transparent);
+    margin-top: var(--zk-spacing-3);
+    padding-top: var(--zk-spacing-3);
+    border-top: 1px solid var(--zk-color-outline-variant);
 }
 
 .z-error .messages .message:first-child {
