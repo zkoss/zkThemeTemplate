@@ -75,13 +75,24 @@
        </div>
      </div>
    The scrim (.z-apply-mask) and the indicator (.z-apply-loading) are siblings;
-   JS sets their inline top/left/width/height. CSS must keep them
-   `position: absolute` so those inline values take effect, and give .z-apply-mask
-   the scrim color and the indicator a visible card. */
+   JS sets their inline top/left/width/height from `revisedOffset()` (document
+   coords). Both MUST be `position: absolute` so those document-Y coords place
+   each element at the component's document position. As the user scrolls the
+   body, the mask + indicator stay locked to that document position (i.e. they
+   keep covering the component area). This is correct: the mask's purpose is
+   to cover the targeted component, not the viewport area.
+
+   Known limitation (CSS alone cannot fix): if the targeted component is
+   nested inside a scrollable DIV (not the body), scrolling that inner
+   container moves the component but not the mask — JS would need to listen
+   for the container's scroll and re-sync the mask offset. Scope of this
+   theme: body scroll only.
+
+   Scrim must match `.z-modal-mask` (Global Busy) — same scrim token, no
+   extra opacity dilution, so Component Busy and Global Busy look identical. */
 .z-apply-mask {
     position: absolute;
     background-color: var(--zk-color-scrim);
-    opacity: 0.4;
     z-index: 89000;
 }
 
@@ -285,12 +296,6 @@
    and slide-down animating. It MUST start hidden so the slideDown effect runs. */
 .z-error .newmessage {
     display: none;
-}
-
-/* ZK loading indicator inside components */
-.z-apply-loading {
-    opacity: 0.5;
-    pointer-events: none;
 }
 
 /* Tooltip */
