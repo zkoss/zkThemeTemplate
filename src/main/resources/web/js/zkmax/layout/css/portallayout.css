@@ -1,0 +1,119 @@
+/* MD3 Portallayout — transparent multi-column drag-drop dashboard shell
+   Root:    .z-portallayout[.z-portallayout-vertical|.z-portallayout-horizontal]
+   Column:  .z-portalchildren[.z-portalchildren-frame]
+   Content: .z-portalchildren-content (#uuid-cave, role=list)
+   Title:   .z-portalchildren-title > .z-portalchildren-counter[-on] + text node
+   Drag:    .z-panel-move-ghost / .z-panel-move-block / .z-panel-header-move
+   NOTE:    .z-portallayout-popup* classes are legacy artifacts — do not style them. */
+
+/* ─── Root shell ─────────────────────────────────────────────────────────── */
+/* Transparent shell; overflow:hidden required to contain floated columns */
+.z-portallayout {
+    overflow: hidden;
+    background: transparent;
+}
+
+/* ─── Vertical column layout ─────────────────────────────────────────────── */
+/* float:left makes columns sit side-by-side; height:100% stretches to shell height.
+   Column widths are set as inline styles by JS — CSS must not override them. */
+.z-portallayout-vertical > .z-portalchildren {
+    float: left;
+    height: 100%;
+}
+
+/* Inter-column gutter: ZK gives columns no built-in horizontal spacing.
+   padding-left on every column after the first sits inside the JS-set inline
+   width (box-sizing:border-box below), so columns stay side-by-side, the row
+   never overflows, and the layout's outer edges stay flush. Margin can't be
+   used here — inline %-widths + root overflow:hidden would overflow or clip. */
+.z-portallayout-vertical > .z-portalchildren + .z-portalchildren {
+    padding-left: var(--zk-spacing-3);
+}
+
+/* ─── Column base (all orientations) ────────────────────────────────────── */
+/* overflow:hidden contains panels within column bounds */
+.z-portalchildren {
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+/* ─── Column content container ───────────────────────────────────────────── */
+/* Full-size panel cave; overflow:hidden prevents float bleed from panel children.
+   Do not add clear:both — the trailing 1px spacer provides float-clearance. */
+.z-portalchildren-content {
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+/* ─── Column title (plain column — no frame) ─────────────────────────────── */
+/* Hidden by default; revealed only when .z-portalchildren-frame is present */
+.z-portalchildren-title {
+    display: none;
+}
+
+/* ─── Framed column chrome ───────────────────────────────────────────────── */
+/* Card-style container introduced by title="" attribute on Portalchildren */
+.z-portalchildren-frame {
+    border: 1px solid var(--zk-color-outline-variant);
+    border-radius: var(--zk-shape-card);
+    background: var(--zk-color-surface);
+    padding: var(--zk-spacing-3);
+    padding-bottom: 0;
+    box-sizing: border-box;
+}
+
+/* Title visible in framed column */
+.z-portalchildren-frame > .z-portalchildren-title {
+    display: block;
+    font-size: var(--zk-typescale-body-medium-size);
+    font-weight: 500;
+    color: var(--zk-color-on-surface-variant);
+    padding-bottom: var(--zk-spacing-3);
+}
+
+/* ─── Panel-count badge ──────────────────────────────────────────────────── */
+/* Base: always in DOM, hidden by default */
+.z-portalchildren-counter {
+    display: none;
+}
+
+/* Active badge: visible when counterVisible="true" (default) */
+.z-portalchildren-counter-on {
+    display: inline;
+    background: var(--zk-color-primary-container);
+    color: var(--zk-color-primary);
+    border-radius: var(--zk-shape-corner-full);
+    font-size: var(--zk-typescale-body-small-size);
+    font-weight: 600;
+    padding: 0 6px;
+    margin-right: var(--zk-spacing-2);
+    line-height: 18px;
+    vertical-align: middle;
+}
+
+/* ─── Drag ghost ─────────────────────────────────────────────────────────── */
+/* Overrides panel.css rules (opacity:0.5, outline:2px solid primary).
+   Ghost is a cloned panel prepended to <body> during drag. */
+.z-panel-move-ghost {
+    background: var(--zk-color-surface);
+    opacity: var(--zk-state-dragged-opacity);
+    border: 1px solid var(--zk-color-outline);
+    outline: none;
+    border-radius: var(--zk-shape-card);
+}
+
+/* ─── Drop placeholder ───────────────────────────────────────────────────── */
+/* Overrides panel.css rule (position:fixed; inset:0; z-index:1500 — wrong for in-flow element).
+   In vertical orient: 10px tall strip inside .z-portalchildren-content to signal drop position. */
+.z-panel-move-block {
+    position: static;
+    inset: auto;
+    z-index: auto;
+    cursor: default;
+    height: 10px;
+    width: auto;
+    background: var(--zk-color-primary-container);
+    border-radius: var(--zk-shape-corner-extra-small);
+}
