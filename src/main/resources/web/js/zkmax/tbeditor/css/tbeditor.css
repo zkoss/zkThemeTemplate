@@ -1,5 +1,19 @@
 /* tbeditor — MD3 outlined editor wrapper */
 
+/* ── SVG sprite container injected into <body> by Trumbowyg ─────────────── */
+/* Trumbowyg prepends <div id="z-tbeditor-icons"> to body for icon sprites.
+   Must be zero-size or it occupies space above page content. */
+#z-tbeditor-icons {
+    overflow: hidden;
+    visibility: hidden;
+    height: 0;
+    width: 0;
+}
+#z-tbeditor-icons svg {
+    height: 0;
+    width: 0;
+}
+
 /* ── Box (Trumbowyg-injected outer wrapper) ─────────────────────────────── */
 .z-tbeditor-box {
     display: flex;
