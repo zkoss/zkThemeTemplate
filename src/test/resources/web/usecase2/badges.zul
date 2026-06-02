@@ -3,32 +3,85 @@
                 <label sclass="m-page-title" value="Badges"/>
             </div>
 
-            <div sclass="z-card">
-                <label sclass="z-card__title" value="Color Variants"/>
-                <hlayout spacing="8px" style="flex-wrap:wrap;">
-                    <div sclass="z-badge z-badge-success">Done</div>
-                    <div sclass="z-badge z-badge-warning">In Progress</div>
-                    <div sclass="z-badge z-badge-error">Cancelled</div>
-                    <div sclass="z-badge z-badge-info">New</div>
-                    <div sclass="z-badge z-badge-neutral">Archived</div>
+            <div sclass="z-card" style="margin-bottom:16px;">
+                <label sclass="z-card__title" value="Icon Badges"/>
+                <hlayout spacing="32px" style="align-items:center;padding:8px 4px;">
+                    <div sclass="z-badge">
+                        <span sclass="z-icon-mail" style="font-size:26px;color:#5f6368;"/>
+                        <label sclass="z-badge-content z-badge-default" value="4"/>
+                    </div>
+                    <div sclass="z-badge">
+                        <span sclass="z-icon-bell" style="font-size:26px;color:#5f6368;"/>
+                        <label sclass="z-badge-content z-badge-error" value="7"/>
+                    </div>
+                    <div sclass="z-badge">
+                        <span sclass="z-icon-message-square" style="font-size:26px;color:#5f6368;"/>
+                        <label sclass="z-badge-content z-badge-dot z-badge-error"/>
+                    </div>
                 </hlayout>
+            </div>
 
-                <separator/>
+            <div sclass="z-card" style="margin-bottom:16px;">
+                <label sclass="z-card__title" value="Colored Icon Badges"/>
+                <hlayout spacing="32px" style="align-items:center;padding:8px 4px;flex-wrap:wrap;">
+                    <div sclass="z-badge">
+                        <span sclass="z-icon-mail" style="font-size:26px;color:#5f6368;"/>
+                        <label sclass="z-badge-content z-badge-primary" value="4"/>
+                    </div>
+                    <div sclass="z-badge">
+                        <span sclass="z-icon-mail" style="font-size:26px;color:#5f6368;"/>
+                        <label sclass="z-badge-content z-badge-secondary" value="4"/>
+                    </div>
+                    <div sclass="z-badge">
+                        <span sclass="z-icon-mail" style="font-size:26px;color:#5f6368;"/>
+                        <label sclass="z-badge-content z-badge-error" value="4"/>
+                    </div>
+                    <div sclass="z-badge">
+                        <span sclass="z-icon-mail" style="font-size:26px;color:#5f6368;"/>
+                        <label sclass="z-badge-content z-badge-warning" value="4"/>
+                    </div>
+                    <div sclass="z-badge">
+                        <span sclass="z-icon-mail" style="font-size:26px;color:#5f6368;"/>
+                        <label sclass="z-badge-content z-badge-success" value="4"/>
+                    </div>
+                    <div sclass="z-badge">
+                        <span sclass="z-icon-mail" style="font-size:26px;color:#5f6368;"/>
+                        <label sclass="z-badge-content z-badge-info" value="4"/>
+                    </div>
+                </hlayout>
+            </div>
 
-                <label sclass="z-card__title" value="Inline with text"/>
-                <vlayout spacing="8px">
-                    <hlayout>
-                        <label value="Project Aurora  "/>
-                        <div sclass="z-badge z-badge-success">Done</div>
-                    </hlayout>
-                    <hlayout>
-                        <label value="Project Eagle   "/>
-                        <div sclass="z-badge z-badge-warning">In Progress</div>
-                    </hlayout>
-                    <hlayout>
-                        <label value="Project Omega   "/>
-                        <div sclass="z-badge z-badge-error">Cancelled</div>
-                    </hlayout>
-                </vlayout>
+            <div sclass="z-card" style="margin-bottom:16px;">
+                <label sclass="z-card__title" value="Button Badges"/>
+                <hlayout spacing="32px" style="align-items:center;padding:8px 4px;">
+                    <div sclass="z-badge">
+                        <button label="Notifications"/>
+                        <label sclass="z-badge-content z-badge-primary" value="4"/>
+                    </div>
+                    <div sclass="z-badge">
+                        <button label="Messages"/>
+                        <label sclass="z-badge-content z-badge-error" value="10"/>
+                    </div>
+                </hlayout>
+            </div>
+
+            <div sclass="z-card">
+                <label sclass="z-card__title" value="Badge Visibility"/>
+                <hlayout spacing="40px" style="align-items:flex-start;padding:8px 4px;">
+                    <vlayout spacing="8px" style="align-items:center;">
+                        <div sclass="z-badge">
+                            <span sclass="z-icon-mail" style="font-size:26px;color:#5f6368;"/>
+                            <label sclass="z-badge-content z-badge-error" value="4"/>
+                        </div>
+                        <label value="Visible" style="font-size:12px;color:#5f6368;"/>
+                    </vlayout>
+                    <vlayout spacing="8px" style="align-items:center;">
+                        <div sclass="z-badge">
+                            <span sclass="z-icon-mail" style="font-size:26px;color:#5f6368;"/>
+                            <label sclass="z-badge-content z-badge-error z-badge-invisible" value="4"/>
+                        </div>
+                        <label value="Hidden" style="font-size:12px;color:#5f6368;"/>
+                    </vlayout>
+                </hlayout>
             </div>
         </div>

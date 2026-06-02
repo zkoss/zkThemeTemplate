@@ -19,7 +19,7 @@
 
         <div sclass="z-card z-card--project">
             <label sclass="z-card__title" value="Landing page redesign"/>
-            <label sclass="z-badge z-badge-success" value="Finished"/>
+            <label sclass="z-chip z-chip-success" value="Finished"/>
             <label sclass="z-card__desc" value="Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum."/>
             <div class="z-avatar-group">
                 <image src="https://mira.bootlab.io/static/img/avatars/avatar-1.jpg" class="z-avatar z-avatar-sm"/>
@@ -34,7 +34,7 @@
 
         <div sclass="z-card z-card--project">
             <label sclass="z-card__title" value="Company posters"/>
-            <label sclass="z-badge z-badge-warning" value="In progress"/>
+            <label sclass="z-chip z-chip-warning" value="In progress"/>
             <label sclass="z-card__desc" value="Curabitur ligula sapien, tincidunt non, euismod vitae, posuere imperdiet, leo. Maecenas malesuada. Praesent congue erat at massa."/>
             <div class="z-avatar-group">
                 <image src="https://mira.bootlab.io/static/img/avatars/avatar-1.jpg" class="z-avatar z-avatar-sm"/>
@@ -49,7 +49,7 @@
 
         <div sclass="z-card z-card--project">
             <label sclass="z-card__title" value="Product page design"/>
-            <label sclass="z-badge z-badge-success" value="Finished"/>
+            <label sclass="z-chip z-chip-success" value="Finished"/>
             <label sclass="z-card__desc" value="Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum."/>
             <div class="z-avatar-group">
                 <image src="https://mira.bootlab.io/static/img/avatars/avatar-1.jpg" class="z-avatar z-avatar-sm"/>
@@ -64,7 +64,7 @@
 
         <div sclass="z-card z-card--project">
             <label sclass="z-card__title" value="Upgrade CRM software"/>
-            <label sclass="z-badge z-badge-warning" value="In progress"/>
+            <label sclass="z-chip z-chip-warning" value="In progress"/>
             <label sclass="z-card__desc" value="Nam pretium turpis et arcu. Duis arcu tortor, suscipit eget, imperdiet nec, imperdiet iaculis, ipsum. Sed aliquam ultrices mauris."/>
             <div class="z-avatar-group">
                 <image src="https://mira.bootlab.io/static/img/avatars/avatar-1.jpg" class="z-avatar z-avatar-sm"/>
@@ -85,7 +85,7 @@
             <image src="https://mira.bootlab.io/static/img/unsplash/unsplash-1.jpg" class="z-card__img"/>
             <div sclass="z-card__body">
                 <label sclass="z-card__title" value="Fix form validation"/>
-                <label sclass="z-badge z-badge-warning" value="In progress"/>
+                <label sclass="z-chip z-chip-warning" value="In progress"/>
                 <label sclass="z-card__desc" value="Nam pretium turpis et arcu. Duis arcu tortor, suscipit eget, imperdiet nec, imperdiet iaculis, ipsum."/>
                 <div class="z-avatar-group">
                     <image src="https://mira.bootlab.io/static/img/avatars/avatar-1.jpg" class="z-avatar z-avatar-sm"/>
@@ -103,7 +103,7 @@
             <image src="https://mira.bootlab.io/static/img/unsplash/unsplash-2.jpg" class="z-card__img"/>
             <div sclass="z-card__body">
                 <label sclass="z-card__title" value="New company logo"/>
-                <label sclass="z-badge z-badge-error" value="On hold"/>
+                <label sclass="z-chip z-chip-error" value="On hold"/>
                 <label sclass="z-card__desc" value="Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero."/>
                 <div class="z-avatar-group">
                     <image src="https://mira.bootlab.io/static/img/avatars/avatar-1.jpg" class="z-avatar z-avatar-sm"/>
@@ -121,7 +121,7 @@
             <image src="https://mira.bootlab.io/static/img/unsplash/unsplash-3.jpg" class="z-card__img"/>
             <div sclass="z-card__body">
                 <label sclass="z-card__title" value="Upgrade to latest Maps API"/>
-                <label sclass="z-badge z-badge-success" value="Finished"/>
+                <label sclass="z-chip z-chip-success" value="Finished"/>
                 <label sclass="z-card__desc" value="Nam pretium turpis et arcu. Duis arcu tortor, suscipit eget, imperdiet nec, imperdiet iaculis, ipsum."/>
                 <div class="z-avatar-group">
                     <image src="https://mira.bootlab.io/static/img/avatars/avatar-1.jpg" class="z-avatar z-avatar-sm"/>
@@ -139,7 +139,7 @@
             <image src="https://mira.bootlab.io/static/img/unsplash/unsplash-4.jpg" class="z-card__img"/>
             <div sclass="z-card__body">
                 <label sclass="z-card__title" value="Refactor backend templates"/>
-                <label sclass="z-badge z-badge-error" value="On hold"/>
+                <label sclass="z-chip z-chip-error" value="On hold"/>
                 <label sclass="z-card__desc" value="Curabitur ligula sapien, tincidunt non, euismod vitae, posuere imperdiet, leo. Maecenas malesuada."/>
                 <div class="z-avatar-group">
                     <image src="https://mira.bootlab.io/static/img/avatars/avatar-1.jpg" class="z-avatar z-avatar-sm"/>

@@ -1,20 +1,65 @@
-/* ── Status Badge Utility ───────────────────────────────────────
-   Usage: sclass="z-badge z-badge-success" (on any ZK component)
-   ZK <label> is preferred — renders as <span> with no extra wrapper.
-   Dimensions: height ~26px, border-radius 6px.
+/* ── Badge (overlay indicator, MUI <Badge> equivalent) ───────────
+   A small count or dot that overlaps the top-right corner of a host
+   element (icon, button). Wrap the host and the indicator together:
+
+   <div sclass="z-badge">
+       <span  sclass="z-icon-mail" style="font-size:24px;"/>   host
+       <label sclass="z-badge-content z-badge-error" value="7"/>  overlay
+   </div>
+
+   • Dot variant : add z-badge-dot (omit the value)
+   • Hidden      : add z-badge-invisible (scales the indicator to 0)
+   • Colors      : z-badge-default|primary|secondary|error|warning|success|info
+   For colored status pills/tags use .z-chip instead (see _chips.css).
 ─────────────────────────────────────────────────────────────── */
 .z-badge {
-    display: inline-block;
-    padding: 3px 12px;
-    border-radius: 6px;
-    font-size: 11px;
-    font-weight: 600;
-    white-space: nowrap;
-    line-height: 1.5;
+    position: relative;
+    display: inline-flex;
+    vertical-align: middle;
 }
 
-.z-badge.z-badge-success { background: var(--zk-color-status-success, #4caf50); color: var(--zk-color-on-status, #fff); }
-.z-badge.z-badge-warning { background: var(--zk-color-status-warning, #ff9800); color: var(--zk-color-on-status, #fff); }
-.z-badge.z-badge-error   { background: var(--zk-color-status-error,   #ef5350); color: var(--zk-color-on-status, #fff); }
-.z-badge.z-badge-info    { background: var(--zk-color-status-info,    #0288d1); color: var(--zk-color-on-status, #fff); }
-.z-badge.z-badge-neutral { background: var(--zk-color-status-neutral, #9e9e9e); color: var(--zk-color-on-status, #fff); }
+.z-badge-content {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 1;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 20px;
+    height: 20px;
+    padding: 0 6px;
+    border-radius: 10px;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1;
+    white-space: nowrap;
+    color: var(--zk-color-on-status, #fff);
+    background: var(--zk-color-status-neutral, #9e9e9e);
+    transform: scale(1) translate(50%, -50%);
+    transform-origin: 100% 0%;
+    transition: transform var(--zk-motion-duration-short3, 150ms) var(--zk-motion-easing-emphasized-decelerate, cubic-bezier(0.05, 0.7, 0.1, 1));
+}
+
+/* Dot — no count, small circle */
+.z-badge-dot {
+    min-width: 8px;
+    height: 8px;
+    padding: 0;
+    border-radius: 4px;
+}
+
+/* Hidden state (MUI invisible) */
+.z-badge-invisible {
+    transform: scale(0) translate(50%, -50%);
+}
+
+/* Color variants */
+.z-badge-default   { background: var(--zk-color-status-neutral, #9e9e9e); color: var(--zk-color-on-status, #fff); }
+.z-badge-primary   { background: var(--zk-color-primary, #376fd0);        color: var(--zk-color-on-primary, #fff); }
+.z-badge-secondary { background: var(--zk-color-secondary, #4db6ac);      color: var(--zk-color-on-secondary, #fff); }
+.z-badge-error     { background: var(--zk-color-error, #d32f2f);          color: var(--zk-color-on-error, #fff); }
+.z-badge-warning   { background: var(--zk-color-warning, #f57c00);        color: var(--zk-color-on-warning, #fff); }
+.z-badge-success   { background: var(--zk-color-status-success, #4caf50); color: var(--zk-color-on-status, #fff); }
+.z-badge-info      { background: var(--zk-color-status-info, #0288d1);    color: var(--zk-color-on-status, #fff); }

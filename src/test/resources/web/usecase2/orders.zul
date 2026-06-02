@@ -24,7 +24,7 @@
                 <listcell label="Salt &amp; Pepper Grinder"/>
                 <listcell label="2025-01-02"/>
                 <listcell label="$32.00"/>
-                <listcell><div sclass="z-badge z-badge-info">Shipped</div></listcell>
+                <listcell><div sclass="z-chip z-chip-info">Shipped</div></listcell>
                 <listcell label="Visa"/>
                 <listcell><hlayout spacing="4px"><button iconSclass="z-icon-eye" sclass="z-button-icon"/><button iconSclass="z-icon-pencil" sclass="z-button-icon"/><button iconSclass="z-icon-trash-2" sclass="z-button-icon"/></hlayout></listcell>
             </listitem>
@@ -33,7 +33,7 @@
                 <listcell label="Backpack"/>
                 <listcell label="2025-01-04"/>
                 <listcell label="$130.00"/>
-                <listcell><div sclass="z-badge z-badge-info">Shipped</div></listcell>
+                <listcell><div sclass="z-chip z-chip-info">Shipped</div></listcell>
                 <listcell label="PayPal"/>
                 <listcell><hlayout spacing="4px"><button iconSclass="z-icon-eye" sclass="z-button-icon"/><button iconSclass="z-icon-pencil" sclass="z-button-icon"/><button iconSclass="z-icon-trash-2" sclass="z-button-icon"/></hlayout></listcell>
             </listitem>
@@ -42,7 +42,7 @@
                 <listcell label="Pocket Speaker"/>
                 <listcell label="2025-01-04"/>
                 <listcell label="$80.00"/>
-                <listcell><div sclass="z-badge z-badge-error">Cancelled</div></listcell>
+                <listcell><div sclass="z-chip z-chip-error">Cancelled</div></listcell>
                 <listcell label="Mastercard"/>
                 <listcell><hlayout spacing="4px"><button iconSclass="z-icon-eye" sclass="z-button-icon"/><button iconSclass="z-icon-pencil" sclass="z-button-icon"/><button iconSclass="z-icon-trash-2" sclass="z-button-icon"/></hlayout></listcell>
             </listitem>
@@ -51,7 +51,7 @@
                 <listcell label="Glass Teapot"/>
                 <listcell label="2025-01-08"/>
                 <listcell label="$45.00"/>
-                <listcell><div sclass="z-badge z-badge-info">Shipped</div></listcell>
+                <listcell><div sclass="z-chip z-chip-info">Shipped</div></listcell>
                 <listcell label="Visa"/>
                 <listcell><hlayout spacing="4px"><button iconSclass="z-icon-eye" sclass="z-button-icon"/><button iconSclass="z-icon-pencil" sclass="z-button-icon"/><button iconSclass="z-icon-trash-2" sclass="z-button-icon"/></hlayout></listcell>
             </listitem>
@@ -60,7 +60,7 @@
                 <listcell label="Unbreakable Water Bottle"/>
                 <listcell label="2025-01-09"/>
                 <listcell label="$40.00"/>
-                <listcell><div sclass="z-badge z-badge-info">Shipped</div></listcell>
+                <listcell><div sclass="z-chip z-chip-info">Shipped</div></listcell>
                 <listcell label="PayPal"/>
                 <listcell><hlayout spacing="4px"><button iconSclass="z-icon-eye" sclass="z-button-icon"/><button iconSclass="z-icon-pencil" sclass="z-button-icon"/><button iconSclass="z-icon-trash-2" sclass="z-button-icon"/></hlayout></listcell>
             </listitem>
@@ -69,7 +69,7 @@
                 <listcell label="Spoon Saver"/>
                 <listcell label="2025-01-14"/>
                 <listcell label="$15.00"/>
-                <listcell><div sclass="z-badge z-badge-info">Shipped</div></listcell>
+                <listcell><div sclass="z-chip z-chip-info">Shipped</div></listcell>
                 <listcell label="Mastercard"/>
                 <listcell><hlayout spacing="4px"><button iconSclass="z-icon-eye" sclass="z-button-icon"/><button iconSclass="z-icon-pencil" sclass="z-button-icon"/><button iconSclass="z-icon-trash-2" sclass="z-button-icon"/></hlayout></listcell>
             </listitem>
@@ -78,7 +78,7 @@
                 <listcell label="Hip Flask"/>
                 <listcell label="2025-01-16"/>
                 <listcell label="$25.00"/>
-                <listcell><div sclass="z-badge z-badge-warning">Processing</div></listcell>
+                <listcell><div sclass="z-chip z-chip-warning">Processing</div></listcell>
                 <listcell label="Visa"/>
                 <listcell><hlayout spacing="4px"><button iconSclass="z-icon-eye" sclass="z-button-icon"/><button iconSclass="z-icon-pencil" sclass="z-button-icon"/><button iconSclass="z-icon-trash-2" sclass="z-button-icon"/></hlayout></listcell>
             </listitem>
@@ -87,7 +87,7 @@
                 <listcell label="Woven Slippers"/>
                 <listcell label="2025-01-22"/>
                 <listcell label="$20.00"/>
-                <listcell><div sclass="z-badge z-badge-info">Shipped</div></listcell>
+                <listcell><div sclass="z-chip z-chip-info">Shipped</div></listcell>
                 <listcell label="PayPal"/>
                 <listcell><hlayout spacing="4px"><button iconSclass="z-icon-eye" sclass="z-button-icon"/><button iconSclass="z-icon-pencil" sclass="z-button-icon"/><button iconSclass="z-icon-trash-2" sclass="z-button-icon"/></hlayout></listcell>
             </listitem>
@@ -96,7 +96,7 @@
                 <listcell label="Womens Watch"/>
                 <listcell label="2025-01-22"/>
                 <listcell label="$65.00"/>
-                <listcell><div sclass="z-badge z-badge-error">Cancelled</div></listcell>
+                <listcell><div sclass="z-chip z-chip-error">Cancelled</div></listcell>
                 <listcell label="Visa"/>
                 <listcell><hlayout spacing="4px"><button iconSclass="z-icon-eye" sclass="z-button-icon"/><button iconSclass="z-icon-pencil" sclass="z-button-icon"/><button iconSclass="z-icon-trash-2" sclass="z-button-icon"/></hlayout></listcell>
             </listitem>
@@ -105,7 +105,7 @@
                 <listcell label="Over-Ear Headphones"/>
                 <listcell label="2025-01-23"/>
                 <listcell label="$210.00"/>
-                <listcell><div sclass="z-badge z-badge-info">Shipped</div></listcell>
+                <listcell><div sclass="z-chip z-chip-info">Shipped</div></listcell>
                 <listcell label="Mastercard"/>
                 <listcell><hlayout spacing="4px"><button iconSclass="z-icon-eye" sclass="z-button-icon"/><button iconSclass="z-icon-pencil" sclass="z-button-icon"/><button iconSclass="z-icon-trash-2" sclass="z-button-icon"/></hlayout></listcell>
             </listitem>

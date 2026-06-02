@@ -37,7 +37,7 @@
                     <div style="font-size:13px;font-weight:500;margin-bottom:8px;">Migrate database to new schema</div>
                     <div style="display:flex;justify-content:space-between;align-items:center;">
                         <span style="font-size:11px;color:#757575;">James Dalton</span>
-                        <div sclass="z-badge z-badge-error" style="font-size:10px;">Blocked</div>
+                        <div sclass="z-chip z-chip-error" style="font-size:10px;">Blocked</div>
                     </div>
                 </div>
             </div>

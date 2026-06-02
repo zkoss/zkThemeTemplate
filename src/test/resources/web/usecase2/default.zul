@@ -132,42 +132,42 @@
                         <label value="Project Aurora"/>
                         <label value="01/01/2025"/>
                         <label value="31/06/2025"/>
-                        <div sclass="z-badge z-badge-success">Done</div>
+                        <div sclass="z-chip z-chip-success">Done</div>
                         <label value="James Dalton"/>
                     </row>
                     <row>
                         <label value="Project Eagle"/>
                         <label value="01/01/2025"/>
                         <label value="31/06/2025"/>
-                        <div sclass="z-badge z-badge-warning">In Progress</div>
+                        <div sclass="z-chip z-chip-warning">In Progress</div>
                         <label value="Tracy Mack"/>
                     </row>
                     <row>
                         <label value="Project Fireball"/>
                         <label value="01/01/2025"/>
                         <label value="31/06/2025"/>
-                        <div sclass="z-badge z-badge-success">Done</div>
+                        <div sclass="z-chip z-chip-success">Done</div>
                         <label value="Sallie Love"/>
                     </row>
                     <row>
                         <label value="Project Omega"/>
                         <label value="01/01/2025"/>
                         <label value="31/06/2025"/>
-                        <div sclass="z-badge z-badge-error">Cancelled</div>
+                        <div sclass="z-chip z-chip-error">Cancelled</div>
                         <label value="Glenda Jang"/>
                     </row>
                     <row>
                         <label value="Project Yoda"/>
                         <label value="01/01/2025"/>
                         <label value="31/06/2025"/>
-                        <div sclass="z-badge z-badge-success">Done</div>
+                        <div sclass="z-chip z-chip-success">Done</div>
                         <label value="Raymond Ennis"/>
                     </row>
                     <row>
                         <label value="Project Zulu"/>
                         <label value="01/01/2025"/>
                         <label value="31/06/2025"/>
-                        <div sclass="z-badge z-badge-success">Done</div>
+                        <div sclass="z-chip z-chip-success">Done</div>
                         <label value="Matthew Winters"/>
                     </row>
                 </rows>

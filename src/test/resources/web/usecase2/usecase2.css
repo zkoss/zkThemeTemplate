@@ -517,8 +517,8 @@
 }
 
 /* badge spacing inside project cards */
-.z-card--project .z-badge,
-.z-card--image .z-badge {
+.z-card--project .z-chip,
+.z-card--image .z-chip {
     margin-top: 6px;
     align-self: flex-start;
 }

@@ -49,7 +49,7 @@
                     <label value="Fasteners"/>
                     <label value="1,240"/>
                     <label value="A-12"/>
-                    <label value="In Stock" sclass="z-badge z-badge-success"/>
+                    <label value="In Stock" sclass="z-chip z-chip-success"/>
                     <progressmeter value="82" width="140px"/>
                     <button iconSclass="z-icon-ellipsis-vertical" sclass="z-button-icon"/>
                 </row>
@@ -59,7 +59,7 @@
                     <label value="Tools"/>
                     <label value="38"/>
                     <label value="C-04"/>
-                    <label value="Low" sclass="z-badge z-badge-warning"/>
+                    <label value="Low" sclass="z-chip z-chip-warning"/>
                     <progressmeter value="24" width="140px"/>
                     <button iconSclass="z-icon-ellipsis-vertical" sclass="z-button-icon"/>
                 </row>
@@ -69,7 +69,7 @@
                     <label value="Safety Gear"/>
                     <label value="0"/>
                     <label value="B-08"/>
-                    <label value="Out" sclass="z-badge z-badge-error"/>
+                    <label value="Out" sclass="z-chip z-chip-error"/>
                     <progressmeter value="0" width="140px"/>
                     <button iconSclass="z-icon-ellipsis-vertical" sclass="z-button-icon"/>
                 </row>
@@ -79,7 +79,7 @@
                     <label value="Packaging"/>
                     <label value="640"/>
                     <label value="D-21"/>
-                    <label value="In Stock" sclass="z-badge z-badge-success"/>
+                    <label value="In Stock" sclass="z-chip z-chip-success"/>
                     <progressmeter value="68" width="140px"/>
                     <button iconSclass="z-icon-ellipsis-vertical" sclass="z-button-icon"/>
                 </row>
@@ -89,7 +89,7 @@
                     <label value="Fasteners"/>
                     <label value="95"/>
                     <label value="A-15"/>
-                    <label value="Low" sclass="z-badge z-badge-warning"/>
+                    <label value="Low" sclass="z-chip z-chip-warning"/>
                     <progressmeter value="31" width="140px"/>
                     <button iconSclass="z-icon-ellipsis-vertical" sclass="z-button-icon"/>
                 </row>
