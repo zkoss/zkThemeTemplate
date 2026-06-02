@@ -30,6 +30,37 @@
     padding-left: var(--zk-spacing-3);
 }
 
+/* ─── Horizontal (row-based) layout ──────────────────────────────────────── */
+/* orient="horizontal": each .z-portalchildren is a full-height row that stacks
+   vertically (block flow, inline JS-set height wins), and the panels inside a
+   row float left so they sit side-by-side. ZK provides no built-in float here —
+   the theme must supply it (mirrors ZK's default mold + the skill invariant). */
+.z-portallayout-horizontal > .z-portalchildren {
+    height: 100%;
+}
+.z-portallayout-horizontal .z-portalchildren-content > .z-panel,
+.z-portallayout-horizontal .z-portalchildren-content > .z-panel-move-block {
+    float: left;
+}
+
+/* Inter-panel gutter — consistent with the vertical orient's --zk-spacing-3.
+   Inter-row gutter: padding-top on every row after the first. The row is a
+   transparent wrapper with box-sizing:border-box, so (like the vertical
+   inter-column padding-left) the gutter sits inside the JS-set inline row
+   height and never overflows. */
+.z-portallayout-horizontal > .z-portalchildren + .z-portalchildren {
+    padding-top: var(--zk-spacing-3);
+}
+/* Side-by-side panel gutter: margin-left on every panel after the first.
+   Must be margin, not padding — the panel's card chrome (border + background)
+   lives on .z-panel itself with no transparent wrapper, so padding would open
+   space inside the card instead of between cards. Panels whose widths sum to
+   100% plus this margin would wrap, so side-by-side panels must budget for the
+   gutter in their authored widths (e.g. width="calc(50% - 6px)" for two-up). */
+.z-portallayout-horizontal .z-portalchildren-content > .z-panel + .z-panel {
+    margin-left: var(--zk-spacing-3);
+}
+
 /* ─── Column base (all orientations) ────────────────────────────────────── */
 /* overflow:hidden contains panels within column bounds */
 .z-portalchildren {

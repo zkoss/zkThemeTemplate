@@ -30,6 +30,10 @@ The **framed column** (`title` set on `Portalchildren`, triggering `.z-portalchi
 
 The **drag ghost** (`.z-panel-move-ghost`) receives a semi-transparent surface overlay — `var(--zk-color-surface)` background at `var(--zk-state-dragged-opacity)` — to indicate motion without fully hiding the drop target beneath. The drop placeholder (`.z-panel-move-block`) uses `var(--zk-color-primary-container)` as a 10px-tall highlight strip so the insertion point reads as an active slot.
 
+In **horizontal orient** (`orient="horizontal"` → `.z-portallayout-horizontal`) the layout becomes row-based: each `Portalchildren` is a full-height row that stacks vertically, and the panels inside a row float left so they sit side-by-side. ZK supplies no built-in float for this — the theme must add `float: left` to `.z-portallayout-horizontal .z-portalchildren-content > .z-panel` (and `.z-panel-move-block`), mirroring the vertical-orient column float. Row height comes from the column's JS-set inline size (the `height` attribute on `Portalchildren`), with `height: 100%` as the CSS fallback.
+
+The **inter-panel gutter must be consistent across orients** — both axes use the same `var(--zk-spacing-3)` (12px) spacing the vertical orient uses (column `padding-left` for the side gutter, panel `margin-bottom` for stacking). Horizontal needs two rules: an **inter-row gutter** (`padding-top: var(--zk-spacing-3)` on `.z-portalchildren + .z-portalchildren`, which is transparent and box-sizing `border-box` so the gutter sits inside the JS-set inline row height — the exact vertical-axis mirror of the vertical inter-column `padding-left`), and a **side-by-side panel gutter** (`margin-left: var(--zk-spacing-3)` on `.z-panel + .z-panel`). The side gutter must be `margin` (not `padding`) because the panel's card chrome — border and background — lives on `.z-panel` itself with no transparent wrapper, so padding would open space *inside* the card instead of *between* cards. Because floated panels with widths summing to 100% plus a margin would overflow and wrap, the side-by-side panels must budget for the gutter in their authored widths (e.g. `width="calc(50% - 6px)"` for a two-up row). This is the structural counterpart of the vertical orient, where ZK already computes column widths to pixels and so leaves room for the gutter automatically; in horizontal orient ZK leaves panel widths at the authored value, so the width budget is the page author's responsibility.
+
 **No transition** on the layout shell itself — column width changes are JS-driven and cannot meaningfully animate without layout-thrash. The panel children animate according to their own contract.
 
 ## Expected values
@@ -45,6 +49,10 @@ The **drag ghost** (`.z-panel-move-ghost`) receives a semi-transparent surface o
 | col-5 | `.z-portalchildren-content` | width | `100%` | structural |
 | col-6 | `.z-portalchildren-content` | height | `100%` | structural |
 | col-7 | `.z-portallayout-vertical > .z-portalchildren + .z-portalchildren` | padding-left | `var(--zk-spacing-3)` | DESIGN.md §4 (inter-column gutter) |
+| col-h1 | `.z-portallayout-horizontal > .z-portalchildren` | height | `100%` | structural (row fills shell height) |
+| col-h2 | `.z-portallayout-horizontal .z-portalchildren-content > .z-panel` | float | `left` | structural (row-based orient — panels sit side-by-side) |
+| col-h3 | `.z-portallayout-horizontal > .z-portalchildren + .z-portalchildren` | padding-top | `var(--zk-spacing-3)` | DESIGN.md §4 (inter-row gutter — consistency with vertical inter-column gutter) |
+| col-h4 | `.z-portallayout-horizontal .z-portalchildren-content > .z-panel + .z-panel` | margin-left | `var(--zk-spacing-3)` | DESIGN.md §4 (side-by-side panel gutter — consistency with vertical) |
 | title-1 | `.z-portalchildren-title` | display | `none` | structural (hidden until frame variant) |
 | title-2 | `.z-portalchildren-frame > .z-portalchildren-title` | display | `block` | structural |
 | title-3 | `.z-portalchildren-frame > .z-portalchildren-title` | font-size | `var(--zk-typescale-body-medium-size)` | DESIGN.md §7 |
@@ -78,6 +86,8 @@ The **drag ghost** (`.z-panel-move-ghost`) receives a semi-transparent surface o
 | default shell | `.z-portallayout` | root-1, root-2 |
 | vertical column | `.z-portallayout-vertical > .z-portalchildren` | col-1, col-2, col-3 |
 | inter-column gutter | `.z-portallayout-vertical > .z-portalchildren + .z-portalchildren` | col-7 |
+| horizontal orient | `.z-portallayout-horizontal > .z-portalchildren` / `… .z-portalchildren-content > .z-panel` | col-h1, col-h2 |
+| horizontal gutters | `.z-portallayout-horizontal > .z-portalchildren + .z-portalchildren` / `… .z-portalchildren-content > .z-panel + .z-panel` | col-h3, col-h4 |
 | plain column content | `.z-portalchildren-content` | col-4, col-5, col-6 |
 | column title hidden | `.z-portalchildren-title` | title-1 |
 | framed column | `.z-portalchildren-frame` | frame-1, frame-2, frame-3, frame-4, frame-5 |
@@ -91,7 +101,7 @@ The **drag ghost** (`.z-panel-move-ghost`) receives a semi-transparent surface o
 ## States to evaluate
 - [ ] default (plain portallayout shell — transparent, no chrome)
 - [ ] vertical-orient (`.z-portallayout-vertical` — default)
-- [ ] horizontal-orient (`.z-portallayout-horizontal`)
+- [x] horizontal-orient (`.z-portallayout-horizontal` — rows stack; panels float left, verified col-h1/col-h2)
 - [ ] plain-column (no title — transparent column wrapper)
 - [ ] framed-column (title set — `.z-portalchildren-frame` chrome)
 - [ ] counter-visible (`.z-portalchildren-counter-on`)

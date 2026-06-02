@@ -31,5 +31,32 @@
         </div>
     </div>
 
+    <div sclass="z-mb-6">
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Horizontal Orientation</div>
+        <div sclass="z-py-3">
+            <portallayout orient="horizontal" height="500px">
+                <portalchildren height="50%">
+                    <panel width="calc(50% - 6px)" height="100%" title="Calendar" border="normal">
+                        <panelchildren>
+                            <calendar/>
+                        </panelchildren>
+                    </panel>
+                    <panel width="calc(50% - 6px)" height="100%" title="Colorbox" border="normal">
+                        <panelchildren>
+                            <colorbox/>
+                        </panelchildren>
+                    </panel>
+                </portalchildren>
+                <portalchildren height="50%">
+                    <panel width="100%" height="100%" title="Editor" border="normal">
+                        <panelchildren>
+                            <tbeditor/>
+                        </panelchildren>
+                    </panel>
+                </portalchildren>
+            </portallayout>
+        </div>
+    </div>
+
 </div>
 </zk>
