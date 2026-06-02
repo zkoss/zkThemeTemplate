@@ -1,7 +1,7 @@
 <?page title="Component Utilities"?>
 <zk>
 <style src="~./usecase/usecase.css"/>
-<vlayout hflex="1" sclass="z-d-flex z-flex-col z-gap-4 z-p-4 z-bg-surface-low">
+<vlayout hflex="1" sclass="z-d-flex z-flex-col z-gap-4 z-p-4 z-bg-surface-low" xmlns:ca="client/attribute">
 
     <toolbar>
         <label value="Component Utilities" sclass="z-h2"/>
@@ -28,33 +28,57 @@
         </div>
     </div>
 
-    <!-- z-chip -->
+    <!-- z-badge (overlay indicator, MUI <Badge> equivalent) -->
     <div sclass="section-card">
-        <label value="Badge  (.z-chip)" sclass="z-d-block z-text-base z-fw-medium z-text-on-surface z-mb-3"/>
-        <label value="Badges are slightly larger than chips and always carry a solid background for strong visual prominence." sclass="z-text-secondary z-text-sm z-mb-3"/>
-        <div sclass="z-d-flex z-gap-3 z-flex-wrap z-align-center z-mb-3">
-            <label value="Success" sclass="z-chip z-chip-success"/>
-            <label value="Warning" sclass="z-chip z-chip-warning"/>
-            <label value="Error"   sclass="z-chip z-chip-error"/>
-            <label value="Info"    sclass="z-chip z-chip-info"/>
-            <label value="Neutral" sclass="z-chip z-chip-neutral"/>
+        <label value="Badge  (.z-badge)" sclass="z-d-block z-text-base z-fw-medium z-text-on-surface z-mb-3"/>
+        <label value="Overlay indicators that float a count or dot over a host's top-right corner. Add z-badge to the host itself and pass the count via the data-badge attribute (ca:data-badge). Declare xmlns:ca=&quot;client/attribute&quot; once on an ancestor. Rows must use a non-clipping flex container (z-d-flex / z-hstack) — never &lt;hlayout&gt; (overflow:hidden crops the overhang)." sclass="z-text-secondary z-text-sm z-mb-3"/>
+
+        <!-- Count + dot on icons -->
+        <label value="Icon Badges  (count + dot)" sclass="z-h6 z-mb-2"/>
+        <div sclass="z-d-flex z-gap-6 z-align-center z-mb-4" style="padding:8px 4px;">
+            <span sclass="z-icon-mail z-badge z-badge-default" ca:data-badge="4" style="font-size:26px;color:var(--zk-color-on-surface-variant);"/>
+            <span sclass="z-icon-bell z-badge z-badge-error" ca:data-badge="7" style="font-size:26px;color:var(--zk-color-on-surface-variant);"/>
+            <span sclass="z-icon-message-square z-badge z-badge-dot z-badge-error" style="font-size:26px;color:var(--zk-color-on-surface-variant);"/>
         </div>
-        <div sclass="z-d-flex z-gap-6 z-mt-3">
-            <div sclass="z-d-flex z-align-center z-gap-2">
-                <label value="Order #1042"/>
-                <label value="Shipped" sclass="z-chip z-chip-success"/>
-            </div>
-            <div sclass="z-d-flex z-align-center z-gap-2">
-                <label value="Order #1043"/>
-                <label value="Pending" sclass="z-chip z-chip-warning"/>
-            </div>
-            <div sclass="z-d-flex z-align-center z-gap-2">
-                <label value="Order #1044"/>
-                <label value="Cancelled" sclass="z-chip z-chip-error"/>
-            </div>
+
+        <!-- Color variants -->
+        <label value="Color Variants  (.z-badge-default | primary | secondary | error | warning | success | info)" sclass="z-h6 z-mb-2"/>
+        <div sclass="z-d-flex z-gap-6 z-align-center z-flex-wrap z-mb-4" style="padding:8px 4px;">
+            <span sclass="z-icon-mail z-badge z-badge-default" ca:data-badge="4" style="font-size:26px;color:var(--zk-color-on-surface-variant);"/>
+            <span sclass="z-icon-mail z-badge z-badge-primary" ca:data-badge="4" style="font-size:26px;color:var(--zk-color-on-surface-variant);"/>
+            <span sclass="z-icon-mail z-badge z-badge-secondary" ca:data-badge="4" style="font-size:26px;color:var(--zk-color-on-surface-variant);"/>
+            <span sclass="z-icon-mail z-badge z-badge-error" ca:data-badge="4" style="font-size:26px;color:var(--zk-color-on-surface-variant);"/>
+            <span sclass="z-icon-mail z-badge z-badge-warning" ca:data-badge="4" style="font-size:26px;color:var(--zk-color-on-surface-variant);"/>
+            <span sclass="z-icon-mail z-badge z-badge-success" ca:data-badge="4" style="font-size:26px;color:var(--zk-color-on-surface-variant);"/>
+            <span sclass="z-icon-mail z-badge z-badge-info" ca:data-badge="4" style="font-size:26px;color:var(--zk-color-on-surface-variant);"/>
         </div>
+
+        <!-- Button hosts -->
+        <label value="Button Badges" sclass="z-h6 z-mb-2"/>
+        <div sclass="z-d-flex z-gap-6 z-align-center z-mb-4" style="padding:8px 4px;">
+            <button label="Notifications" sclass="z-badge z-badge-primary" ca:data-badge="4"/>
+            <button label="Messages" sclass="z-badge z-badge-error" ca:data-badge="10"/>
+        </div>
+
+        <!-- Visibility -->
+        <label value="Badge Visibility  (.z-badge-invisible / auto-hide on 0)" sclass="z-h6 z-mb-2"/>
+        <div sclass="z-d-flex z-gap-6 z-align-center" style="padding:8px 4px;">
+            <vlayout spacing="6px" style="align-items:center;">
+                <span sclass="z-icon-mail z-badge z-badge-error" ca:data-badge="4" style="font-size:26px;color:var(--zk-color-on-surface-variant);"/>
+                <label value="Visible" sclass="z-text-muted z-text-xs"/>
+            </vlayout>
+            <vlayout spacing="6px" style="align-items:center;">
+                <span sclass="z-icon-mail z-badge z-badge-error z-badge-invisible" ca:data-badge="4" style="font-size:26px;color:var(--zk-color-on-surface-variant);"/>
+                <label value="Invisible" sclass="z-text-muted z-text-xs"/>
+            </vlayout>
+            <vlayout spacing="6px" style="align-items:center;">
+                <span sclass="z-icon-mail z-badge z-badge-error" ca:data-badge="0" style="font-size:26px;color:var(--zk-color-on-surface-variant);"/>
+                <label value="Zero (auto-hide)" sclass="z-text-muted z-text-xs"/>
+            </vlayout>
+        </div>
+
         <div sclass="z-mt-3">
-            <label value="Usage: sclass=&quot;z-chip z-chip-warning&quot;" sclass="z-text-muted z-text-sm z-bg-surface-variant z-p-2 z-rounded"/>
+            <label value="Usage: sclass=&quot;z-badge z-badge-error&quot; ca:data-badge=&quot;7&quot;  ·  dot: add z-badge-dot" sclass="z-text-muted z-text-sm z-bg-surface-variant z-p-2 z-rounded"/>
         </div>
     </div>
 
