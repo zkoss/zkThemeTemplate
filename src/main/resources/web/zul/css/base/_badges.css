@@ -1,15 +1,25 @@
 /* ── Badge (overlay indicator, MUI <Badge> equivalent) ───────────
-   A small count or dot that overlaps the top-right corner of a host
-   element (icon, button). Wrap the host and the indicator together:
+   Single-element usage — add z-badge to the host itself and pass the
+   count through the data-badge DOM attribute (the ::after pseudo-element
+   reads it via content:attr() and floats it over the top-right corner).
+   This theme renders state-layers and icon glyphs on ::before, so ::after
+   is free for the badge.
 
-   <div sclass="z-badge">
-       <span  sclass="z-icon-mail" style="font-size:24px;"/>   host
-       <label sclass="z-badge-content z-badge-error" value="7"/>  overlay
-   </div>
+   <button label="Messages" sclass="z-badge z-badge-error" ca:data-badge="10"/>
+   <span sclass="z-icon-mail z-badge z-badge-primary" ca:data-badge="4"
+         style="font-size:26px;"/>
 
-   • Dot variant : add z-badge-dot (omit the value)
-   • Hidden      : add z-badge-invisible (scales the indicator to 0)
-   • Colors      : z-badge-default|primary|secondary|error|warning|success|info
+   • Count   : ca:data-badge="4"  (auto-hidden when "", "0", or absent)
+   • Dot     : add z-badge-dot   (no data-badge needed)
+   • Hidden  : add z-badge-invisible (scales the indicator to 0, MUI `invisible`)
+   • Colors  : z-badge-default|primary|secondary|error|warning|success|info
+
+   Declare the attribute namespace once on an ancestor element:
+       xmlns:ca="client/attribute"
+
+   ⚠ The badge overhangs the host's corner, so it is cropped by any ancestor with
+   overflow:hidden. Host badges in a NON-CLIPPING row (z-hstack / z-d-flex), never
+   an <hlayout> (its root is overflow:hidden). See skill: components/hlayout-vlayout.
    For colored status pills/tags use .z-chip instead (see _chips.css).
 ─────────────────────────────────────────────────────────────── */
 .z-badge {
@@ -18,13 +28,14 @@
     vertical-align: middle;
 }
 
-.z-badge-content {
+.z-badge::after {
+    content: attr(data-badge);
     position: absolute;
     top: 0;
     right: 0;
     z-index: 1;
     box-sizing: border-box;
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
     min-width: 20px;
@@ -36,30 +47,45 @@
     line-height: 1;
     white-space: nowrap;
     color: var(--zk-color-on-status, #fff);
-    background: var(--zk-color-status-neutral, #9e9e9e);
-    transform: scale(1) translate(50%, -50%);
+    background: var(--zk-badge-color, var(--zk-color-status-neutral, #9e9e9e));
+    transform: translate(50%, -50%);
     transform-origin: 100% 0%;
     transition: transform var(--zk-motion-duration-short3, 150ms) var(--zk-motion-easing-emphasized-decelerate, cubic-bezier(0.05, 0.7, 0.1, 1));
 }
 
 /* Dot — no count, small circle */
-.z-badge-dot {
+.z-badge-dot::after {
+    content: "";
     min-width: 8px;
     height: 8px;
     padding: 0;
     border-radius: 4px;
 }
 
+/* Auto-hide when empty / zero / attribute absent (dots are exempt) */
+.z-badge[data-badge=""]:not(.z-badge-dot)::after,
+.z-badge[data-badge="0"]:not(.z-badge-dot)::after,
+.z-badge:not([data-badge]):not(.z-badge-dot)::after {
+    display: none;
+}
+
 /* Hidden state (MUI invisible) */
-.z-badge-invisible {
+.z-badge-invisible::after {
     transform: scale(0) translate(50%, -50%);
 }
 
-/* Color variants */
-.z-badge-default   { background: var(--zk-color-status-neutral, #9e9e9e); color: var(--zk-color-on-status, #fff); }
-.z-badge-primary   { background: var(--zk-color-primary, #376fd0);        color: var(--zk-color-on-primary, #fff); }
-.z-badge-secondary { background: var(--zk-color-secondary, #4db6ac);      color: var(--zk-color-on-secondary, #fff); }
-.z-badge-error     { background: var(--zk-color-error, #d32f2f);          color: var(--zk-color-on-error, #fff); }
-.z-badge-warning   { background: var(--zk-color-warning, #f57c00);        color: var(--zk-color-on-warning, #fff); }
-.z-badge-success   { background: var(--zk-color-status-success, #4caf50); color: var(--zk-color-on-status, #fff); }
-.z-badge-info      { background: var(--zk-color-status-info, #0288d1);    color: var(--zk-color-on-status, #fff); }
+/* Buttons set overflow:hidden to contain their ::before state layer, which
+   would clip an overflowing badge. The state layer is a self-rounded box
+   (inset:0; border-radius:inherit), so it is safe to reveal overflow here. */
+.z-badge.z-button {
+    overflow: visible;
+}
+
+/* Color variants — set the indicator background via a custom property */
+.z-badge-default   { --zk-badge-color: var(--zk-color-status-neutral, #9e9e9e); }
+.z-badge-primary   { --zk-badge-color: var(--zk-color-primary, #376fd0); }
+.z-badge-secondary { --zk-badge-color: var(--zk-color-secondary, #4db6ac); }
+.z-badge-error     { --zk-badge-color: var(--zk-color-error, #d32f2f); }
+.z-badge-warning   { --zk-badge-color: var(--zk-color-warning, #f57c00); }
+.z-badge-success   { --zk-badge-color: var(--zk-color-status-success, #4caf50); }
+.z-badge-info      { --zk-badge-color: var(--zk-color-status-info, #0288d1); }
