@@ -13,9 +13,9 @@ The two files form a **two-tier contract**. This guide defines the boundary, the
 | 層 | 檔案 | 內容性質 | 跨主題會變嗎？ |
 |---|---|---|---|
 | 結構不變式 (Structural Invariants) | `.claude/skills/zk-component-rules/components/<comp>.md` | DOM、state class、幾何/關係、「狀態必須有區別」之類的**通用述語** | **不會**。所有主題都該通過 |
-| 主題契約 (Theme Contract) | `doc/contracts/<comp>.md` (+ `.html` mockup) | 具體 token 綁定、明確設計取捨、預期解析值 | **會**。每個主題一份 |
+| 主題契約 (Theme Contract) | `doc/contracts/<comp>.md` (+ optional `.html` mockup) | 具體 token 綁定、明確設計取捨、預期解析值、`## Outcome assertions`（整頁尺度 M-rows） | **會**。每個主題一份 |
 
-**Evaluator 的工作 = 兩層都通過**。結構不變式像「物理定律」，主題契約像「這顆星球的重力」。
+**Evaluator 的工作 = 兩層都通過 + M-rows 過 + AI visual review 不報嚴重 finding**。結構不變式像「物理定律」，主題契約像「這顆星球的重力」，M-rows 像「整體該看起來像個 X」。
 
 ---
 
@@ -33,7 +33,9 @@ The two files form a **two-tier contract**. This guide defines the boundary, the
 
 ---
 
-## 三類可驗證述語
+## 五類可驗證述語
+
+A/B/C 屬於 skill（主題無關）；D 屬於 contract（主題特定 + 自底向上）；M 屬於 contract（主題特定 + 自頂向下整頁尺度，與 §3d AI visual review 形成閉環）。
 
 ### A. 結構述語 (Structural) — 主題無關
 
@@ -84,6 +86,31 @@ DOM 拓撲、class 出現條件、role/aria。完全由 ZK widget 行為決定�
 - 連接線 `border-color: var(--zk-color-outline-variant)` — 來源 DESIGN.md §11
 
 換主題 = 換 token 值或換這份契約；A/B/C 不動。
+
+### M. Outcome 述語 (Outcome-Level / 整頁尺度) — 主題特定，top-down
+
+A/B/C/D 都是「自底向上」的：對單一 selector 的單一屬性 assert。但一份契約**全 PASS** 仍可能視覺破損 — 因為沒人問「整體看起來像不像那個東西」。M-row 補這個洞。
+
+寫進 `doc/contracts/<comp>.md` 的 `## Outcome assertions` 表，與 `## Design Contract` prose 並列。
+
+**特徵**：
+- **整頁尺度 / 跨 selector**：「每個 `.lm_header` 內的 `.lm_controls` 跟 tabs 同一橫排」、「面板互相 dock 不重疊」、「outer wrapper 沒有 redundant 卡片」
+- **bbox geometry 為主**：用 `getBoundingClientRect()`，不是 `getComputedStyle()`
+- **disjunctive / tolerance-based**：「border ≥ 1px OR shadow ≠ none OR bg ≠ transparent」、「±2px」、「≥ 95%」
+- **outcome 不是 recipe**：assert「看起來是張卡片」，不 assert「`border: 1px solid #ccc`」
+- **Failure blocks VERIFIED**：任一 M-row FAIL 就擋住 verified，即使 D-tier 全過
+
+**範例 (goldenlayout)**：
+- M1: every `.z-goldenpanel` 有可見框 AND outer `.z-goldenlayout` 沒有 redundant outer card
+- M4: 同一 `.lm_header` 內所有 `.lm_tab` siblings 的 `bbox.top` range ≤ 2px
+- M9: `.lm_controls` cluster bbox.right 在 `.lm_header` 右緣 8px 內，且有 ≥ 2 個可見 icon
+- M13: `.lm_controls` 跟首個 `.lm_tab` **同一橫排**（vertical centers within 4px）
+
+**與 B-tier 的關係**：B-tier 是「主題無關 + 單 selector 範圍」的關係述語；M-row 是「主題特定 + 跨 selector / 整頁範圍」的結果述語。一條 B-tier 可被**升級**成 M-row 當它的視覺判定門檻在「整體看起來對不對」這個層級 — 但升級後就脫離 skill 進到 contract。
+
+**與 §3d AI visual review 的閉環**：Evaluator 跑 AI visual review 找到的 finding，如果在 M-rows 抓不到（geometry 通過但 AI 用眼睛看仍 FAIL），就**回頭加一條 M-row**到契約。M-row 集合會隨著每一次 finding 變嚴。goldenlayout 的 M13 就是這條路徑長出來的：M9 只查 X 軸 right-anchoring，AI vision 看出 icons 跑到第二行，M13 補了「同一橫排」的 Y 軸條件。
+
+換主題 = 重新寫一份 M-rows（因為它們對應的視覺意圖在 DESIGN.md），但**predicate 形式**（disjunction + tolerance）跨主題通用。
 
 ---
 

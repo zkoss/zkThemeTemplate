@@ -220,6 +220,39 @@ closest-sibling: <sibling name | none>
 
 Example for stepbar: "Connected circle-with-label markers, primary-filled for completed steps, primary-outlined for active, neutral-outlined for upcoming. 2px connector line in outline-variant. Labels in body-small, secondary text. 250ms transition on state change."
 
+## Outcome assertions
+
+<MANDATORY for layout / T3 / data-rich components (≥ 5 rows). Optional but recommended for inputs (≥ 1 row). Stub components may declare `visual-goal: trivial — no outcome rows`.>
+
+Outcome-level predicates that gate `VERIFIED`: failing any row blocks VERIFIED even if all D-tier rows below pass. Predicates are deliberately disjunctive / tolerance-based — they assert *outcome*, not *recipe*. Row IDs use the `M` prefix (originally "macro-scale outcome"; retained as a stable identifier).
+
+| id | predicate | rationale |
+|----|-----------|-----------|
+| M1 | `.z-<comp>` has visible framing: `border-width ≥ 1px` OR `box-shadow ≠ none` OR `background ≠ transparent` | visual closure — "reads as a <thing>" |
+| M2 | root bbox height ≥ <N>px AND ≥ <X>% of parent (when parent has explicit height) | layout engaged |
+| M3 | <inner> fills ≥ 95% of root content-box | no dead space |
+| M4 | siblings dock / no two text-bearing nodes overlap > 1px | no z-fighting, no collisions |
+| M<n> | <outcome predicate specific to this component> | <one-sentence rationale> |
+
+**Authoring rules** (consult `.claude/skills/zk-component-rules/authoring/contract-tiers.md` for full discussion):
+- Each row asserts a *visible result* a reviewer could verify in 5 seconds with a screenshot, not a CSS recipe.
+- Use **bounding-box geometry** (`getBoundingClientRect()`) rather than `getComputedStyle()` whenever possible. Geometry is recipe-agnostic.
+- Use **disjunctions** (`A OR B OR C`) when multiple recipes can produce the same outcome — e.g. "card-like framing" is `border OR shadow OR bg`.
+- Use **tolerances**: `±2px`, `≥ 95%`, `≤ 4px range`, etc. Avoid exact equality — geometry has rounding.
+- Cite a **ZKDoc reference image** when available: `/Users/hawk/Documents/workspace/DOC/zkdoc/zk_component_ref/images/ZKCompRef_<Component>*.png`. The image is the visual ground truth; your M-rows are quantifications of what that image shows.
+
+**Wave-driven minimum row count:**
+
+| Wave | Component class | Minimum M-rows |
+|------|-----------------|-----------------|
+| 1 | T3 + EE structural (goldenlayout, portallayout, organigram, pdfviewer, signature, stepbar, tbeditor, searchbox) | ≥ 6 |
+| 2 | Layout primitives (borderlayout, splitlayout, splitter, panel, window, groupbox, caption, tabbox, …) | ≥ 5 |
+| 3 | Data-rich (grid, listbox, tree, paging, biglistbox, calendar, slider, …) | ≥ 4 |
+| 4 | Inputs & buttons (textbox, combobox, datebox, button, checkbox, …) | ≥ 2 (most rows are D-tier; outcome rows only for composite layouts) |
+| 5 | Misc / stubs (a, popup, separator, …) | ≥ 0 (declare `visual-goal: trivial` if none) |
+
+The Evaluator's §3b-outcome / §3b-macro step enforces these as a top-down gate. The §3d AI visual review step then loads captured screenshots and adds advisory findings that map to `suspected-row` IDs — when AI vision catches something M-rows missed, **promote the finding into a new M-row**. This is the feedback path that grew goldenlayout's M9 → M9+M13 (icons-on-same-row-as-tabs).
+
 ## Expected values
 
 | id | selector | property | expected (token preferred) | source |
@@ -262,7 +295,45 @@ theme-bridge:
   --lib-bg: var(--zk-color-surface)
 ```
 
-### 7. Author the HTML contract mockup
+### 6.5. Mockup decision — Y / N / declare
+
+**Before** authoring an HTML mockup in Step 7, decide whether the component **needs** one. A hand-authored `doc/contracts/<comp>.html` is required only when the ZKDoc canonical image is insufficient as a visual ground truth. Apply this rule:
+
+```
+mockup needed = Y if any of:
+  (1) ZKDoc has no canonical image for the component, i.e. there is no file
+      matching /Users/hawk/Documents/workspace/DOC/zkdoc/zk_component_ref/images/ZKCompRef_<Component>*.png
+  (2) Marble's Design Contract diverges significantly from the ZKDoc default look
+      Examples of "significant divergence":
+        - tab shape change (e.g. pill → underline)
+        - elevation pattern reshape (multi-step shadow vs single shadow)
+        - density step change (compact → comfortable, or vice-versa)
+        - state-layer pattern reshape (ripple, hover-tint, etc.)
+        - novel composition not in the ZKDoc image
+  (3) Component has no ZK analog at all (pure-Marble novel UI — rare)
+
+mockup needed = N otherwise: use the ZKDoc reference image as the visual
+ground truth. The Design Contract prose + Outcome assertions table are the
+single binding document. Cite ZKCompRef_<Component>.png as the visual
+target in the contract's `## References` block.
+```
+
+**Output of this step:** Add one line to the contract's frontmatter:
+```yaml
+mockup-needed: Y | N
+mockup-rationale: <one sentence explaining the choice>
+```
+
+Examples:
+- `goldenlayout`: ZKDoc image exists AND Marble's per-panel-card pattern matches the ZKDoc default → `mockup-needed: N — ZKDoc ZKCompRef_GoldenLayout.png is visual ground truth; Marble token-swap only`.
+- `checkbox`: ZKDoc image exists but MD3 ripple + state-layer pattern diverges significantly from ZK default → `mockup-needed: Y — MD3 state-layer + ripple not visible in ZKDoc baseline; mockup needed to fix design intent`.
+- `splitlayout`: no ZKDoc image AND Marble adds nothing novel → `mockup-needed: Y — no ZKDoc canonical image; mockup needed as the only visual reference`.
+
+**Then proceed to Step 7 only when `mockup-needed: Y`.** When `N`, skip Step 7 entirely and add the ZKDoc image citation to the contract's `## References` block (`- ZKDoc canonical: /Users/hawk/Documents/workspace/DOC/zkdoc/zk_component_ref/images/ZKCompRef_<Component>.png`).
+
+The orchestrator's status registry (`tasks/outcome-migration-status.md`) reads `mockup-needed` from the frontmatter to populate the `mockup` column.
+
+### 7. Author the HTML contract mockup (only if Step 6.5 set `mockup-needed: Y`)
 
 Create `doc/contracts/<comp>.html`. Start from `doc/contracts/_template.html` and fill in:
 - Component name in the page title and `<h1>`
