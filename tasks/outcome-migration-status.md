@@ -1,6 +1,6 @@
 # Outcome-Driven Contract Migration — Status
 
-Tracks the rollout of `## Visual outcome` + `## Outcome assertions` sections per §1 of [outcome-driven-verification-proposal.md](outcome-driven-verification-proposal.md). The orchestrator updates this file after every Evaluator dispatch on a migrated component. **Single-writer** (orchestrator) — same lock model as `work-status.md`.
+Tracks the rollout of `## Visual outcome` + `## Outcome assertions` sections across `doc/contracts/*.md`. Authoring rules live in [`.claude/agents/zk-spec-author.md`](../.claude/agents/zk-spec-author.md) Step 6 (template) and Step 6.5 (mockup decision); see also [`outcome-driven-verification-proposal.md`](outcome-driven-verification-proposal.md) for the rationale and pilot history. The orchestrator updates this file after every Evaluator dispatch on a migrated component. **Single-writer** (orchestrator) — same lock model as `work-status.md`.
 
 > **Naming history (2026-06-03)**: section was originally called `## Macro assertions` and the columns `macro-rows` / `macro-pass`. Renamed to `Outcome` everywhere for vocabulary alignment with the proposal title. The row-ID prefix `M` (M1, M2, …) is retained as a stable identifier across existing eval reports.
 

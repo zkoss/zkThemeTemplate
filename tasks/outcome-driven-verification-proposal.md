@@ -1,10 +1,10 @@
 # Outcome-Driven Contract Verification — Rationale & History
 
-**Status:** Distributed. This document is now a historical / rationale record.
+**Status:** Distributed. This document is a rationale / decision record. Operational rules live in `.claude/agents/zk-spec-author.md`, `.claude/agents/zk-theme-evaluator.md`, `.claude/skills/zk-component-rules/authoring/contract-tiers.md`, `doc/orchestrator-playbook.md`, and `scripts/eval-sanity-tier.js`.
 **Authored:** 2026-06-02 (proposal); distributed into operational artifacts 2026-06-03.
 **Supersedes:** `iceblue-selector-coverage-proposal.md` (deleted — bottom-up coverage was the wrong frame).
 
-> The active spec for each behavior described here lives in the agents and skill files listed under "Where the content lives now". If you are an agent or human reader looking for the **rules**, read those files. This file exists to explain **why** the architecture is shaped the way it is.
+> This file exists to explain **why** the architecture is shaped the way it is. For the active rules, read the files listed above.
 
 ---
 
@@ -43,34 +43,13 @@ pass condition = all N rows match
 
 `contract-tiers.md` already names this: *"if a structural rules file only lists DOM/state/composition, evaluator can only verify A + D — this is the current gap."* Marble's contracts were ~95% D-tier (token-bound).
 
-**The fix is not "raise selector coverage."** Selector coverage is bottom-up — it can only ever sharpen what's already on the checklist. The needed shift is **top-down: assert page-level outcomes first, derive selector rows downstream.**
+**The fix is not "raise selector coverage."** Selector coverage is bottom-up — it can only ever sharpen what's already on the checklist. The needed shift was **top-down: assert page-level outcomes first, derive selector rows downstream.**
 
 ---
 
-## 3. The five approaches (and where each lives now)
+## 3. Pilot results — goldenlayout (2026-06-02 to 2026-06-03)
 
-| # | Approach | Where it lives now |
-|---|---|---|
-| §1 | Outcome-first contract sections (`## Outcome assertions` M-row table) | `.claude/agents/zk-spec-author.md` Step 6 (template) and `.claude/skills/zk-component-rules/authoring/contract-tiers.md` Section M (predicate class) |
-| §2 | Side-by-side render diff (mockup gets a job) — **replaced by** AI visual review per §3d below; mockup decision rule narrows mockup workload | `.claude/agents/zk-spec-author.md` Step 6.5 (mockup decision: Y / N / declare) |
-| §3 | Universal sanity tier | `scripts/eval-sanity-tier.js` + `.claude/agents/zk-theme-evaluator.md` §3c |
-| §3d | AI visual review (added 2026-06-03 in place of SSIM render-diff — same purpose, simpler implementation) | `.claude/agents/zk-theme-evaluator.md` §3d; `doc/orchestrator-playbook.md` Step 4 (`VERIFIED_WITH_VISUAL_NOTES` triage) |
-| §4 | Backfill B/C predicates to skill layer | Ongoing; per-component as Wave migrations land |
-| §5 | LLM-derived assertions from prose | **Not implemented** — deferred until manual M-row authoring cost becomes a bottleneck |
-
----
-
-## 4. Per-component rollout — where progress is tracked
-
-- **Registry:** `tasks/outcome-migration-status.md` — one row per component with `visual-goal / outcome-rows / sanity-pass / outcome-pass / legacy-pass / mockup / migrated` columns. Source of truth for "which components have been migrated to outcome-driven verification."
-- **Append-only log:** `tasks/outcome-migration-log.jsonl` — one line per Evaluator dispatch. Records the M-row pass/fail vector and AI visual finding count. Use this for trend analysis.
-- **Wave plan:** see `tasks/outcome-migration-status.md` "Wave schedule" table. Five waves grouped by tier (T3 + EE → layout primitives → data-rich → inputs → misc/stubs).
-
----
-
-## 5. Pilot results — goldenlayout (2026-06-02 to 2026-06-03)
-
-Pilot ran through iter-1 to iter-12 against this architecture. Final state: `VERIFIED_WITH_ESCALATION` (12/13 outcome rows pass + 0 advisory findings + all D-tier pass; M11 escalated to `tasks/library-config-issues.md` as a ZK widget JS issue, non-blocking).
+Pilot ran iter-1 to iter-12 against this architecture. Final state: `VERIFIED_WITH_ESCALATION` (12/13 outcome rows pass + 0 advisory findings + all D-tier pass; M11 escalated to `tasks/library-config-issues.md` as a ZK widget JS issue, non-blocking).
 
 Key validations of the architecture from this run:
 
@@ -81,27 +60,13 @@ Key validations of the architecture from this run:
 
 ---
 
-## 6. Open decisions — resolution log
+## 4. Open decisions — resolution log
 
 | # | Question (2026-06-02) | Resolution (2026-06-03) |
 |---|---|---|
 | 1 | Keep `iceblue mining` workflow as-is for skill files? | YES. Kept. Outcome-driven is contract-layer; skill mining still feeds B/C predicates per `contract-tiers.md`. |
 | 2 | Minimum outcome-row count? | Wave-driven minimums set in `zk-spec-author.md` Step 6 (Wave 1 ≥ 6, Wave 2 ≥ 5, Wave 3 ≥ 4, Wave 4 ≥ 2, Wave 5 ≥ 0 with `visual-goal: trivial` declaration). |
-| 3 | SSIM threshold for §2 render-diff? | OBSOLETED by §3d AI visual review. SSIM never implemented. AI vision via multimodal `Read` proved cheaper and more flexible. |
+| 3 | SSIM threshold for §2 render-diff? | OBSOLETED by AI visual review (`zk-theme-evaluator.md` §3d). SSIM never implemented. AI vision via multimodal `Read` proved cheaper and more flexible — no threshold tuning, finds emergent issues (icon-below-label, viewport clipping) that pixel-diff would have missed or false-positived on. |
 | 4 | Who runs Wave 1 spec-author re-runs? | One orchestrator session per component. Goldenlayout was the live pilot. |
-| 5 | Does §3 sanity tier run on all components every dispatch? | All. Cheap; catches sibling-generator collateral. |
+| 5 | Does the sanity tier run on all components every dispatch? | All. Cheap; catches sibling-generator collateral. |
 | 6 | Where do outcome-pass results live? | Eval-report (existing) + single-line append to `tasks/outcome-migration-log.jsonl` (active). |
-
----
-
-## 7. Migration playbook — for the next person doing a Wave 1 component (portallayout next)
-
-1. Run `zk-spec-author <comp>`. The agent's Step 6 now includes the `## Outcome assertions` template + Wave minimum row count.
-2. Step 6.5 decides `mockup-needed: Y | N` per the ZKDoc-image rule.
-3. The user approves the contract (flips `contract-approved: true`).
-4. Orchestrator dispatches `zk-theme-evaluator` — §3a captures `page.gif`, §3b measures M-rows + D-rows, §3d runs AI visual review against the screenshot.
-5. Triage per `doc/orchestrator-playbook.md` Step 4. AI findings either get promoted to new M-rows (next iter catches geometrically) or accepted as false positives.
-6. Generator iterates until VERIFIED or terminal (STALLED / OSCILLATING / ESCALATED_*).
-7. Append result to `tasks/outcome-migration-log.jsonl`; update `tasks/outcome-migration-status.md` row.
-
-Estimated pilot effort: 1–2 hours end-to-end per Wave 1 / Wave 2 component once the spec-author is run with the new template.

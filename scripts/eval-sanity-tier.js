@@ -1,7 +1,8 @@
 /**
  * Universal Sanity Tier — outcome-level health checks that run on every
  * Evaluator dispatch regardless of contract.  See
- * tasks/outcome-driven-verification-proposal.md §3.
+ * .claude/agents/zk-theme-evaluator.md §3c (active spec) and
+ * tasks/outcome-driven-verification-proposal.md (rationale).
  *
  * Usage in a browser page (via mcp__claude-in-chrome__javascript_tool):
  *
