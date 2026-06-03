@@ -59,10 +59,10 @@ public class UseCaseVM {
             PAGE_TO_NAV.put(p, "Media & Upload");
         }
         for (String p : new String[]{
-                "usecase/utility/colors", "usecase/utility/typography",
-                "usecase/utility/spacing", "usecase/utility/stack",
-                "usecase/utility/layout", "usecase/utility/borders",
-                "usecase/utility/elevation", "usecase/utility/components"}) {
+                "utility/colors", "utility/typography",
+                "utility/spacing", "utility/stack",
+                "utility/layout", "utility/borders",
+                "utility/elevation", "utility/components"}) {
             PAGE_TO_NAV.put(p, "Utility CSS");
         }
     }
