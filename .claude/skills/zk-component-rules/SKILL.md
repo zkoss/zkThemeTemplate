@@ -1,0 +1,131 @@
+---
+name: zk-component-rules
+description: Use when implementing or verifying CSS for any ZK Framework component. Documents ZK's component characteristics, DOM structure, state-handling mechanics, attribute support, CSS file bundling, and quirks — independent of any specific theme. Theme-builders for ZK (Material, Sapphire, custom corporate themes) consult this skill to learn what ZK renders before deciding how it should look. Excludes theme-specific values (colors, spacing, tokens) by design.
+---
+
+# ZK Component Rules
+
+You are reading the index of a knowledge base about **how ZK Framework components actually render and behave**. Theme values (colors, sizes, tokens) live in `doc/DESIGN.md` or per-theme references — this skill never repeats them.
+
+## When to use
+
+Invoke this skill whenever you are about to:
+
+- Write or modify CSS for a ZK component
+- Verify a ZK component's computed styles match expected values
+- Decide a selector for a state (`disabled`, `readonly`, `invalid`, `inplace`, `:hover`, etc.)
+- Choose which CSS file to edit when components share a bundle
+- Build a preview/test page that exercises component states
+- Diagnose a styling regression that depends on DOM structure
+
+If the question is "what should this look like?" — that is a **theme** question; not in scope.
+If the question is "where does ZK put the class / what selector applies / what state classes does ZK emit" — that is a **component-rules** question; right place.
+
+## How to use
+
+1. **Read this index first.** It tells you which file covers what.
+2. **Load only the files you need** for the component or topic at hand. Each file is independently loadable; do not pre-load everything.
+3. **Treat rule files as authoritative.** If you find a contradiction with sub-agent prompts or scattered docs, the rule file wins (and please open an issue/PR to update both).
+
+## Authoring discipline
+
+Before writing or modifying any `components/<comp>.md` (or its companion `doc/contracts/<comp>.md`), read **`authoring/contract-tiers.md`**. It defines:
+
+- The two-tier contract model (this skill = theme-portable; `doc/contracts/` = theme-specific)
+- A/B/C/D predicate classification (Structural / Relational / State-differs / Token-bound)
+- What MUST refuse to enter a component-rules file (hex, tokens, design refs, "mirrors iceblue")
+- How to mine iceblue CSS as a structural-signal source without importing visual values (with path-search-then-ask fallback — iceblue CSS path is environment-dependent and must not be hardcoded)
+
+Both `zk-spec-author` (when authoring) and `zk-theme-evaluator` (when verifying) must follow this discipline.
+
+## Index
+
+### Cross-cutting reference (`reference/`)
+
+| File | Topic |
+|------|-------|
+| `reference/state-classes.md` | How ZK marks `disabled` / `readonly` / `invalid` — class-based vs attribute-based per component family |
+| `reference/inplace-state.md` | The `inplace` attribute: when ZK adds `.z-{comp}-inplace`, and the three CSS patterns (A: root-bordered, B: child-bordered, C: direct-input) |
+| `reference/buttonVisible-attribute.md` | Which input components support `buttonVisible="false"` and where ZK puts the resulting class |
+| `reference/focus-vs-focus-within.md` | Composite controls require `:focus-within`; CDP measurement caveat |
+| `reference/edition-availability.md` | Which components require PE / EE licensing and where they live (zkex.jar / zkmax.jar) |
+| `reference/css-file-bundling.md` | Shared `.css.dsp` outputs (e.g. `combo.css.dsp` covers 5 components) and delivery quirks (splitter merged into box, files missing from lang-addon.xml) |
+| `reference/zul-template-patterns.md` | `<apply templateURI>` shadow scoping, content-partial pattern, template name scoping |
+| `reference/inline-flex-overflow.md` | Why inline-flex ZK components overflow grid cells unless forced to `width: 100%` |
+| `reference/class-name-quirks.md` | Non-intuitive z-* class names (`.z-panelchildren`, `.z-row-content`, `.z-rating-icon`, `.z-progressmeter-image`, etc.) — guard against guessing |
+| `reference/preview-state-matrix.md` | Convention for preview pages: which states are columns, which are rows, what `—` means |
+| `reference/floating-popup-in-body.md` | ZK detaches popups (combobox/datebox/timebox/bandbox/chosenbox/cascader/menupopup…) to `<body>` at runtime, so percentage-based widths reference viewport — never `width: 100%` / `min-width: 100%` on the popup root |
+| `reference/css-dsp-pipeline.md` | Our build does not DSP-process `.css.dsp` — any `${…}` / `<%@ %>` in a source `.css` will silently delete the entire file from the WCS bundle. Use `/zkau/web/...` absolute URLs or data: URIs for image refs |
+| `reference/theme-override-is-replace.md` | When a theme provides a CSS at a stock widget's `<css-uri>` path, ZK serves only the theme version — the stock file is NOT loaded. Theme CSS must re-author every structural rule (positioning, orientation, geometry) the widget JS depends on; partial overrides silently break the widget |
+
+### Component-specific (`components/`)
+
+Load only the file for the component you are working on.
+
+| File | Components covered |
+|------|--------------------|
+| `components/bandbox.md` | bandbox (popup vs bandpopup, button class location) |
+| `components/borderlayout.md` | borderlayout (JS absolute-positioning engine, 5 regions, splitter bar + pill button DOM, collapsed placeholder, z-index map, do-not-flex rule) |
+| `components/button.md` | button (vertical orient via `<br/>`, `:has(br)` selector) |
+| `components/calendar.md` | calendar (z-calendar-today not on cells, cell-width arithmetic) |
+| `components/checkbox.md` | checkbox + 3 molds (checkbox, switch, toggle) — mold-prefixed state classes |
+| `components/chosenbox.md` | chosenbox (chip class = `.z-chosenbox-item`, EE-only) |
+| `components/colorbox.md` | colorbox (current swatch + button + popup w/ picker+palette, geometry-locked sprites, EE-only) |
+| `components/combobox.md` | combobox (split-border, comboitem variants) |
+| `components/combobutton.md` | combobutton (pointer-events: auto required for popup click) |
+| `components/combo-trio.md` | datebox + timebox + spinner (shared `.z-{c}-input` / `.z-{c}-button` pattern) |
+| `components/data-components.md` | grid + listbox + tree (z-*-odd preferred over nth-child, shared row-based structure) |
+| `components/groupbox.md` | groupbox (content area is `.z-groupbox-content`) |
+| `components/menubar.md` | menubar (`<ul><li>` wrapper structure) |
+| `components/organigram.md` | organigram (EE) — recursive `.z-orgchildren > .z-orgitem > .z-orgnode`, pseudo-element connector bus, `-close` not `-open`, `-non-selectable`, novel T2 |
+| `components/portallayout.md` | portallayout + portalchildren (EE) — transparent multi-column drag-drop shell, `.z-portalchildren-frame` titled column, counter badge, ghost/placeholder drag classes |
+| `components/panel.md` | panel (content wrapper is `.z-panelchildren`) |
+| `components/pdfviewer.md` | pdfviewer (EE) — T3 thin chrome over opaque PDF.js viewport, opacity-driven toolbar reveal, fullscreen pseudo-class |
+| `components/progressmeter.md` | progressmeter (fill is `.z-progressmeter-image`) |
+| `components/rating.md` | rating (`.z-rating-icon` not `-star`, orient="vertical") |
+| `components/searchbox.md` | searchbox (multi-select trigger + detached popup with search input + checkbox list, EE-only) |
+| `components/selectbox.md` | selectbox (native `<select>` element — popup options NOT styleable) |
+| `components/separator.md` | separator (transparent base, horizontal-bar variant) |
+| `components/signature.md` | signature (EE) — T3 two-canvas wrapper + absolute toolbar strip, native `<button>` tools (no ZK state classes), `.z-signature-toolbar-hide` toggle |
+| `components/slider.md` | slider (no disabled/invalid sclass, sphere/scale molds, multislider) |
+| `components/splitter.md` | splitter (cursor mode, ghost element, delivery merged into box.css) |
+| `components/stepbar.md` | stepbar + step (EE) — circle-marker + pseudo-element connector pattern, `.z-step-complete` not `-completed`, `.z-step-icon` not `-number` |
+| `components/tabbox.md` | tabbox (5 orientation classes including accordion) |
+| `components/tbeditor.md` | tbeditor (EE) — T3 chrome around Trumbowyg-injected DOM, prefix-namespaced classes (`z-tbeditor-*`), fullscreen body-attach |
+| `components/toast-notification.md` | toast / notification (9 position classes, severity classes) |
+| `components/toolbar.md` | toolbar (padding lives on `.z-toolbar-content`, not root) |
+| `components/window.md` | window (no `.z-window-title` element — plain text in header) |
+| `components/goldenlayout.md` | goldenlayout + goldenpanel (EE) — T3 dockable multi-pane layout, `.lm_*` selectors ARE styleable under `.z-goldenlayout` scope; NO forbidden-selectors on lm_* |
+| `components/a.md` | a / link (`.z-a`, `[disabled]` via CSS pointer-events) — stub |
+| `components/absolutelayout.md` | absolutelayout (JS positions children with `position: absolute`) — stub |
+| `components/anchorlayout.md` | anchorlayout (float-based children, `anchor=` width) — stub |
+| `components/caption.md` | caption (no `.z-caption-text` element — plain text) — stub |
+| `components/hlayout-vlayout.md` | hlayout / vlayout + hbox / vbox (`.z-hlayout-inner` wrapper) — stub |
+| `components/inputgroup.md` | inputgroup (`display: inline-flex` root, `.z-inputgroup-text`) — stub |
+| `components/paging.md` | paging (`.z-paging-previous` NOT `-prev` — naming trap) — stub |
+| `components/popup.md` | popup (generic floating container, JS-positioned) — stub |
+| `components/toolbarbutton.md` | toolbarbutton (`.z-toolbarbutton-checked`, CSS in `footer.css.dsp`) — stub |
+| `components/splitlayout.md` | splitlayout (EE) — T1 two-pane resizable container, cave-top/bottom/left/right, splitter bar with collapse button and three icon idiom, `--zk-splitter-*` legacy var mapping required |
+| `components/cropper.md` | cropper (EE) — T3 Jcrop-backed image cropper; only `.z-cropper` wrapper and `.z-cropper-toolbar` are theme-owned; `.z-cropper-canvas` does NOT exist (actual Jcrop holder is `.z-cropper-holder`); toolbar is JS-positioned and hidden at rest |
+
+## What this skill deliberately does NOT contain
+
+- Specific colors, hex values, rgba values
+- Token names (`--zk-*`, `--md-sys-*`)
+- Spacing scales, padding/margin values
+- Border widths, radius values, shadow specs
+- Transition durations, easing curves
+- Font sizes, weights, line-heights
+- MD3 / MUI / Mira / iceBlue / Sapphire references
+- Hover/focus opacity values
+
+Those belong in **theme** documentation (`doc/DESIGN.md` for the current theme). If a future theme is built on top of ZK, that theme has its own DESIGN.md; this skill stays the same.
+
+## How to add a new rule
+
+1. Decide: is the rule **a ZK property** (how the framework renders) or **a theme choice** (what looks good)?
+   - ZK property → goes here.
+   - Theme choice → goes in `doc/DESIGN.md`.
+2. Decide scope: cross-cutting → `reference/<topic>.md`; single component → `components/<name>.md`.
+3. Add the rule with a one-line statement plus a code example or selector snippet. Cite the source (component source file, official doc) so future maintainers can verify.
+4. Update this index if you added a new file.

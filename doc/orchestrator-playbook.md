@@ -103,9 +103,11 @@ For each Evaluator return:
 | Result | Action |
 |--------|--------|
 | `VERIFIED` | Mark done. Continue to next loop iteration. |
+| `VERIFIED_WITH_VISUAL_NOTES` | Measurement passed (`failing_set == []`) but §3d AI visual review surfaced ≥ 1 finding. Open the eval report's `## AI visual findings` table and inspect each row. For each HIGH/MEDIUM finding: decide one of (a) **Promote** — add a new outcome row or D-tier row to the contract that catches this visually, flip status to `RE_EVAL_NEEDED` (the new row exercises the next eval), and dispatch Generator if appropriate. (b) **Accept** — finding is a false positive (e.g. ZKDoc image style choice that Marble intentionally deviates from); flip status to plain `VERIFIED` and log the dismissal in eval-report under `## Findings accepted as false positive` for audit. The orchestrator never auto-promotes; this row requires explicit triage. LOW findings can be accepted in batch with a comment. |
 | `NEEDS_FIX` with no `TOKEN_FIX_REQUIRED` in Action-required | Queue for Generator (Step 5). |
 | `NEEDS_FIX` with `TOKEN_FIX_REQUIRED` | Append the component + check ids to `tasks/token-issues.md`. Flip status to `ESCALATED_TOKEN_FIX` in work-status.md. Generator is NOT dispatched. |
 | `NEEDS_FIX` with `LIBRARY_CONFIG_REQUIRED` (T3 only) | Append the component + check ids + reason to `tasks/library-config-issues.md`. Flip status to `ESCALATED_LIBRARY_CONFIG`. Generator is NOT dispatched (fix needs widget `.ts`/`.java` work, not CSS). |
+| `BLOCKED: missing-visual-artefact` | §3a post-condition failed — Evaluator could not capture any screenshot. Check that the preview app is reachable, the component's preview ZUL exists, and `gif_creator` is functional. Retry the Evaluator after fixing. This is rare but blocks ALL downstream eval steps including the AI visual review. |
 | `STALLED` / `OSCILLATING` | Append the component to `tasks/escalation.md` with the failure history. Stop loop iteration for this component; ask user before retrying. |
 | `EVALUATING_BLOCKED` | Preview app died mid-run. Stop the loop, alert user to restart. |
 

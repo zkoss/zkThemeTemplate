@@ -1,0 +1,132 @@
+/* MD3 Splitlayout — resizable two-pane container (EE only)
+   Root:      .z-splitlayout (white-space:nowrap, overflow:hidden)
+   Caves:     .z-splitlayout-cave-top/bottom (vertical) | -left/-right (horizontal)
+   Splitter:  .z-splitlayout-splitter[-vertical|-horizontal][-draggable|-nosplitter]
+   Button:    .z-splitlayout-splitter-button[.z-splitlayout-splitter-button-disabled]
+   Icons:     .z-splitlayout-splitter-icon (three <i> per button: drag / caret / drag) */
+
+/* ── Root container ──────────────────────────────────────────────────────── */
+/* Splitlayout JS adds `.z-flex` + `.z-flex-row` or `.z-flex-column` to root,
+   expecting `display: flex` on the wrapper. The theme's `.z-flex` utility was
+   renamed to `.z-d-flex`, leaving the JS-added class undefined — so the root
+   stayed `display: block` and caves collapsed to intrinsic content width.
+   Anchor `display: flex` to `.z-splitlayout` directly so the layout is
+   independent of utility-class naming drift. */
+.z-splitlayout {
+    display: flex;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+/* orient="horizontal" — JS adds .z-flex-row */
+.z-splitlayout.z-flex-row,
+.z-splitlayout:not(.z-flex-column) {
+    flex-direction: row;
+}
+
+/* orient="vertical" — JS adds .z-flex-column */
+.z-splitlayout.z-flex-column {
+    flex-direction: column;
+}
+
+/* ── Cave areas ───────────────────────────────────────────────────────────── */
+/* All caves are flex items that grow to fill available main-axis space.
+   flex: 1 1 0 with min-width/min-height: 0 lets caves shrink below their
+   intrinsic content size; JS may set explicit inline width/height when the
+   user drags the splitter — flex-basis: 0 ensures the initial 50/50 split is
+   honored regardless of inline values from JS. */
+.z-splitlayout-cave-top,
+.z-splitlayout-cave-bottom,
+.z-splitlayout-cave-left,
+.z-splitlayout-cave-right {
+    flex: 1 1 0;
+    position: relative;
+    overflow: hidden;
+    min-width: 0;
+    min-height: 0;
+}
+
+/* ── Splitter bar — base ─────────────────────────────────────────────────── */
+/* position:relative makes the bar a positioning context for its <i> icons.
+   background-color uses surface-container so the bar recedes at rest.
+   border draws the 1px divider line (outline-variant = subtle grey).
+   cursor:default on bare bar (draggable modifier overrides below).
+   transition animates hover tint smoothly. */
+.z-splitlayout-splitter {
+    position: relative;
+    flex: 0 0 auto;
+    background-color: var(--zk-color-surface-container);
+    border: 1px solid var(--zk-color-outline-variant);
+    cursor: default;
+    box-sizing: border-box;
+    transition: background-color var(--zk-motion-duration-short3);
+}
+
+/* ── Splitter bar — vertical orient (horizontal dividing bar) ────────────── */
+/* Vertical orient = top/bottom caves — the splitter bar spans full width via
+   flex stretch (cross-axis), 8px tall on the main axis. */
+.z-splitlayout-splitter-vertical {
+    height: var(--zk-spacing-2);
+    width: auto;
+}
+
+/* ── Splitter bar — horizontal orient (vertical dividing bar) ────────────── */
+/* Horizontal orient = left/right caves — splitter is 8px wide, full height
+   via flex stretch. */
+.z-splitlayout-splitter-horizontal {
+    width: var(--zk-spacing-2);
+    height: auto;
+}
+
+/* ── Draggable cursor overrides ──────────────────────────────────────────── */
+.z-splitlayout-splitter-draggable.z-splitlayout-splitter-horizontal {
+    cursor: col-resize;
+}
+
+.z-splitlayout-splitter-draggable.z-splitlayout-splitter-vertical {
+    cursor: row-resize;
+}
+
+/* ── Non-resizable (nosplitter) ──────────────────────────────────────────── */
+.z-splitlayout-splitter-nosplitter {
+    cursor: default;
+}
+
+/* ── Hover state ─────────────────────────────────────────────────────────── */
+.z-splitlayout-splitter:hover {
+    background-color: color-mix(in srgb, var(--zk-color-primary) calc(var(--zk-state-hover-opacity) * 100%), var(--zk-color-surface-container));
+}
+
+.z-splitlayout-splitter:hover .z-splitlayout-splitter-button {
+    color: var(--zk-color-primary);
+}
+
+/* ── Collapse button ─────────────────────────────────────────────────────── */
+/* Centered in the splitter bar; cursor:pointer when active (not disabled).
+   position:relative ensures the three <i> icons can be positioned within it.
+   Disabled variant suppresses the cursor affordance. */
+.z-splitlayout-splitter-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--zk-color-on-surface-variant);
+    cursor: pointer;
+    transition: color var(--zk-motion-duration-short3);
+}
+
+.z-splitlayout-splitter-button-disabled {
+    cursor: default;
+}
+
+/* ── Splitter icons ──────────────────────────────────────────────────────── */
+/* Icons use the shared z-icon-* pattern; no sizing needed here (inherits from
+   the icon CSS layer in norm.css.dsp). */
+.z-splitlayout-splitter-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}

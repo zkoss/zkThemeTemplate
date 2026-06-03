@@ -6,8 +6,24 @@ target/
 temp
 .agent
 .agents
-.claude
+
+# Claude Code — track design artifacts (agents, skills); ignore runtime state
+.claude/agent-memory/
+.claude/worktrees/
+.claude/scheduled_tasks.lock
+.claude/settings.local.json
+
 doc/completed
 doc/mira
 doc/mira-reports
-tasks
+
+# Task tracking — track design artifacts (proposal, escalations, registry);
+# ignore runtime state (work-status, eval/gen reports, append-only logs, scratch)
+tasks/work-status.md
+tasks/eval-reports/
+tasks/gen-reports/
+tasks/outcome-migration-log.jsonl
+tasks/todo.md
+tasks/prompt.md
+tasks/prompt2.md
+tasks/scrape_mira.py

@@ -81,6 +81,7 @@ Outcome-level predicates that gate `VERIFIED`: failing any row blocks VERIFIED e
 | M10 | every visible `.lm_tab.lm_active` has a generated `::after` pseudo-element whose computed `background-color` equals (or color-mix-derives from) `var(--zk-color-primary)`, AND whose `height` is `2px` ± 0.5px | active-tab underline indicator (MUI Tabs convention) is actually rendered, not just declared |
 | M11 | when `areas` is set on the preview goldenlayout (`AAB / AAB / CCD`), the bbox width of panel-A's stack is `≥ 1.6× AND ≤ 2.4×` panel-B's stack width AND the AB-row height is `≥ 1.6× AND ≤ 2.4×` the CD-row height | the areas-grid attribute is honored — flex ratios from area counts produce the documented layout |
 | M12 | every visible `.lm_splitter` has bbox.width > 0 AND bbox.height > 0 (it is not collapsed to 0) AND its `::before` (or first child) renders a non-zero-bbox handle marker | splitter is visible AND has the dot-handle (`⁞`) marker shown in the ZKDoc reference image |
+| M13 | within every `.lm_header`, the `.lm_controls` cluster sits on the **same horizontal row as the tabs**: `lm_controls.bbox.top` is within `±4px` of the first visible `.lm_tab`'s bbox.top AND `lm_controls.bbox.bottom` is within `±4px` of that tab's bbox.bottom AND `.lm_header.bbox.height ≤ 48px` (single-row header). | Promoted from §3d AI visual finding 2026-06-03 iter-11: M9 geometry passed but icons rendered on a SECOND row below the tab strip because `.lm_header` lacked `display:flex; align-items:center`. M9 only checks X-axis right-anchoring; M13 adds the Y-axis "same row" assertion that M9 was missing. |
 
 ### Evaluation notes
 - M1 inverts the previous "outer wrapper card" assumption. Existing `wrap-1`..`wrap-3` rows (border / corner-large / elevation on `.z-goldenlayout`) now contradict M1 — they should be REMOVED from the Expected values table in the next CSS iteration. The card visual moves to `.z-goldenpanel` (already covered by `panel-1`..`panel-4`; needs an additional `box-shadow: var(--zk-elevation-1)` row on `.z-goldenpanel` to match the ZKDoc image's per-panel framing).
@@ -92,20 +93,24 @@ Outcome-level predicates that gate `VERIFIED`: failing any row blocks VERIFIED e
 
 ## Expected values
 
+> wrap-1, wrap-2, wrap-3 removed 2026-06-03: the outer-card pattern (border / corner-large / elevation on `.z-goldenlayout`) was wrong — the wrapper is a transparent layout container. Per-panel framing moved to `.z-goldenpanel` (see panel-shadow-1, panel-top-radius-1, panel-top-radius-2 rows below). hdr-3, hdr-4 updated: corner-large → corner-small to match the panel card's top corners.
+
 | id | selector | property | expected (token preferred) | source |
 |----|----------|----------|----------------------------|--------|
-| wrap-1 | `.z-goldenlayout` | border | `1px solid var(--zk-color-outline-variant)` | DESIGN.md §3 (iceblue uses #d2d2d2 ≈ outline-variant) |
-| wrap-2 | `.z-goldenlayout` | border-radius | `var(--zk-shape-corner-large)` | DESIGN.md §6 (iceblue: 6px corner; Marble maps to corner-large 16px for card) |
-| wrap-3 | `.z-goldenlayout` | box-shadow | `var(--zk-elevation-1)` | DESIGN.md §6 |
-| wrap-4 | `.z-goldenlayout` | background-color | `var(--zk-color-surface)` | DESIGN.md §3 |
-| wrap-5 | `.z-goldenlayout` | overflow | `hidden` | structural (clips children to border-radius) |
+| wrap-4 | `.z-goldenlayout` | background-color | `transparent` | revised 2026-06-03 — wrapper is a layout container, no fill |
+| wrap-5 | `.z-goldenlayout` | overflow | `visible` | revised 2026-06-03 — per-panel cards handle their own clipping |
 | hdr-1 | `.z-goldenlayout .lm_header` | background-color | `var(--zk-color-surface-container)` | DESIGN.md §3 (iceblue: colorBackground3 = #fff; Marble uses surface-container for visible strip) |
 | hdr-2 | `.z-goldenlayout .lm_header` | border-bottom | `1px solid var(--zk-color-outline-variant)` | DESIGN.md §3 |
-| hdr-3 | `.z-goldenlayout .lm_header` | border-top-left-radius | `var(--zk-shape-corner-large)` | DESIGN.md §6 (top corners only — bottom edge is content area) |
-| hdr-4 | `.z-goldenlayout .lm_header` | border-top-right-radius | `var(--zk-shape-corner-large)` | DESIGN.md §6 |
+| hdr-3 | `.z-goldenlayout .lm_header` | border-top-left-radius | `var(--zk-shape-corner-small)` | revised 2026-06-03 — matches panel card top-corner radius (corner-small = 8px) |
+| hdr-4 | `.z-goldenlayout .lm_header` | border-top-right-radius | `var(--zk-shape-corner-small)` | revised 2026-06-03 — matches panel card top-corner radius (corner-small = 8px) |
 | hdr-5 | `.z-goldenlayout .lm_header` | min-height | `44px` | structural — JS reads this at bind_ to set config.dimensions.headerHeight; must not change after theme is set |
 | hdr-6 | `.z-goldenlayout .lm_header` | overflow | `hidden` | structural |
 | hdr-7 | `.z-goldenlayout .lm_header` | font-size | `var(--zk-typescale-body-medium-size)` | DESIGN.md §4 |
+| hdr-flex-1 | `.z-goldenlayout .lm_header` | display | `flex` | structural — enables tab strip + controls to co-exist on one row (added 2026-06-03 iter-11 fix) |
+| hdr-flex-2 | `.z-goldenlayout .lm_header` | flex-direction | `row` | structural — horizontal layout for tabs + controls (added 2026-06-03 iter-11 fix) |
+| hdr-flex-3 | `.z-goldenlayout .lm_header` | align-items | `center` | structural — vertically centers tabs and icons in header strip (added 2026-06-03 iter-11 fix) |
+| hdr-tabs-flex | `.z-goldenlayout .lm_tabs` | flex | `1 1 auto` | structural — tabs expand to fill remaining row width, pushing controls to right edge (added 2026-06-03 iter-11 fix) |
+| hdr-controls-flex | `.z-goldenlayout .lm_controls` | flex | `0 0 auto` | structural — controls cluster fixed-size, right-anchored (added 2026-06-03 iter-11 fix) |
 | tab-1 | `.z-goldenlayout .lm_tab` | color | `var(--zk-color-on-surface-variant)` | DESIGN.md §3 (iceblue: textColorLight = rgba(0,0,0,0.57)) |
 | tab-2 | `.z-goldenlayout .lm_tab` | padding | `var(--zk-spacing-3) var(--zk-spacing-4)` | DESIGN.md §5 (iceblue: 11px 15px — approximate to spacing-3/spacing-4) |
 | tab-3 | `.z-goldenlayout .lm_tab` | cursor | `pointer` | usability |
@@ -133,8 +138,11 @@ Outcome-level predicates that gate `VERIFIED`: failing any row blocks VERIFIED e
 | spl-3 | `.z-goldenlayout .lm_splitter.lm_dragging` | background-color | `var(--zk-color-outline-variant)` | DESIGN.md §3 (iceblue: colorGreyLight) |
 | panel-1 | `.z-goldenpanel` | background-color | `var(--zk-color-surface)` | DESIGN.md §3 (iceblue: colorBackground3 = white) |
 | panel-2 | `.z-goldenpanel` | border | `1px solid var(--zk-color-outline-variant)` | DESIGN.md §3 (iceblue: goldenLayoutBorderColor = #d2d2d2 → outline-variant) |
-| panel-3 | `.z-goldenpanel` | border-bottom-left-radius | `var(--zk-shape-corner-large)` | DESIGN.md §6 (bottom corners only) |
+| panel-top-radius-1 | `.z-goldenpanel` | border-top-left-radius | `var(--zk-shape-corner-small)` | added 2026-06-03 — full 4-corner card; top corners match .lm_header top radius |
+| panel-top-radius-2 | `.z-goldenpanel` | border-top-right-radius | `var(--zk-shape-corner-small)` | added 2026-06-03 — full 4-corner card; top corners match .lm_header top radius |
+| panel-3 | `.z-goldenpanel` | border-bottom-left-radius | `var(--zk-shape-corner-large)` | DESIGN.md §6 (bottom corners — larger radius for visual weight) |
 | panel-4 | `.z-goldenpanel` | border-bottom-right-radius | `var(--zk-shape-corner-large)` | DESIGN.md §6 |
+| panel-shadow-1 | `.z-goldenpanel` | box-shadow | `var(--zk-elevation-1)` | added 2026-06-03 — per-panel card elevation (moved from outer wrapper) |
 | panel-5 | `.z-goldenpanel` | padding | `var(--zk-spacing-5) var(--zk-spacing-4)` | DESIGN.md §5 (iceblue: 20px 16px) |
 | panel-6 | `.z-goldenpanel` | overflow | `auto` | structural (content scroll) |
 | panel-7 | `.z-goldenpanel` | box-sizing | `border-box` | structural |
@@ -157,8 +165,10 @@ Outcome-level predicates that gate `VERIFIED`: failing any row blocks VERIFIED e
 
 | state | selector | property ids |
 |-------|----------|--------------|
-| wrapper default | `.z-goldenlayout` | wrap-1, wrap-2, wrap-3, wrap-4, wrap-5 |
-| header strip | `.z-goldenlayout .lm_header` | hdr-1, hdr-2, hdr-3, hdr-4, hdr-5, hdr-6, hdr-7 |
+| wrapper default | `.z-goldenlayout` | wrap-4, wrap-5 |
+| header strip | `.z-goldenlayout .lm_header` | hdr-1, hdr-2, hdr-3, hdr-4, hdr-5, hdr-6, hdr-7, hdr-flex-1, hdr-flex-2, hdr-flex-3 |
+| tab strip flex | `.z-goldenlayout .lm_tabs` | hdr-tabs-flex |
+| header controls flex | `.z-goldenlayout .lm_controls` | hdr-controls-flex |
 | tab default | `.z-goldenlayout .lm_tab` | tab-1, tab-2, tab-3, tab-4, tab-5 |
 | tab hover | `.z-goldenlayout .lm_tab:hover` | tab-h1, tab-h2, tab-h3, tab-h4 |
 | tab active | `.z-goldenlayout .lm_tab.lm_active` | tab-a1, tab-a2, tab-a3, tab-a4, tab-a5, tab-a6, tab-a7, tab-a8 |
@@ -169,7 +179,7 @@ Outcome-level predicates that gate `VERIFIED`: failing any row blocks VERIFIED e
 | splitter default | `.z-goldenlayout .lm_splitter` | spl-1 |
 | splitter hover | `.z-goldenlayout .lm_splitter:hover` | spl-2 |
 | splitter dragging | `.z-goldenlayout .lm_splitter.lm_dragging` | spl-3 |
-| panel content | `.z-goldenpanel` | panel-1, panel-2, panel-3, panel-4, panel-5, panel-6, panel-7 |
+| panel content | `.z-goldenpanel` | panel-1, panel-2, panel-top-radius-1, panel-top-radius-2, panel-3, panel-4, panel-shadow-1, panel-5, panel-6, panel-7 |
 | maximised stack | `.z-goldenlayout .lm_maximised` | max-1 |
 | drag proxy tab | `.z-goldenlayout-dragProxy .lm_tab` | proxy-1, proxy-2, proxy-3 |
 | drag proxy content | `.z-goldenlayout-dragProxy > .lm_content` | proxy-4, proxy-5 |

@@ -1,5 +1,284 @@
+/* ── GoldenLayout wrapper ──────────────────────────────────────────────── */
+/* Transparent layout container — no outer card framing. Per-panel cards
+   (.z-goldenpanel) carry the visual border + shadow individually. */
 .z-goldenlayout {
-    border-radius: var(--zk-shape-card);
-    box-shadow: var(--zk-elevation-card);
+    position: relative;
+    background-color: transparent;
     overflow: hidden;
+    min-height: 0;
+    max-height: 100%;
+    box-sizing: border-box;
+}
+
+/* ── GoldenLayout structural layout ────────────────────────────────────── */
+/* GoldenLayout 2.x relies on CSS flexbox for its row/column/stack composition.
+   The library does NOT bundle these structural rules — they must be provided
+   by the theme. Without them, all .lm_item siblings collapse to block-level
+   stacking and the dockable layout never engages. */
+.z-goldenlayout .lm_goldenlayout {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    min-width: 0;
+}
+.z-goldenlayout .lm_item.lm_row {
+    display: flex;
+    flex-direction: row;
+    min-height: 0;
+    min-width: 0;
+}
+.z-goldenlayout .lm_item.lm_column {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    min-width: 0;
+}
+.z-goldenlayout .lm_item.lm_stack {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    min-height: 0;
+    min-width: 0;
+}
+.z-goldenlayout .lm_items {
+    position: relative;
+    flex: 1 1 auto;
+    overflow: hidden;
+}
+.z-goldenlayout .lm_item_container {
+    position: absolute;
+    inset: 0;
+}
+.z-goldenlayout .lm_header {
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+/* ── Header strip (tab bar) ────────────────────────────────────────────── */
+.z-goldenlayout .lm_header {
+    background-color: var(--zk-color-surface-container);
+    border-bottom: 1px solid var(--zk-color-outline-variant);
+    border-top-left-radius: var(--zk-shape-corner-small);
+    border-top-right-radius: var(--zk-shape-corner-small);
+    min-height: 44px;
+    overflow: hidden;
+    font-size: var(--zk-typescale-body-medium-size);
+}
+
+/* ── List resets on GoldenLayout's UL containers ───────────────────────── */
+/* GoldenLayout renders .lm_tabs and .lm_controls as <ul><li> structures.
+   Without these resets, browser defaults (display:list-item, list-style:disc,
+   padding:0 0 0 40px, margin:13px 0) make tabs stack vertically with visible
+   bullet markers and indented offset — breaks the entire header layout. */
+.z-goldenlayout .lm_tabs,
+.z-goldenlayout .lm_controls {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: stretch;
+}
+
+/* lm_tabs expands to fill the header row; lm_controls stays fixed-size at right */
+.z-goldenlayout .lm_tabs {
+    flex: 1 1 auto;
+    overflow: hidden;
+}
+
+.z-goldenlayout .lm_controls {
+    flex: 0 0 auto;
+}
+
+/* ── Tab — default ─────────────────────────────────────────────────────── */
+.z-goldenlayout .lm_tab {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    position: relative;
+    color: var(--zk-color-on-surface-variant);
+    padding: var(--zk-spacing-3) var(--zk-spacing-4);
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: color var(--zk-motion-duration-short2) var(--zk-motion-easing-standard);
+}
+
+/* ── Tab — hover ───────────────────────────────────────────────────────── */
+.z-goldenlayout .lm_tab:hover {
+    color: var(--zk-color-on-surface);
+    border-color: var(--zk-color-outline-variant);
+    border-top-left-radius: var(--zk-shape-corner-small);
+    border-top-right-radius: var(--zk-shape-corner-small);
+}
+
+/* ── Tab — active ──────────────────────────────────────────────────────── */
+.z-goldenlayout .lm_tab.lm_active {
+    color: var(--zk-color-primary);
+    background-color: var(--zk-color-surface);
+    border-top-left-radius: var(--zk-shape-corner-small);
+    border-top-right-radius: var(--zk-shape-corner-small);
+}
+
+.z-goldenlayout .lm_tab.lm_active::after {
+    content: '';
+    display: block;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 2px;
+    background-color: var(--zk-color-primary);
+}
+
+/* ── Close icon on tab ─────────────────────────────────────────────────── */
+.z-goldenlayout .lm_close_tab {
+    color: var(--zk-color-on-surface-variant);
+}
+
+.z-goldenlayout .lm_close_tab:hover {
+    color: var(--zk-color-primary);
+}
+
+/* ── Header controls (maximize / close-stack icons) ───────────────────── */
+.z-goldenlayout .lm_controls {
+    gap: var(--zk-spacing-2);
+}
+
+.z-goldenlayout .lm_controls > li {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    color: var(--zk-color-on-surface-variant);
+    cursor: pointer;
+}
+
+.z-goldenlayout .lm_controls > li:hover {
+    color: var(--zk-color-primary);
+}
+
+/* Maximize icon — ↗ (U+2197 North East Arrow) */
+.z-goldenlayout .lm_controls .lm_maximise::after {
+    content: "\2197";
+    font-size: 14px;
+    line-height: 1;
+    display: block;
+}
+
+/* Close icon — × (U+00D7 Multiplication Sign) */
+.z-goldenlayout .lm_controls .lm_close::after {
+    content: "\00d7";
+    font-size: 16px;
+    line-height: 1;
+    display: block;
+}
+
+/* ── Splitter handle ───────────────────────────────────────────────────── */
+.z-goldenlayout .lm_splitter {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    transition: background-color var(--zk-motion-duration-short2) var(--zk-motion-easing-standard);
+}
+
+/* Dot-handle marker — ⋮ for vertical splitter, ⋯ for horizontal */
+.z-goldenlayout .lm_splitter.lm_vertical::before {
+    content: "\22EE";
+    color: var(--zk-color-on-surface-variant);
+    font-size: 12px;
+    line-height: 1;
+    opacity: 0.5;
+    transition: color var(--zk-motion-duration-short2) var(--zk-motion-easing-standard),
+                opacity var(--zk-motion-duration-short2) var(--zk-motion-easing-standard);
+}
+
+.z-goldenlayout .lm_splitter.lm_horizontal::before {
+    content: "\22EF";
+    color: var(--zk-color-on-surface-variant);
+    font-size: 12px;
+    line-height: 1;
+    opacity: 0.5;
+    transition: color var(--zk-motion-duration-short2) var(--zk-motion-easing-standard),
+                opacity var(--zk-motion-duration-short2) var(--zk-motion-easing-standard);
+}
+
+.z-goldenlayout .lm_splitter:hover {
+    background-color: var(--zk-color-primary-container);
+}
+
+.z-goldenlayout .lm_splitter:hover::before {
+    color: var(--zk-color-primary);
+    opacity: 1;
+}
+
+.z-goldenlayout .lm_splitter.lm_dragging {
+    background-color: var(--zk-color-outline-variant);
+}
+
+/* ── Panel content area ────────────────────────────────────────────────── */
+/* Each panel is a self-contained visual card: full 4-corner radius +
+   outline-variant border + elevation-1 shadow. The .lm_header (tab strip)
+   sits above .z-goldenpanel and uses matching corner-small top radius. */
+.z-goldenpanel {
+    background-color: var(--zk-color-surface);
+    border: 1px solid var(--zk-color-outline-variant);
+    border-top-left-radius: var(--zk-shape-corner-small);
+    border-top-right-radius: var(--zk-shape-corner-small);
+    border-bottom-left-radius: var(--zk-shape-corner-large);
+    border-bottom-right-radius: var(--zk-shape-corner-large);
+    box-shadow: var(--zk-elevation-1);
+    padding: var(--zk-spacing-5) var(--zk-spacing-4);
+    overflow: auto;
+    box-sizing: border-box;
+}
+
+/* ── Drag proxy (appears at document root during drag) ─────────────────── */
+.z-goldenlayout-dragProxy .lm_tab {
+    box-shadow: var(--zk-elevation-2);
+    background-color: var(--zk-color-surface-container);
+}
+
+.z-goldenlayout-dragProxy .lm_tab::after {
+    content: '';
+    display: block;
+    height: 2px;
+    background-color: var(--zk-color-primary);
+}
+
+.z-goldenlayout-dragProxy > .lm_content {
+    box-shadow: var(--zk-elevation-2);
+    background-color: var(--zk-color-surface);
+}
+
+/* ── Drop-target indicator ─────────────────────────────────────────────── */
+.z-goldenlayout-dropTargetIndicator {
+    border: 1px dashed var(--zk-color-primary);
+}
+
+.z-goldenlayout-dropTargetIndicator .lm_inner {
+    background-color: color-mix(in srgb, var(--zk-color-primary) 10%, transparent);
+}
+
+/* ── Overflow tab dropdown ─────────────────────────────────────────────── */
+.z-goldenlayout-dropdown {
+    background-color: var(--zk-color-surface);
+    box-shadow: var(--zk-elevation-2);
+    border-radius: var(--zk-shape-corner-small);
+    padding: var(--zk-spacing-1);
+}
+
+.z-goldenlayout-dropdown > li,
+.z-goldenlayout-dropdown > li.lm_tab {
+    padding: var(--zk-spacing-2) var(--zk-spacing-2);
+}
+
+.z-goldenlayout-dropdown > li:hover {
+    background-color: var(--zk-color-surface-container-high);
 }
