@@ -2,7 +2,7 @@
  * Universal Sanity Tier — outcome-level health checks that run on every
  * Evaluator dispatch regardless of contract.  See
  * .claude/agents/zk-theme-evaluator.md §3c (active spec) and
- * tasks/outcome-driven-verification-proposal.md (rationale).
+ * doc/verification-harness-decisions.md DR-1 (rationale).
  *
  * Usage in a browser page (via mcp__claude-in-chrome__javascript_tool):
  *
@@ -19,13 +19,17 @@
  * Returns:
  *   {
  *     results: {
- *       'collapsed-root':    {status: 'PASS'|'FAIL'|'SKIP', actual, reason},
- *       'text-collision':    {status, actual, reason, samples?},
- *       'child-overflow':    {status, actual, reason, samples?},
- *       'layout-not-engaged':{status, actual, reason}
+ *       'collapsed-root':           {status: 'PASS'|'FAIL'|'SKIP', actual, reason},
+ *       'text-collision':           {status, actual, reason, samples?},
+ *       'child-overflow':           {status, actual, reason, samples?},
+ *       'layout-not-engaged':       {status, actual, reason},
+ *       'card-clipped-by-viewport': {status, actual, reason, samples?}
  *     },
  *     allPass: boolean
  *   }
+ *
+ * Opt-in card selectors for 'card-clipped-by-viewport' via opts.cardSelectors
+ * (array of strings). When omitted, the check is SKIPPED.
  *
  * The script is intentionally self-contained (no imports), short, and
  * pure-read — never mutates the DOM.
@@ -129,6 +133,46 @@
     return { status: 'PASS', actual: '0 overflows', reason: '' };
   }
 
+  // For each selector in opts.cardSelectors, every matching element must have
+  // its bbox.bottom/right within (root.bbox.bottom/right + tolerance). Catches
+  // the "border declared but bottom edge clipped by parent viewport" bug class.
+  function check_cardClippedByViewport(root, opts) {
+    if (!opts.cardSelectors || !opts.cardSelectors.length) {
+      return { status: 'SKIP', reason: 'no cardSelectors provided' };
+    }
+    const rb = bbox(root);
+    const tol = opts.cardClipTolerancePx;
+    const samples = [];
+    for (const sel of opts.cardSelectors) {
+      let matches;
+      try { matches = root.querySelectorAll(sel); } catch (e) {
+        samples.push({ sel, error: 'invalid selector: ' + e.message });
+        continue;
+      }
+      for (const el of matches) {
+        if (!isVisible(el)) continue;
+        const cb = bbox(el);
+        const clipBottom = cb.bottom - (rb.bottom + tol);
+        const clipRight  = cb.right  - (rb.right  + tol);
+        if (clipBottom > 0 || clipRight > 0) {
+          samples.push({
+            sel: cssPath(el),
+            clipBottom: clipBottom > 0 ? Math.round(clipBottom) + 'px' : null,
+            clipRight:  clipRight  > 0 ? Math.round(clipRight)  + 'px' : null,
+            rootBbox: { right: Math.round(rb.right), bottom: Math.round(rb.bottom) },
+            cardBbox: { right: Math.round(cb.right), bottom: Math.round(cb.bottom) }
+          });
+          if (samples.length >= 5) break;
+        }
+      }
+      if (samples.length >= 5) break;
+    }
+    if (samples.length) {
+      return { status: 'FAIL', actual: `${samples.length}+ cards clipped`, reason: 'card-class element extends past root bbox (its bottom/right edge is off-frame)', samples };
+    }
+    return { status: 'PASS', actual: '0 cards clipped', reason: '' };
+  }
+
   function check_layoutNotEngaged(root, opts) {
     // Heuristic: if root or a major child uses display: flex/grid AND the
     // children have a vertical-axis range > 8px when they should be horizontal
@@ -182,13 +226,16 @@
       isLayoutComponent: opts.isLayoutComponent !== false,
       minLayoutHeight: opts.minLayoutHeight || 50,
       overlapTolerancePx: opts.overlapTolerancePx ?? 1,
-      overflowTolerancePx: opts.overflowTolerancePx ?? 2
+      overflowTolerancePx: opts.overflowTolerancePx ?? 2,
+      cardSelectors: opts.cardSelectors || null,
+      cardClipTolerancePx: opts.cardClipTolerancePx ?? 1
     };
     const results = {
-      'collapsed-root':     check_collapsedRoot(root, cfg),
-      'text-collision':     check_textCollision(root, cfg),
-      'child-overflow':     check_childOverflow(root, cfg),
-      'layout-not-engaged': check_layoutNotEngaged(root, cfg)
+      'collapsed-root':           check_collapsedRoot(root, cfg),
+      'text-collision':           check_textCollision(root, cfg),
+      'child-overflow':           check_childOverflow(root, cfg),
+      'layout-not-engaged':       check_layoutNotEngaged(root, cfg),
+      'card-clipped-by-viewport': check_cardClippedByViewport(root, cfg)
     };
     const allPass = Object.values(results).every(r => r.status === 'PASS' || r.status === 'SKIP');
     return { rootSelector, config: cfg, results, allPass };

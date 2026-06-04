@@ -131,7 +131,7 @@ mkdir -p doc/screenshots/<component>
 
 ---
 
-### 3a. Capture visual artefacts (MANDATORY — post-condition enforced)
+### 3a. Capture visual artefacts (MANDATORY — post-condition enforced + ready-state gated)
 
 Capture screenshots **before** running any CSS measurement. These artefacts feed two consumers:
 1. **§3d AI visual review** — you read them back via the `Read` tool to spot obvious visible violations (icons in wrong place, missing borders, things misaligned) that geometry checks can miss.
@@ -139,7 +139,55 @@ Capture screenshots **before** running any CSS measurement. These artefacts feed
 
 **Pre-condition:** `mkdir -p doc/screenshots/<component>` has run (Step 3).
 
+#### Ready-state gate (MANDATORY before any capture)
+
+A screenshot of a half-rendered page is worse than no screenshot — it makes §3d AI visual review confidently wrong (false negatives on missing elements; false positives on "blank page"). Before any `gif_creator` / `upload_image` call, the page MUST satisfy ALL FOUR conditions below. Use `mcp__claude-in-chrome__javascript_tool`:
+
+```js
+// Returns {ready: true} only when every condition holds.
+(() => {
+  // 1. Document is fully loaded (HTML parse + subresources done)
+  if (document.readyState !== 'complete') return {ready: false, reason: 'readyState=' + document.readyState};
+
+  // 2. The component root exists AND has a non-trivial bbox
+  //    Pass the wrapper selector for this component (e.g. '.z-goldenlayout', '.z-grid').
+  const root = document.querySelector(WRAPPER_SELECTOR);
+  if (!root) return {ready: false, reason: 'wrapper selector matched no element'};
+  const rb = root.getBoundingClientRect();
+  if (rb.width < 100 || rb.height < 40) {
+    return {ready: false, reason: `root bbox too small: ${Math.round(rb.width)}x${Math.round(rb.height)}`};
+  }
+
+  // 3. No visible loading / progress indicators on the page
+  const loaders = [...document.querySelectorAll(
+    '.z-loading, .z-progressmeter, .z-busy, [class*="loading"]:not([style*="display: none"])'
+  )].filter(el => {
+    const cs = getComputedStyle(el);
+    return cs.display !== 'none' && cs.visibility !== 'hidden';
+  });
+  if (loaders.length) {
+    return {ready: false, reason: `${loaders.length} visible loading indicator(s): ` + loaders.slice(0,3).map(e => e.className).join(', ')};
+  }
+
+  // 4. ZK's Au request queue is idle (no pending server round-trips)
+  if (typeof window.zAu === 'object' && typeof window.zAu.processing === 'function' && window.zAu.processing()) {
+    return {ready: false, reason: 'zAu.processing() is true (pending Au request)'};
+  }
+
+  return {ready: true};
+})();
+```
+
+**Retry protocol** — if `ready === false`, wait 500ms and re-evaluate. **Up to 3 retries (max ~2 seconds total)**. If still not ready after retry 3, do NOT capture the screenshot:
+1. Set status `BLOCKED: page-not-ready`.
+2. Write the eval-report stub with the final `reason` payload.
+3. STOP. Do not run §3b/§3c/§3d.
+
+For T3 layout components with no `.pv-state-gallery` (`goldenlayout`, `borderlayout`, `splitlayout`, etc.), the wrapper selector for the gate is the contract's `wrapper-selectors[0]` (e.g. `.z-goldenlayout`).
+
 **Post-condition (enforced — non-skippable):** At least ONE image file with size > 0 bytes must exist under `doc/screenshots/<component>/` by the end of this step. If the post-condition fails, you MUST set status to `BLOCKED: missing-visual-artefact` and STOP — do not proceed to §3b or later steps. This is a hard gate; visual artefacts are no longer "nice to have".
+
+**Capture-time sanity recheck** — immediately AFTER each `gif_creator` call, re-run the ready-state gate one more time. If a loading indicator appeared mid-capture (rare — usually from a delayed Au response), discard the captured file and retry the capture up to 2 times. If still flaky, mark the artefact path with `.suspect.gif` suffix and continue (the post-condition still passes, but §3d will be warned).
 
 #### Static states gallery
 
@@ -337,8 +385,24 @@ Read file_path=doc/screenshots/<component>/<image>.gif
 
 The image content is loaded directly into your context. You can now visually inspect it.
 
+**Dual-image (ZKDoc baseline) compare** — when the contract's frontmatter declares `mockup-needed: N`, the contract's `## References` block MUST cite a ZKDoc canonical image (e.g. `/Users/hawk/Documents/workspace/DOC/zkdoc/zk_component_ref/images/ZKCompRef_<Component>.png`). In that case, ALSO `Read` the ZKDoc image into context — you now have two images loaded simultaneously: (i) our captured screenshot of the live Marble page, (ii) the ZKDoc canonical reference.
+
+The ZKDoc image is the **structural ground truth ONLY** — it is authoritative for *what exists and where* (element presence, position, counts, glyph identity), because the contract's prose was authored from imagination and may be wrong (glyph choices, icon counts, edge visibility). It is NOT styling truth: ZKDoc screenshots show the old iceblue theme, while Marble's styling truth is MD3/MUI — judged by Gate 2 (`md3-design-verifier`), not by you. Do NOT emit findings for styling deltas vs. the ZKDoc image (background fills, tonal steps, corner radii, colors, shadows).
+
+When `mockup-needed: Y`, no ZKDoc image is canonical — fall back to single-image review against the contract's prose. (Future: `doc/contracts/<comp>.html` may serve as the baseline once we automate that; for now, single-image review for `Y` components.)
+
 #### Review prompt (apply mentally to each loaded image)
 
+**Dual-image mode (`mockup-needed: N` and ZKDoc baseline loaded):**
+For each visible region of the captured screenshot, ask: "Does the ZKDoc image show this region with the same *structure*?" (Structure only — styling deltas are Gate 2's job.) Specifically enumerate:
+1. Every visible icon in the ZKDoc image — is the same glyph (or a clearly intended Marble-replacement) present in our screenshot at the same logical position? Examples: per-tab close ×, header right-cluster maximise/close, splitter dot-handle marker.
+2. Every visible edge/border in the ZKDoc image — is it visible in our screenshot? (A "bottom border off-screen" is a violation even if the CSS *declares* the border.)
+3. Every distinct row/column/layout region in the ZKDoc image — does our screenshot have the same partitioning?
+4. Counts of repeated elements (e.g. 4 panels in ZKDoc → 4 panels in our screenshot; if we render 2, that's a structural mismatch).
+
+When ZKDoc shows a glyph X and our screenshot shows glyph Y (or no glyph), emit a finding with severity HIGH — the contract's literal glyph string is suspect, not the screenshot. The fix path may be either CSS (correct the glyph) or contract (update the prose + literal glyph + Mn row to match ZKDoc).
+
+**Single-image mode (`mockup-needed: Y` or `?`):**
 Compare each image against the contract's `## Design Contract` prose AND `## Outcome assertions` table (already read in §1 and §3b-macro). Look specifically for these categories of obvious violations:
 
 **(a) Wrong element positions**
@@ -369,6 +433,7 @@ Compare each image against the contract's `## Design Contract` prose AND `## Out
 - Token-level numeric mismatches (that's §3b's job)
 - Anything you measured PASS in §3b — do not contradict your own measurements without explanation
 - Aesthetic preference disagreements (don't second-guess design intent)
+- Design-quality / MD3-compliance judgments (tonal steps, color-role choices, radius scale, state layers) — that is Gate 2's job (`md3-design-verifier`); your VERIFIED-equivalent output is `GATE2_PENDING` precisely because that review hasn't happened yet
 
 #### Findings emission
 
@@ -442,13 +507,15 @@ Read the failing-set-history from `tasks/work-status.md`:
 - **STALLED:** if `newly_passing == []` AND the previous iteration also had `newly_passing == []`, set status to `STALLED`.
 - **OSCILLATING:** if iteration ≥ 3 AND `failing_set != previous_failing_set` AND `failing_set == failing_set[n-2]`, set status to `OSCILLATING`.
 - Otherwise: derive status from `failing_set` AND `ai_findings_total` (from §3d):
-  - `failing_set == []` AND `ai_findings_total == 0`  →  `VERIFIED`
+  - `failing_set == []` AND `ai_findings_total == 0`  →  `GATE2_PENDING`
   - `failing_set == []` AND `ai_findings_total > 0`   →  `VERIFIED_WITH_VISUAL_NOTES`
   - `failing_set != []`                                →  `NEEDS_FIX`
 
-**Macro gate:** because §3b-macro adds any failing `Mn` to `failing_set`, a failing macro row mechanically forces `NEEDS_FIX` — i.e. failing any macro assertion blocks `VERIFIED` even when every §3b token row and §3c layout row passes. This is the top-down outcome gate; do not mark `VERIFIED` (or `VERIFIED_WITH_VISUAL_NOTES`) while any `Mn` is FAIL.
+**Dual-gate semantics:** you are **Gate 1** of the dual-gate `VERIFIED` flow. You never write `VERIFIED` — that status is written by the orchestrator only after Gate 2 (`md3-design-verifier`) also passes. `GATE2_PENDING` means: all measurement passed, design review pending.
 
-**Visual-notes gate semantics:** `VERIFIED_WITH_VISUAL_NOTES` is NOT a failure state — it means measurement passed but AI vision spotted something a human should look at. The orchestrator's playbook §Step 4 decides whether to promote findings into new contract rows (and re-dispatch Generator) or accept them as false positives (flip to plain `VERIFIED`). The Evaluator never auto-promotes findings — that's the orchestrator's call.
+**Macro gate:** because §3b-macro adds any failing `Mn` to `failing_set`, a failing macro row mechanically forces `NEEDS_FIX` — i.e. failing any macro assertion blocks `GATE2_PENDING` even when every §3b token row and §3c layout row passes. This is the top-down outcome gate; do not mark `GATE2_PENDING` (or `VERIFIED_WITH_VISUAL_NOTES`) while any `Mn` is FAIL.
+
+**Visual-notes gate semantics:** `VERIFIED_WITH_VISUAL_NOTES` is NOT a failure state — it means measurement passed but AI vision spotted something a human should look at. The orchestrator's playbook §Step 4 decides whether to promote findings into new contract rows (and re-dispatch Generator) or accept them as false positives (flip to `GATE2_PENDING`, which then routes to Gate 2). The Evaluator never auto-promotes findings — that's the orchestrator's call.
 
 ### 6. Write the eval report
 
@@ -493,7 +560,7 @@ newly-passing-since-last: [<check-ids>]
 - <id>: <prose describing the gap in human terms, e.g. "border-color rgba(0,0,0,0.23) not applied at resting state — investigate whether the rule is overridden by a more specific selector">
 ```
 
-When status is `VERIFIED`, keep the Visual artefacts section (screenshots are still useful for reference) but omit the Action-required section.
+When status is `GATE2_PENDING`, keep the Visual artefacts section (Gate 2 reads those screenshots; they are its only visual input) but omit the Action-required section.
 
 ### 7. Update `tasks/work-status.md`
 
@@ -519,7 +586,7 @@ If the orchestrator passes you a hint that the prior Generator just touched the 
 
 Print to the conversation:
 - The component name
-- New status (one of: `VERIFIED`, `VERIFIED_WITH_VISUAL_NOTES`, `NEEDS_FIX`, `STALLED`, `OSCILLATING`, `BLOCKED: <reason>`)
+- New status (one of: `GATE2_PENDING`, `VERIFIED_WITH_VISUAL_NOTES`, `NEEDS_FIX`, `STALLED`, `OSCILLATING`, `BLOCKED: <reason>`)
 - Failing-set size (e.g. `3 of 14 checks failing`)
 - `newly_passing` size
 - **AI visual findings count** in the form `ai-findings: <total> (HIGH:<n>, MEDIUM:<n>, LOW:<n>)`. If status is `VERIFIED_WITH_VISUAL_NOTES`, this is the actionable signal the orchestrator reads first.

@@ -241,6 +241,21 @@ Outcome-level predicates that gate `VERIFIED`: failing any row blocks VERIFIED e
 - Use **tolerances**: `±2px`, `≥ 95%`, `≤ 4px range`, etc. Avoid exact equality — geometry has rounding.
 - Cite a **ZKDoc reference image** when available: `/Users/hawk/Documents/workspace/DOC/zkdoc/zk_component_ref/images/ZKCompRef_<Component>*.png`. The image is the visual ground truth; your M-rows are quantifications of what that image shows.
 
+**Mandatory glyph-row rule (for every ::before / ::after icon mentioned in the Design Contract prose):**
+
+When the Design Contract prose mentions any pseudo-element icon (e.g. "close icon `×` via `.lm_close_tab::before`", "maximise icon `⤢` via `.lm_maximise::after`"), the prose MUST quote the literal glyph (or its `\uXXXX` escape) AND the contract MUST include a paired M-row asserting **all three**:
+1. `getComputedStyle(el, '::before' | '::after').content` evaluates to a non-empty string ≠ `'none'` ≠ `'""'` (i.e. a real glyph is bound)
+2. The pseudo-element's bounding rect (read via `el.getBoundingClientRect()` on the host element with `:before/:after` accounted for — or measured by toggling a probe class) has `width ≥ 6px AND height ≥ 6px` (not collapsed to invisible)
+3. The literal glyph in the computed `content` matches the literal in the contract prose (verbatim string match, modulo whitespace)
+
+Row id pattern: `M-<icon-name>-glyph`, e.g. `M-tab-close-glyph`, `M-maximise-glyph`. This rule exists because the iter-11 ↗ / ⤢ bug proved that a contract can self-consistently declare the wrong glyph: prose says ↗, CSS implements ↗, every D-tier row passes, but the ZKDoc canonical image shows ⤢. The §3d AI dual-image compare catches that only when the glyph rule pins the literal — otherwise the AI has no anchor to demand a glyph change.
+
+**Mandatory visibility-row rule (for every visual element whose absence is the bug we're trying to prevent):**
+
+When the contract's prose lists an icon, edge, indicator, handle, or marker as "present", the contract MUST include an M-row asserting **the element's bounding rect is non-zero AND its bbox.bottom ≤ root.bbox.bottom AND bbox.right ≤ root.bbox.right** (i.e. it is renderable AND in-frame). The iter-11 "tab × icon declared but invisible" bug + the "panel bottom edge clipped" bug both passed §3b token rows because token-only checks measure properties of (potentially invisible / off-screen) elements. M-rows must close that gap explicitly.
+
+Row id pattern: `M-<element>-visible`, e.g. `M-tab-close-visible`, `M-panel-bottom-in-frame`.
+
 **Wave-driven minimum row count:**
 
 | Wave | Component class | Minimum M-rows |

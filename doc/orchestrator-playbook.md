@@ -32,13 +32,15 @@ Before the first dispatch in any session:
    withjdk.sh 17 mvn test exec:java@preview-app
    ```
 
-2. Verify the two agents are registered in the running session. The Task tool's available-agent list (shown at session start) must include `zk-theme-evaluator` and `zk-theme-generator`. If not, the user must restart Claude Code — agents in `.claude/agents/` are loaded only at session boot.
+2. Verify the three agents are registered in the running session. The Task tool's available-agent list (shown at session start) must include `zk-theme-evaluator`, `zk-theme-generator`, and `md3-design-verifier`. If not, the user must restart Claude Code — agents in `.claude/agents/` are loaded only at session boot.
 
 3. Read `tasks/work-status.md` to load current state.
 
 ---
 
 ## Main loop
+
+**`VERIFIED` is dual-gate**: Gate 1 (`zk-theme-evaluator` — conformance to the contract) AND Gate 2 (`md3-design-verifier` — MD3/MUI design quality) must both pass. The evaluator never writes `VERIFIED`; its all-measurements-pass result is `GATE2_PENDING`, and only the orchestrator flips `GATE2_PENDING → VERIFIED` after a `GATE2: PASS`.
 
 Repeat until every row is `VERIFIED`, `STALLED`, `OSCILLATING`, `CONSTRAINT`, or `ESCALATED_TOKEN_FIX`:
 
@@ -56,6 +58,10 @@ Compute two batches from `tasks/work-status.md`:
 - All rows in `NEEDS_FIX` status WITH an Action-required section that is not flagged `TOKEN_FIX_REQUIRED`
 - Pick exactly 1 per outer loop iteration
 - Build serialization: `npm run build:css` writes to `target/classes/web/marble/` non-atomically; concurrent builds race. Even though different Generators edit different CSS source files, their builds would clobber each other.
+
+**Design-review batch (parallel, read-only):**
+- All rows in `GATE2_PENDING` status → dispatch `md3-design-verifier` per component (Step 4b)
+- These are read-only (CSS + pre-captured screenshots, no Chrome) and can run in the same message as the Evaluator batch — but NOT for a component whose `shared-css-file` matches a currently-running Generator's target
 
 ### Step 2 — Dispatch the Evaluator batch (parallel)
 
@@ -102,14 +108,39 @@ For each Evaluator return:
 
 | Result | Action |
 |--------|--------|
-| `VERIFIED` | Mark done. Continue to next loop iteration. |
-| `VERIFIED_WITH_VISUAL_NOTES` | Measurement passed (`failing_set == []`) but §3d AI visual review surfaced ≥ 1 finding. Open the eval report's `## AI visual findings` table and inspect each row. For each HIGH/MEDIUM finding: decide one of (a) **Promote** — add a new outcome row or D-tier row to the contract that catches this visually, flip status to `RE_EVAL_NEEDED` (the new row exercises the next eval), and dispatch Generator if appropriate. (b) **Accept** — finding is a false positive (e.g. ZKDoc image style choice that Marble intentionally deviates from); flip status to plain `VERIFIED` and log the dismissal in eval-report under `## Findings accepted as false positive` for audit. The orchestrator never auto-promotes; this row requires explicit triage. LOW findings can be accepted in batch with a comment. |
+| `GATE2_PENDING` | Gate 1 passed. Dispatch Gate 2 (`md3-design-verifier`) — see Step 4b. Do NOT write `VERIFIED` yet. |
+| `VERIFIED_WITH_VISUAL_NOTES` | Measurement passed (`failing_set == []`) but §3d AI visual review surfaced ≥ 1 finding. Open the eval report's `## AI visual findings` table and inspect each row. For each HIGH/MEDIUM finding: decide one of (a) **Promote** — add a new outcome row or D-tier row to the contract that catches this visually, flip status to `RE_EVAL_NEEDED` (the new row exercises the next eval), and dispatch Generator if appropriate. (b) **Accept** — finding is a false positive (e.g. ZKDoc image style choice that Marble intentionally deviates from); flip status to `GATE2_PENDING` (Gate 2 still required) and log the dismissal in eval-report under `## Findings accepted as false positive` for audit. The orchestrator never auto-promotes; this row requires explicit triage. LOW findings can be accepted in batch with a comment. |
 | `NEEDS_FIX` with no `TOKEN_FIX_REQUIRED` in Action-required | Queue for Generator (Step 5). |
 | `NEEDS_FIX` with `TOKEN_FIX_REQUIRED` | Append the component + check ids to `tasks/token-issues.md`. Flip status to `ESCALATED_TOKEN_FIX` in work-status.md. Generator is NOT dispatched. |
 | `NEEDS_FIX` with `LIBRARY_CONFIG_REQUIRED` (T3 only) | Append the component + check ids + reason to `tasks/library-config-issues.md`. Flip status to `ESCALATED_LIBRARY_CONFIG`. Generator is NOT dispatched (fix needs widget `.ts`/`.java` work, not CSS). |
 | `BLOCKED: missing-visual-artefact` | §3a post-condition failed — Evaluator could not capture any screenshot. Check that the preview app is reachable, the component's preview ZUL exists, and `gif_creator` is functional. Retry the Evaluator after fixing. This is rare but blocks ALL downstream eval steps including the AI visual review. |
 | `STALLED` / `OSCILLATING` | Append the component to `tasks/escalation.md` with the failure history. Stop loop iteration for this component; ask user before retrying. |
 | `EVALUATING_BLOCKED` | Preview app died mid-run. Stop the loop, alert user to restart. |
+
+### Step 4b — Gate 2: MD3 design review (dual-gate VERIFIED)
+
+For every component in `GATE2_PENDING`, dispatch the design reviewer (parallel-safe; may share a message with Evaluator dispatches):
+
+```
+Task(
+  description="Design-review textbox",
+  subagent_type="md3-design-verifier",
+  prompt="Component: textbox\nMode: loop-gate\n\nFollow your agent definition. Screenshots are pre-captured under doc/screenshots/textbox/."
+)
+```
+
+The reviewer reads the contract, component CSS, and the evaluator's screenshots; it writes `tasks/design-reviews/<component>.md` and returns a terminal line. Triage:
+
+| Gate 2 result | Action |
+|---------------|--------|
+| `GATE2: PASS` | Flip status to `VERIFIED`. Component is done. |
+| `GATE2: FAIL (critical=N)` | **Contract revision path.** Read the report's `## Findings` table. For each Critical row: (a) if it maps to a contract row (`suspected-row` set), revise that row's expected value; (b) if `suspected-row` is blank, add a new D-tier or M-row; (c) if the user rules the deviation intentional, add it to the contract's `## Accepted MD3 deviations` section instead (user-only decision — the orchestrator never adds entries autonomously). Contract changes of design substance require user re-approval (`contract-approved` gate). Then flip status to `NEEDS_FIX` with the findings as the Action-required input → Generator → `RE_EVAL_NEEDED` → next round runs **both gates** again. |
+| `GATE2: BLOCKED (missing screenshots)` | The evaluator's artefacts are missing. Re-dispatch the Evaluator (its §3a captures them), then retry Gate 2. |
+
+Rules:
+- **Skip rule**: never dispatch Gate 2 for a component whose Gate 1 failed this round (the CSS is about to change anyway).
+- **Convergence**: Gate 2 blocks only on Critical findings; Suggested findings never block. Deviations listed in the contract's `## Accepted MD3 deviations` are skipped by the reviewer — this is what guarantees the loop converges despite intentional MD3 deviations (Marble policy: MD3 token naming, MUI v7 visual values).
+- The reviewer is read-only: it never edits CSS, contracts, or `work-status.md`. All flips and revisions are orchestrator/user actions.
 
 ### Step 5 — Dispatch one Generator (serial)
 
@@ -146,6 +177,7 @@ Go to Step 1.
 | Phase | Concurrency | Reason |
 |-------|-------------|--------|
 | Evaluator | up to 4 parallel | Each uses its own Chrome tab; eval reports are one-file-per-component (no write conflict). Status-file race is small and recoverable. |
+| Design reviewer (Gate 2) | freely parallel | Read-only: CSS + pre-captured screenshots, no Chrome. Design reports are one-file-per-component. Only constraint: not while a Generator targets the same `shared-css-file` (avoids reviewing mid-edit CSS). |
 | Generator | strictly 1 at a time | `npm run build:css` writes `target/` non-atomically; concurrent builds race. |
 | Mixed Eval+Gen | OK in same outer iteration | Evaluator reads CSS files (no edits); Generator edits and rebuilds. They don't conflict if they target different components — but for clarity, run Eval batch, then Gen, then re-Eval. |
 
@@ -176,7 +208,13 @@ grep -E '^\| [a-z]' tasks/work-status.md | awk -F'|' '{print $6}' | sort | uniq 
 
 ```bash
 # List next eligible components for Evaluator batch
-awk -F'|' '$6 ~ /(PENDING|NEEDS_FIX|RE_EVAL_NEEDED)/ {print $2 $6}' tasks/work-status.md
+# (note: " PENDING " with surrounding spaces so GATE2_PENDING does NOT match)
+awk -F'|' '$6 ~ /( PENDING |NEEDS_FIX|RE_EVAL_NEEDED)/ {print $2 $6}' tasks/work-status.md
+```
+
+```bash
+# List components awaiting Gate 2 design review
+awk -F'|' '$6 ~ /GATE2_PENDING/ {print $2}' tasks/work-status.md
 ```
 
 ---
@@ -208,11 +246,13 @@ After the user fixes the token, they run `npm run build:css` and re-dispatch the
 [orchestrator] dispatches 4 Task() calls in one message
 [evaluator-1]  measures textbox, writes report, status=NEEDS_FIX, action requires TOKEN_FIX for c2,c8
 [evaluator-2]  measures button, writes report, status=NEEDS_FIX, action lists 3 component-level fixes
-[evaluator-3]  measures grid, writes report, status=VERIFIED
+[evaluator-3]  measures grid, writes report, status=GATE2_PENDING
 [evaluator-4]  measures checkbox, writes report, status=NEEDS_FIX, 2 component-level fixes
 [orchestrator] reads all 4 reports
 [orchestrator] textbox → ESCALATED_TOKEN_FIX (append to token-issues.md)
-[orchestrator] grid → done
+[orchestrator] dispatches md3-design-verifier for grid (Gate 2)
+[design-rev-1] reads grid contract + CSS + screenshots, writes design-reviews/grid.md, returns GATE2: PASS
+[orchestrator] grid → VERIFIED (both gates passed)
 [orchestrator] queues button + checkbox for Generator (different shared-css-files, but Generator is serial anyway)
 [orchestrator] dispatches Generator for button
 [generator-1]  reads eval-reports/button.md, prints contract, edits button.css, builds, writes receipt
@@ -238,6 +278,20 @@ Trigger spec-author when either condition holds for the component's contract:
 - The contract's frontmatter has `contract-approved: false` (or the line is missing entirely).
 
 The orchestrator should NOT dispatch the evaluator on such a component — the evaluator's §0a gate will refuse with `BLOCKED: contract-approved=false`. Route to spec-author instead.
+
+### Pre-approval MD3 audit (Gate 2, contract-audit mode)
+
+After `zk-spec-author <component>` produces (or updates) the artifacts but BEFORE the user approval gate, dispatch:
+
+```
+Task(
+  description="Contract-audit <component>",
+  subagent_type="md3-design-verifier",
+  prompt="Component: <component>\nMode: contract-audit\n\nAudit the proposed contract + HTML mockup. No Marble CSS or screenshots exist yet."
+)
+```
+
+This catches MD3/MUI violations and **prose↔table contradictions** in the proposed contract before any CSS is written (garbage in → garbage out — the goldenlayout hybrid-design failure was exactly an unaudited contract). Critical findings go back to `zk-spec-author` for contract revision; repeat until `GATE2: PASS`. Only then proceed to the user approval gate — the user reviews an MD3-vetted contract.
 
 ### Approval gate
 
