@@ -211,7 +211,22 @@ Use `mcp__claude-in-chrome__gif_creator` with whole-document viewport. If `gif_c
 
 #### Dynamic states
 
+**NO-ASSERTION gate (mandatory, before any state capture):** for every entry in the contract's
+**States to evaluate** checklist, verify at least one Expected-values row covers it. An entry with
+zero matching rows is a **contract defect** — report it in the eval report as `NO-ASSERTION: <entry>`
+and count it as a FAIL; never silently skip it. (Root cause of three shipped gaps: `inplace`,
+portallayout `horizontal-orient`, checkbox `mold="switch"` sized off-benchmark — each existed as a
+checklist entry the evaluator never measured because no row asserted anything.)
+
 For each dynamic state listed in the contract's **States to evaluate** checklist:
+
+**Transition-freeze trap:** when the measured element has a CSS `transition` on the asserted
+property and the tab is occluded/backgrounded, Chrome freezes the animation at t≈0 — computed
+styles then return the *start* value serialized as an `oklab(…)` interpolation snapshot, and the
+hover/focus end value is never reached no matter how long you wait. If a state measurement
+returns `oklab(…)` or stays at the resting value while the selector verifiably matches, set
+`el.style.transition = 'none'` inline, re-read the computed style, then restore it. Decode any
+non-rgb serialization through a 1×1 canvas (`fillStyle` → `getImageData`) before comparing.
 
 **hover** (if listed):
 1. Use `mcp__claude-in-chrome__javascript_tool` to dispatch mouseover on the first default-state element in the gallery:
@@ -485,7 +500,6 @@ If you cannot meaningfully review an image (e.g. the capture is blank, all-white
 - `failing-set` = sorted list of failing check ids this iteration.
 - `newly_passing` = `previous_failing_set − failing_set` (ids that were failing before, now passing).
 - If iteration 1: `newly_passing = []` (no baseline).
-
 ### 4.5. Distinguish token-rooted vs component-rooted failures (D6)
 
 For each FAIL row in the measurement table:

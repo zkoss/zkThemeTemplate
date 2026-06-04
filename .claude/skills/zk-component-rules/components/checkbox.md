@@ -12,6 +12,19 @@ Three molds rendered by the same component: default checkbox, switch, toggle.
 
 The mold adds `.z-checkbox-{mold}` to the root. Default mold gets no mold modifier.
 
+## The mold element is always EMPTY
+
+All three molds share one renderer (`zul/wgt/mold/checkbox.js`): it emits
+`<label class="z-checkbox-mold"></label>` with **no content**, and the text label is always a
+sibling `<label class="z-checkbox-content">` *outside* the mold. Consequences for any theme:
+
+- A "toggle button" visual can never carry its label inside the button (unlike MUI ToggleButton
+  / MD3 toggle button) — the label always sits beside it.
+- Any glyph the mold shows (checkmark, switch thumb, toggle icon) must be injected via
+  `::before` / `::after` pseudo-elements on `.z-checkbox-mold`.
+- Closest Material analog for `mold="toggle"` is therefore a *toggle icon button* whose icon
+  the theme supplies, not a labeled toggle button.
+
 ## State classes are **mold-prefixed**
 
 This is a non-intuitive ZK choice:

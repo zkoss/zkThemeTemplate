@@ -361,8 +361,10 @@
 
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   Switch variant  (sclass="z-checkbox-switch" on checkbox component)
-   MD3 Switch using ZK checkbox mold infrastructure
+   Switch variant  (mold="switch" → z-checkbox-switch on the wrapper)
+   MUI v7 Switch (medium) values — see doc/contracts/checkbox.md sw1–sw9.
+   Track 34×14 (radius 7, no border); 20px thumb overhangs the track 3px on
+   every side; checked travel = 20px. Do NOT use the MD3 spec-sheet sizes.
    ═══════════════════════════════════════════════════════════════════════════ */
 
 /* Wrapper holds inline-block layout */
@@ -382,63 +384,80 @@
     pointer-events: none;
 }
 
-/* The mold element IS the switch track */
+/* The mold element IS the switch track; the thumb overhangs it (no overflow clip) */
 .z-checkbox-switch > .z-checkbox-mold {
     position: relative;
     display: inline-block;
-    width: 52px;
-    height: 32px;
-    min-width: 52px;
-    border-radius: 16px;
-    background-color: var(--zk-color-surface-variant);
-    border: 2px solid var(--zk-color-outline);
-    overflow: hidden;
+    width: 34px;
+    height: 14px;
+    min-width: 34px;
+    border-radius: 7px;
+    /* ≈ rgba(0,0,0,.38) — MUI off-track is #000 @ .38; on-surface is 87% black, so 44% of it ≈ .38 */
+    background-color: color-mix(in srgb, var(--zk-color-on-surface) 44%, transparent);
+    border: none;
+    overflow: visible;
     cursor: pointer;
     flex-shrink: 0;
-    margin: 4px;
+    margin: 13px 4px;  /* vertical: centers 14px track in 40px touch area */
     transition:
-        background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard),
-        border-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+        background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
 }
 
-/* Cancel out the checkbox ::before state-layer (not needed; switch has its own) */
+/* State-layer halo: 38px circle centered on the thumb, follows its travel */
 .z-checkbox-switch > .z-checkbox-mold::before {
-    display: none;
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: -12px;
+    transform: translateY(-50%);
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background-color: var(--zk-color-on-surface);
+    opacity: 0;
+    pointer-events: none;
+    transition:
+        opacity var(--zk-motion-duration-short2) var(--zk-motion-easing-standard),
+        left var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
 }
 
-/* Thumb (knob) */
+/* Thumb (knob) — 20px, overhangs the 14px track by 3px on every side */
 .z-checkbox-switch > .z-checkbox-mold::after {
     content: '';
     position: absolute;
     top: 50%;
-    left: 4px;
+    left: -3px;
     transform: translateY(-50%);
-    width: 16px;
-    height: 16px;
+    width: 20px;
+    height: 20px;
     border-radius: 50%;
-    background-color: var(--zk-color-outline);
+    background-color: var(--zk-color-surface);
+    box-shadow: var(--zk-elevation-1);
     display: block;
     background-image: none;
     transition:
         left var(--zk-motion-duration-short3) var(--zk-motion-easing-standard),
-        width var(--zk-motion-duration-short3) var(--zk-motion-easing-standard),
-        height var(--zk-motion-duration-short3) var(--zk-motion-easing-standard),
         background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+}
+
+/* Hover state-layer (focus-visible opacity comes from the base .z-checkbox rule) */
+.z-checkbox-switch:not(.z-checkbox-switch-disabled):hover > .z-checkbox-mold::before {
+    opacity: var(--zk-state-hover-opacity);
 }
 
 /* Switch ON state */
 .z-checkbox-switch-on > .z-checkbox-mold {
+    background-color: color-mix(in srgb, var(--zk-color-primary) 50%, transparent);
+}
+
+.z-checkbox-switch-on > .z-checkbox-mold::before {
+    left: calc(100% - 26px);
     background-color: var(--zk-color-primary);
-    border-color: var(--zk-color-primary);
 }
 
 .z-checkbox-switch-on > .z-checkbox-mold::after {
-    left: calc(100% - 28px);
-    width: 24px;
-    height: 24px;
-    top: 50%;
-    transform: translateY(-50%);
-    background-color: var(--zk-color-on-primary);
+    left: calc(100% - 17px);
+    background-color: var(--zk-color-primary);
     background-image: none;
 }
 
@@ -473,28 +492,26 @@
     pointer-events: none;
 }
 
+/* The mold is rendered EMPTY by ZK (label is a sibling), so the fill is the only
+   on/off signal: ON = solid primary (MD3 "selected = filled container" reading, no
+   glyph, no inset shadow). See doc/contracts/checkbox.md tg1–tg7. */
 .z-checkbox-toggle > .z-checkbox-mold {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: auto;
-    height: auto;
-    min-width: unset;
-    min-height: 36px;
-    padding: 6px 16px;
-    border-radius: var(--zk-shape-button);
-    border: 1px solid var(--zk-color-outline);
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
+    min-height: unset;
+    padding: 0;
+    border-radius: 4px;
+    border: 1px solid var(--zk-color-outline-variant);
     background-color: transparent;
-    color: var(--zk-color-primary);
-    font-size: var(--zk-typescale-label-large-size);
-    font-weight: var(--zk-typescale-label-large-weight);
     cursor: pointer;
     flex-shrink: 0;
     margin: 0;
     transition:
-        background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard),
-        box-shadow var(--zk-motion-duration-short3) var(--zk-motion-easing-standard),
-        color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+        background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
 }
 
 /* Cancel out the default mold ::before (checkbox state-layer ring) */
@@ -503,17 +520,20 @@
     display: none;
 }
 
-/* OFF hover */
+/* OFF hover — neutral state layer (MUI unselected hover is neutral, not primary) */
 .z-checkbox-toggle-off:not(.z-checkbox-toggle-disabled) > .z-checkbox-mold:hover {
-    background-color: color-mix(in srgb, var(--zk-color-primary) 8%, transparent);
+    background-color: color-mix(in srgb, var(--zk-color-on-surface) 8%, transparent);
 }
 
-/* ON — filled / pressed in */
+/* ON — solid primary fill (the fill IS the signal; no glyph, no inset shadow) */
 .z-checkbox-toggle-on > .z-checkbox-mold {
     background-color: var(--zk-color-primary);
-    color: var(--zk-color-on-primary);
     border-color: var(--zk-color-primary);
-    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.18);
+}
+
+/* ON hover — on-primary state layer over the fill (filled-button convention) */
+.z-checkbox-toggle-on:not(.z-checkbox-toggle-disabled) > .z-checkbox-mold:hover {
+    background-color: color-mix(in srgb, var(--zk-color-on-primary) 8%, var(--zk-color-primary));
 }
 
 /* Disabled */
