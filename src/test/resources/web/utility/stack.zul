@@ -8,7 +8,7 @@
     </toolbar>
 
     <!-- Concept -->
-    <div sclass="section-card">
+    <div sclass="z-card">
         <label value="Concept" sclass="z-d-block z-text-base z-fw-medium z-text-on-surface z-mb-3"/>
         <label sclass="z-d-block z-text-secondary z-text-md z-mb-2"
                value="Marble has two opt-in container utilities for grouping items with consistent spacing. Naming follows Bootstrap 5 / SwiftUI."/>
@@ -36,7 +36,7 @@
     </div>
 
     <!-- z-vstack demo -->
-    <div sclass="section-card">
+    <div sclass="z-card">
         <label value=".z-vstack — vertical stack" sclass="z-d-block z-text-base z-fw-medium z-text-on-surface z-mb-3"/>
         <label sclass="z-d-block z-text-secondary z-text-sm z-mb-3"
                value="Five size variants. Default = 12px (z-vstack), sm = 8px, md = 16px, lg = 24px, 0 = none."/>
@@ -85,7 +85,7 @@
     </div>
 
     <!-- z-hstack demo -->
-    <div sclass="section-card">
+    <div sclass="z-card">
         <label value=".z-hstack — horizontal stack" sclass="z-d-block z-text-base z-fw-medium z-text-on-surface z-mb-3"/>
         <label sclass="z-d-block z-text-secondary z-text-sm z-mb-3"
                value="Four size variants. Wraps automatically when the row overflows. Default = 12px, sm = 8px, md = 16px, lg = 24px."/>
@@ -120,7 +120,7 @@
     </div>
 
     <!-- Mixed example -->
-    <div sclass="section-card">
+    <div sclass="z-card">
         <label value="Real-world Example — Form Actions" sclass="z-d-block z-text-base z-fw-medium z-text-on-surface z-mb-3"/>
         <label sclass="z-d-block z-text-secondary z-text-sm z-mb-3"
                value="Stack form rows vertically with .z-vstack, then group the action buttons horizontally with .z-hstack."/>
@@ -147,7 +147,7 @@
     </div>
 
     <!-- Default rhythm vs opt-in -->
-    <div sclass="section-card">
+    <div sclass="z-card">
         <label value="Default Rhythm vs Opt-in Stack" sclass="z-d-block z-text-base z-fw-medium z-text-on-surface z-mb-3"/>
         <label sclass="z-d-block z-text-secondary z-text-sm z-mb-3"
                value="Block-level container widgets (cardlayout, panel, window, grid, listbox, tree, tabbox, …) already have 12px margin-block-end by default — no .z-vstack needed. Use .z-vstack only when grouping arbitrary children (form rows, sections, atomic widgets)."/>
@@ -182,7 +182,7 @@
     </div>
 
     <!-- Class reference -->
-    <div sclass="section-card">
+    <div sclass="z-card">
         <label value="Class Reference" sclass="z-d-block z-text-base z-fw-medium z-text-on-surface z-mb-3"/>
         <div sclass="z-d-grid z-grid-cols-2 z-gap-6">
             <div>

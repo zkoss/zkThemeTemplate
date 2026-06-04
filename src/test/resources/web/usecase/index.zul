@@ -7,7 +7,7 @@
     onBookmarkChange="@command('handleBookmarkChange', bookmark=event.bookmark)">
 
     <west size="258px" border="none" collapsible="false">
-        <div>
+        <div sclass="z-p-2">
             <div sclass="sidebar-brand">Marble</div>
             <navbar orient="vertical">
                 <nav label="Use Cases" open="@load(vm.openNavLabel eq 'Use Cases')">

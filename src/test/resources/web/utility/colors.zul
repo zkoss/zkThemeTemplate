@@ -8,7 +8,7 @@
     </toolbar>
 
     <!-- Text Colors -->
-    <div sclass="section-card">
+    <div sclass="z-card">
         <label value="Text Colors" sclass="z-d-block z-text-base z-fw-medium z-text-on-surface z-mb-3"/>
         <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px">
             <div sclass="z-d-flex z-align-center z-gap-2">
@@ -55,7 +55,7 @@
     </div>
 
     <!-- Background Colors -->
-    <div sclass="section-card">
+    <div sclass="z-card">
         <label value="Background Colors" sclass="z-d-block z-text-base z-fw-medium z-text-on-surface z-mb-3"/>
         <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px">
             <div sclass="z-bg-primary z-p-3 z-rounded-md z-text-center">
@@ -104,7 +104,7 @@
     </div>
 
     <!-- Inverse text on dark background -->
-    <div sclass="section-card">
+    <div sclass="z-card">
         <label value="Inverse Text" sclass="z-d-block z-text-base z-fw-medium z-text-on-surface z-mb-3"/>
         <div sclass="z-bg-primary z-p-4 z-rounded-md z-d-inline-block">
             <label value=".z-text-inverse — readable on dark backgrounds" sclass="z-text-inverse z-fw-medium"/>

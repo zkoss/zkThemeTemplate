@@ -8,7 +8,7 @@
     </toolbar>
 
     <!-- Elevation Scale -->
-    <div sclass="section-card">
+    <div sclass="z-card">
         <label value="Elevation Shadow Scale  (.z-elevation-0 — .z-elevation-3)" sclass="z-d-block z-text-base z-fw-medium z-text-on-surface z-mb-3"/>
         <label value="Higher elevation values render deeper shadows, conveying layers closer to the user." sclass="z-text-secondary z-text-sm z-mb-4"/>
         <div sclass="z-d-flex z-gap-6 z-flex-wrap z-align-start">
@@ -61,7 +61,7 @@
     </div>
 
     <!-- Elevation on dark background -->
-    <div sclass="section-card">
+    <div sclass="z-card">
         <label value="Elevation on Tinted Background" sclass="z-d-block z-text-base z-fw-medium z-text-on-surface z-mb-3"/>
         <div sclass="z-bg-primary z-p-6 z-rounded-md z-d-flex z-gap-6 z-flex-wrap">
             <div sclass="z-elevation-1 z-bg-surface z-rounded-md z-p-4" style="width:120px;text-align:center">
@@ -77,7 +77,7 @@
     </div>
 
     <!-- Practical use -->
-    <div sclass="section-card">
+    <div sclass="z-card">
         <label value="Practical Usage" sclass="z-d-block z-text-base z-fw-medium z-text-on-surface z-mb-3"/>
         <div sclass="z-d-flex z-gap-4 z-flex-wrap z-align-start">
 

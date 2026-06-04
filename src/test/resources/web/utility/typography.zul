@@ -8,7 +8,7 @@
     </toolbar>
 
     <!-- Heading Utilities -->
-    <div sclass="section-card">
+    <div sclass="z-card">
         <label value="Heading Utilities  (.z-h1 — .z-h7)" sclass="z-d-block z-text-base z-fw-medium z-text-on-surface z-mb-3"/>
         <vlayout>
             <div sclass="z-d-flex z-align-baseline z-gap-3">
@@ -43,7 +43,7 @@
     </div>
 
     <!-- Font Size Scale -->
-    <div sclass="section-card">
+    <div sclass="z-card">
         <label value="Font Size Scale  (.z-text-xs … .z-text-7xl)" sclass="z-d-block z-text-base z-fw-medium z-text-on-surface z-mb-3"/>
         <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px 24px">
             <div sclass="z-d-flex z-align-baseline z-gap-2"><label value="Aa" sclass="z-text-xs"/><label value=".z-text-xs   11px" sclass="z-text-muted z-text-xs"/></div>
@@ -62,7 +62,7 @@
     </div>
 
     <!-- Font Weight -->
-    <div sclass="section-card">
+    <div sclass="z-card">
         <label value="Font Weight  (.z-fw-*)" sclass="z-d-block z-text-base z-fw-medium z-text-on-surface z-mb-3"/>
         <div sclass="z-d-flex z-gap-6 z-flex-wrap">
             <div>
@@ -89,7 +89,7 @@
     </div>
 
     <!-- Text Alignment -->
-    <div sclass="section-card">
+    <div sclass="z-card">
         <label value="Text Alignment  (.z-text-start / center / end)" sclass="z-d-block z-text-base z-fw-medium z-text-on-surface z-mb-3"/>
         <vlayout>
             <div sclass="z-border z-rounded-md z-p-3 z-text-start"><label value="Start aligned — .z-text-start"/></div>
@@ -99,7 +99,7 @@
     </div>
 
     <!-- Text Transform -->
-    <div sclass="section-card">
+    <div sclass="z-card">
         <label value="Text Transform  (.z-text-uppercase / lowercase / capitalize / none)" sclass="z-d-block z-text-base z-fw-medium z-text-on-surface z-mb-3"/>
         <div sclass="z-d-flex z-gap-6 z-flex-wrap">
             <div>
@@ -118,7 +118,7 @@
     </div>
 
     <!-- Font Style & Line Height -->
-    <div sclass="section-card">
+    <div sclass="z-card">
         <label value="Font Style &amp; Line Height" sclass="z-d-block z-text-base z-fw-medium z-text-on-surface z-mb-3"/>
         <div sclass="z-d-flex z-gap-6 z-flex-wrap">
             <div>
@@ -141,7 +141,7 @@
     </div>
 
     <!-- Truncation -->
-    <div sclass="section-card">
+    <div sclass="z-card">
         <label value="Text Truncation  (.z-text-truncate)" sclass="z-d-block z-text-base z-fw-medium z-text-on-surface z-mb-3"/>
         <div sclass="z-text-truncate z-border z-rounded-md z-p-3" style="max-width:320px">
             <label value="This is a very long text that will be truncated with an ellipsis at the end of the line when it overflows the container width"/>

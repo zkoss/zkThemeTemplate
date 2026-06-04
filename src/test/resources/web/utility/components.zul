@@ -8,7 +8,7 @@
     </toolbar>
 
     <!-- z-chip -->
-    <div sclass="section-card">
+    <div sclass="z-card">
         <label value="Chip  (.z-chip)" sclass="z-d-block z-text-base z-fw-medium z-text-on-surface z-mb-3"/>
         <label value="Status chips are small inline labels for categories, tags, and statuses. Apply on ZK &lt;label&gt; for a clean span with no extra wrapper." sclass="z-text-secondary z-text-sm z-mb-3"/>
         <div sclass="z-d-flex z-gap-3 z-flex-wrap z-align-center z-mb-3">
@@ -29,7 +29,7 @@
     </div>
 
     <!-- z-badge (overlay indicator, MUI <Badge> equivalent) -->
-    <div sclass="section-card">
+    <div sclass="z-card">
         <label value="Badge  (.z-badge)" sclass="z-d-block z-text-base z-fw-medium z-text-on-surface z-mb-3"/>
         <label value="Overlay indicators that float a count or dot over a host's top-right corner. Add z-badge to the host itself and pass the count via the data-badge attribute (ca:data-badge). Declare xmlns:ca=&quot;client/attribute&quot; once on an ancestor. Rows must use a non-clipping flex container (z-d-flex / z-hstack) — never &lt;hlayout&gt; (overflow:hidden crops the overhang)." sclass="z-text-secondary z-text-sm z-mb-3"/>
 
@@ -83,7 +83,7 @@
     </div>
 
     <!-- z-avatar -->
-    <div sclass="section-card">
+    <div sclass="z-card">
         <label value="Avatar  (.z-avatar)" sclass="z-d-block z-text-base z-fw-medium z-text-on-surface z-mb-3"/>
         <label value="Circular containers for user photos or initials. Apply on ZK &lt;image&gt; (photo) or &lt;div&gt; (initials). Three sizes: -sm 36px / -md 44px / -lg 56px." sclass="z-text-secondary z-text-sm z-mb-3"/>
 
@@ -123,7 +123,7 @@
     </div>
 
     <!-- z-card -->
-    <div sclass="section-card">
+    <div sclass="z-card">
         <label value="Card  (.z-card)" sclass="z-d-block z-text-base z-fw-medium z-text-on-surface z-mb-3"/>
         <label value="A surface container with background-color, border-radius (--zk-shape-card), and elevation shadow (--zk-elevation-card) from the design token system." sclass="z-text-secondary z-text-sm z-mb-3"/>
         <div sclass="z-d-flex z-gap-4 z-flex-wrap z-align-start">

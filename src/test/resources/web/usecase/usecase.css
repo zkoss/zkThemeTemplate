@@ -12,30 +12,8 @@ body {
 }
 
 /* ============================================
-   User Profile — Avatar
-   ============================================ */
-/* ZK <image sclass="avatar"> renders as a plain <img class="avatar z-image">
-   Apply border-radius directly to the img element */
-img.avatar,
-.avatar.z-image {
-    border-radius: 50%;
-    object-fit: cover;
-    display: block;
-    border: 3px solid var(--zk-color-outline-variant);
-    background-color: var(--zk-color-surface-container-high);
-}
-
-/* ============================================
    Index — Mira-Style Sidebar Shell
    ============================================ */
-.sidebar-nav {
-    background-color: var(--zk-color-primary);
-    height: 100%;
-    padding: 16px 0;
-    overflow-y: auto;
-    box-sizing: border-box;
-}
-
 .sidebar-brand {
     padding: 8px 16px 16px;
     font-size: 18px;
@@ -44,192 +22,16 @@ img.avatar,
     letter-spacing: -0.01em;
 }
 
-.nav-section {
-    display: block;
-    padding: 16px 16px 4px;
-    font-size: 11px;
-    font-weight: 600;
-    color: var(--zk-color-inverse-on-surface);
-    opacity: 0.6;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-}
-
-.sidebar-nav .nav-item,
-.sidebar-nav .z-a.nav-item {
-    display: flex;
-    align-items: center;
-    padding: 10px 16px;
-    margin: 0 8px 2px 0;
-    border-radius: 0 24px 24px 0;
-    color: var(--zk-color-inverse-on-surface);
-    font-size: 14px;
-    text-decoration: none;
-    transition: background-color 150ms ease;
-}
-
-.sidebar-nav .nav-item:hover,
-.sidebar-nav .z-a.nav-item:hover {
-    background-color: rgba(255, 255, 255, 0.08);
-    text-decoration: none;
-}
-
-.sidebar-nav .nav-item::before {
-    display: none;
-}
-
-/* Content iframe fills center panel */
-#content-frame {
-    width: 100%;
-    height: 100%;
-    border: none;
-    display: block;
-}
-
 /* ============================================
-   Flat Section Cards (replaces Groupbox/Panel borders)
+   Index — West Navigation Sidebar
    ============================================ */
-.section-card {
-    background-color: var(--zk-color-surface);
-    border-radius: var(--zk-shape-corner-medium);
-    box-shadow: var(--zk-elevation-card);
-    padding: var(--zk-spacing-4);
-}
-
-/* ============================================
-   Report Page
-   ============================================ */
-.report-header {
-    background-color: var(--zk-color-surface-container-low);
-    padding: var(--zk-spacing-3) var(--zk-spacing-4);
-    border-bottom: 2px solid var(--zk-color-primary);
-    margin-bottom: var(--zk-spacing-2);
-}
-
-.report-title {
-    font-size: var(--zk-typescale-title-large-size);
-    font-weight: var(--zk-typescale-title-large-weight);
-    line-height: var(--zk-typescale-title-large-line-height);
-    color: var(--zk-color-on-surface);
-    margin-bottom: var(--zk-spacing-1);
-}
-
-.report-sub {
-    font-size: var(--zk-typescale-body-small-size);
-    font-weight: var(--zk-typescale-body-small-weight);
-    color: var(--zk-color-on-surface-variant);
-    margin: 0;
-}
-
-/* ============================================
-   App Shell — Status Bar (bottom south panel)
-   ============================================ */
-.status-bar {
-    display: flex;
-    align-items: center;
-    gap: var(--zk-spacing-3);
-    padding: 0 var(--zk-spacing-4);
-    height: 28px;
-    font-size: var(--zk-typescale-body-small-size);
-    color: var(--zk-color-on-surface-variant);
-    background-color: var(--zk-color-surface-container-low);
-}
-
-/* Status bar used with sclass="status-bar-inner" on hlayout */
-.status-bar-inner.z-hlayout,
-.z-hlayout.status-bar-inner {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    height: 100%;
-    padding: 0 var(--zk-spacing-4);
-    gap: var(--zk-spacing-3);
-    font-size: var(--zk-typescale-body-small-size);
-    color: var(--zk-color-on-surface-variant);
-    background-color: var(--zk-color-surface-container-low);
-    box-sizing: border-box;
-}
-
-.status-bar-inner .z-hlayout-inner {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: var(--zk-spacing-3);
-    height: 100%;
-    flex: 1;
-    overflow: hidden;
-}
-
-/* Prevent labels in status bar from wrapping */
-.status-bar-inner .z-label {
-    white-space: nowrap;
-    font-size: var(--zk-typescale-body-small-size);
-    color: var(--zk-color-on-surface-variant);
-}
-
-/* ============================================
-   App Shell — West Navigation Sidebar padding
-   ============================================ */
-/* The west body has no native padding; add some via the first child div */
-.z-west-body > .z-div {
-    padding: var(--zk-spacing-2) var(--zk-spacing-2);
-}
-
 /* Sidebar = white surface with a divider, so it separates from the tinted
    content area (which uses surface-container-low). */
 .z-west,
 .z-west-body {
-    background-color: var(--zk-color-surface);
+    background-color: var(--zk-color-surface-container-low);
 }
 .z-west {
     border-right: 1px solid var(--zk-color-outline-variant);
 }
 
-/* ============================================
-   Misc Demo Helpers
-   ============================================ */
-.section-hint {
-    color: var(--zk-color-on-surface-variant);
-    margin-bottom: var(--zk-spacing-2);
-}
-
-.html-snippet-preview {
-    padding: var(--zk-spacing-2);
-    background-color: var(--zk-color-surface-container-low);
-    border: 1px solid var(--zk-color-outline-variant);
-    border-radius: var(--zk-shape-corner-extra-small);
-    font-size: var(--zk-typescale-body-small-size);
-    color: var(--zk-color-on-surface);
-}
-
-/* ============================================
-   Media Manager — Audio player full width
-   ============================================ */
-/* The ZK <audio> component renders as a native <audio> element.
-   ZK may set a fixed width attribute; override to stretch to container. */
-.z-audio {
-    width: 100% !important;
-    display: block;
-}
-
-/* Suppress bottom border on toolbar when immediately followed by another toolbar
-   to avoid double-line visual artifact when toolbars are stacked vertically */
-.z-tabpanel .z-toolbar + .z-toolbar {
-    border-top: none;
-}
-
-/* ============================================
-   Page-level layout helpers
-   (moved from _utilities.css — usecase-only)
-   ============================================ */
-
-.md-text-right  { text-align: right !important; }
-
-.md-py-3 { padding-top: var(--zk-spacing-3) !important; padding-bottom: var(--zk-spacing-3) !important; }
-.md-m-2  { margin: var(--zk-spacing-2) !important; }
-
-.md-flex      { display: flex !important; }
-.md-flex-wrap { flex-wrap: wrap !important; }
-.md-gap-4     { gap: var(--zk-spacing-4) !important; }
-
-.md-icon-xl { font-size: 48px !important; }

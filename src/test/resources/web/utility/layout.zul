@@ -27,7 +27,7 @@
     </toolbar>
 
     <!-- Display -->
-    <div sclass="section-card">
+    <div sclass="z-card">
         <label value="Display  (.z-d-*)" sclass="z-d-block z-text-base z-fw-medium z-text-on-surface z-mb-3"/>
         <div sclass="z-d-flex z-gap-4 z-flex-wrap z-align-center">
             <div>
@@ -50,7 +50,7 @@
     </div>
 
     <!-- Flex Direction -->
-    <div sclass="section-card">
+    <div sclass="z-card">
         <label value="Flex Direction  (.z-flex-row / .z-flex-col)" sclass="z-d-block z-text-base z-fw-medium z-text-on-surface z-mb-3"/>
         <div sclass="z-d-flex z-gap-6">
             <div>
@@ -81,7 +81,7 @@
     </div>
 
     <!-- Justify Content -->
-    <div sclass="section-card">
+    <div sclass="z-card">
         <label value="Justify Content  (.z-justify-*)" sclass="z-d-block z-text-base z-fw-medium z-text-on-surface z-mb-3"/>
         <vlayout sclass="z-gap-3">
             <div>
@@ -118,7 +118,7 @@
     </div>
 
     <!-- Align Items -->
-    <div sclass="section-card">
+    <div sclass="z-card">
         <label value="Align Items  (.z-align-*)" sclass="z-d-block z-text-base z-fw-medium z-text-on-surface z-mb-3"/>
         <div sclass="z-d-flex z-gap-4">
             <div>
@@ -149,7 +149,7 @@
     </div>
 
     <!-- Flex Grow / Fill -->
-    <div sclass="section-card">
+    <div sclass="z-card">
         <label value="Flex Grow &amp; Fill  (.z-flex-1 / .z-flex-auto / .z-flex-none)" sclass="z-d-block z-text-base z-fw-medium z-text-on-surface z-mb-3"/>
         <vlayout sclass="z-gap-3">
             <div>
@@ -172,7 +172,7 @@
     </div>
 
     <!-- Gap -->
-    <div sclass="section-card">
+    <div sclass="z-card">
         <label value="Gap  (.z-gap-* / .z-col-gap-* / .z-row-gap-*)" sclass="z-d-block z-text-base z-fw-medium z-text-on-surface z-mb-3"/>
         <div sclass="z-d-flex z-gap-6 z-flex-wrap">
             <div>
@@ -197,7 +197,7 @@
     </div>
 
     <!-- Flex Wrap -->
-    <div sclass="section-card">
+    <div sclass="z-card">
         <label value="Flex Wrap  (.z-flex-wrap / .z-flex-nowrap)" sclass="z-d-block z-text-base z-fw-medium z-text-on-surface z-mb-3"/>
         <div sclass="z-d-flex z-gap-4">
             <div style="max-width:300px">

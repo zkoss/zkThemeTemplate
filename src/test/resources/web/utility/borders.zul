@@ -20,7 +20,7 @@
     </toolbar>
 
     <!-- Border Sides -->
-    <div sclass="section-card">
+    <div sclass="z-card">
         <label value="Borders  (.z-border-*)" sclass="z-d-block z-text-base z-fw-medium z-text-on-surface z-mb-3"/>
         <div sclass="z-d-flex z-gap-4 z-flex-wrap">
             <div style="text-align:center">
@@ -58,7 +58,7 @@
     </div>
 
     <!-- Border Radius Scale -->
-    <div sclass="section-card">
+    <div sclass="z-card">
         <label value="Border Radius  (.z-rounded-*)" sclass="z-d-block z-text-base z-fw-medium z-text-on-surface z-mb-3"/>
         <div sclass="z-d-flex z-gap-5 z-flex-wrap">
             <div style="text-align:center">
@@ -101,7 +101,7 @@
     </div>
 
     <!-- Practical combinations -->
-    <div sclass="section-card">
+    <div sclass="z-card">
         <label value="Common Combinations" sclass="z-d-block z-text-base z-fw-medium z-text-on-surface z-mb-3"/>
         <div sclass="z-d-flex z-gap-4 z-flex-wrap z-align-center">
             <div sclass="z-bg-primary-container z-p-4 z-rounded-md z-border">
