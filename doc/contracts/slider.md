@@ -28,7 +28,7 @@ mockup-rationale: ZKDoc has no canonical knob-mold image that shows Marble token
 
 Material-styled linear sliders use primary-colored fill (`.z-slider-area`) against an outline-variant track (`.z-slider-center`). The thumb (`.z-slider-button`) is a filled primary circle; on hover and focus-visible, a semi-transparent primary state-layer ring (8px spread, 16% alpha via `color-mix`) expands outward via `box-shadow`; on active/drag the ring expands to 14px spread at the same 16% alpha. Disabled state uses `opacity: var(--zk-state-disabled-opacity)` on the root. The sphere mold (root class `.z-slider-sphere`) applies a radial-gradient on `.z-slider-button` for a 3D sphere effect; ZK confirms `.z-slider-sphere` is added to the root by `domClass_()`. The scale mold (root class `.z-slider-scale`) inherits all the above and adds tick marks via background-image (CSS-DSP restriction means no external image refs; tick styling uses a repeating-linear-gradient data pattern or is deferred). The popup tooltip (`.z-slider-popup`) uses inverse-surface background with inverse-on-surface text, 4px corner, elevation-1 shadow.
 
-The knob mold (PE) renders a rotary SVG dial. The **background arc** (`.z-slider-knob-inner path`) uses `stroke: var(--zk-color-outline-variant)` — the inert ring. The **progress arc** (`.z-slider-knob-area path`) uses `stroke: var(--zk-color-primary)`. Both `stroke-width` and arc geometry are JS-controlled via inline SVG attributes and are NOT CSS-themable (T3 boundary for internal geometry). The numeric input overlay (`.z-slider-input`) uses surface-container background, outline border, and primary-colored bold text. No hover state ring exists for the knob (SVG drag-based, not thumb-based).
+The knob mold (PE) renders a rotary SVG dial. The **background arc** (`.z-slider-knob-inner path`) uses `stroke: var(--zk-color-outline-variant)` — the inert ring. The **progress arc** (`.z-slider-knob-area path`) uses `stroke: var(--zk-color-primary)`. Both `stroke-width` and arc geometry are JS-controlled via inline SVG attributes and are NOT CSS-themable (T3 boundary for internal geometry). The numeric input overlay (`.z-slider-input`) uses surface-container background, outline border, extra-small corner radius, and primary-colored bold text — **centered**, with the native number-input spin buttons suppressed (`appearance: textfield` + `::-webkit-*-spin-button: none`, matching iceblue; MD3/MUI never show native spinner chrome). No hover state ring exists for the knob (SVG drag-based, not thumb-based).
 
 ## Outcome assertions
 
@@ -72,6 +72,9 @@ visual-goal: simple input — M-rows for track+thumb geometry and knob SVG visib
 | k3 | `.z-slider-input` | background-color | `var(--zk-color-surface-container)` | DESIGN.md §9 — input field on surface |
 | k4 | `.z-slider-input` | border | `1px solid var(--zk-color-outline)` | DESIGN.md §11 — standard input border |
 | k5 | `.z-slider-input` | color | `var(--zk-color-primary)` | design decision — numeric value echoes primary |
+| k6 | `.z-slider-input` | text-align | `center` | iceblue baseline + approved mockup — value centered in the JS-sized box |
+| k7 | `.z-slider-input` | appearance | `textfield`; AND `::-webkit-outer-spin-button` / `::-webkit-inner-spin-button` have `-webkit-appearance: none; margin: 0` | iceblue suppresses native spinners; MD3/MUI show no native spinner chrome — the JS box is sized from digit count, so reserved spinner space de-centers the value |
+| k8 | `.z-slider-input` | border-radius | `var(--zk-shape-corner-extra-small)` | approved mockup slider.html — small field corner |
 
 ### Knob mold — NOT CSS-themable (document the boundary)
 
@@ -102,7 +105,7 @@ These properties are controlled by JS inline styles/SVG attributes and cannot be
 
 | state | selector | properties to check |
 |-------|----------|---------------------|
-| default | `.z-slider` (knob mold) | k1, k2, k3, k4, k5, M4, M5 |
+| default | `.z-slider` (knob mold) | k1, k2, k3, k4, k5, k6, k7, k8, M4, M5 |
 
 ## States to evaluate
 - [ ] default (horizontal)

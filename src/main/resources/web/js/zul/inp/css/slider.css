@@ -60,30 +60,18 @@
         transform   var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
 }
 
-/* State-layer ring (hover / focus) */
-.z-slider-button::before {
-    content: '';
-    position: absolute;
-    inset: -8px;
-    border-radius: var(--zk-shape-corner-full);
-    background-color: var(--zk-color-primary);
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+/* State-layer ring via box-shadow (MUI Slider pattern: 16% alpha, not MD3 8%) */
+.z-slider-button:hover {
+    box-shadow: 0 0 0 8px color-mix(in srgb, var(--zk-color-primary) 16%, transparent);
 }
 
-.z-slider:hover .z-slider-button::before {
-    opacity: var(--zk-state-hover-opacity);
-}
-
-.z-slider:focus-within .z-slider-button::before {
-    opacity: var(--zk-state-focus-opacity);
+.z-slider-button:focus-visible {
+    box-shadow: 0 0 0 8px color-mix(in srgb, var(--zk-color-primary) 16%, transparent);
 }
 
 .z-slider-button:active {
     cursor: grabbing;
-    transform: scale(1.15);
-    box-shadow: var(--zk-elevation-2);
+    box-shadow: 0 0 0 14px color-mix(in srgb, var(--zk-color-primary) 16%, transparent);
 }
 
 /* ── Horizontal slider ────────────────────────────────── */
@@ -128,9 +116,44 @@
     margin-top: 0;
 }
 
-/* ── Sphere mold — circular thumb ────────────────────── */
+/* ── Sphere mold — 3D gradient thumb ────────────────── */
 .z-slider-sphere .z-slider-button {
     border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, var(--zk-color-primary-container), var(--zk-color-primary) 60%, var(--zk-color-on-primary-container) 100%);
+}
+
+/* ── Knob mold (PE) ───────────────────────────────────── */
+/* SVG arc strokes — stroke-width and arc geometry are JS-controlled (NOT CSS-themable) */
+.z-slider-knob-inner {
+    stroke: var(--zk-color-outline-variant);
+    fill: none;
+}
+
+.z-slider-knob-area {
+    stroke: var(--zk-color-primary);
+    fill: none;
+}
+
+/* Numeric input overlay — position:absolute required so JS top/left take effect */
+.z-slider-input {
+    position: absolute;
+    background-color: var(--zk-color-surface-container);
+    border: 1px solid var(--zk-color-outline);
+    border-radius: var(--zk-shape-corner-extra-small);
+    box-sizing: border-box;
+    color: var(--zk-color-primary);
+    font-weight: 600;
+    text-align: center;
+    /* k7 — suppress native number-input spinners (iceblue parity; the JS box is
+       sized from digit count, so reserved spinner space de-centers the value) */
+    appearance: textfield;
+    -moz-appearance: textfield;
+}
+
+.z-slider-input::-webkit-outer-spin-button,
+.z-slider-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
 }
 
 /* ── Disabled ─────────────────────────────────────────── */
