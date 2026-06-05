@@ -71,6 +71,7 @@ Load only the file for the component you are working on.
 | `components/button.md` | button (vertical orient via `<br/>`, `:has(br)` selector) |
 | `components/calendar.md` | calendar (z-calendar-today not on cells, cell-width arithmetic) |
 | `components/checkbox.md` | checkbox + 3 molds (checkbox, switch, toggle) — mold-prefixed state classes |
+| `components/cascader.md` | cascader (EE) — hierarchical tree-picker, read-only trigger + side-by-side cave columns, `.z-cascader-label` / `.z-cascader-placeholder` (not `-input`), `.z-cascader-disabled` class, popup detached to body |
 | `components/chosenbox.md` | chosenbox (chip class = `.z-chosenbox-item`, EE-only) |
 | `components/colorbox.md` | colorbox (current swatch + button + popup w/ picker+palette, geometry-locked sprites, EE-only) |
 | `components/combobox.md` | combobox (split-border, comboitem variants) |

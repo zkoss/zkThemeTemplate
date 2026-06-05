@@ -70,14 +70,20 @@
 }
 
 /* ─── Popup ───────────────────────────────────────────────────────────── */
-/* ZK positions popup via JS (makeVParent + position()); display toggled via slideDown */
-.z-cascader .z-cascader-popup {
-    display: none;
+/* ZK detaches .z-cascader-popup to <body> on open() via makeVParent(). These structural
+   rules must be unscoped so they apply after detachment. */
+.z-cascader-popup {
+    position: absolute;
     background-color: var(--zk-color-surface);
     border: 1px solid var(--zk-color-outline-variant);
     border-radius: var(--zk-shape-menu);
     overflow: hidden;
     white-space: nowrap;
+}
+
+/* Closed-state hide: scoped so it only applies while popup is still a child of .z-cascader */
+.z-cascader .z-cascader-popup {
+    display: none;
 }
 
 .z-cascader-shadow {
