@@ -56,39 +56,39 @@
 /* ─── Table cell wrapper sizing ───────────────────────────────────────────── */
 /* ZK reads offsetWidth/offsetHeight for layout math — sizes must be explicit */
 tr.z-splitter-outer > td {
-    height: 8px;
-    max-height: 8px;
+    height: var(--zk-splitter-thickness);
+    max-height: var(--zk-splitter-thickness);
 }
 
 td.z-splitter-outer {
-    width: 8px;
-    max-width: 8px;
+    width: var(--zk-splitter-thickness);
+    max-width: var(--zk-splitter-thickness);
     padding: 0;
 }
 
 /* ─── Splitter base ───────────────────────────────────────────────────────── */
 /* surface-container at rest — tonal strip that recedes until interacted with */
 .z-splitter {
-    background-color: var(--zk-color-surface-container);
+    background-color: var(--zk-splitter-bar-bg);
     position: relative;
     overflow: hidden;
-    transition: background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+    transition: var(--zk-splitter-transition);
 }
 
 /* Bar hover — primary-tinted mix signals resize affordance across the full hit area */
 .z-splitter:hover {
-    background-color: color-mix(in srgb, var(--zk-color-primary) calc(var(--zk-state-hover-opacity) * 100%), var(--zk-color-surface-container));
+    background-color: var(--zk-splitter-bar-bg-hover);
 }
 
 /* Bar drag/active — deepens to pressed-opacity tint while user holds mousedown */
 .z-splitter:active {
-    background-color: color-mix(in srgb, var(--zk-color-primary) calc(var(--zk-state-pressed-opacity) * 100%), var(--zk-color-surface-container));
+    background-color: var(--zk-splitter-bar-bg-active);
 }
 
 /* ─── Horizontal splitter (inside hbox — vertical bar, col-resize) ────────── */
 /* z-splitter-horizontal means it divides horizontally (left | right) */
 .z-splitter-horizontal {
-    width: 8px;
+    width: var(--zk-splitter-thickness);
     overflow: hidden;
     cursor: col-resize;
 }
@@ -96,7 +96,7 @@ td.z-splitter-outer {
 /* ─── Vertical splitter (inside vbox — horizontal bar, row-resize) ────────── */
 /* z-splitter-vertical means it divides vertically (top / bottom) */
 .z-splitter-vertical {
-    height: 8px;
+    height: var(--zk-splitter-thickness);
     overflow: hidden;
     cursor: row-resize;
 }
@@ -132,11 +132,11 @@ td.z-splitter-outer {
     position: absolute;
     top: 0;
     left: 0;
-    background-color: var(--zk-color-outline-variant);
+    background-color: var(--zk-splitter-pill-fill);
     border: none;
-    border-radius: var(--zk-shape-corner-full);
+    border-radius: var(--zk-splitter-pill-radius);
     box-shadow: none;
-    color: var(--zk-color-on-surface-variant);
+    color: var(--zk-splitter-pill-icon);
     cursor: pointer;
     transition:
         background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard),
@@ -147,23 +147,23 @@ td.z-splitter-outer {
    Cross-axis (width) = bar thickness; left: 0 is sufficient since both are 8px. */
 .z-splitter-horizontal > .z-splitter-button {
     flex-direction: column;
-    width: 8px;
-    height: 28px;
+    width: var(--zk-splitter-thickness);
+    height: var(--zk-splitter-pill-length);
 }
 
 /* horizontal bar (vertical splitter): pill is 28px wide × 8px tall.
    Cross-axis (height) = bar thickness; top: 0 is sufficient since both are 8px. */
 .z-splitter-vertical > .z-splitter-button {
     flex-direction: row;
-    width: 28px;
-    height: 8px;
+    width: var(--zk-splitter-pill-length);
+    height: var(--zk-splitter-thickness);
 }
 
 /* Pill hover — fills primary, icons flip to on-primary */
 .z-splitter-button:hover,
 .z-splitter:hover .z-splitter-button {
-    background-color: var(--zk-color-primary);
-    color: var(--zk-color-on-primary);
+    background-color: var(--zk-splitter-pill-fill-hover);
+    color: var(--zk-splitter-pill-icon-hover);
 }
 
 /* Disabled button (collapse="none") — suppress pointer */
@@ -186,7 +186,7 @@ td.z-splitter-outer {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    font-size: 8px;
+    font-size: var(--zk-splitter-icon-size);
     line-height: 1;
     color: inherit;
 }
@@ -218,7 +218,7 @@ td.z-splitter-outer {
 /* Non-resizable — keep idle tint; no resize affordance (DESIGN.md §14) */
 .z-splitter-nosplitter:hover,
 .z-splitter-nosplitter:active {
-    background-color: var(--zk-color-surface-container);
+    background-color: var(--zk-splitter-bar-bg);
 }
 
 /* ─── Drag ghost ──────────────────────────────────────────────────────────── */

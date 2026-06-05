@@ -337,8 +337,8 @@
 .z-goldenlayout .lm_splitter {
     position: relative;
     z-index: 2; /* base CSS: splitter sits above pane content */
-    background-color: transparent;
-    transition: background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+    background-color: transparent; /* GL exception (DESIGN.md §14, 2026-06-06) — NOT --zk-splitter-bar-bg */
+    transition: var(--zk-splitter-transition);
 }
 
 /* lm_horizontal = vertical bar (splits left|right); lm_vertical = horizontal bar */
@@ -357,19 +357,19 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: var(--zk-color-outline-variant);
-    border-radius: var(--zk-shape-corner-full);
+    background-color: var(--zk-splitter-pill-fill);
+    border-radius: var(--zk-splitter-pill-radius);
     transition: background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
 }
 
 .z-goldenlayout .lm_splitter.lm_horizontal::before {
-    width: 8px;
-    height: 28px;
+    width: var(--zk-splitter-thickness);
+    height: var(--zk-splitter-pill-length);
 }
 
 .z-goldenlayout .lm_splitter.lm_vertical::before {
-    width: 28px;
-    height: 8px;
+    width: var(--zk-splitter-pill-length);
+    height: var(--zk-splitter-thickness);
 }
 
 /* Grip dots — 8px Lucide ellipsis mask, always visible (family: opacity 1) */
@@ -379,9 +379,9 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 8px;
-    height: 8px;
-    background-color: var(--zk-color-on-surface-variant);
+    width: var(--zk-splitter-icon-size);
+    height: var(--zk-splitter-icon-size);
+    background-color: var(--zk-splitter-pill-icon);
     transition: background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
 }
 
@@ -401,11 +401,11 @@
 
 /* Pill fills primary on hover; grips flip to on-primary (family spec) */
 .z-goldenlayout .lm_splitter:hover::before {
-    background-color: var(--zk-color-primary);
+    background-color: var(--zk-splitter-pill-fill-hover);
 }
 
 .z-goldenlayout .lm_splitter:hover::after {
-    background-color: var(--zk-color-on-primary);
+    background-color: var(--zk-splitter-pill-icon-hover);
 }
 
 .z-goldenlayout .lm_splitter.lm_dragging {

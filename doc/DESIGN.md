@@ -304,6 +304,13 @@ One resize affordance across the app. Four implementations share this spec:
 `splitter` (zul.box), `borderlayout` region splitters, `splitlayout` (zkmax), and
 `goldenlayout` `.lm_splitter`.
 
+**Implementation source (2026-06-06):** the canonical values below are defined ONCE as
+`--zk-splitter-*` tokens in `zul/css/tokens/_splitter.css` (globally loaded via
+`norm.css.dsp`). Component CSS must consume the tokens — never restate these values as
+literals (gap log 2026-06-04 family fragmentation; 2026-06-06 cursor drift). Documented
+per-component exceptions (GL transparent gutter, splitlayout 1px bar border, borderlayout
+44px pill growth) stay local in their component file with a comment citing this section.
+
 | Property | Canonical value |
 |----------|-----------------|
 | Bar thickness | **8px** (`--zk-spacing-2`) — both axes/orientations |

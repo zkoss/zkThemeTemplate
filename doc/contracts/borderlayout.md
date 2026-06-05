@@ -79,6 +79,8 @@ The borderlayout uses the MD3 surface elevation system to signal region hierarch
 | c40 | `*-header`                                        | color             | `var(--zk-color-on-surface-variant)`                                                    | DESIGN.md §3      |
 | c41 | `.z-splitter-ghost`                               | background-color  | `var(--zk-color-primary)`                                                               | DESIGN.md §3      |
 | c42 | `.z-splitter-ghost`                               | opacity           | 0.3                                                                                     | DESIGN.md §7      |
+| c43 | `.z-west-splitter, .z-east-splitter`              | cursor            | `col-resize`                                                                            | DESIGN.md §14 — family cursor (added 2026-06-06; encoded failing: CSS shipped `ew-resize`, a §14 drift no row asserted) |
+| c44 | `.z-north-splitter, .z-south-splitter`            | cursor            | `row-resize`                                                                            | DESIGN.md §14 — family cursor (added 2026-06-06; encoded failing: CSS shipped `ns-resize`) |
 
 ## State matrix
 

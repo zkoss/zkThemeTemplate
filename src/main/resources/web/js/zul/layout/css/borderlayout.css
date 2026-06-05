@@ -124,37 +124,37 @@
 .z-west-splitter,
 .z-east-splitter {
     position: absolute;
-    width: 8px;
-    cursor: ew-resize;
+    width: var(--zk-splitter-thickness);
+    cursor: col-resize; /* family cursor (DESIGN.md §14) — was ew-resize, drift fixed 2026-06-06 (c43) */
     overflow: visible;
-    background-color: var(--zk-color-surface-container);
+    background-color: var(--zk-splitter-bar-bg);
     z-index: 20;
-    transition: background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+    transition: var(--zk-splitter-transition);
 }
 
 .z-north-splitter,
 .z-south-splitter {
     position: absolute;
-    height: 8px;
-    cursor: ns-resize;
+    height: var(--zk-splitter-thickness);
+    cursor: row-resize; /* family cursor (DESIGN.md §14) — was ns-resize, drift fixed 2026-06-06 (c44) */
     overflow: visible;
-    background-color: var(--zk-color-surface-container);
+    background-color: var(--zk-splitter-bar-bg);
     z-index: 20;
-    transition: background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+    transition: var(--zk-splitter-transition);
 }
 
 .z-west-splitter:hover,
 .z-east-splitter:hover,
 .z-north-splitter:hover,
 .z-south-splitter:hover {
-    background-color: color-mix(in srgb, var(--zk-color-primary) calc(var(--zk-state-hover-opacity) * 100%), var(--zk-color-surface-container));
+    background-color: var(--zk-splitter-bar-bg-hover);
 }
 
 .z-west-splitter:active,
 .z-east-splitter:active,
 .z-north-splitter:active,
 .z-south-splitter:active {
-    background-color: color-mix(in srgb, var(--zk-color-primary) calc(var(--zk-state-pressed-opacity) * 100%), var(--zk-color-surface-container));
+    background-color: var(--zk-splitter-bar-bg-active);
 }
 
 /* ─── Splitter buttons (collapse toggle) ─────────────────────────────────── *
@@ -184,15 +184,15 @@
     justify-content: center;
     gap: 2px;
     position: absolute;
-    background-color: var(--zk-color-outline-variant);
+    background-color: var(--zk-splitter-pill-fill);
     border: none;
-    border-radius: var(--zk-shape-corner-full);
+    border-radius: var(--zk-splitter-pill-radius);
     box-shadow: none;
-    width: 8px;
-    height: 28px;
+    width: var(--zk-splitter-thickness);
+    height: var(--zk-splitter-pill-length);
     /* No margin-left: pill cross-axis (8px) == bar width (8px); JS manages long-axis via margin-top */
     cursor: pointer;
-    color: var(--zk-color-on-surface-variant);
+    color: var(--zk-splitter-pill-icon);
     transform: translateY(0);
     transition:
         background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard),
@@ -209,15 +209,15 @@
     justify-content: center;
     gap: 2px;
     position: absolute;
-    background-color: var(--zk-color-outline-variant);
+    background-color: var(--zk-splitter-pill-fill);
     border: none;
-    border-radius: var(--zk-shape-corner-full);
+    border-radius: var(--zk-splitter-pill-radius);
     box-shadow: none;
-    width: 28px;
-    height: 8px;
+    width: var(--zk-splitter-pill-length);
+    height: var(--zk-splitter-thickness);
     /* No margin-top: pill cross-axis (8px) == bar height (8px); JS manages long-axis via margin-left */
     cursor: pointer;
-    color: var(--zk-color-on-surface-variant);
+    color: var(--zk-splitter-pill-icon);
     transform: translateX(0);
     transition:
         background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard),
@@ -252,8 +252,8 @@
 .z-west-splitter:active .z-west-splitter-button,
 .z-east-splitter:hover .z-east-splitter-button,
 .z-east-splitter:active .z-east-splitter-button {
-    background-color: var(--zk-color-primary);
-    color: var(--zk-color-on-primary);
+    background-color: var(--zk-splitter-pill-fill-hover);
+    color: var(--zk-splitter-pill-icon-hover);
     height: 44px;             /* grow to accommodate the now-visible caret */
     transform: translateY(-8px); /* (44 − 28) / 2 — shift up so growth is symmetric */
 }
@@ -262,8 +262,8 @@
 .z-north-splitter:active .z-north-splitter-button,
 .z-south-splitter:hover .z-south-splitter-button,
 .z-south-splitter:active .z-south-splitter-button {
-    background-color: var(--zk-color-primary);
-    color: var(--zk-color-on-primary);
+    background-color: var(--zk-splitter-pill-fill-hover);
+    color: var(--zk-splitter-pill-icon-hover);
     width: 44px;
     transform: translateX(-8px);
 }
@@ -289,7 +289,7 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    font-size: 8px;
+    font-size: var(--zk-splitter-icon-size);
     line-height: 1;
     color: inherit;
 }

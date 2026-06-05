@@ -73,6 +73,8 @@ Before measurement, load applicable rules from the `zk-component-rules` skill at
 
 The skill tells you **what selector to query and how to trigger the state**. The contract still owns the **expected value**.
 
+**Splitter-family trigger**: if the component is one of `splitter`, `borderlayout`, `splitlayout`, `goldenlayout`, also read `doc/DESIGN.md` §14 (Splitter Family). When a splitter bar/pill/icon check fails, classify it: a deviation from a §14 canonical value is a FAMILY failure (root cause is usually a literal restated instead of the `--zk-splitter-*` token from `zul/css/tokens/_splitter.css` — flag in the report that the other three members may share it), whereas a deviation §14 explicitly lists as that component's exception is expected — do not fail it against the family value.
+
 4. **Attribute-state sweep (input components only).** Before finalising the failing-set, for any component whose contract lists an attribute-driven state (`inplace`, `buttonVisible-false`, etc.) you MUST measure that state's selector on the live page. A missing CSS rule produces no console error and no test failure — the only signal is `getComputedStyle` returning the wrong value. Do not infer pass from "the rule should exist if a sibling has it" — siblings in the same `.css.dsp` do NOT share source files (see `reference/css-file-bundling.md` → "Bundling ≠ source file sharing"). Measure each component's selector independently.
 
 ### 2. Verify preview app is reachable

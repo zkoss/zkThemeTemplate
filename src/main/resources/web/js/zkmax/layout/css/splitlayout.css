@@ -55,11 +55,11 @@
    Transition animates hover tint at standard speed. */
 .z-splitlayout-splitter {
     position: relative;
-    background-color: var(--zk-color-surface-container);
-    border: 1px solid var(--zk-color-outline-variant);
+    background-color: var(--zk-splitter-bar-bg);
+    border: 1px solid var(--zk-color-outline-variant); /* splitlayout-specific: 1px divider line (contract c2) */
     cursor: default;
     box-sizing: border-box;
-    transition: background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+    transition: var(--zk-splitter-transition);
 }
 
 /* ── Splitter bar — vertical orient (horizontal dividing bar) ────────────── */
@@ -68,8 +68,8 @@
    thickness when ZK's runtime z-flex classes make the root a flex column. */
 .z-splitlayout-splitter-vertical {
     width: 100%;
-    height: var(--zk-spacing-2);
-    max-height: var(--zk-spacing-2);
+    height: var(--zk-splitter-thickness);
+    max-height: var(--zk-splitter-thickness);
 }
 
 /* ── Splitter bar — horizontal orient (vertical dividing bar) ────────────── */
@@ -78,8 +78,8 @@
    pins the bar thickness under the runtime flex-row state. */
 .z-splitlayout-splitter-horizontal {
     display: inline-block;
-    width: var(--zk-spacing-2);
-    max-width: var(--zk-spacing-2);
+    width: var(--zk-splitter-thickness);
+    max-width: var(--zk-splitter-thickness);
     height: 100%;
 }
 
@@ -100,17 +100,17 @@
 /* Non-resizable — keep idle tint; no resize affordance (DESIGN.md §14) */
 .z-splitlayout-splitter-nosplitter:hover,
 .z-splitlayout-splitter-nosplitter:active {
-    background-color: var(--zk-color-surface-container);
+    background-color: var(--zk-splitter-bar-bg);
 }
 
 /* ── Bar hover + drag states ─────────────────────────────────────────────── */
 .z-splitlayout-splitter:hover {
-    background-color: color-mix(in srgb, var(--zk-color-primary) calc(var(--zk-state-hover-opacity) * 100%), var(--zk-color-surface-container));
+    background-color: var(--zk-splitter-bar-bg-hover);
 }
 
 /* Drag/active — deepens to pressed-opacity tint while user holds mousedown */
 .z-splitlayout-splitter:active {
-    background-color: color-mix(in srgb, var(--zk-color-primary) calc(var(--zk-state-pressed-opacity) * 100%), var(--zk-color-surface-container));
+    background-color: var(--zk-splitter-bar-bg-active);
 }
 
 /* ── Actuator pill (collapse toggle button) ──────────────────────────────── *
@@ -145,11 +145,11 @@
     position: absolute;
     top: 0;
     left: 0;
-    background-color: var(--zk-color-outline-variant);
+    background-color: var(--zk-splitter-pill-fill);
     border: none;
-    border-radius: var(--zk-shape-corner-full);
+    border-radius: var(--zk-splitter-pill-radius);
     box-shadow: none;
-    color: var(--zk-color-on-surface-variant);
+    color: var(--zk-splitter-pill-icon);
     cursor: pointer;
     transition:
         background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard),
@@ -161,8 +161,8 @@
    margin-top:0 !important neutralizes setBtnPos_ inline margin (timing-safe). */
 .z-splitlayout-splitter-horizontal .z-splitlayout-splitter-button {
     flex-direction: column;
-    width: 8px;
-    height: 28px;
+    width: var(--zk-splitter-thickness);
+    height: var(--zk-splitter-pill-length);
     top: 50%;
     left: 0;
     margin-top: 0 !important;
@@ -175,8 +175,8 @@
    setBtnPos_ call time — flex layout unresolved — so JS writes margin-left:0px). */
 .z-splitlayout-splitter-vertical .z-splitlayout-splitter-button {
     flex-direction: row;
-    width: 28px;
-    height: 8px;
+    width: var(--zk-splitter-pill-length);
+    height: var(--zk-splitter-thickness);
     top: 0;
     left: 50%;
     margin-left: 0 !important;
@@ -185,15 +185,15 @@
 
 /* Pill hover — fills primary, icons flip to on-primary */
 .z-splitlayout-splitter-button:hover {
-    background-color: var(--zk-color-primary);
-    color: var(--zk-color-on-primary);
+    background-color: var(--zk-splitter-pill-fill-hover);
+    color: var(--zk-splitter-pill-icon-hover);
 }
 
 /* Bar hover wires pill color — hovering anywhere on the 8px bar activates the
    pill, not just hovering over the pill itself (wider activation zone). */
 .z-splitlayout-splitter:hover .z-splitlayout-splitter-button {
-    background-color: var(--zk-color-primary);
-    color: var(--zk-color-on-primary);
+    background-color: var(--zk-splitter-pill-fill-hover);
+    color: var(--zk-splitter-pill-icon-hover);
 }
 
 /* Disabled button (collapse="none") — suppress pointer */
@@ -208,7 +208,7 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    font-size: 8px;
+    font-size: var(--zk-splitter-icon-size);
     line-height: 1;
     color: inherit;
 }

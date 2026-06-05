@@ -15,6 +15,7 @@ const normFiles = [
     'zul/css/tokens/_elevation.css',
     'zul/css/tokens/_motion.css',
     'zul/css/tokens/_shape.css',
+    'zul/css/tokens/_splitter.css',
     'zul/css/base/_reset.css',
     // Utility CSS — split by sidebar category (see usecase/index.zul "Utility CSS").
     // NOTE: no default-rhythm file — widgets carry zero default margins (ZK's

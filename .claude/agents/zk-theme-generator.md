@@ -53,6 +53,7 @@ Before the contract step, load applicable component rules from the `zk-component
    - Shared CSS file / sibling impact → `reference/css-file-bundling.md` (read especially "Bundling ≠ source file sharing" — a rule in `combobox.css` does NOT apply to `datebox.css` even though they ship in `combo.css.dsp`)
    - Component edition (CE/PE/EE) constraints → `reference/edition-availability.md`
    - Selector that targets an unintuitive class name (`.z-panelchildren`, `.z-rating-icon`, etc.) → `reference/class-name-quirks.md`
+4. **Splitter-family trigger**: if the component is one of `splitter`, `borderlayout`, `splitlayout`, `goldenlayout` AND the failing-set touches any splitter bar/pill/icon check, read `doc/DESIGN.md` §14 (Splitter Family) before editing. The canonical values are `--zk-splitter-*` tokens (`zul/css/tokens/_splitter.css`) — consume the tokens, never restate the values as literals. If the fix changes a FAMILY value (the token itself or §14), state in your gen report under `Sibling impact:` that the other three family members need re-evaluation; documented per-component exceptions (§14 lists them) stay local.
 
 If the skill files contradict the contract's expected values, that is a bug — surface it in your gen report under a `Skill conflict:` note and proceed using the contract as the authoritative spec for this run.
 
