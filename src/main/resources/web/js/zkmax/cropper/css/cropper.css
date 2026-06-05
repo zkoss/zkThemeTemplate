@@ -1,10 +1,234 @@
 .z-cropper {
+    display: inline-block; /* c6: structural — shrink-wraps border to image (upstream codegen) */
+    position: relative;
     border: 1px solid var(--zk-color-outline-variant);
     border-radius: var(--zk-shape-corner-extra-small);
     overflow: hidden;
 }
 
-.z-cropper-toolbar {
-    background-color: var(--zk-color-surface);
-    border-top: 1px solid var(--zk-color-outline-variant);
+/* Structural rules for the Jcrop-injected subtree — required by theme (Jcrop ships no stylesheet).
+   Geometry values verbatim from upstream codegen cropper.css.dsp.
+   White on handles/outline is intentional literal (Jcrop visibility convention over dimmed photo, not a token violation). */
+
+.z-cropper-area {
+    position: absolute;
+    cursor: move;
+    outline: 1px solid white; /* intentional literal: Jcrop convention — selection outline over dimmed image */
 }
+
+.z-cropper .jcrop-dragbar {
+    display: block;
+    width: 6px;
+    height: 6px;
+    position: absolute;
+}
+
+.z-cropper .jcrop-dragbar.ord-n,
+.z-cropper .jcrop-dragbar.ord-s {
+    width: 100%;
+}
+
+.z-cropper .jcrop-dragbar.ord-e,
+.z-cropper .jcrop-dragbar.ord-w {
+    height: 100%;
+}
+
+.z-cropper .jcrop-dragbar.ord-n {
+    transform: translateY(-50%);
+}
+
+.z-cropper .jcrop-dragbar.ord-e {
+    transform: translateX(50%);
+}
+
+.z-cropper .jcrop-dragbar.ord-w {
+    transform: translateX(-50%);
+}
+
+.z-cropper .jcrop-dragbar.ord-s {
+    transform: translateY(50%);
+}
+
+.z-cropper-handle {
+    display: block;
+    background: white; /* intentional literal: Jcrop convention — handle visibility over dimmed image */
+    width: 6px;
+    height: 6px;
+    position: absolute;
+}
+
+.z-cropper-handle.ord-n {
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.z-cropper-handle.ord-e {
+    top: 50%;
+    transform: translate(50%, -50%);
+}
+
+.z-cropper-handle.ord-w {
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.z-cropper-handle.ord-s {
+    left: 50%;
+    transform: translate(-50%, 50%);
+}
+
+.z-cropper .ord-n {
+    cursor: row-resize;
+    top: 0;
+}
+
+.z-cropper .ord-e {
+    cursor: col-resize;
+    right: 0;
+}
+
+.z-cropper .ord-w {
+    cursor: col-resize;
+    left: 0;
+}
+
+.z-cropper .ord-s {
+    cursor: row-resize;
+    bottom: 0;
+}
+
+.z-cropper .ord-ne {
+    cursor: nesw-resize;
+    top: 0;
+    right: 0;
+    transform: translate(50%, -50%);
+}
+
+.z-cropper .ord-nw {
+    cursor: nwse-resize;
+    top: 0;
+    left: 0;
+    transform: translate(-50%, -50%);
+}
+
+.z-cropper .ord-se {
+    cursor: nwse-resize;
+    bottom: 0;
+    right: 0;
+    transform: translate(50%, 50%);
+}
+
+.z-cropper .ord-sw {
+    cursor: nesw-resize;
+    bottom: 0;
+    left: 0;
+    transform: translate(-50%, 50%);
+}
+
+.z-cropper-holder {
+    direction: ltr;
+    cursor: crosshair;
+    text-align: left;
+}
+
+.z-cropper-holder img {
+    max-width: none; /* structural — Jcrop needs unconstrained image width for crop geometry */
+}
+
+.z-cropper-vline,
+.z-cropper-hline {
+    font-size: 0;
+    position: absolute;
+}
+
+.z-cropper-vline {
+    height: 100%;
+    width: 1px !important;
+}
+
+.z-cropper-vline.right {
+    right: 0;
+}
+
+.z-cropper-hline {
+    height: 1px !important;
+    width: 100%;
+}
+
+.z-cropper-hline.bottom {
+    bottom: 0;
+}
+
+.z-cropper-tracker {
+    width: 100%;
+    height: 100%;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+/* MD3 floating toolbar (c4, c5, c7, c8) — JS positions it (position: absolute required);
+   _positionToolbar measures outerWidth(true), so margin is the sanctioned selection-clearance mechanism */
+.z-cropper-toolbar {
+    position: absolute;
+    margin: var(--zk-spacing-2) var(--zk-spacing-1); /* c8: 8px clearance from selection edge */
+    padding: var(--zk-spacing-1);
+    background-color: var(--zk-color-surface-container);
+    border-radius: var(--zk-shape-corner-full);
+    box-shadow: var(--zk-elevation-2);
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.z-cropper-toolbar > ul {
+    display: flex;
+    gap: var(--zk-spacing-1);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+/* MD3 compact text buttons (c9, c10, c11, c12) */
+.z-cropper-toolbar > ul > li > a {
+    position: relative;
+    overflow: hidden;
+    display: inline-flex;
+    align-items: center;
+    min-height: 32px;
+    padding: 0 var(--zk-spacing-3);
+    border-radius: var(--zk-shape-corner-full);
+    font-size: var(--zk-typescale-label-large-size);
+    font-weight: var(--zk-typescale-label-large-weight);
+    line-height: var(--zk-typescale-label-large-line-height);
+    text-decoration: none;
+    text-transform: capitalize;
+}
+
+.z-cropper-crop > a {
+    color: var(--zk-color-primary); /* c9: confirming action */
+}
+
+.z-cropper-cancel > a {
+    color: var(--zk-color-on-surface-variant); /* c10: dismissive action */
+}
+
+/* c11: standard theme state-layer (button.css ::before convention) */
+.z-cropper-toolbar > ul > li > a::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background-color: currentColor;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+}
+
+.z-cropper-toolbar > ul > li > a:hover::before { opacity: var(--zk-state-hover-opacity); }
+.z-cropper-toolbar > ul > li > a:active::before { opacity: var(--zk-state-pressed-opacity); }
+
+/* the mold's anchors carry no z-* class (it sits on the <li>), so the reset's
+   prose-link heuristic a[href]:not([class*="z-"]):hover would underline them —
+   [href] here matches its specificity */
+.z-cropper-toolbar > ul > li > a[href]:hover { text-decoration: none; }

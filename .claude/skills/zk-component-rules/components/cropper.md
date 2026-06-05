@@ -1,6 +1,8 @@
 # cropper
 
-An image cropping widget backed by the Jcrop jQuery library (EE component from zkmax). ZK renders a root `<div class="z-cropper">` containing an `<img>` for the image source and, when `enableToolbar="true"` (default), a floating `<div class="z-cropper-toolbar">` with crop/cancel action items. Jcrop initializes on the `<img>` at `bindChildren_` time and injects its entire crop-selection DOM — holder, overlay, dragbars, handles, guide lines, tracker — internally. That Jcrop-injected subtree is **not authored by ZK** and must not be targeted by theme CSS.
+An image cropping widget backed by the Jcrop jQuery library (PE component from zkmax — edition per ZKDoc badge, not source location). ZK renders a root `<div class="z-cropper">` containing an `<img>` for the image source and, when `enableToolbar="true"` (default), a floating `<div class="z-cropper-toolbar">` with crop/cancel action items. Jcrop initializes on the `<img>` at `bindChildren_` time and injects its entire crop-selection DOM — holder, overlay, dragbars, handles, guide lines, tracker — internally.
+
+**Jcrop ships NO stylesheet in ZK's integration** — the theme CSS is the *only* source of structural rules for the Jcrop-injected subtree. Upstream codegen (`/Users/hawk/Documents/workspace/ZK10/zkcml/zkmax/codegen/resources/web/js/zkmax/cropper/css/cropper.css.dsp`) ships ~30 structural rules every theme MUST reproduce, or the crop UI is invisible/broken: `.z-cropper-handle` (6×6 blocks + 8 per-ordinal position/transform rules), `.jcrop-dragbar` (6px bars stretched per axis), `.z-cropper-area` (`outline: 1px solid white`, `cursor: move`), `.z-cropper-vline`/`-hline` (1px guide lines), `.z-cropper-tracker` (full-size event overlay), `.z-cropper-holder` (`cursor: crosshair` etc.), `.z-cropper-holder img { max-width: none }`, and `.z-cropper { display: inline-block }` (shrink-wrap). Confirmed 2026-06-05: Marble shipped without these → all 8 handles rendered 0×0 (invisible). The earlier "Jcrop DOM is off-limits for theme CSS" rule was over-broad — the correct boundary is: **structural rules (size/position/transform/cursor) are REQUIRED and must match upstream geometry verbatim; only decorative aspects (handle/outline color, opacity) are theme choices; never set width/height on `.z-cropper-holder` or its `img` — JS owns those.**
 
 The toolbar is absolutely positioned by JS (`_positionToolbar`) relative to the current selection rectangle. It is hidden (`display: none`) at rest and shown only when a crop selection exists. It does not appear in the static DOM inspection without a live selection.
 
@@ -58,11 +60,12 @@ States rely on Jcrop's own DOM mutation (not on ZK class toggles):
 - `aspectRatio="N"` → passed to Jcrop's `setOptions()`; no CSS effect
 - `minWidth` / `minHeight` / `maxWidth` / `maxHeight` → passed to Jcrop; no CSS effect
 - `x`, `y`, `w`, `h` → initial selection coordinates; passed to Jcrop; no CSS effect
-- `width` / `height` → standard ZK widget sizing; applied as inline styles on `<img>` and propagated via `setFlexSizeW_` / `setFlexSizeH_`
+- `width` / `height` → standard ZK widget sizing; applied as inline styles on `<img>` and propagated via `setFlexSizeW_` / `setFlexSizeH_`. **Cap fact**: the `load` handler re-clamps the img to `min(cropperWidth, naturalWidth)` / `min(cropperHeight, naturalHeight)` — ZK **never upscales** the image. Setting `width` larger than the image's natural width therefore leaves dead space inside the root (inline width stays on `.z-cropper`) in *every* theme; it's only invisible in themes with a borderless wrapper (iceblue). Pages should not set `width`/`height` beyond the image's natural size.
 - `crossOrigin` → sets `crossorigin` attribute on `<img>`
 
 ## Composition invariants
 
+- **The cropper requires an externally determined size** (explicit `width`/`height`, hflex/vflex, or a sized parent). `onSize → _jcrop.resizeImage(jqCropper.width(), jqCropper.height())` feeds the ROOT's rendered size back into the Jcrop holder/img — but with the `display: inline-block` shrink-wrapped root, the root's size is itself derived from the holder. An unsized cropper therefore collapses in a feedback loop (first onSize reads ~0 → holder set to 0 → root shrinks to 0 → stable broken state; observed live 2026-06-05 when the preview page's `width` was removed). Pages must set `width` equal to (never above — see the cap fact under Attribute support) the image's natural width.
 - The root `.z-cropper` must have `position: relative` for the JS-positioned toolbar to anchor correctly. Jcrop also depends on the image being a relative-positioned context.
 - The toolbar `z-index: 601` is hard-coded in the mold (`style="z-index: 601;"`). This value is chosen to exceed Jcrop's internal maximum z-index. Theme CSS must not set a `z-index` on `.z-cropper-toolbar` that conflicts (the inline style already wins).
 - `overflow: hidden` on `.z-cropper` is required so that the `border-radius` on the wrapper clips the Jcrop-injected content correctly.
@@ -79,11 +82,11 @@ No ZK component sibling shares this CSS file. The toolbar button row (`.z-croppe
 
 ## Edition
 
-EE (zkmax)
+PE (per ZKDoc `cropper.md` edition badge, since 8.6.0; code ships in zkmax sources — source location does NOT determine the licensed edition, the ZKDoc badge does)
 
 ## Notes
 
-- **Jcrop-injected DOM is off-limits for theme CSS.** Selectors targeting `.z-cropper-holder`, `.z-cropper-area`, `.z-cropper-vline`, `.z-cropper-hline`, `.z-cropper-tracker`, `.z-cropper-handle`, `.jcrop-dragbar` are Jcrop internals. The only ZK-styleable elements are `.z-cropper` (wrapper), `.z-cropper-toolbar`, and its `<ul>/<li>/<a>` descendants.
+- **Jcrop-injected DOM requires theme-shipped structural CSS** (corrected 2026-06-05; the earlier "off-limits" rule here was wrong). `.z-cropper-holder`, `.z-cropper-area`, `.z-cropper-vline`, `.z-cropper-hline`, `.z-cropper-tracker`, `.z-cropper-handle`, `.jcrop-dragbar` are Jcrop-injected but **unstyled by Jcrop itself** — copy the structural rules from the upstream codegen `cropper.css.dsp` (path in the intro above). Freely restylable: only `.z-cropper` wrapper chrome and the `.z-cropper-toolbar` + `<ul>/<li>/<a>` descendants; for the Jcrop subtree restyle decorative values only (colors/opacity), never geometry.
 - **`.z-cropper-canvas` does not exist.** The earlier contract draft listed `.z-cropper-canvas` as a key selector — this is wrong. The compiled theme CSS and eval report both confirm `.z-cropper-holder` is the Jcrop-injected image area; `.z-cropper-canvas` is never emitted by ZK or Jcrop.
 - The `baseClass` passed to Jcrop is the widget's `zclass` (`z-cropper`), which is why Jcrop emits classes like `.z-cropper-holder`, `.z-cropper-area`, `.z-cropper-vline`, `.z-cropper-hline`, `.z-cropper-tracker`, `.z-cropper-handle` instead of the default `jcrop-` prefix. The dragbars keep the `jcrop-dragbar` name because Jcrop hardcodes that within its source.
 - The `zWatch.listen({ onSize: self })` hook in `bindChildren_` calls `_jcrop.resizeImage()` on container resize — the image and Jcrop selection geometry auto-adapt. Theme CSS must not set `width` or `height` on `.z-cropper-holder` or the contained `img` — JS owns those.
