@@ -67,6 +67,7 @@ Load only the file for the component you are working on.
 |------|--------------------|
 | `components/bandbox.md` | bandbox (popup vs bandpopup, button class location) |
 | `components/borderlayout.md` | borderlayout (JS absolute-positioning engine, 5 regions, splitter bar + pill button DOM, collapsed placeholder, z-index map, do-not-flex rule) |
+| `components/box.md` | hbox + vbox (default mold is nested TABLES — never change `display`; `-chdex`/`-chdex2` anatomy; no `-cell` classes exist; splitter drag depends on the table chain) |
 | `components/button.md` | button (vertical orient via `<br/>`, `:has(br)` selector) |
 | `components/calendar.md` | calendar (z-calendar-today not on cells, cell-width arithmetic) |
 | `components/checkbox.md` | checkbox + 3 molds (checkbox, switch, toggle) — mold-prefixed state classes |
@@ -89,7 +90,7 @@ Load only the file for the component you are working on.
 | `components/separator.md` | separator (transparent base, horizontal-bar variant) |
 | `components/signature.md` | signature (EE) — T3 two-canvas wrapper + absolute toolbar strip, native `<button>` tools (no ZK state classes), `.z-signature-toolbar-hide` toggle |
 | `components/slider.md` | slider (no disabled/invalid sclass; 4 molds: default/sphere/scale CE + knob PE; knob = SVG rotary dial, CSS-themable boundary documented) |
-| `components/splitter.md` | splitter (cursor mode, ghost element, delivery merged into box.css) |
+| `components/splitter.md` | splitter (cursor mode, ghost element, delivery merged into box.css, drag persists via px on parent-box `<td>`s — table chain required) |
 | `components/stepbar.md` | stepbar + step (EE) — circle-marker + pseudo-element connector pattern, `.z-step-complete` not `-completed`, `.z-step-icon` not `-number` |
 | `components/tabbox.md` | tabbox (5 orientation classes including accordion) |
 | `components/tbeditor.md` | tbeditor (EE) — T3 chrome around Trumbowyg-injected DOM, prefix-namespaced classes (`z-tbeditor-*`), fullscreen body-attach |

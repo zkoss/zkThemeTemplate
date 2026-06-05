@@ -1,42 +1,46 @@
-/* MD3 Box — hbox and vbox layout containers */
-
-/* Horizontal box */
-.z-hbox {
-    display: inline-flex;
-    flex-direction: row;
-    align-items: flex-start;
-    flex-wrap: nowrap;
-    box-sizing: border-box;
-}
-
-/* Horizontal box full-width */
-.z-hbox.z-hbox-block {
-    display: flex;
-    width: 100%;
-}
-
-/* Vertical box */
+/* MD3 Box — hbox and vbox layout containers
+   DOM: the default mold is nested TABLES (table.z-hbox/.z-vbox > tr > td-frame >
+   table#-real > tr/td chdex cells) — see skill components/box.md.
+   NEVER change display on .z-hbox/.z-vbox: the mold's inline width/height:100%
+   chain and Splitter's drag persistence (px written onto adjacent <td>s) both
+   require native table layout. Stock ZK (box.less) only resets table spacing —
+   we mirror that. */
+.z-hbox,
 .z-vbox {
-    display: inline-flex;
-    flex-direction: column;
-    align-items: flex-start;
-    flex-wrap: nowrap;
-    box-sizing: border-box;
+    border-spacing: 0;
 }
 
-/* Vertical box full-width */
-.z-vbox.z-vbox-block {
-    display: flex;
-    width: 100%;
+.z-hbox th,
+.z-hbox td,
+.z-vbox th,
+.z-vbox td {
+    padding: 0;
+    background-clip: padding-box;
 }
 
-/* Box cells */
-.z-hbox-cell,
-.z-vbox-cell {
-    flex-shrink: 0;
-    box-sizing: border-box;
-    display: flex;
-    align-items: flex-start;
+.z-hbox th,
+.z-vbox th {
+    text-align: inherit;
+}
+
+/* Separators — default gap when spacing="auto"; the spacing attribute
+   overrides via inline width/height */
+.z-hbox-separator,
+.z-vbox-separator {
+    margin: 0;
+    padding: 0;
+}
+
+.z-hbox-separator {
+    width: 0.3em;
+}
+
+.z-vbox-separator {
+    height: 0.3em;
+}
+
+.z-vbox-separator td {
+    line-height: 0; /* separator holds a spacer img — kill line-box height */
 }
 
 /* MD3 Splitter — resize/collapse handle between hbox/vbox panes

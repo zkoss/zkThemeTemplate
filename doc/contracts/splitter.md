@@ -13,6 +13,21 @@ zk-version: 10.2.1-jakarta
 - Closest siblings: `borderlayout` region splitters and `splitlayout` splitter — identical ZK mold pattern (bar + `<span>-button` + grip/caret/grip icons) and identical `setBtnPos_` JS centering (see skill file).
 - Visual goal: one resize affordance across the app — unobtrusive tonal strip at rest, primary-tinted on hover, pill actuator.
 
+## Visual outcome
+
+A splitter is a working resize handle, not a decorated strip: dragging the bar moves the boundary between its two sibling panes, and the bar itself tracks the new boundary. In the default mold the parent hbox/vbox is a nested-TABLE layout (`table.z-hbox/.z-vbox > tr > td-frame > table#-real > tr/td`); ZK persists a drag by writing inline px `width`/`height` on the adjacent `<td>`s, and sizes the bar itself via `width:100%` (vertical) / px height (horizontal) — all of which require the table display chain and the inline `width/height:100%` chain to stay intact. See `.claude/skills/zk-component-rules/components/box.md`.
+
+## Outcome assertions
+
+Outcome-level predicates that gate `VERIFIED`: failing any row blocks VERIFIED even if all declared-value rows pass. Measured on `/splitter.zul` Default Mold (hbox 300px high containing a 100%×100% vbox + side splitter; vbox contains an inner splitter).
+
+| id | predicate | rationale |
+|----|-----------|-----------|
+| M1 | **%-chain integrity**: the vbox's inner `#<uuid>-real` table bbox height equals the vbox root bbox height ± 2px, and the hbox's inner `-real` table bbox width+height match the hbox content box ± 2px | added 2026-06-06 — the mold's inline `width/height:100%` must resolve; theme CSS that changes `display` on `.z-hbox`/`.z-vbox` breaks the chain. Pre-fix FAILURE measured 2026-06-06: vbox `-real` table 68px tall inside a 300px vbox (theme `display:inline-flex` on the outer table → anonymous-table wrapper with auto size) |
+| M2 | **drag follows (vertical splitter)**: after a pointer-event drag of `.z-splitter-vertical` by +80px down (dispatched mousedown → stepped mousemoves → mouseup, target away from the pill — the screenshot-tool single-gesture drag does NOT drive ZK's Draggable; same protocol as splitlayout M10/M11), the bar's bbox top moves by min(80, `_snap` clamp = adjacent-pane offsetHeight − bar) ± 2px and persists ≥ 300ms later | added 2026-06-06 — user report: vertical bar never moves. Pre-fix FAILURE measured 2026-06-06: bbox unchanged (rows squashed to content height → clamp ≈ 0, so the px heights `_doDragEndResize` writes had no room to act). Post-fix: +80px requested → +80px measured, persists |
+| M3 | **drag follows (horizontal splitter)**: same protocol with +50px right on `.z-splitter-horizontal` — bbox left moves by min(50, clamp) ± 2px and persists ≥ 300ms later | added 2026-06-06 — same mechanism on the other axis (inline px `width` on adjacent tds). Post-fix: +50px requested → +35px measured = exact clamp (narrow right pane), persists |
+| M4 | **cross-axis stretch propagation**: after M3's drag, the inner `.z-splitter-vertical` bar's bbox width equals its vbox root bbox width ± 2px (i.e. the bar lengthened with the widened pane) | added 2026-06-06 — user report: widening the left pane never lengthens the inner bar. The bar's `width:100%`/`_fixsz` resize chain must reach the resized td |
+
 ## Expected values (T2) — DESIGN.md §14
 - Bar: 8px thick (`--zk-spacing-2`), background `--zk-color-surface-container` at rest.
 - Bar hover: `color-mix(in srgb, var(--zk-color-primary) calc(var(--zk-state-hover-opacity) * 100%), var(--zk-color-surface-container))`.
