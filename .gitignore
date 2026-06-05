@@ -27,3 +27,5 @@ tasks/todo.md
 tasks/prompt.md
 tasks/prompt2.md
 tasks/scrape_mira.py
+tasks
+.vscode
