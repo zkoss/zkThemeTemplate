@@ -26,21 +26,15 @@
     box-sizing: border-box;
 }
 
-/* ─── Region edge borders ─────────────────────────────────────────────────── *
- * Region borders on the splittable edges (north→bottom, south→top, west→right,
- * east→left) are intentionally OMITTED here — the inter-region divider is
- * painted by the splitter strip's `::before` hairline (see "Splitter divider"
- * section below). Drawing both produces a visible double-paint at idle and a
- * stacking conflict at hover. If a region is non-splittable AND the author
- * needs an explicit boundary, add it on the page (e.g. `<style>` block or
- * sclass override). 99% of layouts have splitters, so this is the right
- * default.
- * ─────────────────────────────────────────────────────────────────────────── */
-
 /* ─── North (top) ─────────────────────────────────────────────────────────── */
 .z-north {
     background-color: var(--zk-color-surface);
+    border-bottom: 1px solid var(--zk-color-outline-variant);
     z-index: 16;
+}
+
+.z-north-noborder {
+    border-bottom: none;
 }
 
 .z-north-body {
@@ -52,7 +46,12 @@
 /* ─── South (bottom) ──────────────────────────────────────────────────────── */
 .z-south {
     background-color: var(--zk-color-surface);
+    border-top: 1px solid var(--zk-color-outline-variant);
     z-index: 14;
+}
+
+.z-south-noborder {
+    border-top: none;
 }
 
 .z-south-body {
@@ -64,7 +63,12 @@
 /* ─── West (left sidebar) ─────────────────────────────────────────────────── */
 .z-west {
     background-color: var(--zk-color-surface-container-low);
+    border-right: 1px solid var(--zk-color-outline-variant);
     z-index: 12;
+}
+
+.z-west-noborder {
+    border-right: none;
 }
 
 .z-west-body {
@@ -76,7 +80,12 @@
 /* ─── East (right sidebar) ────────────────────────────────────────────────── */
 .z-east {
     background-color: var(--zk-color-surface-container-low);
+    border-left: 1px solid var(--zk-color-outline-variant);
     z-index: 10;
+}
+
+.z-east-noborder {
+    border-left: none;
 }
 
 .z-east-body {
@@ -102,14 +111,12 @@
 }
 
 /* ─── Splitters ──────────────────────────────────────────────────────────── *
- * The strip is now a 12px tonal bar (surface-container-low) — wide enough to
- * host the actuator pill flush, narrow enough to read as a divider. The
- * tonal fill itself replaces the previous 1px hairline + transparent-strip
- * pattern (the hairline was redundant once the strip became visibly tinted).
+ * The strip is an 8px tonal bar (surface-container) — DESIGN.md §14 splitter
+ * family spec. The tonal fill replaces the previous 1px hairline + transparent
+ * pattern (hairline was redundant once the strip became visibly tinted).
  *
- * Hover treatment is on the strip background, not on a separate hairline —
- * the entire strip darkens slightly so the user sees the resize affordance
- * across the full 12px hit area.
+ * Hover treatment: the entire strip tints with the primary color-mix so the
+ * user sees the resize affordance across the full 8px hit area.
  *
  * z-index:20 keeps the strip's pill above neighbouring regions (north 16,
  * center 8). Without it the pill's overhang gets visually clipped.
@@ -117,10 +124,10 @@
 .z-west-splitter,
 .z-east-splitter {
     position: absolute;
-    width: 12px;
+    width: 8px;
     cursor: ew-resize;
     overflow: visible;
-    background-color: var(--zk-color-surface-container-low);
+    background-color: var(--zk-color-surface-container);
     z-index: 20;
     transition: background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
 }
@@ -128,23 +135,26 @@
 .z-north-splitter,
 .z-south-splitter {
     position: absolute;
-    height: 12px;
+    height: 8px;
     cursor: ns-resize;
     overflow: visible;
-    background-color: var(--zk-color-surface-container-low);
+    background-color: var(--zk-color-surface-container);
     z-index: 20;
     transition: background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
 }
 
 .z-west-splitter:hover,
-.z-west-splitter:active,
 .z-east-splitter:hover,
-.z-east-splitter:active,
 .z-north-splitter:hover,
+.z-south-splitter:hover {
+    background-color: color-mix(in srgb, var(--zk-color-primary) calc(var(--zk-state-hover-opacity) * 100%), var(--zk-color-surface-container));
+}
+
+.z-west-splitter:active,
+.z-east-splitter:active,
 .z-north-splitter:active,
-.z-south-splitter:hover,
 .z-south-splitter:active {
-    background-color: var(--zk-color-surface-container);
+    background-color: color-mix(in srgb, var(--zk-color-primary) calc(var(--zk-state-pressed-opacity) * 100%), var(--zk-color-surface-container));
 }
 
 /* ─── Splitter buttons (collapse toggle) ─────────────────────────────────── *
@@ -158,11 +168,10 @@
  * MD3 has no formal "splitter" component; the closest analogues are the
  * Bottom-Sheet drag handle (a 4×32dp inline pill) and the surface-tinted
  * divider. We compose the two:
- *   - Strip: 12px tonal bar (above) — provides the drag affordance.
+ *   - Strip: 8px tonal bar (above) — provides the drag affordance.
  *   - Actuator pill: a slim 8×28 inline pill that fits flush inside the
- *     strip's 12px width, no shadow, no overhang. Outline fill at idle,
- *     primary fill on hover. NO elevation lift (the strip is the actuator,
- *     not a button popping off it).
+ *     8px strip (pill cross-axis == bar thickness; no margin offset needed).
+ *     Outline fill at idle, primary fill on hover. NO elevation lift.
  *
  * The caret glyph is HIDDEN at idle so the pill reads as a pure drag handle
  * (grip dots only). On hover the caret fades in to communicate "click to
@@ -178,9 +187,10 @@
     background-color: var(--zk-color-outline-variant);
     border: none;
     border-radius: var(--zk-shape-corner-full);
+    box-shadow: none;
     width: 8px;
     height: 28px;
-    margin-left: 2px;         /* (12 − 8) / 2 — centre the pill in the 12px strip */
+    /* No margin-left: pill cross-axis (8px) == bar width (8px); JS manages long-axis via margin-top */
     cursor: pointer;
     color: var(--zk-color-on-surface-variant);
     transform: translateY(0);
@@ -202,9 +212,10 @@
     background-color: var(--zk-color-outline-variant);
     border: none;
     border-radius: var(--zk-shape-corner-full);
+    box-shadow: none;
     width: 28px;
     height: 8px;
-    margin-top: 2px;          /* (12 − 8) / 2 — centre the pill in the 12px strip */
+    /* No margin-top: pill cross-axis (8px) == bar height (8px); JS manages long-axis via margin-left */
     cursor: pointer;
     color: var(--zk-color-on-surface-variant);
     transform: translateX(0);
@@ -235,8 +246,8 @@
  * splitter on the page whenever any one was being dragged.
  *
  * Hover on the parent strip is also wired in: moving the cursor anywhere
- * on the 12px strip (not just precisely on the 8px pill) expands the pill,
- * giving the user a generous activation zone. ──────────────────────────── */
+ * on the 8px strip (not just precisely on the pill) expands the pill,
+ * giving the user a generous activation zone. ───────────────────────────── */
 .z-west-splitter:hover .z-west-splitter-button,
 .z-west-splitter:active .z-west-splitter-button,
 .z-east-splitter:hover .z-east-splitter-button,
@@ -292,32 +303,32 @@
 
 /* Caret is the collapse-toggle hint. Hidden at idle so the pill reads as a
  * pure drag handle; fades in on hover to communicate the click action. The
- * pill itself grows on the long axis to make room when the caret appears. */
-.z-west-icon.z-icon-caret-left,
-.z-east-icon.z-icon-caret-right,
-.z-north-icon.z-icon-caret-up,
-.z-south-icon.z-icon-caret-down {
-    font-size: 10px;
+ * pill itself grows on the long axis to make room when the caret appears.
+ * Uses [class*="z-icon-caret"] to match all four directions in one rule. */
+.z-west-icon[class*="z-icon-caret"],
+.z-east-icon[class*="z-icon-caret"],
+.z-north-icon[class*="z-icon-caret"],
+.z-south-icon[class*="z-icon-caret"] {
     opacity: 0;
     transition: opacity var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
 }
 
-.z-west-splitter:hover .z-icon-caret-left,
-.z-west-splitter:active .z-icon-caret-left,
-.z-east-splitter:hover .z-icon-caret-right,
-.z-east-splitter:active .z-icon-caret-right,
-.z-north-splitter:hover .z-icon-caret-up,
-.z-north-splitter:active .z-icon-caret-up,
-.z-south-splitter:hover .z-icon-caret-down,
-.z-south-splitter:active .z-icon-caret-down {
+.z-west-splitter:hover .z-west-icon[class*="z-icon-caret"],
+.z-west-splitter:active .z-west-icon[class*="z-icon-caret"],
+.z-east-splitter:hover .z-east-icon[class*="z-icon-caret"],
+.z-east-splitter:active .z-east-icon[class*="z-icon-caret"],
+.z-north-splitter:hover .z-north-icon[class*="z-icon-caret"],
+.z-north-splitter:active .z-north-icon[class*="z-icon-caret"],
+.z-south-splitter:hover .z-south-icon[class*="z-icon-caret"],
+.z-south-splitter:active .z-south-icon[class*="z-icon-caret"] {
     opacity: 1;
 }
 
-/* Hide disabled icons */
-.z-west-splitter-button-disabled .z-icon-caret-left,
-.z-east-splitter-button-disabled .z-icon-caret-right,
-.z-north-splitter-button-disabled .z-icon-caret-up,
-.z-south-splitter-button-disabled .z-icon-caret-down {
+/* Hide disabled caret icons (closable=false — button renders but caret hidden) */
+.z-west-splitter-button-disabled [class*="z-icon-caret"],
+.z-east-splitter-button-disabled [class*="z-icon-caret"],
+.z-north-splitter-button-disabled [class*="z-icon-caret"],
+.z-south-splitter-button-disabled [class*="z-icon-caret"] {
     display: none;
 }
 

@@ -1,9 +1,10 @@
 /* MD3 Splitlayout — resizable two-pane container (EE only)
-   Root:      .z-splitlayout (white-space:nowrap, overflow:hidden)
+   Root:      .z-splitlayout (display: flex; flex-direction driven by JS class)
    Caves:     .z-splitlayout-cave-top/bottom (vertical) | -left/-right (horizontal)
    Splitter:  .z-splitlayout-splitter[-vertical|-horizontal][-draggable|-nosplitter]
    Button:    .z-splitlayout-splitter-button[.z-splitlayout-splitter-button-disabled]
-   Icons:     .z-splitlayout-splitter-icon (three <i> per button: drag / caret / drag) */
+   Icons:     .z-splitlayout-splitter-icon (three <i> per button: grip / caret / grip)
+   Family:    DESIGN.md §14 — unified splitter-family spec (bar + actuator pill) */
 
 /* ── Root container ──────────────────────────────────────────────────────── */
 /* Splitlayout JS adds `.z-flex` + `.z-flex-row` or `.z-flex-column` to root,
@@ -47,11 +48,11 @@
 }
 
 /* ── Splitter bar — base ─────────────────────────────────────────────────── */
-/* position:relative makes the bar a positioning context for its <i> icons.
+/* position:relative makes the bar a positioning context for the splitter button.
    background-color uses surface-container so the bar recedes at rest.
    border draws the 1px divider line (outline-variant = subtle grey).
-   cursor:default on bare bar (draggable modifier overrides below).
-   transition animates hover tint smoothly. */
+   cursor:default on bare bar; draggable modifier overrides below.
+   Transition animates hover tint at standard speed. */
 .z-splitlayout-splitter {
     position: relative;
     flex: 0 0 auto;
@@ -59,7 +60,7 @@
     border: 1px solid var(--zk-color-outline-variant);
     cursor: default;
     box-sizing: border-box;
-    transition: background-color var(--zk-motion-duration-short3);
+    transition: background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
 }
 
 /* ── Splitter bar — vertical orient (horizontal dividing bar) ────────────── */
@@ -92,41 +93,136 @@
     cursor: default;
 }
 
-/* ── Hover state ─────────────────────────────────────────────────────────── */
+/* Non-resizable — keep idle tint; no resize affordance (DESIGN.md §14) */
+.z-splitlayout-splitter-nosplitter:hover,
+.z-splitlayout-splitter-nosplitter:active {
+    background-color: var(--zk-color-surface-container);
+}
+
+/* ── Bar hover + drag states ─────────────────────────────────────────────── */
 .z-splitlayout-splitter:hover {
     background-color: color-mix(in srgb, var(--zk-color-primary) calc(var(--zk-state-hover-opacity) * 100%), var(--zk-color-surface-container));
 }
 
-.z-splitlayout-splitter:hover .z-splitlayout-splitter-button {
-    color: var(--zk-color-primary);
+/* Drag/active — deepens to pressed-opacity tint while user holds mousedown */
+.z-splitlayout-splitter:active {
+    background-color: color-mix(in srgb, var(--zk-color-primary) calc(var(--zk-state-pressed-opacity) * 100%), var(--zk-color-surface-container));
 }
 
-/* ── Collapse button ─────────────────────────────────────────────────────── */
-/* Centered in the splitter bar; cursor:pointer when active (not disabled).
-   position:relative ensures the three <i> icons can be positioned within it.
-   Disabled variant suppresses the cursor affordance. */
+/* ── Actuator pill (collapse toggle button) ──────────────────────────────── *
+ * ZK's mold renders a three-icon button inside the splitter bar:
+ *   <span class="z-splitlayout-splitter-button">
+ *     <i class="z-splitlayout-splitter-icon z-icon-ellipsis-{h|v}"></i>  ← grip 1
+ *     <i class="z-splitlayout-splitter-icon z-icon-caret-{dir}"></i>     ← caret
+ *     <i class="z-splitlayout-splitter-icon z-icon-ellipsis-{h|v}"></i>  ← grip 2
+ *   </span>
+ *
+ * MD3 has no formal splitter; we compose the MD3 bottom-sheet drag handle
+ * (a slim inline pill) with a surface-tinted divider (see borderlayout.css
+ * lines ~150–170 for full rationale).
+ *
+ * CRITICAL — axis ownership rule (see .claude/skills/zk-component-rules/components/splitlayout.md):
+ *   Splitlayout.ts `setBtnPos_` writes an inline margin on the bar's LONG axis
+ *   to centre the pill:
+ *     • orient="horizontal" (vertical bar)  → inline `margin-top  = (barH − btnH)/2`
+ *     • orient="vertical"   (horizontal bar) → inline `margin-left = (barW − btnW)/2`
+ *   Rule: NEVER half-mix. Each axis must be owned ENTIRELY by JS OR entirely by CSS.
+ *   For the vertical-orient bar, `offsetWidth` is 0 at `setBtnPos_` call time
+ *   (flex layout not yet resolved), so JS writes `margin-left: 0px` and the pill
+ *   sits at the left edge. CSS takes FULL ownership of the long axis for BOTH
+ *   orientations: `left/top: 50% + transform` + `margin-left/top: 0 !important`
+ *   (stylesheet !important beats inline non-important). The cross-axis is 8px on
+ *   both bar and pill, so top:0 / left:0 on the base rule suffices there. ───────── */
 .z-splitlayout-splitter-button {
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: 2px;
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    top: 0;
+    left: 0;
+    background-color: var(--zk-color-outline-variant);
+    border: none;
+    border-radius: var(--zk-shape-corner-full);
+    box-shadow: none;
     color: var(--zk-color-on-surface-variant);
     cursor: pointer;
-    transition: color var(--zk-motion-duration-short3);
+    transition:
+        background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard),
+        color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
 }
 
+/* horizontal orient (vertical bar): pill is 8px wide × 28px tall.
+   CSS owns the long axis (vertical): top:50% + translateY(-50%).
+   margin-top:0 !important neutralizes setBtnPos_ inline margin (timing-safe). */
+.z-splitlayout-splitter-horizontal .z-splitlayout-splitter-button {
+    flex-direction: column;
+    width: 8px;
+    height: 28px;
+    top: 50%;
+    left: 0;
+    margin-top: 0 !important;
+    transform: translateY(-50%);
+}
+
+/* vertical orient (horizontal bar): pill is 28px wide × 8px tall.
+   CSS owns the long axis (horizontal): left:50% + translateX(-50%).
+   margin-left:0 !important neutralizes setBtnPos_ inline margin (offsetWidth=0 at
+   setBtnPos_ call time — flex layout unresolved — so JS writes margin-left:0px). */
+.z-splitlayout-splitter-vertical .z-splitlayout-splitter-button {
+    flex-direction: row;
+    width: 28px;
+    height: 8px;
+    top: 0;
+    left: 50%;
+    margin-left: 0 !important;
+    transform: translateX(-50%);
+}
+
+/* Pill hover — fills primary, icons flip to on-primary */
+.z-splitlayout-splitter-button:hover {
+    background-color: var(--zk-color-primary);
+    color: var(--zk-color-on-primary);
+}
+
+/* Bar hover wires pill color — hovering anywhere on the 8px bar activates the
+   pill, not just hovering over the pill itself (wider activation zone). */
+.z-splitlayout-splitter:hover .z-splitlayout-splitter-button {
+    background-color: var(--zk-color-primary);
+    color: var(--zk-color-on-primary);
+}
+
+/* Disabled button (collapse="none") — suppress pointer */
 .z-splitlayout-splitter-button-disabled {
+    border-width: 0;
     cursor: default;
 }
 
 /* ── Splitter icons ──────────────────────────────────────────────────────── */
-/* Icons use the shared z-icon-* pattern; no sizing needed here (inherits from
-   the icon CSS layer in norm.css.dsp). */
+/* Grip and caret glyphs share the same base. */
 .z-splitlayout-splitter-icon {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    font-size: 8px;
+    line-height: 1;
+    color: inherit;
+}
+
+/* Grip dots (ellipsis-h / ellipsis-v) — always visible drag affordance */
+.z-splitlayout-splitter-icon.z-icon-ellipsis-h,
+.z-splitlayout-splitter-icon.z-icon-ellipsis-v {
+    opacity: 1;
+}
+
+/* Collapse caret — hidden at idle, fades in on pill hover to signal collapse
+   action without cluttering the resting state. */
+.z-splitlayout-splitter-icon:not(.z-icon-ellipsis-h):not(.z-icon-ellipsis-v) {
+    opacity: 0;
+    transition: opacity var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+}
+
+.z-splitlayout-splitter-button:hover .z-splitlayout-splitter-icon:not(.z-icon-ellipsis-h):not(.z-icon-ellipsis-v),
+.z-splitlayout-splitter:hover .z-splitlayout-splitter-icon:not(.z-icon-ellipsis-h):not(.z-icon-ellipsis-v) {
+    opacity: 1;
 }

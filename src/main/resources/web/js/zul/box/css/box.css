@@ -42,11 +42,12 @@
 /* MD3 Splitter — resize/collapse handle between hbox/vbox panes
    DOM (inside hbox/vbox table):
      tr.z-splitter-outer > td.z-splitter-outer > .z-splitter.z-splitter-horizontal
-     .z-splitter > .z-splitter-button > <i.z-splitter-icon.z-icon-ellipsis-v> x3
+     .z-splitter > .z-splitter-button > <i.z-splitter-icon> x3 (grip / caret / grip)
    Orientation:
      z-splitter-horizontal = vertical drag handle (col-resize cursor) inside hbox
      z-splitter-vertical   = horizontal drag handle (row-resize cursor) inside vbox
-   State: z-splitter-nosplitter added when collapsed (collapse="before/after") */
+   State: z-splitter-nosplitter added when collapsed (collapse="before/after")
+   Family: DESIGN.md §14 — unified splitter-family spec (bar + actuator pill) */
 
 /* ─── Table cell wrapper sizing ───────────────────────────────────────────── */
 /* ZK reads offsetWidth/offsetHeight for layout math — sizes must be explicit */
@@ -62,62 +63,107 @@ td.z-splitter-outer {
 }
 
 /* ─── Splitter base ───────────────────────────────────────────────────────── */
+/* surface-container at rest — tonal strip that recedes until interacted with */
 .z-splitter {
-    border: 1px solid var(--zk-color-outline-variant);
-    background-color: var(--zk-color-surface-variant);
+    background-color: var(--zk-color-surface-container);
     position: relative;
     overflow: hidden;
     transition: background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
 }
 
+/* Bar hover — primary-tinted mix signals resize affordance across the full hit area */
 .z-splitter:hover {
-    background-color: color-mix(in srgb, var(--zk-color-primary) 12%, var(--zk-color-surface-variant));
+    background-color: color-mix(in srgb, var(--zk-color-primary) calc(var(--zk-state-hover-opacity) * 100%), var(--zk-color-surface-container));
+}
+
+/* Bar drag/active — deepens to pressed-opacity tint while user holds mousedown */
+.z-splitter:active {
+    background-color: color-mix(in srgb, var(--zk-color-primary) calc(var(--zk-state-pressed-opacity) * 100%), var(--zk-color-surface-container));
 }
 
 /* ─── Horizontal splitter (inside hbox — vertical bar, col-resize) ────────── */
 /* z-splitter-horizontal means it divides horizontally (left | right) */
 .z-splitter-horizontal {
     width: 8px;
-    border-width: 0 1px 1px;
     overflow: hidden;
     cursor: col-resize;
-}
-
-.z-splitter-horizontal > .z-splitter-button {
-    width: 8px;
-    height: 30px;
-    border-width: 1px 0;
 }
 
 /* ─── Vertical splitter (inside vbox — horizontal bar, row-resize) ────────── */
 /* z-splitter-vertical means it divides vertically (top / bottom) */
 .z-splitter-vertical {
     height: 8px;
-    border-width: 1px 0;
     overflow: hidden;
     cursor: row-resize;
 }
 
-.z-splitter-vertical > .z-splitter-button {
-    width: 30px;
-    height: 8px;
-    border-width: 0 1px;
-}
-
-/* ─── Button (collapse toggle handle) ────────────────────────────────────── */
+/* ─── Actuator pill (collapse toggle button) ─────────────────────────────── *
+ * ZK mold renders three icons inside the button:
+ *   <span class="z-splitter-button">
+ *     <i class="z-splitter-icon z-icon-ellipsis-{v|h}"></i>  ← grip 1
+ *     <i class="z-splitter-icon z-icon-caret-{dir}"></i>      ← caret
+ *     <i class="z-splitter-icon z-icon-ellipsis-{v|h}"></i>  ← grip 2
+ *   </span>
+ *
+ * MD3 has no formal splitter; we compose the MD3 bottom-sheet drag handle
+ * (a slim inline pill) with a surface-tinted divider (see borderlayout.css
+ * lines ~150–170 for full rationale).
+ *
+ * CRITICAL — JS centering rule (applies to entire splitter family):
+ *   Splitter.ts `setBtnPos_` writes an inline margin on the bar's LONG axis
+ *   to centre the pill:
+ *     • z-splitter-horizontal (vertical bar) → inline `margin-left = (barH − btnH)/2`
+ *     • z-splitter-vertical   (horizontal bar) → inline `margin-top = (barW − btnW)/2`
+ *   Inline style always overrides stylesheet. If CSS ALSO sets `top/left: 50%`
+ *   or `transform: translate(-50%)` on the same axis, the two stack and push
+ *   the pill to the end of the bar (double-centering bug).
+ *   Solution: `position: absolute; top: 0; left: 0` — containment only.
+ *   No centering transforms, no top/left percentages on the JS-managed axis.
+ *   See .claude/skills/zk-component-rules/components/splitter.md ─────────── */
 .z-splitter-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: var(--zk-color-outline-variant);
+    border: none;
+    border-radius: var(--zk-shape-corner-full);
+    box-shadow: none;
     color: var(--zk-color-on-surface-variant);
-    display: inline-block;
-    position: relative;
-    vertical-align: top;
     cursor: pointer;
-    border: 1px solid var(--zk-color-outline-variant);
-    background-color: var(--zk-color-surface);
-    border-radius: 2px;
+    transition:
+        background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard),
+        color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
 }
 
+/* vertical bar (horizontal splitter): pill is 8px wide × 28px tall.
+   Cross-axis (width) = bar thickness; left: 0 is sufficient since both are 8px. */
+.z-splitter-horizontal > .z-splitter-button {
+    flex-direction: column;
+    width: 8px;
+    height: 28px;
+}
+
+/* horizontal bar (vertical splitter): pill is 28px wide × 8px tall.
+   Cross-axis (height) = bar thickness; top: 0 is sufficient since both are 8px. */
+.z-splitter-vertical > .z-splitter-button {
+    flex-direction: row;
+    width: 28px;
+    height: 8px;
+}
+
+/* Pill hover — fills primary, icons flip to on-primary */
+.z-splitter-button:hover,
+.z-splitter:hover .z-splitter-button {
+    background-color: var(--zk-color-primary);
+    color: var(--zk-color-on-primary);
+}
+
+/* Disabled button (collapse="none") — suppress pointer */
 .z-splitter-button-disabled {
-    border: 0;
     cursor: default;
 }
 
@@ -129,56 +175,46 @@ td.z-splitter-outer {
     cursor: col-resize;
 }
 
-/* ─── Icon dots (gripper marks) ───────────────────────────────────────────── */
+/* ─── Splitter icons ─────────────────────────────────────────────────────── */
+/* Grip and caret glyphs share the same base — inline-flex at 8px, color inherited
+   from the pill so hover flip from on-surface-variant → on-primary is automatic. */
 .z-splitter-icon {
-    font-size: 14px;
-    position: absolute;
-    color: var(--zk-color-on-surface-variant);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 8px;
+    line-height: 1;
+    color: inherit;
 }
 
-/* Horizontal splitter icons — ellipsis-v (3 dots vertical = gripper for col-resize) */
-.z-splitter-horizontal .z-splitter-icon {
-    top: 8px;
-    left: -3px;
+/* Grip dots (ellipsis-v / ellipsis-h) — always visible drag affordance */
+.z-splitter-icon.z-icon-ellipsis-v,
+.z-splitter-icon.z-icon-ellipsis-h {
+    opacity: 1;
 }
 
-.z-splitter-horizontal .z-splitter-icon.z-icon-ellipsis-v {
-    top: -21px;
-    left: 2px;
-    cursor: col-resize;
-    visibility: hidden;
+/* Collapse caret — hidden at idle so the pill reads as a pure drag handle;
+   fades in on pill hover to communicate the collapse action without cluttering
+   the resting state. */
+.z-splitter-icon:not(.z-icon-ellipsis-v):not(.z-icon-ellipsis-h) {
+    opacity: 0;
+    transition: opacity var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
 }
 
-.z-splitter-horizontal .z-splitter-icon.z-icon-ellipsis-v ~ .z-splitter-icon.z-icon-ellipsis-v {
-    top: 39px;
-}
-
-/* Vertical splitter icons — ellipsis-h (3 dots horizontal = gripper for row-resize) */
-.z-splitter-vertical .z-splitter-icon {
-    font-size: 14px;
-    line-height: normal;
-    top: -4px;
-    left: 9px;
-}
-
-.z-splitter-vertical .z-splitter-icon.z-icon-ellipsis-h {
-    top: -2px;
-    left: -16px;
-    cursor: row-resize;
-    visibility: hidden;
-}
-
-.z-splitter-vertical .z-splitter-icon.z-icon-ellipsis-h ~ .z-splitter-icon.z-icon-ellipsis-h {
-    left: 36px;
-}
-
-.z-splitter:hover .z-splitter-button {
-    color: var(--zk-color-primary);
+.z-splitter-button:hover .z-splitter-icon:not(.z-icon-ellipsis-v):not(.z-icon-ellipsis-h),
+.z-splitter:hover .z-splitter-icon:not(.z-icon-ellipsis-v):not(.z-icon-ellipsis-h) {
+    opacity: 1;
 }
 
 /* ─── Collapsed (nosplitter) state ────────────────────────────────────────── */
 .z-splitter-nosplitter {
     cursor: default;
+}
+
+/* Non-resizable — keep idle tint; no resize affordance (DESIGN.md §14) */
+.z-splitter-nosplitter:hover,
+.z-splitter-nosplitter:active {
+    background-color: var(--zk-color-surface-container);
 }
 
 /* ─── Drag ghost ──────────────────────────────────────────────────────────── */
