@@ -3,9 +3,7 @@
 <style src="~./usecase/usecase.css"/>
 <vlayout hflex="1" sclass="z-d-flex z-flex-col z-gap-4 z-p-4 z-bg-surface-low">
 
-    <toolbar>
-        <label value="Stack Utilities" sclass="z-h2"/>
-    </toolbar>
+    <label value="Stack Utilities" sclass="z-h2"/>
 
     <!-- Concept -->
     <div sclass="z-card">

@@ -1,55 +1,41 @@
 <?page title="Border &amp; Shape Utilities"?>
 <zk>
 <style src="~./usecase/usecase.css"/>
-<style>
-.u-shape-demo {
-    width: 80px;
-    height: 80px;
-    background: var(--zk-color-primary-container);
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--zk-color-on-primary-container);
-    text-align: center;
-}
-</style>
 <vlayout hflex="1" sclass="z-d-flex z-flex-col z-gap-4 z-p-4 z-bg-surface-low">
 
-    <toolbar>
-        <label value="Border &amp; Shape Utilities" sclass="z-h2"/>
-    </toolbar>
+    <label value="Border &amp; Shape Utilities" sclass="z-h2"/>
 
     <!-- Border Sides -->
     <div sclass="z-card">
         <label value="Borders  (.z-border-*)" sclass="z-d-block z-text-base z-fw-medium z-text-on-surface z-mb-3"/>
         <div sclass="z-d-flex z-gap-4 z-flex-wrap">
             <div style="text-align:center">
-                <div sclass="u-shape-demo z-rounded-md z-border"/>
+                <div width="80px" height="80px" sclass="z-bg-primary-container z-d-inline-flex z-align-center z-justify-center z-rounded-md z-border"/>
                 <label value=".z-border" sclass="z-text-muted z-text-xs z-d-block z-mt-1"/>
                 <label value="all sides" sclass="z-text-muted z-text-xs z-d-block"/>
             </div>
             <div style="text-align:center">
-                <div sclass="u-shape-demo z-rounded-md z-border-top"/>
+                <div width="80px" height="80px" sclass="z-bg-primary-container z-d-inline-flex z-align-center z-justify-center z-rounded-md z-border-top"/>
                 <label value=".z-border-top" sclass="z-text-muted z-text-xs z-d-block z-mt-1"/>
                 <label value="top only" sclass="z-text-muted z-text-xs z-d-block"/>
             </div>
             <div style="text-align:center">
-                <div sclass="u-shape-demo z-rounded-md z-border-bottom"/>
+                <div width="80px" height="80px" sclass="z-bg-primary-container z-d-inline-flex z-align-center z-justify-center z-rounded-md z-border-bottom"/>
                 <label value=".z-border-bottom" sclass="z-text-muted z-text-xs z-d-block z-mt-1"/>
                 <label value="bottom only" sclass="z-text-muted z-text-xs z-d-block"/>
             </div>
             <div style="text-align:center">
-                <div sclass="u-shape-demo z-rounded-md z-border-start"/>
+                <div width="80px" height="80px" sclass="z-bg-primary-container z-d-inline-flex z-align-center z-justify-center z-rounded-md z-border-start"/>
                 <label value=".z-border-start" sclass="z-text-muted z-text-xs z-d-block z-mt-1"/>
                 <label value="inline-start" sclass="z-text-muted z-text-xs z-d-block"/>
             </div>
             <div style="text-align:center">
-                <div sclass="u-shape-demo z-rounded-md z-border-end"/>
+                <div width="80px" height="80px" sclass="z-bg-primary-container z-d-inline-flex z-align-center z-justify-center z-rounded-md z-border-end"/>
                 <label value=".z-border-end" sclass="z-text-muted z-text-xs z-d-block z-mt-1"/>
                 <label value="inline-end" sclass="z-text-muted z-text-xs z-d-block"/>
             </div>
             <div style="text-align:center">
-                <div sclass="u-shape-demo z-rounded-md z-border-0 z-bg-surface-container"/>
+                <div width="80px" height="80px" sclass="z-bg-primary-container z-d-inline-flex z-align-center z-justify-center z-rounded-md z-border-0 z-bg-surface-container"/>
                 <label value=".z-border-0" sclass="z-text-muted z-text-xs z-d-block z-mt-1"/>
                 <label value="no border" sclass="z-text-muted z-text-xs z-d-block"/>
             </div>
@@ -62,37 +48,37 @@
         <label value="Border Radius  (.z-rounded-*)" sclass="z-d-block z-text-base z-fw-medium z-text-on-surface z-mb-3"/>
         <div sclass="z-d-flex z-gap-5 z-flex-wrap">
             <div style="text-align:center">
-                <div sclass="u-shape-demo z-rounded-none z-border"/>
+                <div width="80px" height="80px" sclass="z-bg-primary-container z-d-inline-flex z-align-center z-justify-center z-rounded-none z-border"/>
                 <label value=".z-rounded-none" sclass="z-text-muted z-text-xs z-d-block z-mt-1"/>
                 <label value="0px" sclass="z-text-muted z-text-xs z-d-block"/>
             </div>
             <div style="text-align:center">
-                <div sclass="u-shape-demo z-rounded-xs z-border"/>
+                <div width="80px" height="80px" sclass="z-bg-primary-container z-d-inline-flex z-align-center z-justify-center z-rounded-xs z-border"/>
                 <label value=".z-rounded-xs" sclass="z-text-muted z-text-xs z-d-block z-mt-1"/>
                 <label value="corner-extra-small" sclass="z-text-muted z-text-xs z-d-block"/>
             </div>
             <div style="text-align:center">
-                <div sclass="u-shape-demo z-rounded z-border"/>
+                <div width="80px" height="80px" sclass="z-bg-primary-container z-d-inline-flex z-align-center z-justify-center z-rounded z-border"/>
                 <label value=".z-rounded" sclass="z-text-muted z-text-xs z-d-block z-mt-1"/>
                 <label value="corner-small" sclass="z-text-muted z-text-xs z-d-block"/>
             </div>
             <div style="text-align:center">
-                <div sclass="u-shape-demo z-rounded-md z-border"/>
+                <div width="80px" height="80px" sclass="z-bg-primary-container z-d-inline-flex z-align-center z-justify-center z-rounded-md z-border"/>
                 <label value=".z-rounded-md" sclass="z-text-muted z-text-xs z-d-block z-mt-1"/>
                 <label value="corner-medium" sclass="z-text-muted z-text-xs z-d-block"/>
             </div>
             <div style="text-align:center">
-                <div sclass="u-shape-demo z-rounded-lg z-border"/>
+                <div width="80px" height="80px" sclass="z-bg-primary-container z-d-inline-flex z-align-center z-justify-center z-rounded-lg z-border"/>
                 <label value=".z-rounded-lg" sclass="z-text-muted z-text-xs z-d-block z-mt-1"/>
                 <label value="corner-large" sclass="z-text-muted z-text-xs z-d-block"/>
             </div>
             <div style="text-align:center">
-                <div sclass="u-shape-demo z-rounded-xl z-border"/>
+                <div width="80px" height="80px" sclass="z-bg-primary-container z-d-inline-flex z-align-center z-justify-center z-rounded-xl z-border"/>
                 <label value=".z-rounded-xl" sclass="z-text-muted z-text-xs z-d-block z-mt-1"/>
                 <label value="corner-extra-large" sclass="z-text-muted z-text-xs z-d-block"/>
             </div>
             <div style="text-align:center">
-                <div sclass="u-shape-demo z-rounded-full z-border"/>
+                <div width="80px" height="80px" sclass="z-bg-primary-container z-d-inline-flex z-align-center z-justify-center z-rounded-full z-border"/>
                 <label value=".z-rounded-full" sclass="z-text-muted z-text-xs z-d-block z-mt-1"/>
                 <label value="9999px" sclass="z-text-muted z-text-xs z-d-block"/>
             </div>
