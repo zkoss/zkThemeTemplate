@@ -193,8 +193,7 @@ src/main/resources/web/
 │   │   ├── _layout.css       # display, grid, flex, gap, sizing, position
 │   │   ├── _typography.css   # weight, size, align, transform, headings
 │   │   ├── _borders.css      # border + rounded
-│   │   ├── _stack.css        # vstack/hstack
-│   │   └── _rhythm.css       # unlayered default margin-block-end
+│   │   └── _stack.css        # vstack/hstack (opt-in spacing — widgets have no default margins)
 │   └── marble.css            # Global entry styles
 └── js/zul/                   # Component CSS (auto-scanned → *.css.dsp 1:1)
     ├── box/css/

@@ -81,6 +81,10 @@ Consequences for theme CSS:
 - The root's `white-space: nowrap` + caves' `display: inline-block` (horizontal) / `display: block` (vertical) is the layout model that works in **both** runtime states: before drag (ZK's `z-flex*` classes provide the flex layout) and after drag (inline px sizes on block/inline-block caves).
 - Contract rows M10/M11 in `doc/contracts/splitlayout.md` assert this outcome (drag delta sticks ≥ 300ms AND caves stay docked in orientation order).
 
+## Pane fill — child margins become trailing holes (added 2026-06-05)
+
+Caves are **wrapper flex children** (`fcc != c` in `zk/flex.ts applyCSSFlex`): the cave div gets `z-flex-item`, and ZK sizes the widget *inside* it with `calc(100% - <child margins>)` — in **row** orientation it subtracts the child's `marginHeight()` (top+bottom) from **both** width and height. Any default margin on the pane widget (window, grid, panel, …) therefore renders as a same-sized hole between the pane and the splitter/cave edge, in horizontal orientation only (column mode subtracts `marginWidth()`, usually 0 — the asymmetry is the debugging signature). See `reference/css-flex-classes.md` "Margin subtraction". Contract row M12 asserts the outcome: flexed child bbox == cave bbox ±1px, both axes, both orientations.
+
 ## Sibling decomposition
 
 - Splitter bar visual (background, border, hover highlight, drag cursor): aligns with `splitter` — see `components/splitter.md`. The `--zk-splitter-*` legacy vars used in the default CSS must be mapped to the same marble token choices used for `.z-splitter`.

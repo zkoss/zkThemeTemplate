@@ -57,6 +57,7 @@ Both `zk-spec-author` (when authoring) and `zk-theme-evaluator` (when verifying)
 | `reference/floating-popup-in-body.md` | ZK detaches popups (combobox/datebox/timebox/bandbox/chosenbox/cascader/menupopup…) to `<body>` at runtime, so percentage-based widths reference viewport — never `width: 100%` / `min-width: 100%` on the popup root |
 | `reference/css-dsp-pipeline.md` | Our build does not DSP-process `.css.dsp` — any `${…}` / `<%@ %>` in a source `.css` will silently delete the entire file from the WCS bundle. Use `/zkau/web/...` absolute URLs or data: URIs for image refs |
 | `reference/theme-override-is-replace.md` | When a theme provides a CSS at a stock widget's `<css-uri>` path, ZK serves only the theme version — the stock file is NOT loaded. Theme CSS must re-author every structural rule (positioning, orientation, geometry) the widget JS depends on; partial overrides silently break the widget |
+| `reference/css-flex-classes.md` | `.z-flex`/`.z-flex-row`/`.z-flex-column`/`.z-flex-item` are JS-toggled framework classes (`zk/flex.ts`), not theme utilities — define verbatim, never rename, never hard-code their effect on a JS-managed root, never `flex-basis: 0` on JS-sized children, never theme-default margins on flex-capable widgets (ZK subtracts them via `calc()`) |
 
 ### Component-specific (`components/`)
 

@@ -61,6 +61,17 @@
     margin-left: var(--zk-spacing-3);
 }
 
+/* Stacked-panel gutter (vertical orient columns): margin-bottom on every
+   panel in a column. Scoped here on purpose — widgets carry NO theme-default
+   margins (ZK's flex sizing subtracts child margins; see skill
+   reference/css-flex-classes.md "Margin subtraction"), so portallayout
+   supplies its own stacking gap. Was previously inherited from the removed
+   global rhythm rule (gap log 2026-06-05). Portal panels are float/inline-%
+   sized by portallayout's own JS, not css-flex, so this margin is safe. */
+.z-portalchildren-content > .z-panel {
+    margin-bottom: var(--zk-spacing-3);
+}
+
 /* ─── Column base (all orientations) ────────────────────────────────────── */
 /* overflow:hidden contains panels within column bounds */
 .z-portalchildren {

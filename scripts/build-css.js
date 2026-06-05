@@ -17,8 +17,9 @@ const normFiles = [
     'zul/css/tokens/_shape.css',
     'zul/css/base/_reset.css',
     // Utility CSS — split by sidebar category (see usecase/index.zul "Utility CSS").
-    // _rhythm.css MUST come last: it is intentionally unlayered so component
-    // CSS can override it; later source order also wins ties.
+    // NOTE: no default-rhythm file — widgets carry zero default margins (ZK's
+    // flex sizing subtracts child margins; spacing is opt-in via _stack.css /
+    // _spacing.css — see doc/spacing-policy.md, gap log 2026-06-05).
     'zul/css/utility/_colors.css',
     'zul/css/utility/_elevation.css',
     'zul/css/utility/_components.css',
@@ -27,7 +28,6 @@ const normFiles = [
     'zul/css/utility/_typography.css',
     'zul/css/utility/_borders.css',
     'zul/css/utility/_stack.css',
-    'zul/css/utility/_rhythm.css',
     'zul/css/base/_badges.css',
     'zul/css/base/_chips.css',
     'zul/css/base/_avatars.css',

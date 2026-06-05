@@ -144,15 +144,15 @@
         </div>
     </div>
 
-    <!-- Default rhythm vs opt-in -->
+    <!-- Opt-in spacing (no default widget margins) -->
     <div sclass="z-card">
-        <label value="Default Rhythm vs Opt-in Stack" sclass="z-d-block z-text-base z-fw-medium z-text-on-surface z-mb-3"/>
+        <label value="Opt-in Spacing — Widgets Have No Default Margins" sclass="z-d-block z-text-base z-fw-medium z-text-on-surface z-mb-3"/>
         <label sclass="z-d-block z-text-secondary z-text-sm z-mb-3"
-               value="Block-level container widgets (cardlayout, panel, window, grid, listbox, tree, tabbox, …) already have 12px margin-block-end by default — no .z-vstack needed. Use .z-vstack only when grouping arbitrary children (form rows, sections, atomic widgets)."/>
+               value="No widget carries a theme-default margin (ZK's hflex/vflex sizing measures child margins — see doc/spacing-policy.md). To space stacked widgets, put .z-vstack on the parent; it works for container widgets (panel, window, grid, …) and atomic widgets alike."/>
         <div sclass="z-d-grid z-grid-cols-2 z-gap-4">
             <div>
-                <label value="Default rhythm — no wrapper needed" sclass="z-d-block z-text-sm z-fw-semibold z-mb-2"/>
-                <div sclass="z-bg-surface-variant z-rounded z-p-3">
+                <label value=".z-vstack — container widgets" sclass="z-d-block z-text-sm z-fw-semibold z-mb-2"/>
+                <div sclass="z-bg-surface-variant z-rounded z-p-3 z-vstack">
                     <panel title="Panel A" border="normal">
                         <panelchildren style="padding:12px">Block widget #1</panelchildren>
                     </panel>
@@ -164,17 +164,17 @@
                     </panel>
                 </div>
                 <label sclass="z-d-block z-text-secondary z-text-xs z-mt-2"
-                       value="No sclass on the container. Each panel has 12px margin-block-end."/>
+                       value="One sclass on the container — 12px between each panel. Without it the panels sit flush."/>
             </div>
             <div>
-                <label value="Opt-in stack — for atomic widgets" sclass="z-d-block z-text-sm z-fw-semibold z-mb-2"/>
+                <label value=".z-vstack — atomic widgets" sclass="z-d-block z-text-sm z-fw-semibold z-mb-2"/>
                 <div sclass="z-bg-surface-variant z-rounded z-p-3 z-vstack">
                     <textbox hflex="1" placeholder="textbox #1"/>
                     <textbox hflex="1" placeholder="textbox #2"/>
                     <textbox hflex="1" placeholder="textbox #3"/>
                 </div>
                 <label sclass="z-d-block z-text-secondary z-text-xs z-mt-2"
-                       value="Atomic widgets (textbox, button, checkbox) have no built-in margin — wrap in .z-vstack."/>
+                       value="Same pattern for textbox, button, checkbox — spacing is always declared on the parent."/>
             </div>
         </div>
     </div>
