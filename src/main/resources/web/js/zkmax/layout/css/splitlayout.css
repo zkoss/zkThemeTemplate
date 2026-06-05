@@ -1,5 +1,5 @@
 /* MD3 Splitlayout — resizable two-pane container (EE only)
-   Root:      .z-splitlayout (display: flex; flex-direction driven by JS class)
+   Root:      .z-splitlayout (white-space: nowrap; ZK toggles z-flex* at runtime)
    Caves:     .z-splitlayout-cave-top/bottom (vertical) | -left/-right (horizontal)
    Splitter:  .z-splitlayout-splitter[-vertical|-horizontal][-draggable|-nosplitter]
    Button:    .z-splitlayout-splitter-button[.z-splitlayout-splitter-button-disabled]
@@ -7,44 +7,44 @@
    Family:    DESIGN.md §14 — unified splitter-family spec (bar + actuator pill) */
 
 /* ── Root container ──────────────────────────────────────────────────────── */
-/* Splitlayout JS adds `.z-flex` + `.z-flex-row` or `.z-flex-column` to root,
-   expecting `display: flex` on the wrapper. The theme's `.z-flex` utility was
-   renamed to `.z-d-flex`, leaving the JS-added class undefined — so the root
-   stayed `display: block` and caves collapsed to intrinsic content width.
-   Anchor `display: flex` to `.z-splitlayout` directly so the layout is
-   independent of utility-class naming drift. */
+/* Stock layout model (sapphire/zkmax splitlayout.less). ZK's css-flex engine
+   (zk/flex.ts) ADDS `z-flex` + `z-flex-row|column` here at runtime when the
+   children use hflex/vflex, and REMOVES them at splitter drag-end so the
+   dragged pane sizes persist as inline px width/height on the caves
+   (Splitlayout._doDragEndResize). Theme CSS must therefore NOT hard-code
+   `display: flex` or `flex-direction` on this root — both states (flex via
+   z-flex* classes, non-flex via inline sizes) must lay out correctly.
+   The z-flex* classes themselves are defined in zul/css/base/_cssflex.css.
+   See contract M10/M11 + skill reference/css-flex-classes.md. */
 .z-splitlayout {
-    display: flex;
+    white-space: nowrap;
     overflow: hidden;
     box-sizing: border-box;
 }
 
-/* orient="horizontal" — JS adds .z-flex-row */
-.z-splitlayout.z-flex-row,
-.z-splitlayout:not(.z-flex-column) {
-    flex-direction: row;
-}
-
-/* orient="vertical" — JS adds .z-flex-column */
-.z-splitlayout.z-flex-column {
-    flex-direction: column;
-}
-
 /* ── Cave areas ───────────────────────────────────────────────────────────── */
-/* All caves are flex items that grow to fill available main-axis space.
-   flex: 1 1 0 with min-width/min-height: 0 lets caves shrink below their
-   intrinsic content size; JS may set explicit inline width/height when the
-   user drags the splitter — flex-basis: 0 ensures the initial 50/50 split is
-   honored regardless of inline values from JS. */
+/* Caves carry NO flex of their own: their main-axis size comes either from
+   ZK's runtime `z-flex-item` class (before any drag) or from the inline px
+   width/height that drag-end writes. `flex-basis: 0` here is forbidden — it
+   makes the browser ignore the inline sizes and the drag snaps back to 50/50
+   (gap log 2026-06-05). Vertical orient: block caves stack top/bottom.
+   Horizontal orient: inline-block caves sit side-by-side in the nowrap root. */
 .z-splitlayout-cave-top,
-.z-splitlayout-cave-bottom,
+.z-splitlayout-cave-bottom {
+    display: block;
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+}
+
 .z-splitlayout-cave-left,
 .z-splitlayout-cave-right {
-    flex: 1 1 0;
+    display: inline-block;
     position: relative;
+    height: 100%;
+    vertical-align: top;
+    white-space: normal;
     overflow: hidden;
-    min-width: 0;
-    min-height: 0;
 }
 
 /* ── Splitter bar — base ─────────────────────────────────────────────────── */
@@ -55,7 +55,6 @@
    Transition animates hover tint at standard speed. */
 .z-splitlayout-splitter {
     position: relative;
-    flex: 0 0 auto;
     background-color: var(--zk-color-surface-container);
     border: 1px solid var(--zk-color-outline-variant);
     cursor: default;
@@ -64,19 +63,24 @@
 }
 
 /* ── Splitter bar — vertical orient (horizontal dividing bar) ────────────── */
-/* Vertical orient = top/bottom caves — the splitter bar spans full width via
-   flex stretch (cross-axis), 8px tall on the main axis. */
+/* Vertical orient = top/bottom caves — the bar spans full width (block-level
+   in the stacked column), 8px tall on the main axis. max-height pins the bar
+   thickness when ZK's runtime z-flex classes make the root a flex column. */
 .z-splitlayout-splitter-vertical {
+    width: 100%;
     height: var(--zk-spacing-2);
-    width: auto;
+    max-height: var(--zk-spacing-2);
 }
 
 /* ── Splitter bar — horizontal orient (vertical dividing bar) ────────────── */
-/* Horizontal orient = left/right caves — splitter is 8px wide, full height
-   via flex stretch. */
+/* Horizontal orient = left/right caves — inline-block bar sits between the
+   inline-block caves in the nowrap root: 8px wide, full height. max-width
+   pins the bar thickness under the runtime flex-row state. */
 .z-splitlayout-splitter-horizontal {
+    display: inline-block;
     width: var(--zk-spacing-2);
-    height: auto;
+    max-width: var(--zk-spacing-2);
+    height: 100%;
 }
 
 /* ── Draggable cursor overrides ──────────────────────────────────────────── */

@@ -59,6 +59,10 @@ const footerFiles = [
     'js/zul/wgt/css/toolbarbutton.css',
     'js/zul/wgt/css/loadingbar.css',
     'js/zul/wnd/css/messagebox.css',
+    // Framework css-flex classes (z-flex/z-flex-row/z-flex-column/z-flex-item)
+    // toggled at runtime by zk/flex.ts — stock ZK defines them in footer.less,
+    // so they live in the footer bundle here too. See the file's header comment.
+    'zul/css/base/_cssflex.css',
 ];
 
 // Files merged into another CSS file (excluded from 1:1 auto-scan).

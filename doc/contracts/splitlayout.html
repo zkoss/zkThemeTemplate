@@ -229,20 +229,29 @@ h1 { font-size: 22px; font-weight: 600; margin: 0 0 var(--zk-spacing-2); }
     cursor: default;
 }
 
-/* Collapse button */
+/* Collapse button — DESIGN.md §14 actuator pill (revised 2026-06-04, family unification) */
 .z-splitlayout-splitter-button {
-    color: var(--zk-color-on-surface-variant);
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
     position: relative;
     vertical-align: top;
+    background-color: var(--zk-color-outline-variant);
+    border: none;
+    border-radius: var(--zk-shape-corner-full);
+    box-shadow: none;
+    color: var(--zk-color-on-surface-variant);
     cursor: pointer;
     transition:
+        background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-legacy),
         color var(--zk-motion-duration-short3) var(--zk-motion-easing-legacy);
-    font-size: var(--zk-typescale-label-medium-size);
 }
 
-.z-splitlayout-splitter:hover .z-splitlayout-splitter-button {
-    color: var(--zk-color-primary);
+/* Pill hover: primary fill, on-primary icons (DESIGN.md §14) */
+.z-splitlayout-splitter-button:hover {
+    background-color: var(--zk-color-primary);
+    color: var(--zk-color-on-primary);
 }
 
 /* Collapse button — disabled (no collapse configured) */
@@ -250,35 +259,31 @@ h1 { font-size: 22px; font-weight: 600; margin: 0 0 var(--zk-spacing-2); }
     border: 0;
 }
 
-/* Button positioning inside vertical splitter */
+/* Pill inside vertical splitter (horizontal bar): 28×8, row layout */
 .z-splitlayout-splitter-vertical > .z-splitlayout-splitter-button {
-    width: 30px;
-    height: var(--zk-spacing-2);
-    border-width: 0 1px;
-    border-color: var(--zk-color-outline-variant);
-    border-style: solid;
+    flex-direction: row;
+    width: 28px;
+    height: 8px;
 }
 
-/* Button positioning inside horizontal splitter */
+/* Pill inside horizontal splitter (vertical bar): 8×28, column layout */
 .z-splitlayout-splitter-horizontal > .z-splitlayout-splitter-button {
-    width: var(--zk-spacing-2);
-    height: 30px;
-    border-width: 1px 0;
-    border-color: var(--zk-color-outline-variant);
-    border-style: solid;
+    flex-direction: column;
+    width: 8px;
+    height: 28px;
 }
 
-/* Splitter icons — positioned absolutely within the button */
-.z-splitlayout-splitter-vertical .z-splitlayout-splitter-icon {
-    line-height: normal;
-    position: absolute;
-    top: -4px;
-    left: 9px;
+/* Splitter icons — grips 8px always visible; caret hidden at idle (DESIGN.md §14) */
+.z-splitlayout-splitter-icon {
+    font-size: 8px;
+    line-height: 1;
 }
-.z-splitlayout-splitter-horizontal .z-splitlayout-splitter-icon {
-    position: absolute;
-    top: 8px;
-    left: -3px;
+.z-splitlayout-splitter-icon[class*="z-icon-caret"] {
+    opacity: 0;
+    transition: opacity var(--zk-motion-duration-short3) var(--zk-motion-easing-legacy);
+}
+.z-splitlayout-splitter-button:hover .z-splitlayout-splitter-icon[class*="z-icon-caret"] {
+    opacity: 1;
 }
 
 /* ────────────────────────────────────────────────────────────────────────
@@ -291,8 +296,13 @@ h1 { font-size: 22px; font-weight: 600; margin: 0 0 var(--zk-spacing-2); }
         var(--zk-color-surface-container)
     ) !important;
 }
-.is-hover .z-splitlayout-splitter-button {
-    color: var(--zk-color-primary) !important;
+/* Pill-hover demo helper (pill states are on the button itself, not the bar) */
+.is-hover-btn {
+    background-color: var(--zk-color-primary) !important;
+    color: var(--zk-color-on-primary) !important;
+}
+.is-hover-btn .z-splitlayout-splitter-icon[class*="z-icon-caret"] {
+    opacity: 1 !important;
 }
 
 /* Mockup layout helpers */
@@ -378,9 +388,9 @@ h1 { font-size: 22px; font-weight: 600; margin: 0 0 var(--zk-spacing-2); }
                 </div>
                 <div class="z-splitlayout-splitter z-splitlayout-splitter-vertical z-splitlayout-splitter-draggable">
                     <span class="z-splitlayout-splitter-button">
-                        <i class="z-splitlayout-splitter-icon z-icon-ellipsis-h" aria-hidden="true" style="font-size:10px;color:var(--zk-color-on-surface-variant)">&#8942;</i>
-                        <i id="splitter-icon-demo" class="z-splitlayout-splitter-icon z-icon-caret-up" aria-hidden="true" style="font-size:10px;color:var(--zk-color-on-surface-variant)">&#9650;</i>
-                        <i class="z-splitlayout-splitter-icon z-icon-ellipsis-h" aria-hidden="true" style="font-size:10px;color:var(--zk-color-on-surface-variant)">&#8942;</i>
+                        <i class="z-splitlayout-splitter-icon z-icon-ellipsis-h" aria-hidden="true">&#8942;</i>
+                        <i id="splitter-icon-demo" class="z-splitlayout-splitter-icon z-icon-caret-up" aria-hidden="true">&#9650;</i>
+                        <i class="z-splitlayout-splitter-icon z-icon-ellipsis-h" aria-hidden="true">&#8942;</i>
                     </span>
                 </div>
                 <div class="z-splitlayout-cave-bottom split-demo-cave" style="height:50px">
@@ -397,9 +407,9 @@ h1 { font-size: 22px; font-weight: 600; margin: 0 0 var(--zk-spacing-2); }
                 </div>
                 <div class="z-splitlayout-splitter z-splitlayout-splitter-vertical z-splitlayout-splitter-draggable">
                     <span class="z-splitlayout-splitter-button">
-                        <i class="z-splitlayout-splitter-icon z-icon-ellipsis-h" aria-hidden="true" style="font-size:10px;color:var(--zk-color-on-surface-variant)">&#8942;</i>
-                        <i class="z-splitlayout-splitter-icon z-icon-caret-down" aria-hidden="true" style="font-size:10px;color:var(--zk-color-on-surface-variant)">&#9660;</i>
-                        <i class="z-splitlayout-splitter-icon z-icon-ellipsis-h" aria-hidden="true" style="font-size:10px;color:var(--zk-color-on-surface-variant)">&#8942;</i>
+                        <i class="z-splitlayout-splitter-icon z-icon-ellipsis-h" aria-hidden="true">&#8942;</i>
+                        <i class="z-splitlayout-splitter-icon z-icon-caret-down" aria-hidden="true">&#9660;</i>
+                        <i class="z-splitlayout-splitter-icon z-icon-ellipsis-h" aria-hidden="true">&#8942;</i>
                     </span>
                 </div>
                 <div class="z-splitlayout-cave-bottom split-demo-cave" style="height:100px">
@@ -475,9 +485,9 @@ h1 { font-size: 22px; font-weight: 600; margin: 0 0 var(--zk-spacing-2); }
                 </div>
                 <div class="z-splitlayout-splitter z-splitlayout-splitter-horizontal z-splitlayout-splitter-draggable" style="height:100%">
                     <span class="z-splitlayout-splitter-button">
-                        <i class="z-splitlayout-splitter-icon z-icon-ellipsis-v" aria-hidden="true" style="font-size:10px;color:var(--zk-color-on-surface-variant)">&#8285;</i>
-                        <i class="z-splitlayout-splitter-icon z-icon-caret-right" aria-hidden="true" style="font-size:10px;color:var(--zk-color-on-surface-variant)">&#9654;</i>
-                        <i class="z-splitlayout-splitter-icon z-icon-ellipsis-v" aria-hidden="true" style="font-size:10px;color:var(--zk-color-on-surface-variant)">&#8285;</i>
+                        <i class="z-splitlayout-splitter-icon z-icon-ellipsis-v" aria-hidden="true">&#8285;</i>
+                        <i class="z-splitlayout-splitter-icon z-icon-caret-right" aria-hidden="true">&#9654;</i>
+                        <i class="z-splitlayout-splitter-icon z-icon-ellipsis-v" aria-hidden="true">&#8285;</i>
                     </span>
                 </div>
                 <div class="z-splitlayout-cave-right split-demo-cave" style="display:none">
@@ -508,9 +518,9 @@ h1 { font-size: 22px; font-weight: 600; margin: 0 0 var(--zk-spacing-2); }
                 <!-- Outer vertical splitter bar -->
                 <div class="z-splitlayout-splitter z-splitlayout-splitter-vertical z-splitlayout-splitter-draggable">
                     <span class="z-splitlayout-splitter-button">
-                        <i aria-hidden="true" style="font-size:10px;color:var(--zk-color-on-surface-variant)">&#8942;</i>
-                        <i aria-hidden="true" style="font-size:10px;color:var(--zk-color-on-surface-variant)">&#9660;</i>
-                        <i aria-hidden="true" style="font-size:10px;color:var(--zk-color-on-surface-variant)">&#8942;</i>
+                        <i aria-hidden="true">&#8942;</i>
+                        <i aria-hidden="true">&#9660;</i>
+                        <i aria-hidden="true">&#8942;</i>
                     </span>
                 </div>
                 <!-- Cave bottom (inner horizontal splitlayout) -->
