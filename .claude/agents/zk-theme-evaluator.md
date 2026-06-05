@@ -294,6 +294,8 @@ For each state in the contract's checklist:
     - Box-shadow: substring match (focus on the colour + offset tokens, not exact float precision).
     - `transition`: substring match on duration + easing function.
 
+**Row-coverage invariant (non-skippable).** Every id in the contract's Expected-values table MUST appear exactly once in the report's Per-component results with a result of `PASS`, `FAIL`, or `SKIPPED (<reason>)`. An id with no row is NOT an implicit pass — it is a measurement gap. Silent gaps are how a real mismatch hides behind a clean failing-set (pilot example: goldenlayout `wrap-5` — CSS had `overflow: hidden` against a contract value of `visible`, yet iter-13 reported `failing-set: []` because the row was never measured; the mismatch was only caught by Gate 2 reading the CSS). §4 makes this accountable via the `row-coverage` report field.
+
 ### 3b-frozen. Frozen-column scroll-trigger checks
 
 Run this section when the contract contains a `## Frozen columns` section.
@@ -500,6 +502,8 @@ If you cannot meaningfully review an image (e.g. the capture is blank, all-white
 - `failing-set` = sorted list of failing check ids this iteration.
 - `newly_passing` = `previous_failing_set − failing_set` (ids that were failing before, now passing).
 - If iteration 1: `newly_passing = []` (no baseline).
+- `row-coverage` = `<measured>/<total>` where `total` = count of ids in the contract's Expected-values table (plus macro `Mn` ids when present) and `measured` = count of those ids that have a PASS/FAIL/SKIPPED row in this report. **If `measured < total`, list the missing ids and go back and measure them before computing status — do not emit a report with unmeasured rows.** A `SKIPPED` row with a stated reason counts as measured; a missing row never does.
+
 ### 4.5. Distinguish token-rooted vs component-rooted failures (D6)
 
 For each FAIL row in the measurement table:
@@ -542,6 +546,7 @@ date: <ISO timestamp>
 tier: <T1|T2|T3>
 failing-set: [<check-ids>]
 newly-passing-since-last: [<check-ids>]
+row-coverage: <measured>/<total>  <!-- §4 row-coverage invariant; must be n/n — a shortfall means unmeasured contract rows -->
 
 ## Visual artefacts
 <!-- Paths to screenshots captured in Step 3a. List only files that were actually written. -->

@@ -137,6 +137,8 @@ The splitter button (`-splitbtn`) is centered on the splitter bar by JS (`setBtn
 
 The button itself uses `position:absolute` relative to the splitter bar. CSS should set `width`/`height` and styling but leave `top`/`left` unset (JS manages centering via margin injection).
 
+This is a **family-wide ZK pattern**: the identical `setBtnPos_` inline-margin centering exists in `zul.box.Splitter` (`Splitter.ts`) and zkmax Splitlayout (`Splitlayout.ts`). Never **half-mix** CSS and JS centering on the same axis in any of the three — either leave the axis fully to JS, or take CSS ownership by neutralizing the inline margin (`margin-left/top: 0 !important`) and centering via `left/top: 50% + transform`. CSS ownership is required when the bar's long-axis size is flex-resolved: `setBtnPos_` can run while the offset is still 0 and writes margin 0 permanently (verified in splitlayout 2026-06-04) — see `components/splitter.md` / `components/splitlayout.md` for the full timing-trap notes.
+
 ## Z-index map
 
 ZK's JS engine assigns z-indices:

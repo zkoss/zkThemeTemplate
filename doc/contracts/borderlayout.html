@@ -240,16 +240,14 @@ h1 {
     flex-shrink: 0;
 }
 
-/* ── Splitter bars ────────────────────────────────────────────────────────── */
+/* ── Splitter bars — DESIGN.md §14 family spec (revised 2026-06-04) ──────── */
 .z-west-splitter,
 .z-east-splitter {
     position: absolute;
     width: 8px;
     cursor: ew-resize;
-    background-color: var(--zk-color-outline-variant);
-    opacity: 0.4;
+    background-color: var(--zk-color-surface-container);
     transition:
-        opacity var(--zk-motion-duration-short3) var(--zk-motion-easing-standard),
         background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
     overflow: visible;
 }
@@ -258,10 +256,8 @@ h1 {
     position: absolute;
     height: 8px;
     cursor: ns-resize;
-    background-color: var(--zk-color-outline-variant);
-    opacity: 0.4;
+    background-color: var(--zk-color-surface-container);
     transition:
-        opacity var(--zk-motion-duration-short3) var(--zk-motion-easing-standard),
         background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
     overflow: visible;
 }
@@ -269,11 +265,16 @@ h1 {
 .z-east-splitter:hover,
 .z-north-splitter:hover,
 .z-south-splitter:hover {
-    opacity: 1;
-    background-color: var(--zk-color-primary);
+    background-color: color-mix(
+        in srgb,
+        var(--zk-color-primary) calc(var(--zk-state-hover-opacity) * 100%),
+        var(--zk-color-surface-container)
+    );
 }
 
-/* ── Splitter pill buttons ────────────────────────────────────────────────── */
+/* ── Splitter actuator pills — DESIGN.md §14 (8×28, outline-variant, no elevation) ── */
+/* Note: in real ZK, long-axis centering comes from setBtnPos_ inline margin (skill rule);
+   the static mockup simulates it with translate. */
 .z-west-splitter-button,
 .z-east-splitter-button {
     display: flex;
@@ -282,16 +283,18 @@ h1 {
     justify-content: center;
     gap: 2px;
     position: absolute;
-    background-color: var(--zk-color-surface);
-    border: 1px solid var(--zk-color-outline-variant);
+    background-color: var(--zk-color-outline-variant);
+    border: none;
     border-radius: var(--zk-shape-corner-full);
-    width: 16px;
-    height: 56px;
+    box-shadow: none;
+    width: 8px;
+    height: 28px;
     cursor: pointer;
-    font-size: 12px;
+    font-size: 8px;
     color: var(--zk-color-on-surface-variant);
-    transition: background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
-    box-shadow: var(--zk-elevation-1);
+    transition:
+        background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard),
+        color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
     top: 50%;
     transform: translateY(-50%);
     left: 0;
@@ -304,16 +307,18 @@ h1 {
     justify-content: center;
     gap: 2px;
     position: absolute;
-    background-color: var(--zk-color-surface);
-    border: 1px solid var(--zk-color-outline-variant);
+    background-color: var(--zk-color-outline-variant);
+    border: none;
     border-radius: var(--zk-shape-corner-full);
-    width: 56px;
-    height: 16px;
+    box-shadow: none;
+    width: 28px;
+    height: 8px;
     cursor: pointer;
-    font-size: 12px;
+    font-size: 8px;
     color: var(--zk-color-on-surface-variant);
-    transition: background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
-    box-shadow: var(--zk-elevation-1);
+    transition:
+        background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard),
+        color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
     left: 50%;
     transform: translateX(-50%);
     top: 0;
@@ -322,8 +327,8 @@ h1 {
 .z-east-splitter-button:hover,
 .z-north-splitter-button:hover,
 .z-south-splitter-button:hover {
-    background-color: var(--zk-color-surface-container);
-    color: var(--zk-color-on-surface);
+    background-color: var(--zk-color-primary);
+    color: var(--zk-color-on-primary);
 }
 
 /* ── Splitter button hover (static preview class for mockup) ─────────────── */
@@ -331,15 +336,18 @@ h1 {
 .is-hover-btn.z-east-splitter-button,
 .is-hover-btn.z-north-splitter-button,
 .is-hover-btn.z-south-splitter-button {
-    background-color: var(--zk-color-surface-container);
-    color: var(--zk-color-on-surface);
+    background-color: var(--zk-color-primary);
+    color: var(--zk-color-on-primary);
 }
 
 /* ── Splitter bar hover (static preview) ─────────────────────────────────── */
 .is-hover-bar.z-west-splitter,
 .is-hover-bar.z-north-splitter {
-    opacity: 1;
-    background-color: var(--zk-color-primary);
+    background-color: color-mix(
+        in srgb,
+        var(--zk-color-primary) calc(var(--zk-state-hover-opacity) * 100%),
+        var(--zk-color-surface-container)
+    );
 }
 
 /* ── Icons inside splitter button ────────────────────────────────────────── */
@@ -350,16 +358,32 @@ h1 {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    font-size: 12px;
+    font-size: 8px;
     line-height: 1;
     color: inherit;
 }
-/* Grip ellipsis: slightly muted to read as decorative */
+/* Grip ellipsis: full opacity — drag-handle affordance (c30, DESIGN.md §14) */
 .z-west-icon.z-icon-ellipsis-v,
 .z-east-icon.z-icon-ellipsis-v,
 .z-north-icon.z-icon-ellipsis-h,
 .z-south-icon.z-icon-ellipsis-h {
-    opacity: 0.7;
+    opacity: 1;
+}
+/* Collapse caret: hidden at idle, fades in on pill hover (c30c, DESIGN.md §14) */
+.z-west-icon[class*="z-icon-caret"],
+.z-east-icon[class*="z-icon-caret"],
+.z-north-icon[class*="z-icon-caret"],
+.z-south-icon[class*="z-icon-caret"] {
+    opacity: 0;
+    transition: opacity var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+}
+.z-west-splitter-button:hover .z-west-icon[class*="z-icon-caret"],
+.z-east-splitter-button:hover .z-east-icon[class*="z-icon-caret"],
+.z-north-splitter-button:hover .z-north-icon[class*="z-icon-caret"],
+.z-south-splitter-button:hover .z-south-icon[class*="z-icon-caret"],
+.is-hover-btn .z-west-icon[class*="z-icon-caret"],
+.is-hover-btn .z-north-icon[class*="z-icon-caret"] {
+    opacity: 1;
 }
 /* Disabled caret: hidden when closable=false */
 .z-west-splitter-button-disabled .z-icon-caret-left,

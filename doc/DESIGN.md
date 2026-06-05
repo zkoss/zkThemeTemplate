@@ -212,6 +212,26 @@ If a future use-case needs auxhead to match the column-header transparency exact
 
 Use Lucide icons via the `z-icon-*` CSS mask pattern already established in the theme.
 
+### Header control icon buttons (close / maximize / minimize / collapse)
+
+One family across every header strip that carries window-management controls (user ruling
+2026-06-05 — goldenlayout had invented its own 20px text-glyph controls):
+
+| Host | Button box | Icon size | Icons (Lucide) |
+|------|------------|-----------|----------------|
+| `window` (56px header) | 32×32 | 16px | `x` (close), `expand` (maximize), `compress` → `minimize-2` (restore), `minus` (minimize) |
+| `panel` (48px header) | 28×28 | 14px | same set |
+| `goldenlayout` `.lm_controls` (44px strip) | 28×28 (panel size — nearest header height) | 14px | `expand` (maximize), `x` (close) — the SAME icons panel's `z-icon-expand`/`z-icon-times` resolve to |
+
+Shared rules: `--zk-shape-corner-full` radius, `--zk-color-on-surface-variant` at rest,
+hover reveals a circular state layer. Hover fill is `--zk-color-surface-container` where the
+host header is lighter than it (window, panel); on a strip that is already `surface-container`
+(goldenlayout), use a mix-based layer (`color-mix(in srgb, var(--zk-color-on-surface) 8%, transparent)`)
+so the circle stays visible. Icons render as Lucide masks (via `z-icon-*` classes when ZK
+emits them, or embedded data-URI masks on library-injected elements that carry no class —
+the signature.css / colorbox.css precedent). Text glyphs (`×`, `⤢`, …) are banned in this
+family: their optical size and side-bearings never match the SVG icons.
+
 ---
 
 ## 13. ZK-Specific DOM Quirks
@@ -275,3 +295,69 @@ Do not confuse with `.z-bandbox.z-bandbox-disabled` (used when the whole compone
 When `inplace="true"` and the input is blurred, ZK adds `z-bandbox-inplace` to the root `<span>` element. On focus, the class is removed and the full input appearance is restored.
 
 Style `.z-bandbox.z-bandbox-inplace` to look like plain text: transparent border, transparent background, no box-shadow, hidden button. Do not style the child input or button separately — targeting the root state class is sufficient.
+
+---
+
+## 14. Splitter Family (unified spec — user ruling 2026-06-04)
+
+One resize affordance across the app. Four implementations share this spec:
+`splitter` (zul.box), `borderlayout` region splitters, `splitlayout` (zkmax), and
+`goldenlayout` `.lm_splitter`.
+
+| Property | Canonical value |
+|----------|-----------------|
+| Bar thickness | **8px** (`--zk-spacing-2`) — both axes/orientations |
+| Bar idle background | `--zk-color-surface-container` |
+| Bar hover background | `color-mix(in srgb, var(--zk-color-primary) calc(var(--zk-state-hover-opacity) * 100%), var(--zk-color-surface-container))` |
+| Bar drag/active background | same mix with `--zk-state-pressed-opacity` (12%) |
+| Cursor | `col-resize` (vertical bar) / `row-resize` (horizontal bar) |
+| Transition | `background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard)` |
+| Non-resizable (`*-nosplitter`) | cursor `default` AND hover keeps the idle background — no primary tint on a bar that cannot resize (false affordance; Gate-2 finding 2026-06-04). borderlayout is exempt: ZK hides the strip entirely when `splittable="false"` |
+
+**Actuator pill** (the three ZK-mold splitters — `splitter`, `borderlayout`, `splitlayout` —
+all render `<span>-button` + grip/caret/grip icons):
+
+| Property | Canonical value |
+|----------|-----------------|
+| Pill size | cross-axis = bar thickness (8px), long-axis 28px, `--zk-shape-corner-full` |
+| Pill idle | `--zk-color-outline-variant` fill, no border, no elevation |
+| Pill hover/active | `--zk-color-primary` fill, icons `--zk-color-on-primary` |
+| Grip icons | 8px, `--zk-color-on-surface-variant`, always visible (`opacity: 1`) |
+| Collapse caret | hidden at idle (`opacity: 0`), fades in on hover |
+
+Rationale: MD3 has no splitter; the spec composes the MD3 bottom-sheet drag handle
+(slim inline pill) with a surface-tinted divider (originally designed for borderlayout —
+that CSS's comment block is the source of record for the pill reasoning).
+
+**GoldenLayout (revised 2026-06-05 — full family alignment; idle fill re-ruled
+2026-06-06):** `.lm_splitter` is GoldenLayout-library-injected — no button element — but
+that does NOT exempt it from the pill: GL has no `setBtnPos_` JS centering, so the actuator
+pill is drawn entirely in CSS via `::before` (pill: bar-thickness × 28px, `outline-variant`,
+`corner-full`) with grip dots via `::after` (8px Lucide `ellipsis-vertical`/`ellipsis` mask,
+`on-surface-variant`, `opacity: 1`; hover → pill `primary`, dots `on-primary`). The earlier
+"no pill, opacity-.5 dot marker" exception shipped an imperceptible affordance (user finding
+2026-06-05) and is retired. GL's bundled CSS is never loaded in ZK, so the theme must also
+set the family cursors (`col-resize` on `.lm_horizontal`, `row-resize` on `.lm_vertical`).
+Remaining structural exception: no collapse caret (GoldenLayout has no collapse feature).
+
+**GL idle-fill exception (user re-ruling 2026-06-06):** the family's `surface-container`
+idle fill is REPLACED by `transparent` for GL only. The family fill exists to make the bar
+visible *between surface panes*; GL bars abut `surface-container` `.lm_header` strips, so
+the identical fill erased the very boundary it marks — bar + header read as one region
+(worst on `lm_vertical`). GL panels are self-bordered cards on a transparent canvas: the
+splitter region reads as a card *gutter*, with the pill + grips carrying the affordance.
+Hover/drag tints become translucent: `color-mix(in srgb, var(--zk-color-primary)
+<hover|pressed opacity>%, transparent)`. General principle for future splitter contexts:
+**the bar idle fill must contrast with every surface it abuts** — when neighbors are
+`surface-container`, the family fill is disqualified (contract outcome row M21 encodes
+this as an adjacent-surface comparison).
+
+**JS centering rule (refined 2026-06-04):** all three ZK-mold splitters center the pill on
+the bar's long axis via JS inline margin (`setBtnPos_`). Never **half-mix** CSS and JS
+centering on the same axis — either leave the axis fully to JS (only safe when the bar's
+long-axis size is CSS-fixed at bind time), or take full CSS ownership: neutralize the JS
+inline margin with `margin-left/top: 0 !important` and center via `left/top: 50% +
+transform`. CSS ownership is required on a flex-resolved axis (`setBtnPos_` can run while
+the offset is still 0 and write margin 0 permanently) — see
+`.claude/skills/zk-component-rules/components/splitlayout.md` (family-wide rule; both
+half-mixing and JS-only-on-flex-axis shipped as real bugs).

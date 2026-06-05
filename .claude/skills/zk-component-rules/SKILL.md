@@ -88,7 +88,7 @@ Load only the file for the component you are working on.
 | `components/selectbox.md` | selectbox (native `<select>` element — popup options NOT styleable) |
 | `components/separator.md` | separator (transparent base, horizontal-bar variant) |
 | `components/signature.md` | signature (EE) — T3 two-canvas wrapper + absolute toolbar strip, native `<button>` tools (no ZK state classes), `.z-signature-toolbar-hide` toggle |
-| `components/slider.md` | slider (no disabled/invalid sclass, sphere/scale molds, multislider) |
+| `components/slider.md` | slider (no disabled/invalid sclass; 4 molds: default/sphere/scale CE + knob PE; knob = SVG rotary dial, CSS-themable boundary documented) |
 | `components/splitter.md` | splitter (cursor mode, ghost element, delivery merged into box.css) |
 | `components/stepbar.md` | stepbar + step (EE) — circle-marker + pseudo-element connector pattern, `.z-step-complete` not `-completed`, `.z-step-icon` not `-number` |
 | `components/tabbox.md` | tabbox (5 orientation classes including accordion) |
@@ -107,7 +107,7 @@ Load only the file for the component you are working on.
 | `components/popup.md` | popup (generic floating container, JS-positioned) — stub |
 | `components/toolbarbutton.md` | toolbarbutton (`.z-toolbarbutton-checked`, CSS in `footer.css.dsp`) — stub |
 | `components/splitlayout.md` | splitlayout (EE) — T1 two-pane resizable container, cave-top/bottom/left/right, splitter bar with collapse button and three icon idiom, `--zk-splitter-*` legacy var mapping required |
-| `components/cropper.md` | cropper (EE) — T3 Jcrop-backed image cropper; only `.z-cropper` wrapper and `.z-cropper-toolbar` are theme-owned; `.z-cropper-canvas` does NOT exist (actual Jcrop holder is `.z-cropper-holder`); toolbar is JS-positioned and hidden at rest |
+| `components/cropper.md` | cropper (PE per ZKDoc) — T3 Jcrop-backed image cropper; only `.z-cropper` wrapper and `.z-cropper-toolbar` are theme-owned; `.z-cropper-canvas` does NOT exist (actual Jcrop holder is `.z-cropper-holder`); toolbar is JS-positioned and hidden at rest |
 
 ## What this skill deliberately does NOT contain
 
