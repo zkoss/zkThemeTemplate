@@ -4,10 +4,70 @@
 .z-goldenlayout {
     position: relative;
     background-color: transparent;
-    overflow: hidden;
+    overflow: visible;
     min-height: 0;
     max-height: 100%;
     box-sizing: border-box;
+    /* Lucide icon masks for GoldenLayout-injected elements (no z-icon-* class
+       available — data-URI pattern per signature.css / colorbox.css).
+       x / expand = the same icons panel's z-icon-times / z-icon-expand resolve to. */
+    --_gl-icon-x: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2224%22 height=%2224%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22currentColor%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Cpath d=%22M18 6 6 18%22/%3E%3Cpath d=%22m6 6 12 12%22/%3E%3C/svg%3E");
+    --_gl-icon-expand: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2224%22 height=%2224%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22currentColor%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Cpath d=%22m15 15 6 6%22/%3E%3Cpath d=%22m15 9 6-6%22/%3E%3Cpath d=%22M21 16v5h-5%22/%3E%3Cpath d=%22M21 8V3h-5%22/%3E%3Cpath d=%22M3 16v5h5%22/%3E%3Cpath d=%22m3 21 6-6%22/%3E%3Cpath d=%22M3 8V3h5%22/%3E%3Cpath d=%22M9 9 3 3%22/%3E%3C/svg%3E");
+    --_gl-icon-grip-v: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2224%22 height=%2224%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22currentColor%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Ccircle cx=%2212%22 cy=%2212%22 r=%221%22/%3E%3Ccircle cx=%2212%22 cy=%225%22 r=%221%22/%3E%3Ccircle cx=%2212%22 cy=%2219%22 r=%221%22/%3E%3C/svg%3E");
+    --_gl-icon-grip-h: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2224%22 height=%2224%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22currentColor%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Ccircle cx=%2212%22 cy=%2212%22 r=%221%22/%3E%3Ccircle cx=%2219%22 cy=%2212%22 r=%221%22/%3E%3Ccircle cx=%225%22 cy=%2212%22 r=%221%22/%3E%3C/svg%3E");
+    /* restore = Lucide minimize-2 (panel's z-icon-compress equivalent); shown while maximised */
+    --_gl-icon-restore: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2224%22 height=%2224%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22currentColor%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Cpath d=%22m14 10 7-7%22/%3E%3Cpath d=%22M20 10h-6V4%22/%3E%3Cpath d=%22m3 21 7-7%22/%3E%3Cpath d=%22M4 14h6v6%22/%3E%3C/svg%3E");
+    --_gl-icon-chevron-down: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2224%22 height=%2224%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22currentColor%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Cpath d=%22m6 9 6 6 6-6%22/%3E%3C/svg%3E");
+}
+
+/* ── GoldenLayout base structural rules ────────────────────────────────── */
+/* goldenlayout-base.css is NEVER loaded in ZK's integration — ZK's upstream
+   codegen goldenlayout.css.dsp reproduces it verbatim at the top of the file.
+   Marble must carry the structural subset our flex layout doesn't replace.
+   Omitting it shipped two real bugs (found 2026-06-05): maximise rendered
+   in-flow (siblings shifted aside instead of being covered) and the
+   drop-target indicator was a visible in-flow element at rest. */
+.z-goldenlayout .lm_goldenlayout {
+    position: relative; /* containing block for the absolute .lm_maximised */
+}
+
+/* Specificity note: must beat `.z-goldenlayout .lm_item.lm_stack { position:
+   relative }` (0,3,0) — a bare `.lm_maximised` (0,2,0) rule loses and the
+   maximised stack stays a flex item (shrunk to half width, siblings beside it). */
+.z-goldenlayout .lm_item.lm_stack.lm_maximised {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 40;
+}
+
+.z-goldenlayout .lm_maximise_placeholder {
+    display: none;
+}
+
+/* GL adds lm_dragging to <body> and the dragged element during tab/splitter drag */
+.lm_dragging,
+.lm_dragging * {
+    cursor: move !important;
+    user-select: none;
+}
+
+/* Unscoped — GL appends this node to <body>, outside .z-goldenlayout */
+.lm_transition_indicator {
+    display: none;
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 20;
+}
+
+.z-goldenlayout .lm_drop_tab_placeholder {
+    float: left;
+    width: 100px;
+    height: 10px;
+    visibility: hidden;
 }
 
 /* ── GoldenLayout structural layout ────────────────────────────────────── */
@@ -58,14 +118,22 @@
 }
 
 /* ── Header strip (tab bar) ────────────────────────────────────────────── */
+/* HEIGHT-SYNC INVARIANT: bind_ snapshots the computed min-height into
+   config.dimensions.headerHeight and sizes every .lm_items/.lm_content inline
+   from it. The rendered height MUST equal min-height exactly — box-sizing
+   border-box keeps the 1px border inside the 44px, and tabs stretch into the
+   strip (see .lm_tabs/.lm_tab below) instead of driving its height. Any delta
+   makes .lm_items { overflow: hidden } clip the panel's bottom border (M17). */
 .z-goldenlayout .lm_header {
     background-color: var(--zk-color-surface-container);
     border-bottom: 1px solid var(--zk-color-outline-variant);
-    border-top-left-radius: var(--zk-shape-corner-small);
-    border-top-right-radius: var(--zk-shape-corner-small);
+    border-top-left-radius: var(--zk-shape-card);
+    border-top-right-radius: var(--zk-shape-card);
+    box-sizing: border-box;
     min-height: 44px;
     overflow: hidden;
-    font-size: var(--zk-typescale-body-medium-size);
+    font-size: var(--zk-typescale-label-large-size);
+    font-weight: var(--zk-typescale-label-large-weight);
 }
 
 /* ── List resets on GoldenLayout's UL containers ───────────────────────── */
@@ -82,14 +150,18 @@
     align-items: stretch;
 }
 
-/* lm_tabs expands to fill the header row; lm_controls stays fixed-size at right */
+/* lm_tabs expands to fill the header row; lm_controls stays fixed-size at right.
+   align-self: stretch — tabs fill the strip's 43px content row so the header,
+   not the tab content, owns the height (height-sync invariant above). */
 .z-goldenlayout .lm_tabs {
     flex: 1 1 auto;
+    align-self: stretch;
     overflow: hidden;
 }
 
 .z-goldenlayout .lm_controls {
     flex: 0 0 auto;
+    padding-right: var(--zk-spacing-2);
 }
 
 /* ── Tab — default ─────────────────────────────────────────────────────── */
@@ -98,27 +170,41 @@
     display: flex;
     align-items: center;
     position: relative;
+    overflow: hidden;
     color: var(--zk-color-on-surface-variant);
-    padding: var(--zk-spacing-3) var(--zk-spacing-4);
+    /* no block padding — the tab stretches to the strip height (height-sync) */
+    padding: 0 var(--zk-spacing-4);
     cursor: pointer;
-    border: 1px solid transparent;
-    transition: color var(--zk-motion-duration-short2) var(--zk-motion-easing-standard);
+    transition: color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+}
+
+/* MD3 state layer — primary-tinted overlay, invisible at rest */
+.z-goldenlayout .lm_tab::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-color: var(--zk-color-primary);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
 }
 
 /* ── Tab — hover ───────────────────────────────────────────────────────── */
 .z-goldenlayout .lm_tab:hover {
     color: var(--zk-color-on-surface);
-    border-color: var(--zk-color-outline-variant);
-    border-top-left-radius: var(--zk-shape-corner-small);
-    border-top-right-radius: var(--zk-shape-corner-small);
+}
+
+.z-goldenlayout .lm_tab:hover::before {
+    opacity: var(--zk-state-hover-opacity);
 }
 
 /* ── Tab — active ──────────────────────────────────────────────────────── */
+/* Full .z-tab-selected parity (user re-ruling 2026-06-06): transparent bg —
+   the strip shows through; selection = primary label + 2px underline only.
+   The earlier surface fill equaled --zk-color-background and read as a hole
+   punched in the strip (tab-a2 corrected; tab-a7/a8 radii retired). */
 .z-goldenlayout .lm_tab.lm_active {
     color: var(--zk-color-primary);
-    background-color: var(--zk-color-surface);
-    border-top-left-radius: var(--zk-shape-corner-small);
-    border-top-right-radius: var(--zk-shape-corner-small);
 }
 
 .z-goldenlayout .lm_tab.lm_active::after {
@@ -134,15 +220,45 @@
 }
 
 /* ── Close icon on tab ─────────────────────────────────────────────────── */
+/* Full .z-tab-button geometry parity (tabbox convention, user ruling
+   2026-06-05): 16×16 corner-full button, centered 12px Lucide `x` mask,
+   on-surface hover with a 12% state-layer circle. */
 .z-goldenlayout .lm_close_tab {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 16px;
+    margin-left: var(--zk-spacing-1);
+    border-radius: var(--zk-shape-corner-full);
     color: var(--zk-color-on-surface-variant);
+    cursor: pointer;
+    transition: background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+}
+
+/* Lucide `x` mask — same icon panel/tabbox close buttons resolve to
+   (z-icon-times → x). Without an explicit pseudo box, .lm_close_tab is an
+   empty 0×0 element and no icon appears regardless of color (M14). */
+.z-goldenlayout .lm_close_tab::before {
+    content: "";
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    background-color: currentColor;
+    -webkit-mask: var(--_gl-icon-x) no-repeat center / contain;
+    mask: var(--_gl-icon-x) no-repeat center / contain;
 }
 
 .z-goldenlayout .lm_close_tab:hover {
-    color: var(--zk-color-primary);
+    color: var(--zk-color-on-surface);
+    background-color: color-mix(in srgb, var(--zk-color-on-surface) 12%, transparent);
 }
 
 /* ── Header controls (maximize / close-stack icons) ───────────────────── */
+/* Panel-icon family (DESIGN.md §12 control-icon-button table, user ruling
+   2026-06-05): 28×28 corner-full buttons with 14px Lucide masks — the SAME
+   icons panel renders (z-icon-expand → expand, z-icon-times → x). Hover uses
+   a mix-based state layer because the strip is already surface-container. */
 .z-goldenlayout .lm_controls {
     gap: var(--zk-spacing-2);
 }
@@ -152,94 +268,176 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 20px;
-    height: 20px;
+    width: 28px;
+    height: 28px;
+    border-radius: var(--zk-shape-corner-full);
     color: var(--zk-color-on-surface-variant);
     cursor: pointer;
+    transition: background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard),
+                color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
 }
 
 .z-goldenlayout .lm_controls > li:hover {
     color: var(--zk-color-primary);
+    background-color: color-mix(in srgb, var(--zk-color-on-surface) 8%, transparent);
 }
 
-/* Maximize icon — ↗ (U+2197 North East Arrow) */
-.z-goldenlayout .lm_controls .lm_maximise::after {
-    content: "\2197";
-    font-size: 14px;
-    line-height: 1;
-    display: block;
-}
-
-/* Close icon — × (U+00D7 Multiplication Sign) */
+/* Shared mask-icon box for control glyphs (14px icon in 28px button — panel parity) */
+.z-goldenlayout .lm_controls .lm_maximise::after,
 .z-goldenlayout .lm_controls .lm_close::after {
-    content: "\00d7";
-    font-size: 16px;
-    line-height: 1;
+    content: "";
     display: block;
+    width: 14px;
+    height: 14px;
+    background-color: currentColor;
+}
+
+/* Maximize — Lucide `expand` (replaces the ⤢ text glyph; M15 pins the path) */
+.z-goldenlayout .lm_controls .lm_maximise::after {
+    -webkit-mask: var(--_gl-icon-expand) no-repeat center / contain;
+    mask: var(--_gl-icon-expand) no-repeat center / contain;
+}
+
+/* Close — Lucide `x` */
+.z-goldenlayout .lm_controls .lm_close::after {
+    -webkit-mask: var(--_gl-icon-x) no-repeat center / contain;
+    mask: var(--_gl-icon-x) no-repeat center / contain;
+}
+
+/* While maximised, the maximize control flips to a restore icon — Lucide
+   `minimize-2` (panel's z-icon-compress equivalent; iceblue uses FA \f066) */
+.z-goldenlayout .lm_maximised .lm_controls .lm_maximise::after {
+    -webkit-mask: var(--_gl-icon-restore) no-repeat center / contain;
+    mask: var(--_gl-icon-restore) no-repeat center / contain;
+}
+
+/* Overflow-tab dropdown trigger — Lucide `chevron-down` (iceblue: FA \f107).
+   GL inline-hides this <li> until tabs overflow; the icon must exist for the
+   day it shows. Same 14px mask box as the other controls. */
+.z-goldenlayout .lm_controls .lm_tabdropdown::before {
+    content: "";
+    display: block;
+    width: 14px;
+    height: 14px;
+    background-color: currentColor;
+    -webkit-mask: var(--_gl-icon-chevron-down) no-repeat center / contain;
+    mask: var(--_gl-icon-chevron-down) no-repeat center / contain;
 }
 
 /* ── Splitter handle ───────────────────────────────────────────────────── */
+/* Splitter-family affordance (DESIGN.md §14, user ruling 2026-06-05) with the
+   GL idle-fill exception (user re-ruling 2026-06-06): the bar is a TRANSPARENT
+   gutter — the family surface-container fill equaled the abutting .lm_header
+   strips and erased the boundary it marks (M21). Panels are self-bordered
+   cards; pill (::before) + grip dots (::after) carry the affordance; hover/
+   drag tints are translucent primary mixes. GL injects no button element and
+   has no setBtnPos_ JS centering, so the pill is drawn and centered purely in
+   CSS. GL's bundled CSS (which normally provides cursors) is never loaded in
+   ZK — the theme sets them. */
 .z-goldenlayout .lm_splitter {
     position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    z-index: 2; /* base CSS: splitter sits above pane content */
     background-color: transparent;
-    transition: background-color var(--zk-motion-duration-short2) var(--zk-motion-easing-standard);
+    transition: background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
 }
 
-/* Dot-handle marker — ⋮ for vertical splitter, ⋯ for horizontal */
-.z-goldenlayout .lm_splitter.lm_vertical::before {
-    content: "\22EE";
-    color: var(--zk-color-on-surface-variant);
-    font-size: 12px;
-    line-height: 1;
-    opacity: 0.5;
-    transition: color var(--zk-motion-duration-short2) var(--zk-motion-easing-standard),
-                opacity var(--zk-motion-duration-short2) var(--zk-motion-easing-standard);
+/* lm_horizontal = vertical bar (splits left|right); lm_vertical = horizontal bar */
+.z-goldenlayout .lm_splitter.lm_horizontal {
+    cursor: col-resize;
+}
+
+.z-goldenlayout .lm_splitter.lm_vertical {
+    cursor: row-resize;
+}
+
+/* Actuator pill — cross-axis = bar thickness (8px), long-axis 28px, corner-full */
+.z-goldenlayout .lm_splitter::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: var(--zk-color-outline-variant);
+    border-radius: var(--zk-shape-corner-full);
+    transition: background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
 }
 
 .z-goldenlayout .lm_splitter.lm_horizontal::before {
-    content: "\22EF";
-    color: var(--zk-color-on-surface-variant);
-    font-size: 12px;
-    line-height: 1;
-    opacity: 0.5;
-    transition: color var(--zk-motion-duration-short2) var(--zk-motion-easing-standard),
-                opacity var(--zk-motion-duration-short2) var(--zk-motion-easing-standard);
+    width: 8px;
+    height: 28px;
+}
+
+.z-goldenlayout .lm_splitter.lm_vertical::before {
+    width: 28px;
+    height: 8px;
+}
+
+/* Grip dots — 8px Lucide ellipsis mask, always visible (family: opacity 1) */
+.z-goldenlayout .lm_splitter::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 8px;
+    height: 8px;
+    background-color: var(--zk-color-on-surface-variant);
+    transition: background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+}
+
+.z-goldenlayout .lm_splitter.lm_horizontal::after {
+    -webkit-mask: var(--_gl-icon-grip-v) no-repeat center / contain;
+    mask: var(--_gl-icon-grip-v) no-repeat center / contain;
+}
+
+.z-goldenlayout .lm_splitter.lm_vertical::after {
+    -webkit-mask: var(--_gl-icon-grip-h) no-repeat center / contain;
+    mask: var(--_gl-icon-grip-h) no-repeat center / contain;
 }
 
 .z-goldenlayout .lm_splitter:hover {
-    background-color: var(--zk-color-primary-container);
+    background-color: color-mix(in srgb, var(--zk-color-primary) calc(var(--zk-state-hover-opacity) * 100%), transparent);
 }
 
+/* Pill fills primary on hover; grips flip to on-primary (family spec) */
 .z-goldenlayout .lm_splitter:hover::before {
-    color: var(--zk-color-primary);
-    opacity: 1;
+    background-color: var(--zk-color-primary);
+}
+
+.z-goldenlayout .lm_splitter:hover::after {
+    background-color: var(--zk-color-on-primary);
 }
 
 .z-goldenlayout .lm_splitter.lm_dragging {
-    background-color: var(--zk-color-outline-variant);
+    background-color: color-mix(in srgb, var(--zk-color-primary) calc(var(--zk-state-pressed-opacity) * 100%), transparent);
 }
 
 /* ── Panel content area ────────────────────────────────────────────────── */
-/* Each panel is a self-contained visual card: full 4-corner radius +
+/* Each panel is a self-contained visual card: full 4-corner shape-card radius +
    outline-variant border + elevation-1 shadow. The .lm_header (tab strip)
-   sits above .z-goldenpanel and uses matching corner-small top radius. */
+   sits above .z-goldenpanel and uses matching shape-card top radius. */
 .z-goldenpanel {
     background-color: var(--zk-color-surface);
     border: 1px solid var(--zk-color-outline-variant);
-    border-top-left-radius: var(--zk-shape-corner-small);
-    border-top-right-radius: var(--zk-shape-corner-small);
-    border-bottom-left-radius: var(--zk-shape-corner-large);
-    border-bottom-right-radius: var(--zk-shape-corner-large);
+    border-top-left-radius: var(--zk-shape-card);
+    border-top-right-radius: var(--zk-shape-card);
+    border-bottom-left-radius: var(--zk-shape-card);
+    border-bottom-right-radius: var(--zk-shape-card);
     box-shadow: var(--zk-elevation-1);
-    padding: var(--zk-spacing-5) var(--zk-spacing-4);
+    padding: var(--zk-spacing-4) var(--zk-spacing-4) var(--zk-spacing-6);
     overflow: auto;
     box-sizing: border-box;
 }
 
 /* ── Drag proxy (appears at document root during drag) ─────────────────── */
+/* base CSS positioning — GL moves it with inline transforms during drag */
+.z-goldenlayout-dragProxy {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 30;
+}
+
 .z-goldenlayout-dragProxy .lm_tab {
     box-shadow: var(--zk-elevation-2);
     background-color: var(--zk-color-surface-container);
@@ -258,11 +456,22 @@
 }
 
 /* ── Drop-target indicator ─────────────────────────────────────────────── */
+/* base CSS: hidden + absolute at rest — GL toggles display/position inline
+   during drag. Without these, the indicator is a visible in-flow element. */
 .z-goldenlayout-dropTargetIndicator {
+    display: none;
+    position: absolute;
+    z-index: 20;
+    transition: all 200ms ease;
     border: 1px dashed var(--zk-color-primary);
 }
 
 .z-goldenlayout-dropTargetIndicator .lm_inner {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    top: 0;
+    left: 0;
     background-color: color-mix(in srgb, var(--zk-color-primary) 10%, transparent);
 }
 
