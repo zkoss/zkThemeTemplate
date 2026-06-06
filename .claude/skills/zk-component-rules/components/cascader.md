@@ -24,6 +24,14 @@ The visible widget body is a **read-only display area**, not an `<input>`. Users
             └─ .z-cascader-icon  <i class="z-icon-caret-right">   ← only on non-leaf nodes
 ```
 
+### Item text is a bare text node — NO wrapper element
+
+`_renderItems0` writes `out.push(zUtl.encodeXML(item.content))` directly between the `<li>` open tag and the optional icon `<i>`. There is **no `<label>`, `<span>`, or any element** around the item text. Consequences for theme CSS:
+
+- Selectors like `.z-cascader-item > label` or `.z-cascader-item > span` match **nothing** — any `flex: 1` / `text-overflow` rule placed on them is dead code.
+- In a flex item row, the text becomes an anonymous flex item that cannot be targeted. To position the expand icon independently of label length (e.g. anchored at the trailing edge), the rule must live **on the icon itself** — `margin-left: auto` is the working mechanism.
+- Per-item text truncation (`text-overflow: ellipsis`) is not achievable via CSS alone for this widget — there is no element to clip.
+
 ### Notes on the label/placeholder toggle
 
 `Cascader.ts` `bind_()` and `setSelectedUuids()` use direct `jq(...).css('display', ...)` to toggle `.z-cascader-label` and `.z-cascader-placeholder`. The inline style **overrides** any CSS `display` rule on those elements. Authors may style their appearance (color, font, padding) but must not rely on CSS-only `display` toggling for these two elements.

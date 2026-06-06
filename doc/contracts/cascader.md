@@ -23,7 +23,7 @@ mockup-rationale: ZKDoc image shows iceblue-style rounded-rectangle trigger with
 
 ## Design Contract
 
-The cascader trigger renders as an MD3 outlined input field — 40px tall, `--zk-color-outline` border at rest, border thickens to a 2px primary-colour ring on focus/open (via `border-color: primary + box-shadow: 0 0 0 1px primary`). The trigger body shows a slash-joined path label in `--zk-color-on-surface`, or a muted placeholder in `--zk-color-on-surface-variant` when no item is selected. The trailing icon is a caret-down (dropdown closed, no selection), caret-right (dropdown open, no selection), or times (clear, when selection present); all icon states use `--zk-color-on-surface-variant`. On hover the border becomes `--zk-color-on-surface`. Disabled state applies `--zk-state-disabled-opacity` (0.38) to the entire trigger. The dropdown popup surfaces with `--zk-elevation-dropdown` shadow and a `--zk-color-outline-variant` border; cave columns are separated by `1px solid --zk-color-outline-variant` dividers except the first. Each item row is 36px tall; hover and keyboard-active rows get a neutral state-layer tint (`rgba(0,0,0,0.04)` — matches MUI MenuItem hover). Selected items (path ancestors + current leaf) render their text in `--zk-color-primary`. Transitions on `border-color` and `background-color` use `--zk-motion-duration-short3` / `--zk-motion-easing-standard`.
+The cascader trigger renders as an MD3 outlined input field — 40px tall, `--zk-color-outline` border at rest, border thickens to a 2px primary-colour ring on focus/open (via `border-color: primary + box-shadow: 0 0 0 1px primary`). The trigger body shows a slash-joined path label in `--zk-color-on-surface`, or a muted placeholder in `--zk-color-on-surface-variant` when no item is selected. The trailing icon is a caret-down (dropdown closed, no selection), caret-right (dropdown open, no selection), or times (clear, when selection present); all icon states use `--zk-color-on-surface-variant`. On hover the border becomes `--zk-color-on-surface`. Disabled state applies `--zk-state-disabled-opacity` (0.38) to the entire trigger. The dropdown popup surfaces with `--zk-elevation-dropdown` shadow and a `--zk-color-outline-variant` border; cave columns are separated by `1px solid --zk-color-outline-variant` dividers except the first. Each item row is 36px tall; hover and keyboard-active rows get a neutral state-layer tint (`rgba(0,0,0,0.04)` — matches MUI MenuItem hover). Selected items (path ancestors + current leaf) render their text in `--zk-color-primary`. Non-leaf rows show a caret-right expand icon **anchored at the row's trailing edge** (MD3 trailing-icon slot — fixed position regardless of label length, like MUI nested-menu arrows), never inline after the text. Transitions on `border-color` and `background-color` use `--zk-motion-duration-short3` / `--zk-motion-easing-standard`.
 
 ## Outcome assertions
 
@@ -35,6 +35,7 @@ The cascader trigger renders as an MD3 outlined input field — 40px tall, `--zk
 | M4 | When popup is open: `.z-cascader-popup` bbox.width ≥ `.z-cascader` bbox.width − 2 | popup never narrower than its trigger |
 | M5 | `.z-cascader-item.z-cascader-selected` color ≠ `.z-cascader-item` (non-selected) color | selected path items are visually distinguished from unselected siblings |
 | M6 | `.z-cascader-cave` + `.z-cascader-cave` siblings are horizontally adjacent: max horizontal gap ≤ 4px | columns dock side-by-side — no collapsed second panel or phantom gap |
+| M7 | All `.z-cascader-item .z-cascader-icon` within one cave share equal bbox.right (±1px), independent of each item's label length | expand carets occupy a fixed trailing slot (MD3 menus) — a caret that floats after the text drifts with label width |
 
 ## Expected values
 
@@ -66,6 +67,7 @@ The cascader trigger renders as an MD3 outlined input field — 40px tall, `--zk
 | c23 | `.z-cascader-item.z-cascader-active` | background-color | `rgba(0, 0, 0, 0.04)` | same tint as hover — keyboard active = hover visual |
 | c24 | `.z-cascader-item.z-cascader-selected` | color | `var(--zk-color-primary)` | DESIGN.md §3 — selected path shown in primary |
 | c25 | `.z-cascader-item .z-cascader-icon` (expand icon) | color | `var(--zk-color-on-surface-variant)` | DESIGN.md §11 |
+| c26 | `.z-cascader-item .z-cascader-icon` (expand icon) | margin-left | `auto` (declared; computed resolves to used px on flex items — verify via stylesheet rule or M7) | mockup cascader.html item-icon block — trailing-anchor in the item's flex row (item text is a bare text node; the icon must carry the push, see skill) |
 
 ## State matrix
 
@@ -83,7 +85,7 @@ The cascader trigger renders as an MD3 outlined input field — 40px tall, `--zk
 | item-hover | `.z-cascader-item:hover` | c22 |
 | item-active (keyboard) | `.z-cascader-item.z-cascader-active` | c23 |
 | item-selected | `.z-cascader-item.z-cascader-selected` | c24 |
-| item-expand-icon | `.z-cascader-item .z-cascader-icon` | c25 |
+| item-expand-icon | `.z-cascader-item .z-cascader-icon` | c25, c26 |
 
 ## States to evaluate
 - [ ] default (no selection, placeholder visible)
