@@ -26,6 +26,8 @@ closest-sibling: none — distinct chrome+payload composition; sibling reuse lim
 
 Tabs use a borderless strip with an underline indicator on the active tab (`top`/`bottom` orients) or a side-bar indicator on the active tab (`left`/`right` orients). Inactive tabs use on-surface-variant text colour and tint with the primary state-layer on hover. The active tab and its 2px indicator use `--zk-color-primary`. The strip carries a 1px outline-variant divider along its content edge.
 
+Closable tabs place the close button **trailing the label** with a reduced trailing inset — closable geometry is **16/4/8** (leading inset / label–icon gap / trailing inset), per the dismiss-affordance placement convention (`doc/md3-close-affordance-placement.md`; user ruling 2026-06-05, mirrors goldenlayout close-7). ZK emits `.z-tab-button` *before* `.z-tab-text` in the DOM (iceblue repositions it absolutely; Marble flips it with flex `order`), so the trailing position must be asserted, not assumed — the pre-2026-06-05 theme shipped the × on the *leading* side (`× Tab1`) because nothing checked the button's side. In `left`/`right`/`vertical` orients the tab bar is wider than the label, so the × additionally hugs the bar's trailing edge (`margin-left: auto`). In accordion mold the × sits at the trailing end of the header row, immediately *before* the chevron (the chevron remains the outermost element).
+
 Scroll buttons in strip mode are flat, square-ish hit-targets that sit at the leading and trailing edges of the strip. They display only the chevron glyph (no border, no background) at `--zk-color-on-surface-variant`, picking up the primary state-layer tint on hover (matching the inactive-tab hover treatment). They are always present in the DOM in strip modes but are visually hidden until ZK adds `.z-tabbox-scroll` to the root. When the strip has reached an end-of-scroll position there is no class to react to, so the buttons remain at their full default appearance and clicks are silent no-ops (acceptable trade-off — ZK does not surface this state).
 
 Accordion mold uses a flat bordered container (no border-radius — children span the container's full width with square corners; rounding the parent leaves visible sharp corners and the `overflow: hidden` workaround is incompatible with ZK's slideDown animation). Each header is a single-line row; the selected header tints to `--zk-color-primary-container` with `--zk-color-on-primary-container` text. Section dividers between headers use the same 1px outline-variant rule used elsewhere in the theme.
@@ -102,6 +104,27 @@ Visibility rule: when root does NOT carry `.z-tabbox-scroll`, the four direction
 
 Endpoint-disabled note: ZK does not emit any "can't scroll further" class (see skill entry). The contract therefore does NOT spec a separate disabled appearance — buttons retain c27/c28 at endpoints. If the user later requests a dimmed-at-endpoint look, that requires either JS instrumentation or a CSS-only `:has()` heuristic; deferred (Q3).
 
+### Close button — c31–c35 (added 2026-06-05, failing-first)
+
+Executes the deferred tabbox side-flip pass (`doc/skill-gaps.md` 2026-06-05 goldenlayout+tabbox row). All rows are expected to FAIL until the same-day CSS iteration lands.
+
+| id | selector | property | expected (token preferred) | source |
+|----|----------|----------|----------------------------|--------|
+| c31 | `.z-tab-button` | order | `1` | ZK emits the button BEFORE `.z-tab-text` in the DOM (skill — DOM structure); flex `order` flips it to trailing. Dismiss affordances trail the content (`doc/md3-close-affordance-placement.md`) |
+| c32 | `.z-tab-button` | margin-left | `0` (label–icon gap supplied solely by `.z-tab-content { gap: var(--zk-spacing-1) }`) | closable geometry 16/4/8 — the previous `margin-left: spacing-1` was the gap *in leading position*; once trailing, it would double the gap to 8px |
+| c33 | `.z-tab-content:has(> .z-tab-button)` | padding-right | `var(--zk-spacing-2)` | trailing inset = half the 16px text inset (16/4/8), mirrors GL close-7. Cascade note: accordion's c22i (`padding: 0`) has equal specificity (0,2,0) and MUST come later in the file so accordion headers stay at padding 0 |
+| c34 | `.z-tabbox-left .z-tab-content`, `.z-tabbox-vertical .z-tab-content`, `.z-tabbox-right .z-tab-content` | flex | `1 1 auto` (content row spans the full bar width) | prerequisite for c34a — without it the content box shrink-wraps and `margin-left: auto` has no room to act |
+| c34a | `.z-tabbox-left .z-tab-button`, `.z-tabbox-vertical .z-tab-button`, `.z-tabbox-right .z-tab-button` | margin-left | `auto` | vertical-orient bars are ≥ 120px wide — order alone leaves the × adjacent to a short label mid-bar; `auto` margin pushes it to the bar's trailing edge |
+| c35 | `.z-tabbox-accordion .z-tab-content::after` | order | `2` | accordion header sequence: label (`flex: 1`) … × (`order: 1`) chevron (`order: 2`) — the chevron stays the outermost trailing element, the × sits immediately before it |
+
+## Outcome assertions
+
+Outcome-level predicates gating VERIFIED (first backfilled M-row for this pre-outcome-format contract; same protocol as `doc/contracts/goldenlayout.md` §Outcome assertions).
+
+| id | predicate | rationale |
+|----|-----------|-----------|
+| M1 | for every visible closable tab (`.z-tab` containing a `.z-tab-button`): the button's bbox is **trailing** (`button.bbox.left ≥ text.bbox.right`) — AND in strip molds (`top`/`bottom`) the trailing inset `tab.bbox.right − button.bbox.right` is `8px ±2`; in `left`/`right`/`vertical` orients the same inset measured against the tab bar is `10px ±3` (8px padding + up to 2px indicator border); in accordion mold the button sits in the trailing cluster (`button.bbox.right` within 48px of `header.bbox.right`) and left of the chevron. | Added 2026-06-05 — pre-fix the × rendered on the *leading* side (measured: `gap label→icon = −50px`, trailing inset 50px) while c11a (visibility-only) passed; the button's *side* was never asserted in any row. Encoded failing-first per `doc/skill-feedback-loop.md` Step 1. |
+
 ## State matrix
 
 | state | selector | checks |
@@ -110,11 +133,13 @@ Endpoint-disabled note: ZK does not emit any "can't scroll further" class (see s
 | strip — selected (top) | `.z-tabbox-top .z-tab.z-tab-selected` | c5, c6 |
 | strip — tab bar | `.z-tabbox-top > .z-tabs` | c7 |
 | strip — hover | `.z-tab:hover` | c8 |
+| strip — closable | `.z-tab-content:has(> .z-tab-button)` | c31, c32, c33, M1 |
+| vertical — closable | `.z-tabbox-left/.z-tabbox-vertical/.z-tabbox-right` closable tab | c34, c34a, M1 |
 | accordion — container | `.z-tabbox-accordion` | c9, c10 |
 | accordion — header default | `.z-tabbox-accordion .z-tab` | c11, c12, c13 |
 | accordion — header selected | `.z-tabbox-accordion .z-tab.z-tab-selected` | c14, c15 |
 | accordion — panel content | `.z-tabbox-accordion .z-tabpanel-content` | c16 |
-| accordion — closable header | `.z-tabbox-accordion .z-tab .z-tab-button` | c11a |
+| accordion — closable header | `.z-tabbox-accordion .z-tab .z-tab-button` | c11a, c35, M1 |
 | accordion — section divider | `.z-tabbox-accordion .z-tabpanel + .z-tabpanel` | c17 |
 | bottom — selected indicator | `.z-tabbox-bottom .z-tab.z-tab-selected` | c18 |
 | left — selected indicator | `.z-tabbox-left .z-tab.z-tab-selected` | c19 |
@@ -139,6 +164,7 @@ Endpoint-disabled note: ZK does not emit any "can't scroll further" class (see s
 - [ ] left orientation indicator (c19, c21)
 - [ ] right orientation indicator (c20, c21)
 - [ ] tabscroll=false — scroll buttons must be absent from DOM and `.z-tabbox-scroll` never appears; overflow clips silently
+- [ ] closable: × trails the label, 16/4/8 geometry, all orients incl. image tabs (c31–c34a, M1)
 
 ### Accordion mold
 - [ ] container border + radius (c9, c10)
@@ -149,6 +175,7 @@ Endpoint-disabled note: ZK does not emit any "can't scroll further" class (see s
 - [ ] header hover (state-layer tint on `var(--zk-color-on-surface)`)
 - [ ] header disabled (opacity + cursor)
 - [ ] close button visible when closable=true (`.z-tab-button` inherits strip-mode visibility) — c11a
+- [ ] closable: × at trailing end of header row, immediately before the chevron (c35, M1)
 
 ### Scroll buttons
 - [ ] horizontal scroll arrows visible when overflow + `.z-tabbox-scroll` on root (c22, c24, c25, c27, c28, c29)

@@ -155,9 +155,14 @@
 }
 
 /* ─── Tab close button (.z-tab-button, not z-tab-close) ─────────────────── */
+/* ZK emits the button BEFORE .z-tab-text — order:1 flips it to trailing
+   (dismiss affordances trail the content; c31, doc/md3-close-affordance-
+   placement.md). Label–icon gap comes from .z-tab-content's 4px flex gap
+   alone (c32) — the old margin-left would double it once trailing. */
 .z-tab-button {
     position: relative;
     z-index: 1;
+    order: 1;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -169,10 +174,17 @@
     cursor: pointer;
     border-radius: var(--zk-shape-corner-full);
     font-size: 12px;
-    margin-left: var(--zk-spacing-1);
     padding: 0;
     pointer-events: auto;
     transition: background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+}
+
+/* Closable tabs: trailing inset = half the 16px text inset — 16/4/8
+   leading/gap/trailing (c33, GL close-7 parity). Accordion is exempt via
+   cascade: c22i (.z-tabbox-accordion .z-tab-content { padding: 0 }) has
+   equal specificity (0,2,0) and comes later in this file. */
+.z-tab-content:has(> .z-tab-button) {
+    padding-right: var(--zk-spacing-2);
 }
 
 .z-tab-button:hover {
@@ -399,6 +411,22 @@
     color: var(--zk-color-primary);
 }
 
+/* Closable in vertical orients: bars are ≥ 120px wide, so order alone leaves
+   the × adjacent to a short label mid-bar. Content spans the bar (c34) and
+   the auto margin pushes the × to the bar's trailing edge (c34a); the 8px
+   inset comes from the closable padding-right rule above (c33). */
+.z-tabbox-left .z-tab-content,
+.z-tabbox-vertical .z-tab-content,
+.z-tabbox-right .z-tab-content {
+    flex: 1 1 auto;
+}
+
+.z-tabbox-left .z-tab-button,
+.z-tabbox-vertical .z-tab-button,
+.z-tabbox-right .z-tab-button {
+    margin-left: auto;
+}
+
 .z-tabbox-right {
     flex-direction: row-reverse;
 }
@@ -559,10 +587,13 @@
     pointer-events: none;
 }
 
-/* Chevron — right-side arrow via ::after on .z-tab-content */
+/* Chevron — right-side arrow via ::after on .z-tab-content.
+   order: 2 keeps it the outermost trailing element now that .z-tab-button
+   carries order: 1 — closable header sequence: label(flex:1) … × chevron (c35). */
 .z-tabbox-accordion .z-tab-content::after {
     content: '';
     display: inline-block;
+    order: 2;
     width: 8px;
     height: 8px;
     border-right: 2px solid var(--zk-color-on-surface-variant);

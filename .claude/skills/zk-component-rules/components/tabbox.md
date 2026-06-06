@@ -21,11 +21,11 @@ The orientation class is added by `Tabbox.domClass_()`: accordion when `inAccord
 ├─ .z-tabs                                       (the tab strip; `<div>`)
 │   └─ ul.z-tabs-content                         (the tab list; id="{uuid}-cave")
 │       └─ li.z-tab[.z-tab-selected][.z-tab-disabled]
-│           ├─ div.z-tab-content                 (inner content row; id="{tab-uuid}-cave")
-│           │   ├─ img.z-tab-icon                (only when `image` set)
-│           │   ├─ i.z-tab-icon                  (only when `iconSclass` set; class is iconSclass)
-│           │   └─ span.z-tab-text               (label; id="{tab-uuid}-cnt")
-│           └─ div.z-tab-button                  (close button — only when `closable="true"`)
+│           └─ div.z-tab-content                 (inner content row; id="{tab-uuid}-cave")
+│               ├─ div.z-tab-button              (close button — only when `closable="true"`; ZK emits it FIRST, before the label — see Notes)
+│               ├─ i.z-tab-icon                  (only when `iconSclass` set; class is iconSclass)
+│               └─ span.z-tab-text               (label; id="{tab-uuid}-cnt")
+│                   └─ img.z-tab-image           (only when `image` set — nested INSIDE the text span, class z-tab-image not z-tab-icon)
 ├─ div.z-tabbox-left-scroll                      (scroll buttons — see Scroll buttons section)
 ├─ div.z-tabbox-right-scroll
 ├─ .z-toolbar                                    (only when `<toolbar>` child exists)
@@ -101,7 +101,7 @@ Attributes that affect DOM/class output:
 - `tabscroll="true"` (default) → scroll buttons are emitted into the DOM; root receives `.z-tabbox-scroll` when overflow is detected at runtime
 - `tabscroll="false"` → scroll buttons are NOT emitted into the DOM and `.z-tabbox-scroll` is never added (overflow simply clips)
 - `disabled="true"` on `<tab>` → adds `.z-tab-disabled`
-- `closable="true"` on `<tab>` → emits `.z-tab-button` inside `.z-tab-content`
+- `closable="true"` on `<tab>` → emits `.z-tab-button` inside `.z-tab-content`, as its **first** child (before icon/label) — in both strip and accordion molds
 - `image="<url>"` on `<tab>` → emits `<img class="z-tab-icon">`
 - `iconSclass="z-icon-<name>"` on `<tab>` → emits `<i class="z-tab-icon z-icon-<name>">` (the iconSclass value is appended as a literal class)
 - `selected="true"` on `<tab>` → adds `.z-tab-selected`; only one tab per tabbox can be selected at a time (set via `_setSel`)
@@ -127,6 +127,7 @@ These invariants come directly from how `Tabs._scrollcheck` (in `Tabs.ts`) write
 - **Horizontal orients emit `left-scroll` + `right-scroll`; vertical orients emit `up-scroll` + `down-scroll`** — never both pairs on the same root.
 - **Chevron `<i>` glyph is injected by ZK** — the inner `<i class="z-icon-chevron-{dir}">` is added by `domIconHTML()` in the mold; the theme's icon font/font-face mapping must resolve `z-icon-chevron-left`, `-right`, `-up`, `-down` for the arrows to appear.
 - **Accordion mode keeps the close button visible** — when `closable="true"`, `.z-tab-button` is present in the accordion DOM and rendered (matches iceblue baseline). The theme inherits strip-mode `.z-tab-button` styling without an accordion-specific override.
+- **`.z-tab-button` is emitted BEFORE the label** (first child of `.z-tab-content`, both molds; verified live 2026-06-05). In document flow it therefore renders on the *leading* side of the label — opposite to the trailing-close convention (MD3 chip / MUI / Chrome tabs). Any theme that wants the × trailing must reposition it: flex `order` on the button (Marble) or absolute positioning (iceblue). This skill's earlier DOM tree drew the button *after* the content row, which is how Marble shipped a leading × unnoticed.
 - **One selected tab per tabbox** — `_setSel` deselects the previous tab before selecting the new one; CSS may not rely on multiple `.z-tab-selected` siblings.
 - **In accordion mode `.z-tab` is `<div>`; in strip modes `.z-tab` is `<li>`** — element-type selectors (`li.z-tab`) do not match the accordion variant.
 - **`<toolbar>` only renders in horizontal+default-mold** — vertical and accordion molds skip it.
