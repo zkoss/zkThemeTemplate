@@ -223,10 +223,20 @@
 /* Full .z-tab-button geometry parity (tabbox convention, user ruling
    2026-06-05): 16×16 corner-full button, centered 12px Lucide `x` mask,
    on-surface hover with a 12% state-layer circle. */
+/* Closable tabs: the close button sits nearer the edge than the text inset —
+   16/4/8 leading/gap/trailing (close-7; doc/md3-close-affordance-placement.md:
+   MD3 chip 8dp, MUI deleteIcon 5px, Chrome ~6–8px). :has discriminates exactly:
+   GL removes the .lm_close_tab node entirely when closable=false. */
+.z-goldenlayout .lm_tab:has(> .lm_close_tab) {
+    padding-right: var(--zk-spacing-2);
+}
+
+/* ZK's GL fork writes inline `display: inline-block` on this element (Tab
+   ctor in ext/goldenlayout.js) — a stylesheet display value is dead here, so
+   flex centering on the element never engages (M22: icon sat off-center in
+   the hover circle). The icon pseudo is absolute-centered instead. */
 .z-goldenlayout .lm_close_tab {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
+    position: relative;
     width: 16px;
     height: 16px;
     margin-left: var(--zk-spacing-1);
@@ -238,10 +248,14 @@
 
 /* Lucide `x` mask — same icon panel/tabbox close buttons resolve to
    (z-icon-times → x). Without an explicit pseudo box, .lm_close_tab is an
-   empty 0×0 element and no icon appears regardless of color (M14). */
+   empty 0×0 element and no icon appears regardless of color (M14).
+   inset:0 + margin:auto = concentric with the 16px circle regardless of the
+   host's JS-imposed display (M22). */
 .z-goldenlayout .lm_close_tab::before {
     content: "";
-    display: inline-block;
+    position: absolute;
+    inset: 0;
+    margin: auto;
     width: 12px;
     height: 12px;
     background-color: currentColor;
