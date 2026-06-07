@@ -52,6 +52,17 @@
     color: var(--zk-color-on-surface-variant);
 }
 
+/* Initial-render display gap (contract c27/M8, skill — label/placeholder toggle):
+   with a pre-selected model, ZK emits BOTH label and placeholder with empty
+   inline style (Cascader.java never renders placeholderVisible; bind_ only
+   patches the empty-selection branch), so the stale empty placeholder keeps
+   flex: 1 and squeezes the label into ellipsis. Suppress it whenever the label
+   has content. Interactive flows write inline display styles, which win the
+   cascade — this rule only acts at initial render. */
+.z-cascader:has(.z-cascader-label:not(:empty)) .z-cascader-placeholder {
+    display: none;
+}
+
 /* ─── Icon (caret-down / caret-right / times) ─────────────────────────── */
 .z-cascader-icon {
     position: absolute;

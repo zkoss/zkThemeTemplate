@@ -36,6 +36,7 @@ The cascader trigger renders as an MD3 outlined input field — 40px tall, `--zk
 | M5 | `.z-cascader-item.z-cascader-selected` color ≠ `.z-cascader-item` (non-selected) color | selected path items are visually distinguished from unselected siblings |
 | M6 | `.z-cascader-cave` + `.z-cascader-cave` siblings are horizontally adjacent: max horizontal gap ≤ 4px | columns dock side-by-side — no collapsed second panel or phantom gap |
 | M7 | All `.z-cascader-item .z-cascader-icon` within one cave share equal bbox.right (±1px), independent of each item's label length | expand carets occupy a fixed trailing slot (MD3 menus) — a caret that floats after the text drifts with label width |
+| M8 | Pre-selected at **initial render, before any user interaction**: `.z-cascader-label` shows its full text (`scrollWidth ≤ clientWidth`, no ellipsis) AND `.z-cascader-placeholder` occupies zero width (bbox.width = 0 or display none). Must be measured on a freshly loaded page — the bug self-heals after one interactive selection. | added 2026-06-07, failing-first — ZK's initial render leaves BOTH label and placeholder visible when a selection is pre-set (`mold/cascader.js` emits empty `style` on both; `Cascader.java` never renders `placeholderVisible`; `bind_` only patches the empty-selection branch — see skill). A theme granting the placeholder horizontal space (`flex: 1`) squeezes the label into ellipsis while the same selection made interactively renders full-width |
 
 ## Expected values
 
@@ -68,6 +69,7 @@ The cascader trigger renders as an MD3 outlined input field — 40px tall, `--zk
 | c24 | `.z-cascader-item.z-cascader-selected` | color | `var(--zk-color-primary)` | DESIGN.md §3 — selected path shown in primary |
 | c25 | `.z-cascader-item .z-cascader-icon` (expand icon) | color | `var(--zk-color-on-surface-variant)` | DESIGN.md §11 |
 | c26 | `.z-cascader-item .z-cascader-icon` (expand icon) | margin-left | `auto` (declared; computed resolves to used px on flex items — verify via stylesheet rule or M7) | mockup cascader.html item-icon block — trailing-anchor in the item's flex row (item text is a bare text node; the icon must carry the push, see skill) |
+| c27 | `.z-cascader:has(.z-cascader-label:not(:empty)) .z-cascader-placeholder` | display | `none` — suppress the stale placeholder div ZK leaves visible at initial render when a selection is pre-set (skill — initial-render display gap). Stylesheet-level only by design: interactive flows write inline `display` styles, which win the cascade and keep full control | added 2026-06-07, failing-first (M8) |
 
 ## State matrix
 
@@ -77,6 +79,7 @@ The cascader trigger renders as an MD3 outlined input field — 40px tall, `--zk
 | hover | `.z-cascader:hover` | c5 |
 | focus-visible / open | `.z-cascader-focus`, `.z-cascader-open` | c6, c7, c8, c8b |
 | has-selection | `.z-cascader` (label visible) | c9, c10 |
+| pre-selected (initial render, no interaction) | `.z-cascader` with model-level pre-selection | c27, M8 |
 | placeholder | `.z-cascader` (no selection) | c11 |
 | disabled | `.z-cascader.z-cascader-disabled` | c13 |
 | popup-default | `.z-cascader-popup` | c14, c15, c16 |
@@ -90,6 +93,7 @@ The cascader trigger renders as an MD3 outlined input field — 40px tall, `--zk
 ## States to evaluate
 - [ ] default (no selection, placeholder visible)
 - [ ] has-selection (label shows slash-joined path)
+- [ ] pre-selected at initial render (full label text, no ellipsis, placeholder takes no space — M8; measure BEFORE any interaction)
 - [ ] hover (trigger border intensifies)
 - [ ] focus-visible (primary ring)
 - [ ] open (popup visible, caves side by side)

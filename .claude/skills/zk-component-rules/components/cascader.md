@@ -36,6 +36,12 @@ The visible widget body is a **read-only display area**, not an `<input>`. Users
 
 `Cascader.ts` `bind_()` and `setSelectedUuids()` use direct `jq(...).css('display', ...)` to toggle `.z-cascader-label` and `.z-cascader-placeholder`. The inline style **overrides** any CSS `display` rule on those elements. Authors may style their appearance (color, font, padding) but must not rely on CSS-only `display` toggling for these two elements.
 
+**Initial-render display gap (pre-selected model)**: `mold/cascader.js` keys both inline styles off `this._placeholderVisible`, but `Cascader.java` **never renders `placeholderVisible`** (its sibling `Searchbox.java` does — line ~612), so the flag is always `undefined` at redraw and BOTH divs are emitted with empty `style` — both visible. `bind_()` then patches only the **empty-selection** branch (`_selectedUuids.length == 0` → hide label, show placeholder); when a selection is **pre-set on the model**, the empty placeholder div stays visible alongside the label until the first interactive `setSelectedUuids`/`setLabel` writes inline styles. Consequences for theme CSS:
+
+- Any rule granting the placeholder horizontal space (`flex: 1`, a width, large padding) makes the invisible-but-rendered placeholder squeeze the label at initial load — the classic symptom is a pre-selected path showing `text-overflow: ellipsis` that "fixes itself" after one interactive selection. Stock iceblue dodges it only because its label/placeholder are content-sized `inline-block`s (an empty placeholder takes ~0px).
+- A stylesheet-level guard is safe and sufficient: `.z-cascader:has(.z-cascader-label:not(:empty)) .z-cascader-placeholder { display: none }`. It only acts when no inline `display` exists (= initial render); all interactive flows write inline styles, which win the cascade.
+- The same gap means `placeholder="…"` text + pre-selected model shows **both texts side by side** at initial load in any theme that doesn't guard — this is the upstream rendering gap, not a theme bug.
+
 ### Popup detachment
 
 `.z-cascader-popup` follows the standard ZK floating-popup rule. When `open()` is called, `zkpp.makeVParent()` re-parents the popup to `<body>`, and `pp.style.minWidth` is set to `node.offsetWidth` (trigger width) inline. See `reference/floating-popup-in-body.md`:
