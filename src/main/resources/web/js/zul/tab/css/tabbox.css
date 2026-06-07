@@ -587,6 +587,16 @@
     pointer-events: none;
 }
 
+/* Accordion NEVER shows the close icon, regardless of closable (contract c11a,
+   user ruling 2026-06-07): accordion header = MD3 expansion panel, whose only
+   trailing affordance is the chevron — no inline dismiss
+   (doc/md3-close-affordance-placement.md). ZK still emits .z-tab-button in the
+   accordion DOM when closable="true" (skill — Notes); closing remains available
+   programmatically. */
+.z-tabbox-accordion .z-tab-button {
+    display: none;
+}
+
 /* Chevron — right-side arrow via ::after on .z-tab-content.
    order: 2 keeps it the outermost trailing element now that .z-tab-button
    carries order: 1 — closable header sequence: label(flex:1) … × chevron (c35). */

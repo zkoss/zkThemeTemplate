@@ -29,6 +29,7 @@ Components with a header region put the close affordance in a **top corner**:
 | Side sheet | close icon button | top, trailing end of the header |
 | Full-screen dialog | close affordance × | top **leading** (exception — see below) |
 | Basic dialog | none by default | dismissal via action buttons (bottom-trailing) or scrim |
+| Expansion panel / accordion header | **none** | the only trailing affordance is the expand/collapse chevron; MD3 expansion panels are never dismissible inline |
 
 **The full-screen dialog exception**: its × is top-*leading* because it doubles as
 back/cancel navigation and must sit at the *opposite* end from the confirming action
@@ -62,7 +63,7 @@ Placement and anatomy are independent rules that compose:
 |----------------|---------|----------|
 | GoldenLayout per-tab × (`.lm_close_tab`) | inline — trailing after label; closable geometry **16/4/8** (leading inset / label–icon gap / trailing inset, contract close-7) | ✓ |
 | GoldenLayout stack controls (`.lm_controls .lm_close`) | surface — right-anchored ≤ 8px from header edge (contract M9) | ✓ |
-| Tabbox `.z-tab-button` | inline — trailing after label via flex `order: 1` (ZK emits the button *before* `.z-tab-text`); strip geometry **16/4/8**; vertical orients hug the bar's trailing edge (`margin-left: auto`); accordion: × immediately before the chevron | ✓ — corrected 2026-06-05 (contract c31–c35 + M1; was leading-side) |
+| Tabbox `.z-tab-button` | inline — trailing after label via flex `order: 1` (ZK emits the button *before* `.z-tab-text`); strip geometry **16/4/8**; vertical orients hug the bar's trailing edge (`margin-left: auto`); accordion: **suppressed entirely** (`display: none` regardless of `closable` — accordion header = expansion panel, no inline dismiss; user ruling 2026-06-07, contract c11a) | ✓ — corrected 2026-06-05 (contract c31–c35 + M1; was leading-side); accordion re-ruled 2026-06-07 |
 | Window/Panel close tool | surface — trailing end of caption bar | ✓ |
 | Chip-like custom sclasses | inline — trailing remove icon, 8dp inset | use as guide |
 
