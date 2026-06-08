@@ -396,6 +396,36 @@
     background-position: center !important;
 }
 
+/* ─── Radio (single-selection checkmark) ──────────────────────────────────
+   With single selection, ZK emits `z-icon-radio` (not `z-icon-check`) — see
+   data-components.md "Checkmark column renders a checkbox OR a radio". Override
+   the generic mask glyph and draw a Material radio circle. */
+.z-listitem-icon.z-icon-radio::before {
+    background-color: transparent !important;
+    background-image: none !important;
+    -webkit-mask-image: none !important;
+    mask-image: none !important;
+    border: 1.5px solid var(--zk-color-outline, #79747e);
+    border-radius: 50%;
+    width: 16px !important;
+    height: 16px !important;
+    box-sizing: border-box !important;
+    vertical-align: -3px;
+}
+
+.z-listitem:hover .z-listitem-icon.z-icon-radio::before {
+    border-color: var(--zk-color-primary, #376fd0);
+}
+
+/* Selected row: primary ring + filled centre dot */
+.z-listitem.z-listitem-selected .z-listitem-icon.z-icon-radio::before,
+.z-listitem.z-selected .z-listitem-icon.z-icon-radio::before {
+    border-color: var(--zk-color-primary, #376fd0) !important;
+    background-image: radial-gradient(circle at center, var(--zk-color-primary, #376fd0) 0 4px, transparent 4px) !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+}
+
 /* Checkmark cell column — compact padding */
 .z-listitem-checkable,
 .z-listheader-checkable {
@@ -415,6 +445,14 @@
 .z-listheader:has(.z-listheader-checkable) {
     padding-left: var(--zk-spacing-1);
     padding-right: var(--zk-spacing-1);
+}
+
+/* The always-present sort-icon slot has margin-left:4px and precedes the
+   checkable span, pushing the header checkbox 4px right of the row checkboxes
+   (broken vertical column line). A checkbox column is never sorted — zero it
+   so header and row checkboxes share one vertical axis. */
+.z-listheader:has(.z-listheader-checkable) .z-listheader-sorticon {
+    margin-left: 0;
 }
 
 .z-listcell:has(.z-listitem-checkable) > .z-listcell-content {

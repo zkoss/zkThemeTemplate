@@ -29,8 +29,28 @@ and `on-primary-container` text — never a hardcoded rgba, never
 | s3 | `.z-listitem.z-listitem-selected` | background-color | MUST NOT be `rgba(55, 111, 208, 0.12)` (the pre-fix hardcoded literal) |
 | s4 | `.z-listitem.z-listitem-selected` | background-color | MUST NOT be `rgb(178, 223, 219)` (= `--zk-color-secondary-container`) — wrong family |
 
+### Checkmark column (checkbox in `multiple`, radio in single selection)
+
+`checkmark="true"` renders a selection control in the first cell. ZK forks the icon
+class on selection mode: `multiple` → `z-icon-check` (checkbox), single → `z-icon-radio`
+(radio). See `data-components.md` → "Checkmark column renders a checkbox … OR a radio".
+Both must be real Material controls — NOT the generic flat mask glyph (which has no
+border and `background-color: rgba(0,0,0,.87)` on `::before`).
+
+**Preview anchors:** the listbox page's "Checkmark" gallery (multiple) and the
+single-selection checkmark case.
+
+| id | check | selector | property | expected | method |
+|----|-------|----------|----------|----------|--------|
+| cm1 | multi → real checkbox box | `.z-listitem-checkbox .z-listitem-icon.z-icon-check::before` | border-width / border-radius | border ≈ `1.5px` solid `outline`; `border-radius: 2px`; `mask-image: none` | computedStyle |
+| cm2 | multi selected → filled box | `.z-listitem-selected .z-listitem-icon.z-icon-check::before` | background-color | `rgb(55, 111, 208)` (= `--zk-color-primary`) with a checkmark `background-image` | computedStyle |
+| cm3 | single → real radio circle | `.z-listitem-radio .z-listitem-icon.z-icon-radio::before` | border-radius | `50%` (circle), `mask-image: none`, NOT `rgba(0,0,0,.87)` flat glyph | computedStyle |
+| cm4 | single selected → filled dot | `.z-listitem-radio.z-listitem-selected .z-listitem-icon.z-icon-radio::before` (or `::after`) | — | border-color/inner-dot = `--zk-color-primary` | computedStyle |
+| cm5 | header checkbox aligned with row | `.z-listheader-icon.z-icon-check` vs `.z-listitem-icon.z-icon-check` | center X | `Math.round(headerIcon.centerX) === Math.round(rowIcon.centerX)` (±1px) | getBoundingClientRect |
+
 ## States to evaluate
 - [ ] default rows, header, hover, selected, focus, disabled, striped, frozen columns
+- [ ] checkmark column: multiple (checkbox) + single (radio); header↔row X-alignment
 
 ## Frozen columns (shared CSS: mesh/css/frozen.css)
 
