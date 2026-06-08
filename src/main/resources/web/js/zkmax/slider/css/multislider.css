@@ -209,12 +209,20 @@
 
 .z-multislider-mark-label {
     position: absolute;
-    top: 30px;
     font-family: var(--zk-typescale-font-family);
     font-size: var(--zk-typescale-label-small-size);
     color: var(--zk-color-on-surface-variant);
     white-space: nowrap;
+}
+
+.z-multislider-horizontal .z-multislider-mark-label {
+    top: 30px;
     transform: translateX(-50%);
+}
+
+.z-multislider-vertical .z-multislider-mark-label {
+    left: 20px;
+    transform: translateY(-50%);
 }
 
 /* ── Disabled ─────────────────────────────────────────── */
