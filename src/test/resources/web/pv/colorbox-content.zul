@@ -25,14 +25,16 @@
     <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Colorbox in Menu</div>
     <div sclass="z-py-3">
         <menubar>
-            <menuitem label="Color" popup="colorPopup"/>
+            <menu label="Format">
+                <menupopup>
+                    <menu label="Text Colour" content="#color=#184dc6"/>
+                    <menu label="Fill Colour" content="#color=#990000"/>
+                    <menuseparator/>
+                    <menuitem label="Clear Formatting"/>
+                </menupopup>
+            </menu>
+            <menu label="Quick Colour" content="#color=#2e7d32"/>
         </menubar>
-        <popup id="colorPopup">
-            <vbox spacing="8" style="padding:8px;">
-                <label value="Pick a colour:"/>
-                <colorbox/>
-            </vbox>
-        </popup>
     </div>
 </div>
 </zk>

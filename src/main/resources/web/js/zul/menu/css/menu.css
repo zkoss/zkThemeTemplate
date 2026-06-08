@@ -229,8 +229,11 @@
     z-index: 1;
 }
 
-/* Hide blank 1px placeholder images (no image/icon set) */
-.z-menu-image[src*="R0lGODlhAQABAIAA"] {
+/* Hide blank 1px placeholder images (no image/icon set).
+   Exception: the colour chip of a `<menu content="#color=…">` is a blank-GIF
+   <img> whose colour comes from an inline background-color (see colorbox.css);
+   it must stay visible. */
+.z-menu-image[src*="R0lGODlhAQABAIAA"]:not(.z-colorbox-color) {
     display: none;
 }
 

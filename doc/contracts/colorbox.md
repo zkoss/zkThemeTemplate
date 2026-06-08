@@ -46,6 +46,26 @@ zk-version: 10.2.1-jakarta
 
 **Sprite-locked picker internals**: `.z-colorpicker-gradient`, `.z-colorpicker-bar`, `.z-colorpicker-circle`, `.z-colorpicker-arrows`, `.z-colorpicker-rgb`, `.z-colorpicker-hsv`, `.z-colorpicker-hex` MUST keep the ZK-source geometry (sizes + absolute positions). Do not redesign — see `components/colorbox.md`.
 
+## Expected values — menu-content mold (`<menu content="#color=…">`)
+
+ZK can embed a colorbox in a `<menu>` (see `components/colorbox.md` → "Menu-content mold"). The mirror classes `.z-menu-popup` / `.z-menu-paletteicon` / `.z-menu-pickericon` / `.z-menu-image.z-colorbox-color` MUST be styled in lockstep with the standalone `.z-colorbox-*` chrome — otherwise the popup ships frameless. The shared `.z-colorpicker` / `.z-colorpalette` body already carries over (no zclass prefix).
+
+| id  | selector | property | expected |
+|-----|----------|----------|----------|
+| m1  | `.z-menu-popup` | border / border-radius / box-shadow / background / padding | identical to `.z-colorbox-popup` (1px `--zk-color-outline-variant`, `--zk-shape-menu`, `--zk-elevation-dropdown`, `--zk-color-surface`, 8px) — must NOT be the browser-default frameless block |
+| m2  | `.z-menu-paletteicon`, `.z-menu-pickericon` | size / radius / color / hover | identical to `.z-colorbox-paletteicon`/`-pickericon` (28×28, small-corner radius, on-surface-variant, 8% hover overlay) |
+| m3  | `.z-menu-paletteicon::before`, `.z-menu-pickericon::before` | mask-image | grid / palette lucide glyph present (NOT `none`) — same as colorbox tab icons |
+| m4  | `.z-colorpalette-popup .z-menu-paletteicon`, `.z-colorpicker-popup .z-menu-pickericon` | selected fill | `--zk-color-primary-container` bg + `--zk-color-on-primary-container` color |
+| m5  | `.z-menu-image.z-colorbox-color` | border / border-radius / display | 1px `--zk-color-outline-variant`, 2px radius; `background-color` from ZK inline style. **Visible only when the colour menu is non-topmost** (nested in a `<menupopup>`) — ZK inline-hides the chip on a topmost menubar menu (`Menu.ts isTopmost()`); do not force it with `!important`. The theme's hide-blank-placeholder rule (`.z-menu-image[src*="R0lGODlhAQABAIAA"]`) MUST exclude `.z-colorbox-color` or the chip is hidden even when non-topmost |
+
+**Verify the menu mold with a nested colour menu** (chip only renders here):
+```xml
+<menubar><menu label="Format"><menupopup>
+    <menu label="Text Colour" content="#color=#184dc6"/>
+    <menu label="Fill Colour" content="#color=#990000"/>
+</menupopup></menu></menubar>
+```
+
 ## States to evaluate
 - [ ] default (closed, no color set) — swatch renders as black or theme default, chevron visible
 - [ ] default (with color="#184dc6") — swatch shows the picked color

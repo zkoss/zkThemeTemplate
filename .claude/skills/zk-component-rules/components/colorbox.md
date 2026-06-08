@@ -113,6 +113,43 @@ Verify with `document.elementFromPoint(iconRect.left + iconRect.width/2, iconRec
 
 Implication: writing CSS rules like `.z-colorpalette-popup .z-colorpicker { display: none }` is **redundant** (it can't override the inline `display: none` ZK already set), but harmless. The real toggle has already happened by the time CSS runs.
 
+## Menu-content mold — colorbox embedded in a `<menu>`
+
+ZK can create a colorbox **inside a Menu** (not the standalone `<colorbox>` widget). Setting a Menu's `content` to `#color=#RRGGBB` auto-builds a color picker:
+
+```xml
+<menubar>
+    <menu label="Color" content="#color=#184dc6"/>
+</menubar>
+```
+
+This is handled by `zkex.inp.ContentHandler` (a content handler of `zul.menu.Menu`, see `zkcml/zkex/src/main/resources/web/js/zkex/inp/ContentHandler.ts`). The picker/palette objects are the **same** `zkex.inp.Colorpicker` / `zkex.inp.Colorpalette` used by `<colorbox>` — but the **wrapper classes are different** because the host widget's zclass is `z-menu`, not `z-colorbox`.
+
+### Mirror-class map (menu mold vs standalone)
+
+| Standalone `<colorbox>` | Menu-content mold | Element |
+|-------------------------|-------------------|---------|
+| `.z-colorbox-popup`      | `.z-menu-popup`      | popup frame (detached to `<body>`) |
+| `.z-colorbox-paletteicon`| `.z-menu-paletteicon`| palette tab toggle |
+| `.z-colorbox-pickericon` | `.z-menu-pickericon` | picker tab toggle |
+| `.z-colorbox-current` (swatch) | `.z-menu-image.z-colorbox-color` | the color chip beside the menu label |
+| `.z-colorpicker` / `.z-colorpalette` | **same** (`.z-colorpicker` / `.z-colorpalette`) | picker/palette body — no zclass prefix |
+
+The toggle state classes are identical for both molds: ZK adds `.z-colorpalette-popup` / `.z-colorpicker-popup` to the popup root (`.z-menu-popup` here), so selected-tab rules read e.g. `.z-colorpalette-popup .z-menu-paletteicon`.
+
+**`.z-menu-popup` ≠ `.z-menupopup`.** Regular menubar dropdowns render the `Menupopup` widget with class `.z-menupopup` (no hyphen). The color-content popup is `wgt.$s('popup')` on the Menu (`z-menu` + `-popup`) → `.z-menu-popup` (hyphenated). The HTML-content variant (`content="<html…>"`) renders `.z-menu-content-popup` instead. So `.z-menu-popup` is exclusive to the **color** menu and safe to style without touching ordinary menus.
+
+**Theme trap:** a theme that styles only the `.z-colorbox-*` set ships the menu mold with a chrome-less popup (no surface/border/shadow/padding) and invisible tab toggles, even though the palette/picker grid itself renders (shared classes). Any theme must style the `.z-menu-*` mirrors in lockstep — the ZK default theme groups them in one selector list (`.z-colorbox-popup, .z-menu-popup { … }`). The label swatch `.z-menu-image.z-colorbox-color` gets its `background-color` set inline by `ContentHandler.bind` (`jq(img).addClass('z-colorbox-color').css('backgroundColor', …)`), so it needs only a border + radius to read as a chip.
+
+### The label chip shows only when the colour menu is **non-topmost**
+
+`Menu.ts` `domContent_` (≈ line 230) writes inline `style="display:none"` on the image `<img>` **iff `isTopmost()`** — i.e. the menu sits directly in a `<menubar>`. `ContentHandler.bind` then sets the chip's `background-color` on that same node but never clears the inline `display`. Consequences:
+
+- **Topmost colour menu** (`<menubar><menu content="#color=…"/>`): chip is inline-hidden by ZK. The label shows text + caret only; CSS cannot reveal the chip without `!important` (don't — this matches the default theme, which also leaves it hidden).
+- **Nested colour menu** (`<menupopup><menu content="#color=…"/></menupopup>`): `isTopmost()` is false → no inline `display:none` → the chip is visible and CSS-controlled. This is the realistic "Text Colour / Fill Colour" dropdown pattern.
+
+Second trap for the nested case: a theme's generic *hide-blank-placeholder* rule (`.z-menu-image[src*="R0lGODlhAQABAIAA"] { display:none }`, common because the chip's `<img src>` is a blank 1×1 GIF — the colour is CSS-only) will also hide the chip. Exclude it: `…[src*="…"]:not(.z-colorbox-color)`. Specificity won't save you here — if component CSS is split across bundles that land in different cascade layers, layer order can override specificity, so neutralise the placeholder rule at its source rather than out-specifying it.
+
 ## Bundle
 
 `colorbox.css.dsp` in zkex. No siblings.
