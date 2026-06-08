@@ -61,10 +61,9 @@
                 <button label="Close" onClick="dnomask.close()"/>
             </drawer>
 
-            <button label="No Close Button" onClick="dnoclosable.open()"/>
-            <drawer id="dnoclosable" title="No Close Button" closable="false">
-                <label value="The header has no X button. Use the button below to close."/>
-                <button label="Close" onClick="dnoclosable.close()"/>
+            <button label="Close Button" onClick="dnoclosable.open()"/>
+            <drawer id="dnoclosable" title="Close Button" closable="true">
+                <label value="The header has X button"/>
             </drawer>
         </div>
     </div>

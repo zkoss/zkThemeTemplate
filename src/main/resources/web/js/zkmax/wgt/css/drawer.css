@@ -27,7 +27,10 @@
     transition: opacity var(--zk-motion-duration-medium2) var(--zk-motion-easing-standard);
 }
 
-.z-drawer-open .z-drawer-mask {
+/* The mask element is ALWAYS rendered; ZK's setMask(false) only strips the
+   .z-drawer-mask-enabled modifier. Gate the visible scrim on that modifier so a
+   mask="false" drawer shows no backdrop (the mask still captures click→close). */
+.z-drawer-open .z-drawer-mask.z-drawer-mask-enabled {
     opacity: 1;
 }
 
@@ -104,6 +107,35 @@
     font-size: var(--zk-typescale-title-medium-size);
     font-weight: var(--zk-typescale-title-medium-weight);
     line-height: var(--zk-typescale-title-medium-line-height);
+    color: var(--zk-color-on-surface);
+}
+
+/* ─── Close button (closable=true) ───────────────────────────────────────────
+   Side sheet → close icon button at the top-trailing corner of the header
+   (doc/md3-close-affordance-placement.md §2). The mold emits this as a sibling
+   of .z-drawer-header inside .z-drawer-real, holding <i class="z-icon-times">;
+   .z-drawer-real is position:absolute, so it anchors the corner placement even
+   when the header is hidden (no title). Pattern mirrors .z-window-icon. */
+.z-drawer-close {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: var(--zk-shape-corner-full);
+    color: var(--zk-color-on-surface-variant);
+    font-size: 16px;
+    cursor: pointer;
+    overflow: hidden;
+    transition: background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard),
+                color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+}
+
+.z-drawer-close:hover {
+    background-color: var(--zk-color-surface-container);
     color: var(--zk-color-on-surface);
 }
 

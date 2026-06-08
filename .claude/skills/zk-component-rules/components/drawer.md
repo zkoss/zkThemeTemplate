@@ -53,7 +53,31 @@ The stock ZK iceblue theme uses the compound form for exactly this reason.
 ```
 
 - Closed state is `display:none` on the root (ZK toggles it), so a full-viewport `position:fixed` root is safe.
-- `_mask` defaults **true**; the `z-drawer-mask-enabled` modifier is toggled by `setMask`.
+
+## The mask element is ALWAYS rendered — gate the visible scrim on `.z-drawer-mask-enabled`
+
+`_mask` defaults **true**. The mold ALWAYS emits the `.z-drawer-mask` element; it only appends the `z-drawer-mask-enabled` modifier when `_mask` is true (`this._mask ? this.$s('mask-enabled') : ''`), and `setMask(false)` strips that modifier — it never removes the element. So a theme that makes the scrim visible on the bare `.z-drawer-mask` (or on `.z-drawer-open .z-drawer-mask`) will show a backdrop even for `mask="false"`.
+
+```css
+/* CORRECT — scrim visibility keys off the modifier */
+.z-drawer-mask { background-color: …; opacity: 0; }   /* transparent by default */
+.z-drawer-open .z-drawer-mask.z-drawer-mask-enabled { opacity: 1; }
+
+/* WRONG — mask="false" still shows the backdrop */
+.z-drawer-open .z-drawer-mask { opacity: 1; }
+```
+
+The mask retains its `onClick→close` handler regardless of `mask-enabled`, so click-outside-to-close still works when the scrim is invisible (matches stock ZK).
+
+## Close button (`closable=true`)
+
+The mold emits the close as a **sibling of `.z-drawer-header`** (both children of `.z-drawer-real`), not inside the header:
+
+```html
+<div class="z-drawer-close" role="button" tabindex="0" aria-label="…"><i class="z-icon-times"></i></div>
+```
+
+It is `display:none` inline until `closable=true` (`setClosable` toggles it). A drawer is an MD3 **side sheet** → the close icon button belongs at the **top-trailing corner of the header** (`doc/md3-close-affordance-placement.md` §2). Since `.z-drawer-real` is a positioned ancestor, `position:absolute; top; right` on `.z-drawer-close` anchors the corner placement independently of whether the header is visible (header is `display:none` when title is empty). The glyph is the ZK icon-font `<i class="z-icon-times">` (sized by the container's `font-size`).
 
 ## Bundle
 
