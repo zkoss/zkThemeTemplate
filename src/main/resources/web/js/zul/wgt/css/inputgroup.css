@@ -55,11 +55,14 @@
     flex-shrink: 0;
 }
 
-/* Collapse duplicate adjacent borders between text addons and inputs */
-.z-inputgroup .z-inputgroup-text + .z-inputgroup-text,
-.z-inputgroup .z-inputgroup-text + .z-textbox,
-.z-inputgroup .z-inputgroup-text + .z-combobox,
-.z-inputgroup .z-inputgroup-text + .z-combobox .z-combobox-input {
+/* Collapse duplicate adjacent borders between text addons and inputs.
+ * Axis-aware: in horizontal layout adjacent children share a VERTICAL edge,
+ * so the successor's left border is dropped. The vertical-mode equivalent
+ * (shared horizontal edge → drop top border) lives in the vertical block below. */
+.z-inputgroup:not(.z-inputgroup-vertical) .z-inputgroup-text + .z-inputgroup-text,
+.z-inputgroup:not(.z-inputgroup-vertical) .z-inputgroup-text + .z-textbox,
+.z-inputgroup:not(.z-inputgroup-vertical) .z-inputgroup-text + .z-combobox,
+.z-inputgroup:not(.z-inputgroup-vertical) .z-inputgroup-text + .z-combobox .z-combobox-input {
     border-left: none;
 }
 
@@ -110,4 +113,17 @@
 
 .z-inputgroup-vertical .z-inputgroup-text {
     justify-content: center;
+}
+
+/* Vertical mode collapses the shared HORIZONTAL edge: each stacked successor
+ * drops its top border so the seam is one 1px line, not a doubled 2px line.
+ * Side (left/right) borders stay intact — dropping them was the leaked
+ * horizontal rule that left the textbox without a left border. */
+.z-inputgroup-vertical .z-inputgroup-text + .z-inputgroup-text,
+.z-inputgroup-vertical .z-inputgroup-text + .z-textbox,
+.z-inputgroup-vertical .z-textbox + .z-inputgroup-text,
+.z-inputgroup-vertical .z-inputgroup-text + .z-combobox,
+.z-inputgroup-vertical .z-combobox + .z-inputgroup-text,
+.z-inputgroup-vertical .z-inputgroup-text + .z-combobox .z-combobox-input {
+    border-top: none;
 }

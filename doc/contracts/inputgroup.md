@@ -26,3 +26,8 @@ preview: http://localhost:8080/inputgroup.zul
 
 ## States to evaluate
 - [ ] default, hover, focus, disabled, sibling-coherence (compare to textbox)
+- [ ] **vertical-border**: in `orient="vertical"`, the centre `.z-textbox` must
+      keep BOTH left and right borders (1px outline colour); only its
+      `border-top` is collapsed against the preceding addon. A textbox with
+      `border-left-width: 0` in vertical mode is a fail (horizontal collapse
+      rule leaking — see skill "Border-collapse is axis-aware").
