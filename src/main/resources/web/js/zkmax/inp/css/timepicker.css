@@ -1,12 +1,209 @@
+/* MD3 Timepicker — PE composite time input (zkmax) */
+/* DOM:
+   <span class="z-timepicker [z-timepicker-disabled] [z-timepicker-readonly] [z-timepicker-inplace]">
+     <input class="z-timepicker-input [z-timepicker-invalid] [z-timepicker-input-full]">
+     <a class="z-timepicker-button [z-timepicker-disabled]">
+       <i class="z-timepicker-icon z-icon-clock-o"/>
+     </a>
+   </span>
+   <div class="z-timepicker-popup">  ← DETACHED to <body>
+     <ul class="z-timepicker-content">
+       <li class="z-timepicker-option [z-timepicker-option-selected]">
+*/
+
+/* ─── Root layout ──────────────────────────────────────────────────────────── */
 .z-timepicker {
+    display: inline-flex;
+    align-items: center;
+    position: relative;
+    min-height: 36px;
     border: 1px solid var(--zk-color-outline);
     border-radius: var(--zk-shape-corner-extra-small);
+    background-color: var(--zk-color-surface);
+    box-sizing: border-box;
+    /* Timepicker is always-readonly (constructor forces it) → the input always carries the opaque
+       surface-container bg; clip the square-cornered child to the rounded root, else its corners
+       bleed past the left border-radius and the rounded corner reads as missing. */
+    overflow: hidden;
+    transition: border-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
 }
 
+/* Focus ring lives on an always-present OVERLAY, not a root inset box-shadow.
+   The input carries an opaque (always-readonly) surface-container background that would paint OVER
+   a root inset shadow on the input side, while the transparent button lets it show — making the
+   ring look thicker around the button than around the input. The ::after overlay paints ABOVE both
+   children (pointer-events:none; clipped to the rounded shape by the root's overflow:hidden), so the
+   ring reads uniformly across the whole field. Border-width stays 1px → no layout shift on focus.
+   See reference/focus-affordance-no-layout-shift.md (opaque-child caveat). */
+.z-timepicker::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    box-shadow: inset 0 0 0 1px transparent;
+    pointer-events: none;
+    transition: box-shadow var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+}
+
+.z-timepicker:hover {
+    border-color: var(--zk-color-on-surface);
+}
+
+.z-timepicker:focus-within {
+    border-color: var(--zk-color-primary);
+}
+
+.z-timepicker:focus-within::after {
+    box-shadow: inset 0 0 0 1px var(--zk-color-primary);
+}
+
+/* ─── Input ────────────────────────────────────────────────────────────────── */
 .z-timepicker-input {
+    flex: 1;
+    min-width: 0;
+    border: none;
+    background: transparent;
+    padding: 0 var(--zk-spacing-3);
+    height: 100%;
+    min-height: 34px;
+    font-family: var(--zk-typescale-font-family);
     font-size: var(--zk-typescale-body-medium-size);
+    color: var(--zk-color-on-surface);
+    outline: none;
+    box-sizing: border-box;
 }
 
+.z-timepicker-input::placeholder {
+    color: var(--zk-color-on-surface-variant);
+    opacity: 1;
+}
+
+/* ─── Clock button ─────────────────────────────────────────────────────────── */
+.z-timepicker-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    min-height: 34px;
+    flex-shrink: 0;
+    border: none;
+    border-left: 1px solid var(--zk-color-outline);
+    border-radius: 0 var(--zk-shape-corner-extra-small) var(--zk-shape-corner-extra-small) 0;
+    background: transparent;
+    color: var(--zk-color-on-surface-variant);
+    cursor: pointer;
+    text-decoration: none;
+    overflow: hidden;
+    transition: background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+}
+
+.z-timepicker-button:hover {
+    background-color: color-mix(in srgb, var(--zk-color-on-surface) 8%, transparent);
+    color: var(--zk-color-on-surface);
+}
+
+/* ─── Disabled ─────────────────────────────────────────────────────────────── */
 .z-timepicker-disabled {
-    opacity: 0.38;
+    opacity: var(--zk-state-disabled-opacity);
+    pointer-events: none;
+    cursor: not-allowed;
+}
+
+/* NOTE: no buttonVisible="false" rule — Timepicker extends DateTimeFormatInputElement
+   (not ComboElement), exposes no setButtonVisible, and 500s if the attribute is set in ZUL.
+   The .z-timepicker-button.z-timepicker-disabled state is structurally unreachable. */
+
+/* ─── Readonly ─────────────────────────────────────────────────────────────── */
+.z-timepicker-readonly .z-timepicker-input {
+    background-color: var(--zk-color-surface-container);
+}
+
+/* ─── Invalid ──────────────────────────────────────────────────────────────── */
+/* ZK places .z-timepicker-invalid on the INPUT child (see DOM comment at top of file),
+   NOT the root span. Use :has() so the error tint lands on the root's outlined border.
+   transition:none — the invalid class is applied dynamically (onCreate/validation), and the
+   base border-color transition restarts every style recalc while :has() matches, leaving the
+   transition stuck at currentTime 0 (start color). Disabling it renders the error border at once. */
+.z-timepicker:has(.z-timepicker-invalid) {
+    border-color: var(--zk-color-error);
+    transition: none;
+}
+
+.z-timepicker:has(.z-timepicker-invalid):hover {
+    border-color: var(--zk-color-error);
+}
+
+.z-timepicker:has(.z-timepicker-invalid):focus-within {
+    border-color: var(--zk-color-error);
+}
+
+.z-timepicker:has(.z-timepicker-invalid):focus-within::after {
+    box-shadow: inset 0 0 0 1px var(--zk-color-error);
+}
+
+/* ─── Inplace ──────────────────────────────────────────────────────────────── */
+.z-timepicker-inplace {
+    border-color: transparent;
+    background-color: transparent;
+    box-shadow: none;
+}
+
+.z-timepicker-inplace:hover {
+    border-color: transparent;
+}
+
+.z-timepicker-inplace .z-timepicker-input {
+    background-color: transparent;
+    border-color: transparent;
+}
+
+.z-timepicker-inplace .z-timepicker-button {
+    visibility: hidden;
+}
+
+/* ─── Popup ────────────────────────────────────────────────────────────────── */
+/* Popup is DETACHED to <body> at runtime — must be a top-level selector.
+   position:absolute + z-index are REQUIRED: ZK sets the popup's left/top inline
+   but NOT position, so without this the popup computes position:static, the inline
+   offsets are inert, and it drops to the page bottom-left. Aligned with the
+   combobox dropdown (z-index 1600, 4px gap, shape-menu, elevation-dropdown, no border).
+   See reference/floating-popup-in-body.md. */
+.z-timepicker-popup {
+    position: absolute;
+    z-index: 1600;
+    margin: 4px 0 0 0;
+    box-shadow: var(--zk-elevation-dropdown);
+    border-radius: var(--zk-shape-menu);
+    background-color: var(--zk-color-surface);
+    border: none;
+    overflow: auto;
+    min-width: 160px;   /* floor: never narrower than 160px */
+    max-width: 400px;   /* cap for long format strings */
+    max-height: 350px;
+    box-sizing: border-box;
+}
+
+/* ─── Popup options ────────────────────────────────────────────────────────── */
+.z-timepicker-content {
+    list-style: none;
+    margin: 0;
+    padding: var(--zk-spacing-1) 0;
+}
+
+.z-timepicker-option {
+    display: block;
+    padding: var(--zk-spacing-2) var(--zk-spacing-4);
+    font-size: var(--zk-typescale-body-medium-size);
+    font-family: var(--zk-typescale-font-family);
+    color: var(--zk-color-on-surface);
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.z-timepicker-option:hover {
+    background-color: var(--zk-color-surface-container);
+}
+
+.z-timepicker-option-selected {
+    color: var(--zk-color-primary);
 }

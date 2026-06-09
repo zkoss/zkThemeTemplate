@@ -1,0 +1,102 @@
+# coachmark
+
+A guided-tour overlay component that positions an annotated card relative to a target element,
+highlights that target by raising its z-index above a full-page mask, and provides a close
+button plus optional child content (label, action button).
+
+## DOM structure
+
+```
+.z-coachmark                          (<div> root — absolute-positioned wrapper; transparent bg; no shadow)
+├─ .z-coachmark-pointer               (<div> arrow/pointer triangle — border-trick CSS triangle; aria-hidden)
+├─ .z-coachmark-content               (<div id="uuid-cave"> visual card — carries bg, radius, shadow, padding)
+│   ├─ [child ZK widgets]             (arbitrary children: .z-label, .z-button, etc. — slotted by the ZUL author)
+│   └─ ...
+└─ .z-coachmark-close                 (<div id="uuid-cls"> close button — role="button", tabindex="0")
+    └─ <i class="z-icon-times ...">   (close icon — rendered as a <i> with z-icon-times + internal icon class)
+```
+
+Notes:
+- `.z-coachmark` itself is a positional shell — `position: absolute`, initially `opacity: 0; visibility: hidden`.
+- Visual card appearance lives on `.z-coachmark-content`, not the root.
+- A `.z-coachmark-mask` element is injected separately (via `zk.eff.FullMask`) as a sibling under
+  `<body>` at runtime when the coachmark opens. It is NOT a child of `.z-coachmark`.
+- Close button sub-element `<i id="uuid-clsIcon">` carries both an internal icon class and
+  `z-icon-times`. Clicks on either `uuid-cls` or `uuid-clsIcon` trigger close.
+
+## State classes
+
+- `.z-coachmark-open` — added to `.z-coachmark` root when the coachmark is open (via `_open()`).
+  The animation runs here. Removed on close via `_close()`.
+
+The pointer direction classes are added to `.z-coachmark-pointer` (not root):
+- `.z-coachmark-up`    — pointer points upward (coachmark is below the target)
+- `.z-coachmark-down`  — pointer points downward (coachmark is above the target)
+- `.z-coachmark-left`  — pointer points left (coachmark is to the right of the target)
+- `.z-coachmark-right` — pointer points right (coachmark is to the left of the target)
+
+No disabled or readonly states. No focus/active state classes — these use only pseudo-classes
+on `.z-coachmark-close`.
+
+## Attribute support
+
+- `visible="false"` — coachmark starts closed; open programmatically with `self.open()` or
+  `setVisible(true)`. When visible goes to `true`, ZK calls `_open()` which adds `.z-coachmark-open`.
+- `target="id"` — JS raises the target element's `z-index` above the mask when open; restores it on close.
+- `position="before_center|after_center|..."` — controls which side of the target the coachmark appears on.
+  JS-resolves to a pointer direction and injects `paddingTop/Bottom/Left/Right` on `.z-coachmark` root to
+  make room for the pointer triangle.
+- `next="id"` — triggers the next coachmark in a guided sequence.
+
+## Composition invariants
+
+- `.z-coachmark` root has `position: absolute` and JS-set `top`/`left`. Do NOT override these with CSS.
+- `.z-coachmark-pointer` is sized/positioned entirely by JS (`_fixarrow()`). The theme controls only its
+  border-color (which sets the pointer triangle fill). The border-width is JS-hardcoded at 10px.
+- `.z-coachmark-content` should keep `position: relative` (matches the ZK LESS source). Height is `100%` (inherits from root sizing).
+- `.z-coachmark-close` is a **sibling of the content**, a direct child of the `.z-coachmark` root, and is
+  `position: absolute` resolved against the **root** (NOT the content box). The theme must pin it to the
+  top-right corner (`top`/`right`); a missing `position:absolute` flows it as a full-width row below the
+  content. The pointer direction shifts its corner offset: when the pointer carries `.z-coachmark-up` /
+  `.z-coachmark-right`, bump the close `top` / `right` clear of the triangle via
+  `.z-coachmark-up ~ .z-coachmark-close` / `.z-coachmark-right ~ .z-coachmark-close` (general-sibling, because
+  the pointer precedes the close in DOM order). The ZK default offsets are `top:8px right:4px` with a `+16px`
+  bump on the pointer side.
+- `.z-coachmark-pointer` MUST be `position: absolute` (the mold JS `_fixarrow()` writes inline `top`/`left`
+  to align the triangle with the target; `position:static` discards those coordinates and the triangle
+  collapses to the card's left edge, no longer pointing at the target). `z-index: 100`.
+- The mask (`.z-coachmark-mask`) is a sibling of `.z-coachmark` in `<body>`, created by `zk.eff.FullMask`.
+  Its z-index is set to `(coachmark z-index - 1)`. The theme may style it; the selector is `.z-coachmark-mask`.
+- Animation: `.z-coachmark-open` triggers the open entrance. The base `opacity: 0; visibility: hidden` on
+  `.z-coachmark` must be preserved — they are the closed state. The animation sets `opacity: 1; visibility: visible`
+  via `animation-fill-mode: forwards`.
+
+## Sibling decomposition
+
+none — novel guided-tour card pattern. No ZK sibling shares primitives with coachmark.
+
+## Contract
+
+`zkmax/nav/css/coachmark.css` (separate file, zkmax-specific — NOT bundled in any standard `.css.dsp`).
+The theme provides this file under `src/main/resources/web/js/zkmax/nav/css/coachmark.css`.
+
+## Edition
+
+PE (zkmax package — requires PE license or higher per ZKDoc edition badge)
+
+## Notes
+
+- The old contract incorrectly listed `shared-css-file: src/main/resources/web/js/zkmax/wgt/css/coachmark.css`
+  and selectors `.z-coachmark-title`, `.z-coachmark-body`, `.z-coachmark-button`. None of these exist in the
+  live DOM. The real CSS file is `src/main/resources/web/js/zkmax/nav/css/coachmark.css`.
+- Children rendered inside `.z-coachmark-content` are arbitrary ZK widgets (`.z-label`, `.z-button`, etc.)
+  placed by the ZUL author. The theme does not control their class names — style them via child combinators
+  or the children's own component CSS files.
+- The mold (`mold/coachmark.js`) renders the full DOM including `role="tooltip"` on the root and
+  `role="button"` + `tabindex="0"` on the close div — accessibility-ready out of the box.
+- ZK makes the target component interactive above the mask by temporarily setting `position: relative`
+  and a high `z-index` on its DOM node. This is JS-driven; the theme cannot rely on the target having
+  any particular positioning at rest.
+- `.z-coachmark-icon` is present in the ZK LESS source with `position: absolute; z-index: 1;` — it appears
+  to be an additional highlight/glow element around the target, but is not present in the mold output.
+  Treat as unused unless confirmed in a live DOM inspection.

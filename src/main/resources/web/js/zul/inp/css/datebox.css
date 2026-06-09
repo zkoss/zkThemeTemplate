@@ -21,17 +21,21 @@
     background-color: var(--zk-color-surface);
     min-height: 40px;
     box-sizing: border-box;
-    transition: border-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+    transition:
+        border-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard),
+        box-shadow var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
 }
 
 .z-datebox:hover {
     border-color: var(--zk-color-on-surface);
 }
 
+/* Focus ring as an INSET box-shadow, not a border-width increase: border stays 1px so the
+   border-box content area never shrinks and the min-height-pinned input/button never force the
+   root taller. See reference/focus-affordance-no-layout-shift.md. */
 .z-datebox:focus-within {
     border-color: var(--zk-color-primary);
-    border-width: 2px;
-    padding: 0;  /* compensate 1px border growth on all sides */
+    box-shadow: inset 0 0 0 1px var(--zk-color-primary);
 }
 
 .z-datebox-input {
@@ -69,7 +73,7 @@
 
 .z-datebox:has(.z-datebox-invalid):focus-within {
     border-color: var(--zk-color-error);
-    border-width: 2px;
+    box-shadow: inset 0 0 0 1px var(--zk-color-error);
 }
 
 /* Keep legacy class on wrapper in case server sets it */
@@ -83,7 +87,7 @@
 
 .z-datebox.z-datebox-invalid:focus-within {
     border-color: var(--zk-color-error);
-    border-width: 2px;
+    box-shadow: inset 0 0 0 1px var(--zk-color-error);
 }
 
 .z-datebox-button {

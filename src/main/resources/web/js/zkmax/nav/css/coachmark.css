@@ -1,7 +1,75 @@
+.z-coachmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.z-coachmark.z-coachmark-open {
+    opacity: 1;
+    visibility: visible;
+}
+
 .z-coachmark-content {
+    /* positioned context for the absolutely-pinned close button */
+    position: relative;
     background-color: var(--zk-color-primary);
     color: var(--zk-color-on-primary);
     border-radius: var(--zk-shape-card);
     box-shadow: var(--zk-elevation-2);
-    padding: var(--zk-spacing-4);
+    /* extra right padding reserves room for the top-right close button (mirrors ZK default's asymmetric padding) */
+    padding: var(--zk-spacing-4) calc(var(--zk-spacing-4) + var(--zk-spacing-3)) var(--zk-spacing-4) var(--zk-spacing-4);
+}
+
+.z-coachmark-pointer {
+    width: 0;
+    height: 0;
+    border: 10px solid transparent;
+    /* REQUIRED: the mold JS (_fixarrow) writes inline top/left on the pointer to align the
+       triangle with the target. Without position:absolute those coordinates are ignored and
+       the triangle collapses to the card's static left edge (does not point at the target). */
+    position: absolute;
+    z-index: 100;
+}
+
+.z-coachmark-pointer.z-coachmark-up {
+    border-bottom-color: var(--zk-color-primary);
+}
+
+.z-coachmark-pointer.z-coachmark-down {
+    border-top-color: var(--zk-color-primary);
+}
+
+.z-coachmark-pointer.z-coachmark-left {
+    border-right-color: var(--zk-color-primary);
+}
+
+.z-coachmark-pointer.z-coachmark-right {
+    border-left-color: var(--zk-color-primary);
+}
+
+.z-coachmark-close {
+    /* pinned to the top-right corner, relative to the .z-coachmark root (close is a sibling
+       of the content, not a child of it) */
+    position: absolute;
+    top: var(--zk-spacing-2);
+    right: var(--zk-spacing-2);
+    width: var(--zk-spacing-4);
+    height: var(--zk-spacing-4);
+    line-height: var(--zk-spacing-4);
+    font-size: 14px;
+    text-align: center;
+    color: var(--zk-color-on-primary);
+    cursor: pointer;
+}
+
+/* push the close clear of the pointer triangle when it occupies the top/right edge
+   (the direction class lives on the pointer, which precedes the close in the DOM) */
+.z-coachmark-up ~ .z-coachmark-close {
+    top: calc(var(--zk-spacing-2) + 16px);
+}
+
+.z-coachmark-right ~ .z-coachmark-close {
+    right: calc(var(--zk-spacing-2) + 16px);
 }

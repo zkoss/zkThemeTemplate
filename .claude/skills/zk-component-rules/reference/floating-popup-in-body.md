@@ -24,6 +24,22 @@ For chosenbox (also applies to combobox, datebox, etc.):
 
 `parentElement.tagName === 'BODY'` for the popup element after first open. The trigger and popup are **siblings**, not parent-child.
 
+## Implication: the popup CSS MUST declare `position: absolute` (+ a z-index)
+
+ZK sets the popup's `left`/`top` (and often `width`) **inline** at open time — but it does **not** set `position`. Positioning offsets only take effect on a positioned box, so the theme CSS is responsible for supplying `position: absolute` (or `fixed`). If the popup rule omits it, the element computes `position: static`, the inline `left`/`top` are inert, and the popup drops into normal `<body>` flow — rendering at the **bottom-left of the page**, after all body content.
+
+```css
+.z-{component}-popup {
+    position: absolute;   /* REQUIRED — ZK's inline left/top are dead without it */
+    z-index: 1600;        /* dropdown stacking; calendar/datebox use 1700 */
+    /* … surface, shape, elevation … */
+}
+```
+
+This is a ZK structural fact, not a theme choice: **any** theme that styles a detached popup and forgets `position` hits the identical bottom-left bug. Verify every `*-popup` **base** rule declares `position` — a modifier rule (`.z-x-open .z-x-popup`) inheriting from a positioned base is fine, but a base rule without `position` is the bug.
+
+> Caught 2026-06-08 on `.z-timepicker-popup` (its sole rule lacked `position`). A prior `width: max-content !important` workaround had masked it by capping the width, so the full-body-width `static` box wasn't obvious. Fix = `position: absolute; z-index: 1600` (and the width hack became unnecessary — under `position: absolute`, ZK's inline `width: auto` shrink-fits to content). See `doc/skill-gaps.md`.
+
 ## Implication: percentage-based widths reference `<body>`
 
 Because the popup's offset parent is `<body>`, any percentage size in CSS resolves against the body box:
