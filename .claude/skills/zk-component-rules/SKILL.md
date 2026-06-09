@@ -112,6 +112,7 @@ Load only the file for the component you are working on.
 | `components/splitlayout.md` | splitlayout (EE) — T1 two-pane resizable container, cave-top/bottom/left/right, splitter bar with collapse button and three icon idiom, `--zk-splitter-*` legacy var mapping required |
 | `components/cropper.md` | cropper (PE per ZKDoc) — T3 Jcrop-backed image cropper; only `.z-cropper` wrapper and `.z-cropper-toolbar` are theme-owned; `.z-cropper-canvas` does NOT exist (actual Jcrop holder is `.z-cropper-holder`); toolbar is JS-positioned and hidden at rest |
 | `components/timepicker.md` | timepicker (PE) — T1 combo-pattern input + clock-button + detached time-option-list popup; `.z-timepicker-disabled` appears on root (component disabled) AND on `<a>` button (buttonVisible=false — different semantics); popup is raw `<li>` items not ZK widgets; separate CSS file `zkmax/inp/css/timepicker.css` not merged into combo.css.dsp |
+| `components/coachmark.md` | coachmark (PE) — T2 guided-tour card; `.z-coachmark` is transparent positional wrapper; `.z-coachmark-content` is the visual card; `.z-coachmark-open` drives animation; pointer arrow on `.z-coachmark-pointer.z-coachmark-{up\|down\|left\|right}`; mask is a `zk.eff.FullMask` sibling in `<body>`; CSS in `zkmax/nav/css/coachmark.css` |
 
 ## What this skill deliberately does NOT contain
 
