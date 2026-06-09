@@ -48,6 +48,7 @@ Both `zk-spec-author` (when authoring) and `zk-theme-evaluator` (when verifying)
 | `reference/inplace-state.md` | The `inplace` attribute: when ZK adds `.z-{comp}-inplace`, and the three CSS patterns (A: root-bordered, B: child-bordered, C: direct-input) |
 | `reference/buttonVisible-attribute.md` | Which input components support `buttonVisible="false"` and where ZK puts the resulting class |
 | `reference/focus-vs-focus-within.md` | Composite controls require `:focus-within`; CDP measurement caveat |
+| `reference/focus-affordance-no-layout-shift.md` | A focus ring must not resize the field. Composite inputs (timepicker/datebox/timebox/bandbox/spinner) must use an inset box-shadow ring, NOT `border-width:1px→2px` (which grows the box via min-height-pinned children); single inputs (textbox) may use 2px border + padding compensation; combobox is the borderless-root exception |
 | `reference/edition-availability.md` | Which components require PE / EE licensing and where they live (zkex.jar / zkmax.jar) |
 | `reference/css-file-bundling.md` | Shared `.css.dsp` outputs (e.g. `combo.css.dsp` covers 5 components) and delivery quirks (splitter merged into box, files missing from lang-addon.xml) |
 | `reference/zul-template-patterns.md` | `<apply templateURI>` shadow scoping, content-partial pattern, template name scoping |
@@ -110,6 +111,7 @@ Load only the file for the component you are working on.
 | `components/toolbarbutton.md` | toolbarbutton (`.z-toolbarbutton-checked`, CSS in `footer.css.dsp`) — stub |
 | `components/splitlayout.md` | splitlayout (EE) — T1 two-pane resizable container, cave-top/bottom/left/right, splitter bar with collapse button and three icon idiom, `--zk-splitter-*` legacy var mapping required |
 | `components/cropper.md` | cropper (PE per ZKDoc) — T3 Jcrop-backed image cropper; only `.z-cropper` wrapper and `.z-cropper-toolbar` are theme-owned; `.z-cropper-canvas` does NOT exist (actual Jcrop holder is `.z-cropper-holder`); toolbar is JS-positioned and hidden at rest |
+| `components/timepicker.md` | timepicker (PE) — T1 combo-pattern input + clock-button + detached time-option-list popup; `.z-timepicker-disabled` appears on root (component disabled) AND on `<a>` button (buttonVisible=false — different semantics); popup is raw `<li>` items not ZK widgets; separate CSS file `zkmax/inp/css/timepicker.css` not merged into combo.css.dsp |
 
 ## What this skill deliberately does NOT contain
 
