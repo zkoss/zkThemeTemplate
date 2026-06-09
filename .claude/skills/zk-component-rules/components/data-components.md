@@ -308,6 +308,49 @@ Without `float: left` on `.z-frozen-body`, `.z-frozen-inner` stacks **below** bo
 
 **Visual indicator on `.z-frozen-body`.** That spacer aligns under the frozen columns; users need a visual cue that the columns above are frozen. Apply a faint `surface-container-low` background plus the same `border-inline-end + box-shadow` boundary you used on `.z-frozen-col`. That makes the frozen pane edge continue past the data rows.
 
+## Sticky header (`z-sticky-header`)
+
+ZK-4795 (since 9.6.0) gives **grid, listbox, and tree** an opt-in sticky column
+header: add `sclass="z-sticky-header"` and the header pins to the top of its scroll
+ancestor (the page, or any ancestor with `overflow:auto`) while rows scroll under it.
+
+**It is a bare opt-in class — ZK's `zul/less` ships NO CSS for it.** The only
+implementation lives in the `zkmax` addon (`zkmax/grid/less/grid.less`,
+`zkmax/sel/less/{listbox,tree}.less`), which a custom theme does not inherit. So
+**any theme must supply the rule itself**, or the class is inert. The canonical
+mechanism (per component, `<comp>` ∈ grid/listbox/tree):
+
+```css
+.z-<comp>.z-sticky-header            { overflow: visible; }   /* un-clip the header */
+.z-<comp>.z-sticky-header .z-<comp>-header {
+    position: sticky;
+    top: 0;
+    z-index: 1;            /* above the scrolling rows */
+}
+```
+
+Two things to get right that ZK's own LESS does NOT handle:
+
+- **The root must be `overflow: visible`.** Data components default to `overflow:hidden`
+  (to clip body + honour the card radius). A `position:sticky` header cannot escape an
+  `overflow:hidden` ancestor, so the sticky never engages. Overriding to `visible` is
+  required and means the card's rounded corners no longer clip — an accepted trade-off
+  for sticky mode (ZK does the same).
+- **The header must get an OPAQUE background.** Marble's default header is
+  `background-color: transparent`. A transparent sticky header lets the scrolling rows
+  show THROUGH it — give it `var(--zk-color-surface)`. ZK's zkmax LESS omits this and
+  inherits whatever the theme set; on a fill-less Material header that bug is visible, so
+  the opaque bg is theme-mandatory, not optional. (The existing header cell
+  `border-bottom` already provides the divider against the scrolling content.)
+
+Sticky engages relative to the **nearest scrolling ancestor**: if the component has no
+fixed height and the page scrolls, it pins to the viewport; if it sits inside an
+`overflow:auto` wrapper (as the preview pages do — `height:200px; overflow-y:auto`), it
+pins to that wrapper's top. The component must NOT impose its own fixed body height in
+this mode, or the body scrolls internally and the outer scroll never reaches the header.
+Verify: scroll the container, then `getComputedStyle(header).position === 'sticky'` and
+`header.getBoundingClientRect().top === container.getBoundingClientRect().top`.
+
 ## Tree-specific
 
 - **Indent per level**: `.z-tree-spacer` width controls indentation (typically 20px per level).

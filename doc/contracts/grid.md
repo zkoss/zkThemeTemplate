@@ -53,3 +53,21 @@ const gb = document.querySelector('.z-grid:has(.z-grid-frozen) .z-grid-body');
 if (gb) gb.scrollLeft = 350;
 ```
 Wait 300 ms, then screenshot. FAIL if any text from a non-frozen column overlaps the frozen column area.
+
+## Sticky header (`z-sticky-header`)
+
+ZK-4795 (since 9.6.0): `sclass="z-sticky-header"` pins the column header to the top
+of the scroll ancestor (page or an `overflow:auto` wrapper) as rows scroll under it.
+This is a **bare opt-in class** — ZK's `zul/less` ships NO rule; the implementation
+lives in the `zkmax` addon, so the theme MUST supply it. See
+`data-components.md` → "Sticky header (`z-sticky-header`)".
+
+**Preview anchor:** the grid page's "Sticky Header (z-sticky-header)" section
+(`grid-header.zul`), a `<grid sclass="z-sticky-header">` inside a `height:200px;
+overflow-y:auto` scroller.
+
+| id | check | selector | property | expected | method |
+|----|-------|----------|----------|----------|--------|
+| sh1 | header pins on scroll | `.z-grid.z-sticky-header .z-grid-header` | `position` | `sticky` (with `top: 0px`) | computedStyle |
+| sh2 | header opaque (no bleed-through) | `.z-grid.z-sticky-header .z-grid-header` | `background-color` | ≠ `rgba(0, 0, 0, 0)` — rows must not show through the pinned header | computedStyle |
+| sh3 | root un-clips header | `.z-grid.z-sticky-header` | `overflow` | `visible` (else the header is clipped and cannot escape to stick) | computedStyle |
