@@ -120,6 +120,109 @@ When a `<listheader>` (or `<column>`) is a checkbox-only cell (typically `width=
 
 **Trap:** fixing only one side (typical first-pass mistake) leaves the icons offset between header and rows. Always verify with `header.icon.right === cell.icon.right`.
 
+## Checkmark column renders a checkbox (multiple) OR a radio (single)
+
+`checkmark="true"` on a **listbox** or **tree** inserts a selection control as the
+first element of each first-visible cell. **The control's shape depends on the
+selection mode**, and ZK signals it via the *icon class*, not the span class:
+
+| Mode | `<i>` icon class | Render as |
+|------|------------------|-----------|
+| `multiple="true"` | `…-icon z-icon-check` | **checkbox** (square box, checkmark when selected) |
+| single (default)  | `…-icon z-icon-radio` | **radio** (circle, filled dot when selected) |
+
+Source: `Listcell._colHtmlPre` / `Treecell._colHtmlPre` —
+`multi ? 'z-icon-check' : 'z-icon-radio'`. A theme that styles only `z-icon-check`
+ships a broken single-selection checkmark (the radio falls through to the generic
+flat mask glyph). **Always style both `z-icon-check` and `z-icon-radio`.**
+
+### Class map (the span, the icon, the header select-all)
+
+The checkmark span wraps an `<i>` icon. Class prefixes differ per widget — and tree's
+prefix is `z-treerow`, **not** `z-treeitem` (Treeitem's zclass resolves to the
+treerow's, since the treeitem element is never rendered):
+
+| Part | listbox | tree |
+|------|---------|------|
+| span (always) | `z-listitem-checkable` | `z-treerow-checkable` |
+| span +multi | `z-listitem-checkbox` | `z-treerow-checkbox` |
+| span +single | `z-listitem-radio` | `z-treerow-radio` |
+| span +disabled/unselectable | `z-listitem-disabled` | `z-treerow-disabled` |
+| icon `<i>` | `z-listitem-icon z-icon-check\|z-icon-radio` | `z-treerow-icon z-icon-check\|z-icon-radio` |
+| header select-all span | `z-listheader-checkable` (+`z-listheader-checked`) | `z-treecol-checkable` (+`z-treecol-checked`) |
+| header icon | `z-listheader-icon z-icon-check` | `z-treecol-icon z-icon-check` |
+
+The header "select all" control **only exists in `multiple` mode** (`_hasCheckbox`
+requires `_multiple`) and is **always a checkbox** (`z-icon-check`) — never a radio.
+
+**Override the generic mask glyph.** `z-icon-check`/`z-icon-radio` arrive pre-wired
+to the theme's generic icon system (`mask-image` + `background-color`). To draw a real
+Material box/circle, kill the mask on `::before` and rebuild:
+`-webkit-mask-image: none !important; mask-image: none !important;` then add
+`border` + `border-radius` (`2px` checkbox / `50%` radio).
+
+**Trap — dead `.z-{row}.z-{row}-checkable` selector.** `z-treerow-checkable` /
+`z-listitem-checkable` live on the **inner span**, never on the TR. A compound
+selector like `.z-treerow.z-treerow-checkable` (both classes on one element) matches
+**nothing**. Scope row-level checkable rules through the span:
+`.z-treerow:has(.z-treerow-checkable) .z-treecell:first-child …`, or target the span
+directly.
+
+**Trap — header checkbox 4px-misaligned with row checkboxes.** The header content
+wrapper always contains an (often zero-width) `.z-{c}-sorticon` element *before* the
+checkable span, so the header control sits 4px right of the body-row controls (the
+column's vertical line breaks). **The 4px has two different sources — fix each at the
+right mechanism, confirmed by measurement:**
+
+- **listbox** — `.z-listheader-content` lays the sorticon out inline; the offset is the
+  sorticon's own `margin-left: 4px`. Zero it:
+  `.z-listheader:has(.z-listheader-checkable) .z-listheader-sorticon { margin-left: 0 }`.
+- **tree** — `.z-treecol-content` is `display: flex; gap: 4px`. The sorticon's margin is
+  already 0, but it is still a **flex item**, so the 4px flex *gap* (not a margin) pushes
+  the checkable span right. `margin-left: 0` does nothing here; remove the sorticon from
+  flex flow instead: `.z-treecol:has(.z-treecol-checkable) .z-treecol-sorticon { display: none }`.
+
+Verify alignment with `header.icon.centerX === row.icon.centerX` — do not assume the
+listbox fix transfers to tree.
+
+**Tristate / indeterminate (partial) checkmark — tree only.** A parent whose children
+are *partly* selected renders an indeterminate (minus) box. This is **gated on the model
+implementing `org.zkoss.zul.ext.TristateModel`** — `Tree.java` casts `(TristateModel) _model`
+and reads `getPartials()`; with a plain `DefaultTreeModel` the partial codepath never
+runs and **no** partial DOM is emitted. ZK ships **no concrete `TristateModel`** — a demo
+must declare one (e.g. `class X extends DefaultTreeModel implements TristateModel { Set getPartials() … }`).
+When active, ZK adds `z-treerow-partial` to the row's **TR** and switches the icon class
+to **`z-icon-minus`**; the header select-all icon also becomes `z-icon-minus` when only
+some rows are selected (keyed by the icon class, **not** a `z-treecol-partial` class).
+`z-icon-minus` arrives as the same flat mask glyph as check/radio — override and rebuild
+as a filled-primary box with a white minus. Scope through the icon, not the dead compound
+`.z-treerow.z-treerow-partial`:
+`.z-treerow-partial .z-treerow-icon.z-icon-minus::before, .z-treecol-icon.z-icon-minus::before { … }`.
+Two gotchas when building the demo model: (1) call `model.setMultiple(true)` or every
+`addToSelection` but the last is dropped (single-select default), so fully-selected
+parents never get `z-treerow-selected`; (2) partial nodes in `getPartials()` must be
+rendered (a visible row) for `getChildByNode` to map them.
+
+**`TristateModel` is PASSIVE — ZK does NOT cascade.** `Tree.java` only *reads*
+`getPartials()` to render and re-reads it on `SELECTION_CHANGED`/`TRISTATE_CHANGED`; it
+**never computes** a parent's state from its children. There is zero cascade logic and
+zero concrete impl anywhere in ZK — child↔parent propagation is by design 100% the
+application's job. So a static `partials` set (set once, no listeners) renders correctly
+but is **inert under interaction**: deselecting a child leaves the parent's box frozen.
+This is **not a ZK bug and not a CSS gap** — it is unimplemented app logic. To make
+tristate interactive, the model/page must, on every selection change:
+(1) recompute each parent bottom-up — *all* children selected → SELECTED, *some*-or-any-child-partial
+→ PARTIAL, *none* → UNSELECTED; (2) write that back to the model's selection + `partials`
+sets, **removing partial parents from selection** (else they render checked and the minus
+loses); (3) call the **public** `AbstractTreeModel.fireEvent(TreeDataEvent.TRISTATE_CHANGED, path, 0, 0)`
+to force ZK to re-read `getPartials()` and repaint. For a parent click, down-propagate the
+parent's new state to its subtree first (`addToSelection`/`removeFromSelection` on each
+descendant), then recompute. An `onSelect` handler whose recompute runs *after* the
+`getReference()` parent-branch covers both directions; recompute alone (no reference
+needed) handles every child→parent case. Derive the initial parent states by running the
+same recompute at page load rather than hand-setting `partials` — the demo then starts in
+a state interaction can actually reproduce. See `tree.zul` tristate block for the pattern.
+
 ## Focus-trap div (`.z-focus-a`)
 
 SelectWidget (Listbox, Grid via mesh, Tree) renders a hidden focus-trap div at the end of the body:

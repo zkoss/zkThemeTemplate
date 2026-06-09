@@ -1,11 +1,43 @@
 <?page title="Tree" contentType="text/html;charset=UTF-8"?>
 <zk xmlns:h="native">
 <h:link rel="stylesheet" href="pv.css"/>
-<zscript>
+<zscript><![CDATA[
     import zk.example.*;
+    import java.util.*;
+    import org.zkoss.zul.DefaultTreeModel;
+    import org.zkoss.zul.DefaultTreeNode;
+    import org.zkoss.zul.ext.TristateModel;
 
     BinaryTreeModel btm = new BinaryTreeModel(new ArrayList(new BigList(1000)));
-</zscript>
+
+    // ── Tristate (indeterminate) checkmark demo ──────────────────────────────
+    // ZK only computes/renders the partial state when the model implements
+    // TristateModel (Tree.java casts (TristateModel) _model). ZK ships no
+    // concrete impl, so we declare one: getPartials() returns the nodes whose
+    // descendants are partially selected.
+    DefaultTreeNode makeParent(String label, DefaultTreeNode[] kids) {
+        ArrayList list = new ArrayList();
+        for (int i = 0; i < kids.length; i++) list.add(kids[i]);
+        return new DefaultTreeNode(label, list);
+    }
+
+    DefaultTreeNode childA1 = new DefaultTreeNode("Child A-1");
+    DefaultTreeNode childA2 = new DefaultTreeNode("Child A-2");
+    DefaultTreeNode childA3 = new DefaultTreeNode("Child A-3");
+    DefaultTreeNode parentA = makeParent("Parent A (partial)",
+        new DefaultTreeNode[]{childA1, childA2, childA3});
+
+    DefaultTreeNode childB1 = new DefaultTreeNode("Child B-1");
+    DefaultTreeNode childB2 = new DefaultTreeNode("Child B-2");
+    DefaultTreeNode parentB = makeParent("Parent B (all selected)",
+        new DefaultTreeNode[]{childB1, childB2});
+
+    DefaultTreeNode childC1 = new DefaultTreeNode("Child C-1");
+    DefaultTreeNode childC2 = new DefaultTreeNode("Child C-2");
+    DefaultTreeNode parentC = makeParent("Parent C (none selected)",
+        new DefaultTreeNode[]{childC1, childC2});
+
+]]></zscript>
 <div sclass="z-p-8">
     <div sclass="z-border-bottom z-text-xl z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Tree</div>
 
@@ -178,6 +210,125 @@
                         </treerow>
                     </treeitem>
                 </treechildren>
+            </tree>
+        </div>
+        <div sclass="z-py-3">
+            <div sclass="z-text-sm z-fw-medium z-text-on-surface-variant z-mb-2">Single selection — renders a radio, not a checkbox</div>
+            <tree rows="4" checkmark="true">
+                <treecols>
+                    <treecol label="Name"/>
+                    <treecol label="Description"/>
+                </treecols>
+                <treechildren>
+                    <treeitem>
+                        <treerow>
+                            <treecell label="Item 1"/>
+                            <treecell label="Item 1 description"/>
+                        </treerow>
+                    </treeitem>
+                    <treeitem open="true">
+                        <treerow>
+                            <treecell label="Item 2"/>
+                            <treecell label="Item 2 description"/>
+                        </treerow>
+                        <treechildren>
+                            <treeitem selected="true">
+                                <treerow>
+                                    <treecell label="Item 2.1 (selected)"/>
+                                    <treecell label="Active"/>
+                                </treerow>
+                            </treeitem>
+                            <treeitem>
+                                <treerow>
+                                    <treecell label="Item 2.2"/>
+                                    <treecell/>
+                                </treerow>
+                            </treeitem>
+                        </treechildren>
+                    </treeitem>
+                    <treeitem>
+                        <treerow>
+                            <treecell label="Item 3"/>
+                            <treecell/>
+                        </treerow>
+                    </treeitem>
+                </treechildren>
+            </tree>
+        </div>
+        <zscript><![CDATA[
+        DefaultTreeNode tristateRoot = makeParent("root",
+            new DefaultTreeNode[]{parentA, parentB, parentC});
+
+        // ZK's TristateModel is a PASSIVE data holder — Tree.java only READS
+        // getPartials() to render; it never computes parent state from children.
+        // The child<->parent cascade is the application's job, so the model owns it:
+        //   setSubtree() — down-propagate a parent click to its descendants
+        //   recompute()  — bottom-up: all kids selected→SELECTED, some/any-partial
+        //                  →PARTIAL (and removed from selection so the minus wins),
+        //                  none→UNSELECTED. Returns 0=unsel 1=sel 2=partial.
+        class MarbleTristateModel extends DefaultTreeModel implements TristateModel {
+            Set partials = new HashSet();
+            MarbleTristateModel(DefaultTreeNode root) { super(root, true); }
+            public Set getPartials() { return partials; }
+            public boolean isPartial(Object item) { return partials.contains(item); }
+
+            void setSubtree(DefaultTreeNode node, boolean sel) {
+                List kids = node.getChildren();
+                if (kids == null) return;
+                for (int i = 0; i < kids.size(); i++) {
+                    DefaultTreeNode c = (DefaultTreeNode) kids.get(i);
+                    if (sel) addToSelection(c); else removeFromSelection(c);
+                    setSubtree(c, sel);
+                }
+            }
+
+            int recompute(DefaultTreeNode node) {
+                if (node.isLeaf()) return isSelected(node) ? 1 : 0;
+                List kids = node.getChildren();
+                int sel = 0, total = 0; boolean anyPartial = false;
+                for (int i = 0; i < kids.size(); i++) {
+                    int cs = recompute((DefaultTreeNode) kids.get(i));
+                    total++;
+                    if (cs == 1) sel++; else if (cs == 2) anyPartial = true;
+                }
+                int s;
+                if (anyPartial || (sel > 0 && sel < total)) s = 2;
+                else if (sel == total && total > 0) s = 1;
+                else s = 0;
+                if (s == 1) { addToSelection(node); partials.remove(node); }
+                else if (s == 2) { removeFromSelection(node); partials.add(node); }
+                else { removeFromSelection(node); partials.remove(node); }
+                return s;
+            }
+        }
+
+        MarbleTristateModel tristateModel = new MarbleTristateModel(tristateRoot);
+        tristateModel.setMultiple(true);         // keep every selection (else single-select drops all but last)
+        tristateModel.addToSelection(childA1);   // 1 of 3 → parentA partial
+        tristateModel.addToSelection(childB1);   // 2 of 2 → parentB full check
+        tristateModel.addToSelection(childB2);
+        tristateModel.recompute(tristateRoot);   // derive parent states (parentC stays empty)
+        ]]></zscript>
+        <div sclass="z-py-3">
+            <div sclass="z-text-sm z-fw-medium z-text-on-surface-variant z-mb-2">Tristate — toggle a child and its parent recomputes (all→checked, some→indeterminate, none→unchecked); toggle a parent and it cascades to its children</div>
+            <tree model="${tristateModel}" checkmark="true" multiple="true" width="320px">
+                <treecols>
+                    <treecol label="Node"/>
+                </treecols>
+                <attribute name="onSelect"><![CDATA[
+                    // Cascade. getReference() is the clicked Treeitem; if it's a parent,
+                    // down-propagate its new state first, then recompute the whole tree
+                    // and fire TRISTATE_CHANGED so ZK re-reads getPartials() and repaints.
+                    org.zkoss.zk.ui.event.SelectEvent se = (org.zkoss.zk.ui.event.SelectEvent) event;
+                    org.zkoss.zul.Treeitem ref = (org.zkoss.zul.Treeitem) se.getReference();
+                    if (ref != null) {
+                        DefaultTreeNode node = (DefaultTreeNode) ref.getValue();
+                        if (!node.isLeaf())
+                            tristateModel.setSubtree(node, tristateModel.isSelected(node));
+                    }
+                    tristateModel.recompute(tristateRoot);
+                    tristateModel.fireEvent(org.zkoss.zul.event.TreeDataEvent.TRISTATE_CHANGED, new int[]{0}, 0, 0);
+                ]]></attribute>
             </tree>
         </div>
     </div>

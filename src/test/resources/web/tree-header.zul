@@ -4,41 +4,8 @@
 <zscript><![CDATA[
     import zk.example.*;
     import java.util.*;
-    import org.zkoss.zul.DefaultTreeModel;
-    import org.zkoss.zul.DefaultTreeNode;
 
     BinaryTreeModel btm = new BinaryTreeModel(new ArrayList(new BigList(1000)));
-
-    // helper: build a parent node from children (BeanShell can't infer Arrays.asList overloads for DefaultTreeNode[])
-    DefaultTreeNode makeParent(String label, DefaultTreeNode[] kids) {
-        ArrayList list = new ArrayList();
-        for (int i = 0; i < kids.length; i++) list.add(kids[i]);
-        return new DefaultTreeNode(label, list);
-    }
-
-    // Tristate model: parentA has only childA1 selected (PARTIAL); parentB has all selected; parentC has none
-    DefaultTreeNode childA1 = new DefaultTreeNode("Child A-1");
-    DefaultTreeNode childA2 = new DefaultTreeNode("Child A-2");
-    DefaultTreeNode childA3 = new DefaultTreeNode("Child A-3");
-    DefaultTreeNode parentA = makeParent("Parent A (partial)",
-        new DefaultTreeNode[]{childA1, childA2, childA3});
-
-    DefaultTreeNode childB1 = new DefaultTreeNode("Child B-1");
-    DefaultTreeNode childB2 = new DefaultTreeNode("Child B-2");
-    DefaultTreeNode parentB = makeParent("Parent B (all selected)",
-        new DefaultTreeNode[]{childB1, childB2});
-
-    DefaultTreeNode childC1 = new DefaultTreeNode("Child C-1");
-    DefaultTreeNode childC2 = new DefaultTreeNode("Child C-2");
-    DefaultTreeNode parentC = makeParent("Parent C (none selected)",
-        new DefaultTreeNode[]{childC1, childC2});
-
-    DefaultTreeNode tristateRoot = makeParent("root",
-        new DefaultTreeNode[]{parentA, parentB, parentC});
-    DefaultTreeModel tristateModel = new DefaultTreeModel(tristateRoot, true);
-    tristateModel.addToSelection(childA1);
-    tristateModel.addToSelection(childB1);
-    tristateModel.addToSelection(childB2);
 ]]></zscript>
 <div sclass="z-p-8">
     <div sclass="z-border-bottom z-text-xl z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Tree Header</div>
@@ -316,17 +283,6 @@
                     </treechildren>
                 </tree>
             </div>
-        </div>
-    </div>
-
-    <div sclass="z-mb-6">
-        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Tristate Selection (PARTIAL)</div>
-        <div sclass="z-py-3">
-            <tree model="${tristateModel}" checkmark="true" multiple="true" width="320px">
-                <treecols>
-                    <treecol label="Node"/>
-                </treecols>
-            </tree>
         </div>
     </div>
 

@@ -28,8 +28,33 @@ menu / searchbox dropdown.
 | s2 | `.z-treerow-selected .z-treecell-content` | color | `rgb(0, 28, 61)` (= `--zk-color-on-primary-container`) |
 | s3 | `.z-treerow-selected` | background-color | MUST NOT be `rgb(178, 223, 219)` (= `--zk-color-secondary-container`) — wrong family |
 
+### Checkmark column (checkbox in `multiple`, radio in single selection)
+
+`checkmark="true"` renders a selection control in the first cell. Same fork as listbox:
+`multiple` → `z-icon-check` (checkbox), single → `z-icon-radio` (radio). Tree's class
+prefix is **`z-treerow`** (Treeitem zclass resolves to the treerow's). Both controls
+must be real Material controls — NOT the generic flat mask glyph (no border,
+`background-color: rgba(0,0,0,.87)` on `::before`). See `data-components.md` →
+"Checkmark column renders a checkbox … OR a radio".
+
+**Preview anchor:** the tree page's "Tree with Checkmark" section (multiple), the
+single-selection checkmark case, and the tristate (partial) case.
+
+| id | check | selector | property | expected | method |
+|----|-------|----------|----------|----------|--------|
+| cm1 | multi → real checkbox box | `.z-treerow-checkbox .z-treerow-icon.z-icon-check::before` | border-width / border-radius | border ≈ `1.5px` solid `outline`; `border-radius: 2px`; `mask-image: none` | computedStyle |
+| cm2 | multi selected → filled box | `.z-treerow-selected .z-treerow-icon.z-icon-check::before` | background-color | `rgb(55, 111, 208)` (= `--zk-color-primary`) with a checkmark `background-image` | computedStyle |
+| cm3 | single → real radio circle | `.z-treerow-radio .z-treerow-icon.z-icon-radio::before` | border-radius | `50%` (circle), `mask-image: none`, NOT `rgba(0,0,0,.87)` flat glyph | computedStyle |
+| cm4 | single selected → filled dot | `.z-treerow-radio.z-treerow-selected .z-treerow-icon.z-icon-radio::before` (or `::after`) | — | border-color/inner-dot = `--zk-color-primary` | computedStyle |
+| cm5 | header select-all is a checkbox box | `.z-treecol-checkable .z-treecol-icon.z-icon-check::before` | border-radius | `2px` box (multiple only); `mask-image: none` | computedStyle |
+| cm6 | header box aligns with row boxes | `.z-treecol-checkable .z-treecol-icon` vs `.z-treerow-checkable .z-treerow-icon` | getBoundingClientRect centerX | header `centerX === row centerX` (±1px). Offset source is `.z-treecol-content` flex `gap:4px` acting on the zero-width sorticon — `display:none` the sorticon, not `margin-left:0` | getBoundingClientRect |
+| cm7 | tristate row → indeterminate (minus) box | `.z-treerow-partial .z-treerow-icon.z-icon-minus::before` | background-color / background-image | filled `rgb(55, 111, 208)` (= `--zk-color-primary`) box with a white **minus** `background-image`; `mask-image: none`. Requires a `TristateModel` (ZK ships none — see skill) | computedStyle |
+| cm8 | header select-all → indeterminate when only some rows selected | `.z-treecol-icon.z-icon-minus::before` | background-color | same filled primary minus box as cm7 (ZK switches the header icon class to `z-icon-minus`, not a `z-treecol-partial` class) | computedStyle |
+
 ## States to evaluate
 - [ ] default, hover, selected, focus, expanded, collapsed, disabled, frozen columns
+- [ ] checkmark column: multiple (checkbox) + single (radio); header select-all box
+- [ ] tristate: row indeterminate (minus) box + header indeterminate box (needs a `TristateModel`)
 
 ## Frozen columns (shared CSS: mesh/css/frozen.css)
 
