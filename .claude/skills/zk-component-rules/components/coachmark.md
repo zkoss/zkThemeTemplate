@@ -65,6 +65,15 @@ on `.z-coachmark-close`.
 - `.z-coachmark-pointer` MUST be `position: absolute` (the mold JS `_fixarrow()` writes inline `top`/`left`
   to align the triangle with the target; `position:static` discards those coordinates and the triangle
   collapses to the card's left edge, no longer pointing at the target). `z-index: 100`.
+- **Child controls on a colored card must be inverted.** When the theme fills `.z-coachmark-content`
+  with a brand/saturated surface (e.g. `--zk-color-primary`), any child filled control inherits the
+  *global* filled style — and the default `.z-button` is itself `--zk-color-primary` on `--zk-color-on-primary`
+  with `border:none`. Same-fill-on-same-fill makes the button vanish (only its label floats; no shape, no
+  affordance). If the card is colored, the theme MUST invert child filled controls via a descendant rule
+  (`.z-coachmark-content .z-button`): swap bg↔text, flip the state-layer `::before` to the surface color, and
+  flip the `:focus-visible` outline to the on-surface color so the ring stays visible on the card. This is a
+  *consequence of choosing a colored surface*, not a coachmark-specific quirk — it applies to any colored
+  popup that hosts arbitrary action widgets.
 - The mask (`.z-coachmark-mask`) is a sibling of `.z-coachmark` in `<body>`, created by `zk.eff.FullMask`.
   Its z-index is set to `(coachmark z-index - 1)`. The theme may style it; the selector is `.z-coachmark-mask`.
 - Animation: `.z-coachmark-open` triggers the open entrance. The base `opacity: 0; visibility: hidden` on

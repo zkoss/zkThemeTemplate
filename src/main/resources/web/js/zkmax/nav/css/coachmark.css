@@ -73,3 +73,25 @@
 .z-coachmark-right ~ .z-coachmark-close {
     right: calc(var(--zk-spacing-2) + 16px);
 }
+
+/* Inverse button on the brand-filled card.
+   The global .z-button is primary-on-primary; the coachmark card bg is ALSO
+   --zk-color-primary, so a default button would vanish into the surface (blue on
+   blue, no border). Swap to a white fill + primary label so it reads as the action,
+   and flip the state layer + focus ring to stay visible on the blue card. */
+.z-coachmark-content .z-button {
+    background-color: var(--zk-color-on-primary);
+    color: var(--zk-color-primary);
+}
+
+/* state layer: a primary overlay darkens the white fill on hover/focus/press
+   (the inherited on-primary/white overlay would be invisible on a white button) */
+.z-coachmark-content .z-button::before {
+    background-color: var(--zk-color-primary);
+}
+
+/* focus ring: white outline so it is visible against the blue card
+   (the inherited primary outline would disappear into the surface) */
+.z-coachmark-content .z-button:focus-visible {
+    outline-color: var(--zk-color-on-primary);
+}
