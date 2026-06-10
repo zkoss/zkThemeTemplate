@@ -69,11 +69,16 @@ on `.z-coachmark-close`.
   with a brand/saturated surface (e.g. `--zk-color-primary`), any child filled control inherits the
   *global* filled style — and the default `.z-button` is itself `--zk-color-primary` on `--zk-color-on-primary`
   with `border:none`. Same-fill-on-same-fill makes the button vanish (only its label floats; no shape, no
-  affordance). If the card is colored, the theme MUST invert child filled controls via a descendant rule
-  (`.z-coachmark-content .z-button`): swap bg↔text, flip the state-layer `::before` to the surface color, and
-  flip the `:focus-visible` outline to the on-surface color so the ring stays visible on the card. This is a
-  *consequence of choosing a colored surface*, not a coachmark-specific quirk — it applies to any colored
-  popup that hosts arbitrary action widgets.
+  affordance). The same holds for **every** filled action widget, not just `.z-button`: a `.z-combobutton` is
+  primary-on-primary on BOTH halves (`.z-combobutton-content` + `.z-combobutton-button`) and vanishes too.
+  If the card is colored, the theme MUST invert each child filled control via a descendant rule
+  (`.z-coachmark-content .z-button`, `.z-coachmark-content .z-combobutton …`): swap bg↔text, flip the
+  state-layer `::before` to the surface color, flip the `:focus-visible` outline to the on-surface color so
+  the ring stays visible, and re-tint any sub-divider that was keyed to the old fill (combobutton's
+  label↔arrow divider was `rgba(255,255,255,.3)` — invisible on a white fill, retint to `--zk-color-outline`).
+  This is a *consequence of choosing a colored surface*, not a coachmark-specific quirk — it applies to any
+  colored popup that hosts arbitrary action widgets. (Audit-and-extend: when a new filled control type is
+  slotted into a coachmark, check its at-rest fill against the card and add an inverse rule.)
 - The mask (`.z-coachmark-mask`) is a sibling of `.z-coachmark` in `<body>`, created by `zk.eff.FullMask`.
   Its z-index is set to `(coachmark z-index - 1)`. The theme may style it; the selector is `.z-coachmark-mask`.
 - Animation: `.z-coachmark-open` triggers the open entrance. The base `opacity: 0; visibility: hidden` on

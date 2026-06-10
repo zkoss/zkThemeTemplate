@@ -49,7 +49,7 @@ bound to them. The Marble CSS (`coachmark.css`) contains no animation rule.
 | M7 | `.z-coachmark-pointer` computed `position === 'absolute'` — the mold JS (`_fixarrow`) writes inline `top`/`left` on the pointer to align the triangle with the target; with `position:static` those coordinates are ignored and the triangle collapses to the card's left edge (does NOT point at the target) | pointer must actually point at the target |
 | M5 | `.z-coachmark.z-coachmark-open` has `opacity > 0` (animation fill-mode forwards preserves final state) | card must not remain invisible after opening |
 | M6 | Text nodes inside `.z-coachmark-content` have WCAG contrast ≥ 4.5:1 against the `background-color` of `.z-coachmark-content` | legibility on primary background |
-| M8 | A `.z-button` rendered inside `.z-coachmark-content` has `background-color` **distinct from** the card's `background-color` (Δ must be perceptible, NOT both `--zk-color-primary`) AND its `background-color` has WCAG contrast ≥ 3:1 against the card | the default filled button is primary-on-primary; on the brand-filled card it loses its shape/affordance entirely — a nested action control MUST contrast with the colored surface |
+| M8 | Every filled action control inside `.z-coachmark-content` — `.z-button` AND each half of a `.z-combobutton` (`.z-combobutton-content`, `.z-combobutton-button`) — has `background-color` **distinct from** the card's `background-color` (NOT both `--zk-color-primary`) AND its `background-color` has WCAG contrast ≥ 3:1 against the card | the default filled button/combobutton is primary-on-primary; on the brand-filled card it loses its shape/affordance entirely — a nested action control MUST contrast with the colored surface |
 
 ## Expected values
 
@@ -73,6 +73,8 @@ bound to them. The Marble CSS (`coachmark.css`) contains no animation rule.
 | c16 | `.z-coachmark-close` | position | `absolute` | close is pinned to the card's top-right corner relative to the `.z-coachmark` root; static positioning flows it to the card bottom |
 | c17 | `.z-coachmark-content .z-button` | background-color | `var(--zk-color-on-primary)` → `rgb(255, 255, 255)` | inverse button on the brand-filled card — white fill so the button reads against the primary surface (the global filled button is primary-on-primary and would vanish) |
 | c18 | `.z-coachmark-content .z-button` | color | `var(--zk-color-primary)` → `rgb(55, 111, 208)` | inverse button label color — primary text on the white button fill |
+| c19 | `.z-coachmark-content .z-combobutton-content`, `.z-coachmark-content .z-combobutton-button` | background-color | `var(--zk-color-on-primary)` → `rgb(255, 255, 255)` | inverse combobutton — both halves get the white fill so the split button reads against the primary card (the global combobutton is primary-on-primary and would vanish) |
+| c20 | `.z-coachmark-content .z-combobutton-content`, `.z-coachmark-content .z-combobutton-button` | color | `var(--zk-color-primary)` → `rgb(55, 111, 208)` | inverse combobutton label/arrow color — primary on the white fill |
 
 ## State matrix
 
@@ -80,6 +82,7 @@ bound to them. The Marble CSS (`coachmark.css`) contains no animation rule.
 |-------|----------|---------------------|
 | open (default on page load) | `.z-coachmark.z-coachmark-open` | c1, c2, c3, c4, c5, c10, c11, c15, c16, c17, c18, M8 |
 | nested-button | `.z-coachmark-content .z-button` | c17, c18, M8 |
+| nested-combobutton | `.z-coachmark-content .z-combobutton` | c19, c20, M8 |
 | closed | `.z-coachmark` (without `.z-coachmark-open`) | c14 (opacity = 0) |
 | pointer-up | `.z-coachmark-pointer.z-coachmark-up` | c6, c15 |
 | pointer-down | `.z-coachmark-pointer.z-coachmark-down` | c7, c15 |
@@ -91,6 +94,7 @@ bound to them. The Marble CSS (`coachmark.css`) contains no animation rule.
 ## States to evaluate
 - [ ] open (with .z-coachmark-open)
 - [ ] nested-button (.z-button inside .z-coachmark-content — must contrast with the card)
+- [ ] nested-combobutton (.z-combobutton inside .z-coachmark-content — both halves must contrast)
 - [ ] closed (without .z-coachmark-open)
 - [ ] pointer-up
 - [ ] pointer-down
