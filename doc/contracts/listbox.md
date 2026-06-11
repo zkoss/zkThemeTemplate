@@ -147,6 +147,26 @@ See `data-components.md` → "Header-row dividers go on the TH".
 | ax2 | visible-last auxheader has no inline-end border | `.z-auxheader:has(+ .z-auxhead-bar)` | `border-inline-end` (border-right) | `0px` / none — ZK appends a zero-width `.z-auxhead-bar` filler TH, so the visible-last auxheader is NOT `:last-child`; a right border left on it doubles with the container frame border (two parallel 1px lines on the right edge). | computedStyle |
 | hs1 | header table has no inter-cell gap | `.z-listbox-header table` | `border-spacing` | `0px` (UA default 2px would leak white gaps between cells/rows under separate border-collapse) | computedStyle |
 
+## Select mold (`<listbox mold="select">` → native `<select class="z-select">`)
+
+`mold="select"` renders a native `<select>` (no table DOM), identical to Selectbox. With
+`rows="1"` it is a **dropdown** (`size="1"`) and gets the `base-select` popup treatment. With
+`rows="N>1"` it is `size="N"` — an **in-page list box** that shows its options inline; a
+`<listgroup>` becomes an `<optgroup>`. base-select is popup-only, so the sized list must opt
+OUT of its inline-flex trigger layout (otherwise the optgroups flow side-by-side into columns).
+See `components/selectbox.md` → "Sized / multiple select is an in-page list box".
+
+**Preview anchor:** the "Select Mold with Optgroup (listgroup)" section of `listbox-header.zul`
+(the `rows="4"` listbox). sm1/sm2 only meaningful in a `base-select`-supporting browser
+(Chrome 130+); mark `SKIPPED` otherwise.
+
+| id | check | selector | property | expected | method |
+|----|-------|----------|----------|----------|--------|
+| sm1 | sized list lays options vertically | `.z-select[size]:not([size="1"])` | `display` | `block` (NOT `flex` — a flex-row select flows the `<optgroup>`s into 2+ columns) | computedStyle |
+| sm2 | single-row select keeps base-select | `.z-select[size="1"]` | `display` | `flex` / `inline-flex` (the dropdown trigger; base-select still applies) | computedStyle (base-select browsers) |
+| sm3 | selected option = list-row family (blue, not green) | `.z-select option:checked` | `background-color` | `--zk-color-primary-container` (list-row family — NOT `secondary-container`/chip). MUST equal `.z-selectbox option:checked` (same native-select control). Read the **CSS rule** (`document.styleSheets`), not the live `<option>` — `getComputedStyle` on an `<option>` returns transparent. | CSS-rule lookup |
+| sm4 | focus ring causes no layout shift | `.z-select:focus` | `border-width` / box | `border-width` stays `1px` (ring drawn via `box-shadow: inset 0 0 0 1px primary`, NOT a 2px border — a `<select>` is auto-sized so a 2px border grows the box). Outer dims at `:focus` == at rest (±0px). | computedStyle + bbox rest-vs-focus |
+
 ## Outer frame (container)
 
 Default = standalone **outlined** card: border, NO shadow (never both). No-border variant

@@ -89,6 +89,16 @@ does not reach `::after`; inject a `.z-thing::after{transition:none}` rule inste
 **Applies to (Marble, border on the root):** timepicker, datebox, timebox, bandbox, spinner,
 doublespinner. Verified 2026-06-08: all rest-H == focus-H after the change.
 
+**Also applies to `<select>` (selectbox + listbox `mold="select"`) — for a different reason.**
+A native `<select>` is **intrinsically sized**: a `rows="1"` trigger sizes to its `min-width`,
+a sized `rows>1` list sizes to its rows. With no fixed outer dimension, a 2px focus border has
+nothing to grow inward against, so it grows the box outward (both axes). Mechanism B's padding
+compensation can absorb the horizontal growth of a single fixed-width input but **not** a sized
+list's vertical growth, so use mechanism A here: keep `border: 1px` and draw the ring as
+`box-shadow: inset 0 0 0 1px var(--zk-color-primary)`. The `<select>` has no opaque children, so
+the plain root inset ring (not the `::after` overlay) is sufficient. Apply to **both** copies —
+`.z-select` in `listbox.css` and `.z-selectbox` in `selectbox.css` (caught 2026-06-11).
+
 **Does NOT apply to combobox:** combobox puts the border on its **input/button children** (each
 `min-height: 40px`) and leaves the root borderless. A child border growing to 2px (border-box) shrinks
 the child's content but the child stays 40px and the borderless root stays 40px → no growth. Combobox
