@@ -62,7 +62,12 @@
     line-height: 38px; /* match trigger inner height */
 }
 
+/* Hidden by default — ZK clears the inline display when a selection exists and
+   relies on this base rule (mirrors stock ZK less). Without it the placeholder
+   defaults to display:block and, sharing flex:1 with the label, steals half the
+   trigger width → selected label truncates. See components/searchbox.md. */
 .z-searchbox-placeholder {
+    display: none;
     color: var(--zk-color-on-surface-variant);
 }
 
@@ -104,12 +109,23 @@
 }
 
 /* ── Popup (detached to body) ─────────────────────────────────────────── */
-/* Mold renders the popup with no inline display style; without this rule it
-   would render visible next to every searchbox on first paint. ZK's open()
-   uses slideDown which sets inline display:block, overriding this default. */
+/* The popup is visible by default; it is hidden ONLY while still attached
+   inside the trigger (initial paint + closed state) via the descendant rule
+   below. ZK's open() calls makeVParent() which re-parents the popup to <body>,
+   at which point `.z-searchbox .z-searchbox-popup` stops matching, the popup
+   becomes visible, and ZK's slideDown drives the reveal — exactly like every
+   stock ZK theme.
+
+   Do NOT hide via a bare `.z-searchbox-popup { display:none }` + a
+   `.z-searchbox-open .z-searchbox-popup { display:* }` show rule: the open
+   class lives on the trigger, so after detach the show rule no longer matches
+   the body-level popup, leaving it display:none at the exact moment
+   `_repositionPopup()` measures its height (→ 0). A zero-height measurement
+   makes slideDown anchor the reveal bottom-up and the popup mis-position.
+   See reference/floating-popup-in-body.md (detached-popup display scoping). */
 .z-searchbox-popup {
     position: absolute;
-    display: none;
+    display: flex;
     flex-direction: column;
     box-sizing: border-box;
     padding: var(--zk-spacing-2);
@@ -124,8 +140,9 @@
     overflow: hidden;
 }
 
-.z-searchbox-open .z-searchbox-popup {
-    display: flex;
+/* Hidden while attached (initial paint + after close()'s undoVParent). */
+.z-searchbox .z-searchbox-popup {
+    display: none;
 }
 
 /* ── Search input inside popup ────────────────────────────────────────── */

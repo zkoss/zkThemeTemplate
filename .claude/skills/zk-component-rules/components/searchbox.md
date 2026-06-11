@@ -54,6 +54,69 @@ There is no `readonly` / `invalid` / `inplace` for searchbox.
 - Do **not** put `width: 100%` / `max-width: 100%` / `min-width: 100%` on `.z-searchbox-popup` — those resolve against `<body>`.
 - The trigger's width is propagated as `style="min-width: Npx"` on the popup root; you can give the popup a larger `width` or let `min-width` win.
 
+### Hiding the popup: the mold sets NO inline display, so the theme owns it — scope the hide to the attached state
+
+Unlike combobox/bandbox/datebox (where ZK writes inline `style="display:none"`), the searchbox **mold renders `.z-searchbox-popup` with no inline display style**. The theme must therefore supply the hidden state — and it MUST be scoped to the popup *while attached inside the trigger*:
+
+```css
+.z-searchbox-popup { display: flex; /* visible by default */ … }
+.z-searchbox .z-searchbox-popup { display: none; }   /* hidden while attached (initial + closed) */
+```
+
+`open()` detaches the popup to `<body>` (`makeVParent`); `close()` re-attaches it (`undoVParent`). So the attached-descendant rule hides it on first paint and after close, and lets it show when open — with no dependence on the `.z-searchbox-open` class (which is on the trigger, not an ancestor of the detached popup).
+
+**Do NOT** use the bare-hide + open-scoped-show anti-pattern (`.z-searchbox-popup { display:none }` plus `.z-searchbox-open .z-searchbox-popup { display:flex }`). After detach the show rule no longer matches, so the popup is `display:none` when `_repositionPopup()` measures it → height reads 0 → `slideDown` reveals **bottom-up** and the popup mis-positions far below the trigger; outside-clicks may also fail to close it. Full mechanism + lifecycle table in `reference/floating-popup-in-body.md` (§ "Hiding a detached popup").
+
+## Label vs placeholder visibility is JS-toggled ONLY in the no-selection state
+
+The trigger holds two mutually-exclusive text elements: `.z-searchbox-label`
+(selected text) and `.z-searchbox-placeholder` (the empty-state hint). The mold
+(`mold/searchbox.js`) emits an **inline** `display` on them **only when
+`placeholderVisible` is true** (i.e. no selection); when a selection exists it
+renders both with an **empty inline style**, so their visibility falls back to the
+theme's **base CSS rules**:
+
+```js
+// mold/searchbox.js — placeholderVisible === (no selection)
+'<div …-label …       style="' + (placeholderVisible ? 'display:none'         : '') + '">'
+'<div …-placeholder … style="' + (placeholderVisible ? 'display:inline-block' : '') + '">'
+```
+
+| State | `.z-searchbox-label` inline | `.z-searchbox-placeholder` inline |
+|-------|-----------------------------|-----------------------------------|
+| no selection (`placeholderVisible`) | `display:none` | `display:inline-block` |
+| has selection | *empty* (`style=""`) → base CSS | *empty* (`style=""`) → base CSS |
+
+The theme therefore MUST supply the base values, mirroring stock ZK less
+(`zkmax/inp/less/searchbox.less`):
+
+```css
+.z-searchbox-label       { display: inline-block; }  /* visible by default */
+.z-searchbox-placeholder { display: none; }          /* hidden by default  */
+```
+
+**The trap:** if you give `.z-searchbox-placeholder` no base `display`, it defaults
+to `block`. With a selection present (inline styles cleared) the placeholder is then
+visible, and because both label and placeholder are flex items with `flex:1`, they
+split the trigger width 50/50 — the selected label gets only half the row and is
+truncated with an ellipsis ("Apple, Banana" → "Apple, B…") even though the trigger
+is wide enough. ZK only writes the inline `display` in the no-selection state, so a
+missing base rule is invisible until something is actually selected. (Caught
+2026-06-11; see `doc/skill-gaps.md`.)
+
+This is the inverse of combobox/datebox, which use a real `<input>` with a native
+`placeholder` attribute — there is no swapped `<div>` and no base-display dependency.
+
+**Sibling:** `cascader` has the **same** label/placeholder-`<div>` swap and the same
+has-selection gap (both divs emitted with empty inline style). It is documented in
+`components/cascader.md` ("Notes on the label/placeholder toggle"). Cascader guards
+it with `.z-cascader:has(.z-cascader-label:not(:empty)) .z-cascader-placeholder
+{ display:none }` because `Cascader.java` never even renders `placeholderVisible`
+(so the placeholder div is *always* empty-inline). Searchbox does render
+`placeholderVisible`, so the simpler stock-ZK base `display:none` is sufficient
+here. Either guard is valid; the `:has()` variant is the more defensive form when
+a component never emits the inline hint.
+
 ## Clear icon visibility is JS-controlled
 
 `Searchbox.ts` `_toggleClearButtonVisible()` uses `jq(...).toggle(visible)` which directly sets `display: inline-block` or `display: none` as **inline style**. CSS rules like `.z-searchbox-clear { display: none }` are overridden by inline style and have no effect once `bind_` runs.

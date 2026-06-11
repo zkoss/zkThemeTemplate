@@ -99,3 +99,54 @@ Examples:
 
 To force a fixed direction (e.g. always-downward) you must override the widget JS in a theme JS layer — there is no pure-CSS path.
 
+## Hiding a detached popup: scope `display:none` to the ATTACHED state
+
+Most detached popups (combobox, bandbox, datebox, timebox, chosenbox, …) are
+hidden by **ZK itself** — the mold/JS writes inline `style="display:none"` and
+toggles it. For those, the theme only styles appearance and must NOT add its own
+`display:none` (it would fight ZK's inline toggle).
+
+A few popups — notably **searchbox** — are rendered by the mold with **no inline
+display style**, so the theme is responsible for the hidden state. When that is
+the case, the hide rule MUST be scoped to the popup *while it is still attached
+inside the trigger*:
+
+```css
+.z-searchbox-popup { display: flex; /* visible by default */ … }
+
+/* Hidden only while attached (initial paint + closed state). */
+.z-searchbox .z-searchbox-popup { display: none; }
+```
+
+**Why the descendant scope, not a bare class.** ZK's `open()` calls
+`makeVParent()`, which re-parents the popup to `<body>`; `close()` calls
+`undoVParent()`, which moves it back inside the trigger. So:
+
+| Lifecycle state | Popup parent | `.z-searchbox .z-searchbox-popup` matches? | Result |
+|-----------------|--------------|--------------------------------------------|--------|
+| initial paint / closed | inside trigger | yes | hidden ✅ |
+| open | `<body>` | no | visible ✅ |
+
+**The anti-pattern that breaks it** — a bare hide plus an open-class-scoped show:
+
+```css
+/* WRONG */
+.z-searchbox-popup { display: none; }
+.z-searchbox-open .z-searchbox-popup { display: flex; }
+```
+
+The `-open` class lives on the **trigger**, but after `makeVParent()` the popup
+is no longer a descendant of the trigger, so the show rule stops matching and the
+base `display:none` wins. The detached popup is then `display:none` at the exact
+moment `_repositionPopup()` measures its height — height reads `0`, which makes
+`slideDown` anchor the reveal **bottom-up** and mis-position the popup well below
+the trigger. The broken floating lifecycle also lets outside-clicks fail to close
+it. (Caught 2026-06-11 on searchbox; both the upward-reveal and the
+won't-close-on-outside-click reports traced to this one rule. See
+`doc/skill-gaps.md`.)
+
+**Rule:** if the theme owns a detached popup's hidden state, scope the hide to
+`.z-{comp} .z-{comp}-popup` (attached), never the bare `.z-{comp}-popup`. Verify
+that `getComputedStyle(popup).display !== 'none'` while open and that the open
+popup's `top >= trigger.bottom` when there is room below.
+
