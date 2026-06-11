@@ -1,15 +1,36 @@
 /* MD3 BigListbox — virtual/lazy-loading data grid component */
-/* DOM: .z-biglistbox > .z-biglistbox-head > table > thead > tr > th.z-biglistbox-header
-        .z-biglistbox > .z-biglistbox-body > table > tbody > tr.z-biglistbox-row > td */
+/* DOM: .z-biglistbox > .z-biglistbox-outer > {.z-biglistbox-head-outer, .z-biglistbox-body-outer,
+        .z-biglistbox-wscroll-vertical, .z-biglistbox-wscroll-horizontal}
+   Header cell: th.z-biglistbox-header > div.z-biglistbox-header-content
+                  > div.z-biglistbox-sorticon > i.z-icon-caret-up|down  (+ label div)
+   Data cell:   tr.z-biglistbox-row > td
+   Scrollbar:   ZK draws its own (zul.WScroll) — NOT native. See components/biglistbox.md. */
 
 .z-biglistbox {
     display: block;
+    position: relative;          /* anchor the custom scrollbar to the component… */
     background-color: var(--zk-color-surface);
     border: 1px solid var(--zk-color-outline-variant);
     border-radius: var(--zk-shape-card);
     overflow: hidden;
     box-sizing: border-box;
     font-family: var(--zk-typescale-font-family);
+}
+/* …the wscroll bars are children of -outer and are position:absolute. Without a
+   positioned ancestor they anchor to the VIEWPORT (top-right of the page), detached
+   from the grid — the scrollbar then appears to be missing. ZK's default theme sets
+   this too; Marble must as well. */
+.z-biglistbox-outer {
+    position: relative;
+}
+
+/* Reset UA default border-spacing:2px on the (unclassed) head & body tables.
+   Same class of bug as the grid header gap (skill-gaps 2026-06-10). Without this,
+   2px spacing leaks between every cell/row and above the first row (it makes the
+   first row look taller than the rest). Mirrors ZK default .resetTable() mixin. */
+.z-biglistbox table {
+    border-collapse: separate;
+    border-spacing: 0;
 }
 
 /* ─── Header ───────────────────────────────────────────────────────────── */
@@ -30,6 +51,33 @@
     cursor: default;
 }
 
+/* Single-line header: lay the sort caret inline (trailing, MUI DataGrid style) so the
+   glyph never pushes the label onto a second row (was making the header ~2× tall). */
+.z-biglistbox-header-content {
+    display: flex;
+    align-items: center;
+    gap: var(--zk-spacing-1);
+    white-space: nowrap;
+    line-height: var(--zk-typescale-label-large-line-height, 1.25rem);
+}
+.z-biglistbox-sorticon {
+    order: 1;                 /* trail the label */
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    color: var(--zk-color-on-surface-variant);
+}
+.z-biglistbox-sorticon i {
+    font-size: 18px;
+    line-height: 1;
+}
+.z-biglistbox-sort {
+    cursor: pointer;
+}
+.z-biglistbox-sort:hover {
+    background-color: color-mix(in srgb, var(--zk-color-on-surface) 4%, transparent);
+}
+
 /* ─── Rows ─────────────────────────────────────────────────────────────── */
 .z-biglistbox-row:hover {
     background-color: rgba(0, 0, 0, 0.04);
@@ -43,4 +91,126 @@
     border-bottom: 1px solid var(--zk-color-outline-variant);
     box-sizing: border-box;
     vertical-align: middle;
+}
+
+/* ─── Custom scrollbar (zul.WScroll) ───────────────────────────────────────
+   Biglistbox renders its own scrollbar, not a native one. Marble presents it as a
+   thin MD3 overlay: a rounded translucent thumb on a transparent track, with the
+   arrow buttons (home/up/down/end) hidden. Wheel + thumb-drag still work; ZK hides
+   the whole bar automatically when content fits.
+   Geometry note: the thumb size used by WScroll = edrag.offsetHeight − _gap, where
+   _gap = edrag.offsetHeight − epos.offsetHeight is measured once at construction.
+   Keeping -drag and -pos the same fixed size ⇒ _gap = 0 ⇒ a clean fixed-size thumb.
+   -pos MUST keep a non-zero box (no display:none) or the gap math collapses the thumb. */
+.z-biglistbox-wscroll-vertical,
+.z-biglistbox-wscroll-horizontal {
+    position: absolute;
+    z-index: 10;
+    background: transparent;
+}
+.z-biglistbox-wscroll-vertical {
+    width: 14px;
+    height: 100%;
+    top: 0;
+    right: 0;
+}
+.z-biglistbox-wscroll-horizontal {
+    height: 14px;
+    width: 100%;
+    left: 0;
+    bottom: 0;
+}
+/* Faint always-visible track groove, drawn in the thumb's lane so the scroll
+   region stays perceptible even when the thumb is compressed into a corner
+   (scale=1 modest-data case). Painted behind the thumb (-drag is a normal-flow
+   child, so it stacks above this ::before). */
+.z-biglistbox-wscroll-vertical::before,
+.z-biglistbox-wscroll-horizontal::before {
+    content: "";
+    position: absolute;
+    background-color: color-mix(in srgb, var(--zk-color-on-surface) 6%, transparent);
+    border-radius: 999px;
+}
+.z-biglistbox-wscroll-vertical::before {
+    top: 0;
+    bottom: 0;
+    left: 3px;
+    width: 8px;
+}
+.z-biglistbox-wscroll-horizontal::before {
+    left: 0;
+    right: 0;
+    top: 3px;
+    height: 8px;
+}
+
+/* Hide the arrow buttons — they're absolutely positioned inside the fixed-height
+   -drag, so display:none does not affect edrag.offsetHeight. */
+.z-biglistbox-wscroll-home,
+.z-biglistbox-wscroll-up,
+.z-biglistbox-wscroll-down,
+.z-biglistbox-wscroll-end {
+    display: none;
+}
+/* The endbar (eend) is the scroll END-STOP marker WScroll reads to clamp the thumb on
+   wheel/drag (`end = eend.offsetTop − thumbHeight`). It must NOT be display:none —
+   `zk(eend).isVisible()` still returns true but display:none zeroes its offsetTop, so the
+   clamp computes a negative top and the thumb jumps off the track. visibility:hidden keeps
+   the box (correct offsetTop) while hiding it. */
+.z-biglistbox-wscroll-endbar {
+    position: absolute;   /* REQUIRED: ZK sets its top via inline style; without
+                             position:absolute `top` is ignored, offsetTop reads 0, and
+                             the thumb's end-clamp goes negative. Marble doesn't inherit
+                             ZK's less, so every wscroll part must declare its own position. */
+    right: 0;
+    visibility: hidden;
+}
+
+/* The persistent thumb is -drag (a rounded translucent pill).
+   -pos is ZK's transient drag-preview; ZK leaves it display:none, but its box size is
+   read once at construction to compute _gap = edrag.offsetHeight − epos.offsetHeight.
+   It MUST therefore keep a real offsetHeight equal to the thumb height (⇒ _gap = 0, so
+   the thumb positions correctly), while staying invisible — visibility:hidden preserves
+   the box where display:none would zero it. display is forced to override ZK's inline none. */
+.z-biglistbox-wscroll-drag {
+    position: absolute;
+    background-color: color-mix(in srgb, var(--zk-color-on-surface) 38%, transparent);
+    border-radius: 999px;
+    border: 0;
+    overflow: hidden;
+}
+.z-biglistbox-wscroll-drag:hover {
+    background-color: color-mix(in srgb, var(--zk-color-on-surface) 55%, transparent);
+}
+.z-biglistbox-wscroll-pos {
+    position: absolute;
+    display: block !important;
+    visibility: hidden;
+    border: 0;
+}
+.z-biglistbox-wscroll-vertical .z-biglistbox-wscroll-drag,
+.z-biglistbox-wscroll-vertical .z-biglistbox-wscroll-pos {
+    width: 8px;
+    height: 48px;
+    left: 3px;
+}
+.z-biglistbox-wscroll-horizontal .z-biglistbox-wscroll-drag,
+.z-biglistbox-wscroll-horizontal .z-biglistbox-wscroll-pos {
+    height: 8px;
+    width: 48px;
+    top: 3px;
+}
+
+/* The grabbable body fills the whole thumb pill (drag is bound to this element only). */
+.z-biglistbox-wscroll-body {
+    position: absolute;
+    inset: 0;
+    width: auto;
+    height: auto;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+}
+.z-biglistbox-wscroll-body::before {
+    content: none;
 }

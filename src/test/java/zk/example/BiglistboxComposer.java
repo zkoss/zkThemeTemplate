@@ -89,6 +89,12 @@ public class BiglistboxComposer extends SelectorComposer<Component> {
             biglist.setFrozenCols(frozenColsBox.getSelectedIndex());
     }
 
+    @Listen("onSelect = #rowsSizeBox")
+    public void changeRowsSize() {
+        biglist.setAutoRows(false);
+        biglist.setRows(rowsSize.getSelection().iterator().next());
+    }
+
     @Listen("onSelect = #colsSizeBox")
     public void changeColsSize() {
         int i = colsSize.getSelection().iterator().next();
