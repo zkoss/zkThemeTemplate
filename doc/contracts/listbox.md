@@ -90,3 +90,33 @@ overflow-y:auto` scroller.
 | sh1 | header pins on scroll | `.z-listbox.z-sticky-header .z-listbox-header` | `position` | `sticky` (with `top: 0px`) | computedStyle |
 | sh2 | header opaque (no bleed-through) | `.z-listbox.z-sticky-header .z-listbox-header` | `background-color` | ≠ `rgba(0, 0, 0, 0)` — rows must not show through the pinned header | computedStyle |
 | sh3 | root un-clips header | `.z-listbox.z-sticky-header` | `overflow` | `visible` (else the header is clipped and cannot escape to stick) | computedStyle |
+
+## Auxhead divider (shared CSS: mesh/css/auxhead.css)
+
+The header table is `border-collapse: separate` (so frozen-col TH `box-shadow` /
+`border-inline-end` paint). In `separate` mode browsers do NOT paint borders on a TR — so
+the auxhead row divider MUST live on the `.z-auxheader` **TH cell** `border-bottom`, not on
+`.z-auxhead` (the TR). Without this, two adjacent `<auxhead>` rows merge into one tonal band.
+See `data-components.md` → "Header-row dividers go on the TH".
+
+**Preview anchor:** the "Auxhead" section of `listbox-header.zul` (if it stacks two
+`<auxhead>` rows). If the page has no adjacent-auxhead demo, mark ax1 `SKIPPED` — do not FAIL.
+
+| id | check | selector | property | expected | method |
+|----|-------|----------|----------|----------|--------|
+| ax1 | auxhead row divider paints (on the TH) | `.z-auxheader` | `border-bottom` | `1px solid` `--zk-color-outline-variant` (so adjacent aux rows separate under `border-collapse: separate`) | computedStyle |
+| hs1 | header table has no inter-cell gap | `.z-listbox-header table` | `border-spacing` | `0px` (UA default 2px would leak white gaps between cells/rows under separate border-collapse) | computedStyle |
+
+## Outer frame (container)
+
+Default = standalone **outlined** card: border, NO shadow (never both). No-border variant
+(`z-listbox-noborder`) and panel/groupbox ancestry strip the border. ZK emits no border
+attribute for listbox (unlike window's `z-window-noborder`) → the variant is a theme sclass
+mirroring that naming. See `doc/data-table-frame-rationale.md`.
+
+| id | check | selector | property | expected | method |
+|----|-------|----------|----------|----------|--------|
+| fr1 | default outlined | `.z-listbox` | `border` | `1px solid` `--zk-color-outline-variant` | computedStyle |
+| fr2 | never border + shadow | `.z-listbox` | `box-shadow` | `none` | computedStyle |
+| fr3 | noborder variant strips frame | `.z-listbox.z-listbox-noborder` | `border` | `none` (for nesting in a bounded parent) | computedStyle |
+| fr4 | auto-flat inside panel/groupbox | `.z-panel-body .z-listbox`, `.z-groupbox .z-listbox` | `border` | `none` | computedStyle |

@@ -5,15 +5,31 @@
    .z-tree > .z-tree-footer
 */
 
+/* Default = standalone OUTLINED card: 1px border, NO shadow (was border + shadow, which
+   is double-emphasis — MD3 outlined ≠ elevated). On the near-white page the elevation
+   shadow is invisible, so the border carries the boundary. See
+   doc/data-table-frame-rationale.md. */
 .z-tree {
     display: block;
     background-color: var(--zk-color-surface);
     border-radius: var(--zk-shape-card);
-    box-shadow: var(--zk-elevation-card);
     border: 1px solid var(--zk-color-outline-variant);
     overflow: hidden;
     box-sizing: border-box;
     font-family: var(--zk-typescale-font-family);
+}
+
+/* No-border variant — strip the frame when nested in another bounded surface. ZK emits no
+   border attribute for tree, so this is an opt-in sclass mirroring ZK's z-window-noborder
+   naming: sclass="z-tree-noborder". */
+.z-tree-noborder {
+    border: none;
+    box-shadow: none;
+}
+
+.z-panel-body .z-tree,
+.z-groupbox .z-tree {
+    border: none;
 }
 
 /* ─── Header ─ Mira / MD3 Data Table: no fill, hierarchy via weight + divider */
@@ -270,6 +286,19 @@
     font-weight: var(--zk-typescale-label-large-weight);
     color: var(--zk-color-on-surface-variant);
     vertical-align: middle;
+}
+
+/* ─── Paging (mold="paging") ───────────────────────────────────────────────
+   ZK wraps the bar in .z-tree-paging-top / .z-tree-paging-bottom (mirrors grid's
+   .z-grid-paging-*). The last .z-treerow strips its own border-bottom, so the host
+   must supply the divider between the bar and the rows. See paging.md. */
+.z-tree-paging-top .z-paging {
+    border-bottom: 1px solid var(--zk-color-outline-variant);
+    border-top: none;
+}
+
+.z-tree-paging-bottom .z-paging {
+    border-top: 1px solid var(--zk-color-outline-variant);
 }
 
 /* Disabled state handled at TR level in row section above */

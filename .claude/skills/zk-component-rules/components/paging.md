@@ -30,6 +30,22 @@ The previous-page button is `.z-paging-previous`, **NOT** `.z-paging-prev`. Writ
 
 `paging.css.dsp`
 
+## Divider between the bar and the rows is owned by the host data-component
+
+When a grid/listbox/tree uses `mold="paging"`, ZK wraps the bar in a per-component wrapper
+named by `$s('paging-top')` / `$s('paging-bottom')` → `.z-grid-paging-top`/`-bottom`,
+`.z-listbox-paging-*`, `.z-tree-paging-*`. The **host component's CSS** (grid.css / listbox.css
+/ tree.css), not `paging.css`, must draw the divider that separates the bar from the data:
+
+```css
+.z-<comp>-paging-top    .z-paging { border-bottom: 1px solid var(--zk-color-outline-variant); }
+.z-<comp>-paging-bottom .z-paging { border-top:    1px solid var(--zk-color-outline-variant); }
+```
+
+This is mandatory because the body's last row strips its own `border-bottom` (`:last-child`),
+so without the wrapper border the bar floats against the rows with no separation. Keep the
+rule in sync across all three host components — it is easy to add it to grid and forget tree.
+
 ## Note
 
 Stub entry — full documentation pending spec-author run (Phase 3/4).

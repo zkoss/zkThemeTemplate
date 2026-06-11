@@ -6,7 +6,6 @@
 
 .z-auxhead {
     background-color: var(--zk-color-surface-container-low);
-    border-bottom: 1px solid var(--zk-color-outline-variant);
 }
 
 .z-auxheader {
@@ -17,6 +16,11 @@
     color: var(--zk-color-on-surface-variant);
     text-align: center;
     background-color: transparent;
+    /* Divider on the TH, not the .z-auxhead TR: tree/listbox header tables are
+       border-collapse:separate, where TR borders do NOT paint. Grid (collapse)
+       painted the TR border by accident; the TH border is uniform across all
+       three and lets two adjacent <auxhead> rows separate. See data-components.md. */
+    border-bottom: 1px solid var(--zk-color-outline-variant);
     border-inline-end: 1px solid var(--zk-color-outline-variant);
     vertical-align: middle;
     white-space: nowrap;

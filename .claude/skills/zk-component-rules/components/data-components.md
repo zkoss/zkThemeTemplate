@@ -268,6 +268,7 @@ Key facts:
 - `colspan` is the only mechanism for grouping; cells under a multi-cell auxheader still emit independently.
 - `.z-auxheader.z-frozen-col` is applied to the auxheader cell that aligns with a frozen pane.
 - Themes that hide the regular column-header background need to give the auxhead row some visual marker (tonal band, stronger divider, or typographic shift) or the multi-level structure won't read. Aim for hierarchy: auxhead-row > column-header > body-row.
+- **The auxhead row divider must go on the `.z-auxheader` TH, never on `.z-auxhead` (TR)** — the header table is `border-collapse: separate`, where TR borders do not paint. Otherwise two stacked `<auxhead>` rows merge into one band. See "Header-row dividers go on the TH" below.
 
 ## Frozen columns
 
@@ -410,6 +411,85 @@ If you write `.z-listgroup .z-listcell-content { border-top; border-bottom }`, t
 ```
 
 Cell-level rules can still set `background-color: transparent` so the row band shows through. Tree's `.z-treegroup` follows the same pattern.
+
+## Header-row dividers go on the TH — the header table is `border-collapse: separate`
+
+The rule above ("borders on the ROW, not the cell") is true **only for the body table**,
+which is `border-collapse: collapse` — there a TR border paints. The **header** table is the
+opposite: grid/listbox/tree render the header `<table>` as `border-collapse: separate` — the
+listbox/tree roots set it explicitly (so frozen-column TH `box-shadow` / `border-inline-end`
+survive; collapse clips them), and grid's auxhead `*-headtbl` table is unclassed so it falls
+to the browser default, which is also `separate`. **In `separate` mode browsers do NOT paint
+borders on a `<tr>` / `<tbody>` — only on `table`, `th`, `td`.**
+
+So any divider that needs to appear **between header rows** — most importantly the
+`<auxhead>` row divider, and any multi-level header — MUST be set on the **TH cell**
+(`.z-auxheader`, `.z-column` / `.z-listheader` / `.z-treecol`), never on the TR:
+
+```css
+/* WRONG — TR border is silently dropped in the separate-collapse header table */
+.z-auxhead { border-bottom: 1px solid var(--zk-color-outline-variant); }
+
+/* RIGHT — TH border paints in both collapse AND separate */
+.z-auxheader { border-bottom: 1px solid var(--zk-color-outline-variant); }
+```
+
+Symptom when you get it wrong: a single `<auxhead>` still looks bordered (the adjacent
+`.z-column`/`.z-treecol` TH supplies its own divider), but **two adjacent `<auxhead>` rows
+merge into one tonal band** — there is no painted line between them, because the only thing
+that would draw it is the dropped TR border (this is true of grid too — its `*-headtbl` is
+`separate` as well). Grid merely *looked* acceptable because its previews show a single
+`<auxhead>` whose weight reads against the column-header row, not two stacked aux rows that
+need a line drawn between them. Put the divider on the TH and it is uniform across all three.
+
+Keep the row-level `background-color` on the TR (the band) — only the *border* must move to
+the cell. (Cell bg stays `transparent` so the row band shows through, per the Auxhead rule.)
+
+### The header table is emitted UNCLASSED — reset `border-spacing` on the `table`, not a class
+
+In ZK 10 the header table for all three components is rendered **unclassed**, as
+`<table id="…-headtbl">` (see `grid.js` / the sel molds). There is **no `.z-grid-header-inner`
+class** (older docs/comments claim one — it is stale). A theme rule keyed on
+`.z-grid-header-inner` is therefore a **dead selector**, and the real `-headtbl` table falls
+back to the **UA default `border-spacing: 2px`**. In `separate` mode (which the header table
+is — see above) that 2px gap shows the table's background **between every cell and every row**
+— e.g. a white line between two stacked `<auxhead>` rows, or between auxheader cells.
+
+Reset it the way ZK's own default theme does — target the descendant `table`, never a class:
+
+```css
+.z-<comp>-header table {        /* grid / listbox / tree — matches the unclassed -headtbl */
+    border-collapse: separate;  /* keep separate so frozen-col TH box-shadow paints */
+    border-spacing: 0;          /* ← the UA default is 2px; without this you get white gaps */
+    table-layout: fixed;
+}
+```
+
+ZK's default less does the same via a `table { border-spacing: 0; th,td { padding: 0 } }`
+reset mixin (`grid.less`, `tree.less`, `listbox.less` all line ~6). Mirror that. The trap is
+keying the reset on a class the runtime doesn't emit — then it silently no-ops and the UA
+default leaks through only in the `separate` header table (the collapsed body table hides it,
+because `collapse` ignores `border-spacing`).
+
+## No `border` attribute — the outer frame is theme-driven, not ZK-driven
+
+Unlike `window` (which has `setBorder`/`getBorder` → `border="none"` → `.z-window-noborder`),
+**grid, listbox, and tree expose NO border attribute** (verified in ZK source: no
+`setBorder`/`getBorder`/`noborder` on `Grid`/`Listbox`/`Tree.java`). ZK therefore emits **no
+class that signals "standalone vs embedded"** for these components. Consequences for any theme:
+
+- Whether the component shows an outer frame is a **pure theme decision on the root class**
+  (`.z-grid` / `.z-listbox` / `.z-tree`) — there is no ZK toggle to hook.
+- A "strip the frame when embedded" affordance must be a **theme-defined sclass** the author
+  applies (e.g. `z-grid-noborder` — mirror ZK's own `z-window-noborder` / `z-panel-noborder`
+  naming for discoverability), and/or an **ancestor-context selector** (`.z-panel-body .z-grid`,
+  `.z-groupbox .z-grid`) — ZK won't do it automatically.
+- Do not invent a class and assume ZK applies it: a rule like `.z-grid-standalone` only does
+  anything if a ZUL actually writes `sclass="z-grid-standalone"`. An unused such rule is dead
+  (this bit Marble twice — see `.z-grid-header-inner` and the deleted `.z-grid-standalone`).
+
+(Marble's resulting frame policy — outlined-by-default, `z-*-noborder` to strip — is
+theme-specific and lives in `doc/DESIGN.md` §11 / `doc/data-table-frame-rationale.md`, not here.)
 
 ## Bundles
 

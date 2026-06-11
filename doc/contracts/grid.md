@@ -71,3 +71,30 @@ overflow-y:auto` scroller.
 | sh1 | header pins on scroll | `.z-grid.z-sticky-header .z-grid-header` | `position` | `sticky` (with `top: 0px`) | computedStyle |
 | sh2 | header opaque (no bleed-through) | `.z-grid.z-sticky-header .z-grid-header` | `background-color` | ≠ `rgba(0, 0, 0, 0)` — rows must not show through the pinned header | computedStyle |
 | sh3 | root un-clips header | `.z-grid.z-sticky-header` | `overflow` | `visible` (else the header is clipped and cannot escape to stick) | computedStyle |
+
+## Header table spacing (border-spacing)
+
+The header table is emitted UNCLASSED as `<table id="…-headtbl">` (ZK 10) — there is **no
+`.z-grid-header-inner` class**. A reset keyed on that stale class is a dead selector, and the
+real table falls back to the UA default `border-spacing: 2px`, which in `separate` mode leaks
+a white gap between auxhead cells/rows. Reset on the descendant `table` instead, mirroring
+tree/listbox and the ZK default less. See `data-components.md` → "The header table is emitted
+UNCLASSED".
+
+| id | check | selector | property | expected | method |
+|----|-------|----------|----------|----------|--------|
+| hs1 | header table has no inter-cell gap | `.z-grid-header table` | `border-spacing` | `0px` (UA default 2px would leak white gaps between auxhead cells/rows under separate border-collapse) | computedStyle |
+
+## Outer frame (container)
+
+Default = standalone **outlined** card: border, NO shadow (never both). No-border variant
+(`z-grid-noborder`) and panel/groupbox ancestry strip the border. ZK emits no border attribute
+for grid (unlike window's `z-window-noborder`) → the variant is a theme sclass mirroring that
+naming. See `doc/data-table-frame-rationale.md`.
+
+| id | check | selector | property | expected | method |
+|----|-------|----------|----------|----------|--------|
+| fr1 | default outlined | `.z-grid` | `border` | `1px solid` `--zk-color-outline-variant` | computedStyle |
+| fr2 | never border + shadow | `.z-grid` | `box-shadow` | `none` | computedStyle |
+| fr3 | noborder variant strips frame | `.z-grid.z-grid-noborder` | `border` | `none` (for nesting in a bounded parent) | computedStyle |
+| fr4 | auto-flat inside panel/groupbox | `.z-panel-body .z-grid`, `.z-groupbox .z-grid` | `border` | `none` | computedStyle |

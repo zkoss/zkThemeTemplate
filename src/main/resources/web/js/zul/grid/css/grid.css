@@ -1,7 +1,12 @@
 /* MD3 Grid — data table component */
-/* DOM: .z-grid > .z-grid-header > table.z-grid-header-inner > thead > tr > th.z-column
+/* DOM: .z-grid > .z-grid-header > table#…-headtbl (UNCLASSED, not .z-grid-header-inner) > thead > tr > th.z-column
         .z-grid > .z-grid-body > table > tbody > tr.z-row > td.z-row-inner > div.z-row-content */
 
+/* Default = standalone OUTLINED card: 1px border, NO shadow. The component is
+   assumed to stand alone, and on the near-white page (--zk-color-background #f7f9fc)
+   the elevation-card shadow is invisible, so a border is the only thing that gives the
+   table a readable boundary. Never border + shadow together (MD3 outlined ≠ elevated).
+   See doc/data-table-frame-rationale.md. */
 .z-grid {
     --zk-grid-cell-padding: var(--zk-spacing-4);
     display: block;
@@ -11,14 +16,23 @@
     width: 100%;
     font-family: var(--zk-typescale-font-family);
     border-radius: var(--zk-shape-card);
-    box-shadow: var(--zk-elevation-card);
+    border: 1px solid var(--zk-color-outline-variant);
 }
 
-/* Standalone card grid — opt-in card appearance */
-.z-grid-standalone {
-    border-radius: var(--zk-shape-card);
-    box-shadow: var(--zk-elevation-card);
-    border: 1px solid var(--zk-color-outline-variant);
+/* No-border variant — strip the frame when the grid is nested in another bounded
+   surface (panel/card/form) so it doesn't double-frame. ZK emits no border attribute for
+   grid (unlike window's z-window-noborder), so this is an opt-in theme sclass that mirrors
+   ZK's own naming: sclass="z-grid-noborder". */
+.z-grid-noborder {
+    border: none;
+    box-shadow: none;
+}
+
+/* Auto-noborder inside the known form containers — a grid used as a form layout inside a
+   panel/groupbox should blend into its parent without needing the explicit class. */
+.z-panel-body .z-grid,
+.z-groupbox .z-grid {
+    border: none;
 }
 
 /* Form grid label column: fixed width so label doesn't take 50% */
@@ -58,9 +72,17 @@
     background-color: var(--zk-color-surface);
 }
 
-.z-grid-header-inner {
+/* The header table is emitted unclassed as <table id="…-headtbl"> in ZK 10 (grid.js),
+   NOT as .z-grid-header-inner — that class no longer exists, so a rule keyed on it is
+   dead and the table fell back to the UA default border-spacing:2px, which leaked a
+   white gap between stacked auxhead rows. Target the descendant table and zero the
+   spacing, mirroring tree/listbox (`.z-{comp}-header table`) and the ZK default theme's
+   `table { border-spacing: 0 }` reset. (Already separate by UA default; the explicit
+   value keeps frozen-col TH box-shadow paintable, consistent with tree/listbox.) */
+.z-grid-header table {
     width: 100%;
-    border-collapse: collapse;
+    border-collapse: separate;
+    border-spacing: 0;
     table-layout: fixed;
 }
 

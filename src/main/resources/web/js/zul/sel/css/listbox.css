@@ -2,16 +2,32 @@
 /* DOM: .z-listbox > .z-listbox-header > table > thead > tr.z-listhead > th.z-listheader
         .z-listbox > .z-listbox-body > table > tbody > tr.z-listitem > td.z-listcell > div.z-listcell-content */
 
+/* Default = standalone OUTLINED card: 1px border, NO shadow (was border + shadow, which
+   is double-emphasis — MD3 outlined ≠ elevated). On the near-white page the elevation
+   shadow is invisible, so the border carries the boundary. See
+   doc/data-table-frame-rationale.md. */
 .z-listbox {
     --zk-listbox-cell-padding: var(--zk-spacing-4);
     display: block;
     background-color: var(--zk-color-surface);
     border-radius: var(--zk-shape-card);
-    box-shadow: rgba(50,50,93,0.024) 0px 2px 5px -1px, rgba(0,0,0,0.05) 0px 1px 3px -1px;
     border: 1px solid var(--zk-color-outline-variant);
     overflow: hidden;
     box-sizing: border-box;
     font-family: var(--zk-typescale-font-family);
+}
+
+/* No-border variant — strip the frame when nested in another bounded surface. ZK emits no
+   border attribute for listbox, so this is an opt-in sclass mirroring ZK's z-window-noborder
+   naming: sclass="z-listbox-noborder". */
+.z-listbox-noborder {
+    border: none;
+    box-shadow: none;
+}
+
+.z-panel-body .z-listbox,
+.z-groupbox .z-listbox {
+    border: none;
 }
 
 /* ─── Header ───────────────────────────────────────────────────────────── */

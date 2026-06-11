@@ -163,5 +163,17 @@
             </listbox>
         </div>
     </div>
+
+    <div sclass="z-mb-6">
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">No-Border Variant (z-listbox-noborder)</div>
+        <div sclass="z-py-3 z-text-sm z-text-secondary z-mb-3">A listbox is an outlined card by default. Add sclass="z-listbox-noborder" to strip its own frame when nesting it inside another bounded surface — here an elevated card — so it blends into the parent instead of double-framing.</div>
+        <div sclass="z-bg-surface z-rounded-lg z-elevation-2 z-p-6">
+            <listbox sclass="z-listbox-noborder">
+                <listhead><listheader label="Name"/><listheader label="Value"/></listhead>
+                <listitem><listcell>Alpha</listcell><listcell>1</listcell></listitem>
+                <listitem><listcell>Beta</listcell><listcell>2</listcell></listitem>
+            </listbox>
+        </div>
+    </div>
 </div>
 </zk>

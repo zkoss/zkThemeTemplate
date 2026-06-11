@@ -93,3 +93,49 @@ overflow-y:auto` scroller.
 | sh1 | header pins on scroll | `.z-tree.z-sticky-header .z-tree-header` | `position` | `sticky` (with `top: 0px`) | computedStyle |
 | sh2 | header opaque (no bleed-through) | `.z-tree.z-sticky-header .z-tree-header` | `background-color` | ≠ `rgba(0, 0, 0, 0)` — rows must not show through the pinned header | computedStyle |
 | sh3 | root un-clips header | `.z-tree.z-sticky-header` | `overflow` | `visible` (else the header is clipped and cannot escape to stick) | computedStyle |
+
+## Paging divider (`mold="paging"`)
+
+Tree wraps the paging bar in `.z-tree-paging-top` / `.z-tree-paging-bottom`
+(mold `$s('paging-top/bottom')`, the same scheme as grid's `.z-grid-paging-*`). The host
+component owns the divider between the bar and the rows — the last `.z-treerow` strips its
+own `border-bottom` (`:last-child`), so without a wrapper border the bar floats against the
+rows with no separation. See `components/paging.md`.
+
+**Preview anchor:** the tree page's "Paging with Tree" section (`tree.zul`), a
+`<tree mold="paging">` with a radiogroup toggling `top` / `bottom` / `both`.
+
+| id | check | selector | property | expected | method |
+|----|-------|----------|----------|----------|--------|
+| pg1 | top bar divides from header below | `.z-tree-paging-top .z-paging` | `border-bottom` | `1px solid` `--zk-color-outline-variant` | computedStyle |
+| pg2 | bottom bar divides from rows above | `.z-tree-paging-bottom .z-paging` | `border-top` | `1px solid` `--zk-color-outline-variant` | computedStyle |
+
+## Auxhead divider (shared CSS: mesh/css/auxhead.css)
+
+The header table is `border-collapse: separate` (so frozen-col TH `box-shadow` /
+`border-inline-end` paint). In `separate` mode browsers do NOT paint borders on a TR — so
+the auxhead row divider MUST live on the `.z-auxheader` **TH cell** `border-bottom`, not on
+`.z-auxhead` (the TR). Without this, two adjacent `<auxhead>` rows merge into one tonal band
+(no painted line between them). See `data-components.md` → "Header-row dividers go on the TH".
+
+**Preview anchor:** the "Auxhead + Treecols Combinations" section (`tree-header.zul`),
+specifically the 2nd / 3rd trees which stack two `<auxhead>` rows adjacently.
+
+| id | check | selector | property | expected | method |
+|----|-------|----------|----------|----------|--------|
+| ax1 | auxhead row divider paints (on the TH) | `.z-auxheader` | `border-bottom` | `1px solid` `--zk-color-outline-variant` (so adjacent aux rows separate under `border-collapse: separate`) | computedStyle |
+| hs1 | header table has no inter-cell gap | `.z-tree-header table` | `border-spacing` | `0px` (UA default 2px would leak white gaps between cells/rows under separate border-collapse) | computedStyle |
+
+## Outer frame (container)
+
+Default = standalone **outlined** card: border, NO shadow (never both). No-border variant
+(`z-tree-noborder`) and panel/groupbox ancestry strip the border. ZK emits no border attribute
+for tree (unlike window's `z-window-noborder`) → the variant is a theme sclass mirroring that
+naming. See `doc/data-table-frame-rationale.md`.
+
+| id | check | selector | property | expected | method |
+|----|-------|----------|----------|----------|--------|
+| fr1 | default outlined | `.z-tree` | `border` | `1px solid` `--zk-color-outline-variant` | computedStyle |
+| fr2 | never border + shadow | `.z-tree` | `box-shadow` | `none` | computedStyle |
+| fr3 | noborder variant strips frame | `.z-tree.z-tree-noborder` | `border` | `none` (for nesting in a bounded parent) | computedStyle |
+| fr4 | auto-flat inside panel/groupbox | `.z-panel-body .z-tree`, `.z-groupbox .z-tree` | `border` | `none` | computedStyle |

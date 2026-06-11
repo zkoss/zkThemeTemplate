@@ -60,7 +60,7 @@
                                 <treeitem><treerow><treecell label="Child 2"/></treerow></treeitem>
                             </treechildren>
                         </treeitem>
-                        <treeitem>
+                        <treeitem open="false">
                             <treerow><treecell label="Collapsed"/></treerow>
                             <treechildren>
                                 <treeitem><treerow><treecell label="Hidden Child"/></treerow></treeitem>
@@ -395,6 +395,25 @@
                     <treefooter label="Footer 5"/>
                     <treefooter label="Footer 6"/>
                 </treefoot>
+            </tree>
+        </div>
+    </div>
+
+    <div sclass="z-mb-6">
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">No-Border Variant (z-tree-noborder)</div>
+        <div sclass="z-py-3 z-text-sm z-text-secondary z-mb-3">A tree is an outlined card by default. Add sclass="z-tree-noborder" to strip its own frame when nesting it inside another bounded surface — here an elevated card — so it blends into the parent instead of double-framing.</div>
+        <div sclass="z-bg-surface z-rounded-lg z-elevation-2 z-p-6">
+            <tree sclass="z-tree-noborder">
+                <treecols><treecol label="Name"/><treecol label="Value"/></treecols>
+                <treechildren>
+                    <treeitem>
+                        <treerow><treecell>Alpha</treecell><treecell>1</treecell></treerow>
+                        <treechildren>
+                            <treeitem><treerow><treecell>Alpha-1</treecell><treecell>1.1</treecell></treerow></treeitem>
+                        </treechildren>
+                    </treeitem>
+                    <treeitem><treerow><treecell>Beta</treecell><treecell>2</treecell></treerow></treeitem>
+                </treechildren>
             </tree>
         </div>
     </div>

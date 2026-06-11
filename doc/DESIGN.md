@@ -200,6 +200,17 @@ If a future use-case needs auxhead to match the column-header transparency exact
 | Card border | none (elevation only) |
 | Outlined card | `1px solid outline-variant` + no shadow |
 
+### Data-table frame (grid / listbox / tree)
+
+These three are **outlined by default** (`1px solid outline-variant`, **no shadow**) — they
+are assumed standalone, and on the near-white page the elevation shadow is invisible, so the
+border is the only readable boundary. **Never border + shadow together.** When nested in a
+bounded parent, strip the frame: automatically inside panel/groupbox
+(`.z-panel-body .z-{comp}` / `.z-groupbox .z-{comp}` → `border: none`), or explicitly via the
+opt-in variant sclass **`z-{grid,listbox,tree}-noborder`** (ZK emits no border attribute for
+these, unlike `window`'s `z-window-noborder` — the variant name mirrors that ZK convention).
+Full rationale + decision record: `doc/data-table-frame-rationale.md`.
+
 ---
 
 ## 12. Iconography (Lucide SVG)
