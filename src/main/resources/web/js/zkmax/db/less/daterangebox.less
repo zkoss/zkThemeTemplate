@@ -1,0 +1,275 @@
+/* daterangebox.less
+
+	Purpose:
+
+	Description:
+
+	History:
+		Sun May 11 12:14:00 CST 2026, Created by peakerlee
+
+Copyright (C) 2026 Potix Corporation. All Rights Reserved.
+*/
+@import "~./zul/less/_header.less";
+
+// WCAG 4.1.3 Status Messages: visually-hidden but assistive-tech-readable
+// live region used by Daterangebox._announceRange(). Standard sr-only
+// pattern: 1px clipped box, off-screen but in the accessibility tree.
+.z-daterangebox-status {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	margin: -1px;
+	padding: 0;
+	border: 0;
+	overflow: hidden;
+	clip: rect(0 0 0 0);
+	white-space: nowrap;
+}
+
+.z-daterangebox {
+	display: inline-flex;
+	align-items: center;
+	border: 1px solid @inputBorderColor;
+	border-radius: @inputBorderRadius;
+	background: @inputBackgroundColor;
+	padding: 0;
+	box-sizing: border-box;
+	vertical-align: middle;
+	// Fixed min-height so a row WITHOUT the icon (buttonVisible=false) and
+	// rows WITH the icon line up the same vertical pitch in dense forms.
+	min-height: 32px;
+
+	&-input {
+		border: 0;
+		outline: 0;
+		background: transparent;
+		padding: @inputPadding;
+		// Equal-share grow so begin / end inputs fill the box uniformly,
+		// including the case where buttonVisible=false leaves no icon.
+		flex: 1 1 0;
+		min-width: 0;
+		font-family: @baseContentFontFamily;
+		font-size: @fontSizeMedium;
+		color: @inputColor;
+		text-align: center;
+	}
+
+	&-separator {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 0 4px;
+		color: @inputColor;
+		opacity: 0.6;
+		flex: 0 0 auto;
+		align-self: stretch;
+	}
+
+	&-button {
+		cursor: pointer;
+		padding: 0 8px;
+		display: inline-flex;
+		align-items: center;
+		color: @inputColor;
+		flex: 0 0 auto;
+	}
+	&-button:hover {
+		color: @colorPrimary;
+	}
+
+	&-focused {
+		border-color: @colorPrimary;
+		box-shadow: 0 0 0 2px @colorPrimaryLighter;
+	}
+
+	&-invalid {
+		border-color: @errorboxBorderColor;
+	}
+
+	// Distinct visual for disabled — clearly differs from the writable
+	// state so users don't try to type into it. Uses the global disabled
+	// background token (@disabledBackgroundColor / --zk-disabled-background-color),
+	// the same one every other input uses — no per-component override needed.
+	// Outer wrapper is a <div>; <div> has no `disabled` attribute, so only
+	// the modifier class (.z-daterangebox-disabled) actually matches.
+	&-disabled {
+		background: @disabledBackgroundColor !important;
+		cursor: not-allowed;
+
+		.z-daterangebox-input,
+		.z-daterangebox-separator,
+		.z-daterangebox-button {
+			color: @disabledColor;
+			cursor: not-allowed;
+		}
+		.z-daterangebox-input {
+			background: transparent;
+		}
+	}
+}
+
+.z-daterangebox-popup {
+	position: absolute;
+	background: @popupBackgroundColor;
+	border: 1px solid @popupBorderColor;
+	border-radius: 4px;
+	box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+	z-index: 90000;
+	display: flex;
+	flex-direction: column;
+	font-size: @fontSizeMedium;
+
+	// Suppress per-Calendar internal _value selection. Range visuals are
+	// driven solely by z-cell-range-* classes managed by DaterangePopup.
+	.z-calendar-cell.z-calendar-selected:not(.z-cell-range-begin):not(.z-cell-range-end):not(.z-cell-range-mid) {
+		background: transparent;
+		color: @calendarCellColor;
+	}
+	// When the panel anchor date (selected) falls inside the range mid-band,
+	// the selected text color would bleed through — override it to the normal
+	// cell color so the range-mid background reads correctly.
+	.z-calendar-cell.z-calendar-selected.z-cell-range-mid {
+		color: @calendarCellColor;
+	}
+
+	// Hide leading/trailing overflow cells (next/previous month days) inside the
+	// daterangebox popup so each panel only shows its own month. The adjacent
+	// panel renders those dates, so cross-month ranges are still fully visible.
+	.z-calendar-cell.z-calendar-outside {
+		visibility: hidden;
+	}
+
+	// Consistent 12px breathing room on all sides of every popup section.
+	// Panels: top + sides padded; bottom-padding 0 so the next section
+	// supplies the inter-section gap. Times: same column grid as panels
+	// so each Timebox lines up under its Calendar. Footer: own 12px box
+	// with a top border for visual separation.
+	&-panels {
+		display: grid;
+		grid-template-columns: repeat(var(--panels, 2), auto);
+		gap: 12px;
+		padding: 12px 12px 0;
+	}
+
+	&-times {
+		display: grid;
+		grid-template-columns: repeat(var(--panels, 2), auto);
+		gap: 12px;
+		padding: 12px 12px 0;
+		justify-items: center;
+
+		.z-timebox {
+			width: 75%;
+			font-size: @fontSizeSmall;
+		}
+	}
+
+	&-footer {
+		display: flex;
+		align-items: center;
+		// 3-zone layout: Clear (left) | Today (center) | Cancel (right). Clear
+		// shows only under allowEmpty="both" and Today only when showTodayLink is
+		// set, so 1-3 of them may be present; space-between distributes whatever
+		// is there, keeping the leftmost left and the rightmost right.
+		justify-content: space-between;
+		padding: 12px;
+		margin-top: 12px;
+		border-top: 1px solid @baseBorderColor;
+	}
+
+	// Hide the per-Calendar "Today" link inside the popup — showTodayLink
+	// is surfaced as a single footer button instead.
+	.z-calendar-today {
+		display: none;
+	}
+
+	// When panels are linked (default), only the leftmost panel shows the
+	// `<` arrow and only the rightmost shows the `>`. Inner-edge arrows are
+	// hidden via `visibility: hidden` (not `display: none`) so the panel
+	// title bar stays the same height across panels — keeps cell columns
+	// aligned. Container class `-linked` is toggled by DaterangePopup
+	// based on `box.isUnlinkPanels()`.
+	&-linked &-panels .z-calendar:not(:first-child) .z-calendar-left {
+		visibility: hidden;
+	}
+	&-linked &-panels .z-calendar:not(:last-child) .z-calendar-right {
+		visibility: hidden;
+	}
+
+	&-clear,
+	&-today,
+	&-cancel {
+		cursor: pointer;
+		padding: 2px 10px;
+		font-family: @baseContentFontFamily;
+		font-size: @fontSizeSmall;
+		line-height: 1.4;
+		border: 1px solid @buttonBorderColor;
+		border-radius: 3px;
+		background: @buttonBackgroundColor;
+		color: @buttonColor;
+		&:hover {
+			background: @buttonHoverBackgroundColor;
+			border-color: @buttonHoverBorderColor;
+			color: @buttonHoverColor;
+		}
+	}
+	// Today stands out as the primary action — filled with the theme's
+	// primary colour so users immediately identify it as the shortcut.
+	&-today {
+		background: @colorPrimary;
+		border-color: @colorPrimary;
+		color: @calendarSelectedColor;
+		&:hover {
+			background: @colorPrimaryDark;
+			border-color: @colorPrimaryDark;
+			color: @calendarSelectedColor;
+		}
+	}
+}
+
+// Mobile / narrow viewport — convert the popup into a full-screen modal:
+// - position fixed, fill the viewport (no rounded corners or shadow)
+// - panels stack vertically (1 month per row), scrollable
+// - times row also collapses to 1 column
+// - footer pinned at the bottom
+@media (max-width: 576px) {
+	.z-daterangebox-popup {
+		position: fixed !important;
+		top: 0 !important;
+		left: 0 !important;
+		right: 0;
+		bottom: 0;
+		width: 100vw;
+		height: 100vh;
+		max-width: 100vw;
+		max-height: 100vh;
+		border-radius: 0;
+		box-shadow: none;
+		display: flex;
+		flex-direction: column;
+		overflow: hidden;
+
+		&-panels {
+			grid-template-columns: 1fr;
+			overflow-y: auto;
+			flex: 1 1 auto;
+		}
+
+		&-times {
+			grid-template-columns: 1fr;
+		}
+
+		// Hide all inner-edge arrow rules from desktop layout — on mobile
+		// each month is its own row so every panel needs its own < / >.
+		&-linked &-panels .z-calendar:not(:first-child) .z-calendar-left,
+		&-linked &-panels .z-calendar:not(:last-child) .z-calendar-right {
+			visibility: visible;
+		}
+
+		&-footer {
+			margin-top: 0;
+			flex: 0 0 auto;
+		}
+	}
+}
