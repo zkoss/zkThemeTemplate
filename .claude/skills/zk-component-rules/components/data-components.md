@@ -361,6 +361,15 @@ Key facts:
 - `.z-auxheader.z-frozen-col` is applied to the auxheader cell that aligns with a frozen pane.
 - Themes that hide the regular column-header background need to give the auxhead row some visual marker (tonal band, stronger divider, or typographic shift) or the multi-level structure won't read. Aim for hierarchy: auxhead-row > column-header > body-row.
 - **The auxhead row divider must go on the `.z-auxheader` TH, never on `.z-auxhead` (TR)** — the header table is `border-collapse: separate`, where TR borders do not paint. Otherwise two stacked `<auxhead>` rows merge into one band. See "Header-row dividers go on the TH" below.
+- **The trailing `.z-auxhead-bar` filler is the row's real `:last-child` — never the visible-last `.z-auxheader`.** ZK appends a zero-width `TH.z-auxhead-bar` (scrollbar/sizing spacer) to **every** auxhead row, even when nothing is being resized. So an edge-stripping rule keyed on `.z-auxheader:last-child` silently misses the rightmost visible header. If auxheaders carry a `border-inline-end` (a vertical divider between groups), that border stays on the visible-last cell and **doubles with the container's own frame border** — two parallel 1px lines on the right edge only (the left edge is clean because auxheaders have no border-left). In `border-collapse: separate` header tables (listbox/tree, and grid's `*-headtbl`) the two lines don't merge, so the doubling is visible. Strip the edge border with `.z-auxheader:has(+ .z-auxhead-bar)` (the cell immediately before the filler) **in addition to** `:last-child`:
+
+  ```css
+  .z-auxheader { border-inline-end: 1px solid var(--zk-color-outline-variant); }
+  .z-auxheader:last-child,
+  .z-auxheader:has(+ .z-auxhead-bar) { border-inline-end: none; }  /* don't double the frame */
+  ```
+
+  Grid often *looks* fine without this only because its auto-width lands the last-auxheader border coincident with the grid frame — same latent trap, just hidden by pixel alignment. Fix it in the shared `mesh/css/auxhead.css` so all three (grid/listbox/tree) are covered at once.
 
 ## Frozen columns
 

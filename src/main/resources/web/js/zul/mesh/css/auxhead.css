@@ -29,7 +29,14 @@
     box-sizing: border-box;
 }
 
-.z-auxheader:last-child {
+/* Strip the inline-end (right) border from the rightmost VISIBLE auxheader so it
+   does not double with the container's own frame border. ZK appends a zero-width
+   `TH.z-auxhead-bar` filler to every auxhead row, so the visible-last auxheader is
+   NOT `:last-child` (the bar is) — match the cell immediately before the bar too.
+   See data-components.md → "The trailing `.z-auxhead-bar` filler is the row's real
+   :last-child". */
+.z-auxheader:last-child,
+.z-auxheader:has(+ .z-auxhead-bar) {
     border-inline-end: none;
 }
 

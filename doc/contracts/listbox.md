@@ -144,6 +144,7 @@ See `data-components.md` → "Header-row dividers go on the TH".
 | id | check | selector | property | expected | method |
 |----|-------|----------|----------|----------|--------|
 | ax1 | auxhead row divider paints (on the TH) | `.z-auxheader` | `border-bottom` | `1px solid` `--zk-color-outline-variant` (so adjacent aux rows separate under `border-collapse: separate`) | computedStyle |
+| ax2 | visible-last auxheader has no inline-end border | `.z-auxheader:has(+ .z-auxhead-bar)` | `border-inline-end` (border-right) | `0px` / none — ZK appends a zero-width `.z-auxhead-bar` filler TH, so the visible-last auxheader is NOT `:last-child`; a right border left on it doubles with the container frame border (two parallel 1px lines on the right edge). | computedStyle |
 | hs1 | header table has no inter-cell gap | `.z-listbox-header table` | `border-spacing` | `0px` (UA default 2px would leak white gaps between cells/rows under separate border-collapse) | computedStyle |
 
 ## Outer frame (container)
