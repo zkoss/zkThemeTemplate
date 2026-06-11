@@ -47,6 +47,45 @@ single-selection checkmark case.
 | cm3 | single → real radio circle | `.z-listitem-radio .z-listitem-icon.z-icon-radio::before` | border-radius | `50%` (circle), `mask-image: none`, NOT `rgba(0,0,0,.87)` flat glyph | computedStyle |
 | cm4 | single selected → filled dot | `.z-listitem-radio.z-listitem-selected .z-listitem-icon.z-icon-radio::before` (or `::after`) | — | border-color/inner-dot = `--zk-color-primary` | computedStyle |
 | cm5 | header checkbox aligned with row | `.z-listheader-icon.z-icon-check` vs `.z-listitem-icon.z-icon-check` | center X | `Math.round(headerIcon.centerX) === Math.round(rowIcon.centerX)` (±1px) | getBoundingClientRect |
+| cm6 | no stray ellipsis beside checkbox | `.z-listcell:has(.z-listitem-checkable) > .z-listcell-content` | text-overflow | `clip` (NOT `ellipsis` — the narrow checkable cell overflows its content box by ~8px, so an ellipsis paints a leftover "…" to the right of the checkbox) | computedStyle |
+
+**Preview anchor for cm6:** the `multiple="true" checkmark="true"` listbox in the
+"Sorting and Resizable Headers" section of `listbox-header.zul` (narrow `width="40px"`
+checkbox column with empty `<listcell/>` first cells).
+
+## Sizable header resize affordance (`<listhead sizable="true">`)
+
+ZK lets the user drag the rightmost 8px of each header cell to resize it, toggling
+`.z-listheader-sizing` on the **TH** only while the pointer is in that zone (no persistent
+"sizable" class exists). The theme MUST give a hover-time affordance — there is no resting
+column divider to scope. See `data-components.md` → "Sizable header → resize affordance".
+
+**Preview anchor:** the "Sorting and Resizable Headers" section of `listbox-header.zul`
+(`<listhead sizable="true">`).
+
+| id | check | selector | property | expected | method |
+|----|-------|----------|----------|----------|--------|
+| sz1 | resize cursor on the sizing state | `.z-listheader.z-listheader-sizing` (add the class manually to a `.z-listheader`, then read) | cursor | `col-resize` | computedStyle after `el.classList.add('z-listheader-sizing')` |
+| sz2 | sizing state is NOT positioned (would collapse the TH) | `.z-listheader.z-listheader-sizing` | position | NOT `absolute` (must stay a state on the TH; `position:absolute;width:4px` deforms the column) | computedStyle |
+
+## Narrow icon / image header column (no squeeze, no row inflation)
+
+A fixed-width icon column (`width="40px"`) holding a header `image="…16x16.png"` must not
+shrink the image below its intrinsic size nor inflate the header row. The default 16px side
+padding leaves only 8px content → image squished to 8px + content wraps → row 53→73px. Fix
+= collapse side padding for image columns. See `data-components.md` → "Narrow icon /
+checkbox / image column".
+
+**Preview anchor:** the first two `<listhead sizable="true">` listboxes in the "Sorting and
+Resizable Headers" section (first `<listheader width="40px" image="…ArrowsUpDown-16x16.png">`).
+
+| id | check | selector | property | expected | method |
+|----|-------|----------|----------|----------|--------|
+| ni1 | image header column padding collapsed | `.z-listheader:has(img)` | padding-left / padding-right | `4px` (= `--zk-spacing-1`), NOT `16px` | computedStyle |
+| ni2 | header image renders at intrinsic size | `.z-listheader img` (16×16 source) | width / height | `16px` × `16px` (not shrunk to ~8px) | getBoundingClientRect |
+| ni3 | image header row not inflated | image-header `.z-listhead` row height vs a no-image `.z-listhead` row | height | equal (≈53px) — the image must not make the header taller | getBoundingClientRect |
+| ni4 | checkbox/icon header stays single-line | `.z-listheader:has(.z-listheader-checkable)`, `.z-listheader:has(img)` | white-space | `nowrap` (default `normal` wraps the over-wide icon span → row inflates) | computedStyle |
+| ni5 | select-all checkbox header row not inflated | the `multiple checkmark` listbox's `.z-listhead` (40px select-all column) | height | ≈53px, equal to a text-only header row (NOT ~74px) | getBoundingClientRect |
 
 ## States to evaluate
 - [ ] default rows, header, hover, selected, focus, disabled, striped, frozen columns

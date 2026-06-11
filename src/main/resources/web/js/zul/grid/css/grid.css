@@ -172,21 +172,14 @@
     margin-left: 0;
 }
 
-/* Column separator for resize */
-.z-column-sizer {
-    position: absolute;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    width: 4px;
-    cursor: col-resize;
-    background: var(--zk-color-outline-variant);
-    opacity: 0;
-    transition: opacity var(--zk-motion-duration-short3);
-}
-
-.z-column:hover .z-column-sizer {
-    opacity: 1;
+/* Narrow image/icon header column — see listbox.css for the full rationale. A
+   fixed-width icon column minus the default 16px side padding squeezes the header
+   image (global `img{max-width:100%}`) below intrinsic size and inflates the row;
+   collapse the side padding so a 16px icon renders full-size. */
+.z-column:has(img) {
+    padding-left: var(--zk-spacing-1);
+    padding-right: var(--zk-spacing-1);
+    white-space: nowrap;   /* icon column stays one line so the row doesn't inflate */
 }
 
 /* ─── Body area ─────────────────────────────────────────────────────────── */
@@ -452,13 +445,15 @@
     vertical-align: middle;
 }
 
+/* Resize affordance (columns sizable="true"). ZK toggles `.z-column-sizing` on the
+   TH itself while the pointer is within the rightmost 8px drag zone
+   (HeaderWidget._insizer / doMouseMove_), removed on mouse-out — it is NOT a
+   separate handle element, so it must not be positioned/sized (the old
+   position:absolute;width:4px deformed the header cell on hover). Show the resize
+   cursor + a primary edge accent. See data-components.md → "Sizable header". */
 .z-column-sizing {
-    position: absolute;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    width: 4px;
     cursor: col-resize;
+    box-shadow: inset -2px 0 0 var(--zk-color-primary);
 }
 
 .z-columns {

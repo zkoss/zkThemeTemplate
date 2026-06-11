@@ -91,6 +91,17 @@
     background-color: color-mix(in srgb, var(--zk-color-on-surface) 8%, transparent);
 }
 
+/* Resize affordance (listhead sizable="true"). ZK toggles `.z-listheader-sizing`
+   on the TH itself while the pointer is within the rightmost 8px drag zone
+   (HeaderWidget._insizer / doMouseMove_), and removes it on mouse-out. ZK emits
+   NO persistent "sizable" class, so the cue can only be a hover-time one (matches
+   MUI DataGrid's on-hover column separator). Show the resize cursor + a primary
+   accent on the edge being dragged. See data-components.md → "Sizable header". */
+.z-listheader-sizing {
+    cursor: col-resize;
+    box-shadow: inset -2px 0 0 var(--zk-color-primary);
+}
+
 /* ─── Listheader-button (menupopup trigger) ─────────────────────────────────
    Rendered when <listheader menupopup="..."> is set. Same MD3 progressive-
    disclosure pattern as Grid's column-button: invisible by default, fades in
@@ -474,6 +485,25 @@
 .z-listheader:has(.z-listheader-checkable) {
     padding-left: var(--zk-spacing-1);
     padding-right: var(--zk-spacing-1);
+    /* Keep the select-all icon on one line. `.z-listheader` is `white-space: normal`
+       (so long text labels wrap), but the checkable span is 40px wide inside the ~32px
+       content box — with `normal` it wraps to a 2nd line and inflates the whole header
+       ROW (53→74px). An icon column never needs wrapping. */
+    white-space: nowrap;
+}
+
+/* Narrow image/icon header column — same squeeze as the checkable column. A
+   fixed-width icon column (e.g. width="40px") minus the default 16px side padding
+   leaves only 8px of content width; the header image (ZK emits `<img>` with no
+   class, subject to the global `img{max-width:100%}`) then shrinks below its
+   intrinsic size AND the squeezed content wraps to a 2nd line, inflating the
+   whole header ROW. Collapse the side padding so a 16px icon renders full-size and
+   the row keeps its default height. See data-components.md → "Narrow icon/image
+   column". */
+.z-listheader:has(img) {
+    padding-left: var(--zk-spacing-1);
+    padding-right: var(--zk-spacing-1);
+    white-space: nowrap;
 }
 
 /* The always-present sort-icon slot has margin-left:4px and precedes the
@@ -487,6 +517,12 @@
 .z-listcell:has(.z-listitem-checkable) > .z-listcell-content {
     padding-left: var(--zk-spacing-1);
     padding-right: var(--zk-spacing-1);
+    /* This cell holds a control, not clipping text. The default cell content is
+       `white-space:nowrap; overflow:hidden; text-overflow:ellipsis`; the checkable
+       span (16px icon + its own inline padding) is ~8px wider than the narrow
+       content box, so an `ellipsis` would paint a stray "…" to the right of the
+       checkbox. Clip instead so no ellipsis renders. */
+    text-overflow: clip;
 }
 
 

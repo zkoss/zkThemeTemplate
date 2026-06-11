@@ -52,6 +52,98 @@ Header cells add sort modifiers when `sort="auto"` or `sort="ascending"/"descend
 | listbox | `.z-listheader-sort`| `.z-listheader-sorticon`|
 | tree    | `.z-treecol-sort`   | `.z-treecol-sorticon`   |
 
+## Sizable header → resize affordance (hover-only `.z-{c}-sizing` class)
+
+`<listhead sizable="true">` / `<columns sizable="true">` / `<treecols sizable="true">`
+let the user drag a column's right edge to resize it. The mechanism is **not** a
+rendered handle element:
+
+- The drag hot-zone is the **rightmost 8px** of each header cell
+  (`HeaderWidget._insizer: x >= this.$n_().offsetWidth - 8`).
+- On mouse-move inside that zone ZK adds class `.z-{c}-sizing` **to the header cell
+  (the TH) itself** (`doMouseMove_ → jq(n).addClass(this.$s('sizing'))`, `n = $n()`),
+  and removes it on mouse-out / drag-end. Class names: `.z-column-sizing` (grid),
+  `.z-listheader-sizing` (listbox), `.z-treecol-sizing` (tree).
+- ZK emits **NO persistent "this head is sizable" class** — `HeadWidget.setSizable`
+  only flips an internal `_sizable` flag and rerenders; nothing in the DOM marks a
+  sizable head at rest. So a theme **cannot** draw a resting per-column divider scoped
+  to sizable heads; the only CSS hook is the transient `.z-{c}-sizing` state.
+
+**Required theme rule** — the affordance is a *hover-time* one (matches MUI DataGrid,
+which shows the column separator only on hover):
+
+```css
+.z-column-sizing, .z-listheader-sizing, .z-treecol-sizing {
+    cursor: col-resize;                                   /* the real affordance */
+    box-shadow: inset -2px 0 0 var(--zk-color-primary);   /* accent the dragged edge */
+}
+```
+
+**Trap — `.z-{c}-sizing` is the TH, not a 4px handle.** It is tempting (and Marble's
+grid.css did this) to write `.z-column-sizing { position:absolute; right:0; width:4px }`
+as if it were a separator child. It is the header cell itself — positioning/sizing it
+collapses the whole column the instant the pointer enters the 8px zone. Style it as a
+state on the TH only (`cursor`, `box-shadow`, `background`). Likewise `.z-{c}-sizer` is a
+**dead selector** — ZK renders no such element (`HeaderWidget.redraw` emits only
+content/sorticon/[button]).
+
+## Narrow icon / checkbox / image column → collapse padding (and kill ellipsis)
+
+A header/cell column with a small fixed width (typically `width="40px"`) holding only an
+icon — a checkmark, a sort glyph, or an `image="…16x16.png"` — collides with the theme's
+default 16px (`spacing-4`) side padding: `40px − 16 − 16 = 8px` of content width left.
+Three symptoms, one root cause:
+
+1. **Checkbox/check icon clipped** — the 16×16 control overflows the 8px content area and
+   the cell's `overflow:hidden` clips its right edge.
+2. **Header row inflated by a wrapping icon column** — `.z-{c}` header cells are
+   `white-space: normal` (so long *text* labels wrap onto a 2nd line). But a narrow icon
+   column's content is *wider* than its content box, so `normal` wraps it too, doubling the
+   content height and inflating the whole header **row** (measured: 53px → 73–74px). Two
+   triggers, same mechanism:
+   - a header **image** (bare `<img>`, no class) hits the global `img{max-width:100%}`,
+     shrinks to the 8px content width AND the squeezed content wraps;
+   - a **select-all checkbox** header (`width="40px"`) — the `.z-{c}-checkable` span is
+     ~40px wide (16px icon + its inline padding) inside the ~32px content box, so it wraps
+     below the (zero-width) sorticon.
+
+   This is why "a small image / a checkbox makes the header taller than default" — it is not
+   the icon's height, it is the narrow column forcing a wrap.
+3. **Stray ellipsis "…" beside a checkbox** — the checkable body cell's `.z-listcell-content`
+   is `white-space:nowrap; overflow:hidden; text-overflow:ellipsis`. The checkable span
+   (16px icon + its own inline padding) is ~8px wider than the content box, so the browser
+   paints a leftover ellipsis to the right of the box. (The header select-all box shows no
+   ellipsis because `.z-listheader` is `white-space:normal`; a labelled checkmark cell in an
+   auto-width column shows none because it doesn't overflow.)
+
+**Fix — collapse the side padding on BOTH the header cell and the cell content, and clip
+(don't ellipsis) the checkable cell:**
+
+```css
+/* Header side — checkable OR image/icon column. nowrap is REQUIRED: the cell defaults
+   to white-space:normal for text labels, which wraps the over-wide icon content and
+   inflates the row. padding-collapse alone does NOT fix the checkbox header (its span
+   is wider than the content box even at 4px padding). */
+.z-listheader:has(.z-listheader-checkable),
+.z-listheader:has(img) {
+    padding-left: var(--zk-spacing-1);
+    padding-right: var(--zk-spacing-1);
+    white-space: nowrap;
+}
+/* Cell side — mirror header padding; padding lives on .z-listcell-content, NOT the td. */
+.z-listcell:has(.z-listitem-checkable) > .z-listcell-content {
+    padding-left: var(--zk-spacing-1);
+    padding-right: var(--zk-spacing-1);
+    text-overflow: clip;   /* holds a control, not clipping text → no stray "…" */
+}
+```
+
+Same pattern for `.z-column` (grid) and `.z-treecol` (tree). **Trap:** fixing only the
+header (or only the cell) leaves header/row icons misaligned — always do both, and verify
+`header.icon.right === cell.icon.right`. Tree's `.z-treecell-content` is `display:flex`, so
+its ellipsis lives on the child `.z-treecell-text` and the stray-ellipsis symptom (3) is
+listbox-specific; symptoms (1) and (2) apply to all three.
+
 ## Focus and disabled state classes (listbox + tree)
 
 | Component | Focus class | Disabled class |
@@ -470,6 +562,11 @@ reset mixin (`grid.less`, `tree.less`, `listbox.less` all line ~6). Mirror that.
 keying the reset on a class the runtime doesn't emit — then it silently no-ops and the UA
 default leaks through only in the `separate` header table (the collapsed body table hides it,
 because `collapse` ignores `border-spacing`).
+
+**4th data table — `biglistbox`.** The zkmax virtual grid has the *same* unclassed-table
+trap on **both** its head and body tables (`.z-biglistbox table { border-spacing:0 }`), and
+its body shows the leak too (it is `separate`, unlike the collapsed grid/listbox/tree body).
+When you touch border-spacing on any data table, sweep all four. See `components/biglistbox.md`.
 
 ## No `border` attribute — the outer frame is theme-driven, not ZK-driven
 

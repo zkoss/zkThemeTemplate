@@ -549,7 +549,7 @@
             <div style="height:200px; overflow-y:auto; border:1px solid var(--zk-color-outline);">
                 <listbox sclass="z-sticky-header" width="500px">
                     <listhead>
-                        <listheader label="Row #" width="70px"/>
+                        <listheader label="Row #" width="100px"/>
                         <listheader label="Subject"/>
                         <listheader label="Date" width="130px"/>
                     </listhead>

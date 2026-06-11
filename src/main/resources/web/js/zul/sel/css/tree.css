@@ -384,6 +384,24 @@
     display: none;
 }
 
+/* Resize affordance (treecols sizable="true"). ZK toggles `.z-treecol-sizing` on the
+   TH while the pointer is within the rightmost 8px drag zone, removed on mouse-out;
+   no persistent "sizable" class exists. Show the resize cursor + a primary edge
+   accent. See data-components.md → "Sizable header". */
+.z-treecol-sizing {
+    cursor: col-resize;
+    box-shadow: inset -2px 0 0 var(--zk-color-primary);
+}
+
+/* Narrow image/icon header column — same squeeze as the checkable column (see
+   listbox.css). Collapse side padding so a 16px header icon renders full-size and
+   the header row keeps its default height. */
+.z-treecol:has(img) {
+    padding-left: var(--zk-spacing-1);
+    padding-right: var(--zk-spacing-1);
+    white-space: nowrap;   /* icon column stays one line so the row doesn't inflate */
+}
+
 /* Indeterminate / tristate (partial) — filled primary box with a white minus.
    When a TristateModel reports a node in getPartials(), ZK adds `z-treerow-partial`
    to the row and switches the icon class to `z-icon-minus`; the header select-all
