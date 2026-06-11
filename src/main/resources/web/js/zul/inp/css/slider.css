@@ -113,7 +113,10 @@
     left: 50%;
     top: auto;
     margin-left: -10px;
-    margin-top: 0;
+    /* JS sets `top` = the value position (thumb CENTER); pull up half the 20px
+       thumb so its center — not its top edge — lands there (mirrors horizontal
+       margin-left). margin-top:0 left every vertical thumb 10px low. */
+    margin-top: -10px;
 }
 
 /* ── Sphere mold — 3D gradient thumb ────────────────── */

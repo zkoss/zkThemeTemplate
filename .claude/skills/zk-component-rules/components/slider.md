@@ -162,6 +162,21 @@ CSS must give `.z-rangeslider-track` **measurable** width/height (typically `ins
 
 The same convention applies to **multislider**.
 
+### Thumb must be centered on its JS-set offset (negative margin = −½ thumb size)
+
+For slider/rangeslider/multislider, ZK JS writes the **value position** as an inline percentage on the thumb's main axis — `btn.style.left = X%` (horizontal) or `btn.style.top = X%` (vertical) — and on the filled area (`Sliderbuttons.syncArea()`, `Rangeslider.updatePosByValues_()`, `Sliderbuttons._dragging()`). That percentage marks where the thumb's **center** belongs, not its top/left edge.
+
+So the thumb CSS must offset itself by half its own size on whichever axis JS drives:
+
+- **Horizontal**: `margin-left: calc(thumb-size / -2)` (axis JS sets is `left`). Cross-axis is centered with `top: 50%; margin-top: calc(thumb-size / -2)`.
+- **Vertical**: `margin-top: calc(thumb-size / -2)` (axis JS sets is `top`). Cross-axis is centered with `left: 50%; margin-left: calc(thumb-size / -2)`.
+
+Drop the negative margin on the JS-driven axis and every thumb lands half-a-thumb off the track (its edge, not its center, sits on the value point) — and the filled-area end edge, which DOES anchor on the % point, visibly detaches from the thumb. This bit multislider's vertical thumb (`margin-top: 0` → thumbs 10px below their track points); rangeslider's vertical rule (`margin-top: calc(--btn-size / -2)`) is the correct template.
+
+### Marks: rangeslider renders a dot + label; multislider renders the label only
+
+`Rangeslider.redrawMarks_()` appends BOTH a `.z-{c}-mark-dot` and a `.z-{c}-mark-label` to each `.z-{c}-mark`. `Multislider.redrawMarks_()` (override) appends ONLY the label — no dot. So a multislider mark has no on-track dot anchor; its label is positioned relative to a bare (2px) mark element on the track. Theme consequence: the per-orientation offset that places the mark label a consistent perpendicular distance from the track differs between the two components (the dot shifts rangeslider's anchor), even when the intended visual gap is identical — express the intended gap as one shared value and add a small per-case `calc()` correction rather than hand-tuning four independent offsets.
+
 ## Bundle
 
 `slider.css.dsp` — one-to-one mapping. No sibling impact.

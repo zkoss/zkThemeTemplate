@@ -35,6 +35,11 @@
     --zk-rangeslider-tooltip-color: var(--zk-color-inverse-on-surface);
     --zk-rangeslider-dot-size: 8px;
     --zk-rangeslider-dot-border-width: 2px;
+    /* Perpendicular gap between the track's near edge and the numeric mark label.
+       Single source of truth so horizontal & vertical (and multislider, which
+       reads the same token) stay consistent. Each orientation adds a small
+       mark-anchor correction on top of this gap via calc(). */
+    --zk-rangeslider-label-gap: 18px;
 }
 
 /* ─── Outer container ───────────────────────────────────────────────── */
@@ -189,13 +194,14 @@
     white-space: nowrap;
 }
 
+/* +4px correction = mark anchor (track centre / dot) → track near edge. */
 .z-rangeslider-horizontal .z-rangeslider-mark-label {
-    top: 14px;
+    top: calc(var(--zk-rangeslider-label-gap) + 4px);
     transform: translateX(-50%);
 }
 
 .z-rangeslider-vertical .z-rangeslider-mark-label {
-    left: 22px;
+    left: calc(var(--zk-rangeslider-label-gap) + 4px);
     transform: translateY(-50%);
 }
 

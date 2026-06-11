@@ -129,11 +129,16 @@
 }
 
 /* ── Vertical thumb: left-centered, JS sets top ──────── */
+/* JS writes `btn.style.top = X%` where X% is the VALUE position along the track
+   (0% = min at top, 100% = max at bottom) and is meant to mark the thumb CENTER.
+   `margin-top: -10px` (= -½ the 20px thumb) pulls the thumb up so its center —
+   not its top edge — lands on that offset, mirroring the horizontal
+   `margin-left: -10px`. Without it every thumb sits 10px below its track point. */
 .z-multislider-vertical .z-sliderbuttons-button {
     left: 50%;
     top: auto;
     margin-left: -10px;
-    margin-top: 0;
+    margin-top: -10px;
 }
 
 /* ── Vertical area fills from bottom ─────────────────── */
@@ -215,13 +220,18 @@
     white-space: nowrap;
 }
 
+/* Label gap shares the rangeslider token so the slider family stays consistent
+   (fallback applies on multislider-only pages where rangeslider.css isn't loaded).
+   The per-orientation correction is the mark-anchor → track-near-edge distance.
+   multislider marks carry NO dot (just the label), so corrections differ from
+   rangeslider's. */
 .z-multislider-horizontal .z-multislider-mark-label {
-    top: 30px;
+    top: calc(var(--zk-rangeslider-label-gap, 18px) + 3px);
     transform: translateX(-50%);
 }
 
 .z-multislider-vertical .z-multislider-mark-label {
-    left: 20px;
+    left: calc(var(--zk-rangeslider-label-gap, 18px) + 5px);
     transform: translateY(-50%);
 }
 
