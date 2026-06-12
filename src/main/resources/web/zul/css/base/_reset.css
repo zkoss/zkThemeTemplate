@@ -8,26 +8,35 @@
 }
 
 html {
-    /* min-height so floating popups (colorbox / combobox / datebox …) can be
-       dismissed by clicking the empty area below the page content. Without this,
-       <html>/<body> collapse to content height and the bottom of the viewport
-       receives no click event. */
-    min-height: 100%;
+    /* DEFINITE height (not min-height) so that body's `min-height: 100%` below
+       has a resolvable containing-block height. A percentage min-height computes
+       to 0 when its containing block's height is indefinite — so `html`
+       MUST give an explicit `height` here, otherwise body collapses to content
+       height. `height: 100%` resolves against the viewport and is scrollbar-aware
+       (unlike `100vh`): when a horizontal scrollbar appears it shrinks with the
+       reduced viewport, so no spurious vertical scrollbar. */
+    height: 100%;
     font-size: 14px;
     -webkit-text-size-adjust: 100%;
 }
 
 body {
-    /* min-height: 100% (NOT 100vh) so the viewport stays filled with the
-       background without spawning a spurious vertical scrollbar. `100vh` is the
-       full viewport height and ignores the horizontal scrollbar's thickness, so
-       the moment any wide content triggers a horizontal scrollbar, body (100vh)
-       exceeds the now-shorter visible area and a vertical scrollbar appears on a
-       page whose content fits. `100%` resolves against the containing block,
-       which DOES shrink with the scrollbar; the background still covers the
-       viewport via background propagation from body to the canvas. The
-       click-to-dismiss empty area below short content is provided by
-       `html { min-height: 100% }` above. */
+    /* min-height: 100% (NOT 100vh) so body FILLS the viewport height.
+       Two things depend on body being viewport-tall:
+       1. Floating-popup dismiss: ZK closes an open popup (colorbox / combobox /
+          datebox / bandbox / menupopup …) only when an outside mousedown lands
+          within `document.body.clientHeight` — see ZK core `mount.ts`
+          `_docMouseDown` (a "not a scrollbar click" guard). If body collapses to
+          content height, every click in the empty area below the content is
+          swallowed and popups never close.
+       2. Background fill without a spurious vertical scrollbar. `100vh` is the
+          full viewport height and ignores the horizontal scrollbar's thickness,
+          so wide content (a horizontal scrollbar) makes body (100vh) exceed the
+          now-shorter visible area and a vertical scrollbar appears on a page
+          whose content fits. `100%` resolves against `html`'s definite height,
+          which DOES shrink with the scrollbar.
+       This `100%` only resolves because `html { height: 100% }` above is
+       definite. */
     min-height: 100%;
     margin: 0;
     font-family: var(--zk-typescale-font-family);

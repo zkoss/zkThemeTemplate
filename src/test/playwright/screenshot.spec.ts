@@ -388,4 +388,47 @@ test.describe('viewport-fill', () => {
     // The guard: despite the horizontal scrollbar, no vertical scrollbar appears.
     expect(m.vScroll).toBe(false);
   });
+
+  // A floating popup must dismiss on an outside click ANYWHERE in the viewport,
+  // including the empty area below the page content. ZK core only fires the
+  // float-up / auto-close when the click's clientY <= document.body.clientHeight
+  // (mount.ts `_docMouseDown`, a "not a scrollbar click" guard). So `body` MUST
+  // fill the viewport height; if it collapses to content height, clicks below
+  // the content are silently swallowed and open popups never close. This guards
+  // the regression where `body { min-height: 100% }` failed to resolve (its
+  // containing block <html> had no definite height) and body shrank to content.
+  test('colorbox popup dismisses on a click in the empty area below content', async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 900 });
+    await page.goto('/colorbox.zul');
+    await page.waitForLoadState('networkidle');
+
+    const geo = await page.evaluate(() => {
+      const cb = document.querySelector('.z-colorbox') as HTMLElement;
+      const w = (window as any).zk.Widget.$(cb);
+      w.openPopup();
+      const pp = w.$n('pp') as HTMLElement;
+      const r = pp.getBoundingClientRect();
+      return {
+        open: getComputedStyle(pp).display !== 'none',
+        popupBottom: Math.round(r.bottom),
+        bodyClientHeight: document.body.clientHeight,
+        innerH: window.innerHeight,
+      };
+    });
+    // Precondition: the popup is open, and there is empty viewport below it.
+    expect(geo.open).toBe(true);
+    const clickY = geo.popupBottom + 120;
+    expect(clickY).toBeLessThan(geo.innerH);
+
+    // Click in the empty area below the content, well clear of the popup (x=1100).
+    await page.mouse.click(1100, clickY);
+    await page.waitForTimeout(300); // ZK's float-up filter is ~120ms
+
+    const closed = await page.evaluate(() => {
+      const cb = document.querySelector('.z-colorbox') as HTMLElement;
+      const w = (window as any).zk.Widget.$(cb);
+      return getComputedStyle(w.$n('pp') as HTMLElement).display === 'none';
+    });
+    expect(closed).toBe(true);
+  });
 });

@@ -1,41 +1,71 @@
-# Viewport-height fill: use `min-height: 100%` on `body`, never `100vh`
+# Viewport-height fill: `html { height: 100% }` + `body { min-height: 100% }`, never `100vh`
 
-**Rule:** to make the theme background fill the viewport on sparse pages, the base
-reset must use `body { min-height: 100% }`, **not** `body { min-height: 100vh }`.
+**Rule:** the base reset must give the page two co-operating declarations:
 
-## Why `100vh` is a footgun
+```css
+html { height: 100%; }       /* definite height — required, see below */
+body { min-height: 100%; }   /* NOT 100vh, NOT bare 100% without the html rule */
+```
 
-`100vh` is the *full* viewport height and is **blind to scrollbars** — it does not
-subtract the strip a horizontal scrollbar occupies. So whenever any page has a
-horizontal scrollbar (a wide table, a fixed-width grid, an oversized image), the
-sequence is:
+`body` must end up **as tall as the viewport** (and grow with content). Two
+distinct things break if it collapses to content height — one cosmetic, one
+functional.
 
-1. horizontal scrollbar appears → the visible viewport height shrinks by the
-   scrollbar thickness (e.g. 835px → 829px);
-2. `body { min-height: 100vh }` stays pinned at the full 835px;
-3. body (835) now exceeds the visible area (829) → a **spurious vertical
-   scrollbar** appears on a page whose content fits well within the viewport.
+## Why `body` must fill the viewport — the functional reason (ZK dismiss)
 
-The page looks "unexpectedly taller" with a vertical scrollbar even though nothing
-in the content is that tall. (`100dvh` has the **same** flaw — it accounts for
-mobile browser UI chrome, not scrollbars.)
+ZK closes an open floating popup (colorbox, combobox, datebox, bandbox,
+menupopup, …) on an outside mousedown — but only when the click lands inside the
+body box. ZK core `mount.ts` `_docMouseDown` guards the auto-close with:
 
-## Why `100%` is correct
+```js
+if (dEvent.clientX <= body.clientWidth && dEvent.clientY <= body.clientHeight)
+    Widget.mimicMouseDown_(...);   // fires onFloatUp → closes popups
+```
 
+The `clientY <= body.clientHeight` test is meant to ignore scrollbar clicks. But
+if `body` has collapsed to its **content height**, every click in the empty area
+below the content is `clientY > body.clientHeight` → the auto-close is skipped →
+**the popup never closes when you click below the content.** Clicking *above*
+(over real content) still closes it — producing the tell-tale "dismiss only works
+above the popup, not below it" symptom. This is theme-wide: it hits every ZK
+floating popup, not one component.
+
+## Why `body` must fill the viewport — the cosmetic reason (no scrollbar footgun)
+
+`body` also paints the page background. To fill the viewport without a spurious
+vertical scrollbar, use `min-height: 100%`, **never `100vh`**. `100vh` is the
+*full* viewport height and is **blind to scrollbars**: the moment any wide
+content triggers a horizontal scrollbar, the visible area shrinks by the
+scrollbar thickness but `100vh` stays pinned, so body now exceeds the visible
+area and a **spurious vertical scrollbar** appears on a page whose content fits.
+(`100dvh` has the same flaw — it accounts for browser UI chrome, not scrollbars.)
 `min-height: 100%` resolves against the containing block, which **does** shrink
-when a scrollbar appears — so body never exceeds the visible area. The background
-still covers the whole viewport via **CSS background propagation**: when `html`
-has no background, `body`'s `background-color` is propagated to the canvas and
-paints the entire viewport even when body is only as tall as its content.
+with the scrollbar.
 
-The click-to-dismiss empty area below short content (so floating popups close on
-an outside click) is provided by `html { min-height: 100% }`, which fills the
-viewport and receives the click — body does not need to be viewport-tall for that.
+## The trap: `min-height: 100%` needs a definite containing-block height
+
+A percentage `min-height` resolves to **0** when its containing block's height is
+*indefinite*. `body`'s containing block is `<html>`. So `html { min-height: 100% }`
+is **not enough** — `min-height` leaves html's height indefinite, body's
+`min-height: 100%` computes to 0, and body collapses to content height (causing
+the ZK dismiss bug above). `html` MUST declare a **definite** `height: 100%`
+(which resolves against the viewport, the initial containing block). Only then
+does `body { min-height: 100% }` resolve to the viewport height.
+
+`html { height: 100% }` is itself scrollbar-aware (it resolves against the
+content area, not the scrollbar-blind `vh` viewport), so it does not reintroduce
+the footgun.
+
+Background still covers the whole viewport via **CSS background propagation**:
+with no background on `html`, `body`'s `background-color` is propagated to the
+canvas.
 
 ## Applies to
 
-Any theme's base reset (`base/_reset.css`). This is theme-agnostic: a Sapphire or
-corporate-dark reset would hit the identical bug with `100vh`. First seen on the
-colorbox preview page, where the fixed-width preview matrix (`pv/matrix.zul`,
-`grid-template-columns: 120px repeat(N,160px)`) overflows narrow/mobile viewports
-horizontally and the `100vh` body then added a spurious vertical scrollbar.
+Any theme's base reset (`base/_reset.css`). Theme-agnostic: a Sapphire or
+corporate-dark reset hits the identical bugs. First seen on the colorbox preview
+page — the fixed-width preview matrix (`pv/matrix.zul`,
+`grid-template-columns: 120px repeat(N,160px)`) overflows narrow viewports
+horizontally (surfacing the `100vh` scrollbar footgun), and a later
+`body { min-height: 100% }` *without* `html { height: 100% }` collapsed body to
+content height (surfacing the ZK dismiss-below-content bug).
