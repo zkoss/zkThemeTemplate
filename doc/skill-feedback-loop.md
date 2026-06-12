@@ -54,6 +54,14 @@ The log is append-only. Never edit past rows.
 
 **Encode the gap as a failing assertion before writing any CSS.** Add the missed check as a new row in `doc/contracts/<comp>.md` (or a corrected check in the skill's component file) *first* — the evaluator should now fail on the next run. This proves the harness can *see* the gap; only then fix the CSS. If the gap is that an existing row asserts the wrong value, correct that row instead of adding a new one. Fixing CSS before the assertion exists means the next sibling sweep silently re-introduces the same bug.
 
+**Also add a Playwright regression test — failing-first.** The contract row is verified by the (agent-run) evaluator; a Playwright test is the *automated, CI-able* guard that catches the regression on every run with no agent in the loop. For **every gap that results in a code fix**, add a test to the Playwright suite (`src/test/playwright/`) *before* fixing the CSS and confirm it **FAILS** against the current (buggy) build. Pick the cheapest shape that captures the gap:
+
+- **Computed-style / geometry assertion** (most gaps): read `getComputedStyle` / `getBoundingClientRect` / `document.styleSheets` via `page.evaluate` and assert the token, colour, size, `display`, or overflow the contract row names. Add to `screenshot.spec.ts` (chromium project).
+- **Behavioural**: drive a real interaction (`click`, `type`, `setViewportSize`) then measure — popup drop direction, outside-click close, focus layout-shift, scrollbar interactions. A real click often reproduces what programmatic `wgt.open()` cannot.
+- **Visual baseline**: `toHaveScreenshot` when the gap is purely visual and impractical to assert numerically.
+
+Tablet/touch gaps go in `tablet.spec.ts` (tablet project, mobile UA). A gap that resolves to **not-a-bug** (no code change) needs no test — note that in the row. Record the test's `describe`/title in the `fix-location` column alongside the CSS/skill paths.
+
 ### Step 2 — Apply the decision rule
 
 For each row in the log, ask the three questions. Write the chosen layer(s) in the `layer` column **before** writing CSS.
@@ -67,6 +75,8 @@ For each row in the log, ask the three questions. Write the chosen layer(s) in t
 ### Step 4 — Re-verify the gap is caught
 
 Run the harness on the original component **without** giving the agent the manual fix. The agent should now produce the right CSS on its own. If it doesn't, the fix is at the wrong layer — go back to Step 2.
+
+Then run the Playwright regression test you wrote in Step 1: it must now **pass** (it failed before the fix). That failing-then-passing transition is the proof the test actually guards the gap — a test that is green both before and after the fix guards nothing. Keep it green in CI so the regression cannot return silently.
 
 ### Step 5 — Sweep for siblings
 
