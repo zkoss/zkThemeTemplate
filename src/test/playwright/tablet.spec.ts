@@ -85,3 +85,63 @@ for (const { name, url } of visualCases) {
     });
   });
 }
+
+// -------------------------------------------------------
+// Colorbox popup dismiss on touch — ZK 10.2.1-jakarta's Colorbox.closePopup /
+// onHide only call undoVParent(); they do NOT reset the inline display/position
+// that openPopup set. On desktop undoVParent's style restore hides the reattached
+// popup, but on the mobile (iPad/Safari) UA it does not, so the popup stays
+// display:block (looks un-closed) and leaves a small `.z-palette-button` artifact.
+// Theme workaround (floating-popup-in-body pattern): the OPEN popup is detached to
+// <body>, so force-hiding the popup while it is RE-ATTACHED inside .z-colorbox
+// only ever hides the closed popup. These guard that workaround on a touch UA.
+// -------------------------------------------------------
+test.describe('tablet-colorbox-dismiss', () => {
+  test('outside tap closes the popup (no display:block left on the reattached popup)', async ({ page }) => {
+    await page.goto('/colorbox.zul');
+    await page.waitForLoadState('networkidle');
+
+    // open must still show (the open popup is detached to <body>)
+    const opened = await page.evaluate(() => {
+      const w = (window as any).zk.Widget.$(document.querySelector('.z-colorbox'));
+      w.openPopup();
+      const pp = w.$n('pp') as HTMLElement;
+      return getComputedStyle(pp).display !== 'none' && (pp.parentElement as HTMLElement).tagName === 'BODY';
+    });
+    expect(opened).toBe(true);
+
+    // tap an empty/content area away from the colorbox
+    await page.touchscreen.tap(500, 300);
+    await page.waitForTimeout(350);
+
+    const dismissed = await page.evaluate(() => {
+      const w = (window as any).zk.Widget.$(document.querySelector('.z-colorbox'));
+      return { hidden: getComputedStyle(w.$n('pp') as HTMLElement).display === 'none', open: w._open };
+    });
+    expect(dismissed.open).toBe(false);
+    expect(dismissed.hidden).toBe(true);
+  });
+
+  test('selecting a color leaves no visible popup/palette-button artifact', async ({ page }) => {
+    await page.goto('/colorbox.zul');
+    await page.waitForLoadState('networkidle');
+
+    await page.evaluate(() => {
+      const w = (window as any).zk.Widget.$(document.querySelector('.z-colorbox'));
+      w.openPopup();
+      const pp = w.$n('pp') as HTMLElement;
+      const sw = pp.querySelector('.z-colorpalette-color, [data-color]') as HTMLElement;
+      if (sw) ['mousedown', 'mouseup', 'click'].forEach(t => sw.dispatchEvent(new MouseEvent(t, { bubbles: true, cancelable: true })));
+    });
+    await page.waitForTimeout(400);
+
+    const visibleArtifacts = await page.evaluate(() =>
+      [...document.querySelectorAll('[class*="palette-button"], .z-colorbox-popup')]
+        .filter(e => {
+          const r = (e as HTMLElement).getBoundingClientRect();
+          return r.width > 0 && r.height > 0 && getComputedStyle(e as HTMLElement).display !== 'none';
+        })
+        .map(e => e.className.toString()));
+    expect(visibleArtifacts).toEqual([]);
+  });
+});

@@ -107,6 +107,22 @@
     padding: 8px;
 }
 
+/* Closed state: force-hide the popup while it sits INSIDE .z-colorbox.
+   ZK 10.2.1-jakarta's Colorbox.closePopup()/onHide() only call undoVParent();
+   they do NOT reset the inline `display:block` (and position/z-index) that
+   openPopup() set. On desktop undoVParent's style restore happens to hide the
+   reattached popup, but on the mobile (iPad/Safari) UA it does not — so after a
+   dismiss or a colour pick the popup (and its `.z-palette-button` artifact)
+   stays visible. The OPEN popup is detached to <body> (see comment above), so
+   `.z-colorbox > .z-colorbox-popup` ONLY ever matches the closed, re-attached
+   popup; `!important` is required because ZK leaves the inline display:block.
+   Not applied to `.z-menu-popup` — that mold is a zul.menu.Menu (its own,
+   working close path), and its open popup can remain a child of .z-menu.
+   See `.claude/skills/zk-component-rules/reference/floating-popup-in-body.md`. */
+.z-colorbox > .z-colorbox-popup {
+    display: none !important;
+}
+
 /* ─── Tab icons (palette / picker toggles) ────────────────────────────── */
 /* `.z-menu-*icon` = the same toggles inside the menu-content mold popup. */
 .z-colorbox-paletteicon,

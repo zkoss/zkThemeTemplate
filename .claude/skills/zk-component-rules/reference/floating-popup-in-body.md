@@ -150,3 +150,56 @@ won't-close-on-outside-click reports traced to this one rule. See
 that `getComputedStyle(popup).display !== 'none'` while open and that the open
 popup's `top >= trigger.bottom` when there is room below.
 
+
+## Variant: the close method leaves an inline `display:block` (needs `!important`)
+
+The searchbox case above assumes the popup carries **no inline `display`** and
+the theme owns the hidden state with a plain (non-`!important`) attached-scope
+rule. Some ZK widgets are worse: their **close method sets an inline
+`display:block` on open and never clears it on close**, relying on
+`undoVParent()`'s style-restore to re-hide the re-attached popup.
+
+`zkex.inp.Colorbox` (ZK 10.2.1-jakarta) is the known case. The *running build's*
+methods are NOT what the `ZK10` source shows — read what actually runs
+(`('' + wgt.openPopup)` in the browser), not the source tree:
+
+```js
+openPopup()  { this._open = true;  var pp = this.$n_('pp');
+               pp.style.display = 'block'; pp.style.position = 'absolute';
+               pp.style.zIndex = '88000'; this.openPalette(); }   // sets inline block
+closePopup() { this._open = false; var pp = this.$n('pp'); jq(pp).zk.undoVParent(); } // NO display:none
+onHide()     { this._open = false; var pp = this.$n('pp'); jq(pp).zk.undoVParent(); } // NO display:none
+```
+
+`closePopup`/`onHide` never reset the inline `display:block`. On a **desktop** UA
+`undoVParent()`'s restore happens to leave the re-attached popup hidden; on a
+**mobile (iPad/Safari) UA it does not**, so after a dismiss or a colour pick the
+popup stays `display:block` and a small `.z-palette-button` artifact remains
+visible. (`openPalette()` also `addClass('z-palette-button')` onto the popup, so
+the leftover element is `class="z-colorbox-popup z-palette-button"`.)
+
+**Fix:** force-hide the popup while it is **re-attached inside the widget**.
+Because the OPEN popup is detached to `<body>`, the attached-scope selector only
+ever matches the closed popup — but `!important` IS required here (unlike the
+searchbox case) because ZK leaves an inline `display:block` that a plain rule
+can't beat:
+
+```css
+.z-colorbox > .z-colorbox-popup { display: none !important; }
+```
+
+**Cautions:**
+- **Verify the open popup actually detaches to `<body>`** before using this. If a
+  widget shows its popup *in place* (still a child of the widget), this rule
+  hides it permanently. The menu-content colour mold (`.z-menu-popup`, a
+  `zul.menu.Menu`) is a different widget with its own working close path — do NOT
+  apply the rule to it.
+- This bug is **UA-dependent** (desktop passes, mobile fails). A desktop-only
+  screenshot/dismiss test will not catch it — write the guard in the **tablet**
+  Playwright project (mobile UA + `hasTouch`), driving a real `touchscreen.tap`.
+
+**Rule:** when a ZK widget's close method relies on `undoVParent()` alone (no
+`display:none`) to hide a body-detached popup, add
+`.z-{comp} > .z-{comp}-popup { display: none !important }` for the closed/attached
+state — and verify the open popup is `<body>`-detached so the rule can't hide it.
+(Caught 2026-06-12 on colorbox, mobile only. See `doc/skill-gaps.md`.)

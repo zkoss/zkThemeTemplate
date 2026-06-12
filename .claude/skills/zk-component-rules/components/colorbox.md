@@ -66,6 +66,16 @@ Combobox does the same thing (see `js/zul/inp/css/combobox.css`'s "Dropdown arro
 - Do **not** put `width: 100%` / `min-width: 100%` / `max-width: 100%` on `.z-colorbox-popup` — those resolve against body.
 - For the colorbox specifically, the popup is wide (~280–320px for palette, ~480–540px for picker because of the 256×256 gradient + hue + RGB inputs). Don't try to constrain.
 
+### Closed popup must be force-hidden (mobile-only bug)
+
+ZK 10.2.1-jakarta's `Colorbox.closePopup()`/`onHide()` only call `undoVParent()` — they do **NOT** reset the inline `display:block` that `openPopup()` set. On desktop `undoVParent`'s style restore hides the re-attached popup; on the **mobile (iPad/Safari) UA it does not**, so after an outside-dismiss or a colour pick the popup stays visible and leaves a small `class="z-colorbox-popup z-palette-button"` artifact. The theme MUST force-hide the re-attached (closed) popup:
+
+```css
+.z-colorbox > .z-colorbox-popup { display: none !important; }
+```
+
+The OPEN popup is detached to `<body>`, so this selector only matches the closed popup; `!important` is required because ZK leaves the inline `display:block`. Do **NOT** extend it to `.z-menu-popup` (the menu mold is a `zul.menu.Menu` with its own working close path). See `reference/floating-popup-in-body.md` → "the close method leaves an inline `display:block`". Guard in the **tablet** Playwright project (mobile UA + touch) — a desktop test passes and misses it.
+
 ## Picker / palette sub-layout is geometry-locked
 
 The colorpicker uses fixed-size bitmap sprites (`colorpicker_gradient.png`, `colorpicker_hue.png`, `colorpicker_select.gif`, `colorpicker_arrows.gif`) at hard-coded pixel positions (top: 0, left: 0, etc. in `colorbox.less` lines 84–204). A theme **cannot** restyle these layouts without breaking the picker — the drag handles' positions are calculated in JavaScript against these exact coordinates.
