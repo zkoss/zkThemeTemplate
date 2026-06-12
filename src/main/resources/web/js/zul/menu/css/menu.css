@@ -489,9 +489,15 @@
 }
 
 /* ─── Scrollable menubar ─────────────────────────────────────────────────── */
+/* The scroll arrows are position:absolute at left:0/right:0, which resolve to the
+   bar's PADDING edge — so the bar's default `0 16px` gutter would inset them. Reset
+   the horizontal padding while scrolling so the arrows sit flush at the bar edges
+   (the arrows + body margins already provide the content inset). */
 .z-menubar-scroll {
     overflow: hidden;
     position: relative;
+    padding-left: 0;
+    padding-right: 0;
 }
 
 .z-menubar-body {
@@ -516,12 +522,15 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    color: var(--zk-color-on-primary);
+    /* Inherit the bar's text color so the arrow contrasts with the surface bar
+       (the bar is `surface-container`, not a colored surface — white would vanish). */
+    color: var(--zk-color-on-surface);
+    background-color: var(--zk-color-surface-container);
     transition: background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
 }
 
 .z-menubar-scrollable:hover {
-    background-color: color-mix(in srgb, var(--zk-color-on-primary) 12%, transparent);
+    background-color: color-mix(in srgb, var(--zk-color-on-surface) 8%, var(--zk-color-surface-container));
 }
 
 .z-menubar-left {
@@ -537,6 +546,14 @@
     font-size: 18px;
     color: inherit;
     pointer-events: none;
+    /* ZK's _fixScrolling sets the arrow's inline style.display='block', which
+       overrides the arrow's CSS `display:inline-flex` and kills its flex
+       centering. Center the icon explicitly within the (position:absolute)
+       arrow box instead — immune to the JS display override. */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 /* ─── Shadow variant ─────────────────────────────────────────────────────── */
