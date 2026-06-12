@@ -356,3 +356,36 @@ test.describe('tablet-isolation', () => {
     expect(hrefs.some(h => h.includes('zkmax/css/tablet.css'))).toBe(false);
   });
 });
+
+// -------------------------------------------------------
+// Viewport-fill guard — the `100vh` footgun
+// The base reset must use `body { min-height: 100% }`, NOT `100vh`. `100vh` is
+// blind to scrollbars: when any wide content triggers a horizontal scrollbar,
+// a `100vh` body exceeds the now-shorter visible area and spawns a SPURIOUS
+// vertical scrollbar on a page whose content fits. The colorbox preview matrix
+// is fixed-width (~504px min), so a narrow viewport is a reliable trigger.
+// See `.claude/skills/zk-component-rules/reference/viewport-height-fill.md`.
+// -------------------------------------------------------
+test.describe('viewport-fill', () => {
+  test('horizontal overflow must not spawn a spurious vertical scrollbar', async ({ page }) => {
+    await page.setViewportSize({ width: 414, height: 835 });
+    await page.goto('/colorbox.zul');
+    await page.waitForLoadState('networkidle');
+    const m = await page.evaluate(() => {
+      const d = document.documentElement;
+      const pageEl = document.querySelector('.z-page') as HTMLElement;
+      return {
+        contentBottom: Math.round(pageEl.getBoundingClientRect().bottom),
+        innerH: window.innerHeight,
+        hScroll: d.scrollWidth > d.clientWidth,
+        vScroll: d.scrollHeight > d.clientHeight,
+      };
+    });
+    // Precondition: the page content genuinely fits within the viewport...
+    expect(m.contentBottom).toBeLessThan(m.innerH);
+    // ...and the fixed-width preview matrix does overflow horizontally — the trigger.
+    expect(m.hScroll).toBe(true);
+    // The guard: despite the horizontal scrollbar, no vertical scrollbar appears.
+    expect(m.vScroll).toBe(false);
+  });
+});

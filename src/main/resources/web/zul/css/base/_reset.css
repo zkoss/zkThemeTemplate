@@ -18,7 +18,17 @@ html {
 }
 
 body {
-    min-height: 100vh;
+    /* min-height: 100% (NOT 100vh) so the viewport stays filled with the
+       background without spawning a spurious vertical scrollbar. `100vh` is the
+       full viewport height and ignores the horizontal scrollbar's thickness, so
+       the moment any wide content triggers a horizontal scrollbar, body (100vh)
+       exceeds the now-shorter visible area and a vertical scrollbar appears on a
+       page whose content fits. `100%` resolves against the containing block,
+       which DOES shrink with the scrollbar; the background still covers the
+       viewport via background propagation from body to the canvas. The
+       click-to-dismiss empty area below short content is provided by
+       `html { min-height: 100% }` above. */
+    min-height: 100%;
     margin: 0;
     font-family: var(--zk-typescale-font-family);
     font-size: var(--zk-typescale-body-medium-size);
