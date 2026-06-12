@@ -1,0 +1,59 @@
+/* ============================================================================
+ * Tablet — text inputs + combo bundle
+ * Enlarge input fields and their dropdown/stepper buttons to touch sizes.
+ * Marble desktop inputs are 40px (wrapper) / 38px (input); buttons 28-36px.
+ * ========================================================================== */
+
+/* Plain text inputs */
+.z-textbox,
+.z-intbox,
+.z-decimalbox,
+.z-doublebox,
+.z-longbox,
+.z-passwordbox {
+    min-height: var(--zk-touch-input-height);
+}
+
+/* Combo-family wrappers + inputs */
+.z-combobox,
+.z-bandbox,
+.z-datebox,
+.z-timebox,
+.z-spinner,
+.z-doublespinner {
+    min-height: var(--zk-touch-input-height);
+}
+.z-combobox-input,
+.z-bandbox-input,
+.z-datebox-input,
+.z-timebox-input,
+.z-spinner-input,
+.z-doublespinner-input {
+    min-height: var(--zk-touch-input-height);
+}
+
+/* Dropdown / picker buttons → at least the minimum touch width, full input height */
+.z-combobox-button,
+.z-bandbox-button,
+.z-datebox-button,
+.z-timebox-button {
+    width: var(--zk-touch-target-min);
+    min-height: var(--zk-touch-input-height);
+}
+
+/* Spinner steppers are the tightest on desktop (28px) — widen for touch */
+.z-spinner-button,
+.z-doublespinner-button {
+    width: var(--zk-touch-target-min);
+}
+
+/* Larger control glyphs for the dropdown/picker icons */
+.z-combobox-icon,
+.z-combobox-button .z-icon-caret-down,
+.z-datebox-button > i,
+.z-bandbox-button > i {
+    font-size: var(--zk-touch-icon-size);
+}
+.z-timebox-icon {
+    height: var(--zk-touch-icon-size);
+}

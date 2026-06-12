@@ -1,0 +1,40 @@
+/* ============================================================================
+ * Tablet — selection controls (checkbox / radio / switch)
+ * The clickable target is the whole .z-checkbox / .z-radio row; grow it to the
+ * comfortable target and enlarge the state-layer ripple so touch feedback fills
+ * the finger. The glyph itself keeps its MD3 size.
+ * ========================================================================== */
+
+.z-checkbox,
+.z-radio {
+    min-height: var(--zk-touch-target-comfortable);
+}
+
+/* Expand the checkbox state-layer ring from 40px to the comfortable target
+ * (mold box 18px + 2 * 15px margin = 48px). */
+.z-checkbox-mold {
+    margin: 15px;
+}
+.z-checkbox-mold::before {
+    inset: -15px;
+}
+
+/* Expand the radio state-layer ring from 40px to 48px
+ * (input 20px + 2 * 14px margin = 48px). */
+.z-radio input[type="radio"] {
+    margin: 14px;
+}
+.z-radio input[type="radio"]::before {
+    inset: -14px;
+}
+
+/* Larger label text for readability at arm's length */
+.z-checkbox-content,
+.z-radio-content {
+    font-size: var(--zk-typescale-body-large-size);
+}
+
+/* Switch mold keeps its track, just sits in the taller row */
+.z-checkbox-switch {
+    min-height: var(--zk-touch-target-comfortable);
+}

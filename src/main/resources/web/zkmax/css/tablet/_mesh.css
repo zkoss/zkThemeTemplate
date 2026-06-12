@@ -1,0 +1,40 @@
+/* ============================================================================
+ * Tablet — mesh widgets (listbox / grid / tree) + paging
+ * Grow row height, cell padding and header/paging tap targets for touch.
+ * Marble drives cell padding through component-scoped custom props
+ * (--zk-listbox-cell-padding / --zk-grid-cell-padding), so bump those.
+ * ========================================================================== */
+
+/* Roomier cell padding → taller rows */
+.z-listbox {
+    --zk-listbox-cell-padding: var(--zk-spacing-5);
+}
+.z-grid {
+    --zk-grid-cell-padding: var(--zk-spacing-5);
+}
+
+/* Guarantee a touch-height row regardless of content */
+.z-listcell-content,
+.z-row > .z-cell,
+.z-treecell-content {
+    min-height: var(--zk-touch-row-min-height);
+}
+
+/* Header sort/menu buttons → comfortable hit area */
+.z-listheader-button,
+.z-column-button,
+.z-treecol-button {
+    width: var(--zk-touch-target-min);
+    height: var(--zk-touch-target-min);
+    font-size: var(--zk-touch-icon-size);
+}
+
+/* Paging controls */
+.z-paging-button {
+    min-width: var(--zk-touch-target-min);
+    height: var(--zk-touch-target-min);
+}
+.z-paging-input {
+    height: var(--zk-touch-target-min);
+    min-height: var(--zk-touch-target-min);
+}

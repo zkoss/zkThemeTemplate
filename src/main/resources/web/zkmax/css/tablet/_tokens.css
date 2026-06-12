@@ -1,0 +1,20 @@
+/* ============================================================================
+ * Marble tablet bundle — touch tokens
+ * ----------------------------------------------------------------------------
+ * Loaded only on a mobile User-Agent (ZK's TabletThemeURIHandler injects
+ * zkmax/css/tablet.css.dsp at cascade position 1). These tablet-scoped tokens
+ * layer on top of Marble's regular --zk-* tokens (loaded earlier in norm.css)
+ * and centralize the touch geometry used by the partials that follow.
+ *
+ * Geometry only — palette continues to come from --zk-color-*. No hardcoded
+ * hex anywhere in this bundle (project rule).
+ * MD3 touch targets: 48dp comfortable / 44px minimum.
+ * ========================================================================== */
+:root {
+    --zk-touch-target-min: 44px;          /* MD3 minimum hit area */
+    --zk-touch-target-comfortable: 48px;  /* MD3 comfortable hit area */
+    --zk-touch-input-height: 48px;        /* text inputs / combo wrappers */
+    --zk-touch-icon-size: 24px;           /* control glyphs (up from ~14-20px) */
+    --zk-touch-scrollbar-size: 16px;      /* touch-width custom scrollbar */
+    --zk-touch-row-min-height: 48px;      /* mesh row / cell tap height */
+}

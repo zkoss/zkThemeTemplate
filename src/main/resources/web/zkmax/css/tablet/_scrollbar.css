@@ -1,0 +1,13 @@
+/* ============================================================================
+ * Tablet — scrollbars
+ * Marble's only themed scrollbar is the biglistbox custom WScroll widget
+ * (14px on desktop); widen it for touch dragging. Native scrollbars are left
+ * to the platform (touch overlay scrollbars), matching stock-ZK behavior.
+ * ========================================================================== */
+
+.z-biglistbox-wscroll-vertical {
+    width: var(--zk-touch-scrollbar-size);
+}
+.z-biglistbox-wscroll-horizontal {
+    height: var(--zk-touch-scrollbar-size);
+}

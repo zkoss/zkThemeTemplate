@@ -101,7 +101,22 @@ src/main/resources/web/marble/
 ## 3. ZK Max Components (`zkmax`)
 
 ### Tablet
-- `zkmax/css/tablet.css.dsp`
+- `zkmax/css/tablet.css.dsp` — **built bundle** (no longer a stub). Touch-optimized
+  overrides injected by ZK's `TabletThemeURIHandler` at cascade position 1, **only
+  on a mobile User-Agent** (EE). Concatenated by `scripts/build-css.js` (build stage 5,
+  `tabletFiles`) from per-component source partials, kept split during development:
+  ```
+  src/main/resources/web/zkmax/css/tablet/
+    _tokens.css      # tablet-scoped --zk-touch-* tokens (MUST be first)
+    _inputs.css      # textbox + combo bundle
+    _buttons.css     # button / toolbarbutton / combobutton
+    _selection.css   # checkbox / radio / switch
+    _mesh.css        # listbox / grid / tree rows + headers + paging
+    _calendar.css    # calendar / datebox popup day cells
+    _window.css      # window / panel headers + affordances
+    _scrollbar.css   # biglistbox WScroll touch width
+  ```
+  Regression-guarded by the Playwright `tablet` project (`src/test/playwright/tablet.spec.ts`).
 
 ### Input
 - `js/zkmax/inp/css/cascader.css.dsp`

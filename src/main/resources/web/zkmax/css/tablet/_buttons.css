@@ -1,0 +1,35 @@
+/* ============================================================================
+ * Tablet — buttons
+ * Raise button hit areas to >= the MD3 minimum and grow icon glyphs.
+ * Marble desktop: .z-button 36px, icon-button 40px, toolbarbutton 36px.
+ * ========================================================================== */
+
+.z-button {
+    min-height: var(--zk-touch-target-min);
+    padding: 6px var(--zk-spacing-5);
+}
+
+/* Icon-only and FAB buttons → square touch targets */
+.z-button-icon.z-button {
+    width: var(--zk-touch-target-min);
+    height: var(--zk-touch-target-min);
+    min-height: var(--zk-touch-target-min);
+    font-size: var(--zk-touch-icon-size);
+}
+
+.z-uploadbutton {
+    min-height: var(--zk-touch-target-min);
+}
+
+.z-toolbarbutton {
+    min-width: var(--zk-touch-target-min);
+    height: var(--zk-touch-target-min);
+}
+
+/* Split / combo button: enlarge both the label area and the dropdown arm */
+.z-combobutton-content {
+    min-height: var(--zk-touch-target-min);
+}
+.z-combobutton-button {
+    width: var(--zk-touch-target-min);
+}

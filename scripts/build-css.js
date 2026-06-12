@@ -55,6 +55,21 @@ const comboFiles = [
     'js/zul/inp/css/bandbox.css',
 ];
 
+// tablet.css.dsp = touch overrides, injected by ZK's TabletThemeURIHandler at
+// cascade position 1 ONLY on a mobile User-Agent (EE). Split by component during
+// development; concatenated into a single tablet.css.dsp at build time.
+// _tokens.css MUST be first so its :root touch tokens cascade to the rest.
+const tabletFiles = [
+    'zkmax/css/tablet/_tokens.css',
+    'zkmax/css/tablet/_inputs.css',
+    'zkmax/css/tablet/_buttons.css',
+    'zkmax/css/tablet/_selection.css',
+    'zkmax/css/tablet/_mesh.css',
+    'zkmax/css/tablet/_calendar.css',
+    'zkmax/css/tablet/_window.css',
+    'zkmax/css/tablet/_scrollbar.css',
+];
+
 // footer.css.dsp = loaded last by WCS
 const footerFiles = [
     'js/zul/wgt/css/toolbarbutton.css',
@@ -89,7 +104,8 @@ const stubPaths = [
     // per-widget CSS lookup.
     'js/zkex/slider/css/sliderbuttons.css.dsp',
     // zkmax
-    'zkmax/css/tablet.css.dsp',
+    // NOTE: zkmax/css/tablet.css.dsp is NOT stubbed — it is built for real from
+    // the web/zkmax/css/tablet/_*.css partials (see tabletFiles + build stage 5).
     'js/zkmax/inp/css/cascader.css.dsp',
     'js/zkmax/inp/css/chosenbox.css.dsp',
     'js/zkmax/inp/css/searchbox.css.dsp',
@@ -375,6 +391,13 @@ function build() {
     if (footerCSS.trim()) {
         writeDsp('zul/css/footer.css.dsp', footerCSS);
         console.log('  zul/css/footer.css.dsp');
+    }
+
+    // 5. Build tablet.css.dsp (touch overrides — single file from partials)
+    const tabletCSS = tabletFiles.map(f => readFile(f)).join('\n');
+    if (tabletCSS.trim()) {
+        writeDsp('zkmax/css/tablet.css.dsp', tabletCSS);
+        console.log('  zkmax/css/tablet.css.dsp');
     }
 
     console.log('\nCSS build complete.');

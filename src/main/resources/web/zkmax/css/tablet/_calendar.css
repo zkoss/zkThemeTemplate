@@ -1,0 +1,26 @@
+/* ============================================================================
+ * Tablet — calendar / datebox popup
+ * Fingertip-sized day cells. Desktop cells are 40px in a 268px-wide grid;
+ * widen the popup so 7 comfortable columns fit and grow the selection disc.
+ * ========================================================================== */
+
+.z-calendar {
+    max-width: 360px;
+}
+
+.z-calendar-cell {
+    height: var(--zk-touch-target-comfortable);
+}
+
+/* Hover / selected disc grows with the cell */
+.z-calendar-cell::before {
+    width: 40px;
+    height: 40px;
+}
+
+/* Month/prev/next navigation buttons */
+.z-calendar-icon {
+    width: var(--zk-touch-target-min);
+    height: var(--zk-touch-target-min);
+    font-size: var(--zk-touch-icon-size);
+}

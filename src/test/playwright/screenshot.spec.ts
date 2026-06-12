@@ -16,32 +16,41 @@ const buttonDynamicStates: DynamicState[] = [
   },
 ];
 
+// Preview pages fall into two structural families:
+//  - "gallery" pages (button, textbox, checkbox, the input controls): a single
+//    `.z-p-8` page wrapper holding `pv-cols-N` / `pv-row` demo rows. No per-variant
+//    wrapper — capture the whole `.z-p-8` for the gallery and target bare `.z-*`
+//    elements for dynamic states.
+//  - "variant" pages (listbox, grid, tabbox, tree, window, panel): wrap each demo
+//    in a `.pv-variant-<name>` block — capture/scope by that wrapper.
+
 // -------------------------------------------------------
 // Button
 // -------------------------------------------------------
 test.describe('button', () => {
-  const variants = ['default', 'outlined'];
+  test.beforeEach(async ({ page }) => {
+    await page.goto('/button.zul');
+    await page.waitForLoadState('networkidle');
+  });
 
-  for (const variant of variants) {
-    test.describe(variant, () => {
-      test.beforeEach(async ({ page }) => {
-        await page.goto('/button.zul');
-        await page.waitForLoadState('networkidle');
+  test('gallery', async ({ page }) => {
+    await expect(page.locator('.z-p-8').first()).toHaveScreenshot('gallery.png');
+  });
+
+  const variants = [
+    { label: 'default',  selector: '.z-button' },
+    { label: 'outlined', selector: '.z-button-outlined' },
+  ];
+
+  for (const { label, selector } of variants) {
+    for (const { name, action } of buttonDynamicStates) {
+      test(`${label}-${name}`, async ({ page }) => {
+        const el = page.locator(selector).first();
+        await action(el);
+        await expect(el).toHaveScreenshot(`${label}-${name}.png`);
+        if (name === 'active') await page.mouse.up();
       });
-
-      test('gallery', async ({ page }) => {
-        await expect(page.locator(`.pv-variant-${variant}`).first()).toHaveScreenshot('gallery.png');
-      });
-
-      for (const { name, action } of buttonDynamicStates) {
-        test(name, async ({ page }) => {
-          const el = page.locator(`.pv-variant-${variant} .z-button`).first();
-          await action(el);
-          await expect(el).toHaveScreenshot(`${name}.png`);
-          if (name === 'active') await page.mouse.up();
-        });
-      }
-    });
+    }
   }
 });
 
@@ -55,12 +64,12 @@ test.describe('textbox', () => {
   });
 
   test('gallery', async ({ page }) => {
-    await expect(page.locator('.pv-variant-default').first()).toHaveScreenshot('gallery.png');
+    await expect(page.locator('.z-p-8').first()).toHaveScreenshot('gallery.png');
   });
 
   for (const { name, action } of hoverFocusStates) {
     test(name, async ({ page }) => {
-      const el = page.locator('.pv-variant-default .z-textbox').first();
+      const el = page.locator('.z-textbox').first();
       await action(el);
       await expect(el).toHaveScreenshot(`${name}.png`);
     });
@@ -77,12 +86,12 @@ test.describe('checkbox', () => {
   });
 
   test('gallery', async ({ page }) => {
-    await expect(page.locator('.pv-variant-default').first()).toHaveScreenshot('gallery.png');
+    await expect(page.locator('.z-p-8').first()).toHaveScreenshot('gallery.png');
   });
 
   for (const { name, action } of hoverFocusStates) {
     test(name, async ({ page }) => {
-      const el = page.locator('.pv-variant-default .z-checkbox').first();
+      const el = page.locator('.z-checkbox').first();
       await action(el);
       await expect(el).toHaveScreenshot(`${name}.png`);
     });
@@ -99,12 +108,12 @@ test.describe('combobox', () => {
   });
 
   test('gallery', async ({ page }) => {
-    await expect(page.locator('.pv-variant-default').first()).toHaveScreenshot('gallery.png');
+    await expect(page.locator('.z-p-8').first()).toHaveScreenshot('gallery.png');
   });
 
   for (const { name, action } of hoverFocusStates) {
     test(name, async ({ page }) => {
-      const el = page.locator('.pv-variant-default .z-combobox-input').first();
+      const el = page.locator('.z-combobox-input').first();
       await action(el);
       await expect(el).toHaveScreenshot(`${name}.png`);
     });
@@ -167,12 +176,12 @@ test.describe('datebox', () => {
   });
 
   test('gallery', async ({ page }) => {
-    await expect(page.locator('.pv-variant-default').first()).toHaveScreenshot('gallery.png');
+    await expect(page.locator('.z-p-8').first()).toHaveScreenshot('gallery.png');
   });
 
   for (const { name, action } of hoverFocusStates) {
     test(name, async ({ page }) => {
-      const el = page.locator('.pv-variant-default .z-datebox-input').first();
+      const el = page.locator('.z-datebox-input').first();
       await action(el);
       await expect(el).toHaveScreenshot(`${name}.png`);
     });
@@ -189,12 +198,12 @@ test.describe('timebox', () => {
   });
 
   test('gallery', async ({ page }) => {
-    await expect(page.locator('.pv-variant-default').first()).toHaveScreenshot('gallery.png');
+    await expect(page.locator('.z-p-8').first()).toHaveScreenshot('gallery.png');
   });
 
   for (const { name, action } of hoverFocusStates) {
     test(name, async ({ page }) => {
-      const el = page.locator('.pv-variant-default .z-timebox-input').first();
+      const el = page.locator('.z-timebox-input').first();
       await action(el);
       await expect(el).toHaveScreenshot(`${name}.png`);
     });
@@ -211,12 +220,12 @@ test.describe('spinner', () => {
   });
 
   test('gallery', async ({ page }) => {
-    await expect(page.locator('.pv-variant-default').first()).toHaveScreenshot('gallery.png');
+    await expect(page.locator('.z-p-8').first()).toHaveScreenshot('gallery.png');
   });
 
   for (const { name, action } of hoverFocusStates) {
     test(name, async ({ page }) => {
-      const el = page.locator('.pv-variant-default .z-spinner-input').first();
+      const el = page.locator('.z-spinner-input').first();
       await action(el);
       await expect(el).toHaveScreenshot(`${name}.png`);
     });
@@ -233,12 +242,12 @@ test.describe('bandbox', () => {
   });
 
   test('gallery', async ({ page }) => {
-    await expect(page.locator('.pv-variant-default').first()).toHaveScreenshot('gallery.png');
+    await expect(page.locator('.z-p-8').first()).toHaveScreenshot('gallery.png');
   });
 
   for (const { name, action } of hoverFocusStates) {
     test(name, async ({ page }) => {
-      const el = page.locator('.pv-variant-default .z-bandbox-input').first();
+      const el = page.locator('.z-bandbox-input').first();
       await action(el);
       await expect(el).toHaveScreenshot(`${name}.png`);
     });
@@ -255,11 +264,11 @@ test.describe('selectbox', () => {
   });
 
   test('gallery', async ({ page }) => {
-    await expect(page.locator('.pv-variant-default').first()).toHaveScreenshot('gallery.png');
+    await expect(page.locator('.z-p-8').first()).toHaveScreenshot('gallery.png');
   });
 
   test('hover', async ({ page }) => {
-    const el = page.locator('.pv-variant-default .z-selectbox').first();
+    const el = page.locator('.z-selectbox').first();
     await el.hover();
     await expect(el).toHaveScreenshot('hover.png');
   });
@@ -330,5 +339,20 @@ test.describe('panel', () => {
 
   test('gallery', async ({ page }) => {
     await expect(page.locator('.pv-variant-default').first()).toHaveScreenshot('gallery.png');
+  });
+});
+
+// -------------------------------------------------------
+// Tablet-isolation guard
+// The tablet bundle must stay tablet-only: on a desktop UA, ZK must NOT inject
+// zkmax/css/tablet.css, so touch overrides can never leak into desktop.
+// -------------------------------------------------------
+test.describe('tablet-isolation', () => {
+  test('tablet.css is absent on a desktop UA', async ({ page }) => {
+    await page.goto('/button.zul');
+    await page.waitForLoadState('networkidle');
+    const hrefs = await page.evaluate(() =>
+      [...document.styleSheets].map(s => s.href).filter(Boolean) as string[]);
+    expect(hrefs.some(h => h.includes('zkmax/css/tablet.css'))).toBe(false);
   });
 });
