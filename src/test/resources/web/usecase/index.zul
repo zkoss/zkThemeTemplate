@@ -149,7 +149,7 @@
     </west>
 
     <center border="none" autoscroll="true">
-        <div>
+        <div height="100%">
             <apply templateURI="@load(vm.currentPage)"/>
         </div>
     </center>

@@ -5,7 +5,7 @@
 .pref-row { display: flex; align-items: center; gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--zk-color-outline-variant); }
 .pref-row:last-child { border-bottom: none; }
 </style>
-<vlayout hflex="1" sclass="z-d-flex z-flex-col z-gap-4 z-p-4 z-bg-surface-low">
+<vlayout hflex="1" sclass="z-d-flex z-flex-col z-gap-4 z-p-4 z-bg-surface-low" vflex="1">
 
     <label value="Settings" sclass="z-h2"/>
 
