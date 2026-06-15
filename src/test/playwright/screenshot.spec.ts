@@ -118,6 +118,30 @@ test.describe('combobox', () => {
       await expect(el).toHaveScreenshot(`${name}.png`);
     });
   }
+
+  // Comboitem with iconSclass: the leading icon must be separated from the
+  // label, not glued to it. ZK renders `.z-comboitem-icon` + `.z-comboitem-text`
+  // as adjacent flex children with no built-in gap. See doc/skill-gaps.md 2026-06-15.
+  test('comboitem icon is separated from its label', async ({ page }) => {
+    const gap = await page.evaluate(() => {
+      const cbs = [...document.querySelectorAll('.z-combobox')];
+      let item = null;
+      for (const el of cbs) {
+        const w = (window as any).zk.Widget.$(el);
+        for (let c = w.firstChild; c; c = c.nextSibling) {
+          if (c._iconSclass) { item = c; break; }
+        }
+        if (item) { w.open(); break; }
+      }
+      if (!item) return -1;
+      const li = item.$n();
+      const iconGlyph = li.querySelector('.z-comboitem-icon > *') || li.querySelector('.z-comboitem-icon');
+      const text = li.querySelector('.z-comboitem-text');
+      return text.getBoundingClientRect().left - iconGlyph.getBoundingClientRect().right;
+    });
+    // 0px = glyph touching the label (the bug); expect a real MD-scale gap.
+    expect(gap).toBeGreaterThanOrEqual(8);
+  });
 });
 
 // -------------------------------------------------------
@@ -438,5 +462,34 @@ test.describe('viewport-fill', () => {
       return getComputedStyle(w.$n('pp') as HTMLElement).display === 'none';
     });
     expect(closed).toBe(true);
+  });
+});
+
+// -------------------------------------------------------
+// State-gallery columns must FILL their container, not cap at a fixed px.
+// The `pv-cols` grid was 8 hardcoded variants (label + N fixed-width tracks),
+// so on a wide desktop the data columns capped at ~160px and left a large empty
+// gutter on the right. The unified layout uses `auto repeat(var(--zk-cols),
+// minmax(0,1fr))` — one variable-driven utility shared with the framework's
+// `.z-grid-cols-auto`. This asserts the rightmost data cell now reaches the
+// row's right edge (i.e. the columns fill). Fails under the old capped layout.
+// -------------------------------------------------------
+test.describe('pv-cols-fill', () => {
+  test('state matrix columns fill the container width on desktop', async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 900 });
+    await page.goto('/button.zul');
+    await page.waitForLoadState('networkidle');
+
+    const gap = await page.evaluate(() => {
+      const row = document.querySelector('[class*="pv-cols"] .pv-row') as HTMLElement;
+      const cells = [...row.children] as HTMLElement[];
+      const last = cells[cells.length - 1];
+      const rowRight = row.getBoundingClientRect().right;
+      const lastRight = last.getBoundingClientRect().right;
+      return Math.round(rowRight - lastRight);
+    });
+    // With fill, the last cell ends at the row's right edge (only sub-pixel slack).
+    // With the old capped 160px tracks this gutter was several hundred px.
+    expect(gap, `right gutter is ${gap}px — columns are not filling`).toBeLessThanOrEqual(8);
   });
 });

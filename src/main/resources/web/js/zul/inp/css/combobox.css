@@ -159,6 +159,19 @@
     text-overflow: ellipsis;
 }
 
+/* Leading icon / image: separate it from the label. The mold renders
+   `.z-comboitem-icon`/`.z-comboitem-image` and `.z-comboitem-text` as adjacent
+   flex children with no built-in gap, so without this the glyph touches the
+   label. A container `gap` can't be used: a plain item always emits an empty
+   `.z-comboitem-image` span, which `gap` would turn into a phantom indent.
+   Hence margin on the leading element only (icon always has content; image
+   guarded with :not(:empty)). */
+.z-comboitem-icon,
+.z-comboitem-image:not(:empty) {
+    flex-shrink: 0;
+    margin-right: var(--zk-spacing-3);
+}
+
 .z-comboitem:hover {
     background-color: rgba(0, 0, 0, 0.08);
 }

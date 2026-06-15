@@ -30,6 +30,8 @@ zk-version: 10.2.1-jakarta
 | c13 | `.z-comboitem-selected` | background-color | `rgb(214, 228, 255)` (= `--zk-color-primary-container`) — LIST-ROW family, see `reference/selected-state-families.md` |
 | c14 | `.z-comboitem-selected` | color | `rgb(0, 28, 61)` (= `--zk-color-on-primary-container`) |
 | c15 | `.z-comboitem-selected` | background-color | MUST NOT be `rgb(178, 223, 219)` (= `--zk-color-secondary-container`) — wrong family |
+| c16 | `.z-comboitem-icon` (item with `iconSclass`) | margin-right | 12px (= `--zk-spacing-3`) — leading icon must be separated from the label; glyph-to-text gap ≥ 8px, NOT 0 |
+| c17 | `.z-comboitem-image:empty` (plain item's backward-compat span) | margin-right | 0px — the always-emitted empty image span must NOT phantom-indent the label (no container `gap`); see skill `components/combobox.md` |
 
 ## States to evaluate
 - [ ] default

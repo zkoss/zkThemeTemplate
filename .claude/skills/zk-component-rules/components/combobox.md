@@ -15,10 +15,34 @@ Popup (rendered in `<body>`, not inside `.z-combobox`):
 ```
 .z-combobox-popup
 └─ ul.z-combobox-content
-   └─ li.z-comboitem
-      └─ .z-comboitem-content
-         (selected item gets .z-comboitem-selected on the li)
+   └─ li.z-comboitem                  (display:flex, align-items:center)
+      ├─ span.z-comboitem-icon        (only when iconSclass set)
+      ├─ span.z-comboitem-image       (when image set; ALSO emitted EMPTY otherwise — see below)
+      └─ span.z-comboitem-text        (label; description goes inside as `<br/>` + span.z-comboitem-inner)
+      (selected item gets .z-comboitem-selected on the li)
 ```
+
+### Leading icon/image spacing — never use container `gap`
+
+The `<li>` is a flex row; the leading element (`.z-comboitem-icon` or
+`.z-comboitem-image`) and `.z-comboitem-text` are adjacent flex children with
+**no built-in separation** — without a theme rule the glyph touches the label.
+
+The trap: the mold (`comboitem.js`) emits an **empty** `.z-comboitem-image`
+span for a *plain* item too ("if no image specified, we still output the image
+for backward compatibility"). So a flex `gap` on `.z-comboitem` would turn that
+zero-width span into a **phantom indent** on every plain item. Space the leading
+element with `margin-right` on it, not container `gap` — and guard the image
+with `:not(:empty)` so the always-present empty span stays flush:
+
+```css
+.z-comboitem-icon,
+.z-comboitem-image:not(:empty) { margin-right: <gap>; flex-shrink: 0; }
+```
+
+The icon span is only rendered when `iconSclass` is set, so it always has
+content (no `:not(:empty)` guard needed). This whole structure holds for any
+theme; only `<gap>` is a theme choice (DESIGN.md).
 
 ## Border location: child input, not root
 
