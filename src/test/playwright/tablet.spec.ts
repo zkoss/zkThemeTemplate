@@ -124,6 +124,138 @@ test.describe('tablet-matrix-card-usable', () => {
 });
 
 // -------------------------------------------------------
+// Mobile WHEEL picker — datebox/timebox swap the desktop grid calendar / stepper
+// for an iOS-style scroll wheel (.z-calendar-wheel-* / .z-timebox-wheel-*,
+// rendered by zkmax/touch/{datebox,timebox}-touch.ts) and make the input
+// readonly. The wheel mold had no theme CSS: .z-*-wheel-list had no bounded
+// height, so its <ul> (200+ <li>×40px) collapsed to ~5079px; ZK's bottom-sheet
+// popup (top=innerHeight; height=cave.offsetHeight; translateY(-height)) then
+// slid that 5079px off-screen (y≈-3949) → "no usable display". These guard the
+// _wheel.css fix: the list stays bounded (3 visible rows) and the sheet lands on
+// screen. Also guards that the mobile-readonly trigger stays interactive (the
+// desktop readonly rule had pointer-events:none, making every mobile datebox
+// look disabled). See doc/skill-gaps.md 2026-06-15.
+// -------------------------------------------------------
+// A REAL tap on the trigger (the reported interaction) — also exercises the
+// pointer-events fix end-to-end. setOpen() via the widget API is avoided here: it
+// skips the touch event flow that captures the current viewport height, so the
+// bottom-sheet anchor can go stale on a programmatic open.
+async function tapFirstTrigger(page: Page, btnSel: string): Promise<void> {
+  await page.evaluate(() => window.scrollTo(0, 0));
+  const btn = page.locator(btnSel).first();
+  await btn.waitFor({ state: 'visible' });
+  const box = await btn.boundingBox();
+  await page.touchscreen.tap(box!.x + box!.width / 2, box!.y + box!.height / 2);
+  await page.waitForTimeout(1000); // bottom-sheet slide is delayed + animated
+}
+
+type WheelCase = { name: string; url: string; listSel: string; btnSel: string; inputSel: string };
+const wheelCases: WheelCase[] = [
+  { name: 'datebox', url: '/datebox.zul',
+    listSel: '.z-calendar-wheel-list', btnSel: '.z-datebox .z-datebox-button',
+    inputSel: '.z-datebox .z-datebox-input' },
+  { name: 'timebox', url: '/timebox.zul',
+    listSel: '.z-timebox-wheel-list', btnSel: '.z-timebox .z-timebox-button',
+    inputSel: '.z-timebox .z-timebox-input' },
+];
+
+// Geometry of the OPEN bottom-sheet popup (the one ZK detached to <body> and
+// rendered with content — found by a non-zero rect).
+async function openSheetGeometry(page: Page) {
+  return page.evaluate(() => {
+    const pps = [...document.querySelectorAll('[id$="-pp"]')] as HTMLElement[];
+    const pp = pps.find(p => p.getBoundingClientRect().height > 0) || pps[0];
+    const r = pp?.getBoundingClientRect();
+    const vh = window.innerHeight;
+    return {
+      vh,
+      top: r ? Math.round(r.top) : null,
+      bottom: r ? Math.round(r.bottom) : null,
+      height: r ? Math.round(r.height) : null,
+      // positive = sheet bottom is BELOW the viewport (clipped OK/Cancel row)
+      overshoot: r ? Math.round(r.bottom - vh) : null,
+    };
+  });
+}
+
+for (const { name, url, listSel, btnSel, inputSel } of wheelCases) {
+  test.describe(`tablet-${name}-wheel`, () => {
+    test('picker opens on-screen with a bounded scroll wheel', async ({ page }) => {
+      await page.goto(url);
+      await page.waitForLoadState('networkidle');
+      await tapFirstTrigger(page, btnSel);
+
+      const r = await page.evaluate((ls) => {
+        const lists = [...document.querySelectorAll(ls)] as HTMLElement[];
+        const pp = lists[0]?.closest('[id$="-pp"]') as HTMLElement
+          || document.querySelector('.z-datebox-popup, .z-timebox-popup') as HTMLElement;
+        const rect = pp?.getBoundingClientRect();
+        const vh = window.innerHeight;
+        return {
+          listCount: lists.length,
+          maxListH: lists.length ? Math.max(...lists.map(l => Math.round(l.getBoundingClientRect().height))) : -1,
+          vh,
+          popTop: rect ? Math.round(rect.top) : null,
+          popH: rect ? Math.round(rect.height) : null,
+          // how much of the sheet actually overlaps the viewport
+          visibleH: rect ? Math.round(Math.min(rect.bottom, vh) - Math.max(rect.top, 0)) : null,
+        };
+      }, listSel);
+
+      // the wheel actually rendered
+      expect(r.listCount, 'wheel-list columns rendered').toBeGreaterThan(0);
+      // each scroll column shows ~3 rows (40px li) — never the full unbounded list
+      expect(r.maxListH, `tallest wheel-list is ${r.maxListH}px (should be ~120, not the full ~5000px list)`)
+        .toBeLessThanOrEqual(240);
+      // bounded sheet (the bug rendered a ~5000px popup), top edge on-screen (the
+      // bug put it at y≈-3949), and substantially visible. ZK anchors the sheet
+      // to its own jq.innerHeight(), which the emulated viewport reports ~18px
+      // shorter — so assert overlap, not an exact bottom edge.
+      expect(r.popH!, `popup is ${r.popH}px tall (must fit the viewport)`).toBeLessThan(r.vh);
+      expect(r.popTop!, `popup top is ${r.popTop}px (off-screen above)`).toBeGreaterThanOrEqual(0);
+      expect(r.popTop!, `popup top is ${r.popTop}px (below the viewport)`).toBeLessThan(r.vh);
+      expect(r.visibleH!, `only ${r.visibleH}px of the ${r.popH}px sheet is on-screen`)
+        .toBeGreaterThanOrEqual(Math.round(r.popH! * 0.8));
+    });
+
+    test('mobile-readonly trigger stays interactive', async ({ page }) => {
+      await page.goto(url);
+      await page.waitForLoadState('networkidle');
+      const pe = await page.evaluate((sel) => {
+        const btn = document.querySelector(sel) as HTMLElement;
+        return btn ? getComputedStyle(btn).pointerEvents : 'no-button';
+      }, btnSel);
+      // on mobile ZK makes every input readonly; the trigger must NOT be disabled
+      expect(pe, 'trigger button pointer-events').not.toBe('none');
+    });
+
+    // Tapping the INPUT must land the sheet flush to the viewport bottom, exactly
+    // like tapping the ICON. ZK's CalendarPop._syncPosition anchors the sheet with
+    // top = innerHeight + scrollY then re-parents via makeVParent, which inflates
+    // the inline top by ~18px; the icon tap self-corrects via a second onSize sync
+    // but the input tap (focus suppresses the resize) stayed at top+18 → the sheet
+    // overshot below the fold, clipping the OK/Cancel row. The _wheel.css fix pins
+    // the sheet to bottom:0 so BOTH tap targets land identically. See
+    // doc/skill-gaps.md 2026-06-15 (follow-up).
+    test('tapping the input lands the sheet flush (not below the fold)', async ({ page }) => {
+      await page.goto(url);
+      await page.waitForLoadState('networkidle');
+      await tapFirstTrigger(page, inputSel);
+      const r = await openSheetGeometry(page);
+
+      expect(r.height!, 'sheet rendered').toBeGreaterThan(0);
+      // the bug parked the bottom ~18px below the viewport; allow 2px sub-pixel slack
+      expect(r.overshoot!, `input-tap sheet overshoots ${r.overshoot}px below the viewport`)
+        .toBeLessThanOrEqual(2);
+      // and it must not be pushed up off the top either
+      expect(r.top!, `sheet top is ${r.top}px`).toBeGreaterThanOrEqual(0);
+      expect(r.bottom!, `sheet bottom is ${r.bottom}px (viewport ${r.vh})`)
+        .toBeGreaterThanOrEqual(r.vh - 2);
+    });
+  });
+}
+
+// -------------------------------------------------------
 // Visual baselines at tablet size — capture the page wrapper (.z-p-8)
 // -------------------------------------------------------
 type VisualCase = { name: string; url: string };

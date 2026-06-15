@@ -52,3 +52,13 @@ java.util.Date sampleTime = new java.util.Date(0, 0, 1, 10, 30, 0);
 ```
 
 Without a value, inplace inputs render blank — not useful for visual verification.
+
+## Mobile/tablet: datebox & timebox swap to a wheel picker
+
+On a touch UA, ZK replaces the desktop calendar/stepper with an iOS-style
+scrolling **wheel picker** (`.z-calendar-wheel-*` / `.z-timebox-wheel-*`) and
+forces the input `readonly`. Different DOM, its own geometry invariants (3-row
+scroll columns, JS-driven bottom-sheet positioning), no MD3/Mira analog — any ZK
+theme must style it separately in the tablet bundle. See
+`reference/mobile-wheel-picker.md`. (spinner keeps its desktop stepper on touch —
+only datebox and timebox use the wheel.)

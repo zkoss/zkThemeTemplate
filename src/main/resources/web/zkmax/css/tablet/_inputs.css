@@ -57,3 +57,27 @@
 .z-timebox-icon {
     height: var(--zk-touch-icon-size);
 }
+
+/* ─── Mobile-readonly neutralization (datebox / timebox) ─────────────────────
+ * On a mobile UA ZK makes EVERY datebox/timebox input `readonly` to suppress the
+ * soft keyboard — the wheel picker is the only input path (see
+ * reference/mobile-wheel-picker.md). So the desktop "readonly = inert, greyed"
+ * treatment is wrong here: it greyed the field and set the trigger button to
+ * `pointer-events:none; opacity:.5`, making every normal mobile date/time field
+ * look disabled and un-openable. Restore the active surface + an interactive
+ * trigger (matches ZK's own canonical `.z-datebox-input[readonly]` rule). The
+ * genuinely-disabled state (.z-*-disabled) keeps its inert appearance. */
+.z-datebox.z-datebox-readonly,
+.z-timebox.z-timebox-readonly {
+    background-color: var(--zk-color-surface);
+    border-color: var(--zk-color-outline);
+}
+.z-datebox.z-datebox-readonly .z-datebox-input,
+.z-timebox.z-timebox-readonly .z-timebox-input {
+    color: var(--zk-color-on-surface);
+}
+.z-datebox.z-datebox-readonly .z-datebox-button,
+.z-timebox.z-timebox-readonly .z-timebox-button {
+    pointer-events: auto;
+    opacity: 1;
+}

@@ -66,6 +66,7 @@ const tabletFiles = [
     'zkmax/css/tablet/_selection.css',
     'zkmax/css/tablet/_mesh.css',
     'zkmax/css/tablet/_calendar.css',
+    'zkmax/css/tablet/_wheel.css',
     'zkmax/css/tablet/_window.css',
     'zkmax/css/tablet/_scrollbar.css',
 ];

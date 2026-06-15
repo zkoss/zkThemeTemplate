@@ -59,6 +59,7 @@ Both `zk-spec-author` (when authoring) and `zk-theme-evaluator` (when verifying)
 | `reference/css-dsp-pipeline.md` | Our build does not DSP-process `.css.dsp` — any `${…}` / `<%@ %>` in a source `.css` will silently delete the entire file from the WCS bundle. Use `/zkau/web/...` absolute URLs or data: URIs for image refs |
 | `reference/theme-override-is-replace.md` | When a theme provides a CSS at a stock widget's `<css-uri>` path, ZK serves only the theme version — the stock file is NOT loaded. Theme CSS must re-author every structural rule (positioning, orientation, geometry) the widget JS depends on; partial overrides silently break the widget |
 | `reference/css-flex-classes.md` | `.z-flex`/`.z-flex-row`/`.z-flex-column`/`.z-flex-item` are JS-toggled framework classes (`zk/flex.ts`), not theme utilities — define verbatim, never rename, never hard-code their effect on a JS-managed root, never `flex-basis: 0` on JS-sized children, never theme-default margins on flex-capable widgets (ZK subtracts them via `calc()`) |
+| `reference/mobile-wheel-picker.md` | On a touch UA, datebox/timebox swap the desktop calendar/stepper for an iOS-style scrolling **wheel picker** (`.z-calendar-wheel-*` / `.z-timebox-wheel-*`) and force the input `readonly`. Different DOM, no MD3/Mira analog, JS-driven bottom-sheet geometry, `offsetHeight/3` row invariant — must be styled in the tablet bundle |
 
 ### Component-specific (`components/`)
 

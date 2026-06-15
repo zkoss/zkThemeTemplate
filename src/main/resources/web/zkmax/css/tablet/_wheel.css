@@ -1,0 +1,227 @@
+/* ============================================================================
+ * Tablet — datebox / timebox WHEEL picker (mobile-only mold)
+ * ----------------------------------------------------------------------------
+ * On a mobile UA, ZK does NOT render the desktop grid calendar (.z-calendar-cell)
+ * or the timebox stepper. It swaps in an iOS-style scrolling WHEEL picker with a
+ * completely different DOM — `.z-calendar-wheel-*` (datebox) and
+ * `.z-timebox-wheel-*` (timebox) — rendered by zkmax/touch/{datebox,timebox}-
+ * touch.ts. None of that DOM has an MD3/Mira analog, so the desktop theme never
+ * styled it: without a bounded list height the wheel <ul> (200+ <li> × 40px)
+ * collapsed to ~5000px, and ZK's bottom-sheet popup
+ *   top = innerHeight;  height = cave.offsetHeight;  transform: translateY(-height)
+ * slid that 5000px off the top of the screen → the reported "no usable display".
+ *
+ * CRITICAL INVARIANT (datebox-touch.ts / timebox-touch.ts):
+ *   slot = wheel-list.offsetHeight / 3   →  the list always shows EXACTLY 3 rows,
+ *   and the scroll position is `-value * slot`. The <li> height MUST equal one
+ *   third of the wheel-list height or the selected value stops aligning with the
+ *   centre band. We use 40px <li> / 120px list. ZK forces the popup `width`
+ *   (= innerWidth − 20) and `height` inline via JS; we let those stand and style
+ *   the wheel's internals — EXCEPT the sheet's vertical anchor, which we override
+ *   (see "Bottom-sheet positioning" below) because ZK's inline `top` is unreliable.
+ * See doc/skill-gaps.md 2026-06-15 and reference/mobile-wheel-picker.md.
+ * ========================================================================== */
+
+/* ─── Bottom-sheet positioning (override ZK's unreliable inline `top`) ───────
+ * ZK's CalendarPop._syncPosition anchors the sheet with
+ *   top = (zk.ios ? window.innerHeight : jq.innerHeight()) + window.scrollY
+ * then calls `$pp.zk.makeVParent()` to detach the popup to <body>. makeVParent
+ * (via the iOS `_fixedVParent` override) INFLATES that inline `top` by ~18px (an
+ * offset-parent delta). The inflation is only undone by a SECOND `_syncPosition`
+ * (fired from onSize) — which an ICON tap triggers but an INPUT tap does not
+ * (focusing the readonly <input> suppresses the resize). So tapping the input
+ * left the sheet ~18px below the viewport, clipping the OK/Cancel row, while the
+ * icon landed flush. Rather than trust ZK's inline `top`, pin the sheet to the
+ * viewport bottom ourselves: `position:fixed; bottom:0` is immune to BOTH the
+ * makeVParent inflation and a scrolled page (scrollY), and `left/right` centre it
+ * (datebox-touch never sets `left`, so the sheet otherwise hugs x:0). A keyframe
+ * restores the slide-up that ZK's now-overridden translateY transition provided.
+ * !important is required to beat ZK's inline position/top/transform.
+ * See doc/skill-gaps.md 2026-06-15 (follow-up). */
+.z-datebox-popup:has(.z-calendar-wheel-cave),
+.z-timebox-popup:has(.z-timebox-wheel-cave) {
+    position: fixed !important;
+    left: 10px !important;   /* 10px gutters = ZK's innerWidth − 20, centred */
+    right: 10px !important;
+    top: auto !important;
+    bottom: 0 !important;
+    width: auto !important;
+    transform: none !important;
+    animation: zk-wheel-sheet-up var(--zk-motion-duration-medium2) var(--zk-motion-easing-emphasized-decelerate);
+}
+@keyframes zk-wheel-sheet-up {
+    from { transform: translateY(100%); }
+    to   { transform: none; }
+}
+
+/* ─── Bottom-sheet surface (ZK anchors the popup to the viewport bottom) ───── */
+.z-timebox-popup {
+    background-color: var(--zk-color-surface);
+    border: none;
+    border-radius: var(--zk-shape-corner-large);
+    box-shadow: var(--zk-elevation-dialog);
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+/* Centre the wheel content within ZK's full-width sheet instead of letting the
+ * columns hug the left edge of an 800px-wide popup. */
+.z-datebox-popup .z-calendar:has(.z-calendar-wheel-cave) {
+    max-width: 420px;
+    margin: 0 auto;
+}
+.z-timebox-wheel-cave {
+    max-width: 420px;
+    margin: 0 auto;
+}
+
+/* ─── Column layout ─────────────────────────────────────────────────────────
+ * .z-*-wheel-body is the horizontal row of columns; .z-*-wheel-date /
+ * .z-*-wheel-time wraps the columns + the centre selection line. ZK ships these
+ * as legacy `display:box`; restate as flex. */
+.z-calendar-wheel-cave,
+.z-timebox-wheel-cave {
+    position: relative;
+    padding: var(--zk-spacing-3) var(--zk-spacing-4) 0;
+    box-sizing: border-box;
+}
+
+.z-calendar-wheel-body,
+.z-timebox-wheel-body {
+    display: flex;
+    align-items: stretch;
+}
+
+.z-calendar-wheel-date,
+.z-timebox-wheel-time {
+    position: relative;
+    flex: 1;
+    display: flex;
+}
+
+/* ─── Centre selection band ─────────────────────────────────────────────────
+ * ZK's `-line` is a 0-height element pinned at top:50% (z-index:1, behind the
+ * <ul> which is z-index:2). Expand it into a rounded surface-variant band that
+ * fills the centre 40px slot so the selected (centred) row reads as chosen. */
+.z-calendar-wheel-line,
+.z-timebox-wheel-line {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    height: 40px;
+    transform: translateY(-50%);
+    background-color: var(--zk-color-surface-container-high);
+    border-radius: var(--zk-shape-corner-small);
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* ─── A single scroll column ────────────────────────────────────────────────
+ * height = 3 × 40px <li> (see CRITICAL INVARIANT). overflow:hidden clips the
+ * <ul>; the top/bottom rows are faded out so the centre row stands alone. */
+.z-calendar-wheel-list,
+.z-timebox-wheel-list {
+    flex: 1;
+    height: 120px;
+    margin: 0;
+    overflow: hidden;
+    position: relative;
+    /* mask-image establishes a stacking context, so the list must sit ABOVE the
+     * selection band (-line, z-index:1) — otherwise the band paints over the
+     * centred row and it reads as an empty slot. The transparent list background
+     * lets the band show through behind the text. */
+    z-index: 2;
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 30%, #000 70%, transparent 100%);
+            mask-image: linear-gradient(to bottom, transparent 0, #000 30%, #000 70%, transparent 100%);
+}
+
+.z-calendar-wheel-list ul,
+.z-timebox-wheel-list ul {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    position: relative;
+    z-index: 2;
+}
+
+.z-calendar-wheel-list li,
+.z-timebox-wheel-list li {
+    height: 40px;
+    line-height: 40px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-align: center;
+    white-space: nowrap;
+    font-family: var(--zk-typescale-font-family);
+    font-size: var(--zk-typescale-body-large-size);
+    color: var(--zk-color-on-surface-variant);
+    opacity: 0.4;
+    transition: opacity var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+}
+
+/* The centred value in each column (ZK adds -wheel-list-selected to that <li>) */
+.z-calendar-wheel-list li.z-calendar-wheel-list-selected,
+.z-timebox-wheel-list li.z-timebox-wheel-list-selected {
+    opacity: 1;
+    color: var(--zk-color-on-surface);
+    font-weight: var(--zk-typescale-title-medium-weight);
+}
+
+/* ─── Inline time field inside the datebox wheel (datetime formats only) ──── */
+.z-calendar-wheel-body > .z-timebox {
+    align-self: center;
+    margin-left: var(--zk-spacing-3);
+}
+
+/* ─── Footer actions (Set / Cancel) ─────────────────────────────────────────
+ * ZK lays the two buttons out with float:left / float:right; restate as a flex
+ * row of equal MD3 buttons: left = filled primary (confirm), right = tonal. */
+.z-calendar-wheel-footer,
+.z-timebox-wheel-footer {
+    display: flex;
+    gap: var(--zk-spacing-3);
+    height: auto;
+    padding: var(--zk-spacing-3) var(--zk-spacing-4) var(--zk-spacing-4);
+    clear: both;
+    box-sizing: border-box;
+}
+
+.z-calendar-wheel-button,
+.z-timebox-wheel-button {
+    flex: 1;
+    float: none;
+    width: auto;
+    min-height: var(--zk-touch-target-min);
+    padding: 0 var(--zk-spacing-4);
+    border: none;
+    border-radius: var(--zk-shape-corner-full);
+    box-shadow: none;
+    font-family: var(--zk-typescale-font-family);
+    font-size: var(--zk-typescale-label-large-size);
+    font-weight: var(--zk-typescale-label-large-weight);
+    cursor: pointer;
+    transition: background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+}
+
+.z-calendar-wheel-left,
+.z-timebox-wheel-left {
+    background-color: var(--zk-color-primary);
+    color: var(--zk-color-on-primary);
+}
+.z-calendar-wheel-left:active,
+.z-timebox-wheel-left:active {
+    background-color: color-mix(in srgb, var(--zk-color-on-primary) 12%, var(--zk-color-primary));
+}
+
+.z-calendar-wheel-right,
+.z-timebox-wheel-right {
+    background-color: var(--zk-color-surface-container-high);
+    color: var(--zk-color-primary);
+}
+.z-calendar-wheel-right:active,
+.z-timebox-wheel-right:active {
+    background-color: color-mix(in srgb, var(--zk-color-primary) 12%, var(--zk-color-surface-container-high));
+}

@@ -59,6 +59,14 @@ Month/year/decade picker cells are wider (pills, not circles): pin them to `back
 
 Datebox's popup is the same calendar widget rendered inside the dropdown. Styling the calendar styles both standalone and datebox-popup usages.
 
+## Mobile/tablet: this grid is replaced by a wheel picker
+
+Everything above describes the **desktop** grid calendar. On a touch UA the
+datebox does NOT render `.z-calendar-cell` at all — ZK swaps in an iOS-style
+scrolling **wheel picker** (`.z-calendar-wheel-*`) with its own DOM and geometry
+rules. A theme that styles only the grid will ship a broken mobile picker. See
+`reference/mobile-wheel-picker.md`.
+
 ## Bundle
 
 `calendar.css.dsp`.
