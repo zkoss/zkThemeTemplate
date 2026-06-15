@@ -3,7 +3,7 @@
        cols="${['Default','Disabled']}"
        rowsTemplate="selectbox-rows">
     <template name="selectbox-rows">
-        <div sclass="pv-row z-py-2 z-border-bottom">
+        <div sclass="pv-row">
             <div sclass="z-text-sm z-text-secondary">Default</div>
             <div>
                 <selectbox model="${selectModel}">

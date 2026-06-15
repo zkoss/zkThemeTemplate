@@ -42,7 +42,7 @@
        cols="${['Default','Disabled','Readonly','Invalid','Inplace']}"
        rowsTemplate="datebox-rows">
     <template name="datebox-rows">
-        <div sclass="pv-row z-py-2 z-border-bottom">
+        <div sclass="pv-row">
             <div sclass="z-text-sm z-text-secondary">With button</div>
             <div><datebox/></div>
             <div><datebox disabled="true"/></div>
@@ -50,7 +50,7 @@
             <div><datebox sclass="z-datebox-invalid"/></div>
             <div><datebox inplace="true" value="${sampleDate}"/></div>
         </div>
-        <div sclass="pv-row z-py-2 z-border-bottom">
+        <div sclass="pv-row">
             <div sclass="z-text-sm z-text-secondary">No button</div>
             <div><datebox buttonVisible="false"/></div>
             <div><datebox buttonVisible="false" disabled="true"/></div>

@@ -19,7 +19,7 @@
        cols="${['Default','Disabled']}"
        rowsTemplate="searchbox-rows">
     <template name="searchbox-rows">
-        <div sclass="pv-row z-py-2 z-border-bottom">
+        <div sclass="pv-row">
             <div sclass="z-text-sm z-text-secondary">Default</div>
             <div>
                 <searchbox model="${searchModel}" placeholder="Search regions..." autoclose="true">

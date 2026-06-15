@@ -3,7 +3,7 @@
        cols="${['Default','Disabled','Readonly','Invalid','Inplace']}"
        rowsTemplate="timebox-rows">
     <template name="timebox-rows">
-        <div sclass="pv-row z-py-2 z-border-bottom">
+        <div sclass="pv-row">
             <div sclass="z-text-sm z-text-secondary">With button</div>
             <div><timebox/></div>
             <div><timebox disabled="true"/></div>
@@ -11,7 +11,7 @@
             <div><timebox sclass="z-timebox-invalid"/></div>
             <div><timebox inplace="true" value="${sampleTime}"/></div>
         </div>
-        <div sclass="pv-row z-py-2 z-border-bottom">
+        <div sclass="pv-row">
             <div sclass="z-text-sm z-text-secondary">No button</div>
             <div><timebox buttonVisible="false"/></div>
             <div><timebox buttonVisible="false" disabled="true"/></div>

@@ -5,44 +5,44 @@
 <div sclass="z-p-8">
     <div sclass="z-border-bottom z-text-xl z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Rounded Inputs</div>
 
-    <div sclass="z-mb-6 pv-cols-4-wide">
+    <div sclass="z-mb-6 pv-cols z-d-grid z-grid-cols-auto z-overflow-x-auto" style="--zk-cols:4">
         <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">States</div>
-        <div sclass="pv-col-header-row z-pb-1">
+        <div sclass="pv-col-header-row">
             <div/>
             <div sclass="z-text-xs z-fw-semibold z-text-secondary">Default</div>
             <div sclass="z-text-xs z-fw-semibold z-text-secondary">Disabled</div>
             <div sclass="z-text-xs z-fw-semibold z-text-secondary">Readonly</div>
             <div sclass="z-text-xs z-fw-semibold z-text-secondary">Inplace</div>
         </div>
-        <div sclass="pv-row z-py-2 z-border-bottom">
+        <div sclass="pv-row">
             <div sclass="z-text-sm z-text-secondary">Textbox</div>
             <div><textbox mold="rounded" value="Hello"/></div>
             <div><textbox mold="rounded" disabled="true" value="Hello"/></div>
             <div><textbox mold="rounded" readonly="true" value="Hello"/></div>
             <div><textbox mold="rounded" inplace="true" value="Hello"/></div>
         </div>
-        <div sclass="pv-row z-py-2 z-border-bottom">
+        <div sclass="pv-row">
             <div sclass="z-text-sm z-text-secondary">Combobox</div>
             <div><combobox mold="rounded"><comboitem label="Item 1"/></combobox></div>
             <div><combobox mold="rounded" disabled="true"><comboitem label="Item 1"/></combobox></div>
             <div><combobox mold="rounded" readonly="true"><comboitem label="Item 1"/></combobox></div>
             <div><combobox mold="rounded" inplace="true" value="Item 1"><comboitem label="Item 1"/></combobox></div>
         </div>
-        <div sclass="pv-row z-py-2 z-border-bottom">
+        <div sclass="pv-row">
             <div sclass="z-text-sm z-text-secondary">Datebox</div>
             <div><datebox mold="rounded"/></div>
             <div><datebox mold="rounded" disabled="true"/></div>
             <div><datebox mold="rounded" readonly="true"/></div>
             <div><datebox mold="rounded" inplace="true" value="${sampleDate}"/></div>
         </div>
-        <div sclass="pv-row z-py-2 z-border-bottom">
+        <div sclass="pv-row">
             <div sclass="z-text-sm z-text-secondary">Spinner</div>
             <div><spinner mold="rounded"/></div>
             <div><spinner mold="rounded" disabled="true"/></div>
             <div><spinner mold="rounded" readonly="true"/></div>
             <div><spinner mold="rounded" inplace="true" value="5"/></div>
         </div>
-        <div sclass="pv-row z-py-2 z-border-bottom">
+        <div sclass="pv-row">
             <div sclass="z-text-sm z-text-secondary">Bandbox</div>
             <div><bandbox mold="rounded"><bandpopup>Content</bandpopup></bandbox></div>
             <div><bandbox mold="rounded" disabled="true"><bandpopup>Content</bandpopup></bandbox></div>

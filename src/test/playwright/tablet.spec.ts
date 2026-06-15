@@ -99,27 +99,32 @@ test.describe('tablet-no-horizontal-overflow', () => {
 });
 
 // -------------------------------------------------------
-// State-matrix cards must stay usable on a phone — not squeezed.
-// The fluid table (minmax columns) keeps the document within the viewport, but
-// at phone widths it shrinks each combobox cell to ~34px — narrower than the
-// 44px dropdown button, so cells overlap and the preview is useless. Below the
-// `sm` breakpoint the matrix must REFLOW into self-labeled cards that stay a
-// usable width. Guards the responsive `pv.css` card layout (matrix.zul exposes
-// the column labels as --pv-col-N custom properties for the ::before captions).
+// On a phone the State Matrix must SCROLL horizontally, not squeeze its cells.
+// The matrix is a single `z-grid-cols-auto` grid with a `--zk-col-min` floor
+// (140px) inside an `overflow-x:auto` container: on a narrow viewport the columns
+// hold their min width so the grid overflows its OWN box and scrolls, keeping
+// each input usable — while the document never overflows (the scroll is
+// contained), so no phantom vertical scrollbar. Guards that the matrix container
+// is internally scrollable and the inputs stay usable.
 // -------------------------------------------------------
-test.describe('tablet-matrix-card-usable', () => {
-  test('state cards keep a usable width on a phone', async ({ page }) => {
+test.describe('tablet-matrix-scroll-usable', () => {
+  test('matrix scrolls horizontally and inputs stay usable on a phone', async ({ page }) => {
     await page.goto('/combobox.zul');
     await page.waitForLoadState('networkidle');
     await page.setViewportSize({ width: 390, height: 800 });
     await page.waitForTimeout(300);
-    const minCardW = await page.evaluate(() => {
-      // every state cell (skip the first-child variant label of each row)
-      const cells = [...document.querySelectorAll('.pv-matrix .pv-row > div:not(:first-child)')];
-      return Math.min(...cells.map(c => Math.round(c.getBoundingClientRect().width)));
+    const r = await page.evaluate(() => {
+      const grid = document.querySelector('.pv-cols') as HTMLElement;
+      const combos = [...grid.querySelectorAll('.z-combobox')] as HTMLElement[];
+      return {
+        overflow: grid.scrollWidth - grid.clientWidth,
+        minComboW: Math.min(...combos.map(c => Math.round(c.getBoundingClientRect().width))),
+      };
     });
-    // A combobox needs room for the 44px button plus a readable input.
-    expect(minCardW, `narrowest state card is ${minCardW}px`).toBeGreaterThanOrEqual(150);
+    // The matrix overflows its own box (so it scrolls) instead of squeezing.
+    expect(r.overflow, `matrix should overflow→scroll (got ${r.overflow}px)`).toBeGreaterThan(50);
+    // Each combobox keeps a usable width (holds the --zk-col-min floor).
+    expect(r.minComboW, `narrowest combobox is ${r.minComboW}px`).toBeGreaterThanOrEqual(130);
   });
 });
 

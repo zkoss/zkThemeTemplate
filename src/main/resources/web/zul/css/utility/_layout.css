@@ -26,6 +26,21 @@
 .z-grid-cols-6 { grid-template-columns: repeat(6, minmax(0, 1fr)); }
 .z-grid-cols-auto-1fr { grid-template-columns: auto 1fr; }
 
+/* Auto-sized leading column + N equal fill columns — for "label + N values"
+   layouts where the rows must align (state/variant matrices, comparison and
+   spec tables, pricing rows). The first column sizes to its content (`auto`),
+   the rest split the remaining width equally. Set the count per-instance with
+   `style="--zk-cols: 4"` (default 1, i.e. equivalent to .z-grid-cols-auto-1fr).
+   Use this instead of .z-grid-fill when a fixed leading label column and
+   cross-row alignment are required.
+
+   `--zk-col-min` (default 0) is each data column's minimum width. Keep it 0 to
+   let columns shrink freely; set it (e.g. `--zk-col-min: 140px`) and wrap the
+   grid in an `.z-overflow-x-auto` container to get a responsive data table:
+   columns fill when wide, hold their min and scroll horizontally when narrow —
+   instead of squeezing unusably. */
+.z-grid-cols-auto { grid-template-columns: auto repeat(var(--zk-cols, 1), minmax(var(--zk-col-min, 0), 1fr)); }
+
 /* Auto-fit fill — responsive by intrinsic sizing, no breakpoints needed.
    Children flow into as many equal columns as fit, each at least
    `--zk-grid-min` wide (default 180px), wrapping to new rows when they don't.

@@ -3,7 +3,7 @@
        cols="${['Default','Disabled','Readonly','Invalid','Inplace']}"
        rowsTemplate="combobox-rows">
     <template name="combobox-rows">
-        <div sclass="pv-row z-py-2 z-border-bottom">
+        <div sclass="pv-row">
             <div sclass="z-text-sm z-text-secondary">Default</div>
             <div><combobox><comboitem label="Item 1"/><comboitem label="Item 2"/></combobox></div>
             <div><combobox disabled="true"><comboitem label="Item 1"/><comboitem label="Item 2"/></combobox></div>
@@ -11,7 +11,7 @@
             <div><combobox sclass="z-combobox-invalid"><comboitem label="Item 1"/><comboitem label="Item 2"/></combobox></div>
             <div><combobox inplace="true" value="Item 1"><comboitem label="Item 1"/><comboitem label="Item 2"/></combobox></div>
         </div>
-        <div sclass="pv-row z-py-2 z-border-bottom">
+        <div sclass="pv-row">
             <div sclass="z-text-sm z-text-secondary">No button</div>
             <div><combobox buttonVisible="false"><comboitem label="Item 1"/></combobox></div>
             <div><combobox buttonVisible="false" disabled="true"><comboitem label="Item 1"/></combobox></div>

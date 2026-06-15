@@ -46,51 +46,39 @@
 }
 
 /* -------------------------------------------------------
-   Legacy grid layout
+   State-gallery grid (label column + N equal data columns)
    ------------------------------------------------------- */
 
-.pv-col-header-row,
-.pv-row {
-    display: grid;
-    gap: 24px;
+/* The matrix grid itself now comes from the GENERIC framework utilities on the
+   container: `z-d-grid z-grid-cols-auto z-overflow-x-auto` (+ `style="--zk-cols:N"`).
+   pv.css only bridges the preview HTML structure to a single flat grid:
+
+   - Each row is wrapped in a `.pv-row` (and the header in `.pv-col-header-row`)
+     by the 18 content templates. `display: contents` makes those wrappers
+     layout-transparent, so every cell becomes a DIRECT child of the one grid →
+     the `auto` label column is sized once across all rows → columns align with
+     no subgrid (the teaching page works the same way: all cells in one grid).
+   - The section title is the only non-row direct child → span the full width.
+   - Row spacing comes from `row-gap` (the per-row `z-py-2` on `.pv-row` is inert
+     under display:contents).
+   - `--zk-col-min` gives each data column a usable floor so on a phone the grid
+     holds its width and scrolls inside `z-overflow-x-auto` instead of squeezing;
+     the document never overflows, so no phantom vertical scrollbar. */
+.pv-cols {
+    --zk-col-min: 140px;
+    column-gap: 24px;
+    row-gap: 8px;
     align-items: start;
 }
 
-/* Column tracks use minmax(0, …) so the gallery shrinks to fit a narrow
-   (phone/tablet) viewport instead of overflowing horizontally. On a wide
-   desktop the tracks reach their max and render exactly as before; on a narrow
-   viewport they shrink proportionally, keeping document width <= viewport width
-   (a horizontal overflow would otherwise scale the whole mobile page down and
-   spawn a phantom vertical scrollbar). The `min-width: 0` below lets the cell
-   contents (width:100% inputs) follow the shrinking tracks. */
-.pv-cols-1 > .pv-col-header-row,
-.pv-cols-1 > .pv-row { grid-template-columns: minmax(0, 120px) minmax(0, 200px); }
+.pv-cols > .pv-row,
+.pv-cols > .pv-col-header-row { display: contents; }
 
-.pv-cols-2 > .pv-col-header-row,
-.pv-cols-2 > .pv-row { grid-template-columns: minmax(0, 120px) repeat(2, minmax(0, 160px)); }
+.pv-cols > :not(.pv-row):not(.pv-col-header-row) { grid-column: 1 / -1; }
 
-.pv-cols-2-wide > .pv-col-header-row,
-.pv-cols-2-wide > .pv-row { grid-template-columns: minmax(0, 150px) repeat(2, minmax(0, 220px)); }
-
-.pv-cols-2-xl > .pv-col-header-row,
-.pv-cols-2-xl > .pv-row { grid-template-columns: minmax(0, 120px) repeat(2, minmax(0, 260px)); }
-
-.pv-cols-3 > .pv-col-header-row,
-.pv-cols-3 > .pv-row { grid-template-columns: minmax(0, 120px) repeat(3, minmax(0, 160px)); }
-
-.pv-cols-4 > .pv-col-header-row,
-.pv-cols-4 > .pv-row { grid-template-columns: minmax(0, 120px) repeat(4, minmax(0, 160px)); }
-
-.pv-cols-4-wide > .pv-col-header-row,
-.pv-cols-4-wide > .pv-row { grid-template-columns: minmax(0, 150px) repeat(4, minmax(0, 220px)); }
-
-.pv-cols-5 > .pv-col-header-row,
-.pv-cols-5 > .pv-row { grid-template-columns: minmax(0, 120px) repeat(5, minmax(0, 160px)); }
-
-/* Allow cells to shrink below their content's intrinsic width so the fluid
-   tracks above can actually contract on narrow viewports. */
-.pv-col-header-row > *,
-.pv-row > * { min-width: 0; }
+/* Allow cells to shrink within their track (width:100% inputs follow). */
+.pv-row > *,
+.pv-col-header-row > * { min-width: 0; }
 
 /* Make inline-flex ZK components (bandbox, combobox, datebox, …) fill their grid cell */
 .pv-row > div > .z-bandbox,
@@ -106,48 +94,3 @@
 .pv-row > div > .z-decimalbox,
 .pv-row > div > .z-searchbox,
 .pv-row > div > .z-selectbox { width: 100%; }
-
-/* -------------------------------------------------------
-   Phone (< sm 600px) — reflow the State Matrix into self-labeled cards.
-   The fluid table above keeps the document within the viewport, but at phone
-   widths the 5/6 columns squeeze each cell to ~34px (narrower than a 44px
-   dropdown button → overlap). A 2D aligned table can't keep its shared header
-   aligned once columns reflow, so the header is hidden and each cell self-labels
-   from the --pv-col-N custom properties matrix.zul sets on .pv-matrix. Cards
-   then auto-fit at a usable >=150px width and wrap.
-   ------------------------------------------------------- */
-@media (max-width: 599px) {
-    .pv-matrix .pv-col-header-row { display: none; }
-
-    .pv-matrix .pv-row {
-        grid-template-columns: repeat(auto-fit, minmax(min(150px, 100%), 1fr));
-        gap: 16px;
-    }
-
-    /* The row's variant label (first cell) becomes a full-width group heading. */
-    .pv-matrix .pv-row > div:first-child {
-        grid-column: 1 / -1;
-        font-weight: 600;
-        color: var(--zk-color-on-surface);
-        margin-bottom: 0;
-    }
-
-    /* Each state cell becomes a self-labeled card: the column (state) name from
-       the matching --pv-col-N custom property is captioned above the widget. */
-    .pv-matrix .pv-row > div:not(:first-child)::before {
-        content: "";
-        display: block;
-        font-size: 11px;
-        font-weight: 600;
-        color: var(--zk-color-outline);
-        text-transform: uppercase;
-        letter-spacing: 0.08em;
-        margin-bottom: 6px;
-    }
-    .pv-matrix .pv-row > div:nth-child(2)::before { content: var(--pv-col-1); }
-    .pv-matrix .pv-row > div:nth-child(3)::before { content: var(--pv-col-2); }
-    .pv-matrix .pv-row > div:nth-child(4)::before { content: var(--pv-col-3); }
-    .pv-matrix .pv-row > div:nth-child(5)::before { content: var(--pv-col-4); }
-    .pv-matrix .pv-row > div:nth-child(6)::before { content: var(--pv-col-5); }
-    .pv-matrix .pv-row > div:nth-child(7)::before { content: var(--pv-col-6); }
-}
