@@ -2,9 +2,29 @@
 
 const fs = require('fs');
 const path = require('path');
+const CleanCSS = require('clean-css');
 
 const webDir = path.join(__dirname, '..', 'src/main/resources/web');
 const themeDir = path.join(__dirname, '..', 'target/classes/web/marble');
+
+// Dev builds (watch / build:css:dev) stay unminified so hot-swapped CSS is
+// readable in DevTools; the packaged build (build:css) is minified.
+const isDev = process.argv.includes('--dev');
+// level 1 = strip comments + whitespace + safe per-rule optimizations only
+// (no structural merging/reordering → no cascade risk). rebase:false leaves
+// data-URI url("data:image/svg+xml,...") values untouched.
+const cleanCss = new CleanCSS({ level: 1, rebase: false });
+
+function minifyCss(css) {
+    if (isDev || !css) return css;
+    const output = cleanCss.minify(css);
+    if (output.errors.length) {
+        // Never break the build / empty a file on a minifier hiccup.
+        console.warn(`  ⚠ minify failed, writing raw CSS: ${output.errors.join('; ')}`);
+        return css;
+    }
+    return output.styles;
+}
 
 // norm.css.dsp = tokens + base + global styles (loaded first by WCS)
 const normFiles = [
@@ -301,7 +321,7 @@ function readFile(relativePath) {
 function writeDsp(relativePath, content) {
     const fullPath = path.join(themeDir, relativePath);
     fs.mkdirSync(path.dirname(fullPath), { recursive: true });
-    fs.writeFileSync(fullPath, content);
+    fs.writeFileSync(fullPath, minifyCss(content));
 }
 
 function scanCssFiles(dir, base) {
@@ -401,7 +421,7 @@ function build() {
         console.log('  zkmax/css/tablet.css.dsp');
     }
 
-    console.log('\nCSS build complete.');
+    console.log(`\nCSS build complete (${isDev ? 'dev — unminified' : 'minified'}).`);
 }
 
 build();
