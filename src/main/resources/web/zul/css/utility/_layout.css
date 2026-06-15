@@ -26,6 +26,17 @@
 .z-grid-cols-6 { grid-template-columns: repeat(6, minmax(0, 1fr)); }
 .z-grid-cols-auto-1fr { grid-template-columns: auto 1fr; }
 
+/* Auto-fit fill — responsive by intrinsic sizing, no breakpoints needed.
+   Children flow into as many equal columns as fit, each at least
+   `--zk-grid-min` wide (default 180px), wrapping to new rows when they don't.
+   Set `display: grid` (.z-d-grid) and a gap, then override the minimum
+   per-instance with `style="--zk-grid-min: 220px"` when a wider card is wanted.
+   Prefer this over fixed `.z-grid-cols-N` whenever the cards are independent
+   (no cross-row column alignment required). */
+.z-grid-fill {
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--zk-grid-min, 180px), 100%), 1fr));
+}
+
 /* ============================================
    Flex — direction & wrap
    ============================================ */

@@ -139,6 +139,7 @@ Located in `doc/` directory:
 | [window-design-rules.md](doc/window-design-rules.md) | Window mode↔elevation mapping; `border` must not drive shadow |
 | [md3-close-affordance-placement.md](doc/md3-close-affordance-placement.md) | MD3 close/dismiss icon placement (inline trailing vs surface top-corner; full-screen-dialog exception) |
 | [verification-harness-decisions.md](doc/verification-harness-decisions.md) | Decision records: outcome-driven contracts (DR-1), dual-gate VERIFIED (DR-2) |
+| [responsive-design.md](doc/responsive-design.md) | Responsive layout: `z-grid-fill` auto-fit utility + State Matrix mobile card-reflow; why not Bootstrap Grid |
 | [mira/](doc/mira/) | 49 Mira HTML reference pages + MUI stylesheet (index-BnB_Ifri.css) |
 
 ### External CSS Reference

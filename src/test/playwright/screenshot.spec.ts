@@ -362,8 +362,10 @@ test.describe('tablet-isolation', () => {
 // The base reset must use `body { min-height: 100% }`, NOT `100vh`. `100vh` is
 // blind to scrollbars: when any wide content triggers a horizontal scrollbar,
 // a `100vh` body exceeds the now-shorter visible area and spawns a SPURIOUS
-// vertical scrollbar on a page whose content fits. The colorbox preview matrix
-// is fixed-width (~504px min), so a narrow viewport is a reliable trigger.
+// vertical scrollbar on a page whose content fits. We force the horizontal
+// scrollbar with an injected off-document-flow wide spacer (the preview pages
+// are now responsive and no longer overflow), so this guards the reset rule
+// itself rather than any page's layout.
 // See `.claude/skills/zk-component-rules/reference/viewport-height-fill.md`.
 // -------------------------------------------------------
 test.describe('viewport-fill', () => {
@@ -372,6 +374,12 @@ test.describe('viewport-fill', () => {
     await page.goto('/colorbox.zul');
     await page.waitForLoadState('networkidle');
     const m = await page.evaluate(() => {
+      // Force a horizontal scrollbar without adding vertical content height:
+      // an absolutely-positioned 1px-tall spacer wider than the viewport.
+      const spacer = document.createElement('div');
+      spacer.style.cssText = 'position:absolute;top:0;left:0;width:2000px;height:1px;pointer-events:none;';
+      document.body.appendChild(spacer);
+
       const d = document.documentElement;
       const pageEl = document.querySelector('.z-page') as HTMLElement;
       return {

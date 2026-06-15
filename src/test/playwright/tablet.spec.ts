@@ -65,6 +65,65 @@ test.describe('tablet-touch-size', () => {
 });
 
 // -------------------------------------------------------
+// No horizontal overflow — the fixed-width `pv-cols-*` state-gallery grids
+// (matrix.zul) were ~1072px wide, exceeding a phone/tablet viewport. When
+// document content is wider than the viewport the mobile engine widens the
+// layout viewport and scales the whole page down; that same scale makes the
+// layout viewport TALLER than the visible area, producing a phantom *vertical*
+// scrollbar even though no element sticks out. Asserting no horizontal overflow
+// guards the responsive `pv.css` fix (fluid minmax() columns) that keeps the
+// galleries within the viewport width.
+// -------------------------------------------------------
+const overflowPages = [
+  '/combobox.zul',
+  '/datebox.zul',
+  '/timebox.zul',
+  '/spinner.zul',
+  '/textbox.zul',
+];
+
+test.describe('tablet-no-horizontal-overflow', () => {
+  for (const url of overflowPages) {
+    test(`${url} content fits the viewport width`, async ({ page }) => {
+      await page.goto(url);
+      await page.waitForLoadState('networkidle');
+      const { scrollW, clientW } = await page.evaluate(() => {
+        const de = document.scrollingElement || document.documentElement;
+        return { scrollW: de.scrollWidth, clientW: de.clientWidth };
+      });
+      // 1px tolerance for sub-pixel rounding.
+      expect(scrollW, `${url}: document is ${scrollW - clientW}px wider than the viewport`)
+        .toBeLessThanOrEqual(clientW + 1);
+    });
+  }
+});
+
+// -------------------------------------------------------
+// State-matrix cards must stay usable on a phone — not squeezed.
+// The fluid table (minmax columns) keeps the document within the viewport, but
+// at phone widths it shrinks each combobox cell to ~34px — narrower than the
+// 44px dropdown button, so cells overlap and the preview is useless. Below the
+// `sm` breakpoint the matrix must REFLOW into self-labeled cards that stay a
+// usable width. Guards the responsive `pv.css` card layout (matrix.zul exposes
+// the column labels as --pv-col-N custom properties for the ::before captions).
+// -------------------------------------------------------
+test.describe('tablet-matrix-card-usable', () => {
+  test('state cards keep a usable width on a phone', async ({ page }) => {
+    await page.goto('/combobox.zul');
+    await page.waitForLoadState('networkidle');
+    await page.setViewportSize({ width: 390, height: 800 });
+    await page.waitForTimeout(300);
+    const minCardW = await page.evaluate(() => {
+      // every state cell (skip the first-child variant label of each row)
+      const cells = [...document.querySelectorAll('.pv-matrix .pv-row > div:not(:first-child)')];
+      return Math.min(...cells.map(c => Math.round(c.getBoundingClientRect().width)));
+    });
+    // A combobox needs room for the 44px button plus a readable input.
+    expect(minCardW, `narrowest state card is ${minCardW}px`).toBeGreaterThanOrEqual(150);
+  });
+});
+
+// -------------------------------------------------------
 // Visual baselines at tablet size — capture the page wrapper (.z-p-8)
 // -------------------------------------------------------
 type VisualCase = { name: string; url: string };

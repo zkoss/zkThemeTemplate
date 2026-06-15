@@ -1,4 +1,16 @@
-<div sclass="z-mb-6 pv-cols-${arg.cols.size()}${arg.colsSuffix}">
+<zk>
+<!-- Expose each column (state) label as a CSS custom property on the wrapper so
+     the mobile card layout can self-label each cell via ::before — without
+     editing the 18 content row-templates. CSS var inheritance scopes the labels
+     to this matrix instance, so multiple matrices on one page never collide. -->
+<zscript><![CDATA[
+    java.util.List _cols = (java.util.List) arg.get("cols");
+    StringBuilder _sb = new StringBuilder();
+    for (int _i = 0; _i < _cols.size(); _i++)
+        _sb.append("--pv-col-").append(_i + 1).append(":'").append(_cols.get(_i)).append("';");
+    String pvColVars = _sb.toString();
+]]></zscript>
+<div sclass="pv-matrix z-mb-6 pv-cols-${arg.cols.size()}${arg.colsSuffix}" style="${pvColVars}">
     <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">${arg.title}</div>
     <div sclass="pv-col-header-row z-pb-1">
         <div/>
@@ -8,3 +20,4 @@
     </div>
     <apply template="${arg.rowsTemplate}"/>
 </div>
+</zk>
