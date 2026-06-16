@@ -37,6 +37,7 @@
                     <navitem label="Inputs"           selected="@load(vm.currentPage eq '~./inputs.zul')" onClick="@command('navigate', page='~./inputs.zul')" />
                     <navitem label="Inputs (Rounded)" selected="@load(vm.currentPage eq '~./inputs-rounded.zul')" onClick="@command('navigate', page='~./inputs-rounded.zul')" />
                     <navitem label="Intbox"           selected="@load(vm.currentPage eq '~./intbox.zul')" onClick="@command('navigate', page='~./intbox.zul')" />
+                    <navitem label="Label"            selected="@load(vm.currentPage eq '~./label.zul')" onClick="@command('navigate', page='~./label.zul')" />
                     <navitem label="Link"             selected="@load(vm.currentPage eq '~./a.zul')" onClick="@command('navigate', page='~./a.zul')" />
                     <navitem label="Longbox"          selected="@load(vm.currentPage eq '~./longbox.zul')" onClick="@command('navigate', page='~./longbox.zul')" />
                     <navitem label="Multislider"      selected="@load(vm.currentPage eq '~./multislider.zul')" onClick="@command('navigate', page='~./multislider.zul')" />

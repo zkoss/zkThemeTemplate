@@ -307,6 +307,18 @@ When `inplace="true"` and the input is blurred, ZK adds `z-bandbox-inplace` to t
 
 Style `.z-bandbox.z-bandbox-inplace` to look like plain text: transparent border, transparent background, no box-shadow, hidden button. Do not style the child input or button separately — targeting the root state class is sufficient.
 
+### Label ↔ field horizontal alignment (form rows)
+
+A standalone `<label>` placed on the same line as a taller field has **no MD3 spec** — MD3 labels live inside/above the field. The parity target (MUI `FormLabel` / `FormControlLabel` rows, `align-items:center`) is **centre alignment** of the label against the field's control box.
+
+Why a separate `<label>` is needed at all: most ZK inputs (textbox, combobox, datebox, …) have **no `label` attribute**, so a field caption must be an adjacent `<label>` component. Only selection controls (radio, checkbox) carry their own `label` — and those captions are part of the control, centred by the component itself.
+
+Theme stance:
+- The theme does **not** auto-centre a bare `<label>` — alignment is a container concern, never a `.z-label` property (a label must still baseline-align in running text and wrap as a caption). See skill `reference/inline-label-alignment.md`.
+- The flex centre is **required only for selection controls** (radio / checkbox): a label beside a `textbox`/`combobox` already centres in a plain block row, so leave those alone. For a radio/checkbox row, wrap it: `<div sclass="z-d-flex z-align-center z-gap-3">` (verified 0px; `z-gap-*` sets the label↔field gap since flex collapses inter-element whitespace). `<hlayout valign="middle">` / `<hbox valign="middle">` are equivalent ZK-attribute alternatives. Applying the wrapper to an input row is harmless but unnecessary; for a column of mixed rows you may apply it uniformly for visual consistency.
+- A bare `<div>` row is a **baseline context**: it coincidentally centres single-line inputs (textbox via `vertical-align:middle`, combobox via baseline-at-centre) but drops radio/checkbox labels ~4–5px (their baseline is the caption text, below the box centre). The default `<hlayout>` (`valign="top"`) puts every label ~10px high. Neither is a reliable form-row container — the divergence is correct CSS for the mode, not a theme defect.
+- Live demo of both states: `src/test/resources/web/label.zul` (a "Default block row" group showing the radio/checkbox drop, and a "Correct" flex-centred group).
+
 ---
 
 ## 14. Splitter Family (unified spec — user ruling 2026-06-04)

@@ -32,6 +32,11 @@ Do not confuse `.z-hlayout-inner` (hlayout) with the hbox structure (no `-inner`
 - `.z-valign-top` / `.z-valign-middle` / `.z-valign-bottom` — vertical alignment on children
 - `.z-flex` — enables flex expansion on a child
 
+Default `valign` is `top` (`Hlayout.java:29` / `Hlayout.ts:23`); ZK adds `.z-valign-middle` /
+`.z-valign-bottom` to the **root** when set. For aligning a `<label>` beside a taller field,
+this is the deciding factor — see `reference/inline-label-alignment.md` (a bare `<div>` row puts
+the label ~30px high, default hlayout ~10px high, `valign="middle"` centres at 0px).
+
 ## Spacing comes from ZK-injected inline padding — **not** from parent `gap`
 
 ZK's `zul.box.Layout` (`Layout.ts` `setSpacing` / `encloseChildHTML_`) writes an
