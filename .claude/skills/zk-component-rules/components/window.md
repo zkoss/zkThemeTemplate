@@ -26,6 +26,8 @@ The title text in `.z-window-header` is rendered as a **plain text node**, not w
 
 If you need to style only the title (not the icon buttons), you cannot do it with CSS alone — you would need to wrap the title in a span via ZUL/template customization.
 
+**Consequence for wrapping:** because the title is a bare text node, any `white-space: nowrap` / `overflow` / `text-overflow` rule you scope to a caption wrapper (e.g. `.z-caption-content`, `.z-label`) will **not** reach the title-mold text. A long title in a narrow window then wraps to multiple lines and inflates the header height. Put `white-space: nowrap` on `.z-window-header` itself (the flex container) — the anonymous text flex item inherits it; the window's `overflow: hidden` clips any excess. The same applies to `.z-panel-header` (panel title mold). Groupbox's title mold *does* use a wrapper (`.z-groupbox-title-content`), so it is unaffected.
+
 ## Modes
 
 Window has **five runtime modes** set via the `mode` attribute (not `mold`):

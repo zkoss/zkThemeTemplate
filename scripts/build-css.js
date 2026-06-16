@@ -17,13 +17,29 @@ const cleanCss = new CleanCSS({ level: 1, rebase: false });
 
 function minifyCss(css) {
     if (isDev || !css) return css;
-    const output = cleanCss.minify(css);
+    // CleanCSS 5.3.3 has a bug: a bare layer-order statement `@layer a, b;`
+    // (the statement form, no block) is dropped TOGETHER with the single CSS
+    // rule that immediately follows it. In _reset.css that following rule is the
+    // universal `*{box-sizing:border-box}` reset, so the packaged build shipped
+    // without it → headers computed as content-box and min-height stacked on
+    // padding (window 88px, panel 80px, groupbox 73px). Extract the bare @layer
+    // statements before minifying, then re-prepend them so neither the statement
+    // nor its following rule is lost. (Block form `@layer x{…}` is unaffected.)
+    // See tasks/header-height-boxsizing-fix.md and doc/skill-gaps.md.
+    const layerStmts = css.match(/@layer\s+[\w-]+(?:\s*,\s*[\w-]+)*\s*;/g) || [];
+    const body = layerStmts.length ? css.replace(/@layer\s+[\w-]+(?:\s*,\s*[\w-]+)*\s*;/g, '') : css;
+    const output = cleanCss.minify(body);
     if (output.errors.length) {
         // Never break the build / empty a file on a minifier hiccup.
         console.warn(`  ⚠ minify failed, writing raw CSS: ${output.errors.join('; ')}`);
         return css;
     }
-    return output.styles;
+    if (!layerStmts.length) return output.styles;
+    // A bare `@layer <names>;` statement is one of the few things allowed to
+    // precede @import (CSS spec: @import must come first except for @charset and
+    // @layer statements), so prepend at the very top. This avoids parsing the
+    // @import boundary, whose Google-Fonts url() itself contains `;` characters.
+    return layerStmts.join('') + output.styles;
 }
 
 // norm.css.dsp = tokens + base + global styles (loaded first by WCS)

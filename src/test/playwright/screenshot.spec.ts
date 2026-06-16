@@ -493,3 +493,46 @@ test.describe('pv-cols-fill', () => {
     expect(gap, `right gutter is ${gap}px — columns are not filling`).toBeLessThanOrEqual(8);
   });
 });
+
+// -------------------------------------------------------
+// Container header height — the box-sizing-reset regression guard.
+// The universal reset `*{box-sizing:border-box}` lives in `_reset.css` directly
+// after the `@layer …;` order statement. CleanCSS 5.3.3 (build-css.js minify)
+// dropped a bare `@layer a,b;` statement TOGETHER with the rule right after it,
+// so the packaged build shipped without the reset. Headers then computed as
+// content-box, making `min-height` ADD to padding instead of including it:
+// window 56+32→88px, panel 48+32→80px, groupbox 48+24→73px. This guards both
+// the precise cause (box-sizing must be border-box) and the visible symptom
+// (header height must stay within the intended band, not the content-box blow-up).
+// See tasks/header-height-boxsizing-fix.md and doc/skill-gaps.md.
+// -------------------------------------------------------
+test.describe('container-header-height', () => {
+  const cases = [
+    { name: 'window',   url: '/window.zul',   selector: '.z-window-header',   maxHeight: 72 },
+    { name: 'panel',    url: '/panel.zul',     selector: '.z-panel-header',    maxHeight: 68 },
+    { name: 'groupbox', url: '/groupbox.zul',  selector: '.z-groupbox-header', maxHeight: 56 },
+  ];
+
+  for (const { name, url, selector, maxHeight } of cases) {
+    test(`${name} header uses border-box and stays compact`, async ({ page }) => {
+      await page.goto(url);
+      await page.waitForLoadState('networkidle');
+
+      const m = await page.evaluate((sel) => {
+        const headers = [...document.querySelectorAll(sel)] as HTMLElement[];
+        return headers.map(h => ({
+          boxSizing: getComputedStyle(h).boxSizing,
+          height: Math.round(h.getBoundingClientRect().height),
+        }));
+      }, selector);
+
+      expect(m.length, `no ${selector} found on ${url}`).toBeGreaterThan(0);
+      for (const h of m) {
+        // Precise cause: the reset must reach the header.
+        expect(h.boxSizing, `${name} header box-sizing`).toBe('border-box');
+        // Visible symptom: height must stay within the intended band.
+        expect(h.height, `${name} header height is ${h.height}px`).toBeLessThanOrEqual(maxHeight);
+      }
+    });
+  }
+});

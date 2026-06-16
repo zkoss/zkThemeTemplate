@@ -54,6 +54,11 @@
     min-height: 56px;
     position: relative;
     cursor: default;
+    /* Title-mold renders the title as a BARE text node (not a .z-caption child),
+       so the .z-caption-content/.z-label nowrap rules below don't reach it. nowrap
+       on the flex container is inherited by the anonymous text flex item, keeping
+       a long title on one line; the window's overflow:hidden clips any excess. */
+    white-space: nowrap;
     /* Typography for the title text node */
     font-size: var(--zk-typescale-title-medium-size);
     font-weight: var(--zk-typescale-title-medium-weight);
