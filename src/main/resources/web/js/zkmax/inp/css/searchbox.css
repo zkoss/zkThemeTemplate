@@ -177,8 +177,7 @@
     margin: 0;
     padding: 0;
     max-height: 320px;
-    overflow-y: auto;
-    overflow-x: hidden;
+    overflow: hidden auto;
 }
 
 .z-searchbox-item {

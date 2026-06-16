@@ -54,8 +54,7 @@
     align-items: flex-start;
     gap: var(--zk-spacing-3);
     padding: var(--zk-spacing-4) var(--zk-spacing-6);
-    overflow-x: auto;
-    overflow-y: visible;
+    overflow: auto visible;
     /* Do NOT set white-space:nowrap here — message text must wrap */
     margin-bottom: 0;
 }

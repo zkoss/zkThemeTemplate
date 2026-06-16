@@ -49,8 +49,7 @@
     /* `overflow-x: scroll` reserves the horizontal scrollbar so it stays
        visible. ZK JS sizes width inline; we just ensure visible scrollbar
        height via min-height (10px scrollbar + 2px breathing room). */
-    overflow-x: scroll;
-    overflow-y: hidden;
+    overflow: scroll hidden;
     min-height: 12px;
 }
 

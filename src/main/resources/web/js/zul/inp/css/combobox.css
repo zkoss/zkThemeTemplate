@@ -132,15 +132,14 @@
     position: absolute;
     z-index: 1600;
     list-style: none;
-    margin: 4px 0 0 0;
+    margin: 4px 0 0;
     padding: 0;
     background-color: var(--zk-color-surface);
     border-radius: var(--zk-shape-menu);
     box-shadow: var(--zk-elevation-dropdown);
     border: none;
     max-height: 280px;
-    overflow-y: auto;
-    overflow-x: hidden;
+    overflow: hidden auto;
     box-sizing: border-box;
 }
 
@@ -278,7 +277,7 @@
 }
 
 .z-combobox.z-combobox-standard .z-combobox-input {
-    padding: 4px 0 5px 0;
+    padding: 4px 0 5px;
     min-height: 30px;
 }
 

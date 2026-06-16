@@ -171,7 +171,7 @@
 .z-timepicker-popup {
     position: absolute;
     z-index: 1600;
-    margin: 4px 0 0 0;
+    margin: 4px 0 0;
     box-shadow: var(--zk-elevation-dropdown);
     border-radius: var(--zk-shape-menu);
     background-color: var(--zk-color-surface);

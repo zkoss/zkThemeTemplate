@@ -111,8 +111,7 @@
     padding: var(--zk-spacing-1) 0;
     min-width: 160px;
     max-height: 280px;
-    overflow-y: auto;
-    overflow-x: hidden;
+    overflow: hidden auto;
     box-sizing: border-box;
     border-left: 1px solid var(--zk-color-outline-variant);
 }

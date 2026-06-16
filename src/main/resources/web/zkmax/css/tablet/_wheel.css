@@ -41,10 +41,8 @@
 .z-datebox-popup:has(.z-calendar-wheel-cave),
 .z-timebox-popup:has(.z-timebox-wheel-cave) {
     position: fixed !important;
-    left: 10px !important;   /* 10px gutters = ZK's innerWidth − 20, centred */
-    right: 10px !important;
-    top: auto !important;
-    bottom: 0 !important;
+    /* inset: top right bottom left — 10px side gutters (ZK's innerWidth − 20, centred), pinned to bottom */
+    inset: auto 10px 0 !important;
     width: auto !important;
     transform: none !important;
     animation: zk-wheel-sheet-up var(--zk-motion-duration-medium2) var(--zk-motion-easing-emphasized-decelerate);

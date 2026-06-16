@@ -61,8 +61,7 @@
 /* Inner tab list */
 .z-tabs-content {
     display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
+    flex-flow: row nowrap;
     align-items: stretch;
     list-style: none;
     margin: 0;

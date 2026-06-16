@@ -44,12 +44,11 @@
 /* ─── Toolbar content (flex container for children) ─────────────────────── */
 .z-toolbar-content {
     display: flex;
-    flex-direction: row;
+    flex-flow: row wrap;
     align-items: center;
     flex: 1;
     gap: var(--zk-spacing-1);
     padding: 0 var(--zk-spacing-4);
-    flex-wrap: wrap;
     min-height: inherit;
     box-sizing: border-box;
 }
