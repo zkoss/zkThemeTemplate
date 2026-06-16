@@ -536,3 +536,95 @@ test.describe('container-header-height', () => {
     });
   }
 });
+
+// -------------------------------------------------------
+// Errorbox — layout must be position-invariant
+// -------------------------------------------------------
+// Errorbox._fixarrow() (ZK) writes padding to ONLY the beak-facing side of
+// .z-errorbox per pointer direction (padding-left when the beak points left,
+// padding-top when up, etc.). The content is a table-cell so that one-sided
+// padding shifts it, but the icon and close button are absolutely positioned
+// against .z-errorbox and stay put. The theme overrides it with SYMMETRIC
+// padding (`.z-errorbox { padding: var(--zk-errorbox-beak) !important }`, 8px)
+// and adds the same beak back to the icon/close offsets, so:
+//   (a) the icon→text and close→edge gaps stay constant in every direction, and
+//   (b) the beak (pointer -4px + 12px triangle) lands flush at the content edge
+//       — OUTSIDE the content, never intruding into it.
+// Two failure modes this guards: the original one-sided drift (8px), and a
+// `padding:0` over-correction that pulls the beak INSIDE the content.
+test.describe('errorbox-position-invariance', () => {
+  test('icon/close gaps are constant and the beak sits flush outside the content', async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 800 });
+    await page.goto('/errorbox.zul');
+    await page.waitForLoadState('networkidle');
+
+    const boxes = await page.evaluate(async () => {
+      const win = window as any;
+      // Drive validation through the widget API — synthetic typing+Tab is
+      // unreliable in automation (see skills/.../components/errorbox.md).
+      [...document.querySelectorAll('input.z-textbox, input.z-intbox')].forEach(inp => {
+        const w = win.zk.Widget.$(inp);
+        if (w && w.setErrorMessage) w.setErrorMessage('Value is required');
+      });
+      await new Promise(r => setTimeout(r, 500)); // Errorbox.show() defers open() by 50ms + reposition
+
+      return [...document.querySelectorAll('.z-errorbox')]
+        // real widget boxes carry pointer + icon + close; the static State
+        // Gallery examples have only a subset, so require all three.
+        .filter(eb => eb.querySelector('.z-errorbox-pointer')
+                   && eb.querySelector('.z-errorbox-icon')
+                   && eb.querySelector('.z-errorbox-close'))
+        .map(eb => {
+          const content = eb.querySelector('.z-errorbox-content') as HTMLElement;
+          const icon = eb.querySelector('.z-errorbox-icon') as HTMLElement;
+          const close = eb.querySelector('.z-errorbox-close') as HTMLElement;
+          const pointer = eb.querySelector('.z-errorbox-pointer') as HTMLElement;
+          const cr = content.getBoundingClientRect();
+          const ir = icon.getBoundingClientRect();
+          const clr = close.getBoundingClientRect();
+          const pr = pointer.getBoundingClientRect();
+          const dir = (pointer.className.match(/z-errorbox-(up|down|left|right)/) || [, 'none'])[1];
+          // How far the beak's far edge crosses past the content edge it points
+          // at, INTO the content. ~0 = flush outside; >0 = beak sits inside (bug).
+          const intrusion =
+            dir === 'left'  ? pr.right - cr.left :
+            dir === 'right' ? cr.right - pr.left :
+            dir === 'up'    ? pr.bottom - cr.top :
+            dir === 'down'  ? cr.bottom - pr.top : 0;
+          return {
+            dir,
+            iconLeftFromContent: Math.round(ir.left - cr.left),
+            closeRightFromContent: Math.round(cr.right - clr.right),
+            beakIntrusion: Math.round(intrusion),
+          };
+        });
+    });
+
+    expect(boxes.length, 'no live errorboxes were triggered').toBeGreaterThanOrEqual(2);
+
+    for (const b of boxes) {
+      // Icon sits 12px inside the content text edge, close 4px from the content
+      // right edge — in EVERY pointer direction. (Buggy one-sided build: 4px.)
+      expect(b.iconLeftFromContent,
+        `icon→text gap is ${b.iconLeftFromContent}px for a "${b.dir}" pointer (expected ~12): ${JSON.stringify(boxes)}`)
+        .toBeGreaterThanOrEqual(10);
+      expect(b.iconLeftFromContent).toBeLessThanOrEqual(14);
+      expect(b.closeRightFromContent,
+        `close→edge gap is ${b.closeRightFromContent}px for a "${b.dir}" pointer (expected ~4): ${JSON.stringify(boxes)}`)
+        .toBeGreaterThanOrEqual(2);
+      expect(b.closeRightFromContent).toBeLessThanOrEqual(6);
+      // Beak must sit flush OUTSIDE the content, not inside it. (padding:0
+      // over-correction build: intrusion = 8px.)
+      expect(b.beakIntrusion,
+        `beak intrudes ${b.beakIntrusion}px into the content for a "${b.dir}" pointer (must be ≤1): ${JSON.stringify(boxes)}`)
+        .toBeLessThanOrEqual(1);
+    }
+
+    // Invariance: the gaps must not drift between directions.
+    const spread = (xs: number[]) => Math.max(...xs) - Math.min(...xs);
+    expect(spread(boxes.map(b => b.iconLeftFromContent)),
+      `icon→text gap drifts across pointer directions: ${JSON.stringify(boxes)}`).toBeLessThanOrEqual(2);
+    expect(spread(boxes.map(b => b.closeRightFromContent)),
+      `close→edge gap drifts across pointer directions: ${JSON.stringify(boxes)}`).toBeLessThanOrEqual(2);
+  });
+});

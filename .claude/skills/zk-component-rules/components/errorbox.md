@@ -25,6 +25,36 @@ Correct base: keep the pointer `display: block`. With all four `border` sides `t
 
 `_fixarrow` sets the pointer's inline `top/left/right/bottom` (e.g. `bottom:-4px` for a down arrow) and node padding per direction — the theme only supplies `display`, `border` size, and colour.
 
+## `_fixarrow` rewrites the `.z-errorbox` OUTER padding per direction — make it symmetric, don't zero it
+
+On every reposition `Errorbox._fixarrow` runs:
+
+```js
+node.style.padding = '0';
+// then, depending on which side faces the field:
+s.paddingLeft  = `${pw}px`;   // beak points left  (box is to the RIGHT of the field)
+s.paddingRight = `${pw}px`;   // beak points right (box is to the LEFT of the field)
+s.paddingTop   = `${ph}px`;   // beak points up    (box is BELOW the field)
+s.paddingBottom= `${ph}px`;   // beak points down  (box is ABOVE the field)
+```
+
+`pw`/`ph` ≈ 8px (ZK computes `pw = 2 + pointerBorderWidth/2`; with a 6px pointer border that is `2 + 6 = 8`). The padding lands on the **outer `.z-errorbox`** node — the one with `display:table`. Because `.z-errorbox-content` is the `table-cell`, that padding **shifts the content** by 8px on the padded side. But `.z-errorbox-icon` and `.z-errorbox-close` are absolutely positioned against `.z-errorbox` and **don't move**. Net effect: the icon→text gap and close→edge gap drift 8px depending on whether the box landed right/left/above/below the field — so the *same* errorbox looks different in each position (icon 4px from text when the box is on the right, 12px when below — user-visible).
+
+**The padding is load-bearing for the beak — do NOT just zero it.** The pointer is positioned at `left/top:-4px` and the triangle is `2*6 = 12px` wide, so its base sits at `-4 + 12 = 8px` from the box edge. That 8px is exactly `pw`: ZK insets the content by `pw` so the triangle base lands **flush at the content edge**, with the triangle entirely outside. Set `.z-errorbox { padding: 0 }` and the content fills to the box edge while the beak base stays at 8px → the beak ends up **8px INSIDE the content** (visibly wrong — the arrow appears inside the box).
+
+The correct fix keeps the beak room but makes it **symmetric on all four sides**, then re-adds it to the icon/close offsets so they track the (now uniformly inset) content:
+
+```css
+.z-errorbox {
+    --zk-errorbox-beak: 8px;                       /* = ZK's pw/ph = 2 + the 6px pointer border */
+    padding: var(--zk-errorbox-beak) !important;   /* beats ZK's inline one-sided padding */
+}
+.z-errorbox-icon  { left:  calc(var(--zk-spacing-3) + var(--zk-errorbox-beak)); }  /* 12px from content */
+.z-errorbox-close { right: calc(var(--zk-spacing-1) + var(--zk-errorbox-beak)); }  /* 4px from content */
+```
+
+`!important` is required (same reason as the pointer `display`): ZK writes the padding as an **inline** style every reposition, and a normal stylesheet rule loses to inline. The shorthand `padding !important` also overrides ZK's inline `paddingLeft`/`paddingTop`/… longhands. With symmetric padding the content is inset equally in every direction, so the beak lands flush at whichever content edge it points to, and the icon/close keep a constant offset from the content — only the pointer direction differs. The `8px` is coupled to the `6px` pointer border via ZK's `pw = 2 + border` formula; if you change the pointer border, update `--zk-errorbox-beak` to match. Regression guard: `screenshot.spec.ts › errorbox-position-invariance` (asserts both the constant gaps and zero beak intrusion).
+
 ## DOM structure
 
 ```

@@ -17,6 +17,20 @@
     left: 0;
     z-index: 1600;
     display: table;
+    /* Errorbox._fixarrow() (ZK) writes padding to ONLY the beak-facing side of
+       this node on every reposition (padding-left when the beak points left,
+       padding-top when up, …). Because the content is a table-cell, that
+       one-sided padding shifts the content — but the icon and close button are
+       absolutely positioned against this box and stay put, so they drift 8px
+       between positions, and zeroing the padding instead lets the beak fall
+       INSIDE the content. Override it with SYMMETRIC padding on all four sides,
+       equal to ZK's own beak size (pw/ph = 2 + the 6px pointer border = 8px):
+       the content is now inset equally in every direction, the beak (pointer
+       -4px + 12px-wide triangle) lands flush at the content edge on whichever
+       side it points, and the icon/close keep a constant offset from the
+       content (they add the same --zk-errorbox-beak back). */
+    --zk-errorbox-beak: 8px;
+    padding: var(--zk-errorbox-beak) !important;
 }
 
 /* ─── Content box ───────────────────────────────────────────────────────── */
@@ -47,7 +61,9 @@
     height: 14px;
     line-height: 14px;
     top: 50%;
-    left: var(--zk-spacing-3);
+    /* +beak: cancel the symmetric box padding so the icon keeps a 12px gap from
+       the content's left edge in every pointer direction. */
+    left: calc(var(--zk-spacing-3) + var(--zk-errorbox-beak));
     margin-top: -7px;
     color: var(--zk-color-error);
 }
@@ -60,7 +76,9 @@
     padding: 0 1px;
     position: absolute;
     top: 50%;
-    right: var(--zk-spacing-1);
+    /* +beak: cancel the symmetric box padding so the close keeps a 4px gap from
+       the content's right edge in every pointer direction. */
+    right: calc(var(--zk-spacing-1) + var(--zk-errorbox-beak));
     margin-top: -9px;
     cursor: pointer;
     opacity: 0.6;

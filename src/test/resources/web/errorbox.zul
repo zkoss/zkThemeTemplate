@@ -8,26 +8,17 @@
         <div sclass="pv-section-title">Errorbox — State Gallery</div>
 
         <div sclass="pv-state-gallery pv-variant-default">
+            <!-- A real errorbox always carries all three parts: the pointer
+                 beak, the warning icon, and the close button. There is no
+                 "no-arrow" or "no-close" variant, so the gallery shows the one
+                 canonical structure (mirrors zul.inp.Errorbox#redraw). -->
             <div sclass="pv-state-col">
-                <div sclass="pv-state-label">Default</div>
+                <div sclass="pv-state-label">Pointer + icon + close</div>
                 <h:div class="z-errorbox" style="position:relative;width:260px;">
+                    <h:div class="z-errorbox-pointer z-errorbox-down" style="bottom:-4px;left:120px;"/>
+                    <h:i class="z-errorbox-icon z-icon-exclamation-triangle"/>
                     <h:div class="z-errorbox-content">Value is required</h:div>
-                </h:div>
-            </div>
-            <div sclass="pv-state-col">
-                <div sclass="pv-state-label">With arrow (down)</div>
-                <h:div class="z-errorbox" style="position:relative;width:260px;">
-                    <h:div class="z-errorbox-pointer z-errorbox-down"/>
-                    <h:div class="z-errorbox-content">Please enter a valid value</h:div>
-                </h:div>
-            </div>
-            <div sclass="pv-state-col">
-                <div sclass="pv-state-label">Closable</div>
-                <h:div class="z-errorbox" style="position:relative;width:260px;">
-                    <h:div class="z-errorbox-content">
-                        Field cannot be empty
-                        <h:span class="z-errorbox-close">✕</h:span>
-                    </h:div>
+                    <h:div class="z-errorbox-close"><h:i class="z-errorbox-icon z-icon-times"/></h:div>
                 </h:div>
             </div>
         </div>
@@ -50,6 +41,10 @@
                 <intbox placeholder="1–100" constraint="min 1 max 100" width="200px"/>
             </div>
         </div>
+        <div sclass="z-text-xs z-text-secondary z-mt-4 z-mb-2">no empty (full width — errorbox flips to the left of the field)</div>
+        <hlayout hflex="1">
+            <textbox value="" hflex="1" constraint="no empty"/>
+        </hlayout>
     </div>
 </div>
 </zk>
