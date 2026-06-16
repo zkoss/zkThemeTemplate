@@ -76,21 +76,20 @@
 
 .pv-cols > :not(.pv-row):not(.pv-col-header-row) { grid-column: 1 / -1; }
 
-/* Allow cells to shrink within their track (width:100% inputs follow). */
-.pv-row > *,
-.pv-col-header-row > * { min-width: 0; }
+/* Allow the VALUE cells to shrink within their track (so width:100% inputs follow).
+   The first child is the row label on the `auto` column — it must KEEP its
+   min-content floor, otherwise on a phone (where the firm `--zk-col-min` value
+   columns overflow and leave no free space) the `auto` track would collapse to 0
+   and the label text gets clipped/covered. :first-child excludes it. */
+.pv-row > *:not(:first-child),
+.pv-col-header-row > *:not(:first-child) { min-width: 0; }
 
-/* Make inline-flex ZK components (bandbox, combobox, datebox, …) fill their grid cell */
-.pv-row > div > .z-bandbox,
-.pv-row > div > .z-combobox,
-.pv-row > div > .z-datebox,
-.pv-row > div > .z-timebox,
-.pv-row > div > .z-spinner,
-.pv-row > div > .z-doublespinner,
-.pv-row > div > .z-textbox,
-.pv-row > div > .z-intbox,
-.pv-row > div > .z-longbox,
-.pv-row > div > .z-doublebox,
-.pv-row > div > .z-decimalbox,
-.pv-row > div > .z-searchbox,
-.pv-row > div > .z-selectbox { width: 100%; }
+/* Make inline-flex text-input ZK components fill their grid cell. Explicit list
+   (via :is() to share the `.pv-row > div >` prefix) — NOT a `*box` substring
+   match, which would also catch .z-checkbox (a real matrix cell, checkbox.zul)
+   and wrongly stretch it. */
+.pv-row > div > :is(
+    .z-bandbox, .z-combobox, .z-datebox, .z-timebox,
+    .z-spinner, .z-doublespinner, .z-textbox, .z-intbox,
+    .z-longbox, .z-doublebox, .z-decimalbox, .z-searchbox,
+    .z-selectbox) { width: 100%; }

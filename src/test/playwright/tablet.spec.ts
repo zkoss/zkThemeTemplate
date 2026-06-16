@@ -129,6 +129,45 @@ test.describe('tablet-matrix-scroll-usable', () => {
 });
 
 // -------------------------------------------------------
+// On a phone the row-LABEL column must stay readable. The matrix grid is
+// `auto repeat(N, minmax(--zk-col-min, 1fr))`; on a narrow viewport the firm
+// value columns overflow and leave no free space, so the `auto` label track can
+// only grow to its content if the label cell keeps a min-content floor. pv.css
+// applies `min-width:0` to the VALUE cells only (so width:100% inputs shrink) but
+// must NOT zero the first child — else the `auto` track collapses to 0 and the
+// label text is clipped/covered. Guards that exclusion (textbox has long labels
+// like "Placeholder" across 5 columns — the worst case).
+// -------------------------------------------------------
+test.describe('tablet-matrix-label-readable', () => {
+  test('the row-label column keeps its width on a phone (not collapsed to 0)', async ({ page }) => {
+    await page.goto('/textbox.zul');
+    await page.waitForLoadState('networkidle');
+    await page.setViewportSize({ width: 390, height: 800 });
+    await page.waitForTimeout(300);
+    const r = await page.evaluate(() => {
+      const grid = document.querySelector('.pv-cols') as HTMLElement;
+      // first cell of every data row = the label (DOM first child of each .pv-row)
+      const labels = [...grid.querySelectorAll('.pv-row')]
+        .map(row => row.firstElementChild as HTMLElement)
+        .filter(Boolean);
+      const widths = labels.map(l => Math.round(l.getBoundingClientRect().width));
+      return {
+        count: labels.length,
+        minLabelW: widths.length ? Math.min(...widths) : -1,
+        // the widest label's own scrollWidth — if the track collapsed the text
+        // would overflow its box (scrollWidth > clientWidth)
+        clipped: labels.some(l => l.scrollWidth - l.clientWidth > 1),
+      };
+    });
+    expect(r.count, 'label cells found').toBeGreaterThan(0);
+    // the label column must hold a usable width, not collapse toward 0
+    expect(r.minLabelW, `narrowest label cell is ${r.minLabelW}px`).toBeGreaterThanOrEqual(40);
+    // and no label text is clipped inside its own cell
+    expect(r.clipped, 'a label cell clips its own text').toBe(false);
+  });
+});
+
+// -------------------------------------------------------
 // Mobile WHEEL picker — datebox/timebox swap the desktop grid calendar / stepper
 // for an iOS-style scroll wheel (.z-calendar-wheel-* / .z-timebox-wheel-*,
 // rendered by zkmax/touch/{datebox,timebox}-touch.ts) and make the input
