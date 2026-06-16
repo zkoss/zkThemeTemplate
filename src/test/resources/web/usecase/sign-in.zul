@@ -1,8 +1,11 @@
 <?page title="Sign In"?>
 <zk>
 <style src="~./usecase/usecase.css"/>
-<vlayout hflex="1" sclass="z-d-flex z-flex-col z-gap-4 z-p-4 z-bg-surface-low">
+<div hflex="1" vflex="1" sclass="z-d-flex z-flex-col z-gap-4 z-p-4 z-bg-surface-low">
 
+    <!-- Plain <div> root (not <vlayout>): vlayout wraps each child in
+         .z-vlayout-inner, which breaks the z-flex-1 height chain so the card
+         can't vertically center. A div makes the wrapper the real flex item. -->
     <!-- Centered using layout utilities (flex-1 + justify/align center) -->
     <div sclass="z-d-flex z-flex-1 z-justify-center z-align-center">
         <div sclass="z-card" width="360px">
@@ -39,5 +42,5 @@
         </div>
     </div>
 
-</vlayout>
+</div>
 </zk>

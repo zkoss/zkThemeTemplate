@@ -1,4 +1,4 @@
-<?page title="Inventory Table"?>
+<?page title="Inventory List"?>
 <zk>
 <style src="~./usecase/usecase.css"/>
 <vlayout hflex="1" sclass="z-d-flex z-flex-col z-gap-4 z-p-4 z-bg-surface-low">

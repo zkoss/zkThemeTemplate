@@ -3,6 +3,9 @@
 <style src="~./usecase/usecase.css"/>
 <vlayout hflex="1" sclass="z-d-flex z-flex-col z-gap-4 z-p-4 z-bg-surface-low">
 
+  <!-- Centered narrow column so form inputs don't stretch edge-to-edge -->
+  <div width="600px" sclass="z-mx-auto z-d-flex z-flex-col z-gap-4">
+
     <label value="Account Setup" sclass="z-h2"/>
 
     <div sclass="z-card">
@@ -57,6 +60,8 @@
         <button label="Back"/>
         <button label="Next" sclass="z-button-primary z-ms-auto"/>
     </div>
+
+  </div>
 
 </vlayout>
 </zk>

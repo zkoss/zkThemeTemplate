@@ -1,29 +1,22 @@
 <?page title="Support Ticket Inbox"?>
 <zk>
 <style src="~./usecase/usecase.css"/>
-<style>
-.ticket-row { display: flex; flex-direction: column; gap: 2px; padding: 4px 0; }
-.ticket-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; margin-right: 6px; }
-.dot-high { background: var(--zk-color-error); }
-.dot-med  { background: var(--zk-color-warning); }
-.dot-low  { background: var(--zk-color-outline); }
-.msg-bubble { background: var(--zk-color-surface-container-low); border-radius: 12px; padding: 10px 14px; }
-.msg-bubble-me { background: var(--zk-color-primary-container); color: var(--zk-color-on-primary-container); border-radius: 12px; padding: 10px 14px; }
-</style>
-<div hflex="1" sclass="z-gap-4 z-p-4 z-bg-surface-low" vflex="1">
+<div hflex="1" vflex="1" sclass="z-d-flex z-flex-col z-gap-4 z-p-4 z-bg-surface-low">
 
     <label value="Support Tickets" sclass="z-h2"/>
 
-    <hlayout hflex="1" vflex="1" spacing="16px">
+    <!-- Flex row (not hlayout): hlayout children are inline-block, so z-flex-1
+         never fills. A CSS flex row lets the detail pane take the full right width. -->
+    <div sclass="z-d-flex z-flex-row z-gap-4 z-flex-1 z-min-h-0">
 
         <!-- Master list -->
-        <div sclass="z-card z-p-0" width="340px" vflex="1" style="overflow:auto">
+        <div sclass="z-card z-p-0 z-flex-none z-overflow-auto" width="340px">
             <listbox vflex="1" sclass="z-border-0">
                 <listitem selected="true">
                     <listcell>
-                        <div sclass="ticket-row">
-                            <div>
-                                <span sclass="ticket-dot dot-high"/>
+                        <div sclass="z-d-flex z-flex-col z-gap-1 z-py-1">
+                            <div sclass="z-d-flex z-flex-row z-align-center z-gap-2">
+                                <label value="High" sclass="z-chip z-chip-error"/>
                                 <label value="Login fails after password reset" sclass="z-fw-medium"/>
                             </div>
                             <div sclass="z-text-xs z-text-muted">
@@ -35,9 +28,9 @@
                 </listitem>
                 <listitem>
                     <listcell>
-                        <div sclass="ticket-row">
-                            <div>
-                                <span sclass="ticket-dot dot-med"/>
+                        <div sclass="z-d-flex z-flex-col z-gap-1 z-py-1">
+                            <div sclass="z-d-flex z-flex-row z-align-center z-gap-2">
+                                <label value="Med" sclass="z-chip z-chip-warning"/>
                                 <label value="Invoice PDF not downloading"/>
                             </div>
                             <div sclass="z-text-xs z-text-muted">
@@ -49,9 +42,9 @@
                 </listitem>
                 <listitem>
                     <listcell>
-                        <div sclass="ticket-row">
-                            <div>
-                                <span sclass="ticket-dot dot-low"/>
+                        <div sclass="z-d-flex z-flex-col z-gap-1 z-py-1">
+                            <div sclass="z-d-flex z-flex-row z-align-center z-gap-2">
+                                <label value="Low" sclass="z-chip z-chip-neutral"/>
                                 <label value="Feature request: dark mode"/>
                             </div>
                             <div sclass="z-text-xs z-text-muted">
@@ -63,9 +56,9 @@
                 </listitem>
                 <listitem>
                     <listcell>
-                        <div sclass="ticket-row">
-                            <div>
-                                <span sclass="ticket-dot dot-low"/>
+                        <div sclass="z-d-flex z-flex-col z-gap-1 z-py-1">
+                            <div sclass="z-d-flex z-flex-row z-align-center z-gap-2">
+                                <label value="Low" sclass="z-chip z-chip-neutral"/>
                                 <label value="Thanks for the quick fix!"/>
                             </div>
                             <div sclass="z-text-xs z-text-muted">
@@ -78,36 +71,34 @@
             </listbox>
         </div>
 
-        <!-- Detail pane -->
-        <div sclass="z-card z-flex-1 z-min-w-0" vflex="1">
-            <vlayout hflex="1" vflex="1" spacing="12px">
-                <div>
-                    <label value="Login fails after password reset" sclass="z-h4 z-d-block"/>
-                    <div sclass="z-text-xs z-text-muted z-mt-1">
-                        <label value="Dana Lee · dana@example.com"/>
-                        <label value="Open" sclass="z-chip z-chip-info z-ms-2"/>
-                    </div>
+        <!-- Detail pane: z-flex-1 now fills the remaining width -->
+        <div sclass="z-card z-flex-1 z-min-w-0 z-d-flex z-flex-col z-gap-3">
+            <div>
+                <label value="Login fails after password reset" sclass="z-h4 z-d-block"/>
+                <div sclass="z-text-xs z-text-muted z-mt-1">
+                    <label value="Dana Lee · dana@example.com"/>
+                    <label value="Open" sclass="z-chip z-chip-info z-ms-2"/>
                 </div>
+            </div>
 
-                <vlayout hflex="1" vflex="1" spacing="10px" style="overflow:auto">
-                    <div sclass="msg-bubble">
-                        <label value="After resetting my password I get 'invalid credentials' even with the new one." sclass="z-d-block"/>
-                        <label value="Dana · 10:24" sclass="z-text-xs z-text-muted"/>
-                    </div>
-                    <div sclass="msg-bubble-me z-ms-auto" style="max-width:80%">
-                        <label value="Thanks Dana — can you confirm whether you used the link from the latest email?" sclass="z-d-block"/>
-                        <label value="You · 10:31" sclass="z-text-xs"/>
-                    </div>
-                </vlayout>
-
-                <div sclass="z-d-flex z-flex-row z-flex-wrap z-gap-4 z-align-center">
-                    <textbox placeholder="Type a reply…" hflex="1" sclass="z-flex-1 z-min-w-0"/>
-                    <button label="Send" sclass="z-button-primary"/>
+            <div sclass="z-d-flex z-flex-col z-gap-3 z-flex-1 z-min-h-0 z-overflow-auto">
+                <div sclass="z-bg-surface-low z-rounded-md z-p-3">
+                    <label value="After resetting my password I get 'invalid credentials' even with the new one." sclass="z-d-block"/>
+                    <label value="Dana · 10:24" sclass="z-text-xs z-text-muted"/>
                 </div>
-            </vlayout>
+                <div sclass="z-bg-primary-container z-rounded-md z-p-3 z-ms-auto z-w-75">
+                    <label value="Thanks Dana — can you confirm whether you used the link from the latest email?" sclass="z-d-block"/>
+                    <label value="You · 10:31" sclass="z-text-xs"/>
+                </div>
+            </div>
+
+            <div sclass="z-d-flex z-flex-row z-flex-wrap z-gap-4 z-align-center">
+                <textbox placeholder="Type a reply…" hflex="1" sclass="z-flex-1 z-min-w-0"/>
+                <button label="Send" sclass="z-button-primary"/>
+            </div>
         </div>
 
-    </hlayout>
+    </div>
 
 </div>
 </zk>

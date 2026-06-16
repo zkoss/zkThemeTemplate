@@ -11,8 +11,8 @@
             <div sclass="sidebar-brand">Marble</div>
             <navbar orient="vertical">
                 <nav label="Use Cases" open="@load(vm.openNavLabel eq 'Use Cases')">
-                    <navitem label="Inventory Table"      selected="@load(vm.currentPage eq '~./usecase/inventory-table.zul')" onClick="@command('navigate', page='~./usecase/inventory-table.zul')" />
-                    <navitem label="Item Editor"          selected="@load(vm.currentPage eq '~./usecase/item-editor.zul')" onClick="@command('navigate', page='~./usecase/item-editor.zul')" />
+                    <navitem label="Inventory List"       selected="@load(vm.currentPage eq '~./usecase/inventory-table.zul')" onClick="@command('navigate', page='~./usecase/inventory-table.zul')" />
+                    <navitem label="Item Detail"          selected="@load(vm.currentPage eq '~./usecase/item-editor.zul')" onClick="@command('navigate', page='~./usecase/item-editor.zul')" />
                     <navitem label="Support Ticket Inbox" selected="@load(vm.currentPage eq '~./usecase/ticket-inbox.zul')" onClick="@command('navigate', page='~./usecase/ticket-inbox.zul')" />
                     <navitem label="Operations Dashboard" selected="@load(vm.currentPage eq '~./usecase/ops-dashboard.zul')" onClick="@command('navigate', page='~./usecase/ops-dashboard.zul')" />
                     <navitem label="Onboarding Wizard"    selected="@load(vm.currentPage eq '~./usecase/onboarding-wizard.zul')" onClick="@command('navigate', page='~./usecase/onboarding-wizard.zul')" />

@@ -1,18 +1,22 @@
 <?page title="Account Settings"?>
 <zk>
 <style src="~./usecase/usecase.css"/>
-<style>
-.pref-row { display: flex; align-items: center; gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--zk-color-outline-variant); }
-.pref-row:last-child { border-bottom: none; }
-</style>
-<vlayout hflex="1" sclass="z-d-flex z-flex-col z-gap-4 z-p-4 z-bg-surface-low" vflex="1">
+<div hflex="1" sclass="z-d-flex z-flex-col z-p-4 z-bg-surface-low">
+
+  <!-- Centered block with side gutters so it reads as a distinct page,
+       not an extension of the dark left sidebar. -->
+  <div sclass="z-w-75 z-mx-auto z-d-flex z-flex-col z-gap-4">
 
     <label value="Settings" sclass="z-h2"/>
 
-    <hlayout hflex="1" vflex="1" spacing="16px">
+    <!-- Flex row (not hlayout): lets the panel's z-flex-1 actually fill.
+         No ZK vflex on the children — that would flip ZK's flex engine to
+         column and override z-flex-row. CSS align-items:stretch gives the
+         nav card equal height to the panel. -->
+    <div sclass="z-d-flex z-flex-row z-gap-4">
 
         <!-- Sub-nav -->
-        <navbar orient="vertical" sclass="z-card" width="220px" vflex="1">
+        <navbar orient="vertical" sclass="z-card z-flex-none" width="220px">
             <navitem label="Profile" selected="true"/>
             <navitem label="Notifications"/>
             <navitem label="Security"/>
@@ -20,10 +24,10 @@
         </navbar>
 
         <!-- Preference panel -->
-        <div sclass="z-card z-flex-1 z-min-w-0" vflex="1">
+        <div sclass="z-card z-flex-1 z-min-w-0">
             <label value="Notifications" sclass="z-d-block z-text-base z-fw-medium z-text-on-surface z-mb-3"/>
 
-            <div sclass="pref-row">
+            <div sclass="z-d-flex z-align-center z-gap-4 z-py-3 z-border-bottom">
                 <div sclass="z-d-flex z-flex-col z-flex-1 z-min-w-0">
                     <label value="Email alerts" sclass="z-fw-medium"/>
                     <label value="Receive an email when stock runs low" sclass="z-text-xs z-text-muted"/>
@@ -31,7 +35,7 @@
                 <checkbox mold="switch" checked="true"/>
             </div>
 
-            <div sclass="pref-row">
+            <div sclass="z-d-flex z-align-center z-gap-4 z-py-3 z-border-bottom">
                 <div sclass="z-d-flex z-flex-col z-flex-1 z-min-w-0">
                     <label value="Push notifications" sclass="z-fw-medium"/>
                     <label value="Browser push for new support tickets" sclass="z-text-xs z-text-muted"/>
@@ -39,7 +43,7 @@
                 <checkbox mold="switch"/>
             </div>
 
-            <div sclass="pref-row">
+            <div sclass="z-d-flex z-align-center z-gap-4 z-py-3 z-border-bottom">
                 <div sclass="z-d-flex z-flex-col z-flex-1 z-min-w-0">
                     <label value="Digest frequency" sclass="z-fw-medium"/>
                     <label value="How often to send the activity summary" sclass="z-text-xs z-text-muted"/>
@@ -51,7 +55,7 @@
                 </combobox>
             </div>
 
-            <div sclass="pref-row">
+            <div sclass="z-d-flex z-align-center z-gap-4 z-py-3">
                 <div sclass="z-d-flex z-flex-col z-flex-1 z-min-w-0">
                     <label value="Alert volume" sclass="z-fw-medium"/>
                     <label value="Sound level for in-app alerts" sclass="z-text-xs z-text-muted"/>
@@ -65,7 +69,9 @@
             </div>
         </div>
 
-    </hlayout>
+    </div>
 
-</vlayout>
+  </div>
+
+</div>
 </zk>

@@ -1,4 +1,4 @@
-<?page title="Item Editor"?>
+<?page title="Item Detail"?>
 <zk>
 <style src="~./usecase/usecase.css"/>
 <vlayout hflex="1" sclass="z-d-flex z-flex-col z-gap-4 z-p-4 z-bg-surface-low">
@@ -25,8 +25,7 @@
                 <row>
                     <label value="SKU *"/>
                     <hlayout>
-                        <textbox value="" hflex="1" sclass="z-bg-error-container"/>
-                        <label value="SKU is required" sclass="z-text-error z-text-xs z-align-center"/>
+                        <textbox value="" hflex="1" constraint="no empty"/>
                     </hlayout>
                 </row>
                 <row>
