@@ -222,17 +222,23 @@
 
 .z-button-text-primary.z-button   { background-color: transparent; color: var(--zk-color-primary, #376fd0); border: none; }
 .z-button-text-secondary.z-button { background-color: transparent; color: var(--zk-color-secondary, #4db6ac); border: none; }
+.z-button-text-success.z-button   { background-color: transparent; color: var(--zk-color-success, #2e7d32); border: none; }
+.z-button-text-warning.z-button   { background-color: transparent; color: var(--zk-color-warning, #ed6c02); border: none; }
 .z-button-text-error.z-button     { background-color: transparent; color: var(--zk-color-error, #d32f2f); border: none; }
 .z-button-text-info.z-button      { background-color: transparent; color: var(--zk-color-status-info, #0288d1); border: none; }
 
 .z-button-text-primary.z-button::before   { background-color: var(--zk-color-primary); }
 .z-button-text-secondary.z-button::before { background-color: var(--zk-color-secondary, #4db6ac); }
+.z-button-text-success.z-button::before   { background-color: var(--zk-color-success, #2e7d32); }
+.z-button-text-warning.z-button::before   { background-color: var(--zk-color-warning, #ed6c02); }
 .z-button-text-error.z-button::before     { background-color: var(--zk-color-error, #d32f2f); }
 .z-button-text-info.z-button::before      { background-color: var(--zk-color-status-info, #0288d1); }
 
 /* Disabled overrides for text color variants (spec 0,3,0 > 0,2,0 variant rules) */
 .z-button-text-primary.z-button[disabled],
 .z-button-text-secondary.z-button[disabled],
+.z-button-text-success.z-button[disabled],
+.z-button-text-warning.z-button[disabled],
 .z-button-text-error.z-button[disabled],
 .z-button-text-info.z-button[disabled] {
     background-color: transparent;

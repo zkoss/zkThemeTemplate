@@ -114,6 +114,16 @@
             <div><button label="Button" sclass="z-button-text-secondary" disabled="true"/></div>
         </div>
         <div sclass="pv-row">
+            <div sclass="z-text-sm z-text-secondary">Success</div>
+            <div><button label="Button" sclass="z-button-text-success"/></div>
+            <div><button label="Button" sclass="z-button-text-success" disabled="true"/></div>
+        </div>
+        <div sclass="pv-row">
+            <div sclass="z-text-sm z-text-secondary">Warning</div>
+            <div><button label="Button" sclass="z-button-text-warning"/></div>
+            <div><button label="Button" sclass="z-button-text-warning" disabled="true"/></div>
+        </div>
+        <div sclass="pv-row">
             <div sclass="z-text-sm z-text-secondary">Error</div>
             <div><button label="Button" sclass="z-button-text-error"/></div>
             <div><button label="Button" sclass="z-button-text-error" disabled="true"/></div>
