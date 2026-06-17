@@ -12,12 +12,6 @@
     --zk-color-secondary-container: #b2dfdb;
     --zk-color-on-secondary-container: #00251a;
 
-    /* Tertiary */
-    --zk-color-tertiary: #7e73d6;
-    --zk-color-on-tertiary: #ffffff;
-    --zk-color-tertiary-container: #e6dfff;
-    --zk-color-on-tertiary-container: #1a0068;
-
     /* Error */
     --zk-color-error: #d32f2f;
     --zk-color-on-error: #ffffff;

@@ -14,6 +14,5 @@
     --zk-shape-input: var(--zk-shape-corner-extra-small);
     --zk-shape-card: 6px;
     --zk-shape-dialog: var(--zk-shape-corner-extra-small);
-    --zk-shape-chip: var(--zk-shape-corner-small);
     --zk-shape-menu: var(--zk-shape-corner-extra-small);
 }

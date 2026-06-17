@@ -105,7 +105,7 @@
         <div sclass="z-d-flex z-gap-3 z-mb-4">
             <div sclass="z-avatar z-avatar-md" style="background:var(--zk-color-primary)"><label value="HW" sclass="z-fw-bold z-text-base z-text-on-primary"/></div>
             <div sclass="z-avatar z-avatar-md" style="background:var(--zk-color-secondary)"><label value="JL" sclass="z-fw-bold z-text-base z-text-on-secondary"/></div>
-            <div sclass="z-avatar z-avatar-md" style="background:var(--zk-color-tertiary, #7c4dff)"><label value="MK" sclass="z-fw-bold z-text-base" style="color:#fff"/></div>
+            <div sclass="z-avatar z-avatar-md z-bg-warning"><label value="MK" sclass="z-fw-bold z-text-base"/></div>
             <div sclass="z-avatar z-avatar-md" style="background:var(--zk-color-status-success)"><label value="SA" sclass="z-fw-bold z-text-base z-text-on-status"/></div>
         </div>
 

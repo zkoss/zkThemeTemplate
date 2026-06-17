@@ -61,9 +61,4 @@
     --zk-typescale-label-small-weight: 500;
     --zk-typescale-label-small-line-height: 16px;
 
-    /* Utility aliases */
-    --zk-typescale-default-size: var(--zk-typescale-body-medium-size);
-    --zk-typescale-default-weight: var(--zk-typescale-body-medium-weight);
-    --zk-typescale-default-line-height: var(--zk-typescale-body-medium-line-height);
-
 }

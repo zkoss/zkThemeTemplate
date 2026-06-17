@@ -30,9 +30,6 @@
 
     /* Semantic aliases */
     --zk-elevation-card: 0 1px 3px rgba(0, 0, 0, 0.08);
-    --zk-elevation-panel: var(--zk-elevation-1);
     --zk-elevation-dropdown: var(--zk-elevation-2);
     --zk-elevation-dialog: var(--zk-elevation-3);
-    --zk-elevation-drawer: var(--zk-elevation-4);
-    --zk-elevation-window: var(--zk-elevation-3);
 }

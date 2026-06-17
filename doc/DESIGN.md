@@ -128,7 +128,6 @@ Default interactive transition: `250ms cubic-bezier(0.4, 0, 0.2, 1)` (MUI standa
 Tokens:
 - Duration: `--zk-motion-duration-short3` (250ms) for most controls (background-color, box-shadow, border-color).
 - Easing: `--zk-motion-easing-legacy` = `cubic-bezier(0.4, 0, 0.2, 1)`.
-- Preset: `--zk-motion-transition-standard` = 300ms standard easing (use for complex transitions).
 
 ---
 
