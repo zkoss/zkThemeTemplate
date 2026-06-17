@@ -30,6 +30,22 @@ zk-version: 10.2.1-jakarta
 | c13 | `.z-button[disabled]` | opacity | 0.38 |
 | c14 | `.z-button` | box-shadow | elevation level 1 (resting) |
 
+| c15 | `.z-button-secondary.z-button[disabled]` | background-color | `--zk-color-disabled-container` (not the secondary color) |
+| c16 | `.z-button-success.z-button[disabled]` | background-color | `--zk-color-disabled-container` (not the success color) |
+| c17 | `.z-button-warning.z-button[disabled]` | background-color | `--zk-color-disabled-container` (not the warning color) |
+| c18 | `.z-button-error.z-button[disabled]` | background-color | `--zk-color-disabled-container` (not the error color) |
+| c19 | `.z-button-info.z-button[disabled]` | background-color | `--zk-color-disabled-container` (not the info color) |
+| c20 | `.z-button-outlined-secondary.z-button[disabled]` | color | `--zk-color-disabled` (not the secondary color) |
+| c21 | `.z-button-outlined-secondary.z-button[disabled]` | border-color | `--zk-color-disabled-container` (not the secondary color) |
+| c22 | `.z-button-outlined-success.z-button[disabled]` | color | `--zk-color-disabled` |
+| c23 | `.z-button-outlined-error.z-button[disabled]` | color | `--zk-color-disabled` |
+| c24 | `.z-button-outlined-warning.z-button[disabled]` | color | `--zk-color-disabled` |
+| c25 | `.z-button-outlined-info.z-button[disabled]` | color | `--zk-color-disabled` |
+| c26 | `.z-button-text-secondary.z-button[disabled]` | color | `--zk-color-disabled` (not the secondary color) |
+| c27 | `.z-button-text-error.z-button[disabled]` | color | `--zk-color-disabled` |
+| c28 | `.z-button-text-info.z-button[disabled]` | color | `--zk-color-disabled` |
+
 ## States to evaluate
 - [ ] default, hover, focus-visible, active (pressed), disabled
 - [ ] variants if applicable: outlined, text (sclass="z-button-outlined", "z-button-text")
+- [ ] color variants in disabled state: secondary, success, warning, error, info

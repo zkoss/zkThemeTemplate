@@ -163,6 +163,20 @@
 .z-button-dark.z-button::before { background-color: #fff; }
 .z-button-light.z-button::before { background-color: #000; }
 
+/* Disabled overrides for contained color variants (spec 0,3,0 > 0,2,0 variant rules) */
+.z-button-secondary.z-button[disabled],
+.z-button-success.z-button[disabled],
+.z-button-warning.z-button[disabled],
+.z-button-error.z-button[disabled],
+.z-button-info.z-button[disabled],
+.z-button-light.z-button[disabled],
+.z-button-dark.z-button[disabled] {
+    background-color: var(--zk-color-disabled-container);
+    color: var(--zk-color-disabled);
+    border-color: transparent;
+    box-shadow: none;
+}
+
 /* ─── Outlined — color variants ──────────────────────────────────────── */
 .z-button-outlined.z-button {
     background-color: transparent;
@@ -185,6 +199,19 @@
 .z-button-outlined-error.z-button::before     { background-color: var(--zk-color-error, #d32f2f); }
 .z-button-outlined-info.z-button::before      { background-color: var(--zk-color-status-info, #0288d1); }
 
+/* Disabled overrides for outlined color variants (spec 0,3,0 > 0,2,0 variant rules) */
+.z-button-outlined-primary.z-button[disabled],
+.z-button-outlined-secondary.z-button[disabled],
+.z-button-outlined-success.z-button[disabled],
+.z-button-outlined-warning.z-button[disabled],
+.z-button-outlined-error.z-button[disabled],
+.z-button-outlined-info.z-button[disabled] {
+    background-color: transparent;
+    border-color: var(--zk-color-disabled-container);
+    color: var(--zk-color-disabled);
+    box-shadow: none;
+}
+
 /* ─── Text — color variants ──────────────────────────────────────────── */
 .z-button-text.z-button {
     background-color: transparent;
@@ -202,6 +229,17 @@
 .z-button-text-secondary.z-button::before { background-color: var(--zk-color-secondary, #4db6ac); }
 .z-button-text-error.z-button::before     { background-color: var(--zk-color-error, #d32f2f); }
 .z-button-text-info.z-button::before      { background-color: var(--zk-color-status-info, #0288d1); }
+
+/* Disabled overrides for text color variants (spec 0,3,0 > 0,2,0 variant rules) */
+.z-button-text-primary.z-button[disabled],
+.z-button-text-secondary.z-button[disabled],
+.z-button-text-error.z-button[disabled],
+.z-button-text-info.z-button[disabled] {
+    background-color: transparent;
+    border: none;
+    color: var(--zk-color-disabled);
+    box-shadow: none;
+}
 
 /* ─── Sizes ───────────────────────────────────────────────────────────── */
 .z-button-sm.z-button { min-height: 28px; padding: 0 10px; font-size: 12px; }

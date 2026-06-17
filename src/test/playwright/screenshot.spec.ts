@@ -52,6 +52,49 @@ test.describe('button', () => {
       });
     }
   }
+
+  // c15-c19: contained color-variant disabled buttons must use disabled-container bg
+  // --zk-color-disabled-container = rgba(0,0,0,0.12), alpha ≈ 0.12 (variant colors are opaque)
+  test('color-variant-disabled-state', async ({ page }) => {
+    const containedVariants = ['secondary', 'success', 'warning', 'error', 'info'];
+    for (const variant of containedVariants) {
+      const alpha = await page.evaluate((cls) => {
+        const el = document.querySelector(`.z-button-${cls}[disabled]`);
+        if (!el) throw new Error(`No disabled .z-button-${cls} found`);
+        const bg = getComputedStyle(el).backgroundColor;
+        const m = bg.match(/rgba\(\s*[\d.]+\s*,\s*[\d.]+\s*,\s*[\d.]+\s*,\s*([\d.]+)\s*\)/);
+        return m ? parseFloat(m[1]) : 1.0; // no alpha → opaque
+      }, variant);
+      expect(alpha, `${variant} disabled button bg should be semi-transparent (disabled-container), not opaque`).toBeLessThanOrEqual(0.2);
+    }
+
+    // c20-c25: outlined color-variant disabled buttons must use disabled text/border colors
+    // --zk-color-disabled = rgba(0,0,0,0.38), alpha ≈ 0.38 (variant colors are opaque)
+    const outlinedVariants = ['secondary', 'success', 'warning', 'error', 'info'];
+    for (const variant of outlinedVariants) {
+      const alpha = await page.evaluate((cls) => {
+        const el = document.querySelector(`.z-button-outlined-${cls}[disabled]`);
+        if (!el) throw new Error(`No disabled .z-button-outlined-${cls} found`);
+        const color = getComputedStyle(el).color;
+        const m = color.match(/rgba\(\s*[\d.]+\s*,\s*[\d.]+\s*,\s*[\d.]+\s*,\s*([\d.]+)\s*\)/);
+        return m ? parseFloat(m[1]) : 1.0;
+      }, variant);
+      expect(alpha, `outlined-${variant} disabled button color should be semi-transparent (disabled), not opaque`).toBeLessThanOrEqual(0.5);
+    }
+
+    // c26-c28: text color-variant disabled buttons must use disabled text color
+    const textVariants = ['secondary', 'error', 'info'];
+    for (const variant of textVariants) {
+      const alpha = await page.evaluate((cls) => {
+        const el = document.querySelector(`.z-button-text-${cls}[disabled]`);
+        if (!el) throw new Error(`No disabled .z-button-text-${cls} found`);
+        const color = getComputedStyle(el).color;
+        const m = color.match(/rgba\(\s*[\d.]+\s*,\s*[\d.]+\s*,\s*[\d.]+\s*,\s*([\d.]+)\s*\)/);
+        return m ? parseFloat(m[1]) : 1.0;
+      }, variant);
+      expect(alpha, `text-${variant} disabled button color should be semi-transparent (disabled), not opaque`).toBeLessThanOrEqual(0.5);
+    }
+  });
 });
 
 // -------------------------------------------------------
