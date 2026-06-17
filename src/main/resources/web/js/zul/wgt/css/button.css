@@ -149,8 +149,8 @@
 .z-button-secondary.z-button { background-color: var(--zk-color-secondary, #4db6ac); color: #fff; }
 .z-button-success.z-button   { background-color: #2e7d32; color: #fff; }
 .z-button-warning.z-button   { background-color: #ed6c02; color: #fff; }
-.z-button-error.z-button     { background-color: #d32f2f; color: #fff; }
-.z-button-info.z-button      { background-color: #0288d1; color: #fff; }
+.z-button-error.z-button     { background-color: var(--zk-color-error, #d32f2f); color: #fff; }
+.z-button-info.z-button      { background-color: var(--zk-color-status-info, #0288d1); color: #fff; }
 .z-button-light.z-button     { background-color: #f5f5f5; color: #333; border: 1px solid #e0e0e0; }
 .z-button-dark.z-button      { background-color: #212121; color: #fff; }
 
@@ -175,15 +175,15 @@
 .z-button-outlined-secondary.z-button { background-color: transparent; color: var(--zk-color-secondary, #4db6ac); border: 1px solid var(--zk-color-secondary, #4db6ac); }
 .z-button-outlined-success.z-button   { background-color: transparent; color: #2e7d32; border: 1px solid #2e7d32; }
 .z-button-outlined-warning.z-button   { background-color: transparent; color: #ed6c02; border: 1px solid #ed6c02; }
-.z-button-outlined-error.z-button     { background-color: transparent; color: #d32f2f; border: 1px solid #d32f2f; }
-.z-button-outlined-info.z-button      { background-color: transparent; color: #0288d1; border: 1px solid #0288d1; }
+.z-button-outlined-error.z-button     { background-color: transparent; color: var(--zk-color-error, #d32f2f); border: 1px solid var(--zk-color-error, #d32f2f); }
+.z-button-outlined-info.z-button      { background-color: transparent; color: var(--zk-color-status-info, #0288d1); border: 1px solid var(--zk-color-status-info, #0288d1); }
 
 .z-button-outlined-primary.z-button::before   { background-color: var(--zk-color-primary); }
 .z-button-outlined-secondary.z-button::before { background-color: var(--zk-color-secondary, #4db6ac); }
 .z-button-outlined-success.z-button::before   { background-color: #2e7d32; }
 .z-button-outlined-warning.z-button::before   { background-color: #ed6c02; }
-.z-button-outlined-error.z-button::before     { background-color: #d32f2f; }
-.z-button-outlined-info.z-button::before      { background-color: #0288d1; }
+.z-button-outlined-error.z-button::before     { background-color: var(--zk-color-error, #d32f2f); }
+.z-button-outlined-info.z-button::before      { background-color: var(--zk-color-status-info, #0288d1); }
 
 /* ─── Text — color variants ──────────────────────────────────────────── */
 .z-button-text.z-button {
@@ -195,13 +195,13 @@
 
 .z-button-text-primary.z-button   { background-color: transparent; color: var(--zk-color-primary, #376fd0); border: none; }
 .z-button-text-secondary.z-button { background-color: transparent; color: var(--zk-color-secondary, #4db6ac); border: none; }
-.z-button-text-error.z-button     { background-color: transparent; color: #d32f2f; border: none; }
-.z-button-text-info.z-button      { background-color: transparent; color: #0288d1; border: none; }
+.z-button-text-error.z-button     { background-color: transparent; color: var(--zk-color-error, #d32f2f); border: none; }
+.z-button-text-info.z-button      { background-color: transparent; color: var(--zk-color-status-info, #0288d1); border: none; }
 
 .z-button-text-primary.z-button::before   { background-color: var(--zk-color-primary); }
 .z-button-text-secondary.z-button::before { background-color: var(--zk-color-secondary, #4db6ac); }
-.z-button-text-error.z-button::before     { background-color: #d32f2f; }
-.z-button-text-info.z-button::before      { background-color: #0288d1; }
+.z-button-text-error.z-button::before     { background-color: var(--zk-color-error, #d32f2f); }
+.z-button-text-info.z-button::before      { background-color: var(--zk-color-status-info, #0288d1); }
 
 /* ─── Sizes ───────────────────────────────────────────────────────────── */
 .z-button-sm.z-button { min-height: 28px; padding: 0 10px; font-size: 12px; }
@@ -231,11 +231,11 @@
 /* Color variants for icon button */
 .z-button-icon.z-button-primary.z-button   { color: var(--zk-color-primary); }
 .z-button-icon.z-button-secondary.z-button { color: var(--zk-color-secondary, #4db6ac); background-color: transparent; }
-.z-button-icon.z-button-error.z-button     { color: #d32f2f; background-color: transparent; }
+.z-button-icon.z-button-error.z-button     { color: var(--zk-color-error, #d32f2f); background-color: transparent; }
 
 .z-button-icon.z-button-primary.z-button::before   { background-color: var(--zk-color-primary); }
 .z-button-icon.z-button-secondary.z-button::before { background-color: var(--zk-color-secondary, #4db6ac); }
-.z-button-icon.z-button-error.z-button::before     { background-color: #d32f2f; }
+.z-button-icon.z-button-error.z-button::before     { background-color: var(--zk-color-error, #d32f2f); }
 
 /* ─── FAB (Floating Action Button) ───────────────────────────────────── */
 .z-button-fab.z-button {
