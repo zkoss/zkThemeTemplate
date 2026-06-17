@@ -24,6 +24,9 @@
     --zk-color-warning-container: #ffe0b2;
     --zk-color-on-warning-container: #7a3900;
 
+    /* Success (main — filled controls; status-success is the lighter accent) */
+    --zk-color-success: #2e7d32;
+
     /* Surface & Background */
     --zk-color-background: #ffffff;
     --zk-color-on-background: rgba(0, 0, 0, 0.87);

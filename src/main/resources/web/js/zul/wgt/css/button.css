@@ -147,7 +147,7 @@
 /* ─── Contained — color variants ─────────────────────────────────────── */
 /* (default .z-button = primary filled; these add semantic color variants) */
 .z-button-secondary.z-button { background-color: var(--zk-color-secondary, #4db6ac); color: #fff; }
-.z-button-success.z-button   { background-color: #2e7d32; color: #fff; }
+.z-button-success.z-button   { background-color: var(--zk-color-success, #2e7d32); color: #fff; }
 .z-button-warning.z-button   { background-color: #ed6c02; color: #fff; }
 .z-button-error.z-button     { background-color: var(--zk-color-error, #d32f2f); color: #fff; }
 .z-button-info.z-button      { background-color: var(--zk-color-status-info, #0288d1); color: #fff; }
@@ -173,14 +173,14 @@
 
 .z-button-outlined-primary.z-button   { background-color: transparent; color: var(--zk-color-primary, #376fd0); border: 1px solid var(--zk-color-primary, #376fd0); }
 .z-button-outlined-secondary.z-button { background-color: transparent; color: var(--zk-color-secondary, #4db6ac); border: 1px solid var(--zk-color-secondary, #4db6ac); }
-.z-button-outlined-success.z-button   { background-color: transparent; color: #2e7d32; border: 1px solid #2e7d32; }
+.z-button-outlined-success.z-button   { background-color: transparent; color: var(--zk-color-success, #2e7d32); border: 1px solid var(--zk-color-success, #2e7d32); }
 .z-button-outlined-warning.z-button   { background-color: transparent; color: #ed6c02; border: 1px solid #ed6c02; }
 .z-button-outlined-error.z-button     { background-color: transparent; color: var(--zk-color-error, #d32f2f); border: 1px solid var(--zk-color-error, #d32f2f); }
 .z-button-outlined-info.z-button      { background-color: transparent; color: var(--zk-color-status-info, #0288d1); border: 1px solid var(--zk-color-status-info, #0288d1); }
 
 .z-button-outlined-primary.z-button::before   { background-color: var(--zk-color-primary); }
 .z-button-outlined-secondary.z-button::before { background-color: var(--zk-color-secondary, #4db6ac); }
-.z-button-outlined-success.z-button::before   { background-color: #2e7d32; }
+.z-button-outlined-success.z-button::before   { background-color: var(--zk-color-success, #2e7d32); }
 .z-button-outlined-warning.z-button::before   { background-color: #ed6c02; }
 .z-button-outlined-error.z-button::before     { background-color: var(--zk-color-error, #d32f2f); }
 .z-button-outlined-info.z-button::before      { background-color: var(--zk-color-status-info, #0288d1); }
