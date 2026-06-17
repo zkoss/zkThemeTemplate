@@ -86,6 +86,6 @@
 .z-badge-primary   { --zk-badge-color: var(--zk-color-primary, #376fd0); }
 .z-badge-secondary { --zk-badge-color: var(--zk-color-secondary, #4db6ac); }
 .z-badge-error     { --zk-badge-color: var(--zk-color-error, #d32f2f); }
-.z-badge-warning   { --zk-badge-color: var(--zk-color-warning, #f57c00); }
+.z-badge-warning   { --zk-badge-color: var(--zk-color-warning, #ed6c02); }
 .z-badge-success   { --zk-badge-color: var(--zk-color-status-success, #4caf50); }
 .z-badge-info      { --zk-badge-color: var(--zk-color-status-info, #0288d1); }

@@ -19,7 +19,8 @@
     --zk-color-on-error-container: #7f0000;
 
     /* Warning (non-standard MD3, needed for badges) */
-    --zk-color-warning: #f57c00;
+    /* main — filled controls; status-warning is the lighter accent */
+    --zk-color-warning: #ed6c02;
     --zk-color-on-warning: #ffffff;
     --zk-color-warning-container: #ffe0b2;
     --zk-color-on-warning-container: #7a3900;
