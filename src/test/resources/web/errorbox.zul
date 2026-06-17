@@ -16,9 +16,9 @@
                 <div sclass="pv-state-label">Pointer + icon + close</div>
                 <h:div class="z-errorbox" style="position:relative;width:260px;">
                     <h:div class="z-errorbox-pointer z-errorbox-down" style="bottom:-4px;left:120px;"/>
-                    <h:i class="z-errorbox-icon z-icon-exclamation-triangle"/>
+                    <h:i class="z-errorbox-icon z-icon-triangle-alert"/>
                     <h:div class="z-errorbox-content">Value is required</h:div>
-                    <h:div class="z-errorbox-close"><h:i class="z-errorbox-icon z-icon-times"/></h:div>
+                    <h:div class="z-errorbox-close"><h:i class="z-errorbox-icon z-icon-x"/></h:div>
                 </h:div>
             </div>
         </div>
