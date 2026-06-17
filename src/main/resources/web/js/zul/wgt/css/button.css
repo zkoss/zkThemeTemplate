@@ -9,7 +9,7 @@
     overflow: hidden;
     min-height: 36px;
     padding: 6px var(--zk-spacing-4);
-    box-shadow: rgba(50,50,93,0.024) 0px 2px 5px -1px, rgba(0,0,0,0.05) 0px 1px 3px -1px;
+    box-shadow: var(--zk-elevation-resting);
     border: none;
     border-radius: var(--zk-shape-button);
     background-color: var(--zk-color-primary);
