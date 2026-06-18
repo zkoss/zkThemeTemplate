@@ -128,18 +128,6 @@
     animation: z-loading-spin 0.8s linear infinite;
 }
 
-/* Notification/toast */
-.z-notification {
-    background-color: var(--zk-color-inverse-surface);
-    color: var(--zk-color-inverse-on-surface);
-    border-radius: var(--zk-shape-corner-extra-small);
-    padding: var(--zk-spacing-2) var(--zk-spacing-4);
-    font-family: var(--zk-typescale-font-family);
-    font-size: var(--zk-typescale-body-medium-size);
-    box-shadow: var(--zk-elevation-3);
-    max-width: 400px;
-}
-
 /* ZK mask overlay.
    `position: fixed; inset: 0` is enough to cover the viewport, BUT
    zk/utl.ts progressbox() always writes inline `style="left:Xpx;top:Ypx"` on

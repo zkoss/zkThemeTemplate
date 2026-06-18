@@ -12,10 +12,6 @@
     top: 0;
     left: 0;
     display: table;
-    min-height: 48px;
-    padding: var(--zk-spacing-3) var(--zk-spacing-4);
-    border-radius: var(--zk-shape-corner-extra-small);
-    box-shadow: var(--zk-elevation-2);
 }
 
 /* ─── Content box (the visible card) ───────────────────────────────────── */

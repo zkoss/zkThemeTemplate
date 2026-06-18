@@ -671,3 +671,41 @@ test.describe('errorbox-position-invariance', () => {
       `close→edge gap drifts across pointer directions: ${JSON.stringify(boxes)}`).toBeLessThanOrEqual(2);
   });
 });
+
+// -------------------------------------------------------
+// Notification
+// `.z-notification` is a bare layout shell — the visual card (bg, shadow,
+// radius, padding) lives only on `.z-notification-content`. A dead duplicate
+// rule in misc.css once painted the shell with inverse-surface, producing a
+// dark frame around the card and pushing the icon onto the accent stripe.
+// See doc/skill-gaps.md 2026-06-18.
+// -------------------------------------------------------
+test.describe('notification', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto('/notification.zul');
+    await page.waitForLoadState('networkidle');
+  });
+
+  test('shell-is-bare-and-icon-clears-stripe', async ({ page }) => {
+    const m = await page.evaluate(() => {
+      const shell = document.querySelector('.z-notification-info') as HTMLElement;
+      const content = document.querySelector('.z-notification-info .z-notification-content') as HTMLElement;
+      const icon = document.querySelector('.z-notification-info .z-notification-icon') as HTMLElement;
+      const sc = getComputedStyle(shell);
+      const stripe = getComputedStyle(content, '::before');
+      const cr = content.getBoundingClientRect(), ir = icon.getBoundingClientRect();
+      return {
+        shellBg: sc.backgroundColor,
+        shellPaddingLeft: sc.paddingLeft,
+        stripeWidth: parseFloat(stripe.width) || 0,
+        iconLeftFromContent: Math.round(ir.x - cr.x),
+      };
+    });
+    // shell must be transparent — the dark inverse-surface frame is the bug
+    expect(m.shellBg, 'shell .z-notification must be transparent (no dark frame)').toBe('rgba(0, 0, 0, 0)');
+    // no padding on the shell — padding shifts the absolute icon onto the stripe
+    expect(parseFloat(m.shellPaddingLeft), 'shell .z-notification must have no padding-left').toBe(0);
+    // icon must sit clear of the 4px accent stripe, not on top of it
+    expect(m.iconLeftFromContent, `icon must clear the ${m.stripeWidth}px stripe`).toBeGreaterThanOrEqual(8);
+  });
+});

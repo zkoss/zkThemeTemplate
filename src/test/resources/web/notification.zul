@@ -14,19 +14,22 @@
         <div sclass="pv-state-gallery pv-variant-default">
             <div sclass="pv-state-col">
                 <div sclass="pv-state-label">Info</div>
-                <h:div class="z-notification z-notification-info" style="position:relative;width:300px;">
+                <h:div class="z-notification z-notification-info" style="position:relative;">
+                    <h:i class="z-notification-icon z-icon-info-circle"/>
                     <h:div class="z-notification-content">Info notification message</h:div>
                 </h:div>
             </div>
             <div sclass="pv-state-col">
                 <div sclass="pv-state-label">Warning</div>
-                <h:div class="z-notification z-notification-warning" style="position:relative;width:300px;">
+                <h:div class="z-notification z-notification-warning" style="position:relative;">
+                    <h:i class="z-notification-icon z-icon-exclamation-circle"/>
                     <h:div class="z-notification-content">Warning notification message</h:div>
                 </h:div>
             </div>
             <div sclass="pv-state-col">
                 <div sclass="pv-state-label">Error</div>
-                <h:div class="z-notification z-notification-error" style="position:relative;width:300px;">
+                <h:div class="z-notification z-notification-error" style="position:relative;">
+                    <h:i class="z-notification-icon z-icon-times-circle"/>
                     <h:div class="z-notification-content">Error notification message</h:div>
                 </h:div>
             </div>
