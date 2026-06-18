@@ -33,6 +33,7 @@ zk-version: 10.2.1-jakarta
 | c8 | `.z-notification-warning .z-notification-content` | background | **opaque** warning tint, `color-mix(#ed6c02 12%, surface)` — alpha must be 1 |
 | c9 | `.z-notification-error .z-notification-content` | background | **opaque** error tint, `color-mix(#d32f2f 12%, surface)` — alpha must be 1 |
 | c10 | `.z-notification-icon` | size | 20–24px, matching status colour; left edge clears the 4px stripe |
+| c11 | `.z-notification-content` | single-line vertical alignment | message text optically centred within the `min-height:48px` card (`display:flex; align-items:center`) — block layout top-aligns the line and misaligns it with the centered icon; text centre must be within ±1px of the card centre |
 
 ## States to evaluate
 - [ ] info, success, warning, error

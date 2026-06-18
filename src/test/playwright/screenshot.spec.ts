@@ -731,4 +731,24 @@ test.describe('notification', () => {
       expect(alpha, `.z-notification-${type} content background must be opaque (alpha=1), got ${alpha}`).toBe(1);
     }
   });
+
+  // `.z-notification-content` has min-height:48px — taller than a single 13px/1.5
+  // line (~19.5px) plus its 12px top+bottom padding (~43.5px). Block layout flows
+  // the text from the top, leaving the ~4.5px slack at the bottom, so a single
+  // line reads as top-aligned rather than vertically centred against the icon
+  // (which IS centred via top:50%). The text's optical centre must match the
+  // card's centre. See doc/skill-gaps.md 2026-06-18.
+  test('single-line-content-is-vertically-centered', async ({ page }) => {
+    const m = await page.evaluate(() => {
+      const content = document.querySelector('.z-notification-info .z-notification-content') as HTMLElement;
+      const cr = content.getBoundingClientRect();
+      // measure the actual rendered text glyph box, not the padding box
+      const range = document.createRange();
+      range.selectNodeContents(content);
+      const tr = range.getBoundingClientRect();
+      return { contentCenter: cr.y + cr.height / 2, textCenter: tr.y + tr.height / 2 };
+    });
+    const offset = m.textCenter - m.contentCenter;
+    expect(Math.abs(offset), `single-line text off-centre by ${offset.toFixed(2)}px (positive = too low, negative = too high)`).toBeLessThanOrEqual(1);
+  });
 });

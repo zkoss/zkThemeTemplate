@@ -21,6 +21,11 @@
     font-weight: var(--zk-typescale-body-medium-weight);
     width: 288px;
     min-height: 48px;
+    /* center the message vertically: min-height (48px) exceeds a single line's
+       natural height (~43.5px incl. padding), so block layout would top-align
+       the text and leave bottom slack, misaligning it with the centered icon */
+    display: flex;
+    align-items: center;
     padding: var(--zk-spacing-3) var(--zk-spacing-4) var(--zk-spacing-3) 52px;
     position: relative;
     overflow: hidden;

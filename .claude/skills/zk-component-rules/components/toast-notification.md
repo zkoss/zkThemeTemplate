@@ -123,6 +123,29 @@ A static preview gallery sits over the (white) page background, so a translucent
 fill looks fine there — the bug only appears once the overlay covers real
 content. Assert opacity (alpha = 1) directly rather than trusting the gallery.
 
+## Content min-height taller than one line → centre the text explicitly
+
+Both `.z-notification-content` and `.z-toast-content` host the message text
+directly and typically carry a `min-height` (e.g. 48px, an MD3 touch target)
+that **exceeds** a single line's natural height (line-box + top/bottom padding).
+The severity icon is centred (`position:absolute; top:50%`), but block layout
+flows the text from the top, leaving the slack at the bottom — so a single-line
+message reads as top-aligned and misaligned with the icon.
+
+Any theme using a `min-height` larger than its line must centre the content
+explicitly (it cannot rely on padding):
+
+```css
+.z-notification-content, .z-toast-content {
+    display: flex;
+    align-items: center;   /* single line centres; multi-line is unaffected */
+}
+```
+
+(The pointer variant centres differently — `.z-notification-pointer ~ .z-notification-content`
+uses `display:table-cell; vertical-align:middle`, which has higher specificity
+and is left intact.)
+
 ## Bundle
 
 `notification.css.dsp` and `toast.css.dsp`.
