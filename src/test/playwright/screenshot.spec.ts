@@ -708,4 +708,27 @@ test.describe('notification', () => {
     // icon must sit clear of the 4px accent stripe, not on top of it
     expect(m.iconLeftFromContent, `icon must clear the ${m.stripeWidth}px stripe`).toBeGreaterThanOrEqual(8);
   });
+
+  // A notification floats over arbitrary page content (e.g. top_left lands on the
+  // page header). A translucent fill (rgba alpha < 1) lets that content bleed
+  // through, making the header look like it sits ON TOP of the notification.
+  // Every variant's card background must be fully opaque.
+  test('variant-backgrounds-are-opaque', async ({ page }) => {
+    const alphas = await page.evaluate(() => {
+      const types = ['info', 'warning', 'error'];
+      const alphaOf = (s: string) => {
+        const m = s.match(/rgba?\(([^)]+)\)/);
+        if (!m) return 1;
+        const parts = m[1].split(',').map((x) => x.trim());
+        return parts.length === 4 ? parseFloat(parts[3]) : 1;
+      };
+      return types.map((t) => {
+        const c = document.querySelector(`.z-notification-${t} .z-notification-content`) as HTMLElement;
+        return { type: t, alpha: alphaOf(getComputedStyle(c).backgroundColor) };
+      });
+    });
+    for (const { type, alpha } of alphas) {
+      expect(alpha, `.z-notification-${type} content background must be opaque (alpha=1), got ${alpha}`).toBe(1);
+    }
+  });
 });

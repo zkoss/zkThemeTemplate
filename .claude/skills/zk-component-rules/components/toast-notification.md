@@ -92,6 +92,37 @@ Static mockups must replicate the real DOM structure. Without the `.z-notificati
 </div>
 ```
 
+## Transient overlay backgrounds MUST be opaque
+
+Toast and notification are floating overlays positioned over arbitrary page
+content (ZK sets them `position:absolute` with a high inline `z-index`, e.g.
+`1800`). `top_left` / `top_center` etc. routinely land on top of the app header
+or other content.
+
+The card background (`.z-notification-content` / `.z-toast-content`, including
+every severity variant) **must be fully opaque (alpha = 1)**. A translucent fill
+— e.g. `rgba(<status>, 0.12)` — lets the underlying page content bleed through,
+so the overlay reads as if the page is *on top of* it even though its z-index is
+correct. This is theme-independent: any overlay over unknown content needs an
+opaque surface.
+
+To get a tinted-but-opaque variant background, composite the tint over an opaque
+surface instead of using an alpha < 1:
+
+```css
+/* ✗ translucent — page content bleeds through when it floats over real content */
+.z-notification-info .z-notification-content { background-color: rgba(2,136,209,0.12); }
+
+/* ✓ opaque tint — same hue over white, but no bleed-through */
+.z-notification-info .z-notification-content {
+    background-color: color-mix(in srgb, #0288d1 12%, var(--zk-color-surface));
+}
+```
+
+A static preview gallery sits over the (white) page background, so a translucent
+fill looks fine there — the bug only appears once the overlay covers real
+content. Assert opacity (alpha = 1) directly rather than trusting the gallery.
+
 ## Bundle
 
 `notification.css.dsp` and `toast.css.dsp`.
