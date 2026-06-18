@@ -25,6 +25,11 @@ export default defineConfig({
       use: { ...devices['Desktop Chrome'] },
     },
     {
+      name: 'smoke',
+      testMatch: /render-smoke\.spec\.ts/,
+      use: { ...devices['Desktop Chrome'] },
+    },
+    {
       name: 'tablet',
       testMatch: /tablet\.spec\.ts/,
       use: {

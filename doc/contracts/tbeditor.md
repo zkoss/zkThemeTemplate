@@ -77,8 +77,6 @@ The tbeditor renders as a single bordered box with a light surface-variant toolb
 | group separator | `.z-tbeditor-button-group::before` | sep-1 |
 | editor canvas | `.z-tbeditor-editor` | editor-1, editor-2, editor-3, editor-4 |
 | editor placeholder | `.z-tbeditor-editor[contenteditable=true]:empty:not(:focus)::before` | editor-5 |
-| disabled | `.z-tbeditor-disabled .z-tbeditor-button-pane button` | dis-1, dis-2 |
-| disabled border | `.z-tbeditor-disabled .z-tbeditor-box` | dis-3 |
 | fullscreen | `.z-tbeditor-fullscreen` | full-1 |
 | dropdown default | `.z-tbeditor-dropdown` | drop-1, drop-2, drop-3, drop-4, drop-6 |
 | dropdown hover | `.z-tbeditor-dropdown button:hover` | drop-5 |
@@ -87,8 +85,9 @@ The tbeditor renders as a single bordered box with a light surface-variant toolb
 - [ ] default (box border, toolbar background, editor canvas color)
 - [ ] toolbar button hover (primary-tinted background layer)
 - [ ] toolbar button active/toggled (bold, italic, etc. pressed)
-- [ ] disabled (reduced-opacity icons, outline-variant border)
 - [ ] HTML-source mode (editor hidden, textarea shown — `.z-tbeditor-editor-hidden`)
+
+> Not evaluatable: the **disabled** state is **unreachable from ZUL** — `Tbeditor` (zkmax) extends `XulElement` and exposes only `setValue`/`setConfig` (no `setDisabled`), so `disabled="true"` throws an HTTP 500 at compose time. The `dis-1`/`dis-2`/`dis-3` CSS rows above are retained for reference only.
 - [ ] fullscreen (`.z-tbeditor-fullscreen` — elevation-3 shadow, no border)
 - [ ] dropdown open (`.z-tbeditor-dropdown` visible below a button)
 

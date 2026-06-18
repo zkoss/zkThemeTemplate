@@ -83,5 +83,38 @@
             </hlayout>
         </div>
     </div>
+
+    <div sclass="z-mb-6">
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Node State Gallery</div>
+        <div sclass="z-py-3">
+            <div sclass="z-text-xs z-text-secondary z-mb-3">Selected, disabled, non-selectable, and closed branch — static state samples</div>
+            <organigram id="stateOrg">
+                <orgchildren>
+                    <orgitem id="rootItem" label="Root">
+                        <orgchildren>
+                            <orgitem id="selectedItem" label="Selected" selected="true">
+                                <orgchildren>
+                                    <orgitem label="Child A"/>
+                                    <orgitem label="Child B"/>
+                                </orgchildren>
+                            </orgitem>
+                            <orgitem id="disabledItem" label="Disabled" disabled="true">
+                                <orgchildren>
+                                    <orgitem label="Hidden C"/>
+                                </orgchildren>
+                            </orgitem>
+                            <orgitem id="nonSelItem" label="Non-Selectable" selectable="false"/>
+                            <orgitem id="closedItem" label="Collapsed" open="false">
+                                <orgchildren>
+                                    <orgitem label="Hidden D"/>
+                                    <orgitem label="Hidden E"/>
+                                </orgchildren>
+                            </orgitem>
+                        </orgchildren>
+                    </orgitem>
+                </orgchildren>
+            </organigram>
+        </div>
+    </div>
 </div>
 </zk>

@@ -27,5 +27,7 @@ zk-version: 10.2.1-jakarta
 | c10 | `.z-panel-header` | height | ≤ 68px — compact card header; a content-box blow-up reads ~80px. Bare title text must not wrap (`white-space: nowrap`), incl. narrow no-border panels |
 
 ## States to evaluate
-- [ ] default, collapsed, with-shadow, no-border, 3d variant
+- [ ] default, collapsed, with-shadow, no-border
 - [ ] no-title panel (`.z-panel-noheader`): drag-button hidden (c8), body fills full height
+
+> Not applicable: there is **no `3d` panel variant** — ZK `Panel` only registers the `default` mold in `lang.xml` (the `3d` mold belongs to Groupbox). `<panel mold="3d">` throws an HTTP 500 at compose time.

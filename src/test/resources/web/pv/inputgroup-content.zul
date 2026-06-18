@@ -32,6 +32,20 @@
 </div>
 
 <div sclass="z-mb-6">
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Disabled State</div>
+    <div sclass="z-d-flex z-align-start z-flex-wrap z-gap-6 z-py-3">
+        <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+            <div sclass="z-text-xs z-text-secondary">Prefix + disabled textbox</div>
+            <inputgroup>@<textbox disabled="true" value="disabled@example.com"/></inputgroup>
+        </div>
+        <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+            <div sclass="z-text-xs z-text-secondary">Both sides + disabled textbox</div>
+            <inputgroup>$<textbox disabled="true" value="0"/>.00</inputgroup>
+        </div>
+    </div>
+</div>
+
+<div sclass="z-mb-6">
     <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Vertical Orientation</div>
     <div sclass="z-d-flex z-align-start z-flex-wrap z-gap-6 z-py-3">
         <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">

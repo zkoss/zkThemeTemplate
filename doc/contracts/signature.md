@@ -73,7 +73,6 @@ The `.z-signature` root is a bordered container (1px solid `outline`, medium cor
 |-------|----------|--------------|
 | root default | `.z-signature` | r1, r2, r3, r4, r5 |
 | root focus-within | `.z-signature:focus-within` | r6, r7 |
-| root disabled | `.z-signature[disabled]` | dis1, dis2 |
 | toolbar default | `.z-signature-toolbar` | tb1, tb2, tb3, tb4, tb5, tb6, tb7 |
 | toolbar hidden | `.z-signature-toolbar-hide` | tb-hide |
 | tool-button default | `.z-signature-tool-button` | btn1–btn15 |
@@ -91,7 +90,8 @@ The `.z-signature` root is a bordered container (1px solid `outline`, medium cor
 - [ ] tool-button hover
 - [ ] tool-button focus-visible
 - [ ] tool-button active
-- [ ] disabled (root has `[disabled]` attribute — full widget dims)
+
+> Not evaluatable: the **disabled** state is **unreachable from ZUL** — `Signature` (zkmax) extends `XulElement` and defines no `setDisabled`, so `disabled="true"` throws an HTTP 500 at compose time. The `dis1`/`dis2` CSS rows below are retained for reference only (would apply if the `[disabled]` DOM state were ever produced by a client API).
 - [ ] label-present vs label-empty (check `:not(:empty)` margin behavior)
 
 ## T3 wrapper boundary

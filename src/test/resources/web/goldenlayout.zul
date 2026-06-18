@@ -21,5 +21,16 @@
             </goldenlayout>
         </div>
     </div>
+
+    <div sclass="z-mb-6">
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Closable Tabs (closable="true" on all panels)</div>
+        <div sclass="z-py-3">
+            <goldenlayout hflex="1" height="300px" orient="horizontal">
+                <goldenpanel title="Alpha" closable="true">Alpha content</goldenpanel>
+                <goldenpanel title="Beta" closable="true">Beta content</goldenpanel>
+                <goldenpanel title="Gamma" closable="true">Gamma content</goldenpanel>
+            </goldenlayout>
+        </div>
+    </div>
 </div>
 </zk>
