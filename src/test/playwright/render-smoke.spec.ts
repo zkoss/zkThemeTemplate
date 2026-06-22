@@ -1,51 +1,146 @@
 import { test, expect } from '@playwright/test';
 
-// Render smoke test for the preview pages touched by the state-coverage gap-fill
-// work (see doc/state-coverage-audit.md). xmllint only proves a .zul is
-// well-formed XML — it does NOT catch ZK semantic errors such as an unsupported
-// mold or an attribute with no setter, which surface only at compose time as an
-// HTTP 500. This suite loads every changed page and asserts it actually compiles
-// and renders.
+// Render smoke test: every preview page must return HTTP 200 and compose without
+// error. xmllint only proves a .zul is well-formed XML — it does NOT catch ZK
+// semantic errors such as an unsupported mold or an attribute with no setter,
+// which surface only at compose time as an HTTP 500.
+//
+// Most pages share the `.z-p-8` page wrapper; `preview.zul` is a special SPA
+// listing page (no z-p-8) so it falls back to a `body` visible check.
 //
 // Requires the preview app running on http://localhost:8080
 //   withjdk.sh 17 mvn test exec:java@preview-app
 
 const PAGES = [
-  '/notification.zul',
+  '/a.zul',
+  '/absolutelayout.zul',
+  '/anchorlayout.zul',
+  '/anchornav.zul',
+  '/area.zul',
+  '/audio.zul',
+  '/bandbox.zul',
+  '/barcode.zul',
+  '/barcodescanner.zul',
+  '/biglistbox.zul',
+  '/borderlayout.zul',
+  '/button.zul',
+  '/calendar.zul',
+  '/camera.zul',
+  '/captcha.zul',
   '/caption.zul',
+  '/cardlayout.zul',
+  '/cascader.zul',
+  '/checkbox.zul',
+  '/chosenbox.zul',
+  '/coachmark.zul',
+  '/colorbox.zul',
+  '/columnlayout.zul',
+  '/combobox.zul',
+  '/combobutton.zul',
+  '/cropper.zul',
+  '/datebox.zul',
+  '/decimalbox.zul',
+  '/doublebox.zul',
+  '/doublespinner.zul',
+  '/drawer.zul',
+  '/dropupload.zul',
+  '/error.zul',
+  '/errorbox.zul',
+  '/fileupload.zul',
+  '/fisheyebar.zul',
   '/goldenlayout.zul',
+  '/grid-detail.zul',
+  '/grid-grouping.zul',
+  '/grid-header.zul',
+  '/grid-livegrouping.zul',
+  '/grid-paging.zul',
+  '/grid-utilities.zul',
+  '/grid.zul',
+  '/groupbox.zul',
   '/hlayout.zul',
+  '/html.zul',
+  '/iframe.zul',
+  '/imagemap.zul',
+  '/inputgroup.zul',
+  '/inputs-rounded.zul',
+  '/inputs.zul',
+  '/intbox.zul',
+  '/label.zul',
+  '/linelayout.zul',
+  '/listbox-grouping.zul',
+  '/listbox-header.zul',
+  '/listbox.zul',
+  '/loading.zul',
+  '/loadingbar.zul',
+  '/longbox.zul',
+  '/menubar.zul',
+  '/messagebox.zul',
+  '/multislider.zul',
+  '/navbar.zul',
+  '/notification.zul',
   '/organigram.zul',
+  '/overview.zul',
   '/paging.zul',
   '/panel.zul',
+  '/pdfviewer.zul',
+  '/popup.zul',
   '/portallayout.zul',
+  '/preview.zul',
+  '/progressmeter.zul',
+  '/radiogroup.zul',
+  '/rangeslider.zul',
+  '/rating.zul',
+  '/rowlayout.zul',
+  '/scrollbar.zul',
+  '/scrollview.zul',
+  '/searchbox.zul',
+  '/selectbox.zul',
+  '/separator.zul',
   '/signature.zul',
+  '/slider.zul',
+  '/space.zul',
+  '/spinner.zul',
+  '/splitlayout.zul',
+  '/splitter.zul',
   '/stepbar.zul',
+  '/tabbox-misc.zul',
+  '/tabbox.zul',
+  '/tablelayout.zul',
   '/tbeditor.zul',
+  '/textbox.zul',
+  '/timebox.zul',
+  '/timepicker.zul',
+  '/toast.zul',
+  '/toolbar.zul',
+  '/tree-header.zul',
   '/tree.zul',
+  '/video.zul',
   '/vlayout.zul',
-  '/inputgroup.zul',
+  '/window.zul',
 ];
 
-test.describe('state-coverage render smoke', () => {
+// Pages that don't use the standard .z-p-8 wrapper — check body instead.
+const NO_WRAPPER = new Set(['/preview.zul']);
+
+test.describe('render smoke — all preview pages', () => {
   for (const path of PAGES) {
     test(`renders ${path}`, async ({ page }) => {
       const resp = await page.goto(path, { waitUntil: 'networkidle' });
 
-      // 1. The initial GET must not be a server error (an unsupported
-      //    attribute/mold makes ZK return HTTP 500 here).
       expect(resp, `no response for ${path}`).toBeTruthy();
       expect(
         resp!.status(),
         `${path} returned HTTP ${resp!.status()} — page failed to compile`
       ).toBe(200);
 
-      // 2. ZK must have actually composed the page (the .z-p-8 wrapper is the
-      //    common root of every changed preview page). A blank/error body fails.
-      await expect(
-        page.locator('.z-p-8').first(),
-        `${path} did not render the .z-p-8 page wrapper`
-      ).toBeVisible();
+      if (NO_WRAPPER.has(path)) {
+        await expect(page.locator('body'), `${path} body not visible`).toBeVisible();
+      } else {
+        await expect(
+          page.locator('.z-p-8').first(),
+          `${path} did not render the .z-p-8 page wrapper`
+        ).toBeVisible();
+      }
     });
   }
 });
