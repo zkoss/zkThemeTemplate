@@ -7,7 +7,7 @@
     <div sclass="z-mb-6">
         <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Anchor-based Sizing</div>
         <div sclass="z-py-3">
-            <anchorlayout id="al" style="height:480px; overflow:auto; display:block;">
+            <anchorlayout id="al">
                 <anchorchildren height="200px" anchor="-100">
                     <window title="win1" border="normal" height="100%">
                         height="200px" anchor="-100" (width = parent - 100)
