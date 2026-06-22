@@ -131,7 +131,7 @@
 .z-notification-info .z-notification-content {
     /* opaque tint — a floating notification overlays arbitrary page content,
        so the fill must not be translucent or that content bleeds through */
-    background-color: color-mix(in srgb, #0288d1 12%, var(--zk-color-surface));
+    background-color: color-mix(in srgb, var(--zk-color-status-info) 12%, var(--zk-color-surface));
     color: var(--zk-color-on-surface);
 }
 .z-notification-info .z-notification-content::before { background-color: var(--zk-color-status-info); }
@@ -144,7 +144,7 @@
 .z-notification-warning .z-notification-icon          { color: var(--zk-color-status-warning); }
 .z-notification-warning .z-notification-close > .z-notification-icon { color: var(--zk-color-on-surface); }
 .z-notification-warning .z-notification-content {
-    background-color: color-mix(in srgb, #ed6c02 12%, var(--zk-color-surface));
+    background-color: color-mix(in srgb, var(--zk-color-warning) 12%, var(--zk-color-surface));
     color: var(--zk-color-on-surface);
 }
 .z-notification-warning .z-notification-content::before { background-color: var(--zk-color-status-warning); }
@@ -157,7 +157,7 @@
 .z-notification-error .z-notification-icon          { color: var(--zk-color-status-error); }
 .z-notification-error .z-notification-close > .z-notification-icon { color: var(--zk-color-on-surface); }
 .z-notification-error .z-notification-content {
-    background-color: color-mix(in srgb, #d32f2f 12%, var(--zk-color-surface));
+    background-color: color-mix(in srgb, var(--zk-color-error) 12%, var(--zk-color-surface));
     color: var(--zk-color-on-surface);
 }
 .z-notification-error .z-notification-content::before { background-color: var(--zk-color-status-error); }
