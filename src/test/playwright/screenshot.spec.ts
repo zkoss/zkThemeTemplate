@@ -752,3 +752,116 @@ test.describe('notification', () => {
     expect(Math.abs(offset), `single-line text off-centre by ${offset.toFixed(2)}px (positive = too low, negative = too high)`).toBeLessThanOrEqual(1);
   });
 });
+
+// -------------------------------------------------------
+// Linelayout
+// -------------------------------------------------------
+// Each lineitem's content (a button) is moved out of the cave into the
+// .z-linelayout-last column at bind_(). For the timeline to read correctly the
+// content slots must (a) line up along the timeline axis with their cave points
+// and (b) sit adjacent to the connector line. Both depend on the first/last
+// CONTENT columns carrying the per-orientation flex-direction (column in vertical)
+// and align-items (flex-start on last). The Marble rewrite set flex-direction only
+// on the cave, so the content column defaulted to `row` and all buttons collapsed
+// to one vertical position. See doc/skill-gaps.md 2026-06-22 and contract M7.
+test.describe('linelayout', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto('/linelayout.zul');
+    await page.waitForLoadState('networkidle');
+    await page.waitForSelector('.z-linelayout-last .z-button, .z-linelayout-last button');
+  });
+
+  test('content-aligns-with-points', async ({ page }) => {
+    const m = await page.evaluate(() => {
+      const cy = (el: Element) => { const r = el.getBoundingClientRect(); return r.y + r.height / 2; };
+      // Scope to the first linelayout (the model-driven vertical timeline: 4 items,
+      // each a single button in the default last area). The page now hosts several
+      // linelayouts demonstrating other attributes; document-wide selectors would
+      // mix their points/buttons together.
+      const root = document.querySelector('.z-linelayout')!;
+      const points = [...root.querySelectorAll('.z-linelayout-cave .z-lineitem-point')].map(cy);
+      const lastRight = root.querySelector('.z-linelayout-last')!.getBoundingClientRect().right;
+      const btns = [...root.querySelectorAll('.z-linelayout-last .z-button, .z-linelayout-last button')]
+        .map((el) => { const r = el.getBoundingClientRect(); return { cy: r.y + r.height / 2, left: r.x, right: r.right }; });
+      const cave = root.querySelector('.z-linelayout-cave')!.getBoundingClientRect();
+      return { points, btns, caveRight: cave.x + cave.width, lastRight };
+    });
+
+    expect(m.btns.length, 'expected 4 timeline buttons').toBe(4);
+    expect(m.points.length, 'expected 4 cave points').toBe(4);
+
+    // (a) buttons must occupy distinct vertical positions — not all collapsed to one
+    const distinctY = new Set(m.btns.map((b) => Math.round(b.cy))).size;
+    expect(distinctY, 'buttons must spread vertically along the timeline, not collapse to one row').toBeGreaterThanOrEqual(m.btns.length);
+
+    // (b) each button's vertical centre must match its corresponding point's (±4px)
+    m.btns.forEach((b, i) => {
+      const d = b.cy - m.points[i];
+      expect(Math.abs(d), `button[${i}] cy=${b.cy.toFixed(0)} vs point cy=${m.points[i].toFixed(0)} (off ${d.toFixed(1)}px)`).toBeLessThanOrEqual(4);
+    });
+
+    // (c) each button must hug the cave (adjacent to the connector line), not float mid-column
+    m.btns.forEach((b, i) => {
+      const gap = b.left - m.caveRight;
+      expect(gap, `button[${i}] must sit adjacent to the cave (left edge ${gap.toFixed(0)}px from cave, expected ≤16)`).toBeLessThanOrEqual(16);
+    });
+
+    // (d) no button may be clipped by the column's overflow:hidden — the timeline
+    // must be wide enough that each button renders in full (see skill-gaps 2026-06-22).
+    m.btns.forEach((b, i) => {
+      const overflow = b.right - m.lastRight;
+      expect(overflow, `button[${i}] is clipped: right edge overflows the last column by ${overflow.toFixed(0)}px`).toBeLessThanOrEqual(1);
+    });
+  });
+
+  // Icon (pointIconSclass) and image (pointImageSrc) content must be both
+  // vertically and horizontally centred in the point circle. The Marble rewrite
+  // gave .z-lineitem-point-inner `width/height:inherit` (→ a 24px box overflowing
+  // the 20px bordered interior, offsetting content +2/+2px from the point centre)
+  // and left `background-position` at the default `0% 0%` (image anchored
+  // top-left). See doc/skill-gaps.md 2026-06-22 and contract M8/pt10-pt13c.
+  test('point-content-centered', async ({ page }) => {
+    const m = await page.evaluate(() => {
+      const box = (el: Element) => {
+        const r = el.getBoundingClientRect();
+        return { cx: r.x + r.width / 2, cy: r.y + r.height / 2 };
+      };
+      const measure = (el: Element) => {
+        const point = el.closest('.z-lineitem-point')!;
+        const ic = box(el), pc = box(point);
+        const cs = getComputedStyle(el);
+        return {
+          dx: ic.cx - pc.cx, dy: ic.cy - pc.cy,
+          display: cs.display, alignItems: cs.alignItems, justifyContent: cs.justifyContent,
+          bgPos: cs.backgroundPosition,
+        };
+      };
+      const inners = [...document.querySelectorAll('.z-lineitem-point-inner')];
+      const iconInner = inners.find((el) => /\bz-icon-/.test(el.className));
+      const imageInner = inners.find((el) => /url\(.*(earth|\.png|\.jpg|\.gif|\.svg)/i.test(getComputedStyle(el).backgroundImage)
+        && !el.className.includes('z-icon-')
+        && !/data:image\/gif/.test(getComputedStyle(el).backgroundImage));
+      return {
+        icon: iconInner ? measure(iconInner) : null,
+        image: imageInner ? measure(imageInner) : null,
+      };
+    });
+
+    // ── Icon point ──────────────────────────────────────────────────────
+    expect(m.icon, 'expected an icon point (pointIconSclass) on the page').not.toBeNull();
+    // inner holder centred within the circle (no inherit-overflow offset)
+    expect(Math.abs(m.icon!.dx), `icon inner off-centre horizontally by ${m.icon!.dx.toFixed(2)}px`).toBeLessThanOrEqual(1);
+    expect(Math.abs(m.icon!.dy), `icon inner off-centre vertically by ${m.icon!.dy.toFixed(2)}px`).toBeLessThanOrEqual(1);
+    // flex centring guarantees the 12×12 ::before glyph sits at the circle centre
+    expect(m.icon!.display, 'icon inner must flex-centre its glyph').toBe('flex');
+    expect(m.icon!.alignItems).toBe('center');
+    expect(m.icon!.justifyContent).toBe('center');
+
+    // ── Image point ─────────────────────────────────────────────────────
+    expect(m.image, 'expected an image point (pointImageSrc) on the page').not.toBeNull();
+    expect(Math.abs(m.image!.dx), `image inner off-centre horizontally by ${m.image!.dx.toFixed(2)}px`).toBeLessThanOrEqual(1);
+    expect(Math.abs(m.image!.dy), `image inner off-centre vertically by ${m.image!.dy.toFixed(2)}px`).toBeLessThanOrEqual(1);
+    // image must be centred in the circle, not anchored top-left (0% 0%)
+    expect(m.image!.bgPos, `image must be centred in the circle (background-position=${m.image!.bgPos})`).toMatch(/^(center|50%)/);
+  });
+});

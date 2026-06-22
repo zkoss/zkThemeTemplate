@@ -1,0 +1,196 @@
+/* MD3 Linelayout — vertical/horizontal timeline layout (EE only)
+   Root:      .z-linelayout (.z-linelayout-vertical | .z-linelayout-horizontal)
+   Columns:   .z-linelayout-first | .z-linelayout-cave | .z-linelayout-last
+   Line:      .z-linelayout-line  (absolutely positioned connector; z-index: 99)
+   Lineitem:  .z-lineitem  (flex slot in cave; first/last area divs moved to outer columns at bind_())
+   Point:     .z-lineitem-point  (24×24px primary-filled circle; z-index: 100)
+   Inner:     .z-lineitem-point-inner  (icon / image holder)
+   DESIGN.md: §3 (color roles), §4 (spacing), §5 (shape)
+   NOTE:      This file fully replaces the stock ZK iceblue linelayout CSS.
+              Every structural rule the widget JS depends on must be re-authored here. */
+
+/* ─── Root container ─────────────────────────────────────────────────────── */
+.z-linelayout {
+    width: 100%;
+    height: 100%;
+    background: transparent;
+}
+
+/* ─── Vertical orientation — three columns side by side ─────────────────── */
+.z-linelayout-vertical {
+    display: flex;
+    flex-direction: row;
+}
+
+/* ─── Horizontal orientation — three rows stacked ───────────────────────── */
+.z-linelayout-horizontal {
+    display: flex;
+    flex-direction: column;
+}
+
+/* ─── First-area column (left in vertical, top in horizontal) ────────────── */
+.z-linelayout-first {
+    flex: 1 0 0;
+    display: flex;
+    overflow: hidden;
+    /* Pull first-area content toward the cave (right in vertical, bottom in
+       horizontal) so each slot sits adjacent to the connector line/points. */
+    align-items: flex-end;
+}
+
+.z-linelayout-vertical .z-linelayout-first {
+    /* Content slots must stack along the timeline axis so each aligns with its
+       cave point; without this the column defaults to `row` and all slots
+       collapse to a single main-axis position. */
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.z-linelayout-horizontal .z-linelayout-first {
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+/* ─── Last-area column (right in vertical, bottom in horizontal) ─────────── */
+.z-linelayout-last {
+    flex: 1 0 0;
+    display: flex;
+    overflow: hidden;
+    /* Pull last-area content toward the cave (left in vertical, top in
+       horizontal) so each slot sits adjacent to the points. */
+    align-items: flex-start;
+}
+
+.z-linelayout-vertical .z-linelayout-last {
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.z-linelayout-horizontal .z-linelayout-last {
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+/* ─── Cave column — center strip holding points and the connector line ────── */
+.z-linelayout-cave {
+    display: flex;
+    position: relative;
+    /* Stock ZK sets this; the point fills the cave content box so it has no
+       visible effect, kept for faithful reproduction. */
+    align-items: flex-end;
+}
+
+.z-linelayout-vertical .z-linelayout-cave {
+    flex-direction: column;
+    justify-content: space-around;
+    /* DESIGN.md §4 — 12px gutter between content edges and point circle */
+    padding: 0 var(--zk-spacing-3);
+}
+
+.z-linelayout-horizontal .z-linelayout-cave {
+    flex-direction: row;
+    justify-content: space-around;
+    /* DESIGN.md §4 — 12px gutter (vertical axis) */
+    padding: var(--zk-spacing-3) 0;
+}
+
+/* ─── Connector line ──────────────────────────────────────────────────────── */
+/* z-index: 99 is required — ZK sets it; points sit at z-index: 100 above. */
+.z-linelayout-line {
+    position: absolute;
+    z-index: 99;
+    /* DESIGN.md §3 — subtle neutral stroke; recedes behind point circles */
+    background-color: var(--zk-color-outline-variant);
+}
+
+/* Vertical mode: 2px-wide vertical rail, centered in cave */
+.z-linelayout-vertical .z-linelayout-line {
+    width: 2px;
+    height: 100%;
+    /* calc(50% − half of 2px line) = centered */
+    left: calc(50% - 1px);
+    top: 0;
+}
+
+/* Horizontal mode: 2px-tall horizontal rail, centered in cave */
+.z-linelayout-horizontal .z-linelayout-line {
+    height: 2px;
+    width: 100%;
+    top: calc(50% - 1px);
+    left: 0;
+}
+
+/* ─── Lineitem slot ───────────────────────────────────────────────────────── */
+.z-lineitem {
+    flex: 1 0 0;
+    display: flex;
+    overflow: hidden;
+}
+
+.z-linelayout-vertical .z-lineitem {
+    flex-direction: column;
+}
+
+/* Children of lineitem must not shrink; auto margin centers them in the slot */
+.z-lineitem > * {
+    flex-shrink: 0;
+    margin: auto;
+}
+
+/* ─── Lineitem stretch — fills its slot when hflex/vflex is set ─────────── */
+.z-lineitem-stretch {
+    width: 100%;
+    height: 100%;
+}
+
+/* ─── Point circle ────────────────────────────────────────────────────────── */
+/* position: relative establishes stacking context so z-index: 100 takes effect
+   (z-index has no effect on position: static elements). */
+.z-lineitem-point {
+    width: 24px;
+    height: 24px;
+    /* box-sizing: border-box keeps total size at 24px including the 2px border */
+    box-sizing: border-box;
+    border-radius: var(--zk-shape-corner-full);
+    /* DESIGN.md §3 — primary fill for active timeline points */
+    background: var(--zk-color-primary);
+    /* Border matches fill — creates a solid disc with crisp edge */
+    border: 2px solid var(--zk-color-primary);
+    /* DESIGN.md §3 — icon/text inside circle */
+    color: var(--zk-color-on-primary);
+    /* DESIGN.md §5 — icon size fits within 20px interior (24px − 2×2px border) */
+    font-size: 12px;
+    overflow: hidden;
+    position: relative;
+    z-index: 100;
+    /* Prevents compression inside a narrow cave */
+    flex-shrink: 0;
+}
+
+/* Hidden state — preserves spacing continuity while hiding the circle */
+.z-lineitem-point-hidden {
+    visibility: hidden;
+}
+
+/* ─── Point inner — icon / image holder ─────────────────────────────────── */
+/* Fill the point's bordered interior exactly (24px − 2×2px border = 20px) so
+   content is centered without offset. `width/height: inherit` would inherit the
+   point's 24px box and overflow the 20px interior, pushing content +2/+2px off
+   center. Flex centers the icon glyph (rendered as a 12×12 ::before mask) on
+   both axes; background-position centers the image (pointImageSrc sets
+   background-image with no position — the default 0% 0% anchors it top-left). */
+.z-lineitem-point-inner {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-size: cover;
+    background-position: center;
+}
+
+/* ─── Point image holder — when pointImageSrc is set ────────────────────── */
+.z-lineitem-point-image {
+    display: inline-flex;
+    vertical-align: baseline;
+}
