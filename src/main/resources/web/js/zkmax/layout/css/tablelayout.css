@@ -1,0 +1,22 @@
+/* MD3 Tablelayout — transparent HTML-table layout shell
+   Root:  .z-tablelayout  (<table> — NEVER override display: any flex/grid breaks native table)
+   Row:   <tr>            (bare HTML — no ZK class)
+   Cell:  .z-tablechildren (<td> — one per tablechildren widget; colspan/rowspan are native attrs)
+   Gutter: border-collapse:separate + border-spacing provides MD3 8px grid gutter between cells */
+
+/* ─── Root shell ─────────────────────────────────────────────────────────── */
+/* Transparent shell; border-collapse:separate is required for border-spacing to have effect */
+.z-tablelayout {
+    border-collapse: separate;
+    border-spacing: var(--zk-spacing-2);
+    background-color: transparent;
+    border-width: 0;
+    box-sizing: border-box;
+}
+
+/* ─── Cell ───────────────────────────────────────────────────────────────── */
+/* Top-align content to match card-grid convention; zero padding (content widgets provide own) */
+.z-tablechildren {
+    vertical-align: top;
+    padding: 0;
+}

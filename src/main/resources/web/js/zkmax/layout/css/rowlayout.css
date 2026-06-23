@@ -1,0 +1,29 @@
+/* MD3 Rowlayout — 12-column proportional-grid layout primitive (EE)
+   Root:    .z-rowlayout  (clearfix container; no surface decoration)
+   Column:  .z-rowchildren.colspanN [.offsetN]  (float cells; JS writes inline widths)
+   NOTE:    Never override width/margin-left on .z-rowchildren — JS sets them inline. */
+
+/* ─── Root container — clearfix ──────────────────────────────────────────── */
+.z-rowlayout::before,
+.z-rowlayout::after {
+    display: table;
+    content: "";
+}
+
+.z-rowlayout::after {
+    clear: both;
+}
+
+/* ─── Column cells — float model ─────────────────────────────────────────── */
+.z-rowchildren[class*="colspan"] {
+    display: block;
+    float: left;
+    box-sizing: border-box;
+}
+
+/* ─── Responsive stacking — single column below 767px ───────────────────── */
+@media (max-width: 767px) {
+    .z-rowchildren[class*="colspan"] {
+        float: none;
+    }
+}
