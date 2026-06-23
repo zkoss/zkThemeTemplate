@@ -185,14 +185,14 @@
     top: 0;
     background-color: transparent;
     border: none;
-    min-height: 40px;
+    min-height: var(--zk-control-height);
     z-index: 1;
     overflow: hidden;
 }
 
 .z-toolbar-tabs .z-toolbar-content {
     padding: 0 var(--zk-spacing-2);
-    min-height: 40px;
+    min-height: var(--zk-control-height);
 }
 
 /* ─── Overflow popup ─────────────────────────────────────────────────────── */

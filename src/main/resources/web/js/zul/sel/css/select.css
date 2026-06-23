@@ -4,7 +4,7 @@
     display: inline-flex;
     align-items: center;
     position: relative;
-    min-height: 40px;
+    min-height: var(--zk-control-height);
     box-sizing: border-box;
     font-family: var(--zk-typescale-font-family);
 }
@@ -16,7 +16,7 @@ select.z-select {
     -webkit-appearance: none;
     display: block;
     width: 100%;
-    min-height: 40px;
+    min-height: var(--zk-control-height);
     padding: 0 var(--zk-spacing-8) 0 var(--zk-spacing-3);
     border: 1px solid var(--zk-color-outline);
     border-radius: var(--zk-shape-input);

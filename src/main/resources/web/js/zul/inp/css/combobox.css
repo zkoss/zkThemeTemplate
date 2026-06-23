@@ -7,7 +7,7 @@
     align-items: center;
     position: relative;
     background-color: var(--zk-color-surface);
-    min-height: 40px;
+    min-height: var(--zk-control-height);
     overflow: visible;
     box-sizing: border-box;
 }
@@ -33,7 +33,7 @@
     background: transparent;
     padding: 0 var(--zk-spacing-3);
     height: 100%;
-    min-height: 40px;
+    min-height: var(--zk-control-height);
     font-family: var(--zk-typescale-font-family);
     font-size: var(--zk-typescale-body-medium-size);
     font-weight: var(--zk-typescale-body-medium-weight);
@@ -93,7 +93,7 @@
     align-items: center;
     justify-content: center;
     width: 32px;
-    min-height: 40px;
+    min-height: var(--zk-control-height);
     border: 1px solid var(--zk-color-outline);
     border-left: none;
     background: transparent;

@@ -26,7 +26,7 @@
     line-height: var(--zk-typescale-body-medium-line-height);
     color: var(--zk-color-on-surface);
     /* 40px minimum touch-target height */
-    min-height: 40px;
+    min-height: var(--zk-control-height);
 }
 
 /* ── Hide native input; still needed for focus / label association ─────────── */
@@ -216,7 +216,7 @@
     font-weight: var(--zk-typescale-body-medium-weight);
     line-height: var(--zk-typescale-body-medium-line-height);
     color: var(--zk-color-on-surface);
-    min-height: 40px;
+    min-height: var(--zk-control-height);
 }
 
 /* Hide ZK-generated <br> inside flex context */
@@ -373,7 +373,7 @@
     align-items: center;
     cursor: pointer;
     user-select: none;
-    min-height: 40px;
+    min-height: var(--zk-control-height);
     gap: var(--zk-spacing-2);
 }
 

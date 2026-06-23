@@ -10,7 +10,7 @@
     border: 1px solid var(--zk-color-outline);
     border-radius: var(--zk-shape-input);
     background-color: var(--zk-color-surface);
-    min-height: 40px;
+    min-height: var(--zk-control-height);
     box-sizing: border-box;
     transition:
         border-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard),

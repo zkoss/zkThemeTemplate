@@ -1,0 +1,20 @@
+/* Sizing tokens — interactive control dimensions.
+ *
+ * --zk-control-height is the standard height of a single interactive control
+ * row on desktop (MUI dense default, 40px). Shared by inputs, selects,
+ * checkbox rows, menu items, toolbars and input-groups so the whole control
+ * family stays vertically consistent — change it here, never restate 40px as
+ * a literal in component CSS.
+ *
+ * NOT a touch target: 40px is below the MD3 44/48px minimum. The genuine
+ * touch-target tokens live in the tablet-only layer
+ * (zkmax/css/tablet/_tokens.css: --zk-touch-target-min/-comfortable), which
+ * scales these controls up on mobile UAs.
+ *
+ * Square sizings that merely coincide with 40px (icon-button / FAB diameter,
+ * calendar day cells) deliberately stay as literals — they are a different
+ * concept and must not be coupled to control height.
+ */
+:root {
+    --zk-control-height: 40px;
+}

@@ -44,7 +44,7 @@
     display: inline-flex;
     align-items: center;
     padding: 0 var(--zk-spacing-3);
-    min-height: 40px;
+    min-height: var(--zk-control-height);
     background-color: var(--zk-color-surface-container-low);
     border: 1px solid var(--zk-color-outline);
     color: var(--zk-color-on-surface-variant);
@@ -74,7 +74,7 @@
     flex: 1;
     min-width: 0;
     height: auto;
-    min-height: 40px;
+    min-height: var(--zk-control-height);
     box-sizing: border-box;
 }
 

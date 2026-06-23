@@ -742,7 +742,7 @@ td.z-listgroup-inner {
    bundle only loads when a Selectbox widget is on the page.) */
 .z-select {
     display: inline-block;
-    min-height: 40px;
+    min-height: var(--zk-control-height);
     min-width: 120px;
     box-sizing: border-box;
     padding: 0 36px 0 var(--zk-spacing-3);

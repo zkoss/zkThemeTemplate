@@ -9,7 +9,7 @@
 .z-longbox,
 .z-passwordbox {
     display: inline-block;
-    min-height: 40px;
+    min-height: var(--zk-control-height);
     padding: 0 var(--zk-spacing-3);
     border: 1px solid var(--zk-color-outline);
     border-radius: var(--zk-shape-input);

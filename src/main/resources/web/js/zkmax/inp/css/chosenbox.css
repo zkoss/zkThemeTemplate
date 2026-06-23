@@ -10,7 +10,7 @@
     align-items: center;
     gap: 4px;
     position: relative;
-    min-height: 40px;
+    min-height: var(--zk-control-height);
     padding: 4px 6px;
     border: 1px solid var(--zk-color-outline);
     border-radius: var(--zk-shape-input);

@@ -176,7 +176,7 @@
 .z-menubar-vertical .z-menu-content {
     width: 100%;
     padding: var(--zk-spacing-2) var(--zk-spacing-4);
-    min-height: 40px;
+    min-height: var(--zk-control-height);
 }
 
 /* Menuitem (direct child of menubar, not inside a popup) */
