@@ -754,6 +754,67 @@ test.describe('notification', () => {
 });
 
 // -------------------------------------------------------
+// Toast
+// -------------------------------------------------------
+// The gallery screenshot covers the three TYPE variants (info/warning/error),
+// whose `.z-toast-content` carries a light token tint. The typeless BASE
+// `.z-toast-content` is a dark scrim (rgba(50,50,50,0.95)) + white text — the
+// fallback shown for an untyped toast, overridden by every type variant so it
+// never appears in the typed gallery. The base is guarded directly via an
+// injected probe element so a future tokenisation/refactor can't silently
+// shift it without triggering an untyped toast.
+test.describe('toast', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto('/toast.zul');
+    await page.waitForLoadState('networkidle');
+  });
+
+  test('gallery', async ({ page }) => {
+    await expect(page.locator('.pv-state-gallery').first()).toHaveScreenshot('gallery.png');
+  });
+
+  test('base-content-is-dark-scrim-with-white-text', async ({ page }) => {
+    const m = await page.evaluate(() => {
+      const d = document.createElement('div');
+      d.className = 'z-toast-content';
+      document.body.appendChild(d);
+      const s = getComputedStyle(d);
+      const r = { bg: s.backgroundColor, color: s.color };
+      d.remove();
+      return r;
+    });
+    expect(m.bg, 'typeless .z-toast-content base must be the dark scrim').toBe('rgba(50, 50, 50, 0.95)');
+    expect(m.color, 'typeless .z-toast-content base text must be white').toBe('rgb(255, 255, 255)');
+  });
+});
+
+// -------------------------------------------------------
+// Tooltip (dark popup)
+// -------------------------------------------------------
+// `.z-popup-tooltip` is the dark MUI-style tooltip (rgba(97,97,97,0.92) + white).
+// It only renders when a <popup> carries sclass="z-popup-tooltip" — exercised on
+// the usecase2 tooltips page, NOT on /popup.zul (plain `tooltip=` yields a white
+// popup). The popup is detached to <body> and animated, so a screenshot is flaky;
+// a computed-style assertion is the robust regression guard for the dark fill.
+// (Note: `.z-tooltip` in misc.css shares the same value but has no ZUL usage —
+// unreachable; tracked as a dead-code item, not covered here.)
+test.describe('tooltip', () => {
+  test('dark-popup-fill-and-text', async ({ page }) => {
+    await page.goto('/usecase2/index.zul#tooltips', { waitUntil: 'domcontentloaded' });
+    await page.waitForTimeout(2500);
+    await page.locator('button:has-text("Click")').first().click();
+    const tip = page.locator('.z-popup-tooltip.z-popup-open').first();
+    await tip.waitFor({ state: 'visible' });
+    const m = await tip.evaluate(el => {
+      const s = getComputedStyle(el);
+      return { bg: s.backgroundColor, color: s.color };
+    });
+    expect(m.bg, '.z-popup-tooltip background must be the dark tooltip fill').toBe('rgba(97, 97, 97, 0.92)');
+    expect(m.color, '.z-popup-tooltip text must be white').toBe('rgb(255, 255, 255)');
+  });
+});
+
+// -------------------------------------------------------
 // Linelayout
 // -------------------------------------------------------
 // Each lineitem's content (a button) is moved out of the cave into the
