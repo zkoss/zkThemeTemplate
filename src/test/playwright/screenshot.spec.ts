@@ -865,3 +865,64 @@ test.describe('linelayout', () => {
     expect(m.image!.bgPos, `image must be centred in the circle (background-position=${m.image!.bgPos})`).toMatch(/^(center|50%)/);
   });
 });
+
+// The splitter family (DESIGN.md §14) presents ONE resize affordance: an 8px
+// surface-container tonal bar + actuator pill. The bar's tonal fill IS the
+// divider — no member draws a border on the bar. splitlayout used to be the
+// lone outlier with a 1px outline-variant bar border (contract c2), which
+// stacked into a double-line between its already-bordered panes. This test
+// pins every family bar to border-width 0. See doc/skill-gaps.md 2026-06-23.
+test.describe('splitter-family', () => {
+  test('bars-are-borderless-across-the-family', async ({ page }) => {
+    const maxBorder = async (url: string, selector: string) => {
+      await page.goto(url);
+      await page.waitForLoadState('networkidle');
+      await page.waitForSelector(selector);
+      return page.evaluate((sel) => {
+        const els = [...document.querySelectorAll(sel)];
+        const widths = els.map((el) => {
+          const cs = getComputedStyle(el);
+          return Math.max(
+            parseFloat(cs.borderTopWidth) || 0,
+            parseFloat(cs.borderRightWidth) || 0,
+            parseFloat(cs.borderBottomWidth) || 0,
+            parseFloat(cs.borderLeftWidth) || 0,
+          );
+        });
+        return { count: els.length, max: widths.length ? Math.max(...widths) : -1 };
+      }, selector);
+    };
+
+    const splitlayout = await maxBorder('/splitlayout.zul', '.z-splitlayout-splitter');
+    expect(splitlayout.count, 'expected splitlayout splitter bars on the page').toBeGreaterThan(0);
+    expect(splitlayout.max, `splitlayout splitter bar must be borderless, max border-width=${splitlayout.max}px`).toBe(0);
+
+    const splitter = await maxBorder('/splitter.zul', '.z-splitter');
+    expect(splitter.count, 'expected splitter bars on the page').toBeGreaterThan(0);
+    expect(splitter.max, `splitter bar must be borderless, max border-width=${splitter.max}px`).toBe(0);
+  });
+
+  // MD3 communicates hover via the state layer (colour), not geometry — no family
+  // member resizes its pill on hover. borderlayout used to grow its pill 28px→44px
+  // (the lone outlier; the caret already has its space at idle via opacity:0, so
+  // the growth was decorative). The pill long-axis must stay 28px on hover, like
+  // splitter/splitlayout. See doc/skill-gaps.md 2026-06-23.
+  test('pill-does-not-resize-on-hover', async ({ page }) => {
+    await page.goto('/borderlayout.zul');
+    await page.waitForLoadState('networkidle');
+    await page.waitForSelector('.z-west-splitter-button');
+    const longAxis = (sel: string) =>
+      page.evaluate((s) => {
+        const el = document.querySelector(s) as HTMLElement;
+        return el ? el.getBoundingClientRect().height : -1;
+      }, sel);
+
+    const idle = await longAxis('.z-west-splitter-button');
+    expect(idle, 'west pill idle long-axis should be the family 28px').toBeCloseTo(28, 0);
+
+    await page.hover('.z-west-splitter');
+    await page.waitForTimeout(400); // allow the (former) growth transition to settle
+    const hovered = await longAxis('.z-west-splitter-button');
+    expect(hovered, `west pill must not grow on hover (idle=${idle}px, hover=${hovered}px)`).toBeCloseTo(28, 0);
+  });
+});

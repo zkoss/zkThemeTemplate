@@ -50,7 +50,7 @@ Outcome-level predicates that gate `VERIFIED`: failing any row blocks VERIFIED e
 | id | selector | property | expected (token preferred) | source |
 |----|----------|----------|----------------------------|--------|
 | c1 | `.z-splitlayout-splitter` | background-color | `var(--zk-color-surface-container)` | DESIGN.md §14 — splitter-family idle bar |
-| c2 | `.z-splitlayout-splitter` | border-color | `var(--zk-color-outline-variant)` | DESIGN.md §11 — divider/separator border |
+| c2 | `.z-splitlayout-splitter` | border-width | `0px` | DESIGN.md §14 — splitter-family bar is borderless; the `surface-container` fill is the divider (unified 2026-06-23, was a 1px outline-variant outlier) |
 | c3 | `.z-splitlayout-splitter` | cursor | `default` | DESIGN.md §8 — no cursor affordance on bare bar |
 | c4 | `.z-splitlayout-splitter-vertical` | height | `var(--zk-spacing-2)` (8px) | DESIGN.md §4 — 2-unit splitter height matches splitter contract |
 | c5 | `.z-splitlayout-splitter-horizontal` | width | `var(--zk-spacing-2)` (8px) | DESIGN.md §4 — 2-unit splitter width matches splitter contract |

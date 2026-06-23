@@ -49,14 +49,16 @@
 
 /* ── Splitter bar — base ─────────────────────────────────────────────────── */
 /* position:relative makes the bar a positioning context for the splitter button.
-   background-color uses surface-container so the bar recedes at rest.
-   border draws the 1px divider line (outline-variant = subtle grey).
+   background-color uses surface-container so the bar recedes at rest — that tonal
+   fill IS the divider (DESIGN.md §14): no bar border, matching splitter/borderlayout.
+   The former 1px outline-variant border was the family's lone outlier and stacked
+   into a double-line between the bordered panes (gap log 2026-06-23).
    cursor:default on bare bar; draggable modifier overrides below.
    Transition animates hover tint at standard speed. */
 .z-splitlayout-splitter {
     position: relative;
     background-color: var(--zk-splitter-bar-bg);
-    border: 1px solid var(--zk-color-outline-variant); /* splitlayout-specific: 1px divider line (contract c2) */
+    border: none;
     cursor: default;
     box-sizing: border-box;
     transition: var(--zk-splitter-transition);

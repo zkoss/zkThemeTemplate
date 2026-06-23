@@ -8,11 +8,12 @@
  *
  * Change the family spec HERE (and in DESIGN.md §14) — never restate these
  * values as literals in component CSS (gap log 2026-06-04 family fragmentation;
- * 2026-06-06 cursor drift). Documented per-component exceptions stay local:
+ * 2026-06-06 cursor drift). The bar is borderless family-wide — the
+ * surface-container fill is the divider. The pill never resizes on hover (MD3 hover =
+ * colour, not geometry) — all members keep the 28px long-axis at every state.
+ * The only documented per-component exception stays local:
  *   - goldenlayout idle fill is `transparent` (gutter ruling 2026-06-06) and its
  *     hover/drag tints mix over transparent instead of the bar fill
- *   - splitlayout adds a 1px outline-variant border on the bar
- *   - borderlayout pill grows to 44px on hover (symmetric translate)
  */
 :root {
     /* Bar */
