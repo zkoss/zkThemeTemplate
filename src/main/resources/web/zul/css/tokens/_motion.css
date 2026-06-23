@@ -20,4 +20,11 @@
     --zk-motion-easing-emphasized-decelerate: cubic-bezier(0.05, 0.7, 0.1, 1);
     --zk-motion-easing-emphasized-accelerate: cubic-bezier(0.3, 0, 0.8, 0.15);
     --zk-motion-easing-legacy: cubic-bezier(0.4, 0, 0.2, 1);
+
+    /* Transition presets */
+    /* State-layer fade — the shared transition on every component's overlay
+       `::before` (hover/focus/pressed opacity). Composed from the primitives
+       above so the whole family fades in lockstep. Controls that need a faster
+       fade (checkbox/radio, short2) keep their own transition. */
+    --zk-state-layer-transition: opacity var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
 }

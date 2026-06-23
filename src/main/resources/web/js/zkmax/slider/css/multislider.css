@@ -111,7 +111,7 @@
     background-color: var(--zk-color-primary);
     opacity: 0;
     pointer-events: none;
-    transition: opacity var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+    transition: var(--zk-state-layer-transition);
 }
 
 .z-multislider:hover .z-sliderbuttons-button::before {

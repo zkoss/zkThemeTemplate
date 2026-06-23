@@ -140,7 +140,7 @@
     background-color: var(--zk-rangeslider-button-color);
     opacity: 0;
     pointer-events: none;
-    transition: opacity var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+    transition: var(--zk-state-layer-transition);
 }
 
 .z-rangeslider:hover         .z-sliderbuttons-button::before { opacity: var(--zk-state-hover-opacity); }

@@ -202,7 +202,7 @@ td.z-splitter-outer {
    the resting state. */
 .z-splitter-icon:not(.z-icon-ellipsis-v):not(.z-icon-ellipsis-h) {
     opacity: 0;
-    transition: opacity var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+    transition: var(--zk-state-layer-transition);
 }
 
 .z-splitter-button:hover .z-splitter-icon:not(.z-icon-ellipsis-v):not(.z-icon-ellipsis-h),

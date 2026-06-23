@@ -225,7 +225,7 @@
    action without cluttering the resting state. */
 .z-splitlayout-splitter-icon:not(.z-icon-ellipsis-h):not(.z-icon-ellipsis-v) {
     opacity: 0;
-    transition: opacity var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+    transition: var(--zk-state-layer-transition);
 }
 
 .z-splitlayout-splitter-button:hover .z-splitlayout-splitter-icon:not(.z-icon-ellipsis-h):not(.z-icon-ellipsis-v),

@@ -292,7 +292,7 @@
 .z-north-icon[class*="z-icon-caret"],
 .z-south-icon[class*="z-icon-caret"] {
     opacity: 0;
-    transition: opacity var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+    transition: var(--zk-state-layer-transition);
 }
 
 .z-west-splitter:hover .z-west-icon[class*="z-icon-caret"],
