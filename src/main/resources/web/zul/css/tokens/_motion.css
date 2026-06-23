@@ -11,6 +11,8 @@
     --zk-motion-duration-medium4: 400ms;
     --zk-motion-duration-long1: 450ms;
     --zk-motion-duration-long2: 500ms;
+    --zk-motion-duration-long3: 550ms;
+    --zk-motion-duration-long4: 600ms;
 
     /* Standard transition duration — the theme's de-facto workhorse (state
        layers, hovers, simple fades). Equals medium1 (250ms). Named separately
