@@ -197,7 +197,7 @@
 /* ─── Drag / resize utilities ────────────────────────────────────────────── */
 .z-window-move-ghost {
     opacity: 0.5;
-    outline: 2px solid var(--zk-color-primary);
+    outline: var(--zk-focus-ring);
     outline-offset: -2px;
 }
 

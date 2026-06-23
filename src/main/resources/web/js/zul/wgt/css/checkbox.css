@@ -148,7 +148,7 @@
    ZK focuses the <input>, not the mold, so use :has() to bubble up
    ═══════════════════════════════════════════════════════════════════ */
 .z-checkbox:has(input[type="checkbox"]:focus-visible) > .z-checkbox-mold {
-    outline: 2px solid var(--zk-color-primary);
+    outline: var(--zk-focus-ring);
     outline-offset: 2px;
 }
 
@@ -312,7 +312,7 @@
    Focus-visible
    ═══════════════════════════════════════════════════════════════════ */
 .z-radio input[type="radio"]:focus-visible {
-    outline: 2px solid var(--zk-color-primary);
+    outline: var(--zk-focus-ring);
     outline-offset: 2px;
 }
 

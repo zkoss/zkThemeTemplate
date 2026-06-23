@@ -63,6 +63,13 @@
     --zk-state-disabled-opacity: 0.38;
     --zk-state-disabled-container-opacity: 0.12;
 
+    /* Keyboard focus affordance — the standard 2px primary outline ring.
+       `outline-offset` stays per-component (2px default; ±1/2px inset on dense
+       rows like grid/tree/listbox). The 3px `.z-focus-ring` utility and the
+       border-/box-shadow-based focus styles (text fields, selects, sliders)
+       are intentionally separate and do NOT use this token. */
+    --zk-focus-ring: 2px solid var(--zk-color-primary);
+
     /* Semantic / Role colors for ZK components */
     --zk-color-disabled: rgba(0, 0, 0, 0.38);
     --zk-color-disabled-container: rgba(0, 0, 0, 0.12);

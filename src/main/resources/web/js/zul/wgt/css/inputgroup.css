@@ -90,7 +90,7 @@
 
 /* Focus ring: highlight the whole group when any input is focused */
 .z-inputgroup:focus-within {
-    outline: 2px solid var(--zk-color-primary);
+    outline: var(--zk-focus-ring);
     outline-offset: 0;
     border-radius: var(--zk-shape-input);
 }

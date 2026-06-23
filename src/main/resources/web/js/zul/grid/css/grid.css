@@ -163,7 +163,7 @@
 }
 
 .z-column .z-column-button:focus-visible {
-    outline: 2px solid var(--zk-color-primary);
+    outline: var(--zk-focus-ring);
     outline-offset: 1px;
 }
 
@@ -243,7 +243,7 @@
 
 /* Focus: ZK uses z-row-focus class added by ItemWidget */
 .z-row.z-row-focus {
-    outline: 2px solid var(--zk-color-primary);
+    outline: var(--zk-focus-ring);
     outline-offset: -2px;
 }
 
