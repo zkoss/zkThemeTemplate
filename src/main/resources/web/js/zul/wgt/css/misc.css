@@ -285,20 +285,3 @@
 .z-error .newmessage {
     display: none;
 }
-
-/* Tooltip */
-.z-tooltip {
-    position: absolute;
-    z-index: 2000;
-    background-color: rgba(97, 97, 97, 0.92);
-    color: #fff;
-    padding: 4px 8px;
-    border-radius: 4px;
-    font-family: var(--zk-typescale-font-family);
-    font-size: 0.6875rem;
-    font-weight: 500;
-    max-width: 300px;
-    word-wrap: break-word;
-    pointer-events: none;
-    box-shadow: var(--zk-elevation-2);
-}
