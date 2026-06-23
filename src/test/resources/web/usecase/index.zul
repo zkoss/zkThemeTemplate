@@ -54,6 +54,7 @@
                 </nav>
                 <nav label="Data" open="@load(vm.openNavLabel eq 'Data')">
                     <navitem label="Biglistbox"             selected="@load(vm.currentPage eq '~./biglistbox.zul')" onClick="@command('navigate', page='~./biglistbox.zul')" />
+                    <navitem label="Drag &amp; Drop"        selected="@load(vm.currentPage eq '~./dnd.zul')" onClick="@command('navigate', page='~./dnd.zul')" />
                     <navitem label="Grid"                   selected="@load(vm.currentPage eq '~./grid.zul')" onClick="@command('navigate', page='~./grid.zul')" />
                     <navitem label="Grid (Detail)"          selected="@load(vm.currentPage eq '~./grid-detail.zul')" onClick="@command('navigate', page='~./grid-detail.zul')" />
                     <navitem label="Grid (Grouping)"        selected="@load(vm.currentPage eq '~./grid-grouping.zul')" onClick="@command('navigate', page='~./grid-grouping.zul')" />

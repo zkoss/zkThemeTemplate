@@ -40,6 +40,7 @@ const PAGES = [
   '/cropper.zul',
   '/datebox.zul',
   '/decimalbox.zul',
+  '/dnd.zul',
   '/doublebox.zul',
   '/doublespinner.zul',
   '/drawer.zul',

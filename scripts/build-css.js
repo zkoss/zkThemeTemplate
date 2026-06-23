@@ -116,6 +116,11 @@ const footerFiles = [
     // toggled at runtime by zk/flex.ts — stock ZK defines them in footer.less,
     // so they live in the footer bundle here too. See the file's header comment.
     'zul/css/base/_cssflex.css',
+    // Framework drag-and-drop + frozen classes (z-dragged/z-drag-over/z-drag-ghost/
+    // z-drop-ghost/-content/-icon/-text/-allow/-disallow, z-word-nowrap) toggled at
+    // runtime by zk/widget.ts + zul/mesh/Frozen.ts. Stock ships no CSS for most, so the
+    // theme must define them. See the file's header comment + doc/contracts/framework-classes.md.
+    'zul/css/base/_dnd.css',
 ];
 
 // Files merged into another CSS file (excluded from 1:1 auto-scan).
