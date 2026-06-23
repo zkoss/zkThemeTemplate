@@ -758,11 +758,10 @@ test.describe('notification', () => {
 // -------------------------------------------------------
 // The gallery screenshot covers the three TYPE variants (info/warning/error),
 // whose `.z-toast-content` carries a light token tint. The typeless BASE
-// `.z-toast-content` is a dark scrim (rgba(50,50,50,0.95)) + white text — the
-// fallback shown for an untyped toast, overridden by every type variant so it
-// never appears in the typed gallery. The base is guarded directly via an
-// injected probe element so a future tokenisation/refactor can't silently
-// shift it without triggering an untyped toast.
+// `.z-toast-content` deliberately has NO background/color: the Java API always
+// defaults a null type to "info", so every server-driven toast is typed. The
+// old dark-scrim base fill was dead style and was removed — this guards against
+// its silent re-introduction (an injected typeless probe must be transparent).
 test.describe('toast', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/toast.zul');
@@ -773,18 +772,16 @@ test.describe('toast', () => {
     await expect(page.locator('.pv-state-gallery').first()).toHaveScreenshot('gallery.png');
   });
 
-  test('base-content-is-dark-scrim-with-white-text', async ({ page }) => {
-    const m = await page.evaluate(() => {
+  test('base-content-has-no-dark-scrim-fill', async ({ page }) => {
+    const bg = await page.evaluate(() => {
       const d = document.createElement('div');
       d.className = 'z-toast-content';
       document.body.appendChild(d);
-      const s = getComputedStyle(d);
-      const r = { bg: s.backgroundColor, color: s.color };
+      const v = getComputedStyle(d).backgroundColor;
       d.remove();
-      return r;
+      return v;
     });
-    expect(m.bg, 'typeless .z-toast-content base must be the dark scrim').toBe('rgba(50, 50, 50, 0.95)');
-    expect(m.color, 'typeless .z-toast-content base text must be white').toBe('rgb(255, 255, 255)');
+    expect(bg, 'typeless .z-toast-content base must have no fill (dark scrim removed)').toBe('rgba(0, 0, 0, 0)');
   });
 });
 

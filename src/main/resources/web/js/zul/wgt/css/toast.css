@@ -34,8 +34,10 @@
     box-shadow: var(--zk-elevation-3);
     position: relative;
     overflow: hidden;
-    background-color: rgba(50,50,50,0.95);
-    color: #ffffff;
+    /* No base background/color: the Java API (Toast.show) always defaults a
+       null type to "info", so every toast carries a type variant that supplies
+       its own (light) fill + text color. A typeless base is unreachable via the
+       server API; keeping a dark-scrim fallback here was dead style. */
     line-height: 1.5;
 }
 
