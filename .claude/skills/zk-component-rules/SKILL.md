@@ -103,7 +103,7 @@ Load only the file for the component you are working on.
 | `components/goldenlayout.md` | goldenlayout + goldenpanel (EE) — T3 dockable multi-pane layout, `.lm_*` selectors ARE styleable under `.z-goldenlayout` scope; NO forbidden-selectors on lm_* |
 | `components/a.md` | a / link (`.z-a`, `[disabled]` via CSS pointer-events) — stub |
 | `components/absolutelayout.md` | absolutelayout (JS positions children with `position: absolute`) — stub |
-| `components/anchorlayout.md` | anchorlayout (float-based children, `anchor=` width) — stub |
+| `components/anchorlayout.md` | anchorlayout + anchorchildren — flat DOM (no body wrapper), `anchor=` JS inline-width sizing (% and delta), Marble flex-wrap override; stock ZK uses `float: left` |
 | `components/caption.md` | caption (no `.z-caption-text` element — plain text) — stub |
 | `components/hlayout-vlayout.md` | hlayout / vlayout + hbox / vbox (`.z-hlayout-inner` wrapper) — stub |
 | `components/inputgroup.md` | inputgroup (`display: inline-flex` root, `.z-inputgroup-text`) — stub |
@@ -114,6 +114,9 @@ Load only the file for the component you are working on.
 | `components/cropper.md` | cropper (PE per ZKDoc) — T3 Jcrop-backed image cropper; only `.z-cropper` wrapper and `.z-cropper-toolbar` are theme-owned; `.z-cropper-canvas` does NOT exist (actual Jcrop holder is `.z-cropper-holder`); toolbar is JS-positioned and hidden at rest |
 | `components/timepicker.md` | timepicker (PE) — T1 combo-pattern input + clock-button + detached time-option-list popup; `.z-timepicker-disabled` appears on root (component disabled) AND on `<a>` button (buttonVisible=false — different semantics); popup is raw `<li>` items not ZK widgets; separate CSS file `zkmax/inp/css/timepicker.css` not merged into combo.css.dsp |
 | `components/coachmark.md` | coachmark (PE) — T2 guided-tour card; `.z-coachmark` is transparent positional wrapper; `.z-coachmark-content` is the visual card; `.z-coachmark-open` drives animation; pointer arrow on `.z-coachmark-pointer.z-coachmark-{up\|down\|left\|right}`; mask is a `zk.eff.FullMask` sibling in `<body>`; CSS in `zkmax/nav/css/coachmark.css` |
+| `components/tablelayout.md` | tablelayout + tablechildren (EE) — HTML `<table>`-based grid layout; root is `<table>` (never override display); cells are `<td>.z-tablechildren`; `<tr>` rows carry no ZK class; colspan/rowspan are native HTML attrs; gutter via `border-spacing`; no state classes |
+| `components/rowlayout.md` | rowlayout + rowchildren (EE) — 12-column proportional-grid layout; `.z-rowlayout` float-clearfix container; `.z-rowchildren.colspanN[.offsetN]` float children; JS writes all inline widths — do NOT override with CSS `!important`; own file `zkmax/layout/css/rowlayout.css.dsp` |
+| `components/linelayout.md` | linelayout + lineitem (EE) — T2 vertical/horizontal timeline; tripartite column structure (first/cave/last); `.z-linelayout-vertical` / `.z-linelayout-horizontal` orientation classes; `.z-lineitem-point` circle with hidden state; first/last area `<div>`s are moved OUT of cave at bind_() via virtual-parent architecture; new CSS at `zkmax/layout/css/linelayout.css` |
 
 ## What this skill deliberately does NOT contain
 
