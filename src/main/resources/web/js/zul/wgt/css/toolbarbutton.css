@@ -28,7 +28,7 @@
     text-decoration: none;
     outline: none;
     box-sizing: border-box;
-    transition: background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+    transition: background-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
 }
 
 /* State layer — uses currentColor so app-bar context override works automatically */

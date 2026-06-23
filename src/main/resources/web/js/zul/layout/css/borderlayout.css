@@ -194,8 +194,8 @@
     cursor: pointer;
     color: var(--zk-splitter-pill-icon);
     transition:
-        background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard),
-        color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+        background-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard),
+        color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
 }
 
 .z-north-splitter-button,
@@ -216,8 +216,8 @@
     cursor: pointer;
     color: var(--zk-splitter-pill-icon);
     transition:
-        background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard),
-        color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+        background-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard),
+        color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
 }
 
 /* Active / hover state — primary fill + on-primary icons, family-consistent.

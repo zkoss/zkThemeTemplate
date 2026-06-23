@@ -94,8 +94,8 @@
     font-size: 14px;
     position: relative;
     overflow: hidden;
-    transition: background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard),
-                color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+    transition: background-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard),
+                color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
 }
 
 .z-panel-icon:hover {

@@ -23,8 +23,8 @@
     box-sizing: border-box;
     vertical-align: middle;
     transition:
-        border-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard),
-        border-width var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+        border-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard),
+        border-width var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
 }
 
 .z-textbox::placeholder,

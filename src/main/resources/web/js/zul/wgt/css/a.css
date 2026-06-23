@@ -9,7 +9,7 @@
     font-size: inherit;
     font-weight: inherit;
     cursor: pointer;
-    transition: color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+    transition: color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
 }
 
 .z-a:hover {

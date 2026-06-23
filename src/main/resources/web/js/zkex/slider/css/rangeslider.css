@@ -109,8 +109,8 @@
     cursor: grab;
     z-index: 2;
     transition:
-        box-shadow var(--zk-motion-duration-short3) var(--zk-motion-easing-standard),
-        transform var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+        box-shadow var(--zk-motion-duration-standard) var(--zk-motion-easing-standard),
+        transform var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
 }
 
 .z-sliderbuttons-button:active {
@@ -224,8 +224,8 @@
     opacity: 0;
     visibility: hidden;
     transition:
-        opacity var(--zk-motion-duration-short3) var(--zk-motion-easing-standard),
-        visibility 0s linear var(--zk-motion-duration-short3);
+        opacity var(--zk-motion-duration-standard) var(--zk-motion-easing-standard),
+        visibility 0s linear var(--zk-motion-duration-standard);
 }
 
 .z-sliderbuttons-button:hover .z-sliderbuttons-tooltip,

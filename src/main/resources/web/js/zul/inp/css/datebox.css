@@ -22,8 +22,8 @@
     min-height: var(--zk-control-height);
     box-sizing: border-box;
     transition:
-        border-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard),
-        box-shadow var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+        border-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard),
+        box-shadow var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
 }
 
 .z-datebox:hover {
@@ -105,7 +105,7 @@
     border-radius: 0 var(--zk-shape-input) var(--zk-shape-input) 0;
     overflow: hidden;
     text-decoration: none;
-    transition: color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+    transition: color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
 }
 
 .z-datebox-button::before {
@@ -287,8 +287,8 @@
     -webkit-appearance: none;
 
     transition:
-        border-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard),
-        border-width var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+        border-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard),
+        border-width var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
 }
 
 .z-datebox-timezone > select::-ms-expand {
@@ -329,7 +329,7 @@
     .z-datebox-timezone > select::picker-icon {
         color: var(--zk-color-on-surface-variant);
         font-size: 16px;
-        transition: transform var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+        transition: transform var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
     }
 
     .z-datebox-timezone > select:open::picker-icon {
@@ -348,10 +348,10 @@
         opacity: 0;
         transform: translateY(-4px);
         transition:
-            opacity var(--zk-motion-duration-short3) var(--zk-motion-easing-standard),
-            transform var(--zk-motion-duration-short3) var(--zk-motion-easing-standard),
-            display var(--zk-motion-duration-short3) allow-discrete,
-            overlay var(--zk-motion-duration-short3) allow-discrete;
+            opacity var(--zk-motion-duration-standard) var(--zk-motion-easing-standard),
+            transform var(--zk-motion-duration-standard) var(--zk-motion-easing-standard),
+            display var(--zk-motion-duration-standard) allow-discrete,
+            overlay var(--zk-motion-duration-standard) allow-discrete;
     }
 
     .z-datebox-timezone > select:open::picker(select) {
@@ -376,7 +376,7 @@
         font-family: var(--zk-typescale-font-family);
         color: var(--zk-color-on-surface);
         cursor: pointer;
-        transition: background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+        transition: background-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
     }
 
     .z-datebox-timezone > select option:hover,

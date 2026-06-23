@@ -31,7 +31,7 @@ select.z-select {
     font-weight: var(--zk-typescale-body-medium-weight);
     cursor: pointer;
     outline: none;
-    transition: border-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+    transition: border-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
 }
 
 select.z-select:hover,

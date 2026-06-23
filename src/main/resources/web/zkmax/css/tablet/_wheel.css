@@ -157,7 +157,7 @@
     font-size: var(--zk-typescale-body-large-size);
     color: var(--zk-color-on-surface-variant);
     opacity: 0.4;
-    transition: opacity var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+    transition: opacity var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
 }
 
 /* The centred value in each column (ZK adds -wheel-list-selected to that <li>) */
@@ -201,7 +201,7 @@
     font-size: var(--zk-typescale-label-large-size);
     font-weight: var(--zk-typescale-label-large-weight);
     cursor: pointer;
-    transition: background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+    transition: background-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
 }
 
 .z-calendar-wheel-left,

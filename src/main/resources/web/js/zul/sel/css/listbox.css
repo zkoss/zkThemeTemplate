@@ -125,8 +125,8 @@
     font-size: 14px;
     cursor: pointer;
     opacity: 0;
-    transition: opacity var(--zk-motion-duration-short3) var(--zk-motion-easing-standard),
-                background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+    transition: opacity var(--zk-motion-duration-standard) var(--zk-motion-easing-standard),
+                background-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
     z-index: 2;
 }
 
@@ -224,7 +224,7 @@
 .z-listitem {
     background-color: var(--zk-color-surface);
     border-bottom: 1px solid var(--zk-color-outline-variant);
-    transition: background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+    transition: background-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
     cursor: pointer;
 }
 
@@ -571,7 +571,7 @@
     cursor: pointer;
     border-radius: var(--zk-shape-corner-full);
     color: var(--zk-color-on-surface-variant);
-    transition: background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+    transition: background-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
 }
 
 .z-listbox-paging-bottom .z-paging-button:not(:disabled):hover {
@@ -764,8 +764,8 @@ td.z-listgroup-inner {
     appearance: none;
     -webkit-appearance: none;
     transition:
-        border-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard),
-        box-shadow var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+        border-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard),
+        box-shadow var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
 }
 
 .z-select::-ms-expand {
@@ -825,7 +825,7 @@ td.z-listgroup-inner {
     .z-select::picker-icon {
         color: var(--zk-color-on-surface-variant);
         font-size: 16px;
-        transition: transform var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+        transition: transform var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
     }
 
     .z-select:open::picker-icon {
@@ -846,10 +846,10 @@ td.z-listgroup-inner {
         opacity: 0;
         transform: translateY(-4px);
         transition:
-            opacity var(--zk-motion-duration-short3) var(--zk-motion-easing-standard),
-            transform var(--zk-motion-duration-short3) var(--zk-motion-easing-standard),
-            display var(--zk-motion-duration-short3) allow-discrete,
-            overlay var(--zk-motion-duration-short3) allow-discrete;
+            opacity var(--zk-motion-duration-standard) var(--zk-motion-easing-standard),
+            transform var(--zk-motion-duration-standard) var(--zk-motion-easing-standard),
+            display var(--zk-motion-duration-standard) allow-discrete,
+            overlay var(--zk-motion-duration-standard) allow-discrete;
     }
 
     .z-select:open::picker(select) {
@@ -874,7 +874,7 @@ td.z-listgroup-inner {
         font-family: var(--zk-typescale-font-family);
         color: var(--zk-color-on-surface);
         cursor: pointer;
-        transition: background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+        transition: background-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
     }
 
     .z-select option:hover,

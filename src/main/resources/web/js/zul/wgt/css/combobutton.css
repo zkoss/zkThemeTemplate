@@ -43,7 +43,7 @@
     line-height: var(--zk-typescale-label-large-line-height);
     white-space: nowrap;
     user-select: none;
-    transition: background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+    transition: background-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
 }
 
 /* State layer for main content */
@@ -75,13 +75,13 @@
     background-color: var(--zk-color-primary);
     color: var(--zk-color-on-primary);
     z-index: 1;
-    transition: background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+    transition: background-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
 }
 
 /* Icon inside arrow area */
 .z-combobutton-icon {
     font-size: 14px;
-    transition: transform var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+    transition: transform var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
 }
 
 /* Open state — rotate the arrow icon */

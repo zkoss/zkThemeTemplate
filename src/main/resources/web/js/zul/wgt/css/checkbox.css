@@ -56,8 +56,8 @@
     /* State-layer ring for hover/focus */
     margin: 11px;  /* centers 18px box inside 40px touch area */
     transition:
-        background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard),
-        border-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+        background-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard),
+        border-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
 }
 
 /* State-layer pseudo (ripple ring) */
@@ -239,7 +239,7 @@
     flex-shrink: 0;
     /* 40×40 touch target via margin */
     margin: 10px;
-    transition: border-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+    transition: border-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
 }
 
 /* State-layer ring around radio */
@@ -266,7 +266,7 @@
     border-radius: 50%;
     background-color: var(--zk-color-primary);
     pointer-events: none;
-    transition: transform var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+    transition: transform var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
 }
 
 /* ── Label text ───────────────────────────────────────────────────────────── */
@@ -400,7 +400,7 @@
     flex-shrink: 0;
     margin: 13px 4px;  /* vertical: centers 14px track in 40px touch area */
     transition:
-        background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+        background-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
 }
 
 /* State-layer halo: 38px circle centered on the thumb, follows its travel */
@@ -418,7 +418,7 @@
     pointer-events: none;
     transition:
         opacity var(--zk-motion-duration-short2) var(--zk-motion-easing-standard),
-        left var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+        left var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
 }
 
 /* Thumb (knob) — 20px, overhangs the 14px track by 3px on every side */
@@ -436,8 +436,8 @@
     display: block;
     background-image: none;
     transition:
-        left var(--zk-motion-duration-short3) var(--zk-motion-easing-standard),
-        background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+        left var(--zk-motion-duration-standard) var(--zk-motion-easing-standard),
+        background-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
 }
 
 /* Hover state-layer (focus-visible opacity comes from the base .z-checkbox rule) */
@@ -511,7 +511,7 @@
     flex-shrink: 0;
     margin: 0;
     transition:
-        background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+        background-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
 }
 
 /* Cancel out the default mold ::before (checkbox state-layer ring) */

@@ -17,7 +17,7 @@
     background-color: var(--zk-color-surface);
     cursor: text;
     box-sizing: border-box;
-    transition: border-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+    transition: border-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
 }
 
 .z-chosenbox:hover {
@@ -66,7 +66,7 @@
     border-radius: 50%;
     cursor: pointer;
     flex-shrink: 0;
-    transition: background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+    transition: background-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
 }
 
 .z-chosenbox-button:hover {
@@ -140,7 +140,7 @@
     font-size: var(--zk-typescale-body-medium-size);
     color: var(--zk-color-on-surface);
     box-sizing: border-box;
-    transition: background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+    transition: background-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
 }
 
 .z-chosenbox-option:hover,

@@ -15,7 +15,7 @@
     cursor: pointer;
     box-sizing: border-box;
     outline: none;
-    transition: border-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+    transition: border-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
 }
 
 .z-cascader:hover {
@@ -134,7 +134,7 @@
     font-size: var(--zk-typescale-body-medium-size);
     color: var(--zk-color-on-surface);
     box-sizing: border-box;
-    transition: background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+    transition: background-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
 }
 
 .z-cascader-item:hover,

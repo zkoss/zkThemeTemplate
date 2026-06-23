@@ -59,7 +59,7 @@
     padding: var(--zk-spacing-2) var(--zk-spacing-3);
     box-shadow: var(--zk-elevation-3);
     opacity: 0;
-    transition: opacity var(--zk-motion-duration-short3) var(--zk-motion-easing-legacy);
+    transition: opacity var(--zk-motion-duration-standard) var(--zk-motion-easing-legacy);
 }
 
 /* Progressive toolbar reveal */

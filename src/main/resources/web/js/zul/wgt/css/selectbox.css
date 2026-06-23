@@ -39,8 +39,8 @@
 
     /* Transition */
     transition:
-        border-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard),
-        box-shadow var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+        border-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard),
+        box-shadow var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
 }
 
 /* Remove IE dropdown arrow */
@@ -97,7 +97,7 @@
     .z-selectbox::picker-icon {
         color: var(--zk-color-on-surface-variant);
         font-size: 16px;
-        transition: transform var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+        transition: transform var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
     }
 
     .z-selectbox:open::picker-icon {
@@ -123,10 +123,10 @@
         opacity: 0;
         transform: translateY(-4px);
         transition:
-            opacity var(--zk-motion-duration-short3) var(--zk-motion-easing-standard),
-            transform var(--zk-motion-duration-short3) var(--zk-motion-easing-standard),
-            display var(--zk-motion-duration-short3) allow-discrete,
-            overlay var(--zk-motion-duration-short3) allow-discrete;
+            opacity var(--zk-motion-duration-standard) var(--zk-motion-easing-standard),
+            transform var(--zk-motion-duration-standard) var(--zk-motion-easing-standard),
+            display var(--zk-motion-duration-standard) allow-discrete,
+            overlay var(--zk-motion-duration-standard) allow-discrete;
     }
 
     .z-selectbox:open::picker(select) {
@@ -152,7 +152,7 @@
         font-family: var(--zk-typescale-font-family);
         color: var(--zk-color-on-surface);
         cursor: pointer;
-        transition: background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+        transition: background-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
     }
 
     .z-selectbox option:hover,

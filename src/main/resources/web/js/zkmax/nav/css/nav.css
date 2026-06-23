@@ -59,8 +59,8 @@
     overflow: hidden;
     cursor: pointer;
     transition:
-        color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard),
-        background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+        color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard),
+        background-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
 }
 
 /* State layer */
@@ -160,7 +160,7 @@
     margin-left: auto;
     flex-shrink: 0;
     opacity: 0.6;
-    transition: transform var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+    transition: transform var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
 }
 
 .z-nav-open > .z-nav-content::after {

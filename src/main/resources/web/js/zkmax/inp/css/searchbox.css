@@ -37,7 +37,7 @@
     box-sizing: border-box;
     cursor: pointer;
     outline: none;
-    transition: border-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+    transition: border-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
 }
 
 .z-searchbox:hover {
@@ -82,8 +82,8 @@
     color: var(--zk-color-on-surface-variant);
     cursor: pointer;
     border-radius: var(--zk-shape-corner-full);
-    transition: color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard),
-                background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+    transition: color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard),
+                background-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
 }
 
 .z-searchbox > .z-searchbox-icon:hover {
@@ -159,7 +159,7 @@
     font-family: inherit;
     font-size: inherit;
     outline: none;
-    transition: border-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+    transition: border-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
 }
 
 .z-searchbox-search:focus {
@@ -225,8 +225,8 @@
     border-radius: var(--zk-shape-corner-extra-small);
     background-color: transparent;
     box-sizing: border-box;
-    transition: border-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard),
-                background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+    transition: border-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard),
+                background-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
     position: relative;
 }
 

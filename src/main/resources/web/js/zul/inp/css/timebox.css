@@ -29,8 +29,8 @@
     min-height: var(--zk-control-height);
     box-sizing: border-box;
     transition:
-        border-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard),
-        box-shadow var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+        border-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard),
+        box-shadow var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
 }
 
 .z-timebox:hover {
@@ -125,7 +125,7 @@
     cursor: pointer;
     color: var(--zk-color-on-surface-variant);
     text-decoration: none;
-    transition: background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+    transition: background-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
 }
 
 .z-timebox-icon:hover {

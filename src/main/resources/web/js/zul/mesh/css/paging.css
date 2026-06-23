@@ -51,8 +51,8 @@
     text-decoration: none;
     overflow: hidden;
     transition:
-        background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard),
-        color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+        background-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard),
+        color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
 }
 
 /* State layer overlay (::before for hover/press; ::after for SVG icons in nav buttons) */
@@ -201,7 +201,7 @@
     outline: none;
     padding: 0 var(--zk-spacing-1);
     box-sizing: border-box;
-    transition: border-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+    transition: border-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
 }
 
 .z-paging-input:hover {

@@ -175,7 +175,7 @@
     /* no block padding — the tab stretches to the strip height (height-sync) */
     padding: 0 var(--zk-spacing-4);
     cursor: pointer;
-    transition: color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+    transition: color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
 }
 
 /* MD3 state layer — primary-tinted overlay, invisible at rest */
@@ -243,7 +243,7 @@
     border-radius: var(--zk-shape-corner-full);
     color: var(--zk-color-on-surface-variant);
     cursor: pointer;
-    transition: background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+    transition: background-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
 }
 
 /* Lucide `x` mask — same icon panel/tabbox close buttons resolve to
@@ -287,8 +287,8 @@
     border-radius: var(--zk-shape-corner-full);
     color: var(--zk-color-on-surface-variant);
     cursor: pointer;
-    transition: background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard),
-                color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+    transition: background-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard),
+                color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
 }
 
 .z-goldenlayout .lm_controls > li:hover {
@@ -373,7 +373,7 @@
     transform: translate(-50%, -50%);
     background-color: var(--zk-splitter-pill-fill);
     border-radius: var(--zk-splitter-pill-radius);
-    transition: background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+    transition: background-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
 }
 
 .z-goldenlayout .lm_splitter.lm_horizontal::before {
@@ -396,7 +396,7 @@
     width: var(--zk-splitter-icon-size);
     height: var(--zk-splitter-icon-size);
     background-color: var(--zk-splitter-pill-icon);
-    transition: background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+    transition: background-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
 }
 
 .z-goldenlayout .lm_splitter.lm_horizontal::after {

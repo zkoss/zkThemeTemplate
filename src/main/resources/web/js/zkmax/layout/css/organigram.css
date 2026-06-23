@@ -91,9 +91,9 @@
     cursor: pointer;
     box-shadow: none;
     transition:
-        background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-legacy),
-        border-color var(--zk-motion-duration-short3) var(--zk-motion-easing-legacy),
-        box-shadow var(--zk-motion-duration-short3) var(--zk-motion-easing-legacy);
+        background-color var(--zk-motion-duration-standard) var(--zk-motion-easing-legacy),
+        border-color var(--zk-motion-duration-standard) var(--zk-motion-easing-legacy),
+        box-shadow var(--zk-motion-duration-standard) var(--zk-motion-easing-legacy);
 }
 
 /* ── Hover state (eligible items only) ─────────────────────────────────── */

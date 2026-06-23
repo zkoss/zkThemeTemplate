@@ -95,8 +95,8 @@
     overflow: hidden;
     background: transparent;
     transition:
-        color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard),
-        border-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+        color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard),
+        border-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
 }
 
 /* State layer */
@@ -175,7 +175,7 @@
     font-size: 12px;
     padding: 0;
     pointer-events: auto;
-    transition: background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+    transition: background-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
 }
 
 /* Closable tabs: trailing inset = half the 16px text inset — 16/4/8
@@ -235,7 +235,7 @@
     color: var(--zk-color-on-surface-variant);
     cursor: pointer;
     z-index: 1;
-    transition: background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+    transition: background-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
 }
 
 /* Directional edge anchors — buttons overlay the strip ends (c22b).
@@ -528,8 +528,8 @@
     overflow: hidden;
     user-select: none;
     transition:
-        color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard),
-        background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+        color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard),
+        background-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
 }
 
 .z-tabbox-accordion .z-tab::before {
@@ -609,7 +609,7 @@
     border-bottom: 2px solid var(--zk-color-on-surface-variant);
     transform: rotate(45deg);
     flex-shrink: 0;
-    transition: transform var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+    transition: transform var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
 }
 
 .z-tabbox-accordion .z-tab.z-tab-selected .z-tab-content::after {

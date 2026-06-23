@@ -40,8 +40,8 @@
     color: var(--zk-color-on-surface);
     outline: none;
     box-sizing: border-box;
-    transition: border-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard),
-                border-width var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+    transition: border-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard),
+                border-width var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
 }
 
 .z-combobox-input::placeholder {
@@ -101,9 +101,9 @@
     cursor: pointer;
     flex-shrink: 0;
     border-radius: 0 var(--zk-shape-input) var(--zk-shape-input) 0;
-    transition: color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard),
-                border-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard),
-                border-width var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+    transition: color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard),
+                border-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard),
+                border-width var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
     overflow: hidden;
 }
 
@@ -152,7 +152,7 @@
     font-size: var(--zk-typescale-body-medium-size);
     color: var(--zk-color-on-surface);
     cursor: pointer;
-    transition: background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+    transition: background-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -238,7 +238,7 @@
     right: 0;
     border-bottom: 1px solid var(--zk-color-outline);
     pointer-events: none;
-    transition: border-bottom-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+    transition: border-bottom-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
 }
 
 /* Animated focus indicator */

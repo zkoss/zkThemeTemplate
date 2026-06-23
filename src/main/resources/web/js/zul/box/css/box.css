@@ -139,8 +139,8 @@ td.z-splitter-outer {
     color: var(--zk-splitter-pill-icon);
     cursor: pointer;
     transition:
-        background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard),
-        color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+        background-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard),
+        color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
 }
 
 /* vertical bar (horizontal splitter): pill is 8px wide × 28px tall.

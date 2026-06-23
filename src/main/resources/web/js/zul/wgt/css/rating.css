@@ -35,9 +35,9 @@
     mask-position: center;
     mask-size: 24px 24px;
     transition:
-        background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard),
-        color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard),
-        transform var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+        background-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard),
+        color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard),
+        transform var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
     cursor: pointer;
     user-select: none;
 }

@@ -125,7 +125,7 @@
 .z-treerow {
     background-color: var(--zk-color-surface);
     border-bottom: 1px solid var(--zk-color-outline-variant);
-    transition: background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+    transition: background-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
     cursor: pointer;
 }
 
@@ -214,7 +214,7 @@
     font-size: 16px;
     border-radius: var(--zk-shape-corner-full);
     cursor: pointer;
-    transition: background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+    transition: background-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
 }
 
 .z-tree-icon:hover {
@@ -237,7 +237,7 @@
     mask-repeat: no-repeat;
     mask-position: center;
     transform: rotate(0deg);
-    transition: transform var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+    transition: transform var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
 }
 
 /* Suppress Font Awesome glyph — SVG mask is the visual */

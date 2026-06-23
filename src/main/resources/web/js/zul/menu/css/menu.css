@@ -134,7 +134,7 @@
     white-space: nowrap;
     position: relative;
     overflow: hidden;
-    transition: background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+    transition: background-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
 }
 
 /* State layer pseudo-element for menubar top-level items */
@@ -195,7 +195,7 @@
     white-space: nowrap;
     position: relative;
     overflow: hidden;
-    transition: background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+    transition: background-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
 }
 
 .z-menubar .z-menuitem > .z-menuitem-content::before {
@@ -334,7 +334,7 @@
     min-height: 36px;
     position: relative;
     overflow: hidden;
-    transition: background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+    transition: background-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
     box-sizing: border-box;
 }
 
@@ -452,7 +452,7 @@
     min-height: 36px;
     position: relative;
     overflow: hidden;
-    transition: background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+    transition: background-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
     box-sizing: border-box;
     min-width: unset;
 }
@@ -526,7 +526,7 @@
        (the bar is `surface-container`, not a colored surface — white would vanish). */
     color: var(--zk-color-on-surface);
     background-color: var(--zk-color-surface-container);
-    transition: background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+    transition: background-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
 }
 
 .z-menubar-scrollable:hover {

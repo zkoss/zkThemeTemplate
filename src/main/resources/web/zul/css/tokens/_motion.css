@@ -1,9 +1,9 @@
 /* MD3 Motion Tokens — --zk-motion-* */
 :root {
-    /* Duration */
+    /* Duration — MD3 canonical ladder (monotonic, see md.sys.motion.duration) */
     --zk-motion-duration-short1: 50ms;
     --zk-motion-duration-short2: 100ms;
-    --zk-motion-duration-short3: 250ms;
+    --zk-motion-duration-short3: 150ms;
     --zk-motion-duration-short4: 200ms;
     --zk-motion-duration-medium1: 250ms;
     --zk-motion-duration-medium2: 300ms;
@@ -11,6 +11,12 @@
     --zk-motion-duration-medium4: 400ms;
     --zk-motion-duration-long1: 450ms;
     --zk-motion-duration-long2: 500ms;
+
+    /* Standard transition duration — the theme's de-facto workhorse (state
+       layers, hovers, simple fades). Equals medium1 (250ms). Named separately
+       so the short1–4 ladder can stay true to MD3 instead of being bent to
+       250ms. Was previously the (non-monotonic) short3=250ms. */
+    --zk-motion-duration-standard: var(--zk-motion-duration-medium1);
 
     /* Easing */
     --zk-motion-easing-standard: cubic-bezier(0.4, 0, 0.2, 1);
@@ -26,5 +32,5 @@
        `::before` (hover/focus/pressed opacity). Composed from the primitives
        above so the whole family fades in lockstep. Controls that need a faster
        fade (checkbox/radio, short2) keep their own transition. */
-    --zk-state-layer-transition: opacity var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+    --zk-state-layer-transition: opacity var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
 }

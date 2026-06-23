@@ -56,8 +56,8 @@
     box-shadow: var(--zk-elevation-1);
     cursor: grab;
     transition:
-        box-shadow var(--zk-motion-duration-short3) var(--zk-motion-easing-standard),
-        transform   var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+        box-shadow var(--zk-motion-duration-standard) var(--zk-motion-easing-standard),
+        transform   var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
 }
 
 /* State-layer ring via box-shadow (MUI Slider pattern: 16% alpha, not MD3 8%) */

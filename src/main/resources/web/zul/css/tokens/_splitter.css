@@ -21,7 +21,7 @@
     --zk-splitter-bar-bg: var(--zk-color-surface-container);
     --zk-splitter-bar-bg-hover: color-mix(in srgb, var(--zk-color-primary) calc(var(--zk-state-hover-opacity) * 100%), var(--zk-color-surface-container));
     --zk-splitter-bar-bg-active: color-mix(in srgb, var(--zk-color-primary) calc(var(--zk-state-pressed-opacity) * 100%), var(--zk-color-surface-container));
-    --zk-splitter-transition: background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+    --zk-splitter-transition: background-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
 
     /* Actuator pill (cross-axis = bar thickness) */
     --zk-splitter-pill-length: 28px;

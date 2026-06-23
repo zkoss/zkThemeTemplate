@@ -24,7 +24,7 @@
     vertical-align: middle;
     cursor: pointer;
     transition:
-        border-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+        border-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
 }
 
 .z-colorbox:hover {
@@ -145,8 +145,8 @@
     color: var(--zk-color-on-surface-variant);
     background-color: transparent;
     transition:
-        background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard),
-        color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+        background-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard),
+        color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
 }
 
 .z-colorbox-paletteicon,

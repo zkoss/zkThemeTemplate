@@ -147,8 +147,8 @@
     font-size: 14px;
     cursor: pointer;
     opacity: 0;
-    transition: opacity var(--zk-motion-duration-short3) var(--zk-motion-easing-standard),
-                background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+    transition: opacity var(--zk-motion-duration-standard) var(--zk-motion-easing-standard),
+                background-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
     z-index: 2;
 }
 
@@ -210,7 +210,7 @@
 .z-row {
     background-color: var(--zk-color-surface);
     border-bottom: 1px solid var(--zk-color-outline-variant);
-    transition: background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+    transition: background-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
 }
 
 .z-row:last-child {

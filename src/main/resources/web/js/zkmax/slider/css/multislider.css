@@ -98,8 +98,8 @@
     box-shadow: var(--zk-elevation-1);
     cursor: grab;
     transition:
-        box-shadow var(--zk-motion-duration-short3) var(--zk-motion-easing-standard),
-        transform   var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+        box-shadow var(--zk-motion-duration-standard) var(--zk-motion-easing-standard),
+        transform   var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
 }
 
 /* State-layer ring (hover / focus) */
@@ -165,8 +165,8 @@
     opacity: 0;
     visibility: hidden;
     transition:
-        opacity var(--zk-motion-duration-short3) var(--zk-motion-easing-standard),
-        visibility 0s linear var(--zk-motion-duration-short3);
+        opacity var(--zk-motion-duration-standard) var(--zk-motion-easing-standard),
+        visibility 0s linear var(--zk-motion-duration-standard);
 }
 
 /* Horizontal: tooltip above thumb. Vertical: tooltip left of thumb.

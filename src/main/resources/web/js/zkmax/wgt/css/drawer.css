@@ -130,8 +130,8 @@
     font-size: 16px;
     cursor: pointer;
     overflow: hidden;
-    transition: background-color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard),
-                color var(--zk-motion-duration-short3) var(--zk-motion-easing-standard);
+    transition: background-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard),
+                color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
 }
 
 .z-drawer-close:hover {
