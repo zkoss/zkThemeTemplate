@@ -262,8 +262,12 @@ const FA_TO_LUCIDE = {
 //     on a step's error icon. Lucide only ships alert glyphs that wrap the "!" in a
 //     circle/triangle/octagon — but the stepbar marker is already a filled circle,
 //     so we need the bare "!" (mirrors the `z-icon-check` complete glyph).
+//     Strokes follow Lucide `circle-alert`'s inner "!" geometry — a vertical bar
+//     ending at the 12px box centre + a zero-length-line dot (`x2="12.01"`), round
+//     caps — but scaled to the check glyph's 6→17 vertical extent so the error and
+//     complete markers read at the same size inside the 24px circle.
 const CUSTOM_ICONS = {
-    'exclamation': '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" x2="12" y1="6" y2="13"/><line x1="12" x2="12.01" y1="17" y2="17"/></svg>',
+    'exclamation': '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" x2="12" y1="6" y2="12"/><line x1="12" x2="12.01" y1="17" y2="17"/></svg>',
 };
 
 function generateLucideIconsCSS(iconNames) {
