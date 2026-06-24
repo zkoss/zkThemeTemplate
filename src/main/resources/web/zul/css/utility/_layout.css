@@ -1,5 +1,26 @@
 /* MD3 Utility Classes — Layout (display, grid, flex, gap, sizing, overflow, position, truncation) */
 
+/* ============================================
+   Design principle: one utility = one CSS declaration; `display` is its own utility
+   --------------------------------------------
+   `display` is NEVER bundled into a layout-property utility. Always pair an explicit
+   display class with the property classes, e.g. `z-d-grid z-grid-cols-3 z-gap-4` or
+   `z-d-flex z-justify-center`.
+
+   Why not fold `display:grid` into `z-grid-cols-*` (since it's inert without it)?
+   - `gap`, `justify-*`, and `align-*` are valid on BOTH flex and grid containers.
+     `z-d-grid z-grid-cols-3 z-gap-4 z-justify-center` decorates a GRID — if
+     `z-justify-center` baked in `display:flex` it would clobber the grid display.
+     So display cannot be bundled into those at all.
+   - Keeping display standalone means no utility fights another's display, display can
+     change independently (e.g. responsive `z-d-block` → `z-d-grid` while `z-grid-cols-3`
+     stays put), and the call site self-documents (`z-d-grid z-grid-cols-3` reads as
+     "3-col grid"). Cost is one extra token; consistency (Tailwind model) outweighs it.
+   - Bundling only `z-grid-cols-*` would be safe but makes it the lone 2-property
+     exception and still wouldn't help the flex side — not worth fragmenting the model.
+   See doc/utility-display-bundling-decision.md.
+   ============================================ */
+
 @layer zk-utilities {
 
 /* ============================================
