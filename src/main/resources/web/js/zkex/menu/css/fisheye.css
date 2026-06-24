@@ -46,7 +46,7 @@
 /* ─── Label ───────────────────────────────────────────────────────────────── */
 .z-fisheye-text {
     font-size: 13px;
-    font-family: var(--zk-typescale-body-medium-font);
+    font-family: var(--zk-typescale-font-family);
     color: var(--zk-color-on-surface);
     text-align: center;
     white-space: nowrap;
