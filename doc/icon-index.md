@@ -67,6 +67,12 @@ These exist solely to absorb FontAwesome-style class names that ZK widget JS emi
 | `z-icon-times` | `x` |
 | `z-icon-cogs` | `settings` |
 
+## Custom glyphs (1 entries, from `scripts/build-css.js` `CUSTOM_ICONS`)
+
+Bare FA class names ZK widget JS emits that Lucide has no equivalent for (e.g. `z-step-error` → `z-icon-exclamation`). Drawn in the Lucide idiom.
+
+- `z-icon-exclamation`
+
 ## Lucide names (1947 entries, from `node_modules/lucide-static/icons/*.svg`)
 
 - `z-icon-a-arrow-down`

@@ -272,6 +272,86 @@ h1 { font-size: 22px; font-weight: var(--zk-font-weight-semibold); margin: 0 0 v
     cursor: pointer;
 }
 
+/* Vertical orientation — mirrors js/zkmax/wgt/css/stepbar.css.
+   Each .z-step is a COLUMN so the connector ::before stacks ABOVE the
+   content as a vertical stripe centred under the icon (not beside it). */
+.z-stepbar-vertical {
+    flex-direction: column;
+    align-items: flex-start;
+    width: auto;
+}
+.z-stepbar-vertical .z-step {
+    flex-direction: column;
+    align-items: flex-start;
+    flex: 0 1 auto;
+}
+.z-stepbar-vertical .z-step::before {
+    width: 2px;
+    height: auto;
+    min-height: var(--zk-spacing-6);
+    flex: 0 0 auto;
+    /* centre the 2px stripe under the 24px icon: (24 − 2) / 2 = 11px */
+    margin: 0 0 0 calc((24px - 2px) / 2);
+    align-self: auto;
+}
+.z-stepbar-vertical .z-step:first-child::before {
+    display: none;
+}
+.z-stepbar-vertical.z-stepbar-linear .z-step-active::before,
+.z-stepbar-vertical.z-stepbar-linear .z-step-complete::before {
+    background-color: var(--zk-color-primary);
+}
+
+/* Wrapped-label — mirrors js/zkmax/wgt/css/stepbar.css.
+   .z-step-content becomes a column (icon above title); the connector moves
+   to .z-step-content::before (left half) / ::after (right half), centred at
+   the circle's vertical midpoint and meeting at the step boundary. */
+.z-stepbar-wrapped-label {
+    align-items: flex-start; /* multi-line title must not shift icons/connectors */
+}
+.z-stepbar-wrapped-label .z-step {
+    flex: 1 1 0;
+}
+.z-stepbar-wrapped-label .z-step::before {
+    display: none;
+}
+.z-stepbar-wrapped-label .z-step-content {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    position: relative;
+}
+.z-stepbar-wrapped-label .z-step-content::before,
+.z-stepbar-wrapped-label .z-step-content::after {
+    content: '';
+    position: absolute;
+    height: 2px;
+    top: calc((24px - 2px) / 2); /* circle mid-height */
+    background-color: var(--zk-color-outline-variant);
+}
+.z-stepbar-wrapped-label .z-step-content::before {
+    left: 0;
+    right: calc(50% + 12px); /* to circle's left edge */
+}
+.z-stepbar-wrapped-label .z-step-content::after {
+    left: calc(50% + 12px); /* from circle's right edge */
+    right: 0;
+}
+.z-stepbar-wrapped-label .z-step:first-child .z-step-content::before,
+.z-stepbar-wrapped-label .z-step:last-child .z-step-content::after {
+    display: none;
+}
+.z-stepbar-wrapped-label.z-stepbar-linear .z-step-complete .z-step-content::before,
+.z-stepbar-wrapped-label.z-stepbar-linear .z-step-complete .z-step-content::after,
+.z-stepbar-wrapped-label.z-stepbar-linear .z-step-active .z-step-content::before {
+    background-color: var(--zk-color-primary);
+}
+.z-stepbar-wrapped-label .z-step-content > .z-step-title {
+    white-space: normal;
+    margin-top: var(--zk-spacing-2);
+}
+
 /* Glyph rendering — the contract does not depend on an icon font being
    available, so we draw the check and exclamation as simple inline SVG
    children of the icon node. The DOM is per mold/step.js:
@@ -451,6 +531,78 @@ h1 { font-size: 22px; font-weight: var(--zk-font-weight-semibold); margin: 0 0 v
                     <div class="z-step-content">
                         <span class="z-step-icon z-step-icon-empty"></span>
                         <span class="z-step-title">Third Step</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<section class="matrix-section">
+    <h2>Vertical orientation (orient="vertical" — covers vert-1…vert-10)</h2>
+    <div class="matrix-grid">
+
+        <div class="state-label">Vertical · active second</div>
+        <div class="state-cell">
+            <div class="z-stepbar z-stepbar-linear z-stepbar-vertical">
+                <div class="z-step z-step-complete">
+                    <div class="z-step-content">
+                        <span class="z-step-icon z-icon-check">
+                            <svg viewBox="0 0 24 24"><polyline points="5,12 10,17 19,7"/></svg>
+                        </span>
+                        <span class="z-step-title">First Step</span>
+                    </div>
+                </div>
+                <div class="z-step z-step-active">
+                    <div class="z-step-content">
+                        <span class="z-step-icon z-step-icon-empty"></span>
+                        <span class="z-step-title">Second Step</span>
+                    </div>
+                </div>
+                <div class="z-step">
+                    <div class="z-step-content">
+                        <span class="z-step-icon z-step-icon-empty"></span>
+                        <span class="z-step-title">Third Step</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<section class="matrix-section">
+    <h2>Wrapped label (wrappedLabels="true" — covers wrap-1…wrap-18)</h2>
+    <div class="matrix-grid">
+
+        <div class="state-label">Wrapped · active second</div>
+        <div class="state-cell">
+            <div class="z-stepbar z-stepbar-linear z-stepbar-wrapped-label" style="width:600px">
+                <div class="z-step z-step-complete">
+                    <div class="z-step-content">
+                        <span class="z-step-icon z-icon-check">
+                            <svg viewBox="0 0 24 24"><polyline points="5,12 10,17 19,7"/></svg>
+                        </span>
+                        <span class="z-step-title">Submit Order Details</span>
+                    </div>
+                </div>
+                <div class="z-step z-step-active">
+                    <div class="z-step-content">
+                        <span class="z-step-icon z-step-icon-empty"></span>
+                        <span class="z-step-title">Review and Confirm Your Purchase</span>
+                    </div>
+                </div>
+                <div class="z-step">
+                    <div class="z-step-content">
+                        <span class="z-step-icon z-step-icon-empty"></span>
+                        <span class="z-step-title">Payment Processing</span>
+                    </div>
+                </div>
+                <div class="z-step">
+                    <div class="z-step-content">
+                        <span class="z-step-icon z-step-icon-empty"></span>
+                        <span class="z-step-title">Done</span>
                     </div>
                 </div>
             </div>

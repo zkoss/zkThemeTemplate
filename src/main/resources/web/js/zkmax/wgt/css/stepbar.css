@@ -139,28 +139,32 @@
 }
 
 /* ── Vertical orientation ── */
+/*
+ * Vertical mode: the stepbar is a column of steps, and each .z-step is itself a
+ * column so its ::before connector stacks ABOVE .z-step-content — drawing a
+ * vertical line that joins this step's circle to the previous one. (A row-direction
+ * step would place the stripe beside the content, connecting nothing.) The stripe
+ * is centred under the icon via margin-left ≈ icon-radius − stroke/2.
+ */
 .z-stepbar-vertical {
     flex-direction: column;
+    align-items: flex-start;
 }
 
 .z-stepbar-vertical .z-step {
-    flex-direction: row;
+    flex-direction: column;
+    align-items: flex-start;
     flex: 0 1 auto;
 }
 
-/*
- * In vertical mode the connector pseudo-element becomes a vertical stripe.
- * Width ↔ height roles swap: width=2px (stroke), height=auto/flex:1 (fills gap).
- * The flex:1 is on the step itself (column flex context), so the ::before
- * needs to fill the column. We use a dedicated min-height and align-self:stretch.
- */
 .z-stepbar-vertical .z-step::before {
     width: 2px;
     height: auto;
-    min-height: var(--zk-spacing-4);
-    flex: 1;
-    margin: calc(-1 * var(--zk-spacing-3)) var(--zk-spacing-3) 0 var(--zk-spacing-3);
-    align-self: stretch;
+    min-height: var(--zk-spacing-6);
+    flex: 0 0 auto;
+    /* centre the 2px stripe under the 24px icon: (24 − 2) / 2 = 11px */
+    margin: 0 0 0 calc((24px - 2px) / 2);
+    align-self: auto;
 }
 
 .z-stepbar-vertical .z-step:first-child::before {
@@ -173,4 +177,85 @@
 
 .z-stepbar-vertical.z-stepbar-linear .z-step-complete::before {
     background-color: var(--zk-color-primary);
+}
+
+/* ── Wrapped-label mode ── */
+/*
+ * wrappedLabels="true": .z-step-content switches to a column (icon above title)
+ * and the connector moves off the inline .z-step::before onto absolutely-positioned
+ * .z-step-content::before (left half) / ::after (right half), centred at the circle's
+ * vertical midpoint. Each step is flex:1 so its content fills the slot edge-to-edge
+ * and adjacent connector halves meet at the step boundary, forming a continuous line.
+ */
+/*
+ * Top-align the steps (overriding the root's default `align-items: center`): a step
+ * whose title wraps to two lines is taller, and centring would push the shorter
+ * steps' icons DOWN relative to it — so the icons (and the connector segments pinned
+ * at the circle's mid-height) would sit at different heights and the line would jog.
+ * flex-start keeps every icon at the same top, so the connector stays unbroken.
+ */
+.z-stepbar-wrapped-label {
+    align-items: flex-start;
+}
+
+.z-stepbar-wrapped-label .z-step {
+    flex: 1 1 0;
+}
+
+/* The inline horizontal connector is suppressed; the line is drawn on the content. */
+.z-stepbar-wrapped-label .z-step::before {
+    display: none;
+}
+
+.z-stepbar-wrapped-label .z-step-content {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    position: relative;
+}
+
+.z-stepbar-wrapped-label .z-step-content::before,
+.z-stepbar-wrapped-label .z-step-content::after {
+    content: '';
+    position: absolute;
+    height: 2px;
+    /* circle mid-height: (circle 24px − stroke 2px) / 2 = 11px */
+    top: calc((24px - 2px) / 2);
+    background-color: var(--zk-color-outline-variant);
+    transition: background-color var(--zk-motion-duration-short2) var(--zk-motion-easing-standard);
+}
+
+/* Left half: from the step's left edge to the circle's left edge (12px = circle radius). */
+.z-stepbar-wrapped-label .z-step-content::before {
+    left: 0;
+    right: calc(50% + 12px);
+}
+
+/* Right half: from the circle's right edge to the step's right edge. */
+.z-stepbar-wrapped-label .z-step-content::after {
+    left: calc(50% + 12px);
+    right: 0;
+}
+
+/* No leading line on the first step, no trailing line on the last. */
+.z-stepbar-wrapped-label .z-step:first-child .z-step-content::before,
+.z-stepbar-wrapped-label .z-step:last-child .z-step-content::after {
+    display: none;
+}
+
+/*
+ * Lit connector: a complete step lights both halves (fully behind the cursor);
+ * the active step lights only its leading (left) half.
+ */
+.z-stepbar-wrapped-label.z-stepbar-linear .z-step-complete .z-step-content::before,
+.z-stepbar-wrapped-label.z-stepbar-linear .z-step-complete .z-step-content::after,
+.z-stepbar-wrapped-label.z-stepbar-linear .z-step-active .z-step-content::before {
+    background-color: var(--zk-color-primary);
+}
+
+/* Title stacks below the icon and wraps long labels. */
+.z-stepbar-wrapped-label .z-step-content > .z-step-title {
+    white-space: normal;
+    margin-top: var(--zk-spacing-2);
 }

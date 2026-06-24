@@ -984,3 +984,103 @@ test.describe('splitter-family', () => {
     expect(hovered, `west pill must not grow on hover (idle=${idle}px, hover=${hovered}px)`).toBeCloseTo(28, 0);
   });
 });
+
+// -------------------------------------------------------
+// Stepbar (skill-gaps 2026-06-23/24: error glyph, vertical, wrapped-label)
+// -------------------------------------------------------
+test.describe('stepbar', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto('/stepbar.zul');
+    await page.waitForLoadState('networkidle');
+  });
+
+  // error-4: ZK emits bare `z-icon-exclamation` for error steps; the theme's
+  // icon build must resolve a mask-image for it, else the glyph is invisible.
+  test('error-icon-glyph-renders', async ({ page }) => {
+    const mask = await page.evaluate(() => {
+      const icon = document.querySelector('.z-step-error .z-step-content > .z-step-icon') as HTMLElement;
+      if (!icon) return { found: false } as any;
+      const bs = getComputedStyle(icon, '::before');
+      return {
+        found: true,
+        classes: icon.className,
+        maskImage: bs.maskImage,
+        webkitMask: (bs as any).webkitMaskImage,
+        iconVar: getComputedStyle(icon).getPropertyValue('--_icon').trim(),
+      };
+    });
+    expect(mask.found, 'error step must exist in the preview').toBe(true);
+    const resolved = (mask.maskImage && mask.maskImage !== 'none') ||
+                     (mask.webkitMask && mask.webkitMask !== 'none');
+    expect(resolved, `error icon (${mask.classes}) must resolve a mask-image glyph; got mask-image:${mask.maskImage}, --_icon:"${mask.iconVar}"`).toBe(true);
+  });
+
+  // vert-2/vert-10: vertical step is a column; connector is a vertical stripe
+  // whose horizontal centre aligns with the icon centre (±2px).
+  test('vertical-connector-centered-under-icon', async ({ page }) => {
+    const m = await page.evaluate(() => {
+      const bar = document.querySelector('.z-stepbar-vertical');
+      if (!bar) return { found: false } as any;
+      const step = bar.querySelectorAll('.z-step')[1] as HTMLElement; // non-first → has connector
+      const before = getComputedStyle(step, '::before');
+      const icon = step.querySelector('.z-step-content > .z-step-icon') as HTMLElement;
+      const sr = step.getBoundingClientRect();
+      const ir = icon.getBoundingClientRect();
+      const w = parseFloat(before.width);
+      const h = parseFloat(before.height === 'auto' ? before.minHeight : before.height);
+      const ml = parseFloat(before.marginLeft);
+      return {
+        found: true,
+        stepFlexDir: getComputedStyle(step).flexDirection,
+        beforeW: w, beforeH: h,
+        connectorCenterX: sr.left + ml + w / 2,
+        iconCenterX: ir.left + ir.width / 2,
+      };
+    });
+    expect(m.found, 'vertical stepbar must exist in the preview').toBe(true);
+    expect(m.stepFlexDir, 'vertical step must be a column so the connector stacks above content').toBe('column');
+    expect(m.beforeH, `connector must be a vertical stripe (taller than wide): w=${m.beforeW} h=${m.beforeH}`).toBeGreaterThan(m.beforeW);
+    expect(Math.abs(m.connectorCenterX - m.iconCenterX), `connector center-x (${m.connectorCenterX}) must align with icon center-x (${m.iconCenterX})`).toBeLessThanOrEqual(2);
+  });
+
+  // wrap: wrapped-label stacks the title below the icon (content = column) and
+  // draws the connector on .z-step-content::before (not the inline .z-step::before).
+  test('wrapped-label-stacks-title-below-icon', async ({ page }) => {
+    const m = await page.evaluate(() => {
+      const bar = document.querySelector('.z-stepbar-wrapped-label');
+      if (!bar) return { found: false } as any;
+      const step = bar.querySelectorAll('.z-step')[1] as HTMLElement;
+      const content = step.querySelector('.z-step-content') as HTMLElement;
+      const icon = step.querySelector('.z-step-content > .z-step-icon') as HTMLElement;
+      const title = step.querySelector('.z-step-content > .z-step-title') as HTMLElement;
+      return {
+        found: true,
+        contentFlexDir: getComputedStyle(content).flexDirection,
+        iconBottom: icon.getBoundingClientRect().bottom,
+        titleTop: title.getBoundingClientRect().top,
+        contentBeforeContent: getComputedStyle(content, '::before').content,
+      };
+    });
+    expect(m.found, 'wrapped-label stepbar must exist in the preview').toBe(true);
+    expect(m.contentFlexDir, 'wrapped-label content must be a column (icon above title)').toBe('column');
+    expect(m.titleTop, `title (top=${m.titleTop}) must sit below the icon (bottom=${m.iconBottom})`).toBeGreaterThanOrEqual(m.iconBottom - 1);
+    expect(m.contentBeforeContent !== 'none', `connector must be drawn on .z-step-content::before; content:${m.contentBeforeContent}`).toBe(true);
+  });
+
+  // wrap-1c: a multi-line title must NOT shift its icon/connector vertically.
+  // All step icons (hence all connector segments) must share one center-Y, so the
+  // connector line stays unbroken regardless of how many lines each label wraps to.
+  test('wrapped-label-icons-share-one-baseline', async ({ page }) => {
+    const ys = await page.evaluate(() => {
+      const bar = document.querySelector('.z-stepbar-wrapped-label');
+      if (!bar) return null as any;
+      return [...bar.querySelectorAll('.z-step .z-step-icon')].map((icon) => {
+        const r = (icon as HTMLElement).getBoundingClientRect();
+        return Math.round(r.top + r.height / 2);
+      });
+    });
+    expect(ys, 'wrapped-label stepbar must exist').not.toBeNull();
+    const min = Math.min(...ys), max = Math.max(...ys);
+    expect(max - min, `all step icons must share one center-Y so connectors stay aligned; got ${JSON.stringify(ys)}`).toBeLessThanOrEqual(2);
+  });
+});
