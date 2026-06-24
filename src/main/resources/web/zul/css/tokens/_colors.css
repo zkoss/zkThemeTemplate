@@ -1,4 +1,16 @@
 /* MD3 Color Tokens — --zk-color-* — blue-indigo palette */
+/*
+ * Naming convention — the `on-` prefix (Material Design):
+ *   --zk-color-<x>      a BASE color: a fill / background / container.
+ *   --zk-color-on-<x>   the FOREGROUND (text / icon) color drawn ON TOP of
+ *                       --zk-color-<x>, chosen for legible contrast.
+ * They pair up:  background: var(--zk-color-light);  color: var(--zk-color-on-light);
+ *
+ * Not every base needs an `on-` partner. Add one only when content sits on the
+ * base AND its color isn't the universal white — e.g. light/dark need both
+ * (dark text on light, white text on dark), whereas success/warning/error use
+ * plain white text and share that implicit foreground.
+ */
 :root {
     /* Primary — #376fd0 blue */
     --zk-color-primary: #376fd0;
@@ -27,6 +39,13 @@
 
     /* Success (main — filled controls; status-success is the lighter accent) */
     --zk-color-success: #2e7d32;
+
+    /* Neutral (light/dark filled-control variants — e.g. .z-button-light/-dark) */
+    --zk-color-light: #f5f5f5;
+    --zk-color-on-light: #333333;
+    --zk-color-light-outline: #e0e0e0;
+    --zk-color-dark: #212121;
+    --zk-color-on-dark: #ffffff;
 
     /* Surface & Background */
     --zk-color-background: #ffffff;
