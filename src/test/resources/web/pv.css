@@ -1,51 +1,6 @@
 /* Preview page layout — pv-* classes only, not part of the ZK theme */
 
 /* -------------------------------------------------------
-   State Gallery — layout helpers
-   ------------------------------------------------------- */
-
-.pv-section {
-    margin-bottom: 32px;
-}
-
-.pv-section-title {
-    font-size: 13px;
-    font-weight: 700;
-    color: var(--zk-color-on-surface-variant);
-    margin-bottom: 12px;
-    padding-bottom: 8px;
-    border-bottom: 1px solid var(--zk-color-outline-variant);
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-}
-
-.pv-state-gallery {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 24px;
-    align-items: flex-start;
-    padding: 16px 0;
-    margin-bottom: 8px;
-}
-
-.pv-state-col {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-    min-width: 80px;
-}
-
-.pv-state-label {
-    font-size: 11px;
-    font-weight: 600;
-    color: var(--zk-color-outline);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    text-align: center;
-}
-
-/* -------------------------------------------------------
    State-gallery grid (label column + N equal data columns)
    ------------------------------------------------------- */
 

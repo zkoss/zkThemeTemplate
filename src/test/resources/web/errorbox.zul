@@ -1,19 +1,18 @@
 <?page title="Errorbox" contentType="text/html;charset=UTF-8"?>
 <zk xmlns:h="native">
-<h:link rel="stylesheet" href="pv.css"/>
 <div sclass="z-p-8">
     <div sclass="z-border-bottom z-text-xl z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Errorbox</div>
 
-    <div sclass="pv-section">
-        <div sclass="pv-section-title">Errorbox — State Gallery</div>
+    <div sclass="z-mb-8">
+        <div sclass="z-text-md z-fw-bold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-3">Errorbox — State Gallery</div>
 
-        <div sclass="pv-state-gallery pv-variant-default">
+        <div sclass="z-d-flex z-flex-wrap z-gap-6 z-align-start z-py-4 z-mb-2">
             <!-- A real errorbox always carries all three parts: the pointer
                  beak, the warning icon, and the close button. There is no
                  "no-arrow" or "no-close" variant, so the gallery shows the one
                  canonical structure (mirrors zul.inp.Errorbox#redraw). -->
-            <div sclass="pv-state-col">
-                <div sclass="pv-state-label">Pointer + icon + close</div>
+            <div sclass="z-d-flex z-flex-col z-align-center z-gap-2">
+                <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-center z-text-secondary">Pointer + icon + close</div>
                 <h:div class="z-errorbox" style="position:relative;width:260px;">
                     <h:div class="z-errorbox-pointer z-errorbox-down" style="bottom:-4px;left:120px;"/>
                     <h:i class="z-errorbox-icon z-icon-triangle-alert"/>

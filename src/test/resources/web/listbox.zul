@@ -1,15 +1,14 @@
 <?page title="Listbox" contentType="text/html;charset=UTF-8"?>
 <zk xmlns:h="native">
-<h:link rel="stylesheet" href="pv.css"/>
 <div sclass="z-p-8">
     <div sclass="z-border-bottom z-text-xl z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Listbox</div>
 
-    <div sclass="pv-section">
-        <div sclass="pv-section-title">Listbox — State Gallery</div>
+    <div sclass="z-mb-8">
+        <div sclass="z-text-md z-fw-bold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-3">Listbox — State Gallery</div>
 
-        <div sclass="pv-state-gallery pv-variant-default">
-            <div sclass="pv-state-col">
-                <div sclass="pv-state-label">Row States</div>
+        <div sclass="z-d-flex z-flex-wrap z-gap-6 z-align-start z-py-4 z-mb-2">
+            <div sclass="z-d-flex z-flex-col z-align-center z-gap-2">
+                <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-center z-text-secondary">Row States</div>
                 <listbox width="280px">
                     <listhead><listheader label="Name"/><listheader label="Role"/></listhead>
                     <listitem>
@@ -28,9 +27,9 @@
             </div>
         </div>
 
-        <div sclass="pv-state-gallery pv-variant-checkmark">
-            <div sclass="pv-state-col">
-                <div sclass="pv-state-label">Checkmark (multiple — checkbox)</div>
+        <div sclass="z-d-flex z-flex-wrap z-gap-6 z-align-start z-py-4 z-mb-2">
+            <div sclass="z-d-flex z-flex-col z-align-center z-gap-2">
+                <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-center z-text-secondary">Checkmark (multiple — checkbox)</div>
                 <listbox width="280px" multiple="true" checkmark="true">
                     <listhead><listheader label="Name"/><listheader label="Role"/></listhead>
                     <listitem>
@@ -47,8 +46,8 @@
                     </listitem>
                 </listbox>
             </div>
-            <div sclass="pv-state-col">
-                <div sclass="pv-state-label">Checkmark (single — radio)</div>
+            <div sclass="z-d-flex z-flex-col z-align-center z-gap-2">
+                <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-center z-text-secondary">Checkmark (single — radio)</div>
                 <listbox width="280px" checkmark="true">
                     <listhead><listheader label="Name"/><listheader label="Role"/></listhead>
                     <listitem>

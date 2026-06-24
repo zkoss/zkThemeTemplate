@@ -1,6 +1,5 @@
 <?page title="Notification" contentType="text/html;charset=UTF-8"?>
 <zk xmlns:h="native">
-<h:link rel="stylesheet" href="pv.css"/>
 <zscript><![CDATA[
     import org.zkoss.zk.ui.util.*;
     import org.zkoss.zul.*;
@@ -8,26 +7,26 @@
 <div sclass="z-p-8">
     <div sclass="z-border-bottom z-text-xl z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Notification</div>
 
-    <div sclass="pv-section">
-        <div sclass="pv-section-title">Notification — State Gallery</div>
+    <div sclass="z-mb-8">
+        <div sclass="z-text-md z-fw-bold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-3">Notification — State Gallery</div>
 
-        <div sclass="pv-state-gallery pv-variant-default">
-            <div sclass="pv-state-col">
-                <div sclass="pv-state-label">Info</div>
+        <div sclass="z-d-flex z-flex-wrap z-gap-6 z-align-start z-py-4 z-mb-2">
+            <div sclass="z-d-flex z-flex-col z-align-center z-gap-2">
+                <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-center z-text-secondary">Info</div>
                 <h:div class="z-notification z-notification-info" style="position:relative;">
                     <h:i class="z-notification-icon z-icon-info"/>
                     <h:div class="z-notification-content">Info notification message</h:div>
                 </h:div>
             </div>
-            <div sclass="pv-state-col">
-                <div sclass="pv-state-label">Warning</div>
+            <div sclass="z-d-flex z-flex-col z-align-center z-gap-2">
+                <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-center z-text-secondary">Warning</div>
                 <h:div class="z-notification z-notification-warning" style="position:relative;">
                     <h:i class="z-notification-icon z-icon-circle-alert"/>
                     <h:div class="z-notification-content">Warning notification message</h:div>
                 </h:div>
             </div>
-            <div sclass="pv-state-col">
-                <div sclass="pv-state-label">Error</div>
+            <div sclass="z-d-flex z-flex-col z-align-center z-gap-2">
+                <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-center z-text-secondary">Error</div>
                 <h:div class="z-notification z-notification-error" style="position:relative;">
                     <h:i class="z-notification-icon z-icon-circle-x"/>
                     <h:div class="z-notification-content">Error notification message</h:div>
