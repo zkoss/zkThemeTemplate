@@ -8,6 +8,7 @@
     "watch": "node scripts/watch-css.js",
     "minify": "cleancss -o target/classes/web/marble/css/marble.min.css target/classes/web/marble/css/marble.css",
     "lint:css": "stylelint \"src/main/resources/web/**/*.css\"",
+    "audit:css": "bash .claude/skills/css-theme-audit/scripts/audit-css.sh",
     "screenshot:test": "playwright test --config src/test/playwright/playwright.config.ts",
     "screenshot:update": "playwright test --config src/test/playwright/playwright.config.ts --update-snapshots"
   },

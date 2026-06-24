@@ -2,6 +2,8 @@
 
 > 對 `marble` 主題所有 CSS(tokens / utility / 元件 CSS,含 zul + zkmax + zkex)做的一次性回顧檢查:重複變數、多餘定義、硬編碼值與其他不必要項目。
 > 產出日期:2026-06-15。檢查工具:`stylelint` + `rg`(ripgrep)變數引用計數。
+>
+> **這是一次性快照。** 要對(新)主題重跑同樣的檢查,請用 `css-theme-audit` skill(方法論 + `scripts/audit-css.sh` 機械檢查),或執行 `npm run audit:css`。本報告為該流程的範例輸出。
 
 ## 摘要
 
