@@ -52,6 +52,15 @@
     grid-template-columns: repeat(auto-fit, minmax(min(var(--zk-grid-min, 180px), 100%), 1fr));
 }
 
+/* Cell-size steps for .z-grid-fill — set the auto-fit minimum by class instead of
+   an inline `style="--zk-grid-min: …"`. Compose with .z-d-grid .z-grid-fill, e.g. a
+   dense, uniform gallery: `sclass="z-d-grid z-grid-fill z-grid-fill-xs z-gap-3"`.
+   General-purpose: icon galleries, chip clouds, avatar/thumbnail grids, KPI tiles. */
+.z-grid-fill-xs { --zk-grid-min: 96px;  }
+.z-grid-fill-sm { --zk-grid-min: 140px; }
+.z-grid-fill-lg { --zk-grid-min: 240px; }
+.z-grid-fill-xl { --zk-grid-min: 320px; }
+
 /* ============================================
    Flex — direction & wrap
    ============================================ */

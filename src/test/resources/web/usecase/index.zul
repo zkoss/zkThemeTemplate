@@ -139,6 +139,7 @@
                 <nav label="Utility CSS" open="@load(vm.openNavLabel eq 'Utility CSS')">
                     <navitem label="Colors"             selected="@load(vm.currentPage eq '~./utility/colors.zul')" onClick="@command('navigate', page='~./utility/colors.zul')" />
                     <navitem label="Typography"         selected="@load(vm.currentPage eq '~./utility/typography.zul')" onClick="@command('navigate', page='~./utility/typography.zul')" />
+                    <navitem label="Icons"              selected="@load(vm.currentPage eq '~./utility/icons.zul')" onClick="@command('navigate', page='~./utility/icons.zul')" />
                     <navitem label="Spacing"            selected="@load(vm.currentPage eq '~./utility/spacing.zul')" onClick="@command('navigate', page='~./utility/spacing.zul')" />
                     <navitem label="Stack"              selected="@load(vm.currentPage eq '~./utility/stack.zul')" onClick="@command('navigate', page='~./utility/stack.zul')" />
                     <navitem label="Layout"             selected="@load(vm.currentPage eq '~./utility/layout.zul')" onClick="@command('navigate', page='~./utility/layout.zul')" />
