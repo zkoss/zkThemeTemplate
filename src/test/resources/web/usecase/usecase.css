@@ -35,32 +35,8 @@ body {
     border-right: 1px solid var(--zk-color-outline-variant);
 }
 
-/* ============================================
-   Compact-density demo
-   ============================================ */
-/* Live demo of the whole-app data-dense mode (doc/data-dense-mode.md). The sidebar
-   switch toggles this class on the document root (see UseCaseVM.toggleCompactMode).
-   It MUST be scoped to :root (the <html> element), not <body>: the size aliases
-   (--zk-control-height, --zk-input-height, --zk-toolbar-height, …) are declared at
-   :root as var(--zk-control-height-*) chains and are substituted *at :root* then
-   inherited frozen. A body-scoped override of the leaf rungs would never re-resolve
-   those aliases, so inputs/toolbars/headers would stay full-size. Declaring the
-   override on the same element as the aliases makes them re-resolve. :root.<class>
-   also wins the cascade over the bare :root defaults and reaches body-appended popups.
-   Values mirror doc/marble-compact.css. */
-:root.m-density-compact {
-    --zk-control-height-xs: 24px;
-    --zk-control-height-sm: 28px;
-    --zk-control-height-md: 32px;
-    --zk-control-height-lg: 40px;
-    --zk-control-height-xl: 48px;
-    --zk-button-height: 30px;
-    --zk-button-height-lg: 38px;
-    --zk-menuitem-height: 30px;
-    --zk-data-row-min-height: 36px;
-    --zk-header-padding-y: 8px;
-    --zk-grid-cell-padding: 6px 12px;
-    --zk-listbox-cell-padding: 6px 12px;
-    --zk-tree-cell-padding: 4px 12px;
-}
+/* The sidebar "Compact density" switch drives the theme's own data-dense mode via
+   UseCaseVM.toggleCompactMode → MarbleDensity.apply(...), which sets data-density on
+   <html>. The [data-density="compact"] rule itself ships in the theme
+   (tokens/_sizing.css), so there is nothing density-related to define here. */
 

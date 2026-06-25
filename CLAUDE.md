@@ -141,7 +141,7 @@ Located in `doc/` directory:
 | [verification-harness-decisions.md](doc/verification-harness-decisions.md) | Decision records: outcome-driven contracts (DR-1), dual-gate VERIFIED (DR-2) |
 | [css-audit-report.md](doc/css-audit-report.md) | One-time CSS hygiene audit (worked example). Re-run via the `css-theme-audit` skill / `npm run audit:css` |
 | [responsive-design.md](doc/responsive-design.md) | Responsive layout: `z-grid-fill` auto-fit utility + State Matrix mobile card-reflow; why not Bootstrap Grid |
-| [data-dense-mode.md](doc/data-dense-mode.md) | Whole-app compact density via `:root` token override; control-height ladder + semantic alias layer; ships `marble-compact.css` preset |
+| [data-dense-mode.md](doc/data-dense-mode.md) | Compact density via `data-density="compact"` attribute (whole-app or per-region); control-height ladder + semantic alias layer; `MarbleDensity` Java API; ships `marble-compact.css` tuning preset |
 | [mira/](doc/mira/) | 49 Mira HTML reference pages + MUI stylesheet (index-BnB_Ifri.css) |
 
 ### External CSS Reference

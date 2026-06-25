@@ -2,9 +2,10 @@
 
 Marble's defaults target general business UIs. Data-dense applications — ERP-class
 screens (iDempiere and similar) that pack many rows and fields into a viewport — need
-a tighter UI. Marble exposes this as a **whole-app density switch driven entirely by
-CSS variables**: override a small seed set at `:root` and the *entire* UI shrinks
-coherently. No forking, no per-component classes, no ZUL markup changes.
+a tighter UI. Marble exposes this as a **density attribute**: put `data-density="compact"`
+on an element and everything inside it shrinks coherently — the whole app (on `<html>`)
+or just one region (on any container). No forking, no per-component classes, and the only
+markup change is that one attribute.
 
 ## How it works
 
@@ -20,39 +21,50 @@ The density system has three layers, all defined in
 3. **Data-cell padding** — `--zk-grid-cell-padding`, `--zk-listbox-cell-padding`,
    `--zk-tree-cell-padding` (the biggest lever for table density).
 
-Every component's CSS binds to a rung or an alias — never a raw px. So re-pointing the
-seeds at `:root` cascades through the whole theme at once. This mirrors how Salesforce
-Lightning (Comfy/Compact) and Ant Design (`controlHeight` seed) deliver global density.
+Every component's CSS binds to a rung or an alias — never a raw px. Marble ships a
+`[data-density="compact"]` rule (in _sizing.css) that re-points all of them to their
+compact values, so the attribute cascades through the whole theme at once. This mirrors
+how Salesforce Lightning (Comfy/Compact) and Ant Design (`controlHeight` seed) deliver
+global density.
+
+> **Why the shipped rule uses literal values, not `var()` of a rung:** a var()-derived
+> alias declared at `:root` is substituted there and inherited *frozen*, so overriding a
+> rung alone would not re-size the aliases on a nested region. Listing the consumed tokens
+> as literals lets `data-density` work at ANY scope — see
+> [density-scoped-attribute-proposal.md](./density-scoped-attribute-proposal.md).
 
 ## Switching to compact
 
-Add the compact preset to **your application's** stylesheet, loaded **after** the
-Marble theme (equal-specificity `:root` rules are decided by load order). Either copy
-[marble-compact.css](./marble-compact.css) verbatim, or paste this block:
+**Whole app** — set the attribute on the document root (covers body-appended popups —
+menus, modal windows, notifications — too):
 
-```css
-:root {
-    /* control-height ladder */
-    --zk-control-height-xs: 24px;
-    --zk-control-height-sm: 28px;
-    --zk-control-height-md: 32px;   /* inputs, icon-button, list rows, menu items */
-    --zk-control-height-lg: 40px;   /* toolbar, menubar, tabs, panel/groupbox header, notification */
-    --zk-control-height-xl: 48px;   /* window header, FAB */
-    /* off-ladder semantic seeds */
-    --zk-button-height: 30px;
-    --zk-button-height-lg: 38px;
-    --zk-menuitem-height: 30px;     /* popup menu rows */
-    --zk-data-row-min-height: 36px; /* tree rows + grid/list paging bar */
-    --zk-header-padding-y: 8px;     /* window/panel header vertical padding */
-    /* data-cell padding */
-    --zk-grid-cell-padding: 6px 12px;
-    --zk-listbox-cell-padding: 6px 12px;
-    --zk-tree-cell-padding: 4px 12px;
-}
+```html
+<html data-density="compact">
 ```
 
-You only flip the **5 rungs + 4 off-ladder seeds + 3 padding knobs**. Everything else
-(inputs, headers, tabs, FAB, paging…) follows automatically through the alias layer.
+or, at runtime from Java (no JS string, no DOM detail), use the theme helper
+[MarbleDensity](../src/main/java/org/zkoss/theme/marble/MarbleDensity.java):
+
+```java
+MarbleDensity.apply(MarbleDensity.Density.COMPACT);                // whole app
+MarbleDensity.apply(myGridPanel, MarbleDensity.Density.COMPACT);   // one region
+```
+
+**One region** — set it on any container; it nests and a closer descendant can override
+it back to `comfortable`:
+
+```html
+<vlayout data-density="compact"> … a dense grid … </vlayout>
+```
+
+For a fixed whole-app *default*, prefer the attribute in your page template (or a CSS
+preset) over the Java call — the latter runs after first paint and can briefly flash. See
+the FOUC note in MarbleDensity's Javadoc.
+
+**Tuning the values** — the shipped compact values (below) are a balanced starting point.
+To change them, copy [marble-compact.css](./marble-compact.css) — it targets
+`html[data-density="compact"]`, one notch more specific than the shipped rule, so it wins
+regardless of load order — and edit any value.
 
 ## The full knob set
 

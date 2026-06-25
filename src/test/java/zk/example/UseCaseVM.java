@@ -5,7 +5,7 @@ import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Executions;
-import org.zkoss.zk.ui.util.Clients;
+import org.zkoss.theme.marble.MarbleDensity;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -104,17 +104,16 @@ public class UseCaseVM {
         return compactMode;
     }
 
-    /** Toggles the whole-app data-dense mode by adding/removing the m-density-compact
-        class on the document root (defined in usecase.css). The class must sit on the
-        same element as the :root token declarations so the var()-derived size aliases
-        (--zk-control-height, --zk-input-height, …) re-resolve; a body-scoped class would
-        leave those frozen at their :root values. See doc/data-dense-mode.md. */
+    /** Toggles the whole-app data-dense mode. Delegates to the theme's own
+        MarbleDensity helper, which sets data-density on the document root — the
+        same [data-density="compact"] knob Marble ships (tokens/_sizing.css), so the
+        demo dogfoods the real mechanism rather than a demo-only class.
+        See doc/data-dense-mode.md. */
     @Command
     @NotifyChange("compactMode")
     public void toggleCompactMode(@BindingParam("on") boolean on) {
         this.compactMode = on;
-        Clients.evalJavaScript(
-                "document.documentElement.classList.toggle('m-density-compact', " + on + ")");
+        MarbleDensity.apply(on ? MarbleDensity.Density.COMPACT : MarbleDensity.Density.COMFORTABLE);
     }
 
     @Command
