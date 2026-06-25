@@ -24,7 +24,7 @@
     font-size: var(--zk-typescale-body-medium-size);
     font-weight: var(--zk-typescale-body-medium-weight);
     width: 320px;
-    min-height: 48px;
+    min-height: var(--zk-notification-height);
     /* center vertically: min-height exceeds a single line + padding, so block
        layout top-aligns the text away from the centered icon (mirrors notification) */
     display: flex;

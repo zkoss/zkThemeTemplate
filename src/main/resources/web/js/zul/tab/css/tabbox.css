@@ -54,7 +54,7 @@
     background-color: var(--zk-color-surface);
     flex-shrink: 0;
     overflow: hidden;   /* ZK manages scroll via JS scroll buttons */
-    min-height: 48px;
+    min-height: var(--zk-tab-height);
     line-height: 1;
 }
 
@@ -66,7 +66,7 @@
     list-style: none;
     margin: 0;
     padding: 0;
-    min-height: 48px;
+    min-height: var(--zk-tab-height);
 }
 
 /* Spacer element ZK inserts */
@@ -82,7 +82,7 @@
     justify-content: center;
     list-style: none;
     flex-shrink: 0;   /* keeps natural width so ZK JS can detect overflow */
-    min-height: 48px;
+    min-height: var(--zk-tab-height);
     cursor: pointer;
     color: var(--zk-color-on-surface-variant);
     font-size: var(--zk-typescale-label-large-size);
@@ -260,7 +260,7 @@
 .z-tabbox-scroll > .z-tabbox-right-scroll {
     display: flex;
     width: 40px;
-    min-height: 48px;
+    min-height: var(--zk-tab-height);
 }
 
 /* Vertical scroll buttons: visible when overflow detected.
@@ -514,7 +514,7 @@
     display: flex;
     align-items: center;
     padding: var(--zk-spacing-2) var(--zk-spacing-4);
-    min-height: 48px;
+    min-height: var(--zk-tab-height);
     cursor: pointer;
     color: var(--zk-color-on-surface);
     background: var(--zk-color-surface);

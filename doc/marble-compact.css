@@ -1,0 +1,37 @@
+/* ─────────────────────────────────────────────────────────────────────────
+   Marble — Data-Dense (Compact) preset
+   ─────────────────────────────────────────────────────────────────────────
+   Drop this into YOUR application's stylesheet (or link it AFTER the Marble
+   theme bundle) to switch the whole UI to a compact, ERP-style density.
+
+   It only re-points the density seed tokens at :root. Every component binds
+   to these (or to an alias that derives from them), so the entire UI — inputs,
+   buttons, toolbars, menus, tabs, data rows, headers, FAB — shrinks together
+   and stays in proportion. Nothing else needs to change.
+
+   Load order matters: your :root and the theme's :root have equal specificity,
+   so this must load AFTER Marble's norm.css to win the cascade.
+
+   Tune any value to taste — these are a balanced starting point, not a law.
+   See doc/data-dense-mode.md for the full token map and rationale.
+   ───────────────────────────────────────────────────────────────────────── */
+:root {
+    /* control-height ladder (the seed every alias derives from) */
+    --zk-control-height-xs: 24px;   /* was 28 — sm buttons, close buttons */
+    --zk-control-height-sm: 28px;   /* was 32 — paging controls, window-close */
+    --zk-control-height-md: 32px;   /* was 40 — inputs, icon-button, list rows, menu items */
+    --zk-control-height-lg: 40px;   /* was 48 — toolbar, menubar, tabs, panel/groupbox header, notification */
+    --zk-control-height-xl: 48px;   /* was 56 — window header, FAB */
+
+    /* off-ladder semantic seeds (intentional MD figures; own knobs) */
+    --zk-button-height: 30px;       /* was 36 */
+    --zk-button-height-lg: 38px;    /* was 44 */
+    --zk-menuitem-height: 30px;     /* was 36 — popup menu rows */
+    --zk-data-row-min-height: 36px; /* was 52 — tree rows + grid/list paging bar */
+    --zk-header-padding-y: 8px;     /* was 16 — window/panel header vertical padding */
+
+    /* data-cell padding (the biggest density lever for tables) */
+    --zk-grid-cell-padding: 6px 12px;     /* was 16px all sides */
+    --zk-listbox-cell-padding: 6px 12px;  /* was 16px all sides */
+    --zk-tree-cell-padding: 4px 12px;     /* was 8px / 16px */
+}

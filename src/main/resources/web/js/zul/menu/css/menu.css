@@ -56,7 +56,7 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    min-height: 48px;
+    min-height: var(--zk-menubar-height);
     background-color: var(--zk-color-surface-container);
     color: var(--zk-color-on-surface);
     padding: 0 var(--zk-spacing-4);
@@ -77,7 +77,7 @@
     margin: 0;
     padding: 0;
     flex: 1;
-    min-height: 48px;
+    min-height: var(--zk-menubar-height);
 }
 
 /* All LIs inside menubar UL (both .z-menu and .z-menuitem at top level) */
@@ -124,7 +124,7 @@
     align-items: center;
     gap: var(--zk-spacing-1);
     padding: var(--zk-spacing-2) var(--zk-spacing-4);
-    min-height: 48px;
+    min-height: var(--zk-menubar-height);
     color: var(--zk-color-on-surface);
     font-size: var(--zk-typescale-title-small-size);
     font-weight: var(--zk-typescale-title-small-weight);
@@ -185,7 +185,7 @@
     align-items: center;
     gap: var(--zk-spacing-1);
     padding: 0 var(--zk-spacing-3);
-    min-height: 48px;
+    min-height: var(--zk-menubar-height);
     color: var(--zk-color-on-surface);
     font-size: var(--zk-typescale-title-small-size);
     font-weight: var(--zk-typescale-title-small-weight);
@@ -331,7 +331,7 @@
     text-decoration: none;
     user-select: none;
     white-space: nowrap;
-    min-height: 36px;
+    min-height: var(--zk-menuitem-height);
     position: relative;
     overflow: hidden;
     transition: background-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
@@ -449,7 +449,7 @@
     text-decoration: none;
     user-select: none;
     white-space: nowrap;
-    min-height: 36px;
+    min-height: var(--zk-menuitem-height);
     position: relative;
     overflow: hidden;
     transition: background-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);

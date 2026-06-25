@@ -48,7 +48,7 @@
     background: transparent;
     padding: 0 var(--zk-spacing-3);
     height: 100%;
-    min-height: 38px;
+    min-height: calc(var(--zk-input-height) - 2px);
     font-family: var(--zk-typescale-font-family);
     font-size: var(--zk-typescale-body-medium-size);
     color: var(--zk-color-on-surface);

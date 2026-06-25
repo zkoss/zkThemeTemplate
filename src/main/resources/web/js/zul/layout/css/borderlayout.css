@@ -349,7 +349,7 @@
 .z-south-collapsed {
     flex-direction: row;
     gap: var(--zk-spacing-2);
-    min-height: 48px;
+    min-height: var(--zk-control-height-lg);
     padding: 0 var(--zk-spacing-4);
 }
 

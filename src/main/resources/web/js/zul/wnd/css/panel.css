@@ -29,8 +29,8 @@
 .z-panel-header {
     display: flex;
     align-items: center;
-    padding: var(--zk-spacing-4);
-    min-height: 48px;
+    padding: var(--zk-header-padding-y) var(--zk-spacing-4);
+    min-height: var(--zk-panel-header-height);
     /* Title-mold renders the title as a BARE text node (not a .z-caption child),
        so the .z-caption-content/.z-label nowrap rules below don't reach it. Without
        nowrap a long title wraps to multiple lines and inflates the header height
@@ -84,8 +84,8 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 28px;
-    height: 28px;
+    width: var(--zk-control-height-xs);
+    height: var(--zk-control-height-xs);
     border: none;
     background: transparent;
     color: var(--zk-color-on-surface-variant);

@@ -8,7 +8,6 @@
    table a readable boundary. Never border + shadow together (MD3 outlined ≠ elevated).
    See doc/data-table-frame-rationale.md. */
 .z-grid {
-    --zk-grid-cell-padding: var(--zk-spacing-4);
     display: block;
     background-color: var(--zk-color-surface);
     overflow: hidden;

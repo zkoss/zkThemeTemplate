@@ -54,7 +54,9 @@
     cursor: pointer;
     flex-shrink: 0;
     /* State-layer ring for hover/focus */
-    margin: 11px;  /* centers 18px box inside 40px touch area */
+    /* Horizontal gap only; the wrapper's flex `align-items:center` handles vertical
+       centering, so the box stays centered at any --zk-control-height (compact mode). */
+    margin: 0 11px;
     transition:
         background-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard),
         border-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
@@ -237,8 +239,9 @@
     background-color: transparent;
     cursor: pointer;
     flex-shrink: 0;
-    /* 40×40 touch target via margin */
-    margin: 10px;
+    /* Horizontal gap only; wrapper flex `align-items:center` centers it vertically,
+       so it stays centered at any --zk-control-height (compact mode). */
+    margin: 0 10px;
     transition: border-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
 }
 
@@ -398,7 +401,9 @@
     overflow: visible;
     cursor: pointer;
     flex-shrink: 0;
-    margin: 13px 4px;  /* vertical: centers 14px track in 40px touch area */
+    /* Horizontal gap only; wrapper flex `align-items:center` centers the track
+       vertically, so it stays centered at any --zk-control-height (compact mode). */
+    margin: 0 4px;
     transition:
         background-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
 }

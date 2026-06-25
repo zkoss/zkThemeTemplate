@@ -30,7 +30,7 @@
     background-color: var(--zk-color-surface);
     padding: var(--zk-spacing-3) var(--zk-spacing-4) var(--zk-spacing-3) var(--zk-spacing-6);
     border-bottom: 1px solid var(--zk-color-outline-variant);
-    min-height: 56px;
+    min-height: var(--zk-window-header-height);
     display: flex;
     align-items: center;
 }

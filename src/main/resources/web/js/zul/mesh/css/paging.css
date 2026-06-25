@@ -37,8 +37,8 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-width: 32px;
-    height: 32px;
+    min-width: var(--zk-paging-control-size);
+    height: var(--zk-paging-control-size);
     padding: 0 var(--zk-spacing-1);
     border: none;
     background: transparent;
@@ -97,8 +97,8 @@
 /* ─── OS mold nav buttons (prev/next/first/last) ────────────────────────── */
 /* Nav items: li.z-paging-navigate > a.z-paging-button.z-paging-noborder */
 .z-paging-os ul > li.z-paging-navigate .z-paging-noborder {
-    width: 32px;
-    min-width: 32px;
+    width: var(--zk-paging-control-size);
+    min-width: var(--zk-paging-control-size);
     font-size: 0;               /* hide the text label */
 }
 
@@ -188,8 +188,8 @@
 .z-paging-input {
     display: inline-flex;
     align-items: center;
-    height: 32px;
-    min-height: 32px;
+    height: var(--zk-paging-control-size);
+    min-height: var(--zk-paging-control-size);
     width: 48px;
     text-align: center;
     border: 1px solid var(--zk-color-outline);

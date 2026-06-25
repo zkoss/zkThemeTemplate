@@ -183,14 +183,14 @@
     display: flex;
     align-items: center;
     gap: var(--zk-spacing-1);
-    padding: var(--zk-spacing-2) var(--zk-spacing-4);
+    padding: var(--zk-tree-cell-padding);
     font-size: var(--zk-typescale-body-medium-size);
     font-weight: var(--zk-typescale-body-medium-weight);
     color: var(--zk-color-on-surface);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    min-height: 52px;
+    min-height: var(--zk-data-row-min-height);
     box-sizing: border-box;
 }
 

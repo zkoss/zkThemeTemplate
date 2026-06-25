@@ -7,7 +7,6 @@
    shadow is invisible, so the border carries the boundary. See
    doc/data-table-frame-rationale.md. */
 .z-listbox {
-    --zk-listbox-cell-padding: var(--zk-spacing-4);
     display: block;
     background-color: var(--zk-color-surface);
     border-radius: var(--zk-shape-card);
@@ -532,7 +531,7 @@
     align-items: center;
     justify-content: center;
     padding: 0 var(--zk-spacing-4);
-    min-height: 52px;
+    min-height: var(--zk-data-row-min-height);
     border-top: 1px solid var(--zk-color-outline-variant);
     font-family: var(--zk-typescale-font-family);
     font-size: var(--zk-typescale-body-small-size);

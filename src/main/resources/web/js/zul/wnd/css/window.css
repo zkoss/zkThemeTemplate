@@ -47,11 +47,11 @@
 .z-window-header {
     display: flex;
     align-items: center;
-    padding: var(--zk-spacing-4);
+    padding: var(--zk-header-padding-y) var(--zk-spacing-4);
     border-bottom: 1px solid var(--zk-color-outline-variant);
     background-color: var(--zk-color-surface);
     flex-shrink: 0;
-    min-height: 56px;
+    min-height: var(--zk-window-header-height);
     position: relative;
     cursor: default;
     /* Title-mold renders the title as a BARE text node (not a .z-caption child),
@@ -109,8 +109,8 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 32px;
-    height: 32px;
+    width: var(--zk-control-height-sm);
+    height: var(--zk-control-height-sm);
     border: none;
     background: transparent;
     color: var(--zk-color-on-surface-variant);
