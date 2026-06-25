@@ -56,6 +56,13 @@ is: pick a different Lucide icon. The theme does not extend Lucide.
 is regenerated from `lucide-static` on every build. It is excluded from this
 rule by construction.
 
+**Region opt-out**: a block wrapped between `<!-- icon-lint:disable -->` and
+`<!-- icon-lint:enable -->` comments is exempt from Rule 2. This exists solely
+for the "FontAwesome-compat aliases" demo in `utility/icons.zul`, which
+intentionally renders the FA-style names ZK widget JS emits (to document the
+`FA_TO_LUCIDE` mapping). `check-icon-coverage.sh` honors these markers; do not
+use them to bypass the rule for ordinary preview content.
+
 ## Enforcement
 
 | Tool | Scope | When |

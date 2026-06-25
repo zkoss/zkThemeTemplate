@@ -15,6 +15,11 @@
 #   - icons-lucide.zul: the catalog page is auto-generated from lucide-static,
 #     so by construction every name is valid.
 #
+# Region opt-out:
+#   Lines between an `icon-lint:disable` marker and the next `icon-lint:enable`
+#   marker are skipped. Used for the FA-compat alias demo in utility/icons.zul,
+#   which intentionally renders the FA-style names ZK widget JS emits.
+#
 # Exit codes:
 #   0 — clean (all preview icons resolve to a real Lucide name)
 #   1 — at least one preview ZUL uses a non-Lucide name; details on stderr
@@ -49,17 +54,28 @@ bad_refs=0
 
 # Iterate every preview ZUL except the auto-generated lucide catalog.
 while IFS= read -r zul; do
-    # Extract every z-icon-<name> token. We accept the token wherever it appears
-    # (iconSclass, sclass, class, plain text), then dedupe per file.
-    while IFS=: read -r linenum name; do
-        total_refs=$((total_refs + 1))
-        if ! grep -qx "$name" "$VALID_FILE"; then
-            bad_refs=$((bad_refs + 1))
-            FAIL=1
-            rel="${zul#$PROJECT_ROOT/}"
-            echo "FAIL: $rel:$linenum — z-icon-$name is not a Lucide name" >&2
-        fi
-    done < <(grep -nEo 'z-icon-[a-z0-9-]+' "$zul" | sed -E 's/:z-icon-/:/')
+    rel="${zul#$PROJECT_ROOT/}"
+    linenum=0
+    in_disabled=0
+    # Read line by line so region markers (icon-lint:disable/enable) have
+    # full-line context. We accept z-icon-<name> tokens wherever they appear
+    # (iconSclass, sclass, class, plain text).
+    while IFS= read -r line || [ -n "$line" ]; do
+        linenum=$((linenum + 1))
+        case "$line" in
+            *icon-lint:disable*) in_disabled=1; continue ;;
+            *icon-lint:enable*)  in_disabled=0; continue ;;
+        esac
+        [ "$in_disabled" -eq 1 ] && continue
+        for name in $(printf '%s\n' "$line" | grep -oE 'z-icon-[a-z0-9-]+' | sed -E 's/^z-icon-//'); do
+            total_refs=$((total_refs + 1))
+            if ! grep -qx "$name" "$VALID_FILE"; then
+                bad_refs=$((bad_refs + 1))
+                FAIL=1
+                echo "FAIL: $rel:$linenum — z-icon-$name is not a Lucide name" >&2
+            fi
+        done
+    done < "$zul"
 done < <(find "$ZUL_DIR" -name '*.zul' ! -name 'icons-lucide.zul' | sort)
 
 if [ "$FAIL" -eq 0 ]; then
