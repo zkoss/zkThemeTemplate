@@ -1,0 +1,31 @@
+<?page title="Error" contentType="text/html;charset=UTF-8"?>
+<zk xmlns:h="native">
+<div sclass="z-p-8">
+    <div sclass="z-border-bottom z-text-xl z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Error</div>
+    <div sclass="z-mb-6">
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Client-Side Error</div>
+        <div sclass="z-py-3 z-d-flex z-gap-4 z-flex-wrap">
+            <button label="Trigger Error">
+                <attribute name="onClick">
+                    Clients.evalJavaScript("zk.error('Sample error message.')");
+                </attribute>
+            </button>
+            <button label="Trigger Multiple Errors">
+                <attribute name="onClick">
+                    Clients.evalJavaScript("zk.error('First error message.'); zk.error('Second error message.')");
+                </attribute>
+            </button>
+        </div>
+    </div>
+    <div sclass="z-mb-6">
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Server-Side Error</div>
+        <div sclass="z-py-3 z-d-flex z-gap-4 z-flex-wrap">
+            <button label="Throw Exception">
+                <attribute name="onClick">
+                    throw new RuntimeException("Sample server-side exception for testing error display.");
+                </attribute>
+            </button>
+        </div>
+    </div>
+</div>
+</zk>

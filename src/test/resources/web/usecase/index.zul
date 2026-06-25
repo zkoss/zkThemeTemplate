@@ -106,7 +106,7 @@
                     <navitem label="Vlayout"             selected="@load(vm.currentPage eq '~./vlayout.zul')" onClick="@command('navigate', page='~./vlayout.zul')" />
                 </nav>
                 <nav label="Feedback" open="@load(vm.openNavLabel eq 'Feedback')">
-                    <navitem label="Error"         selected="@load(vm.currentPage eq '~./error.zul')" onClick="@command('navigate', page='~./error.zul')" />
+                    <navitem label="Error"         selected="@load(vm.currentPage eq '~./runtime-error.zul')" onClick="@command('navigate', page='~./runtime-error.zul')" />
                     <navitem label="Errorbox"      selected="@load(vm.currentPage eq '~./errorbox.zul')" onClick="@command('navigate', page='~./errorbox.zul')" />
                     <navitem label="Loading"       selected="@load(vm.currentPage eq '~./loading.zul')" onClick="@command('navigate', page='~./loading.zul')" />
                     <navitem label="Loadingbar"    selected="@load(vm.currentPage eq '~./loadingbar.zul')" onClick="@command('navigate', page='~./loadingbar.zul')" />
