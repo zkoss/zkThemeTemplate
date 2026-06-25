@@ -3,15 +3,15 @@
        cols="${['Default']}"
        rowsTemplate="slider-horizontal-rows">
     <template name="slider-horizontal-rows">
-        <div sclass="pv-row">
+        <div sclass="z-d-contents">
             <div sclass="z-text-sm z-text-secondary">Default</div>
             <div><slider width="180px"/></div>
         </div>
-        <div sclass="pv-row">
+        <div sclass="z-d-contents">
             <div sclass="z-text-sm z-text-secondary">Sphere</div>
             <div><slider width="180px" mold="sphere"/></div>
         </div>
-        <div sclass="pv-row">
+        <div sclass="z-d-contents">
             <div sclass="z-text-sm z-text-secondary">Scale</div>
             <div><slider width="180px" mold="scale"/></div>
         </div>
@@ -22,11 +22,11 @@
        cols="${['Default']}"
        rowsTemplate="slider-vertical-rows">
     <template name="slider-vertical-rows">
-        <div sclass="pv-row">
+        <div sclass="z-d-contents">
             <div sclass="z-text-sm z-text-secondary">Default</div>
             <div><slider orient="vertical" height="120px"/></div>
         </div>
-        <div sclass="pv-row">
+        <div sclass="z-d-contents">
             <div sclass="z-text-sm z-text-secondary">Sphere</div>
             <div><slider orient="vertical" mold="sphere" height="120px"/></div>
         </div>

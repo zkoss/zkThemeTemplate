@@ -1,6 +1,5 @@
 <?page title="Inputs" contentType="text/html;charset=UTF-8"?>
 <zk xmlns:h="native">
-<h:link rel="stylesheet" href="pv.css"/>
 <zscript><![CDATA[
 java.util.Date sampleDate = new java.util.Date(125, 0, 15);
 java.util.Date sampleTime = new java.util.Date(0, 0, 1, 10, 30, 0);

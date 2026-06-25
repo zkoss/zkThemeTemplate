@@ -1,7 +1,6 @@
 <?page title="Absolutelayout" contentType="text/html;charset=UTF-8"?>
 <?component name="window" extends="window" border="normal" width="200px" height="120px"?>
 <zk xmlns:h="native">
-<h:link rel="stylesheet" href="pv.css"/>
 <div sclass="z-p-8">
     <div sclass="z-border-bottom z-text-xl z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Absolutelayout</div>
 

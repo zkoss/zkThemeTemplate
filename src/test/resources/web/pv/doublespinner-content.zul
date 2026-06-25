@@ -3,7 +3,7 @@
        cols="${['Default','Disabled','Readonly','Invalid','Inplace']}"
        rowsTemplate="doublespinner-rows">
     <template name="doublespinner-rows">
-        <div sclass="pv-row">
+        <div sclass="z-d-contents">
             <div sclass="z-text-sm z-text-secondary">With buttons</div>
             <div><doublespinner step="0.5"/></div>
             <div><doublespinner step="0.5" disabled="true"/></div>
@@ -11,7 +11,7 @@
             <div><doublespinner step="0.5" sclass="z-doublespinner-invalid"/></div>
             <div><doublespinner step="0.5" inplace="true" value="3.5"/></div>
         </div>
-        <div sclass="pv-row">
+        <div sclass="z-d-contents">
             <div sclass="z-text-sm z-text-secondary">No button</div>
             <div><doublespinner buttonVisible="false"/></div>
             <div><doublespinner buttonVisible="false" disabled="true"/></div>

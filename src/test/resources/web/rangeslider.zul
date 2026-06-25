@@ -1,6 +1,5 @@
 <?page title="Rangeslider" contentType="text/html;charset=UTF-8"?>
 <zk xmlns:h="native">
-<h:link rel="stylesheet" href="pv.css"/>
 <zscript><![CDATA[
     java.util.LinkedHashMap rangeMarks = new java.util.LinkedHashMap();
     rangeMarks.put(0, "Start");

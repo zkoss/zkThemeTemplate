@@ -3,7 +3,7 @@
        cols="${['Default','Disabled','Readonly','Invalid','Inplace']}"
        rowsTemplate="doublebox-rows">
     <template name="doublebox-rows">
-        <div sclass="pv-row">
+        <div sclass="z-d-contents">
             <div sclass="z-text-sm z-text-secondary">Value</div>
             <div><doublebox value="2.718"/></div>
             <div><doublebox value="2.718" disabled="true"/></div>
@@ -11,7 +11,7 @@
             <div><doublebox value="2.718" sclass="z-doublebox-invalid"/></div>
             <div><doublebox value="2.718" inplace="true"/></div>
         </div>
-        <div sclass="pv-row">
+        <div sclass="z-d-contents">
             <div sclass="z-text-sm z-text-secondary">Placeholder</div>
             <div><doublebox placeholder="Enter value"/></div>
             <div><doublebox placeholder="Enter value" disabled="true"/></div>

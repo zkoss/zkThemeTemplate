@@ -1,6 +1,5 @@
 <?page title="Messagebox" contentType="text/html;charset=UTF-8"?>
 <zk xmlns:h="native" xmlns:w="client">
-<h:link rel="stylesheet" href="pv.css"/>
 <zscript><![CDATA[
     String longmsg = "Stately, plump Buck Mulligan came from the stairhead," +
         " bearing a bowl of lather on which a mirror and a razor lay crossed. " +

@@ -3,17 +3,17 @@
        cols="${['Default','Disabled']}"
        rowsTemplate="colorbox-rows">
     <template name="colorbox-rows">
-        <div sclass="pv-row">
+        <div sclass="z-d-contents">
             <div sclass="z-text-sm z-text-secondary">Default (palette)</div>
             <div><colorbox/></div>
             <div><colorbox disabled="true"/></div>
         </div>
-        <div sclass="pv-row">
+        <div sclass="z-d-contents">
             <div sclass="z-text-sm z-text-secondary">With value</div>
             <div><colorbox color="#184dc6"/></div>
             <div><colorbox color="#184dc6" disabled="true"/></div>
         </div>
-        <div sclass="pv-row">
+        <div sclass="z-d-contents">
             <div sclass="z-text-sm z-text-secondary">Open swatch</div>
             <div><colorbox color="#990000"/></div>
             <div>—</div>

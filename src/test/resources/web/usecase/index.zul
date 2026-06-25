@@ -1,7 +1,5 @@
 <?page title="Marble Use Cases"?>
-<?link rel="stylesheet" type="text/css" href="~./usecase/usecase.css"?>
-<?link rel="stylesheet" type="text/css" href="~./pv.css"?>
-<zk>
+<?link rel="stylesheet" type="text/css" href="~./usecase/usecase.css"?><zk>
 <script src="http://localhost:50000/zk-live-reload.js" defer="true"/>
 <borderlayout height="100vh" viewModel="@id('vm') @init('zk.example.UseCaseVM')"
     onBookmarkChange="@command('handleBookmarkChange', bookmark=event.bookmark)">

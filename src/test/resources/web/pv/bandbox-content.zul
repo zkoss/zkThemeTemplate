@@ -3,7 +3,7 @@
        cols="${['Default','Disabled','Readonly','Invalid','Inplace']}"
        rowsTemplate="bandbox-rows">
     <template name="bandbox-rows">
-        <div sclass="pv-row">
+        <div sclass="z-d-contents">
             <div sclass="z-text-sm z-text-secondary">Default</div>
             <div><bandbox><bandpopup>Content</bandpopup></bandbox></div>
             <div><bandbox disabled="true"><bandpopup>Content</bandpopup></bandbox></div>
@@ -11,7 +11,7 @@
             <div><bandbox sclass="z-bandbox-invalid"><bandpopup>Content</bandpopup></bandbox></div>
             <div><bandbox inplace="true" value="Selected"><bandpopup>Content</bandpopup></bandbox></div>
         </div>
-        <div sclass="pv-row">
+        <div sclass="z-d-contents">
             <div sclass="z-text-sm z-text-secondary">No button</div>
             <div><bandbox buttonVisible="false"><bandpopup>Content</bandpopup></bandbox></div>
             <div><bandbox buttonVisible="false" disabled="true"><bandpopup>Content</bandpopup></bandbox></div>

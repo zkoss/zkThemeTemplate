@@ -2,7 +2,6 @@
 <?component name="hlayout" extends="hlayout" spacing="10px" ?>
 <?component name="vlayout" extends="vlayout" spacing="10px" ?>
 <zk xmlns:h="native">
-<h:link rel="stylesheet" href="pv.css"/>
 <zscript><![CDATA[
     import org.zkoss.zul.*;
     String[] strs = new String[20];

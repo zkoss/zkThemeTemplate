@@ -1,6 +1,5 @@
 <?page title="Chosenbox" contentType="text/html;charset=UTF-8"?>
 <zk xmlns:h="native">
-<h:link rel="stylesheet" href="pv.css"/>
 <zscript><![CDATA[
 ListModelList chosenModel = new ListModelList(new String[]{
     "Apple", "Banana", "Cherry", "Date", "Elderberry", "Fig", "Grape"

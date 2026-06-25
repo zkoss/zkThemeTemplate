@@ -22,7 +22,7 @@
        cols="${['Default','Disabled']}"
        rowsTemplate="cascader-rows">
     <template name="cascader-rows">
-        <div sclass="pv-row">
+        <div sclass="z-d-contents">
             <div sclass="z-text-sm z-text-secondary">Default</div>
             <div><cascader model="${cascaderModel}" width="200px"/></div>
             <div><cascader model="${cascaderModel}" disabled="true" width="200px"/></div>

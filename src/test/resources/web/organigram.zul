@@ -1,6 +1,5 @@
 <?page title="Organigram" contentType="text/html;charset=UTF-8"?>
 <zk xmlns:h="native">
-<h:link rel="stylesheet" href="pv.css"/>
 <zscript><![CDATA[
     DefaultTreeNode root = new DefaultTreeNode(null, new DefaultTreeNode[]{
         new DefaultTreeNode("Item1", new DefaultTreeNode[]{

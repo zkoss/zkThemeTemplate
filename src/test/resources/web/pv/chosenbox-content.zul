@@ -11,12 +11,12 @@
        cols="${['Default','Disabled']}"
        rowsTemplate="chosenbox-rows">
     <template name="chosenbox-rows">
-        <div sclass="pv-row">
+        <div sclass="z-d-contents">
             <div sclass="z-text-sm z-text-secondary">Multiple</div>
             <div><chosenbox model="${chosenModel}" width="200px"/></div>
             <div><chosenbox model="${chosenModel}" disabled="true" width="200px"/></div>
         </div>
-        <div sclass="pv-row">
+        <div sclass="z-d-contents">
             <div sclass="z-text-sm z-text-secondary">Creatable</div>
             <div><chosenbox creatable="true" noResultsText="No results" createMessage="Add new" width="200px"/></div>
             <div>—</div>

@@ -33,6 +33,7 @@
 .z-d-flex         { display: flex; }
 .z-d-inline-flex  { display: inline-flex; }
 .z-d-grid         { display: grid; }
+.z-d-contents     { display: contents; }
 
 /* ============================================
    Grid — template columns
@@ -81,6 +82,10 @@
 .z-grid-fill-sm { --zk-grid-min: 140px; }
 .z-grid-fill-lg { --zk-grid-min: 240px; }
 .z-grid-fill-xl { --zk-grid-min: 320px; }
+
+/* Grid — item placement: span every column (full grid width), e.g. a section
+   title sitting above a multi-column body. Tailwind parallel: `col-span-full`. */
+.z-grid-col-full { grid-column: 1 / -1; }
 
 /* ============================================
    Flex — direction & wrap
@@ -133,6 +138,8 @@
 .z-col-gap-2 { column-gap: var(--zk-spacing-2); }
 .z-col-gap-3 { column-gap: var(--zk-spacing-3); }
 .z-col-gap-4 { column-gap: var(--zk-spacing-4); }
+.z-col-gap-5 { column-gap: var(--zk-spacing-5); }
+.z-col-gap-6 { column-gap: var(--zk-spacing-6); }
 
 .z-row-gap-0 { row-gap: var(--zk-spacing-0); }
 .z-row-gap-1 { row-gap: var(--zk-spacing-1); }

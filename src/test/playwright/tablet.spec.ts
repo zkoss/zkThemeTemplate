@@ -99,13 +99,13 @@ test.describe('tablet-no-horizontal-overflow', () => {
 });
 
 // -------------------------------------------------------
-// On a phone the State Matrix must SCROLL horizontally, not squeeze its cells.
-// The matrix is a single `z-grid-cols-auto` grid with a `--zk-col-min` floor
-// (140px) inside an `overflow-x:auto` container: on a narrow viewport the columns
-// hold their min width so the grid overflows its OWN box and scrolls, keeping
-// each input usable — while the document never overflows (the scroll is
-// contained), so no phantom vertical scrollbar. Guards that the matrix container
-// is internally scrollable and the inputs stay usable.
+// On a phone the State Matrix must SCROLL horizontally, not collapse the document.
+// The matrix is a single `z-grid-cols-auto` grid inside a `z-overflow-x-auto`
+// container. Inputs render at their natural (min-content) width — they are not
+// stretched to fill — so when the columns don't fit a narrow viewport the grid
+// overflows its OWN box and scrolls, while the document never overflows (the
+// scroll is contained), so no phantom vertical scrollbar. Guards that the matrix
+// container stays internally scrollable and its inputs don't collapse to nothing.
 // -------------------------------------------------------
 test.describe('tablet-matrix-scroll-usable', () => {
   test('matrix scrolls horizontally and inputs stay usable on a phone', async ({ page }) => {
@@ -114,29 +114,41 @@ test.describe('tablet-matrix-scroll-usable', () => {
     await page.setViewportSize({ width: 390, height: 800 });
     await page.waitForTimeout(300);
     const r = await page.evaluate(() => {
-      const grid = document.querySelector('.pv-cols') as HTMLElement;
-      const combos = [...grid.querySelectorAll('.z-combobox')] as HTMLElement[];
+      const grid = document.querySelector('.z-grid-cols-auto') as HTMLElement;
+      const boxes = [...grid.querySelectorAll('.z-combobox')].map(c => c.getBoundingClientRect());
+      // worst horizontal overlap between two comboboxes sitting on the same row
+      let maxOverlap = 0;
+      for (let i = 0; i < boxes.length; i++)
+        for (let j = i + 1; j < boxes.length; j++) {
+          const a = boxes[i], b = boxes[j];
+          const sameRow = Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top) > 2;
+          if (sameRow)
+            maxOverlap = Math.max(maxOverlap, Math.min(a.right, b.right) - Math.max(a.left, b.left));
+        }
       return {
         overflow: grid.scrollWidth - grid.clientWidth,
-        minComboW: Math.min(...combos.map(c => Math.round(c.getBoundingClientRect().width))),
+        minComboW: Math.min(...boxes.map(b => Math.round(b.width))),
+        maxOverlap: Math.round(maxOverlap),
       };
     });
     // The matrix overflows its own box (so it scrolls) instead of squeezing.
     expect(r.overflow, `matrix should overflow→scroll (got ${r.overflow}px)`).toBeGreaterThan(50);
-    // Each combobox keeps a usable width (holds the --zk-col-min floor).
-    expect(r.minComboW, `narrowest combobox is ${r.minComboW}px`).toBeGreaterThanOrEqual(130);
+    // Each combobox renders at its natural width — inputs are no longer stretched
+    // to fill, so we assert they didn't collapse to zero (no fixed floor anymore).
+    expect(r.minComboW, `narrowest combobox is ${r.minComboW}px`).toBeGreaterThan(80);
+    // Columns size to their content (`--zk-col-min:min-content`), so inputs never
+    // overlap their neighbours on a narrow viewport — the grid scrolls instead.
+    expect(r.maxOverlap, `comboboxes overlap by ${r.maxOverlap}px`).toBeLessThanOrEqual(1);
   });
 });
 
 // -------------------------------------------------------
 // On a phone the row-LABEL column must stay readable. The matrix grid is
-// `auto repeat(N, minmax(--zk-col-min, 1fr))`; on a narrow viewport the firm
-// value columns overflow and leave no free space, so the `auto` label track can
-// only grow to its content if the label cell keeps a min-content floor. pv.css
-// applies `min-width:0` to the VALUE cells only (so width:100% inputs shrink) but
-// must NOT zero the first child — else the `auto` track collapses to 0 and the
-// label text is clipped/covered. Guards that exclusion (textbox has long labels
-// like "Placeholder" across 5 columns — the worst case).
+// `auto repeat(N, minmax(0, 1fr))`; the `auto` label track sizes to its content,
+// so on a narrow viewport the label cell keeps its min-content width while the
+// value columns overflow and the grid scrolls. Guards that the label text stays
+// readable and unclipped (textbox has long labels like "Placeholder" — the worst
+// case). Row wrappers are now `z-d-contents` (header is the first one, skipped).
 // -------------------------------------------------------
 test.describe('tablet-matrix-label-readable', () => {
   test('the row-label column keeps its width on a phone (not collapsed to 0)', async ({ page }) => {
@@ -145,9 +157,10 @@ test.describe('tablet-matrix-label-readable', () => {
     await page.setViewportSize({ width: 390, height: 800 });
     await page.waitForTimeout(300);
     const r = await page.evaluate(() => {
-      const grid = document.querySelector('.pv-cols') as HTMLElement;
-      // first cell of every data row = the label (DOM first child of each .pv-row)
-      const labels = [...grid.querySelectorAll('.pv-row')]
+      const grid = document.querySelector('.z-grid-cols-auto') as HTMLElement;
+      // Each row wrapper is a `z-d-contents` element; the first is the column-header
+      // row, so skip it. The label is the first child cell of each data row.
+      const labels = [...grid.querySelectorAll('.z-d-contents')].slice(1)
         .map(row => row.firstElementChild as HTMLElement)
         .filter(Boolean);
       const widths = labels.map(l => Math.round(l.getBoundingClientRect().width));

@@ -3,7 +3,7 @@
        cols="${['Default','Disabled','Readonly']}"
        rowsTemplate="rating-rows">
     <template name="rating-rows">
-        <div sclass="pv-row">
+        <div sclass="z-d-contents">
             <div sclass="z-text-sm z-text-secondary">3 stars</div>
             <div><rating rating="3"/></div>
             <div><rating rating="3" disabled="true"/></div>
