@@ -256,9 +256,12 @@ textarea.z-textbox:focus-visible {
 
 .z-errorbox-content {
     font-family: var(--zk-typescale-font-family);
-    font-size: var(--zk-typescale-body-small-size);
-    font-weight: var(--zk-typescale-body-small-weight);
-    line-height: 1.4;
+    /* body-medium, matching an MD3 rich tooltip's supporting text — the errorbox
+       is an anchored, field-pointing, dismissible popover (rich tooltip class),
+       not a region-level Alert, so it sizes to tooltip not banner. */
+    font-size: var(--zk-typescale-body-medium-size);
+    font-weight: var(--zk-typescale-body-medium-weight);
+    line-height: var(--zk-typescale-body-medium-line-height);
     color: var(--zk-color-on-error-container);
     width: 100%;
     border: 1px solid var(--zk-color-error);
@@ -275,15 +278,17 @@ textarea.z-textbox:focus-visible {
 .z-errorbox-icon {
     position: absolute;
     z-index: 2;
-    font-size: 14px;
-    width: 14px;
-    height: 14px;
-    line-height: 14px;
+    /* 18px leading status icon — proportional to the body-medium text, in the
+       rich-tooltip register (not Alert's 22px banner icon). */
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+    line-height: 18px;
     top: 50%;
     /* +beak: cancel the symmetric box padding so the icon keeps a 12px gap from
        the content's left edge in every pointer direction. */
     left: calc(var(--zk-spacing-3) + var(--zk-errorbox-beak));
-    margin-top: -7px;
+    margin-top: -9px;
     color: var(--zk-color-error);
 }
 
@@ -309,6 +314,11 @@ textarea.z-textbox:focus-visible {
     position: static;
     margin-top: 0;
     color: inherit;
+    /* Close stays 14px — a subordinate affordance, below the 18px status icon. */
+    font-size: 14px;
+    width: 14px;
+    height: 14px;
+    line-height: 14px;
 }
 
 /* ZK reveals the pointer with jQuery .show() (Errorbox._fixarrow), which only
