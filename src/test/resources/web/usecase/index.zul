@@ -7,6 +7,11 @@
     <west size="258px" border="none" collapsible="false">
         <div sclass="z-p-2">
             <div sclass="sidebar-brand">Marble</div>
+            <div sclass="z-d-flex z-align-center z-gap-2 z-px-2 z-py-2 z-mb-2 z-border-bottom">
+                <label value="Compact density" sclass="z-text-sm z-flex-1"/>
+                <checkbox mold="switch" checked="@load(vm.compactMode)"
+                          onCheck="@command('toggleCompactMode', on=self.checked)"/>
+            </div>
             <navbar orient="vertical">
                 <nav label="Use Cases" open="@load(vm.openNavLabel eq 'Use Cases')">
                     <navitem label="Inventory List"       selected="@load(vm.currentPage eq '~./usecase/inventory-table.zul')" onClick="@command('navigate', page='~./usecase/inventory-table.zul')" />

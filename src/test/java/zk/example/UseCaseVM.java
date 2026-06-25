@@ -5,6 +5,7 @@ import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Executions;
+import org.zkoss.zk.ui.util.Clients;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -69,6 +70,7 @@ public class UseCaseVM {
 
     private String currentPage = DEFAULT_PAGE;
     private String openNavLabel = DEFAULT_NAV;
+    private boolean compactMode = false;
 
     private static boolean isValidBookmark(String bookmark) {
         return bookmark != null && bookmark.matches("[a-zA-Z0-9/_-]+");
@@ -96,6 +98,23 @@ public class UseCaseVM {
 
     public String getOpenNavLabel() {
         return openNavLabel;
+    }
+
+    public boolean isCompactMode() {
+        return compactMode;
+    }
+
+    /** Toggles the whole-app data-dense mode by adding/removing the m-density-compact
+        class on the document root (defined in usecase.css). The class must sit on the
+        same element as the :root token declarations so the var()-derived size aliases
+        (--zk-control-height, --zk-input-height, …) re-resolve; a body-scoped class would
+        leave those frozen at their :root values. See doc/data-dense-mode.md. */
+    @Command
+    @NotifyChange("compactMode")
+    public void toggleCompactMode(@BindingParam("on") boolean on) {
+        this.compactMode = on;
+        Clients.evalJavaScript(
+                "document.documentElement.classList.toggle('m-density-compact', " + on + ")");
     }
 
     @Command
