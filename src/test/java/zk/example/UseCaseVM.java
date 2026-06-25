@@ -27,7 +27,7 @@ public class UseCaseVM {
                 "textbox", "intbox", "longbox", "decimalbox", "doublebox", "combobox", "selectbox",
                 "chosenbox", "searchbox", "cascader", "datebox", "timebox", "timepicker", "spinner",
                 "doublespinner", "colorbox", "bandbox", "slider", "rangeslider", "multislider",
-                "rating", "inputgroup", "inputs", "inputs-basic", "inputs-rounded", "a",
+                "rating", "inputgroup", "inputs", "inputs-basic", "a",
                 "calendar"}) {
             PAGE_TO_NAV.put(p, "Inputs");
         }

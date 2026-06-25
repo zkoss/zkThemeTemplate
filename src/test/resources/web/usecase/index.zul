@@ -38,7 +38,6 @@
                     <navitem label="Doublespinner"    selected="@load(vm.currentPage eq '~./doublespinner.zul')" onClick="@command('navigate', page='~./doublespinner.zul')" />
                     <navitem label="Inputgroup"       selected="@load(vm.currentPage eq '~./inputgroup.zul')" onClick="@command('navigate', page='~./inputgroup.zul')" />
                     <navitem label="Inputs"           selected="@load(vm.currentPage eq '~./inputs.zul')" onClick="@command('navigate', page='~./inputs.zul')" />
-                    <navitem label="Inputs (Rounded)" selected="@load(vm.currentPage eq '~./inputs-rounded.zul')" onClick="@command('navigate', page='~./inputs-rounded.zul')" />
                     <navitem label="Intbox"           selected="@load(vm.currentPage eq '~./intbox.zul')" onClick="@command('navigate', page='~./intbox.zul')" />
                     <navitem label="Label"            selected="@load(vm.currentPage eq '~./label.zul')" onClick="@command('navigate', page='~./label.zul')" />
                     <navitem label="Link"             selected="@load(vm.currentPage eq '~./a.zul')" onClick="@command('navigate', page='~./a.zul')" />

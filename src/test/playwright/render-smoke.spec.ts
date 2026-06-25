@@ -63,7 +63,6 @@ const PAGES = [
   '/iframe.zul',
   '/imagemap.zul',
   '/inputgroup.zul',
-  '/inputs-rounded.zul',
   '/inputs.zul',
   '/intbox.zul',
   '/label.zul',
