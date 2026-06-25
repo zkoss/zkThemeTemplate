@@ -1,18 +1,11 @@
+/* ZK Dropupload emits no drag-over or disabled state class — drag feedback is the
+ * native cursor (dataTransfer.dropEffect='copy') and there is no setDisabled.
+ * The resting box is the only theme-stylable surface.
+ * See .claude/skills/zk-component-rules/components/dropupload.md */
 .z-dropupload {
     border-width: 2px;
     border-style: dashed;
     border-color: var(--zk-color-outline);
     border-radius: var(--zk-shape-corner-extra-small);
     background-color: transparent;
-    transition: border-color var(--zk-motion-duration-short2) var(--zk-motion-easing-standard),
-                background-color var(--zk-motion-duration-short2) var(--zk-motion-easing-standard);
-}
-
-.z-dropupload-active {
-    border-color: var(--zk-color-primary);
-    background-color: rgba(55, 111, 208, 0.08);
-}
-
-.z-dropupload-disabled {
-    opacity: var(--zk-state-disabled-opacity);
 }

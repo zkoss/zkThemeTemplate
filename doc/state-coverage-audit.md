@@ -54,7 +54,7 @@ Recorded for completeness; a static gallery cannot show these and the convention
 | splitter / borderlayout / splitlayout | `:active` drag, splitter-bar hover, drag ghost |
 | pdfviewer | toolbar opacity transitions, fullscreen |
 | cropper | active selection, handle resize, toolbar hover/pressed |
-| dropupload | drag-over highlight |
+| dropupload | none — no themed interaction state; drag feedback is the native browser cursor (`dropEffect='copy'`), and ZK emits no `-active`/`-disabled` class |
 | fisheyebar | hover magnification |
 | a | `:visited` |
 | selectbox | hover, focus-visible (native `<select>`) |

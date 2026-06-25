@@ -1084,3 +1084,34 @@ test.describe('stepbar', () => {
     expect(max - min, `all step icons must share one center-Y so connectors stay aligned; got ${JSON.stringify(ys)}`).toBeLessThanOrEqual(2);
   });
 });
+
+// -------------------------------------------------------
+// Dropupload
+// -------------------------------------------------------
+test.describe('dropupload', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto('/dropupload.zul');
+    await page.waitForLoadState('networkidle');
+  });
+
+  // The ZK Dropupload widget never emits `.z-dropupload-active` or
+  // `.z-dropupload-disabled` (verified against Dropupload.ts/.java — drag feedback
+  // is the native cursor `dataTransfer.dropEffect='copy'`, and there is no setDisabled).
+  // The theme must not ship CSS rules for those phantom states. This guards the
+  // dead-CSS regression: it fails while the rules exist and passes once they are gone.
+  test('no-phantom-state-rules', async ({ page }) => {
+    const phantom = await page.evaluate(() => {
+      const hits: string[] = [];
+      for (const sheet of Array.from(document.styleSheets)) {
+        let rules: CSSRuleList;
+        try { rules = sheet.cssRules; } catch { continue; } // cross-origin: skip
+        for (const rule of Array.from(rules)) {
+          const sel = (rule as CSSStyleRule).selectorText;
+          if (sel && /\.z-dropupload-(active|disabled)\b/.test(sel)) hits.push(sel);
+        }
+      }
+      return hits;
+    });
+    expect(phantom, `theme ships no CSS for ZK-nonexistent dropupload states; found: ${JSON.stringify(phantom)}`).toEqual([]);
+  });
+});
