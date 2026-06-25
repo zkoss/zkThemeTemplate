@@ -95,6 +95,29 @@
     border-radius: var(--zk-shape-input);
 }
 
+/* Neutralize the single-input Mechanism-B focus rule (input.css) on grouped
+ * children. The group's :focus-within outline above owns the affordance, so the
+ * child must keep a constant 1px border AND constant rest padding in every state.
+ * input.css's `:focus { padding: 0 calc(spacing-3 - 1px) }` is the compensation
+ * for a 1px→2px border growth — but inside the group the border stays 1px (the
+ * base rule above wins on equal specificity), so that padding shrink has nothing
+ * to offset and the shrink-to-fit group jumps ~2px on focus. Pin both back.
+ * See skill reference/focus-affordance-no-layout-shift.md. */
+.z-inputgroup .z-textbox:focus,
+.z-inputgroup .z-textbox:focus-visible,
+.z-inputgroup .z-combobox .z-combobox-input:focus,
+.z-inputgroup .z-combobox .z-combobox-input:focus-visible {
+    border-width: 1px;
+    padding: 0 var(--zk-spacing-3);
+}
+
+/* Multiline keeps its own (taller) rest padding — the single-line rule above
+ * would otherwise wipe the textarea's vertical padding on focus. */
+.z-inputgroup textarea.z-textbox:focus,
+.z-inputgroup textarea.z-textbox:focus-visible {
+    padding: var(--zk-spacing-2) var(--zk-spacing-3);
+}
+
 /* Vertical orientation */
 .z-inputgroup-vertical {
     flex-direction: column;

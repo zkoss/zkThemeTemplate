@@ -26,6 +26,17 @@ preview: http://localhost:8080/inputgroup.zul
 
 ## States to evaluate
 - [ ] default, hover, focus, disabled, sibling-coherence (compare to textbox)
+- [ ] **focus-no-layout-shift**: `.z-inputgroup` bbox dimensions when an inner
+      input is `:focus-within` **==** dimensions at rest (±0px), for every
+      variant (suffix / both-sides / input+button / vertical / multiline). The
+      single-input Mechanism-B `:focus` rule (`input.css`) leaks its **padding
+      compensation** (`0 calc(spacing-3 - 1px)`) onto grouped children — the
+      inputgroup base rule wins on the *border* (stays 1px, equal specificity,
+      loads later) but NOT the padding, so the child shrinks ~2px with no border
+      growth to offset it and the shrink-to-fit group jumps. Inside a group,
+      children must keep constant 1px border AND constant rest padding; the
+      group's `:focus-within` outline owns the affordance (see skill
+      `reference/focus-affordance-no-layout-shift.md`).
 - [ ] **vertical-border**: in `orient="vertical"`, the centre `.z-textbox` must
       keep BOTH left and right borders (1px outline colour); only its
       `border-top` is collapsed against the preceding addon. A textbox with

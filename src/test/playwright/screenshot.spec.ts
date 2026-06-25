@@ -1115,3 +1115,70 @@ test.describe('dropupload', () => {
     expect(phantom, `theme ships no CSS for ZK-nonexistent dropupload states; found: ${JSON.stringify(phantom)}`).toEqual([]);
   });
 });
+
+// -------------------------------------------------------
+// Inputgroup — focusing an inner input must not change its size
+// -------------------------------------------------------
+test.describe('inputgroup', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto('/inputgroup.zul');
+    await page.waitForLoadState('networkidle');
+  });
+
+  // The single-input focus rule in input.css bumps a textbox's border 1px→2px
+  // (Mechanism B). Inside a group that thickening leaks onto the child while its
+  // addon/button neighbours stay 1px, so the focused segment puffs proud of them
+  // and the group "looks bigger" (tasks/prompt.md). The fix keeps grouped children
+  // at a constant 1px border in every state — the group's :focus-within outline
+  // owns the affordance. Guard: a focused grouped input's border-width == its rest
+  // border-width (and the group's bbox is unchanged), per
+  // reference/focus-affordance-no-layout-shift.md.
+  test('no-layout-shift-on-focus', async ({ page }) => {
+    const groups = await page.evaluate(() => {
+      // Border-width animates over the standard transition; disable transitions
+      // so the focused geometry/border settles to its target value immediately.
+      const style = document.createElement('style');
+      style.textContent = '*{transition:none !important; animation:none !important}';
+      document.head.appendChild(style);
+
+      const round = (n: number) => Math.round(n * 100) / 100;
+      const px = (s: string) => parseFloat(s) || 0;
+      const out: any[] = [];
+      document.querySelectorAll('.z-inputgroup').forEach((g, i) => {
+        const input = g.querySelector('.z-textbox') as HTMLElement | null;
+        if (!input) return; // group has no textbox (skip)
+        (document.activeElement as HTMLElement | null)?.blur();
+        const gRest = g.getBoundingClientRect();
+        const csRest = getComputedStyle(input);
+        const restBW = [csRest.borderTopWidth, csRest.borderRightWidth,
+                        csRest.borderBottomWidth, csRest.borderLeftWidth].map(px);
+        input.focus();
+        void (g as HTMLElement).offsetWidth; // force reflow
+        const gFoc = g.getBoundingClientRect();
+        const csFoc = getComputedStyle(input);
+        const focBW = [csFoc.borderTopWidth, csFoc.borderRightWidth,
+                       csFoc.borderBottomWidth, csFoc.borderLeftWidth].map(px);
+        input.blur();
+        out.push({
+          i,
+          groupDW: round(gFoc.width - gRest.width),
+          groupDH: round(gFoc.height - gRest.height),
+          restBW, focBW,
+          maxBWGrowth: round(Math.max(...focBW.map((w, k) => w - restBW[k]))),
+        });
+      });
+      return out;
+    });
+
+    expect(groups.length, 'expected at least one .z-inputgroup with a textbox').toBeGreaterThan(0);
+    for (const g of groups) {
+      expect(Math.abs(g.groupDW),
+        `inputgroup[${g.i}] width changed on focus by ${g.groupDW}px (rest BW ${JSON.stringify(g.restBW)} → focus BW ${JSON.stringify(g.focBW)})`).toBeLessThanOrEqual(0.5);
+      expect(Math.abs(g.groupDH),
+        `inputgroup[${g.i}] height changed on focus by ${g.groupDH}px`).toBeLessThanOrEqual(0.5);
+      // The real defect: the grouped input's border thickens on focus.
+      expect(g.maxBWGrowth,
+        `inputgroup[${g.i}] inner input border grew on focus: rest ${JSON.stringify(g.restBW)} → focus ${JSON.stringify(g.focBW)} (the focused segment puffs past its 1px neighbours)`).toBeLessThanOrEqual(0);
+    }
+  });
+});

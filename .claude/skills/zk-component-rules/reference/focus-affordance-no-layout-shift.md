@@ -104,6 +104,21 @@ the plain root inset ring (not the `::after` overlay) is sufficient. Apply to **
 the child's content but the child stays 40px and the borderless root stays 40px → no growth. Combobox
 is the structural exception; do not "fix" it.
 
+**Applies to inputgroup — a *group of independently-styled* inputs (caught 2026-06-25).**
+`inputgroup` is a flex container whose children (`.z-textbox`, addons, buttons) each carry their own
+1px border. The group's own `:focus-within` **outline** already gives a non-shifting ring, so the
+boundary is fine — but the single-input focus rule from `input.css` still matches the grouped child
+and leaks **mechanism B's padding compensation** (`padding: 0 calc(spacing-3 - 1px)`) onto it. Note
+the subtlety: `.z-inputgroup .z-textbox { border: 1px }` and `.z-textbox:focus { border-width: 2px }`
+have **equal specificity** (0,2,0), and inputgroup.css loads later, so the *border* stays 1px — but
+the `:focus` *padding* (a property the inputgroup base rule never sets) still wins and shrinks the
+child ~2px with **no border growth to offset it** → the whole shrink-to-fit group jumps on focus.
+Fix: inside the group, neutralize mechanism B on the children — pin `border-width: 1px` and restore
+the **rest** padding (`0 spacing-3` for single-line; re-assert `spacing-2 spacing-3` for `textarea`,
+or the override wipes its vertical padding). The container's outline owns the affordance. General
+rule: **a group of independently-styled inputs must neutralize each child's focus border-width /
+padding change inside the group** — the container, not the child, owns the focus ring.
+
 ## Correct mechanism B — border-width:2px + padding compensation (single input)
 
 For a lone `<input>` where the border lives on the same element as the text, a real 2px border is fine
