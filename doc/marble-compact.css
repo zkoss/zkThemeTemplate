@@ -15,7 +15,7 @@
    substituted there and inherited frozen, so overriding a rung alone would NOT
    re-size the aliases on a nested region. Listing the consumed tokens as literals
    makes density work at ANY scope — whole page or a single container.
-   See doc/data-dense-mode.md (and density-scoped-attribute-proposal.md for the deep dive).
+   See doc/data-dense-mode.md (incl. the freeze-problem appendix for the deep dive).
    ───────────────────────────────────────────────────────────────────────── */
 html[data-density="compact"] {
     /* leaf rungs (read directly by a few components) */
