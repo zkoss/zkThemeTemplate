@@ -32,7 +32,7 @@ public class MarbleThemeWebAppInit implements WebAppInit {
 
 	private final static String THEME_NAME = "marble";
 	private final static String THEME_DISPLAY = "Marble";
-	private final static int THEME_PRIORITY = 700;
+	private final static int THEME_PRIORITY = 500;
 
 	public void init(WebApp webapp) throws Exception {
 		Themes.register(THEME_NAME, THEME_DISPLAY, THEME_PRIORITY);
