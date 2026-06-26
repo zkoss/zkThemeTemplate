@@ -45,9 +45,10 @@
     inset: auto 10px 0 !important;
     width: auto !important;
     transform: none !important;
-    animation: zk-wheel-sheet-up var(--zk-motion-duration-medium2) var(--zk-motion-easing-emphasized-decelerate);
+    animation: zk-bottom-sheet-up var(--zk-motion-duration-medium2) var(--zk-motion-easing-emphasized-decelerate);
 }
-@keyframes zk-wheel-sheet-up {
+/* Shared bottom-sheet slide-up (also used by the combobox popup in _inputs.css). */
+@keyframes zk-bottom-sheet-up {
     from { transform: translateY(100%); }
     to   { transform: none; }
 }

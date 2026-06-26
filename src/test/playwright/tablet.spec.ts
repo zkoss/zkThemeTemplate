@@ -313,6 +313,69 @@ for (const { name, url, listSel, btnSel, inputSel } of wheelCases) {
 }
 
 // -------------------------------------------------------
+// Mobile combobox BOTTOM-SHEET — on a mobile UA zkmax/touch/combo-touch.ts swaps
+// Combobox.open into a bottom-sheet: `_syncPosition` anchors the popup at
+// top = (ios?window.innerHeight:innerHeight) + window.scrollY, calls makeVParent()
+// to detach it to <body>, then slides it up via transform:translateY(-outerHeight)
+// so the bottom edge rests at the viewport bottom. Same makeVParent top-inflation
+// + baked-in scrollY failure mode as the wheel picker (see above): on a scrolled
+// page the sheet lands too low and clips its bottom rows. The _inputs.css fix pins
+// the popup with `position:fixed; inset:auto 10px 0` so it is immune to BOTH the
+// inflation and scrollY. (Selectbox is a native <select> — browser picker, no ZK
+// popup; bandbox has no touch mold and keeps anchored positioning — neither is
+// affected, so combobox is the only input fixed here.)
+// -------------------------------------------------------
+async function openComboSheet(page: Page, scrollY = 0): Promise<void> {
+  await page.evaluate((y) => window.scrollTo(0, y), scrollY);
+  const btn = page.locator('.z-combobox .z-combobox-button').first();
+  await btn.waitFor({ state: 'visible' });
+  const box = await btn.boundingBox();
+  await page.touchscreen.tap(box!.x + box!.width / 2, box!.y + box!.height / 2);
+  await page.waitForTimeout(600); // open is delayed (Bug ZK-2711) + animated
+}
+
+async function comboPopupPosition(page: Page): Promise<string | null> {
+  return page.evaluate(() => {
+    const pp = ([...document.querySelectorAll('.z-combobox-popup')] as HTMLElement[])
+      .find(p => p.getBoundingClientRect().height > 0);
+    return pp ? getComputedStyle(pp).position : null;
+  });
+}
+
+test.describe('tablet-combobox-sheet', () => {
+  test('opens as a bottom-sheet pinned flush to the viewport bottom', async ({ page }) => {
+    await page.goto('/combobox.zul');
+    await page.waitForLoadState('networkidle');
+    await openComboSheet(page);
+    const r = await openSheetGeometry(page);
+
+    expect(r.height!, 'sheet rendered').toBeGreaterThan(0);
+    // the popup must be CSS-pinned, not riding ZK's inline top
+    expect(await comboPopupPosition(page), 'popup uses position:fixed').toBe('fixed');
+    // bounded, fully on-screen, bottom flush to the viewport
+    expect(r.height!, `sheet is ${r.height}px tall (must fit the viewport)`).toBeLessThan(r.vh);
+    expect(r.top!, `sheet top is ${r.top}px (off-screen above)`).toBeGreaterThanOrEqual(0);
+    expect(r.overshoot!, `sheet overshoots ${r.overshoot}px below the viewport`).toBeLessThanOrEqual(2);
+    expect(r.bottom!, `sheet bottom is ${r.bottom}px (viewport ${r.vh})`)
+      .toBeGreaterThanOrEqual(r.vh - 2);
+  });
+
+  test('stays flush to the bottom when the page is scrolled', async ({ page }) => {
+    await page.goto('/combobox.zul');
+    await page.waitForLoadState('networkidle');
+    // ZK's anchor bakes window.scrollY into the inline top; position:fixed;bottom:0
+    // ignores it. Open from a scrolled position and assert it still lands flush.
+    await openComboSheet(page, 400);
+    const r = await openSheetGeometry(page);
+
+    expect(r.height!, 'sheet rendered').toBeGreaterThan(0);
+    expect(r.overshoot!, `scrolled-page sheet overshoots ${r.overshoot}px below the viewport`)
+      .toBeLessThanOrEqual(2);
+    expect(r.top!, `sheet top is ${r.top}px (off-screen above)`).toBeGreaterThanOrEqual(0);
+  });
+});
+
+// -------------------------------------------------------
 // Visual baselines at tablet size — capture the page wrapper (.z-p-8)
 // -------------------------------------------------------
 type VisualCase = { name: string; url: string };

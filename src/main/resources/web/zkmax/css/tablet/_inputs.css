@@ -81,3 +81,31 @@
     pointer-events: auto;
     opacity: 1;
 }
+
+/* ─── Combobox bottom-sheet positioning (override ZK's unreliable inline `top`) ─
+ * On a mobile UA, zkmax/touch/combo-touch.ts swaps Combobox.open into a
+ * bottom-sheet: `_syncPosition` sets the popup `top = (ios?window.innerHeight
+ * :innerHeight) + window.scrollY`, calls `$pp.zk.makeVParent()` to detach the
+ * popup to <body>, then slides it up via a `transform:translateY(-outerHeight)`
+ * transition so its bottom edge rests at the viewport bottom. This is the SAME
+ * anchor mechanism as the datebox/timebox wheel picker (see _wheel.css), and it
+ * has the same failure mode: `makeVParent` inflates the inline `top` by an
+ * offset-parent delta and `scrollY` is baked in, so on a scrolled page the sheet
+ * lands too low and its bottom rows clip. (Selectbox is a native <select> with
+ * the browser's own picker — no ZK popup — and bandbox has no touch mold, so it
+ * keeps desktop anchored positioning; neither is affected. Combobox is the only
+ * input whose popup needs this fix.)
+ * Pin the sheet to the viewport bottom ourselves: `position:fixed; bottom:0` is
+ * immune to both the makeVParent inflation and scrollY; 10px side gutters match
+ * ZK's own `innerWidth − 20` centred width; `transform:none` cancels the inline
+ * translateY and the shared keyframe restores the slide-up. !important is needed
+ * to beat ZK's inline position/top/transform. The popup's own height (JS-set to
+ * `_items × _itemHeight`) is preserved, so the iScroll list still scrolls. */
+.z-combobox-popup {
+    position: fixed !important;
+    /* inset: top right bottom left — pinned to bottom, 10px side gutters */
+    inset: auto 10px 0 !important;
+    width: auto !important;
+    transform: none !important;
+    animation: zk-bottom-sheet-up var(--zk-motion-duration-medium2) var(--zk-motion-easing-emphasized-decelerate);
+}
