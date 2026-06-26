@@ -22,7 +22,6 @@ src/main/resources/web/marble/
 - `js/zul/box/css/div.css.dsp`
 - `js/zul/box/css/space.css.dsp`
 - `js/zul/box/css/span.css.dsp`
-- `js/zul/box/css/splitter.css.dsp`
 
 ### Layout
 - `js/zul/layout/css/absolutelayout.css.dsp`
@@ -122,7 +121,6 @@ src/main/resources/web/marble/
 - `js/zkmax/inp/css/cascader.css.dsp`
 - `js/zkmax/inp/css/chosenbox.css.dsp`
 - `js/zkmax/inp/css/searchbox.css.dsp`
-- `js/zkmax/inp/css/tbeditor.css.dsp`
 - `js/zkmax/inp/css/timepicker.css.dsp`
 
 ### Layout
@@ -138,7 +136,6 @@ src/main/resources/web/marble/
 
 ### Media
 - `js/zkmax/med/css/camera.css.dsp`
-- `js/zkmax/med/css/cropper.css.dsp`
 - `js/zkmax/med/css/video.css.dsp`
 
 ### Navigation
@@ -153,7 +150,6 @@ src/main/resources/web/marble/
 ### Widgets
 - `js/zkmax/wgt/css/drawer.css.dsp`
 - `js/zkmax/wgt/css/dropupload.css.dsp`
-- `js/zkmax/wgt/css/signature.css.dsp`
 - `js/zkmax/wgt/css/stepbar.css.dsp`
 
 ### Other

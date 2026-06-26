@@ -148,7 +148,7 @@
     <div sclass="z-card">
         <label value="Opt-in Spacing — Widgets Have No Default Margins" sclass="z-d-block z-text-base z-fw-medium z-text-on-surface z-mb-3"/>
         <label sclass="z-d-block z-text-secondary z-text-sm z-mb-3"
-               value="No widget carries a theme-default margin (ZK's hflex/vflex sizing measures child margins — see doc/spacing-policy.md). To space stacked widgets, put .z-vstack on the parent; it works for container widgets (panel, window, grid, …) and atomic widgets alike."/>
+               value="No widget carries a theme-default margin (ZK's hflex/vflex sizing measures child margins — see doc/spec/spacing-policy.md). To space stacked widgets, put .z-vstack on the parent; it works for container widgets (panel, window, grid, …) and atomic widgets alike."/>
         <div sclass="z-d-grid z-grid-cols-2 z-gap-4">
             <div>
                 <label value=".z-vstack — container widgets" sclass="z-d-block z-text-sm z-fw-semibold z-mb-2"/>

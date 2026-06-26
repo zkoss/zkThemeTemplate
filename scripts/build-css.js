@@ -58,11 +58,11 @@ const normFiles = [
     // NOTE: base/_reset.css is intentionally NOT bundled here. It is emitted as its own
     // stylesheet (reset.css / reset-embed.css) and loaded ahead of this bundle by
     // MarbleThemeProvider.getThemeURIs, so the theme can swap a host-safe variant for
-    // JS-Embed pages. See buildResetVariants() below and doc/reset-scoping.md.
+    // JS-Embed pages. See buildResetVariants() below and doc/spec/reset-scoping.md.
     // Utility CSS — split by sidebar category (see usecase/index.zul "Utility CSS").
     // NOTE: no default-rhythm file — widgets carry zero default margins (ZK's
     // flex sizing subtracts child margins; spacing is opt-in via _stack.css /
-    // _spacing.css — see doc/spacing-policy.md, gap log 2026-06-05).
+    // _spacing.css — see doc/spec/spacing-policy.md, gap log 2026-06-05).
     'zul/css/utility/_colors.css',
     'zul/css/utility/_elevation.css',
     'zul/css/utility/_components.css',
@@ -207,7 +207,7 @@ function getLucideIcons() {
 // the former Google-Fonts CDN @import so the theme has no external runtime font
 // dependency (offline / air-gapped / GDPR safe). The @font-face that points at
 // these files lives in zul/css/tokens/_fonts.css. Inter is SIL OFL 1.1, so the
-// license ships alongside the binary. See doc/font-loading-strategy.md.
+// license ships alongside the binary. See doc/spec/DESIGN.md §7 (Font loading).
 //   *-wght-normal.woff2 = weight-axis-only (100–900) variable fonts.
 //   latin (~47 KB) covers Western-European accents (Latin-1); latin-ext (~83 KB)
 //   adds Central/Eastern-European glyphs (Polish/Czech/Turkish/…) for EU customers.
@@ -342,7 +342,7 @@ function generateLucideIconsCSS(iconNames) {
 }
 
 function generateIconIndexMd(iconNames) {
-    const destPath = path.join(__dirname, '..', 'doc/icon-index.md');
+    const destPath = path.join(__dirname, '..', 'doc/spec/icon-index.md');
     const aliasRows = Object.entries(FA_TO_LUCIDE)
         .map(([fa, lucide]) => `| \`z-icon-${fa}\` | \`${lucide}\` |`)
         .join('\n');
@@ -360,7 +360,7 @@ This is the canonical lookup for valid \`z-icon-*\` class names in this theme.
 - **Theme evaluator** validates that every \`z-icon-*\` reference resolves here.
 - **Preview ZULs** (\`src/test/resources/web/**/*.zul\`) MUST use names from the Lucide section only — no FA aliases, no invented names. Enforced by \`scripts/check-icon-coverage.sh\`.
 
-See \`doc/icon-policy.md\` for the full policy.
+See \`doc/spec/icon-policy.md\` for the full policy.
 
 ## FA → Lucide aliases (${Object.keys(FA_TO_LUCIDE).length} entries, from \`scripts/build-css.js\` \`FA_TO_LUCIDE\`)
 
@@ -512,7 +512,7 @@ function build() {
 
     // 1c. Generate icon-index.md (canonical lookup for generator/evaluator)
     generateIconIndexMd(lucideIcons);
-    console.log(`  doc/icon-index.md (${lucideIcons.length} lucide + ${Object.keys(FA_TO_LUCIDE).length} aliases)`);
+    console.log(`  doc/spec/icon-index.md (${lucideIcons.length} lucide + ${Object.keys(FA_TO_LUCIDE).length} aliases)`);
 
     // 2. Auto-scan js/zul/**/css/*.css → 1:1 *.css.dsp
     const jsZulDir = path.join(webDir, 'js/zul');

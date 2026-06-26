@@ -48,6 +48,8 @@ Use this as the rulebook when styling a component that Mira does not cover.
 
 Chips use tinted backgrounds (`rgba(color, 0.1)`). Badges use full-strength color on white.
 
+**Coachmark is intentionally the lone brand-filled popup.** Its card uses `--zk-color-primary` fill + `on-primary` text, while every other popup-family component (notification, toast, tooltip/popup, bandpopup) is a neutral/tinted/dark surface. This is deliberate, not an inconsistency to "fix": consistency here is **by role, not by sameness**. A coachmark is *proactive guided discovery* — it dims the page with a scrim and must win attention against it (a CTA), so the brand fill is correct (and matches Material's original Feature-Discovery pattern; MD3/MUI dropped the dedicated component, so there is no canonical token answer). Consequence: because the surface is brand-filled, child filled controls (`.z-button`) inherit the global primary fill and vanish — the theme MUST invert them (`.z-coachmark-content .z-button`: white bg + primary text + flipped state-layer/focus-ring).
+
 ---
 
 ## 4. Spacing Scale (4dp baseline)
@@ -102,6 +104,17 @@ Cards have elevation only — no border. Use outlined variant (`1px solid outlin
 
 Font family: **Inter** (system sans-serif fallback stack). Token: `--zk-typescale-font-family`.  
 Mira is denser than standard MD3 — prefer 13–14px body rather than 16px.
+
+**Utility-class naming is size-based, not role-based.** The full MD3 type scale (role × size — `display/headline/title/body/label` × `large/medium/small`, each with its own size + weight + line-height) lives **only** in the `--zk-typescale-*` tokens, consumed by component CSS (`.z-button`, `.z-label`, …). The *utility* classes are a plain T-shirt size ladder — `z-text-xs … z-text-7xl` — so ZUL authors pick a size in one class instead of stacking size + weight + line-height. This is deliberate (chosen over 1:1 role-named utilities like `z-fs-title-md`): utility-first ZUL authoring wants short size-only classes, while role+size semantics belong at the token/component layer, not in page markup.
+
+**Font loading (self-hosted, no CDN).** Inter ships **self-hosted**, never from the Google Fonts CDN: vendored from the `@fontsource-variable/inter` devDependency by `scripts/build-css.js` (`copyFonts()`) into `~./marble/font/`, declared as `@font-face` in `zul/css/tokens/_fonts.css`. It is the **variable** font (weight axis 100–900), split into two `unicode-range`-partitioned `woff2` subsets — `inter-latin-variable.woff2` (~47 KB) and `inter-latin-ext-variable.woff2` (~83 KB, for EU/Central-European glyphs, fetched only when a page needs them). The `@font-face` `url()` uses `${c:encodeURL("~./marble/font/…")}` (requires the DSP `c` taglib prepended to `norm.css.dsp`), so it resolves correctly inside the `zk.wcs` aggregate regardless of context path.
+
+Rationale:
+- **Self-host over CDN** — the CDN `@import` failed in air-gapped installs and leaked end-user IPs to Google (GDPR). Self-hosting is offline-safe and same-origin.
+- **Self-host over system-font stack** — Marble is calibrated pixel-for-pixel against Mira and has Playwright visual-regression tests; a system-font stack drifts per OS, destabilizing baselines and table layouts. A bundled font gives one reproducible look on every client and in CI.
+- **Inter over Roboto** (MD3's canonical face) — Marble's concrete reference is the Mira dashboard, which uses Inter; Inter's tall x-height + open apertures also read better at the 13–14px dense-table sizes this theme targets. The fallback stack still degrades gracefully to each OS's native UI font if Inter never loads.
+
+**Deprecated font library-properties — intentionally absent (do not re-add).** ZK's `org.zkoss.zul.theme.fontFamily*` and `org.zkoss.zul.theme.fontSize*` library properties have been **deprecated since ZK 7.0.0** (superseded by LESS, and now by CSS custom properties). Marble sets **zero** library properties of any kind — all typography is driven by the `--zk-typescale-*` tokens in `zul/css/tokens/_typography.css`. Their absence is a deliberate modern-CSS design choice, **not** a gap: do not introduce these properties to "configure" fonts. To change a face or size, edit the token, not a `<library-property>`. (Gap-review finding lane D / P3-1, 2026-06-26.)
 
 ---
 
@@ -208,7 +221,8 @@ bounded parent, strip the frame: automatically inside panel/groupbox
 (`.z-panel-body .z-{comp}` / `.z-groupbox .z-{comp}` → `border: none`), or explicitly via the
 opt-in variant sclass **`z-{grid,listbox,tree}-noborder`** (ZK emits no border attribute for
 these, unlike `window`'s `z-window-noborder` — the variant name mirrors that ZK convention).
-Full rationale + decision record: `doc/data-table-frame-rationale.md`.
+Decision ratified 2026-06-11 (outlined chosen over Mira's elevated because the near-white
+`#f7f9fc` page makes the elevation shadow invisible; revisit if the surface palette darkens).
 
 ---
 

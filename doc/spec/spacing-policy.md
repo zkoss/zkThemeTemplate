@@ -68,6 +68,35 @@ stacked-panel gutter(`.z-portalchildren-content > .z-panel { margin-bottom }`,
 portallayout 自己的 JS 管 sizing,不經過 css-flex,所以安全)。
 **絕不**用全域 widget selector(裸 `.z-panel`、`.z-window`)加 margin。
 
+## Layout primitive 沒有預設 padding(wrap, don't pad)
+
+跟「零預設 margin」對稱:ZK 的 **layout primitive** — `vlayout`、`hlayout`、
+`vbox`、`hbox`、`div`、`cell`、`borderlayout`,以及 layout 家族裡的 `*-body` —
+一律**零 padding**。把內容包進 `<div>`/`<vlayout>` 後文字會貼齊容器邊緣,這
+**不是 bug**:它對齊 web 平台的 Grid/Flexbox/Box 語意。若每層 `<vlayout>` 都帶
+16px padding,巢狀 layout 會累積出無法解釋的死白(三層 = 48px)。
+
+規則:**primitive 保持零 padding,作者在需要處明確 opt-in。**
+
+```xml
+<!-- ❌ primitive 不吃 padding -->
+<vlayout>Content</vlayout>
+<!-- ✅ 內層 wrapper 加 padding utility -->
+<vlayout><div sclass="z-p-4">Content</div></vlayout>
+<!-- ✅ 或用本來就帶 padding 的 semantic container -->
+<panel title="…"><panelchildren>Content</panelchildren></panel>
+```
+
+| 元件 | 預設 body padding | 原因 |
+|------|------------------|------|
+| `vlayout`/`hlayout`/`div`/`vbox`/`hbox`/`cell`、`borderlayout` 的 `*-body` | 無 | layout primitive — 負責組合 |
+| `panel`(`panelchildren`)、`groupbox`、`window` 內容區 | 有 | semantic container — 代表卡片/區塊/對話框 |
+
+padding utility 見 `zul/css/utility/_spacing.css`(`z-p-*`/`z-px-*`/`z-py-*`/
+per-side,數字對應 `--zk-spacing-N`)。**禁止**直接對 `.z-vlayout`/`.z-hlayout`/
+`.z-div` 或 `*-body` 加 padding — always-on padding 會破壞組合性;要永遠帶
+padding 就改用 semantic container。
+
 ## 歷史:per-widget margin 的三種踩雷情境(仍然成立)
 
 | 情境 | 問題 |

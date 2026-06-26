@@ -58,7 +58,7 @@ This is a tonal-palette gap, not a widget bug. The fix is in
 perceptually distinct on white. The widget CSS should not be touched.
 
 ## Cross-reference
-- `doc/window-design-rules.md` — `border` attribute MUST NOT drive shadow on
+- `doc/spec/window-design-rules.md` — `border` attribute MUST NOT drive shadow on
   Window; same principle (tonal, not shadow) for elevation distinctions.
 - `tasks/design-review-2026-05-29.md` §1 — original audit and rationale.
 - `doc/skill-gaps.md` 2026-05-29 row "navbar / menubar (tonal-surface

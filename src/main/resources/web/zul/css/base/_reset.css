@@ -10,7 +10,7 @@
 /* page-frame:start — html/body reset. Emitted ONLY in the global (browserDefault=false)
    variant. In the embed variant (browserDefault=true, JS-Embed host pages) this block is
    dropped so ZK never restyles the host page's <html>/<body>, and the remaining rules are
-   confined to the ZK subtree via @scope (.z-page). See doc/reset-scoping.md. */
+   confined to the ZK subtree via @scope (.z-page). See doc/spec/reset-scoping.md. */
 html {
     /* DEFINITE height (not min-height) so that body's `min-height: 100%` below
        has a resolvable containing-block height. A percentage min-height computes

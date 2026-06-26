@@ -16,7 +16,7 @@
  *   3. data-cell padding       — grid/listbox/tree cell padding knobs.
  *
  * To go compact: override the 5 rungs + the 3 off-ladder seeds (button 36/44,
- * data-row 52) and the cell-padding knobs at :root. See doc/data-dense-mode.md
+ * data-row 52) and the cell-padding knobs at :root. See doc/spec/data-dense-mode.md
  * for the ready-made compact preset. Default values below reproduce the
  * comfortable desktop rendering exactly — change nothing here for that.
  *
@@ -82,7 +82,7 @@
    carries the attribute — root or region alike. The leaf rungs are overridden
    too (also literals) so the few components that read a rung directly
    (icon-button/FAB sizes, panel/window close buttons, header min-heights) follow
-   at any scope as well. See doc/data-dense-mode.md.
+   at any scope as well. See doc/spec/data-dense-mode.md.
    Values mirror doc/marble-compact.css. */
 [data-density="compact"] {
     /* leaf rungs (read directly by a few components) */

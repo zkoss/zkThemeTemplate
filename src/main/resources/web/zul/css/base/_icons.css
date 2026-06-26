@@ -5,8 +5,8 @@
    `norm.css.dsp` at build time, together with the FA→Lucide aliases declared in
    the `FA_TO_LUCIDE` map of that script.
 
-   The canonical lookup of all valid `z-icon-*` names is `doc/icon-index.md`
-   (auto-generated). See `doc/icon-policy.md` for the policy.
+   The canonical lookup of all valid `z-icon-*` names is `doc/spec/icon-index.md`
+   (auto-generated). See `doc/spec/icon-policy.md` for the policy.
 
    ZK's font-awesome.css.dsp sets `font-family: ZK85Icons, FontAwesome` on
    z-icon-* elements. We reset that here so no FA character bleeds through; the

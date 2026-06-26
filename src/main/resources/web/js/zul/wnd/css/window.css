@@ -9,7 +9,7 @@
                              z-window-minimize. Maximized button also gets z-window-maximized. */
 
 /* Base chrome — frame + radius only. NO box-shadow here; mode classes own elevation.
-   See doc/window-design-rules.md: elevation is driven by `mode`, never by `border`. */
+   See doc/spec/window-design-rules.md: elevation is driven by `mode`, never by `border`. */
 .z-window {
     display: flex;
     flex-direction: column;

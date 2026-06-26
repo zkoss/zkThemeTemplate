@@ -77,7 +77,7 @@ The mold emits the close as a **sibling of `.z-drawer-header`** (both children o
 <div class="z-drawer-close" role="button" tabindex="0" aria-label="…"><i class="z-icon-times"></i></div>
 ```
 
-It is `display:none` inline until `closable=true` (`setClosable` toggles it). A drawer is an MD3 **side sheet** → the close icon button belongs at the **top-trailing corner of the header** (`doc/md3-close-affordance-placement.md` §2). Since `.z-drawer-real` is a positioned ancestor, `position:absolute; top; right` on `.z-drawer-close` anchors the corner placement independently of whether the header is visible (header is `display:none` when title is empty). The glyph is the ZK icon-font `<i class="z-icon-times">` (sized by the container's `font-size`).
+It is `display:none` inline until `closable=true` (`setClosable` toggles it). A drawer is an MD3 **side sheet** → the close icon button belongs at the **top-trailing corner of the header** (`doc/spec/md3-close-affordance-placement.md` §2). Since `.z-drawer-real` is a positioned ancestor, `position:absolute; top; right` on `.z-drawer-close` anchors the corner placement independently of whether the header is visible (header is `display:none` when title is empty). The glyph is the ZK icon-font `<i class="z-icon-times">` (sized by the container's `font-size`).
 
 ## Bundle
 

@@ -1962,7 +1962,7 @@
     </div>
 
     <!-- icon-lint:disable &#8212; FA-compat alias demo intentionally shows the FA-style
-         z-icon-* names ZK widget JS emits at runtime (see doc/icon-policy.md). -->
+         z-icon-* names ZK widget JS emits at runtime (see doc/spec/icon-policy.md). -->
     <div sclass="z-card">
         <label value="FontAwesome-compat aliases (51)"
                sclass="z-d-block z-text-base z-fw-medium z-text-on-surface z-mb-3"/>

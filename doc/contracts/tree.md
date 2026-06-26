@@ -131,7 +131,7 @@ specifically the 2nd / 3rd trees which stack two `<auxhead>` rows adjacently.
 Default = standalone **outlined** card: border, NO shadow (never both). No-border variant
 (`z-tree-noborder`) and panel/groupbox ancestry strip the border. ZK emits no border attribute
 for tree (unlike window's `z-window-noborder`) → the variant is a theme sclass mirroring that
-naming. See `doc/data-table-frame-rationale.md`.
+naming. See `doc/spec/DESIGN.md §11`.
 
 | id | check | selector | property | expected | method |
 |----|-------|----------|----------|----------|--------|

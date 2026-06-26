@@ -90,7 +90,7 @@ UNCLASSED".
 Default = standalone **outlined** card: border, NO shadow (never both). No-border variant
 (`z-grid-noborder`) and panel/groupbox ancestry strip the border. ZK emits no border attribute
 for grid (unlike window's `z-window-noborder`) → the variant is a theme sclass mirroring that
-naming. See `doc/data-table-frame-rationale.md`.
+naming. See `doc/spec/DESIGN.md §11`.
 
 | id | check | selector | property | expected | method |
 |----|-------|----------|----------|----------|--------|

@@ -12,7 +12,7 @@ import org.zkoss.zk.ui.util.Clients;
  * padding, button/toolbar/tab heights, …). Because those are the tokens the
  * components actually read, the attribute takes effect at <em>any</em> scope —
  * the document root for the whole app, or a single component subtree for one
- * region. See {@code doc/data-dense-mode.md}.
+ * region. See {@code doc/spec/data-dense-mode.md}.
  *
  * <p>This helper exposes that knob from Java:
  * <ul>

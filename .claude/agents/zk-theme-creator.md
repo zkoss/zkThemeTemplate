@@ -21,7 +21,7 @@ ZK components follow a strict naming convention:
 - Focus state: `.z-{component}-focus` or `:focus-visible`
 - Readonly state: `.z-{component}-readonly`
 
-see [css-dsp-file-structure.md](../../doc/css-dsp-file-structure.md)
+see [css-dsp-file-structure.md](../../doc/spec/css-dsp-file-structure.md)
 
 ### ZK Component DOM Structure Knowledge
 You understand the DOM hierarchy of all major ZK components:

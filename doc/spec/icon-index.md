@@ -8,7 +8,7 @@ This is the canonical lookup for valid `z-icon-*` class names in this theme.
 - **Theme evaluator** validates that every `z-icon-*` reference resolves here.
 - **Preview ZULs** (`src/test/resources/web/**/*.zul`) MUST use names from the Lucide section only — no FA aliases, no invented names. Enforced by `scripts/check-icon-coverage.sh`.
 
-See `doc/icon-policy.md` for the full policy.
+See `doc/spec/icon-policy.md` for the full policy.
 
 ## FA → Lucide aliases (50 entries, from `scripts/build-css.js` `FA_TO_LUCIDE`)
 

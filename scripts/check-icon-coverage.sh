@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# check-icon-coverage.sh — enforces the icon-naming policy in `doc/icon-policy.md`.
+# check-icon-coverage.sh — enforces the icon-naming policy in `doc/spec/icon-policy.md`.
 #
 # Rule 2 (preview/example content): every `z-icon-{name}` referenced in
 #   src/test/resources/web/**/*.zul MUST be a real Lucide icon name, i.e.
@@ -75,7 +75,7 @@ find "$ZUL_DIR" -name '*.zul' ! -name 'icons-lucide.zul' ! -name 'icons.zul' -pr
             if (bad) {
                 print "" > "/dev/stderr"
                 printf "FAILED — %d of %d icon references use non-Lucide names.\n", bad, total > "/dev/stderr"
-                print "Fix by renaming to the Lucide equivalent (see doc/icon-index.md FA-alias table)." > "/dev/stderr"
+                print "Fix by renaming to the Lucide equivalent (see doc/spec/icon-index.md FA-alias table)." > "/dev/stderr"
                 exit 1
             }
             printf "OK — %d icon references checked, all resolve to Lucide names.\n", total

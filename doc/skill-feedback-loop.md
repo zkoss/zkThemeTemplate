@@ -88,7 +88,7 @@ This is the most common confusion. Use the test:
 
 > **"If we switched from MD3 to a different theme, would this rule still hold?"**
 > - Yes → Skill (it's a ZK property)
-> - No → `doc/DESIGN.md` (it's a theme choice)
+> - No → `doc/spec/DESIGN.md` (it's a theme choice)
 
 Examples:
 - "Bandbox's popup frame is `.z-bandbox-popup`, content is `.z-bandpopup` — never border the content" → Skill (true for every theme)

@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 
 // Verifies the `org.zkoss.zul.theme.browserDefault` reset-scoping mechanism — the DSP-free
-// replacement for ZK's legacy norm.css.dsp `<c:if>` (see doc/reset-scoping.md).
+// replacement for ZK's legacy norm.css.dsp `<c:if>` (see doc/spec/reset-scoping.md).
 //
 // The theme serves its reset as its OWN stylesheet, swapped in Java by MarbleThemeProvider:
 //   browserDefault=false (default) → reset.css       : global reset, <html>/<body> frame

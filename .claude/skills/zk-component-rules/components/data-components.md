@@ -595,7 +595,7 @@ class that signals "standalone vs embedded"** for these components. Consequences
   (this bit Marble twice — see `.z-grid-header-inner` and the deleted `.z-grid-standalone`).
 
 (Marble's resulting frame policy — outlined-by-default, `z-*-noborder` to strip — is
-theme-specific and lives in `doc/DESIGN.md` §11 / `doc/data-table-frame-rationale.md`, not here.)
+theme-specific and lives in `doc/spec/DESIGN.md` §11, not here.)
 
 ## Bundles
 

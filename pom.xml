@@ -159,7 +159,7 @@
 							<classpathScope>test</classpathScope>
 						</configuration>
 					</execution>
-					<execution> <!-- lint: preview ZULs may only use Lucide icon names (Rule 2 of doc/icon-policy.md) -->
+					<execution> <!-- lint: preview ZULs may only use Lucide icon names (Rule 2 of doc/spec/icon-policy.md) -->
 						<id>check-icon-coverage</id>
 						<phase>process-resources</phase>
 						<goals>

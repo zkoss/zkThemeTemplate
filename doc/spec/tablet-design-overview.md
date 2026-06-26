@@ -84,7 +84,7 @@ state-layer, so the finger target fills 48px.
 | Month / prev / next nav buttons | small | **44×44**, glyph **24px** |
 
 ### 5. Window / panel (`_window.css`)
-Close-affordance **placement is unchanged** (see `doc/md3-close-affordance-placement.md`);
+Close-affordance **placement is unchanged** (see `doc/spec/md3-close-affordance-placement.md`);
 only sizes grow.
 | Element | Desktop | Mobile |
 |---------|---------|--------|

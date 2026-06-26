@@ -108,7 +108,7 @@ public class UseCaseVM {
         MarbleDensity helper, which sets data-density on the document root — the
         same [data-density="compact"] knob Marble ships (tokens/_sizing.css), so the
         demo dogfoods the real mechanism rather than a demo-only class.
-        See doc/data-dense-mode.md. */
+        See doc/spec/data-dense-mode.md. */
     @Command
     @NotifyChange("compactMode")
     public void toggleCompactMode(@BindingParam("on") boolean on) {

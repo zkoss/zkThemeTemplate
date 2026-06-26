@@ -1,7 +1,7 @@
 # Spec-Author Pipeline + Two-Category Documentation Refactor
 
 > **Status (2026-05-19): Phases 0-5 complete; Phase 6 user-gated.**
-> Retained as the **architectural reference** for the two-category rule, the spec-author output mapping, and the verification criteria — these still govern `zk-spec-author`, `zk-theme-evaluator`, and `zk-theme-generator` behavior. Do not treat the phase table as an active TODO; see [`spec-author-pipeline-completion.md`](spec-author-pipeline-completion.md) for the as-built report and [`orchestrator-playbook.md`](orchestrator-playbook.md) for the operational loop.
+> Retained as the **architectural reference** for the two-category rule, the spec-author output mapping, and the verification criteria — these still govern `zk-spec-author`, `zk-theme-evaluator`, and `zk-theme-generator` behavior. Do not treat the phase table as an active TODO; see [`orchestrator-playbook.md`](orchestrator-playbook.md) for the operational loop.
 
 ## Context
 
@@ -24,7 +24,7 @@ Going forward, **every component-knowledge document falls into exactly one of tw
 
 ### Category 2: Theme Design (theme-specific)
 
-**Locations:** `doc/contracts/<comp>.md`, `doc/contracts/<comp>.html`, `doc/contracts/baselines/<comp>-iceblue.png`, `doc/DESIGN.md`, `doc/mira/*.html`.
+**Locations:** `doc/contracts/<comp>.md`, `doc/contracts/<comp>.html`, `doc/contracts/baselines/<comp>-iceblue.png`, `doc/spec/DESIGN.md`, `doc/mira/*.html`.
 **Scope:** How a specific theme (marble in this repo) styles each ZK component.
 **Contents:** Token assignments, color/spacing values, MUI/Mira references, visual mockups, baseline screenshots, theme-wide design rules.
 **Audience:** This theme's evaluator and generator. Sibling themes do not read these.
@@ -103,7 +103,7 @@ Cross-cutting cleanup: migrate `doc/component-dom-structures.md` content into `z
 5. Partial Mira/MUI analog (if any) at `doc/mira/*.html` and `/Users/hawk/Documents/workspace/THEME/material-ui-7.3.1/static-css-output/<comp>.css`.
 6. MD3 tokens at `src/main/resources/web/zul/css/tokens/_{colors,elevation,motion,shape,spacing,typography}.css`.
 7. Existing skill: `.claude/skills/zk-component-rules/SKILL.md` (index) + any sibling component files.
-8. Theme rules: `doc/DESIGN.md`.
+8. Theme rules: `doc/spec/DESIGN.md`.
 
 **Outputs (strict category split, enforced by agent prompt):**
 

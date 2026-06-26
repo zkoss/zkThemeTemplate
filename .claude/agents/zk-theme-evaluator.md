@@ -25,7 +25,7 @@ Required files to read (in order):
 1. `doc/contracts/<component>.md` — the contract: tier, shared-css-file, siblings, DOM selectors, expected values, states checklist
 2. `tasks/work-status.md` — to find the current iteration count and the last failing-set for this component
 3. `tasks/eval-reports/<component>.md` (if exists) — previous report, for computing `newly_passing`
-4. `doc/DESIGN.md` — authoritative expected values (cross-check anything ambiguous in the contract)
+4. `doc/spec/DESIGN.md` — authoritative expected values (cross-check anything ambiguous in the contract)
 
 ### Two-category source-of-truth (authoritative split)
 
@@ -57,7 +57,7 @@ If the contract declares no `js-source-hash:` field, skip 0b silently and procee
 
 ### 1.5. Load ZK component rules from the skill
 
-Before measurement, load applicable rules from the `zk-component-rules` skill at `.claude/skills/zk-component-rules/`. **The skill is the canonical source of ZK component characteristics** (DOM structure, state-handling mechanism, attribute support, framework quirks). It excludes theme-specific values — those come from `doc/DESIGN.md`.
+Before measurement, load applicable rules from the `zk-component-rules` skill at `.claude/skills/zk-component-rules/`. **The skill is the canonical source of ZK component characteristics** (DOM structure, state-handling mechanism, attribute support, framework quirks). It excludes theme-specific values — those come from `doc/spec/DESIGN.md`.
 
 1. **Always read** `.claude/skills/zk-component-rules/SKILL.md` (the index).
 2. **Component-specific file**: if `components/<component>.md` exists, read it. Shared files:
@@ -74,7 +74,7 @@ Before measurement, load applicable rules from the `zk-component-rules` skill at
 
 The skill tells you **what selector to query and how to trigger the state**. The contract still owns the **expected value**.
 
-**Splitter-family trigger**: if the component is one of `splitter`, `borderlayout`, `splitlayout`, `goldenlayout`, also read `doc/DESIGN.md` §14 (Splitter Family). When a splitter bar/pill/icon check fails, classify it: a deviation from a §14 canonical value is a FAMILY failure (root cause is usually a literal restated instead of the `--zk-splitter-*` token from `zul/css/tokens/_splitter.css` — flag in the report that the other three members may share it), whereas a deviation §14 explicitly lists as that component's exception is expected — do not fail it against the family value.
+**Splitter-family trigger**: if the component is one of `splitter`, `borderlayout`, `splitlayout`, `goldenlayout`, also read `doc/spec/DESIGN.md` §14 (Splitter Family). When a splitter bar/pill/icon check fails, classify it: a deviation from a §14 canonical value is a FAMILY failure (root cause is usually a literal restated instead of the `--zk-splitter-*` token from `zul/css/tokens/_splitter.css` — flag in the report that the other three members may share it), whereas a deviation §14 explicitly lists as that component's exception is expected — do not fail it against the family value.
 
 4. **Attribute-state sweep (input components only).** Before finalising the failing-set, for any component whose contract lists an attribute-driven state (`inplace`, `buttonVisible-false`, etc.) you MUST measure that state's selector on the live page. A missing CSS rule produces no console error and no test failure — the only signal is `getComputedStyle` returning the wrong value. Do not infer pass from "the rule should exist if a sibling has it" — siblings in the same `.css.dsp` do NOT share source files (see `reference/css-file-bundling.md` → "Bundling ≠ source file sharing"). Measure each component's selector independently.
 
@@ -99,7 +99,7 @@ When a T3 check fails because the only fix would require styling a forbidden sel
 ### 2.6. Icon-coverage pre-render check
 
 Before navigating to the preview, verify every `z-icon-*` reference for this
-component is renderable. Two scopes per `doc/icon-policy.md`:
+component is renderable. Two scopes per `doc/spec/icon-policy.md`:
 
 **Scope A — preview content (Rule 2)**: Extract every `z-icon-{name}` literal
 from the component's preview ZULs (e.g. `src/test/resources/web/<component>.zul`
@@ -111,17 +111,17 @@ test -f node_modules/lucide-static/icons/{name}.svg
 
 The single exception is `z-icon-fw` (no-glyph width modifier). For any other
 miss, record a FAIL with category `icon-preview` and message
-`preview ZUL uses non-Lucide icon name "z-icon-{name}"; rename to the Lucide equivalent (see doc/icon-index.md)`. **Do not propose a CSS fix** — the action is to edit the preview ZUL.
+`preview ZUL uses non-Lucide icon name "z-icon-{name}"; rename to the Lucide equivalent (see doc/spec/icon-index.md)`. **Do not propose a CSS fix** — the action is to edit the preview ZUL.
 
 **Scope B — ZK widget-emitted (Rule 1)**: For the component being evaluated,
 check the ZK source under `/Users/hawk/Documents/workspace/ZK10/zk/zul/src/main/resources/web/js/zul/<area>/` for any `z-icon-{name}` literal that the widget injects. Each must be present in EITHER:
 - `node_modules/lucide-static/icons/{name}.svg`, OR
-- the `FA_TO_LUCIDE` map in `scripts/build-css.js` (consult `doc/icon-index.md` "FA → Lucide aliases" table).
+- the `FA_TO_LUCIDE` map in `scripts/build-css.js` (consult `doc/spec/icon-index.md` "FA → Lucide aliases" table).
 
 If neither, record a FAIL with category `icon-widget` and message
 `ZK widget emits "z-icon-{name}" but no Lucide source or FA_TO_LUCIDE alias exists; add an entry to scripts/build-css.js FA_TO_LUCIDE`. The fix here belongs to the theme, not the preview.
 
-Lookup priority for both scopes: `doc/icon-index.md` is the canonical reference. If that file is stale (older than `scripts/build-css.js` or `node_modules/lucide-static`), instruct the user to run `npm run build:css` before proceeding.
+Lookup priority for both scopes: `doc/spec/icon-index.md` is the canonical reference. If that file is stale (older than `scripts/build-css.js` or `node_modules/lucide-static`), instruct the user to run `npm run build:css` before proceeding.
 
 ### 3. Open Chrome and navigate
 

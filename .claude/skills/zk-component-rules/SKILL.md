@@ -5,7 +5,7 @@ description: Use when implementing or verifying CSS for any ZK Framework compone
 
 # ZK Component Rules
 
-You are reading the index of a knowledge base about **how ZK Framework components actually render and behave**. Theme values (colors, sizes, tokens) live in `doc/DESIGN.md` or per-theme references — this skill never repeats them.
+You are reading the index of a knowledge base about **how ZK Framework components actually render and behave**. Theme values (colors, sizes, tokens) live in `doc/spec/DESIGN.md` or per-theme references — this skill never repeats them.
 
 ## When to use
 
@@ -130,13 +130,13 @@ Load only the file for the component you are working on.
 - MD3 / MUI / Mira / iceBlue / Sapphire references
 - Hover/focus opacity values
 
-Those belong in **theme** documentation (`doc/DESIGN.md` for the current theme). If a future theme is built on top of ZK, that theme has its own DESIGN.md; this skill stays the same.
+Those belong in **theme** documentation (`doc/spec/DESIGN.md` for the current theme). If a future theme is built on top of ZK, that theme has its own DESIGN.md; this skill stays the same.
 
 ## How to add a new rule
 
 1. Decide: is the rule **a ZK property** (how the framework renders) or **a theme choice** (what looks good)?
    - ZK property → goes here.
-   - Theme choice → goes in `doc/DESIGN.md`.
+   - Theme choice → goes in `doc/spec/DESIGN.md`.
 2. Decide scope: cross-cutting → `reference/<topic>.md`; single component → `components/<name>.md`.
 3. Add the rule with a one-line statement plus a code example or selector snippet. Cite the source (component source file, official doc) so future maintainers can verify.
 4. Update this index if you added a new file.

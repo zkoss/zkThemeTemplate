@@ -112,7 +112,7 @@
 
 /* ─── Close button (closable=true) ───────────────────────────────────────────
    Side sheet → close icon button at the top-trailing corner of the header
-   (doc/md3-close-affordance-placement.md §2). The mold emits this as a sibling
+   (doc/spec/md3-close-affordance-placement.md §2). The mold emits this as a sibling
    of .z-drawer-header inside .z-drawer-real, holding <i class="z-icon-times">;
    .z-drawer-real is position:absolute, so it anchors the corner placement even
    when the header is hidden (no title). Pattern mirrors .z-window-icon. */

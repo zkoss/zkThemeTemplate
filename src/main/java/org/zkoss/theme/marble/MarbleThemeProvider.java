@@ -13,7 +13,7 @@ public class MarbleThemeProvider implements ThemeProvider {
     // ZK's widget-CSS bundle; everything inside it (norm.css.dsp + component CSS) loads
     // after this entry in the page <head>. We insert the reset stylesheet just before it
     // so the reset keeps its current "first" cascade position (it used to live inside
-    // norm.css.dsp). See doc/reset-scoping.md.
+    // norm.css.dsp). See doc/spec/reset-scoping.md.
     private static final String ZK_WCS = "zul/css/zk.wcs";
 
     // org.zkoss.zul.theme.browserDefault (boolean, default false): the legacy ZK switch for

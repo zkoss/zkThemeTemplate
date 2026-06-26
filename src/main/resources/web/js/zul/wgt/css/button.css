@@ -27,7 +27,7 @@
     outline: none;
     /* No built-in margin. For horizontal spacing wrap buttons in
        <hlayout>, <toolbar>, or a `<div sclass="z-hstack">` container
-       (all flex+gap). See doc/spacing-policy.md. */
+       (all flex+gap). See doc/spec/spacing-policy.md. */
     margin: 0;
     transition:
         background-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard),

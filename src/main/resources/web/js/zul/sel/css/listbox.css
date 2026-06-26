@@ -5,7 +5,7 @@
 /* Default = standalone OUTLINED card: 1px border, NO shadow (was border + shadow, which
    is double-emphasis — MD3 outlined ≠ elevated). On the near-white page the elevation
    shadow is invisible, so the border carries the boundary. See
-   doc/data-table-frame-rationale.md. */
+   doc/spec/DESIGN.md §11. */
 .z-listbox {
     display: block;
     background-color: var(--zk-color-surface);

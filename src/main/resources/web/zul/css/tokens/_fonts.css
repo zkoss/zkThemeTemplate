@@ -8,7 +8,7 @@
    resolve under the app context path regardless of where the WCS bundle is served
    (same convention as ZK core font DSPs; requires the c taglib at the top of
    norm.css.dsp — prepended by build-css.js). Licensed SIL OFL 1.1 — license ships
-   at ~./marble/font/inter-LICENSE.txt. See doc/font-loading-strategy.md. */
+   at ~./marble/font/inter-LICENSE.txt. See doc/spec/DESIGN.md §7 (Font loading). */
 @font-face {
     font-family: 'Inter';
     font-style: normal;

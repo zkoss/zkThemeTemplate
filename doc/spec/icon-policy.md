@@ -20,7 +20,7 @@ cannot modify these. The strategy is:
    step emits a second `.z-icon-{fa-name}{...}` rule reusing the matching
    Lucide SVG.
 
-Current alias set: see the table in `doc/icon-index.md`, section "FA → Lucide
+Current alias set: see the table in `doc/spec/icon-index.md`, section "FA → Lucide
 aliases". The single ZK-widget name without coverage is `z-icon-fw` — it is a
 FontAwesome "fixed-width" modifier with no glyph, handled by a single rule in
 `src/main/resources/web/zul/css/base/_icons.css` setting `width: 1.25em`.
@@ -32,7 +32,7 @@ grep -rhoE 'z-icon-[a-z0-9-]+' /path/to/ZK10/zk/zul/src/main/resources/web/js/ \
     | sort -u
 ```
 
-and diff against `doc/icon-index.md`'s Lucide list ∪ FA alias table. Any newly
+and diff against `doc/spec/icon-index.md`'s Lucide list ∪ FA alias table. Any newly
 appearing name must be either present in Lucide or added to `FA_TO_LUCIDE`.
 
 ## Rule 2 — Preview / example content (Lucide names only)
@@ -73,6 +73,6 @@ use them to bypass the rule for ordinary preview content.
 
 ## Canonical reference
 
-`doc/icon-index.md` — auto-generated, regenerate with `npm run build:css`.
+`doc/spec/icon-index.md` — auto-generated, regenerate with `npm run build:css`.
 Lists every valid Lucide name plus the active FA→Lucide alias table. This is
 the file generator and evaluator should consult when in doubt.

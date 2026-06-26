@@ -130,19 +130,20 @@ Located in `doc/` directory:
 
 | File | Description |
 |------|-------------|
+| [spec/index.md](doc/spec/index.md) | **Spec index** — normative theme specifications (the docs below marked *spec* live under `doc/spec/`) |
 | [component-dom-structures.md](doc/component-dom-structures.md) | DOM structure of each ZK component |
 | [zk-source-reference.md](doc/zk-source-reference.md) | How to navigate ZK source code |
-| [css-dsp-file-structure.md](doc/css-dsp-file-structure.md) | All required *.css.dsp output files for the theme |
+| [css-dsp-file-structure.md](doc/spec/css-dsp-file-structure.md) | All required *.css.dsp output files for the theme |
 | [usecase-driven-iteration.md](doc/usecase-driven-iteration.md) | Use-case driven iteration workflow (OBSERVE→AUDIT→FIX→VERIFY) |
 | [preview-page-descriptions.md](doc/preview-page-descriptions.md) | ZUL page descriptions for 8 use-case enterprise scenarios |
 | [zk-edition-components.md](doc/zk-edition-components.md) | Components by ZK edition (CE/PE/EE) |
-| [window-design-rules.md](doc/window-design-rules.md) | Window mode↔elevation mapping; `border` must not drive shadow |
-| [reset-scoping.md](doc/reset-scoping.md) | `org.zkoss.zul.theme.browserDefault` — DSP-free reset scoping for JS-Embed host pages (global `reset.css` vs `@scope(.z-page)` `reset-embed.css`, swapped in `MarbleThemeProvider`) |
-| [md3-close-affordance-placement.md](doc/md3-close-affordance-placement.md) | MD3 close/dismiss icon placement (inline trailing vs surface top-corner; full-screen-dialog exception) |
+| [window-design-rules.md](doc/spec/window-design-rules.md) | Window mode↔elevation mapping; `border` must not drive shadow |
+| [reset-scoping.md](doc/spec/reset-scoping.md) | `org.zkoss.zul.theme.browserDefault` — DSP-free reset scoping for JS-Embed host pages (global `reset.css` vs `@scope(.z-page)` `reset-embed.css`, swapped in `MarbleThemeProvider`) |
+| [md3-close-affordance-placement.md](doc/spec/md3-close-affordance-placement.md) | MD3 close/dismiss icon placement (inline trailing vs surface top-corner; full-screen-dialog exception) |
 | [verification-harness-decisions.md](doc/verification-harness-decisions.md) | Decision records: outcome-driven contracts (DR-1), dual-gate VERIFIED (DR-2) |
 | [css-audit-report.md](doc/css-audit-report.md) | One-time CSS hygiene audit (worked example). Re-run via the `css-theme-audit` skill / `npm run audit:css` |
 | [responsive-design.md](doc/responsive-design.md) | Responsive layout: `z-grid-fill` auto-fit utility + State Matrix mobile card-reflow; why not Bootstrap Grid |
-| [data-dense-mode.md](doc/data-dense-mode.md) | Compact density via `data-density="compact"` attribute (whole-app or per-region); control-height ladder + semantic alias layer; `MarbleDensity` Java API; ships `marble-compact.css` tuning preset |
+| [data-dense-mode.md](doc/spec/data-dense-mode.md) | Compact density via `data-density="compact"` attribute (whole-app or per-region); control-height ladder + semantic alias layer; `MarbleDensity` Java API; ships `marble-compact.css` tuning preset |
 | [mira/](doc/mira/) | 49 Mira HTML reference pages + MUI stylesheet (index-BnB_Ifri.css) |
 
 ### External CSS Reference
@@ -156,7 +157,7 @@ Located in `doc/` directory:
 ## Quick Start for New Session
 
 1. **Read the iteration workflow**: `doc/usecase-driven-iteration.md`
-2. **Check required output files**: `doc/css-dsp-file-structure.md`
+2. **Check required output files**: `doc/spec/css-dsp-file-structure.md`
 3. **Research DOM structure**: `doc/component-dom-structures.md` or ZK source at `/Users/hawk/Documents/workspace/ZK10/zk/zul`
 4. **Reference MUI CSS**: `/Users/hawk/Documents/workspace/THEME/material-ui-7.3.1/static-css-output/INDEX.md` → pick matching file
 5. **Implement CSS**: Use MD3 token patterns; all colors via `var(--md-sys-color-*)` — no hardcoded hex

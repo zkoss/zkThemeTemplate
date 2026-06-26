@@ -172,7 +172,7 @@ See `components/selectbox.md` → "Sized / multiple select is an in-page list bo
 Default = standalone **outlined** card: border, NO shadow (never both). No-border variant
 (`z-listbox-noborder`) and panel/groupbox ancestry strip the border. ZK emits no border
 attribute for listbox (unlike window's `z-window-noborder`) → the variant is a theme sclass
-mirroring that naming. See `doc/data-table-frame-rationale.md`.
+mirroring that naming. See `doc/spec/DESIGN.md §11`.
 
 | id | check | selector | property | expected | method |
 |----|-------|----------|----------|----------|--------|

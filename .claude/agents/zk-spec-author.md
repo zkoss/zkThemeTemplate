@@ -65,7 +65,7 @@ You receive a single argument: `<comp>` (e.g. `stepbar`). Required reads, in pri
 5. **Partial Mira/MUI analog.** Check `doc/mira/components-*.html` and `/Users/hawk/Documents/workspace/THEME/material-ui-7.3.1/static-css-output/` for any related component. If none exists, say so explicitly in the contract's References block ("no MUI/Mira analog — see §8 of DESIGN.md for novel-component policy").
 6. **MD3 tokens** at `src/main/resources/web/zul/css/tokens/_{colors,elevation,motion,shape,spacing,typography}.css`. The contract's expected-values column must cite a `var(--zk-…)` token when one exists; raw values only as a last resort.
 7. **Skill index** at `.claude/skills/zk-component-rules/SKILL.md`. After you create the new component file, you MUST update this index.
-8. **Theme rules** at `doc/DESIGN.md`.
+8. **Theme rules** at `doc/spec/DESIGN.md`.
 
 ## Workflow
 
@@ -97,7 +97,7 @@ Criteria, in order of weight:
 4. **Mira/MUI analog exists for the sibling** — reusable styles likely apply.
 5. **Shared `.css.dsp` contract** — if the component already ships in a sibling's CSS file, that sibling is *automatically* the closest sibling (forced by ZK's bundling).
 
-If candidates tie or none score above a "good fit" threshold, declare `closest-sibling: none — novel pattern` and pull values from `doc/DESIGN.md` directly. The five seed components are expected to land here (stepbar, organigram, pdfviewer, signature, tbeditor — except where noted below).
+If candidates tie or none score above a "good fit" threshold, declare `closest-sibling: none — novel pattern` and pull values from `doc/spec/DESIGN.md` directly. The five seed components are expected to land here (stepbar, organigram, pdfviewer, signature, tbeditor — except where noted below).
 
 **Worked examples for seed components:**
 

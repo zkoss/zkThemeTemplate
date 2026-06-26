@@ -4,7 +4,7 @@
 rows/cols). It is NOT a Listbox variant — different widget, different DOM, its own
 scrollbar. It renders only the visible `rows`×`cols` window and re-fetches from a
 `MatrixModel` as you scroll. These are ZK-portable facts (true for any theme); theme
-values (colors, thumb size, radius) live in `doc/DESIGN.md` / `doc/contracts/biglistbox.md`.
+values (colors, thumb size, radius) live in `doc/spec/DESIGN.md` / `doc/contracts/biglistbox.md`.
 
 ## DOM structure
 

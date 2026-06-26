@@ -6,7 +6,7 @@
    assumed to stand alone, and on the near-white page (--zk-color-background #f7f9fc)
    the elevation-card shadow is invisible, so a border is the only thing that gives the
    table a readable boundary. Never border + shadow together (MD3 outlined ≠ elevated).
-   See doc/data-table-frame-rationale.md. */
+   See doc/spec/DESIGN.md §11. */
 .z-grid {
     display: block;
     background-color: var(--zk-color-surface);

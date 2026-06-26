@@ -1,6 +1,6 @@
 /* MD3 Auxhead — auxiliary multi-level column header row (ZK-only).
    DOM: TR.z-auxhead > TH.z-auxheader (with colspan) > DIV.z-auxheader-content
-   Design (see doc/DESIGN.md): faint tonal band on the ROW, cells transparent.
+   Design (see doc/spec/DESIGN.md): faint tonal band on the ROW, cells transparent.
    The band gives a 4th hierarchy tier (auxhead-row → header-row → body → footer)
    without competing with the column-header divider. */
 

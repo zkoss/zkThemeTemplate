@@ -19,7 +19,7 @@ Required files to read (in order):
 2. `doc/contracts/<component>.md` — tier, shared-css-file, siblings, token assignments, expected values
 3. `.claude/skills/zk-component-rules/components/<component>.md` — **authoritative structural source**: DOM selectors, state-class enumeration, composition invariants. Read this FIRST for any selector or state-class lookup. The contract is consulted only for token assignments — selectors come from the skill.
 4. The CSS file named in `shared-css-file` — the file you will edit
-5. `doc/DESIGN.md` — canonical expected values (for token names + values)
+5. `doc/spec/DESIGN.md` — canonical expected values (for token names + values)
 6. For T1 components only: the MUI CSS reference file listed in the contract (for cross-checking idiomatic styles)
 
 ### Skill-first structural lookups
@@ -39,7 +39,7 @@ If the contract declares a `## Design Contract` section (or equivalent prose aut
 
 ### 1.3. Load ZK component rules from the skill
 
-Before the contract step, load applicable component rules from the `zk-component-rules` skill at `.claude/skills/zk-component-rules/`. **The skill is the canonical source of ZK component characteristics** (DOM structure, state-handling mechanism, attribute support, CSS file bundling, framework quirks). It excludes theme-specific values — those still come from `doc/DESIGN.md`.
+Before the contract step, load applicable component rules from the `zk-component-rules` skill at `.claude/skills/zk-component-rules/`. **The skill is the canonical source of ZK component characteristics** (DOM structure, state-handling mechanism, attribute support, CSS file bundling, framework quirks). It excludes theme-specific values — those still come from `doc/spec/DESIGN.md`.
 
 1. **Always read** `.claude/skills/zk-component-rules/SKILL.md` (the index) on every invocation.
 2. **Component-specific file**: if `components/<component>.md` exists, read it. Some components share a file:
@@ -53,7 +53,7 @@ Before the contract step, load applicable component rules from the `zk-component
    - Shared CSS file / sibling impact → `reference/css-file-bundling.md` (read especially "Bundling ≠ source file sharing" — a rule in `combobox.css` does NOT apply to `datebox.css` even though they ship in `combo.css.dsp`)
    - Component edition (CE/PE/EE) constraints → `reference/edition-availability.md`
    - Selector that targets an unintuitive class name (`.z-panelchildren`, `.z-rating-icon`, etc.) → `reference/class-name-quirks.md`
-4. **Splitter-family trigger**: if the component is one of `splitter`, `borderlayout`, `splitlayout`, `goldenlayout` AND the failing-set touches any splitter bar/pill/icon check, read `doc/DESIGN.md` §14 (Splitter Family) before editing. The canonical values are `--zk-splitter-*` tokens (`zul/css/tokens/_splitter.css`) — consume the tokens, never restate the values as literals. If the fix changes a FAMILY value (the token itself or §14), state in your gen report under `Sibling impact:` that the other three family members need re-evaluation; documented per-component exceptions (§14 lists them) stay local.
+4. **Splitter-family trigger**: if the component is one of `splitter`, `borderlayout`, `splitlayout`, `goldenlayout` AND the failing-set touches any splitter bar/pill/icon check, read `doc/spec/DESIGN.md` §14 (Splitter Family) before editing. The canonical values are `--zk-splitter-*` tokens (`zul/css/tokens/_splitter.css`) — consume the tokens, never restate the values as literals. If the fix changes a FAMILY value (the token itself or §14), state in your gen report under `Sibling impact:` that the other three family members need re-evaluation; documented per-component exceptions (§14 lists them) stay local.
 
 If the skill files contradict the contract's expected values, that is a bug — surface it in your gen report under a `Skill conflict:` note and proceed using the contract as the authoritative spec for this run.
 
