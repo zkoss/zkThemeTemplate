@@ -13,6 +13,7 @@
     "screenshot:update": "playwright test --config src/test/playwright/playwright.config.ts --update-snapshots"
   },
   "devDependencies": {
+    "@fontsource-variable/inter": "^5.2.8",
     "@playwright/test": "^1.59.1",
     "chokidar": "^3.5.3",
     "clean-css": "^5.3.3",

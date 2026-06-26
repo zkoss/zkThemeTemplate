@@ -7,6 +7,10 @@ const CleanCSS = require('clean-css');
 const webDir = path.join(__dirname, '..', 'src/main/resources/web');
 const themeDir = path.join(__dirname, '..', 'target/classes/web/marble');
 
+// DSP taglib directive enabling ${c:encodeURL(...)} in a .css.dsp (the `c` prefix).
+// Required by norm.css.dsp's self-hosted-font @font-face; mirrors ZK's font DSPs.
+const DSP_CORE_TAGLIB = '<%@ taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" %>';
+
 // Dev builds (watch / build:css:dev) stay unminified so hot-swapped CSS is
 // readable in DevTools; the packaged build (build:css) is minified.
 const isDev = process.argv.includes('--dev');
@@ -35,10 +39,8 @@ function minifyCss(css) {
         return css;
     }
     if (!layerStmts.length) return output.styles;
-    // A bare `@layer <names>;` statement is one of the few things allowed to
-    // precede @import (CSS spec: @import must come first except for @charset and
-    // @layer statements), so prepend at the very top. This avoids parsing the
-    // @import boundary, whose Google-Fonts url() itself contains `;` characters.
+    // A bare `@layer <names>;` statement may legally precede other rules; prepend
+    // it at the very top so neither it nor its immediately-following rule is lost.
     return layerStmts.join('') + output.styles;
 }
 
@@ -197,6 +199,49 @@ function getLucideIcons() {
         .filter(f => f.endsWith('.svg'))
         .sort()
         .map(f => f.replace('.svg', ''));
+}
+
+// Vendored web font: Inter (variable, Latin subset). Copied from the
+// @fontsource-variable/inter npm package into the served theme dir at build
+// time — the same vendoring pattern used for Lucide icons above. This replaces
+// the former Google-Fonts CDN @import so the theme has no external runtime font
+// dependency (offline / air-gapped / GDPR safe). The @font-face that points at
+// these files lives in zul/css/tokens/_fonts.css. Inter is SIL OFL 1.1, so the
+// license ships alongside the binary. See doc/font-loading-strategy.md.
+//   *-wght-normal.woff2 = weight-axis-only (100–900) variable fonts.
+//   latin (~47 KB) covers Western-European accents (Latin-1); latin-ext (~83 KB)
+//   adds Central/Eastern-European glyphs (Polish/Czech/Turkish/…) for EU customers.
+//   _fonts.css partitions them by unicode-range, so latin-ext is only fetched by
+//   the browser when a page actually contains those characters.
+const FONT_SOURCES = [
+    {
+        from: 'node_modules/@fontsource-variable/inter/files/inter-latin-wght-normal.woff2',
+        to: 'font/inter-latin-variable.woff2',
+    },
+    {
+        from: 'node_modules/@fontsource-variable/inter/files/inter-latin-ext-wght-normal.woff2',
+        to: 'font/inter-latin-ext-variable.woff2',
+    },
+    {
+        from: 'node_modules/@fontsource-variable/inter/LICENSE',
+        to: 'font/inter-LICENSE.txt',
+    },
+];
+
+function copyFonts() {
+    let copied = 0;
+    for (const { from, to } of FONT_SOURCES) {
+        const src = path.join(__dirname, '..', from);
+        if (!fs.existsSync(src)) {
+            console.warn(`  ⚠ font asset missing (did you run npm install?): ${from}`);
+            continue;
+        }
+        const dest = path.join(themeDir, to);
+        fs.mkdirSync(path.dirname(dest), { recursive: true });
+        fs.copyFileSync(src, dest);
+        copied++;
+    }
+    if (copied) console.log(`  font/ — Inter latin + latin-ext variable woff2 (+ OFL license) [${copied} files]`);
 }
 
 // Font Awesome name → Lucide name aliases.
@@ -447,11 +492,19 @@ function build() {
         normCSS += readFile(file) + '\n';
     }
     normCSS += generateLucideIconsCSS(lucideIcons);
-    writeDsp('zul/css/norm.css.dsp', normCSS);
+    // norm.css.dsp uses ${c:encodeURL(...)} in _fonts.css's @font-face (self-hosted
+    // Inter). The DSP `c` taglib must be declared at the top of the file or the parser
+    // throws "Function 'c:encodeURL' not found" and drops the rule — same directive ZK's
+    // own font-awesome.css.dsp carries. Prepend it AFTER minify so CleanCSS never sees
+    // the non-CSS <%@ ... %> directive. Written raw for the same reason.
+    writeRaw('zul/css/norm.css.dsp', DSP_CORE_TAGLIB + minifyCss(normCSS));
     console.log(`  zul/css/norm.css.dsp (${lucideIcons.length} Lucide icons)`);
 
     // 1a. Build the two reset variants (served separately, ahead of norm — see getThemeURIs)
     buildResetVariants();
+
+    // 1a'. Vendor the self-hosted Inter web font (replaces the Google-Fonts CDN @import)
+    copyFonts();
 
     // 1b. Generate icons demo page
     generateIconsZul(lucideIcons);
