@@ -77,8 +77,8 @@
     margin: 0;
 }
 
-.z-h1 { font-size: 2rem;     font-weight: 700; line-height: 1.2;  letter-spacing: -0.5px; }
-.z-h2 { font-size: 1.75rem;  font-weight: 700; line-height: 1.2;  letter-spacing: -0.25px; }
+.z-h1 { font-size: 2rem;     font-weight: 700; line-height: 1.2;  letter-spacing: var(--zk-typescale-tracking-tighter); }
+.z-h2 { font-size: 1.75rem;  font-weight: 700; line-height: 1.2;  letter-spacing: var(--zk-typescale-tracking-tight); }
 .z-h3 { font-size: 1.5rem;   font-weight: 600; line-height: 1.25; }
 .z-h4 { font-size: 1.25rem;  font-weight: 600; line-height: 1.3;  }
 .z-h5 { font-size: 1.125rem; font-weight: 600; line-height: 1.4;  }

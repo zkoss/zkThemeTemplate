@@ -20,6 +20,7 @@ import org.zkoss.zk.ui.WebApp;
 import org.zkoss.zk.ui.WebApps;
 import org.zkoss.zk.ui.util.Configuration;
 import org.zkoss.zk.ui.util.WebAppInit;
+import org.zkoss.web.theme.StandardTheme.ThemeOrigin;
 import org.zkoss.zkmax.theme.ResponsiveThemeRegistry;
 import org.zkoss.zul.theme.Themes;
 
@@ -35,11 +36,14 @@ public class MarbleThemeWebAppInit implements WebAppInit {
 	private final static int THEME_PRIORITY = 500;
 
 	public void init(WebApp webapp) throws Exception {
-		Themes.register(THEME_NAME, THEME_DISPLAY, THEME_PRIORITY);
+		// ThemeOrigin.JAR is StandardTheme's default; state it explicitly so it is
+		// self-documenting that Marble ships its CSS resources inside the theme jar
+		// (not a FOLDER deployment).
+		Themes.register(THEME_NAME, THEME_DISPLAY, THEME_PRIORITY, ThemeOrigin.JAR);
 		// Bug ZK-2963: register theme for tablet responsive theme
 		String edition = WebApps.getEdition();
 		if ("EE".equals(edition)) {
-			Themes.register(ResponsiveThemeRegistry.TABLET_PREFIX + THEME_NAME, THEME_DISPLAY, THEME_PRIORITY);
+			Themes.register(ResponsiveThemeRegistry.TABLET_PREFIX + THEME_NAME, THEME_DISPLAY, THEME_PRIORITY, ThemeOrigin.JAR);
 		}
 
 		// ZK-1671: <theme-provider-class> in our metainfo/zk/zk.xml is loaded

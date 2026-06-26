@@ -6,6 +6,11 @@
     --zk-typescale-mono-family: 'SFMono-Regular', Consolas, 'Liberation Mono',
         Menlo, Courier, monospace;
 
+    /* Tracking (letter-spacing) — large headings tighten per MD3; the larger the
+     * size the tighter the tracking. Consumed by the .z-h1/.z-h2 utilities. */
+    --zk-typescale-tracking-tight: -0.25px;
+    --zk-typescale-tracking-tighter: -0.5px;
+
     /* Display */
     --zk-typescale-display-large-size: 57px;
     --zk-typescale-display-large-weight: 400;

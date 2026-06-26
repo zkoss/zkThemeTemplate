@@ -147,7 +147,7 @@
     resize: none;
     background-color: var(--zk-color-surface);
     color: var(--zk-color-on-surface);
-    font-family: monospace;
+    font-family: var(--zk-typescale-mono-family);
     font-size: var(--zk-typescale-body-medium-size);
 }
 
