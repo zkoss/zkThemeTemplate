@@ -63,6 +63,17 @@
    instead of squeezing unusably. */
 .z-grid-cols-auto { grid-template-columns: auto repeat(var(--zk-cols, 1), minmax(var(--zk-col-min, 0), 1fr)); }
 
+/* Auto-fit fill column-width tokens — the default minimum and the named steps
+   below are declared here so they can be retuned in one place (override at
+   `:root`, or per-instance via `style="--zk-grid-min: …"`). */
+:root {
+    --zk-grid-min: 180px;     /* default auto-fit minimum column width */
+    --zk-grid-min-xs: 96px;
+    --zk-grid-min-sm: 140px;
+    --zk-grid-min-lg: 240px;
+    --zk-grid-min-xl: 320px;
+}
+
 /* Auto-fit fill — responsive by intrinsic sizing, no breakpoints needed.
    Children flow into as many equal columns as fit, each at least
    `--zk-grid-min` wide (default 180px), wrapping to new rows when they don't.
@@ -75,13 +86,14 @@
 }
 
 /* Cell-size steps for .z-grid-fill — set the auto-fit minimum by class instead of
-   an inline `style="--zk-grid-min: …"`. Compose with .z-d-grid .z-grid-fill, e.g. a
-   dense, uniform gallery: `sclass="z-d-grid z-grid-fill z-grid-fill-xs z-gap-3"`.
+   an inline `style="--zk-grid-min: …"`. Each maps to a `:root`-overridable token
+   above. Compose with .z-d-grid .z-grid-fill, e.g. a dense, uniform gallery:
+   `sclass="z-d-grid z-grid-fill z-grid-fill-xs z-gap-3"`.
    General-purpose: icon galleries, chip clouds, avatar/thumbnail grids, KPI tiles. */
-.z-grid-fill-xs { --zk-grid-min: 96px;  }
-.z-grid-fill-sm { --zk-grid-min: 140px; }
-.z-grid-fill-lg { --zk-grid-min: 240px; }
-.z-grid-fill-xl { --zk-grid-min: 320px; }
+.z-grid-fill-xs { --zk-grid-min: var(--zk-grid-min-xs); }
+.z-grid-fill-sm { --zk-grid-min: var(--zk-grid-min-sm); }
+.z-grid-fill-lg { --zk-grid-min: var(--zk-grid-min-lg); }
+.z-grid-fill-xl { --zk-grid-min: var(--zk-grid-min-xl); }
 
 /* Grid — item placement: span every column (full grid width), e.g. a section
    title sitting above a multi-column body. Tailwind parallel: `col-span-full`. */
