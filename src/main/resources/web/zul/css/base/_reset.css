@@ -7,6 +7,10 @@
     box-sizing: border-box;
 }
 
+/* page-frame:start — html/body reset. Emitted ONLY in the global (browserDefault=false)
+   variant. In the embed variant (browserDefault=true, JS-Embed host pages) this block is
+   dropped so ZK never restyles the host page's <html>/<body>, and the remaining rules are
+   confined to the ZK subtree via @scope (.z-page). See doc/reset-scoping.md. */
 html {
     /* DEFINITE height (not min-height) so that body's `min-height: 100%` below
        has a resolvable containing-block height. A percentage min-height computes
@@ -16,7 +20,10 @@ html {
        (unlike `100vh`): when a horizontal scrollbar appears it shrinks with the
        reduced viewport, so no spurious vertical scrollbar. */
     height: 100%;
-    font-size: 14px;
+    /* No font-size override here: keep the browser default (16px) as the rem base, like MUI /
+       Bootstrap / Tailwind. Content text is set explicitly by body/.z-page via px tokens, so
+       this only anchors rem — and the theme's rem values are authored as x/16. See
+       tasks/remove-root-font-size-impact.md. */
     -webkit-text-size-adjust: 100%;
 }
 
@@ -48,6 +55,7 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
+/* page-frame:end */
 
 .z-page{
     font-family: var(--zk-typescale-font-family);

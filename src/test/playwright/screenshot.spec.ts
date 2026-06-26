@@ -804,10 +804,13 @@ test.describe('tooltip', () => {
     await tip.waitFor({ state: 'visible' });
     const m = await tip.evaluate(el => {
       const s = getComputedStyle(el);
-      return { bg: s.backgroundColor, color: s.color };
+      return { bg: s.backgroundColor, color: s.color, fontSize: s.fontSize };
     });
     expect(m.bg, '.z-popup-tooltip background must be the dark tooltip fill').toBe('rgba(97, 97, 97, 0.92)');
     expect(m.color, '.z-popup-tooltip text must be white').toBe('rgb(255, 255, 255)');
+    // 0.6875rem against the browser-default 16px root (the `html{font-size:14px}` override was
+    // removed — see tasks/remove-root-font-size-impact.md). Guards the intended /16 size.
+    expect(m.fontSize, '.z-popup-tooltip text is 0.6875rem = 11px at the 16px root').toBe('11px');
   });
 });
 

@@ -53,7 +53,10 @@ const normFiles = [
     'zul/css/tokens/_shape.css',
     'zul/css/tokens/_sizing.css',
     'zul/css/tokens/_splitter.css',
-    'zul/css/base/_reset.css',
+    // NOTE: base/_reset.css is intentionally NOT bundled here. It is emitted as its own
+    // stylesheet (reset.css / reset-embed.css) and loaded ahead of this bundle by
+    // MarbleThemeProvider.getThemeURIs, so the theme can swap a host-safe variant for
+    // JS-Embed pages. See buildResetVariants() below and doc/reset-scoping.md.
     // Utility CSS — split by sidebar category (see usecase/index.zul "Utility CSS").
     // NOTE: no default-rhythm file — widgets carry zero default margins (ZK's
     // flex sizing subtracts child margins; spacing is opt-in via _stack.css /
@@ -375,6 +378,14 @@ function writeDsp(relativePath, content) {
     fs.writeFileSync(fullPath, minifyCss(content));
 }
 
+// Write content verbatim (no minify pass). Used for CSS the build has already minified and
+// then wrapped in an at-rule CleanCSS can't parse (e.g. @scope) — see toEmbedReset.
+function writeRaw(relativePath, content) {
+    const fullPath = path.join(themeDir, relativePath);
+    fs.mkdirSync(path.dirname(fullPath), { recursive: true });
+    fs.writeFileSync(fullPath, content);
+}
+
 function scanCssFiles(dir, base) {
     const results = [];
     for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
@@ -387,6 +398,39 @@ function scanCssFiles(dir, base) {
         }
     }
     return results;
+}
+
+// Bare `@layer <names>;` order statement (same shape minifyCss guards against).
+const LAYER_STMT_RE = /@layer\s+[\w-]+(?:\s*,\s*[\w-]+)*\s*;/;
+// The html/body page-frame block, delimited by markers in _reset.css.
+const PAGE_FRAME_RE = /\/\* page-frame:start[\s\S]*?page-frame:end \*\//;
+
+// Derive the JS-Embed-safe reset from the single _reset.css source: drop the html/body
+// page-frame block (so ZK never touches the host page's frame) and confine the remaining
+// widget reset to the ZK subtree with @scope (.z-page). The bare @layer order statement is
+// lifted above @scope so it still governs the layered utility CSS in norm.css.dsp.
+//
+// CRITICAL ordering: CleanCSS (level 1) does not understand @scope — it drops the first
+// nested rule and hoists the rest OUT of the block. So we minify the PLAIN rules first
+// (while they are ordinary CSS, exactly like reset.css), then wrap the result in @scope.
+// CleanCSS therefore never sees @scope at all.
+function toEmbedReset(src) {
+    const noFrame = src.replace(PAGE_FRAME_RE, '');
+    const minified = minifyCss(noFrame); // @layer guarded + plain rules minified (or raw in dev)
+    const layerStmt = (minified.match(LAYER_STMT_RE) || [''])[0];
+    const body = minified.replace(LAYER_STMT_RE, '').trim();
+    const open = isDev ? `${layerStmt}\n@scope (.z-page) {\n` : `${layerStmt}@scope (.z-page){`;
+    return `${open}${body}${isDev ? '\n}\n' : '}'}`;
+}
+
+function buildResetVariants() {
+    const resetSrc = readFile('zul/css/base/_reset.css');
+    // Global variant — today's reset verbatim (frame intact, unscoped). Default / standalone.
+    writeDsp('zul/css/reset.css', resetSrc);
+    // Embed variant — host-safe, scoped, no frame. Served when browserDefault=true.
+    // Already minified + @scope-wrapped, so write it raw (don't re-run the minifier over @scope).
+    writeRaw('zul/css/reset-embed.css', toEmbedReset(resetSrc));
+    console.log('  zul/css/reset.css + zul/css/reset-embed.css');
 }
 
 function build() {
@@ -405,6 +449,9 @@ function build() {
     normCSS += generateLucideIconsCSS(lucideIcons);
     writeDsp('zul/css/norm.css.dsp', normCSS);
     console.log(`  zul/css/norm.css.dsp (${lucideIcons.length} Lucide icons)`);
+
+    // 1a. Build the two reset variants (served separately, ahead of norm — see getThemeURIs)
+    buildResetVariants();
 
     // 1b. Generate icons demo page
     generateIconsZul(lucideIcons);

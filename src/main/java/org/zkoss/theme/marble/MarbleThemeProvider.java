@@ -1,5 +1,6 @@
 package org.zkoss.theme.marble;
 
+import org.zkoss.lang.Library;
 import org.zkoss.web.fn.ServletFns;
 import org.zkoss.zk.ui.Execution;
 import org.zkoss.zk.ui.util.ThemeProvider;
@@ -8,9 +9,40 @@ import java.util.*;
 
 // this class is made as a workaround for ZK-6024 load theme-based font-awesome.css.dsp from a wrong path
 public class MarbleThemeProvider implements ThemeProvider {
+
+    // ZK's widget-CSS bundle; everything inside it (norm.css.dsp + component CSS) loads
+    // after this entry in the page <head>. We insert the reset stylesheet just before it
+    // so the reset keeps its current "first" cascade position (it used to live inside
+    // norm.css.dsp). See doc/reset-scoping.md.
+    private static final String ZK_WCS = "zul/css/zk.wcs";
+
+    // org.zkoss.zul.theme.browserDefault (boolean, default false): the legacy ZK switch for
+    // whether the theme overrides browser defaults globally. We reuse it DSP-free —
+    //   false → override globally: serve the standard global reset (reset.css);
+    //   true  → don't override the host: serve the host-safe reset scoped to .z-page
+    //           with the html/body frame dropped (reset-embed.css), for JS-Embed pages.
+    private static final String BROWSER_DEFAULT = "org.zkoss.zul.theme.browserDefault";
+    private static final String RESET_GLOBAL = "~./zul/css/reset.css";
+    private static final String RESET_EMBED = "~./zul/css/reset-embed.css";
+
     @Override
     public Collection<Object> getThemeURIs(Execution exec, List<Object> uris) {
-        return uris;
+        final boolean embedSafe = Boolean.parseBoolean(Library.getProperty(BROWSER_DEFAULT, "false"));
+        final String resetUri = ServletFns.resolveThemeURL(embedSafe ? RESET_EMBED : RESET_GLOBAL);
+
+        final List<Object> out = new ArrayList<>(uris.size() + 1);
+        boolean inserted = false;
+        for (Object uri : uris) {
+            if (!inserted && uri instanceof String && ((String) uri).contains(ZK_WCS)) {
+                out.add(resetUri); // reset loads immediately before the widget-CSS bundle
+                inserted = true;
+            }
+            out.add(uri);
+        }
+        if (!inserted) {
+            out.add(0, resetUri); // no zk.wcs entry found — fall back to loading first
+        }
+        return out;
     }
 
     @Override
