@@ -8,16 +8,18 @@ description: >-
   review, audit, clean up, lint, or check the quality/hygiene of theme CSS,
   tokens, or utility classes; before tagging a theme release; or when adopting
   this template to build a NEW theme and they ask "how do I run the same checks
-  I did before" — even if they never say the word "audit". This is the
-  repeatable method behind the one-off doc/css-audit-report.md.
+  I did before" — even if they never say the word "audit". This skill is the
+  self-contained, repeatable method (procedure + worked example below).
 ---
 
 # CSS Theme Audit
 
-A repeatable procedure for auditing a ZK theme's CSS the way `marble` was audited
-on 2026-06-15. That audit lives in `doc/css-audit-report.md` — treat it as the
-**worked example** (what good output looks like); this skill is the **method**
-(how to produce it for any theme).
+A repeatable procedure for auditing a ZK theme's CSS the way `marble` was first
+audited on 2026-06-15. This skill is self-contained: the **method** (how to
+produce an audit for any theme) plus an inline **worked example** (what good
+output looks like — the A–F structure in Step 4, with the concrete `marble`
+findings cited throughout: the goldenlayout 3-warning split, the
+`--zk-elevation-resting` shadow extraction, the orphan-token buckets).
 
 The audit deliberately mixes two kinds of work:
 
@@ -58,7 +60,7 @@ script has no other theme-specific assumptions.
 ## Step 1 — Mechanical pass (automated)
 
 ```bash
-bash .claude/skills/css-theme-audit/scripts/audit-css.sh --out doc/css-audit-report.md
+bash .claude/skills/css-theme-audit/scripts/audit-css.sh --out doc/css-audit-<theme>.md
 # or just print to the terminal:
 bash .claude/skills/css-theme-audit/scripts/audit-css.sh
 ```
@@ -164,8 +166,8 @@ The mechanical core is meant to stay on as a standing gate:
 
 ## Step 4 — Write it up
 
-Produce the report using the same **A–F structure** as `doc/css-audit-report.md`
-so audits of different themes stay comparable:
+Produce the report using the **A–F structure** below so audits of different
+themes stay comparable:
 
 ```
 A. Token / variable layer   (duplicates, same-value-different-name, orphans, DRY)

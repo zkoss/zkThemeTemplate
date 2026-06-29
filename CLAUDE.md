@@ -141,7 +141,6 @@ Located in `doc/` directory:
 | [reset-scoping.md](doc/spec/reset-scoping.md) | `org.zkoss.zul.theme.browserDefault` — DSP-free reset scoping for JS-Embed host pages (global `reset.css` vs `@scope(.z-page)` `reset-embed.css`, swapped in `MarbleThemeProvider`) |
 | [md3-close-affordance-placement.md](doc/spec/md3-close-affordance-placement.md) | MD3 close/dismiss icon placement (inline trailing vs surface top-corner; full-screen-dialog exception) |
 | [verification-harness-decisions.md](doc/verification-harness-decisions.md) | Decision records: outcome-driven contracts (DR-1), dual-gate VERIFIED (DR-2) |
-| [css-audit-report.md](doc/css-audit-report.md) | One-time CSS hygiene audit (worked example). Re-run via the `css-theme-audit` skill / `npm run audit:css` |
 | [responsive-design.md](doc/responsive-design.md) | Responsive layout: `z-grid-fill` auto-fit utility + State Matrix mobile card-reflow; why not Bootstrap Grid |
 | [data-dense-mode.md](doc/spec/data-dense-mode.md) | Compact density via `data-density="compact"` attribute (whole-app or per-region); control-height ladder + semantic alias layer; `MarbleDensity` Java API; ships `marble-compact.css` tuning preset |
 | [mira/](doc/mira/) | 49 Mira HTML reference pages + MUI stylesheet (index-BnB_Ifri.css) |

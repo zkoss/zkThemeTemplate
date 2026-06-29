@@ -237,4 +237,5 @@ The spec + checker are theme-independent. To onboard a new ZK theme:
    (re-enumerate norm.less / footer.less / _reset.less + re-grep the client JS for that version).
 3. Build the theme, run Tier 1 against its compiled CSS dir.
 4. Run the Tier 2 review on any MISS/WARN.
-5. Write the result to that theme's `doc/framework-classes-audit.md`.
+5. Report the PASS/FAIL result (the checker output is the record — it is reproducible by
+   re-running the command, so there is no need to persist it as a separate audit doc).

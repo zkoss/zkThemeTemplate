@@ -5,10 +5,6 @@
  * emits at runtime. Stock ZK ships NO CSS for the drag/drop feedback classes (only
  * `.z-word-nowrap` / `.z-dragged` live in stock norm.less), so a theme that omits them
  * leaves drag/drop visually unstyled. Marble replaces stock CSS entirely, so every hook
- * must be defined here. See:
- *   - spec:     .claude/skills/zk-component-rules/reference/framework-classes.md
- *   - contract: doc/contracts/framework-classes.md
- *   - audit:    doc/framework-classes-audit.md
  *
  * DOM (verified ZK 10.2.1 zk/widget.ts):
  *   - Frozen grid/listbox body div   ← .z-word-nowrap            (Frozen.ts bind_, on load)
