@@ -304,11 +304,11 @@
 
 /* ═══════════════════════════════════════════════════════════════════════
    PICKER — HSV gradient + hue bar + RGB/HSV/HEX inputs
-   Sprite URLs use a relative path: the CSS lives at
-     /zkau/web/{ver}/marble/js/zkex/inp/css/colorbox.css.dsp
-   and the sprites at
-     /zkau/web/{ver}/zkex/img/colorbox/*.png
-   So `../../../../../zkex/img/colorbox/...` resolves correctly.
+   No external sprite dependency: the SV square and hue bar are drawn with CSS
+   gradients, and the two marker graphics are inlined as data URIs (see the
+   -overlay / -bar / -circle / -arrows rules below). This drops the former
+   /zkau/web/zkex/img/colorbox/*.{png,gif} references from zkex.jar — so the
+   picker is DSP-free, context-path-safe, and independent of zkex's asset layout.
    Geometry mirrors the default ZK profile.
    ═══════════════════════════════════════════════════════════════════════ */
 .z-colorpicker {
@@ -347,14 +347,27 @@
 .z-colorpicker-overlay {
     width: 256px;
     height: 256px;
-    background-image: url(/zkau/web/zkex/img/colorbox/colorpicker_gradient.png);
+    /* SV (saturation/value) square — replaces colorpicker_gradient.png (zkex.jar),
+       so colorbox has no external image dependency (DSP-free, context-path-safe).
+       The pure-hue background-color is set by Colorpicker.ts (overlay.style.backgroundColor);
+       these gradients layer on top: white→right = saturation (left desaturated),
+       black→bottom = value (bottom dark). Pure #fff/#000 are intrinsic to HSV, not
+       theme tokens — do NOT tokenize. */
+    background-image:
+        linear-gradient(to bottom, rgba(0, 0, 0, 0), #000),
+        linear-gradient(to right, #fff, rgba(255, 255, 255, 0));
 }
 
 .z-colorpicker-bar {
     width: 12px;
     height: 256px;
     border: 1px solid var(--zk-color-outline-variant);
-    background-image: url(/zkau/web/zkex/img/colorbox/colorpicker_hue.png);
+    /* Hue spectrum — replaces colorpicker_hue.png. Top→bottom maps hue 360°→0°
+       per Colorpicker.ts (hue = (256 - y) * 359.99 / 255). Spectrum primaries are
+       intrinsic to HSV, not theme tokens — do NOT tokenize. */
+    background-image: linear-gradient(
+        to bottom,
+        #f00 0%, #f0f 17%, #00f 33%, #0ff 50%, #0f0 67%, #ff0 83%, #f00 100%);
     position: absolute;
     left: 7px;
     overflow: hidden;
@@ -366,7 +379,8 @@
     width: 11px;
     height: 11px;
     margin: -5px 0 0 -5px;
-    background-image: url(/zkau/web/zkex/img/colorbox/colorpicker_select.gif);
+    /* SV selector ring — inlined colorpicker_select.gif (78 B) as data URI. */
+    background-image: url("data:image/gif;base64,R0lGODlhCwALAJECAAAAAP///////wAAACH5BAEAAAIALAAAAAALAAsAAAIflINoG+AeGFgGxEaXxVns2X2dh4CZJXBadDxQlihGAQA7");
     position: absolute;
     top: 0;
     left: 0;
@@ -385,7 +399,8 @@
     width: 27px;
     height: 9px;
     margin: -4px 0 0;
-    background-image: url(/zkau/web/zkex/img/colorbox/colorpicker_arrows.gif);
+    /* Hue position arrows — inlined colorpicker_arrows.gif (81 B) as data URI. */
+    background-image: url("data:image/gif;base64,R0lGODlhGwAJAKECACWCtJjB4////////yH5BAEAAAIALAAAAAAbAAkAAAIiDISpywhhTpsLvCjptJdnrXiQ94HkyIGMiKkNh7pbJ1NPAQA7");
     position: absolute;
     left: 0;
     overflow: hidden;
