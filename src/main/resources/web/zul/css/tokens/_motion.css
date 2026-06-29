@@ -36,3 +36,34 @@
        fade (checkbox/radio, short2) keep their own transition. */
     --zk-state-layer-transition: opacity var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
 }
+
+/* ---------------------------------------------------------------------------
+ * FEATURE: prefers-reduced-motion (a11y) — implemented 2026-06-29
+ *
+ * Honors the OS "reduce motion" setting (WCAG 2.1 SC 2.3.3, Animation from
+ * Interactions): when active, neutralize CSS transitions/animations theme-wide.
+ * Uses the canonical universal-reset shape (same as Bootstrap ships) rather than
+ * only zeroing the --zk-motion-duration-* tokens — the universal rule also
+ * catches hardcoded durations AND @keyframes animations (e.g. the tablet
+ * bottom-sheet slide-up), which token-zeroing alone would miss.
+ *
+ * Why 1ms / iteration-count:1 (not 0s / none): a near-zero (non-zero) duration
+ * still fires `transitionend`/`animationend`, so ZK widgets that await those
+ * events don't hang; capping iteration-count stops infinite loops (spinners,
+ * indeterminate progress). 1ms — not the more common 0.01ms — because CleanCSS
+ * rounds sub-millisecond values down to `0s` at build time, and a `0s`
+ * transition fires no end event (the very hang we're avoiding).
+ *
+ * Scope limit: CSS motion only. ZK's JS-driven slide/fade effects (some popup
+ * open/close) are not CSS animations and are unaffected here.
+ *
+ * Spec: doc/spec/DESIGN.md §9 (Motion → Reduced motion).
+ * ------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 1ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 1ms !important;
+        scroll-behavior: auto !important;
+    }
+}

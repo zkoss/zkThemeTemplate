@@ -142,6 +142,14 @@ Tokens:
 - Duration: `--zk-motion-duration-short3` (250ms) for most controls (background-color, box-shadow, border-color).
 - Easing: `--zk-motion-easing-legacy` = `cubic-bezier(0.4, 0, 0.2, 1)`.
 
+### Reduced motion (`prefers-reduced-motion`) — *implemented 2026-06-29*
+
+The theme honors the OS "reduce motion" setting (WCAG 2.1 SC 2.3.3, *Animation from Interactions*). When `@media (prefers-reduced-motion: reduce)` matches, all CSS transitions and animations are neutralized theme-wide via a universal reset in `tokens/_motion.css` (bundled into the global `norm.css.dsp`, so it applies in both standalone and JS-Embed/`browserDefault` modes).
+
+- **Mechanism:** a single `*, *::before, *::after` rule sets `transition-duration`/`animation-duration` to `1ms !important`, caps `animation-iteration-count: 1`, and forces `scroll-behavior: auto`. Universal (not token-zeroing) so it also covers hardcoded durations and `@keyframes` animations (e.g. the tablet bottom-sheet slide-up).
+- **`1ms`, not `0s`/`0.01ms`:** a non-zero duration still fires `transitionend`/`animationend` (avoids hanging any widget that awaits them); `1ms` specifically because CleanCSS rounds sub-millisecond values down to `0s` at build time.
+- **Scope limit:** CSS motion only. ZK's JS-driven slide/fade effects (some popup open/close) are not CSS animations and are unaffected.
+
 ---
 
 ## 10. Density
