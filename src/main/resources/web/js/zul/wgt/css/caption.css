@@ -1,6 +1,7 @@
 /* MD3 Caption — title component for panels, groupboxes, windows */
 /* DOM: <div class="z-caption"><div class="z-caption-content"><i class="z-icon-*"/><span class="z-caption-text">Title</span></div></div> */
 
+@layer zk-components {
 .z-caption {
     display: flex;
     align-items: center;
@@ -46,4 +47,5 @@
 .z-caption-readonly {
     color: var(--zk-color-on-surface-variant);
     pointer-events: none;
+}
 }

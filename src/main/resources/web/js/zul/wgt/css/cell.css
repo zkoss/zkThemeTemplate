@@ -1,5 +1,6 @@
 /* MD3 Cell — generic cell container */
 
+@layer zk-components {
 .z-cell {
     display: table-cell;
     vertical-align: middle;
@@ -8,4 +9,5 @@
     font-size: var(--zk-typescale-body-medium-size);
     color: var(--zk-color-on-surface);
     box-sizing: border-box;
+}
 }

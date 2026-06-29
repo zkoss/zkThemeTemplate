@@ -6,6 +6,7 @@
         and a "-collapsed" placeholder when closed. */
 
 /* ─── Container ───────────────────────────────────────────────────────────── */
+@layer zk-components {
 .z-borderlayout {
     position: relative;
     width: 100%;
@@ -436,4 +437,5 @@
     background-color: var(--zk-color-primary);
     opacity: 0.3;
     position: absolute;
+}
 }

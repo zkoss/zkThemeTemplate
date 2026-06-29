@@ -1,5 +1,6 @@
 /* MD3 Space — spacer / gap element */
 
+@layer zk-components {
 .z-space {
     display: inline-block;
     flex-shrink: 0;
@@ -8,4 +9,5 @@
 /* Horizontal spacer (flex-grow fill) */
 .z-space-flex {
     flex: 1;
+}
 }

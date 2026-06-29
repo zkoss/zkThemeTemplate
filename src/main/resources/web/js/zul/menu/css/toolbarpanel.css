@@ -1,5 +1,6 @@
 /* MD3 Toolbarpanel — transparent panel for toolbar layouts */
 
+@layer zk-components {
 .z-toolbarpanel {
     display: flex;
     flex-direction: row;
@@ -10,4 +11,5 @@
     margin: 0;
     min-height: inherit;
     font-family: var(--zk-typescale-font-family);
+}
 }

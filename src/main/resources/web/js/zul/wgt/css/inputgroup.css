@@ -12,6 +12,7 @@
  *  - All middle children get border-radius: 0 to connect seamlessly
  */
 
+@layer zk-components {
 .z-inputgroup {
     display: inline-flex;
     align-items: stretch;
@@ -149,4 +150,5 @@
 .z-inputgroup-vertical .z-combobox + .z-inputgroup-text,
 .z-inputgroup-vertical .z-inputgroup-text + .z-combobox .z-combobox-input {
     border-top: none;
+}
 }

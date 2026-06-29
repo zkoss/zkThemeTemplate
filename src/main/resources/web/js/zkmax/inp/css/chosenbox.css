@@ -4,6 +4,7 @@
                                 + .z-chosenbox-button > .z-chosenbox-icon.z-icon-times */
 
 /* ─── Wrapper ─────────────────────────────────────────────────────────── */
+@layer zk-components {
 .z-chosenbox {
     display: inline-flex;
     flex-wrap: wrap;
@@ -199,4 +200,5 @@
 
 .z-chosenbox-inplace {
     display: none;
+}
 }

@@ -1,6 +1,7 @@
 /* MD3 Link (anchor) component */
 /* DOM: <a class="z-a">text</a> */
 
+@layer zk-components {
 .z-a {
     display: inline;
     color: var(--zk-color-primary);
@@ -29,4 +30,5 @@
     opacity: var(--zk-state-disabled-opacity);
     cursor: not-allowed;
     pointer-events: none;
+}
 }

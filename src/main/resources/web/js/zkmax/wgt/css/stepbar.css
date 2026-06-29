@@ -1,6 +1,7 @@
 /* Stepbar — MD3 stepper indicator */
 
 /* ── Stepbar root ── */
+@layer zk-components {
 .z-stepbar {
     display: flex;
     align-items: center;
@@ -258,4 +259,5 @@
 .z-stepbar-wrapped-label .z-step-content > .z-step-title {
     white-space: normal;
     margin-top: var(--zk-spacing-2);
+}
 }

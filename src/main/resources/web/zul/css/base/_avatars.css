@@ -6,6 +6,7 @@
                     container for initials label with colored background
    Sizes: -sm 36px  -md 44px  -lg 56px
 ─────────────────────────────────────────────────────────────── */
+@layer zk-base {
 .z-avatar {
     display: inline-flex;
     align-items: center;
@@ -42,4 +43,5 @@
 
 .z-avatar-group .z-avatar {
     border: 2px solid var(--zk-color-surface, #fff);
+}
 }

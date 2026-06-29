@@ -13,6 +13,7 @@
  */
 
 /* ─── Container ───────────────────────────────────────────────────────────── */
+@layer zk-components {
 .z-fisheyebar {
     display: flex;
     flex-direction: row;
@@ -52,4 +53,5 @@
     white-space: nowrap;
     margin-top: var(--zk-spacing-1);
     line-height: 1.2;
+}
 }

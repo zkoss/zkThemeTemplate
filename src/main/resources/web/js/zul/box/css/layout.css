@@ -6,6 +6,7 @@
    patterns wipe ZK's inline spacing and break the `spacing` attribute. */
 
 /* Horizontal layout — inline-block children flow on a single line. */
+@layer zk-components {
 .z-hlayout {
     white-space: nowrap;
     overflow: hidden;
@@ -48,4 +49,5 @@
     display: block;
     box-sizing: border-box;
     width: 100%;
+}
 }

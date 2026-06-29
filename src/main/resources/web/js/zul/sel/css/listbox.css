@@ -6,6 +6,7 @@
    is double-emphasis — MD3 outlined ≠ elevated). On the near-white page the elevation
    shadow is invisible, so the border carries the boundary. See
    doc/spec/DESIGN.md §11. */
+@layer zk-components {
 .z-listbox {
     display: block;
     background-color: var(--zk-color-surface);
@@ -396,17 +397,20 @@
 }
 
 /* ─── Checkmark column (listbox checkmark="true") ──────────────────────── */
-/* Override the generic mask-icon approach: render as a proper checkbox box */
+/* Override the generic mask-icon approach: render as a proper checkbox box.
+   No !important needed: these rules live in @layer zk-components, which outranks
+   _icons.css's generic glyph rule in @layer zk-base. Don't re-add !important.
+   See doc/spec/layer-architecture-review.md. */
 .z-listitem-icon.z-icon-check::before,
 .z-listheader-icon.z-icon-check::before {
-    background-color: transparent !important;
-    -webkit-mask-image: none !important;
-    mask-image: none !important;
+    background-color: transparent;
+    -webkit-mask-image: none;
+    mask-image: none;
     border: 1.5px solid var(--zk-color-outline, #79747e);
     border-radius: 2px;
-    width: 16px !important;
-    height: 16px !important;
-    box-sizing: border-box !important;
+    width: 16px;
+    height: 16px;
+    box-sizing: border-box;
     vertical-align: -3px;
 }
 
@@ -417,22 +421,22 @@
 /* Selected row: filled blue box with white checkmark */
 .z-listitem.z-listitem-selected .z-listitem-icon.z-icon-check::before,
 .z-listitem.z-selected .z-listitem-icon.z-icon-check::before {
-    background-color: var(--zk-color-primary, #376fd0) !important;
-    border-color: var(--zk-color-primary, #376fd0) !important;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E") !important;
-    background-size: 11px 11px !important;
-    background-repeat: no-repeat !important;
-    background-position: center !important;
+    background-color: var(--zk-color-primary, #376fd0);
+    border-color: var(--zk-color-primary, #376fd0);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E");
+    background-size: 11px 11px;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 /* Header "select all" checkbox — checked state */
 .z-listheader-checkable.z-listheader-checked .z-listheader-icon.z-icon-check::before {
-    background-color: var(--zk-color-primary, #376fd0) !important;
-    border-color: var(--zk-color-primary, #376fd0) !important;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E") !important;
-    background-size: 11px 11px !important;
-    background-repeat: no-repeat !important;
-    background-position: center !important;
+    background-color: var(--zk-color-primary, #376fd0);
+    border-color: var(--zk-color-primary, #376fd0);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E");
+    background-size: 11px 11px;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 /* ─── Radio (single-selection checkmark) ──────────────────────────────────
@@ -440,15 +444,15 @@
    data-components.md "Checkmark column renders a checkbox OR a radio". Override
    the generic mask glyph and draw a Material radio circle. */
 .z-listitem-icon.z-icon-radio::before {
-    background-color: transparent !important;
-    background-image: none !important;
-    -webkit-mask-image: none !important;
-    mask-image: none !important;
+    background-color: transparent;
+    background-image: none;
+    -webkit-mask-image: none;
+    mask-image: none;
     border: 1.5px solid var(--zk-color-outline, #79747e);
     border-radius: 50%;
-    width: 16px !important;
-    height: 16px !important;
-    box-sizing: border-box !important;
+    width: 16px;
+    height: 16px;
+    box-sizing: border-box;
     vertical-align: -3px;
 }
 
@@ -459,10 +463,10 @@
 /* Selected row: primary ring + filled centre dot */
 .z-listitem.z-listitem-selected .z-listitem-icon.z-icon-radio::before,
 .z-listitem.z-selected .z-listitem-icon.z-icon-radio::before {
-    border-color: var(--zk-color-primary, #376fd0) !important;
-    background-image: radial-gradient(circle at center, var(--zk-color-primary, #376fd0) 0 4px, transparent 4px) !important;
-    background-repeat: no-repeat !important;
-    background-position: center !important;
+    border-color: var(--zk-color-primary, #376fd0);
+    background-image: radial-gradient(circle at center, var(--zk-color-primary, #376fd0) 0 4px, transparent 4px);
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 /* Checkmark cell column — compact padding */
@@ -927,4 +931,5 @@ td.z-listgroup-inner {
         color: var(--zk-color-on-surface);
         flex: 1;
     }
+}
 }

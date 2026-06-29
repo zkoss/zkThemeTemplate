@@ -8,6 +8,7 @@
 */
 
 /* ─── Base track (MD3 4px linear progress) ───────────────────────────── */
+@layer zk-components {
 .z-progressmeter {
     display: block;
     width: 100%;
@@ -73,4 +74,5 @@
 }
 .z-progressmeter-error.z-progressmeter {
     background-color: var(--zk-color-error-container);
+}
 }

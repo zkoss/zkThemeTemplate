@@ -6,6 +6,7 @@
 
 /* ─── Root shell ─────────────────────────────────────────────────────────── */
 /* Transparent shell; border-collapse:separate is required for border-spacing to have effect */
+@layer zk-components {
 .z-tablelayout {
     border-collapse: separate;
     border-spacing: var(--zk-spacing-2);
@@ -19,4 +20,5 @@
 .z-tablechildren {
     vertical-align: top;
     padding: 0;
+}
 }

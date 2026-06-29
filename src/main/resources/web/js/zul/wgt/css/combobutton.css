@@ -12,6 +12,7 @@
  *   </span>
  */
 
+@layer zk-components {
 .z-combobutton {
     display: inline-flex;
     align-items: stretch;
@@ -152,4 +153,5 @@
     background-color: transparent;
     border-left-color: var(--zk-color-disabled-container);
     color: var(--zk-color-disabled);
+}
 }

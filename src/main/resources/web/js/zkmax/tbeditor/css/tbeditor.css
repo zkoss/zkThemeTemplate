@@ -3,6 +3,7 @@
 /* ── SVG sprite container injected into <body> by Trumbowyg ─────────────── */
 /* Trumbowyg prepends <div id="z-tbeditor-icons"> to body for icon sprites.
    Must be zero-size or it occupies space above page content. */
+@layer zk-components {
 #z-tbeditor-icons {
     overflow: hidden;
     visibility: hidden;
@@ -240,4 +241,5 @@ body.z-tbeditor-body-fullscreen {
 .z-tbeditor-dropdown button:hover,
 .z-tbeditor-dropdown button:focus {
     background-color: var(--zk-color-surface-container);
+}
 }

@@ -22,6 +22,7 @@
    an <hlayout> (its root is overflow:hidden). See skill: components/hlayout-vlayout.
    For colored status pills/tags use .z-chip instead (see _chips.css).
 ─────────────────────────────────────────────────────────────── */
+@layer zk-base {
 .z-badge {
     position: relative;
     display: inline-flex;
@@ -89,3 +90,4 @@
 .z-badge-warning   { --zk-badge-color: var(--zk-color-warning, #ed6c02); }
 .z-badge-success   { --zk-badge-color: var(--zk-color-status-success, #4caf50); }
 .z-badge-info      { --zk-badge-color: var(--zk-color-status-info, #0288d1); }
+}

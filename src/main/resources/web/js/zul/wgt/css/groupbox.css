@@ -7,6 +7,7 @@
          AND adds z-groupbox-collapsed class to the root element.
    Note: in default mold, .z-groupbox-content has inline border-top:0 when title/caption present. */
 
+@layer zk-components {
 .z-groupbox {
     display: flex;
     flex-direction: column;
@@ -132,4 +133,5 @@
     padding: 0 var(--zk-spacing-3);
     background-color: var(--zk-color-surface-container-low);
     border-bottom: 1px solid var(--zk-color-outline-variant);
+}
 }

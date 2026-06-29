@@ -7,6 +7,7 @@
         </div>
 */
 
+@layer zk-components {
 .z-notification {
     position: absolute;
     top: 0;
@@ -165,3 +166,4 @@
 .z-notification-error .z-notification-right { border-left-color:   color-mix(in srgb, var(--zk-color-error) 12%, transparent); }
 .z-notification-error .z-notification-up    { border-bottom-color: color-mix(in srgb, var(--zk-color-error) 12%, transparent); }
 .z-notification-error .z-notification-down  { border-top-color:    color-mix(in srgb, var(--zk-color-error) 12%, transparent); }
+}

@@ -2,6 +2,7 @@
 /* DOM: <input class="z-textbox" type="text"> */
 
 /* ─── Shared outlined text field base ──────────────────────────────────── */
+@layer zk-components {
 .z-textbox,
 .z-intbox,
 .z-decimalbox,
@@ -352,4 +353,5 @@ textarea.z-textbox:focus-visible {
 .z-errorbox-pointer ~ .z-errorbox-content {
     display: table-cell;
     vertical-align: middle;
+}
 }

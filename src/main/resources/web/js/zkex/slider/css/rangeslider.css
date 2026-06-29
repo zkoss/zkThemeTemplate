@@ -24,6 +24,7 @@
      </div>
    Vertical swaps width/height and uses left/top axis. */
 
+@layer zk-components {
 :root {
     --zk-rangeslider-inner-size: 4px;
     --zk-rangeslider-border-radius: var(--zk-shape-corner-full);
@@ -256,4 +257,5 @@
     opacity: var(--zk-state-disabled-opacity);
     pointer-events: none;
     cursor: not-allowed;
+}
 }

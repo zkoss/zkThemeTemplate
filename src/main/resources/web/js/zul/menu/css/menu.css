@@ -52,6 +52,7 @@
    Panel, Grid, Listbox all sit on `surface`). Text stays `on-surface` for high
    contrast on the tinted bar. Override with `transparent` at the use site if
    the menubar is embedded in an already-tinted region. */
+@layer zk-components {
 .z-menubar {
     display: flex;
     flex-direction: row;
@@ -560,4 +561,5 @@
 .z-menu-shadow,
 .z-menupopup-shadow {
     box-shadow: var(--zk-elevation-dropdown);
+}
 }

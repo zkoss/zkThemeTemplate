@@ -3,6 +3,7 @@
 /*      OS mold DOM: nav.z-paging.z-paging-os > ul > li[.z-paging-navigate] > a.z-paging-button[.z-paging-selected][.z-paging-noborder] */
 
 /* ─── Shared base container ─────────────────────────────────────────────── */
+@layer zk-components {
 .z-paging {
     display: flex;
     flex-direction: row;
@@ -218,4 +219,5 @@
     opacity: var(--zk-state-disabled-opacity);
     cursor: default;
     pointer-events: none;
+}
 }

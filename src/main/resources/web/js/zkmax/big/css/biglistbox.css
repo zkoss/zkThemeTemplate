@@ -6,6 +6,7 @@
    Data cell:   tr.z-biglistbox-row > td
    Scrollbar:   ZK draws its own (zul.WScroll) — NOT native. See components/biglistbox.md. */
 
+@layer zk-components {
 .z-biglistbox {
     display: block;
     position: relative;          /* anchor the custom scrollbar to the component… */
@@ -213,4 +214,5 @@
 }
 .z-biglistbox-wscroll-body::before {
     content: none;
+}
 }

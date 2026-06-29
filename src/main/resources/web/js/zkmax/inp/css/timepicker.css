@@ -12,6 +12,7 @@
 */
 
 /* ─── Root layout ──────────────────────────────────────────────────────────── */
+@layer zk-components {
 .z-timepicker {
     display: inline-flex;
     align-items: center;
@@ -206,4 +207,5 @@
 
 .z-timepicker-option-selected {
     color: var(--zk-color-primary);
+}
 }

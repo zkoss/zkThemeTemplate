@@ -14,6 +14,7 @@
    it MUST be position: absolute so those inline values take effect, and its
    z-index MUST be above `.z-modal-mask` (1400) to remain visible above the
    scrim. */
+@layer zk-components {
 .z-loading {
     position: absolute;
     z-index: 1450;
@@ -284,4 +285,5 @@
    and slide-down animating. It MUST start hidden so the slideDown effect runs. */
 .z-error .newmessage {
     display: none;
+}
 }

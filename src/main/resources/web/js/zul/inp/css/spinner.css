@@ -11,6 +11,7 @@
    (Doublespinner is identical with z-doublespinner prefix)
 */
 
+@layer zk-components {
 .z-spinner,
 .z-doublespinner {
     display: inline-flex;
@@ -219,4 +220,5 @@
     cursor: not-allowed;
     background-color: var(--zk-color-surface-container-low);
     border-color: var(--zk-color-outline-variant);
+}
 }

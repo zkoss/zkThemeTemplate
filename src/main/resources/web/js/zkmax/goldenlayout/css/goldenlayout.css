@@ -1,6 +1,7 @@
 /* ── GoldenLayout wrapper ──────────────────────────────────────────────── */
 /* Transparent layout container — no outer card framing. Per-panel cards
    (.z-goldenpanel) carry the visual border + shadow individually. */
+@layer zk-components {
 .z-goldenlayout {
     position: relative;
     background-color: transparent;
@@ -501,4 +502,5 @@
 
 .z-goldenlayout-dropdown > li:hover {
     background-color: var(--zk-color-surface-container-high);
+}
 }

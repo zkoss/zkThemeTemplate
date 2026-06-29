@@ -9,6 +9,7 @@
         </div>
 */
 
+@layer zk-components {
 .z-errorbox {
     color: var(--zk-color-on-error-container);
     width: 260px;
@@ -127,4 +128,5 @@
 .z-errorbox-pointer ~ .z-errorbox-content {
     display: table-cell;
     vertical-align: middle;
+}
 }

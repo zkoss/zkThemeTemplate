@@ -27,6 +27,7 @@
  * width as (tabbox.contentWidth - toolbar.offsetWidth); that arithmetic
  * is only correct when the toolbar overlays (absolute) rather than sharing
  * the flex row. */
+@layer zk-components {
 .z-tabbox {
     position: relative;  /* anchor for absolutely-positioned scroll arrows + toolbar */
     display: flex;
@@ -624,4 +625,5 @@
     font-size: var(--zk-typescale-body-medium-size);
     line-height: 1.6;
     background: var(--zk-color-surface);
+}
 }

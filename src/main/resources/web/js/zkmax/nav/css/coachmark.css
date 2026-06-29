@@ -1,3 +1,4 @@
+@layer zk-components {
 .z-coachmark {
     position: absolute;
     top: 0;
@@ -117,4 +118,5 @@
    (the inherited on-primary/white overlay would be invisible on a white surface) */
 .z-coachmark-content .z-combobutton .z-combobutton-content::before {
     background-color: var(--zk-color-primary);
+}
 }

@@ -1,3 +1,4 @@
+@layer zk-components {
 .z-signature {
     position: relative;
     border: 1px solid var(--zk-color-outline);
@@ -109,4 +110,5 @@
 /* label — hidden; buttons are icon-only */
 .z-signature-tool-button-label {
     display: none;
+}
 }

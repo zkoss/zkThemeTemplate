@@ -10,6 +10,7 @@
 
 /* Base chrome — frame + radius only. NO box-shadow here; mode classes own elevation.
    See doc/spec/window-design-rules.md: elevation is driven by `mode`, never by `border`. */
+@layer zk-components {
 .z-window {
     display: flex;
     flex-direction: column;
@@ -206,4 +207,5 @@
     inset: 0;
     z-index: 1500;
     cursor: se-resize;
+}
 }

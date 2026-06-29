@@ -44,6 +44,18 @@ function minifyCss(css) {
     return layerStmts.join('') + output.styles;
 }
 
+// Guard: component/base CSS self-declares its cascade layer IN SOURCE (readability +
+// correctness — see doc/spec/layer-architecture-review.md). The build no longer injects
+// layers; it only VERIFIES the wrapper is present, so a new file that forgets it fails the
+// build instead of silently shipping unlayered (which would beat utilities + user CSS).
+function assertLayer(relPath, content, layer) {
+    if (content.trim() && !new RegExp(`@layer\\s+${layer}\\s*\\{`).test(content)) {
+        throw new Error(
+            `CSS layer guard: ${relPath} must wrap its rules in "@layer ${layer} { … }". ` +
+            `All component/base CSS belongs to a cascade layer.`);
+    }
+}
+
 // norm.css.dsp = tokens + base + global styles (loaded first by WCS)
 const normFiles = [
     'zul/css/tokens/_fonts.css',
@@ -338,7 +350,9 @@ function generateLucideIconsCSS(iconNames) {
     for (const [name, svg] of Object.entries(CUSTOM_ICONS)) {
         css += `.z-icon-${name}{--_icon:url("data:image/svg+xml,${encodeSvgForCss(minifySvg(svg))}")}\n`;
     }
-    return css;
+    // Generated, so this code emits its own layer block: these .z-icon-* rules belong in zk-base
+    // alongside _icons.css (components override them).
+    return `@layer zk-base {\n${css}}\n`;
 }
 
 function generateIconIndexMd(iconNames) {
@@ -453,24 +467,24 @@ const PAGE_FRAME_RE = /\/\* page-frame:start[\s\S]*?page-frame:end \*\//;
 // Derive the JS-Embed-safe reset from the single _reset.css source: drop the html/body
 // page-frame block (so ZK never touches the host page's frame) and confine the remaining
 // widget reset to the ZK subtree with @scope (.z-page). The bare @layer order statement is
-// lifted above @scope so it still governs the layered utility CSS in norm.css.dsp.
+// lifted above @scope so it still declares layer order first; the reset rules already carry
+// their own `@layer zk-base { … }` block in source, so we just scope it (no @layer added here).
 //
 // CRITICAL ordering: CleanCSS (level 1) does not understand @scope — it drops the first
-// nested rule and hoists the rest OUT of the block. So we minify the PLAIN rules first
-// (while they are ordinary CSS, exactly like reset.css), then wrap the result in @scope.
-// CleanCSS therefore never sees @scope at all.
+// nested rule and hoists the rest OUT of the block. So we minify first (CleanCSS handles the
+// @layer zk-base block fine), then wrap the result in @scope. CleanCSS never sees @scope.
 function toEmbedReset(src) {
     const noFrame = src.replace(PAGE_FRAME_RE, '');
-    const minified = minifyCss(noFrame); // @layer guarded + plain rules minified (or raw in dev)
+    const minified = minifyCss(noFrame); // bare order stmt guarded + the @layer zk-base{…} block minified
     const layerStmt = (minified.match(LAYER_STMT_RE) || [''])[0];
-    const body = minified.replace(LAYER_STMT_RE, '').trim();
+    const body = minified.replace(LAYER_STMT_RE, '').trim(); // = "@layer zk-base{…}" from source
     const open = isDev ? `${layerStmt}\n@scope (.z-page) {\n` : `${layerStmt}@scope (.z-page){`;
     return `${open}${body}${isDev ? '\n}\n' : '}'}`;
 }
 
 function buildResetVariants() {
     const resetSrc = readFile('zul/css/base/_reset.css');
-    // Global variant — today's reset verbatim (frame intact, unscoped). Default / standalone.
+    // Global variant — frame intact, unscoped; reset rules already wrap themselves in @layer zk-base.
     writeDsp('zul/css/reset.css', resetSrc);
     // Embed variant — host-safe, scoped, no frame. Served when browserDefault=true.
     // Already minified + @scope-wrapped, so write it raw (don't re-run the minifier over @scope).
@@ -489,8 +503,14 @@ function build() {
     const lucideIcons = getLucideIcons();
     let normCSS = '';
     for (const file of normFiles) {
-        normCSS += readFile(file) + '\n';
+        const css = readFile(file);
+        // Each file self-declares its layer in source; verify the ones that must be layered.
+        // (tokens are unlayered :root defs; utility files self-declare @layer zk-utilities.)
+        if (file.startsWith('zul/css/base/')) assertLayer(file, css, 'zk-base');
+        else if (file.startsWith('js/')) assertLayer(file, css, 'zk-components');
+        normCSS += css + '\n';
     }
+    // Lucide icon CSS is generated, so the generator emits its own @layer zk-base block.
     normCSS += generateLucideIconsCSS(lucideIcons);
     // norm.css.dsp uses ${c:encodeURL(...)} in _fonts.css's @font-face (self-hosted
     // Inter). The DSP `c` taglib must be declared at the top of the file or the parser
@@ -520,6 +540,7 @@ function build() {
     for (const relPath of cssFiles) {
         const content = readFile(relPath);
         if (content) {
+            assertLayer(relPath, content, 'zk-components');
             writeDsp(relPath + '.dsp', content);
             console.log(`  ${relPath}.dsp`);
         }
@@ -532,6 +553,7 @@ function build() {
         for (const relPath of zkmaxCssFiles) {
             const content = readFile(relPath);
             if (content) {
+                assertLayer(relPath, content, 'zk-components');
                 writeDsp(relPath + '.dsp', content);
                 console.log(`  ${relPath}.dsp`);
             }
@@ -545,20 +567,25 @@ function build() {
         for (const relPath of zkexCssFiles) {
             const content = readFile(relPath);
             if (content) {
+                assertLayer(relPath, content, 'zk-components');
                 writeDsp(relPath + '.dsp', content);
                 console.log(`  ${relPath}.dsp`);
             }
         }
     }
 
-    // 3. Build combo.css.dsp (merged dropdown inputs)
+    // 3. Build combo.css.dsp (merged dropdown inputs — each source file self-wraps in zk-components)
+    comboFiles.forEach(f => assertLayer(f, readFile(f), 'zk-components'));
     const comboCSS = comboFiles.map(f => readFile(f)).join('\n');
     if (comboCSS.trim()) {
         writeDsp('js/zul/inp/css/combo.css.dsp', comboCSS);
         console.log('  js/zul/inp/css/combo.css.dsp');
     }
 
-    // 4. Build footer.css.dsp (loaded last)
+    // 4. Build footer.css.dsp (loaded last). Component CSS self-declares zk-components in source;
+    //    the framework runtime classes _cssflex/_dnd (z-flex/z-dragged… toggled by ZK JS) stay
+    //    UNLAYERED so they keep beating layered component CSS exactly as they do today.
+    footerFiles.filter(f => f.startsWith('js/')).forEach(f => assertLayer(f, readFile(f), 'zk-components'));
     const footerCSS = footerFiles.map(f => readFile(f)).join('\n');
     if (footerCSS.trim()) {
         writeDsp('zul/css/footer.css.dsp', footerCSS);

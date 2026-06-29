@@ -1,5 +1,6 @@
 /* MD3 Scrollbar — custom overlay scrollbar widget */
 
+@layer zk-components {
 .z-scrollbar {
     display: none;
     position: absolute;
@@ -121,4 +122,5 @@
 .z-scrollbar-left,
 .z-scrollbar-right {
     display: none;
+}
 }

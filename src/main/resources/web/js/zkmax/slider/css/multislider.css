@@ -14,6 +14,7 @@
 */
 
 /* ── Outer container ──────────────────────────────────── */
+@layer zk-components {
 .z-multislider {
     display: block;
     position: relative;
@@ -241,4 +242,5 @@
     opacity: var(--zk-state-disabled-opacity);
     pointer-events: none;
     cursor: not-allowed;
+}
 }

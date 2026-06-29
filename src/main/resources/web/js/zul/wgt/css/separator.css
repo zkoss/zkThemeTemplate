@@ -2,6 +2,7 @@
 /* NOTE: ZK <space> also renders as .z-separator-vertical with inline size styles.
    Keep the base transparent; only bar separators get color. */
 
+@layer zk-components {
 .z-separator {
     border: 0;
     background-color: transparent;
@@ -45,4 +46,5 @@
     margin: 0 var(--zk-spacing-2);
     vertical-align: middle;
     align-self: stretch;
+}
 }

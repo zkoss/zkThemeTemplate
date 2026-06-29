@@ -13,6 +13,7 @@
 */
 
 /* ─── Dialog window overrides ─────────────────────────────────────────── */
+@layer zk-components {
 .z-messagebox-window.z-window {
     background-color: var(--zk-color-surface);
     border-radius: var(--zk-shape-dialog);
@@ -145,4 +146,5 @@
 
 .z-messagebox-button {
     min-width: 64px;
+}
 }

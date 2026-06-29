@@ -18,6 +18,7 @@
  *   sliding between cards — also requires absolute positioning underneath.
  */
 
+@layer zk-components {
 .z-cardlayout {
     position: relative;
     overflow: hidden;
@@ -30,4 +31,5 @@
     left: 0;
     overflow: hidden;
     box-sizing: border-box;
+}
 }

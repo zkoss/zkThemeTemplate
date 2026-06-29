@@ -10,6 +10,7 @@
    See `.claude/skills/zk-component-rules/components/colorbox.md` for the full DOM. */
 
 /* ─── Root frame ──────────────────────────────────────────────────────── */
+@layer zk-components {
 .z-colorbox {
     display: inline-flex;
     align-items: stretch;
@@ -511,4 +512,5 @@
 .z-colorpalette-popup .z-colorpicker,
 .z-colorpicker-popup  .z-colorpalette {
     display: none;
+}
 }

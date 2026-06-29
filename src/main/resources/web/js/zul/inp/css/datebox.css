@@ -12,6 +12,7 @@
    </div>
 */
 
+@layer zk-components {
 .z-datebox {
     display: inline-flex;
     align-items: center;
@@ -426,4 +427,5 @@
         color: var(--zk-color-on-surface);
         flex: 1;
     }
+}
 }

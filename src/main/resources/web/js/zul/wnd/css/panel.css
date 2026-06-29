@@ -7,6 +7,7 @@
      z-panel-expand (collapse toggle), z-panel-close, z-panel-maximize, z-panel-minimize.
    State classes on root: z-panel-collapsed, z-panel-noborder, z-panel-noheader, z-panel-noframe */
 
+@layer zk-components {
 .z-panel {
     display: flex;
     flex-direction: column;
@@ -193,4 +194,5 @@
     inset: 0;
     z-index: 1500;
     cursor: se-resize;
+}
 }

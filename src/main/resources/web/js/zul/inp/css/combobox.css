@@ -2,6 +2,7 @@
 /* DOM: <span class="z-combobox"><input class="z-combobox-input"><a class="z-combobox-button"><i class="z-combobox-icon z-icon-caret-down"></i></a><div class="z-combobox-popup">...</div></span> */
 
 /* ─── Wrapper ─────────────────────────────────────────────────────────── */
+@layer zk-components {
 .z-combobox {
     display: inline-flex;
     align-items: center;
@@ -394,4 +395,5 @@
 
 .z-combobox.z-combobox-inplace .z-combobox-button {
     display: none;
+}
 }

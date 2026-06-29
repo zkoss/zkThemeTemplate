@@ -22,6 +22,7 @@
    collapse to ~6px which is too thin to see). We force a min-height so the
    themed WebKit scrollbar reads at a usable size, then let the native scroll
    position drive ZK's column translateX. */
+@layer zk-components {
 .z-frozen {
     background-color: var(--zk-color-surface);
     border-top: 1px solid var(--zk-color-outline-variant);
@@ -161,4 +162,5 @@
 .z-treecell.z-frozen-col:not(:has(+ .z-frozen-col)) {
     border-inline-end: 1px solid var(--zk-color-outline-variant);
     box-shadow: 2px 0 4px -1px color-mix(in srgb, var(--zk-color-shadow, #000) 12%, transparent);
+}
 }

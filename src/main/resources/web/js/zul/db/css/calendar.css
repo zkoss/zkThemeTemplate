@@ -21,6 +21,7 @@
          .z-calendar-selected is added to the selected cell only.
 */
 
+@layer zk-components {
 .z-calendar {
     display: flex;
     flex-direction: column;
@@ -346,4 +347,5 @@
     height: 0;
     overflow: hidden;
     opacity: 0;
+}
 }

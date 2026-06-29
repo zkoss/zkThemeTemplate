@@ -12,6 +12,7 @@
    z-icon-* elements. We reset that here so no FA character bleeds through; the
    icon is rendered entirely by the ::before mask-image, not by a font glyph. */
 
+@layer zk-base {
 [class^="z-icon-"],
 [class*=" z-icon-"] {
     font-family: inherit;
@@ -41,3 +42,4 @@
 
 /* FA-style width modifier (no glyph) — applied alongside a glyph class for column alignment. */
 .z-icon-fw { width: 1.25em; text-align: center; }
+}

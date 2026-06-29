@@ -1,5 +1,6 @@
 /* MD3 HTML component — raw HTML container */
 
+@layer zk-components {
 .z-html {
     display: block;
     font-family: var(--zk-typescale-font-family);
@@ -23,3 +24,4 @@
 .z-html table { border-collapse: collapse; width: 100%; }
 .z-html th, .z-html td { padding: var(--zk-spacing-2) var(--zk-spacing-3); border: 1px solid var(--zk-color-outline-variant); }
 .z-html th { background-color: var(--zk-color-surface-container-low); font-weight: 600; }
+}

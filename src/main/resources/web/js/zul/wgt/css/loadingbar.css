@@ -17,6 +17,7 @@
 */
 
 /* ─── Base ────────────────────────────────────────────────────────────── */
+@layer zk-components {
 .z-loadingbar {
     width: 100%;
     height: 3px;
@@ -106,4 +107,5 @@
     flex-direction: column-reverse;
     bottom: 0;
     top: unset;
+}
 }

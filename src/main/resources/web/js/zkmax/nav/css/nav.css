@@ -17,6 +17,7 @@
  */
 
 /* ─── Reset ──────────────────────────────────────────────────────────────── */
+@layer zk-components {
 .z-navbar,
 .z-navbar ul {
     list-style: none;
@@ -278,4 +279,5 @@
     min-width: 16px;
     height: 16px;
     font-size: 9px;
+}
 }

@@ -16,6 +16,7 @@
    z-flex* classes, non-flex via inline sizes) must lay out correctly.
    The z-flex* classes themselves are defined in zul/css/base/_cssflex.css.
    See contract M10/M11 + skill reference/css-flex-classes.md. */
+@layer zk-components {
 .z-splitlayout {
     white-space: nowrap;
     overflow: hidden;
@@ -231,4 +232,5 @@
 .z-splitlayout-splitter-button:hover .z-splitlayout-splitter-icon:not(.z-icon-ellipsis-h):not(.z-icon-ellipsis-v),
 .z-splitlayout-splitter:hover .z-splitlayout-splitter-icon:not(.z-icon-ellipsis-h):not(.z-icon-ellipsis-v) {
     opacity: 1;
+}
 }

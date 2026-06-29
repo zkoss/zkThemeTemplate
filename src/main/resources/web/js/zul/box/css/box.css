@@ -5,6 +5,7 @@
    chain and Splitter's drag persistence (px written onto adjacent <td>s) both
    require native table layout. Stock ZK (box.less) only resets table spacing —
    we mirror that. */
+@layer zk-components {
 .z-hbox,
 .z-vbox {
     border-spacing: 0;
@@ -225,4 +226,5 @@ td.z-splitter-outer {
 .z-splitter-ghost {
     background: var(--zk-color-primary) !important;
     opacity: 0.3;
+}
 }

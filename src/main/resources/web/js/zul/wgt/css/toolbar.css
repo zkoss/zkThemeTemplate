@@ -30,6 +30,7 @@
  */
 
 /* ─── Base toolbar ───────────────────────────────────────────────────────── */
+@layer zk-components {
 .z-toolbar {
     display: flex;
     flex-direction: row;
@@ -265,4 +266,5 @@
     clear: both;
     height: 0;
     overflow: hidden;
+}
 }

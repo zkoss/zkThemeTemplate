@@ -1,5 +1,6 @@
 /* MD3 Label — inline text component */
 
+@layer zk-components {
 .z-label {
     display: inline;
     font-family: var(--zk-typescale-font-family);
@@ -20,4 +21,5 @@
 .z-label-multiline {
     display: block;
     white-space: pre-wrap;
+}
 }

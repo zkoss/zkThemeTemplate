@@ -11,6 +11,7 @@
  *  - We use SVG masks instead of the icon font so the glyph itself swaps.
  */
 
+@layer zk-components {
 .z-rating {
     display: inline-flex;
     align-items: center;
@@ -78,4 +79,5 @@
 .z-rating-vertical {
     flex-direction: column;
     align-items: center;
+}
 }

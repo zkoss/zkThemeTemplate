@@ -1,4 +1,5 @@
 /* ── Root container ─────────────────────────────────────────────────────── */
+@layer zk-components {
 .z-organigram {
     display: block;
     overflow: auto;
@@ -159,4 +160,5 @@
 /* Icon picks up selected item text color */
 .z-orgitem-selected > .z-orgnode > .z-orgnode-icon {
     color: var(--zk-color-on-primary-container);
+}
 }

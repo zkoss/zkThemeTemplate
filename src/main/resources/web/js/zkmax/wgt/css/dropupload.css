@@ -2,10 +2,12 @@
  * native cursor (dataTransfer.dropEffect='copy') and there is no setDisabled.
  * The resting box is the only theme-stylable surface.
  * See .claude/skills/zk-component-rules/components/dropupload.md */
+@layer zk-components {
 .z-dropupload {
     border-width: 2px;
     border-style: dashed;
     border-color: var(--zk-color-outline);
     border-radius: var(--zk-shape-corner-extra-small);
     background-color: transparent;
+}
 }

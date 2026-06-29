@@ -1,6 +1,15 @@
-/* Layer order: components declared before utilities so utilities win within the layer system.
-   User styles (no layer) always win over both. */
-@layer zk-components, zk-utilities;
+/* Cascade layer order (lowest → highest priority): zk-base, then zk-components, then zk-utilities.
+   Each source file self-declares its layer: component CSS wraps its rules in a zk-components block,
+   base icon/badge/chip/avatar + this reset in a zk-base block, utilities in a zk-utilities block
+   (build-css.js asserts every component/base file is wrapped). So utilities override components,
+   components override base, and unlayered styles — the theme's own tokens/tablet plus ALL downstream
+   USER CSS — win over every layer with any specificity, no !important.
+   The bare order statement below MUST stay OUTSIDE any block and load first (reset.css is served
+   ahead of the component CSS). NOTE: keep this comment free of any literal at-rule "layer <name>;"
+   form — build-css.js extracts bare layer statements by regex (incl. from comments) for a CleanCSS guard. */
+@layer zk-base, zk-components, zk-utilities;
+
+@layer zk-base {
 
 /* CSS Reset for marble — normalize browser defaults */
 *, *::before, *::after {
@@ -99,5 +108,7 @@ img {
 
 ::-webkit-scrollbar-thumb:hover {
     background: var(--zk-color-outline);
+}
+
 }
 

@@ -10,6 +10,7 @@
               Every structural rule the widget JS depends on must be re-authored here. */
 
 /* ─── Root container ─────────────────────────────────────────────────────── */
+@layer zk-components {
 .z-linelayout {
     width: 100%;
     height: 100%;
@@ -193,4 +194,5 @@
 .z-lineitem-point-image {
     display: inline-flex;
     vertical-align: baseline;
+}
 }

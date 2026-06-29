@@ -1,3 +1,4 @@
+@layer zk-components {
 .z-cropper {
     display: inline-block; /* c6: structural — shrink-wraps border to image (upstream codegen) */
     position: relative;
@@ -232,3 +233,4 @@
    prose-link heuristic a[href]:not([class*="z-"]):hover would underline them —
    [href] here matches its specificity */
 .z-cropper-toolbar > ul > li > a[href]:hover { text-decoration: none; }
+}

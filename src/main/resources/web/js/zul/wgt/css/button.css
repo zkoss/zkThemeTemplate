@@ -1,6 +1,7 @@
 /* MD3 Button — base styles + utility class system */
 
 /* ─── Base: Filled button ─────────────────────────────────────────────── */
+@layer zk-components {
 .z-button {
     position: relative;
     display: inline-flex;
@@ -333,3 +334,4 @@
 }
 .m-editor-toolbar-btn.z-button::before { background-color: var(--zk-color-on-surface); }
 .m-editor-toolbar-btn.z-button:hover::before { opacity: var(--zk-state-hover-opacity, 0.08); }
+}

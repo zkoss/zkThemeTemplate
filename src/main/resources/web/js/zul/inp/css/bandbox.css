@@ -3,6 +3,7 @@
         + .z-bandbox-popup > .z-bandpopup */
 
 /* ─── Wrapper ─────────────────────────────────────────────────────────── */
+@layer zk-components {
 .z-bandbox {
     display: inline-flex;
     align-items: center;
@@ -171,4 +172,5 @@
 .z-bandpopup {
     background-color: var(--zk-color-surface);
     padding: var(--zk-spacing-4);
+}
 }

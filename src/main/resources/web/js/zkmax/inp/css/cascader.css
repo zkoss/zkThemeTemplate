@@ -4,6 +4,7 @@
    NOTE: item text is a bare text node (no label/span wrapper) — see skill components/cascader.md */
 
 /* ─── Wrapper ─────────────────────────────────────────────────────────── */
+@layer zk-components {
 .z-cascader {
     display: inline-flex;
     align-items: center;
@@ -164,4 +165,5 @@
     opacity: var(--zk-state-disabled-opacity);
     pointer-events: none;
     cursor: default;
+}
 }

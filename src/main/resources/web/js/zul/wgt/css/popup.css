@@ -1,5 +1,6 @@
 /* MD3 Popup — floating surface for tooltips, dropdowns, overlays */
 
+@layer zk-components {
 .z-popup {
     position: absolute;
     z-index: 1500;
@@ -60,4 +61,5 @@
 @keyframes z-popup-grow {
     from { opacity: 0; transform: scaleY(0.5); }
     to   { opacity: 1; transform: scaleY(1); }
+}
 }

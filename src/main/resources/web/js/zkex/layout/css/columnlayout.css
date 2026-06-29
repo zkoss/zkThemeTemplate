@@ -3,6 +3,7 @@
    <div class="z-columnchildren-content">…children…</div></div>.
    Do NOT use display:flex on .z-columnchildren — `flex: 1` would override the
    user-set width attribute. See Columnchildren.ts + mold/columnchildren.js. */
+@layer zk-components {
 .z-columnlayout {
     white-space: nowrap;
     box-sizing: border-box;
@@ -26,4 +27,5 @@
     width: 100%;
     height: 100%;
     box-sizing: border-box;
+}
 }

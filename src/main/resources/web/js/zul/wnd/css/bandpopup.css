@@ -1,5 +1,6 @@
 /* MD3 Bandpopup — custom popup for bandbox */
 
+@layer zk-components {
 .z-bandpopup {
     position: absolute;
     z-index: 1600;
@@ -17,4 +18,5 @@
     padding: var(--zk-spacing-4);
     color: var(--zk-color-on-surface);
     font-size: var(--zk-typescale-body-medium-size);
+}
 }

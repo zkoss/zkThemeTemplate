@@ -1,4 +1,5 @@
 /* Root wrapper */
+@layer zk-components {
 .z-pdfviewer {
     display: flex;
     flex-direction: column;
@@ -140,4 +141,5 @@
 /* Fullscreen icon swap: expand → compress */
 .z-pdfviewer:fullscreen .z-pdfviewer-toolbar-fullscreen > i::before {
     content: '\f066';
+}
 }

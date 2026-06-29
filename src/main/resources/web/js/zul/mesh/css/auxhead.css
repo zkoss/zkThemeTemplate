@@ -4,6 +4,7 @@
    The band gives a 4th hierarchy tier (auxhead-row → header-row → body → footer)
    without competing with the column-header divider. */
 
+@layer zk-components {
 .z-auxhead {
     background-color: var(--zk-color-surface-container-low);
 }
@@ -47,4 +48,5 @@
 /* Frozen-aligned auxheader cell — stronger right-edge boundary marker */
 .z-auxheader.z-frozen-col:not(:has(+ .z-frozen-col)) {
     border-inline-end: 2px solid var(--zk-color-outline-variant);
+}
 }

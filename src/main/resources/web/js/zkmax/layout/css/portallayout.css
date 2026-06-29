@@ -8,6 +8,7 @@
 
 /* ─── Root shell ─────────────────────────────────────────────────────────── */
 /* Transparent shell; overflow:hidden required to contain floated columns */
+@layer zk-components {
 .z-portallayout {
     overflow: hidden;
     background: transparent;
@@ -158,4 +159,5 @@
     width: auto;
     background: var(--zk-color-primary-container);
     border-radius: var(--zk-shape-corner-extra-small);
+}
 }

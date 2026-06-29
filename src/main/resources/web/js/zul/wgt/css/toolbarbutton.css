@@ -5,6 +5,7 @@
           </span>
         </a> */
 
+@layer zk-components {
 .z-toolbarbutton {
     position: relative;
     display: inline-flex;
@@ -90,4 +91,5 @@
 .z-toolbarbutton[disabled]::before,
 .z-toolbarbutton.z-toolbarbutton-disabled::before {
     display: none;
+}
 }

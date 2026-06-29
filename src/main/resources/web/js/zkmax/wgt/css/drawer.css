@@ -7,6 +7,7 @@
    Open state: .z-drawer-open on root
    Variants: .z-drawer-right (default), .z-drawer-left, .z-drawer-top, .z-drawer-bottom */
 
+@layer zk-components {
 .z-drawer {
     position: fixed;
     inset: 0;
@@ -147,4 +148,5 @@
 
 .z-drawer-cave {
     padding: var(--zk-spacing-4);
+}
 }

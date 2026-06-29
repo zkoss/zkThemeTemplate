@@ -1,5 +1,6 @@
 /* MD3 Select — native select with MD3 outlined appearance */
 
+@layer zk-components {
 .z-select {
     display: inline-flex;
     align-items: center;
@@ -60,4 +61,5 @@ select.z-select[multiple],
     padding-right: var(--zk-spacing-3);
     background-image: none;
     min-height: 80px;
+}
 }

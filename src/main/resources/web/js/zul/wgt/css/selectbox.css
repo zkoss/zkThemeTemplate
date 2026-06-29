@@ -4,6 +4,7 @@
 /* Chevron-down SVG arrow (encoded, color-independent mask approach not possible on
    background-image since SVG fill must be a literal color, not a CSS variable.
    We use a neutral dark arrow via stroke color matching on-surface-variant at ~60% opacity) */
+@layer zk-components {
 .z-selectbox {
     /* Layout */
     display: inline-block;
@@ -208,4 +209,5 @@
         color: var(--zk-color-on-surface);
         flex: 1;
     }
+}
 }
