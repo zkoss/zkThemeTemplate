@@ -27,7 +27,7 @@ with the desktop ones.
 
 | Project | Spec file | What it guarantees | What it does **not** do |
 |---------|-----------|--------------------|--------------------------|
-| `chromium` | [screenshot.spec.ts](../src/test/playwright/screenshot.spec.ts) | Desktop **depth layer**: visual baselines (gallery + hover/focus/active) for 16 components **and** ~14 **computed-style/geometry regression guards** | It is *not* one-screenshot-per-component — it is a hand-picked depth list (see §5) |
+| `chromium` | [screenshot.spec.ts](../src/test/playwright/screenshot.spec.ts) | Desktop **depth layer**: gallery baselines for 16 components, **hover/focus state baselines for all 23 input/form controls**, **and** ~14 **computed-style/geometry regression guards** | It is *not* one-screenshot-per-component — it is a hand-picked depth list (see §5) |
 | `gallery` | [gallery-scan.spec.ts](../src/test/playwright/gallery-scan.spec.ts) | Desktop **breadth layer**: one gallery screenshot per visual preview page, **auto-discovered** by scanning `src/test/resources/web/*.zul`. New pages are covered the moment they're added | One shot per page only — no per-state matrix; skips non-visual/non-deterministic pages (see the spec's `SKIP` set) |
 | `smoke` | [render-smoke.spec.ts](../src/test/playwright/render-smoke.spec.ts) | Every preview page (105) loads with **no HTTP 500 / ZK compose error** and renders its wrapper | No visual/style assertions — "it renders", not "it looks right" |
 | `framework` | [framework-classes.spec.ts](../src/test/playwright/framework-classes.spec.ts) | JS-toggled **framework classes** ZK emits at runtime: `.z-word-nowrap` (frozen grid), `.z-dragged`, `.z-drag-over`, `.z-drag-ghost`, `.z-drop-ghost/content/icon` | Injects DOM to test runtime markup — does not perform real drag gestures |
@@ -98,6 +98,7 @@ There are **105 preview pages** (`src/test/resources/web/*.zul`). Automated cove
 | Coverage kind | Count | Components |
 |---------------|-------|-----------|
 | **Depth visual baseline** (`screenshot.spec.ts`, gallery + states) | **16 desktop** | button, textbox, checkbox, combobox, listbox, grid, datebox, timebox, spinner, bandbox, selectbox, tabbox, tree, window, panel, toast |
+| **Hover + focus state baselines** (`screenshot.spec.ts`) | **23 controls** | every input/form control: textbox, intbox, longbox, doublebox, decimalbox, combobox, bandbox, datebox, timebox, spinner, doublespinner, chosenbox, searchbox, cascader, selectbox, combobutton, slider, multislider, rangeslider, checkbox, radiogroup, colorbox + rating (hover only) |
 | **Breadth gallery baseline** (`gallery-scan.spec.ts`, auto-discovered) | **73 pages** | every other *visual* page — layouts, data variants, inputs, containers, feedback, enterprise (see §6 step 2) |
 | **Tablet visual baseline** | 4 | button, checkbox, combobox, listbox |
 | **Computed-style / geometry regression guard** (no screenshot) | ~14 blocks | button (disabled variants), combobox (item gap), colorbox (viewport-fill + popup dismiss), window/panel/groupbox (header height), errorbox, notification, toast (base), tooltip, linelayout, splitter/splitlayout/borderlayout, stepbar, dropupload, inputgroup |
@@ -180,13 +181,27 @@ components are covered by default.** Recommended order:
      (button variants, input hover/focus, `.pv-variant-*` layout pages) and the
      computed-style guards — the depth layer; the scan is the breadth layer.
    - Regenerate after intentional visual changes: `npm run screenshot:update`.
-3. ~~**Backfill state coverage**~~ ✅ **Done 2026-06-29 (first pass).** Added hover/focus
-   depth blocks to `screenshot.spec.ts` for the distinct interactive controls whose state
-   layer the breadth gallery can't show: **radiogroup** (hover/focus), **rating** (hover —
-   highlight spread), **slider** (hover/focus on the knob), **colorbox** (hover/focus on
-   the swatch). 7 new baselines, verified. Containers (groupbox, popup, drawer, menubar,
-   toolbar) and the grid/listbox/tree variant pages are adequately served by their breadth
-   gallery shot; revisit if a specific interaction regresses.
+3. ~~**Backfill state coverage**~~ ✅ **Done 2026-06-29 (first pass) + 2026-06-30 (second
+   pass).** First pass added hover/focus depth blocks for **radiogroup**, **rating** (hover
+   only — highlight spread), **slider**, **colorbox**.
+   Second pass closed two defects and finished the input family:
+   - **Capture-target bug:** wrapper-styled inputs (bandbox/datebox/timebox/spinner) paint
+     the hover border + `:focus-within` ring on the *wrapper*, but the test captured the
+     transparent inner `.z-*-input`, clipping the effect away (blank baselines). Fixed by
+     decoupling **action target** (the focusable inner `<input>`) from **capture target**
+     (the bordered wrapper).
+   - **Edge-tight captures:** added a `padShot()` helper that screenshots the page with a
+     clip expanded `PAD=12px` on every side of the control, so the ring/border has visible
+     breathing room instead of hugging the image edge.
+   - **Every input component now has hover+focus baselines:** added the numeric textbox
+     variants (**intbox/longbox/doublebox/decimalbox**), **doublespinner**, the EE inputs
+     (**chosenbox/searchbox/cascader** — their `.z-*-focus` class fires under a programmatic
+     focus, verified live), **combobutton**, and the slider variants (**multislider/
+     rangeslider**); added the missing **focus** shot to **selectbox**. New components are
+     driven by the `FORM_CONTROL_STATES` table at the foot of `screenshot.spec.ts`.
+   Containers (groupbox, popup, drawer, menubar, toolbar) and the grid/listbox/tree variant
+   pages are adequately served by their breadth gallery shot; revisit if a specific
+   interaction regresses.
 4. ~~**Extend tablet baselines** beyond the current 4 seed components.~~ ✅ **Done
    2026-06-29.** Added 8 touch-relevant form/data controls to `tablet.spec.ts`'s
    `visualCases` (textbox, datebox, timebox, spinner, selectbox, radiogroup, slider, grid),
@@ -197,9 +212,10 @@ components are covered by default.** Recommended order:
    show are tracked in [state-coverage-audit.md](state-coverage-audit.md) — keep that audit
    as the source of truth for "which states a contract requires vs which the gallery shows".
 
-**Progress:** steps 1–2 are done (2026-06-29) — the breadth scan now makes the "basic
-visual test per visual page" guarantee self-maintaining. Steps 3–4 (state depth and
-broader tablet coverage) remain.
+**Progress:** steps 1–4 are done (2026-06-29 / 2026-06-30) — the breadth scan makes the
+"basic visual test per visual page" guarantee self-maintaining, every input/form control
+carries hover+focus state baselines, and the tablet gallery covers 12 controls. Step 5
+(interaction-only states) is tracked in [state-coverage-audit.md](state-coverage-audit.md).
 
 ## 7. Related docs
 

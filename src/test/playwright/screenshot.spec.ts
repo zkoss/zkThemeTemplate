@@ -1,4 +1,4 @@
-import { test, expect, Locator } from '@playwright/test';
+import { test, expect, Locator, Page } from '@playwright/test';
 
 type DynamicState = { name: string; action: (loc: Locator) => Promise<void> };
 
@@ -6,6 +6,27 @@ const hoverFocusStates: DynamicState[] = [
   { name: 'hover',  action: loc => loc.hover() },
   { name: 'focus',  action: loc => loc.focus() },
 ];
+
+// Breathing room (px) added around a captured control so the hover border /
+// focus ring isn't flush against the image edge and is easy to eyeball.
+const PAD = 12;
+
+// Capture `target` with a `PAD`-px margin on every side, instead of the element's
+// exact bounding box. Many controls paint their hover/focus affordance (border
+// colour, inset ring, state-layer glow) right at — or just outside — their edge,
+// so an edge-tight element screenshot clips it. We screenshot the PAGE with a
+// clip expanded around the element's box (clamped to the page top-left).
+async function padShot(page: Page, target: Locator, name: string) {
+  await target.scrollIntoViewIfNeeded();
+  const box = await target.boundingBox();
+  if (!box) throw new Error(`padShot: no bounding box for "${name}"`);
+  const x = Math.max(0, box.x - PAD);
+  const y = Math.max(0, box.y - PAD);
+  await expect(page).toHaveScreenshot(name, {
+    clip: { x, y, width: box.x + box.width + PAD - x, height: box.y + box.height + PAD - y },
+    animations: 'disabled',
+  });
+}
 
 const buttonDynamicStates: DynamicState[] = [
   ...hoverFocusStates,
@@ -114,7 +135,7 @@ test.describe('textbox', () => {
     test(name, async ({ page }) => {
       const el = page.locator('.z-textbox').first();
       await action(el);
-      await expect(el).toHaveScreenshot(`${name}.png`);
+      await padShot(page, el, `${name}.png`);
     });
   }
 });
@@ -136,7 +157,7 @@ test.describe('checkbox', () => {
     test(name, async ({ page }) => {
       const el = page.locator('.z-checkbox').first();
       await action(el);
-      await expect(el).toHaveScreenshot(`${name}.png`);
+      await padShot(page, el, `${name}.png`);
     });
   }
 });
@@ -156,9 +177,11 @@ test.describe('combobox', () => {
 
   for (const { name, action } of hoverFocusStates) {
     test(name, async ({ page }) => {
-      const el = page.locator('.z-combobox-input').first();
-      await action(el);
-      await expect(el).toHaveScreenshot(`${name}.png`);
+      // Action on the inner input; capture the whole .z-combobox so the shot
+      // includes the dropdown button — both input and button take the focus/hover
+      // border. (padShot adds breathing room around the ring.)
+      await action(page.locator('.z-combobox-input').first());
+      await padShot(page, page.locator('.z-combobox').first(), `${name}.png`);
     });
   }
 
@@ -248,9 +271,10 @@ test.describe('datebox', () => {
 
   for (const { name, action } of hoverFocusStates) {
     test(name, async ({ page }) => {
-      const el = page.locator('.z-datebox-input').first();
-      await action(el);
-      await expect(el).toHaveScreenshot(`${name}.png`);
+      // Action on the inner input, capture the wrapper — the border/ring lives
+      // on .z-datebox, not the transparent .z-datebox-input. (See bandbox note.)
+      await action(page.locator('.z-datebox-input').first());
+      await padShot(page, page.locator('.z-datebox').first(), `${name}.png`);
     });
   }
 });
@@ -270,9 +294,10 @@ test.describe('timebox', () => {
 
   for (const { name, action } of hoverFocusStates) {
     test(name, async ({ page }) => {
-      const el = page.locator('.z-timebox-input').first();
-      await action(el);
-      await expect(el).toHaveScreenshot(`${name}.png`);
+      // Action on the inner input, capture the wrapper — the border/ring lives
+      // on .z-timebox, not the transparent .z-timebox-input. (See bandbox note.)
+      await action(page.locator('.z-timebox-input').first());
+      await padShot(page, page.locator('.z-timebox').first(), `${name}.png`);
     });
   }
 });
@@ -292,9 +317,10 @@ test.describe('spinner', () => {
 
   for (const { name, action } of hoverFocusStates) {
     test(name, async ({ page }) => {
-      const el = page.locator('.z-spinner-input').first();
-      await action(el);
-      await expect(el).toHaveScreenshot(`${name}.png`);
+      // Action on the inner input, capture the wrapper — the border/ring lives
+      // on .z-spinner, not the transparent .z-spinner-input. (See bandbox note.)
+      await action(page.locator('.z-spinner-input').first());
+      await padShot(page, page.locator('.z-spinner').first(), `${name}.png`);
     });
   }
 });
@@ -314,9 +340,12 @@ test.describe('bandbox', () => {
 
   for (const { name, action } of hoverFocusStates) {
     test(name, async ({ page }) => {
-      const el = page.locator('.z-bandbox-input').first();
-      await action(el);
-      await expect(el).toHaveScreenshot(`${name}.png`);
+      // Focus/hover the inner <input> (the focusable node), but capture the
+      // bordered WRAPPER: the hover border-color and the :focus-within ring are
+      // painted on .z-bandbox, while .z-bandbox-input is transparent/borderless.
+      // Capturing the input would clip away the very effect under test.
+      await action(page.locator('.z-bandbox-input').first());
+      await padShot(page, page.locator('.z-bandbox').first(), `${name}.png`);
     });
   }
 });
@@ -334,11 +363,13 @@ test.describe('selectbox', () => {
     await expect(page.locator('.z-p-8').first()).toHaveScreenshot('gallery.png');
   });
 
-  test('hover', async ({ page }) => {
-    const el = page.locator('.z-selectbox').first();
-    await el.hover();
-    await expect(el).toHaveScreenshot('hover.png');
-  });
+  for (const { name, action } of hoverFocusStates) {
+    test(name, async ({ page }) => {
+      const el = page.locator('.z-selectbox').first();
+      await action(el);
+      await padShot(page, el, `${name}.png`);
+    });
+  }
 });
 
 // -------------------------------------------------------
@@ -1205,7 +1236,7 @@ test.describe('radiogroup', () => {
     test(name, async ({ page }) => {
       const el = page.locator('.z-radio').first();
       await action(el);
-      await expect(el).toHaveScreenshot(`${name}.png`);
+      await padShot(page, el, `${name}.png`);
     });
   }
 });
@@ -1223,7 +1254,7 @@ test.describe('rating', () => {
     // hover the 3rd star of the first rating; capture the whole control so the
     // highlight spread (stars 1–3 filled) is visible.
     await page.locator('.z-rating-icon').nth(2).hover();
-    await expect(page.locator('.z-rating').first()).toHaveScreenshot('hover.png');
+    await padShot(page, page.locator('.z-rating').first(), 'hover.png');
   });
 });
 
@@ -1240,7 +1271,7 @@ test.describe('slider', () => {
     test(name, async ({ page }) => {
       await action(page.locator('.z-slider-button').first());
       // capture the whole slider so the knob's state layer is in context
-      await expect(page.locator('.z-slider').first()).toHaveScreenshot(`${name}.png`);
+      await padShot(page, page.locator('.z-slider').first(), `${name}.png`);
     });
   }
 });
@@ -1258,7 +1289,83 @@ test.describe('colorbox', () => {
     test(name, async ({ page }) => {
       const el = page.locator('.z-colorbox').first();
       await action(el);
-      await expect(el).toHaveScreenshot(`${name}.png`);
+      await padShot(page, el, `${name}.png`);
     });
   }
+});
+
+// =======================================================
+// Remaining input / form-control state coverage
+// Goal: EVERY ZK input component carries a hover + focus baseline, not just the
+// representative few. These follow one of two structural patterns:
+//   - self-styled:    border/ring on the element itself  → action == capture
+//   - wrapper-styled:  border/ring on the wrapper, focusable node inside →
+//                      action targets the focusable node, capture the wrapper
+// `focus` = the node to hover/focus; `shot` = the box to screenshot (padded).
+// All baselines land at doc/screenshots/<comp>-<state>/<state>.png.
+// =======================================================
+const FORM_CONTROL_STATES: { comp: string; focus: string; shot: string }[] = [
+  // Numeric textbox variants — share input.css with textbox (border on the element).
+  { comp: 'intbox',        focus: '.z-intbox',               shot: '.z-intbox' },
+  { comp: 'longbox',       focus: '.z-longbox',              shot: '.z-longbox' },
+  { comp: 'doublebox',     focus: '.z-doublebox',            shot: '.z-doublebox' },
+  { comp: 'decimalbox',    focus: '.z-decimalbox',           shot: '.z-decimalbox' },
+  // Wrapper-styled: ring on the wrapper, focusable <input> inside.
+  { comp: 'doublespinner', focus: '.z-doublespinner-input',  shot: '.z-doublespinner' },
+  { comp: 'chosenbox',     focus: '.z-chosenbox-input',      shot: '.z-chosenbox' },
+  // Self-focusable wrappers — the root carries tabindex; ZK toggles .z-*-focus
+  // on focus and the theme draws the ring off that class (verified live: a
+  // programmatic focus does fire it). hover uses a plain :hover border change.
+  { comp: 'searchbox',     focus: '.z-searchbox',            shot: '.z-searchbox' },
+  { comp: 'cascader',      focus: '.z-cascader',             shot: '.z-cascader' },
+  // Combobutton: :focus-within / :hover drive a state-layer tint on the content.
+  { comp: 'combobutton',   focus: '.z-combobutton',          shot: '.z-combobutton' },
+  // Slider variants — state layer on the knob, capture the whole control.
+  { comp: 'multislider',   focus: '.z-sliderbuttons-button', shot: '.z-multislider' },
+  { comp: 'rangeslider',   focus: '.z-sliderbuttons-button', shot: '.z-rangeslider' },
+];
+
+for (const { comp, focus, shot } of FORM_CONTROL_STATES) {
+  test.describe(comp, () => {
+    test.beforeEach(async ({ page }) => {
+      await page.goto(`/${comp}.zul`);
+      await page.waitForLoadState('networkidle');
+    });
+    for (const { name, action } of hoverFocusStates) {
+      test(name, async ({ page }) => {
+        await action(page.locator(focus).first());
+        await padShot(page, page.locator(shot).first(), `${name}.png`);
+      });
+    }
+  });
+}
+
+// -------------------------------------------------------
+// Scrollbar (custom / simulated overlay + embedded)
+// MD3 gap (doc/skill-gaps.md 2026-06-30): the simulated bar's thumb/rail/embed
+// used a hardcoded `border-radius: 4px` and the `ease` timing keyword instead of
+// the theme's pill radius (--zk-shape-corner-full) + standard easing
+// (--zk-motion-easing-standard = cubic-bezier(0.4, 0, 0.2, 1)). Thumb COLOURS are
+// a deliberate "bolder draggable thumb" choice and are intentionally NOT asserted.
+// The State Gallery at the top of scrollbar.zul always renders a real
+// `.z-scrollbar-indicator`, so this is deterministic regardless of ZK's JS init.
+// -------------------------------------------------------
+test.describe('scrollbar', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto('/scrollbar.zul');
+    await page.waitForLoadState('networkidle');
+  });
+
+  test('simulated-thumb-md3-radius-and-easing', async ({ page }) => {
+    const probe = await page.evaluate(() => {
+      const el = document.querySelector('.z-scrollbar-indicator');
+      if (!el) throw new Error('No .z-scrollbar-indicator found on /scrollbar.zul');
+      const cs = getComputedStyle(el);
+      return { radius: cs.borderTopLeftRadius, timing: cs.transitionTimingFunction };
+    });
+    // Pill radius (--zk-shape-corner-full), not the old hardcoded 4px.
+    expect(parseFloat(probe.radius), `thumb border-radius should be a pill, got "${probe.radius}"`).toBeGreaterThan(100);
+    // MD3 standard easing curve, not the `ease` keyword.
+    expect(probe.timing, `thumb transition easing should be the MD3 standard curve, got "${probe.timing}"`).toContain('cubic-bezier(0.4, 0, 0.2, 1)');
+  });
 });
