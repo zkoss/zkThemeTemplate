@@ -419,3 +419,43 @@ transform`. CSS ownership is required on a flex-resolved axis (`setBtnPos_` can 
 the offset is still 0 and write margin 0 permanently) — see
 `.claude/skills/zk-component-rules/components/splitlayout.md` (family-wide rule; both
 half-mixing and JS-only-on-flex-axis shipped as real bugs).
+
+## 15. Scrollbar (added 2026-06-30)
+
+Two distinct scrollbar surfaces, both MD3-aligned to the same token language:
+
+**Native bar** (`org.zkoss.zul.nativebar="true"` — the ZK default). Styled via
+`::-webkit-scrollbar*` pseudo-elements in `base/_reset.css` (global) and
+`.z-frozen-inner::-webkit-scrollbar*` in `mesh/css/frozen.css` (frozen grid columns).
+Passive, OS-drawn, always occupies layout space.
+
+**Simulated bar** (`nativebar="false"` — drawn by the `zul.Scrollbar` helper; see
+`.claude/skills/zk-component-rules/components/scrollbar.md` for DOM + the must-bundle
+loading rule). CSS in `js/zul/wgt/css/scrollbar.css`, **bundled into `norm.css.dsp` via
+`scripts/build-css.js` `normFiles`** — it has no widget css-uri, so a standalone
+`.dsp` would never load (gap log 2026-06-30). Two render modes selected by
+`data-embedscrollbar`: **overlay** (`false`, hover-only float, no reserved space) and
+**embedded** (`true`, always-visible rail in a reserved gutter).
+
+| Property | Value | Token |
+|----------|-------|-------|
+| Thumb / rail / embed corner radius | pill | `--zk-shape-corner-full` |
+| Thumb idle background | `outline` @ opacity .6 | `--zk-color-outline` |
+| Thumb hover background | `on-surface-variant` @ opacity .85 | `--zk-color-on-surface-variant` |
+| **Track (rail) background** | **faint surface tint — a visible channel** | `--zk-color-surface-container` |
+| Embed (idle) rail background | `rgba(0,0,0,0.12)` | `--zk-color-outline-variant` |
+| Lane / track / thumb thickness | 12px lane · 8px track · 6px thumb (1px inset in track) | literal |
+| **Step buttons** (caret up/down/left/right) | **shown** — 12px, flat, neutral caret; faint state layer on hover | `--zk-color-on-surface-variant` → `--zk-color-on-surface` / `--zk-color-surface-container-high` |
+| Transition | `opacity` + `background-color`, short2 + standard easing | `--zk-motion-duration-short2`, `--zk-motion-easing-standard` |
+
+**Distinct-from-native, but MD3 (user ruling 2026-06-30):** a `nativebar="false"` bar that
+looks identical to native is pointless, so the simulated bar reads as a deliberate themed
+control via (a) a **visible faint track channel** (the native overlay has none) and (b) a
+**neutral, slightly bolder pill thumb** (idle `outline` → hover `on-surface-variant`, vs the
+native bar's `outline-variant` → `outline`). The **caret step buttons are shown** (against
+the MD3 default of hiding scrollbar arrows) per explicit user ruling — kept MD3-restrained:
+flat, neutral, with a faint hover state layer, and they appear **only on hover** with the
+rest of the bar (the whole `.z-scrollbar` is `display:none` at rest). ZK's `syncSize()` reads
+the buttons' offset size to inset the wrapper, so the buttons must carry an explicit
+width/height (12px). The `*-embed` rail carries **no** `:hover` rule — it is `display:none`
+whenever the pointer is over the body (the full bar replaces it).

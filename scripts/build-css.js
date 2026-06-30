@@ -98,6 +98,12 @@ const normFiles = [
     // that are emitted directly by ZK core (zAu.cmd0.showBusy / zUtl.progressbox),
     // not by any widget — so it must always be in the global bundle.
     'js/zul/wgt/css/misc.css',
+    // Scrollbar is drawn by the zul.Scrollbar helper (instantiated by MeshWidget /
+    // LayoutRegion when org.zkoss.zul.nativebar=false), not a registered widget — so it
+    // has NO lang.xml css-uri and, like notification/toast/captcha above, must be bundled
+    // here or its CSS never loads (the 1:1 auto-scan emits an orphaned scrollbar.css.dsp
+    // that ZK never requests). Stock ZK keeps scrollbar styling in the global norm.less too.
+    'js/zul/wgt/css/scrollbar.css',
 ];
 
 // combo.css.dsp = merged dropdown-type input components

@@ -1,4 +1,11 @@
-/* MD3 Scrollbar — custom overlay scrollbar widget */
+/* MD3 Scrollbar — custom (simulated) scrollbar, drawn by the zul.Scrollbar helper
+   when org.zkoss.zul.nativebar="false". Marble gives it a deliberate, themed look,
+   distinct from the browser-native bar (user ruling 2026-06-30):
+     • a faint visible TRACK channel (vs the track-less native overlay),
+     • a neutral pill THUMB (bolder than native, draggable affordance),
+     • slim caret STEP BUTTONS at the lane ends (shown — but flat/neutral, and the
+       whole bar only appears on hover, keeping it MD3-restrained).
+   See doc/spec/DESIGN.md §15 and the scrollbar skill entry. */
 
 @layer zk-components {
 .z-scrollbar {
@@ -12,115 +19,147 @@
     position: absolute;
 }
 
+/* Track channel — faint surface tint so the scroll lane reads as a deliberate
+   control (the native overlay bar has no visible track). */
 .z-scrollbar-rail {
     position: absolute;
     width: 100%;
     height: 100%;
-    background: transparent;
-    border-radius: 4px;
+    background: var(--zk-color-surface-container);
+    border-radius: var(--zk-shape-corner-full);
 }
 
+/* Thumb — neutral, slightly bolder than the native bar (it is draggable). */
 .z-scrollbar-indicator {
-    border-radius: 4px;
+    border-radius: var(--zk-shape-corner-full);
     background-color: var(--zk-color-outline);
-    opacity: 0.5;
+    opacity: 0.6;
     position: absolute;
     cursor: pointer;
     z-index: 100;
-    transition: opacity var(--zk-motion-duration-short2) ease,
-                background-color var(--zk-motion-duration-short2) ease;
+    transition: opacity var(--zk-motion-duration-short2) var(--zk-motion-easing-standard),
+                background-color var(--zk-motion-duration-short2) var(--zk-motion-easing-standard);
 }
 
 .z-scrollbar-indicator:hover {
     background-color: var(--zk-color-on-surface-variant);
-    opacity: 0.8;
+    opacity: 0.85;
 }
 
+/* Grip glyph inside the thumb — kept hidden (MD3 thumbs are plain). */
 .z-scrollbar-icon {
     display: none;
-    color: var(--zk-color-on-surface-variant);
-    width: 16px;
-    height: 16px;
+}
+
+/* Caret step buttons at the lane ends. Flat, neutral, with a faint MD3 state
+   layer on hover. The JS (Scrollbar.ts syncSize) reads their offset size to
+   inset the wrapper, so they must carry an explicit width/height. */
+.z-scrollbar-up,
+.z-scrollbar-down,
+.z-scrollbar-left,
+.z-scrollbar-right {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     position: absolute;
+    width: 12px;
+    height: 12px;
+    color: var(--zk-color-on-surface-variant);
+    cursor: pointer;
+    border-radius: var(--zk-shape-corner-full);
+    transition: background-color var(--zk-motion-duration-short2) var(--zk-motion-easing-standard),
+                color var(--zk-motion-duration-short2) var(--zk-motion-easing-standard);
+}
+
+.z-scrollbar-up i,
+.z-scrollbar-down i,
+.z-scrollbar-left i,
+.z-scrollbar-right i {
+    font-size: 11px;
+    line-height: 1;
+}
+
+.z-scrollbar-up:hover,
+.z-scrollbar-down:hover,
+.z-scrollbar-left:hover,
+.z-scrollbar-right:hover {
+    background-color: var(--zk-color-surface-container-high);
+    color: var(--zk-color-on-surface);
 }
 
 /* ─── Vertical ───────────────────────────────────────────────────────────── */
 .z-scrollbar-vertical {
-    width: 8px;
+    width: 12px;
     height: 100%;
     top: 0;
     right: 0;
     margin-right: 2px;
 }
 
+.z-scrollbar-vertical .z-scrollbar-up   { top: 0; left: 0; }
+.z-scrollbar-vertical .z-scrollbar-down { bottom: 0; left: 0; }
+
 .z-scrollbar-vertical .z-scrollbar-wrapper {
     width: 100%;
-    top: 0;
+    top: 12px;        /* clear the up arrow; JS sets height = lane − up − down */
     left: 0;
-    bottom: 0;
 }
 
 .z-scrollbar-vertical .z-scrollbar-rail {
-    width: 4px;
+    width: 8px;
     left: 2px;
 }
 
 .z-scrollbar-vertical .z-scrollbar-indicator {
     width: 6px;
-    left: 1px;
+    left: 3px;        /* inset 1px inside the 8px track */
 }
 
 .z-scrollbar-vertical-embed {
-    border-radius: 4px;
+    border-radius: var(--zk-shape-corner-full);
     background-color: var(--zk-color-outline-variant);
     position: absolute;
-    width: 4px;
+    width: 6px;
     top: 0;
-    right: 0;
-    height: 100%;
+    right: 3px;
+    height: 100%;     /* JS overrides height to the thumb footprint */
 }
 
 /* ─── Horizontal ─────────────────────────────────────────────────────────── */
 .z-scrollbar-horizontal {
     width: 100%;
-    height: 8px;
+    height: 12px;
     left: 0;
     bottom: 0;
     margin-bottom: 2px;
 }
 
+.z-scrollbar-horizontal .z-scrollbar-left  { left: 0; top: 0; }
+.z-scrollbar-horizontal .z-scrollbar-right { right: 0; top: 0; }
+
 .z-scrollbar-horizontal .z-scrollbar-wrapper {
     height: 100%;
     bottom: 0;
-    left: 0;
-    right: 0;
+    left: 12px;       /* clear the left arrow; JS sets width = lane − left − right */
 }
 
 .z-scrollbar-horizontal .z-scrollbar-rail {
-    height: 4px;
+    height: 8px;
     top: 2px;
 }
 
 .z-scrollbar-horizontal .z-scrollbar-indicator {
     height: 6px;
-    top: 1px;
+    top: 3px;
 }
 
 .z-scrollbar-horizontal-embed {
-    border-radius: 4px;
+    border-radius: var(--zk-shape-corner-full);
     background-color: var(--zk-color-outline-variant);
     position: absolute;
-    height: 4px;
-    bottom: 0;
+    height: 6px;
+    bottom: 3px;
     left: 0;
-    width: 100%;
-}
-
-/* Up/down/left/right arrow buttons — hidden in modern flat design */
-.z-scrollbar-up,
-.z-scrollbar-down,
-.z-scrollbar-left,
-.z-scrollbar-right {
-    display: none;
+    width: 100%;      /* JS overrides width to the thumb footprint */
 }
 }
