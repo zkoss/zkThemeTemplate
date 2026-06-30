@@ -69,6 +69,30 @@ reserved space, no `*-embed` element. **Embedded** (`embed=true`): a thin static
 hover. Consequence: the `*-embed` rail must NOT have a `:hover` rule — it is
 `display:none` precisely when the pointer is over the body.
 
+### Cross-axis positioning (embedded): avoid the rest→hover jump
+
+The scroll-sync (`_doScroll`-style handler, `Scrollbar.ts` ~L841) writes inline
+`right`/`bottom = -pos` on **both** the bar and the `*-embed` rail (vertical pair gets
+`right`, horizontal pair gets `bottom`) — this keeps the simulated bar glued to the visible
+edge as the cave scrolls. Two consequences for a theme:
+
+1. **The bar's and embed's cross-axis *anchor* are JS-owned and always identical** — your CSS
+   `right`/`bottom` on `.z-scrollbar-vertical`/`-horizontal` and on `*-embed` is overridden
+   (it's `-pos`, i.e. `0` when not scrolled). You cannot move the anchor from CSS, and you
+   don't need to — JS keeps the rest rail and the hover bar on the same line.
+2. **What IS yours:** the embed's `width`/`height` (cross-axis thickness), and the bar's
+   *internal* layout — rail/thumb/arrows positioned **within** the lane via their own
+   `right`/`bottom` relative to it.
+
+So the jump is never an anchor problem; it's a **thickness/inset** problem. If the lane is
+wider than the track and the track sits inset within it (centred), the hover track/thumb
+appear inset from the shared anchor while the thin flush embed sits *at* it → lateral jump on
+mouse-over. Fix: **edge-anchor the track/thumb/arrows inside the lane** (vertical → `right:0`,
+horizontal → `bottom:0`; thumb 1px in) **and size the `*-embed` rail to the hover *track's*
+thickness** (not the thumb's). Then the flush rest footprint equals the flush hover-track
+footprint and the bar only "refines" into thumb-in-track in place. (Marble gap log 2026-06-30;
+this is ZK behaviour, not a Marble choice, so it lives here.)
+
 ## CSS LOADING TRAP (theme-portable — applies to every ZK theme)
 
 Because the scrollbar is a **helper, not a widget**, it has **no `lang.xml` css-uri and no

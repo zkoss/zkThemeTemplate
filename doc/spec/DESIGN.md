@@ -445,7 +445,9 @@ loading rule). CSS in `js/zul/wgt/css/scrollbar.css`, **bundled into `norm.css.d
 | **Track (rail) background** | **faint surface tint — a visible channel** | `--zk-color-surface-container` |
 | Embed (idle) rail background | `rgba(0,0,0,0.12)` | `--zk-color-outline-variant` |
 | Lane / track / thumb thickness | 12px lane · 8px track · 6px thumb (1px inset in track) | literal |
-| **Step buttons** (caret up/down/left/right) | **shown** — 12px, flat, neutral caret; faint state layer on hover | `--zk-color-on-surface-variant` → `--zk-color-on-surface` / `--zk-color-surface-container-high` |
+| Embed (idle) rail thickness | **8px = the hover *track* width** (not the 6px thumb) — same flush footprint as the track so rest→hover does not shift | literal |
+| Cross-axis anchoring | track/thumb/arrows **edge-anchored** (vertical → `right`, horizontal → `bottom`); lane carries **no margin** → everything centres ~4px from the edge | literal |
+| **Step buttons** (caret up/down/left/right) | **shown** — flat, neutral caret; faint state layer on hover. Along-axis 12px (read by `syncSize()`), cross-axis 8px and edge-anchored | `--zk-color-on-surface-variant` → `--zk-color-on-surface` / `--zk-color-surface-container-high` |
 | Transition | `opacity` + `background-color`, short2 + standard easing | `--zk-motion-duration-short2`, `--zk-motion-easing-standard` |
 
 **Distinct-from-native, but MD3 (user ruling 2026-06-30):** a `nativebar="false"` bar that
@@ -459,3 +461,15 @@ rest of the bar (the whole `.z-scrollbar` is `display:none` at rest). ZK's `sync
 the buttons' offset size to inset the wrapper, so the buttons must carry an explicit
 width/height (12px). The `*-embed` rail carries **no** `:hover` rule — it is `display:none`
 whenever the pointer is over the body (the full bar replaces it).
+
+**Edge-hugging, no lateral jump (user ruling 2026-06-30, Option A; gap log 2026-06-30):** in
+embedded mode the rest `*-embed` rail and the hover bar must sit on the *same* cross-axis line
+— otherwise the bar visibly jumps on mouse-over (MD3 continuity-of-motion; the original
+design jumped ~5px). ZK's scroll-sync pins **both** the bar and the `*-embed` rail to the same
+cross-axis anchor inline (`right`/`bottom = -scrollPos`, i.e. flush when unscrolled) — so the
+anchor is JS-owned and identical for both; only the embed *thickness* and the bar's *internal*
+layout are ours. So: (a) **edge-anchor** the track (`right:0`/`bottom:0`, flush) within the lane, thumb
+(`right:1px`/`bottom:1px`, centred in the track), and arrows; (b) size the `*-embed` rail to
+the **8px track width** (not the 6px thumb) so its forced-flush footprint is *identical* to
+the hover track. Result: rest and hover share one 8px flush footprint centred ~4px from the
+edge; on hover it merely refines into thumb-in-track + arrows, with zero lateral movement.
