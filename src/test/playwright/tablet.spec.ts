@@ -381,10 +381,19 @@ test.describe('tablet-combobox-sheet', () => {
 type VisualCase = { name: string; url: string };
 
 const visualCases: VisualCase[] = [
-  { name: 'tablet-button',   url: '/button.zul' },
-  { name: 'tablet-combobox', url: '/combobox.zul' },
-  { name: 'tablet-listbox',  url: '/listbox.zul' },
-  { name: 'tablet-checkbox', url: '/checkbox.zul' },
+  { name: 'tablet-button',     url: '/button.zul' },
+  { name: 'tablet-combobox',   url: '/combobox.zul' },
+  { name: 'tablet-listbox',    url: '/listbox.zul' },
+  { name: 'tablet-checkbox',   url: '/checkbox.zul' },
+  // step 4 (test-architecture.md §6): broaden touch-relevant form/data controls
+  { name: 'tablet-textbox',    url: '/textbox.zul' },
+  { name: 'tablet-datebox',    url: '/datebox.zul' },
+  { name: 'tablet-timebox',    url: '/timebox.zul' },
+  { name: 'tablet-spinner',    url: '/spinner.zul' },
+  { name: 'tablet-selectbox',  url: '/selectbox.zul' },
+  { name: 'tablet-radiogroup', url: '/radiogroup.zul' },
+  { name: 'tablet-slider',     url: '/slider.zul' },
+  { name: 'tablet-grid',       url: '/grid.zul' },
 ];
 
 for (const { name, url } of visualCases) {

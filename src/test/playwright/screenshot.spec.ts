@@ -1185,3 +1185,80 @@ test.describe('inputgroup', () => {
     }
   });
 });
+
+// =======================================================
+// State-depth blocks (test-architecture.md §6 step 3)
+// Distinct interactive controls whose hover/focus state layer is worth a baseline
+// beyond the breadth gallery shot in gallery-scan.spec.ts.
+// =======================================================
+
+// -------------------------------------------------------
+// Radiogroup — hover/focus state layer on a radio
+// -------------------------------------------------------
+test.describe('radiogroup', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto('/radiogroup.zul');
+    await page.waitForLoadState('networkidle');
+  });
+
+  for (const { name, action } of hoverFocusStates) {
+    test(name, async ({ page }) => {
+      const el = page.locator('.z-radio').first();
+      await action(el);
+      await expect(el).toHaveScreenshot(`${name}.png`);
+    });
+  }
+});
+
+// -------------------------------------------------------
+// Rating — hovering a star highlights the run up to the cursor
+// -------------------------------------------------------
+test.describe('rating', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto('/rating.zul');
+    await page.waitForLoadState('networkidle');
+  });
+
+  test('hover', async ({ page }) => {
+    // hover the 3rd star of the first rating; capture the whole control so the
+    // highlight spread (stars 1–3 filled) is visible.
+    await page.locator('.z-rating-icon').nth(2).hover();
+    await expect(page.locator('.z-rating').first()).toHaveScreenshot('hover.png');
+  });
+});
+
+// -------------------------------------------------------
+// Slider — hover/focus state layer on the knob
+// -------------------------------------------------------
+test.describe('slider', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto('/slider.zul');
+    await page.waitForLoadState('networkidle');
+  });
+
+  for (const { name, action } of hoverFocusStates) {
+    test(name, async ({ page }) => {
+      await action(page.locator('.z-slider-button').first());
+      // capture the whole slider so the knob's state layer is in context
+      await expect(page.locator('.z-slider').first()).toHaveScreenshot(`${name}.png`);
+    });
+  }
+});
+
+// -------------------------------------------------------
+// Colorbox — hover/focus state on the swatch button
+// -------------------------------------------------------
+test.describe('colorbox', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto('/colorbox.zul');
+    await page.waitForLoadState('networkidle');
+  });
+
+  for (const { name, action } of hoverFocusStates) {
+    test(name, async ({ page }) => {
+      const el = page.locator('.z-colorbox').first();
+      await action(el);
+      await expect(el).toHaveScreenshot(`${name}.png`);
+    });
+  }
+});

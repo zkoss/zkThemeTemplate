@@ -25,6 +25,13 @@ export default defineConfig({
       use: { ...devices['Desktop Chrome'] },
     },
     {
+      // Scan-driven breadth layer: one gallery screenshot per visual preview page,
+      // auto-discovered from src/test/resources/web/*.zul. See gallery-scan.spec.ts.
+      name: 'gallery',
+      testMatch: /gallery-scan\.spec\.ts/,
+      use: { ...devices['Desktop Chrome'] },
+    },
+    {
       name: 'smoke',
       testMatch: /render-smoke\.spec\.ts/,
       use: { ...devices['Desktop Chrome'] },
