@@ -5,7 +5,7 @@ This theme delivers all icons via the [Lucide](https://lucide.dev/) icon set, re
 | Source | Examples | Naming rule |
 |--------|----------|-------------|
 | ZK widget JS (compiled, immutable) | `<i class="z-icon-caret-down">` injected by `Scrollbar.ts`; `domIconHTML('left')` in `tab/mold/tabbox.js` emitting `z-icon-chevron-left` | Cannot rename. FA-style names that are not in Lucide MUST be aliased in `FA_TO_LUCIDE` (see `scripts/build-css.js`). |
-| Preview / example ZULs (`src/test/resources/web/**/*.zul`) | `iconSclass="z-icon-settings"`, `sclass="z-icon-trash-2"` | MUST use the real Lucide name. FA aliases, custom names, and theme-specific names are FORBIDDEN. |
+| Preview / example ZULs (`src/test/resources/web/**/*.zul`) | `iconSclass="z-icon-settings"`, `sclass="z-icon-trash-2"` | MUST resolve to a **served** class: a real Lucide name **or** a ZK built-in FA/custom alias (`FA_TO_LUCIDE` / `CUSTOM_ICONS`). Invented / misspelled names are FORBIDDEN. Lucide names are preferred for new content. |
 
 ## Rule 1 — ZK widget icons (alias when needed)
 
@@ -35,33 +35,39 @@ grep -rhoE 'z-icon-[a-z0-9-]+' /path/to/ZK10/zk/zul/src/main/resources/web/js/ \
 and diff against `doc/spec/icon-index.md`'s Lucide list ∪ FA alias table. Any newly
 appearing name must be either present in Lucide or added to `FA_TO_LUCIDE`.
 
-## Rule 2 — Preview / example content (Lucide names only)
+## Rule 2 — Preview / example content (must resolve to a served class)
 
-Every `z-icon-{name}` literal in `src/test/resources/web/**/*.zul` MUST satisfy:
+Every `z-icon-{name}` literal in `src/test/resources/web/**/*.zul` MUST resolve to a
+class that `scripts/build-css.js` actually serves — i.e. `{name}` is one of:
 
 ```
-node_modules/lucide-static/icons/{name}.svg  EXISTS
+node_modules/lucide-static/icons/{name}.svg  EXISTS   (a Lucide name)
+{name} is a key of FA_TO_LUCIDE                        (a ZK FA-style alias, e.g. caret-down)
+{name} is a key of CUSTOM_ICONS                        (a bare ZK glyph, e.g. exclamation)
+{name} == fw                                           (the no-glyph width modifier)
 ```
 
-- No FA names (`cogs`, `times`, `caret-down`, `volume-up`, …). Even though
-  `FA_TO_LUCIDE` makes them work at runtime, preview content must be
-  self-documenting. Use the Lucide name directly.
-- No invented names (`my-custom-icon`).
-- The only exception is `z-icon-fw` (the no-glyph width modifier).
+- **Both kinds are allowed**: a Lucide name *or* a ZK built-in FA/custom class name.
+  ZK widget JS emits the FA-style names (`caret-down`, `angle-up`, `cogs`, …) and the
+  build serves a real `.z-icon-{fa}` rule for each, so they render — and a static
+  mockup of a widget's DOM (e.g. `scrollbar.zul`'s State Gallery, which mirrors
+  `zul.Scrollbar`) SHOULD use the exact emitted name so it matches the live widget.
+- **Forbidden**: invented / misspelled names (`my-custom-icon`) — anything with no
+  served `.z-icon-*` rule.
+- **Preferred for new content**: when you have a free choice, use the Lucide name
+  directly (it is self-documenting); reach for an FA alias only when reproducing what
+  ZK emits. The theme does not extend Lucide — if a glyph you want isn't in Lucide and
+  isn't a ZK-emitted alias, pick a different Lucide icon.
 
-When a preview author wants an icon that does not exist in Lucide, the answer
-is: pick a different Lucide icon. The theme does not extend Lucide.
+**Excluded catalogs** (performance — these are whole-page icon listings, not ordinary
+content): `src/test/resources/web/usecase2/icons-lucide.zul` (regenerated from
+`lucide-static` on every build) and `utility/icons.zul` (the "All Lucide Icons" page,
+which also hosts the FA-compat alias demo). Both are skipped by `check-icon-coverage.sh`.
 
-**Auto-generated catalog**: `src/test/resources/web/usecase2/icons-lucide.zul`
-is regenerated from `lucide-static` on every build. It is excluded from this
-rule by construction.
-
-**Region opt-out**: a block wrapped between `<!-- icon-lint:disable -->` and
-`<!-- icon-lint:enable -->` comments is exempt from Rule 2. This exists solely
-for the "FontAwesome-compat aliases" demo in `utility/icons.zul`, which
-intentionally renders the FA-style names ZK widget JS emits (to document the
-`FA_TO_LUCIDE` mapping). `check-icon-coverage.sh` honors these markers; do not
-use them to bypass the rule for ordinary preview content.
+> Historical note: an earlier `<!-- icon-lint:disable -->` / `<!-- icon-lint:enable -->`
+> region opt-out existed to exempt FA-style names in authored ZULs. It was removed once
+> Rule 2 was widened to accept ZK FA/custom aliases everywhere (both kinds now resolve to
+> a served class, so no region exemption is needed).
 
 ## Enforcement
 

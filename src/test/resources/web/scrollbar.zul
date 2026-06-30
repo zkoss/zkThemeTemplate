@@ -9,6 +9,9 @@
     <div sclass="z-mb-8">
         <div sclass="z-text-md z-fw-bold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-3">Scrollbar — State Gallery</div>
 
+        <!-- This gallery mirrors the live zul.Scrollbar DOM, which emits the FA-style
+             caret-up/down/left/right icon classes (aliased to chevrons via FA_TO_LUCIDE)
+             — keep them verbatim so the mockup matches the real widget; do NOT rename to chevron. -->
         <div sclass="z-d-flex z-flex-wrap z-gap-6 z-align-start z-py-4 z-mb-2">
             <div sclass="z-d-flex z-flex-col z-align-center z-gap-2">
                 <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-center z-text-secondary">Vertical</div>

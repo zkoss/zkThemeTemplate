@@ -6,13 +6,13 @@ Regenerate with `npm run build:css`.
 This is the canonical lookup for valid `z-icon-*` class names in this theme.
 - **Theme generator** consults this file before writing any `z-icon-*` selector.
 - **Theme evaluator** validates that every `z-icon-*` reference resolves here.
-- **Preview ZULs** (`src/test/resources/web/**/*.zul`) MUST use names from the Lucide section only — no FA aliases, no invented names. Enforced by `scripts/check-icon-coverage.sh`.
+- **Preview ZULs** (`src/test/resources/web/**/*.zul`) MUST use a name that resolves to a served class — a Lucide name OR a ZK FA/custom alias listed below; invented/misspelled names are rejected. Lucide names are preferred for new content. Enforced by `scripts/check-icon-coverage.sh`.
 
 See `doc/spec/icon-policy.md` for the full policy.
 
 ## FA → Lucide aliases (50 entries, from `scripts/build-css.js` `FA_TO_LUCIDE`)
 
-These exist solely to absorb FontAwesome-style class names that ZK widget JS emits at runtime (e.g. `z-icon-caret-down`). Do NOT use these names in new preview/example ZULs — write the Lucide name directly.
+These absorb FontAwesome-style class names that ZK widget JS emits at runtime (e.g. `z-icon-caret-down`). They are valid in authored ZULs too (they resolve to a served class) — but for *new* content prefer the Lucide name directly; reach for an FA alias when faithfully reproducing what ZK emits (e.g. a widget-DOM mockup).
 
 | FA name | Lucide target |
 |---------|---------------|
