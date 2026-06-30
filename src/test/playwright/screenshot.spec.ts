@@ -37,13 +37,12 @@ const buttonDynamicStates: DynamicState[] = [
   },
 ];
 
-// Preview pages fall into two structural families:
-//  - "gallery" pages (button, textbox, checkbox, the input controls): a single
-//    `.z-p-8` page wrapper holding `pv-cols-N` / `pv-row` demo rows. No per-variant
-//    wrapper — capture the whole `.z-p-8` for the gallery and target bare `.z-*`
-//    elements for dynamic states.
-//  - "variant" pages (listbox, grid, tabbox, tree, window, panel): wrap each demo
-//    in a `.pv-variant-<name>` block — capture/scope by that wrapper.
+// Every preview page is a single `.z-p-8` wrapper laying its demos out with
+// generic utilities (the state matrix uses `.z-grid-cols-auto` + `.z-d-contents`
+// rows; there are no `.pv-*` wrappers any more). So:
+//  - "gallery" shot captures the whole `.z-p-8`.
+//  - dynamic-state shots target a bare framework class (`.z-textbox`, `.z-row`,
+//    `.z-tab`, `.z-listitem`, …) — the first instance on the page.
 
 // -------------------------------------------------------
 // Button
@@ -213,27 +212,25 @@ test.describe('combobox', () => {
 // -------------------------------------------------------
 // Listbox
 // -------------------------------------------------------
+// The preview page lays its variants (default, checkmark, no-border…) out with
+// generic utilities — there is no longer a `.pv-variant-*` wrapper to scope to.
+// Gallery shoots the whole `.z-p-8` page (every variant in one shot, like the
+// other gallery pages); hover targets the first bare `.z-listitem`.
 test.describe('listbox', () => {
-  const variants = ['default', 'checkmark'];
+  test.beforeEach(async ({ page }) => {
+    await page.goto('/listbox.zul');
+    await page.waitForLoadState('networkidle');
+  });
 
-  for (const variant of variants) {
-    test.describe(variant, () => {
-      test.beforeEach(async ({ page }) => {
-        await page.goto('/listbox.zul');
-        await page.waitForLoadState('networkidle');
-      });
+  test('gallery', async ({ page }) => {
+    await expect(page.locator('.z-p-8').first()).toHaveScreenshot('gallery.png');
+  });
 
-      test('gallery', async ({ page }) => {
-        await expect(page.locator(`.pv-variant-${variant}`).first()).toHaveScreenshot('gallery.png');
-      });
-
-      test('hover', async ({ page }) => {
-        const el = page.locator(`.pv-variant-${variant} .z-listitem`).first();
-        await el.hover();
-        await expect(el).toHaveScreenshot('hover.png');
-      });
-    });
-  }
+  test('hover', async ({ page }) => {
+    const el = page.locator('.z-listitem').first();
+    await el.hover();
+    await expect(el).toHaveScreenshot('hover.png');
+  });
 });
 
 // -------------------------------------------------------
@@ -246,11 +243,11 @@ test.describe('grid', () => {
   });
 
   test('gallery', async ({ page }) => {
-    await expect(page.locator('.pv-variant-default').first()).toHaveScreenshot('gallery.png');
+    await expect(page.locator('.z-p-8').first()).toHaveScreenshot('gallery.png');
   });
 
   test('hover', async ({ page }) => {
-    const el = page.locator('.pv-variant-default .z-row').first();
+    const el = page.locator('.z-row').first();
     await el.hover();
     await expect(el).toHaveScreenshot('hover.png');
   });
@@ -382,11 +379,11 @@ test.describe('tabbox', () => {
   });
 
   test('gallery', async ({ page }) => {
-    await expect(page.locator('.pv-variant-default').first()).toHaveScreenshot('gallery.png');
+    await expect(page.locator('.z-p-8').first()).toHaveScreenshot('gallery.png');
   });
 
   test('hover', async ({ page }) => {
-    const el = page.locator('.pv-variant-default .z-tab').first();
+    const el = page.locator('.z-tab').first();
     await el.hover();
     await expect(el).toHaveScreenshot('hover.png');
   });
@@ -402,11 +399,11 @@ test.describe('tree', () => {
   });
 
   test('gallery', async ({ page }) => {
-    await expect(page.locator('.pv-variant-default').first()).toHaveScreenshot('gallery.png');
+    await expect(page.locator('.z-p-8').first()).toHaveScreenshot('gallery.png');
   });
 
   test('hover', async ({ page }) => {
-    const el = page.locator('.pv-variant-default .z-treerow').first();
+    const el = page.locator('.z-treerow').first();
     await el.hover();
     await expect(el).toHaveScreenshot('hover.png');
   });
@@ -422,7 +419,7 @@ test.describe('window', () => {
   });
 
   test('gallery', async ({ page }) => {
-    await expect(page.locator('.pv-variant-default').first()).toHaveScreenshot('gallery.png');
+    await expect(page.locator('.z-p-8').first()).toHaveScreenshot('gallery.png');
   });
 });
 
@@ -436,7 +433,7 @@ test.describe('panel', () => {
   });
 
   test('gallery', async ({ page }) => {
-    await expect(page.locator('.pv-variant-default').first()).toHaveScreenshot('gallery.png');
+    await expect(page.locator('.z-p-8').first()).toHaveScreenshot('gallery.png');
   });
 });
 
@@ -540,13 +537,13 @@ test.describe('viewport-fill', () => {
 });
 
 // -------------------------------------------------------
-// State-gallery columns must FILL their container, not cap at a fixed px.
-// The `pv-cols` grid was 8 hardcoded variants (label + N fixed-width tracks),
-// so on a wide desktop the data columns capped at ~160px and left a large empty
-// gutter on the right. The unified layout uses `auto repeat(var(--zk-cols),
-// minmax(0,1fr))` — one variable-driven utility shared with the framework's
-// `.z-grid-cols-auto`. This asserts the rightmost data cell now reaches the
-// row's right edge (i.e. the columns fill). Fails under the old capped layout.
+// State-matrix columns must FILL their container, not cap at a fixed px.
+// The old `pv-cols` grid capped its data columns at ~160px, leaving a large
+// empty gutter on a wide desktop. The matrix is now the generic
+// `.z-grid-cols-auto` utility (`auto repeat(var(--zk-cols), minmax(0,1fr))`),
+// with each variant row a `.z-d-contents` (display:contents) whose children are
+// the grid cells directly. This asserts the rightmost data cell reaches the
+// container's content-right edge (i.e. the columns fill).
 // -------------------------------------------------------
 test.describe('pv-cols-fill', () => {
   test('state matrix columns fill the container width on desktop', async ({ page }) => {
@@ -555,14 +552,22 @@ test.describe('pv-cols-fill', () => {
     await page.waitForLoadState('networkidle');
 
     const gap = await page.evaluate(() => {
-      const row = document.querySelector('[class*="pv-cols"] .pv-row') as HTMLElement;
+      // Data rows are `.z-d-contents` (display:contents) so their children ARE
+      // the grid cells; the title row spans full width, so pick a multi-cell row.
+      const row = [...document.querySelectorAll('.z-grid-cols-auto > .z-d-contents')]
+        .find(r => r.children.length > 1) as HTMLElement | undefined;
+      if (!row) throw new Error('no multi-cell .z-d-contents row under a .z-grid-cols-auto');
+      const container = row.closest('.z-grid-cols-auto') as HTMLElement;
       const cells = [...row.children] as HTMLElement[];
       const last = cells[cells.length - 1];
-      const rowRight = row.getBoundingClientRect().right;
-      const lastRight = last.getBoundingClientRect().right;
-      return Math.round(rowRight - lastRight);
+      const cs = getComputedStyle(container);
+      // a display:contents row has no box of its own — measure against the
+      // container's content-right edge (rect minus right padding + border).
+      const contentRight = container.getBoundingClientRect().right
+        - parseFloat(cs.paddingRight) - parseFloat(cs.borderRightWidth);
+      return Math.round(contentRight - last.getBoundingClientRect().right);
     });
-    // With fill, the last cell ends at the row's right edge (only sub-pixel slack).
+    // With fill, the last cell ends at the container's content edge (sub-pixel slack).
     // With the old capped 160px tracks this gutter was several hundred px.
     expect(gap, `right gutter is ${gap}px — columns are not filling`).toBeLessThanOrEqual(8);
   });
@@ -800,7 +805,7 @@ test.describe('toast', () => {
   });
 
   test('gallery', async ({ page }) => {
-    await expect(page.locator('.pv-state-gallery').first()).toHaveScreenshot('gallery.png');
+    await expect(page.locator('.z-p-8').first()).toHaveScreenshot('gallery.png');
   });
 
   test('base-content-has-no-dark-scrim-fill', async ({ page }) => {
