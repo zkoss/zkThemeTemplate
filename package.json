@@ -5,6 +5,7 @@
   "scripts": {
     "build:css": "node scripts/build-css.js",
     "build:css:dev": "node scripts/build-css.js --dev",
+    "check:css-dsp": "node scripts/check-css-dsp.js",
     "watch": "node scripts/watch-css.js",
     "minify": "cleancss -o target/classes/web/marble/css/marble.min.css target/classes/web/marble/css/marble.css",
     "lint:css": "stylelint \"src/main/resources/web/**/*.css\"",
