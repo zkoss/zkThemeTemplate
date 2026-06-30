@@ -104,6 +104,20 @@ const normFiles = [
     // here or its CSS never loads (the 1:1 auto-scan emits an orphaned scrollbar.css.dsp
     // that ZK never requests). Stock ZK keeps scrollbar styling in the global norm.less too.
     'js/zul/wgt/css/scrollbar.css',
+    // The widgets below are REAL widgets but have NO lang.xml css-uri (stock ZK styles
+    // them in the global norm.less, not via a per-component mold css-uri), so the 1:1
+    // auto-scan would emit orphaned *.css.dsp files that ZK never requests and the widget
+    // renders with browser/inherited defaults. Same loading trap as scrollbar/notification
+    // above. Found by the 2026-06-30 orphan sweep via runtime document.styleSheets probe
+    // (gap log 2026-06-30). NOTE: select.css/cell.css/bandpopup.css are NOT here — they have
+    // no css-uri either but ZK's zk.wcs DOES serve them via package aggregation (probe-
+    // verified), so they live in WCS_SERVED_ALLOWLIST below instead.
+    'js/zul/wgt/css/label.css',
+    'js/zul/box/css/div.css',
+    'js/zul/box/css/span.css',
+    'js/zul/layout/css/html.css',
+    'js/zul/wgt/css/image.css',
+    'js/zul/wgt/css/imagemap.css',
 ];
 
 // combo.css.dsp = merged dropdown-type input components
@@ -155,6 +169,51 @@ const extraMergedFiles = [
 
 // Files that are merged (excluded from 1:1 auto-scan)
 const mergedFiles = new Set([...normFiles.filter(f => f.startsWith('js/')), ...comboFiles, ...footerFiles, ...extraMergedFiles]);
+
+// --- Orphan-CSS guard data (see assertNoOrphanComponentCss + doc/skill-gaps.md 2026-06-30) ---
+//
+// `.css.dsp` basenames that ZK requests via a `<css-uri>` in lang.xml / lang-addon.xml. ZK
+// auto-loads these when the widget is on the page, so a 1:1 auto-scanned dsp serves correctly.
+// REGENERATE on a ZK upgrade with (zul + zkmax + zkex lang files):
+//   grep -rhoE "css-uri>[^<]+" <ZK>/zk/zul/.../lang.xml <ZK>/zkcml/zk{max,ex}/.../lang-addon.xml \
+//     | sed -E 's#.*/##' | sort -u
+const CSS_URI_BACKED = new Set([
+    // zul (CE)
+    'a.css.dsp', 'absolutelayout.css.dsp', 'anchorlayout.css.dsp', 'auxhead.css.dsp',
+    'borderlayout.css.dsp', 'box.css.dsp', 'button.css.dsp', 'calendar.css.dsp',
+    'caption.css.dsp', 'checkbox.css.dsp', 'combo.css.dsp', 'combobutton.css.dsp',
+    'frozen.css.dsp', 'grid.css.dsp', 'groupbox.css.dsp', 'input.css.dsp', 'inputgroup.css.dsp',
+    'layout.css.dsp', 'listbox.css.dsp', 'menu.css.dsp', 'paging.css.dsp', 'panel.css.dsp',
+    'popup.css.dsp', 'progressmeter.css.dsp', 'rating.css.dsp', 'selectbox.css.dsp',
+    'separator.css.dsp', 'slider.css.dsp', 'tabbox.css.dsp', 'toolbar.css.dsp', 'tree.css.dsp',
+    'window.css.dsp',
+    // zkmax (PE/EE)
+    'daterangebox.css.dsp', 'anchornav.css.dsp', 'barcodescanner.css.dsp', 'biglistbox.css.dsp',
+    'camera.css.dsp', 'cardlayout.css.dsp', 'cascader.css.dsp', 'chosenbox.css.dsp',
+    'coachmark.css.dsp', 'cropper.css.dsp', 'drawer.css.dsp', 'dropupload.css.dsp',
+    'goldenlayout.css.dsp', 'linelayout.css.dsp', 'multislider.css.dsp', 'nav.css.dsp',
+    'organigram.css.dsp', 'portallayout.css.dsp', 'rowlayout.css.dsp', 'scrollview.css.dsp',
+    'searchbox.css.dsp', 'signature.css.dsp', 'splitlayout.css.dsp', 'stepbar.css.dsp',
+    'tablelayout.css.dsp', 'tbeditor.css.dsp', 'timepicker.css.dsp', 'video.css.dsp',
+    // zkex (EE)
+    'colorbox.css.dsp', 'columnlayout.css.dsp', 'fisheye.css.dsp', 'pdfviewer.css.dsp',
+    'rangeslider.css.dsp', 'sliderbuttons.css.dsp',
+]);
+
+// No `css-uri`, NOT in any bundle list — but a runtime `document.styleSheets` probe (2026-06-30)
+// confirmed ZK's zk.wcs DOES serve their own `.z-*` rule (package aggregation). NOT orphans, so
+// the guard must not flag them. Re-verify with a probe before adding here.
+const WCS_SERVED_ALLOWLIST = new Set([
+    'js/zul/sel/css/select.css',     // .z-select — 24 own rules served (probe 2026-06-30)
+    'js/zul/wgt/css/cell.css',       // .z-cell
+    'js/zul/wnd/css/bandpopup.css',  // .z-bandpopup
+]);
+// NOTE: the orphan sweep (2026-06-30) also found two DEAD-CSS files — `box/css/space.css`
+// (`.z-space`; `<space>` actually renders `.z-separator`) and `menu/css/toolbarpanel.css`
+// (`.z-toolbarpanel`; Toolbar's `panel` mold renders `.z-toolbar-panel`). Their selectors
+// matched nothing, so they were DELETED rather than bundled. There is intentionally no
+// dead-CSS allowlist: a future no-css-uri file that matches nothing SHOULD trip the guard
+// below so someone decides delete-vs-fix.
 
 // Empty stubs for unimplemented zkex/zkmax/font components.
 // These prevent FileNotFoundException errors at runtime.
@@ -465,6 +524,38 @@ function scanCssFiles(dir, base) {
     return results;
 }
 
+// Build-time orphan guard (gap log 2026-06-30, sweep of the scrollbar bug class).
+// Every non-empty component CSS left to the 1:1 auto-scan is emitted as a standalone
+// *.css.dsp. ZK only REQUESTS that dsp if the component has a `css-uri`; otherwise the file
+// is never loaded and the component renders unstyled — silently, with no error. This asserts
+// that every auto-scanned, non-empty component CSS is either css-uri-backed, in a bundle
+// (excluded from the scan already), probe-verified served via zk.wcs, or known dead CSS.
+// A new no-css-uri component thus can't silently orphan: the build fails until it is bundled.
+function assertNoOrphanComponentCss() {
+    const scanned = [];
+    for (const dir of ['js/zul', 'js/zkmax', 'js/zkex']) {
+        const full = path.join(webDir, dir);
+        if (fs.existsSync(full)) scanned.push(...scanCssFiles(full, webDir));
+    }
+    const orphans = scanned.filter(relPath => {
+        const content = readFile(relPath);
+        if (!content || !content.trim()) return false;          // empty → not emitted
+        if (CSS_URI_BACKED.has(path.basename(relPath) + '.dsp')) return false; // ZK requests it
+        if (WCS_SERVED_ALLOWLIST.has(relPath)) return false;    // served via zk.wcs (probe-verified)
+        return true;
+    });
+    if (orphans.length) {
+        throw new Error(
+            'Orphaned component CSS — no css-uri, not bundled, not WCS-served:\n' +
+            orphans.map(f => '  - ' + f).join('\n') +
+            '\nEach is emitted as a 1:1 *.css.dsp that ZK never requests, so the component renders ' +
+            'unstyled (no error).\nFix: add it to `normFiles` in scripts/build-css.js. OR, if a runtime ' +
+            'document.styleSheets probe\nconfirms zk.wcs already serves its own `.z-*` rule, add it to ' +
+            '`WCS_SERVED_ALLOWLIST`.\nSee doc/skill-gaps.md (2026-06-30) and ' +
+            '.claude/skills/zk-component-rules/reference/component-css-must-be-bundled-or-css-uri.md.');
+    }
+}
+
 // Bare `@layer <names>;` order statement (same shape minifyCss guards against).
 const LAYER_STMT_RE = /@layer\s+[\w-]+(?:\s*,\s*[\w-]+)*\s*;/;
 // The html/body page-frame block, delimited by markers in _reset.css.
@@ -499,7 +590,10 @@ function buildResetVariants() {
 }
 
 function build() {
-    // 0. Write empty stubs for unimplemented components
+    // 0. Fail fast if any no-css-uri component CSS would be emitted as an orphaned 1:1 dsp.
+    assertNoOrphanComponentCss();
+
+    // 0a. Write empty stubs for unimplemented components
     for (const stubPath of stubPaths) {
         writeDsp(stubPath, '');
     }

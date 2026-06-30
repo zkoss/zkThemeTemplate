@@ -1373,4 +1373,123 @@ test.describe('scrollbar', () => {
     // MD3 standard easing curve, not the `ease` keyword.
     expect(probe.timing, `thumb transition easing should be the MD3 standard curve, got "${probe.timing}"`).toContain('cubic-bezier(0.4, 0, 0.2, 1)');
   });
+
+  // MD3 gap (doc/skill-gaps.md 2026-06-30): in EMBEDDED mode (data-embedscrollbar=true)
+  // the rest `*-embed` rail and the hover `.z-scrollbar` bar disagreed on their cross-axis
+  // offset, so the bar jumped ~5px laterally on mouse-over (rest center 3px vs hover 8px
+  // from the edge) and read as "two different scrollbars". MD3 continuity-of-motion: the
+  // rest rail must preview the hover thumb at the SAME cross-axis line — hover only grows
+  // (track + arrows fade in), it must not move. ZK's scroll-sync pins both the bar and the
+  // *-embed rail to the same cross-axis anchor inline, so the fix is thickness/inset (size
+  // the embed to the track width + edge-anchor the track) — see the scrollbar skill. The
+  // embedded grid is the 2nd .z-grid on the page (overlay / embedded / native).
+  test('embed-rail-and-hover-thumb-share-cross-axis-no-jump', async ({ page }) => {
+    const grid = page.locator('.z-grid').nth(1);
+    await grid.scrollIntoViewIfNeeded();
+    await grid.locator('.z-scrollbar-vertical-embed').waitFor({ state: 'attached' });
+
+    // REST: cross-axis CENTER of each embed rail, as a distance from the grid body's edge.
+    await page.mouse.move(0, 0);
+    const rest = await grid.evaluate((g) => {
+      const body = g.querySelector('.z-grid-body') || g;
+      const br = body.getBoundingClientRect();
+      const ve = g.querySelector('.z-scrollbar-vertical-embed') as HTMLElement | null;
+      const he = g.querySelector('.z-scrollbar-horizontal-embed') as HTMLElement | null;
+      const vr = ve && ve.offsetWidth ? ve.getBoundingClientRect() : null;
+      const hr = he && he.offsetHeight ? he.getBoundingClientRect() : null;
+      return {
+        vCenterFromRight: vr ? br.right - (vr.left + vr.right) / 2 : null,
+        hCenterFromBottom: hr ? br.bottom - (hr.top + hr.bottom) / 2 : null,
+      };
+    });
+
+    // HOVER: same measurement for the live thumb (the bar replaces the embed rail).
+    await grid.locator('.z-grid-body').hover();
+    await page.waitForTimeout(300);
+    const hover = await grid.evaluate((g) => {
+      const body = g.querySelector('.z-grid-body') || g;
+      const br = body.getBoundingClientRect();
+      const vt = g.querySelector('.z-scrollbar-vertical .z-scrollbar-indicator') as HTMLElement | null;
+      const ht = g.querySelector('.z-scrollbar-horizontal .z-scrollbar-indicator') as HTMLElement | null;
+      const vr = vt ? vt.getBoundingClientRect() : null;
+      const hr = ht ? ht.getBoundingClientRect() : null;
+      return {
+        vCenterFromRight: vr ? br.right - (vr.left + vr.right) / 2 : null,
+        hCenterFromBottom: hr ? br.bottom - (hr.top + hr.bottom) / 2 : null,
+      };
+    });
+
+    expect(rest.vCenterFromRight, 'rest vertical embed rail must be present').not.toBeNull();
+    expect(hover.vCenterFromRight, 'hover vertical thumb must be present').not.toBeNull();
+    expect(rest.hCenterFromBottom, 'rest horizontal embed rail must be present').not.toBeNull();
+    expect(hover.hCenterFromBottom, 'hover horizontal thumb must be present').not.toBeNull();
+
+    // Rest rail and hover thumb must sit on the same cross-axis line — no lateral jump.
+    expect(
+      Math.abs((rest.vCenterFromRight as number) - (hover.vCenterFromRight as number)),
+      `vertical: rest embed center ${rest.vCenterFromRight}px vs hover thumb ${hover.vCenterFromRight}px from right edge`,
+    ).toBeLessThanOrEqual(1);
+    expect(
+      Math.abs((rest.hCenterFromBottom as number) - (hover.hCenterFromBottom as number)),
+      `horizontal: rest embed center ${rest.hCenterFromBottom}px vs hover thumb ${hover.hCenterFromBottom}px from bottom edge`,
+    ).toBeLessThanOrEqual(1);
+  });
+});
+
+// Orphaned helper/mold-only component CSS — these widgets have NO lang.xml css-uri,
+// so ZK never requests their per-component .css.dsp; their CSS must be in the global
+// norm.css.dsp bundle or it is silently dropped and the widget renders unstyled (same
+// bug class as the 2026-06-30 scrollbar orphan; sweep gap log 2026-06-30). Each guard
+// loads a page that renders the widget and asserts the widget's own `.z-<comp>` root
+// rule is present in a *served* stylesheet — fails red when the file is orphaned,
+// passes once it is bundled. Page-agnostic after the fix (norm loads on every page),
+// but we probe a page that actually renders the widget to keep the guard meaningful.
+test.describe('orphaned-helper-css', () => {
+  // [component class (without leading dot), preview page that renders it]
+  const ORPHAN_GUARDS: [string, string][] = [
+    ['z-label',    '/label.zul'],
+    ['z-div',      '/label.zul'],
+    ['z-span',     '/progressmeter.zul'],
+    ['z-html',     '/html.zul'],
+    ['z-image',    '/camera.zul'],
+    ['z-imagemap', '/imagemap.zul'],
+  ];
+
+  for (const [cls, url] of ORPHAN_GUARDS) {
+    test(`${cls.replace('z-', '')}-css-is-served`, async ({ page }) => {
+      await page.goto(url);
+      await page.waitForLoadState('networkidle');
+      const result = await page.evaluate((name) => {
+        const domCount = document.querySelectorAll('.' + name).length;
+        const re = new RegExp('^\\.' + name + '(?![\\w-])');
+        let ownRuleServed = false;
+        for (const ss of document.styleSheets) {
+          let rules: CSSRuleList;
+          try { rules = ss.cssRules; } catch (e) { continue; }
+          const scan = (list: CSSRuleList): boolean => {
+            for (const r of Array.from(list)) {
+              const grouping = r as CSSGroupingRule;
+              if (grouping.cssRules && scan(grouping.cssRules)) return true;
+              const styleRule = r as CSSStyleRule;
+              if (styleRule.selectorText) {
+                for (const sel of styleRule.selectorText.split(',')) {
+                  if (re.test(sel.trim())) return true;
+                }
+              }
+            }
+            return false;
+          };
+          try { if (scan(rules)) { ownRuleServed = true; break; } } catch (e) { /* ignore */ }
+        }
+        return { domCount, ownRuleServed };
+      }, cls);
+
+      expect(result.domCount, `${url} should render at least one .${cls} element`).toBeGreaterThan(0);
+      expect(
+        result.ownRuleServed,
+        `.${cls} own root rule must be present in a served stylesheet — it is orphaned ` +
+        `(emitted as a 1:1 .css.dsp ZK never requests). Add the source CSS to normFiles in scripts/build-css.js.`,
+      ).toBe(true);
+    });
+  }
 });
