@@ -423,9 +423,10 @@
     margin: var(--zk-spacing-1) 0;
 }
 
-/* Framework ul > li { margin:0 } override — !important required */
+/* High-specificity LI-scoped rule; wins over framework ul>li{margin:0} on 10.3.0.1
+   via specificity alone (verified render-neutral without !important, 2026-07). */
 .z-menupopup-content > li.z-menuseparator {
-    margin: var(--zk-spacing-1) 0 !important;
+    margin: var(--zk-spacing-1) 0;
 }
 
 /* ─── Submenu (menu inside menupopup) ────────────────────────────────────── */

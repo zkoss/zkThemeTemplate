@@ -1353,6 +1353,56 @@ test.describe('colorbox', () => {
 });
 
 // =======================================================
+// `!important` removal guards
+// These assert the computed value that a now-deleted `!important` used to force
+// is still produced by the plain cascade on ZK 10.3.0.1. Each was proven
+// render-neutral before the keyword was removed (see doc/spec/important-inventory.md
+// + tasks/important-decisions.md). If a future ZK/@layer change lets a lower rule
+// win again, these fail — the signal to restore the override.
+// =======================================================
+test.describe('important-removal-guards', () => {
+  test('progressmeter fill bar stays display:block without !important', async ({ page }) => {
+    await page.goto('/progressmeter.zul');
+    await page.waitForLoadState('networkidle');
+    const display = await page.evaluate(() => {
+      const el = document.querySelector('.z-progressmeter-image');
+      if (!el) throw new Error('no .z-progressmeter-image');
+      return getComputedStyle(el).display;
+    });
+    expect(display).toBe('block');
+  });
+
+  test('messagebox button row is flex with zeroed child margin without !important', async ({ page }) => {
+    await page.goto('/messagebox.zul');
+    await page.waitForLoadState('networkidle');
+    await page.click('button:has-text("YES / NO / CANCEL")');
+    await page.waitForSelector('.z-messagebox-buttons');
+    const r = await page.evaluate(() => {
+      const box = document.querySelector('.z-messagebox-buttons');
+      const kid = box.firstElementChild;
+      return { display: getComputedStyle(box).display, ml: getComputedStyle(kid).marginLeft };
+    });
+    expect(r.display).toBe('flex');
+    expect(r.ml).toBe('0px');
+  });
+
+  test('menupopup separator keeps its 4px vertical margin without !important', async ({ page }) => {
+    await page.goto('/menubar.zul');
+    await page.waitForLoadState('networkidle');
+    await page.click('.z-menu:has-text("Project")');
+    await page.waitForTimeout(300);
+    const m = await page.evaluate(() => {
+      const sep = document.querySelector('.z-menupopup-content > li.z-menuseparator');
+      if (!sep) throw new Error('no menu separator');
+      const cs = getComputedStyle(sep);
+      return { top: cs.marginTop, bottom: cs.marginBottom };
+    });
+    expect(m.top).toBe('4px');
+    expect(m.bottom).toBe('4px');
+  });
+});
+
+// =======================================================
 // Remaining input / form-control state coverage
 // Goal: EVERY ZK input component carries a hover + focus baseline, not just the
 // representative few. These follow one of two structural patterns:

@@ -128,7 +128,7 @@
 
 /* ─── Button row ──────────────────────────────────────────────────────── */
 .z-messagebox-buttons {
-    display: flex !important;
+    display: flex;
     align-items: center;
     justify-content: flex-end;
     gap: var(--zk-spacing-2);
@@ -139,9 +139,9 @@
     left: auto;
 }
 
-/* Undo hlayout's > * margin-left stacking */
+/* Undo hlayout's > * margin-left stacking (layered rule wins on 10.3.0.1 — no !important needed) */
 .z-messagebox-buttons > * {
-    margin-left: 0 !important;
+    margin-left: 0;
 }
 
 .z-messagebox-button {

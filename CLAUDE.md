@@ -8,7 +8,7 @@ This is **Marble** - a Material Design theme for ZK Framework targeting enterpri
 
 - **Theme Name**: `marble`
 - **Version**: 1.0.0
-- **ZK Version**: 10.2.1-jakarta
+- **ZK Version**: 10.3.0.1-jakarta
 - **Design System**: Material Design (MUI-aligned; tokens follow MD3 naming, visual values follow MUI v7)
 - **Spring Boot Version**: 3.2.6 (for preview app)
 - **Browser Support**: Modern browsers only (last 2 versions of Chrome, Firefox, Safari, Edge)

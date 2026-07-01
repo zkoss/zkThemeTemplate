@@ -21,7 +21,7 @@
 
 /* ─── Fill bar ────────────────────────────────────────────────────────── */
 .z-progressmeter-image {
-    display: block !important;
+    display: block;
     height: 100%;
     background-color: var(--zk-color-primary);
     border-radius: 2px;
