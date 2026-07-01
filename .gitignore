@@ -7,6 +7,9 @@ temp
 .agent
 .agents
 
+# pyenv (local tooling only — no Python in the committed project)
+.python-version
+
 # Claude Code — track design artifacts (agents, skills); ignore runtime state
 .mcp.json
 .claude/agent-memory/
