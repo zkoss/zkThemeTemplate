@@ -8,6 +8,7 @@ temp
 .agents
 
 # Claude Code — track design artifacts (agents, skills); ignore runtime state
+.mcp.json
 .claude/agent-memory/
 .claude/worktrees/
 .claude/scheduled_tasks.lock
