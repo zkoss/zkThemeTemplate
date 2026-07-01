@@ -380,20 +380,56 @@ test.describe('tablet-combobox-sheet', () => {
 // -------------------------------------------------------
 type VisualCase = { name: string; url: string };
 
+// COVERAGE RULE: every component whose rendering changes on a mobile UA must
+// have a tablet baseline. The authoritative source of "what changes" is the
+// tablet bundle `src/main/resources/web/zkmax/css/tablet/` — every root `.z-*`
+// class targeted by a partial there maps to a page below. When a partial starts
+// (or stops) styling a component, add (or remove) its page here.
+//   _inputs.css    → textbox, intbox, longbox, doublebox, decimalbox,
+//                    passwordbox(=textbox page), combobox, bandbox, datebox,
+//                    timebox, spinner, doublespinner
+//   _selection.css → checkbox, radiogroup
+//   _buttons.css   → button, combobutton, toolbar(.z-toolbarbutton),
+//                    fileupload(.z-uploadbutton — SKIPped: non-deterministic)
+//   _mesh.css      → listbox, grid, tree(.z-treecell/.z-treecol), paging
+//   _scrollbar.css → biglistbox
+//   _calendar.css  → calendar
+//   _window.css    → window, panel
+// slider/selectbox have NO tablet CSS — their entries below are width-834
+// renders that just guard they don't regress at tablet size.
 const visualCases: VisualCase[] = [
-  { name: 'tablet-button',     url: '/button.zul' },
-  { name: 'tablet-combobox',   url: '/combobox.zul' },
-  { name: 'tablet-listbox',    url: '/listbox.zul' },
-  { name: 'tablet-checkbox',   url: '/checkbox.zul' },
-  // step 4 (test-architecture.md §6): broaden touch-relevant form/data controls
-  { name: 'tablet-textbox',    url: '/textbox.zul' },
-  { name: 'tablet-datebox',    url: '/datebox.zul' },
-  { name: 'tablet-timebox',    url: '/timebox.zul' },
-  { name: 'tablet-spinner',    url: '/spinner.zul' },
-  { name: 'tablet-selectbox',  url: '/selectbox.zul' },
-  { name: 'tablet-radiogroup', url: '/radiogroup.zul' },
-  { name: 'tablet-slider',     url: '/slider.zul' },
-  { name: 'tablet-grid',       url: '/grid.zul' },
+  // form inputs (_inputs.css)
+  { name: 'tablet-textbox',       url: '/textbox.zul' },
+  { name: 'tablet-intbox',        url: '/intbox.zul' },
+  { name: 'tablet-longbox',       url: '/longbox.zul' },
+  { name: 'tablet-doublebox',     url: '/doublebox.zul' },
+  { name: 'tablet-decimalbox',    url: '/decimalbox.zul' },
+  { name: 'tablet-combobox',      url: '/combobox.zul' },
+  { name: 'tablet-bandbox',       url: '/bandbox.zul' },
+  { name: 'tablet-datebox',       url: '/datebox.zul' },
+  { name: 'tablet-timebox',       url: '/timebox.zul' },
+  { name: 'tablet-spinner',       url: '/spinner.zul' },
+  { name: 'tablet-doublespinner', url: '/doublespinner.zul' },
+  { name: 'tablet-calendar',      url: '/calendar.zul' },
+  // selection controls (_selection.css)
+  { name: 'tablet-checkbox',      url: '/checkbox.zul' },
+  { name: 'tablet-radiogroup',    url: '/radiogroup.zul' },
+  // buttons (_buttons.css)
+  { name: 'tablet-button',        url: '/button.zul' },
+  { name: 'tablet-combobutton',   url: '/combobutton.zul' },
+  { name: 'tablet-toolbar',       url: '/toolbar.zul' },
+  // mesh: data grids/lists/tree + paging (_mesh.css)
+  { name: 'tablet-listbox',       url: '/listbox.zul' },
+  { name: 'tablet-grid',          url: '/grid.zul' },
+  { name: 'tablet-tree',          url: '/tree.zul' },
+  { name: 'tablet-paging',        url: '/paging.zul' },
+  { name: 'tablet-biglistbox',    url: '/biglistbox.zul' },
+  // containers (_window.css)
+  { name: 'tablet-window',        url: '/window.zul' },
+  { name: 'tablet-panel',         url: '/panel.zul' },
+  // no tablet CSS — width-834 regression guards only
+  { name: 'tablet-selectbox',     url: '/selectbox.zul' },
+  { name: 'tablet-slider',        url: '/slider.zul' },
 ];
 
 for (const { name, url } of visualCases) {
