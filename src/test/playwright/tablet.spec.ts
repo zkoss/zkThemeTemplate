@@ -389,14 +389,15 @@ type VisualCase = { name: string; url: string };
 //                    passwordbox(=textbox page), combobox, bandbox, datebox,
 //                    timebox, spinner, doublespinner
 //   _selection.css → checkbox, radiogroup
+//   _slider.css    → slider (touch-enlarged knob)
 //   _buttons.css   → button, combobutton, toolbar(.z-toolbarbutton),
 //                    fileupload(.z-uploadbutton — SKIPped: non-deterministic)
 //   _mesh.css      → listbox, grid, tree(.z-treecell/.z-treecol), paging
 //   _scrollbar.css → biglistbox
 //   _calendar.css  → calendar
 //   _window.css    → window, panel
-// slider/selectbox have NO tablet CSS — their entries below are width-834
-// renders that just guard they don't regress at tablet size.
+// selectbox has NO tablet CSS (native <select> — OS handles touch); its entry
+// below is a width-834 render that just guards it doesn't regress at tablet size.
 const visualCases: VisualCase[] = [
   // form inputs (_inputs.css)
   { name: 'tablet-textbox',       url: '/textbox.zul' },
@@ -427,9 +428,10 @@ const visualCases: VisualCase[] = [
   // containers (_window.css)
   { name: 'tablet-window',        url: '/window.zul' },
   { name: 'tablet-panel',         url: '/panel.zul' },
-  // no tablet CSS — width-834 regression guards only
-  { name: 'tablet-selectbox',     url: '/selectbox.zul' },
+  // slider (_slider.css — touch-enlarged knob)
   { name: 'tablet-slider',        url: '/slider.zul' },
+  // no tablet CSS — width-834 regression guard only
+  { name: 'tablet-selectbox',     url: '/selectbox.zul' },
 ];
 
 for (const { name, url } of visualCases) {

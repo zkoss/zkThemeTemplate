@@ -138,6 +138,7 @@ const tabletFiles = [
     'zkmax/css/tablet/_inputs.css',
     'zkmax/css/tablet/_buttons.css',
     'zkmax/css/tablet/_selection.css',
+    'zkmax/css/tablet/_slider.css',
     'zkmax/css/tablet/_mesh.css',
     'zkmax/css/tablet/_calendar.css',
     'zkmax/css/tablet/_wheel.css',

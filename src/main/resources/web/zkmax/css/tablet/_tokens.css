@@ -17,4 +17,5 @@
     --zk-touch-icon-size: 24px;           /* control glyphs (up from ~14-20px) */
     --zk-touch-scrollbar-size: 16px;      /* touch-width custom scrollbar */
     --zk-touch-row-min-height: 48px;      /* mesh row / cell tap height */
+    --zk-touch-slider-knob: 28px;         /* slider thumb (up from the 20px desktop knob) */
 }

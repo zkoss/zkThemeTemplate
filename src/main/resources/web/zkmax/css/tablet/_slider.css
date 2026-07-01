@@ -1,0 +1,23 @@
+/* ============================================================================
+ * Marble tablet bundle — slider (touch)
+ * ----------------------------------------------------------------------------
+ * The desktop slider thumb is 20px (js/zul/inp/css/slider.css). On a mobile UA
+ * that is an awkward drag target — MD3 wants a comfortable touch area and the
+ * stock ZK theme itself grows the knob on touch. Enlarge Marble's thumb to the
+ * touch size (--zk-touch-slider-knob, 28px) and re-center it (margin = -half),
+ * keeping the round MD3/MUI shape, colour and state-layer rings from the base
+ * rule. Loaded only on a mobile UA (TabletThemeURIHandler).
+ * ========================================================================== */
+.z-slider-button {
+    width: var(--zk-touch-slider-knob);
+    height: var(--zk-touch-slider-knob);
+    /* center the enlarged thumb on the 4px track (horizontal) and on its
+       JS-set left position — mirrors the base rule's -10px for a 20px thumb */
+    margin-top: calc(var(--zk-touch-slider-knob) / -2);
+    margin-left: calc(var(--zk-touch-slider-knob) / -2);
+}
+
+.z-slider-vertical .z-slider-button {
+    margin-left: calc(var(--zk-touch-slider-knob) / -2);
+    margin-top: calc(var(--zk-touch-slider-knob) / -2);
+}
