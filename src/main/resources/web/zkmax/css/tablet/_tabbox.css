@@ -1,0 +1,37 @@
+/* ============================================================================
+ * Tablet — tabbox
+ * The stock ZK theme enlarges tabs, tab images and the tab close button for
+ * touch; Marble had no tabbox tablet rule. Give each tab an MD3 44px tap-target
+ * floor, grow the leading image/icon and the per-tab close affordance, and make
+ * the tab-strip scroll arms comfortable to hit. Loaded only on a mobile UA.
+ * ========================================================================== */
+
+/* Each tab is a comfortable tap target (floor — no-op if already taller) */
+.z-tab {
+    min-height: var(--zk-touch-target-min);
+}
+
+/* Per-tab close button (.z-tab-button) — desktop 16px */
+.z-tab-button {
+    width: var(--zk-touch-icon-size);
+    height: var(--zk-touch-icon-size);
+    font-size: var(--zk-touch-icon-size);
+}
+
+/* Leading image / icon inside a tab — desktop 20px */
+.z-tab-image,
+.z-tab-icon {
+    width: var(--zk-touch-icon-size);
+    height: var(--zk-touch-icon-size);
+    font-size: var(--zk-touch-icon-size);
+}
+
+/* Tab-strip scroll arms → comfortable swipe/scroll targets */
+.z-tabbox-left-scroll,
+.z-tabbox-right-scroll {
+    width: var(--zk-touch-target-min);
+}
+.z-tabbox-up-scroll,
+.z-tabbox-down-scroll {
+    height: var(--zk-touch-target-min);
+}

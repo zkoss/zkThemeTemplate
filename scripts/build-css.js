@@ -142,8 +142,11 @@ const tabletFiles = [
     'zkmax/css/tablet/_mesh.css',
     'zkmax/css/tablet/_calendar.css',
     'zkmax/css/tablet/_wheel.css',
+    'zkmax/css/tablet/_menu.css',
+    'zkmax/css/tablet/_tabbox.css',
     'zkmax/css/tablet/_window.css',
     'zkmax/css/tablet/_scrollbar.css',
+    'zkmax/css/tablet/_feedback.css',
 ];
 
 // footer.css.dsp = loaded last by WCS

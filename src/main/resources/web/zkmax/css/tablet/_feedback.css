@@ -1,0 +1,29 @@
+/* ============================================================================
+ * Tablet — feedback popups (notification toast, validation errorbox)
+ * Both carry a small dismiss affordance (desktop ~18-20px) that is an awkward
+ * touch target. The stock ZK theme grows them to ~22px on a mobile UA; Marble
+ * had no rule. Enlarge the close box AND its inner glyph to the touch icon size
+ * (24px) — comfortable on a phone without letting the affordance dominate the
+ * compact toast/tooltip. The whole toast body remains the primary read target.
+ * Loaded only on a mobile UA.
+ * ========================================================================== */
+
+/* Notification (toast) dismiss */
+.z-notification-close {
+    width: var(--zk-touch-icon-size);
+    height: var(--zk-touch-icon-size);
+    font-size: var(--zk-touch-icon-size);
+}
+/* desktop pins the inner glyph to 14px — grow it with the box */
+.z-notification-close > .z-notification-icon {
+    width: var(--zk-touch-icon-size);
+    height: var(--zk-touch-icon-size);
+    font-size: var(--zk-touch-icon-size);
+}
+
+/* Validation errorbox dismiss */
+.z-errorbox-close {
+    width: var(--zk-touch-icon-size);
+    height: var(--zk-touch-icon-size);
+    font-size: var(--zk-touch-icon-size);
+}

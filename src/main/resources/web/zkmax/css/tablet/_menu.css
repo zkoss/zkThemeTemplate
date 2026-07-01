@@ -1,0 +1,27 @@
+/* ============================================================================
+ * Tablet — menu / menubar / menuitem
+ * The stock ZK theme grows menu rows and glyphs for touch on a mobile UA; Marble
+ * had no menu tablet rule. Give every clickable row (menubar item AND dropdown
+ * item) an MD3 44px tap target and enlarge the leading images / trailing arrows
+ * so they are comfortable to hit. Loaded only on a mobile UA.
+ * ========================================================================== */
+
+/* Tappable rows — menubar entries and popup items alike */
+.z-menu-content,
+.z-menuitem-content {
+    min-height: var(--zk-touch-target-min);
+}
+
+/* Leading images grow to the touch glyph size (desktop is 16px) */
+.z-menu-image,
+.z-menuitem-image {
+    min-width: var(--zk-touch-icon-size);
+    min-height: var(--zk-touch-icon-size);
+}
+
+/* Submenu arrows, check marks, and the menubar overflow chevron */
+.z-menu-icon,
+.z-menuitem-icon,
+.z-menubar-icon {
+    font-size: var(--zk-touch-icon-size);
+}

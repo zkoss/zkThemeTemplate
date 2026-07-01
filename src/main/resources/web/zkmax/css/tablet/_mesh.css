@@ -29,6 +29,31 @@
     font-size: var(--zk-touch-icon-size);
 }
 
+/* Row selection checkboxes/radios (listbox / grid / tree) → 24px touch box */
+.z-listheader-checkable,
+.z-listitem-checkable,
+.z-listgroup-checkable,
+.z-treerow-checkable {
+    width: var(--zk-touch-icon-size);
+    height: var(--zk-touch-icon-size);
+    font-size: var(--zk-touch-icon-size);
+}
+
+/* Expand/collapse toggles: tree rows, grid/listbox groups, grid detail.
+   Glyph only — keeping the box size preserves tree indentation geometry. */
+.z-tree-icon,
+.z-group-icon,
+.z-listgroup-icon,
+.z-detail-icon {
+    font-size: var(--zk-touch-icon-size);
+}
+.z-group-icon,
+.z-listgroup-icon,
+.z-detail {
+    width: var(--zk-touch-icon-size);
+    height: var(--zk-touch-icon-size);
+}
+
 /* Paging controls */
 .z-paging-button {
     min-width: var(--zk-touch-target-min);
@@ -37,4 +62,7 @@
 .z-paging-input {
     height: var(--zk-touch-target-min);
     min-height: var(--zk-touch-target-min);
+}
+.z-paging-icon {
+    font-size: var(--zk-touch-icon-size);
 }

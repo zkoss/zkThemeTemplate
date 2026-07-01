@@ -109,3 +109,9 @@
     transform: none !important;
     animation: zk-bottom-sheet-up var(--zk-motion-duration-medium2) var(--zk-motion-easing-emphasized-decelerate);
 }
+
+/* Dropdown option rows (combobox + bandbox) → MD3 44px tap target.
+   Matches the stock ZK theme growing .z-comboitem for touch. */
+.z-comboitem {
+    min-height: var(--zk-touch-target-min);
+}
