@@ -44,6 +44,9 @@ test.describe('gallery', () => {
   for (const comp of pages) {
     test(comp, async ({ page }) => {
       await page.goto(`/${comp}.zul`, { waitUntil: 'networkidle' });
+      // Wait for the Inter web font to settle — otherwise the shot can be taken
+      // mid font-swap and the page height drifts a few px (see reorg investigation).
+      await page.evaluate(() => document.fonts.ready.then(() => true));
       const wrapper = page.locator('.z-p-8').first();
       // Every standard preview page renders the .z-p-8 wrapper; fail loudly if a
       // newly-added page uses a different shell so it gets an explicit decision
@@ -52,7 +55,9 @@ test.describe('gallery', () => {
         wrapper,
         `${comp}.zul has no .z-p-8 wrapper — give it one or add "${comp}" to SKIP in gallery-scan.spec.ts`
       ).toBeVisible();
-      await expect(wrapper).toHaveScreenshot(`${comp}.png`, {
+      // One folder per preview page: doc/screenshots/<comp>/gallery.png
+      // (array name → Playwright path.join()s the segments into a real subdir).
+      await expect(wrapper).toHaveScreenshot([comp, 'gallery.png'], {
         animations: 'disabled',
         // small tolerance for sub-pixel AA differences across runs
         maxDiffPixelRatio: 0.01,

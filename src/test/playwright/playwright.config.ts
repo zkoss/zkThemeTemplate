@@ -11,9 +11,15 @@ const IPAD_USER_AGENT =
 export default defineConfig({
   testDir: '.',
   snapshotDir: '../../../doc/screenshots',
-  // No {projectName} segment — tablet specs use `tablet-` prefixed describe
-  // names so their baselines never collide with the desktop baselines.
-  snapshotPathTemplate: '{snapshotDir}/{testName}/{arg}{ext}',
+  // One folder per preview PAGE. Each spec passes its snapshot name as an ARRAY
+  // — e.g. toHaveScreenshot([DIR, 'gallery.png']) — which Playwright path.join()s
+  // into a real subdirectory for `{arg}` (a string name with a '/' is sanitised
+  // to '-' instead). So baselines group by page, not by test name:
+  // doc/screenshots/button/gallery.png, .../button/default-hover.png,
+  // .../button/tablet.png. Desktop vs tablet no longer needs a `{projectName}`
+  // segment or a `tablet-` folder prefix — they are disambiguated by the
+  // filename (`gallery.png` vs `tablet.png`).
+  snapshotPathTemplate: '{snapshotDir}/{arg}{ext}',
   use: {
     baseURL: 'http://localhost:8080',
     ...devices['Desktop Chrome'],

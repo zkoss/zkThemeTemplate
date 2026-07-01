@@ -397,11 +397,16 @@ const visualCases: VisualCase[] = [
 ];
 
 for (const { name, url } of visualCases) {
+  // The tablet gallery lands in the SAME per-page folder as the desktop shot,
+  // named tablet.png so it never collides with the desktop gallery.png:
+  // doc/screenshots/button/tablet.png.
+  const comp = name.replace(/^tablet-/, '');
   test.describe(name, () => {
     test('gallery', async ({ page }) => {
       await page.goto(url);
       await page.waitForLoadState('networkidle');
-      await expect(page.locator('.z-p-8').first()).toHaveScreenshot('gallery.png');
+      await page.evaluate(() => document.fonts.ready.then(() => true));
+      await expect(page.locator('.z-p-8').first()).toHaveScreenshot([comp, 'tablet.png']);
     });
   });
 }

@@ -21,9 +21,11 @@ component "looks right"; Layer A is the *code* that keeps it from silently regre
 
 Config: [src/test/playwright/playwright.config.ts](../src/test/playwright/playwright.config.ts).
 `baseURL: http://localhost:8080` (the preview app must be running), `snapshotDir:
-doc/screenshots`, snapshot path `{testName}/{arg}{ext}` — **no `{projectName}` segment**,
-so tablet specs use a `tablet-` describe prefix to keep their baselines from colliding
-with the desktop ones.
+doc/screenshots`, snapshot path `{arg}{ext}` — **the `{arg}` carries the whole
+`<page>/<file>` path**, so baselines are grouped **one folder per preview page**
+(`doc/screenshots/button/gallery.png`, `.../button/default-hover.png`, `.../button/tablet.png`).
+Desktop vs tablet no longer needs a `{projectName}` segment or a `tablet-` folder prefix —
+the tablet shot is just `tablet.png` inside the same page folder as the desktop `gallery.png`.
 
 | Project | Spec file | What it guarantees | What it does **not** do |
 |---------|-----------|--------------------|--------------------------|
@@ -86,10 +88,13 @@ invariants) and `.claude/skills/zk-component-rules/tools/check-framework-classes
     in `.pv-variant-<name>`; capture/scope by that wrapper.
 - **Reusable state arrays:** `hoverFocusStates` (hover, focus) and `buttonDynamicStates`
   (adds `active` via `mouse.down()`).
-- **Baseline layout:** `doc/screenshots/<testName>/<arg>.png`, e.g.
-  `button-default-hover/default-hover.png`, `textbox-gallery/gallery.png`.
-- **Tablet baselines** carry a `tablet-` prefix (`tablet-button-gallery/…`) so they never
-  collide with desktop baselines under the `{projectName}`-less path template.
+- **Baseline layout:** one folder per preview page — `doc/screenshots/<page>/<file>.png`,
+  e.g. `button/default-hover.png`, `button/gallery.png`, `textbox/hover.png`. Each spec
+  passes its snapshot name as an **array** (`toHaveScreenshot([DIR, 'gallery.png'])`),
+  which Playwright `path.join()`s into a real subdirectory.
+- **Tablet baselines** land in the *same* page folder as `tablet.png`
+  (`button/tablet.png`) — the filename, not a folder prefix, keeps them from colliding
+  with the desktop `gallery.png`.
 
 ## 5. Coverage matrix (the honest picture)
 
@@ -120,16 +125,17 @@ moment it's added — the silent-gap problem is closed.
 1. **`screenshot.spec.ts` is a hand-maintained list, not a scan.** Each component needs a
    manually-added `test.describe()` block. A new `*.zul` preview page gets **zero** visual
    coverage until someone edits the spec — the gap grows silently.
-2. **The `snapshotDir` is shared with the AI-harness eval artifacts.** There are **no
-   stale/orphan Playwright baselines** — every real baseline (the `*-gallery` / `*-hover`
-   / `*-focus` / `*-active` folders) maps to a current test. But `doc/screenshots/` also
-   holds committed *manual eval artifacts* — GIFs/SVG/JSON/ad-hoc PNGs for `cascader`,
-   `coachmark`, `goldenlayout`, `linelayout`, `portallayout`, `slider`, `splitter`,
-   `stepbar` — written there by the `zk-theme-evaluator` agent convention and **linked
-   from `tasks/eval-reports/*.md`, `tasks/design-reviews/*.md`, and `doc/skill-gaps.md`**.
-   These are referenced evidence, **not** test baselines, and must not be pruned. Mixing
-   both kinds in one directory is a smell (a future cleanup could relocate the eval-artifact
-   convention to its own folder), but that is out of scope here.
+2. **The `snapshotDir` is shared with the AI-harness eval artifacts.** Since the reorg to
+   one-folder-per-page, a Playwright baseline and a manual eval artifact for the same
+   component **co-locate in the same page folder** (e.g. `slider/gallery.png` +
+   `slider/tablet.png` from Playwright, `slider/page.gif` from the evaluator). The
+   Playwright baselines are the `gallery.png` / `<state>.png` / `tablet.png` files; the
+   *manual eval artifacts* are the GIFs/SVG/JSON/ad-hoc PNGs (`page.gif`, `popup-open.gif`,
+   `fixed-*.png`, `eval-results*.json`) written by the `zk-theme-evaluator` agent for
+   `cascader`, `coachmark`, `goldenlayout`, `linelayout`, `portallayout`, `slider`,
+   `splitter`, `stepbar` — **linked from `tasks/eval-reports/*.md`, `tasks/design-reviews/*.md`,
+   and `doc/skill-gaps.md`**. These are referenced evidence, **not** test baselines, and
+   must not be pruned.
 
 ### Pages with no visual baseline (intentionally excluded)
 

@@ -16,7 +16,7 @@ const PAD = 12;
 // colour, inset ring, state-layer glow) right at — or just outside — their edge,
 // so an edge-tight element screenshot clips it. We screenshot the PAGE with a
 // clip expanded around the element's box (clamped to the page top-left).
-async function padShot(page: Page, target: Locator, name: string) {
+async function padShot(page: Page, target: Locator, name: string | string[]) {
   await target.scrollIntoViewIfNeeded();
   const box = await target.boundingBox();
   if (!box) throw new Error(`padShot: no bounding box for "${name}"`);
@@ -48,13 +48,15 @@ const buttonDynamicStates: DynamicState[] = [
 // Button
 // -------------------------------------------------------
 test.describe('button', () => {
+  const DIR = 'button';
   test.beforeEach(async ({ page }) => {
     await page.goto('/button.zul');
     await page.waitForLoadState('networkidle');
+    await page.evaluate(() => document.fonts.ready.then(() => true));
   });
 
   test('gallery', async ({ page }) => {
-    await expect(page.locator('.z-p-8').first()).toHaveScreenshot('gallery.png');
+    await expect(page.locator('.z-p-8').first()).toHaveScreenshot([DIR, 'gallery.png']);
   });
 
   const variants = [
@@ -67,7 +69,7 @@ test.describe('button', () => {
       test(`${label}-${name}`, async ({ page }) => {
         const el = page.locator(selector).first();
         await action(el);
-        await expect(el).toHaveScreenshot(`${label}-${name}.png`);
+        await expect(el).toHaveScreenshot([DIR, `${label}-${name}.png`]);
         if (name === 'active') await page.mouse.up();
       });
     }
@@ -121,20 +123,22 @@ test.describe('button', () => {
 // Textbox
 // -------------------------------------------------------
 test.describe('textbox', () => {
+  const DIR = 'textbox';
   test.beforeEach(async ({ page }) => {
     await page.goto('/textbox.zul');
     await page.waitForLoadState('networkidle');
+    await page.evaluate(() => document.fonts.ready.then(() => true));
   });
 
   test('gallery', async ({ page }) => {
-    await expect(page.locator('.z-p-8').first()).toHaveScreenshot('gallery.png');
+    await expect(page.locator('.z-p-8').first()).toHaveScreenshot([DIR, 'gallery.png']);
   });
 
   for (const { name, action } of hoverFocusStates) {
     test(name, async ({ page }) => {
       const el = page.locator('.z-textbox').first();
       await action(el);
-      await padShot(page, el, `${name}.png`);
+      await padShot(page, el, [DIR, `${name}.png`]);
     });
   }
 });
@@ -143,20 +147,22 @@ test.describe('textbox', () => {
 // Checkbox
 // -------------------------------------------------------
 test.describe('checkbox', () => {
+  const DIR = 'checkbox';
   test.beforeEach(async ({ page }) => {
     await page.goto('/checkbox.zul');
     await page.waitForLoadState('networkidle');
+    await page.evaluate(() => document.fonts.ready.then(() => true));
   });
 
   test('gallery', async ({ page }) => {
-    await expect(page.locator('.z-p-8').first()).toHaveScreenshot('gallery.png');
+    await expect(page.locator('.z-p-8').first()).toHaveScreenshot([DIR, 'gallery.png']);
   });
 
   for (const { name, action } of hoverFocusStates) {
     test(name, async ({ page }) => {
       const el = page.locator('.z-checkbox').first();
       await action(el);
-      await padShot(page, el, `${name}.png`);
+      await padShot(page, el, [DIR, `${name}.png`]);
     });
   }
 });
@@ -165,13 +171,15 @@ test.describe('checkbox', () => {
 // Combobox
 // -------------------------------------------------------
 test.describe('combobox', () => {
+  const DIR = 'combobox';
   test.beforeEach(async ({ page }) => {
     await page.goto('/combobox.zul');
     await page.waitForLoadState('networkidle');
+    await page.evaluate(() => document.fonts.ready.then(() => true));
   });
 
   test('gallery', async ({ page }) => {
-    await expect(page.locator('.z-p-8').first()).toHaveScreenshot('gallery.png');
+    await expect(page.locator('.z-p-8').first()).toHaveScreenshot([DIR, 'gallery.png']);
   });
 
   for (const { name, action } of hoverFocusStates) {
@@ -180,7 +188,7 @@ test.describe('combobox', () => {
       // includes the dropdown button — both input and button take the focus/hover
       // border. (padShot adds breathing room around the ring.)
       await action(page.locator('.z-combobox-input').first());
-      await padShot(page, page.locator('.z-combobox').first(), `${name}.png`);
+      await padShot(page, page.locator('.z-combobox').first(), [DIR, `${name}.png`]);
     });
   }
 
@@ -217,19 +225,21 @@ test.describe('combobox', () => {
 // Gallery shoots the whole `.z-p-8` page (every variant in one shot, like the
 // other gallery pages); hover targets the first bare `.z-listitem`.
 test.describe('listbox', () => {
+  const DIR = 'listbox';
   test.beforeEach(async ({ page }) => {
     await page.goto('/listbox.zul');
     await page.waitForLoadState('networkidle');
+    await page.evaluate(() => document.fonts.ready.then(() => true));
   });
 
   test('gallery', async ({ page }) => {
-    await expect(page.locator('.z-p-8').first()).toHaveScreenshot('gallery.png');
+    await expect(page.locator('.z-p-8').first()).toHaveScreenshot([DIR, 'gallery.png']);
   });
 
   test('hover', async ({ page }) => {
     const el = page.locator('.z-listitem').first();
     await el.hover();
-    await expect(el).toHaveScreenshot('hover.png');
+    await expect(el).toHaveScreenshot([DIR, 'hover.png']);
   });
 });
 
@@ -237,19 +247,21 @@ test.describe('listbox', () => {
 // Grid
 // -------------------------------------------------------
 test.describe('grid', () => {
+  const DIR = 'grid';
   test.beforeEach(async ({ page }) => {
     await page.goto('/grid.zul');
     await page.waitForLoadState('networkidle');
+    await page.evaluate(() => document.fonts.ready.then(() => true));
   });
 
   test('gallery', async ({ page }) => {
-    await expect(page.locator('.z-p-8').first()).toHaveScreenshot('gallery.png');
+    await expect(page.locator('.z-p-8').first()).toHaveScreenshot([DIR, 'gallery.png']);
   });
 
   test('hover', async ({ page }) => {
     const el = page.locator('.z-row').first();
     await el.hover();
-    await expect(el).toHaveScreenshot('hover.png');
+    await expect(el).toHaveScreenshot([DIR, 'hover.png']);
   });
 });
 
@@ -257,13 +269,15 @@ test.describe('grid', () => {
 // Datebox
 // -------------------------------------------------------
 test.describe('datebox', () => {
+  const DIR = 'datebox';
   test.beforeEach(async ({ page }) => {
     await page.goto('/datebox.zul');
     await page.waitForLoadState('networkidle');
+    await page.evaluate(() => document.fonts.ready.then(() => true));
   });
 
   test('gallery', async ({ page }) => {
-    await expect(page.locator('.z-p-8').first()).toHaveScreenshot('gallery.png');
+    await expect(page.locator('.z-p-8').first()).toHaveScreenshot([DIR, 'gallery.png']);
   });
 
   for (const { name, action } of hoverFocusStates) {
@@ -271,7 +285,7 @@ test.describe('datebox', () => {
       // Action on the inner input, capture the wrapper — the border/ring lives
       // on .z-datebox, not the transparent .z-datebox-input. (See bandbox note.)
       await action(page.locator('.z-datebox-input').first());
-      await padShot(page, page.locator('.z-datebox').first(), `${name}.png`);
+      await padShot(page, page.locator('.z-datebox').first(), [DIR, `${name}.png`]);
     });
   }
 });
@@ -280,13 +294,15 @@ test.describe('datebox', () => {
 // Timebox
 // -------------------------------------------------------
 test.describe('timebox', () => {
+  const DIR = 'timebox';
   test.beforeEach(async ({ page }) => {
     await page.goto('/timebox.zul');
     await page.waitForLoadState('networkidle');
+    await page.evaluate(() => document.fonts.ready.then(() => true));
   });
 
   test('gallery', async ({ page }) => {
-    await expect(page.locator('.z-p-8').first()).toHaveScreenshot('gallery.png');
+    await expect(page.locator('.z-p-8').first()).toHaveScreenshot([DIR, 'gallery.png']);
   });
 
   for (const { name, action } of hoverFocusStates) {
@@ -294,7 +310,7 @@ test.describe('timebox', () => {
       // Action on the inner input, capture the wrapper — the border/ring lives
       // on .z-timebox, not the transparent .z-timebox-input. (See bandbox note.)
       await action(page.locator('.z-timebox-input').first());
-      await padShot(page, page.locator('.z-timebox').first(), `${name}.png`);
+      await padShot(page, page.locator('.z-timebox').first(), [DIR, `${name}.png`]);
     });
   }
 });
@@ -303,13 +319,15 @@ test.describe('timebox', () => {
 // Spinner
 // -------------------------------------------------------
 test.describe('spinner', () => {
+  const DIR = 'spinner';
   test.beforeEach(async ({ page }) => {
     await page.goto('/spinner.zul');
     await page.waitForLoadState('networkidle');
+    await page.evaluate(() => document.fonts.ready.then(() => true));
   });
 
   test('gallery', async ({ page }) => {
-    await expect(page.locator('.z-p-8').first()).toHaveScreenshot('gallery.png');
+    await expect(page.locator('.z-p-8').first()).toHaveScreenshot([DIR, 'gallery.png']);
   });
 
   for (const { name, action } of hoverFocusStates) {
@@ -317,7 +335,7 @@ test.describe('spinner', () => {
       // Action on the inner input, capture the wrapper — the border/ring lives
       // on .z-spinner, not the transparent .z-spinner-input. (See bandbox note.)
       await action(page.locator('.z-spinner-input').first());
-      await padShot(page, page.locator('.z-spinner').first(), `${name}.png`);
+      await padShot(page, page.locator('.z-spinner').first(), [DIR, `${name}.png`]);
     });
   }
 });
@@ -326,13 +344,15 @@ test.describe('spinner', () => {
 // Bandbox
 // -------------------------------------------------------
 test.describe('bandbox', () => {
+  const DIR = 'bandbox';
   test.beforeEach(async ({ page }) => {
     await page.goto('/bandbox.zul');
     await page.waitForLoadState('networkidle');
+    await page.evaluate(() => document.fonts.ready.then(() => true));
   });
 
   test('gallery', async ({ page }) => {
-    await expect(page.locator('.z-p-8').first()).toHaveScreenshot('gallery.png');
+    await expect(page.locator('.z-p-8').first()).toHaveScreenshot([DIR, 'gallery.png']);
   });
 
   for (const { name, action } of hoverFocusStates) {
@@ -342,7 +362,7 @@ test.describe('bandbox', () => {
       // painted on .z-bandbox, while .z-bandbox-input is transparent/borderless.
       // Capturing the input would clip away the very effect under test.
       await action(page.locator('.z-bandbox-input').first());
-      await padShot(page, page.locator('.z-bandbox').first(), `${name}.png`);
+      await padShot(page, page.locator('.z-bandbox').first(), [DIR, `${name}.png`]);
     });
   }
 });
@@ -351,20 +371,22 @@ test.describe('bandbox', () => {
 // Selectbox
 // -------------------------------------------------------
 test.describe('selectbox', () => {
+  const DIR = 'selectbox';
   test.beforeEach(async ({ page }) => {
     await page.goto('/selectbox.zul');
     await page.waitForLoadState('networkidle');
+    await page.evaluate(() => document.fonts.ready.then(() => true));
   });
 
   test('gallery', async ({ page }) => {
-    await expect(page.locator('.z-p-8').first()).toHaveScreenshot('gallery.png');
+    await expect(page.locator('.z-p-8').first()).toHaveScreenshot([DIR, 'gallery.png']);
   });
 
   for (const { name, action } of hoverFocusStates) {
     test(name, async ({ page }) => {
       const el = page.locator('.z-selectbox').first();
       await action(el);
-      await padShot(page, el, `${name}.png`);
+      await padShot(page, el, [DIR, `${name}.png`]);
     });
   }
 });
@@ -373,19 +395,21 @@ test.describe('selectbox', () => {
 // Tabbox
 // -------------------------------------------------------
 test.describe('tabbox', () => {
+  const DIR = 'tabbox';
   test.beforeEach(async ({ page }) => {
     await page.goto('/tabbox.zul');
     await page.waitForLoadState('networkidle');
+    await page.evaluate(() => document.fonts.ready.then(() => true));
   });
 
   test('gallery', async ({ page }) => {
-    await expect(page.locator('.z-p-8').first()).toHaveScreenshot('gallery.png');
+    await expect(page.locator('.z-p-8').first()).toHaveScreenshot([DIR, 'gallery.png']);
   });
 
   test('hover', async ({ page }) => {
     const el = page.locator('.z-tab').first();
     await el.hover();
-    await expect(el).toHaveScreenshot('hover.png');
+    await expect(el).toHaveScreenshot([DIR, 'hover.png']);
   });
 });
 
@@ -393,19 +417,21 @@ test.describe('tabbox', () => {
 // Tree
 // -------------------------------------------------------
 test.describe('tree', () => {
+  const DIR = 'tree';
   test.beforeEach(async ({ page }) => {
     await page.goto('/tree.zul');
     await page.waitForLoadState('networkidle');
+    await page.evaluate(() => document.fonts.ready.then(() => true));
   });
 
   test('gallery', async ({ page }) => {
-    await expect(page.locator('.z-p-8').first()).toHaveScreenshot('gallery.png');
+    await expect(page.locator('.z-p-8').first()).toHaveScreenshot([DIR, 'gallery.png']);
   });
 
   test('hover', async ({ page }) => {
     const el = page.locator('.z-treerow').first();
     await el.hover();
-    await expect(el).toHaveScreenshot('hover.png');
+    await expect(el).toHaveScreenshot([DIR, 'hover.png']);
   });
 });
 
@@ -413,13 +439,15 @@ test.describe('tree', () => {
 // Window
 // -------------------------------------------------------
 test.describe('window', () => {
+  const DIR = 'window';
   test.beforeEach(async ({ page }) => {
     await page.goto('/window.zul');
     await page.waitForLoadState('networkidle');
+    await page.evaluate(() => document.fonts.ready.then(() => true));
   });
 
   test('gallery', async ({ page }) => {
-    await expect(page.locator('.z-p-8').first()).toHaveScreenshot('gallery.png');
+    await expect(page.locator('.z-p-8').first()).toHaveScreenshot([DIR, 'gallery.png']);
   });
 });
 
@@ -427,13 +455,15 @@ test.describe('window', () => {
 // Panel
 // -------------------------------------------------------
 test.describe('panel', () => {
+  const DIR = 'panel';
   test.beforeEach(async ({ page }) => {
     await page.goto('/panel.zul');
     await page.waitForLoadState('networkidle');
+    await page.evaluate(() => document.fonts.ready.then(() => true));
   });
 
   test('gallery', async ({ page }) => {
-    await expect(page.locator('.z-p-8').first()).toHaveScreenshot('gallery.png');
+    await expect(page.locator('.z-p-8').first()).toHaveScreenshot([DIR, 'gallery.png']);
   });
 });
 
@@ -446,6 +476,7 @@ test.describe('tablet-isolation', () => {
   test('tablet.css is absent on a desktop UA', async ({ page }) => {
     await page.goto('/button.zul');
     await page.waitForLoadState('networkidle');
+    await page.evaluate(() => document.fonts.ready.then(() => true));
     const hrefs = await page.evaluate(() =>
       [...document.styleSheets].map(s => s.href).filter(Boolean) as string[]);
     expect(hrefs.some(h => h.includes('zkmax/css/tablet.css'))).toBe(false);
@@ -468,6 +499,7 @@ test.describe('viewport-fill', () => {
     await page.setViewportSize({ width: 414, height: 835 });
     await page.goto('/colorbox.zul');
     await page.waitForLoadState('networkidle');
+    await page.evaluate(() => document.fonts.ready.then(() => true));
     const m = await page.evaluate(() => {
       // Force a horizontal scrollbar without adding vertical content height:
       // an absolutely-positioned 1px-tall spacer wider than the viewport.
@@ -504,6 +536,7 @@ test.describe('viewport-fill', () => {
     await page.setViewportSize({ width: 1280, height: 900 });
     await page.goto('/colorbox.zul');
     await page.waitForLoadState('networkidle');
+    await page.evaluate(() => document.fonts.ready.then(() => true));
 
     const geo = await page.evaluate(() => {
       const cb = document.querySelector('.z-colorbox') as HTMLElement;
@@ -550,6 +583,7 @@ test.describe('pv-cols-fill', () => {
     await page.setViewportSize({ width: 1280, height: 900 });
     await page.goto('/button.zul');
     await page.waitForLoadState('networkidle');
+    await page.evaluate(() => document.fonts.ready.then(() => true));
 
     const gap = await page.evaluate(() => {
       // Data rows are `.z-d-contents` (display:contents) so their children ARE
@@ -596,6 +630,7 @@ test.describe('container-header-height', () => {
     test(`${name} header uses border-box and stays compact`, async ({ page }) => {
       await page.goto(url);
       await page.waitForLoadState('networkidle');
+      await page.evaluate(() => document.fonts.ready.then(() => true));
 
       const m = await page.evaluate((sel) => {
         const headers = [...document.querySelectorAll(sel)] as HTMLElement[];
@@ -636,6 +671,7 @@ test.describe('errorbox-position-invariance', () => {
     await page.setViewportSize({ width: 1280, height: 800 });
     await page.goto('/errorbox.zul');
     await page.waitForLoadState('networkidle');
+    await page.evaluate(() => document.fonts.ready.then(() => true));
 
     const boxes = await page.evaluate(async () => {
       const win = window as any;
@@ -720,6 +756,7 @@ test.describe('notification', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/notification.zul');
     await page.waitForLoadState('networkidle');
+    await page.evaluate(() => document.fonts.ready.then(() => true));
   });
 
   test('shell-is-bare-and-icon-clears-stripe', async ({ page }) => {
@@ -799,13 +836,15 @@ test.describe('notification', () => {
 // old dark-scrim base fill was dead style and was removed — this guards against
 // its silent re-introduction (an injected typeless probe must be transparent).
 test.describe('toast', () => {
+  const DIR = 'toast';
   test.beforeEach(async ({ page }) => {
     await page.goto('/toast.zul');
     await page.waitForLoadState('networkidle');
+    await page.evaluate(() => document.fonts.ready.then(() => true));
   });
 
   test('gallery', async ({ page }) => {
-    await expect(page.locator('.z-p-8').first()).toHaveScreenshot('gallery.png');
+    await expect(page.locator('.z-p-8').first()).toHaveScreenshot([DIR, 'gallery.png']);
   });
 
   test('base-content-has-no-dark-scrim-fill', async ({ page }) => {
@@ -865,6 +904,7 @@ test.describe('linelayout', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/linelayout.zul');
     await page.waitForLoadState('networkidle');
+    await page.evaluate(() => document.fonts.ready.then(() => true));
     await page.waitForSelector('.z-linelayout-last .z-button, .z-linelayout-last button');
   });
 
@@ -974,6 +1014,7 @@ test.describe('splitter-family', () => {
     const maxBorder = async (url: string, selector: string) => {
       await page.goto(url);
       await page.waitForLoadState('networkidle');
+      await page.evaluate(() => document.fonts.ready.then(() => true));
       await page.waitForSelector(selector);
       return page.evaluate((sel) => {
         const els = [...document.querySelectorAll(sel)];
@@ -1007,6 +1048,7 @@ test.describe('splitter-family', () => {
   test('pill-does-not-resize-on-hover', async ({ page }) => {
     await page.goto('/borderlayout.zul');
     await page.waitForLoadState('networkidle');
+    await page.evaluate(() => document.fonts.ready.then(() => true));
     await page.waitForSelector('.z-west-splitter-button');
     const longAxis = (sel: string) =>
       page.evaluate((s) => {
@@ -1031,6 +1073,7 @@ test.describe('stepbar', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/stepbar.zul');
     await page.waitForLoadState('networkidle');
+    await page.evaluate(() => document.fonts.ready.then(() => true));
   });
 
   // error-4: ZK emits bare `z-icon-exclamation` for error steps; the theme's
@@ -1131,6 +1174,7 @@ test.describe('dropupload', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/dropupload.zul');
     await page.waitForLoadState('networkidle');
+    await page.evaluate(() => document.fonts.ready.then(() => true));
   });
 
   // The ZK Dropupload widget never emits `.z-dropupload-active` or
@@ -1162,6 +1206,7 @@ test.describe('inputgroup', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/inputgroup.zul');
     await page.waitForLoadState('networkidle');
+    await page.evaluate(() => document.fonts.ready.then(() => true));
   });
 
   // The single-input focus rule in input.css bumps a textbox's border 1px→2px
@@ -1232,16 +1277,18 @@ test.describe('inputgroup', () => {
 // Radiogroup — hover/focus state layer on a radio
 // -------------------------------------------------------
 test.describe('radiogroup', () => {
+  const DIR = 'radiogroup';
   test.beforeEach(async ({ page }) => {
     await page.goto('/radiogroup.zul');
     await page.waitForLoadState('networkidle');
+    await page.evaluate(() => document.fonts.ready.then(() => true));
   });
 
   for (const { name, action } of hoverFocusStates) {
     test(name, async ({ page }) => {
       const el = page.locator('.z-radio').first();
       await action(el);
-      await padShot(page, el, `${name}.png`);
+      await padShot(page, el, [DIR, `${name}.png`]);
     });
   }
 });
@@ -1250,16 +1297,18 @@ test.describe('radiogroup', () => {
 // Rating — hovering a star highlights the run up to the cursor
 // -------------------------------------------------------
 test.describe('rating', () => {
+  const DIR = 'rating';
   test.beforeEach(async ({ page }) => {
     await page.goto('/rating.zul');
     await page.waitForLoadState('networkidle');
+    await page.evaluate(() => document.fonts.ready.then(() => true));
   });
 
   test('hover', async ({ page }) => {
     // hover the 3rd star of the first rating; capture the whole control so the
     // highlight spread (stars 1–3 filled) is visible.
     await page.locator('.z-rating-icon').nth(2).hover();
-    await padShot(page, page.locator('.z-rating').first(), 'hover.png');
+    await padShot(page, page.locator('.z-rating').first(), [DIR, 'hover.png']);
   });
 });
 
@@ -1267,16 +1316,18 @@ test.describe('rating', () => {
 // Slider — hover/focus state layer on the knob
 // -------------------------------------------------------
 test.describe('slider', () => {
+  const DIR = 'slider';
   test.beforeEach(async ({ page }) => {
     await page.goto('/slider.zul');
     await page.waitForLoadState('networkidle');
+    await page.evaluate(() => document.fonts.ready.then(() => true));
   });
 
   for (const { name, action } of hoverFocusStates) {
     test(name, async ({ page }) => {
       await action(page.locator('.z-slider-button').first());
       // capture the whole slider so the knob's state layer is in context
-      await padShot(page, page.locator('.z-slider').first(), `${name}.png`);
+      await padShot(page, page.locator('.z-slider').first(), [DIR, `${name}.png`]);
     });
   }
 });
@@ -1285,16 +1336,18 @@ test.describe('slider', () => {
 // Colorbox — hover/focus state on the swatch button
 // -------------------------------------------------------
 test.describe('colorbox', () => {
+  const DIR = 'colorbox';
   test.beforeEach(async ({ page }) => {
     await page.goto('/colorbox.zul');
     await page.waitForLoadState('networkidle');
+    await page.evaluate(() => document.fonts.ready.then(() => true));
   });
 
   for (const { name, action } of hoverFocusStates) {
     test(name, async ({ page }) => {
       const el = page.locator('.z-colorbox').first();
       await action(el);
-      await padShot(page, el, `${name}.png`);
+      await padShot(page, el, [DIR, `${name}.png`]);
     });
   }
 });
@@ -1307,7 +1360,7 @@ test.describe('colorbox', () => {
 //   - wrapper-styled:  border/ring on the wrapper, focusable node inside →
 //                      action targets the focusable node, capture the wrapper
 // `focus` = the node to hover/focus; `shot` = the box to screenshot (padded).
-// All baselines land at doc/screenshots/<comp>-<state>/<state>.png.
+// All baselines land at doc/screenshots/<comp>/<state>.png.
 // =======================================================
 const FORM_CONTROL_STATES: { comp: string; focus: string; shot: string }[] = [
   // Numeric textbox variants — share input.css with textbox (border on the element).
@@ -1335,11 +1388,12 @@ for (const { comp, focus, shot } of FORM_CONTROL_STATES) {
     test.beforeEach(async ({ page }) => {
       await page.goto(`/${comp}.zul`);
       await page.waitForLoadState('networkidle');
+      await page.evaluate(() => document.fonts.ready.then(() => true));
     });
     for (const { name, action } of hoverFocusStates) {
       test(name, async ({ page }) => {
         await action(page.locator(focus).first());
-        await padShot(page, page.locator(shot).first(), `${name}.png`);
+        await padShot(page, page.locator(shot).first(), [comp, `${name}.png`]);
       });
     }
   });
@@ -1359,6 +1413,7 @@ test.describe('scrollbar', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/scrollbar.zul');
     await page.waitForLoadState('networkidle');
+    await page.evaluate(() => document.fonts.ready.then(() => true));
   });
 
   test('simulated-thumb-md3-radius-and-easing', async ({ page }) => {
@@ -1459,6 +1514,7 @@ test.describe('orphaned-helper-css', () => {
     test(`${cls.replace('z-', '')}-css-is-served`, async ({ page }) => {
       await page.goto(url);
       await page.waitForLoadState('networkidle');
+      await page.evaluate(() => document.fonts.ready.then(() => true));
       const result = await page.evaluate((name) => {
         const domCount = document.querySelectorAll('.' + name).length;
         const re = new RegExp('^\\.' + name + '(?![\\w-])');
