@@ -51,6 +51,16 @@
 .z-button:focus-visible::before { opacity: var(--zk-state-focus-opacity); }
 .z-button:active::before { opacity: var(--zk-state-pressed-opacity); }
 
+/* Contained/filled hover — MD3: state layer + elevation lift.
+   Scoped to filled variants only; flat (outlined/text/icon) & FAB variants excluded
+   so they stay flat or keep their own shadow. */
+.z-button:hover:not([class*="z-button-outlined"]):not([class*="z-button-text"]):not(.z-button-icon):not([class*="z-button-fab"]):not([disabled]) {
+    box-shadow: var(--zk-elevation-2);
+}
+.z-button:hover:not([class*="z-button-outlined"]):not([class*="z-button-text"]):not(.z-button-icon):not([class*="z-button-fab"]):not([disabled])::before {
+    opacity: 0.12; /* small bump over the 0.08 global token; stays within the MD3 state-layer range */
+}
+
 .z-button:focus-visible {
     outline: var(--zk-focus-ring);
     outline-offset: 2px;

@@ -25,10 +25,11 @@ zk-version: 10.2.1-jakarta
 | c8 | `.z-button` | background-color | rgb(55, 111, 208) (primary filled) |
 | c9 | `.z-button` | color | rgb(255, 255, 255) |
 | c10 | `.z-button` | transition-duration | 250ms |
-| c11 | `.z-button:hover` | background-color | darker tint of c8 (state layer 0.08) |
+| c11 | `.z-button:hover` | state layer | white/on-primary overlay ~0.12 opacity — **lightens** the filled bg (not a darker tint) |
 | c12 | `.z-button:focus-visible` | outline | visible (ring or state layer) |
 | c13 | `.z-button[disabled]` | opacity | 0.38 |
 | c14 | `.z-button` | box-shadow | elevation level 1 (resting) |
+| c29 | `.z-button:hover` | box-shadow | raised to `--zk-elevation-2` (from resting) for filled/contained; flat (outlined/text/icon) & FAB variants unchanged |
 
 | c15 | `.z-button-secondary.z-button[disabled]` | background-color | `--zk-color-disabled-container` (not the secondary color) |
 | c16 | `.z-button-success.z-button[disabled]` | background-color | `--zk-color-disabled-container` (not the success color) |
