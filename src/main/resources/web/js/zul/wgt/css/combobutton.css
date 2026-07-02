@@ -29,6 +29,10 @@
     position: relative;
     display: inline-flex;
     align-items: center;
+    /* MD3 image-to-label gap — same collapsing-plain-space issue as .z-button.
+       The .z-combobutton-button arrow is position:absolute (out of flow), so this
+       gap spaces the image from the label without shifting the arrow. */
+    gap: var(--zk-spacing-2);
     overflow: hidden;
     min-height: var(--zk-button-height);
     padding: 0 var(--zk-spacing-4);

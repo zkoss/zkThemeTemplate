@@ -40,6 +40,22 @@ No `.z-button-vertical` class exists. The `:has()` selector is the only reliable
 
 `image="url"` adds an `<img class="z-button-image">` element before the label instead.
 
+### Graphic-to-label separator is a collapsible plain space
+
+The graphic (`<i class="z-icon-*">` or `<img class="z-button-image">`) and the label are adjacent flex children of `.z-button` separated only by a **plain space text node**:
+
+```html
+<button class="z-button"><img class="z-button-image"> Save</button>
+```
+
+That lone space **collapses** in an `align-items:center` flex container, so the graphic ends up glued to the label — there is no wrapper element around the label and no built-in margin. To space them, put a `gap` on the flex button container, **not** a `margin` on the graphic:
+
+- `gap` is **order-independent**, so the one rule also spaces `dir="reverse"` — which reorders the DOM to `Save <img>` (a markup reorder, not CSS). A per-element `margin-right` would land on the wrong side under reverse and need `dir`-aware handling.
+- Text-only (single text node) and icon-only (single graphic) buttons are unaffected — `gap` needs ≥2 flex items.
+- Vertical (`orient="vertical"`) replaces the space with `<br>`; the `:has(br)` rule sets its own (smaller) stacked gap and wins on specificity.
+
+Same mechanism on **combobutton** (`.z-combobutton-content`: image + label). **toolbarbutton** wraps its icon+label in `.z-toolbarbutton-content`, which carries its own content `gap`.
+
 ## Bundle
 
 `button.css.dsp` — one-to-one mapping.

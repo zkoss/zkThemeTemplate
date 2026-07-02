@@ -7,6 +7,13 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    /* MD3 icon/image-to-label gap. The graphic (img.z-button-image or i.z-icon-*)
+       and the label are adjacent flex children separated only by a plain space
+       text node, which collapses in this align-items:center flex box — so set an
+       explicit gap or the graphic glues to the label. Order-independent, so it
+       also spaces dir="reverse" (label→graphic). A single flex item (text-only or
+       icon-only button) is unaffected. Vertical (:has(br)) overrides to 2px below. */
+    gap: var(--zk-spacing-2);
     overflow: hidden;
     min-height: var(--zk-button-height);
     padding: 6px var(--zk-spacing-4);
@@ -285,7 +292,7 @@
     height: var(--zk-fab-size);
     min-height: var(--zk-fab-size);
     padding: 0 20px;
-    gap: 8px;
+    /* gap inherited from base .z-button (var(--zk-spacing-2) = 8px) */
     box-shadow:
         0px 3px 5px -1px rgba(0,0,0,0.20),
         0px 6px 10px 0px rgba(0,0,0,0.14),

@@ -117,6 +117,41 @@ test.describe('button', () => {
       expect(alpha, `text-${variant} disabled button color should be semi-transparent (disabled), not opaque`).toBeLessThanOrEqual(0.5);
     }
   });
+
+  // c30: MD3 icon/image-to-label gap. ZK renders `<img class="z-button-image">`
+  // (or `<i class="z-icon-*">`) + a plain SPACE text node + the label as adjacent
+  // flex children of `.z-button`. With no container `gap` the space collapses and
+  // the graphic glues to the label. Base `.z-button{gap:var(--zk-spacing-2)}` restores
+  // the MD3 8dp gap, order-independently (also for dir="reverse"). The label is a bare
+  // text node (no wrapper), so a Range gives its true glyph box.
+  // See doc/skill-gaps.md 2026-07-02.
+  test('graphic-and-label-have-md3-gap', async ({ page }) => {
+    const gaps = await page.evaluate(() => {
+      const out: { kind: string; gap: number }[] = [];
+      for (const btn of [...document.querySelectorAll('.z-button')] as HTMLElement[]) {
+        if (btn.querySelector('br')) continue; // vertical buttons stack (2px) — not this check
+        const gfx = btn.querySelector('.z-button-image, [class*="z-icon-"]') as HTMLElement | null;
+        if (!gfx) continue;
+        const textNode = [...btn.childNodes].find(
+          n => n.nodeType === Node.TEXT_NODE && (n.textContent || '').trim().length > 0);
+        if (!textNode) continue; // icon-only / text-only — no pair to measure
+        const range = document.createRange();
+        range.selectNodeContents(textNode);
+        const tr = range.getBoundingClientRect();
+        const gr = gfx.getBoundingClientRect();
+        // edge-to-edge horizontal distance, regardless of which side the graphic is on
+        const gap = gr.left >= tr.right ? gr.left - tr.right   // dir="reverse": label, then graphic
+                                        : tr.left - gr.right;  // normal: graphic, then label
+        out.push({ kind: gfx.className, gap: Math.round(gap) });
+      }
+      return out;
+    });
+    expect(gaps.length, 'expected image/icon + label buttons on button.zul').toBeGreaterThan(0);
+    for (const g of gaps) {
+      // 0px = graphic glued to label (the bug); MD3 wants ~8dp.
+      expect(g.gap, `graphic→label gap for "${g.kind}" is ${g.gap}px (want ~8)`).toBeGreaterThanOrEqual(6);
+    }
+  });
 });
 
 // -------------------------------------------------------

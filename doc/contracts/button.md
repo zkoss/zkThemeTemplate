@@ -46,7 +46,10 @@ zk-version: 10.2.1-jakarta
 | c27 | `.z-button-text-error.z-button[disabled]` | color | `--zk-color-disabled` |
 | c28 | `.z-button-text-info.z-button[disabled]` | color | `--zk-color-disabled` |
 
+| c30 | `.z-button` (graphic + label) | gap (graphic→label) | ≈8px (`--zk-spacing-2`) between `.z-button-image`/`.z-icon-*` and the label text — order-independent, so it holds for `dir="reverse"` too; vertical (`:has(br)`) stays 2px; text-only / icon-only buttons unaffected |
+
 ## States to evaluate
 - [ ] default, hover, focus-visible, active (pressed), disabled
 - [ ] variants if applicable: outlined, text (sclass="z-button-outlined", "z-button-text")
 - [ ] color variants in disabled state: secondary, success, warning, error, info
+- [ ] graphic + label spacing: `image` + label, `iconSclass` + label, `dir="reverse"` (all ≈8px gap)
