@@ -64,7 +64,7 @@
             </div>
 
             <div sclass="z-d-flex z-flex-row z-flex-wrap z-gap-4 z-align-center z-mt-4">
-                <button label="Cancel" sclass="z-ms-auto"/>
+                <button label="Cancel" sclass="z-button-outlined z-ms-auto"/>
                 <button label="Save Changes" sclass="z-button-primary"/>
             </div>
         </div>

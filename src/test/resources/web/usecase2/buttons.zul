@@ -31,10 +31,10 @@
                 <label value="Outlined buttons are medium-emphasis buttons which contain actions that are not that important." style="font-size:13px;color:#49454f;display:block;margin-bottom:12px;"/>
                 <div sclass="z-button-group">
                     <button label="Default"   sclass="z-button-outlined"/>
-                    <button label="Primary"   sclass="z-button-outlined-primary"/>
+                    <button label="Primary"   sclass="z-button-outlined"/>
                     <button label="Secondary" sclass="z-button-outlined-secondary"/>
                     <button label="Disabled"  sclass="z-button-outlined" disabled="true"/>
-                    <button label="Link"      sclass="z-button-text-primary"/>
+                    <button label="Link"      sclass="z-button-text"/>
                 </div>
             </div>
 
@@ -44,10 +44,10 @@
                 <label value="Text buttons are typically used for less-pronounced actions in your app." style="font-size:13px;color:#49454f;display:block;margin-bottom:12px;"/>
                 <div sclass="z-button-group">
                     <button label="Default"   sclass="z-button-text"/>
-                    <button label="Primary"   sclass="z-button-text-primary"/>
+                    <button label="Primary"   sclass="z-button-text"/>
                     <button label="Secondary" sclass="z-button-text-secondary"/>
                     <button label="Disabled"  sclass="z-button-text" disabled="true"/>
-                    <button label="Link"      sclass="z-button-text-primary"/>
+                    <button label="Link"      sclass="z-button-text"/>
                 </div>
             </div>
 

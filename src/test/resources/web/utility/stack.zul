@@ -138,7 +138,7 @@
                 </div>
                 <div sclass="z-hstack">
                     <button label="Save"/>
-                    <button label="Cancel" sclass="z-button-default"/>
+                    <button label="Cancel" sclass="z-button-outlined"/>
                 </div>
             </div>
         </div>

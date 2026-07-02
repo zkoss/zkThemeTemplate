@@ -56,23 +56,6 @@
     outline-offset: 2px;
 }
 
-/* ─── Outlined / Default variant ─────────────────────────────────────── */
-.z-button-default,
-.z-button.z-button-default {
-    background-color: transparent;
-    color: var(--zk-color-primary);
-    border: 1px solid var(--zk-color-outline);
-}
-
-.z-button-default::before,
-.z-button.z-button-default::before {
-    background-color: var(--zk-color-primary);
-}
-
-.z-button-default:focus-visible,
-.z-button.z-button-default:focus-visible {
-    border-color: var(--zk-color-primary);
-}
 
 /* ─── Disabled state ─────────────────────────────────────────────────── */
 .z-button[disabled],
@@ -88,13 +71,6 @@
 .z-button[disabled]::before,
 .z-button.z-button-disabled::before {
     display: none;
-}
-
-.z-button-default[disabled],
-.z-button.z-button-default[disabled] {
-    background-color: transparent;
-    border-color: var(--zk-color-disabled-container);
-    color: var(--zk-color-disabled);
 }
 
 /* Disabled overrides for outlined and text utility variants */
@@ -183,17 +159,16 @@
     background-color: transparent;
     color: var(--zk-color-primary);
     border: 1px solid var(--zk-color-primary);
+    box-shadow: none;
 }
 .z-button-outlined.z-button::before { background-color: var(--zk-color-primary); }
 
-.z-button-outlined-primary.z-button   { background-color: transparent; color: var(--zk-color-primary, #376fd0); border: 1px solid var(--zk-color-primary, #376fd0); }
 .z-button-outlined-secondary.z-button { background-color: transparent; color: var(--zk-color-secondary, #4db6ac); border: 1px solid var(--zk-color-secondary, #4db6ac); }
 .z-button-outlined-success.z-button   { background-color: transparent; color: var(--zk-color-success, #2e7d32); border: 1px solid var(--zk-color-success, #2e7d32); }
 .z-button-outlined-warning.z-button   { background-color: transparent; color: var(--zk-color-warning, #ed6c02); border: 1px solid var(--zk-color-warning, #ed6c02); }
 .z-button-outlined-error.z-button     { background-color: transparent; color: var(--zk-color-error, #d32f2f); border: 1px solid var(--zk-color-error, #d32f2f); }
 .z-button-outlined-info.z-button      { background-color: transparent; color: var(--zk-color-status-info, #0288d1); border: 1px solid var(--zk-color-status-info, #0288d1); }
 
-.z-button-outlined-primary.z-button::before   { background-color: var(--zk-color-primary); }
 .z-button-outlined-secondary.z-button::before { background-color: var(--zk-color-secondary, #4db6ac); }
 .z-button-outlined-success.z-button::before   { background-color: var(--zk-color-success, #2e7d32); }
 .z-button-outlined-warning.z-button::before   { background-color: var(--zk-color-warning, #ed6c02); }
@@ -201,7 +176,6 @@
 .z-button-outlined-info.z-button::before      { background-color: var(--zk-color-status-info, #0288d1); }
 
 /* Disabled overrides for outlined color variants (spec 0,3,0 > 0,2,0 variant rules) */
-.z-button-outlined-primary.z-button[disabled],
 .z-button-outlined-secondary.z-button[disabled],
 .z-button-outlined-success.z-button[disabled],
 .z-button-outlined-warning.z-button[disabled],
@@ -218,17 +192,16 @@
     background-color: transparent;
     color: var(--zk-color-primary);
     border: none;
+    box-shadow: none;
 }
 .z-button-text.z-button::before { background-color: var(--zk-color-primary); }
 
-.z-button-text-primary.z-button   { background-color: transparent; color: var(--zk-color-primary, #376fd0); border: none; }
 .z-button-text-secondary.z-button { background-color: transparent; color: var(--zk-color-secondary, #4db6ac); border: none; }
 .z-button-text-success.z-button   { background-color: transparent; color: var(--zk-color-success, #2e7d32); border: none; }
 .z-button-text-warning.z-button   { background-color: transparent; color: var(--zk-color-warning, #ed6c02); border: none; }
 .z-button-text-error.z-button     { background-color: transparent; color: var(--zk-color-error, #d32f2f); border: none; }
 .z-button-text-info.z-button      { background-color: transparent; color: var(--zk-color-status-info, #0288d1); border: none; }
 
-.z-button-text-primary.z-button::before   { background-color: var(--zk-color-primary); }
 .z-button-text-secondary.z-button::before { background-color: var(--zk-color-secondary, #4db6ac); }
 .z-button-text-success.z-button::before   { background-color: var(--zk-color-success, #2e7d32); }
 .z-button-text-warning.z-button::before   { background-color: var(--zk-color-warning, #ed6c02); }
@@ -236,7 +209,6 @@
 .z-button-text-info.z-button::before      { background-color: var(--zk-color-status-info, #0288d1); }
 
 /* Disabled overrides for text color variants (spec 0,3,0 > 0,2,0 variant rules) */
-.z-button-text-primary.z-button[disabled],
 .z-button-text-secondary.z-button[disabled],
 .z-button-text-success.z-button[disabled],
 .z-button-text-warning.z-button[disabled],

@@ -100,7 +100,7 @@
          the viewport bottom; this renders as a normal trailing bar. Consider a .z-sticky-bottom
          utility (position: sticky; bottom: 0) if a pinned bar is desired. -->
     <div sclass="z-card z-d-flex z-flex-row z-flex-wrap z-gap-4 z-align-center">
-        <button label="Cancel" sclass="z-ms-auto"/>
+        <button label="Cancel" sclass="z-button-outlined z-ms-auto"/>
         <button label="Save" sclass="z-button-primary"/>
     </div>
 
