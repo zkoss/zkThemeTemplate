@@ -40,6 +40,31 @@ Therefore the selector is:
 
 Exception: bandbox + `buttonVisible="false"` + `inplace="true"` is valid and ZK supports it; older preview pages incorrectly showed `—` here. Fix to show a real component.
 
+## Click-to-open behavior is gated by `buttonVisible` (ZK JS, not CSS)
+
+For the popup/dropdown inputs — **combobox** and **bandbox** (`ComboWidget`), and **datebox** (`Datebox`) — ZK decides *where* a click opens the popup in **JavaScript**, not CSS. A theme cannot change this and must not try to (it would require overriding ZK JS). The whole-control click-to-open is gated on `buttonVisible`, which is why hiding the button also removes the readonly click gesture.
+
+**Rule (verified against ZK 10.3 source + live interaction probe, 2026-07-03):**
+
+| State | click the INPUT text area | click the ICON/button |
+|-------|---------------------------|-----------------------|
+| editable + button visible | does **not** open (only autodrop-on-type) | opens |
+| **readonly** + button visible | **opens** (whole control is the trigger) | opens |
+| `buttonVisible="false"` (editable *or* readonly) | does **not** open | n/a (no button) |
+| disabled | nothing | nothing |
+
+Why readonly opens on *any* click: a readonly select can't be typed into, so ZK makes the whole field a click target for picking from the list. Documented intent — `Combobox.ts:24-27`: "the value of a read-only combobox can be changed by dropping down the list and selecting a combo item (though users cannot type anything in the input box)."
+
+Source (`/Users/hawk/Documents/workspace/ZK10/zk/zul/src/main/resources/web/js/zul/`):
+- `inp/ComboWidget.ts:779-793` — `doClick_`: `else if (this._readonly && !this.isOpen() && this._buttonVisible) this.open(...)`. Input-click open requires **both** readonly **and** buttonVisible.
+- `inp/ComboWidget.ts:742-756` — `_doBtnClick`: `if (!this._buttonVisible) return`. The button handler no-ops when hidden.
+- `db/Datebox.ts:714-719` — `doClick_`: `if (this._readonly && this._buttonVisible && this._pop && !this._pop.isOpen()) this._pop.open()`. Identical gate.
+- Disabled is handled first in both (`if (this._disabled) return` / `if (!this._disabled)`); the theme additionally sets `pointer-events:none` on the disabled root.
+
+**Key consequence for `buttonVisible="false"`:** hiding the button removes the *only* icon trigger AND disables the readonly whole-control click (the `&& this._buttonVisible` guard). A no-button combobox/datebox/bandbox therefore has **no click gesture that opens the popup** — this is ZK's own behavior, correct and expected, **not a theme/CSS bug**. So "clicking the input opens the popup" only ever happens for **readonly + button visible**, and it is intentional ZK design.
+
+**Theme note (cursor honesty, minor):** the theme sets `cursor:pointer` on a readonly input to signal "click opens a menu." In the readonly + `buttonVisible="false"` corner case that cursor is slightly misleading (nothing opens). Scope it with `:has(.z-{c}-button:not(.z-{c}-disabled))` if strict honesty is wanted; currently accepted as a rare edge. See `doc/combo-click-to-open.md`.
+
 ## Buttons inside the input itself
 
 Do not confuse `buttonVisible` (the auxiliary button) with controls like the spinner's `+/-` keyboard increments — those are not separate DOM elements and have no `buttonVisible` toggle. `buttonVisible="false"` only affects the trailing/leading icon button.
