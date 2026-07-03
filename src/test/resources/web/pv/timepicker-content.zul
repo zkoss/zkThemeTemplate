@@ -1,0 +1,50 @@
+<zk>
+<div sclass="z-mb-6">
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Formats</div>
+    <div sclass="z-d-flex z-align-start z-flex-wrap z-gap-6 z-py-3">
+        <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+            <div sclass="z-text-xs z-text-secondary">HH:mm</div>
+            <timepicker format="HH:mm" width="160px"/>
+        </div>
+        <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+            <div sclass="z-text-xs z-text-secondary">HH:mm a</div>
+            <timepicker format="HH:mm a" width="160px"/>
+        </div>
+        <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+            <div sclass="z-text-xs z-text-secondary">HH:mm:ss</div>
+            <timepicker format="HH:mm:ss" width="160px"/>
+        </div>
+        <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+            <div sclass="z-text-xs z-text-secondary">hh:mm:ss a</div>
+            <timepicker format="hh:mm:ss a" width="160px"/>
+        </div>
+    </div>
+</div>
+
+<apply templateURI="~./pv/matrix.zul" title="States"
+       cols="${['Default','Disabled','Readonly','Invalid','Inplace']}"
+       rowsTemplate="timepicker-rows">
+    <template name="timepicker-rows">
+        <div sclass="z-d-contents">
+            <div sclass="z-text-sm z-text-secondary">HH:mm</div>
+            <div><timepicker format="HH:mm" width="160px"/></div>
+            <div><timepicker format="HH:mm" disabled="true" width="160px"/></div>
+            <div><timepicker format="HH:mm" readonly="true" value="${sampleTime}" width="160px"/></div>
+            <div><timepicker format="HH:mm" value="${sampleTime}" width="160px">
+                <attribute name="onCreate">self.setErrorMessage("Invalid time");</attribute>
+            </timepicker></div>
+            <div><timepicker format="HH:mm" inplace="true" value="${sampleTime}" width="160px"/></div>
+        </div>
+        <div sclass="z-d-contents">
+            <div sclass="z-text-sm z-text-secondary">HH:mm:ss</div>
+            <div><timepicker format="HH:mm:ss" width="160px"/></div>
+            <div><timepicker format="HH:mm:ss" disabled="true" width="160px"/></div>
+            <div><timepicker format="HH:mm:ss" readonly="true" value="${sampleTime}" width="160px"/></div>
+            <div><timepicker format="HH:mm:ss" value="${sampleTime}" width="160px">
+                <attribute name="onCreate">self.setErrorMessage("Invalid time");</attribute>
+            </timepicker></div>
+            <div><timepicker format="HH:mm:ss" inplace="true" value="${sampleTime}" width="160px"/></div>
+        </div>
+    </template>
+</apply>
+</zk>

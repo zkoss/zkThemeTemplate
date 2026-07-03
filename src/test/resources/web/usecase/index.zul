@@ -39,8 +39,6 @@
                     <navitem label="Inputgroup"       selected="@load(vm.currentPage eq '~./inputgroup.zul')" onClick="@command('navigate', page='~./inputgroup.zul')" />
                     <navitem label="Inputs"           selected="@load(vm.currentPage eq '~./inputs.zul')" onClick="@command('navigate', page='~./inputs.zul')" />
                     <navitem label="Intbox"           selected="@load(vm.currentPage eq '~./intbox.zul')" onClick="@command('navigate', page='~./intbox.zul')" />
-                    <navitem label="Label"            selected="@load(vm.currentPage eq '~./label.zul')" onClick="@command('navigate', page='~./label.zul')" />
-                    <navitem label="Link"             selected="@load(vm.currentPage eq '~./a.zul')" onClick="@command('navigate', page='~./a.zul')" />
                     <navitem label="Longbox"          selected="@load(vm.currentPage eq '~./longbox.zul')" onClick="@command('navigate', page='~./longbox.zul')" />
                     <navitem label="Multislider"      selected="@load(vm.currentPage eq '~./multislider.zul')" onClick="@command('navigate', page='~./multislider.zul')" />
                     <navitem label="Radiogroup"       selected="@load(vm.currentPage eq '~./radiogroup.zul')" onClick="@command('navigate', page='~./radiogroup.zul')" />
@@ -63,6 +61,7 @@
                     <navitem label="Grid (Header)"          selected="@load(vm.currentPage eq '~./grid-header.zul')" onClick="@command('navigate', page='~./grid-header.zul')" />
                     <navitem label="Grid (Live Grouping)"   selected="@load(vm.currentPage eq '~./grid-livegrouping.zul')" onClick="@command('navigate', page='~./grid-livegrouping.zul')" />
                     <navitem label="Grid (Paging)"          selected="@load(vm.currentPage eq '~./grid-paging.zul')" onClick="@command('navigate', page='~./grid-paging.zul')" />
+                    <navitem label="Label"                  selected="@load(vm.currentPage eq '~./label.zul')" onClick="@command('navigate', page='~./label.zul')" />
                     <navitem label="Listbox"                selected="@load(vm.currentPage eq '~./listbox.zul')" onClick="@command('navigate', page='~./listbox.zul')" />
                     <navitem label="Listbox (Grouping)"     selected="@load(vm.currentPage eq '~./listbox-grouping.zul')" onClick="@command('navigate', page='~./listbox-grouping.zul')" />
                     <navitem label="Listbox (Header)"       selected="@load(vm.currentPage eq '~./listbox-header.zul')" onClick="@command('navigate', page='~./listbox-header.zul')" />
@@ -76,6 +75,7 @@
                     <navitem label="Coachmark"             selected="@load(vm.currentPage eq '~./coachmark.zul')" onClick="@command('navigate', page='~./coachmark.zul')" />
                     <navitem label="Drawer"                selected="@load(vm.currentPage eq '~./drawer.zul')" onClick="@command('navigate', page='~./drawer.zul')" />
                     <navitem label="Fisheyebar"            selected="@load(vm.currentPage eq '~./fisheyebar.zul')" onClick="@command('navigate', page='~./fisheyebar.zul')" />
+                    <navitem label="Link"                  selected="@load(vm.currentPage eq '~./a.zul')" onClick="@command('navigate', page='~./a.zul')" />
                     <navitem label="Menubar"               selected="@load(vm.currentPage eq '~./menubar.zul')" onClick="@command('navigate', page='~./menubar.zul')" />
                     <navitem label="Navbar"                selected="@load(vm.currentPage eq '~./navbar.zul')" onClick="@command('navigate', page='~./navbar.zul')" />
                     <navitem label="Stepbar"               selected="@load(vm.currentPage eq '~./stepbar.zul')" onClick="@command('navigate', page='~./stepbar.zul')" />

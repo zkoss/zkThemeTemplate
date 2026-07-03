@@ -1,64 +1,8 @@
 <?page title="Timepicker" contentType="text/html;charset=UTF-8"?>
 <zk xmlns:h="native">
-<zscript><![CDATA[
-    java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("HH:mm");
-    java.util.Date time0930 = sdf.parse("09:30");
-    java.util.Date time1800 = sdf.parse("18:00");
-]]></zscript>
+<zscript><![CDATA[java.util.Date sampleTime = new java.util.Date(0, 0, 1, 10, 30, 0);]]></zscript>
 <div sclass="z-p-8">
     <div sclass="z-border-bottom z-text-xl z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Timepicker</div>
-
-    <div sclass="z-mb-6">
-        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Formats</div>
-        <div sclass="z-d-flex z-align-start z-flex-wrap z-gap-6 z-py-3">
-            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <div sclass="z-text-xs z-text-secondary">HH:mm</div>
-                <timepicker format="HH:mm" width="160px"/>
-            </div>
-            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <div sclass="z-text-xs z-text-secondary">HH:mm a</div>
-                <timepicker format="HH:mm a" width="160px"/>
-            </div>
-            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <div sclass="z-text-xs z-text-secondary">HH:mm:ss</div>
-                <timepicker format="HH:mm:ss" width="160px"/>
-            </div>
-            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <div sclass="z-text-xs z-text-secondary">hh:mm:ss a</div>
-                <timepicker format="hh:mm:ss a" width="160px"/>
-            </div>
-        </div>
-    </div>
-
-    <div sclass="z-mb-6 z-d-grid z-grid-cols-auto z-overflow-x-auto z-col-gap-6 z-row-gap-2 z-align-start" style="--zk-cols:2; --zk-col-min:min-content">
-        <div sclass="z-grid-col-full z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">States</div>
-        <div sclass="z-d-contents">
-            <div/>
-            <div sclass="z-text-xs z-fw-semibold z-text-secondary">Default</div>
-            <div sclass="z-text-xs z-fw-semibold z-text-secondary">Disabled</div>
-        </div>
-        <div sclass="z-d-contents">
-            <div sclass="z-text-sm z-text-secondary">Default</div>
-            <div><timepicker format="HH:mm" width="160px"/></div>
-            <div><timepicker format="HH:mm" disabled="true" width="160px"/></div>
-        </div>
-        <div sclass="z-d-contents">
-            <div sclass="z-text-sm z-text-secondary">Readonly</div>
-            <div><timepicker format="HH:mm" readonly="true" value="${time0930}" width="160px"/></div>
-            <div>—</div>
-        </div>
-        <div sclass="z-d-contents">
-            <div sclass="z-text-sm z-text-secondary">Inplace</div>
-            <div><timepicker format="HH:mm" inplace="true" value="${time0930}" width="160px"/></div>
-            <div>—</div>
-        </div>
-        <div sclass="z-d-contents">
-            <div sclass="z-text-sm z-text-secondary">Invalid (constraint violated)</div>
-            <div><timepicker format="HH:mm" value="${time1800}" width="160px">
-                <attribute name="onCreate">self.setErrorMessage("Must be before 17:00");</attribute>
-            </timepicker></div>
-            <div>—</div>
-        </div>
-    </div>
+    <apply templateURI="~./pv/timepicker-content.zul"/>
 </div>
 </zk>

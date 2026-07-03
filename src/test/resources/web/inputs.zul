@@ -51,6 +51,9 @@ DefaultTreeModel cascaderModel = new DefaultTreeModel(new DefaultTreeNode("ROOT"
     <div sclass="z-text-base z-fw-medium z-text-on-surface z-mt-6 z-mb-2">Timebox</div>
     <apply templateURI="~./pv/timebox-content.zul"/>
 
+    <div sclass="z-text-base z-fw-medium z-text-on-surface z-mt-6 z-mb-2">Timepicker</div>
+    <apply templateURI="~./pv/timepicker-content.zul"/>
+
     <div sclass="z-text-base z-fw-medium z-text-on-surface z-mt-6 z-mb-2">Bandbox</div>
     <apply templateURI="~./pv/bandbox-content.zul"/>
 
