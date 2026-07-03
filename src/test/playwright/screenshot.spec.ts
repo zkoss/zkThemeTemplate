@@ -69,7 +69,11 @@ test.describe('button', () => {
       test(`${label}-${name}`, async ({ page }) => {
         const el = page.locator(selector).first();
         await action(el);
-        await expect(el).toHaveScreenshot([DIR, `${label}-${name}.png`]);
+        // padShot (element + PAD margin), not an edge-tight element shot: the
+        // filled-button hover raises box-shadow: elevation-2, which paints
+        // OUTSIDE the element box and an element-clipped capture would drop it.
+        // Matches how every other stateful component captures its states.
+        await padShot(page, el, [DIR, `${label}-${name}.png`]);
         if (name === 'active') await page.mouse.up();
       });
     }
