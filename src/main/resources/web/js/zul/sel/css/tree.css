@@ -11,7 +11,6 @@
    doc/spec/DESIGN.md §11. */
 @layer zk-components {
 .z-tree {
-    display: block;
     background-color: var(--zk-color-surface);
     border-radius: var(--zk-shape-card);
     border: 1px solid var(--zk-color-outline-variant);

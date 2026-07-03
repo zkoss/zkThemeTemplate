@@ -9,7 +9,6 @@
    See doc/spec/DESIGN.md §11. */
 @layer zk-components {
 .z-grid {
-    display: block;
     background-color: var(--zk-color-surface);
     overflow: hidden;
     box-sizing: border-box;

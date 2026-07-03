@@ -12,7 +12,6 @@
 /* ── Outer container ──────────────────────────────────── */
 @layer zk-components {
 .z-slider {
-    display: block;
     position: relative;
     padding: var(--zk-spacing-3) 0;
     cursor: pointer;

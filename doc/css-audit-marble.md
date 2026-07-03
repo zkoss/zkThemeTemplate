@@ -79,10 +79,10 @@ src/main/resources/web/js/zul/wgt/css/button.css:299:        0px 1px 18px 0px rg
 src/main/resources/web/js/zul/wgt/css/popup.css:27:    background-color: rgba(97, 97, 97, 0.92);
 src/main/resources/web/js/zul/wgt/css/popup.css:28:    color: #fff;
 src/main/resources/web/js/zul/wgt/css/popup.css:40:    color: #fff;
-src/main/resources/web/js/zul/sel/css/listbox.css:676:    background-color: rgba(255, 255, 255, 0.6);
-src/main/resources/web/js/zul/sel/css/tree.css:452:    background-color: rgba(255, 255, 255, 0.6);
-src/main/resources/web/js/zul/grid/css/grid.css:222:    background-color: rgba(0, 0, 0, 0.04);
-src/main/resources/web/js/zul/grid/css/grid.css:415:    background-color: rgba(255, 255, 255, 0.6);
+src/main/resources/web/js/zul/sel/css/listbox.css:675:    background-color: rgba(255, 255, 255, 0.6);
+src/main/resources/web/js/zul/sel/css/tree.css:451:    background-color: rgba(255, 255, 255, 0.6);
+src/main/resources/web/js/zul/grid/css/grid.css:221:    background-color: rgba(0, 0, 0, 0.04);
+src/main/resources/web/js/zul/grid/css/grid.css:414:    background-color: rgba(255, 255, 255, 0.6);
 ```
 
 ## B4. Duplicate literal box-shadow (DRY → shared-token candidate)
@@ -93,7 +93,7 @@ _No literal box-shadow string appears in 2+ files._
 
 > Root tags resolved from 98 ZK mold file(s) under `/Users/hawk/Documents/workspace/ZK10/zk/zul/src/main/resources/web/js/zul` (fallback map used where a mold declares no tag).
 
-Scanned bare `.z-<name>` `display` declarations under `src/main/resources/web/js/zul`. Summary: **0 safe no-op**, **6 verify**, 4 skipped (replaced/form), 3 real override, 42 unknown.
+Scanned bare `.z-<name>` `display` declarations under `src/main/resources/web/js/zul`. Summary: **0 safe no-op**, **1 verify**, 4 skipped (replaced/form), 3 real override, 42 unknown.
 
 ### G1. Safe no-ops — `inline` restated on an inline-default element (removable)
 
@@ -104,12 +104,7 @@ _None._
 > May be a defensive anchor vs ZK runtime `.z-flex` class toggling or `@layer` cascade.
 > Prove render-neutral on the live app before deleting (see important-reduction `probe.js`).
 
-- `src/main/resources/web/js/zul/grid/css/grid.css:12`  `.z-grid { display: block }` → <div> default is `block`
-- `src/main/resources/web/js/zul/inp/css/slider.css:15`  `.z-slider { display: block }` → <div> default is `block`
-- `src/main/resources/web/js/zul/sel/css/listbox.css:11`  `.z-listbox { display: block }` → <div> default is `block`
-- `src/main/resources/web/js/zul/sel/css/tree.css:14`  `.z-tree { display: block }` → <div> default is `block`
 - `src/main/resources/web/js/zul/wgt/css/cell.css:5`  `.z-cell { display: table-cell }` → <td> default is `table-cell`
-- `src/main/resources/web/js/zul/wgt/css/progressmeter.css:13`  `.z-progressmeter { display: block }` → <div> default is `block`
 
 ### G3. Skipped — replaced/form element (UA default varies; not a finding)
 
@@ -120,7 +115,7 @@ _None._
 - `src/main/resources/web/js/zul/box/css/layout.css:18`  `.z-hlayout-cell { display: inline-block }`
 - `src/main/resources/web/js/zul/box/css/layout.css:18`  `.z-hlayout-inner { display: inline-block }`
 - `src/main/resources/web/js/zul/box/css/layout.css:49`  `.z-vlayout-cell { display: block }`
-- `src/main/resources/web/js/zul/grid/css/grid.css:396`  `.z-grid-emptybody { display: block }`
+- `src/main/resources/web/js/zul/grid/css/grid.css:395`  `.z-grid-emptybody { display: block }`
 - `src/main/resources/web/js/zul/inp/css/combobox.css:57`  `.z-combobox-icon { display: inline-block }`
 - `src/main/resources/web/js/zul/inp/css/input.css:12`  `.z-intbox { display: inline-block }`
 - `src/main/resources/web/js/zul/inp/css/input.css:12`  `.z-decimalbox { display: inline-block }`
@@ -129,18 +124,18 @@ _None._
 - `src/main/resources/web/js/zul/inp/css/input.css:12`  `.z-passwordbox { display: inline-block }`
 - `src/main/resources/web/js/zul/inp/css/input.css:241`  `.z-errorbox { display: table }`
 - `src/main/resources/web/js/zul/inp/css/input.css:331`  `.z-errorbox-pointer { display: block }`
-- `src/main/resources/web/js/zul/inp/css/slider.css:91`  `.z-slider-vertical { display: inline-block }`
+- `src/main/resources/web/js/zul/inp/css/slider.css:90`  `.z-slider-vertical { display: inline-block }`
 - `src/main/resources/web/js/zul/inp/css/spinner.css:167`  `.z-spinner-separator { display: block }`
 - `src/main/resources/web/js/zul/inp/css/spinner.css:167`  `.z-doublespinner-separator { display: block }`
 - `src/main/resources/web/js/zul/inp/css/timebox.css:139`  `.z-timebox-separator { display: block }`
 - `src/main/resources/web/js/zul/layout/css/absolutelayout.css:6`  `.z-absolutelayout { display: block }`
 - `src/main/resources/web/js/zul/mesh/css/auxhead.css:45`  `.z-auxheader-content { display: block }`
-- `src/main/resources/web/js/zul/sel/css/listbox.css:284`  `.z-listcell-cnt { display: block }`
-- `src/main/resources/web/js/zul/sel/css/listbox.css:284`  `.z-listcell-content { display: block }`
-- `src/main/resources/web/js/zul/sel/css/listbox.css:657`  `.z-listbox-emptybody { display: block }`
-- `src/main/resources/web/js/zul/sel/css/tree.css:257`  `.z-tree-spacer { display: inline-block }`
-- `src/main/resources/web/js/zul/sel/css/tree.css:264`  `.z-tree-line { display: inline-block }`
-- `src/main/resources/web/js/zul/sel/css/tree.css:434`  `.z-tree-emptybody { display: block }`
+- `src/main/resources/web/js/zul/sel/css/listbox.css:283`  `.z-listcell-cnt { display: block }`
+- `src/main/resources/web/js/zul/sel/css/listbox.css:283`  `.z-listcell-content { display: block }`
+- `src/main/resources/web/js/zul/sel/css/listbox.css:656`  `.z-listbox-emptybody { display: block }`
+- `src/main/resources/web/js/zul/sel/css/tree.css:256`  `.z-tree-spacer { display: inline-block }`
+- `src/main/resources/web/js/zul/sel/css/tree.css:263`  `.z-tree-line { display: inline-block }`
+- `src/main/resources/web/js/zul/sel/css/tree.css:433`  `.z-tree-emptybody { display: block }`
 - `src/main/resources/web/js/zul/tab/css/tabbox.css:471`  `.z-tabbox-accordion { display: block }`
 - `src/main/resources/web/js/zul/wgt/css/captcha.css:3`  `.z-captcha { display: block }`
 - `src/main/resources/web/js/zul/wgt/css/errorbox.css:105`  `.z-errorbox-pointer { display: block }`
@@ -151,7 +146,7 @@ _None._
 - `src/main/resources/web/js/zul/wgt/css/misc.css:42`  `.z-loading-icon { display: inline-block }`
 - `src/main/resources/web/js/zul/wgt/css/misc.css:59`  `.z-renderdefer { display: inline-block }`
 - `src/main/resources/web/js/zul/wgt/css/notification.css:15`  `.z-notification { display: table }`
-- `src/main/resources/web/js/zul/wgt/css/progressmeter.css:24`  `.z-progressmeter-image { display: block }`
+- `src/main/resources/web/js/zul/wgt/css/progressmeter.css:23`  `.z-progressmeter-image { display: block }`
 - `src/main/resources/web/js/zul/wgt/css/rating.css:25`  `.z-rating-icon { display: inline-block }`
 - `src/main/resources/web/js/zul/wgt/css/separator.css:14`  `.z-separator-horizontal-bar { display: block }`
 - `src/main/resources/web/js/zul/wgt/css/separator.css:31`  `.z-separator-vertical { display: inline-block }`
