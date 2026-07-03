@@ -20,7 +20,7 @@
         <div sclass="z-flex-1 z-min-w-0 z-card">
             <label value="Low Stock SKUs" sclass="z-text-muted z-mb-2 z-text-sm"/>
             <label value="14" sclass="z-h1"/>
-            <label value="↓ 2 since last week" sclass="z-text-xs z-text-error"/>
+            <label value="↓ 2 since last week" sclass="z-text-xs z-text-success"/>
         </div>
         <div sclass="z-flex-1 z-min-w-0 z-card">
             <label value="Open Tickets" sclass="z-text-muted z-mb-2 z-text-sm"/>

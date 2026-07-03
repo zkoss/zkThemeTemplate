@@ -82,9 +82,13 @@
 }
 
 /* ── Upcoming step circle (default — no state class) ── */
+/* Muted grey outline (not primary): an upcoming step is "todo", so it must read as
+   inactive — matching the un-lit grey connector line — and contrast clearly with the
+   solid-primary complete/active dots. A blue outline reads as primary/interactive and
+   flattens the done-vs-todo distinction. */
 .z-step-content > .z-step-icon-empty {
     background-color: transparent;
-    border: 2px solid var(--zk-color-primary);
+    border: 2px solid var(--zk-color-outline);
     color: transparent;
 }
 

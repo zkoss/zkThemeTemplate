@@ -17,8 +17,8 @@
 
         <!-- Sub-nav -->
         <navbar orient="vertical" sclass="z-card z-flex-none" width="220px">
-            <navitem label="Profile" selected="true"/>
-            <navitem label="Notifications"/>
+            <navitem label="Profile"/>
+            <navitem label="Notifications" selected="true"/>
             <navitem label="Security"/>
             <navitem label="Appearance"/>
         </navbar>
