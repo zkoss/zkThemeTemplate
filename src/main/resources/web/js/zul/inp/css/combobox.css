@@ -305,40 +305,18 @@
 }
 
 /* ─── Readonly variant ────────────────────────────────────────────────────── */
-.z-combobox[readonly],
-.z-combobox.z-combobox-readonly {
-    background-color: var(--zk-color-surface-container-low);
-}
-
+/* In ZK, `readonly="true"` is the normal "select-only" state for a combobox, so it
+   must read as an ACTIVE outlined field — identical to the editable combobox and the
+   textbox beside it — not as disabled. It stays fully interactive (the dropdown opens,
+   including via the arrow button). The greyed/dimmed treatment is reserved for the
+   genuine `disabled` state above. The input is made non-typeable by ZK's `readonly`
+   attribute on the <input>, not by styling, so readonly needs no visual de-emphasis
+   at all — only a pointer cursor to signal the whole control opens a menu. */
 .z-combobox[readonly] .z-combobox-input,
-.z-combobox[readonly] .z-combobox-button,
 .z-combobox.z-combobox-readonly .z-combobox-input,
+.z-combobox[readonly] .z-combobox-button,
 .z-combobox.z-combobox-readonly .z-combobox-button {
-    border-color: var(--zk-color-outline-variant);
-}
-
-/* Suppress hover border change on readonly */
-.z-combobox[readonly]:hover,
-.z-combobox.z-combobox-readonly:hover {
-    cursor: default;
-}
-
-.z-combobox[readonly]:hover .z-combobox-input,
-.z-combobox[readonly]:hover .z-combobox-button,
-.z-combobox.z-combobox-readonly:hover .z-combobox-input,
-.z-combobox.z-combobox-readonly:hover .z-combobox-button {
-    border-color: var(--zk-color-outline-variant);
-}
-
-.z-combobox[readonly] .z-combobox-input,
-.z-combobox.z-combobox-readonly .z-combobox-input {
-    color: var(--zk-color-on-surface-variant);
-    cursor: default;
-}
-
-.z-combobox.z-combobox-readonly .z-combobox-button {
-    pointer-events: none;
-    opacity: 0.6;
+    cursor: pointer;
 }
 
 /* ─── Open state ──────────────────────────────────────────────────────────── */

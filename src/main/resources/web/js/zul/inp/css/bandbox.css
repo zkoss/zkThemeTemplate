@@ -143,21 +143,16 @@
 }
 
 /* ─── Readonly variant ────────────────────────────────────────────────── */
-.z-bandbox[readonly],
-.z-bandbox.z-bandbox-readonly {
-    background-color: var(--zk-color-surface-container-low);
-    border-color: var(--zk-color-outline-variant);
-}
-
-.z-bandbox[readonly]:hover,
-.z-bandbox.z-bandbox-readonly:hover {
-    border-color: var(--zk-color-outline-variant);
-    cursor: default;
-}
-
+/* readonly bandbox is still interactive (the band popup opens), so it must read as
+   an ACTIVE outlined field, not disabled — matching the editable bandbox and the
+   textbox beside it. The greyed/dimmed treatment is reserved for `disabled` above.
+   The input is made non-typeable by ZK's `readonly` attribute, not by styling.
+   See doc/x2-combobox-readonly-solution.md. */
+.z-bandbox[readonly] .z-bandbox-input,
+.z-bandbox.z-bandbox-readonly .z-bandbox-input,
+.z-bandbox[readonly] .z-bandbox-button,
 .z-bandbox.z-bandbox-readonly .z-bandbox-button {
-    pointer-events: none;
-    opacity: 0.6;
+    cursor: pointer;
 }
 
 /* ─── Open state ──────────────────────────────────────────────────────── */

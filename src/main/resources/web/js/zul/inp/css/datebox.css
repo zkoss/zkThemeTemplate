@@ -123,22 +123,14 @@
 .z-datebox-button:active::before { opacity: var(--zk-state-pressed-opacity); }
 
 /* ─── Readonly ─────────────────────────────────────────────────────────────── */
-.z-datebox.z-datebox-readonly {
-    background-color: var(--zk-color-surface-container-low);
-    border-color: var(--zk-color-outline-variant);
-}
-
-.z-datebox.z-datebox-readonly .z-datebox-input {
-    color: var(--zk-color-on-surface-variant);
-}
-
-.z-datebox.z-datebox-readonly:hover {
-    border-color: var(--zk-color-outline-variant);
-}
-
+/* readonly datebox is still interactive (the calendar popup opens), so it must read
+   as an ACTIVE outlined field, not disabled — matching the editable datebox and the
+   textbox beside it. The greyed/dimmed treatment is reserved for `disabled` below.
+   The input is made non-typeable by ZK's `readonly` attribute, not by styling.
+   See doc/x2-combobox-readonly-solution.md. */
+.z-datebox.z-datebox-readonly .z-datebox-input,
 .z-datebox.z-datebox-readonly .z-datebox-button {
-    pointer-events: none;
-    opacity: 0.5;
+    cursor: pointer;
 }
 
 /* ─── Disabled ─────────────────────────────────────────────────────────────── */
