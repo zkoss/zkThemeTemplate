@@ -22,20 +22,16 @@
     border-radius: var(--zk-shape-corner-extra-small);
     background-color: var(--zk-color-surface);
     box-sizing: border-box;
-    /* Timepicker is always-readonly (constructor forces it) → the input always carries the opaque
-       surface-container bg; clip the square-cornered child to the rounded root, else its corners
-       bleed past the left border-radius and the rounded corner reads as missing. */
+    /* Clip square-cornered children (button hover bg, focus-ring overlay) to the rounded root, else
+       their corners bleed past the border-radius and the rounded corner reads as missing. */
     overflow: hidden;
     transition: border-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
 }
 
-/* Focus ring lives on an always-present OVERLAY, not a root inset box-shadow.
-   The input carries an opaque (always-readonly) surface-container background that would paint OVER
-   a root inset shadow on the input side, while the transparent button lets it show — making the
-   ring look thicker around the button than around the input. The ::after overlay paints ABOVE both
-   children (pointer-events:none; clipped to the rounded shape by the root's overflow:hidden), so the
-   ring reads uniformly across the whole field. Border-width stays 1px → no layout shift on focus.
-   See reference/focus-affordance-no-layout-shift.md (opaque-child caveat). */
+/* Focus ring lives on an ::after OVERLAY (pointer-events:none; clipped to the rounded shape by the
+   root's overflow:hidden), painted ABOVE both children so it reads uniformly across the whole field.
+   Border-width stays 1px → no layout shift on focus.
+   See reference/focus-affordance-no-layout-shift.md. */
 .z-timepicker::after {
     content: "";
     position: absolute;
@@ -115,8 +111,14 @@
    The .z-timepicker-button.z-timepicker-disabled state is structurally unreachable. */
 
 /* ─── Readonly ─────────────────────────────────────────────────────────────── */
-.z-timepicker-readonly .z-timepicker-input {
-    background-color: var(--zk-color-surface-container);
+/* readonly timepicker is still interactive (the time popup opens), so it must read as
+   an ACTIVE outlined field, not disabled — matching the editable timepicker and the
+   readonly combobox/datebox/bandbox. The greyed/dimmed treatment is reserved for
+   `disabled`. The input is made non-typeable by ZK's `readonly` attribute, not by
+   styling. See doc/combo-readonly-consistency-audit.md. */
+.z-timepicker-readonly .z-timepicker-input,
+.z-timepicker-readonly .z-timepicker-button {
+    cursor: pointer;
 }
 
 /* ─── Invalid ──────────────────────────────────────────────────────────────── */
