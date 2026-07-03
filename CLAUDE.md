@@ -103,12 +103,13 @@ The UseCase SPA supports hash-based deep linking — append `#<bookmark>` to jum
 http://localhost:8080/usecase/index.zul#<bookmark>
 ```
 
-Bookmark keys use the **full sub-path after `~./`**, without `.zul`:
-- Use-case pages: `usecase/dashboard`, `usecase/app-shell`, `usecase/order-entry`, `usecase/employee-grid`, `usecase/user-profile`, `usecase/product-browser`, `usecase/report-viewer`, `usecase/media-manager`
-- Feedback: `usecase/messagebox`
-- Root component pages: `button`, `combobutton`, `checkbox`, `radiogroup`, `textbox`, `combobox`, `selectbox`, `datebox`, `timebox`, `spinner`, `slider`, `rating`, `inputgroup`, `bandbox`, `grid`, `grid-header`, `grid-grouping`, `grid-detail`, `listbox`, `listbox-header`, `listbox-grouping`, `tree`, `tree-header`, `paging`, `biglistbox`, `menubar`, `toolbar`, `tabbox`, `window`, `panel`, `groupbox`, `popup`, `caption`, `borderlayout`, `hlayout`, `splitter`, `anchorlayout`, `absolutelayout`, `progressmeter`, `notification`, `toast`, `calendar`
+Bookmark keys are the target ZUL's path relative to the web root (`src/test/resources/web/`), minus the `.zul` extension. Two shapes:
+- **Use-case pages** live under `usecase/` → `~./usecase/ops-dashboard.zul` becomes `usecase/ops-dashboard`.
+- **Single-component preview pages** live at the web root → `~./button.zul` becomes `button`.
 
-Example: `http://localhost:8080/usecase/index.zul#usecase/dashboard`
+The `<navitem>` entries in `usecase/index.zul` are the source of truth for the current set of pages — consult them (or the `.zul` filenames on disk) rather than a hard-coded list here, since the sidebar changes over time.
+
+Example: `http://localhost:8080/usecase/index.zul#usecase/ops-dashboard`
 
 **VM**: `UseCaseVM.java` — same pattern as `UseCase2VM` (`@Init` restores bookmark, `navigate` command sets bookmark, `handleBookmarkChange` command responds to browser back/forward). Reconstruction: `"~./" + bookmark + ".zul"`.
 
