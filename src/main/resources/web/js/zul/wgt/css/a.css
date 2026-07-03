@@ -3,7 +3,6 @@
 
 @layer zk-components {
 .z-a {
-    display: inline;
     color: var(--zk-color-primary);
     text-decoration: none;
     font-family: var(--zk-typescale-font-family);

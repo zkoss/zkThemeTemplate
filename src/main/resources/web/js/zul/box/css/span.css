@@ -2,7 +2,6 @@
 
 @layer zk-components {
 .z-span {
-    display: inline;
     box-sizing: border-box;
     font-family: var(--zk-typescale-font-family);
     font-size: inherit;

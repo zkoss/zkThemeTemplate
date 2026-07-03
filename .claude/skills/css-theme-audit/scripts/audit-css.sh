@@ -15,6 +15,8 @@
 #   2. orphan tokens — design tokens with zero var() references anywhere
 #   3. hardcoded colors — bare hex / rgb() / rgba() NOT inside a var(--x, …) fallback
 #   4. duplicate box-shadow — identical literal shadow strings shared across files
+#   5. default-value redundancy — `display` decls that restate the element's browser
+#      default (e.g. `.z-span { display: inline }`); via check-default-display.js
 #
 # Usage:
 #   bash audit-css.sh [options]
@@ -22,6 +24,7 @@
 #     --tokens-dir <dir>   where token definitions live   (default: <web>/zul/css/tokens)
 #     --css-root <dir>     root scanned for var() refs     (default: <web>)
 #     --component-root <d> root scanned for hardcoded vals (default: <web>/js/zul)
+#     --zk-source <dir>    ZK js/zul source (root-tag resolution for check 5)
 #     --out <file>         write report here               (default: stdout)
 #
 # All defaults assume the standard zkThemeTemplate layout; override them when a
@@ -38,6 +41,7 @@ PREFIX="--zk-"
 TOKENS_DIR="$WEB/zul/css/tokens"
 CSS_ROOT="$WEB"
 COMPONENT_ROOT="$WEB/js/zul"
+ZK_SOURCE="/Users/hawk/Documents/workspace/ZK10/zk/zul/src/main/resources/web/js/zul"
 OUT=""
 
 while [ $# -gt 0 ]; do
@@ -46,6 +50,7 @@ while [ $# -gt 0 ]; do
         --tokens-dir)     TOKENS_DIR="$2"; shift 2 ;;
         --css-root)       CSS_ROOT="$2"; shift 2 ;;
         --component-root) COMPONENT_ROOT="$2"; shift 2 ;;
+        --zk-source)      ZK_SOURCE="$2"; shift 2 ;;
         --out)            OUT="$2"; shift 2 ;;
         -h|--help)        sed -n '2,30p' "${BASH_SOURCE[0]}" | sed 's/^# \{0,1\}//'; exit 0 ;;
         *) echo "Unknown option: $1" >&2; exit 2 ;;
@@ -196,6 +201,21 @@ if [ -n "$DUP_SHADOW" ]; then
     emit "$DUP_SHADOW"
 else
     emit "_No literal box-shadow string appears in 2+ files._"
+fi
+emit ""
+
+# ── Check 5: default-value redundancy (display restating the element default) ─
+# Delegated to a Node helper: it resolves each `.z-<name>` root tag from the ZK
+# mold files and compares the declared `display` against the tag's browser default.
+if command -v node >/dev/null 2>&1; then
+    node "$SCRIPT_DIR/check-default-display.js" \
+        --component-root "$COMPONENT_ROOT" \
+        --zk-source "$ZK_SOURCE" 2>/dev/null \
+    || emit "_check-default-display.js failed to run — see the skill's SKILL.md §G._"
+else
+    emit "## G. Default-value redundancy"
+    emit ""
+    emit "_node not found — skipped. Install Node to run check-default-display.js (§G)._"
 fi
 emit ""
 

@@ -3,8 +3,9 @@ name: css-theme-audit
 description: >-
   Audit a ZK Framework theme's CSS for hygiene issues — duplicate/redundant
   declarations, orphan (zero-reference) design tokens, hardcoded color/spacing
-  values that bypass tokens, and repeated literal box-shadows — and write the
-  findings up as a structured report. Use this whenever the user wants to
+  values that bypass tokens, repeated literal box-shadows, and declarations that
+  restate an element's browser-default display (e.g. `.z-span { display: inline }`)
+  — and write the findings up as a structured report. Use this whenever the user wants to
   review, audit, clean up, lint, or check the quality/hygiene of theme CSS,
   tokens, or utility classes; before tagging a theme release; or when adopting
   this template to build a NEW theme and they ask "how do I run the same checks
@@ -77,6 +78,13 @@ It emits an A–F report skeleton with these checks filled in:
    intentional defensive fallbacks, not violations). Comments are stripped first.
 4. **Duplicate literal box-shadow (§B4)** — the same literal shadow string
    appearing in 2+ files (token references are ignored).
+5. **Default-value redundancy (§G)** — `display` declarations on a bare `.z-<name>`
+   root that merely restate the browser default of the element the widget renders
+   (`.z-span { display: inline }` on a `<span>`). Delegated to
+   `scripts/check-default-display.js`, which resolves each root tag from the ZK
+   **mold files** (`--zk-source`) and buckets hits into safe no-ops (§G1),
+   verify-first candidates (§G2), skipped replaced/form elements (§G3), and
+   unresolved sub-elements (§G4).
 
 The script is **read-only and advisory** — it never edits CSS and always exits 0.
 It does NOT replace the build gate; `npm run lint:css` stays the thing that must
@@ -144,6 +152,41 @@ An identical multi-stop shadow copy-pasted across files is a DRY smell → extra
 shared token (the `marble` audit created `--zk-elevation-resting` for exactly this).
 This is a refactor with visual impact, so verify the affected components after.
 
+### Default-value redundancy (§G): inline no-ops vs block anchors
+
+The check compares a widget's declared `display` against the browser default of the
+element it actually renders. **Root tag = ZK mold source of truth**: each widget's
+`<comp>$mold$(out)` emits its root tag as the first `out.push('<TAG' …)`, which
+resolves the non-1:1 cases (label → `<span>`, image → `<img>`, toolbarbutton →
+`<a>`). Point `--zk-source` at the ZK `js/zul` tree; a small built-in fallback map
+covers widgets whose mold declares no tag (e.g. `div.js`).
+
+- **§G1 inline no-op → safe to remove.** `display: inline` on an inline-default
+  element (`.z-span`, `.z-a`) does literally nothing. Confirm the reset layer doesn't
+  set `display` on that element (marble's `_reset.css` only sets `a` color/
+  text-decoration, never `display`) — then delete the line. Still cheap to prove
+  empirically: build and probe computed `display` stays `inline` (see below).
+- **§G2 restates a non-inline default → VERIFY first, don't bulk-remove.** `display:
+  block` on a `<div>`-rooted container (`.z-grid`, `.z-listbox`, `.z-tree`) restates
+  the default, but the value can be a **defensive anchor**: ZK toggles framework
+  display classes at runtime (the `.z-flex` family) and the `@layer` cascade can
+  reorder who wins. Prove render-neutral on the live app before deleting — reuse the
+  `important-reduction` skill's `scripts/probe.js` ("remove → build → measure
+  computed style"); if the computed `display` is unchanged with the line gone, it was
+  redundant. `.z-cell { display: table-cell }` on a `<td>` is the same shape.
+- **§G3 replaced/form elements are skipped, not findings.** `<img>`, `<input>`,
+  `<button>`, `<select>`… have UA-specific defaults and are always styled
+  deliberately — e.g. `.z-image img { display: block }` is an intentional
+  baseline-gap fix (an `<img>` is inline), NOT redundant. The check never flags these.
+- **§G4 unknown root tag → manual.** Sub-element wrappers (`.z-*-content`,
+  `.z-*-icon`, `.z-listcell-cnt`) aren't widget roots, so no mold resolves them. Only
+  values that *could* be a default (`block`/`inline-block`/table-family) are listed;
+  check them against the rendered DOM if you pursue them.
+
+The check is `display`-only today, but the same "restates-default" machinery extends
+to other properties that commonly restate defaults (`position: static`, `float:
+none`, `visibility: visible`). Add them to `check-default-display.js` when needed.
+
 ### The sections the script leaves as TODO
 
 `A4` (semantic token holding a literal value), `B2/B3` (hardcoded px / font-size),
@@ -176,6 +219,7 @@ C. Cross-file duplicated CSS blocks (state-layer, focus-visible, transitions)
 D. In-file duplication      (stylelint authoritative scan)
 E. Utility layer            (duplicate classes, intentional aliases)
 F. Dead code                (deferred — needs rendered DOM)
+G. Default-value redundancy (display decls restating the element's browser default)
 ```
 
 For each finding give: location, the value, whether an equivalent token exists,
