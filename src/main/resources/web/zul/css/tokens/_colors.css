@@ -12,30 +12,56 @@
  * plain white text and share that implicit foreground.
  */
 :root {
-    /* Primary — #376fd0 blue */
+    /* -----------------------------------------------------------------------
+     * FEATURE: Brand-color override recipe (color-mix) — implemented 2026-07-03
+     *
+     * The four semantic ROLES below (primary / secondary / error / warning) are
+     * SEEDS. Their `*-container` (light tint) and `on-*-container` (dark tint)
+     * partners are DERIVED from the seed via color-mix() instead of hand-picked
+     * hex, so overriding ONE seed at :root re-derives a coherent palette —
+     * containers, overlays (already currentColor/color-mix of the seed), the
+     * focus ring (--zk-focus-ring references --zk-color-primary) and every
+     * selected-row / alert / badge tint cascade automatically. No generator,
+     * no build step. See doc/spec/brand-override.md for the customer contract.
+     *
+     * Ratios were calibrated per role (in srgb, matching the theme's existing
+     * color-mix convention) to reproduce the previous hand-picked hex as closely
+     * as the sRGB space allows — the trailing comment on each line is that legacy
+     * value. sRGB mixing can't exactly reproduce MD3's HCT-tuned tones, so the
+     * DEFAULT tints drift a hair; that is the accepted cost of single-seed cascade.
+     *
+     * Contrast caveat: `on-<role>` foregrounds stay literal white, so the recipe
+     * assumes a MID-TO-DARK seed. For a light brand color, also override the
+     * matching `--zk-color-on-<role>` to a dark value.
+     *
+     * Escape hatch: these are plain custom properties — pin any single derived
+     * tone by overriding it directly at :root (no special variable needed).
+     * --------------------------------------------------------------------- */
+
+    /* Primary — #376fd0 blue (seed) */
     --zk-color-primary: #376fd0;
     --zk-color-on-primary: #ffffff;
-    --zk-color-primary-container: #d6e4ff;
-    --zk-color-on-primary-container: #001c3d;
+    --zk-color-primary-container: color-mix(in srgb, var(--zk-color-primary) 23%, #fff);    /* ≈ #d6e4ff */
+    --zk-color-on-primary-container: color-mix(in srgb, var(--zk-color-primary) 31%, #000); /* ≈ #001c3d */
 
-    /* Secondary — teal accent */
+    /* Secondary — teal accent (seed) */
     --zk-color-secondary: #4db6ac;
     --zk-color-on-secondary: #ffffff;
-    --zk-color-secondary-container: #b2dfdb;
-    --zk-color-on-secondary-container: #00251a;
+    --zk-color-secondary-container: color-mix(in srgb, var(--zk-color-secondary) 43%, #fff);    /* ≈ #b2dfdb */
+    --zk-color-on-secondary-container: color-mix(in srgb, var(--zk-color-secondary) 23%, #000); /* ≈ #00251a */
 
-    /* Error */
+    /* Error (seed) */
     --zk-color-error: #d32f2f;
     --zk-color-on-error: #ffffff;
-    --zk-color-error-container: #ffcdd2;
-    --zk-color-on-error-container: #7f0000;
+    --zk-color-error-container: color-mix(in srgb, var(--zk-color-error) 26%, #fff);    /* ≈ #ffcdd2 */
+    --zk-color-on-error-container: color-mix(in srgb, var(--zk-color-error) 70%, #000); /* ≈ #7f0000 */
 
-    /* Warning (non-standard MD3, needed for badges) */
+    /* Warning (non-standard MD3, needed for badges) — seed */
     /* main — filled controls; status-warning is the lighter accent */
     --zk-color-warning: #ed6c02;
     --zk-color-on-warning: #ffffff;
-    --zk-color-warning-container: #ffe0b2;
-    --zk-color-on-warning-container: #7a3900;
+    --zk-color-warning-container: color-mix(in srgb, var(--zk-color-warning) 31%, #fff);    /* ≈ #ffe0b2 */
+    --zk-color-on-warning-container: color-mix(in srgb, var(--zk-color-warning) 52%, #000); /* ≈ #7a3900 */
 
     /* Success (main — filled controls; status-success is the lighter accent) */
     --zk-color-success: #2e7d32;
@@ -69,7 +95,7 @@
     /* Inverse */
     --zk-color-inverse-surface: #2d3748;
     --zk-color-inverse-on-surface: #f0f4fa;
-    --zk-color-inverse-primary: #9ec3ff;
+    --zk-color-inverse-primary: color-mix(in srgb, var(--zk-color-primary) 52%, #fff); /* ≈ #9ec3ff — light primary for dark surfaces */
 
     /* Scrim */
     --zk-color-scrim: rgba(0, 0, 0, 0.5);

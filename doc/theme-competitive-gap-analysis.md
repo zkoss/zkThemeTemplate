@@ -28,7 +28,7 @@ Legend: ✅ first-class · ⚠️ partial / undocumented · ❌ absent
 | Theme feature | MUI | Ant | Bootstrap | Fluent | Carbon | Prime* | **Marble** |
 |---|:--:|:--:|:--:|:--:|:--:|:--:|:--:|
 | **Dark mode / color-scheme switch** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | **⊘ won't-do** |
-| **Runtime brand/seed color customization** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | **⚠️** |
+| **Runtime brand/seed color customization** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | **✅** (single-seed cascade; no auto-foreground) |
 | **Multiple prebuilt theme presets** | ⚠️ | ✅ | ✅ | ✅ | ✅ | ✅ | **❌** |
 | **In-app theme switcher** (light↔dark / preset) | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | **❌** |
 | Design tokens / CSS custom props | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | **✅** |
@@ -57,11 +57,12 @@ Legend: ✅ first-class · ⚠️ partial / undocumented · ❌ absent
 - **Everyone else has it:** All 6 benchmark frameworks ship dark mode (MUI `colorSchemes`, Ant `darkAlgorithm`, Bootstrap `data-bs-theme`, Fluent `webDarkTheme`, Carbon `g90/g100`, Prime* `*-dark`). Marble consciously diverges here on enterprise-fit grounds.
 - **If ever revisited:** the centralized `tokens/_colors.css` layer makes authoring cheap; the real cost is re-verifying every component in dark through the dual-gate harness. Per the adoption note, the pragmatic partial path would be dashboard/monitoring modules only — not transactional grids/forms.
 
-### GAP 2 — Runtime brand / seed-color customization  ·  *Severity: High (enterprise buying criterion)*
+### GAP 2 — Runtime brand / seed-color customization  ·  ✅ **RECIPE DONE 2026-07-03** (generator still future)
 
-- **Current state:** The palette is **hardcoded** (`--zk-color-primary: #376fd0`) with **hand-picked** container/on-color shades (`primary-container`, `on-primary-container`, etc. in `_colors.css:15-62`). Tokens live at `:root` so a customer *can* override `--zk-color-primary` — but nothing regenerates the derived shades, hover/state overlays, or container tones from it. There is **no documented customization recipe and no seed→tonal-palette generation.**
-- **What competitors do:** MUI/Material generate a full tonal palette from a seed; Ant derives the whole token set algorithmically from `colorPrimary`; Fluent builds themes from a brand color ramp; PrimeFaces ships a visual **Theme Designer**. Enterprise customers routinely require "make it our brand blue/green" — today that means hand-editing ~10 coupled hex values and hoping contrast holds.
-- **Minimum viable fix:** a documented brand-override contract (which 2–3 tokens to set) + derive containers/overlays via `color-mix()` from the seed so one variable cascades correctly. Full fix: a small seed→palette generator (build-time or JS).
+- **Implemented (the doc's "minimum viable fix"):** the four semantic seeds (primary/secondary/error/warning) now drive their `*-container` and `on-*-container` partners via `color-mix()` in `_colors.css` (9 tokens, calibrated per role to the previous hand-picked values). Overlays and the focus ring already tracked `--zk-color-primary`, so overriding **one** seed at `:root` now cascades a coherent palette — containers, overlays, focus ring, selected-row/alert/badge tints. Documented as a customer contract in [spec/brand-override.md](spec/brand-override.md) and DESIGN.md §3. Build-verified in the minified `norm.css.dsp`.
+- **Was:** the palette was **hardcoded** (`--zk-color-primary: #376fd0`) with **hand-picked** container/on-color shades. Tokens lived at `:root` so a customer *could* override `--zk-color-primary` — but nothing regenerated the derived shades, so a rebrand left every container fill stuck on the old blue. No documented recipe existed.
+- **What competitors do:** MUI/Material generate a full tonal palette from a seed; Ant derives the whole token set algorithmically from `colorPrimary`; Fluent builds themes from a brand color ramp; PrimeFaces ships a visual **Theme Designer**.
+- **Accepted limits (MVP):** `on-<role>` foregrounds stay literal white → the recipe assumes a mid-to-dark seed (light seeds must also override `--zk-color-on-*`); neutral surfaces and `status-*` badge colors are intentionally not re-tinted. **Full fix (future):** a seed→tonal-palette generator (build-time or JS) that also picks foregrounds for contrast.
 
 ### GAP 3 — Multiple prebuilt presets + in-app theme switcher  ·  *Severity: Medium*
 
@@ -112,9 +113,9 @@ These are **not** gaps — Marble is competitive or strong here, and the analysi
 A pragmatic sequence by *impact ÷ effort* (dark mode removed per the 2026-06-29 won't-do decision):
 
 1. ✅ **`prefers-reduced-motion`** (GAP 4) — **DONE 2026-06-29.** Smallest effort, real a11y win, one media block.
-2. **Brand-color override recipe via `color-mix()`** (GAP 2) — **next.** Highest remaining enterprise value; documented contract first, generator later.
-3. **`forced-colors` guards** (GAP 5) — needed for regulated-sector (gov/finance/EU) deals.
+2. ✅ **Brand-color override recipe via `color-mix()`** (GAP 2) — **DONE 2026-07-03.** Single-seed cascade + documented contract; seed→palette generator remains future work.
+3. **`forced-colors` guards** (GAP 5) — **next.** Needed for regulated-sector (gov/finance/EU) deals.
 4. **Finish RTL** (GAP 6) — migrate the remaining physical properties + RTL Playwright project.
 5. **Multiple presets + theme switcher** (GAP 3) — now decoupled from dark; valuable for brand variants, lower priority since the headline preset (dark) is intentionally dropped.
 
-> **Bottom line:** Marble's *static* Material design system is solid and at parity. With dark mode consciously off the table (enterprise-fit, per `dark-theme-adoption.md`) and reduced-motion now shipped, the remaining evaluator-visible gaps are **brand re-coloring**, **accessibility theming** (`forced-colors`/high-contrast), and **finishing RTL**. None require re-architecting — the centralized token layer is the right substrate for all of them.
+> **Bottom line:** Marble's *static* Material design system is solid and at parity. With dark mode consciously off the table (enterprise-fit, per `dark-theme-adoption.md`), reduced-motion shipped, and single-seed **brand re-coloring** now shipped (generator still future), the remaining evaluator-visible gaps are **accessibility theming** (`forced-colors`/high-contrast) and **finishing RTL**. None require re-architecting — the centralized token layer is the right substrate for all of them.

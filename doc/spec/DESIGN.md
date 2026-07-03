@@ -36,8 +36,8 @@ Use this as the rulebook when styling a component that Mira does not cover.
 
 | Role | Color | Token |
 |------|-------|-------|
-| Brand blue | `#376fd0` | `--zk-color-primary` |
-| Brand container | `#d6e4ff` | `--zk-color-primary-container` |
+| Brand blue | `#376fd0` | `--zk-color-primary` (seed) |
+| Brand container | `≈#d6e4ff` | `--zk-color-primary-container` (derived from the seed via `color-mix`) |
 | Error | `#d32f2f` | `--zk-color-error` |
 | Warning | `#ed6c02` | `--zk-color-warning` |
 | Success (badge) | `#4caf50` | `--zk-color-status-success` |
@@ -47,6 +47,15 @@ Use this as the rulebook when styling a component that Mira does not cover.
 | On-status (badge text) | `#ffffff` | `--zk-color-on-status` |
 
 Chips use tinted backgrounds (`rgba(color, 0.1)`). Badges use full-strength color on white.
+
+### Brand-color override
+
+The four semantic roles (primary / secondary / error / warning) are **seeds**. Each
+role's `*-container` and `on-*-container` partners are **derived from the seed via
+`color-mix()`**, so overriding one seed (`--zk-color-primary`) at `:root` re-tints the
+whole palette — containers, overlays, focus ring, selected-row/alert/badge tints. See
+[brand-override.md](brand-override.md) for the full customer contract, the mid-to-dark
+contrast caveat, and the per-role derivation ratios.
 
 **Coachmark is intentionally the lone brand-filled popup.** Its card uses `--zk-color-primary` fill + `on-primary` text, while every other popup-family component (notification, toast, tooltip/popup, bandpopup) is a neutral/tinted/dark surface. This is deliberate, not an inconsistency to "fix": consistency here is **by role, not by sameness**. A coachmark is *proactive guided discovery* — it dims the page with a scrim and must win attention against it (a CTA), so the brand fill is correct (and matches Material's original Feature-Discovery pattern; MD3/MUI dropped the dedicated component, so there is no canonical token answer). Consequence: because the surface is brand-filled, child filled controls (`.z-button`) inherit the global primary fill and vanish — the theme MUST invert them (`.z-coachmark-content .z-button`: white bg + primary text + flipped state-layer/focus-ring).
 
