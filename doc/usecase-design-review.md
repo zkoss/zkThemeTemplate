@@ -20,7 +20,7 @@ These pages are the ground-truth showcase of the Marble theme applied to realist
 |---|---------|-------|----------|------|
 | X1 | Flat button hierarchy: Cancel/Back render as filled primary (same as Save/Next). Theme *ships* low-emphasis variants; the pages just don't apply them | **Page** | **High** | **Done 2026-07-02** |
 | X2 | Input inconsistency: active select comboboxes render grey/borderless with muted text (look disabled) beside white/bordered/black-text textboxes | **Theme** | **High** | **Done 2026-07-03** (combobox, datebox, bandbox; timebox/spinner excluded) |
-| P1 | item-editor: full-bleed Basic-Info fields plus inconsistent label placement (left vs top) within one form | Page | Med | Yes |
+| P1 | item-editor: full-bleed Basic-Info fields plus inconsistent label placement (left vs top) within one form | Page | Med | **Done 2026-07-03** |
 | P2 | ops-dashboard: delta color driven by arrow direction, not meaning ("Low Stock ↓2" shown red) | Page | Med | Yes |
 | P3 | account-settings: selected nav (Profile) does not match shown panel (Notifications) | Page | Low | Yes |
 | P4 | onboarding-wizard: em-dash in "Step 2 — Profile"; future step dots blue-outlined (weak done/todo contrast) | Page | Low | Yes |
@@ -88,7 +88,7 @@ Left settings-nav card plus right panel (Email alerts / Push toggles, Digest fre
 Stepbar (Account done / Profile current / Preferences and Done upcoming) plus a label-left form plus Back/Next. Issues: **X1** (Back equals Next); **X2** (text fields outlined-white, comboboxes filled-grey); **P4** "Step 2 — Profile" uses an em dash, and upcoming step dots are blue-outlined (they should be muted grey so done vs todo reads at a glance).
 
 ### item-editor. Most issues
-`Edit Item` plus SKU chip; sections Basic Info / Stock / Pricing / Options; footer Cancel plus Save. Issues: **X1**, **X2**, plus **P1**: (a) Basic-Info fields are full card width (~640px), far too wide for Name/SKU/Supplier, while Stock/Pricing use sensible multi-column widths, so field rhythm is erratic; (b) label placement is inconsistent, since Basic Info uses label-on-left while Stock/Pricing/Options use label-on-top in the same form; **P6**: the form card and the footer-action card are separate surfaces, leaving a seam.
+`Edit Item` plus SKU chip; sections Basic Info / Stock / Pricing / Options; footer Cancel plus Save. Issues: **X1**, **X2**, plus **P1** (**Done 2026-07-03**): (a) Basic-Info fields were full card width (~640px), far too wide for Name/SKU/Supplier, while Stock/Pricing used sensible multi-column widths, so field rhythm was erratic; (b) label placement was inconsistent, since Basic Info used label-on-left while Stock/Pricing/Options used label-on-top in the same form; **P6**: the form card and the footer-action card are separate surfaces, leaving a seam.
 
 ---
 
@@ -98,7 +98,7 @@ All fix locations are confirmed from source. Direction is settled. None of these
 
 - **X1 (buttons), page, 3 lines. DONE 2026-07-02:** added `sclass="z-button-outlined"` to Cancel [item-editor.zul:103](../src/test/resources/web/usecase/item-editor.zul#L103), Cancel [account-settings.zul:67](../src/test/resources/web/usecase/account-settings.zul#L67), Back [onboarding-wizard.zul:60](../src/test/resources/web/usecase/onboarding-wizard.zul#L60), preserving `z-ms-auto`. Primary CTAs (Save/Next/Sign In/Send/Add Item) stay filled. No theme edit. Chose `.z-button-outlined` over `.z-button-default` because it resets the base resting `box-shadow` to `none` (no residual shadow) and uses the primary color for both border and text (canonical MD outlined). Verified live (computed styles): Cancel/Back compute `background: transparent`, `border: 1px solid rgb(55,111,208)`, text `rgb(55,111,208)`, `box-shadow: none`; Save/Next stay filled `rgb(55,111,208)` with white text.
 - **X2 (comboboxes), theme. DONE 2026-07-03 (combobox):** made `.z-combobox-readonly` render identical to the active/editable combobox (removed the grey bg, faint border, muted text, and `pointer-events:none` dead button); the greyed look is now reserved for `disabled`. Verified live: readonly combobox matches the textbox (`bg #fff`, `border 1px rgba(0,0,0,.23)`, text `rgba(0,0,0,.87)`) and the arrow button opens the dropdown again (it was functionally dead before). Details + verified before/after in [x2-combobox-readonly-solution.md](x2-combobox-readonly-solution.md). The same fix was extended to **datebox** and **bandbox** (both open a popup when readonly, so they must read as active); **timebox / spinner excluded** (no dropdown when readonly, so a de-emphasized look is acceptable). Theme-wide, so a screenshot re-baseline is still owed.
-- **P1 (item-editor), page:** cap Basic-Info field widths (max-width, do not span the full card) and use one label placement for the whole form (label-on-top recommended). ZUL plus `usecase.css`.
+- **P1 (item-editor), page. DONE 2026-07-03:** converted the Basic-Info `<grid>` (label-on-left, 180px label column, `hflex="1"` full-bleed fields) into two label-on-top flex rows matching the Stock/Pricing idiom — Product Name + SKU, then Category + Supplier, each `z-flex-1 z-min-w-0` in a `z-d-flex z-flex-row z-flex-wrap z-gap-4` container. No new page CSS (uses existing `z-*` utilities only); values, the `constraint="no empty"` on SKU, and the Category combobox items all preserved. Verified live (computed styles) at 1280px: all four Basic-Info fields now 471px (~half of the 990px card, 2-per-row) instead of full-bleed, and every field label is `display:block` at 11px (`z-text-xs`) — identical placement to Pricing (471px, 2-col) and Stock (309px, 3-col). This page is not in the Playwright screenshot baseline suite, so no re-baseline is owed. See [item-editor.zul](../src/test/resources/web/usecase/item-editor.zul).
 - **P2 (dashboard deltas), page:** color deltas by good/bad meaning, not arrow direction (Low Stock ↓ equals green).
 - **P3 (settings state), page:** make the selected nav item match the shown panel.
 - **P4 (wizard), page:** replace the em dash with "Step 2 · Profile" or "Step 2: Profile"; mute upcoming step dots (grey, not blue-outlined).
@@ -106,7 +106,7 @@ All fix locations are confirmed from source. Direction is settled. None of these
 
 ### Recommended fix batches (for a later pass)
 
-1. **Page correctness (X1, P1, P2, P3, P4):** demo ZUL/CSS under `src/test/resources/web/usecase/`. Contained, no theme risk.
+1. **Page correctness (X1, P1, P2, P3, P4):** demo ZUL/CSS under `src/test/resources/web/usecase/`. Contained, no theme risk. **X1 done 2026-07-02; P1 done 2026-07-03; P2–P4 not started.**
 2. **Theme fix (X2):** one shared component; highest-leverage but touches every readonly combobox, so it needs `npm run build:css` plus a screenshot re-baseline. **Done 2026-07-03 for combobox + datebox + bandbox** (build run; re-baseline still owed). timebox/spinner excluded (no popup when readonly).
 3. **Optional polish (P5, P6, C1).**
 

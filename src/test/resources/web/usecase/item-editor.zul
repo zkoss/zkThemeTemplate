@@ -12,37 +12,31 @@
 
         <!-- Basic Info -->
         <label value="Basic Info" sclass="z-d-block z-text-base z-fw-medium z-text-on-surface z-mb-3"/>
-        <grid hflex="1" sclass="z-border-0">
-            <columns>
-                <column width="180px"/>
-                <column/>
-            </columns>
-            <rows>
-                <row>
-                    <label value="Product Name *"/>
-                    <textbox value="M6 Hex Bolt (100pk)" hflex="1"/>
-                </row>
-                <row>
-                    <label value="SKU *"/>
-                    <hlayout>
-                        <textbox value="" hflex="1" constraint="no empty"/>
-                    </hlayout>
-                </row>
-                <row>
-                    <label value="Category"/>
-                    <combobox value="Fasteners" readonly="true" hflex="1">
-                        <comboitem label="Fasteners"/>
-                        <comboitem label="Tools"/>
-                        <comboitem label="Safety Gear"/>
-                        <comboitem label="Packaging"/>
-                    </combobox>
-                </row>
-                <row>
-                    <label value="Supplier"/>
-                    <textbox value="Acme Industrial Co." hflex="1"/>
-                </row>
-            </rows>
-        </grid>
+        <div sclass="z-d-flex z-flex-row z-flex-wrap z-gap-4">
+            <div sclass="z-flex-1 z-min-w-0">
+                <label value="Product Name *" sclass="z-d-block z-mb-1 z-text-muted z-text-xs"/>
+                <textbox value="M6 Hex Bolt (100pk)" hflex="1"/>
+            </div>
+            <div sclass="z-flex-1 z-min-w-0">
+                <label value="SKU *" sclass="z-d-block z-mb-1 z-text-muted z-text-xs"/>
+                <textbox value="" hflex="1" constraint="no empty"/>
+            </div>
+        </div>
+        <div sclass="z-d-flex z-flex-row z-flex-wrap z-gap-4 z-mt-3">
+            <div sclass="z-flex-1 z-min-w-0">
+                <label value="Category" sclass="z-d-block z-mb-1 z-text-muted z-text-xs"/>
+                <combobox value="Fasteners" readonly="true" hflex="1">
+                    <comboitem label="Fasteners"/>
+                    <comboitem label="Tools"/>
+                    <comboitem label="Safety Gear"/>
+                    <comboitem label="Packaging"/>
+                </combobox>
+            </div>
+            <div sclass="z-flex-1 z-min-w-0">
+                <label value="Supplier" sclass="z-d-block z-mb-1 z-text-muted z-text-xs"/>
+                <textbox value="Acme Industrial Co." hflex="1"/>
+            </div>
+        </div>
 
         <!-- Stock -->
         <label value="Stock" sclass="z-d-block z-text-base z-fw-medium z-text-on-surface z-mb-3 z-mt-4"/>
