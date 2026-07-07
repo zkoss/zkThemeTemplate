@@ -13,7 +13,7 @@ under [`../`](../).
 | Spec | What it governs |
 |------|-----------------|
 | [DESIGN.md](DESIGN.md) | Root design-language rulebook — surface palette, text colors, elevation hierarchy |
-| [brand-override.md](brand-override.md) | Brand-color override: seed one token (`--zk-color-primary`) → containers/overlays derive via `color-mix()` |
+| [brand-override.md](brand-override.md) | Brand-color override: seed one token (`--zk-color-primary`) → containers/overlays derive via `oklch(from …)` absolute tone |
 | [window-design-rules.md](window-design-rules.md) | Window `mode` → elevation mapping; `border` must never drive shadow |
 | [spacing-policy.md](spacing-policy.md) | Widgets carry zero default margins; spacing is opt-in via containers/utilities |
 | [navigation-surface-rules.md](navigation-surface-rules.md) | Navigation chrome uses MD3 tonal elevation (surface-container tiers), not box-shadows |

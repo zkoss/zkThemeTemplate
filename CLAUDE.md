@@ -13,6 +13,9 @@ This is **Marble** - a Material Design theme for ZK Framework targeting enterpri
 - **Spring Boot Version**: 3.2.6 (for preview app)
 - **Browser Support**: Modern browsers only (last 2 versions of Chrome, Firefox, Safari, Edge)
 
+### Project Status
+This theme is slated to become the **default look-and-feel for the next major version, ZK 11.0**. It is **currently in development** and has **had no public release** yet.
+
 ### Project Goals
 Create a modern, accessible, and high-quality Material Design theme (visually aligned with MUI) that enables enterprise users to build visually appealing ZK applications.
 
@@ -139,7 +142,7 @@ Located in `doc/` directory:
 | [preview-page-descriptions.md](doc/preview-page-descriptions.md) | ZUL page descriptions for 8 use-case enterprise scenarios |
 | [zk-edition-components.md](doc/zk-edition-components.md) | Components by ZK edition (CE/PE/EE) |
 | [window-design-rules.md](doc/spec/window-design-rules.md) | Window mode↔elevation mapping; `border` must not drive shadow |
-| [brand-override.md](doc/spec/brand-override.md) | Brand-color override recipe — override one seed (`--zk-color-primary`) and containers/overlays/focus derive via `color-mix()`; mid-to-dark seed caveat |
+| [brand-override.md](doc/spec/brand-override.md) | Brand-color override recipe — override one seed (`--zk-color-primary`) and containers/overlays/focus derive via `oklch(from …)` absolute tone (hue-consistent); solid-fill-only contrast caveat |
 | [reset-scoping.md](doc/spec/reset-scoping.md) | `org.zkoss.zul.theme.browserDefault` — DSP-free reset scoping for JS-Embed host pages (global `reset.css` vs `@scope(.z-page)` `reset-embed.css`, swapped in `MarbleThemeProvider`) |
 | [md3-close-affordance-placement.md](doc/spec/md3-close-affordance-placement.md) | MD3 close/dismiss icon placement (inline trailing vs surface top-corner; full-screen-dialog exception) |
 | [verification-harness-decisions.md](doc/verification-harness-decisions.md) | Decision records: outcome-driven contracts (DR-1), dual-gate VERIFIED (DR-2) |
