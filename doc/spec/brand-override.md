@@ -64,28 +64,38 @@ container pair the same way:
 
 That's the whole contract: **set the seed(s); the palette follows.**
 
-## Contrast caveat — only the *solid-fill* foreground, and only for light seeds
+## Filled surfaces stay legible on any seed — the `-fill` cap
 
-Because the container and on-container are **both** tone-pinned, the pair stays legible
-for *any* seed lightness — a light-yellow seed still yields a light container with dark
-text (measured ≥ 6.6:1 across blue/green/yellow/violet seeds). Containers are safe.
-
-The one thing that stays **literal white** is `on-<role>` — the text/icon drawn on the
-**solid role fill** (filled buttons, filled chips), e.g. `--zk-color-on-primary`. White
-reads well on the mid-to-dark brand colors most organizations use (blues, greens,
-purples, deep reds). If you pick a **light** brand color, white-on-light fails contrast
-on those filled controls — so also override the matching solid-fill foreground:
+Containers and on-containers are both tone-pinned, so that pair is legible for *any*
+seed lightness (measured ≥ 6.6:1 across blue/green/yellow/violet). **Solid role fills**
+are handled too, via a small set of capped `-fill` tokens:
 
 ```css
-:root {
-    --zk-color-primary: #ffd54f;      /* light brand yellow */
-    --zk-color-on-primary: #3e2723;   /* dark foreground on the SOLID fill (filled buttons/chips) */
-}
+--zk-color-secondary-fill: oklch(from var(--zk-color-secondary) min(l, 0.54) c h);
 ```
 
-Auto-deriving this too needs CSS `contrast-color()`, which isn't baseline yet. A full
-seed→tonal-palette generator that picks all foregrounds automatically (the way
-MUI/Material and Ant Design do) is future work; see GAP 2 in
+`min(l, 0.54)` **caps the fill's lightness** — it darkens a color only when it is
+lighter than the cap, and leaves already-dark colors (primary, error) untouched. `0.54`
+is the highest cap where white text clears WCAG AA (≥ 4.5:1) on *every* hue, including
+worst-case cyan/lime. So a filled role/status surface keeps **white text** and stays
+legible whatever brand hue the customer seeds — no per-role foreground override.
+
+These `-fill` tokens back the filled **utility classes** `.z-bg-primary`,
+`.z-bg-secondary`, `.z-bg-error`, `.z-bg-success`, `.z-bg-warning`, `.z-bg-info` — the
+supported way to paint a button or surface with a role/status color. Use those (rather
+than the raw seed) whenever you put white text on a colored fill:
+
+```xml
+<button label="Save" sclass="z-bg-secondary" />   <!-- fill auto-capped; white text legible -->
+```
+
+Residual limit: `-fill` produces pure white-legible fills only down to a mid-luminance
+floor — a genuinely *mid*-toned vivid seed where neither black nor white can reach 4.5:1
+is unreachable by any fill-only rule. And the base `.z-button` default fill uses the raw
+`--zk-color-primary` (fine at Marble's blue); for a **light** primary rebrand, either
+paint buttons with `.z-bg-primary` or override `--zk-color-on-primary` to a dark value.
+Full automatic foreground selection (MUI/Ant style) needs `contrast-color()`, not yet
+baseline — see GAP 2 in
 [theme-competitive-gap-analysis.md](../theme-competitive-gap-analysis.md).
 
 ## What is NOT re-tinted (by design)
