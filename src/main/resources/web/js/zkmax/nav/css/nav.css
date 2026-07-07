@@ -210,13 +210,12 @@
     margin: 1px 0;
 }
 
-.z-navbar-vertical .z-navitem-content {
-    border-left: 3px solid transparent;
-}
-
-.z-navbar-vertical .z-navitem-selected > .z-navitem-content {
-    border-left-color: var(--zk-color-primary);
-}
+/* Selected item's active marker is the rounded tonal container alone (the tint
+ * fill + primary text + weight 600 from the shared selected rule above) — MD3
+ * Navigation Drawer / MUI ListItemButton. No left-edge accent bar: a bar is a
+ * classic/enterprise-sidebar idiom that MD3 replaced with the pill, and stacking
+ * it on the rounded container is redundant and clashes at the corners.
+ * See doc/contracts/navbar.md c7 and DESIGN.md §16. */
 
 /* ─── Horizontal layout ──────────────────────────────────────────────────── */
 .z-navbar-horizontal > ul {

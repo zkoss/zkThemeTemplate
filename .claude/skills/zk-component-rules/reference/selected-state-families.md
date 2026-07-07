@@ -1,6 +1,6 @@
 # Selected-state families (MD3)
 
-MD3 does not have a single "selected" colour. It has **three families**, each
+MD3 does not have a single "selected" colour. It has **four families**, each
 with its own visual treatment, depending on what kind of selection the
 component represents. Components in the same family MUST share the same
 selected-state tokens; components in different families MUST NOT be unified.
@@ -22,6 +22,7 @@ and rationale.
 | **Chip — resting** ("a tag I've added") | An individual chip/tag in a multi-select picker, in its default unfocused state. This theme follows **MUI** (MuiChip-filled), which uses a neutral tonal surface, NOT secondary-container. (Pure MD3 would use `secondary-container` for filter-chip-selected; this theme is MUI-visually-aligned.) | `--zk-color-surface-container-high` | `--zk-color-on-surface` | — |
 | **Chip — keyboard-focused** ("the chip I'm about to delete/edit") | A chip that has keyboard focus inside a multi-select picker. Treated as a list-row pick for keyboard navigation: it's "the row I'm on" within the chip strip. | `--zk-color-primary-container` | `--zk-color-on-primary-container` | only on `:focus-visible` / equivalent class |
 | **Single-point picker** ("the one chosen value") | The unique chosen value in a picker (e.g. the day the user picked in a calendar). Strong visual emphasis because the answer is singular. | `--zk-color-primary` (FILLED shape — solid disc/circle/square) | `--zk-color-on-primary` | typically a fully-rounded fill, not a rectangular row tint |
+| **Navigation** ("the destination I'm on") | The persistently-active item in a navigation rail / drawer / sidebar. One item stays highlighted to show the *current location*, independent of keyboard focus — unlike a list-row it is not the arrow-key cursor, it is where you are. | MD3 canonical = a rounded **active-indicator container** (pure MD3 nav drawer fills it with `secondary-container`). **This theme** uses a 12%-tint container: `color-mix(--zk-color-primary 12%, transparent)`. | `--zk-color-primary` | + `font-weight: 600`. **No left-edge accent bar** — the rounded tonal container is the whole marker (MD3 / MUI ListItemButton). |
 
 > **Why three families?** A row in a 200-row listbox should not scream — a
 > light container tint is enough. A filter chip needs to differentiate itself
@@ -59,6 +60,29 @@ but pure-MD3 styling is intentionally not used here for chips.
 | Calendar selected day | `.z-calendar-cell.z-calendar-selected` | `js/zul/db/css/calendar.css` |
 | Rating selected star | `.z-rating-button-selected` (TBD) | `js/zul/wgt/css/rating.css` |
 | Radio | `.z-radio:checked` | `js/zul/wgt/css/radio.css` |
+
+### Navigation family — tint container + accent bar
+| Component | Selector | CSS file |
+|-----------|----------|----------|
+| Navbar item (active) | `.z-navitem-selected > .z-navitem-content` | `js/zkmax/nav/css/nav.css` |
+| Navbar group (open/active) | `.z-nav-selected > .z-nav-content`, `.z-nav-open > .z-nav-content` | `js/zkmax/nav/css/nav.css` |
+
+> **Portable rule vs theme choice.** The *classification* (navigation is its own
+> selection family — do not unify it with list-row) is MD3-portable. The active
+> marker is the **rounded tonal container alone** (the tint fill + primary text +
+> weight 600); the exact tint value is this theme's choice, recorded in
+> `doc/spec/DESIGN.md §16`. **No left-edge accent bar** — an earlier iteration
+> added one (a `border-left` that curled into an arc on the rounded box, then a
+> straight `::after` strip), but a bar stacked on the MD3 pill is redundant and
+> clashes at the corners, so it was dropped (design review 2026-07-07). Do not
+> re-introduce a left accent. See `doc/skill-gaps.md`.
+
+> **Navigation-active ≠ list-row focus.** A common confusion: the `.z-listitem`
+> blue *left line* is not its selected state — the selected state is a
+> `primary-container` **fill** (list-row family, above). The left line is the
+> **focus** indicator (`box-shadow: inset 3px 0 0 var(--zk-color-primary)` on the
+> first cell), a separate affordance that happens to look like the navbar's
+> selected accent. Do not "unify" them; they express different things.
 
 ## Required CSS pattern
 

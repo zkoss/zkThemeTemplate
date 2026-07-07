@@ -483,3 +483,38 @@ layout are ours. So: (a) **edge-anchor** the track (`right:0`/`bottom:0`, flush)
 the **8px track width** (not the 6px thumb) so its forced-flush footprint is *identical* to
 the hover track. Result: rest and hover share one 8px flush footprint centred ~4px from the
 edge; on hover it merely refines into thumb-in-track + arrows, with zero lateral movement.
+
+## 16. Navigation — navbar / navitem selected state (added 2026-07-07)
+
+Navigation selection is its own MD3 family (the item that marks the *current
+location*, not the arrow-key cursor) — see
+`.claude/skills/zk-component-rules/reference/selected-state-families.md`. Marble
+follows the MD3 canonical treatment: the active marker is a **rounded tonal
+container**, aligned with MD3 Navigation Drawer / MUI `ListItemButton`.
+
+| Property | Value | Token |
+|----------|-------|-------|
+| Selected item background | 12% primary tint container | `color-mix(in srgb, var(--zk-color-primary) 12%, transparent)` |
+| Selected item text | primary | `--zk-color-primary` |
+| Selected item weight | 600 | literal |
+| Content-link corner radius | 8px (the tint container is rounded) | `--zk-shape-corner-small` |
+
+**No left-edge accent bar.** The rounded tonal container is the *whole* active
+marker. An earlier iteration added a left bar — first as a `border-left` (which
+curled into an arc on the rounded, `overflow:hidden` content link), then as a
+straight inset `::after` strip. On design review (2026-07-07) the bar was dropped
+entirely: stacking a classic/enterprise-sidebar accent on the MD3 pill states
+"active" twice in two idioms and clashes where the square bar meets the container's
+rounded corners. Do not re-introduce any left accent (`border-left`, `::before`, or
+`::after` strip). See `doc/skill-gaps.md`.
+
+(The usecase2 Mira dashboard sidebar is a separate customization demo — a dark
+sidebar that intentionally overrides to a square, edge-to-edge treatment in
+`usecase2.css`. That override is out of scope of this default-theme rule.)
+
+**Navigation-active ≠ list-row focus.** The `.z-listitem` blue *left line* is
+NOT a selected-state accent — the selected state is a `primary-container` fill
+(list-row family, per the selected-state-families skill). That left line is the listbox
+**focus** indicator (`box-shadow: inset 3px 0 0 var(--zk-color-primary)` on the
+first cell), a separate affordance that merely resembles the navbar accent. They
+are intentionally different; do not unify them.

@@ -507,6 +507,76 @@ test.describe('panel', () => {
 });
 
 // -------------------------------------------------------
+// Navbar — selected item is a rounded tonal container, NO left accent
+// -------------------------------------------------------
+// The selected navitem's active marker is the rounded tonal CONTAINER alone
+// (12% primary tint fill + primary text + weight 600) — MD3 Navigation Drawer /
+// MUI ListItemButton. There is NO left-edge accent: an earlier iteration added a
+// left bar (first a radius-clipped `border-left` arc, then a straight `::after`
+// strip), but stacking a classic-sidebar bar on the MD3 pill is redundant and
+// clashes at the corners, so the bar was dropped (design review 2026-07-07). This
+// guards against either accent re-appearing. NB: the `.z-listitem` "blue left
+// line" is a *focus* indicator (`box-shadow: inset 3px 0 0`), a different
+// component/state — not this. Gallery breadth is owned by gallery-scan.spec.ts
+// (the static gallery has no selected item). See doc/skill-gaps.md 2026-07-07 and
+// doc/contracts/navbar.md c7.
+test.describe('navbar', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto('/navbar.zul');
+    await page.waitForLoadState('networkidle');
+    await page.evaluate(() => document.fonts.ready.then(() => true));
+  });
+
+  test('selected item is a rounded tonal container with no left accent', async ({ page }) => {
+    // Select the first item in the expanded vertical navbar via a real click.
+    await page.locator('.z-navbar-vertical .z-navitem-content').first().click();
+    const selected = page.locator('.z-navbar-vertical .z-navitem-selected > .z-navitem-content').first();
+    await selected.waitFor({ state: 'visible' });
+
+    const m = await selected.evaluate((el) => {
+      // Handles rgb/rgba AND the slash-alpha form Chrome uses for color-mix()
+      // results (e.g. `oklab(L a b / 0.12)`, `color(srgb r g b / 0.12)`).
+      const alphaOf = (s: string) => {
+        if (!s || s === 'transparent') return 0;
+        const slash = s.match(/\/\s*([\d.]+)\s*\)/);
+        if (slash) return parseFloat(slash[1]);
+        const mm = s.match(/rgba?\(([^)]+)\)/);
+        if (!mm) return 1; // opaque named/hex-resolved colour
+        const p = mm[1].split(',').map((x) => x.trim());
+        return p.length === 4 ? parseFloat(p[3]) : 1;
+      };
+      const cs = getComputedStyle(el);
+      const after = getComputedStyle(el, '::after');
+      return {
+        borderTopLeftRadius: parseFloat(cs.borderTopLeftRadius) || 0,
+        bgAlpha: alphaOf(cs.backgroundColor),
+        borderLeftWidth: parseFloat(cs.borderLeftWidth) || 0,
+        borderLeftAlpha: alphaOf(cs.borderLeftColor),
+        afterContent: after.content,
+        afterWidth: parseFloat(after.width) || 0,
+      };
+    });
+
+    // Active marker = the rounded tonal container: a rounded corner + a visible
+    // tint fill. Both must be present.
+    expect(m.borderTopLeftRadius, 'selected item must be a rounded container').toBeGreaterThan(0);
+    expect(m.bgAlpha, 'selected item must carry the tonal tint fill').toBeGreaterThan(0);
+    // NO left accent of any kind. (a) not a coloured border-left…
+    const borderAccent = m.borderLeftWidth > 0 && m.borderLeftAlpha > 0.1;
+    expect(
+      borderAccent,
+      `selected item must have no border-left accent: width=${m.borderLeftWidth}px alpha=${m.borderLeftAlpha}`,
+    ).toBe(false);
+    // …(b) nor an ::after bar strip.
+    const afterAccent = m.afterContent !== 'none' && m.afterWidth >= 2;
+    expect(
+      afterAccent,
+      `selected item must have no ::after accent bar: content=${m.afterContent} width=${m.afterWidth}px`,
+    ).toBe(false);
+  });
+});
+
+// -------------------------------------------------------
 // Tablet-isolation guard
 // The tablet bundle must stay tablet-only: on a desktop UA, ZK must NOT inject
 // zkmax/css/tablet.css, so touch overrides can never leak into desktop.
