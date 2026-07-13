@@ -76,8 +76,13 @@
     --zk-color-warning-container: oklch(from var(--zk-color-warning) 0.92 calc(c * 0.38) h);    /* ≈ #ffe0b2 (seed-hue: renders a touch more orange) */
     --zk-color-on-warning-container: oklch(from var(--zk-color-warning) 0.42 calc(c * 0.59) h); /* ≈ #7a3900 */
 
-    /* Success (main — filled controls; status-success is the lighter accent) */
+    /* Success (seed) — completes the semantic role set (primary/secondary/error/
+       warning/success). main #2e7d32 = filled/text controls; status-success
+       #4caf50 remains the lighter badge/chip accent. */
     --zk-color-success: #2e7d32;
+    --zk-color-on-success: #ffffff;
+    --zk-color-success-container: oklch(from var(--zk-color-success) 0.90 calc(c * 0.33) h);    /* ≈ #c8e6c9 */
+    --zk-color-on-success-container: oklch(from var(--zk-color-success) 0.38 calc(c * 0.78) h); /* ≈ #1b5e20 */
 
     /* Neutral (light/dark filled-control variants — e.g. .z-button-light/-dark) */
     --zk-color-light: #f5f5f5;
@@ -144,20 +149,25 @@
      * Filled-surface variants (`-fill`) — cap OKLCh lightness at 0.54 so white
      * on-text always clears WCAG AA (4.5:1) on the fill, for ANY brand/status
      * hue. `min(l, 0.54)` only darkens colors lighter than the cap (secondary,
-     * status-success/warning/info); already-dark roles (primary/error) are
+     * success, warning, info); already-dark roles (primary/error) are
      * effectively unchanged. Consumed by the filled `.z-bg-*` utilities so a
      * role/status color used as a button or surface fill stays legible and
      * visually consistent with white text — including a customer's rebrand seed.
+     *
+     * Membership = one fill per `.z-bg-*` variant: the five semantic roles
+     * (primary/secondary/success/warning/error) plus `status-info` (info has no
+     * brand role). success/warning fills derive from the ROLE seed, not the
+     * lighter `status-*` accent, keeping the utility lineage consistent.
      *
      * Raw seeds/status stay full-strength everywhere else (text, links, borders,
      * icons, progress/loading bars, badges) where bright is correct and there is
      * no text on top. 0.54 is the highest cap where every hue — incl. worst-case
      * cyan/lime — clears AA; see doc/spec/brand-override.md.
      * --------------------------------------------------------------------- */
-    --zk-color-primary-fill:        oklch(from var(--zk-color-primary)        min(l, 0.54) c h);
-    --zk-color-secondary-fill:      oklch(from var(--zk-color-secondary)      min(l, 0.54) c h);
-    --zk-color-error-fill:          oklch(from var(--zk-color-error)          min(l, 0.54) c h);
-    --zk-color-status-success-fill: oklch(from var(--zk-color-status-success) min(l, 0.54) c h);
-    --zk-color-status-warning-fill: oklch(from var(--zk-color-status-warning) min(l, 0.54) c h);
-    --zk-color-status-info-fill:    oklch(from var(--zk-color-status-info)    min(l, 0.54) c h);
+    --zk-color-primary-fill:     oklch(from var(--zk-color-primary)     min(l, 0.54) c h);
+    --zk-color-secondary-fill:   oklch(from var(--zk-color-secondary)   min(l, 0.54) c h);
+    --zk-color-success-fill:     oklch(from var(--zk-color-success)     min(l, 0.54) c h);
+    --zk-color-warning-fill:     oklch(from var(--zk-color-warning)     min(l, 0.54) c h);
+    --zk-color-error-fill:       oklch(from var(--zk-color-error)       min(l, 0.54) c h);
+    --zk-color-status-info-fill: oklch(from var(--zk-color-status-info) min(l, 0.54) c h);
 }

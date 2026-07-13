@@ -20,8 +20,12 @@ _Target: 0 errors. Run `npm run lint:css` for the full human-readable listing._
 
 > ⚠️ orphan ≠ deletable. Keep complete systematic scales (typescale / motion / elevation)
 > and outward-facing theme API. Only one-off aliases / unused color slots are real candidates.
+>
+> The five semantic **role** quartets (primary/secondary/success/warning/error →
+> `<role>` / `on-<role>` / `<role>-container` / `on-<role>-container` + `-fill`) are a
+> deliberate public toolkit — keep every member even if a given slot has no current
+> `var()` consumer. Do NOT flag them as deletable.
 
-- `--zk-color-on-warning`
 - `--zk-elevation-5`
 - `--zk-motion-duration-long1`
 - `--zk-motion-duration-long2`
@@ -52,7 +56,7 @@ _Target: 0 errors. Run `npm run lint:css` for the full human-readable listing._
 - `--zk-typescale-title-large-line-height`
 - `--zk-typescale-title-small-line-height`
 
-**30 orphan token(s)** out of 197 defined. Triage each against the rule above.
+**29 orphan token(s)** out of 200 defined. Triage each against the rule above.
 
 ## B1. Hardcoded color candidates
 

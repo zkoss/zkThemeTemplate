@@ -38,13 +38,20 @@ Use this as the rulebook when styling a component that Mira does not cover.
 |------|-------|-------|
 | Brand blue | `#376fd0` | `--zk-color-primary` (seed) |
 | Brand container | `≈#d6e4ff` | `--zk-color-primary-container` (derived from the seed via `oklch(from …)`) |
-| Error | `#d32f2f` | `--zk-color-error` |
-| Warning | `#ed6c02` | `--zk-color-warning` |
-| Success (badge) | `#4caf50` | `--zk-color-status-success` |
-| Success (text) | `#2e7d32` | (use directly) |
+| Error | `#d32f2f` | `--zk-color-error` (full role quartet) |
+| Warning | `#ed6c02` | `--zk-color-warning` (full role quartet) |
+| Success | `#2e7d32` | `--zk-color-success` (full role quartet — container ≈ `#c8e6c9`) |
+| Success (badge accent) | `#4caf50` | `--zk-color-status-success` |
 | Info | `#0288d1` | `--zk-color-status-info` |
 | Neutral | `#9e9e9e` | `--zk-color-status-neutral` |
 | On-status (badge text) | `#ffffff` | `--zk-color-on-status` |
+
+The five semantic **roles** (primary / secondary / success / warning / error) each carry
+the full quartet (`<role>` / `on-<role>` / `<role>-container` / `on-<role>-container`) plus
+a `-fill`, and back both the `.z-bg-<role>`/`.z-text-<role>` utilities and the button
+color variants. The **status** palette (`status-success/warning/error/info/neutral`) is an
+independent, brighter accent set reserved for badges, chips, progressmeter, notification
+and toast. `info`/`neutral` have no brand role and live only in the status palette.
 
 Chips use tinted backgrounds (`rgba(color, 0.1)`). Badges use full-strength color on white.
 
