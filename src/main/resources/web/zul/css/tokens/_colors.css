@@ -171,3 +171,27 @@
     --zk-color-error-fill:       oklch(from var(--zk-color-error)       min(l, 0.54) c h);
     --zk-color-status-info-fill: oklch(from var(--zk-color-status-info) min(l, 0.54) c h);
 }
+
+/* -----------------------------------------------------------------------
+ * FEATURE: Built-in brand-color presets — flip via a data-brand attribute
+ * on the document root (<html>), toggled by the MarbleBrand Java helper.
+ *
+ * Each preset overrides ONLY the primary SEED. Everything else re-derives
+ * through the oklch(from …) cascade above — containers, on-containers, the
+ * L-capped `-fill` variants, state-layer overlays, --zk-focus-ring and
+ * --zk-color-inverse-primary — so a single line rebrands the whole palette.
+ * This is the same single-seed contract customers use (doc/spec/brand-override.md);
+ * the presets are just a curated set exposed as a runtime switch.
+ *
+ * :root[data-brand="…"] (specificity 0,2,0) beats the base :root block above
+ * (0,1,0) regardless of bundle source order. There is no "default" block —
+ * MarbleBrand.Brand.DEFAULT removes the attribute and the base :root wins.
+ *
+ * All five presets are MID-TO-DARK, so the literal white `--zk-color-on-primary`
+ * stays AA on the solid fill. A light brand seed would also need on-primary
+ * overridden (the caveat noted at the top of this file).
+ * --------------------------------------------------------------------- */
+:root[data-brand="indigo"]  { --zk-color-primary: #5e35b1; }
+:root[data-brand="teal"]    { --zk-color-primary: #00796b; }
+:root[data-brand="green"]   { --zk-color-primary: #2e7d32; }
+:root[data-brand="crimson"] { --zk-color-primary: #c2185b; }

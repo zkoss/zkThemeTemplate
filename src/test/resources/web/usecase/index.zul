@@ -21,6 +21,7 @@
                     <navitem label="Onboarding Wizard"    selected="@load(vm.currentPage eq '~./usecase/onboarding-wizard.zul')" onClick="@command('navigate', page='~./usecase/onboarding-wizard.zul')" />
                     <navitem label="Account Settings"     selected="@load(vm.currentPage eq '~./usecase/account-settings.zul')" onClick="@command('navigate', page='~./usecase/account-settings.zul')" />
                     <navitem label="Sign-In"              selected="@load(vm.currentPage eq '~./usecase/sign-in.zul')" onClick="@command('navigate', page='~./usecase/sign-in.zul')" />
+                    <navitem label="Brand Presets"        selected="@load(vm.currentPage eq '~./usecase/brand-switcher.zul')" onClick="@command('navigate', page='~./usecase/brand-switcher.zul')" />
                 </nav>
                 <nav label="Inputs" open="@load(vm.openNavLabel eq 'Inputs')">
                     <navitem label="Bandbox"          selected="@load(vm.currentPage eq '~./bandbox.zul')" onClick="@command('navigate', page='~./bandbox.zul')" />

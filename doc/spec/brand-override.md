@@ -144,3 +144,46 @@ touch more orange than the legacy `#ffe0b2` because the recipe keeps the *seed's
 
 **Browser support:** relative-color `oklch(from …)` is available in Chrome 119+,
 Safari 16.4+, and Firefox 128+ — within Marble's modern-browser support window.
+
+## Built-in presets + the `MarbleBrand` runtime switcher
+
+The seed-override contract above is the customer's *own-brand* path (a static `:root`
+rule). On top of it, Marble ships a small set of **built-in brand presets** exposed as a
+runtime switch — useful for letting an end user pick a brand, or for demos. Each preset
+is nothing more than the single-seed override, keyed off a `data-brand` attribute on the
+document root, defined in
+[_colors.css](../../src/main/resources/web/zul/css/tokens/_colors.css):
+
+```css
+:root[data-brand="indigo"]  { --zk-color-primary: #5e35b1; }
+:root[data-brand="teal"]    { --zk-color-primary: #00796b; }
+:root[data-brand="green"]   { --zk-color-primary: #2e7d32; }
+:root[data-brand="crimson"] { --zk-color-primary: #c2185b; }
+```
+
+`:root[data-brand="…"]` (specificity 0,2,0) beats the base `:root` block (0,1,0), so it
+wins regardless of bundle order. There is **no `default` block** — the default (Marble
+blue) is just the base `:root`, reached by removing the attribute. All five presets are
+mid-to-dark, so the literal white `--zk-color-on-primary` stays AA on their solid fills;
+a light preset would also need `--zk-color-on-primary` (the caveat above).
+
+Flip a preset from Java with the `MarbleBrand` helper
+([MarbleBrand.java](../../src/main/java/org/zkoss/theme/marble/MarbleBrand.java)):
+
+```java
+MarbleBrand.apply(MarbleBrand.Brand.TEAL);      // whole app
+MarbleBrand.apply(MarbleBrand.Brand.DEFAULT);   // removes data-brand → back to blue
+// Presets: DEFAULT, INDIGO, TEAL, GREEN, CRIMSON
+```
+
+**Whole-app only — by design.** Unlike density (`MarbleDensity`), which re-points size
+tokens as *literals* so its `data-density` attribute works at any scope, the brand
+presets override only the seed and rely on the `oklch(from …)` derivations declared at
+`:root`. A `data-brand` on a descendant would *not* re-derive the containers there (they
+resolved at `:root` and inherit frozen), and a brand is an app-wide identity anyway — so
+`MarbleBrand` exposes a single whole-app method. Prefer the static `:root` rule (above)
+for a fixed default; the runtime helper runs after first paint and can flash (FOUC).
+
+**Try it:** the `usecase/brand-switcher.zul` showcase page (nav: *Use Cases → Brand
+Presets*, deep link `usecase/index.zul#usecase/brand-switcher`) has clickable swatches, a
+live component preview, and the adoption snippets.

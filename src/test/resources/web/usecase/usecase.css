@@ -40,3 +40,33 @@ body {
    <html>. The [data-density="compact"] rule itself ships in the theme
    (tokens/_sizing.css), so there is nothing density-related to define here. */
 
+/* ============================================
+   Brand Presets showcase (usecase/brand-switcher.zul)
+   The swatch hexes/interaction are demo content, not theme values — the actual
+   brand knob (:root[data-brand]) ships in tokens/_colors.css. Only the clickable
+   affordance and the code-block styling live here.
+   ============================================ */
+.brand-swatch {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.12);
+    transition: transform 120ms ease;
+}
+.brand-swatch:hover {
+    transform: scale(1.08);
+}
+/* Selection ring uses neutral on-surface so the marker itself never shifts hue. */
+.brand-swatch-active {
+    box-shadow: 0 0 0 2px var(--zk-color-surface), 0 0 0 4px var(--zk-color-on-surface);
+}
+.brand-code {
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-size: 12.5px;
+    line-height: 1.6;
+    white-space: pre;
+    display: block;
+    overflow-x: auto;
+}
+

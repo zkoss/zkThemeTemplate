@@ -20,7 +20,7 @@ public class UseCaseVM {
         PAGE_TO_NAV = new HashMap<>();
         for (String p : new String[]{"usecase/inventory-table", "usecase/item-editor",
                 "usecase/ticket-inbox", "usecase/ops-dashboard", "usecase/onboarding-wizard",
-                "usecase/account-settings", "usecase/sign-in"}) {
+                "usecase/account-settings", "usecase/sign-in", "usecase/brand-switcher"}) {
             PAGE_TO_NAV.put(p, "Use Cases");
         }
         for (String p : new String[]{"button", "combobutton", "checkbox", "radiogroup",

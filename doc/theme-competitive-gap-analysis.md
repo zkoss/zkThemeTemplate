@@ -65,11 +65,12 @@ Legend: ✅ first-class · ⚠️ partial / undocumented · ❌ absent
 - **What competitors do:** MUI/Material generate a full tonal palette from a seed; Ant derives the whole token set algorithmically from `colorPrimary`; Fluent builds themes from a brand color ramp; PrimeFaces ships a visual **Theme Designer**.
 - **Accepted limits:** the derived on-/container **pairs** are now safe at any seed lightness. What still stays literal is `on-<role>` — the white text on the **solid** role fill — so a light seed must also override `--zk-color-on-<role>` (auto-deriving it needs `contrast-color()`, not yet baseline). Neutral surfaces and `status-*` badge colors are intentionally not re-tinted. **Full fix (future):** a seed→tonal-palette generator (build-time or JS) that also picks all foregrounds for contrast.
 
-### GAP 3 — Multiple prebuilt presets + in-app theme switcher  ·  *Severity: Medium*
+### GAP 3 — Multiple prebuilt presets + in-app theme switcher  ·  ✅ **BRAND VARIANT DONE 2026-07-13** (dark presets still won't-do)
 
-- **Current state:** Exactly **one** shipped theme (Marble). `iceblue` exists only as a *comparison baseline* for the verification harness, not as a selectable Marble variant. No switcher UI in the preview/use-case apps.
+- **Implemented:** Marble now ships **5 built-in brand-color presets** (Blue/default, Indigo, Teal, Green, Crimson) plus a runtime switcher. Each preset is a single-seed override (`--zk-color-primary`) keyed off a `data-brand` attribute on `<html>` in `tokens/_colors.css`; the whole palette re-derives via the `oklch(from …)` cascade (GAP 2). A `MarbleBrand` Java helper (`org.zkoss.theme.marble.MarbleBrand`, whole-app) flips it — mirroring the `MarbleDensity` pattern. A showcase page (`usecase/brand-switcher.zul`, nav *Use Cases → Brand Presets*) drives the switch with swatches, shows a live component preview, and documents both adoption paths. Contract in [spec/brand-override.md](spec/brand-override.md) → "Built-in presets + the `MarbleBrand` runtime switcher".
+- **Scope note:** these are **brand-color** presets, not color-*scheme* presets — dark/high-contrast presets remain out (GAP 1 dark is a won't-do). Region-scoped brand switching is intentionally not offered (whole-app only; see the contract for the freeze-problem rationale).
+- **Was:** exactly one shipped palette; `iceblue` was only a verification-harness comparison baseline, not a selectable variant; no switcher UI.
 - **What competitors do:** PrimeFaces/PrimeNG ship **dozens** (Aura, Lara, Material, Saga, …) with a live switcher; Carbon ships 4 (White/G10/G90/G100); Bootstrap has the Bootswatch ecosystem; Fluent ships web/teams light+dark+high-contrast. A theme switcher is table-stakes in their demo sites.
-- **Cheapest meaningful win:** once GAP 1 (dark) lands, expose a switcher in the use-case SPA — it both demos dark mode and signals "themeable" to evaluators.
 
 ### GAP 4 — Accessibility: `prefers-reduced-motion`  ·  ✅ **DONE 2026-06-29**
 
