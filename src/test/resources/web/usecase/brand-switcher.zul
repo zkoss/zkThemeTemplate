@@ -63,6 +63,20 @@
                value="Active brand applies to the whole app (this SPA) — try navigating to other pages after switching."/>
     </div>
 
+    <!-- Custom brand color -->
+    <div sclass="z-card z-d-flex z-flex-col z-gap-3">
+        <label value="…or define your own" sclass="z-text-base z-fw-medium z-text-on-surface"/>
+        <label sclass="z-text-sm z-text-muted"
+               value="You are not limited to the presets. Pick ANY color — it becomes the primary seed and the whole palette (container tints, fills, focus ring, selected states) re-derives from it through the same single-seed cascade."/>
+        <div sclass="z-d-flex z-flex-row z-align-center z-gap-3">
+            <colorbox value="#376fd0" onChange="@command('applyCustomBrand', color=self.value)"/>
+            <label value="Pick a color → the live preview below recolors instantly."
+                   sclass="z-text-sm z-text-on-surface"/>
+        </div>
+        <label sclass="z-text-xs z-text-muted"
+               value="Heads-up: a very light color needs a dark --zk-color-on-primary so white button text stays legible (see the caveat below). Mid-to-dark colors work with no extra step."/>
+    </div>
+
     <!-- Live preview -->
     <div sclass="z-card z-d-flex z-flex-col z-gap-4">
         <label value="Live preview" sclass="z-text-base z-fw-medium z-text-on-surface"/>
@@ -128,7 +142,7 @@
         <div sclass="z-d-flex z-flex-col z-gap-2">
             <label value="1. Your own brand color — one line of CSS" sclass="z-fw-medium"/>
             <label sclass="z-text-sm z-text-muted"
-                   value="Load a rule after the Marble theme CSS. Overriding the single primary seed re-derives the whole palette; no build step."/>
+                   value="This is the permanent form of the color picker above. Load a rule after the Marble theme CSS; overriding the single primary seed re-derives the whole palette — no build step, no FOUC."/>
             <div sclass="z-bg-surface-variant z-rounded z-p-3">
                 <label sclass="brand-code" pre="true" multiline="true"><attribute name="value">/* your-brand.css - loaded after the Marble theme */
 :root {
