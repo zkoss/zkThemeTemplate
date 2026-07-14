@@ -101,33 +101,42 @@
 
 /* ═══════════════════════════════════════════════════════════════════
    Checked state  (.z-checkbox-on on wrapper)
+   The `tristate` mold emits mold-PREFIXED state classes
+   (.z-checkbox-tristate-on / -indeterminate) — see the checkbox skill entry —
+   so every default-mold state selector below is paired with its tristate twin.
    ═══════════════════════════════════════════════════════════════════ */
-.z-checkbox-on > .z-checkbox-mold {
+.z-checkbox-on > .z-checkbox-mold,
+.z-checkbox-tristate-on > .z-checkbox-mold {
     background-color: var(--zk-color-primary);
     border-color: var(--zk-color-primary);
 }
 
-.z-checkbox-on > .z-checkbox-mold::before {
+.z-checkbox-on > .z-checkbox-mold::before,
+.z-checkbox-tristate-on > .z-checkbox-mold::before {
     background-color: var(--zk-color-primary);
 }
 
-.z-checkbox-on > .z-checkbox-mold::after {
+.z-checkbox-on > .z-checkbox-mold::after,
+.z-checkbox-tristate-on > .z-checkbox-mold::after {
     display: block;
 }
 
 /* ═══════════════════════════════════════════════════════════════════
    Indeterminate state  (.z-checkbox-indeterminate on wrapper)
    ═══════════════════════════════════════════════════════════════════ */
-.z-checkbox-indeterminate > .z-checkbox-mold {
+.z-checkbox-indeterminate > .z-checkbox-mold,
+.z-checkbox-tristate-indeterminate > .z-checkbox-mold {
     background-color: var(--zk-color-primary);
     border-color: var(--zk-color-primary);
 }
 
-.z-checkbox-indeterminate > .z-checkbox-mold::before {
+.z-checkbox-indeterminate > .z-checkbox-mold::before,
+.z-checkbox-tristate-indeterminate > .z-checkbox-mold::before {
     background-color: var(--zk-color-primary);
 }
 
-.z-checkbox-indeterminate > .z-checkbox-mold::after {
+.z-checkbox-indeterminate > .z-checkbox-mold::after,
+.z-checkbox-tristate-indeterminate > .z-checkbox-mold::after {
     display: block;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 18'%3E%3Crect fill='%23ffffff' x='3' y='8' width='12' height='2'/%3E%3C/svg%3E");
 }
@@ -136,13 +145,16 @@
    Hover states
    ═══════════════════════════════════════════════════════════════════ */
 /* Unchecked hover */
-.z-checkbox-off:not(.z-checkbox-disabled):hover > .z-checkbox-mold::before {
+.z-checkbox-off:not(.z-checkbox-disabled):hover > .z-checkbox-mold::before,
+.z-checkbox-tristate-off:not(.z-checkbox-disabled):hover > .z-checkbox-mold::before {
     opacity: var(--zk-state-hover-opacity);
 }
 
 /* Checked/indeterminate hover */
 .z-checkbox-on:not(.z-checkbox-disabled):hover > .z-checkbox-mold::before,
-.z-checkbox-indeterminate:not(.z-checkbox-disabled):hover > .z-checkbox-mold::before {
+.z-checkbox-indeterminate:not(.z-checkbox-disabled):hover > .z-checkbox-mold::before,
+.z-checkbox-tristate-on:not(.z-checkbox-disabled):hover > .z-checkbox-mold::before,
+.z-checkbox-tristate-indeterminate:not(.z-checkbox-disabled):hover > .z-checkbox-mold::before {
     opacity: var(--zk-state-hover-opacity);
 }
 
@@ -168,20 +180,23 @@
 }
 
 /* Disabled unchecked */
-.z-checkbox-disabled.z-checkbox-off > .z-checkbox-mold {
+.z-checkbox-disabled.z-checkbox-off > .z-checkbox-mold,
+.z-checkbox-disabled.z-checkbox-tristate-off > .z-checkbox-mold {
     border-color: var(--zk-color-on-surface);
     opacity: var(--zk-state-disabled-opacity);
 }
 
 /* Disabled checked */
-.z-checkbox-disabled.z-checkbox-on > .z-checkbox-mold {
+.z-checkbox-disabled.z-checkbox-on > .z-checkbox-mold,
+.z-checkbox-disabled.z-checkbox-tristate-on > .z-checkbox-mold {
     background-color: var(--zk-color-on-surface);
     border-color: transparent;
     opacity: var(--zk-state-disabled-opacity);
 }
 
 /* Disabled indeterminate */
-.z-checkbox-disabled.z-checkbox-indeterminate > .z-checkbox-mold {
+.z-checkbox-disabled.z-checkbox-indeterminate > .z-checkbox-mold,
+.z-checkbox-disabled.z-checkbox-tristate-indeterminate > .z-checkbox-mold {
     background-color: var(--zk-color-on-surface);
     border-color: transparent;
     opacity: var(--zk-state-disabled-opacity);

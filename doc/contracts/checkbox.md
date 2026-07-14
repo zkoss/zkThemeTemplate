@@ -63,7 +63,23 @@ glyph), NO inset shadow. Sizing stays MUI-compact (32×32, r4).
 
 (tg5 retired 2026-06-04 — check icon removed by user decision; id not reused.)
 
+### Tristate mold (`mold="tristate"`) — three visually distinct states
+
+ZK emits mold-**prefixed** state classes for this mold (`.z-checkbox-tristate-off` / `-on` /
+`-indeterminate`), NOT the unprefixed default-mold classes — see the checkbox skill entry. The box
+reuses the default-mold visual (18px square, `::after` glyph). Each state must be distinguishable:
+checked = checkmark on a primary fill, indeterminate = dash on a primary fill. (Gap 2026-07-14.)
+
+| id | selector | property | expected |
+|----|----------|----------|----------|
+| tr1 | `.z-checkbox-tristate-off > .z-checkbox-mold` | background / `::after` | transparent box, outline border; `::after` display none (no glyph) |
+| tr2 | `.z-checkbox-tristate-on > .z-checkbox-mold` | background / `::after` | `var(--zk-color-primary)` fill; `::after` display block = **checkmark** SVG |
+| tr3 | `.z-checkbox-tristate-indeterminate > .z-checkbox-mold` | background / `::after` | `var(--zk-color-primary)` fill; `::after` display block = **dash** SVG |
+| tr4 | tr2 vs tr3 | `::after` background-image | must **differ** (checkmark ≠ dash) — the two states are not interchangeable |
+| tr5 | `.z-checkbox-disabled.z-checkbox-tristate-{on,indeterminate}` | opacity | 0.38 |
+
 ## States to evaluate
 - [ ] unchecked, checked, indeterminate (if supported), hover, focus-visible, disabled
 - [ ] switch mold: off, on, hover, focus-visible, disabled (sw1–sw9)
 - [ ] toggle mold: off, on, hover, focus-visible, disabled (tg1–tg7)
+- [ ] tristate mold: off, on (checkmark), indeterminate (dash), disabled (tr1–tr5)

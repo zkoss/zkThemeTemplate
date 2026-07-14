@@ -14,6 +14,19 @@ zk-version: 10.2.1-jakarta
 ## Expected values
 Same input metrics as combobox c1–c8 (just selectors → `.z-datebox-*`). Calendar popup styled separately; cross-reference `calendar` contract.
 
+### Timezone `<select>` focus — Mechanism A (gap 2026-07-14)
+The in-popup timezone `<select>` (`.z-datebox-timezone > select`) is a native, intrinsically-sized
+control → it MUST use Mechanism A, not a 2px focus border (which would grow the box on both axes and
+shift its text). See `reference/focus-affordance-no-layout-shift.md` (§ `<select>`).
+
+| id | selector | property | expected |
+|----|----------|----------|----------|
+| tz1 | `.z-datebox-timezone > select:focus` | border-width | **1px** (unchanged from rest — NOT 2px) |
+| tz2 | `.z-datebox-timezone > select:focus` | box-shadow | `inset 0 0 0 1px var(--zk-color-primary)` (the ring) |
+| tz3 | `.z-datebox-timezone > select` | transition-property | must **NOT** include `border-width` |
+
+Guarded by `screenshot.spec.ts › input focus (no layout shift) › datebox timezone <select>`.
+
 ## States to evaluate
 - [ ] default, hover, focus, disabled, readonly, invalid, open
 - [ ] inplace (see `reference/inplace-state.md`)

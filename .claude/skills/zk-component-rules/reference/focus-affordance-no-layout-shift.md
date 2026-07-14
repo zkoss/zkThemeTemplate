@@ -99,10 +99,16 @@ list's vertical growth, so use mechanism A here: keep `border: 1px` and draw the
 the plain root inset ring (not the `::after` overlay) is sufficient. Apply to **both** copies —
 `.z-select` in `listbox.css` and `.z-selectbox` in `selectbox.css` (caught 2026-06-11).
 
-**Does NOT apply to combobox:** combobox puts the border on its **input/button children** (each
-`min-height: 40px`) and leaves the root borderless. A child border growing to 2px (border-box) shrinks
-the child's content but the child stays 40px and the borderless root stays 40px → no growth. Combobox
-is the structural exception; do not "fix" it.
+**Combobox — the "no growth" exception is about HEIGHT ONLY.** Combobox puts the border on its
+**input/button children** (each `min-height: 40px`) and leaves the root borderless. A child border
+growing to 2px (border-box) shrinks the child's content but the child stays 40px and the borderless
+root stays 40px → the control does **not** grow. That is all the exception guarantees. It does
+**not** mean the child text is fine: the input's left border grows 1px→2px with `border-right:none`,
+so with `box-sizing:border-box` the input's content box shrinks on the left and the text shifts ~1px
+right (mechanism B applies inside the child — compensate `padding-left` on `:focus-within`, don't
+change the height). Caught 2026-07-14: combobox default+error had border-width:2px on focus with **no**
+padding compensation → permanent text shift. Fix = `padding-left: calc(spacing-3 - 1px)` on
+`.z-combobox:focus-within .z-combobox-input` (+ never transition `border-width`, see below).
 
 **Applies to inputgroup — a *group of independently-styled* inputs (caught 2026-06-25).**
 `inputgroup` is a flex container whose children (`.z-textbox`, addons, buttons) each carry their own
@@ -137,12 +143,43 @@ This is what `input.css` (textbox/intbox/decimalbox/…) does. It works because 
 min-height-pinned children fighting the content-box shrink. **Do not** copy this onto a composite
 input — padding compensation cannot offset child-driven vertical growth there; use mechanism A.
 
+## The transition trap — never transition `border-width`
+
+Even when the steady-state compensation is correct (mechanism B's `padding` absorbs the
+border growth so rest-edge == focus-edge), you get a **transient** ~1px jitter if the
+`transition` animates `border-width` but not its compensator `padding`:
+
+```css
+.z-textbox {
+    transition: border-color …, border-width …;   /* ← BUG: border-width animates, padding does not */
+}
+.z-textbox:focus { border-width: 2px; padding: 0 calc(spacing-3 - 1px); }
+```
+
+On focus, `padding` snaps to its compensated value instantly while `border-width` **eases**
+1px→2px. Mid-animation the content edge = `border + padding` is momentarily off by up to 1px,
+then slides back as the border finishes growing — the visible text jitter (and the reverse on
+blur). The steady-state "focus bbox == rest bbox" check does **not** catch this: it measures the
+settled state, which is correct.
+
+**Rule: transition only non-layout properties.** Animate `border-color` (mechanism B) or
+`box-shadow` (mechanism A); let `border-width` and `padding` **snap together** un-transitioned so
+the compensated edge is stable at every frame. This is a general property of animating a
+layout-affecting property without co-animating whatever offsets it — don't do it. Caught 2026-07-14
+across the whole textbox family (`input.css`), combobox (`combobox.css`), and the datebox timezone
+`<select>` (`datebox.css`); this was the second time the focus jitter shipped, hence this rule.
+
 ## How the harness should catch a regression
 
-Add an outcome assertion to every outlined-input contract:
+Two assertions per outlined-input contract — steady-state geometry **and** the transition:
 
-> `.z-<comp>` bbox dimensions when `:focus-within` (or `:focus`) **==** dimensions at rest (±0px).
+> 1. `.z-<comp>` content edge (`border-left-width + padding-left`) / bbox when `:focus`/`:focus-within`
+>    **==** at rest (±0px) — catches missing compensation (permanent shift).
+> 2. The focused element's `transition-property` **does not include `border-width`** — catches the
+>    transient jitter that assertion 1 is blind to.
 
-Measure rest geometry, programmatically focus the inner input, force reflow, re-measure. Any non-zero
-delta is the layout-shift bug. (When measuring computed `box-shadow`/`border-color`, disable the
-element's `transition` first — otherwise you read mid-animation values, not the focus target.)
+Measure rest geometry with transitions disabled, programmatically focus the inner input, force
+reflow, re-measure. Any non-zero delta is the permanent layout-shift bug. (When measuring computed
+`box-shadow`/`border-color`, disable the element's `transition` first — otherwise you read
+mid-animation values, not the focus target.) The Playwright guard for both lives in
+`src/test/playwright/screenshot.spec.ts › input focus (no layout shift)`.

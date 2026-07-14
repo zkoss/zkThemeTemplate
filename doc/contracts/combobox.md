@@ -22,6 +22,8 @@ zk-version: 10.2.1-jakarta
 | c5 | `.z-combobox-input:hover` | border-color | rgba(0, 0, 0, 0.87) |
 | c6 | `.z-combobox-input:focus` | border-color | rgb(55, 111, 208) |
 | c7 | `.z-combobox-input:focus` | border-width | 2px |
+| c7a | `.z-combobox:focus-within .z-combobox-input` | content edge (`border-left + padding-left`) | **== rest (±0px)** — `padding-left` compensates the 2px left border (`border-right:none`); text must NOT shift right. Gap 2026-07-14 |
+| c7b | `.z-combobox-input` / `.z-combobox-button` | transition-property | must **NOT** include `border-width` — snaps in step with padding comp so nothing drifts |
 | c8 | `.z-combobox-button` | width | 24–32px (small icon area) |
 | c9 | `.z-combobox-popup` | box-shadow | dropdown shadow (DESIGN.md §6, level 2) |
 | c10 | `.z-combobox-popup` | border-radius | 4px |

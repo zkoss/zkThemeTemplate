@@ -65,8 +65,15 @@ State selectors below reference the **anchor selectors** above. The check applie
 | c14 | readonly | background-color | ≠ rgb(255, 255, 255) (tinted) | DESIGN.md §1 | no |
 | c15 | invalid | border-color | rgb(211, 47, 47) | DESIGN.md §3 | no |
 | c16 | textarea | min-height | ≥ 64px | inferred | no |
+| c17 | default + Tab focus | content edge (`border-left + padding-left`) | **== rest (±0px)** — padding compensates the 2px border | reference/focus-affordance-no-layout-shift.md | no |
+| c18 | default | transition-property | must **NOT** include `border-width` (would jitter text mid-animation) | reference/focus-affordance-no-layout-shift.md | no |
 
 `token-rooted?` column is hint for the Evaluator to apply D6 logic: read the token's resolved value before deciding whether the failure is token- or component-rooted.
+
+**Focus must not shift text** (gap 2026-07-14, second occurrence). c12's 2px border is absorbed by
+mechanism-B padding compensation (c17) AND `border-width` must not be transitioned (c18) — animating
+it without co-animating padding drifts the content edge mid-transition. Guarded by
+`screenshot.spec.ts › input focus (no layout shift) › textbox family`.
 
 ## States to evaluate
 

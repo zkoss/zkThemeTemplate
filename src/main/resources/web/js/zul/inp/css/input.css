@@ -23,9 +23,12 @@
     outline: none;
     box-sizing: border-box;
     vertical-align: middle;
-    transition:
-        border-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard),
-        border-width var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
+    /* Only transition border-COLOR. On focus, border-width snaps 1px→2px and the
+       compensating padding (0 spacing-3 → 0 calc(spacing-3 - 1px)) snaps with it, so
+       the content edge stays put. Animating border-width WITHOUT co-animating padding
+       makes the text drift ~1px mid-transition (the reported focus jitter). See
+       reference/focus-affordance-no-layout-shift.md — "do not transition border-width". */
+    transition: border-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
 }
 
 .z-textbox::placeholder,

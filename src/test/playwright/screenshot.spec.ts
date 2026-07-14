@@ -204,6 +204,118 @@ test.describe('checkbox', () => {
       await padShot(page, el, [DIR, `${name}.png`]);
     });
   }
+
+  // mold="tristate" checked vs indeterminate must be visually distinct: checked =
+  // checkmark on a filled box, indeterminate = dash on a filled box. ZK emits
+  // mold-PREFIXED state classes (.z-checkbox-tristate-on / -indeterminate) that the
+  // theme originally didn't style, so both rendered as an empty box. See
+  // doc/skill-gaps.md 2026-07-14.
+  test('tristate checked shows checkmark, indeterminate shows dash', async ({ page }) => {
+    const r = await page.evaluate(() => {
+      const read = (wrapperSel: string) => {
+        const wrap = document.querySelector(wrapperSel) as HTMLElement | null;
+        if (!wrap) return null;
+        const mold = wrap.querySelector('.z-checkbox-mold') as HTMLElement;
+        const cs = getComputedStyle(mold);
+        const after = getComputedStyle(mold, '::after');
+        return { bg: cs.backgroundColor, afterDisplay: after.display, afterImage: after.backgroundImage };
+      };
+      return { on: read('.z-checkbox-tristate-on'), ind: read('.z-checkbox-tristate-indeterminate') };
+    });
+    expect(r.on, 'tristate checked checkbox present on checkbox.zul').not.toBeNull();
+    expect(r.ind, 'tristate indeterminate checkbox present on checkbox.zul').not.toBeNull();
+    // Both states fill the box (primary) — a transparent box = the bug (unstyled).
+    expect(r.on!.bg, 'tristate-on box must be filled').not.toBe('rgba(0, 0, 0, 0)');
+    expect(r.ind!.bg, 'tristate-indeterminate box must be filled').not.toBe('rgba(0, 0, 0, 0)');
+    // Both reveal their ::after glyph.
+    expect(r.on!.afterDisplay).toBe('block');
+    expect(r.ind!.afterDisplay).toBe('block');
+    // And the two glyphs differ (checkmark vs dash) — this is what makes them distinguishable.
+    expect(r.on!.afterImage, 'checkmark glyph present').not.toBe('none');
+    expect(r.ind!.afterImage, 'dash glyph present').not.toBe('none');
+    expect(r.on!.afterImage, 'checked and indeterminate glyphs must differ').not.toBe(r.ind!.afterImage);
+  });
+});
+
+// -------------------------------------------------------
+// Input focus — no layout shift (regression guard, doc/skill-gaps.md 2026-07-14)
+// -------------------------------------------------------
+// Focusing an input must NOT move its text and must NOT transition `border-width`.
+// Transitioning border-width (1px→2px) without co-animating the compensating padding
+// makes the content edge drift mid-animation = the ~1px jitter the user reported.
+// The steady-state content edge is measured with transitions DISABLED (per the
+// reference doc — otherwise we read mid-animation values, not the focus target).
+test.describe('input focus (no layout shift)', () => {
+  async function measure(page: Page, sel: string) {
+    return await page.evaluate((sel) => {
+      const el = document.querySelector(sel) as HTMLElement | null;
+      if (!el) return null;
+      const origTransition = getComputedStyle(el).transitionProperty;
+      const edge = () => {
+        const cs = getComputedStyle(el);
+        return parseFloat(cs.borderLeftWidth) + parseFloat(cs.paddingLeft);
+      };
+      el.style.transition = 'none';      // measure settled geometry, not mid-transition
+      void el.offsetWidth;
+      const rest = edge();
+      el.focus();
+      void el.offsetWidth;
+      const focused = edge();
+      el.blur();
+      return { origTransition, rest, focused };
+    }, sel);
+  }
+
+  test('textbox family: no border-width transition, content edge stable', async ({ page }) => {
+    await page.goto('/textbox.zul');
+    await page.waitForLoadState('networkidle');
+    const m = await measure(page, '.z-textbox');
+    expect(m, '.z-textbox present').not.toBeNull();
+    // The actual jitter cause: border-width is animated but its padding compensator is not.
+    expect(m!.origTransition, 'textbox must not transition border-width').not.toContain('border-width');
+    expect(m!.focused, 'settled content edge must equal rest').toBeCloseTo(m!.rest, 1);
+  });
+
+  test('combobox input: no border-width transition, content edge stable', async ({ page }) => {
+    await page.goto('/combobox.zul');
+    await page.waitForLoadState('networkidle');
+    // Focusing the input triggers :focus-within on the wrapper → border-width:2px on the input.
+    const m = await measure(page, '.z-combobox-input');
+    expect(m, '.z-combobox-input present').not.toBeNull();
+    expect(m!.origTransition, 'combobox input must not transition border-width').not.toContain('border-width');
+    // Before the fix the input had border-width:2px on focus with NO padding comp → +1px shift.
+    expect(m!.focused, 'settled content edge must equal rest').toBeCloseTo(m!.rest, 1);
+  });
+
+  // The timezone <select> lives inside the datebox popup (awkward to instantiate),
+  // so assert against the compiled CSS text instead. ZK injects component CSS lazily
+  // via the AU engine, so we fetch combo.css.dsp directly rather than scanning
+  // document.styleSheets. A native <select> is intrinsically sized → must use
+  // Mechanism A (border stays 1px, ring via inset box-shadow); a border-width
+  // transition would both grow the box and shift its text.
+  test('datebox timezone <select>: Mechanism A ring, no border-width transition', async ({ page }) => {
+    await page.goto('/datebox.zul');
+    await page.waitForLoadState('networkidle');
+    const css = await page.evaluate(async () => {
+      const link = [...document.querySelectorAll('link[rel="stylesheet"]')]
+        .map(l => (l as HTMLLinkElement).href).find(h => h.includes('/marble/'));
+      if (!link) return null;
+      const prefix = link.slice(0, link.indexOf('/marble/') + '/marble'.length);
+      const res = await fetch(prefix + '/js/zul/inp/css/combo.css.dsp');
+      return res.ok ? await res.text() : null;
+    });
+    expect(css, 'combo.css.dsp fetched').not.toBeNull();
+    // Match the STANDALONE `.z-datebox-timezone > select` rule (not the popup-scoped
+    // `.z-datebox-popup .z-datebox-timezone …` override): the negative lookbehind
+    // rejects a selector where `.z-datebox-timezone` is preceded by a descendant
+    // combinator (space) or another selector token. Works on minified OR pretty CSS.
+    const base = css!.match(/(?<![\w.\-# ])\.z-datebox-timezone\s*>\s*select\s*\{([^}]*)\}/);
+    expect(base, 'timezone <select> base rule found').not.toBeNull();
+    expect(base![1], 'base rule must not transition border-width').not.toContain('border-width');
+    const focus = css!.match(/(?<![\w.\-# ])\.z-datebox-timezone\s*>\s*select:focus[^{]*\{([^}]*)\}/);
+    expect(focus, 'timezone <select> :focus rule found').not.toBeNull();
+    expect(focus![1], 'focus must draw an inset box-shadow ring (Mechanism A)').toContain('inset');
+  });
 });
 
 // -------------------------------------------------------

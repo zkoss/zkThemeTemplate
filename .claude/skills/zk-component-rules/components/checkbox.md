@@ -1,14 +1,15 @@
 # checkbox
 
-Three molds rendered by the same component: default checkbox, switch, toggle.
+Four molds rendered by the same component: default checkbox, switch, toggle, tristate.
 
-## Three molds
+## Four molds
 
 | Mold | Markup | Visual |
 |------|--------|--------|
 | (default) | `<checkbox label="..."/>` | Square box with checkmark |
 | switch | `<checkbox mold="switch" label="..."/>` | iOS-style on/off switch |
 | toggle | `<checkbox mold="toggle" label="..."/>` | Binary toggle button (looks like a pressed/unpressed button) |
+| tristate | `<checkbox mold="tristate" label="..."/>` | Square box with three states: unchecked / checkmark (checked) / dash (indeterminate) |
 
 The mold adds `.z-checkbox-{mold}` to the root. Default mold gets no mold modifier.
 
@@ -27,16 +28,29 @@ sibling `<label class="z-checkbox-content">` *outside* the mold. Consequences fo
 
 ## State classes are **mold-prefixed**
 
-This is a non-intuitive ZK choice:
+This is a non-intuitive ZK choice. `Checkbox.ts` builds the state class as
+`getMoldPrefix_() + state`, where the prefix is `''` for the default mold and `'<mold>-'`
+otherwise (`getClassNameByState_()`):
 
 - `.z-checkbox-disabled` ✓ (default mold)
 - `.z-checkbox-switch-on` ✓ (switch when checked)
 - `.z-checkbox-switch-disabled` ✓
 - `.z-checkbox-toggle-off` ✓ (toggle when unchecked)
 - `.z-checkbox-toggle-on` ✓
+- `.z-checkbox-tristate-off` / `.z-checkbox-tristate-on` / `.z-checkbox-tristate-indeterminate` ✓ (tristate)
 - `.z-checkbox-on` ✗ (does not exist — checked state for default mold lives on the inner `<input>`'s `checked` attribute)
 
-When writing CSS for switch / toggle, **always include the mold in the state class**.
+When writing CSS for switch / toggle / **tristate**, **always include the mold in the state class**.
+
+### tristate is the one mold that has an `-indeterminate` state class
+
+Unlike the default mold (whose `indeterminate="true"` produces the *unprefixed*
+`.z-checkbox-indeterminate`), the tristate mold produces the mold-prefixed
+`.z-checkbox-tristate-indeterminate` (and `-on` / `-off`). A theme that styles only the
+unprefixed default-mold classes will render **every** tristate state as a bare unchecked
+box — checked and indeterminate become indistinguishable. Style the tristate `-on`
+(checkmark) and `-indeterminate` (dash) classes explicitly, mirroring the default mold.
+(Caught 2026-07-14 — see `doc/skill-gaps.md`.)
 
 ## Checked state for default mold
 

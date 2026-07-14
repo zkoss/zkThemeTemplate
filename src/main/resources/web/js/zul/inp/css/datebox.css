@@ -279,9 +279,13 @@
     appearance: none;
     -webkit-appearance: none;
 
+    /* A native <select> is intrinsically sized, so a 2px focus border would grow the
+       box outward on both axes AND shift the text. Use Mechanism A: keep border 1px,
+       draw the focus ring as an inset box-shadow. Never transition border-width. See
+       reference/focus-affordance-no-layout-shift.md (§ <select> = Mechanism A). */
     transition:
         border-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard),
-        border-width var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
+        box-shadow var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
 }
 
 .z-datebox-timezone > select::-ms-expand {
@@ -295,7 +299,7 @@
 .z-datebox-timezone > select:focus,
 .z-datebox-timezone > select:focus-visible {
     border-color: var(--zk-color-primary);
-    border-width: 2px;
+    box-shadow: inset 0 0 0 1px var(--zk-color-primary);
     outline: none;
 }
 
