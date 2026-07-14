@@ -1,0 +1,240 @@
+/* ===========================================================================
+ * FEATURE: forced-colors (Windows High-Contrast Mode) — GAP 5, 2026-07-14
+ *
+ * Under `forced-colors: active` the OS swaps the palette for a small set of
+ * system colors and STRIPS every box-shadow. Marble (MD3-style) leans on two
+ * things that then vanish, so this block restores them:
+ *   1. box-shadow used for text-input focus rings and for popup/window
+ *      elevation — removed entirely, so focus and structure disappear.
+ *   2. custom-tint selection + compound glyph indicators (selected rows,
+ *      checkbox check) — their colors flip to the system palette while a
+ *      baked-in glyph does not follow, leaving invisible checks.
+ *   (::before/::after state-layer hover tints also drop out, but that is
+ *    cosmetic feedback, not an information loss — intentionally not restored.)
+ *
+ * Strategy: ONE central, UNLAYERED block. Unlayered rules win over every
+ * `@layer zk-*` component rule (unlayered beats layered in the cascade), so
+ * these guards override component styles WITHOUT `!important` and WITHOUT
+ * editing ~20 component files. Colors use CSS system-color keywords
+ * (Canvas / CanvasText / Highlight / HighlightText / ButtonText / GrayText) —
+ * the only palette honored in forced-colors mode.
+ *
+ * Bundled into norm.css.dsp via scripts/build-css.js `normFiles` (placed after
+ * the token files so the `--zk-focus-ring` override wins over _colors.css).
+ * Mirrors the GAP 4 prefers-reduced-motion precedent in _motion.css.
+ *
+ * Spec: doc/spec/forced-colors.md.
+ * Verify: DevTools → Rendering → Emulate CSS media feature `forced-colors:
+ *   active`, or Playwright `forcedColors: 'active'`. (macOS has no real
+ *   forced-colors — it only maps "Increase contrast" to prefers-contrast — so
+ *   this must be emulated on this dev machine.)
+ * =========================================================================== */
+@media (forced-colors: active) {
+    /* Focus ring → system highlight. outline-color is force-mapped anyway; this
+       just makes the intent explicit for the 17 --zk-focus-ring consumers. */
+    :root {
+        --zk-focus-ring: 2px solid Highlight;
+    }
+
+    /* (1a) Elevation-only surfaces: box-shadow is gone — give them a real
+       border so their boundary survives. */
+    .z-window,
+    .z-panel,
+    .z-popup,
+    .z-popup-content,
+    .z-menupopup,
+    .z-menu-popup,
+    .z-combobox-popup,
+    .z-bandbox-popup,
+    .z-listbox,
+    .z-grid,
+    .z-card {
+        border: 1px solid CanvasText;
+    }
+
+    /* (1a-cont, GAP 5 coverage audit) Elevation-only cards/toolbars/overlays —
+       same fix: box-shadow is their only boundary once forced-colors strips it. */
+    .z-pdfviewer-page,
+    .z-pdfviewer-toolbar,
+    .z-cropper-toolbar,
+    .z-signature-tool-button,
+    .z-drawer-real,
+    .z-tbeditor-box,
+    .z-groupbox,
+    .z-calendar,
+    .z-errorbox-content,
+    .z-loading,
+    .z-apply-loading,
+    .z-shadow,
+    .z-error,
+    .z-notification-content,
+    .z-toast-content {
+        border: 1px solid CanvasText;
+    }
+
+    /* (1a-cont) Floating popups/menus/dropdowns not already covered above. */
+    .z-cascader-shadow,
+    .z-chosenbox-shadow,
+    .z-searchbox-popup,
+    .z-timepicker-popup,
+    .z-tbeditor-dropdown,
+    .z-toolbar-popup,
+    .z-nav-popup,
+    .z-navbar-horizontal .z-nav > ul,
+    .z-bandpopup,
+    .z-goldenpanel,
+    .z-goldenlayout-dropdown,
+    .z-goldenlayout-dragProxy .lm_tab,
+    .z-goldenlayout-dragProxy > .lm_content {
+        border: 1px solid CanvasText;
+    }
+
+    /* (1a-cont) Slider thumbs + value tooltips — zul/inp/slider, zkex/rangeslider
+       and zkmax/multislider all share the .z-slider(buttons)-* class names. */
+    .z-slider-button,
+    .z-slider-popup,
+    .z-sliderbuttons-button,
+    .z-sliderbuttons-tooltip {
+        border: 1px solid CanvasText;
+    }
+
+    /* (1b) Text-input focus is drawn with an inset box-shadow plus a same-color
+       1px border; both collapse to a single system color here, leaving no
+       visible focus change. Add a real outline so keyboard focus stays visible. */
+    .z-datebox:focus-within,
+    .z-timebox:focus-within,
+    .z-spinner:focus-within,
+    .z-doublespinner:focus-within,
+    .z-bandbox:focus-within,
+    .z-combobox:focus-within {
+        outline: 2px solid Highlight;
+        outline-offset: -1px;
+    }
+
+    /* (1b-cont, GAP 5 coverage audit) Same treatment for other text-input-like
+       focus rings drawn via box-shadow. */
+    .z-timepicker:focus-within,
+    .z-searchbox-search:focus,
+    .z-selectbox:focus,
+    .z-selectbox:focus-visible {
+        outline: 2px solid Highlight;
+        outline-offset: -1px;
+    }
+
+    /* (1b-cont) Round slider thumb: a floating control, not a bordered box, so
+       the outline sits outside it rather than inset. */
+    .z-slider-button:focus-visible {
+        outline: 2px solid Highlight;
+        outline-offset: 2px;
+    }
+
+    /* (2a) Selected rows lose their primary-container tint → map to the system
+       selection colors so the selection stays obvious. */
+    .z-listitem.z-listitem-selected,
+    .z-listitem.z-selected,
+    .z-treerow.z-treerow-selected,
+    .z-treerow.z-selected {
+        background-color: Highlight;
+        color: HighlightText;
+    }
+    .z-listitem.z-listitem-selected .z-listcell-cnt,
+    .z-listitem.z-listitem-selected .z-listcell-content,
+    .z-listitem.z-selected .z-listcell-cnt,
+    .z-listitem.z-selected .z-listcell-content,
+    .z-treerow.z-treerow-selected .z-treecell-content,
+    .z-treerow.z-selected .z-treecell-content {
+        color: HighlightText;
+    }
+
+    /* (2a-cont, GAP 5 coverage audit) Additional selected-tint surfaces:
+       paging's active page, sidebar/navbar nav item, accordion tab header,
+       searchbox dropdown row, organigram node. */
+    .z-paging-selected,
+    .z-navitem-selected > .z-navitem-content,
+    .z-navitem.z-navitem-selected > .z-navitem-content,
+    .z-tabbox-accordion .z-tab.z-tab-selected,
+    .z-searchbox-selected,
+    .z-orgitem-selected > .z-orgnode {
+        background-color: Highlight;
+        color: HighlightText;
+    }
+    /* Organigram node icon sets its own color (doesn't inherit from the row). */
+    .z-orgitem-selected > .z-orgnode > .z-orgnode-icon {
+        color: HighlightText;
+    }
+
+    /* (2a-cont) Calendar's selected-day fill is painted on ::before (a disc
+       behind the day number); the number's own color is on the cell itself. */
+    .z-calendar-body tbody td.z-calendar-cell.z-calendar-selected {
+        color: HighlightText;
+    }
+    .z-calendar-body tbody td.z-calendar-cell.z-calendar-selected::before {
+        background-color: Highlight;
+    }
+
+    /* (2b) Compound glyph indicators whose legibility is a designed fill+glyph
+       pairing (checkbox check on a filled box; selected-row check). The box
+       background would flip to Canvas while the baked-in white glyph would not
+       follow — an invisible check. Opt these small controls out of the OS
+       palette so the designed contrast is preserved. */
+    .z-checkbox-on > .z-checkbox-mold,
+    .z-checkbox-on > .z-checkbox-mold::after,
+    .z-checkbox-indeterminate > .z-checkbox-mold,
+    .z-checkbox-indeterminate > .z-checkbox-mold::after,
+    .z-listitem.z-listitem-selected .z-listitem-icon.z-icon-check::before,
+    .z-listitem.z-selected .z-listitem-icon.z-icon-check::before,
+    .z-listheader-checkable.z-listheader-checked .z-listheader-icon.z-icon-check::before,
+    .z-treerow.z-treerow-selected .z-treerow-icon.z-icon-check::before,
+    .z-treerow.z-selected .z-treerow-icon.z-icon-check::before {
+        forced-color-adjust: none;
+    }
+
+    /* (2d, icon audit — reported: spinner up/down arrows vanish) Masked
+       Lucide/SVG glyphs are painted as a solid `background-color: currentColor`
+       clipped by a mask-image. forced-colors force-maps *background-color* to
+       Canvas (the PAGE BACKGROUND, not the foreground), so every masked icon
+       collapses into an invisible same-as-background shape. `color` maps to
+       CanvasText, but the glyph is filled from background-color, not color —
+       hence the disappearance. Re-point the fill at a foreground system color.
+       This block is UNLAYERED, so it wins over the component rules (in
+       @layer zk-components) that re-declare the icon fill at higher specificity
+       (e.g. combobox's `.z-combobox-button .z-icon-caret-down::before`).
+       Check/radio indicators are baked-SVG boxes handled in (2b), so they are
+       excluded here. Base = CanvasText; per-context overrides follow. */
+    [class^="z-icon-"]:not(.z-icon-check):not(.z-icon-radio)::before,
+    [class*=" z-icon-"]:not(.z-icon-check):not(.z-icon-radio)::before,
+    .z-tree-icon i,
+    .z-rating-icon,
+    .z-colorbox-icon,
+    .z-colorbox-paletteicon::before,
+    .z-colorbox-pickericon::before,
+    .z-menu-paletteicon::before,
+    .z-menu-pickericon::before,
+    .z-messagebox-icon::before,
+    .z-paging-os ul > li.z-paging-navigate .z-paging-noborder::after {
+        background-color: CanvasText;
+    }
+
+    /* Content icons on a Highlight fill (selected rows / current page) →
+       HighlightText, so a leading glyph stays legible against the selection
+       color rather than reading as CanvasText-on-Highlight. */
+    .z-listitem.z-listitem-selected [class*="z-icon-"]:not(.z-icon-check):not(.z-icon-radio)::before,
+    .z-listitem.z-selected [class*="z-icon-"]:not(.z-icon-check):not(.z-icon-radio)::before,
+    .z-treerow.z-treerow-selected [class*="z-icon-"]:not(.z-icon-check):not(.z-icon-radio)::before,
+    .z-treerow.z-selected [class*="z-icon-"]:not(.z-icon-check):not(.z-icon-radio)::before,
+    .z-paging-selected [class*="z-icon-"]::before {
+        background-color: HighlightText;
+    }
+
+    /* (3) Buttons keep their outline focus and readable ButtonFace/ButtonText
+       fill, but have no border — add one so the button shape is delineated
+       against the surrounding Canvas. */
+    .z-button {
+        border: 1px solid ButtonText;
+    }
+    .z-button[disabled],
+    .z-button.z-button-disabled {
+        color: GrayText;
+        border-color: GrayText;
+    }
+}

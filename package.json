@@ -6,6 +6,8 @@
     "build:css": "node scripts/build-css.js",
     "build:css:dev": "node scripts/build-css.js --dev",
     "check:css-dsp": "node scripts/check-css-dsp.js",
+    "check:forced-colors": "node scripts/check-forced-colors.js",
+    "test:forced-colors": "playwright test --config src/test/playwright/playwright.config.ts --project=forced-colors",
     "watch": "node scripts/watch-css.js",
     "minify": "cleancss -o target/classes/web/marble/css/marble.min.css target/classes/web/marble/css/marble.css",
     "lint:css": "stylelint \"src/main/resources/web/**/*.css\"",

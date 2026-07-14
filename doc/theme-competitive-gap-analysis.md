@@ -1,6 +1,7 @@
 # Competitive Theme-Feature Gap Analysis — Marble vs. Mainstream Enterprise UI Frameworks
 
 **Date:** 2026-06-26
+**Last updated:** 2026-07-14
 **Question:** Compared with ≥5 of the most popular enterprise UI frameworks, what theme/appearance features is Marble *obviously* still missing?
 **Scope:** The **appearance / theming layer** — color schemes, brand customization, accessibility theming, i18n (RTL), density, presets. This is **complementary to** `doc/theme-feature-gap-review.md` (which audits ZK theme *infrastructure*: SPI, `.css.dsp`, fonts, tablet) and does **not** repeat it.
 **Method:** Grounded in the actual Marble token/CSS source (greps + file inspection, cited below) compared against the public theming capabilities of MUI v7, Ant Design v5, Bootstrap 5.3, Microsoft Fluent UI 2, IBM Carbon, and PrimeFaces/PrimeNG (ZK's closest server-side competitor).
@@ -29,21 +30,21 @@ Legend: ✅ first-class · ⚠️ partial / undocumented · ❌ absent
 |---|:--:|:--:|:--:|:--:|:--:|:--:|:--:|
 | **Dark mode / color-scheme switch** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | **⊘ won't-do** |
 | **Runtime brand/seed color customization** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | **✅** (single-seed cascade; no auto-foreground) |
-| **Multiple prebuilt theme presets** | ⚠️ | ✅ | ✅ | ✅ | ✅ | ✅ | **❌** |
-| **In-app theme switcher** (light↔dark / preset) | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | **❌** |
+| **Multiple prebuilt theme presets** | ⚠️ | ✅ | ✅ | ✅ | ✅ | ✅ | **✅** (5 brand presets) |
+| **In-app theme switcher** (light↔dark / preset) | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | **✅** (brand presets; no dark) |
 | Design tokens / CSS custom props | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | **✅** |
 | Semantic palette (success/warn/info/error) | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | **✅** |
 | Density / compact mode | ✅ | ✅ | ⚠️ | ✅ | ✅ | ✅ | **✅** |
 | **RTL / bidirectional support** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | **⚠️** |
-| **`prefers-reduced-motion`** | ✅ | ⚠️ | ✅ | ✅ | ✅ | ⚠️ | **❌** |
-| **`forced-colors` / Windows High-Contrast** | ⚠️ | ❌ | ⚠️ | ✅ | ✅ | ❌ | **❌** |
-| **Dedicated high-contrast theme** | ❌ | ❌ | ❌ | ✅ | ⚠️ | ⚠️ | **❌** |
+| **`prefers-reduced-motion`** | ✅ | ⚠️ | ✅ | ✅ | ✅ | ⚠️ | **✅** |
+| **`forced-colors` / Windows High-Contrast** | ⚠️ | ❌ | ⚠️ | ✅ | ✅ | ❌ | **✅** (2026-07-14) |
+| **Dedicated high-contrast theme** | ❌ | ❌ | ❌ | ✅ | ⚠️ | ⚠️ | **N/A — won't-do** |
 | Elevation / shadow system | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | **✅** |
 | Typography scale tokens | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | **✅** |
 | Responsive / touch sizing | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | **✅** |
-| **Live theme builder / playground** | ✅ | ✅ | ⚠️ | ✅ | ✅ | ✅ | **❌** |
+| **Live theme builder / playground** | ✅ | ✅ | ⚠️ | ✅ | ✅ | ✅ | **⚠️** (single-seed live picker) |
 
-**Read of the matrix:** Marble is at parity on the *static* design-system fundamentals (tokens, semantic palette, density, elevation, typography, responsive). Every gap clusters in three areas where it trails the field: **(A) color-scheme flexibility (dark + brand + presets), (B) accessibility theming, (C) internationalization (RTL).**
+**Read of the matrix:** Marble is at parity on the *static* design-system fundamentals (tokens, semantic palette, density, elevation, typography, responsive). Of the original three gap clusters, **(A) color-scheme flexibility** is now largely closed — brand/seed recoloring, multiple **brand presets**, and an in-app switcher have all shipped; the only remaining (A) item is **dark mode**, an accepted won't-do (GAP 1). **(B) accessibility theming** is now closed too — `prefers-reduced-motion` (GAP 4) and `forced-colors`/high-contrast (GAP 5, 2026-07-14) have both shipped. The only remaining real gap is **(C) internationalization (RTL)**. (A *dedicated* high-contrast theme is marked won't-do: industry has moved to the `forced-colors` CSS-override approach Marble ships — Vaadin does the same in its base styles, and Microsoft moved Fluent off its dedicated high-contrast theme onto standard `forced-colors`.)
 
 ---
 
@@ -67,7 +68,7 @@ Legend: ✅ first-class · ⚠️ partial / undocumented · ❌ absent
 
 ### GAP 3 — Multiple prebuilt presets + in-app theme switcher  ·  ✅ **BRAND VARIANT DONE 2026-07-13** (dark presets still won't-do)
 
-- **Implemented:** Marble now ships **5 built-in brand-color presets** (Blue/default, Indigo, Teal, Green, Crimson) plus a runtime switcher. Each preset is a single-seed override (`--zk-color-primary`) keyed off a `data-brand` attribute on `<html>` in `tokens/_colors.css`; the whole palette re-derives via the `oklch(from …)` cascade (GAP 2). A `MarbleBrand` Java helper (`org.zkoss.theme.marble.MarbleBrand`, whole-app) flips it — mirroring the `MarbleDensity` pattern. A showcase page (`usecase/brand-switcher.zul`, nav *Use Cases → Brand Presets*) drives the switch with swatches, shows a live component preview, and documents both adoption paths. Contract in [spec/brand-override.md](spec/brand-override.md) → "Built-in presets + the `MarbleBrand` runtime switcher".
+- **Implemented:** Marble now ships **5 built-in brand-color presets** (Blue/default, Indigo, Teal, Green, Crimson) plus a runtime switcher. Each preset is a single-seed override (`--zk-color-primary`) keyed off a `data-brand` attribute on `<html>` in `tokens/_colors.css`; the whole palette re-derives via the `oklch(from …)` cascade (GAP 2). A `MarbleBrand` Java helper (`org.zkoss.theme.marble.MarbleBrand`, whole-app) flips it — mirroring the `MarbleDensity` pattern. A showcase page (`usecase/brand-switcher.zul`, nav *Use Cases → Brand Presets*) drives the switch with swatches, shows a live component preview, and documents both adoption paths. It also has a **"define your own color"** picker (`colorbox` → `BrandSwitcherVM.applyCustomBrand`) that applies an *arbitrary* seed at runtime — demonstrating the cascade works beyond the 5 curated presets; the real customer path for a fixed brand remains a static `:root { --zk-color-primary: … }` rule. Contract in [spec/brand-override.md](spec/brand-override.md) → "Built-in presets + the `MarbleBrand` runtime switcher".
 - **Scope note:** these are **brand-color** presets, not color-*scheme* presets — dark/high-contrast presets remain out (GAP 1 dark is a won't-do). Region-scoped brand switching is intentionally not offered (whole-app only; see the contract for the freeze-problem rationale).
 - **Was:** exactly one shipped palette; `iceblue` was only a verification-harness comparison baseline, not a selectable variant; no switcher UI.
 - **What competitors do:** PrimeFaces/PrimeNG ship **dozens** (Aura, Lara, Material, Saga, …) with a live switcher; Carbon ships 4 (White/G10/G90/G100); Bootstrap has the Bootswatch ecosystem; Fluent ships web/teams light+dark+high-contrast. A theme switcher is table-stakes in their demo sites.
@@ -78,11 +79,12 @@ Legend: ✅ first-class · ⚠️ partial / undocumented · ❌ absent
 - **Was:** **0** occurrences — Marble had a full motion-token system but nothing disabled it for reduced-motion users (WCAG 2.1 SC 2.3.3 gap). Now closed.
 - **Note (chosen mechanism):** universal reset rather than token-zeroing, because the universal rule *also* covers hardcoded durations and `@keyframes` (token-zeroing would miss those). `1ms` not `0s` so `transitionend`/`animationend` still fire (CleanCSS rounds sub-ms to `0s`).
 
-### GAP 5 — Accessibility: `forced-colors` / Windows High-Contrast Mode  ·  *Severity: Medium (gov/finance/regulated)*
+### GAP 5 — Accessibility: `forced-colors` / Windows High-Contrast Mode  ·  *Severity: Medium (gov/finance/regulated)*  ·  ✅ **DONE 2026-07-14**
 
-- **Current state:** **0** `forced-colors`, **0** `prefers-contrast`, **0** dedicated high-contrast theme. Components that lean on `::before` state-layer overlays and `box-shadow` borders (common in MD themes) tend to *vanish* under Windows High-Contrast unless explicitly handled.
-- **What competitors do:** Fluent treats high-contrast as a **first-class theme**; Carbon documents forced-colors behavior. For public-sector / financial / EU-accessibility-directive customers this is often a hard requirement.
-- **Fix:** add `@media (forced-colors: active)` guards on focus rings, borders, and overlay-driven affordances (use `forced-color-adjust` + system colors like `CanvasText`/`Highlight`).
+- **Was:** **0** `forced-colors`, **0** `prefers-contrast`. Components leaning on `::before` state-layer overlays and `box-shadow` borders/focus-rings *vanished* under Windows High-Contrast.
+- **What competitors do:** Vaadin (closest Java-web analog) ships forced-colors support in its *base styles* via CSS override (hit the identical `box-shadow`-focus trap in Lumo, fixed V24.1); Microsoft moved Fluent off a dedicated high-contrast theme onto standard `forced-colors`; Carbon documents forced-colors. For public-sector / financial / EU-accessibility-directive customers this is often a hard requirement.
+- **Shipped fix:** a single central, unlayered `@media (forced-colors: active)` block in `tokens/_forced-colors.css` (bundled into `norm.css.dsp`) — real borders on elevation-only surfaces, real outlines on text-input focus, `Highlight`/`HighlightText` on selected rows, `forced-color-adjust: none` on the checkbox/selected-row check glyphs, and a `ButtonText` border on buttons. Unlayered so it wins over `@layer zk-components` without `!important` or per-component edits. Spec: [spec/forced-colors.md](spec/forced-colors.md).
+- **Approach note:** a *dedicated* high-contrast theme was deliberately **not** built — see the matrix row above (won't-do); the `forced-colors` override is the modern equivalent and what the industry ships.
 
 ### GAP 6 — RTL / bidirectional support  ·  *Severity: Medium (i18n)*
 
@@ -93,7 +95,7 @@ Legend: ✅ first-class · ⚠️ partial / undocumented · ❌ absent
 ### Minor / lower-priority
 
 - **No `tertiary` color role** — MD3 defines it; Marble has primary+secondary only. Cosmetic unless a component needs a third accent.
-- **No live "customize & preview" theme playground** — most benchmarks have one; nice-to-have for adoption, lower than the functional gaps above.
+- **No *full* live "customize & preview" theme playground** — a **partial** now exists (the brand showcase's single-seed color picker recolors the whole UI live), but a multi-token playground (edit spacing/shape/typography, export a token set) like the benchmarks' is still absent; nice-to-have for adoption, lower than the functional gaps above.
 
 ---
 
@@ -116,8 +118,8 @@ A pragmatic sequence by *impact ÷ effort* (dark mode removed per the 2026-06-29
 
 1. ✅ **`prefers-reduced-motion`** (GAP 4) — **DONE 2026-06-29.** Smallest effort, real a11y win, one media block.
 2. ✅ **Brand-color override recipe** (GAP 2) — **DONE 2026-07-03**, upgraded to `oklch(from …)` absolute tone **2026-07-07** (hue-consistent single-seed cascade + documented contract; seed→palette generator remains future work).
-3. **`forced-colors` guards** (GAP 5) — **next.** Needed for regulated-sector (gov/finance/EU) deals.
-4. **Finish RTL** (GAP 6) — migrate the remaining physical properties + RTL Playwright project.
-5. **Multiple presets + theme switcher** (GAP 3) — now decoupled from dark; valuable for brand variants, lower priority since the headline preset (dark) is intentionally dropped.
+3. ✅ **Multiple presets + theme switcher** (GAP 3) — **DONE 2026-07-13** (brand variant). 5 built-in brand presets + `MarbleBrand` runtime switcher + a custom-color picker on the showcase page; decoupled from dark (which stays a won't-do).
+4. ✅ **`forced-colors` guards** (GAP 5) — **DONE 2026-07-14.** Central unlayered `@media (forced-colors: active)` block in `tokens/_forced-colors.css`; needed for regulated-sector (gov/finance/EU) deals. Spec: [spec/forced-colors.md](spec/forced-colors.md).
+5. **Finish RTL** (GAP 6) — migrate the remaining physical properties + RTL Playwright project. **Now the only remaining functional gap.**
 
-> **Bottom line:** Marble's *static* Material design system is solid and at parity. With dark mode consciously off the table (enterprise-fit, per `dark-theme-adoption.md`), reduced-motion shipped, and single-seed **brand re-coloring** now shipped (generator still future), the remaining evaluator-visible gaps are **accessibility theming** (`forced-colors`/high-contrast) and **finishing RTL**. None require re-architecting — the centralized token layer is the right substrate for all of them.
+> **Bottom line:** Marble's *static* Material design system is solid and at parity. With dark mode consciously off the table (enterprise-fit, per `dark-theme-adoption.md`), both accessibility media features shipped (reduced-motion GAP 4 + `forced-colors`/high-contrast GAP 5), and single-seed **brand re-coloring** now shipped — including **5 built-in brand presets, an in-app switcher, and a custom-color picker** (seed→palette generator still future) — the only remaining evaluator-visible functional gap is **finishing RTL** (GAP 6). A *dedicated* high-contrast theme is won't-do (the `forced-colors` override is the modern equivalent). None require re-architecting — the centralized token layer is the right substrate for all of them.

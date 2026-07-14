@@ -167,6 +167,15 @@ The theme honors the OS "reduce motion" setting (WCAG 2.1 SC 2.3.3, *Animation f
 - **`1ms`, not `0s`/`0.01ms`:** a non-zero duration still fires `transitionend`/`animationend` (avoids hanging any widget that awaits them); `1ms` specifically because CleanCSS rounds sub-millisecond values down to `0s` at build time.
 - **Scope limit:** CSS motion only. ZK's JS-driven slide/fade effects (some popup open/close) are not CSS animations and are unaffected.
 
+### Forced colors / Windows High-Contrast Mode (`forced-colors`) — *implemented 2026-07-14*
+
+The theme honors `@media (forced-colors: active)` (Windows High-Contrast Mode; also Chrome/Edge/Firefox emulation). In this mode the OS replaces the palette with a small set of **system colors** and **strips every `box-shadow`**, which would otherwise erase Marble's `box-shadow`-based input focus rings and popup/window elevation, and would flip the checkbox/selected-row indicators to system colors while their baked-in glyphs did not follow. A single central, **unlayered** guard block in `tokens/_forced-colors.css` (bundled into `norm.css.dsp`) restores them. Full spec: [forced-colors.md](forced-colors.md).
+
+- **Mechanism:** unlayered rules beat every `@layer zk-*` component rule, so the guards override component styles **without `!important`** and without editing ~20 component files. Colors use CSS system-color keywords only (`Canvas`/`CanvasText`/`Highlight`/`HighlightText`/`ButtonText`/`GrayText`).
+- **What it restores:** real `border` on elevation-only surfaces (window/panel/popups/menupopup/listbox/grid/card); a real `outline` on text-input `:focus-within` (datebox/timebox/spinner/bandbox/combobox); `Highlight`/`HighlightText` on selected list/tree rows; `forced-color-adjust: none` on the checkbox check + selected-row check (a designed fill+glyph pairing the OS palette would break); a `ButtonText` border on all buttons.
+- **Not restored (intentional):** `::before`/`::after` state-layer hover tints — cosmetic feedback, not information loss. Baked-gray dropdown chevrons (datebox/selectbox) keep their fixed color — usable but a known minor limitation.
+- **Approach rationale:** CSS `forced-colors` override (not a separate dedicated high-contrast theme). This matches the industry mainstream — Vaadin (the closest Java-web analog) ships the same CSS-override approach in its base styles, and Microsoft itself moved Fluent from a dedicated high-contrast theme to standard `forced-colors` + system colors. See `doc/theme-competitive-gap-analysis.md`.
+
 ---
 
 ## 10. Density

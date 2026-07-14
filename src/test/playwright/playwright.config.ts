@@ -53,6 +53,19 @@ export default defineConfig({
       use: { ...devices['Desktop Chrome'] },
     },
     {
+      // Windows High-Contrast a11y regression for tokens/_forced-colors.css.
+      // NOTE: the emulation is applied IN the spec via page.emulateMedia(
+      // { forcedColors:'active' }) — the context-option form below does not take
+      // effect for the page fixture in this runner, so the spec's beforeEach is
+      // the source of truth. See forced-colors.spec.ts and doc/spec/forced-colors.md.
+      name: 'forced-colors',
+      testMatch: /forced-colors\.spec\.ts/,
+      use: {
+        ...devices['Desktop Chrome'],
+        forcedColors: 'active',
+      },
+    },
+    {
       name: 'tablet',
       testMatch: /tablet\.spec\.ts/,
       use: {

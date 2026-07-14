@@ -67,6 +67,10 @@ const normFiles = [
     'zul/css/tokens/_shape.css',
     'zul/css/tokens/_sizing.css',
     'zul/css/tokens/_splitter.css',
+    // forced-colors (Windows High-Contrast) a11y guards — GAP 5. Unlayered, and
+    // placed last among tokens so its `--zk-focus-ring` override wins over
+    // _colors.css. See doc/spec/forced-colors.md.
+    'zul/css/tokens/_forced-colors.css',
     // NOTE: base/_reset.css is intentionally NOT bundled here. It is emitted as its own
     // stylesheet (reset.css / reset-embed.css) and loaded ahead of this bundle by
     // MarbleThemeProvider.getThemeURIs, so the theme can swap a host-safe variant for
