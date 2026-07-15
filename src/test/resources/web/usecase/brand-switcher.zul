@@ -27,35 +27,35 @@
             </div>
 
             <div sclass="z-d-flex z-flex-col z-align-center z-gap-1" style="cursor:pointer"
-                 onClick="@command('switchBrand', brand='indigo')">
-                <div sclass="@load(bvm.currentBrand eq 'indigo' ? 'brand-swatch brand-swatch-active' : 'brand-swatch')"
-                     style="background-color:#5e35b1"/>
-                <label value="Indigo" sclass="z-text-xs z-fw-medium"/>
-                <label value="#5e35b1" sclass="z-text-xs z-text-muted"/>
+                 onClick="@command('switchBrand', brand='marine')">
+                <div sclass="@load(bvm.currentBrand eq 'marine' ? 'brand-swatch brand-swatch-active' : 'brand-swatch')"
+                     style="background-color:#00729c"/>
+                <label value="Marine" sclass="z-text-xs z-fw-medium"/>
+                <label value="#00729c" sclass="z-text-xs z-text-muted"/>
             </div>
 
             <div sclass="z-d-flex z-flex-col z-align-center z-gap-1" style="cursor:pointer"
-                 onClick="@command('switchBrand', brand='teal')">
-                <div sclass="@load(bvm.currentBrand eq 'teal' ? 'brand-swatch brand-swatch-active' : 'brand-swatch')"
-                     style="background-color:#00796b"/>
-                <label value="Teal" sclass="z-text-xs z-fw-medium"/>
-                <label value="#00796b" sclass="z-text-xs z-text-muted"/>
+                 onClick="@command('switchBrand', brand='slate')">
+                <div sclass="@load(bvm.currentBrand eq 'slate' ? 'brand-swatch brand-swatch-active' : 'brand-swatch')"
+                     style="background-color:#506274"/>
+                <label value="Slate" sclass="z-text-xs z-fw-medium"/>
+                <label value="#506274" sclass="z-text-xs z-text-muted"/>
             </div>
 
             <div sclass="z-d-flex z-flex-col z-align-center z-gap-1" style="cursor:pointer"
-                 onClick="@command('switchBrand', brand='green')">
-                <div sclass="@load(bvm.currentBrand eq 'green' ? 'brand-swatch brand-swatch-active' : 'brand-swatch')"
-                     style="background-color:#2e7d32"/>
-                <label value="Green" sclass="z-text-xs z-fw-medium"/>
-                <label value="#2e7d32" sclass="z-text-xs z-text-muted"/>
+                 onClick="@command('switchBrand', brand='copper')">
+                <div sclass="@load(bvm.currentBrand eq 'copper' ? 'brand-swatch brand-swatch-active' : 'brand-swatch')"
+                     style="background-color:#b45309"/>
+                <label value="Copper" sclass="z-text-xs z-fw-medium"/>
+                <label value="#b45309" sclass="z-text-xs z-text-muted"/>
             </div>
 
             <div sclass="z-d-flex z-flex-col z-align-center z-gap-1" style="cursor:pointer"
-                 onClick="@command('switchBrand', brand='crimson')">
-                <div sclass="@load(bvm.currentBrand eq 'crimson' ? 'brand-swatch brand-swatch-active' : 'brand-swatch')"
-                     style="background-color:#c2185b"/>
-                <label value="Crimson" sclass="z-text-xs z-fw-medium"/>
-                <label value="#c2185b" sclass="z-text-xs z-text-muted"/>
+                 onClick="@command('switchBrand', brand='rose')">
+                <div sclass="@load(bvm.currentBrand eq 'rose' ? 'brand-swatch brand-swatch-active' : 'brand-swatch')"
+                     style="background-color:#be185d"/>
+                <label value="Rose" sclass="z-text-xs z-fw-medium"/>
+                <label value="#be185d" sclass="z-text-xs z-text-muted"/>
             </div>
 
         </div>
@@ -162,10 +162,10 @@
                 <label sclass="brand-code" pre="true" multiline="true"><attribute name="value">// Java - flip a shipped preset at runtime
 import org.zkoss.theme.marble.MarbleBrand;
 
-MarbleBrand.apply(MarbleBrand.Brand.TEAL);
+MarbleBrand.apply(MarbleBrand.Brand.SLATE);
 MarbleBrand.apply(MarbleBrand.Brand.DEFAULT);  // back to blue
 
-// Presets: DEFAULT, INDIGO, TEAL, GREEN, CRIMSON
+// Presets: DEFAULT, MARINE, SLATE, COPPER, ROSE
 // Sets data-brand on the document root; covers popups too.</attribute></label>
             </div>
         </div>

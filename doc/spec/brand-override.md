@@ -155,10 +155,10 @@ document root, defined in
 [_colors.css](../../src/main/resources/web/zul/css/tokens/_colors.css):
 
 ```css
-:root[data-brand="indigo"]  { --zk-color-primary: #5e35b1; }
-:root[data-brand="teal"]    { --zk-color-primary: #00796b; }
-:root[data-brand="green"]   { --zk-color-primary: #2e7d32; }
-:root[data-brand="crimson"] { --zk-color-primary: #c2185b; }
+:root[data-brand="marine"] { --zk-color-primary: #00729c; }
+:root[data-brand="slate"]  { --zk-color-primary: #506274; }
+:root[data-brand="copper"] { --zk-color-primary: #b45309; }
+:root[data-brand="rose"]   { --zk-color-primary: #be185d; }
 ```
 
 `:root[data-brand="…"]` (specificity 0,2,0) beats the base `:root` block (0,1,0), so it
@@ -171,9 +171,9 @@ Flip a preset from Java with the `MarbleBrand` helper
 ([MarbleBrand.java](../../src/main/java/org/zkoss/theme/marble/MarbleBrand.java)):
 
 ```java
-MarbleBrand.apply(MarbleBrand.Brand.TEAL);      // whole app
+MarbleBrand.apply(MarbleBrand.Brand.SLATE);     // whole app
 MarbleBrand.apply(MarbleBrand.Brand.DEFAULT);   // removes data-brand → back to blue
-// Presets: DEFAULT, INDIGO, TEAL, GREEN, CRIMSON
+// Presets: DEFAULT, MARINE, SLATE, COPPER, ROSE
 ```
 
 **Whole-app only — by design.** Unlike density (`MarbleDensity`), which re-points size
