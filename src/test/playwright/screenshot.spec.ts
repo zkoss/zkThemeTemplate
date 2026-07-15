@@ -791,6 +791,56 @@ test.describe('coachmark', () => {
     expect(r!.btnBg, 'nested button present in coachmark').not.toBeNull();
     expect(r!.btnBg, 'nested button must keep the standard primary fill, not the white inverse').toBe(PRIMARY);
   });
+
+  // Designer review (doc/skill-gaps.md 2026-07-15): the top-right close must be a real
+  // icon-button affordance (circular hit target + hover state layer), pinned at a SYMMETRIC
+  // corner inset. The old build shipped a bare 16px glyph at an asymmetric inset (4px top /
+  // 8px right) because the pointer-side padding bump (+16px) was 4px short of the 20px ZK
+  // actually injects. This guard fails on that build and passes on the fixed one.
+  test('close button is a circular icon-button target with symmetric corner inset', async ({ page }) => {
+    const r = await page.evaluate(() => {
+      const root = document.querySelector('.z-coachmark.z-coachmark-open') as HTMLElement | null;
+      if (!root) return null;
+      const content = root.querySelector('.z-coachmark-content') as HTMLElement;
+      const close = root.querySelector('.z-coachmark-close') as HTMLElement | null;
+      if (!close) return null;
+      const cs = getComputedStyle(close);
+      const cr = close.getBoundingClientRect();
+      const cc = content.getBoundingClientRect();
+      const num = (s: string) => parseFloat(s) || 0;
+      return {
+        w: cr.width, h: cr.height,
+        radius: num(cs.borderRadius),
+        topInset: cr.top - cc.top,          // px inside the content box, top edge
+        rightInset: cc.right - cr.right,    // px inside the content box, right edge
+      };
+    });
+    expect(r, 'open coachmark with close button present').not.toBeNull();
+    // (a) a real hit target, not a bare glyph
+    expect(r!.w, `close width must be a real target (got ${r!.w})`).toBeGreaterThanOrEqual(24);
+    expect(r!.h, `close height must be a real target (got ${r!.h})`).toBeGreaterThanOrEqual(24);
+    // (b) circular state layer (border-radius ≥ half the box)
+    expect(r!.radius, `close must be circular (radius ${r!.radius} vs w ${r!.w})`).toBeGreaterThanOrEqual(r!.w / 2);
+    // (c) symmetric corner inset — top inset must equal right inset (both ≈ 8px)
+    expect(
+      Math.abs(r!.topInset - r!.rightInset),
+      `close corner inset must be symmetric (top ${r!.topInset} vs right ${r!.rightInset})`,
+    ).toBeLessThanOrEqual(1.5);
+  });
+
+  // The close must give hover feedback (a state layer), like every other icon-button in the theme.
+  // The layer is a ::before overlay that fades in on hover (MD3 canonical state layer).
+  test('close button shows a hover state layer', async ({ page }) => {
+    const close = page.locator('.z-coachmark.z-coachmark-open .z-coachmark-close').first();
+    const before = await close.evaluate((el) => Number(getComputedStyle(el, '::before').opacity));
+    expect(before, 'state layer is invisible at rest').toBe(0);
+    await close.hover();
+    // the ::before overlay fades in over ~250ms — poll until it has ramped up
+    await expect
+      .poll(() => close.evaluate((el) => Number(getComputedStyle(el, '::before').opacity)),
+        { message: 'state layer must fade in on hover' })
+      .toBeGreaterThan(0);
+  });
 });
 
 // -------------------------------------------------------

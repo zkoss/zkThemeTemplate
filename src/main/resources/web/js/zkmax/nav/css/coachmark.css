@@ -22,8 +22,9 @@
     color: var(--zk-color-on-surface);
     border-radius: var(--zk-shape-card);
     box-shadow: var(--zk-elevation-2);
-    /* extra right padding reserves room for the top-right close button (mirrors ZK default's asymmetric padding) */
-    padding: var(--zk-spacing-4) calc(var(--zk-spacing-4) + var(--zk-spacing-3)) var(--zk-spacing-4) var(--zk-spacing-4);
+    /* right padding reserves room for the top-right close icon-button: 8px inset + 28px
+       circular target + 8px gap before the text = 44px (mirrors ZK default's asymmetric padding) */
+    padding: var(--zk-spacing-4) calc(var(--zk-spacing-2) + var(--zk-control-height-xs) + var(--zk-spacing-2)) var(--zk-spacing-4) var(--zk-spacing-4);
 }
 
 .z-coachmark-pointer {
@@ -55,28 +56,57 @@
 }
 
 .z-coachmark-close {
-    /* pinned to the top-right corner, relative to the .z-coachmark root (close is a sibling
-       of the content, not a child of it) */
+    /* MD3 icon-button close affordance: a circular hit target with a state-layer + focus ring —
+       not a bare glyph. Pinned to the top-right corner relative to the .z-coachmark root (close is
+       a sibling of the content, not a child of it). */
     position: absolute;
     top: var(--zk-spacing-2);
     right: var(--zk-spacing-2);
-    width: var(--zk-spacing-4);
-    height: var(--zk-spacing-4);
-    line-height: var(--zk-spacing-4);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--zk-control-height-xs);
+    height: var(--zk-control-height-xs);
+    border-radius: var(--zk-shape-corner-full);
+    overflow: hidden;
     font-size: 14px;
-    text-align: center;
     color: var(--zk-color-on-surface-variant);
     cursor: pointer;
+    transition: color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
 }
 
-/* push the close clear of the pointer triangle when it occupies the top/right edge
-   (the direction class lives on the pointer, which precedes the close in the DOM) */
+/* State layer — a semi-transparent on-surface overlay (MD3 canonical, like .z-button::before).
+   An opaque container swap (as .z-window-icon uses) is invisible here: the card is already a
+   neutral surface-container tone, so only an on-surface overlay reads against it. */
+.z-coachmark-close::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background-color: var(--zk-color-on-surface);
+    opacity: 0;
+    pointer-events: none;
+    transition: var(--zk-state-layer-transition);
+}
+
+.z-coachmark-close:hover { color: var(--zk-color-on-surface); }
+.z-coachmark-close:hover::before { opacity: var(--zk-state-hover-opacity); }
+.z-coachmark-close:focus-visible::before { opacity: var(--zk-state-focus-opacity); }
+
+.z-coachmark-close:focus-visible {
+    outline: var(--zk-focus-ring);
+    outline-offset: -2px;
+}
+
+/* Compensate for the padding ZK injects on the pointer side of the root (Coachmark.ts _fixPadding:
+   10 + borderWidth/2 = 20px, pointer border hardcoded 10px). Adding exactly that 20px keeps the
+   close at a SYMMETRIC 8px inset inside the content corner in every pointer direction. */
 .z-coachmark-up ~ .z-coachmark-close {
-    top: calc(var(--zk-spacing-2) + 16px);
+    top: calc(var(--zk-spacing-2) + var(--zk-spacing-5));
 }
 
 .z-coachmark-right ~ .z-coachmark-close {
-    right: calc(var(--zk-spacing-2) + 16px);
+    right: calc(var(--zk-spacing-2) + var(--zk-spacing-5));
 }
 
 /* NOTE: no per-widget colour inversion. The card is a neutral surface, so nested

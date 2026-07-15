@@ -57,11 +57,24 @@ on `.z-coachmark-close`.
 - `.z-coachmark-close` is a **sibling of the content**, a direct child of the `.z-coachmark` root, and is
   `position: absolute` resolved against the **root** (NOT the content box). The theme must pin it to the
   top-right corner (`top`/`right`); a missing `position:absolute` flows it as a full-width row below the
-  content. The pointer direction shifts its corner offset: when the pointer carries `.z-coachmark-up` /
-  `.z-coachmark-right`, bump the close `top` / `right` clear of the triangle via
-  `.z-coachmark-up ~ .z-coachmark-close` / `.z-coachmark-right ~ .z-coachmark-close` (general-sibling, because
-  the pointer precedes the close in DOM order). The ZK default offsets are `top:8px right:4px` with a `+16px`
-  bump on the pointer side.
+  content.
+- **Pinning the close evenly requires compensating for the root padding ZK injects on the pointer side.**
+  Because the close is positioned against the *root* but must sit at a consistent inset inside the *content*
+  box, and the root grows padding on whichever side the pointer occupies, a plain `top/right: 8px` lands the
+  close at an *asymmetric* inset on pointer-up / pointer-right cards. The injected padding is a **fixed 20px**
+  on the pointer side: `_fixPadding()` in `Coachmark.ts` sets `ph = pw = 10 + borderWidth/2`, and the pointer
+  border is hardcoded at 10px → `10 + 10 = 20px`. So the compensation must add **exactly 20px** (not a guessed
+  `+16px`) via the general-sibling selectors `.z-coachmark-up ~ .z-coachmark-close { top: calc(8px + 20px) }`
+  and `.z-coachmark-right ~ .z-coachmark-close { right: calc(8px + 20px) }` (general-sibling because the pointer
+  precedes the close in DOM order). Pointer-down / pointer-left inject padding on the bottom/left, which does
+  not affect the top-right corner, so those need no bump. This yields a symmetric 8px inset in all four
+  directions. (ZK's own default uses a `+16px` bump, which is 4px short of the padding it injects — do not copy it.)
+- The close is **keyboard-focusable** (`tabindex=0`, `role=button`) so it needs a visible `:focus-visible`
+  indicator, and it should be a real **icon-button affordance** (a circular hit target with a hover/focus
+  state layer), not a bare glyph — reuse the theme's icon-button convention rather than styling the raw `×`.
+  On a *neutral* card the state layer must be a semi-transparent **on-surface overlay** (`::before`), because
+  an opaque container swap (e.g. `surface-container`) is invisible against a card that is already a
+  surface-container tone.
 - `.z-coachmark-pointer` MUST be `position: absolute` (the mold JS `_fixarrow()` writes inline `top`/`left`
   to align the triangle with the target; `position:static` discards those coordinates and the triangle
   collapses to the card's left edge, no longer pointing at the target). `z-index: 100`.

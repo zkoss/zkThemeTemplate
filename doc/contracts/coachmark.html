@@ -49,6 +49,10 @@
     --zk-spacing-6: 24px;
     --zk-spacing-8: 32px;
 
+    /* Sizing */
+    --zk-control-height-xs: 28px;   /* close-button target */
+    --zk-focus-ring: 2px solid var(--zk-color-primary);
+
     /* Shape */
     --zk-shape-card: 6px;
     --zk-shape-corner-small: 8px;
@@ -166,32 +170,49 @@ h1 { font-size: 22px; font-weight: var(--zk-font-weight-semibold); margin: 0 0 v
     color: var(--zk-color-on-surface);
     border-radius: var(--zk-shape-card);
     box-shadow: var(--zk-elevation-2);
-    padding: var(--zk-spacing-4);
+    /* right padding reserves the 8px inset + 28px close circle + 8px gap = 44px */
+    padding: var(--zk-spacing-4) 44px var(--zk-spacing-4) var(--zk-spacing-4);
     position: relative;
     max-width: 280px;
     min-width: 160px;
 }
 
-/* Close button */
+/* Close button — circular MD3 icon-button affordance with an on-surface state layer.
+   (Mockup pins it against the content box; in the live DOM the close is a sibling of the
+   content pinned against the .z-coachmark root, +20px on the pointer side for the injected
+   padding — both resolve to the same symmetric 8px inset inside the content corner.) */
 .z-coachmark-close {
     position: absolute;
     top: var(--zk-spacing-2);
     right: var(--zk-spacing-2);
-    width: 20px;
-    height: 20px;
-    display: flex;
+    width: var(--zk-control-height-xs);
+    height: var(--zk-control-height-xs);
+    display: inline-flex;
     align-items: center;
     justify-content: center;
     color: var(--zk-color-on-surface-variant);
     cursor: pointer;
     border-radius: var(--zk-shape-corner-full);
-    font-size: var(--zk-typescale-body-small-size);
-    opacity: 0.8;
-    transition: opacity var(--zk-motion-duration-short2);
+    overflow: hidden;
+    font-size: 14px;
+    transition: color 250ms var(--zk-motion-easing-standard);
 }
-.z-coachmark-close:hover {
-    opacity: 1;
-    background-color: rgba(0, 0, 0, var(--zk-state-hover-opacity));
+.z-coachmark-close::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background-color: var(--zk-color-on-surface);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 250ms var(--zk-motion-easing-standard);
+}
+.z-coachmark-close:hover { color: var(--zk-color-on-surface); }
+.z-coachmark-close:hover::before { opacity: var(--zk-state-hover-opacity); }
+.z-coachmark-close:focus-visible::before { opacity: var(--zk-state-focus-opacity); }
+.z-coachmark-close:focus-visible {
+    outline: var(--zk-focus-ring);
+    outline-offset: -2px;
 }
 
 /* Pointer triangle — base */
