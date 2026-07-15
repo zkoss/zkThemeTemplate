@@ -305,14 +305,19 @@ test.describe('input focus (no layout shift)', () => {
       return res.ok ? await res.text() : null;
     });
     expect(css, 'combo.css.dsp fetched').not.toBeNull();
+    // Strip block comments first: the dev preview serves UNMINIFIED CSS whose
+    // explanatory comments mention "border-width" in prose ("Never transition
+    // border-width"), which would false-match the substring guard below. CI serves
+    // minified (comment-free) CSS; stripping here makes the test pass on both.
+    const clean = css!.replace(/\/\*[\s\S]*?\*\//g, '');
     // Match the STANDALONE `.z-datebox-timezone > select` rule (not the popup-scoped
     // `.z-datebox-popup .z-datebox-timezone …` override): the negative lookbehind
     // rejects a selector where `.z-datebox-timezone` is preceded by a descendant
     // combinator (space) or another selector token. Works on minified OR pretty CSS.
-    const base = css!.match(/(?<![\w.\-# ])\.z-datebox-timezone\s*>\s*select\s*\{([^}]*)\}/);
+    const base = clean.match(/(?<![\w.\-# ])\.z-datebox-timezone\s*>\s*select\s*\{([^}]*)\}/);
     expect(base, 'timezone <select> base rule found').not.toBeNull();
     expect(base![1], 'base rule must not transition border-width').not.toContain('border-width');
-    const focus = css!.match(/(?<![\w.\-# ])\.z-datebox-timezone\s*>\s*select:focus[^{]*\{([^}]*)\}/);
+    const focus = clean.match(/(?<![\w.\-# ])\.z-datebox-timezone\s*>\s*select:focus[^{]*\{([^}]*)\}/);
     expect(focus, 'timezone <select> :focus rule found').not.toBeNull();
     expect(focus![1], 'focus must draw an inset box-shadow ring (Mechanism A)').toContain('inset');
   });

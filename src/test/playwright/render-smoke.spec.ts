@@ -5,8 +5,9 @@ import { test, expect } from '@playwright/test';
 // semantic errors such as an unsupported mold or an attribute with no setter,
 // which surface only at compose time as an HTTP 500.
 //
-// Most pages share the `.z-p-8` page wrapper; `preview.zul` is a special SPA
-// listing page (no z-p-8) so it falls back to a `body` visible check.
+// Every listed page shares the `.z-p-8` page wrapper, which we assert is visible.
+// (`preview.zul` is intentionally excluded — it's a human-only SPA listing page
+// whose live-reload script keeps the network busy so `networkidle` never settles.)
 //
 // Requires the preview app running on http://localhost:8080
 //   withjdk.sh 17 mvn test exec:java@preview-app
@@ -45,8 +46,8 @@ const PAGES = [
   '/doublespinner.zul',
   '/drawer.zul',
   '/dropupload.zul',
-  '/error.zul',
   '/errorbox.zul',
+  '/runtime-error.zul',
   '/fileupload.zul',
   '/fisheyebar.zul',
   '/goldenlayout.zul',
@@ -85,7 +86,6 @@ const PAGES = [
   '/pdfviewer.zul',
   '/popup.zul',
   '/portallayout.zul',
-  '/preview.zul',
   '/progressmeter.zul',
   '/radiogroup.zul',
   '/rangeslider.zul',
@@ -119,9 +119,6 @@ const PAGES = [
   '/window.zul',
 ];
 
-// Pages that don't use the standard .z-p-8 wrapper — check body instead.
-const NO_WRAPPER = new Set(['/preview.zul']);
-
 test.describe('render smoke — all preview pages', () => {
   for (const path of PAGES) {
     test(`renders ${path}`, async ({ page }) => {
@@ -133,14 +130,10 @@ test.describe('render smoke — all preview pages', () => {
         `${path} returned HTTP ${resp!.status()} — page failed to compile`
       ).toBe(200);
 
-      if (NO_WRAPPER.has(path)) {
-        await expect(page.locator('body'), `${path} body not visible`).toBeVisible();
-      } else {
-        await expect(
-          page.locator('.z-p-8').first(),
-          `${path} did not render the .z-p-8 page wrapper`
-        ).toBeVisible();
-      }
+      await expect(
+        page.locator('.z-p-8').first(),
+        `${path} did not render the .z-p-8 page wrapper`
+      ).toBeVisible();
     });
   }
 });
