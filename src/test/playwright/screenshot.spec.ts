@@ -749,6 +749,51 @@ test.describe('navbar', () => {
 });
 
 // -------------------------------------------------------
+// Coachmark — neutral surface (regression guard, doc/skill-gaps.md 2026-07-15)
+// -------------------------------------------------------
+// The coachmark pop-up is an MD3 rich tooltip: a neutral surface-container card
+// so nested action widgets render with their STANDARD filled style (no per-widget
+// colour inversion). A primary-filled card forces every nested filled control to be
+// hand-inverted, which does not scale. This guard asserts (a) the card is a light
+// neutral surface — NOT the primary brand fill — and (b) a nested .z-button keeps the
+// standard primary fill rather than the old white inverse.
+test.describe('coachmark', () => {
+  const PRIMARY = 'rgb(55, 111, 208)';
+  test.beforeEach(async ({ page }) => {
+    await page.goto('/coachmark.zul');
+    await page.waitForLoadState('networkidle');
+    await page.evaluate(() => document.fonts.ready.then(() => true));
+    // The first coachmark is visible by default → it opens on load.
+    await page.locator('.z-coachmark.z-coachmark-open .z-coachmark-content').first().waitFor({ state: 'visible' });
+  });
+
+  test('card is a neutral surface and nested button keeps the standard fill', async ({ page }) => {
+    const r = await page.evaluate(() => {
+      const content = document.querySelector('.z-coachmark.z-coachmark-open .z-coachmark-content') as HTMLElement | null;
+      if (!content) return null;
+      const btn = content.querySelector('.z-button') as HTMLElement | null;
+      const rgb = (s: string) => (s.match(/\d+/g) || []).slice(0, 3).map(Number);
+      return {
+        cardBg: getComputedStyle(content).backgroundColor,
+        cardRgb: rgb(getComputedStyle(content).backgroundColor),
+        btnBg: btn ? getComputedStyle(btn).backgroundColor : null,
+      };
+    });
+    expect(r, 'open coachmark card present on coachmark.zul').not.toBeNull();
+    // (a) The card must NOT be the primary brand fill…
+    expect(r!.cardBg, 'coachmark card must not be the primary brand fill').not.toBe(PRIMARY);
+    // …and must be a light neutral surface (all channels high).
+    expect(
+      r!.cardRgb.every((c) => c >= 200),
+      `coachmark card must be a light neutral surface, got ${r!.cardBg}`,
+    ).toBe(true);
+    // (b) A nested filled button keeps its STANDARD primary fill (no white inversion).
+    expect(r!.btnBg, 'nested button present in coachmark').not.toBeNull();
+    expect(r!.btnBg, 'nested button must keep the standard primary fill, not the white inverse').toBe(PRIMARY);
+  });
+});
+
+// -------------------------------------------------------
 // Tablet-isolation guard
 // The tablet bundle must stay tablet-only: on a desktop UA, ZK must NOT inject
 // zkmax/css/tablet.css, so touch overrides can never leak into desktop.

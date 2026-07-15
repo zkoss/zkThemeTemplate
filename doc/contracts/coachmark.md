@@ -3,36 +3,47 @@ tier: T2
 category: feedback
 preview: http://localhost:8080/coachmark.zul
 rules: see .claude/skills/zk-component-rules/components/coachmark.md
-contract-approved: true
+contract-approved: true  # neutral-surface redesign approved 2026-07-15
 zk-version: 10.2.1-jakarta
 js-source-files:
   - zkmax/src/main/resources/web/js/zkmax/nav/Coachmark.ts
   - zkmax/src/main/resources/web/js/zkmax/nav/mold/coachmark.js
 js-source-hash: 6673edf25b28d7ea66babb6c1b873cf9b1a96c0b3791dac8ecedac5e059f125e
-closest-sibling: none — novel guided-tour card pattern
+closest-sibling: none — novel guided-tour card pattern; MD3-mapped to rich tooltip (neutral surface + text actions)
 mockup-needed: Y
-mockup-rationale: ZKDoc has Coachmark-4.png but Marble's primary-filled card with on-primary text significantly diverges from iceblue's neutral-background default; mockup needed to pin the primary-surface design intent.
+mockup-rationale: ZKDoc has Coachmark-4.png; Marble aligns the card to the MD3 rich-tooltip pattern — a neutral surface-container card so nested action widgets render with their standard styling. Mockup pins the neutral-surface design intent (prominence comes from elevation above the scrim, not a brand fill).
 
 ## References
 - MUI CSS: no direct analog — MUI has Tooltip.css (bare tooltip) and Popover.css but neither has
-  a guided-tour card with pointer arrow + mask + close button. Closest spirit: MUI Snackbar + Tooltip combined.
+  a guided-tour card with pointer arrow + mask + close button. MUI tour/popover content sits on
+  `background.paper` (neutral), which matches the neutral-surface choice below.
 - Mira HTML: no analog
-- DESIGN.md sections: §3 (primary color), §5 (shape — card radius), §6 (elevation), §7 (spacing), §8 (motion)
+- MD3 pattern: **rich tooltip** — an elevated card carrying text + one or more action buttons on a
+  neutral `surface-container`, with the action rendered as a standard `primary` text button. MD3
+  reserves saturated brand fills for single-purpose, non-composable attention surfaces (Snackbar →
+  `inverse-surface` + one `inverse-primary` action); a coachmark hosts arbitrary widgets so it belongs
+  in the neutral rich-tooltip family, not the snackbar family.
+- DESIGN.md sections: §3 (color roles), §5 (shape — card radius), §6 (elevation), §7 (spacing), §8 (motion)
 - ZKDoc canonical: /Users/hawk/Documents/workspace/DOC/zkdoc/zk_component_ref/images/Coachmark-4.png
 - Iceblue baseline: doc/contracts/baselines/coachmark-iceblue.png
 - HTML contract: doc/contracts/coachmark.html
 
 ## Design Contract
 
-Coachmark is a primary-surface guided-tour card. The visual card element (`.z-coachmark-content`)
-uses `--zk-color-primary` as its background and `--zk-color-on-primary` (white) as its text color,
-making it visually pop above the semi-transparent mask. Corner radius is `--zk-shape-card` (6px),
-consistent with all card/alert surfaces in Marble. Elevation is `--zk-elevation-2` (dropdown level)
-since the card floats above the page but is not a modal dialog. Padding is `--zk-spacing-4` (16px)
-for comfortable reading. The pointer arrow triangle inherits the same primary background color via
-`border-color` so it reads as an extension of the card. The close button (`×`) is
-`--zk-color-on-primary` (white) to remain legible on the primary background. The full-page mask
-uses a semi-transparent dark overlay to dim the content beneath, guiding attention to the target.
+Coachmark is an MD3 **rich-tooltip** guided-tour card on a **neutral surface**. The visual card
+element (`.z-coachmark-content`) uses `--zk-color-surface-container-low` (#f7f9fc) as its background
+and `--zk-color-on-surface` as its text color. Prominence above the mask comes from **elevation +
+shadow on the dark scrim** — the same mechanism every MD3 dialog relies on — not from a brand fill.
+The decisive benefit of the neutral surface: **nested action widgets render with their STANDARD
+theme styling** (a `.z-button` keeps its `--zk-color-primary` fill, a `.z-combobutton` keeps both
+halves), so the theme needs **no per-widget colour inversion** and any future slotted control works
+without a bespoke rule. Corner radius is `--zk-shape-card` (6px), consistent with all card/alert
+surfaces in Marble. Elevation is `--zk-elevation-2` (dropdown level) since the card floats above the
+page but is not a modal dialog. Padding is `--zk-spacing-4` (16px) for comfortable reading. The
+pointer arrow triangle inherits the same neutral background color via `border-color` so it reads as
+an extension of the card. The close button (`×`) is `--zk-color-on-surface-variant` to remain legible
+on the neutral surface. The full-page mask uses a semi-transparent dark overlay to dim the content
+beneath, guiding attention to the target.
 Entrance animation: Marble does not override the ZK default `expand` keyframe animation
 (scale 0 → 1 + opacity 0 → 1). The duration, delay, and easing are inherited from ZK's
 built-in coachmark JS — they are not Marble-themed values and no `--zk-motion-*` token is
@@ -42,47 +53,45 @@ bound to them. The Marble CSS (`coachmark.css`) contains no animation rule.
 
 | id | predicate | rationale |
 |----|-----------|-----------|
-| M1 | `.z-coachmark-content` has `background-color ≠ transparent AND background-color ≠ rgb(255,255,255)` — it must read as a distinct colored card | visual identity — "reads as a guided-tour card, not a plain tooltip" |
+| M1 | `.z-coachmark-content` has `background-color ≠ transparent AND background-color ≠ var(--zk-color-primary)` — a **light neutral surface** (all RGB channels ≥ 200), NOT the primary brand fill; it reads as a distinct card via its elevation shadow on the scrim | visual identity — "reads as a rich-tooltip card, prominence from elevation not a brand fill" |
 | M2 | `.z-coachmark-content` bbox `height ≥ 40px AND width ≥ 120px` when containing at least one `.z-label` child | card must have minimum legible body size |
 | M3 | `.z-coachmark-close` bbox is non-zero (`width ≥ 12px AND height ≥ 12px`) AND **`width ≤ 32px`** (it is a corner affordance, NOT a full-width row) AND `bbox.right ≤ (coachmark-content.bbox.right + 4px)` AND **`bbox.top ≤ (coachmark-content.bbox.top + 32px)`** — close button is visible and pinned at the TOP-right of the card (not flowed below the content) | close affordance must be reachable at the top-right corner; a static full-width close collapsed to the card bottom must FAIL |
 | M4 | `.z-coachmark-pointer` bbox is non-zero (`width ≥ 10px AND height ≥ 10px`) when `.z-coachmark-open` is present | pointer arrow must be visible when open |
 | M7 | `.z-coachmark-pointer` computed `position === 'absolute'` — the mold JS (`_fixarrow`) writes inline `top`/`left` on the pointer to align the triangle with the target; with `position:static` those coordinates are ignored and the triangle collapses to the card's left edge (does NOT point at the target) | pointer must actually point at the target |
 | M5 | `.z-coachmark.z-coachmark-open` has `opacity > 0` (animation fill-mode forwards preserves final state) | card must not remain invisible after opening |
-| M6 | Text nodes inside `.z-coachmark-content` have WCAG contrast ≥ 4.5:1 against the `background-color` of `.z-coachmark-content` | legibility on primary background |
-| M8 | Every filled action control inside `.z-coachmark-content` — `.z-button` AND each half of a `.z-combobutton` (`.z-combobutton-content`, `.z-combobutton-button`) — has `background-color` **distinct from** the card's `background-color` (NOT both `--zk-color-primary`) AND its `background-color` has WCAG contrast ≥ 3:1 against the card | the default filled button/combobutton is primary-on-primary; on the brand-filled card it loses its shape/affordance entirely — a nested action control MUST contrast with the colored surface |
+| M6 | Text nodes inside `.z-coachmark-content` have WCAG contrast ≥ 4.5:1 against the `background-color` of `.z-coachmark-content` | legibility on the neutral surface (`on-surface` on `surface-container-low`) |
+| M8 | Every filled action control inside `.z-coachmark-content` — `.z-button` AND each half of a `.z-combobutton` (`.z-combobutton-content`, `.z-combobutton-button`) — has `background-color` with WCAG contrast ≥ 3:1 against the card's `background-color` AND is **NOT inverted to the card's own surface color** (its fill ≈ the standard global `--zk-color-primary`, not the card background) | on the neutral surface the STANDARD filled control already contrasts, so no inversion rule is needed; this guard proves the neutral choice works AND catches a regression where the card is re-colored without handling nested widgets (the old primary-on-primary vanish) |
 
 ## Expected values
 
 | id | selector | property | expected (token preferred) | source |
 |----|----------|----------|----------------------------|--------|
-| c1 | `.z-coachmark-content` | background-color | `var(--zk-color-primary)` → `rgb(55, 111, 208)` | DESIGN.md §3 — primary surface for guided-tour prominence |
-| c2 | `.z-coachmark-content` | color | `var(--zk-color-on-primary)` → `rgb(255, 255, 255)` | DESIGN.md §3 — on-primary text on primary bg |
+| c1 | `.z-coachmark-content` | background-color | `var(--zk-color-surface-container-low)` → `rgb(247, 249, 252)` | DESIGN.md §3 — neutral rich-tooltip surface; prominence from elevation on the scrim, not a brand fill |
+| c2 | `.z-coachmark-content` | color | `var(--zk-color-on-surface)` → `rgba(0, 0, 0, 0.87)` | DESIGN.md §3 — on-surface text on the neutral card |
 | c3 | `.z-coachmark-content` | border-radius | `var(--zk-shape-card)` → `6px` | DESIGN.md §5 — card radius for container surfaces |
 | c4 | `.z-coachmark-content` | box-shadow | `var(--zk-elevation-2)` → `0px 2px 6px 0px rgba(0,0,0,0.12), 0px 1px 2px 0px rgba(0,0,0,0.14)` | DESIGN.md §6 — dropdown/hover elevation for floating card |
 | c5 | `.z-coachmark-content` | padding | `16px 28px 16px 16px` (= `var(--zk-spacing-4)` with right `calc(var(--zk-spacing-4) + var(--zk-spacing-3))`) | DESIGN.md §7 — comfortable body padding; extra right padding reserves space for the absolutely-positioned close button (mirrors ZK default's asymmetric `@coachmarkPaddingRight`) |
-| c6 | `.z-coachmark-pointer.z-coachmark-up` | border-bottom-color | `var(--zk-color-primary)` → `rgb(55, 111, 208)` | pointer triangle must match card background |
-| c7 | `.z-coachmark-pointer.z-coachmark-down` | border-top-color | `var(--zk-color-primary)` → `rgb(55, 111, 208)` | pointer triangle must match card background |
-| c8 | `.z-coachmark-pointer.z-coachmark-left` | border-right-color | `var(--zk-color-primary)` → `rgb(55, 111, 208)` | pointer triangle must match card background |
-| c9 | `.z-coachmark-pointer.z-coachmark-right` | border-left-color | `var(--zk-color-primary)` → `rgb(55, 111, 208)` | pointer triangle must match card background |
-| c10 | `.z-coachmark-close` | color | `var(--zk-color-on-primary)` → `rgb(255, 255, 255)` | close icon must be legible on primary background |
+| c6 | `.z-coachmark-pointer.z-coachmark-up` | border-bottom-color | `var(--zk-color-surface-container-low)` → `rgb(247, 249, 252)` | pointer triangle must match card background |
+| c7 | `.z-coachmark-pointer.z-coachmark-down` | border-top-color | `var(--zk-color-surface-container-low)` → `rgb(247, 249, 252)` | pointer triangle must match card background |
+| c8 | `.z-coachmark-pointer.z-coachmark-left` | border-right-color | `var(--zk-color-surface-container-low)` → `rgb(247, 249, 252)` | pointer triangle must match card background |
+| c9 | `.z-coachmark-pointer.z-coachmark-right` | border-left-color | `var(--zk-color-surface-container-low)` → `rgb(247, 249, 252)` | pointer triangle must match card background |
+| c10 | `.z-coachmark-close` | color | `var(--zk-color-on-surface-variant)` → `rgba(0, 0, 0, 0.6)` | close icon must be legible on the neutral surface |
 | c11 | `.z-coachmark-close` | cursor | `pointer` | interaction contract — close is clickable |
 | c12 | `.z-coachmark-mask` | background | `var(--zk-color-scrim)` → `rgba(0,0,0,0.5)` | mask must use the system scrim token for theme-wide consistency |
 | c13 | `.z-coachmark` | position | `absolute` | structural — JS-positioned wrapper |
 | c14 | `.z-coachmark` | opacity | `0` (when NOT `.z-coachmark-open`) | closed state must be invisible |
 | c15 | `.z-coachmark-pointer` | position | `absolute` | REQUIRED so the mold JS's inline `top`/`left` apply — otherwise the triangle does not align to the target |
 | c16 | `.z-coachmark-close` | position | `absolute` | close is pinned to the card's top-right corner relative to the `.z-coachmark` root; static positioning flows it to the card bottom |
-| c17 | `.z-coachmark-content .z-button` | background-color | `var(--zk-color-on-primary)` → `rgb(255, 255, 255)` | inverse button on the brand-filled card — white fill so the button reads against the primary surface (the global filled button is primary-on-primary and would vanish) |
-| c18 | `.z-coachmark-content .z-button` | color | `var(--zk-color-primary)` → `rgb(55, 111, 208)` | inverse button label color — primary text on the white button fill |
-| c19 | `.z-coachmark-content .z-combobutton-content`, `.z-coachmark-content .z-combobutton-button` | background-color | `var(--zk-color-on-primary)` → `rgb(255, 255, 255)` | inverse combobutton — both halves get the white fill so the split button reads against the primary card (the global combobutton is primary-on-primary and would vanish) |
-| c20 | `.z-coachmark-content .z-combobutton-content`, `.z-coachmark-content .z-combobutton-button` | color | `var(--zk-color-primary)` → `rgb(55, 111, 208)` | inverse combobutton label/arrow color — primary on the white fill |
+| c17 | `.z-coachmark-content .z-button` | background-color | `var(--zk-color-primary)` → `rgb(55, 111, 208)` | nested button uses the STANDARD filled style — NO inversion; the neutral card makes the primary fill contrast naturally (see M8) |
+| c18 | `.z-coachmark-content .z-combobutton-content`, `.z-coachmark-content .z-combobutton-button` | background-color | `var(--zk-color-primary)` → `rgb(55, 111, 208)` | nested combobutton uses the STANDARD filled style on both halves — NO inversion (see M8) |
 
 ## State matrix
 
 | state | selector | properties to check |
 |-------|----------|---------------------|
-| open (default on page load) | `.z-coachmark.z-coachmark-open` | c1, c2, c3, c4, c5, c10, c11, c15, c16, c17, c18, M8 |
-| nested-button | `.z-coachmark-content .z-button` | c17, c18, M8 |
-| nested-combobutton | `.z-coachmark-content .z-combobutton` | c19, c20, M8 |
+| open (default on page load) | `.z-coachmark.z-coachmark-open` | c1, c2, c3, c4, c5, c10, c11, c15, c16, c17, M8 |
+| nested-button | `.z-coachmark-content .z-button` | c17, M8 |
+| nested-combobutton | `.z-coachmark-content .z-combobutton` | c18, M8 |
 | closed | `.z-coachmark` (without `.z-coachmark-open`) | c14 (opacity = 0) |
 | pointer-up | `.z-coachmark-pointer.z-coachmark-up` | c6, c15 |
 | pointer-down | `.z-coachmark-pointer.z-coachmark-down` | c7, c15 |

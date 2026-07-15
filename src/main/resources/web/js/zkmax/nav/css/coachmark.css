@@ -13,10 +13,13 @@
 }
 
 .z-coachmark-content {
+    /* MD3 rich-tooltip card: a NEUTRAL surface, so nested action widgets render with
+       their standard filled style (no per-widget colour inversion). Prominence above
+       the mask comes from the elevation shadow on the dark scrim, not a brand fill. */
     /* positioned context for the absolutely-pinned close button */
     position: relative;
-    background-color: var(--zk-color-primary);
-    color: var(--zk-color-on-primary);
+    background-color: var(--zk-color-surface-container-low);
+    color: var(--zk-color-on-surface);
     border-radius: var(--zk-shape-card);
     box-shadow: var(--zk-elevation-2);
     /* extra right padding reserves room for the top-right close button (mirrors ZK default's asymmetric padding) */
@@ -34,20 +37,21 @@
     z-index: 100;
 }
 
+/* pointer triangle matches the neutral card so it reads as an extension of it */
 .z-coachmark-pointer.z-coachmark-up {
-    border-bottom-color: var(--zk-color-primary);
+    border-bottom-color: var(--zk-color-surface-container-low);
 }
 
 .z-coachmark-pointer.z-coachmark-down {
-    border-top-color: var(--zk-color-primary);
+    border-top-color: var(--zk-color-surface-container-low);
 }
 
 .z-coachmark-pointer.z-coachmark-left {
-    border-right-color: var(--zk-color-primary);
+    border-right-color: var(--zk-color-surface-container-low);
 }
 
 .z-coachmark-pointer.z-coachmark-right {
-    border-left-color: var(--zk-color-primary);
+    border-left-color: var(--zk-color-surface-container-low);
 }
 
 .z-coachmark-close {
@@ -61,7 +65,7 @@
     line-height: var(--zk-spacing-4);
     font-size: 14px;
     text-align: center;
-    color: var(--zk-color-on-primary);
+    color: var(--zk-color-on-surface-variant);
     cursor: pointer;
 }
 
@@ -75,48 +79,7 @@
     right: calc(var(--zk-spacing-2) + 16px);
 }
 
-/* Inverse button on the brand-filled card.
-   The global .z-button is primary-on-primary; the coachmark card bg is ALSO
-   --zk-color-primary, so a default button would vanish into the surface (blue on
-   blue, no border). Swap to a white fill + primary label so it reads as the action,
-   and flip the state layer + focus ring to stay visible on the blue card. */
-.z-coachmark-content .z-button {
-    background-color: var(--zk-color-on-primary);
-    color: var(--zk-color-primary);
-}
-
-/* state layer: a primary overlay darkens the white fill on hover/focus/press
-   (the inherited on-primary/white overlay would be invisible on a white button) */
-.z-coachmark-content .z-button::before {
-    background-color: var(--zk-color-primary);
-}
-
-/* focus ring: white outline so it is visible against the blue card
-   (the inherited primary outline would disappear into the surface) */
-.z-coachmark-content .z-button:focus-visible {
-    outline-color: var(--zk-color-on-primary);
-}
-
-/* Inverse combobutton on the brand-filled card — same disease as .z-button.
-   The split button's two halves (.z-combobutton-content + .z-combobutton-button) are both
-   primary-on-primary, so the whole control vanishes into the blue card. Flip both to a white
-   fill + primary label. The extra .z-combobutton in the selector raises specificity above the
-   toolbar-mold rules so either mold inverts. */
-.z-coachmark-content .z-combobutton .z-combobutton-content,
-.z-coachmark-content .z-combobutton .z-combobutton-button {
-    background-color: var(--zk-color-on-primary);
-    color: var(--zk-color-primary);
-}
-
-/* divider between label and arrow: the inherited 30%-white line is invisible on the white
-   fill — use the outline token (same divider color as the toolbar mold) */
-.z-coachmark-content .z-combobutton .z-combobutton-button {
-    border-left-color: var(--zk-color-outline);
-}
-
-/* state layer: a primary overlay darkens the white fill on hover/press/open
-   (the inherited on-primary/white overlay would be invisible on a white surface) */
-.z-coachmark-content .z-combobutton .z-combobutton-content::before {
-    background-color: var(--zk-color-primary);
-}
+/* NOTE: no per-widget colour inversion. The card is a neutral surface, so nested
+   filled controls (.z-button, .z-combobutton, …) render with their STANDARD styling
+   and contrast naturally against the card. See doc/skill-gaps.md 2026-07-15. */
 }

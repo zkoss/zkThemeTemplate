@@ -34,6 +34,7 @@
     --zk-color-on-surface: rgba(0, 0, 0, 0.87);
     --zk-color-surface-variant: #f0f4fa;
     --zk-color-on-surface-variant: rgba(0, 0, 0, 0.6);
+    --zk-color-surface-container-low: #f7f9fc;
 
     /* Outline / focus */
     --zk-color-outline: rgba(0, 0, 0, 0.23);
@@ -160,8 +161,9 @@ h1 { font-size: 22px; font-weight: var(--zk-font-weight-semibold); margin: 0 0 v
 
 /* Visual card — overflow must NOT be hidden; pointer and close live in the ROOT */
 .z-coachmark-content {
-    background-color: var(--zk-color-primary);
-    color: var(--zk-color-on-primary);
+    /* MD3 rich-tooltip: neutral surface so nested widgets render with standard styling */
+    background-color: var(--zk-color-surface-container-low);
+    color: var(--zk-color-on-surface);
     border-radius: var(--zk-shape-card);
     box-shadow: var(--zk-elevation-2);
     padding: var(--zk-spacing-4);
@@ -180,7 +182,7 @@ h1 { font-size: 22px; font-weight: var(--zk-font-weight-semibold); margin: 0 0 v
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--zk-color-on-primary);
+    color: var(--zk-color-on-surface-variant);
     cursor: pointer;
     border-radius: var(--zk-shape-corner-full);
     font-size: var(--zk-typescale-body-small-size);
@@ -189,7 +191,7 @@ h1 { font-size: 22px; font-weight: var(--zk-font-weight-semibold); margin: 0 0 v
 }
 .z-coachmark-close:hover {
     opacity: 1;
-    background-color: rgba(255, 255, 255, var(--zk-state-hover-opacity));
+    background-color: rgba(0, 0, 0, var(--zk-state-hover-opacity));
 }
 
 /* Pointer triangle — base */
@@ -204,25 +206,25 @@ h1 { font-size: 22px; font-weight: var(--zk-font-weight-semibold); margin: 0 0 v
 
 /* Pointer directions */
 .z-coachmark-pointer.z-coachmark-up {
-    border-bottom-color: var(--zk-color-primary);
+    border-bottom-color: var(--zk-color-surface-container-low);
     top: -20px;
     left: 50%;
     transform: translateX(-50%);
 }
 .z-coachmark-pointer.z-coachmark-down {
-    border-top-color: var(--zk-color-primary);
+    border-top-color: var(--zk-color-surface-container-low);
     bottom: -20px;
     left: 50%;
     transform: translateX(-50%);
 }
 .z-coachmark-pointer.z-coachmark-left {
-    border-right-color: var(--zk-color-primary);
+    border-right-color: var(--zk-color-surface-container-low);
     left: -20px;
     top: 50%;
     transform: translateY(-50%);
 }
 .z-coachmark-pointer.z-coachmark-right {
-    border-left-color: var(--zk-color-primary);
+    border-left-color: var(--zk-color-surface-container-low);
     right: -20px;
     top: 50%;
     transform: translateY(-50%);
@@ -236,13 +238,14 @@ h1 { font-size: 22px; font-weight: var(--zk-font-weight-semibold); margin: 0 0 v
     pointer-events: none;
 }
 
-/* Mock action button inside coachmark */
+/* Mock action button inside coachmark — STANDARD filled style (no inversion);
+   the neutral card lets the primary fill contrast naturally */
 .z-coachmark-content .z-button-mock {
     display: block;
     margin: var(--zk-spacing-3) auto 0;
     padding: var(--zk-spacing-2) var(--zk-spacing-4);
-    background: var(--zk-color-on-primary);
-    color: var(--zk-color-primary);
+    background: var(--zk-color-primary);
+    color: var(--zk-color-on-primary);
     border: none;
     border-radius: var(--zk-shape-corner-small);
     font-size: var(--zk-typescale-body-medium-size);
@@ -381,7 +384,7 @@ h1 { font-size: 22px; font-weight: var(--zk-font-weight-semibold); margin: 0 0 v
                 <div class="z-coachmark-content" style="min-width: 200px;">
                     <div style="padding-right: 24px;">Close button hovered.</div>
                 </div>
-                <div class="z-coachmark-close" style="position: absolute; top: 8px; right: 8px; opacity: 1; background-color: rgba(255,255,255,0.08);">&#x2715;</div>
+                <div class="z-coachmark-close" style="position: absolute; top: 8px; right: 8px; opacity: 1; background-color: rgba(0,0,0,0.08);">&#x2715;</div>
             </div>
         </div>
 
