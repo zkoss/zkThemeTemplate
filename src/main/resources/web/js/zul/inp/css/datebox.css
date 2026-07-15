@@ -143,9 +143,13 @@
 }
 
 /* ─── Open state ───────────────────────────────────────────────────────────── */
+/* Icon-click open must use the SAME affordance as the input-click :focus-within
+   above (Mechanism A: 1px border + inset ring). A border-width:2px here grows the
+   min-height-pinned composite (~1px/side) and reads thicker than the input focus —
+   the two focus styles would diverge. See reference/focus-affordance-no-layout-shift.md. */
 .z-datebox.z-datebox-open {
     border-color: var(--zk-color-primary);
-    border-width: 2px;
+    box-shadow: inset 0 0 0 1px var(--zk-color-primary);
 }
 
 .z-datebox.z-datebox-open .z-datebox-button {

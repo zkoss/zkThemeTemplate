@@ -27,6 +27,20 @@ shift its text). See `reference/focus-affordance-no-layout-shift.md` (§ `<selec
 
 Guarded by `screenshot.spec.ts › input focus (no layout shift) › datebox timezone <select>`.
 
+### Open-state (icon-click) affordance — Mechanism A (gap 2026-07-14)
+ZK adds `z-datebox-open` to the wrapper `<span>` when the calendar icon is clicked. The open-state
+affordance MUST be **identical** to the input-click `:focus-within` affordance (1px border + inset
+primary ring) — NOT a `border-width: 2px` bump, which grows the border-box on a min-height-pinned
+composite input and reads as a thicker ring / layout shift. See
+`reference/focus-affordance-no-layout-shift.md` ("The trap").
+
+| id | selector | property | expected |
+|----|----------|----------|----------|
+| op1 | `.z-datebox.z-datebox-open` | border-width | **1px** (unchanged from rest — NOT 2px) |
+| op2 | `.z-datebox.z-datebox-open` | box-shadow | `inset 0 0 0 1px var(--zk-color-primary)` (same ring as `:focus-within`) |
+
+Guarded by `screenshot.spec.ts › input focus (no layout shift) › datebox open state (icon click)`.
+
 ## States to evaluate
 - [ ] default, hover, focus, disabled, readonly, invalid, open
 - [ ] inplace (see `reference/inplace-state.md`)

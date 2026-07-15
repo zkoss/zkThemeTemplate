@@ -16,6 +16,16 @@ zk-version: 10.2.1-jakarta
 - Input metrics match combobox (since visually a styled combobox).
 - Popup uses elevation level 2 (DESIGN.md §6).
 
+### Open-state (icon-click) affordance — Mechanism A (gap 2026-07-14)
+ZK adds `z-bandbox-open` to the wrapper when the band button is clicked. The open-state ring MUST
+match the input-click `:focus-within` ring — an **inset** box-shadow, not an outset one (an outset
+ring reads as a different halo and is clipped by ancestor `overflow: hidden`). See
+`reference/focus-affordance-no-layout-shift.md`.
+
+| id | selector | property | expected |
+|----|----------|----------|----------|
+| op1 | `.z-bandbox.z-bandbox-open` | box-shadow | `inset 0 0 0 1px var(--zk-color-primary)` (inset — same ring as `:focus-within`, NOT outset) |
+
 ## States to evaluate
 - [ ] default, hover, focus, disabled, readonly, invalid, open
 - [ ] inplace (see `reference/inplace-state.md`)

@@ -316,6 +316,61 @@ test.describe('input focus (no layout shift)', () => {
     expect(focus, 'timezone <select> :focus rule found').not.toBeNull();
     expect(focus![1], 'focus must draw an inset box-shadow ring (Mechanism A)').toContain('inset');
   });
+
+  // The main-wrapper OPEN state (icon click). ZK adds `z-datebox-open` to the
+  // wrapper <span> when the calendar icon is clicked. That emphasis state must reuse
+  // the same affordance as :focus-within (1px border + inset ring) — NOT
+  // border-width:2px. A 2px border on the min-height-pinned composite grows the whole
+  // field (~1px/side, measured 40→42px) and reads thicker than the input-click focus,
+  // so the two focus styles diverge. See doc/skill-gaps.md 2026-07-14.
+  test('datebox open state (icon click): no border-width growth, no layout shift', async ({ page }) => {
+    await page.goto('/datebox.zul');
+    await page.waitForLoadState('networkidle');
+    // Kill transitions on the wrapper so we read settled geometry, not mid-animation.
+    await page.addStyleTag({ content: '.z-datebox { transition: none !important; }' });
+    const box = page.locator('.z-datebox').first();
+    const btn = page.locator('.z-datebox-button').first();
+    const rest = await box.evaluate((el) => {
+      const r = el.getBoundingClientRect();
+      return { border: getComputedStyle(el).borderTopWidth, w: r.width, h: r.height };
+    });
+    await btn.click();
+    await page.waitForSelector('.z-datebox.z-datebox-open', { timeout: 5000 });
+    const open = await box.evaluate((el) => {
+      const r = el.getBoundingClientRect();
+      return { border: getComputedStyle(el).borderTopWidth, w: r.width, h: r.height };
+    });
+    // RED before fix: border grows 1px→2px and the field grows ~2px in height.
+    expect(open.border, 'open-state border must stay 1px (not 2px)').toBe(rest.border);
+    expect(Math.abs(open.h - rest.h), 'open-state height must not grow').toBeLessThan(0.6);
+    expect(Math.abs(open.w - rest.w), 'open-state width must not grow').toBeLessThan(0.6);
+  });
+
+  // Deterministic compiled-CSS guard for the open-state rules (robust against
+  // popup-open flakiness). datebox & bandbox are both bundled into combo.css.dsp.
+  // The icon-open emphasis must reuse the :focus-within mechanism: datebox must NOT
+  // bump border-width, and both must draw an INSET ring (not datebox's old 2px border
+  // nor bandbox's old outset ring).
+  test('datebox & bandbox open-state: inset ring, no border-width bump', async ({ page }) => {
+    await page.goto('/datebox.zul');
+    await page.waitForLoadState('networkidle');
+    const css = await page.evaluate(async () => {
+      const link = [...document.querySelectorAll('link[rel="stylesheet"]')]
+        .map(l => (l as HTMLLinkElement).href).find(h => h.includes('/marble/'));
+      if (!link) return null;
+      const prefix = link.slice(0, link.indexOf('/marble/') + '/marble'.length);
+      const res = await fetch(prefix + '/js/zul/inp/css/combo.css.dsp');
+      return res.ok ? await res.text() : null;
+    });
+    expect(css, 'combo.css.dsp fetched').not.toBeNull();
+    const db = css!.match(/\.z-datebox\.z-datebox-open\s*\{([^}]*)\}/);
+    expect(db, 'datebox open rule found').not.toBeNull();
+    expect(db![1], 'datebox open must NOT bump border-width').not.toContain('border-width');
+    expect(db![1], 'datebox open must draw an inset ring (Mechanism A)').toContain('inset');
+    const bb = css!.match(/\.z-bandbox\.z-bandbox-open\s*\{([^}]*)\}/);
+    expect(bb, 'bandbox open rule found').not.toBeNull();
+    expect(bb![1], 'bandbox open must draw an inset ring (not an outset ring)').toContain('inset');
+  });
 });
 
 // -------------------------------------------------------

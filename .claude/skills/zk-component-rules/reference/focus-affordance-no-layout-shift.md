@@ -169,6 +169,23 @@ layout-affecting property without co-animating whatever offsets it — don't do 
 across the whole textbox family (`input.css`), combobox (`combobox.css`), and the datebox timezone
 `<select>` (`datebox.css`); this was the second time the focus jitter shipped, hence this rule.
 
+## JS-toggled emphasis states (`z-*-open`) are affordance states too
+
+A composite input's "open" state (ZK adds `z-datebox-open` / `z-bandbox-open` / `z-combobox-open`
+to the wrapper when the trigger button opens the popup) is an emphasis state exactly like `:focus`.
+It **must reuse the same mechanism as `:focus-within`** — never a raw `border-width` bump and never
+an outset ring. If focus uses Mechanism A (1px border + `inset` box-shadow) then open must too;
+splitting them across mechanisms is a real user-visible bug: clicking the **icon** then looks
+different from clicking the **input** (and a `border-width:2px` open state also re-introduces the
+layout-shift trap above).
+
+Caught 2026-07-14: **datebox** had migrated `:focus-within` to Mechanism A but left
+`.z-datebox-open` on `border-width:2px` → icon-open grew the field and drew a thicker ring than
+input-focus; **bandbox** used an `inset` focus ring but an **outset** open ring → a different halo.
+Both fixed to `box-shadow: inset 0 0 0 1px var(--zk-color-primary)`, identical to `:focus-within`.
+(Combobox is exempt for the same reason its focus is — border on the children, not the root, with
+`padding-left` compensation; its open and focus rules already match each other.)
+
 ## How the harness should catch a regression
 
 Two assertions per outlined-input contract — steady-state geometry **and** the transition:
