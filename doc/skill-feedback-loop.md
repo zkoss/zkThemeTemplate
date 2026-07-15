@@ -20,6 +20,15 @@ Every manual gap-fix lands at exactly one of three layers. Always pick the highe
 | **2. Contract template** (`doc/contracts/<component>.md` schema) | What to verify and where to look for the canonical value | Until the contract format is overhauled |
 | **3. Agent workflow** (`zk-theme-{generator,evaluator}.md` §1.3 / §1.5) | Process gates that force the agent to look at the right thing | Until the harness is replaced |
 
+## Test-first is non-negotiable
+
+Every fix follows TDD — this applies to **any** defect that will result in a code change, whether the harness surfaced it as a gap or someone filed it as an ordinary bug report. Before writing a single line of CSS:
+
+1. **Encode the defect as a failing test first.** A contract assertion (evaluator-run) *and* a Playwright regression test (`src/test/playwright/`, CI-run). Run them and confirm they are **RED** against the current buggy build — this proves the harness can actually see the defect.
+2. **Only then write the fix.** The defect is done when that same test turns **GREEN**.
+
+A test that was never observed to fail guards nothing. The detailed procedure lives in [Step 1](#step-1--log-it-before-fixing-it) (write the failing test) and [Step 4](#step-4--re-verify-the-gap-is-caught) (prove the RED→GREEN transition); this rule is why those steps are mandatory, not optional.
+
 ## Decision rule
 
 Ask three questions in order. Stop at the first **yes**.
@@ -52,7 +61,7 @@ Append a row to `doc/skill-gaps.md`:
 
 The log is append-only. Never edit past rows.
 
-**Encode the gap as a failing assertion before writing any CSS.** Add the missed check as a new row in `doc/contracts/<comp>.md` (or a corrected check in the skill's component file) *first* — the evaluator should now fail on the next run. This proves the harness can *see* the gap; only then fix the CSS. If the gap is that an existing row asserts the wrong value, correct that row instead of adding a new one. Fixing CSS before the assertion exists means the next sibling sweep silently re-introduces the same bug.
+**Encode the gap as a failing assertion before writing any CSS.** This applies to *any* defect that will result in a code change — a harness-surfaced gap or an ordinary bug report both start here. Add the missed check as a new row in `doc/contracts/<comp>.md` (or a corrected check in the skill's component file) *first* — the evaluator should now fail on the next run. This proves the harness can *see* the gap; only then fix the CSS. If the gap is that an existing row asserts the wrong value, correct that row instead of adding a new one. Fixing CSS before the assertion exists means the next sibling sweep silently re-introduces the same bug.
 
 **Also add a Playwright regression test — failing-first.** The contract row is verified by the (agent-run) evaluator; a Playwright test is the *automated, CI-able* guard that catches the regression on every run with no agent in the loop. For **every gap that results in a code fix**, add a test to the Playwright suite (`src/test/playwright/`) *before* fixing the CSS and confirm it **FAILS** against the current (buggy) build. Pick the cheapest shape that captures the gap:
 
@@ -100,6 +109,9 @@ Examples:
 
 ### "Fix the CSS, move on"
 The single worst outcome: the failing component now looks right, but the next Generator pass on a sibling component repeats the same mistake. The harness has not learnt anything. Mandatory log entry first.
+
+### "Fix first, test later"
+Writing the CSS and then back-filling a test that was never seen to fail guards nothing — a test green both before and after the fix proves only that it doesn't test the defect. The failing test comes *first* (see [Test-first is non-negotiable](#test-first-is-non-negotiable)); a fix without a RED→GREEN transition is not done.
 
 ### "Add a one-off comment in the CSS file explaining the gap"
 Comments rot. The next person editing the file removes them. Put it in the skill where it survives.
