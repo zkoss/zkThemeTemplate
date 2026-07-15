@@ -11,14 +11,15 @@ const IPAD_USER_AGENT =
 export default defineConfig({
   testDir: '.',
   snapshotDir: '../../../doc/screenshots',
-  // One folder per preview PAGE. Each spec passes its snapshot name as an ARRAY
-  // — e.g. toHaveScreenshot([DIR, 'gallery.png']) — which Playwright path.join()s
-  // into a real subdirectory for `{arg}` (a string name with a '/' is sanitised
-  // to '-' instead). So baselines group by page, not by test name:
-  // doc/screenshots/button/gallery.png, .../button/default-hover.png,
-  // .../button/tablet.png. Desktop vs tablet no longer needs a `{projectName}`
-  // segment or a `tablet-` folder prefix — they are disambiguated by the
-  // filename (`gallery.png` vs `tablet.png`).
+  // FLAT layout: one file per (page, scenario) directly under doc/screenshots,
+  // named `<page>-<scenario>.png` — no per-page subfolders. Each spec passes its
+  // snapshot name as a single hyphenated STRING, e.g.
+  // toHaveScreenshot(`${DIR}-gallery.png`), so `{arg}` resolves to a flat
+  // filename: doc/screenshots/button-gallery.png, button-default-hover.png,
+  // button-tablet.png. Desktop vs tablet are disambiguated by the filename
+  // suffix (`-gallery.png` vs `-tablet.png`). The flat layout lets every shot be
+  // browsed in one directory listing (see doc/forced-colors-review.html and
+  // scripts/build-forced-colors-review.js).
   snapshotPathTemplate: '{snapshotDir}/{arg}{ext}',
   use: {
     baseURL: 'http://localhost:8080',
@@ -60,6 +61,20 @@ export default defineConfig({
       // the source of truth. See forced-colors.spec.ts and doc/spec/forced-colors.md.
       name: 'forced-colors',
       testMatch: /forced-colors\.spec\.ts/,
+      use: {
+        ...devices['Desktop Chrome'],
+        forcedColors: 'active',
+      },
+    },
+    {
+      // Forced-colors VISUAL review pass — one screenshot per page under WHCM
+      // emulation, written directly (not toHaveScreenshot baselines). Feeds
+      // doc/forced-colors-review.html. Like the `forced-colors` project, the
+      // emulation is really applied in the spec's beforeEach via
+      // page.emulateMedia() — the use option below does not take effect for the
+      // page fixture in this runner. See forced-colors-gallery.spec.ts.
+      name: 'forced-colors-gallery',
+      testMatch: /forced-colors-gallery\.spec\.ts/,
       use: {
         ...devices['Desktop Chrome'],
         forcedColors: 'active',

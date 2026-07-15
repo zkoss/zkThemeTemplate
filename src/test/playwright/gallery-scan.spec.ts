@@ -55,9 +55,8 @@ test.describe('gallery', () => {
         wrapper,
         `${comp}.zul has no .z-p-8 wrapper — give it one or add "${comp}" to SKIP in gallery-scan.spec.ts`
       ).toBeVisible();
-      // One folder per preview page: doc/screenshots/<comp>/gallery.png
-      // (array name → Playwright path.join()s the segments into a real subdir).
-      await expect(wrapper).toHaveScreenshot([comp, 'gallery.png'], {
+      // Flat layout: doc/screenshots/<comp>-gallery.png (single hyphenated name).
+      await expect(wrapper).toHaveScreenshot(`${comp}-gallery.png`, {
         animations: 'disabled',
         // small tolerance for sub-pixel AA differences across runs
         maxDiffPixelRatio: 0.01,

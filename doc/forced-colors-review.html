@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Forced-Colors Review — Marble theme</title>
+<style>
+  :root { color-scheme: light dark; }
+  * { box-sizing: border-box; }
+  body { margin: 0; font: 14px/1.5 system-ui, sans-serif; }
+  header { position: sticky; top: 0; background: Canvas; border-bottom: 1px solid #8884; padding: 16px 24px; z-index: 1; }
+  header h1 { margin: 0 0 4px; font-size: 18px; }
+  header p { margin: 0; opacity: .75; }
+  nav { padding: 12px 24px; border-bottom: 1px solid #8884; display: flex; flex-wrap: wrap; gap: 6px 12px; }
+  nav a { text-decoration: none; opacity: .8; font-size: 12px; }
+  nav a:hover { text-decoration: underline; opacity: 1; }
+  main { padding: 8px 24px 64px; }
+  .row { padding: 24px 0; border-bottom: 1px solid #8884; }
+  .row h2 { margin: 0 0 12px; font-size: 16px; }
+  .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: start; }
+  figure { margin: 0; }
+  figcaption { font-size: 12px; text-transform: uppercase; letter-spacing: .04em; opacity: .6; margin-bottom: 6px; }
+  img { max-width: 100%; height: auto; display: block; border: 1px solid #8884; background: #fff; }
+  .missing { padding: 40px; text-align: center; opacity: .5; border: 1px dashed #8886; }
+  @media (max-width: 900px) { .pair { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+  <header>
+    <h1>Forced-Colors Review — Marble theme</h1>
+    <p>89 pages · 89 with a normal baseline · normal (left) vs Windows High-Contrast emulation (right). Click any image to open full size.</p>
+  </header>
+  <nav>
+        <a href="#a">a</a>
+        <a href="#absolutelayout">absolutelayout</a>
+        <a href="#anchorlayout">anchorlayout</a>
+        <a href="#anchornav">anchornav</a>
+        <a href="#bandbox">bandbox</a>
+        <a href="#barcode">barcode</a>
+        <a href="#biglistbox">biglistbox</a>
+        <a href="#borderlayout">borderlayout</a>
+        <a href="#button">button</a>
+        <a href="#calendar">calendar</a>
+        <a href="#caption">caption</a>
+        <a href="#cardlayout">cardlayout</a>
+        <a href="#cascader">cascader</a>
+        <a href="#checkbox">checkbox</a>
+        <a href="#chosenbox">chosenbox</a>
+        <a href="#coachmark">coachmark</a>
+        <a href="#colorbox">colorbox</a>
+        <a href="#columnlayout">columnlayout</a>
+        <a href="#combobox">combobox</a>
+        <a href="#combobutton">combobutton</a>
+        <a href="#cropper">cropper</a>
+        <a href="#datebox">datebox</a>
+        <a href="#decimalbox">decimalbox</a>
+        <a href="#dnd">dnd</a>
+        <a href="#doublebox">doublebox</a>
+        <a href="#doublespinner">doublespinner</a>
+        <a href="#drawer">drawer</a>
+        <a href="#dropupload">dropupload</a>
+        <a href="#errorbox">errorbox</a>
+        <a href="#fisheyebar">fisheyebar</a>
+        <a href="#goldenlayout">goldenlayout</a>
+        <a href="#grid">grid</a>
+        <a href="#grid-detail">grid-detail</a>
+        <a href="#grid-grouping">grid-grouping</a>
+        <a href="#grid-header">grid-header</a>
+        <a href="#grid-livegrouping">grid-livegrouping</a>
+        <a href="#grid-paging">grid-paging</a>
+        <a href="#grid-utilities">grid-utilities</a>
+        <a href="#groupbox">groupbox</a>
+        <a href="#hlayout">hlayout</a>
+        <a href="#inputgroup">inputgroup</a>
+        <a href="#intbox">intbox</a>
+        <a href="#label">label</a>
+        <a href="#linelayout">linelayout</a>
+        <a href="#listbox">listbox</a>
+        <a href="#listbox-grouping">listbox-grouping</a>
+        <a href="#listbox-header">listbox-header</a>
+        <a href="#longbox">longbox</a>
+        <a href="#menubar">menubar</a>
+        <a href="#messagebox">messagebox</a>
+        <a href="#multislider">multislider</a>
+        <a href="#navbar">navbar</a>
+        <a href="#notification">notification</a>
+        <a href="#organigram">organigram</a>
+        <a href="#paging">paging</a>
+        <a href="#panel">panel</a>
+        <a href="#pdfviewer">pdfviewer</a>
+        <a href="#popup">popup</a>
+        <a href="#portallayout">portallayout</a>
+        <a href="#progressmeter">progressmeter</a>
+        <a href="#radiogroup">radiogroup</a>
+        <a href="#rangeslider">rangeslider</a>
+        <a href="#rating">rating</a>
+        <a href="#rowlayout">rowlayout</a>
+        <a href="#runtime-error">runtime-error</a>
+        <a href="#scrollview">scrollview</a>
+        <a href="#searchbox">searchbox</a>
+        <a href="#selectbox">selectbox</a>
+        <a href="#separator">separator</a>
+        <a href="#signature">signature</a>
+        <a href="#slider">slider</a>
+        <a href="#space">space</a>
+        <a href="#spinner">spinner</a>
+        <a href="#splitlayout">splitlayout</a>
+        <a href="#splitter">splitter</a>
+        <a href="#stepbar">stepbar</a>
+        <a href="#tabbox">tabbox</a>
+        <a href="#tabbox-misc">tabbox-misc</a>
+        <a href="#tablelayout">tablelayout</a>
+        <a href="#tbeditor">tbeditor</a>
+        <a href="#textbox">textbox</a>
+        <a href="#timebox">timebox</a>
+        <a href="#timepicker">timepicker</a>
+        <a href="#toast">toast</a>
+        <a href="#toolbar">toolbar</a>
+        <a href="#tree">tree</a>
+        <a href="#tree-header">tree-header</a>
+        <a href="#vlayout">vlayout</a>
+        <a href="#window">window</a>
+  </nav>
+  <main>
+      <section class="row" id="a">
+        <h2>a</h2>
+        <div class="pair">
+          <figure><figcaption>normal</figcaption><a href="screenshots/a-gallery.png" target="_blank"><img loading="lazy" src="screenshots/a-gallery.png" alt="a normal"></a></figure>
+          <figure><figcaption>forced-colors</figcaption><a href="screenshots/a-forced-colors.png" target="_blank"><img loading="lazy" src="screenshots/a-forced-colors.png" alt="a forced-colors"></a></figure>
+        </div>
+      </section>
+      <section class="row" id="absolutelayout">
+        <h2>absolutelayout</h2>
+        <div class="pair">
+          <figure><figcaption>normal</figcaption><a href="screenshots/absolutelayout-gallery.png" target="_blank"><img loading="lazy" src="screenshots/absolutelayout-gallery.png" alt="absolutelayout normal"></a></figure>
+          <figure><figcaption>forced-colors</figcaption><a href="screenshots/absolutelayout-forced-colors.png" target="_blank"><img loading="lazy" src="screenshots/absolutelayout-forced-colors.png" alt="absolutelayout forced-colors"></a></figure>
+        </div>
+      </section>
+      <section class="row" id="anchorlayout">
+        <h2>anchorlayout</h2>
+        <div class="pair">
+          <figure><figcaption>normal</figcaption><a href="screenshots/anchorlayout-gallery.png" target="_blank"><img loading="lazy" src="screenshots/anchorlayout-gallery.png" alt="anchorlayout normal"></a></figure>
+          <figure><figcaption>forced-colors</figcaption><a href="screenshots/anchorlayout-forced-colors.png" target="_blank"><img loading="lazy" src="screenshots/anchorlayout-forced-colors.png" alt="anchorlayout forced-colors"></a></figure>
+        </div>
+      </section>
+      <section class="row" id="anchornav">
+        <h2>anchornav</h2>
+        <div class="pair">
+          <figure><figcaption>normal</figcaption><a href="screenshots/anchornav-gallery.png" target="_blank"><img loading="lazy" src="screenshots/anchornav-gallery.png" alt="anchornav normal"></a></figure>
+          <figure><figcaption>forced-colors</figcaption><a href="screenshots/anchornav-forced-colors.png" target="_blank"><img loading="lazy" src="screenshots/anchornav-forced-colors.png" alt="anchornav forced-colors"></a></figure>
+        </div>
+      </section>
+      <section class="row" id="bandbox">
+        <h2>bandbox</h2>
+        <div class="pair">
+          <figure><figcaption>normal</figcaption><a href="screenshots/bandbox-gallery.png" target="_blank"><img loading="lazy" src="screenshots/bandbox-gallery.png" alt="bandbox normal"></a></figure>
+          <figure><figcaption>forced-colors</figcaption><a href="screenshots/bandbox-forced-colors.png" target="_blank"><img loading="lazy" src="screenshots/bandbox-forced-colors.png" alt="bandbox forced-colors"></a></figure>
+        </div>
+      </section>
+      <section class="row" id="barcode">
+        <h2>barcode</h2>
+        <div class="pair">
+          <figure><figcaption>normal</figcaption><a href="screenshots/barcode-gallery.png" target="_blank"><img loading="lazy" src="screenshots/barcode-gallery.png" alt="barcode normal"></a></figure>
+          <figure><figcaption>forced-colors</figcaption><a href="screenshots/barcode-forced-colors.png" target="_blank"><img loading="lazy" src="screenshots/barcode-forced-colors.png" alt="barcode forced-colors"></a></figure>
+        </div>
+      </section>
+      <section class="row" id="biglistbox">
+        <h2>biglistbox</h2>
+        <div class="pair">
+          <figure><figcaption>normal</figcaption><a href="screenshots/biglistbox-gallery.png" target="_blank"><img loading="lazy" src="screenshots/biglistbox-gallery.png" alt="biglistbox normal"></a></figure>
+          <figure><figcaption>forced-colors</figcaption><a href="screenshots/biglistbox-forced-colors.png" target="_blank"><img loading="lazy" src="screenshots/biglistbox-forced-colors.png" alt="biglistbox forced-colors"></a></figure>
+        </div>
+      </section>
+      <section class="row" id="borderlayout">
+        <h2>borderlayout</h2>
+        <div class="pair">
+          <figure><figcaption>normal</figcaption><a href="screenshots/borderlayout-gallery.png" target="_blank"><img loading="lazy" src="screenshots/borderlayout-gallery.png" alt="borderlayout normal"></a></figure>
+          <figure><figcaption>forced-colors</figcaption><a href="screenshots/borderlayout-forced-colors.png" target="_blank"><img loading="lazy" src="screenshots/borderlayout-forced-colors.png" alt="borderlayout forced-colors"></a></figure>
+        </div>
+      </section>
+      <section class="row" id="button">
+        <h2>button</h2>
+        <div class="pair">
+          <figure><figcaption>normal</figcaption><a href="screenshots/button-gallery.png" target="_blank"><img loading="lazy" src="screenshots/button-gallery.png" alt="button normal"></a></figure>
+          <figure><figcaption>forced-colors</figcaption><a href="screenshots/button-forced-colors.png" target="_blank"><img loading="lazy" src="screenshots/button-forced-colors.png" alt="button forced-colors"></a></figure>
+        </div>
+      </section>
+      <section class="row" id="calendar">
+        <h2>calendar</h2>
+        <div class="pair">
+          <figure><figcaption>normal</figcaption><a href="screenshots/calendar-gallery.png" target="_blank"><img loading="lazy" src="screenshots/calendar-gallery.png" alt="calendar normal"></a></figure>
+          <figure><figcaption>forced-colors</figcaption><a href="screenshots/calendar-forced-colors.png" target="_blank"><img loading="lazy" src="screenshots/calendar-forced-colors.png" alt="calendar forced-colors"></a></figure>
+        </div>
+      </section>
+      <section class="row" id="caption">
+        <h2>caption</h2>
+        <div class="pair">
+          <figure><figcaption>normal</figcaption><a href="screenshots/caption-gallery.png" target="_blank"><img loading="lazy" src="screenshots/caption-gallery.png" alt="caption normal"></a></figure>
+          <figure><figcaption>forced-colors</figcaption><a href="screenshots/caption-forced-colors.png" target="_blank"><img loading="lazy" src="screenshots/caption-forced-colors.png" alt="caption forced-colors"></a></figure>
+        </div>
+      </section>
+      <section class="row" id="cardlayout">
+        <h2>cardlayout</h2>
+        <div class="pair">
+          <figure><figcaption>normal</figcaption><a href="screenshots/cardlayout-gallery.png" target="_blank"><img loading="lazy" src="screenshots/cardlayout-gallery.png" alt="cardlayout normal"></a></figure>
+          <figure><figcaption>forced-colors</figcaption><a href="screenshots/cardlayout-forced-colors.png" target="_blank"><img loading="lazy" src="screenshots/cardlayout-forced-colors.png" alt="cardlayout forced-colors"></a></figure>
+        </div>
+      </section>
+      <section class="row" id="cascader">
+        <h2>cascader</h2>
+        <div class="pair">
+          <figure><figcaption>normal</figcaption><a href="screenshots/cascader-gallery.png" target="_blank"><img loading="lazy" src="screenshots/cascader-gallery.png" alt="cascader normal"></a></figure>
+          <figure><figcaption>forced-colors</figcaption><a href="screenshots/cascader-forced-colors.png" target="_blank"><img loading="lazy" src="screenshots/cascader-forced-colors.png" alt="cascader forced-colors"></a></figure>
+        </div>
+      </section>
+      <section class="row" id="checkbox">
+        <h2>checkbox</h2>
+        <div class="pair">
+          <figure><figcaption>normal</figcaption><a href="screenshots/checkbox-gallery.png" target="_blank"><img loading="lazy" src="screenshots/checkbox-gallery.png" alt="checkbox normal"></a></figure>
+          <figure><figcaption>forced-colors</figcaption><a href="screenshots/checkbox-forced-colors.png" target="_blank"><img loading="lazy" src="screenshots/checkbox-forced-colors.png" alt="checkbox forced-colors"></a></figure>
+        </div>
+      </section>
+      <section class="row" id="chosenbox">
+        <h2>chosenbox</h2>
+        <div class="pair">
+          <figure><figcaption>normal</figcaption><a href="screenshots/chosenbox-gallery.png" target="_blank"><img loading="lazy" src="screenshots/chosenbox-gallery.png" alt="chosenbox normal"></a></figure>
+          <figure><figcaption>forced-colors</figcaption><a href="screenshots/chosenbox-forced-colors.png" target="_blank"><img loading="lazy" src="screenshots/chosenbox-forced-colors.png" alt="chosenbox forced-colors"></a></figure>
+        </div>
+      </section>
+      <section class="row" id="coachmark">
+        <h2>coachmark</h2>
+        <div class="pair">
+          <figure><figcaption>normal</figcaption><a href="screenshots/coachmark-gallery.png" target="_blank"><img loading="lazy" src="screenshots/coachmark-gallery.png" alt="coachmark normal"></a></figure>
+          <figure><figcaption>forced-colors</figcaption><a href="screenshots/coachmark-forced-colors.png" target="_blank"><img loading="lazy" src="screenshots/coachmark-forced-colors.png" alt="coachmark forced-colors"></a></figure>
+        </div>
+      </section>
+      <section class="row" id="colorbox">
+        <h2>colorbox</h2>
+        <div class="pair">
+          <figure><figcaption>normal</figcaption><a href="screenshots/colorbox-gallery.png" target="_blank"><img loading="lazy" src="screenshots/colorbox-gallery.png" alt="colorbox normal"></a></figure>
+          <figure><figcaption>forced-colors</figcaption><a href="screenshots/colorbox-forced-colors.png" target="_blank"><img loading="lazy" src="screenshots/colorbox-forced-colors.png" alt="colorbox forced-colors"></a></figure>
+        </div>
+      </section>
+      <section class="row" id="columnlayout">
+        <h2>columnlayout</h2>
+        <div class="pair">
+          <figure><figcaption>normal</figcaption><a href="screenshots/columnlayout-gallery.png" target="_blank"><img loading="lazy" src="screenshots/columnlayout-gallery.png" alt="columnlayout normal"></a></figure>
+          <figure><figcaption>forced-colors</figcaption><a href="screenshots/columnlayout-forced-colors.png" target="_blank"><img loading="lazy" src="screenshots/columnlayout-forced-colors.png" alt="columnlayout forced-colors"></a></figure>
+        </div>
+      </section>
+      <section class="row" id="combobox">
+        <h2>combobox</h2>
+        <div class="pair">
+          <figure><figcaption>normal</figcaption><a href="screenshots/combobox-gallery.png" target="_blank"><img loading="lazy" src="screenshots/combobox-gallery.png" alt="combobox normal"></a></figure>
+          <figure><figcaption>forced-colors</figcaption><a href="screenshots/combobox-forced-colors.png" target="_blank"><img loading="lazy" src="screenshots/combobox-forced-colors.png" alt="combobox forced-colors"></a></figure>
+        </div>
+      </section>
+      <section class="row" id="combobutton">
+        <h2>combobutton</h2>
+        <div class="pair">
+          <figure><figcaption>normal</figcaption><a href="screenshots/combobutton-gallery.png" target="_blank"><img loading="lazy" src="screenshots/combobutton-gallery.png" alt="combobutton normal"></a></figure>
+          <figure><figcaption>forced-colors</figcaption><a href="screenshots/combobutton-forced-colors.png" target="_blank"><img loading="lazy" src="screenshots/combobutton-forced-colors.png" alt="combobutton forced-colors"></a></figure>
+        </div>
+      </section>
+      <section class="row" id="cropper">
+        <h2>cropper</h2>
+        <div class="pair">
+          <figure><figcaption>normal</figcaption><a href="screenshots/cropper-gallery.png" target="_blank"><img loading="lazy" src="screenshots/cropper-gallery.png" alt="cropper normal"></a></figure>
+          <figure><figcaption>forced-colors</figcaption><a href="screenshots/cropper-forced-colors.png" target="_blank"><img loading="lazy" src="screenshots/cropper-forced-colors.png" alt="cropper forced-colors"></a></figure>
+        </div>
+      </section>
+      <section class="row" id="datebox">
+        <h2>datebox</h2>
+        <div class="pair">
+          <figure><figcaption>normal</figcaption><a href="screenshots/datebox-gallery.png" target="_blank"><img loading="lazy" src="screenshots/datebox-gallery.png" alt="datebox normal"></a></figure>
+          <figure><figcaption>forced-colors</figcaption><a href="screenshots/datebox-forced-colors.png" target="_blank"><img loading="lazy" src="screenshots/datebox-forced-colors.png" alt="datebox forced-colors"></a></figure>
+        </div>
+      </section>
+      <section class="row" id="decimalbox">
+        <h2>decimalbox</h2>
+        <div class="pair">
+          <figure><figcaption>normal</figcaption><a href="screenshots/decimalbox-gallery.png" target="_blank"><img loading="lazy" src="screenshots/decimalbox-gallery.png" alt="decimalbox normal"></a></figure>
+          <figure><figcaption>forced-colors</figcaption><a href="screenshots/decimalbox-forced-colors.png" target="_blank"><img loading="lazy" src="screenshots/decimalbox-forced-colors.png" alt="decimalbox forced-colors"></a></figure>
+        </div>
+      </section>
+      <section class="row" id="dnd">
+        <h2>dnd</h2>
+        <div class="pair">
+          <figure><figcaption>normal</figcaption><a href="screenshots/dnd-gallery.png" target="_blank"><img loading="lazy" src="screenshots/dnd-gallery.png" alt="dnd normal"></a></figure>
+          <figure><figcaption>forced-colors</figcaption><a href="screenshots/dnd-forced-colors.png" target="_blank"><img loading="lazy" src="screenshots/dnd-forced-colors.png" alt="dnd forced-colors"></a></figure>
+        </div>
+      </section>
+      <section class="row" id="doublebox">
+        <h2>doublebox</h2>
+        <div class="pair">
+          <figure><figcaption>normal</figcaption><a href="screenshots/doublebox-gallery.png" target="_blank"><img loading="lazy" src="screenshots/doublebox-gallery.png" alt="doublebox normal"></a></figure>
+          <figure><figcaption>forced-colors</figcaption><a href="screenshots/doublebox-forced-colors.png" target="_blank"><img loading="lazy" src="screenshots/doublebox-forced-colors.png" alt="doublebox forced-colors"></a></figure>
+        </div>
+      </section>
+      <section class="row" id="doublespinner">
+        <h2>doublespinner</h2>
+        <div class="pair">
+          <figure><figcaption>normal</figcaption><a href="screenshots/doublespinner-gallery.png" target="_blank"><img loading="lazy" src="screenshots/doublespinner-gallery.png" alt="doublespinner normal"></a></figure>
+          <figure><figcaption>forced-colors</figcaption><a href="screenshots/doublespinner-forced-colors.png" target="_blank"><img loading="lazy" src="screenshots/doublespinner-forced-colors.png" alt="doublespinner forced-colors"></a></figure>
+        </div>
+      </section>
+      <section class="row" id="drawer">
+        <h2>drawer</h2>
+        <div class="pair">
+          <figure><figcaption>normal</figcaption><a href="screenshots/drawer-gallery.png" target="_blank"><img loading="lazy" src="screenshots/drawer-gallery.png" alt="drawer normal"></a></figure>
+          <figure><figcaption>forced-colors</figcaption><a href="screenshots/drawer-forced-colors.png" target="_blank"><img loading="lazy" src="screenshots/drawer-forced-colors.png" alt="drawer forced-colors"></a></figure>
+        </div>
+      </section>
+      <section class="row" id="dropupload">
+        <h2>dropupload</h2>
+        <div class="pair">
+          <figure><figcaption>normal</figcaption><a href="screenshots/dropupload-gallery.png" target="_blank"><img loading="lazy" src="screenshots/dropupload-gallery.png" alt="dropupload normal"></a></figure>
+          <figure><figcaption>forced-colors</figcaption><a href="screenshots/dropupload-forced-colors.png" target="_blank"><img loading="lazy" src="screenshots/dropupload-forced-colors.png" alt="dropupload forced-colors"></a></figure>
+        </div>
+      </section>
+      <section class="row" id="errorbox">
+        <h2>errorbox</h2>
+        <div class="pair">
+          <figure><figcaption>normal</figcaption><a href="screenshots/errorbox-gallery.png" target="_blank"><img loading="lazy" src="screenshots/errorbox-gallery.png" alt="errorbox normal"></a></figure>
+          <figure><figcaption>forced-colors</figcaption><a href="screenshots/errorbox-forced-colors.png" target="_blank"><img loading="lazy" src="screenshots/errorbox-forced-colors.png" alt="errorbox forced-colors"></a></figure>
+        </div>
+      </section>
+      <section class="row" id="fisheyebar">
+        <h2>fisheyebar</h2>
+        <div class="pair">
+          <figure><figcaption>normal</figcaption><a href="screenshots/fisheyebar-gallery.png" target="_blank"><img loading="lazy" src="screenshots/fisheyebar-gallery.png" alt="fisheyebar normal"></a></figure>
+          <figure><figcaption>forced-colors</figcaption><a href="screenshots/fisheyebar-forced-colors.png" target="_blank"><img loading="lazy" src="screenshots/fisheyebar-forced-colors.png" alt="fisheyebar forced-colors"></a></figure>
+        </div>
+      </section>
+      <section class="row" id="goldenlayout">
+        <h2>goldenlayout</h2>
+        <div class="pair">
+          <figure><figcaption>normal</figcaption><a href="screenshots/goldenlayout-gallery.png" target="_blank"><img loading="lazy" src="screenshots/goldenlayout-gallery.png" alt="goldenlayout normal"></a></figure>
+          <figure><figcaption>forced-colors</figcaption><a href="screenshots/goldenlayout-forced-colors.png" target="_blank"><img loading="lazy" src="screenshots/goldenlayout-forced-colors.png" alt="goldenlayout forced-colors"></a></figure>
+        </div>
+      </section>
+      <section class="row" id="grid">
+        <h2>grid</h2>
+        <div class="pair">
+          <figure><figcaption>normal</figcaption><a href="screenshots/grid-gallery.png" target="_blank"><img loading="lazy" src="screenshots/grid-gallery.png" alt="grid normal"></a></figure>
+          <figure><figcaption>forced-colors</figcaption><a href="screenshots/grid-forced-colors.png" target="_blank"><img loading="lazy" src="screenshots/grid-forced-colors.png" alt="grid forced-colors"></a></figure>
+        </div>
+      </section>
+      <section class="row" id="grid-detail">
+        <h2>grid-detail</h2>
+        <div class="pair">
+          <figure><figcaption>normal</figcaption><a href="screenshots/grid-detail-gallery.png" target="_blank"><img loading="lazy" src="screenshots/grid-detail-gallery.png" alt="grid-detail normal"></a></figure>
+          <figure><figcaption>forced-colors</figcaption><a href="screenshots/grid-detail-forced-colors.png" target="_blank"><img loading="lazy" src="screenshots/grid-detail-forced-colors.png" alt="grid-detail forced-colors"></a></figure>
+        </div>
+      </section>
+      <section class="row" id="grid-grouping">
+        <h2>grid-grouping</h2>
+        <div class="pair">
+          <figure><figcaption>normal</figcaption><a href="screenshots/grid-grouping-gallery.png" target="_blank"><img loading="lazy" src="screenshots/grid-grouping-gallery.png" alt="grid-grouping normal"></a></figure>
+          <figure><figcaption>forced-colors</figcaption><a href="screenshots/grid-grouping-forced-colors.png" target="_blank"><img loading="lazy" src="screenshots/grid-grouping-forced-colors.png" alt="grid-grouping forced-colors"></a></figure>
+        </div>
+      </section>
+      <section class="row" id="grid-header">
+        <h2>grid-header</h2>
+        <div class="pair">
+          <figure><figcaption>normal</figcaption><a href="screenshots/grid-header-gallery.png" target="_blank"><img loading="lazy" src="screenshots/grid-header-gallery.png" alt="grid-header normal"></a></figure>
+          <figure><figcaption>forced-colors</figcaption><a href="screenshots/grid-header-forced-colors.png" target="_blank"><img loading="lazy" src="screenshots/grid-header-forced-colors.png" alt="grid-header forced-colors"></a></figure>
+        </div>
+      </section>
+      <section class="row" id="grid-livegrouping">
+        <h2>grid-livegrouping</h2>
+        <div class="pair">
+          <figure><figcaption>normal</figcaption><a href="screenshots/grid-livegrouping-gallery.png" target="_blank"><img loading="lazy" src="screenshots/grid-livegrouping-gallery.png" alt="grid-livegrouping normal"></a></figure>
+          <figure><figcaption>forced-colors</figcaption><a href="screenshots/grid-livegrouping-forced-colors.png" target="_blank"><img loading="lazy" src="screenshots/grid-livegrouping-forced-colors.png" alt="grid-livegrouping forced-colors"></a></figure>
+        </div>
+      </section>
+      <section class="row" id="grid-paging">
+        <h2>grid-paging</h2>
+        <div class="pair">
+          <figure><figcaption>normal</figcaption><a href="screenshots/grid-paging-gallery.png" target="_blank"><img loading="lazy" src="screenshots/grid-paging-gallery.png" alt="grid-paging normal"></a></figure>
+          <figure><figcaption>forced-colors</figcaption><a href="screenshots/grid-paging-forced-colors.png" target="_blank"><img loading="lazy" src="screenshots/grid-paging-forced-colors.png" alt="grid-paging forced-colors"></a></figure>
+        </div>
+      </section>
+      <section class="row" id="grid-utilities">
+        <h2>grid-utilities</h2>
+        <div class="pair">
+          <figure><figcaption>normal</figcaption><a href="screenshots/grid-utilities-gallery.png" target="_blank"><img loading="lazy" src="screenshots/grid-utilities-gallery.png" alt="grid-utilities normal"></a></figure>
+          <figure><figcaption>forced-colors</figcaption><a href="screenshots/grid-utilities-forced-colors.png" target="_blank"><img loading="lazy" src="screenshots/grid-utilities-forced-colors.png" alt="grid-utilities forced-colors"></a></figure>
+        </div>
+      </section>
+      <section class="row" id="groupbox">
+        <h2>groupbox</h2>
+        <div class="pair">
+          <figure><figcaption>normal</figcaption><a href="screenshots/groupbox-gallery.png" target="_blank"><img loading="lazy" src="screenshots/groupbox-gallery.png" alt="groupbox normal"></a></figure>
+          <figure><figcaption>forced-colors</figcaption><a href="screenshots/groupbox-forced-colors.png" target="_blank"><img loading="lazy" src="screenshots/groupbox-forced-colors.png" alt="groupbox forced-colors"></a></figure>
+        </div>
+      </section>
+      <section class="row" id="hlayout">
+        <h2>hlayout</h2>
+        <div class="pair">
+          <figure><figcaption>normal</figcaption><a href="screenshots/hlayout-gallery.png" target="_blank"><img loading="lazy" src="screenshots/hlayout-gallery.png" alt="hlayout normal"></a></figure>
+          <figure><figcaption>forced-colors</figcaption><a href="screenshots/hlayout-forced-colors.png" target="_blank"><img loading="lazy" src="screenshots/hlayout-forced-colors.png" alt="hlayout forced-colors"></a></figure>
+        </div>
+      </section>
+      <section class="row" id="inputgroup">
+        <h2>inputgroup</h2>
+        <div class="pair">
+          <figure><figcaption>normal</figcaption><a href="screenshots/inputgroup-gallery.png" target="_blank"><img loading="lazy" src="screenshots/inputgroup-gallery.png" alt="inputgroup normal"></a></figure>
+          <figure><figcaption>forced-colors</figcaption><a href="screenshots/inputgroup-forced-colors.png" target="_blank"><img loading="lazy" src="screenshots/inputgroup-forced-colors.png" alt="inputgroup forced-colors"></a></figure>
+        </div>
+      </section>
+      <section class="row" id="intbox">
+        <h2>intbox</h2>
+        <div class="pair">
+          <figure><figcaption>normal</figcaption><a href="screenshots/intbox-gallery.png" target="_blank"><img loading="lazy" src="screenshots/intbox-gallery.png" alt="intbox normal"></a></figure>
+          <figure><figcaption>forced-colors</figcaption><a href="screenshots/intbox-forced-colors.png" target="_blank"><img loading="lazy" src="screenshots/intbox-forced-colors.png" alt="intbox forced-colors"></a></figure>
+        </div>
+      </section>
+      <section class="row" id="label">
+        <h2>label</h2>
+        <div class="pair">
+          <figure><figcaption>normal</figcaption><a href="screenshots/label-gallery.png" target="_blank"><img loading="lazy" src="screenshots/label-gallery.png" alt="label normal"></a></figure>
+          <figure><figcaption>forced-colors</figcaption><a href="screenshots/label-forced-colors.png" target="_blank"><img loading="lazy" src="screenshots/label-forced-colors.png" alt="label forced-colors"></a></figure>
+        </div>
+      </section>
+      <section class="row" id="linelayout">
+        <h2>linelayout</h2>
+        <div class="pair">
+          <figure><figcaption>normal</figcaption><a href="screenshots/linelayout-gallery.png" target="_blank"><img loading="lazy" src="screenshots/linelayout-gallery.png" alt="linelayout normal"></a></figure>
+          <figure><figcaption>forced-colors</figcaption><a href="screenshots/linelayout-forced-colors.png" target="_blank"><img loading="lazy" src="screenshots/linelayout-forced-colors.png" alt="linelayout forced-colors"></a></figure>
+        </div>
+      </section>
+      <section class="row" id="listbox">
+        <h2>listbox</h2>
+        <div class="pair">
+          <figure><figcaption>normal</figcaption><a href="screenshots/listbox-gallery.png" target="_blank"><img loading="lazy" src="screenshots/listbox-gallery.png" alt="listbox normal"></a></figure>
+          <figure><figcaption>forced-colors</figcaption><a href="screenshots/listbox-forced-colors.png" target="_blank"><img loading="lazy" src="screenshots/listbox-forced-colors.png" alt="listbox forced-colors"></a></figure>
+        </div>
+      </section>
+      <section class="row" id="listbox-grouping">
+        <h2>listbox-grouping</h2>
+        <div class="pair">
+          <figure><figcaption>normal</figcaption><a href="screenshots/listbox-grouping-gallery.png" target="_blank"><img loading="lazy" src="screenshots/listbox-grouping-gallery.png" alt="listbox-grouping normal"></a></figure>
+          <figure><figcaption>forced-colors</figcaption><a href="screenshots/listbox-grouping-forced-colors.png" target="_blank"><img loading="lazy" src="screenshots/listbox-grouping-forced-colors.png" alt="listbox-grouping forced-colors"></a></figure>
+        </div>
+      </section>
+      <section class="row" id="listbox-header">
+        <h2>listbox-header</h2>
+        <div class="pair">
+          <figure><figcaption>normal</figcaption><a href="screenshots/listbox-header-gallery.png" target="_blank"><img loading="lazy" src="screenshots/listbox-header-gallery.png" alt="listbox-header normal"></a></figure>
+          <figure><figcaption>forced-colors</figcaption><a href="screenshots/listbox-header-forced-colors.png" target="_blank"><img loading="lazy" src="screenshots/listbox-header-forced-colors.png" alt="listbox-header forced-colors"></a></figure>
+        </div>
+      </section>
+      <section class="row" id="longbox">
+        <h2>longbox</h2>
+        <div class="pair">
+          <figure><figcaption>normal</figcaption><a href="screenshots/longbox-gallery.png" target="_blank"><img loading="lazy" src="screenshots/longbox-gallery.png" alt="longbox normal"></a></figure>
+          <figure><figcaption>forced-colors</figcaption><a href="screenshots/longbox-forced-colors.png" target="_blank"><img loading="lazy" src="screenshots/longbox-forced-colors.png" alt="longbox forced-colors"></a></figure>
+        </div>
+      </section>
+      <section class="row" id="menubar">
+        <h2>menubar</h2>
+        <div class="pair">
+          <figure><figcaption>normal</figcaption><a href="screenshots/menubar-gallery.png" target="_blank"><img loading="lazy" src="screenshots/menubar-gallery.png" alt="menubar normal"></a></figure>
+          <figure><figcaption>forced-colors</figcaption><a href="screenshots/menubar-forced-colors.png" target="_blank"><img loading="lazy" src="screenshots/menubar-forced-colors.png" alt="menubar forced-colors"></a></figure>
+        </div>
+      </section>
+      <section class="row" id="messagebox">
+        <h2>messagebox</h2>
+        <div class="pair">
+          <figure><figcaption>normal</figcaption><a href="screenshots/messagebox-gallery.png" target="_blank"><img loading="lazy" src="screenshots/messagebox-gallery.png" alt="messagebox normal"></a></figure>
+          <figure><figcaption>forced-colors</figcaption><a href="screenshots/messagebox-forced-colors.png" target="_blank"><img loading="lazy" src="screenshots/messagebox-forced-colors.png" alt="messagebox forced-colors"></a></figure>
+        </div>
+      </section>
+      <section class="row" id="multislider">
+        <h2>multislider</h2>
+        <div class="pair">
+          <figure><figcaption>normal</figcaption><a href="screenshots/multislider-gallery.png" target="_blank"><img loading="lazy" src="screenshots/multislider-gallery.png" alt="multislider normal"></a></figure>
+          <figure><figcaption>forced-colors</figcaption><a href="screenshots/multislider-forced-colors.png" target="_blank"><img loading="lazy" src="screenshots/multislider-forced-colors.png" alt="multislider forced-colors"></a></figure>
+        </div>
+      </section>
+      <section class="row" id="navbar">
+        <h2>navbar</h2>
+        <div class="pair">
+          <figure><figcaption>normal</figcaption><a href="screenshots/navbar-gallery.png" target="_blank"><img loading="lazy" src="screenshots/navbar-gallery.png" alt="navbar normal"></a></figure>
+          <figure><figcaption>forced-colors</figcaption><a href="screenshots/navbar-forced-colors.png" target="_blank"><img loading="lazy" src="screenshots/navbar-forced-colors.png" alt="navbar forced-colors"></a></figure>
+        </div>
+      </section>
+      <section class="row" id="notification">
+        <h2>notification</h2>
+        <div class="pair">
+          <figure><figcaption>normal</figcaption><a href="screenshots/notification-gallery.png" target="_blank"><img loading="lazy" src="screenshots/notification-gallery.png" alt="notification normal"></a></figure>
+          <figure><figcaption>forced-colors</figcaption><a href="screenshots/notification-forced-colors.png" target="_blank"><img loading="lazy" src="screenshots/notification-forced-colors.png" alt="notification forced-colors"></a></figure>
+        </div>
+      </section>
+      <section class="row" id="organigram">
+        <h2>organigram</h2>
+        <div class="pair">
+          <figure><figcaption>normal</figcaption><a href="screenshots/organigram-gallery.png" target="_blank"><img loading="lazy" src="screenshots/organigram-gallery.png" alt="organigram normal"></a></figure>
+          <figure><figcaption>forced-colors</figcaption><a href="screenshots/organigram-forced-colors.png" target="_blank"><img loading="lazy" src="screenshots/organigram-forced-colors.png" alt="organigram forced-colors"></a></figure>
+        </div>
+      </section>
+      <section class="row" id="paging">
+        <h2>paging</h2>
+        <div class="pair">
+          <figure><figcaption>normal</figcaption><a href="screenshots/paging-gallery.png" target="_blank"><img loading="lazy" src="screenshots/paging-gallery.png" alt="paging normal"></a></figure>
+          <figure><figcaption>forced-colors</figcaption><a href="screenshots/paging-forced-colors.png" target="_blank"><img loading="lazy" src="screenshots/paging-forced-colors.png" alt="paging forced-colors"></a></figure>
+        </div>
+      </section>
+      <section class="row" id="panel">
+        <h2>panel</h2>
+        <div class="pair">
+          <figure><figcaption>normal</figcaption><a href="screenshots/panel-gallery.png" target="_blank"><img loading="lazy" src="screenshots/panel-gallery.png" alt="panel normal"></a></figure>
+          <figure><figcaption>forced-colors</figcaption><a href="screenshots/panel-forced-colors.png" target="_blank"><img loading="lazy" src="screenshots/panel-forced-colors.png" alt="panel forced-colors"></a></figure>
+        </div>
+      </section>
+      <section class="row" id="pdfviewer">
+        <h2>pdfviewer</h2>
+        <div class="pair">
+          <figure><figcaption>normal</figcaption><a href="screenshots/pdfviewer-gallery.png" target="_blank"><img loading="lazy" src="screenshots/pdfviewer-gallery.png" alt="pdfviewer normal"></a></figure>
+          <figure><figcaption>forced-colors</figcaption><a href="screenshots/pdfviewer-forced-colors.png" target="_blank"><img loading="lazy" src="screenshots/pdfviewer-forced-colors.png" alt="pdfviewer forced-colors"></a></figure>
+        </div>
+      </section>
+      <section class="row" id="popup">
+        <h2>popup</h2>
+        <div class="pair">
+          <figure><figcaption>normal</figcaption><a href="screenshots/popup-gallery.png" target="_blank"><img loading="lazy" src="screenshots/popup-gallery.png" alt="popup normal"></a></figure>
+          <figure><figcaption>forced-colors</figcaption><a href="screenshots/popup-forced-colors.png" target="_blank"><img loading="lazy" src="screenshots/popup-forced-colors.png" alt="popup forced-colors"></a></figure>
+        </div>
+      </section>
+      <section class="row" id="portallayout">
+        <h2>portallayout</h2>
+        <div class="pair">
+          <figure><figcaption>normal</figcaption><a href="screenshots/portallayout-gallery.png" target="_blank"><img loading="lazy" src="screenshots/portallayout-gallery.png" alt="portallayout normal"></a></figure>
+          <figure><figcaption>forced-colors</figcaption><a href="screenshots/portallayout-forced-colors.png" target="_blank"><img loading="lazy" src="screenshots/portallayout-forced-colors.png" alt="portallayout forced-colors"></a></figure>
+        </div>
+      </section>
+      <section class="row" id="progressmeter">
+        <h2>progressmeter</h2>
+        <div class="pair">
+          <figure><figcaption>normal</figcaption><a href="screenshots/progressmeter-gallery.png" target="_blank"><img loading="lazy" src="screenshots/progressmeter-gallery.png" alt="progressmeter normal"></a></figure>
+          <figure><figcaption>forced-colors</figcaption><a href="screenshots/progressmeter-forced-colors.png" target="_blank"><img loading="lazy" src="screenshots/progressmeter-forced-colors.png" alt="progressmeter forced-colors"></a></figure>
+        </div>
+      </section>
+      <section class="row" id="radiogroup">
+        <h2>radiogroup</h2>
+        <div class="pair">
+          <figure><figcaption>normal</figcaption><a href="screenshots/radiogroup-gallery.png" target="_blank"><img loading="lazy" src="screenshots/radiogroup-gallery.png" alt="radiogroup normal"></a></figure>
+          <figure><figcaption>forced-colors</figcaption><a href="screenshots/radiogroup-forced-colors.png" target="_blank"><img loading="lazy" src="screenshots/radiogroup-forced-colors.png" alt="radiogroup forced-colors"></a></figure>
+        </div>
+      </section>
+      <section class="row" id="rangeslider">
+        <h2>rangeslider</h2>
+        <div class="pair">
+          <figure><figcaption>normal</figcaption><a href="screenshots/rangeslider-gallery.png" target="_blank"><img loading="lazy" src="screenshots/rangeslider-gallery.png" alt="rangeslider normal"></a></figure>
+          <figure><figcaption>forced-colors</figcaption><a href="screenshots/rangeslider-forced-colors.png" target="_blank"><img loading="lazy" src="screenshots/rangeslider-forced-colors.png" alt="rangeslider forced-colors"></a></figure>
+        </div>
+      </section>
+      <section class="row" id="rating">
+        <h2>rating</h2>
+        <div class="pair">
+          <figure><figcaption>normal</figcaption><a href="screenshots/rating-gallery.png" target="_blank"><img loading="lazy" src="screenshots/rating-gallery.png" alt="rating normal"></a></figure>
+          <figure><figcaption>forced-colors</figcaption><a href="screenshots/rating-forced-colors.png" target="_blank"><img loading="lazy" src="screenshots/rating-forced-colors.png" alt="rating forced-colors"></a></figure>
+        </div>
+      </section>
+      <section class="row" id="rowlayout">
+        <h2>rowlayout</h2>
+        <div class="pair">
+          <figure><figcaption>normal</figcaption><a href="screenshots/rowlayout-gallery.png" target="_blank"><img loading="lazy" src="screenshots/rowlayout-gallery.png" alt="rowlayout normal"></a></figure>
+          <figure><figcaption>forced-colors</figcaption><a href="screenshots/rowlayout-forced-colors.png" target="_blank"><img loading="lazy" src="screenshots/rowlayout-forced-colors.png" alt="rowlayout forced-colors"></a></figure>
+        </div>
+      </section>
+      <section class="row" id="runtime-error">
+        <h2>runtime-error</h2>
+        <div class="pair">
+          <figure><figcaption>normal</figcaption><a href="screenshots/runtime-error-gallery.png" target="_blank"><img loading="lazy" src="screenshots/runtime-error-gallery.png" alt="runtime-error normal"></a></figure>
+          <figure><figcaption>forced-colors</figcaption><a href="screenshots/runtime-error-forced-colors.png" target="_blank"><img loading="lazy" src="screenshots/runtime-error-forced-colors.png" alt="runtime-error forced-colors"></a></figure>
+        </div>
+      </section>
+      <section class="row" id="scrollview">
+        <h2>scrollview</h2>
+        <div class="pair">
+          <figure><figcaption>normal</figcaption><a href="screenshots/scrollview-gallery.png" target="_blank"><img loading="lazy" src="screenshots/scrollview-gallery.png" alt="scrollview normal"></a></figure>
+          <figure><figcaption>forced-colors</figcaption><a href="screenshots/scrollview-forced-colors.png" target="_blank"><img loading="lazy" src="screenshots/scrollview-forced-colors.png" alt="scrollview forced-colors"></a></figure>
+        </div>
+      </section>
+      <section class="row" id="searchbox">
+        <h2>searchbox</h2>
+        <div class="pair">
+          <figure><figcaption>normal</figcaption><a href="screenshots/searchbox-gallery.png" target="_blank"><img loading="lazy" src="screenshots/searchbox-gallery.png" alt="searchbox normal"></a></figure>
+          <figure><figcaption>forced-colors</figcaption><a href="screenshots/searchbox-forced-colors.png" target="_blank"><img loading="lazy" src="screenshots/searchbox-forced-colors.png" alt="searchbox forced-colors"></a></figure>
+        </div>
+      </section>
+      <section class="row" id="selectbox">
+        <h2>selectbox</h2>
+        <div class="pair">
+          <figure><figcaption>normal</figcaption><a href="screenshots/selectbox-gallery.png" target="_blank"><img loading="lazy" src="screenshots/selectbox-gallery.png" alt="selectbox normal"></a></figure>
+          <figure><figcaption>forced-colors</figcaption><a href="screenshots/selectbox-forced-colors.png" target="_blank"><img loading="lazy" src="screenshots/selectbox-forced-colors.png" alt="selectbox forced-colors"></a></figure>
+        </div>
+      </section>
+      <section class="row" id="separator">
+        <h2>separator</h2>
+        <div class="pair">
+          <figure><figcaption>normal</figcaption><a href="screenshots/separator-gallery.png" target="_blank"><img loading="lazy" src="screenshots/separator-gallery.png" alt="separator normal"></a></figure>
+          <figure><figcaption>forced-colors</figcaption><a href="screenshots/separator-forced-colors.png" target="_blank"><img loading="lazy" src="screenshots/separator-forced-colors.png" alt="separator forced-colors"></a></figure>
+        </div>
+      </section>
+      <section class="row" id="signature">
+        <h2>signature</h2>
+        <div class="pair">
+          <figure><figcaption>normal</figcaption><a href="screenshots/signature-gallery.png" target="_blank"><img loading="lazy" src="screenshots/signature-gallery.png" alt="signature normal"></a></figure>
+          <figure><figcaption>forced-colors</figcaption><a href="screenshots/signature-forced-colors.png" target="_blank"><img loading="lazy" src="screenshots/signature-forced-colors.png" alt="signature forced-colors"></a></figure>
+        </div>
+      </section>
+      <section class="row" id="slider">
+        <h2>slider</h2>
+        <div class="pair">
+          <figure><figcaption>normal</figcaption><a href="screenshots/slider-gallery.png" target="_blank"><img loading="lazy" src="screenshots/slider-gallery.png" alt="slider normal"></a></figure>
+          <figure><figcaption>forced-colors</figcaption><a href="screenshots/slider-forced-colors.png" target="_blank"><img loading="lazy" src="screenshots/slider-forced-colors.png" alt="slider forced-colors"></a></figure>
+        </div>
+      </section>
+      <section class="row" id="space">
+        <h2>space</h2>
+        <div class="pair">
+          <figure><figcaption>normal</figcaption><a href="screenshots/space-gallery.png" target="_blank"><img loading="lazy" src="screenshots/space-gallery.png" alt="space normal"></a></figure>
+          <figure><figcaption>forced-colors</figcaption><a href="screenshots/space-forced-colors.png" target="_blank"><img loading="lazy" src="screenshots/space-forced-colors.png" alt="space forced-colors"></a></figure>
+        </div>
+      </section>
+      <section class="row" id="spinner">
+        <h2>spinner</h2>
+        <div class="pair">
+          <figure><figcaption>normal</figcaption><a href="screenshots/spinner-gallery.png" target="_blank"><img loading="lazy" src="screenshots/spinner-gallery.png" alt="spinner normal"></a></figure>
+          <figure><figcaption>forced-colors</figcaption><a href="screenshots/spinner-forced-colors.png" target="_blank"><img loading="lazy" src="screenshots/spinner-forced-colors.png" alt="spinner forced-colors"></a></figure>
+        </div>
+      </section>
+      <section class="row" id="splitlayout">
+        <h2>splitlayout</h2>
+        <div class="pair">
+          <figure><figcaption>normal</figcaption><a href="screenshots/splitlayout-gallery.png" target="_blank"><img loading="lazy" src="screenshots/splitlayout-gallery.png" alt="splitlayout normal"></a></figure>
+          <figure><figcaption>forced-colors</figcaption><a href="screenshots/splitlayout-forced-colors.png" target="_blank"><img loading="lazy" src="screenshots/splitlayout-forced-colors.png" alt="splitlayout forced-colors"></a></figure>
+        </div>
+      </section>
+      <section class="row" id="splitter">
+        <h2>splitter</h2>
+        <div class="pair">
+          <figure><figcaption>normal</figcaption><a href="screenshots/splitter-gallery.png" target="_blank"><img loading="lazy" src="screenshots/splitter-gallery.png" alt="splitter normal"></a></figure>
+          <figure><figcaption>forced-colors</figcaption><a href="screenshots/splitter-forced-colors.png" target="_blank"><img loading="lazy" src="screenshots/splitter-forced-colors.png" alt="splitter forced-colors"></a></figure>
+        </div>
+      </section>
+      <section class="row" id="stepbar">
+        <h2>stepbar</h2>
+        <div class="pair">
+          <figure><figcaption>normal</figcaption><a href="screenshots/stepbar-gallery.png" target="_blank"><img loading="lazy" src="screenshots/stepbar-gallery.png" alt="stepbar normal"></a></figure>
+          <figure><figcaption>forced-colors</figcaption><a href="screenshots/stepbar-forced-colors.png" target="_blank"><img loading="lazy" src="screenshots/stepbar-forced-colors.png" alt="stepbar forced-colors"></a></figure>
+        </div>
+      </section>
+      <section class="row" id="tabbox">
+        <h2>tabbox</h2>
+        <div class="pair">
+          <figure><figcaption>normal</figcaption><a href="screenshots/tabbox-gallery.png" target="_blank"><img loading="lazy" src="screenshots/tabbox-gallery.png" alt="tabbox normal"></a></figure>
+          <figure><figcaption>forced-colors</figcaption><a href="screenshots/tabbox-forced-colors.png" target="_blank"><img loading="lazy" src="screenshots/tabbox-forced-colors.png" alt="tabbox forced-colors"></a></figure>
+        </div>
+      </section>
+      <section class="row" id="tabbox-misc">
+        <h2>tabbox-misc</h2>
+        <div class="pair">
+          <figure><figcaption>normal</figcaption><a href="screenshots/tabbox-misc-gallery.png" target="_blank"><img loading="lazy" src="screenshots/tabbox-misc-gallery.png" alt="tabbox-misc normal"></a></figure>
+          <figure><figcaption>forced-colors</figcaption><a href="screenshots/tabbox-misc-forced-colors.png" target="_blank"><img loading="lazy" src="screenshots/tabbox-misc-forced-colors.png" alt="tabbox-misc forced-colors"></a></figure>
+        </div>
+      </section>
+      <section class="row" id="tablelayout">
+        <h2>tablelayout</h2>
+        <div class="pair">
+          <figure><figcaption>normal</figcaption><a href="screenshots/tablelayout-gallery.png" target="_blank"><img loading="lazy" src="screenshots/tablelayout-gallery.png" alt="tablelayout normal"></a></figure>
+          <figure><figcaption>forced-colors</figcaption><a href="screenshots/tablelayout-forced-colors.png" target="_blank"><img loading="lazy" src="screenshots/tablelayout-forced-colors.png" alt="tablelayout forced-colors"></a></figure>
+        </div>
+      </section>
+      <section class="row" id="tbeditor">
+        <h2>tbeditor</h2>
+        <div class="pair">
+          <figure><figcaption>normal</figcaption><a href="screenshots/tbeditor-gallery.png" target="_blank"><img loading="lazy" src="screenshots/tbeditor-gallery.png" alt="tbeditor normal"></a></figure>
+          <figure><figcaption>forced-colors</figcaption><a href="screenshots/tbeditor-forced-colors.png" target="_blank"><img loading="lazy" src="screenshots/tbeditor-forced-colors.png" alt="tbeditor forced-colors"></a></figure>
+        </div>
+      </section>
+      <section class="row" id="textbox">
+        <h2>textbox</h2>
+        <div class="pair">
+          <figure><figcaption>normal</figcaption><a href="screenshots/textbox-gallery.png" target="_blank"><img loading="lazy" src="screenshots/textbox-gallery.png" alt="textbox normal"></a></figure>
+          <figure><figcaption>forced-colors</figcaption><a href="screenshots/textbox-forced-colors.png" target="_blank"><img loading="lazy" src="screenshots/textbox-forced-colors.png" alt="textbox forced-colors"></a></figure>
+        </div>
+      </section>
+      <section class="row" id="timebox">
+        <h2>timebox</h2>
+        <div class="pair">
+          <figure><figcaption>normal</figcaption><a href="screenshots/timebox-gallery.png" target="_blank"><img loading="lazy" src="screenshots/timebox-gallery.png" alt="timebox normal"></a></figure>
+          <figure><figcaption>forced-colors</figcaption><a href="screenshots/timebox-forced-colors.png" target="_blank"><img loading="lazy" src="screenshots/timebox-forced-colors.png" alt="timebox forced-colors"></a></figure>
+        </div>
+      </section>
+      <section class="row" id="timepicker">
+        <h2>timepicker</h2>
+        <div class="pair">
+          <figure><figcaption>normal</figcaption><a href="screenshots/timepicker-gallery.png" target="_blank"><img loading="lazy" src="screenshots/timepicker-gallery.png" alt="timepicker normal"></a></figure>
+          <figure><figcaption>forced-colors</figcaption><a href="screenshots/timepicker-forced-colors.png" target="_blank"><img loading="lazy" src="screenshots/timepicker-forced-colors.png" alt="timepicker forced-colors"></a></figure>
+        </div>
+      </section>
+      <section class="row" id="toast">
+        <h2>toast</h2>
+        <div class="pair">
+          <figure><figcaption>normal</figcaption><a href="screenshots/toast-gallery.png" target="_blank"><img loading="lazy" src="screenshots/toast-gallery.png" alt="toast normal"></a></figure>
+          <figure><figcaption>forced-colors</figcaption><a href="screenshots/toast-forced-colors.png" target="_blank"><img loading="lazy" src="screenshots/toast-forced-colors.png" alt="toast forced-colors"></a></figure>
+        </div>
+      </section>
+      <section class="row" id="toolbar">
+        <h2>toolbar</h2>
+        <div class="pair">
+          <figure><figcaption>normal</figcaption><a href="screenshots/toolbar-gallery.png" target="_blank"><img loading="lazy" src="screenshots/toolbar-gallery.png" alt="toolbar normal"></a></figure>
+          <figure><figcaption>forced-colors</figcaption><a href="screenshots/toolbar-forced-colors.png" target="_blank"><img loading="lazy" src="screenshots/toolbar-forced-colors.png" alt="toolbar forced-colors"></a></figure>
+        </div>
+      </section>
+      <section class="row" id="tree">
+        <h2>tree</h2>
+        <div class="pair">
+          <figure><figcaption>normal</figcaption><a href="screenshots/tree-gallery.png" target="_blank"><img loading="lazy" src="screenshots/tree-gallery.png" alt="tree normal"></a></figure>
+          <figure><figcaption>forced-colors</figcaption><a href="screenshots/tree-forced-colors.png" target="_blank"><img loading="lazy" src="screenshots/tree-forced-colors.png" alt="tree forced-colors"></a></figure>
+        </div>
+      </section>
+      <section class="row" id="tree-header">
+        <h2>tree-header</h2>
+        <div class="pair">
+          <figure><figcaption>normal</figcaption><a href="screenshots/tree-header-gallery.png" target="_blank"><img loading="lazy" src="screenshots/tree-header-gallery.png" alt="tree-header normal"></a></figure>
+          <figure><figcaption>forced-colors</figcaption><a href="screenshots/tree-header-forced-colors.png" target="_blank"><img loading="lazy" src="screenshots/tree-header-forced-colors.png" alt="tree-header forced-colors"></a></figure>
+        </div>
+      </section>
+      <section class="row" id="vlayout">
+        <h2>vlayout</h2>
+        <div class="pair">
+          <figure><figcaption>normal</figcaption><a href="screenshots/vlayout-gallery.png" target="_blank"><img loading="lazy" src="screenshots/vlayout-gallery.png" alt="vlayout normal"></a></figure>
+          <figure><figcaption>forced-colors</figcaption><a href="screenshots/vlayout-forced-colors.png" target="_blank"><img loading="lazy" src="screenshots/vlayout-forced-colors.png" alt="vlayout forced-colors"></a></figure>
+        </div>
+      </section>
+      <section class="row" id="window">
+        <h2>window</h2>
+        <div class="pair">
+          <figure><figcaption>normal</figcaption><a href="screenshots/window-gallery.png" target="_blank"><img loading="lazy" src="screenshots/window-gallery.png" alt="window normal"></a></figure>
+          <figure><figcaption>forced-colors</figcaption><a href="screenshots/window-forced-colors.png" target="_blank"><img loading="lazy" src="screenshots/window-forced-colors.png" alt="window forced-colors"></a></figure>
+        </div>
+      </section>
+  </main>
+</body>
+</html>

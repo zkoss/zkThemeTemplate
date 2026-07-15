@@ -9,9 +9,10 @@ import { test, expect, Page } from '@playwright/test';
 //   1. the tablet stylesheet is actually enabled/loaded,
 //   2. key controls meet the MD3 touch target (>= 44px),
 //   3. visual baselines at tablet size.
-// Describe names are `tablet-…` so screenshot baselines land at distinct paths
-// (doc/screenshots/tablet-<comp>/…) and never collide with the desktop suite —
-// the snapshot path template has no {projectName} segment.
+// Tablet baselines use a `-tablet.png` filename suffix so they land at distinct
+// flat paths (doc/screenshots/<comp>-tablet.png) and never collide with the
+// desktop suite's `<comp>-gallery.png` — the snapshot path template has no
+// {projectName} segment.
 
 const MD3_MIN_TOUCH = 44;
 
@@ -456,9 +457,9 @@ const visualCases: VisualCase[] = [
 ];
 
 for (const { name, url, maxDiffPixelRatio } of visualCases) {
-  // The tablet gallery lands in the SAME per-page folder as the desktop shot,
-  // named tablet.png so it never collides with the desktop gallery.png:
-  // doc/screenshots/button/tablet.png.
+  // The tablet gallery lands flat alongside the desktop shot, with a -tablet.png
+  // suffix so it never collides with the desktop <comp>-gallery.png:
+  // doc/screenshots/button-tablet.png.
   const comp = name.replace(/^tablet-/, '');
   test.describe(name, () => {
     test('gallery', async ({ page }) => {
@@ -466,7 +467,7 @@ for (const { name, url, maxDiffPixelRatio } of visualCases) {
       await page.waitForLoadState('networkidle');
       await page.evaluate(() => document.fonts.ready.then(() => true));
       await expect(page.locator('.z-p-8').first())
-        .toHaveScreenshot([comp, 'tablet.png'], maxDiffPixelRatio ? { maxDiffPixelRatio } : {});
+        .toHaveScreenshot(`${comp}-tablet.png`, maxDiffPixelRatio ? { maxDiffPixelRatio } : {});
     });
   });
 }

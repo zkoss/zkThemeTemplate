@@ -56,7 +56,7 @@ test.describe('button', () => {
   });
 
   test('gallery', async ({ page }) => {
-    await expect(page.locator('.z-p-8').first()).toHaveScreenshot([DIR, 'gallery.png']);
+    await expect(page.locator('.z-p-8').first()).toHaveScreenshot(`${DIR}-gallery.png`);
   });
 
   const variants = [
@@ -73,7 +73,7 @@ test.describe('button', () => {
         // filled-button hover raises box-shadow: elevation-2, which paints
         // OUTSIDE the element box and an element-clipped capture would drop it.
         // Matches how every other stateful component captures its states.
-        await padShot(page, el, [DIR, `${label}-${name}.png`]);
+        await padShot(page, el, `${DIR}-${label}-${name}.png`);
         if (name === 'active') await page.mouse.up();
       });
     }
@@ -170,14 +170,14 @@ test.describe('textbox', () => {
   });
 
   test('gallery', async ({ page }) => {
-    await expect(page.locator('.z-p-8').first()).toHaveScreenshot([DIR, 'gallery.png']);
+    await expect(page.locator('.z-p-8').first()).toHaveScreenshot(`${DIR}-gallery.png`);
   });
 
   for (const { name, action } of hoverFocusStates) {
     test(name, async ({ page }) => {
       const el = page.locator('.z-textbox').first();
       await action(el);
-      await padShot(page, el, [DIR, `${name}.png`]);
+      await padShot(page, el, `${DIR}-${name}.png`);
     });
   }
 });
@@ -194,14 +194,14 @@ test.describe('checkbox', () => {
   });
 
   test('gallery', async ({ page }) => {
-    await expect(page.locator('.z-p-8').first()).toHaveScreenshot([DIR, 'gallery.png']);
+    await expect(page.locator('.z-p-8').first()).toHaveScreenshot(`${DIR}-gallery.png`);
   });
 
   for (const { name, action } of hoverFocusStates) {
     test(name, async ({ page }) => {
       const el = page.locator('.z-checkbox').first();
       await action(el);
-      await padShot(page, el, [DIR, `${name}.png`]);
+      await padShot(page, el, `${DIR}-${name}.png`);
     });
   }
 
@@ -390,7 +390,7 @@ test.describe('combobox', () => {
   });
 
   test('gallery', async ({ page }) => {
-    await expect(page.locator('.z-p-8').first()).toHaveScreenshot([DIR, 'gallery.png']);
+    await expect(page.locator('.z-p-8').first()).toHaveScreenshot(`${DIR}-gallery.png`);
   });
 
   for (const { name, action } of hoverFocusStates) {
@@ -399,7 +399,7 @@ test.describe('combobox', () => {
       // includes the dropdown button — both input and button take the focus/hover
       // border. (padShot adds breathing room around the ring.)
       await action(page.locator('.z-combobox-input').first());
-      await padShot(page, page.locator('.z-combobox').first(), [DIR, `${name}.png`]);
+      await padShot(page, page.locator('.z-combobox').first(), `${DIR}-${name}.png`);
     });
   }
 
@@ -444,13 +444,13 @@ test.describe('listbox', () => {
   });
 
   test('gallery', async ({ page }) => {
-    await expect(page.locator('.z-p-8').first()).toHaveScreenshot([DIR, 'gallery.png']);
+    await expect(page.locator('.z-p-8').first()).toHaveScreenshot(`${DIR}-gallery.png`);
   });
 
   test('hover', async ({ page }) => {
     const el = page.locator('.z-listitem').first();
     await el.hover();
-    await expect(el).toHaveScreenshot([DIR, 'hover.png']);
+    await expect(el).toHaveScreenshot(`${DIR}-hover.png`);
   });
 });
 
@@ -466,13 +466,13 @@ test.describe('grid', () => {
   });
 
   test('gallery', async ({ page }) => {
-    await expect(page.locator('.z-p-8').first()).toHaveScreenshot([DIR, 'gallery.png']);
+    await expect(page.locator('.z-p-8').first()).toHaveScreenshot(`${DIR}-gallery.png`);
   });
 
   test('hover', async ({ page }) => {
     const el = page.locator('.z-row').first();
     await el.hover();
-    await expect(el).toHaveScreenshot([DIR, 'hover.png']);
+    await expect(el).toHaveScreenshot(`${DIR}-hover.png`);
   });
 });
 
@@ -488,7 +488,7 @@ test.describe('datebox', () => {
   });
 
   test('gallery', async ({ page }) => {
-    await expect(page.locator('.z-p-8').first()).toHaveScreenshot([DIR, 'gallery.png']);
+    await expect(page.locator('.z-p-8').first()).toHaveScreenshot(`${DIR}-gallery.png`);
   });
 
   for (const { name, action } of hoverFocusStates) {
@@ -496,7 +496,7 @@ test.describe('datebox', () => {
       // Action on the inner input, capture the wrapper — the border/ring lives
       // on .z-datebox, not the transparent .z-datebox-input. (See bandbox note.)
       await action(page.locator('.z-datebox-input').first());
-      await padShot(page, page.locator('.z-datebox').first(), [DIR, `${name}.png`]);
+      await padShot(page, page.locator('.z-datebox').first(), `${DIR}-${name}.png`);
     });
   }
 });
@@ -513,7 +513,7 @@ test.describe('timebox', () => {
   });
 
   test('gallery', async ({ page }) => {
-    await expect(page.locator('.z-p-8').first()).toHaveScreenshot([DIR, 'gallery.png']);
+    await expect(page.locator('.z-p-8').first()).toHaveScreenshot(`${DIR}-gallery.png`);
   });
 
   for (const { name, action } of hoverFocusStates) {
@@ -521,7 +521,7 @@ test.describe('timebox', () => {
       // Action on the inner input, capture the wrapper — the border/ring lives
       // on .z-timebox, not the transparent .z-timebox-input. (See bandbox note.)
       await action(page.locator('.z-timebox-input').first());
-      await padShot(page, page.locator('.z-timebox').first(), [DIR, `${name}.png`]);
+      await padShot(page, page.locator('.z-timebox').first(), `${DIR}-${name}.png`);
     });
   }
 });
@@ -538,7 +538,7 @@ test.describe('spinner', () => {
   });
 
   test('gallery', async ({ page }) => {
-    await expect(page.locator('.z-p-8').first()).toHaveScreenshot([DIR, 'gallery.png']);
+    await expect(page.locator('.z-p-8').first()).toHaveScreenshot(`${DIR}-gallery.png`);
   });
 
   for (const { name, action } of hoverFocusStates) {
@@ -546,7 +546,7 @@ test.describe('spinner', () => {
       // Action on the inner input, capture the wrapper — the border/ring lives
       // on .z-spinner, not the transparent .z-spinner-input. (See bandbox note.)
       await action(page.locator('.z-spinner-input').first());
-      await padShot(page, page.locator('.z-spinner').first(), [DIR, `${name}.png`]);
+      await padShot(page, page.locator('.z-spinner').first(), `${DIR}-${name}.png`);
     });
   }
 });
@@ -563,7 +563,7 @@ test.describe('bandbox', () => {
   });
 
   test('gallery', async ({ page }) => {
-    await expect(page.locator('.z-p-8').first()).toHaveScreenshot([DIR, 'gallery.png']);
+    await expect(page.locator('.z-p-8').first()).toHaveScreenshot(`${DIR}-gallery.png`);
   });
 
   for (const { name, action } of hoverFocusStates) {
@@ -573,7 +573,7 @@ test.describe('bandbox', () => {
       // painted on .z-bandbox, while .z-bandbox-input is transparent/borderless.
       // Capturing the input would clip away the very effect under test.
       await action(page.locator('.z-bandbox-input').first());
-      await padShot(page, page.locator('.z-bandbox').first(), [DIR, `${name}.png`]);
+      await padShot(page, page.locator('.z-bandbox').first(), `${DIR}-${name}.png`);
     });
   }
 });
@@ -590,14 +590,14 @@ test.describe('selectbox', () => {
   });
 
   test('gallery', async ({ page }) => {
-    await expect(page.locator('.z-p-8').first()).toHaveScreenshot([DIR, 'gallery.png']);
+    await expect(page.locator('.z-p-8').first()).toHaveScreenshot(`${DIR}-gallery.png`);
   });
 
   for (const { name, action } of hoverFocusStates) {
     test(name, async ({ page }) => {
       const el = page.locator('.z-selectbox').first();
       await action(el);
-      await padShot(page, el, [DIR, `${name}.png`]);
+      await padShot(page, el, `${DIR}-${name}.png`);
     });
   }
 });
@@ -614,13 +614,13 @@ test.describe('tabbox', () => {
   });
 
   test('gallery', async ({ page }) => {
-    await expect(page.locator('.z-p-8').first()).toHaveScreenshot([DIR, 'gallery.png']);
+    await expect(page.locator('.z-p-8').first()).toHaveScreenshot(`${DIR}-gallery.png`);
   });
 
   test('hover', async ({ page }) => {
     const el = page.locator('.z-tab').first();
     await el.hover();
-    await expect(el).toHaveScreenshot([DIR, 'hover.png']);
+    await expect(el).toHaveScreenshot(`${DIR}-hover.png`);
   });
 });
 
@@ -636,13 +636,13 @@ test.describe('tree', () => {
   });
 
   test('gallery', async ({ page }) => {
-    await expect(page.locator('.z-p-8').first()).toHaveScreenshot([DIR, 'gallery.png']);
+    await expect(page.locator('.z-p-8').first()).toHaveScreenshot(`${DIR}-gallery.png`);
   });
 
   test('hover', async ({ page }) => {
     const el = page.locator('.z-treerow').first();
     await el.hover();
-    await expect(el).toHaveScreenshot([DIR, 'hover.png']);
+    await expect(el).toHaveScreenshot(`${DIR}-hover.png`);
   });
 });
 
@@ -658,7 +658,7 @@ test.describe('window', () => {
   });
 
   test('gallery', async ({ page }) => {
-    await expect(page.locator('.z-p-8').first()).toHaveScreenshot([DIR, 'gallery.png']);
+    await expect(page.locator('.z-p-8').first()).toHaveScreenshot(`${DIR}-gallery.png`);
   });
 });
 
@@ -674,7 +674,7 @@ test.describe('panel', () => {
   });
 
   test('gallery', async ({ page }) => {
-    await expect(page.locator('.z-p-8').first()).toHaveScreenshot([DIR, 'gallery.png']);
+    await expect(page.locator('.z-p-8').first()).toHaveScreenshot(`${DIR}-gallery.png`);
   });
 });
 
@@ -1220,7 +1220,7 @@ test.describe('toast', () => {
   });
 
   test('gallery', async ({ page }) => {
-    await expect(page.locator('.z-p-8').first()).toHaveScreenshot([DIR, 'gallery.png']);
+    await expect(page.locator('.z-p-8').first()).toHaveScreenshot(`${DIR}-gallery.png`);
   });
 
   test('base-content-has-no-dark-scrim-fill', async ({ page }) => {
@@ -1664,7 +1664,7 @@ test.describe('radiogroup', () => {
     test(name, async ({ page }) => {
       const el = page.locator('.z-radio').first();
       await action(el);
-      await padShot(page, el, [DIR, `${name}.png`]);
+      await padShot(page, el, `${DIR}-${name}.png`);
     });
   }
 });
@@ -1684,7 +1684,7 @@ test.describe('rating', () => {
     // hover the 3rd star of the first rating; capture the whole control so the
     // highlight spread (stars 1–3 filled) is visible.
     await page.locator('.z-rating-icon').nth(2).hover();
-    await padShot(page, page.locator('.z-rating').first(), [DIR, 'hover.png']);
+    await padShot(page, page.locator('.z-rating').first(), `${DIR}-hover.png`);
   });
 });
 
@@ -1703,7 +1703,7 @@ test.describe('slider', () => {
     test(name, async ({ page }) => {
       await action(page.locator('.z-slider-button').first());
       // capture the whole slider so the knob's state layer is in context
-      await padShot(page, page.locator('.z-slider').first(), [DIR, `${name}.png`]);
+      await padShot(page, page.locator('.z-slider').first(), `${DIR}-${name}.png`);
     });
   }
 });
@@ -1723,7 +1723,7 @@ test.describe('colorbox', () => {
     test(name, async ({ page }) => {
       const el = page.locator('.z-colorbox').first();
       await action(el);
-      await padShot(page, el, [DIR, `${name}.png`]);
+      await padShot(page, el, `${DIR}-${name}.png`);
     });
   }
 });
@@ -1819,7 +1819,7 @@ for (const { comp, focus, shot } of FORM_CONTROL_STATES) {
     for (const { name, action } of hoverFocusStates) {
       test(name, async ({ page }) => {
         await action(page.locator(focus).first());
-        await padShot(page, page.locator(shot).first(), [comp, `${name}.png`]);
+        await padShot(page, page.locator(shot).first(), `${comp}-${name}.png`);
       });
     }
   });
