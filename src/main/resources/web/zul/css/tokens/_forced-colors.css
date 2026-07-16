@@ -99,6 +99,17 @@
         border: 1px solid CanvasText;
     }
 
+    /* (1d, AMBIGUOUS #2 resolved) CSS-triangle beak pointers (coachmark card,
+       errorbox caret) are `border: Npx solid transparent` with one side coloured.
+       forced-colors force-maps the three transparent sides to CanvasText, so the
+       triangle fills solid into an opaque square. Opt the pointer out so its
+       transparency — and thus the triangle shape — survives; the popup/box boundary
+       itself still reads via its (1a) border, this only restores the beak. */
+    .z-coachmark-pointer,
+    .z-errorbox-pointer {
+        forced-color-adjust: none;
+    }
+
     /* (1b) Text-input focus is drawn with an inset box-shadow plus a same-color
        1px border; both collapse to a single system color here, leaving no
        visible focus change. Add a real outline so keyboard focus stays visible. */
