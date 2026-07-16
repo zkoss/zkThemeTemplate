@@ -20,6 +20,7 @@ temp
 doc/completed
 doc/mira
 doc/mira-reports
+doc/forced-colors-review.html
 
 # Task tracking — track design artifacts (proposal, escalations, registry);
 # ignore runtime state (work-status, eval/gen reports, append-only logs, scratch)

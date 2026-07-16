@@ -1,37 +1,22 @@
 /* ===========================================================================
- * FEATURE: forced-colors (Windows High-Contrast Mode) — GAP 5, 2026-07-14
+ * forced-colors (Windows High-Contrast Mode)
  *
- * Under `forced-colors: active` the OS swaps the palette for a small set of
- * system colors and STRIPS every box-shadow. Marble (MD3-style) leans on two
- * things that then vanish, so this block restores them:
- *   1. box-shadow used for text-input focus rings and for popup/window
- *      elevation — removed entirely, so focus and structure disappear.
- *   2. custom-tint selection + compound glyph indicators (selected rows,
- *      checkbox check) — their colors flip to the system palette while a
- *      baked-in glyph does not follow, leaving invisible checks.
- *   (::before/::after state-layer hover tints also drop out, but that is
- *    cosmetic feedback, not an information loss — intentionally not restored.)
+ * Under `forced-colors: active` the OS swaps the palette for system colors and
+ * STRIPS every box-shadow — so Marble's shadow-based elevation/focus and its
+ * custom-tint selections + baked-glyph indicators vanish. This one central,
+ * UNLAYERED block restores them: unlayered rules beat every `@layer zk-*`
+ * component rule, so the guards win WITHOUT `!important` and without editing
+ * ~20 component files. Colors use system-color keywords only (Canvas /
+ * CanvasText / Highlight / HighlightText / ButtonText / GrayText).
  *
- * Strategy: ONE central, UNLAYERED block. Unlayered rules win over every
- * `@layer zk-*` component rule (unlayered beats layered in the cascade), so
- * these guards override component styles WITHOUT `!important` and WITHOUT
- * editing ~20 component files. Colors use CSS system-color keywords
- * (Canvas / CanvasText / Highlight / HighlightText / ButtonText / GrayText) —
- * the only palette honored in forced-colors mode.
+ * Bundled into norm.css.dsp via scripts/build-css.js `normFiles` (after the
+ * token files so the `--zk-focus-ring` override wins over _colors.css).
  *
- * Bundled into norm.css.dsp via scripts/build-css.js `normFiles` (placed after
- * the token files so the `--zk-focus-ring` override wins over _colors.css).
- * Mirrors the GAP 4 prefers-reduced-motion precedent in _motion.css.
- *
- * Spec: doc/spec/forced-colors.md.
- * Verify: DevTools → Rendering → Emulate CSS media feature `forced-colors:
- *   active`, or Playwright `forcedColors: 'active'`. (macOS has no real
- *   forced-colors — it only maps "Increase contrast" to prefers-contrast — so
- *   this must be emulated on this dev machine.)
+ * Full rationale, block index, and verification: doc/spec/forced-colors.md.
  * =========================================================================== */
 @media (forced-colors: active) {
-    /* Focus ring → system highlight. outline-color is force-mapped anyway; this
-       just makes the intent explicit for the 17 --zk-focus-ring consumers. */
+    /* Focus ring → system Highlight (outline-color is force-mapped anyway;
+       explicit for the --zk-focus-ring consumers). */
     :root {
         --zk-focus-ring: 2px solid Highlight;
     }
@@ -52,8 +37,8 @@
         border: 1px solid CanvasText;
     }
 
-    /* (1a-cont, GAP 5 coverage audit) Elevation-only cards/toolbars/overlays —
-       same fix: box-shadow is their only boundary once forced-colors strips it. */
+    /* (1a-cont) More elevation-only cards/toolbars/overlays — same fix
+       (box-shadow was their only boundary). */
     .z-pdfviewer-page,
     .z-pdfviewer-toolbar,
     .z-cropper-toolbar,
@@ -90,8 +75,8 @@
         border: 1px solid CanvasText;
     }
 
-    /* (1a-cont) Slider thumbs + value tooltips — zul/inp/slider, zkex/rangeslider
-       and zkmax/multislider all share the .z-slider(buttons)-* class names. */
+    /* (1a-cont) Slider thumbs + value tooltips (slider/rangeslider/multislider
+       share the .z-slider(buttons)-* class names). */
     .z-slider-button,
     .z-slider-popup,
     .z-sliderbuttons-button,
@@ -99,20 +84,16 @@
         border: 1px solid CanvasText;
     }
 
-    /* (1d, AMBIGUOUS #2 resolved) CSS-triangle beak pointers (coachmark card,
-       errorbox caret) are `border: Npx solid transparent` with one side coloured.
-       forced-colors force-maps the three transparent sides to CanvasText, so the
-       triangle fills solid into an opaque square. Opt the pointer out so its
-       transparency — and thus the triangle shape — survives; the popup/box boundary
-       itself still reads via its (1a) border, this only restores the beak. */
+    /* (1d) Beak pointers are CSS triangles (transparent sides + one coloured);
+       forced-colors maps the transparent sides to CanvasText → opaque square.
+       Opt out to keep the triangle (the box boundary still reads via its 1a border). */
     .z-coachmark-pointer,
     .z-errorbox-pointer {
         forced-color-adjust: none;
     }
 
-    /* (1b) Text-input focus is drawn with an inset box-shadow plus a same-color
-       1px border; both collapse to a single system color here, leaving no
-       visible focus change. Add a real outline so keyboard focus stays visible. */
+    /* (1b) Text-input focus is an inset box-shadow + same-color border; both
+       collapse to one system color. Add a real outline so focus stays visible. */
     .z-datebox:focus-within,
     .z-timebox:focus-within,
     .z-spinner:focus-within,
@@ -123,8 +104,7 @@
         outline-offset: -1px;
     }
 
-    /* (1b-cont, GAP 5 coverage audit) Same treatment for other text-input-like
-       focus rings drawn via box-shadow. */
+    /* (1b-cont) Same treatment for other box-shadow focus rings. */
     .z-timepicker:focus-within,
     .z-searchbox-search:focus,
     .z-selectbox:focus,
@@ -140,17 +120,11 @@
         outline-offset: 2px;
     }
 
-    /* (1c, AMBIGUOUS #1 resolved) Invalid text inputs signal the error state ONLY
-       through a red border (`--zk-color-error`). forced-colors remaps every author
-       border to CanvasText, so invalid becomes indistinguishable from valid. An
-       error icon isn't viable here — datebox/bandbox/spinner already carry an
-       internal glyph and would crowd. Border WIDTH and STYLE survive forced-colors
-       (only the color is remapped), so switch invalid inputs to a distinctive
-       DOUBLE border as the non-color affordance. Focus keeps using `outline`
-       (block 1b), a separate box, so the two signals stay orthogonal — an
-       invalid-unfocused field and a valid-focused field never collapse together.
-       Some inputs border the wrapper (via `:has`), some the control itself —
-       target whichever element the component actually borders. */
+    /* (1c) Invalid inputs show the error only via a red border, which remaps to
+       CanvasText (= a valid field). Border width+style survive the remap (colour
+       doesn't), so a double border is the non-colour error affordance; focus stays
+       on outline (1b) so the two signals never collide. Some inputs border the
+       wrapper (via `:has`), some the control itself. */
     .z-intbox.z-intbox-invalid,
     .z-decimalbox.z-decimalbox-invalid,
     .z-doublebox.z-doublebox-invalid,
@@ -192,9 +166,8 @@
         color: HighlightText;
     }
 
-    /* (2a-cont, GAP 5 coverage audit) Additional selected-tint surfaces:
-       paging's active page, sidebar/navbar nav item, accordion tab header,
-       searchbox dropdown row, organigram node. */
+    /* (2a-cont) More selected-tint surfaces: paging, nav item, accordion tab,
+       searchbox row, organigram node. */
     .z-paging-selected,
     .z-navitem-selected > .z-navitem-content,
     .z-navitem.z-navitem-selected > .z-navitem-content,
@@ -209,12 +182,9 @@
         color: HighlightText;
     }
 
-    /* (2a-backplate fix) Under forced-colors the browser paints a Canvas-coloured
-       "backplate" behind inline text. On the Highlight-filled selections above, the
-       label is forced to HighlightText (near-white), so that backplate reads as an
-       opaque white block hiding the label (white-on-white). Opt the label text out
-       so HighlightText paints straight onto the Highlight fill (system-color
-       keywords still resolve under forced-color-adjust:none). */
+    /* (2a backplate) forced-colors paints a Canvas backplate behind inline text; on a
+       Highlight fill the near-white label reads white-on-white. Opt the label text out
+       so HighlightText paints straight onto the fill. */
     .z-listitem.z-listitem-selected .z-listcell-cnt,
     .z-listitem.z-listitem-selected .z-listcell-content,
     .z-listitem.z-selected .z-listcell-cnt,
@@ -230,20 +200,16 @@
         forced-color-adjust: none;
     }
 
-    /* (2a-cont) Calendar selected day: the Highlight/HighlightText system-color
-       remap collapses the day-number into its disc fill (a solid block). Opt the
-       selected cell out so it reproduces the known-good primary-disc / on-primary-
-       number pairing (forced-color-adjust inherits → covers the number text and the
-       ::before disc). Replaces the earlier HighlightText/Highlight remap. */
+    /* (2a-cont) Calendar selected day: the Highlight remap collapses the day-number
+       into its disc. Opt the cell out to reproduce the primary-disc / on-primary-number
+       pairing (forced-color-adjust inherits → covers the number and the ::before disc). */
     .z-calendar-body tbody td.z-calendar-cell.z-calendar-selected {
         forced-color-adjust: none;
     }
 
-    /* (2b) Compound glyph indicators whose legibility is a designed fill+glyph
-       pairing (checkbox check on a filled box; selected-row check). The box
-       background would flip to Canvas while the baked-in white glyph would not
-       follow — an invisible check. Opt these small controls out of the OS
-       palette so the designed contrast is preserved. */
+    /* (2b) Compound glyph indicators (checkbox check on a filled box; selected-row
+       check) are a designed fill+glyph pairing — the box would flip to Canvas while
+       the baked glyph can't follow. Opt them out to keep the designed contrast. */
     .z-checkbox-on > .z-checkbox-mold,
     .z-checkbox-on > .z-checkbox-mold::after,
     .z-checkbox-indeterminate > .z-checkbox-mold,
@@ -256,18 +222,11 @@
         forced-color-adjust: none;
     }
 
-    /* (2d, icon audit — reported: spinner up/down arrows vanish) Masked
-       Lucide/SVG glyphs are painted as a solid `background-color: currentColor`
-       clipped by a mask-image. forced-colors force-maps *background-color* to
-       Canvas (the PAGE BACKGROUND, not the foreground), so every masked icon
-       collapses into an invisible same-as-background shape. `color` maps to
-       CanvasText, but the glyph is filled from background-color, not color —
-       hence the disappearance. Re-point the fill at a foreground system color.
-       This block is UNLAYERED, so it wins over the component rules (in
-       @layer zk-components) that re-declare the icon fill at higher specificity
-       (e.g. combobox's `.z-combobox-button .z-icon-caret-down::before`).
-       Check/radio indicators are baked-SVG boxes handled in (2b), so they are
-       excluded here. Base = CanvasText; per-context overrides follow. */
+    /* (2d) Masked icons paint background-color:currentColor clipped by a mask-image;
+       forced-colors force-maps background-color to Canvas (page bg, not foreground) →
+       every icon vanishes. Re-point the fill to a foreground system color. Unlayered,
+       so it beats higher-specificity component icon rules (e.g. combobox's caret).
+       Check/radio are baked-SVG boxes, excluded here (handled by 2b/2f). */
     [class^="z-icon-"]:not(.z-icon-check):not(.z-icon-radio)::before,
     [class*=" z-icon-"]:not(.z-icon-check):not(.z-icon-radio)::before,
     .z-tree-icon i,
@@ -293,16 +252,9 @@
         background-color: HighlightText;
     }
 
-    /* (2e, icon audit) Masked glyphs painted OUTSIDE the generic
-       `[class*=" z-icon-"]::before` path, so block (2d) never reaches them. Each
-       paints `background-color: currentColor` on the ELEMENT itself or on a
-       non-z-icon-* class → force-maps to Canvas → invisible. Re-point the fill to a
-       foreground system color, same as (2d).
-       - combobox caret is filled on the icon element (combobutton uses ::before, so
-         it already renders via (2d));
-       - signature toolbar glyph uses no z-icon-* class;
-       - dnd drop-ok/invalid glyph is painted on .z-drop-icon;
-       - stepbar complete-check is a .z-icon-check excluded by (2d)'s :not(). */
+    /* (2e) Masked glyphs painted on the element itself or a non-z-icon class, so (2d)'s
+       ::before path misses them: combobox caret (icon element), signature toolbar glyph
+       (no z-icon class), stepbar complete-check (a .z-icon-check excluded by 2d). Same fix. */
     .z-combobox-icon,
     .z-combobox-button .z-icon-caret-down,
     .z-signature-tool-button-icon::before,
@@ -310,14 +262,10 @@
         background-color: CanvasText;
     }
 
-    /* dnd drop glyph (.z-drop-icon): the mask is filled from `background-color:
-       currentColor` (base), and the per-state rules `.z-drop-ghost.z-drop-{allow,
-       disallow} .z-drop-icon` (specificity 0,3,0) set a LIGHT color designed for the
-       dark ghost chip. In forced-colors the chip flattens to Canvas (white), leaving
-       a light glyph on white = invisible. Match that specificity and repaint the
-       glyph as a foreground system color. `forced-color-adjust: none` is required —
-       otherwise Chromium force-maps this element's background back to Canvas even
-       with a system-color keyword (unlike the other masked icons above). */
+    /* dnd drop glyph (.z-drop-icon): per-state rules set a light color for the dark
+       ghost chip; in forced-colors the chip flattens to Canvas → light-on-white. Match
+       that specificity and repaint. forced-color-adjust:none is required — Chromium
+       otherwise re-maps this element's background even with a system-color keyword. */
     .z-drop-ghost.z-drop-allow .z-drop-icon,
     .z-drop-ghost.z-drop-disallow .z-drop-icon {
         forced-color-adjust: none;
@@ -325,11 +273,10 @@
         background-color: CanvasText;
     }
 
-    /* (2f) Radio indicators: the standalone .z-radio dot (input ::after background)
-       and the listbox/tree .z-icon-radio dot — excluded by (2d) and absent from
-       (2b), so the checked dot force-maps to Canvas and vanishes. Opt out so ring +
-       dot keep their designed contrast, mirroring the checkbox check in (2b).
-       forced-color-adjust inherits, so the input rule also covers its ::after dot. */
+    /* (2f) Radio dots (standalone .z-radio ::after; listbox/tree .z-icon-radio) are
+       excluded by (2d) and absent from (2b), so the checked dot force-maps to Canvas.
+       Opt out to keep the ring+dot contrast (forced-color-adjust inherits → covers
+       the ::after dot). */
     .z-radio-on > input[type="radio"],
     .z-listitem.z-listitem-selected .z-listitem-icon.z-icon-radio::before,
     .z-listitem.z-selected .z-listitem-icon.z-icon-radio::before,
@@ -338,9 +285,7 @@
         forced-color-adjust: none;
     }
 
-    /* (3) Buttons keep their outline focus and readable ButtonFace/ButtonText
-       fill, but have no border — add one so the button shape is delineated
-       against the surrounding Canvas. */
+    /* (3) Buttons have no border — add one so the shape is delineated against Canvas. */
     .z-button {
         border: 1px solid ButtonText;
     }
@@ -350,22 +295,17 @@
         border-color: GrayText;
     }
 
-    /* (3a, AMBIGUOUS #7 resolved) Checked toolbarbutton signals "on" ONLY via a
-       primary-container pill fill, which force-maps to Canvas → checked becomes
-       indistinguishable from unchecked. Toolbarbuttons carry no border by default,
-       so a Highlight border is an unambiguous non-colour checked affordance (the
-       two states now differ by border presence, mirroring a pressed toggle). */
+    /* (3a) Checked toolbarbutton shows "on" only via a primary-container pill →
+       force-maps to Canvas (= unchecked). Toolbarbuttons have no default border, so a
+       Highlight border is the non-colour checked affordance. */
     .z-toolbarbutton-checked {
         border: 2px solid Highlight;
     }
 
-    /* (4, shape-fill audit) Shapes whose visible form is painted with
-       `background-color` (not a masked ::before glyph) force-map to Canvas and
-       disappear entirely. Re-point each at a foreground system color: GrayText for
-       inert track/rail/unlit segments, Highlight for the active/value fill. Chosen
-       over forced-color-adjust:none because the theme's light fills
-       (primary-container, surface, outline-variant) would otherwise stay near-white
-       against Canvas. */
+    /* (4) Shapes painted with background-color (not a masked ::before glyph) force-map
+       to Canvas and vanish. Re-point to GrayText (inert track/rail) / Highlight
+       (active/value fill) — chosen over forced-color-adjust:none since the theme's
+       light fills would otherwise stay near-white against Canvas. */
 
     /* Progressmeter — track + fill (unlayered beats the color-variant rules) */
     .z-progressmeter        { background-color: GrayText; }
@@ -382,12 +322,10 @@
     .z-slider-area,
     .z-sliderbuttons-area   { background-color: Highlight; }
 
-    /* (4a, AMBIGUOUS #8 resolved) Slider thumbs rendered inconsistently (some hollow
-       rings, some with a stray ::before halo) because the thumb fill (primary) force-
-       maps to Canvas while the (1a) 1px CanvasText border stays. Give every thumb a
-       solid CanvasText fill so all three slider variants read as identical solid
-       discs, visible on both the GrayText track and the Highlight value fill, and
-       drop the ::before state-layer halo that painted a second stray shape. */
+    /* (4a) Thumbs rendered inconsistently (hollow rings + a stray ::before halo)
+       because the primary fill force-maps to Canvas while the (1a) border stays. Give
+       every thumb a solid CanvasText disc and drop the ::before halo so all three
+       slider variants match. */
     .z-slider-button,
     .z-sliderbuttons-button   { background-color: CanvasText; }
     .z-sliderbuttons-button::before { background-color: transparent; }
@@ -414,19 +352,11 @@
     .z-stepbar-wrapped-label.z-stepbar-linear .z-step-complete .z-step-content::after,
     .z-stepbar-wrapped-label.z-stepbar-linear .z-step-active .z-step-content::before { background-color: Highlight; }
 
-    /* (5, AMBIGUOUS #4 resolved) Colour-content: elements whose SOLE purpose is to
-       show a colour value — the inline `background-color` ZK sets IS the
-       information, not decoration. forced-colors force-maps background-color to
-       Canvas, blanking every swatch. The forced-colors spec names colour pickers
-       as the canonical `forced-color-adjust: none` opt-out (content where colour
-       is the information), so opt ONLY the colour-bearing pixels out; the
-       surrounding chrome — frame border, caret, palette/picker toggle glyphs, hex
-       inputs, OK button (all handled by the blocks above) — still follows the
-       system palette. `.z-colorbox-current` (the closed swatch) covers standalone
-       colorbox, the portallayout-embedded colorbox, AND signature's pen/background
-       colorboxes, which are `<colorbox>` instances. The picker gradient/hue
-       surfaces and their marker graphics opt out too, so an HC user who does open
-       the picker still sees real colour. */
+    /* (5) Colour-content: the inline background-color ZK sets on a swatch IS the
+       information, not decoration — forced-colors would blank it. forced-color-adjust:none
+       keeps colour on the colour-bearing pixels only (swatch + palette/picker surfaces);
+       the chrome still follows the system palette. .z-colorbox-current covers standalone
+       colorbox, the portallayout embed, and signature's pen/bg colorboxes. */
     .z-colorbox-current,
     .z-menu-image.z-colorbox-color,
     .z-colorpalette-color,

@@ -1,6 +1,11 @@
 # Forced colors / Windows High-Contrast Mode (`forced-colors`)
 
-*Implemented 2026-07-14 · GAP 5 · WCAG 2.1 SC 1.4.1 / 1.4.11 (non-text contrast)*
+*Implemented 2026-07-14 · ambiguous-case pass 2026-07-16 · GAP 5 · WCAG 2.1 SC 1.4.1 / 1.4.11 (non-text contrast)*
+
+> **Single source of truth.** This spec records the complete `forced-colors: active`
+> behaviour of the theme — the guard's mechanism, every restored block, the resolutions
+> of the "ambiguous" judgment-call cases, the audit method, and how to verify and extend.
+> The guard CSS itself is `src/main/resources/web/zul/css/tokens/_forced-colors.css`.
 
 ## Why
 
@@ -31,18 +36,75 @@ Why one central file instead of per-component guards:
 
 ## What the guard restores
 
-1. **Elevation-only surfaces** → `border: 1px solid CanvasText` on `.z-window`, `.z-panel`, `.z-popup(-content)`, `.z-menupopup`, `.z-menu-popup`, `.z-combobox-popup`, `.z-bandbox-popup`, `.z-listbox`, `.z-grid`, `.z-card`.
-2. **Text-input focus** → `outline: 2px solid Highlight; outline-offset: -1px` on `:focus-within` for `.z-datebox`, `.z-timebox`, `.z-spinner`, `.z-doublespinner`, `.z-bandbox`, `.z-combobox`.
-3. **Selected rows** → `background-color: Highlight; color: HighlightText` on selected `.z-listitem` / `.z-treerow` (and their cell content).
-4. **Compound glyph indicators** → `forced-color-adjust: none` on the checked/indeterminate `.z-checkbox-mold` (+ its `::after`) and the selected-row / select-all check icons. These are a *designed fill+glyph pairing* (blue box + white check) whose contrast is guaranteed by design; opting them out of the OS palette keeps them legible rather than letting the box flip to `Canvas` under a check that can't follow.
-5. **Masked icon glyphs** → `background-color: CanvasText` on the whole `z-icon-*` family plus the component-local masked icons (`.z-tree-icon i`, `.z-rating-icon`, `.z-colorbox-icon`, colorbox palette/picker toggles, `.z-messagebox-icon`, paging OS-mold nav chevrons). The theme paints every icon as a `background-color: currentColor` fill clipped by a `mask-image`; forced-colors force-maps `background-color` to `Canvas` (page bg), so the fill must be re-pointed at the foreground. Content icons on a Highlight fill (selected rows / current page) get `HighlightText`. **Check/radio indicators are excluded** — they are baked-SVG boxes handled by item 4, and overriding their fill would flatten the box. Because the guard is *unlayered* it beats even the higher-specificity component rules that re-declare an icon's fill (e.g. `.z-combobox-button .z-icon-caret-down::before`).
-6. **Buttons** → `border: 1px solid ButtonText` (delineates the shape once the fill collapses to `ButtonFace`); disabled buttons use `GrayText`.
-7. **Focus token** → `--zk-focus-ring` retargeted to `2px solid Highlight` (explicit; `outline-color` is force-mapped anyway, but this makes intent clear for its 17 consumers).
+Blocks are labelled with the same codes used in the comments of `tokens/_forced-colors.css`.
+
+- **(1a) Elevation-only surfaces** → `border: 1px solid CanvasText` on `.z-window`, `.z-panel`, `.z-popup(-content)`, `.z-menupopup`, `.z-menu-popup`, `.z-combobox-popup`, `.z-bandbox-popup`, `.z-listbox`, `.z-grid`, `.z-card`; plus audited additions (pdfviewer page/toolbar, cropper toolbar, signature tool button, drawer, tbeditor box, groupbox, calendar, errorbox, loading, notification, toast), floating popups (cascader/chosenbox shadows, searchbox/timepicker popups, toolbar/nav/tbeditor dropdowns, bandpopup, goldenlayout), and slider thumbs/tooltips.
+- **(1b) Text-input focus** → `outline: 2px solid Highlight; outline-offset: -1px` on `:focus-within` for `.z-datebox`, `.z-timebox`, `.z-spinner`, `.z-doublespinner`, `.z-bandbox`, `.z-combobox`, `.z-timepicker`, `.z-searchbox-search`, `.z-selectbox`. Round slider thumb uses `outline-offset: 2px`.
+- **(1c) Invalid inputs** → `border-style: double; border-width: 3px`. Invalid state is otherwise signalled *only* by a red border colour, which force-maps to `CanvasText` (identical to a valid field). Border **width and style survive** the remap while colour does not, so a double border is the non-colour error affordance. Focus stays on `outline` (1b) so the two signals never collide. Covers 13 input components (intbox/decimalbox/doublebox/longbox/textbox/passwordbox on the control; datebox/timebox/timepicker/spinner/doublespinner via `:has()` on the wrapper; bandbox on the wrapper; combobox on input+button).
+- **(1d) Triangle beak pointers** → `forced-color-adjust: none` on `.z-coachmark-pointer`, `.z-errorbox-pointer`. These are CSS triangles (transparent border sides + one coloured); forced-colors force-maps the transparent sides to `CanvasText`, collapsing the beak into an opaque square. Opting out preserves the transparency so the triangle shape survives.
+- **(2a) Selected rows / tinted selections** → `background-color: Highlight; color: HighlightText` on selected `.z-listitem` / `.z-treerow` (and their cell content), plus paging current page, nav item, accordion selected tab, searchbox row, organigram node. A **UA "backplate"** paints an opaque Canvas rectangle behind inline text on these fills (hiding the near-white label); a companion `forced-color-adjust: none` on the label text kills it. The **calendar selected day** opts out too, so its primary-disc / on-primary-number pairing is reproduced (the unscoped selector also covers the portallayout-embedded calendar).
+- **(2b) Compound glyph indicators** → `forced-color-adjust: none` on the checked/indeterminate `.z-checkbox-mold` (+ its `::after`) and the selected-row / select-all check icons. A *designed fill+glyph pairing* (blue box + white check) whose contrast is guaranteed by design; opting out keeps it legible rather than letting the box flip to `Canvas` under a check that can't follow.
+- **(2d) Masked icon glyphs** → `background-color: CanvasText` on the whole `z-icon-*` family plus component-local masked icons (`.z-tree-icon i`, `.z-rating-icon`, `.z-colorbox-icon`, colorbox palette/picker toggles, `.z-messagebox-icon`, paging OS-mold chevrons). The theme paints every icon as a `background-color: currentColor` fill clipped by a `mask-image`; forced-colors force-maps `background-color` to `Canvas`, so the fill is re-pointed at the foreground. Content icons on a Highlight fill get `HighlightText`. Check/radio indicators are excluded (handled by 2b/2f). Being *unlayered* it beats higher-specificity component rules (e.g. `.z-combobox-button .z-icon-caret-down::before`).
+- **(2e) Masked glyphs painted outside the generic path** → `background-color: CanvasText` on `.z-combobox-icon`, `.z-combobox-button .z-icon-caret-down`, `.z-signature-tool-button-icon::before`, `.z-step-icon.z-icon-check::before` — each fills on the element itself or a non-`z-icon` class, so 2d never reaches it. The dnd drop-ok/invalid glyph (`.z-drop-icon`) additionally needs `forced-color-adjust: none` (Chromium force-maps its background even with a system-color keyword).
+- **(2f) Radio dots** → `forced-color-adjust: none` on the standalone `.z-radio` dot and the listbox/tree `.z-icon-radio` dot (excluded from 2d, absent from 2b), so the checked dot keeps its designed ring+dot contrast.
+- **(3) Buttons** → `border: 1px solid ButtonText` (delineates the shape once the fill collapses to `ButtonFace`); disabled buttons use `GrayText`.
+- **(3a) Checked toolbarbutton** → `border: 2px solid Highlight`. The checked "on" state is carried only by a primary-container pill fill, which force-maps to Canvas → checked == unchecked. Toolbarbuttons have no border by default, so border-presence is the non-colour checked affordance.
+- **(4) Background-color shape fills** → whole shapes painted with `background-color` (not a masked `::before` glyph) force-map to Canvas and vanish. Re-pointed to `GrayText` for inert track/rail, `Highlight` for the active/value fill: progressmeter (track + image), separator/space bars, slider/rangeslider/multislider rail + area, checkbox switch mold + toggle mold, stepbar step connectors.
+- **(4a) Slider thumbs** → solid `background-color: CanvasText` disc (+ the 1a 1px border), with the `::before` state-layer halo set transparent, so slider/rangeslider/multislider thumbs render as one identical disc instead of mixed hollow rings and stray dots.
+- **(5) Colour-content** → `forced-color-adjust: none` on `.z-colorbox-current` (the closed swatch — covers standalone colorbox, the portallayout embed, and signature's pen/bg colorboxes) and the palette/picker colour surfaces. The inline `background-color` ZK sets here *is* the information; the forced-colors spec names colour pickers as the canonical opt-out. Surrounding chrome (frame, caret, hex inputs, OK button) still follows the system palette.
+- **(focus token) `--zk-focus-ring`** retargeted to `2px solid Highlight` (explicit; `outline-color` is force-mapped anyway, but this makes intent clear for its 17 consumers).
 
 ## Intentionally NOT handled
 
 - **`::before`/`::after` state-layer hover/pressed tints** — cosmetic feedback, not information loss. Focus (outline) and selection (Highlight) carry the necessary state.
 - **Baked-gray dropdown chevrons** (`datebox`/`selectbox`, `stroke='%23666'` in a `background-image` data-URI) keep their fixed color. The input remains usable (border + focus outline survive); recoloring would require converting the data-URI to a `mask-image`. Known minor limitation.
+
+## Resolved ambiguous cases (2026-07-16)
+
+After the central guard restored the *mechanical* defects (see "Audit method" below), a
+residual set of cases remained where information was genuinely lost but the repair was a
+**design decision**, not a rule — restoring each meant inventing a non-colour affordance
+(or deciding not to). All were dispositioned in the ambiguous-case pass:
+
+| # | Case | Components | Resolution | Block |
+|---|------|------------|------------|-------|
+| 1 | Invalid-field red border collapses to plain black — invalid == valid | intbox, decimalbox, doublebox, longbox, textbox, passwordbox, datebox, timebox, timepicker, spinner, doublespinner, bandbox, combobox | **Double border** (`border-style: double; border-width: 3px`) — width+style survive the palette remap; focus stays on `outline` so the signals stay orthogonal | 1c |
+| 2 | CSS-triangle beak renders as a solid black square | coachmark, errorbox | **`forced-color-adjust: none`** on the pointer — preserves the transparent sides so the beak keeps its shape; the popup/box boundary still reads via its 1a border | 1d |
+| 3 | Colour-preview swatch renders empty — selected colour not conveyed | colorbox, portallayout (embed), signature pen/bg | **`forced-color-adjust: none`** on the colour-content only (swatch + palette/picker surfaces); chrome stays HC. The spec-sanctioned colour-picker opt-out | 5 |
+| 4 | Calendar selected day lost when embedded | portallayout | **No change needed** — the standalone selected-day guard uses an *unscoped* selector and portallayout embeds an identical `<calendar/>` DOM, so it was already covered (verified) | 2a |
+| 5 | Checked toolbarbutton looks unchecked | toolbar | **`border: 2px solid Highlight`** — border-presence is the non-colour checked affordance (unchecked buttons have none) | 3a |
+| 6 | Slider thumbs read inconsistently (rings/dots/carets) | slider, rangeslider, multislider | **Solid `CanvasText` disc** + `::before` halo transparent — all three variants render identically | 4a |
+| 7 | Decorative filled blocks lose their fill | dnd demo boxes, rowlayout column bars | **By design, no change** — preview/demo constructs (not theme chrome) built from `z-bg-*` utilities, each with a surviving text label; stripping a decorative `background-color` is the spec-intended behaviour. A border would be over-broad (every utility use) or alter normal-mode appearance | — |
+
+The **"colour vs high-contrast" tension** in case 3 is resolved by the spec itself: colour
+pickers and data visualisations are the canonical `forced-color-adjust: none` exceptions —
+content where colour *is* the information. Opt out only the colour-bearing pixels; let the
+chrome stay HC-compliant.
+
+## Audit method & provenance
+
+Coverage was established by an **outcome-driven audit**: a Planner → Generator (parallel
+comparison agents) → Evaluator loop over **89 `<page>-gallery.png` vs `<page>-forced-colors.png`
+screenshot pairs**, root-caused against the guard CSS, fixed, re-captured, and re-verified.
+Emulation is Chromium `emulateMedia({ forcedColors: 'active' })` (macOS has no real
+forced-colors). The pass split findings into **OBVIOUS defects** (mechanical, auto-fixed) and
+**AMBIGUOUS** (design calls — resolved above).
+
+**Already fixed in the mechanical pass** (for context): missing masked icons; selected-row /
+tree / accordion labels hidden behind the UA text backplate; radio checked-dots; the paging
+current-page digit; dnd drag-ghost status glyphs; and every `background-color` shape fill
+(progressmeter, separator/space, sliders, checkbox switch/toggle, stepbar connectors).
+
+**Visual review sheet (regenerable artifact).** A side-by-side contact sheet of all 89 pairs
+can be rebuilt on demand — it is **not** committed:
+
+```bash
+npm run capture:forced-colors   # writes doc/screenshots/<page>-forced-colors.png (89 PNGs)
+npm run review:forced-colors    # builds doc/forced-colors-review.html (gitignored)
+```
+
+The committed regression gate is the **assertion** spec (`forced-colors.spec.ts`, 13
+computed-style probes) plus the coverage linter (`check:forced-colors`) — not the screenshots.
 
 ## Approach rationale (vs a dedicated high-contrast theme)
 
@@ -72,13 +134,25 @@ wiring. The process:
    |---|---|
    | `box-shadow` elevation on a surface/popup | add its class to the **(1a) border** list |
    | `box-shadow` focus ring on an input | add its `:focus-within`/`:focus` selector to the **(1b) outline** list |
-   | selected-row/item tint | add its selected selector to the **(2a) Highlight/HighlightText** list |
+   | invalid state shown only by a border colour | add its invalid selector to the **(1c) double-border** list |
+   | CSS-triangle pointer (transparent borders + one colour) | add it to the **(1d) `forced-color-adjust: none`** pointer list |
+   | selected-row/item tint | add its selected selector to the **(2a) Highlight/HighlightText** list (+ the backplate opt-out) |
    | baked-color SVG check/glyph indicator | add its selector to the **(2b) `forced-color-adjust: none`** list |
-   | masked glyph (`mask-image` + `background-color: currentColor`) | add its selector to the **(2d) icon-fill** list (`background-color: CanvasText`, or `HighlightText` if on a selection fill) |
+   | masked glyph (`mask-image` + `background-color: currentColor`) | add its selector to the **(2d)** icon-fill list (`background-color: CanvasText`, or `HighlightText` on a selection fill); **(2e)** if painted on the element/non-`z-icon` class |
+   | tinted "checked/on" toggle with no border | add its checked selector to the **(3a) border** list |
+   | whole shape painted with `background-color` | add it to the **(4) shape-fill** list (`GrayText` track / `Highlight` value) |
+   | draggable thumb with a `background-color` fill | add it to the **(4a) thumb** list (solid `CanvasText` disc) |
+   | element whose `background-color` *is* the information (colour swatch) | add it to the **(5) `forced-color-adjust: none`** colour-content list |
 3. **Rebuild & verify** — `npm run build:css`, then `npm run test:forced-colors` (add a
    case to `forced-colors.spec.ts` if the component introduces a new failure mode).
 
-### Coverage status (as of 2026-07-14)
+### Coverage status (as of 2026-07-16)
+
+**All ambiguous items closed.** The 2026-07-16 pass resolved the seven residual judgment-call
+cases (see "Resolved ambiguous cases"): three took one guard block each (1c, 1d/3a/4a, 5), two
+needed no code (embedded calendar already covered; decorative blocks by-design), and two were
+resolved earlier. The guard now carries ~163 classes; `npm run check:forced-colors` → **0 gaps**
+and `npm run test:forced-colors` → **13/13 pass** (no regression).
 
 **Full component coverage.** After the initial anchor pass, the audit's tail of 27
 lower-frequency components (calendar selected day, accordion selected tab, paging current
@@ -95,7 +169,7 @@ components should keep it at strict-zero using the checklist above.
 whole missing bucket: the theme's *entire icon system* paints glyphs as
 `background-color: currentColor` clipped by a `mask-image`, and forced-colors
 force-maps `background-color` to `Canvas` (page bg), so every masked icon went
-invisible. Fixed centrally (item 5 in "What the guard restores"); a 5th audit
+invisible. Fixed centrally (block 2d in "What the guard restores"); a 5th audit
 pattern (`masked-icon-fill`) now detects the `mask-image` + `currentColor` combo,
 and computed-style probes confirm spinner/combobox/datebox/rating/tree/colorbox/
 paging glyphs paint at the foreground while the baked check/radio boxes stay
