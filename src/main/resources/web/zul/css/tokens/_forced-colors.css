@@ -350,6 +350,15 @@
         border-color: GrayText;
     }
 
+    /* (3a, AMBIGUOUS #7 resolved) Checked toolbarbutton signals "on" ONLY via a
+       primary-container pill fill, which force-maps to Canvas → checked becomes
+       indistinguishable from unchecked. Toolbarbuttons carry no border by default,
+       so a Highlight border is an unambiguous non-colour checked affordance (the
+       two states now differ by border presence, mirroring a pressed toggle). */
+    .z-toolbarbutton-checked {
+        border: 2px solid Highlight;
+    }
+
     /* (4, shape-fill audit) Shapes whose visible form is painted with
        `background-color` (not a masked ::before glyph) force-map to Canvas and
        disappear entirely. Re-point each at a foreground system color: GrayText for
