@@ -382,6 +382,16 @@
     .z-slider-area,
     .z-sliderbuttons-area   { background-color: Highlight; }
 
+    /* (4a, AMBIGUOUS #8 resolved) Slider thumbs rendered inconsistently (some hollow
+       rings, some with a stray ::before halo) because the thumb fill (primary) force-
+       maps to Canvas while the (1a) 1px CanvasText border stays. Give every thumb a
+       solid CanvasText fill so all three slider variants read as identical solid
+       discs, visible on both the GrayText track and the Highlight value fill, and
+       drop the ::before state-layer halo that painted a second stray shape. */
+    .z-slider-button,
+    .z-sliderbuttons-button   { background-color: CanvasText; }
+    .z-sliderbuttons-button::before { background-color: transparent; }
+
     /* Checkbox switch mold — off: outline track + dark thumb; on: Highlight track,
        light thumb (thumb travel is set in the base CSS). */
     .z-checkbox-switch > .z-checkbox-mold         { border: 1px solid CanvasText; }
