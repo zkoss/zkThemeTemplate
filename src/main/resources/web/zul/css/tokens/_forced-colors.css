@@ -383,4 +383,31 @@
     .z-stepbar-wrapped-label.z-stepbar-linear .z-step-complete .z-step-content::before,
     .z-stepbar-wrapped-label.z-stepbar-linear .z-step-complete .z-step-content::after,
     .z-stepbar-wrapped-label.z-stepbar-linear .z-step-active .z-step-content::before { background-color: Highlight; }
+
+    /* (5, AMBIGUOUS #4 resolved) Colour-content: elements whose SOLE purpose is to
+       show a colour value — the inline `background-color` ZK sets IS the
+       information, not decoration. forced-colors force-maps background-color to
+       Canvas, blanking every swatch. The forced-colors spec names colour pickers
+       as the canonical `forced-color-adjust: none` opt-out (content where colour
+       is the information), so opt ONLY the colour-bearing pixels out; the
+       surrounding chrome — frame border, caret, palette/picker toggle glyphs, hex
+       inputs, OK button (all handled by the blocks above) — still follows the
+       system palette. `.z-colorbox-current` (the closed swatch) covers standalone
+       colorbox, the portallayout-embedded colorbox, AND signature's pen/background
+       colorboxes, which are `<colorbox>` instances. The picker gradient/hue
+       surfaces and their marker graphics opt out too, so an HC user who does open
+       the picker still sees real colour. */
+    .z-colorbox-current,
+    .z-menu-image.z-colorbox-color,
+    .z-colorpalette-color,
+    .z-colorpalette-newcolor,
+    .z-colorpicker-gradient,
+    .z-colorpicker-overlay,
+    .z-colorpicker-bar,
+    .z-colorpicker-newcolor,
+    .z-colorpicker-current,
+    .z-colorpicker-circle,
+    .z-colorpicker-arrows {
+        forced-color-adjust: none;
+    }
 }
