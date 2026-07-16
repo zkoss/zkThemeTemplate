@@ -41,7 +41,6 @@ theme-bridge:
 
 ## References
 - MUI CSS: no analog — novel ZK component (PDF viewer widget has no MUI equivalent)
-- Mira HTML: no analog
 - DESIGN.md sections: §1 (surface tokens), §5 (shape/radius), §6 (elevation), §11 (outline/border)
 - Iceblue baseline: doc/contracts/baselines/pdfviewer-iceblue.png
 - HTML contract: doc/contracts/pdfviewer.html

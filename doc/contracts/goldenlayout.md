@@ -13,7 +13,6 @@ closest-sibling: tbeditor (T3 strategy — rewrite lib-internal DOM under wrappe
 
 ## References
 - MUI CSS: no analog — GoldenLayout is a dockable IDE-style multi-pane layout. No MUI equivalent. Reference MUI `Tabs.css` for the tab-strip active-indicator convention (underline on active tab) and `Divider.css` for the splitter handle. See DESIGN.md §8 for novel-component policy.
-- Mira HTML: no analog
 - DESIGN.md sections: §3 (color roles — surface, outline, primary), §4 (spacing), §5 (corner radii — `--zk-shape-card` for header/panel corners), §7 (typography — label-large tab labels), §8 (state layers — tab hover), §9 (motion), §10 (density — card padding), §14 (splitter family)
 - Iceblue baseline: doc/contracts/baselines/goldenlayout-iceblue.png
 - HTML contract: doc/contracts/goldenlayout.html

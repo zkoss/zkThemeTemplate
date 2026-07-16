@@ -17,7 +17,6 @@ mockup-rationale: ZKDoc canonical image exists; Marble applies only gap/flex-wra
 
 ## References
 - MUI CSS: Layout/Stack.css — flex-wrap row layout is the closest structural analog; no visual theming borrowed
-- Mira HTML: no analog — anchorlayout is a ZK-specific anchor-sizing primitive not present in Mira
 - DESIGN.md sections: §4 (Spacing Scale)
 - Iceblue baseline: doc/contracts/baselines/anchorlayout-iceblue.png
 - ZKDoc canonical: /Users/hawk/Documents/workspace/DOC/zkdoc/zk_component_ref/images/ZKComRef_Anchorlayout_Example.png

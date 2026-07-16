@@ -15,7 +15,6 @@ mockup-rationale: ZKDoc image shows iceblue-style rounded-rectangle trigger with
 
 ## References
 - MUI CSS: `Inputs/OutlinedInput.css` (trigger chrome), `Navigation/MenuItem.css` (popup item rows) — no direct "Cascader" MUI analog
-- Mira HTML: no analog — ZK-specific hierarchical picker; no equivalent in Mira component library
 - DESIGN.md sections: §2 (input chrome), §3 (primary colour), §6 (elevation/dropdown shadow), §8 (state layers), §11 (outline/separator colours)
 - Iceblue baseline: doc/contracts/baselines/cascader-iceblue.png
 - HTML contract: doc/contracts/cascader.html

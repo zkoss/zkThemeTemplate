@@ -8,7 +8,6 @@ zk-version: 10.2.1-jakarta
 
 ## References
 - MUI CSS: Rating.css
-- Mira HTML: doc/mira/forms-selection-controls.html
 - DESIGN.md sections: §3, §12
 
 ## Expected values

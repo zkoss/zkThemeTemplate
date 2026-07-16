@@ -27,6 +27,7 @@ under [`../`](../).
 | [data-dense-mode.md](data-dense-mode.md) | Compact density via `data-density="compact"`; control-height ladder + alias layer |
 | [tablet-design-overview.md](tablet-design-overview.md) | Tablet/mobile responsive theme layer (`tablet.css.dsp`) |
 | [responsive-design.md](responsive-design.md) | Responsive utility system — `z-grid-fill` auto-fit + `z-grid-cols-auto`; intrinsic/auto-fit over Bootstrap Grid |
+| [zk-mui-structural-gaps.md](zk-mui-structural-gaps.md) | ZK↔MUI differences unresolvable by CSS alone (floating label, multi-select, calendar today-marker, ripple) — expected limits, not bugs |
 
 ## Related
 

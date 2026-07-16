@@ -1,7 +1,7 @@
 # DESIGN.md — Marble Design Language Spec
 
-Distilled from existing token files, component CSS, and the 49 Mira HTML reference pages.
-Use this as the rulebook when styling a component that Mira does not cover.
+Distilled from existing token files, component CSS, MD3 specifications, and the MUI v7 static-CSS reference (`…/material-ui-7.3.1/static-css-output/`).
+Use this as the rulebook when styling a component the MUI reference does not cover.
 
 ---
 
@@ -120,13 +120,13 @@ Cards have elevation only — no border. Use outlined variant (`1px solid outlin
 | KPI value | 24px | 400 | (`MuiBox` with custom font-size) |
 
 Font family: **Inter** (system sans-serif fallback stack). Token: `--zk-typescale-font-family`.  
-Mira is denser than standard MD3 — prefer 13–14px body rather than 16px.
+Marble targets a denser scale than standard MD3 (aligned to MUI v7) — prefer 13–14px body rather than 16px.
 
 **CSS class-naming convention — `z-` vs `m-` prefix.** The `z-` prefix is for
 framework / component CSS (component variants, styled in `src/main/resources/`
 component + utility CSS — e.g. `z-paging-outlined`, `z-badge-success`). The `m-`
-prefix is for **page-level** classes that live in page CSS (e.g. `usecase2.css`,
-used only by `usecase2/` ZUL pages — `m-card`, `m-badge`, `m-active`), never in
+prefix is for **page-level** classes that live in page-local CSS (used only by a
+specific demo / use-case page — e.g. `m-card`, `m-badge`, `m-active`), never in
 component CSS.
 
 **Utility-class naming is size-based, not role-based.** The full MD3 type scale (role × size — `display/headline/title/body/label` × `large/medium/small`, each with its own size + weight + line-height) lives **only** in the `--zk-typescale-*` tokens, consumed by component CSS (`.z-button`, `.z-label`, …). The *utility* classes are a plain T-shirt size ladder — `z-text-xs … z-text-7xl` — so ZUL authors pick a size in one class instead of stacking size + weight + line-height. This is deliberate (chosen over 1:1 role-named utilities like `z-fs-title-md`): utility-first ZUL authoring wants short size-only classes, while role+size semantics belong at the token/component layer, not in page markup.
@@ -135,8 +135,8 @@ component CSS.
 
 Rationale:
 - **Self-host over CDN** — the CDN `@import` failed in air-gapped installs and leaked end-user IPs to Google (GDPR). Self-hosting is offline-safe and same-origin.
-- **Self-host over system-font stack** — Marble is calibrated pixel-for-pixel against Mira and has Playwright visual-regression tests; a system-font stack drifts per OS, destabilizing baselines and table layouts. A bundled font gives one reproducible look on every client and in CI.
-- **Inter over Roboto** (MD3's canonical face) — Marble's concrete reference is the Mira dashboard, which uses Inter; Inter's tall x-height + open apertures also read better at the 13–14px dense-table sizes this theme targets. The fallback stack still degrades gracefully to each OS's native UI font if Inter never loads.
+- **Self-host over system-font stack** — Marble is calibrated against the MUI v7 reference and has Playwright visual-regression tests; a system-font stack drifts per OS, destabilizing baselines and table layouts. A bundled font gives one reproducible look on every client and in CI.
+- **Inter over Roboto** (MD3's canonical face) — Marble's MUI-aligned reference uses Inter; Inter's tall x-height + open apertures also read better at the 13–14px dense-table sizes this theme targets. The fallback stack still degrades gracefully to each OS's native UI font if Inter never loads.
 
 **Deprecated font library-properties — intentionally absent (do not re-add).** ZK's `org.zkoss.zul.theme.fontFamily*` and `org.zkoss.zul.theme.fontSize*` library properties have been **deprecated since ZK 7.0.0** (superseded by LESS, and now by CSS custom properties). Marble sets **zero** library properties of any kind — all typography is driven by the `--zk-typescale-*` tokens in `zul/css/tokens/_typography.css`. Their absence is a deliberate modern-CSS design choice, **not** a gap: do not introduce these properties to "configure" fonts. To change a face or size, edit the token, not a `<library-property>`. (Gap-review finding lane D / P3-1, 2026-06-26.)
 
@@ -530,10 +530,6 @@ entirely: stacking a classic/enterprise-sidebar accent on the MD3 pill states
 "active" twice in two idioms and clashes where the square bar meets the container's
 rounded corners. Do not re-introduce any left accent (`border-left`, `::before`, or
 `::after` strip). See `doc/skill-gaps.md`.
-
-(The usecase2 Mira dashboard sidebar is a separate customization demo — a dark
-sidebar that intentionally overrides to a square, edge-to-edge treatment in
-`usecase2.css`. That override is out of scope of this default-theme rule.)
 
 **Navigation-active ≠ list-row focus.** The `.z-listitem` blue *left line* is
 NOT a selected-state accent — the selected state is a `primary-container` fill

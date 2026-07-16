@@ -62,7 +62,7 @@ chokidar.watch('src/test/resources/web/**/*.zul', { ignoreInitial: true, persist
     .on('change', (f) => { console.log('[watch] ZUL Changed:', f); copyZul(f); })
     .on('add',    (f) => { console.log('[watch] ZUL Added:', f);   copyZul(f); });
 
-// Watch test CSS (usecase2.css etc.) — hot-swap without page reload
+// Watch test CSS (usecase.css etc.) — hot-swap without page reload
 chokidar.watch('src/test/resources/web/**/*.css', { ignoreInitial: true, persistent: true })
     .on('change', (f) => { console.log('[watch] Test CSS Changed:', f); copyTestCss(f); })
     .on('add',    (f) => { console.log('[watch] Test CSS Added:', f);   copyTestCss(f); });

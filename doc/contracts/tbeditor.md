@@ -12,7 +12,6 @@ closest-sibling: window (outer chrome), toolbar (button pane)
 
 ## References
 - MUI CSS: no analog — tbeditor wraps Trumbowyg, a third-party rich-text library; no MUI RichTextEditor component exists. Consult MUI `OutlinedInput.css` for the outer border/shape and `Toolbar.css` for the button strip background and button hover state.
-- Mira HTML: no analog
 - DESIGN.md sections: §3 (color roles — surface, outline, primary), §4 (typography scale — body-medium for editor content), §5 (spacing — button padding), §6 (shape — corner-small for outer box), §7 (motion — button hover transitions)
 - Iceblue baseline: doc/contracts/baselines/tbeditor-iceblue.png
 - HTML contract: doc/contracts/tbeditor.html

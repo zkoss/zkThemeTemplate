@@ -51,7 +51,7 @@ Compute two batches from `tasks/work-status.md`:
 **Evaluator batch (parallel, up to 4):**
 - All rows in `RE_EVAL_NEEDED` status (highest priority — these block siblings)
 - Then rows in `PENDING` or `NEEDS_FIX` that don't have an open eval report
-- Order: Group A → E → B → C → D → F → G (per `apply-mira-plan.md`)
+- Order: highest-impact component groups first (blockers before dependents)
 - Cap at 4 per batch (Chrome handles 4 tabs comfortably; more risks slowdown)
 
 **Generator batch (serial, 1 at a time):**

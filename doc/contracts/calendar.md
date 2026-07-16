@@ -7,8 +7,7 @@ contract-approved: false
 zk-version: 10.2.1-jakarta
 
 ## References
-- MUI CSS: DateCalendar.css
-- Mira HTML: doc/mira/forms-pickers.html, doc/mira/calendar.html
+- MUI CSS: no clean analog — MUI DateCalendar/PickersDay CSS is not in static-css-output
 - DESIGN.md sections: §1, §3, §5, §7, §11
 - Known issue: class names in this contract's former DOM selectors section
   (`.z-calendar-day`, `.z-calendar-day-selected`) may differ from

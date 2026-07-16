@@ -73,7 +73,7 @@ The `watch-css` Maven execution (bound to `process-resources`, `async: true`) st
 - `src/test/resources/web/**/*.css` → copies to target → browser hot-swaps (no reload)
 - `src/test/resources/web/**/*.{png,jpg,gif,svg,webp}` → copies to target → browser reloads page
 
-The live-reload client script is injected via `_sidebar.zul` (included by all usecase2 pages) and `preview.zul`.
+The live-reload client script is injected via `preview.zul` and the UseCase SPA host (`usecase/index.zul`).
 
 ## Preview Pages
 
@@ -114,20 +114,7 @@ The `<navitem>` entries in `usecase/index.zul` are the source of truth for the c
 
 Example: `http://localhost:8080/usecase/index.zul#usecase/ops-dashboard`
 
-**VM**: `UseCaseVM.java` — same pattern as `UseCase2VM` (`@Init` restores bookmark, `navigate` command sets bookmark, `handleBookmarkChange` command responds to browser back/forward). Reconstruction: `"~./" + bookmark + ".zul"`.
-
-### UseCase2 SPA (Mira Dashboard)
-The UseCase2 SPA supports hash-based deep linking — append `#<pagename>` to jump directly to any sidebar page:
-```
-http://localhost:8080/usecase2/index.zul#<pagename>
-```
-**WARNING**: `/index.zul` (root) returns 404 — always use the full `/usecase2/index.zul` path.
-
-Example: `http://localhost:8080/usecase2/index.zul#analytics`
-
-Valid page names: `default`, `analytics`, `saas`, `pages`, `projects`, `orders`, `products`, `invoice-list`, `invoice-detail`, `tasks`, `sign-in`, `sign-up`, `reset-password`, `pages-profile`, `pages-settings`, `pages-pricing`, `pages-chat`, `pages-blank`, `accordion`, `alerts`, `avatars`, `badges`, `buttons`, `cards`, `chips`, `dialogs`, `lists`, `menus`, `pagination`, `progress`, `tabs`, `tooltips`, `charts-apex`, `charts-chartjs`, `forms-pickers`, `forms-selection-controls`, `forms-selects`, `forms-text-fields`, `forms-formik`, `tables-simple`, `tables-advanced`, `icons-lucide`
-
-Note: `forms-editors` sidebar item exists but is non-functional (no navigation) — ZK has no Quill equivalent.
+**VM**: `UseCaseVM.java` — `@Init` restores bookmark, `navigate` command sets bookmark, `handleBookmarkChange` command responds to browser back/forward. Reconstruction: `"~./" + bookmark + ".zul"`.
 
 ## Documentation Index
 Located in `doc/` directory:
@@ -149,7 +136,6 @@ Located in `doc/` directory:
 | [verification-harness-decisions.md](doc/verification-harness-decisions.md) | Decision records: outcome-driven contracts (DR-1), dual-gate VERIFIED (DR-2) |
 | [responsive-design.md](doc/spec/responsive-design.md) | Responsive layout: `z-grid-fill` auto-fit utility + State Matrix mobile card-reflow; why not Bootstrap Grid |
 | [data-dense-mode.md](doc/spec/data-dense-mode.md) | Compact density via `data-density="compact"` attribute (whole-app or per-region); control-height ladder + semantic alias layer; `MarbleDensity` Java API; ships `marble-compact.css` tuning preset |
-| [mira/](doc/mira/) | 49 Mira HTML reference pages + MUI stylesheet (index-BnB_Ifri.css) |
 
 ### External CSS Reference
 | Path | Description |

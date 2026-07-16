@@ -20,7 +20,7 @@
 #
 # Excluded files (icon catalogs — scanning them is pointless and was the dominant
 # performance cost):
-#   - usecase2/icons-lucide.zul: auto-generated from lucide-static.
+#   - icons-lucide.zul: auto-generated from lucide-static.
 #   - utility/icons.zul: the "All Lucide Icons" catalog page (also hosts the
 #     FA-compat alias demo). Excluded wholesale because the entire file is a catalog.
 #

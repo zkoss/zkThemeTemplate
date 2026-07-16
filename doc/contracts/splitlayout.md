@@ -13,7 +13,6 @@ closest-sibling: splitter (for the splitter bar sub-element only)
 
 ## References
 - MUI CSS: no analog — MUI has no split-pane layout component (closest is a third-party resizable panel library; no file in static-css-output/)
-- Mira HTML: no analog
 - DESIGN.md sections: §1 (surfaces), §4 (spacing), §8 (state layers), §9 (motion), §11 (border rules), §14 (splitter family — canonical bar + actuator-pill spec)
 - Iceblue baseline: doc/contracts/baselines/splitlayout-iceblue.png
 - HTML contract: doc/contracts/splitlayout.html

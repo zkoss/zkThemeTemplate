@@ -19,7 +19,6 @@ closest-sibling: none — novel T2 (no ZK component renders centred branching tr
 
 ## References
 - MUI CSS: no analog — Material-UI 7 ships no org-chart component
-- Mira HTML: no analog — Mira does not include an organigram or org-chart pattern
 - DESIGN.md sections: §1 (surfaces), §2 (text colors), §5 (corner radii — `--zk-shape-card`), §6 (elevation — outlined card on white surface), §7 (typography — body 13/14 medium-weight), §8 (state-layer overlays), §9 (motion — 250ms standard), §11 (border rules — outline-variant dividers, primary focus ring)
 - Iceblue baseline: `doc/contracts/baselines/organigram-iceblue.png`
 - HTML contract: `doc/contracts/organigram.html`

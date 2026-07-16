@@ -471,27 +471,22 @@ ${lucideList}
 }
 
 function generateIconsZul(iconNames) {
-    const destPath = path.join(__dirname, '..', 'src/test/resources/web/usecase2/icons-lucide.zul');
+    const destPath = path.join(__dirname, '..', 'src/test/resources/web/icons-lucide.zul');
     const entries = iconNames.map(name =>
-        `            <div sclass="m-icon-gallery__item"><span sclass="z-icon-${name} m-icon-gallery__icon"/><label sclass="m-icon-gallery__name" value="${name}"/></div>`
+        `            <div sclass="z-d-flex z-flex-col z-align-center z-gap-1 z-text-center"><span sclass="z-icon-${name}" style="font-size:24px; color:var(--zk-color-primary)"/><label sclass="z-text-xs z-text-secondary" style="word-break:break-all" value="${name}"/></div>`
     ).join('\n');
 
-    const zul = `<div sclass="m-main">
+    const zul = `<?page title="Lucide Icons" contentType="text/html;charset=UTF-8"?>
+<zk>
+<div sclass="z-p-8">
+    <div sclass="z-border-bottom z-text-xl z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Lucide Icons</div>
 
-    <div sclass="m-page-header">
-        <label sclass="m-page-title" value="Lucide Icons"/>
-    </div>
-    <separator bar="true"/>
-
-    <div sclass="m-card">
-        <label sclass="m-card__title" value="All ${iconNames.length} Lucide Icons"/>
-        <label sclass="m-icon-gallery__hint" value="Usage: iconSclass=&quot;z-icon-{name}&quot; or sclass=&quot;z-icon-{name}&quot;"/>
-        <div sclass="m-icon-gallery">
+    <label sclass="z-text-sm z-text-secondary z-d-block z-mb-4" value="All ${iconNames.length} Lucide icons. Usage: iconSclass=&quot;z-icon-{name}&quot; or sclass=&quot;z-icon-{name}&quot;"/>
+    <div sclass="z-d-grid z-grid-fill z-grid-fill-xs z-gap-3">
 ${entries}
-        </div>
     </div>
-
-</div>`;
+</div>
+</zk>`;
 
     fs.writeFileSync(destPath, zul, 'utf8');
 }

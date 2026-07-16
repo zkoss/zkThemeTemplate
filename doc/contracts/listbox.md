@@ -9,7 +9,6 @@ zk-version: 10.2.1-jakarta
 
 ## References
 - MUI CSS: List.css / Table.css
-- Mira HTML: doc/mira/tables-simple-table.html
 - DESIGN.md sections: §1, §2, §7, §10, §11
 
 ## Expected values

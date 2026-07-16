@@ -18,7 +18,6 @@ shared-css-file: src/main/resources/web/js/zkmax/layout/css/tablelayout.css
 
 ## References
 - MUI CSS: Layout/Grid.css — structural analog only (MUI Grid is CSS Grid not HTML table; no visual theming borrowed)
-- Mira HTML: no analog — tablelayout is a ZK-specific HTML-table layout primitive not present in Mira
 - DESIGN.md sections: §4 (Spacing Scale)
 - Iceblue baseline: doc/contracts/baselines/tablelayout-iceblue.png
 - ZKDoc canonical: /Users/hawk/Documents/workspace/DOC/zkdoc/zk_component_ref/images/ZKComRef_Tablelayout_Example.PNG

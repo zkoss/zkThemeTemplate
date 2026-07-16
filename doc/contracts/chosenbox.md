@@ -7,7 +7,7 @@ contract-approved: false
 zk-version: 10.2.1-jakarta
 
 ## References
-- MUI CSS: `Inputs/TextField.css`, `Navigation/MenuItem.css` (for popup option rows), `DataDisplay/Chip.css` (for selected chips)
+- MUI CSS: `Inputs/OutlinedInput.css`, `Navigation/MenuItem.css` (for popup option rows), `DataDisplay/Chip.css` (for selected chips)
 - Skill: `reference/floating-popup-in-body.md` (popup detached to `<body>` — no percentage widths)
 - Skill: `components/chosenbox.md` (chip class quirk, EE-only)
 - DESIGN.md sections: §2, §3, §7, §8, §11

@@ -4,7 +4,7 @@ How manual gap-fixes turn into structural improvements instead of one-off patche
 
 ## The problem this solves
 
-The harness drives off theme references (MD3, Mira). When ZK has a feature **without** a theme analog, the Evaluator never measures it, the Generator never implements it, and the bug ships silently. We saw this with `inplace` state — 6 input components shipped without inplace styling before someone noticed.
+The harness drives off theme references (MD3, MUI). When ZK has a feature **without** a theme analog, the Evaluator never measures it, the Generator never implements it, and the bug ships silently. We saw this with `inplace` state — 6 input components shipped without inplace styling before someone noticed.
 
 There will be more: `borderlayout` JS engine, `splitter` cursor mode, `bandbox` custom popup, `checkbox` toggle mold, `calendar` today-class oddity, `colorbox`, `slider` molds, `combobutton` pointer-events, etc.
 
@@ -148,7 +148,7 @@ After every N components verified (say, 10), scan `doc/skill-gaps.md` for cluste
 
 Strong signals (almost certainly Skill-worthy):
 - The fix would apply to 2+ components
-- The fix could not be derived from MD3/Mira reference alone
+- The fix could not be derived from MD3/MUI reference alone
 - The fix changes which DOM element gets the rule, not just the value
 - The fix uses a CSS feature ZK relies on (e.g. `:has(br)` for vertical button)
 

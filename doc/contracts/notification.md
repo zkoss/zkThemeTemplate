@@ -8,7 +8,6 @@ zk-version: 10.2.1-jakarta
 
 ## References
 - MUI CSS: Snackbar.css / Alert.css
-- Mira HTML: doc/mira/alerts.html, doc/mira/snackbars.html
 - DESIGN.md sections: §3, §6, §11
 
 ## Expected values

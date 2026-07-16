@@ -28,7 +28,7 @@ When you need a selector, a state-class name, or a composition rule, the canonic
 
 ### Contract supersedes inference
 
-If the contract declares a `## Design Contract` section (or equivalent prose authored by `zk-spec-author`), every rule in that contract is **user-approved ground truth**. You must honor those decisions verbatim. You may NOT "improve" a contracted color, spacing, radius, or motion value via MUI/Mira/DESIGN.md inference — those references are sources of *unspecified* defaults only. When the contract and inference disagree, the contract wins; flag the conflict in your gen report under `Contract conflict:` and proceed with the contract.
+If the contract declares a `## Design Contract` section (or equivalent prose authored by `zk-spec-author`), every rule in that contract is **user-approved ground truth**. You must honor those decisions verbatim. You may NOT "improve" a contracted color, spacing, radius, or motion value via MUI/DESIGN.md inference — those references are sources of *unspecified* defaults only. When the contract and inference disagree, the contract wins; flag the conflict in your gen report under `Contract conflict:` and proceed with the contract.
 
 ## Workflow
 

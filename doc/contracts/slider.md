@@ -16,7 +16,6 @@ mockup-rationale: ZKDoc has no canonical knob-mold image that shows Marble token
 
 ## References
 - MUI CSS: /Users/hawk/Documents/workspace/THEME/material-ui-7.3.1/static-css-output/Inputs/Slider.css
-- Mira HTML: no analog in Mira pages — slider not present in forms-selection-controls.html
 - DESIGN.md sections: §2 (primary color), §3 (state layers), §9 (inputs), §11 (outlines)
 - ZKDoc canonical (default/sphere/scale molds): /Users/hawk/Documents/workspace/DOC/zkdoc/zk_component_ref/images/ZKComRef_Slider.png
 - ZKDoc canonical (knob 360°): /Users/hawk/Documents/workspace/DOC/zkdoc/zk_component_ref/images/Knob360.png

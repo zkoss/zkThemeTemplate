@@ -17,7 +17,6 @@ closest-sibling: none — distinct chrome+payload composition; sibling reuse lim
 
 ## References
 - MUI CSS: `/Users/hawk/Documents/workspace/THEME/material-ui-7.3.1/static-css-output/Tabs.css`
-- Mira HTML: `doc/mira/tabs.html`
 - DESIGN.md sections: §1 (color), §5 (spacing), §7 (state layers), §11 (focus)
 - Iceblue baseline: `doc/contracts/baselines/tabbox-iceblue.png`
 - HTML contract: `doc/contracts/tabbox.html`

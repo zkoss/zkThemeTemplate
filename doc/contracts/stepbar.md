@@ -15,7 +15,6 @@ closest-sibling: none — novel pattern (no ZK component renders connected-circl
 
 ## References
 - MUI CSS: `/Users/hawk/Documents/workspace/THEME/material-ui-7.3.1/static-css-output/Stepper.css` — consulted for circle size, connector thickness, primary fill semantics (visual cues only; ZK's DOM is independent of MUI's)
-- Mira HTML: no analog — Mira does not ship a stepper component
 - DESIGN.md sections: §3 (color roles), §4 (typography scale), §5 (spacing), §6 (shape), §7 (motion)
 - Iceblue baseline: `doc/contracts/baselines/stepbar-iceblue.png`
 - HTML contract: `doc/contracts/stepbar.html`

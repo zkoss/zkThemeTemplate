@@ -17,7 +17,6 @@ mockup-rationale: ZKDoc has Coachmark-4.png; Marble aligns the card to the MD3 r
 - MUI CSS: no direct analog — MUI has Tooltip.css (bare tooltip) and Popover.css but neither has
   a guided-tour card with pointer arrow + mask + close button. MUI tour/popover content sits on
   `background.paper` (neutral), which matches the neutral-surface choice below.
-- Mira HTML: no analog
 - MD3 pattern: **rich tooltip** — an elevated card carrying text + one or more action buttons on a
   neutral `surface-container`, with the action rendered as a standard `primary` text button. MD3
   reserves saturated brand fills for single-purpose, non-composable attention surfaces (Snackbar →

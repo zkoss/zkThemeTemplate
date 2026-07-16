@@ -1241,14 +1241,14 @@ test.describe('toast', () => {
 // -------------------------------------------------------
 // `.z-popup-tooltip` is the dark MUI-style tooltip (rgba(97,97,97,0.92) + white).
 // It only renders when a <popup> carries sclass="z-popup-tooltip" — exercised on
-// the usecase2 tooltips page, NOT on /popup.zul (plain `tooltip=` yields a white
-// popup). The popup is detached to <body> and animated, so a screenshot is flaky;
-// a computed-style assertion is the robust regression guard for the dark fill.
+// the /popup.zul "Dark tooltip" section, NOT via plain `tooltip=` (which yields a
+// white popup). The popup is detached to <body> and animated, so a screenshot is
+// flaky; a computed-style assertion is the robust regression guard for the dark fill.
 // (Note: `.z-tooltip` in misc.css shares the same value but has no ZUL usage —
 // unreachable; tracked as a dead-code item, not covered here.)
 test.describe('tooltip', () => {
   test('dark-popup-fill-and-text', async ({ page }) => {
-    await page.goto('/usecase2/index.zul#tooltips', { waitUntil: 'domcontentloaded' });
+    await page.goto('/popup.zul', { waitUntil: 'domcontentloaded' });
     await page.waitForTimeout(2500);
     await page.locator('button:has-text("Click")').first().click();
     const tip = page.locator('.z-popup-tooltip.z-popup-open').first();

@@ -8,8 +8,7 @@ contract-approved: true
 zk-version: 10.2.1-jakarta
 
 ## References
-- MUI CSS: TreeView.css
-- Mira HTML: doc/mira/lists.html (closest)
+- MUI CSS: DataDisplay/List.css
 - DESIGN.md sections: §1, §2, §7, §10, §11
 
 ## Expected values

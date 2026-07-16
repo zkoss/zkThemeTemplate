@@ -15,7 +15,6 @@ closest-sibling: none — novel dashboard shell; panel sibling governs visual su
 
 ## References
 - MUI CSS: no analog — Material-UI 7 ships no portal/dashboard-column layout; closest conceptual match is MUI `Paper` for framed columns
-- Mira HTML: no analog — Mira does not include a drag-and-drop dashboard layout pattern
 - DESIGN.md sections: §1 (surfaces — transparent layout shell, surface for framed columns), §4 (spacing — column gap and inner padding), §5 (corner radii — framed column uses card radius), §6 (elevation — framed column uses elevation-1 or outlined variant), §8 (state layers — drag ghost), §9 (motion — drag ghost transition)
 - Iceblue baseline: doc/contracts/baselines/portallayout-iceblue.png
 - HTML contract: doc/contracts/portallayout.html

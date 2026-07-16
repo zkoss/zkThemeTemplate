@@ -8,7 +8,6 @@ zk-version: 10.2.1-jakarta
 
 ## References
 - MUI CSS: Checkbox.css; Inputs/Switch.css (switch mold — visual benchmark is MUI v7 medium, NOT the MD3 spec sheet)
-- Mira HTML: doc/mira/forms-selection-controls.html (`MuiSwitch-root MuiSwitch-sizeMedium`)
 - DESIGN.md sections: §2, §3, §7, §8, §11
 
 ## Expected values

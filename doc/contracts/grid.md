@@ -8,8 +8,7 @@ contract-approved: true
 zk-version: 10.2.1-jakarta
 
 ## References
-- MUI CSS: DataGrid.css / Table.css
-- Mira HTML: doc/mira/tables-simple-table.html, doc/mira/tables-advanced-table.html
+- MUI CSS: DataDisplay/Table.css
 - DESIGN.md sections: §1, §2, §7, §10, §11
 
 ## Expected values

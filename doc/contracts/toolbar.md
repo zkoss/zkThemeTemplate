@@ -8,7 +8,6 @@ zk-version: 10.2.1-jakarta
 
 ## References
 - MUI CSS: Toolbar.css / AppBar.css
-- Mira HTML: doc/mira/menus.html (toolbar section)
 - DESIGN.md sections: §1, §7, §10, §11
 
 ## Expected values

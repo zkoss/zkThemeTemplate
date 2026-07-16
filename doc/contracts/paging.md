@@ -7,7 +7,6 @@ preview: http://localhost:8080/paging.zul   (paging widget is also embedded in g
 
 ## References
 - MUI CSS: Pagination.css
-- Mira HTML: doc/mira/pagination.html
 - DESIGN.md sections: §3, §5, §7, §11
 
 ## DOM key selectors

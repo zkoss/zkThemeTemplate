@@ -7,8 +7,7 @@ contract-approved: false
 zk-version: 10.2.1-jakarta
 
 ## References
-- MUI CSS: TextField.css (number variant)
-- Mira HTML: doc/mira/forms-text-fields.html
+- MUI CSS: Inputs/OutlinedInput.css (number variant)
 - DESIGN.md sections: §1, §2, §5, §7, §9, §10, §11
 
 ## Expected values

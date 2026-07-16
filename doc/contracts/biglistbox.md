@@ -6,7 +6,7 @@ siblings: []
 preview: http://localhost:8080/biglistbox.zul
 
 ## References
-- MUI CSS: DataGrid.css (closest analog)
+- MUI CSS: DataDisplay/Table.css (closest analog)
 - Skill: `.claude/skills/zk-component-rules/components/biglistbox.md` (DOM, WScroll, traps)
 - DESIGN.md sections: §2, §3, §4, §9
 

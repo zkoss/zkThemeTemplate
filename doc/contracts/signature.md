@@ -13,7 +13,6 @@ closest-sibling: toolbar (for the tool-button strip chrome pattern; canvas wrapp
 
 ## References
 - MUI CSS: no analog — no MUI component renders a canvas-based signature capture widget
-- Mira HTML: no analog
 - DESIGN.md sections: §3 (color roles), §5 (spacing), §6 (shape), §7 (motion), §8 (disabled opacity), §9 (focus ring)
 - Iceblue baseline: doc/contracts/baselines/signature-iceblue.png
 - HTML contract: doc/contracts/signature.html

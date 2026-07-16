@@ -8,7 +8,6 @@ zk-version: 10.2.1-jakarta
 
 ## References
 - MUI CSS: Select.css
-- Mira HTML: doc/mira/forms-selects.html
 - DESIGN.md sections: §1, §2, §5, §7, §10, §11
 
 ## Expected values

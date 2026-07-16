@@ -7,7 +7,6 @@ preview: http://localhost:8080/messagebox.zul
 
 ## References
 - MUI CSS: Dialog.css / Alert.css
-- Mira HTML: doc/mira/dialogs.html
 - DESIGN.md sections: §3, §6, §10, §11
 
 ## DOM key selectors

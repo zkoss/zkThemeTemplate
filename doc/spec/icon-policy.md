@@ -60,7 +60,7 @@ node_modules/lucide-static/icons/{name}.svg  EXISTS   (a Lucide name)
   isn't a ZK-emitted alias, pick a different Lucide icon.
 
 **Excluded catalogs** (performance — these are whole-page icon listings, not ordinary
-content): `src/test/resources/web/usecase2/icons-lucide.zul` (regenerated from
+content): `src/test/resources/web/icons-lucide.zul` (regenerated from
 `lucide-static` on every build) and `utility/icons.zul` (the "All Lucide Icons" page,
 which also hosts the FA-compat alias demo). Both are skipped by `check-icon-coverage.sh`.
 

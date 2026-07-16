@@ -16,7 +16,6 @@ mockup-needed: Y  # Marble diverges from the ZKDoc baseline — ZKCompRef_Croppe
 - ZKDoc canonical: /Users/hawk/Documents/workspace/DOC/zkdoc/zk_component_ref/cropper.md (PE component, since 8.6.0; built-in toolbar = Crop + Cancel buttons via `toolbarVisible`)
 - ZKDoc image: /Users/hawk/Documents/workspace/DOC/zkdoc/zk_component_ref/images/ZKCompRef_Cropper.png — confirms the floating Crop/Cancel toolbar near the selection; wrapper itself is borderless in stock ZK (Marble's border/radius is an intentional divergence, hence mockup-needed: Y)
 - MUI CSS: no analog — no MUI image-cropper component. Reference `Paper.css` for the wrapper card convention (border, border-radius, overflow) and see DESIGN.md §8 for novel-component policy.
-- Mira HTML: no analog
 - DESIGN.md sections: §3 (color roles — surface, outline-variant), §5 (spacing), §6 (shape — extra-small corner for wrapper)
 - Iceblue baseline: doc/contracts/baselines/cropper-iceblue.png
 - HTML contract: doc/contracts/cropper.html

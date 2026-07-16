@@ -18,7 +18,6 @@ mockup-rationale: ZKDoc canonical image ZKComRef_Rowlayout.PNG exists and the Ma
 
 ## References
 - MUI CSS: Layout/Grid.css — `.MuiGrid-root { min-width: 0; box-sizing: border-box; }` — confirms column cells need `box-sizing: border-box`; no additional MUI guidance (MUI Grid uses CSS Grid, not float columns)
-- Mira HTML: no analog — Mira dashboard does not use rowlayout
 - DESIGN.md sections: §4 (spacing scale for gutter sizing)
 - Iceblue baseline: doc/contracts/baselines/rowlayout-iceblue.png
 - ZKDoc canonical: /Users/hawk/Documents/workspace/DOC/zkdoc/zk_component_ref/images/ZKComRef_Rowlayout.PNG

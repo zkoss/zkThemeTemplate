@@ -7,7 +7,6 @@ preview: http://localhost:8080/checkbox.zul   (radiogroup section)
 
 ## References
 - MUI CSS: Radio.css
-- Mira HTML: doc/mira/forms-selection-controls.html
 - DESIGN.md sections: §2, §3, §7, §8, §11
 
 ## Shared-selector warning

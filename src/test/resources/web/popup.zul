@@ -38,6 +38,16 @@
         </div>
     </div>
 
+    <div sclass="z-mb-6">
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Dark tooltip (z-popup-tooltip)</div>
+        <div sclass="z-py-3">
+            <button label="Click" sclass="z-button-outlined" popup="tt" />
+        </div>
+    </div>
+
+    <popup id="tt" sclass="z-popup-tooltip">
+        <label value="Tooltip text" />
+    </popup>
     <popup id="p1">
         <div>Popup Content</div>
         <div>Second Line</div>

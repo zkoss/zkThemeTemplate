@@ -7,8 +7,7 @@ preview: http://localhost:8080/intbox.zul
 
 ## References
 - See textbox contract for full check list; intbox shares all base rules
-- MUI CSS: TextField.css
-- Mira HTML: doc/mira/forms-text-fields.html (numeric input variants)
+- MUI CSS: Inputs/OutlinedInput.css
 - DESIGN.md sections: §1, §2, §5, §7, §9, §10, §11
 
 ## DOM key selectors

@@ -8,7 +8,6 @@ zk-version: 10.2.1-jakarta
 
 ## References
 - MUI CSS: Card.css
-- Mira HTML: doc/mira/cards.html
 - DESIGN.md sections: §1, §5, §6, §7, §10, §11
 
 ## Expected values

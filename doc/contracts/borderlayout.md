@@ -19,7 +19,6 @@ closest-sibling: none — novel composite pattern
 ## References
 
 - MUI CSS: no direct analog — closest reference is `Navigation/Drawer.css` (sidebar surface + 1px outline-variant divider pattern) and `Layout/Container.css` (surface background). See §8 of DESIGN.md for novel-component policy.
-- Mira HTML: no analog — no Mira page uses a ZK-style 5-region JS-positioned layout.
 - DESIGN.md sections: §2 (surfaces), §3 (color), §5 (spacing), §7 (motion)
 - Iceblue baseline: doc/contracts/baselines/borderlayout-iceblue.png (**MISSING** — run `scripts/render-iceblue-baseline.sh borderlayout` with iceblue preview on port 8081 before evaluator runs)
 - HTML contract: doc/contracts/borderlayout.html

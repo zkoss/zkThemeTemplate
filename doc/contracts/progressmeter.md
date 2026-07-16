@@ -8,7 +8,6 @@ zk-version: 10.2.1-jakarta
 
 ## References
 - MUI CSS: LinearProgress.css
-- Mira HTML: doc/mira/progress.html
 - DESIGN.md sections: §3, §5
 
 ## Expected values
