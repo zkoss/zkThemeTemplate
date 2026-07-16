@@ -2,10 +2,28 @@
 
 This document defines all required `*.css.dsp` files for the **marble** theme, based on the Ice Blue Compact theme (`iceblue_c-10.3.0.1`) as the reference product.
 
+> **Note (list is indicative, not the runtime contract):** the file list below was authored from the *source CSS tree* and can drift from what ZK actually requests at runtime. The authoritative, runtime-faithful coverage check is `scripts/check-css-dsp.js` (`npm run check:css-dsp`) — see the Path-resolution model below.
+
 All files reside under:
 ```
 src/main/resources/web/marble/
 ```
+
+---
+
+## 0. Path-resolution model — what decides each `.css.dsp` path
+
+The path ZK *requests* a `.css.dsp` from is **not** decided by the theme's Java. It is decided in layers (verified against ZK 10.x source):
+
+- **(a) Per-component path = lang-addon `<css-uri>` (relative) + `<widget-package>`.**
+  `<css-uri>` is relative (e.g. `css/tbeditor.css.dsp`) and resolves against the widget's JS package directory declared by `<widget-package>` (e.g. `zkmax.tbeditor` → `~./js/zkmax/tbeditor/`). Full path = `~./js/` + package-as-path + `/` + css-uri.
+  **Global bundles are decided by ZK core, not lang-addon:** `norm.css.dsp` + `font-awesome.css.dsp` are declared as `<stylesheet>` in the `zk.wcs` XML; `footer.css.dsp` is a hard-coded literal in `WcsExtendlet.java` (`"~./zul/css/footer.css.dsp"`). `WcsExtendlet.service()` assembles the single `zk.wcs` response as norm → every language-level `getCSSURIs()` → footer.
+  The theme's own Java only **rewrites the `~./` prefix to `~./marble/`** via `MarbleThemeProvider.beforeWidgetCSS()` → `ServletFns.resolveThemeURL()`; and `build-css.js` **mirrors** the source tree to `target/classes/web/marble/<same-relative-path>` (it invents no paths).
+- **(b) select / cell / bandpopup** are served via `zk.wcs` package **aggregation** (they are language-level css-uris). A standalone `.dsp` for these is optional / belt-and-suspenders — the rule loads either way.
+- **(c) tbeditor / cropper / signature** live paths follow `<widget-package>`:
+  `zkmax/{tbeditor,cropper,signature}/`. IceBlue's `inp/med/wgt` copies are stale legacy paths from older ZK versions — Marble ships only the live path (cleaner, not a gap).
+- **(d) `daterangebox`** registers an absolute css-uri but is a **ZK-11 forward-skip** — not shipped in Marble's current target; `check-css-dsp.js` reports it via `FORWARD_VERSION_SKIP` without failing.
+- **(e) `scripts/check-css-dsp.js`** (`npm run check:css-dsp`) is the runtime-faithful coverage checker: it reads the ZK lang files for every `<css-uri>`, resolves each to a full path, and asserts it exists under `target/classes/web/marble/`. It is the **inverse** of build-css.js's `assertNoOrphanComponentCss()` — that guards *no-css-uri files emitted as orphans*; this guards *css-uri files ZK requests but the theme doesn't ship*.
 
 ---
 

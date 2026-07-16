@@ -72,6 +72,24 @@ All four corners must look semantically correct:
 .z-window-noborder .z-window-header { border-bottom: none; }
 ```
 
+## Chrome-less window content padding
+
+> **A chrome-less window — `.z-window-noborder.z-window-noheader` — MUST render its content flush: `padding: 0` on `.z-window-content`.**
+
+```css
+.z-window-noborder.z-window-noheader .z-window-content {
+    padding: 0;
+}
+```
+
+When both the border and header are removed, the window is a bare surface; its
+default `.z-window-content` padding (`var(--zk-spacing-4)`) would leave an
+unexplained inset. Inner spacing is then the developer's responsibility. Ported
+from ZK stock 10.3.0.1 (IceBlue) — the only stock CSS bugfix in that release
+that applies to a pure-CSS token theme. (The stock root-level `padding:0` on
+`.z-window` is intentionally omitted: Marble's `.z-window` root carries no
+padding, so the rule would be dead CSS.)
+
 ## Anti-patterns (do not do)
 
 ```css

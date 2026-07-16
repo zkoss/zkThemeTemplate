@@ -115,7 +115,7 @@
    an ACTIVE outlined field, not disabled — matching the editable timepicker and the
    readonly combobox/datebox/bandbox. The greyed/dimmed treatment is reserved for
    `disabled`. The input is made non-typeable by ZK's `readonly` attribute, not by
-   styling. See doc/combo-readonly-consistency-audit.md. */
+   styling. See doc/spec/component-state-model.md. */
 .z-timepicker-readonly .z-timepicker-input,
 .z-timepicker-readonly .z-timepicker-button {
     cursor: pointer;

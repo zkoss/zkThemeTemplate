@@ -76,9 +76,8 @@ manual deletion needed.
   overflow-clipping example uses `.z-badge`; swap to a class that still exists.
 
 ### Docs scrub (planning/audit — treat as light cleanup)
-- `doc/usecase-sclass-audit.md` (~line 7): drop `_chips.css` / `_badges.css` from the file list.
-- `doc/mira-alignment-plan-v2.md`, `doc/visual-parity-spiral.md`,
-  `doc/mira-reports/default-diffs.md`: remove badge/avatar/chip rows / checklist items.
+- `doc/visual-parity-spiral.md`, `doc/mira-reports/default-diffs.md`: remove badge/avatar/chip
+  rows / checklist items.
 - `doc/skill-gaps.md`: historical log — **leave as-is** (record of past work).
 
 ---

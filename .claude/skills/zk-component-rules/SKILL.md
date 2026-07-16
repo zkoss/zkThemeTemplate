@@ -21,6 +21,15 @@ Invoke this skill whenever you are about to:
 If the question is "what should this look like?" — that is a **theme** question; not in scope.
 If the question is "where does ZK put the class / what selector applies / what state classes does ZK emit" — that is a **component-rules** question; right place.
 
+## Two-category documentation rule
+
+Every component-knowledge doc is **exactly one** of two categories, and should declare which up front:
+
+- **Category 1 — ZK Component Rules (theme-PORTABLE):** structural/behavioral facts true of any theme (DOM, selectors, state-class enumeration, attribute support, CSS bundling, framework quirks). These live in **this skill**.
+- **Category 2 — Theme Design (theme-SPECIFIC):** the values and rules for one theme (colors, spacing, tokens, MUI/Mira refs, visual mockups). These live in `doc/contracts/<comp>.md` + `doc/spec/DESIGN.md`.
+
+Keeping the boundary strict is what makes the portable ZK facts reusable across themes and keeps theme-specific values out of the skill.
+
 ## How to use
 
 1. **Read this index first.** It tells you which file covers what.

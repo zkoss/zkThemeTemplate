@@ -2,7 +2,7 @@
 
 ## Context
 
-This document is the **operational SOP for Phase 5** of [`doc/mira-alignment-plan-v2.md`](mira-alignment-plan-v2.md). The master plan owns the progress tracker and page order; this document owns the session procedure, stop conditions, and framework gap rules.
+This document is the **operational SOP** for closing the visual gap between the UseCase2 pages and the Mira reference. It owns the session procedure, stop conditions, framework gap rules, the page order, and the progress tracker (below).
 
 All UseCase2 pages exist and routing works. The visual gap between the ZK implementation and the Mira reference (`mira.bootlab.io`) is significant on many pages. This document defines the repeatable **implement → screenshot → audit → fix** loop that systematically closes this gap one page at a time.
 
@@ -424,6 +424,56 @@ The `impeccable` skill's **analysis commands** accelerate the AUDIT step. Only u
 
 ---
 
+## Reference — Mira → ZK → MUI component mapping
+
+### Component-selection rules
+
+- **ZK-native first.** If a matching ZK widget exists, use it. Otherwise fall back to `<div>` + custom CSS.
+- **Card / Chip / Badge / Avatar → `<div>` + CSS.** No ZK widget models these MUI patterns; implement with `<div>` structures and `m-*` classes.
+- **Dialogs → `<window mode="modal">`.** ZK windows give focus trapping, accessibility, and lifecycle out of the box.
+- **Alerts/toasts → `Clients.showNotification(...)`.** Simple tables → `<grid>`; selectable tables → `<listbox checkmark="true">`.
+
+### Mira component → ZK implementation
+
+| Mira component | Implementation | Notes / Rule |
+|---|---|---|
+| **Alerts** | `<div class="m-alert">` | Toast variants use `Clients.showNotification(...)` |
+| **Accordion** | `<tabbox mold="accordion"/>` | Re-skin `.z-tabbox-accordion` selectors |
+| **Avatars** | `<div class="m-avatar">` | Variants (sm/md/lg, circle) via modifier classes |
+| **Badges** | `<div class="m-badge">` | div only |
+| **Buttons** | `<button>`, `<toolbarbutton>` | Variants (contained/outlined) via `sclass` |
+| **Cards** | `<div class="m-card">` | div only (header/body/footer) |
+| **Chips** | `<div class="m-chip">` | div only |
+| **Dialogs** | `<window mode="modal">` | recommended |
+| **Lists** | `<div>` or `<grid>` | Visual only = div; Data-bound = grid/listbox |
+| **Menus** | `<menubar>`, `<menupopup>` | Sidebar uses `<navbar>`, not menubar |
+| **Pagination** | `<paging>` | Integrates with grid/listbox |
+| **Progress** | `<progressmeter>` | Indeterminate spinner via div + CSS animation |
+| **Tabs** | `<tabbox>` | Re-skin `.z-tabs` / `.z-tab` |
+| **Tooltips** | `<popup>` | Triggered via `tooltip` attribute |
+
+### MUI static-CSS reference (read before editing any ZK component CSS)
+
+Source directory: `/Users/hawk/Documents/workspace/THEME/material-ui-7.3.1/static-css-output/` — see its `INDEX.md` for the full ZK→MUI lookup table. Most-needed files:
+
+| ZK component | MUI CSS file |
+|---|---|
+| `<button>` / `<toolbarbutton>` | `Inputs/Button.css` |
+| `<textbox>` / `<combobox>` / `<datebox>` | `Inputs/InputBase.css`, `Inputs/OutlinedInput.css` |
+| `<checkbox>` | `Inputs/Checkbox.css` |
+| `<radiogroup>` / `<radio>` | `Inputs/Radio.css` |
+| `<grid>` / `<listbox>` (data table) | `DataDisplay/Table.css`, `DataDisplay/TableCell.css`, `DataDisplay/TableRow.css` |
+| `<window>` / card `<div>` | `Surfaces/Card.css`, `Surfaces/Paper.css` |
+| `<window mode="modal">` | `Feedback/Dialog.css`, `Feedback/DialogTitle.css`, `Feedback/DialogContent.css`, `Feedback/DialogActions.css` |
+| `<progressmeter>` | `Feedback/CircularProgress.css`, `Feedback/LinearProgress.css` |
+| `<tabbox>` | `Navigation/Tabs.css`, `Navigation/Tab.css` |
+| `<navbar>` / `<menubar>` | `Navigation/Drawer.css`, `Navigation/Menu.css`, `Navigation/MenuItem.css` |
+| `<paging>` | `Navigation/Pagination.css`, `Navigation/PaginationItem.css` |
+| `.m-badge`, `.m-chip`, `.m-avatar` | `DataDisplay/Badge.css`, `DataDisplay/Chip.css`, `DataDisplay/Avatar.css` |
+| Typography utilities (z-h1–z-h7) | `DataDisplay/Typography.css` |
+
+---
+
 ## Key Files to Edit (by fix type)
 
 | Fix type | File |
@@ -448,7 +498,7 @@ The `impeccable` skill's **analysis commands** accelerate the AUDIT step. Only u
 - [ ] **Badge/chip text color** matches Mira (white-on-color vs color-on-light)
 - [ ] **Label/body text color** matches Mira (e.g. `#49454f` for secondary text, not black)
 - [ ] No regressions on previously completed pages (spot-check sidebar + one earlier page)
-- [ ] Progress tracker row updated in `doc/mira-alignment-plan-v2.md`
+- [ ] Progress tracker row updated (see Page Progress Tracker below)
 
 ---
 

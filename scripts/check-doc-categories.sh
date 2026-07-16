@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # check-doc-categories.sh — enforces the two-category documentation split from
-# doc/spec-author-architecture.md.
+# .claude/skills/zk-component-rules/SKILL.md (two-category doc rule).
 #
 # Three boundary invariants:
 #   1. No theme values (hex / rgba / --zk-* / --md-* / theme refs) in

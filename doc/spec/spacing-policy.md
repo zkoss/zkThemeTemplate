@@ -97,6 +97,24 @@ per-side,數字對應 `--zk-spacing-N`)。**禁止**直接對 `.z-vlayout`/`.z-h
 `.z-div` 或 `*-body` 加 padding — always-on padding 會破壞組合性;要永遠帶
 padding 就改用 semantic container。
 
+## Use-case / demo 頁面:優先組合 `z-*` utilities
+
+在 use-case / demo 頁面(`src/test/resources/web/**`)裡,優先用內建 `z-*`
+utility class 組合出版面,而不是自訂 page-local `sclass`。這與 CLAUDE.md 的
+「prefer built-in utility classes」規則一致 — demo 頁面的目的是證明既有內建
+CSS 就能完成多數視覺效果。
+
+自訂 page-local class **只有**在下列情況才成立:
+- **(a)** 需要 pseudo-class 規則(如 `:last-child` 移除最後一條分隔線)—
+  pseudo-class 無法用 utility 表達。
+- **(b)** 需要固定的 non-token 像素尺寸(如 status dot 8px 圓點、chat bubble
+  的 `12px` radius + `10px 14px` padding)— 換成 token utility 會改變外觀。
+- **(c)** 需要任何 utility 都沒有提供的固定高度(如 chart placeholder 的
+  `220px`)。
+
+其餘一律用 utility 組合。範例:`z-d-flex z-flex-col z-gap-4 z-p-4` 取代自訂
+`page-content`;`z-text-success` 取代自訂 `trend-up`。
+
 ## 歷史:per-widget margin 的三種踩雷情境(仍然成立)
 
 | 情境 | 問題 |

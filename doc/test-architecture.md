@@ -12,7 +12,7 @@ Marble is verified by **two distinct, complementary layers**. Don't conflate the
 | Layer | What it is | Where it's documented |
 |-------|-----------|------------------------|
 | **A. Runnable test suite** (Playwright) | Automated checks a CI/dev run executes against the live preview app: visual baselines, computed-style regression guards, smoke, framework-class contracts, reset scoping, tablet UX. | **This document.** |
-| **B. AI verification harness** | The human+agent loop that *authors and signs off* component design: contracts, evaluator/generator agents, dual gates, outcome minimums. | [verification-harness-decisions.md](verification-harness-decisions.md), [orchestrator-playbook.md](orchestrator-playbook.md), [spec-author-architecture.md](spec-author-architecture.md), [state-coverage-audit.md](state-coverage-audit.md) |
+| **B. AI verification harness** | The human+agent loop that *authors and signs off* component design: contracts, evaluator/generator agents, dual gates, outcome minimums. | [verification-harness-decisions.md](verification-harness-decisions.md), [orchestrator-playbook.md](orchestrator-playbook.md), [zk-component-rules skill](../.claude/skills/zk-component-rules/SKILL.md) (two-category doc rule), [state-coverage-audit.md](state-coverage-audit.md) |
 
 This document covers **Layer A**. Layer B is the *process* that decides whether a
 component "looks right"; Layer A is the *code* that keeps it from silently regressing.
@@ -95,6 +95,13 @@ invariants) and `.claude/skills/zk-component-rules/tools/check-framework-classes
 - **Tablet baselines** land in the *same* page folder as `tablet.png`
   (`button/tablet.png`) — the filename, not a folder prefix, keeps them from colliding
   with the desktop `gallery.png`.
+- **Capture rule — stateful shots must use `padShot()`, not edge-tight
+  `toHaveScreenshot(el)`.** Any state that paints *outside* the element box — a hover
+  `box-shadow` (elevation lift) or a focus ring — must be captured with `padShot()`
+  (element **+ 12px margin**). An edge-tight `toHaveScreenshot(el)` clips whatever is
+  drawn beyond the element's border box, so the shadow/ring is silently omitted from the
+  baseline and a later regression of it can't be caught. (This is why the button hover
+  elevation went uncovered until its state captures were switched to `padShot()`.)
 
 ## 5. Coverage matrix (the honest picture)
 
@@ -228,5 +235,5 @@ carries hover+focus state baselines, and the tablet gallery covers 12 controls. 
 - [spec/index.md](spec/index.md) — normative design specs (the "what it must look like")
 - [verification-harness-decisions.md](verification-harness-decisions.md) — why the AI harness is shaped as it is
 - [orchestrator-playbook.md](orchestrator-playbook.md) — how to run the agent verification loop
-- [spec-author-architecture.md](spec-author-architecture.md) — skill vs contract documentation split
+- [zk-component-rules skill](../.claude/skills/zk-component-rules/SKILL.md) — skill vs contract (two-category) documentation split
 - [state-coverage-audit.md](state-coverage-audit.md) — contract states vs preview-gallery coverage

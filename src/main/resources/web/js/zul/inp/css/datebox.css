@@ -127,7 +127,7 @@
    as an ACTIVE outlined field, not disabled — matching the editable datebox and the
    textbox beside it. The greyed/dimmed treatment is reserved for `disabled` below.
    The input is made non-typeable by ZK's `readonly` attribute, not by styling.
-   See doc/x2-combobox-readonly-solution.md. */
+   See doc/spec/component-state-model.md. */
 .z-datebox.z-datebox-readonly .z-datebox-input,
 .z-datebox.z-datebox-readonly .z-datebox-button {
     cursor: pointer;

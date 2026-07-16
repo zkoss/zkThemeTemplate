@@ -4,7 +4,7 @@
 //
 // WHY: a ZK component renders unstyled — silently, no error — if the .css.dsp ZK requests for it
 // is absent or sits at the wrong path. The path ZK requests is NOT chosen by the theme; it is
-// decided by the ZK lang files (see doc/css-dsp-iceblue-parity.md §6):
+// decided by the ZK lang files (see doc/spec/css-dsp-file-structure.md, Path-resolution model):
 //
 //   per-component CSS  → lang.xml/lang-addon.xml  <css-uri> (relative)  resolved against the
 //                        widget's JS package: <widget-package>, else derived from <widget-class>

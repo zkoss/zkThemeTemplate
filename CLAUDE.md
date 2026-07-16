@@ -147,7 +147,7 @@ Located in `doc/` directory:
 | [md3-close-affordance-placement.md](doc/spec/md3-close-affordance-placement.md) | MD3 close/dismiss icon placement (inline trailing vs surface top-corner; full-screen-dialog exception) |
 | [forced-colors.md](doc/spec/forced-colors.md) | Windows High-Contrast (`@media (forced-colors: active)`) a11y guards — single central *unlayered* `tokens/_forced-colors.css` (bundled into `norm.css.dsp`); restores borders/focus/selection/glyphs with system colors; dedicated high-contrast theme is won't-do |
 | [verification-harness-decisions.md](doc/verification-harness-decisions.md) | Decision records: outcome-driven contracts (DR-1), dual-gate VERIFIED (DR-2) |
-| [responsive-design.md](doc/responsive-design.md) | Responsive layout: `z-grid-fill` auto-fit utility + State Matrix mobile card-reflow; why not Bootstrap Grid |
+| [responsive-design.md](doc/spec/responsive-design.md) | Responsive layout: `z-grid-fill` auto-fit utility + State Matrix mobile card-reflow; why not Bootstrap Grid |
 | [data-dense-mode.md](doc/spec/data-dense-mode.md) | Compact density via `data-density="compact"` attribute (whole-app or per-region); control-height ladder + semantic alias layer; `MarbleDensity` Java API; ships `marble-compact.css` tuning preset |
 | [mira/](doc/mira/) | 49 Mira HTML reference pages + MUI stylesheet (index-BnB_Ifri.css) |
 

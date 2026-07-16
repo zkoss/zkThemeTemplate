@@ -122,6 +122,13 @@ Cards have elevation only — no border. Use outlined variant (`1px solid outlin
 Font family: **Inter** (system sans-serif fallback stack). Token: `--zk-typescale-font-family`.  
 Mira is denser than standard MD3 — prefer 13–14px body rather than 16px.
 
+**CSS class-naming convention — `z-` vs `m-` prefix.** The `z-` prefix is for
+framework / component CSS (component variants, styled in `src/main/resources/`
+component + utility CSS — e.g. `z-paging-outlined`, `z-badge-success`). The `m-`
+prefix is for **page-level** classes that live in page CSS (e.g. `usecase2.css`,
+used only by `usecase2/` ZUL pages — `m-card`, `m-badge`, `m-active`), never in
+component CSS.
+
 **Utility-class naming is size-based, not role-based.** The full MD3 type scale (role × size — `display/headline/title/body/label` × `large/medium/small`, each with its own size + weight + line-height) lives **only** in the `--zk-typescale-*` tokens, consumed by component CSS (`.z-button`, `.z-label`, …). The *utility* classes are a plain T-shirt size ladder — `z-text-xs … z-text-7xl` — so ZUL authors pick a size in one class instead of stacking size + weight + line-height. This is deliberate (chosen over 1:1 role-named utilities like `z-fs-title-md`): utility-first ZUL authoring wants short size-only classes, while role+size semantics belong at the token/component layer, not in page markup.
 
 **Font loading (self-hosted, no CDN).** Inter ships **self-hosted**, never from the Google Fonts CDN: vendored from the `@fontsource-variable/inter` devDependency by `scripts/build-css.js` (`copyFonts()`) into `~./marble/font/`, declared as `@font-face` in `zul/css/tokens/_fonts.css`. It is the **variable** font (weight axis 100–900), split into two `unicode-range`-partitioned `woff2` subsets — `inter-latin-variable.woff2` (~47 KB) and `inter-latin-ext-variable.woff2` (~83 KB, for EU/Central-European glyphs, fetched only when a page needs them). The `@font-face` `url()` uses `${c:encodeURL("~./marble/font/…")}` (requires the DSP `c` taglib prepended to `norm.css.dsp`), so it resolves correctly inside the `zk.wcs` aggregate regardless of context path.
@@ -174,7 +181,7 @@ The theme honors `@media (forced-colors: active)` (Windows High-Contrast Mode; a
 - **Mechanism:** unlayered rules beat every `@layer zk-*` component rule, so the guards override component styles **without `!important`** and without editing ~20 component files. Colors use CSS system-color keywords only (`Canvas`/`CanvasText`/`Highlight`/`HighlightText`/`ButtonText`/`GrayText`).
 - **What it restores:** real `border` on elevation-only surfaces (window/panel/popups/menupopup/listbox/grid/card); a real `outline` on text-input `:focus-within` (datebox/timebox/spinner/bandbox/combobox); `Highlight`/`HighlightText` on selected list/tree rows; `forced-color-adjust: none` on the checkbox check + selected-row check (a designed fill+glyph pairing the OS palette would break); a `ButtonText` border on all buttons.
 - **Not restored (intentional):** `::before`/`::after` state-layer hover tints — cosmetic feedback, not information loss. Baked-gray dropdown chevrons (datebox/selectbox) keep their fixed color — usable but a known minor limitation.
-- **Approach rationale:** CSS `forced-colors` override (not a separate dedicated high-contrast theme). This matches the industry mainstream — Vaadin (the closest Java-web analog) ships the same CSS-override approach in its base styles, and Microsoft itself moved Fluent from a dedicated high-contrast theme to standard `forced-colors` + system colors. See `doc/theme-competitive-gap-analysis.md`.
+- **Approach rationale:** CSS `forced-colors` override (not a separate dedicated high-contrast theme). This matches the industry mainstream — Vaadin (the closest Java-web analog) ships the same CSS-override approach in its base styles, and Microsoft itself moved Fluent from a dedicated high-contrast theme to standard `forced-colors` + system colors. See [`design-decisions.md`](design-decisions.md).
 
 ---
 

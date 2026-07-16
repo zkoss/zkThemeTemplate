@@ -112,6 +112,27 @@ scrollbars are left to the platform (touch overlay scrollbars), matching stock Z
 
 ---
 
+## Touch geometry principles
+
+How Marble matches the ZK default theme's mobile design — the *intent*, not the pixels:
+
+- **(a) Match intent via touch tokens, not by copying pixels.** Reach the default
+  theme's touch-target intent through Marble's own `--zk-touch-*` tokens
+  (`--zk-touch-target-min` 44px, `--zk-touch-target-comfortable` 48px,
+  `--zk-touch-icon-size` 24px, `--zk-touch-row-min-height` 48px,
+  `--zk-touch-scrollbar-size` 16px, `--zk-touch-slider-knob` 28px). MD3's minimum
+  touch target (48dp / 44px) is **stricter** than the default theme's 38px, so
+  Marble is not a copy — it applies the MD3 value through its token layer.
+- **(b) Never copy the default theme's mobile font-size bumps.** The default theme
+  scales its ~13px desktop type up to 15/17px for phone legibility. Marble's MD3
+  `body-medium` (14px) is already mobile-comfortable, so these bumps are
+  **not** ported — copying them would fight Marble's tuned type scale. Only bump a
+  font where Marble's mobile text is genuinely too small (none found).
+- **(c) The borderlayout splitter-pill cross-axis size is an invariant.** The pill's
+  cross-axis is locked to the 8px bar thickness (`8px == bar height`). Do **not**
+  force it to 44px — that breaks the JS margin-based centering. The whole splitter
+  strip is already the generous hover/activation zone.
+
 ## What is deliberately NOT changed
 - **Palette, shape, typography** — inherited from base tokens; tablet bundle is geometry-only.
 - **Close/dismiss affordance placement** — unchanged per the close-affordance doc.

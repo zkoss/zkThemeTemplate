@@ -57,6 +57,15 @@ This is a tonal-palette gap, not a widget bug. The fix is in
 `tokens/_colors.css`: deepen the surface-container ladder so the steps are
 perceptually distinct on white. The widget CSS should not be touched.
 
+## Shared sidebar / nav inclusion — use `<apply>`, not `<include>`
+
+The shared sidebar / navigation surface MUST be injected via
+`<apply templateURI="_sidebar.zul"/>`, **not** `<include src="_sidebar.zul"/>`.
+`<apply>` evaluates the template in the current page's component scope, which is
+required for the active-state sclass and any per-page bindings on the nav to
+resolve. `<include>` creates a separate IdSpace that breaks that ID / binding
+scoping, so active-state coordination fails.
+
 ## Cross-reference
 - `doc/spec/window-design-rules.md` — `border` attribute MUST NOT drive shadow on
   Window; same principle (tonal, not shadow) for elevation distinctions.

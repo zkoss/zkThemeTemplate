@@ -116,8 +116,6 @@
 
 > **與 `z-grid-fill` 的差別**：`z-grid-fill` 欄數隨寬度自動增減、卡片彼此獨立、不保證跨列對齊；`z-grid-cols-auto` 欄數固定（`--zk-cols`）、有一個 auto 標籤欄、**保證跨列對齊**。需要「表格式對齊」就用它。
 
-> **與 `z-grid-fill` 的差別**：`z-grid-fill` 欄數隨寬度自動增減、卡片彼此獨立、不保證跨列對齊；`z-grid-cols-auto` 欄數固定（`--zk-cols`）、有一個 auto 標籤欄、**保證跨列對齊**。需要「表格式對齊」就用它。
-
 ### 對齊的前提：所有 cell 在「同一個 grid」
 
 `z-grid-cols-auto` 之所以能讓 `auto` 標籤欄跨列對齊，前提是**所有 cell 都是同一個 grid 的直接子元素**（`auto` 欄由全體最寬的標籤算一次、共用）。如果你的每一列被包成**獨立的 wrapper 元素**（例如為了逐列邊框），各列就會各自算自己的 `auto` 欄寬而失準。
@@ -128,46 +126,37 @@
 
 ---
 
-## 3. State Matrix：直接用 `z-grid-cols-auto`（已淘汰所有客製 grid CSS）
+## 3. State Matrix：純用通用 utility（零客製 grid CSS）
 
-預覽頁的「狀態矩陣」是**對齊的二維表格**（共用表頭 + 多列資料列）。它**不再有任何客製的 grid 或手機重排 CSS**——grid 與 RWD 全部來自通用 utility。
+預覽頁的「狀態矩陣」是**對齊的二維表格**（共用表頭 + 多列資料列）。它**沒有任何客製的 grid 或手機重排 CSS**——grid 與 RWD 全部來自通用 utility，連結構膠水都不需要（舊有的 `pv.css` / `.pv-cols` 已完全移除）。
 
-### 機制
+### 機制（`src/test/resources/web/pv/matrix.zul`）
 
-**(a) `matrix.zul`** —— 容器直接掛通用 utility，只注入欄數：
+容器直接掛通用 utility，用 `display:contents` 攤平列 wrapper，只注入欄數：
 
 ```xml
-<div sclass="z-mb-6 pv-cols z-d-grid z-grid-cols-auto z-overflow-x-auto" style="--zk-cols:${arg.cols.size()}">
-    <div>...區塊標題...</div>
-    <div sclass="pv-col-header-row z-pb-1"> <div/> <forEach.../> </div>
-    <apply template="${arg.rowsTemplate}"/>
+<div sclass="z-d-grid z-grid-cols-auto z-overflow-x-auto z-col-gap-6 z-row-gap-2 z-align-start"
+     style="--zk-cols:${arg.cols.size()}; --zk-col-min:min-content">
+    <div sclass="z-grid-col-full ...">${arg.title}</div>   <!-- 區塊標題橫跨整寬 -->
+    <div sclass="z-d-contents">                             <!-- 表頭列：wrapper 透明化 -->
+        <div/> <forEach items="${arg.cols}" .../>
+    </div>
+    <apply template="${arg.rowsTemplate}"/>                 <!-- 資料列亦以 z-d-contents 攤平 -->
 </div>
 ```
 
 - `z-d-grid z-grid-cols-auto` → 單一 grid、`auto` 標籤欄 + N 個撐滿欄。
+- `z-d-contents`（`display:contents`）→ 把每一列 wrapper 透明化，cell 升級成父 grid 的直接子元素 → 單一 flat grid → 跨列對齊。
+- `z-grid-col-full`（`grid-column: 1 / -1`）→ 區塊標題橫跨整寬。
 - `z-overflow-x-auto` → 窄螢幕水平捲動的容器。
-- `--zk-cols` → 欄數。（不再需要 zscript、`--pv-col-N` 注入、`pv-matrix` class——全刪。）
-
-**(b) `pv.css`** —— 只剩「把預覽 HTML 結構橋接成單一 flat grid」的結構膠水：
-
-```css
-.pv-cols {                                   /* 由 .z-grid-cols-auto 提供 display:grid 與軌道 */
-    --zk-col-min: 140px;                     /* 手機守住可用欄寬 → 捲動而非擠壓 */
-    column-gap: 24px; row-gap: 8px; align-items: start;
-}
-.pv-cols > .pv-row,
-.pv-cols > .pv-col-header-row { display: contents; }              /* 列 wrapper 透明化 → 單一 grid */
-.pv-cols > :not(.pv-row):not(.pv-col-header-row) { grid-column: 1 / -1; }  /* 區塊標題橫跨整寬 */
-```
-
-（`.pv-row` 透明化後，模板裡掛在它上面的 `z-py-2 z-border-bottom` 變 inert；列間距改由 `row-gap` 提供，逐列分隔線捨棄。）
+- `--zk-cols` → 欄數；`--zk-col-min` → 每欄最小寬（矩陣用 `min-content`）。
 
 ### 結果
 
 - **桌機 / 平板（≥600px）**：對齊表格，欄位撐滿、跨列對齊（與教學頁同一套機制）。
-- **手機（<600px）**：欄位守住 `--zk-col-min`（140px）→ 表格在自己的容器內**水平捲動**，輸入元件維持可用大小；文件本身不溢出 → 無幻影垂直捲軸。
+- **手機（<600px）**：表格在自己的容器內**水平捲動**（`z-overflow-x-auto`），輸入元件維持自然可用大小；文件本身不溢出 → 無幻影垂直捲軸。
 
-> 這是把「可通用的部分全部交給通用 utility」的成果：State Matrix 從「8 個 `pv-cols-*` + subgrid + `@media` 卡片重排 + `--pv-col-N` 注入」縮成「`z-grid-cols-auto` + `z-overflow-x-auto` + 幾行結構膠水」。手機 UX 由「堆疊卡片」改為「水平捲動」（標準資料表 RWD）。
+> 這是把「可通用的部分全部交給通用 utility」的成果：State Matrix 從「8 個 `pv-cols-*` + subgrid + `@media` 卡片重排 + `--pv-col-N` 注入 + 一整個 `pv.css`」縮成「純 `z-grid-cols-auto` + `z-d-contents` + `z-grid-col-full` + `z-overflow-x-auto`」，**零客製 CSS**。手機 UX 由「堆疊卡片」改為「水平捲動」（標準資料表 RWD）。
 
 ---
 
@@ -203,5 +192,4 @@
 
 - `z-grid-fill`／`z-grid-cols-auto` 都只設 `grid-template-columns`，必須搭配 `z-d-grid` 才有效。
 - `z-grid-cols-auto` 的跨列對齊前提是「所有 cell 在同一個 grid」；若列被包成獨立 wrapper，用 `display: contents`（或 `subgrid`）攤平（見第 2.5 節）。
-- State Matrix 已**無任何客製 grid／`@media`／`--pv-col-N`**；`.pv-cols` 只剩結構膠水。`.pv-row` 上殘留的 `z-py-2 z-border-bottom` 因 `display:contents` 而 inert，屬無害遺留，可日後從 18 個模板清除。
-- 相關背景與量測證據：`tasks/mobile-vertical-scrollbar-diagnosis.md`、`tasks/responsive-state-matrix-plan.md`、`tasks/matrix-migrate-to-generic-grid-eval.md`。
+- State Matrix 已**無任何客製 grid／`@media`／`pv.css`**；grid、對齊與 RWD 全部由通用 utility（`z-grid-cols-auto` + `z-d-contents` + `z-grid-col-full` + `z-overflow-x-auto`）提供。

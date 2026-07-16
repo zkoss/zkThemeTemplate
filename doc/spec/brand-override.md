@@ -96,7 +96,7 @@ is unreachable by any fill-only rule. And the base `.z-button` default fill uses
 paint buttons with `.z-bg-primary` or override `--zk-color-on-primary` to a dark value.
 Full automatic foreground selection (MUI/Ant style) needs `contrast-color()`, not yet
 baseline — see GAP 2 in
-[theme-competitive-gap-analysis.md](../theme-competitive-gap-analysis.md).
+[design-decisions.md](design-decisions.md).
 
 ## What is NOT re-tinted (by design)
 

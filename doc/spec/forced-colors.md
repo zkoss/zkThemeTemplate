@@ -114,7 +114,7 @@ Marble uses a CSS `forced-colors` override, **not** a separate dedicated high-co
 - **Microsoft Fluent** moved *away* from a dedicated high-contrast theme toward standard `forced-colors` + system colors (Edge blog, 2020).
 - **PrimeFaces/PrimeNG, GWT, Wicket** have no systematic forced-colors layer.
 
-Consequently, the "dedicated high-contrast theme" line in `theme-competitive-gap-analysis.md` is marked **won't-do** (same disposition as dark mode): shipping the forced-colors override *is* the modern way to meet the requirement.
+Consequently, the "dedicated high-contrast theme" line in [`design-decisions.md`](design-decisions.md) is marked **won't-do** (same disposition as dark mode): shipping the forced-colors override *is* the modern way to meet the requirement.
 
 ## Extending to a new component
 

@@ -118,7 +118,11 @@ A token with zero references is a *candidate*, not a verdict. Three buckets:
   is kept whole even if some rungs are unused; the completeness is the point, and
   a future component will reach for the missing rung. Don't punch holes in a scale.
 - **Keep — outward-facing theme API.** Tokens are how downstream apps re-skin the
-  theme. An unused color slot may exist precisely so consumers can override it.
+  theme. An unused color slot may exist precisely so consumers can override it. In
+  particular, keep the **five semantic role quartets** — primary / secondary / success /
+  warning / error, each expanded to `<role>` / `on-<role>` / `<role>-container` /
+  `on-<role>-container` / `-fill` — as a whole even when a member has zero `var()`
+  consumers; they are a deliberate public toolkit, not dead slots.
 - **Flag for removal — one-off aliases / dead slots.** A single-use alias that
   nothing references, or a color slot that was never wired up, is a real candidate.
   Even then, confirm it isn't documented as public API before deleting.

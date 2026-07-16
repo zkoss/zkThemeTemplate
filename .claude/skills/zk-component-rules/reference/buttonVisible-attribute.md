@@ -63,7 +63,18 @@ Source (`/Users/hawk/Documents/workspace/ZK10/zk/zul/src/main/resources/web/js/z
 
 **Key consequence for `buttonVisible="false"`:** hiding the button removes the *only* icon trigger AND disables the readonly whole-control click (the `&& this._buttonVisible` guard). A no-button combobox/datebox/bandbox therefore has **no click gesture that opens the popup** — this is ZK's own behavior, correct and expected, **not a theme/CSS bug**. So "clicking the input opens the popup" only ever happens for **readonly + button visible**, and it is intentional ZK design.
 
-**Theme note (cursor honesty, minor):** the theme sets `cursor:pointer` on a readonly input to signal "click opens a menu." In the readonly + `buttonVisible="false"` corner case that cursor is slightly misleading (nothing opens). Scope it with `:has(.z-{c}-button:not(.z-{c}-disabled))` if strict honesty is wanted; currently accepted as a rare edge. See `doc/combo-click-to-open.md`.
+**Theme note (cursor honesty, minor):** the theme sets `cursor:pointer` on a readonly input to signal "click opens a menu." In the readonly + `buttonVisible="false"` corner case that cursor is slightly misleading (nothing opens). Scope it with `:has(.z-{c}-button:not(.z-{c}-disabled))` if strict honesty is wanted; currently accepted as a rare edge.
+
+## `buttonVisible` is cosmetic — interactivity is governed by `readonly`/`disabled`
+
+`buttonVisible` (`@since 2.4.1`, one of ZK's oldest input attributes) was **never designed to prevent operation**. The Java javadoc and the ZK Component Reference describe it purely as "hide the button / present a plain text-input style" — cosmetic only. Hiding the button removes the *mouse click-open* affordance (which is button-bound, gated on `buttonVisible` per the table above) but the control stays operable by other means:
+
+- **`Alt+↓` (Alt+ArrowDown) and programmatic `open()` keep working** with `buttonVisible="false"` — documented intended behavior, not a defect.
+- Interactivity is owned by `readonly` / `disabled`, **never** by `buttonVisible`.
+
+**Authoring smell:** `readonly` + `buttonVisible="false"` is the one combination that leaves a **mouse-only** user no way to open the popup — can't type (readonly), no button to click, only the non-discoverable `Alt+↓` remains. For a genuinely non-changeable display, use `disabled` or a plain label / `textbox` instead of `readonly` + `buttonVisible="false"`.
+
+Applies identically to combobox, datebox, and bandbox. See `doc/spec/component-state-model.md`.
 
 ## Buttons inside the input itself
 

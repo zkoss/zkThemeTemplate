@@ -243,6 +243,6 @@
     <div sclass="z-text-sm z-text-secondary z-mb-2">• <h:b>彼此獨立的卡片</h:b>（不需跨列對齊）→ <h:code>z-grid-fill</h:code>，用 <h:code>--zk-grid-min</h:code> 調卡片最小寬。</div>
     <div sclass="z-text-sm z-text-secondary z-mb-2">• <h:b>標籤 + N 個對齊欄</h:b>（比較 / 規格 / 定價 / 矩陣）→ <h:code>z-grid-cols-auto</h:code>，用 <h:code>--zk-cols</h:code> 調欄數。</div>
     <div sclass="z-text-sm z-text-secondary z-mb-2">• <h:b>就是固定 N 欄</h:b>（表單對齊）→ <h:code>z-grid-cols-N</h:code>。</div>
-    <div sclass="z-text-sm z-text-secondary z-mb-6">三者都基於原生 CSS Grid，<h:code>minmax(0, …)</h:code> 保證不橫向溢出 → 手機上不會冒出幻影捲軸。詳見 <h:code>doc/responsive-design.md</h:code>。</div>
+    <div sclass="z-text-sm z-text-secondary z-mb-6">三者都基於原生 CSS Grid，<h:code>minmax(0, …)</h:code> 保證不橫向溢出 → 手機上不會冒出幻影捲軸。詳見 <h:code>doc/spec/responsive-design.md</h:code>。</div>
 </div>
 </zk>

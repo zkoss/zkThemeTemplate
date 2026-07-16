@@ -147,7 +147,7 @@
    an ACTIVE outlined field, not disabled — matching the editable bandbox and the
    textbox beside it. The greyed/dimmed treatment is reserved for `disabled` above.
    The input is made non-typeable by ZK's `readonly` attribute, not by styling.
-   See doc/x2-combobox-readonly-solution.md. */
+   See doc/spec/component-state-model.md. */
 .z-bandbox[readonly] .z-bandbox-input,
 .z-bandbox.z-bandbox-readonly .z-bandbox-input,
 .z-bandbox[readonly] .z-bandbox-button,
