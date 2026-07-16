@@ -129,6 +129,40 @@
         outline-offset: 2px;
     }
 
+    /* (1c, AMBIGUOUS #1 resolved) Invalid text inputs signal the error state ONLY
+       through a red border (`--zk-color-error`). forced-colors remaps every author
+       border to CanvasText, so invalid becomes indistinguishable from valid. An
+       error icon isn't viable here — datebox/bandbox/spinner already carry an
+       internal glyph and would crowd. Border WIDTH and STYLE survive forced-colors
+       (only the color is remapped), so switch invalid inputs to a distinctive
+       DOUBLE border as the non-color affordance. Focus keeps using `outline`
+       (block 1b), a separate box, so the two signals stay orthogonal — an
+       invalid-unfocused field and a valid-focused field never collapse together.
+       Some inputs border the wrapper (via `:has`), some the control itself —
+       target whichever element the component actually borders. */
+    .z-intbox.z-intbox-invalid,
+    .z-decimalbox.z-decimalbox-invalid,
+    .z-doublebox.z-doublebox-invalid,
+    .z-longbox.z-longbox-invalid,
+    .z-textbox-invalid,
+    .z-textbox.z-textbox-invalid,
+    .z-passwordbox.z-passwordbox-invalid,
+    .z-datebox:has(.z-datebox-invalid),
+    .z-datebox.z-datebox-invalid,
+    .z-timebox:has(.z-timebox-invalid),
+    .z-timebox.z-timebox-invalid,
+    .z-timepicker:has(.z-timepicker-invalid),
+    .z-spinner:has(.z-spinner-invalid),
+    .z-spinner.z-spinner-invalid,
+    .z-doublespinner:has(.z-doublespinner-invalid),
+    .z-doublespinner.z-doublespinner-invalid,
+    .z-bandbox.z-bandbox-invalid,
+    .z-combobox.z-combobox-invalid .z-combobox-input,
+    .z-combobox.z-combobox-invalid .z-combobox-button {
+        border-style: double;
+        border-width: 3px;
+    }
+
     /* (2a) Selected rows lose their primary-container tint → map to the system
        selection colors so the selection stays obvious. */
     .z-listitem.z-listitem-selected,
