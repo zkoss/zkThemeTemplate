@@ -73,6 +73,7 @@
     }
 
     /* (1a-cont) Floating popups/menus/dropdowns not already covered above. */
+    .z-coachmark-content,
     .z-cascader-shadow,
     .z-chosenbox-shadow,
     .z-searchbox-popup,
@@ -163,13 +164,34 @@
         color: HighlightText;
     }
 
-    /* (2a-cont) Calendar's selected-day fill is painted on ::before (a disc
-       behind the day number); the number's own color is on the cell itself. */
-    .z-calendar-body tbody td.z-calendar-cell.z-calendar-selected {
-        color: HighlightText;
+    /* (2a-backplate fix) Under forced-colors the browser paints a Canvas-coloured
+       "backplate" behind inline text. On the Highlight-filled selections above, the
+       label is forced to HighlightText (near-white), so that backplate reads as an
+       opaque white block hiding the label (white-on-white). Opt the label text out
+       so HighlightText paints straight onto the Highlight fill (system-color
+       keywords still resolve under forced-color-adjust:none). */
+    .z-listitem.z-listitem-selected .z-listcell-cnt,
+    .z-listitem.z-listitem-selected .z-listcell-content,
+    .z-listitem.z-selected .z-listcell-cnt,
+    .z-listitem.z-selected .z-listcell-content,
+    .z-treerow.z-treerow-selected .z-treecell-content,
+    .z-treerow.z-selected .z-treecell-content,
+    .z-tabbox-accordion .z-tab.z-tab-selected .z-tab-text,
+    .z-paging-selected,
+    .z-navitem-selected > .z-navitem-content,
+    .z-navitem.z-navitem-selected > .z-navitem-content,
+    .z-searchbox-selected,
+    .z-orgitem-selected > .z-orgnode {
+        forced-color-adjust: none;
     }
-    .z-calendar-body tbody td.z-calendar-cell.z-calendar-selected::before {
-        background-color: Highlight;
+
+    /* (2a-cont) Calendar selected day: the Highlight/HighlightText system-color
+       remap collapses the day-number into its disc fill (a solid block). Opt the
+       selected cell out so it reproduces the known-good primary-disc / on-primary-
+       number pairing (forced-color-adjust inherits → covers the number text and the
+       ::before disc). Replaces the earlier HighlightText/Highlight remap. */
+    .z-calendar-body tbody td.z-calendar-cell.z-calendar-selected {
+        forced-color-adjust: none;
     }
 
     /* (2b) Compound glyph indicators whose legibility is a designed fill+glyph
@@ -226,6 +248,51 @@
         background-color: HighlightText;
     }
 
+    /* (2e, icon audit) Masked glyphs painted OUTSIDE the generic
+       `[class*=" z-icon-"]::before` path, so block (2d) never reaches them. Each
+       paints `background-color: currentColor` on the ELEMENT itself or on a
+       non-z-icon-* class → force-maps to Canvas → invisible. Re-point the fill to a
+       foreground system color, same as (2d).
+       - combobox caret is filled on the icon element (combobutton uses ::before, so
+         it already renders via (2d));
+       - signature toolbar glyph uses no z-icon-* class;
+       - dnd drop-ok/invalid glyph is painted on .z-drop-icon;
+       - stepbar complete-check is a .z-icon-check excluded by (2d)'s :not(). */
+    .z-combobox-icon,
+    .z-combobox-button .z-icon-caret-down,
+    .z-signature-tool-button-icon::before,
+    .z-step-icon.z-icon-check::before {
+        background-color: CanvasText;
+    }
+
+    /* dnd drop glyph (.z-drop-icon): the mask is filled from `background-color:
+       currentColor` (base), and the per-state rules `.z-drop-ghost.z-drop-{allow,
+       disallow} .z-drop-icon` (specificity 0,3,0) set a LIGHT color designed for the
+       dark ghost chip. In forced-colors the chip flattens to Canvas (white), leaving
+       a light glyph on white = invisible. Match that specificity and repaint the
+       glyph as a foreground system color. `forced-color-adjust: none` is required —
+       otherwise Chromium force-maps this element's background back to Canvas even
+       with a system-color keyword (unlike the other masked icons above). */
+    .z-drop-ghost.z-drop-allow .z-drop-icon,
+    .z-drop-ghost.z-drop-disallow .z-drop-icon {
+        forced-color-adjust: none;
+        color: CanvasText;
+        background-color: CanvasText;
+    }
+
+    /* (2f) Radio indicators: the standalone .z-radio dot (input ::after background)
+       and the listbox/tree .z-icon-radio dot — excluded by (2d) and absent from
+       (2b), so the checked dot force-maps to Canvas and vanishes. Opt out so ring +
+       dot keep their designed contrast, mirroring the checkbox check in (2b).
+       forced-color-adjust inherits, so the input rule also covers its ::after dot. */
+    .z-radio-on > input[type="radio"],
+    .z-listitem.z-listitem-selected .z-listitem-icon.z-icon-radio::before,
+    .z-listitem.z-selected .z-listitem-icon.z-icon-radio::before,
+    .z-treerow.z-treerow-selected .z-treerow-icon.z-icon-radio::before,
+    .z-treerow.z-selected .z-treerow-icon.z-icon-radio::before {
+        forced-color-adjust: none;
+    }
+
     /* (3) Buttons keep their outline focus and readable ButtonFace/ButtonText
        fill, but have no border — add one so the button shape is delineated
        against the surrounding Canvas. */
@@ -237,4 +304,49 @@
         color: GrayText;
         border-color: GrayText;
     }
+
+    /* (4, shape-fill audit) Shapes whose visible form is painted with
+       `background-color` (not a masked ::before glyph) force-map to Canvas and
+       disappear entirely. Re-point each at a foreground system color: GrayText for
+       inert track/rail/unlit segments, Highlight for the active/value fill. Chosen
+       over forced-color-adjust:none because the theme's light fills
+       (primary-container, surface, outline-variant) would otherwise stay near-white
+       against Canvas. */
+
+    /* Progressmeter — track + fill (unlayered beats the color-variant rules) */
+    .z-progressmeter        { background-color: GrayText; }
+    .z-progressmeter-image  { background-color: Highlight; }
+
+    /* Separator / space (bar="true") dividers — 1px hairlines */
+    .z-separator-horizontal-bar,
+    .z-separator-vertical-bar { background-color: CanvasText; }
+
+    /* Slider / rangeslider / multislider — rail + active fill (thumbs bordered above) */
+    .z-slider-center,
+    .z-rangeslider-track,
+    .z-multislider-track    { background-color: GrayText; }
+    .z-slider-area,
+    .z-sliderbuttons-area   { background-color: Highlight; }
+
+    /* Checkbox switch mold — off: outline track + dark thumb; on: Highlight track,
+       light thumb (thumb travel is set in the base CSS). */
+    .z-checkbox-switch > .z-checkbox-mold         { border: 1px solid CanvasText; }
+    .z-checkbox-switch > .z-checkbox-mold::after  { background-color: CanvasText; }
+    .z-checkbox-switch-on > .z-checkbox-mold        { background-color: Highlight; border-color: Highlight; }
+    .z-checkbox-switch-on > .z-checkbox-mold::after { background-color: HighlightText; }
+
+    /* Checkbox toggle mold — on-fill so on/off differ (off box keeps its border) */
+    .z-checkbox-toggle-on > .z-checkbox-mold { background-color: Highlight; border-color: Highlight; }
+
+    /* Stepbar step connectors — unlit (GrayText) vs lit active/complete (Highlight) */
+    .z-step::before,
+    .z-stepbar-wrapped-label .z-step-content::before,
+    .z-stepbar-wrapped-label .z-step-content::after { background-color: GrayText; }
+    .z-stepbar-linear .z-step-active::before,
+    .z-stepbar-linear .z-step-complete::before,
+    .z-stepbar-vertical.z-stepbar-linear .z-step-active::before,
+    .z-stepbar-vertical.z-stepbar-linear .z-step-complete::before,
+    .z-stepbar-wrapped-label.z-stepbar-linear .z-step-complete .z-step-content::before,
+    .z-stepbar-wrapped-label.z-stepbar-linear .z-step-complete .z-step-content::after,
+    .z-stepbar-wrapped-label.z-stepbar-linear .z-step-active .z-step-content::before { background-color: Highlight; }
 }
