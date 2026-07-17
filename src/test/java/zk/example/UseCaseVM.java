@@ -33,7 +33,7 @@ public class UseCaseVM {
         }
         for (String p : new String[]{"grid", "grid-header", "grid-grouping", "grid-livegrouping",
                 "grid-detail", "grid-paging", "listbox", "listbox-header", "listbox-grouping",
-                "tree", "tree-header", "paging", "biglistbox", "organigram"}) {
+                "tree", "tree-header", "paging", "biglistbox", "organigram", "badge", "chip"}) {
             PAGE_TO_NAV.put(p, "Data");
         }
         for (String p : new String[]{"menubar", "toolbar", "tabbox", "tabbox-misc",
@@ -56,7 +56,7 @@ public class UseCaseVM {
         }
         for (String p : new String[]{"fileupload", "dropupload", "audio", "video", "camera",
                 "barcode", "barcodescanner", "imagemap", "pdfviewer", "cropper", "signature",
-                "tbeditor", "captcha", "html", "iframe"}) {
+                "tbeditor", "captcha", "html", "iframe", "avatar"}) {
             PAGE_TO_NAV.put(p, "Media & Upload");
         }
         for (String p : new String[]{

@@ -1,126 +1,90 @@
 <?page title="Component Utilities"?>
 <zk>
 <style src="~./usecase/usecase.css"/>
-<vlayout hflex="1" sclass="z-d-flex z-flex-col z-gap-4 z-p-4 z-bg-surface-low" xmlns:ca="client/attribute">
+<vlayout hflex="1" sclass="z-d-flex z-flex-col z-gap-4 z-p-4 z-bg-surface-low">
 
-    <label value="Component Utilities" sclass="z-h2"/>
+    <label value="Native UI Components" sclass="z-h2"/>
+    <label value="badge / chip / avatar are native ZK components (ZK 10.4+). See the dedicated badge.zul / chip.zul / avatar.zul preview pages for full attribute coverage." sclass="z-text-secondary z-text-sm"/>
 
-    <!-- z-chip -->
+    <!-- chip -->
     <div sclass="z-card">
-        <label value="Chip  (.z-chip)" sclass="z-d-block z-text-base z-fw-medium z-text-on-surface z-mb-3"/>
-        <label value="Status chips are small inline labels for categories, tags, and statuses. Apply on ZK &lt;label&gt; for a clean span with no extra wrapper." sclass="z-text-secondary z-text-sm z-mb-3"/>
+        <label value="Chip  (&lt;chip&gt;)" sclass="z-d-block z-text-base z-fw-medium z-text-on-surface z-mb-3"/>
+        <label value="Compact status/tag pill. severity = info | success | warning | danger | secondary." sclass="z-text-secondary z-text-sm z-mb-3"/>
         <div sclass="z-d-flex z-gap-3 z-flex-wrap z-align-center z-mb-3">
-            <label value="Primary"  sclass="z-chip z-chip-primary"/>
-            <label value="Success"  sclass="z-chip z-chip-success"/>
-            <label value="Warning"  sclass="z-chip z-chip-warning"/>
-            <label value="Error"    sclass="z-chip z-chip-error"/>
-            <label value="Info"     sclass="z-chip z-chip-info"/>
-            <label value="Neutral"  sclass="z-chip z-chip-neutral"/>
+            <chip label="Info"      severity="info"/>
+            <chip label="Success"   severity="success"/>
+            <chip label="Warning"   severity="warning"/>
+            <chip label="Danger"    severity="danger"/>
+            <chip label="Secondary" severity="secondary"/>
         </div>
-        <div sclass="z-bg-primary z-p-3 z-rounded-md z-d-inline-flex z-gap-3 z-align-center">
-            <label value="On Primary" sclass="z-chip z-chip-on-primary"/>
-            <label value=".z-chip-on-primary — for use on primary backgrounds" sclass="z-text-on-primary z-text-xs"/>
-        </div>
-        <div sclass="z-mt-3">
-            <label value="Usage: sclass=&quot;z-chip z-chip-success&quot;" sclass="z-text-muted z-text-sm z-bg-surface-variant z-p-2 z-rounded"/>
+        <label value="Variants: small · rounded · closable" sclass="z-h6 z-mb-2"/>
+        <div sclass="z-d-flex z-gap-3 z-flex-wrap z-align-center">
+            <chip label="Small"    severity="info" size="small"/>
+            <chip label="Rounded"  severity="success" rounded="true"/>
+            <chip label="Closable" severity="warning" closable="true"/>
+            <chip label="Disabled" severity="danger" disabled="true"/>
         </div>
     </div>
 
-    <!-- z-badge (overlay indicator, MUI <Badge> equivalent) -->
+    <!-- badge -->
     <div sclass="z-card">
-        <label value="Badge  (.z-badge)" sclass="z-d-block z-text-base z-fw-medium z-text-on-surface z-mb-3"/>
-        <label value="Overlay indicators that float a count or dot over a host's top-right corner. Add z-badge to the host itself and pass the count via the data-badge attribute (ca:data-badge). Declare xmlns:ca=&quot;client/attribute&quot; once on an ancestor. Rows must use a non-clipping flex container (z-d-flex / z-hstack) — never &lt;hlayout&gt; (overflow:hidden crops the overhang)." sclass="z-text-secondary z-text-sm z-mb-3"/>
+        <label value="Badge  (&lt;badge&gt;)" sclass="z-d-block z-text-base z-fw-medium z-text-on-surface z-mb-3"/>
+        <label value="Overlay count/dot indicator. Wraps a host to float over its corner, or renders standalone. severity, count, max, showZero, dot, placement." sclass="z-text-secondary z-text-sm z-mb-3"/>
 
-        <!-- Count + dot on icons -->
-        <label value="Icon Badges  (count + dot)" sclass="z-h6 z-mb-2"/>
+        <label value="Count + dot on icons" sclass="z-h6 z-mb-2"/>
         <div sclass="z-d-flex z-gap-6 z-align-center z-mb-4" style="padding:8px 4px;">
-            <span sclass="z-icon-mail z-badge z-badge-default" ca:data-badge="4" style="font-size:26px;color:var(--zk-color-on-surface-variant);"/>
-            <span sclass="z-icon-bell z-badge z-badge-error" ca:data-badge="7" style="font-size:26px;color:var(--zk-color-on-surface-variant);"/>
-            <span sclass="z-icon-message-square z-badge z-badge-dot z-badge-error" style="font-size:26px;color:var(--zk-color-on-surface-variant);"/>
+            <badge count="4"><label sclass="z-icon-mail" style="font-size:26px;color:var(--zk-color-on-surface-variant);"/></badge>
+            <badge count="7" severity="danger"><label sclass="z-icon-bell" style="font-size:26px;color:var(--zk-color-on-surface-variant);"/></badge>
+            <badge dot="true" severity="danger"><label sclass="z-icon-message-square" style="font-size:26px;color:var(--zk-color-on-surface-variant);"/></badge>
         </div>
 
-        <!-- Color variants -->
-        <label value="Color Variants  (.z-badge-default | primary | secondary | error | warning | success | info)" sclass="z-h6 z-mb-2"/>
-        <div sclass="z-d-flex z-gap-6 z-align-center z-flex-wrap z-mb-4" style="padding:8px 4px;">
-            <span sclass="z-icon-mail z-badge z-badge-default" ca:data-badge="4" style="font-size:26px;color:var(--zk-color-on-surface-variant);"/>
-            <span sclass="z-icon-mail z-badge z-badge-primary" ca:data-badge="4" style="font-size:26px;color:var(--zk-color-on-surface-variant);"/>
-            <span sclass="z-icon-mail z-badge z-badge-secondary" ca:data-badge="4" style="font-size:26px;color:var(--zk-color-on-surface-variant);"/>
-            <span sclass="z-icon-mail z-badge z-badge-error" ca:data-badge="4" style="font-size:26px;color:var(--zk-color-on-surface-variant);"/>
-            <span sclass="z-icon-mail z-badge z-badge-warning" ca:data-badge="4" style="font-size:26px;color:var(--zk-color-on-surface-variant);"/>
-            <span sclass="z-icon-mail z-badge z-badge-success" ca:data-badge="4" style="font-size:26px;color:var(--zk-color-on-surface-variant);"/>
-            <span sclass="z-icon-mail z-badge z-badge-info" ca:data-badge="4" style="font-size:26px;color:var(--zk-color-on-surface-variant);"/>
+        <label value="Severity variants (standalone)" sclass="z-h6 z-mb-2"/>
+        <div sclass="z-d-flex z-gap-3 z-align-center z-flex-wrap z-mb-4">
+            <badge count="4" severity="info"/>
+            <badge count="4" severity="success"/>
+            <badge count="4" severity="warning"/>
+            <badge count="4" severity="danger"/>
+            <badge count="4" severity="secondary"/>
+            <badge count="120" max="99" severity="danger"/>
         </div>
 
-        <!-- Button hosts -->
-        <label value="Button Badges" sclass="z-h6 z-mb-2"/>
-        <div sclass="z-d-flex z-gap-6 z-align-center z-mb-4" style="padding:8px 4px;">
-            <button label="Notifications" sclass="z-badge z-badge-primary" ca:data-badge="4"/>
-            <button label="Messages" sclass="z-badge z-badge-error" ca:data-badge="10"/>
-        </div>
-
-        <!-- Visibility -->
-        <label value="Badge Visibility  (.z-badge-invisible / auto-hide on 0)" sclass="z-h6 z-mb-2"/>
+        <label value="Button host" sclass="z-h6 z-mb-2"/>
         <div sclass="z-d-flex z-gap-6 z-align-center" style="padding:8px 4px;">
-            <vlayout spacing="6px" style="align-items:center;">
-                <span sclass="z-icon-mail z-badge z-badge-error" ca:data-badge="4" style="font-size:26px;color:var(--zk-color-on-surface-variant);"/>
-                <label value="Visible" sclass="z-text-muted z-text-xs"/>
-            </vlayout>
-            <vlayout spacing="6px" style="align-items:center;">
-                <span sclass="z-icon-mail z-badge z-badge-error z-badge-invisible" ca:data-badge="4" style="font-size:26px;color:var(--zk-color-on-surface-variant);"/>
-                <label value="Invisible" sclass="z-text-muted z-text-xs"/>
-            </vlayout>
-            <vlayout spacing="6px" style="align-items:center;">
-                <span sclass="z-icon-mail z-badge z-badge-error" ca:data-badge="0" style="font-size:26px;color:var(--zk-color-on-surface-variant);"/>
-                <label value="Zero (auto-hide)" sclass="z-text-muted z-text-xs"/>
-            </vlayout>
-        </div>
-
-        <div sclass="z-mt-3">
-            <label value="Usage: sclass=&quot;z-badge z-badge-error&quot; ca:data-badge=&quot;7&quot;  ·  dot: add z-badge-dot" sclass="z-text-muted z-text-sm z-bg-surface-variant z-p-2 z-rounded"/>
+            <badge count="4" severity="danger"><button label="Notifications"/></badge>
+            <badge count="10" severity="info"><button label="Messages"/></badge>
         </div>
     </div>
 
-    <!-- z-avatar -->
+    <!-- avatar -->
     <div sclass="z-card">
-        <label value="Avatar  (.z-avatar)" sclass="z-d-block z-text-base z-fw-medium z-text-on-surface z-mb-3"/>
-        <label value="Circular containers for user photos or initials. Apply on ZK &lt;image&gt; (photo) or &lt;div&gt; (initials). Three sizes: -sm 36px / -md 44px / -lg 56px." sclass="z-text-secondary z-text-sm z-mb-3"/>
+        <label value="Avatar  (&lt;avatar&gt;)" sclass="z-d-block z-text-base z-fw-medium z-text-on-surface z-mb-3"/>
+        <label value="Photo or initials container. size = small | medium | large; shape = circle | square. Falls back image → icon → initials." sclass="z-text-secondary z-text-sm z-mb-3"/>
 
+        <label value="Sizes" sclass="z-h6 z-mb-2"/>
         <div sclass="z-d-flex z-gap-6 z-align-end z-mb-4">
-            <div style="text-align:center">
-                <div sclass="z-avatar z-avatar-sm"><label value="AB" sclass="z-fw-medium z-text-xs"/></div>
-                <div sclass="z-text-muted z-text-xs z-mt-1">-sm 36px</div>
-            </div>
-            <div style="text-align:center">
-                <div sclass="z-avatar z-avatar-md"><label value="AB" sclass="z-fw-medium z-text-sm"/></div>
-                <div sclass="z-text-muted z-text-xs z-mt-1">-md 44px</div>
-            </div>
-            <div style="text-align:center">
-                <div sclass="z-avatar z-avatar-lg"><label value="AB" sclass="z-fw-medium z-text-lg"/></div>
-                <div sclass="z-text-muted z-text-xs z-mt-1">-lg 56px</div>
-            </div>
+            <avatar label="AB" size="small"/>
+            <avatar label="AB" size="medium"/>
+            <avatar label="AB" size="large"/>
         </div>
 
-        <!-- Colored initials avatars -->
-        <label value="Initials Avatars" sclass="z-h6 z-mb-2"/>
-        <div sclass="z-d-flex z-gap-3 z-mb-4">
-            <div sclass="z-avatar z-avatar-md" style="background:var(--zk-color-primary)"><label value="HW" sclass="z-fw-bold z-text-base z-text-on-primary"/></div>
-            <div sclass="z-avatar z-avatar-md" style="background:var(--zk-color-secondary)"><label value="JL" sclass="z-fw-bold z-text-base z-text-on-secondary"/></div>
-            <div sclass="z-avatar z-avatar-md z-bg-warning"><label value="MK" sclass="z-fw-bold z-text-base"/></div>
-            <div sclass="z-avatar z-avatar-md" style="background:var(--zk-color-status-success)"><label value="SA" sclass="z-fw-bold z-text-base z-text-on-status"/></div>
+        <label value="Colored initials + square shape" sclass="z-h6 z-mb-2"/>
+        <div sclass="z-d-flex z-gap-3 z-align-center z-mb-4">
+            <avatar label="HW" size="medium" style="background:var(--zk-color-primary);color:var(--zk-color-on-primary)"/>
+            <avatar label="JL" size="medium" style="background:var(--zk-color-secondary);color:var(--zk-color-on-secondary)"/>
+            <avatar label="SA" size="medium" style="background:var(--zk-color-status-success);color:var(--zk-color-on-status)"/>
+            <avatar label="MK" size="medium" shape="square"/>
         </div>
 
-        <!-- Avatar Group -->
-        <label value="Avatar Group  (.z-avatar-group)" sclass="z-h6 z-mb-2"/>
-        <div sclass="z-avatar-group" style="justify-content:flex-start;margin-top:0">
-            <div sclass="z-avatar z-avatar-md" style="background:var(--zk-color-primary)"><label value="HW" sclass="z-fw-bold z-text-base z-text-on-primary"/></div>
-            <div sclass="z-avatar z-avatar-md" style="background:var(--zk-color-secondary)"><label value="JL" sclass="z-fw-bold z-text-base z-text-on-secondary"/></div>
-            <div sclass="z-avatar z-avatar-md z-bg-primary-container"><label value="MK" sclass="z-fw-bold z-text-base"/></div>
-            <div sclass="z-avatar z-avatar-md z-bg-surface-variant"><label value="+3" sclass="z-fw-bold z-text-xs z-text-secondary"/></div>
-        </div>
-        <label value=".z-avatar-group — overlapping avatars with -8px left margin" sclass="z-text-muted z-text-xs z-mt-2"/>
+        <label value="Avatar Group  (&lt;avatargroup&gt;)" sclass="z-h6 z-mb-2"/>
+        <avatargroup size="medium">
+            <avatar label="HW" style="background:var(--zk-color-primary);color:var(--zk-color-on-primary)"/>
+            <avatar label="JL" style="background:var(--zk-color-secondary);color:var(--zk-color-on-secondary)"/>
+            <avatar label="MK"/>
+            <avatar label="+3"/>
+        </avatargroup>
     </div>
 
-    <!-- z-card -->
+    <!-- z-card (utility, unchanged) -->
     <div sclass="z-card">
         <label value="Card  (.z-card)" sclass="z-d-block z-text-base z-fw-medium z-text-on-surface z-mb-3"/>
         <label value="A surface container with background-color, border-radius (--zk-shape-card), and elevation shadow (--zk-elevation-card) from the design token system." sclass="z-text-secondary z-text-sm z-mb-3"/>
@@ -133,21 +97,21 @@
 
             <div sclass="z-card" style="width:240px">
                 <div sclass="z-d-flex z-align-center z-gap-3 z-mb-3">
-                    <div sclass="z-avatar z-avatar-md z-bg-primary"><label value="HC" sclass="z-fw-bold z-text-base z-text-on-primary"/></div>
+                    <avatar label="HC" size="medium" style="background:var(--zk-color-primary);color:var(--zk-color-on-primary)"/>
                     <div>
                         <label value="Hawk Chen" sclass="z-fw-semibold z-d-block"/>
                         <label value="hawkchen@potix.com" sclass="z-text-muted z-text-xs"/>
                     </div>
                 </div>
                 <div sclass="z-d-flex z-gap-2">
-                    <label value="Admin" sclass="z-chip z-chip-primary"/>
-                    <label value="Active" sclass="z-chip z-chip-success"/>
+                    <chip label="Admin" severity="info"/>
+                    <chip label="Active" severity="success"/>
                 </div>
             </div>
 
             <div sclass="z-card" style="width:240px">
                 <label value="Order #1042" sclass="z-h5 z-d-block z-mb-2"/>
-                <label value="Shipped" sclass="z-chip z-chip-success z-mb-3"/>
+                <chip label="Shipped" severity="success" sclass="z-mb-3"/>
                 <vlayout>
                     <label value="3 items · $124.50" sclass="z-text-secondary z-text-sm"/>
                     <label value="ETA: Jun 15, 2026" sclass="z-text-muted z-text-sm"/>

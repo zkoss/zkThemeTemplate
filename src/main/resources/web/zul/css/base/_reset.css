@@ -1,6 +1,6 @@
 /* Cascade layer order (lowest → highest priority): zk-base, then zk-components, then zk-utilities.
    Each source file self-declares its layer: component CSS wraps its rules in a zk-components block,
-   base icon/badge/chip/avatar + this reset in a zk-base block, utilities in a zk-utilities block
+   base icons + this reset in a zk-base block, utilities in a zk-utilities block
    (build-css.js asserts every component/base file is wrapped). So utilities override components,
    components override base, and unlayered styles — the theme's own tokens/tablet plus ALL downstream
    USER CSS — win over every layer with any specificity, no !important.

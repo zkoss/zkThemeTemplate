@@ -5,7 +5,7 @@
 
     <div sclass="z-d-flex z-flex-row z-flex-wrap z-gap-4 z-align-center">
         <label value="Edit Item" sclass="z-h2"/>
-        <label value="SKU FST-0481" sclass="z-chip z-chip-neutral z-ms-auto"/>
+        <chip label="SKU FST-0481" severity="secondary" sclass="z-ms-auto"/>
     </div>
 
     <div sclass="z-card">

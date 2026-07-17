@@ -87,9 +87,6 @@ const normFiles = [
     'zul/css/utility/_typography.css',
     'zul/css/utility/_borders.css',
     'zul/css/utility/_stack.css',
-    'zul/css/base/_badges.css',
-    'zul/css/base/_chips.css',
-    'zul/css/base/_avatars.css',
     'zul/css/base/_icons.css',
     // Notification has no css-uri mold registration in lang.xml (moldOnly, no mold element),
     // so it must be bundled here to ensure styles are always loaded.
@@ -188,8 +185,9 @@ const mergedFiles = new Set([...normFiles.filter(f => f.startsWith('js/')), ...c
 const CSS_URI_BACKED = new Set([
     // zul (CE)
     'a.css.dsp', 'absolutelayout.css.dsp', 'anchorlayout.css.dsp', 'auxhead.css.dsp',
+    'avatar.css.dsp', 'avatargroup.css.dsp', 'badge.css.dsp',
     'borderlayout.css.dsp', 'box.css.dsp', 'button.css.dsp', 'calendar.css.dsp',
-    'caption.css.dsp', 'checkbox.css.dsp', 'combo.css.dsp', 'combobutton.css.dsp',
+    'caption.css.dsp', 'checkbox.css.dsp', 'chip.css.dsp', 'combo.css.dsp', 'combobutton.css.dsp',
     'frozen.css.dsp', 'grid.css.dsp', 'groupbox.css.dsp', 'input.css.dsp', 'inputgroup.css.dsp',
     'layout.css.dsp', 'listbox.css.dsp', 'menu.css.dsp', 'paging.css.dsp', 'panel.css.dsp',
     'popup.css.dsp', 'progressmeter.css.dsp', 'rating.css.dsp', 'selectbox.css.dsp',
@@ -228,6 +226,12 @@ const WCS_SERVED_ALLOWLIST = new Set([
 const stubPaths = [
     // zul/font
     'zul/font/font-awesome.css.dsp',
+    // zul (CE) — new in ZK 10.4 (breadcrumb/carousel/confirmpopup). Stubbed to
+    // avoid a 404; they render with ZK's default styling until Marble themes them.
+    // TODO: author real Marble CSS for these (follow-up to the 10.4 upgrade).
+    'js/zul/wgt/css/breadcrumb.css.dsp',
+    'js/zul/wgt/css/carousel.css.dsp',
+    'js/zul/wgt/css/confirmpopup.css.dsp',
     // zkex
     'js/zkex/grid/css/grid.css.dsp',
     'js/zkex/inp/css/colorbox.css.dsp',

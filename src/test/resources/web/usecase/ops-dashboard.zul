@@ -47,7 +47,7 @@
                     <label value="M6 Hex Bolt (100pk)"/>
                     <label value="Web"/>
                     <label value="120"/>
-                    <label value="Delayed" sclass="z-chip z-chip-warning"/>
+                    <chip label="Delayed" severity="warning"/>
                     <progressmeter value="45" hflex="1"/>
                 </row>
                 <row>
@@ -55,7 +55,7 @@
                     <label value="Cordless Drill 18V"/>
                     <label value="Retail"/>
                     <label value="12"/>
-                    <label value="Backorder" sclass="z-chip z-chip-error"/>
+                    <chip label="Backorder" severity="danger"/>
                     <progressmeter value="10" hflex="1"/>
                 </row>
                 <row>
@@ -63,7 +63,7 @@
                     <label value="Safety Goggles"/>
                     <label value="Wholesale"/>
                     <label value="300"/>
-                    <label value="Picking" sclass="z-chip z-chip-info"/>
+                    <chip label="Picking" severity="info"/>
                     <progressmeter value="70" hflex="1"/>
                 </row>
                 <row>
@@ -71,7 +71,7 @@
                     <label value="Shipping Box (Large)"/>
                     <label value="Web"/>
                     <label value="50"/>
-                    <label value="Packed" sclass="z-chip z-chip-success"/>
+                    <chip label="Packed" severity="success"/>
                     <progressmeter value="90" hflex="1"/>
                 </row>
             </rows>

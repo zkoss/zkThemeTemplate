@@ -28,6 +28,7 @@ under [`../`](../).
 | [tablet-design-overview.md](tablet-design-overview.md) | Tablet/mobile responsive theme layer (`tablet.css.dsp`) |
 | [responsive-design.md](responsive-design.md) | Responsive utility system — `z-grid-fill` auto-fit + `z-grid-cols-auto`; intrinsic/auto-fit over Bootstrap Grid |
 | [zk-mui-structural-gaps.md](zk-mui-structural-gaps.md) | ZK↔MUI differences unresolvable by CSS alone (floating label, multi-select, calendar today-marker, ripple) — expected limits, not bugs |
+| [native-modern-ui-components.md](native-modern-ui-components.md) | Native `badge`/`chip`/`avatar`/`avatargroup` (ZK 10.4+) — class/attribute contract; old-utility → native-severity mapping; replaces the former `.z-badge`/`.z-chip`/`.z-avatar` utility CSS |
 
 ## Related
 

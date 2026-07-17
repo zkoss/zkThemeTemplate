@@ -1,0 +1,56 @@
+<?page title="Chip" contentType="text/html;charset=UTF-8"?>
+<zk>
+<div sclass="z-p-8 z-d-flex z-flex-col z-gap-6">
+    <div sclass="z-border-bottom z-text-xl z-fw-medium z-text-on-surface z-pb-3">Chip</div>
+
+    <div>
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Severities</div>
+        <div sclass="z-d-flex z-gap-3 z-flex-wrap z-align-center">
+            <chip label="Info"      severity="info"/>
+            <chip label="Success"   severity="success"/>
+            <chip label="Warning"   severity="warning"/>
+            <chip label="Danger"    severity="danger"/>
+            <chip label="Secondary" severity="secondary"/>
+        </div>
+    </div>
+
+    <div>
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Sizes</div>
+        <div sclass="z-d-flex z-gap-3 z-flex-wrap z-align-center">
+            <chip label="Small"  severity="info" size="small"/>
+            <chip label="Medium" severity="info" size="medium"/>
+        </div>
+    </div>
+
+    <div>
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Rounded</div>
+        <div sclass="z-d-flex z-gap-3 z-flex-wrap z-align-center">
+            <chip label="Rounded Info"    severity="info" rounded="true"/>
+            <chip label="Rounded Success" severity="success" rounded="true"/>
+        </div>
+    </div>
+
+    <div>
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Closable</div>
+        <div sclass="z-d-flex z-gap-3 z-flex-wrap z-align-center">
+            <chip label="Closable"          severity="info" closable="true"/>
+            <chip label="Closable Rounded"  severity="success" closable="true" rounded="true"/>
+        </div>
+    </div>
+
+    <div>
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Disabled</div>
+        <div sclass="z-d-flex z-gap-3 z-flex-wrap z-align-center">
+            <chip label="Disabled"          severity="info" disabled="true"/>
+            <chip label="Disabled Closable" severity="info" disabled="true" closable="true"/>
+        </div>
+    </div>
+
+    <div>
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Custom color (style hook)</div>
+        <div sclass="z-d-flex z-gap-3 z-flex-wrap z-align-center">
+            <chip label="Custom" style="--zk-chip-bg:#ede7f6;--zk-chip-border:#d1c4e9;--zk-chip-color:#5e35b1"/>
+        </div>
+    </div>
+</div>
+</zk>

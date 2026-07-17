@@ -54,7 +54,9 @@
                     <navitem label="Timepicker"       selected="@load(vm.currentPage eq '~./timepicker.zul')" onClick="@command('navigate', page='~./timepicker.zul')" />
                 </nav>
                 <nav label="Data" open="@load(vm.openNavLabel eq 'Data')">
+                    <navitem label="Badge"                  selected="@load(vm.currentPage eq '~./badge.zul')" onClick="@command('navigate', page='~./badge.zul')" />
                     <navitem label="Biglistbox"             selected="@load(vm.currentPage eq '~./biglistbox.zul')" onClick="@command('navigate', page='~./biglistbox.zul')" />
+                    <navitem label="Chip"                   selected="@load(vm.currentPage eq '~./chip.zul')" onClick="@command('navigate', page='~./chip.zul')" />
                     <navitem label="Drag &amp; Drop"        selected="@load(vm.currentPage eq '~./dnd.zul')" onClick="@command('navigate', page='~./dnd.zul')" />
                     <navitem label="Grid"                   selected="@load(vm.currentPage eq '~./grid.zul')" onClick="@command('navigate', page='~./grid.zul')" />
                     <navitem label="Grid (Detail)"          selected="@load(vm.currentPage eq '~./grid-detail.zul')" onClick="@command('navigate', page='~./grid-detail.zul')" />
@@ -124,6 +126,7 @@
                 </nav>
                 <nav label="Media &amp; Upload" open="@load(vm.openNavLabel eq 'Media &amp; Upload')">
                     <navitem label="Audio"           selected="@load(vm.currentPage eq '~./audio.zul')" onClick="@command('navigate', page='~./audio.zul')" />
+                    <navitem label="Avatar"          selected="@load(vm.currentPage eq '~./avatar.zul')" onClick="@command('navigate', page='~./avatar.zul')" />
                     <navitem label="Barcode"         selected="@load(vm.currentPage eq '~./barcode.zul')" onClick="@command('navigate', page='~./barcode.zul')" />
                     <navitem label="Barcode Scanner" selected="@load(vm.currentPage eq '~./barcodescanner.zul')" onClick="@command('navigate', page='~./barcodescanner.zul')" />
                     <navitem label="Camera"          selected="@load(vm.currentPage eq '~./camera.zul')" onClick="@command('navigate', page='~./camera.zul')" />

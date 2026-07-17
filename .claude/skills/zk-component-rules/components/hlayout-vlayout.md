@@ -92,10 +92,10 @@ visible overflow, and it also spaces atomic widgets the canonical way:
 
 ```xml
 <!-- ❌ clips the badge's overhanging corner -->
-<hlayout><span sclass="z-icon-bell z-badge z-badge-error" ca:data-badge="7"/></hlayout>
+<hlayout><badge count="7" severity="danger"><label sclass="z-icon-bell"/></badge></hlayout>
 
 <!-- ✅ overflow visible -->
-<div sclass="z-hstack-lg"><span sclass="z-icon-bell z-badge z-badge-error" ca:data-badge="7"/></div>
+<div sclass="z-hstack-lg"><badge count="7" severity="danger"><label sclass="z-icon-bell"/></badge></div>
 ```
 
 This is theme-independent: any ZK theme that styles overlay badges hits the same
