@@ -25,7 +25,7 @@ public class UseCaseVM {
         }
         for (String p : new String[]{"button", "combobutton", "checkbox", "radiogroup",
                 "textbox", "intbox", "longbox", "decimalbox", "doublebox", "combobox", "selectbox",
-                "chosenbox", "searchbox", "cascader", "datebox", "timebox", "timepicker", "spinner",
+                "chosenbox", "searchbox", "cascader", "datebox", "daterangebox", "timebox", "timepicker", "spinner",
                 "doublespinner", "colorbox", "bandbox", "slider", "rangeslider", "multislider",
                 "rating", "inputgroup", "inputs", "inputs-basic", "a",
                 "calendar"}) {
@@ -51,7 +51,7 @@ public class UseCaseVM {
             PAGE_TO_NAV.put(p, "Layout");
         }
         for (String p : new String[]{"progressmeter", "notification", "toast", "loadingbar",
-                "messagebox", "loading", "separator", "scrollbar", "error", "errorbox"}) {
+                "messagebox", "confirmpopup", "loading", "separator", "scrollbar", "error", "errorbox"}) {
             PAGE_TO_NAV.put(p, "Feedback");
         }
         for (String p : new String[]{"fileupload", "dropupload", "audio", "video", "camera",

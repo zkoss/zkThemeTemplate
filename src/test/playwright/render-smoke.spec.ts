@@ -41,8 +41,14 @@ const PAGES = [
   '/columnlayout.zul',
   '/combobox.zul',
   '/combobutton.zul',
+  '/confirmpopup.zul',
   '/cropper.zul',
   '/datebox.zul',
+  // daterangebox: the "Invalid" State-Matrix cell renders UNSTYLED until ZK-6133
+  // (https://zkoss.atlassian.net/browse/ZK-6133) is fixed — daterangebox drops the user
+  // `sclass`, so `.z-daterangebox-invalid` can't be applied declaratively. Any future test
+  // that asserts the daterangebox invalid state will only pass once ZK-6133 lands.
+  '/daterangebox.zul',
   '/decimalbox.zul',
   '/dnd.zul',
   '/doublebox.zul',

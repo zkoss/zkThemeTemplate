@@ -188,6 +188,7 @@ const CSS_URI_BACKED = new Set([
     'avatar.css.dsp', 'avatargroup.css.dsp', 'badge.css.dsp',
     'borderlayout.css.dsp', 'box.css.dsp', 'button.css.dsp', 'calendar.css.dsp',
     'caption.css.dsp', 'checkbox.css.dsp', 'chip.css.dsp', 'combo.css.dsp', 'combobutton.css.dsp',
+    'confirmpopup.css.dsp',
     'frozen.css.dsp', 'grid.css.dsp', 'groupbox.css.dsp', 'input.css.dsp', 'inputgroup.css.dsp',
     'layout.css.dsp', 'listbox.css.dsp', 'menu.css.dsp', 'paging.css.dsp', 'panel.css.dsp',
     'popup.css.dsp', 'progressmeter.css.dsp', 'rating.css.dsp', 'selectbox.css.dsp',
@@ -226,12 +227,13 @@ const WCS_SERVED_ALLOWLIST = new Set([
 const stubPaths = [
     // zul/font
     'zul/font/font-awesome.css.dsp',
-    // zul (CE) — new in ZK 10.4 (breadcrumb/carousel/confirmpopup). Stubbed to
+    // zul (CE) — new in ZK 10.4 (breadcrumb/carousel). Stubbed to
     // avoid a 404; they render with ZK's default styling until Marble themes them.
     // TODO: author real Marble CSS for these (follow-up to the 10.4 upgrade).
+    // NOTE: confirmpopup graduated out of this stub list — it now ships real Marble
+    // CSS at js/zul/wgt/css/confirmpopup.css (auto-scanned 1:1; css-uri-backed below).
     'js/zul/wgt/css/breadcrumb.css.dsp',
     'js/zul/wgt/css/carousel.css.dsp',
-    'js/zul/wgt/css/confirmpopup.css.dsp',
     // zkex
     'js/zkex/grid/css/grid.css.dsp',
     'js/zkex/inp/css/colorbox.css.dsp',

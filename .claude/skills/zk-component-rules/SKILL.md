@@ -89,6 +89,7 @@ Load only the file for the component you are working on.
 | `components/combobox.md` | combobox (split-border, comboitem variants) |
 | `components/combobutton.md` | combobutton (pointer-events: auto required for popup click) |
 | `components/combo-trio.md` | datebox + timebox + spinner (shared `.z-{c}-input` / `.z-{c}-button` pattern) |
+| `components/daterangebox.md` | daterangebox (EE) — two-input root (begin/end) + detached multi-panel calendar popup, `--panels` CSS var drives grid column count, no root `-open` class, `buttonVisible=false` toggles inline style not a class, range-highlight reuses `.z-cell-range-*` from calendar.md |
 | `components/data-components.md` | grid + listbox + tree (z-*-odd preferred over nth-child, shared row-based structure) |
 | `components/groupbox.md` | groupbox (content area is `.z-groupbox-content`) |
 | `components/menubar.md` | menubar (`<ul><li>` wrapper structure) |
@@ -126,6 +127,7 @@ Load only the file for the component you are working on.
 | `components/coachmark.md` | coachmark (PE) — T2 guided-tour card; `.z-coachmark` is transparent positional wrapper; `.z-coachmark-content` is the visual card; `.z-coachmark-open` drives animation; pointer arrow on `.z-coachmark-pointer.z-coachmark-{up\|down\|left\|right}`; mask is a `zk.eff.FullMask` sibling in `<body>`; CSS in `zkmax/nav/css/coachmark.css` |
 | `components/tablelayout.md` | tablelayout + tablechildren (EE) — HTML `<table>`-based grid layout; root is `<table>` (never override display); cells are `<td>.z-tablechildren`; `<tr>` rows carry no ZK class; colspan/rowspan are native HTML attrs; gutter via `border-spacing`; no state classes |
 | `components/rowlayout.md` | rowlayout + rowchildren (EE) — 12-column proportional-grid layout; `.z-rowlayout` float-clearfix container; `.z-rowchildren.colspanN[.offsetN]` float children; JS writes all inline widths — do NOT override with CSS `!important`; own file `zkmax/layout/css/rowlayout.css.dsp` |
+| `components/confirmpopup.md` | confirmpopup (CE, new in ZK 10.4.0) — T2 anchored popover card (extends but mostly overrides `Popup`); no `.z-popup-content` wrapper, header/body/footer are direct root children; optional header/icon/message; two-layer CSS-triangle arrow re-anchored via JS on placement change; severity enum (`info/success/warning/danger/secondary`) shared with native badge/chip, recolors only the icon; fixed cancel-then-ok DOM order independent of `defaultFocus`; CE mold emits no ARIA (za11y EE add-on layers `role="alertdialog"`); own file `confirmpopup.css.dsp` |
 | `components/linelayout.md` | linelayout + lineitem (EE) — T2 vertical/horizontal timeline; tripartite column structure (first/cave/last); `.z-linelayout-vertical` / `.z-linelayout-horizontal` orientation classes; `.z-lineitem-point` circle with hidden state; first/last area `<div>`s are moved OUT of cave at bind_() via virtual-parent architecture; new CSS at `zkmax/layout/css/linelayout.css` |
 
 ## What this skill deliberately does NOT contain

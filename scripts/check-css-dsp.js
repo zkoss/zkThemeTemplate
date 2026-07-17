@@ -58,9 +58,11 @@ const THEMED_PREFIXES = ['zul/', 'js/zul/', 'js/zkmax/', 'js/zkex/'];
 // theme currently targets (10.2.1-jakarta). They are intentionally out of scope for now and
 // will be styled when the theme moves to that ZK version — so the check skips them rather than
 // failing. They are still LISTED in the report (never silently dropped). Re-evaluate on upgrade.
-const FORWARD_VERSION_SKIP = new Map([
-    ['js/zkmax/db/css/daterangebox.css.dsp', 'daterangebox — new in ZK 11.0; handle when theme targets 11.x'],
-]);
+// (empty) daterangebox graduated out on the 10.4.0 upgrade — it now ships real
+// Marble CSS at js/zkmax/db/css/daterangebox.css and is enforced like any other
+// css-uri-backed component. Add a new entry here only for a component that exists
+// in the ZK source on disk but is genuinely out of scope for the current target.
+const FORWARD_VERSION_SKIP = new Map([]);
 
 function pkgToPath(pkg) {
     return 'js/' + pkg.replace(/\./g, '/');

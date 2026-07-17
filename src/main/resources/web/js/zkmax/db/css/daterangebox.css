@@ -1,0 +1,441 @@
+/* MD3 DateRangeBox — two-ended date-range picker input + detached range-calendar popup (EE, zkmax) */
+/* DOM:
+   <div class="z-daterangebox [z-daterangebox-focused] [z-daterangebox-invalid]
+                [z-daterangebox-disabled] [z-daterangebox-readonly]" role="group">
+     <input class="z-daterangebox-input z-daterangebox-begin">
+     <span class="z-daterangebox-separator" aria-hidden="true">~</span>
+     <input class="z-daterangebox-input z-daterangebox-end">
+     <a class="z-daterangebox-button" role="button" tabindex="0" aria-haspopup="dialog">   (omitted entirely when buttonVisible=false at initial render)
+       <i class="z-icon-calendar">
+     </a>
+     <div class="z-daterangebox-status" role="status" aria-live="polite" aria-atomic="true">   (always present, visually hidden)
+   </div>
+
+   <!-- Popup: body-detached (NOT a descendant of .z-daterangebox); created lazily on first open,
+        re-parented to <body>, stays there across close/reopen. --panels custom property is set
+        inline on the popup root = numberOfMonths; descendants inherit it. -->
+   <div class="z-daterangebox-popup z-daterangebox-popup-linked" role="dialog" aria-modal="false"
+        tabindex="-1" style="--panels: N">
+     <div class="z-daterangebox-popup-panels">     (grid; N x .z-calendar, N = numberOfMonths — see calendar.css)
+       <div class="z-calendar">...</div>
+       ...
+     </div>
+     <div class="z-daterangebox-popup-times">       (grid; 2 x .z-timebox [begin, end]; empty + inline display:none unless showTime)
+       <span class="z-timebox">...</span>
+       <span class="z-timebox">...</span>
+     </div>
+     <div class="z-daterangebox-popup-footer">
+       <button class="z-daterangebox-popup-clear">   (present only when allowEmpty === "both")
+       <button class="z-daterangebox-popup-today">   (present only when showTodayLink === true)
+       <button class="z-daterangebox-popup-cancel">  (always present, trailing edge)
+     </div>
+   </div>
+
+   Range-highlight state lives on the Calendar panel's OWN cells (not daterangebox-prefixed):
+     .z-calendar-cell.z-cell-range-begin / -mid / -end                (committed range)
+     .z-calendar-cell.z-cell-range-preview-mid / -preview-end         (hover preview, no committed end yet)
+
+   No `-open` root class exists here (unlike datebox/combobox) — popup visibility is tracked
+   purely by the popup's own inline display + body attach/detach, never a root modifier class.
+*/
+
+@layer zk-components {
+
+/* ─── Root: one continuous outlined field (combo-trio pattern, two-input variant) ───────── */
+.z-daterangebox {
+    display: inline-flex;
+    align-items: center;
+    position: relative;
+    border: 1px solid var(--zk-color-outline);
+    border-radius: var(--zk-shape-corner-extra-small);
+    background-color: var(--zk-color-surface);
+    min-height: var(--zk-control-height);
+    box-sizing: border-box;
+    transition:
+        border-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard),
+        box-shadow var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
+}
+
+.z-daterangebox:hover {
+    border-color: var(--zk-color-on-surface);
+}
+
+/* Focus ring as an INSET box-shadow, not a border-width increase (Mechanism A) — border stays
+   1px so the min-height-pinned inputs never force the root taller. `.z-daterangebox-focused` is
+   a manually-managed class (added on either input's focus, removed only when the popup closes)
+   because the popup is a <body>-detached sibling outside this root's subtree — `:focus-within`
+   alone would drop the ring the moment focus moves onto a popup calendar cell. Included anyway
+   as a harmless OR-condition for the rare case focus is literally inside the root with no popup
+   open yet. See reference/focus-affordance-no-layout-shift.md. */
+.z-daterangebox.z-daterangebox-focused,
+.z-daterangebox:focus-within {
+    border-color: var(--zk-color-primary);
+    box-shadow: inset 0 0 0 1px var(--zk-color-primary);
+}
+
+/* ─── Inputs (both transparent — root supplies the only visible surface) ────────────────── */
+.z-daterangebox-input {
+    flex: 1;
+    min-width: 0;
+    border: none;
+    background: transparent;
+    padding: 0 var(--zk-spacing-3);
+    height: 100%;
+    min-height: calc(var(--zk-input-height) - 2px);
+    font-family: var(--zk-typescale-font-family);
+    font-size: var(--zk-typescale-body-medium-size);
+    color: var(--zk-color-on-surface);
+    text-align: center;
+    outline: none;
+    box-sizing: border-box;
+}
+
+.z-daterangebox-input::placeholder {
+    color: var(--zk-color-on-surface-variant);
+    opacity: 1;
+}
+
+/* ─── Separator glyph ────────────────────────────────────────────────────────────────────── */
+.z-daterangebox-separator {
+    flex-shrink: 0;
+    color: var(--zk-color-on-surface-variant);
+    font-size: var(--zk-typescale-body-medium-size);
+    font-family: var(--zk-typescale-font-family);
+    padding: 0 var(--zk-spacing-1);
+    user-select: none;
+    pointer-events: none;
+}
+
+/* ─── Invalid ─────────────────────────────────────────────────────────────────────────────── */
+.z-daterangebox.z-daterangebox-invalid {
+    border-color: var(--zk-color-error);
+}
+
+.z-daterangebox.z-daterangebox-invalid:hover {
+    border-color: var(--zk-color-error);
+}
+
+.z-daterangebox.z-daterangebox-invalid.z-daterangebox-focused,
+.z-daterangebox.z-daterangebox-invalid:focus-within {
+    border-color: var(--zk-color-error);
+    box-shadow: inset 0 0 0 1px var(--zk-color-error);
+}
+
+/* ─── Disabled — whole root dimmed (root is a <div>, no native [disabled]; the modifier
+   class is the only signal). Consistent with timebox's disabled treatment. ──────────────── */
+.z-daterangebox.z-daterangebox-disabled {
+    opacity: var(--zk-state-disabled-opacity);
+    pointer-events: none;
+    cursor: not-allowed;
+    background-color: var(--zk-color-surface-container-low);
+    border-color: var(--zk-color-outline-variant);
+}
+
+/* ─── Readonly — NARROWER than disabled: the popup refuses to open while readonly, so only
+   the now-nonfunctional trigger icon is dimmed. Inputs stay full-opacity/transparent/legible
+   (a "read-only display", not a disabled one). ──────────────────────────────────────────── */
+.z-daterangebox.z-daterangebox-readonly .z-daterangebox-input {
+    cursor: default;
+    background-color: transparent;
+}
+
+.z-daterangebox.z-daterangebox-readonly .z-daterangebox-button {
+    opacity: var(--zk-state-disabled-opacity);
+    pointer-events: none;
+}
+
+/* ─── Trigger button ──────────────────────────────────────────────────────────────────────── */
+.z-daterangebox-button {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    min-height: calc(var(--zk-control-height) - 2px);
+    border: none;
+    background: transparent;
+    color: var(--zk-color-on-surface-variant);
+    cursor: pointer;
+    flex-shrink: 0;
+    border-radius: 0 var(--zk-shape-corner-extra-small) var(--zk-shape-corner-extra-small) 0;
+    overflow: hidden;
+    text-decoration: none;
+    transition: color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
+}
+
+.z-daterangebox-button::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-color: currentColor;
+    opacity: 0;
+    pointer-events: none;
+    transition: var(--zk-state-layer-transition);
+}
+
+.z-daterangebox-button:hover {
+    color: var(--zk-color-primary);
+}
+
+.z-daterangebox-button:hover::before { opacity: var(--zk-state-hover-opacity); }
+.z-daterangebox-button:active::before { opacity: var(--zk-state-pressed-opacity); }
+
+/* ─── Status live region — always in the DOM (WCAG 4.1.3), visually hidden only ──────────── */
+.z-daterangebox-status {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════════════════
+   Popup — the ONE elevated surface (canonical dropdown-popup recipe shared with
+   combobox/datebox/timepicker). Panels, times and footer are flat content on it.
+   ═══════════════════════════════════════════════════════════════════════════════════════════ */
+.z-daterangebox-popup {
+    position: absolute;
+    z-index: 1700;
+    background-color: var(--zk-color-surface);
+    border-radius: var(--zk-shape-menu);
+    box-shadow: var(--zk-elevation-dropdown);
+    border: none;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+/* Calendar panels inside the popup render FLAT — no nested card border/shadow.
+   Specificity note: calendar.css's own card-shell rule is
+   `.z-calendar:not(.z-datebox-popup .z-calendar)` (0,3,0). A plain
+   `.z-daterangebox-popup .z-calendar` (0,2,0) would lose that tie-break regardless of file
+   load order, so the class is intentionally repeated to reach (0,4,0) and win unconditionally. */
+.z-daterangebox-popup .z-calendar.z-calendar {
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+/* Panels grid — column count is CSS-var-driven via the inherited --panels custom property
+   (set inline on .z-daterangebox-popup, see DOM comment above), never a hardcoded count. */
+.z-daterangebox-popup-panels {
+    display: grid;
+    grid-template-columns: repeat(var(--panels, 2), 1fr);
+    gap: var(--zk-spacing-3);
+    padding: var(--zk-spacing-3);
+    box-sizing: border-box;
+}
+
+/* Times grid — same column count as panels so each Timebox lines up under its Calendar.
+   Populated/shown only when showTime is on; otherwise empty + inline display:none from JS. */
+.z-daterangebox-popup-times {
+    display: grid;
+    grid-template-columns: repeat(var(--panels, 2), 1fr);
+    gap: var(--zk-spacing-3);
+    padding: 0 var(--zk-spacing-3) var(--zk-spacing-3);
+    box-sizing: border-box;
+}
+
+/* ─── Footer — 1–3 slot row (Clear conditional, Today conditional, Cancel unconditional).
+   DOM order is clear → today → cancel; docking the group to the trailing edge keeps Cancel
+   anchored at the far right regardless of which optional buttons are present. ──────────────── */
+.z-daterangebox-popup-footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: var(--zk-spacing-2);
+    border-top: 1px solid var(--zk-color-outline-variant);
+    padding: var(--zk-spacing-3);
+    box-sizing: border-box;
+}
+
+/* Shared footer-button chrome (plain <button> elements, not ZK <button> widgets — the
+   outlined/filled recipes are hand-mirrored from button.css's utility variants). */
+.z-daterangebox-popup-clear,
+.z-daterangebox-popup-today,
+.z-daterangebox-popup-cancel {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: var(--zk-button-height);
+    padding: 6px var(--zk-spacing-4);
+    border-radius: var(--zk-shape-corner-extra-small);
+    font-family: var(--zk-typescale-font-family);
+    font-size: var(--zk-typescale-body-medium-size);
+    font-weight: var(--zk-typescale-label-large-weight);
+    line-height: var(--zk-typescale-label-large-line-height);
+    cursor: pointer;
+    overflow: hidden;
+    outline: none;
+    transition:
+        background-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard),
+        border-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
+}
+
+.z-daterangebox-popup-clear::before,
+.z-daterangebox-popup-today::before,
+.z-daterangebox-popup-cancel::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    opacity: 0;
+    pointer-events: none;
+    transition: var(--zk-state-layer-transition);
+}
+
+.z-daterangebox-popup-clear:hover::before,
+.z-daterangebox-popup-today:hover::before,
+.z-daterangebox-popup-cancel:hover::before { opacity: var(--zk-state-hover-opacity); }
+.z-daterangebox-popup-clear:focus-visible::before,
+.z-daterangebox-popup-today:focus-visible::before,
+.z-daterangebox-popup-cancel:focus-visible::before { opacity: var(--zk-state-focus-opacity); }
+.z-daterangebox-popup-clear:active::before,
+.z-daterangebox-popup-today:active::before,
+.z-daterangebox-popup-cancel:active::before { opacity: var(--zk-state-pressed-opacity); }
+
+.z-daterangebox-popup-clear:focus-visible,
+.z-daterangebox-popup-today:focus-visible,
+.z-daterangebox-popup-cancel:focus-visible {
+    outline: var(--zk-focus-ring);
+    outline-offset: 2px;
+}
+
+/* Clear / Cancel — outlined, secondary actions (mirrors .z-button-outlined) */
+.z-daterangebox-popup-clear,
+.z-daterangebox-popup-cancel {
+    background-color: transparent;
+    border: 1px solid var(--zk-color-outline);
+    color: var(--zk-color-on-surface);
+}
+
+.z-daterangebox-popup-clear::before,
+.z-daterangebox-popup-cancel::before {
+    background-color: var(--zk-color-primary);
+}
+
+/* Today — filled-primary CTA (the one-click shortcut reads as the recommended action) */
+.z-daterangebox-popup-today {
+    background-color: var(--zk-color-primary);
+    border: 1px solid transparent;
+    color: var(--zk-color-on-primary);
+}
+
+.z-daterangebox-popup-today::before {
+    background-color: var(--zk-color-on-primary);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════════════════
+   Range-highlight cells — Calendar's own TD cells inside .z-daterangebox-popup-panels.
+   Begin/end/mid form ONE continuous band: the fixed circular hover/selected disc from
+   calendar.css's `.z-calendar-cell::before` is reset to a full-bleed (edge-to-edge) rectangle
+   so horizontally adjacent cells' fills touch with no gap, then capped with a rounded outer
+   edge only at the true begin/end of the range.
+   ═══════════════════════════════════════════════════════════════════════════════════════════ */
+.z-calendar-cell.z-cell-range-begin::before,
+.z-calendar-cell.z-cell-range-mid::before,
+.z-calendar-cell.z-cell-range-end::before,
+.z-calendar-cell.z-cell-range-preview-mid::before,
+.z-calendar-cell.z-cell-range-preview-end::before {
+    top: 4px;
+    bottom: 4px;
+    left: 0;
+    right: 0;
+    width: auto;
+    height: auto;
+    transform: none;
+    border-radius: 0;
+}
+
+/* Endpoints — primary fill, rounded on the OUTER edge only (square on the inner edge so it
+   fuses with the adjacent mid cell). A single-day range carries both classes on one cell,
+   so both radius pairs apply together and the disc reads fully rounded. */
+.z-calendar-cell.z-cell-range-begin::before {
+    background-color: var(--zk-color-primary);
+    border-top-left-radius: var(--zk-shape-corner-full);
+    border-bottom-left-radius: var(--zk-shape-corner-full);
+}
+
+.z-calendar-cell.z-cell-range-end::before {
+    background-color: var(--zk-color-primary);
+    border-top-right-radius: var(--zk-shape-corner-full);
+    border-bottom-right-radius: var(--zk-shape-corner-full);
+}
+
+.z-calendar-body tbody td.z-calendar-cell.z-cell-range-begin,
+.z-calendar-body tbody td.z-calendar-cell.z-cell-range-end {
+    color: var(--zk-color-on-primary);
+    font-weight: var(--zk-typescale-label-large-weight);
+}
+
+/* Interior band — lighter container fill, square both edges so mid cells fuse with their
+   neighbors (begin/end/other mid cells) into one continuous visual band. */
+.z-calendar-cell.z-cell-range-mid::before {
+    background-color: var(--zk-color-primary-container);
+}
+
+.z-calendar-body tbody td.z-calendar-cell.z-cell-range-mid {
+    color: var(--zk-color-on-primary-container);
+}
+
+/* Keep the committed-range fill on hover (overrides calendar.css's plain grey hover disc at
+   matching specificity, mirroring its own `.z-calendar-selected:hover` treatment). */
+.z-calendar-body tbody td.z-calendar-cell.z-cell-range-begin:hover::before,
+.z-calendar-body tbody td.z-calendar-cell.z-cell-range-end:hover::before {
+    background-color: color-mix(in srgb, var(--zk-color-primary) 85%, var(--zk-color-on-primary));
+}
+
+.z-calendar-body tbody td.z-calendar-cell.z-cell-range-mid:hover::before {
+    background-color: color-mix(in srgb, var(--zk-color-primary-container) 85%, var(--zk-color-on-primary-container));
+}
+
+/* Hover preview (no committed end yet) — same shapes as mid/end, at reduced opacity so a
+   not-yet-committed candidate reads as tentative rather than committed. Text colour is left
+   at the cell default (not on-primary/on-primary-container) since the faint fill would not
+   carry enough contrast for the inverted text treatment. */
+.z-calendar-cell.z-cell-range-preview-mid::before {
+    background-color: var(--zk-color-primary-container);
+    opacity: var(--zk-state-hover-opacity);
+}
+
+.z-calendar-cell.z-cell-range-preview-end::before {
+    background-color: var(--zk-color-primary);
+    opacity: var(--zk-state-hover-opacity);
+    border-top-right-radius: var(--zk-shape-corner-full);
+    border-bottom-right-radius: var(--zk-shape-corner-full);
+}
+
+/* ─── Narrow viewport (<576px) — full-screen modal popup ─────────────────────────────────── *
+ * Same DOM, no new classes: purely a layout breakpoint. Panels/times collapse to a single
+ * column and the footer pins to the bottom of the viewport.
+ * ─────────────────────────────────────────────────────────────────────────────────────────── */
+@media (max-width: 575px) {
+    .z-daterangebox-popup {
+        position: fixed;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        max-width: none;
+        max-height: none;
+        border-radius: 0;
+        display: flex;
+        flex-direction: column;
+        overflow-y: auto;
+    }
+
+    .z-daterangebox-popup-panels,
+    .z-daterangebox-popup-times {
+        grid-template-columns: 1fr;
+    }
+
+    .z-daterangebox-popup-footer {
+        margin-top: auto;
+    }
+}
+
+}

@@ -22,7 +22,7 @@ The path ZK *requests* a `.css.dsp` from is **not** decided by the theme's Java.
 - **(b) select / cell / bandpopup** are served via `zk.wcs` package **aggregation** (they are language-level css-uris). A standalone `.dsp` for these is optional / belt-and-suspenders — the rule loads either way.
 - **(c) tbeditor / cropper / signature** live paths follow `<widget-package>`:
   `zkmax/{tbeditor,cropper,signature}/`. IceBlue's `inp/med/wgt` copies are stale legacy paths from older ZK versions — Marble ships only the live path (cleaner, not a gap).
-- **(d) `daterangebox`** registers an absolute css-uri but is a **ZK-11 forward-skip** — not shipped in Marble's current target; `check-css-dsp.js` reports it via `FORWARD_VERSION_SKIP` without failing.
+- **(d) `daterangebox`** (zkmax) registers an absolute css-uri (`~./js/zkmax/db/css/daterangebox.css.dsp`). As of the **ZK 10.4.0** upgrade it ships live, so Marble now themes it (`src/main/resources/web/js/zkmax/db/css/daterangebox.css`, auto-scanned 1:1) and it is **enforced** by `check-css-dsp.js` — the former `FORWARD_VERSION_SKIP` entry was removed. `confirmpopup` (CE, `js/zul/wgt/css/confirmpopup.css.dsp`) likewise graduated from an empty `build-css.js` stub to real theme CSS in the same upgrade.
 - **(e) `scripts/check-css-dsp.js`** (`npm run check:css-dsp`) is the runtime-faithful coverage checker: it reads the ZK lang files for every `<css-uri>`, resolves each to a full path, and asserts it exists under `target/classes/web/marble/`. It is the **inverse** of build-css.js's `assertNoOrphanComponentCss()` — that guards *no-css-uri files emitted as orphans*; this guards *css-uri files ZK requests but the theme doesn't ship*.
 
 ---
@@ -82,6 +82,7 @@ The path ZK *requests* a `.css.dsp` from is **not** decided by the theme's Java.
 - `js/zul/wgt/css/caption.css.dsp`
 - `js/zul/wgt/css/checkbox.css.dsp`
 - `js/zul/wgt/css/combobutton.css.dsp`
+- `js/zul/wgt/css/confirmpopup.css.dsp` — new in ZK 10.4.0 (severity popover)
 - `js/zul/wgt/css/groupbox.css.dsp`
 - `js/zul/wgt/css/inputgroup.css.dsp`
 - `js/zul/wgt/css/popup.css.dsp`
@@ -134,6 +135,9 @@ The path ZK *requests* a `.css.dsp` from is **not** decided by the theme's Java.
     _scrollbar.css   # biglistbox WScroll touch width
   ```
   Regression-guarded by the Playwright `tablet` project (`src/test/playwright/tablet.spec.ts`).
+
+### Date
+- `js/zkmax/db/css/daterangebox.css.dsp` — new in ZK 10.4.0 (date-range picker)
 
 ### Input
 - `js/zkmax/inp/css/cascader.css.dsp`

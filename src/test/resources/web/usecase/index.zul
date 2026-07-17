@@ -34,6 +34,7 @@
                     <navitem label="Combobox"         selected="@load(vm.currentPage eq '~./combobox.zul')" onClick="@command('navigate', page='~./combobox.zul')" />
                     <navitem label="Combobutton"      selected="@load(vm.currentPage eq '~./combobutton.zul')" onClick="@command('navigate', page='~./combobutton.zul')" />
                     <navitem label="Datebox"          selected="@load(vm.currentPage eq '~./datebox.zul')" onClick="@command('navigate', page='~./datebox.zul')" />
+                    <navitem label="DateRangeBox"     selected="@load(vm.currentPage eq '~./daterangebox.zul')" onClick="@command('navigate', page='~./daterangebox.zul')" />
                     <navitem label="Decimalbox"       selected="@load(vm.currentPage eq '~./decimalbox.zul')" onClick="@command('navigate', page='~./decimalbox.zul')" />
                     <navitem label="Doublebox"        selected="@load(vm.currentPage eq '~./doublebox.zul')" onClick="@command('navigate', page='~./doublebox.zul')" />
                     <navitem label="Doublespinner"    selected="@load(vm.currentPage eq '~./doublespinner.zul')" onClick="@command('navigate', page='~./doublespinner.zul')" />
@@ -118,6 +119,7 @@
                     <navitem label="Loading"       selected="@load(vm.currentPage eq '~./loading.zul')" onClick="@command('navigate', page='~./loading.zul')" />
                     <navitem label="Loadingbar"    selected="@load(vm.currentPage eq '~./loadingbar.zul')" onClick="@command('navigate', page='~./loadingbar.zul')" />
                     <navitem label="Messagebox"    selected="@load(vm.currentPage eq '~./messagebox.zul')" onClick="@command('navigate', page='~./messagebox.zul')" />
+                    <navitem label="ConfirmPopup"  selected="@load(vm.currentPage eq '~./confirmpopup.zul')" onClick="@command('navigate', page='~./confirmpopup.zul')" />
                     <navitem label="Notification"  selected="@load(vm.currentPage eq '~./notification.zul')" onClick="@command('navigate', page='~./notification.zul')" />
                     <navitem label="Progressmeter" selected="@load(vm.currentPage eq '~./progressmeter.zul')" onClick="@command('navigate', page='~./progressmeter.zul')" />
                     <navitem label="Scrollbar"     selected="@load(vm.currentPage eq '~./scrollbar.zul')" onClick="@command('navigate', page='~./scrollbar.zul')" />
