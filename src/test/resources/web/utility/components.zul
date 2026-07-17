@@ -3,88 +3,10 @@
 <style src="~./usecase/usecase.css"/>
 <vlayout hflex="1" sclass="z-d-flex z-flex-col z-gap-4 z-p-4 z-bg-surface-low">
 
-    <label value="Native UI Components" sclass="z-h2"/>
-    <label value="badge / chip / avatar are native ZK components (ZK 10.4+). See the dedicated badge.zul / chip.zul / avatar.zul preview pages for full attribute coverage." sclass="z-text-secondary z-text-sm"/>
+    <label value="Component Utilities" sclass="z-h2"/>
+    <label value="Reusable surface primitives built from design tokens. (badge / chip / avatar are native ZK components — see their dedicated Badge / Chip / Avatar preview pages.)" sclass="z-text-secondary z-text-sm"/>
 
-    <!-- chip -->
-    <div sclass="z-card">
-        <label value="Chip  (&lt;chip&gt;)" sclass="z-d-block z-text-base z-fw-medium z-text-on-surface z-mb-3"/>
-        <label value="Compact status/tag pill. severity = info | success | warning | danger | secondary." sclass="z-text-secondary z-text-sm z-mb-3"/>
-        <div sclass="z-d-flex z-gap-3 z-flex-wrap z-align-center z-mb-3">
-            <chip label="Info"      severity="info"/>
-            <chip label="Success"   severity="success"/>
-            <chip label="Warning"   severity="warning"/>
-            <chip label="Danger"    severity="danger"/>
-            <chip label="Secondary" severity="secondary"/>
-        </div>
-        <label value="Variants: small · rounded · closable" sclass="z-h6 z-mb-2"/>
-        <div sclass="z-d-flex z-gap-3 z-flex-wrap z-align-center">
-            <chip label="Small"    severity="info" size="small"/>
-            <chip label="Rounded"  severity="success" rounded="true"/>
-            <chip label="Closable" severity="warning" closable="true"/>
-            <chip label="Disabled" severity="danger" disabled="true"/>
-        </div>
-    </div>
-
-    <!-- badge -->
-    <div sclass="z-card">
-        <label value="Badge  (&lt;badge&gt;)" sclass="z-d-block z-text-base z-fw-medium z-text-on-surface z-mb-3"/>
-        <label value="Overlay count/dot indicator. Wraps a host to float over its corner, or renders standalone. severity, count, max, showZero, dot, placement." sclass="z-text-secondary z-text-sm z-mb-3"/>
-
-        <label value="Count + dot on icons" sclass="z-h6 z-mb-2"/>
-        <div sclass="z-d-flex z-gap-6 z-align-center z-mb-4" style="padding:8px 4px;">
-            <badge count="4"><label sclass="z-icon-mail" style="font-size:26px;color:var(--zk-color-on-surface-variant);"/></badge>
-            <badge count="7" severity="danger"><label sclass="z-icon-bell" style="font-size:26px;color:var(--zk-color-on-surface-variant);"/></badge>
-            <badge dot="true" severity="danger"><label sclass="z-icon-message-square" style="font-size:26px;color:var(--zk-color-on-surface-variant);"/></badge>
-        </div>
-
-        <label value="Severity variants (standalone)" sclass="z-h6 z-mb-2"/>
-        <div sclass="z-d-flex z-gap-3 z-align-center z-flex-wrap z-mb-4">
-            <badge count="4" severity="info"/>
-            <badge count="4" severity="success"/>
-            <badge count="4" severity="warning"/>
-            <badge count="4" severity="danger"/>
-            <badge count="4" severity="secondary"/>
-            <badge count="120" max="99" severity="danger"/>
-        </div>
-
-        <label value="Button host" sclass="z-h6 z-mb-2"/>
-        <div sclass="z-d-flex z-gap-6 z-align-center" style="padding:8px 4px;">
-            <badge count="4" severity="danger"><button label="Notifications"/></badge>
-            <badge count="10" severity="info"><button label="Messages"/></badge>
-        </div>
-    </div>
-
-    <!-- avatar -->
-    <div sclass="z-card">
-        <label value="Avatar  (&lt;avatar&gt;)" sclass="z-d-block z-text-base z-fw-medium z-text-on-surface z-mb-3"/>
-        <label value="Photo or initials container. size = small | medium | large; shape = circle | square. Falls back image → icon → initials." sclass="z-text-secondary z-text-sm z-mb-3"/>
-
-        <label value="Sizes" sclass="z-h6 z-mb-2"/>
-        <div sclass="z-d-flex z-gap-6 z-align-end z-mb-4">
-            <avatar label="AB" size="small"/>
-            <avatar label="AB" size="medium"/>
-            <avatar label="AB" size="large"/>
-        </div>
-
-        <label value="Colored initials + square shape" sclass="z-h6 z-mb-2"/>
-        <div sclass="z-d-flex z-gap-3 z-align-center z-mb-4">
-            <avatar label="HW" size="medium" style="background:var(--zk-color-primary);color:var(--zk-color-on-primary)"/>
-            <avatar label="JL" size="medium" style="background:var(--zk-color-secondary);color:var(--zk-color-on-secondary)"/>
-            <avatar label="SA" size="medium" style="background:var(--zk-color-status-success);color:var(--zk-color-on-status)"/>
-            <avatar label="MK" size="medium" shape="square"/>
-        </div>
-
-        <label value="Avatar Group  (&lt;avatargroup&gt;)" sclass="z-h6 z-mb-2"/>
-        <avatargroup size="medium">
-            <avatar label="HW" style="background:var(--zk-color-primary);color:var(--zk-color-on-primary)"/>
-            <avatar label="JL" style="background:var(--zk-color-secondary);color:var(--zk-color-on-secondary)"/>
-            <avatar label="MK"/>
-            <avatar label="+3"/>
-        </avatargroup>
-    </div>
-
-    <!-- z-card (utility, unchanged) -->
+    <!-- z-card (utility) -->
     <div sclass="z-card">
         <label value="Card  (.z-card)" sclass="z-d-block z-text-base z-fw-medium z-text-on-surface z-mb-3"/>
         <label value="A surface container with background-color, border-radius (--zk-shape-card), and elevation shadow (--zk-elevation-card) from the design token system." sclass="z-text-secondary z-text-sm z-mb-3"/>
@@ -96,22 +18,13 @@
             </div>
 
             <div sclass="z-card" style="width:240px">
-                <div sclass="z-d-flex z-align-center z-gap-3 z-mb-3">
-                    <avatar label="HC" size="medium" style="background:var(--zk-color-primary);color:var(--zk-color-on-primary)"/>
-                    <div>
-                        <label value="Hawk Chen" sclass="z-fw-semibold z-d-block"/>
-                        <label value="hawkchen@potix.com" sclass="z-text-muted z-text-xs"/>
-                    </div>
-                </div>
-                <div sclass="z-d-flex z-gap-2">
-                    <chip label="Admin" severity="info"/>
-                    <chip label="Active" severity="success"/>
-                </div>
+                <label value="Hawk Chen" sclass="z-h5 z-d-block z-mb-2"/>
+                <label value="hawkchen@potix.com" sclass="z-text-muted z-text-sm z-d-block z-mb-2"/>
+                <label value="Compose card content from any combination of ZK widgets and utility classes." sclass="z-text-secondary z-text-sm"/>
             </div>
 
             <div sclass="z-card" style="width:240px">
                 <label value="Order #1042" sclass="z-h5 z-d-block z-mb-2"/>
-                <chip label="Shipped" severity="success" sclass="z-mb-3"/>
                 <vlayout>
                     <label value="3 items · $124.50" sclass="z-text-secondary z-text-sm"/>
                     <label value="ETA: Jun 15, 2026" sclass="z-text-muted z-text-sm"/>
