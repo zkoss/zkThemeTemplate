@@ -52,11 +52,15 @@
     </template>
 </apply>
 
-<!-- Invalid cells render UNSTYLED: daterangebox drops the user `sclass` (ZK-6133,
-     https://zkoss.atlassian.net/browse/ZK-6133), so `.z-daterangebox-invalid` cannot be applied
-     declaratively — the real invalid state only appears via an actual unparseable-input validation
-     error. The invalid CSS itself is correct (verified by forcing the class in devtools). Make the
-     Invalid column a live demo once ZK-6133 is fixed and `sclass` reaches the root. -->
+<!-- Invalid cells force the REAL invalid state on load by firing the exact same AuInvoke the
+     framework itself sends on a validation failure — Daterangebox.java:
+       response("invalid", new AuInvoke(this, "_setInvalid", true))
+     This is a genuine `.z-daterangebox-invalid` render (the same client mechanism a real
+     unparseable-input / constraint error triggers), NOT a faked sclass. It sidesteps ZK-6133
+     (https://zkoss.atlassian.net/browse/ZK-6133 — daterangebox drops the user `sclass`), which
+     blocks the plain declarative `sclass="z-daterangebox-invalid"` path other components use.
+     daterangebox is a XulElement (not an InputElement), so timepicker's `self.setErrorMessage(...)`
+     onCreate trick is unavailable here — `_setInvalid` via AuInvoke is the equivalent hook. -->
 <apply templateURI="~./pv/matrix.zul" title="States — Readonly / Invalid"
        cols="${['Readonly','Invalid']}"
        rowsTemplate="dr-rows-ro-inv">
@@ -64,12 +68,16 @@
         <div sclass="z-d-contents">
             <div sclass="z-text-sm z-text-secondary">Basic</div>
             <div><daterangebox readonly="true"/></div>
-            <div><daterangebox/></div>
+            <div><daterangebox>
+                <attribute name="onCreate">Clients.response(new org.zkoss.zk.au.out.AuInvoke(self, "_setInvalid", true));</attribute>
+            </daterangebox></div>
         </div>
         <div sclass="z-d-contents">
             <div sclass="z-text-sm z-text-secondary">Seeded range</div>
             <div><daterangebox readonly="true" beginValue="${sampleBegin}" endValue="${sampleEnd}"/></div>
-            <div><daterangebox beginValue="${sampleBegin}" endValue="${sampleEnd}"/></div>
+            <div><daterangebox beginValue="${sampleBegin}" endValue="${sampleEnd}">
+                <attribute name="onCreate">Clients.response(new org.zkoss.zk.au.out.AuInvoke(self, "_setInvalid", true));</attribute>
+            </daterangebox></div>
         </div>
     </template>
 </apply>

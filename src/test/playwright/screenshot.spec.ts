@@ -529,6 +529,37 @@ test.describe('daterangebox', () => {
     const width = box!.width;
     expect(width, `seeded input must hug its date content (< 130px), was ${width}px`).toBeLessThan(130);
   });
+
+  // gap 2026-07-20 (invalid-state coverage): daterangebox has a real invalid state
+  // (`z-daterangebox-invalid` on the ROOT, since it's a XulElement composite, not an
+  // InputElement). ZK-6133 (https://zkoss.atlassian.net/browse/ZK-6133) drops the user
+  // `sclass`, so it CANNOT be forced with `sclass="z-daterangebox-invalid"` the way other
+  // inputs are. The preview (pv/daterangebox-content.zul) forces the GENUINE state on load
+  // via the framework's own AuInvoke — Clients.response(new AuInvoke(self, "_setInvalid",
+  // true)) — the same call Daterangebox.java fires on a validation failure. This guards
+  // that ZK-6133 workaround: the two Invalid-column cells must carry the class AND paint
+  // the error border (--zk-color-error), not the default outline.
+  test('invalid state paints the error border (ZK-6133 workaround)', async ({ page }) => {
+    const invalid = page.locator('.z-daterangebox.z-daterangebox-invalid');
+    // Deterministic wait: the class arrives via an AuInvoke applied after mount, so
+    // toHaveCount auto-retries until it lands (no fixed timeout). The preview forces
+    // exactly the two Invalid-column cells.
+    await expect(invalid).toHaveCount(2);
+
+    // Resolve --zk-color-error at runtime instead of hardcoding rgb(211,47,47), so the
+    // guard survives a token-value change and still asserts "invalid uses the error color".
+    const errorColor = await page.evaluate(() => {
+      const probe = document.createElement('span');
+      probe.style.color = 'var(--zk-color-error)';
+      document.body.appendChild(probe);
+      const c = getComputedStyle(probe).color;
+      probe.remove();
+      return c;
+    });
+
+    const borderColor = await invalid.first().evaluate(el => getComputedStyle(el).borderTopColor);
+    expect(borderColor, `invalid border must be --zk-color-error (${errorColor}), was ${borderColor}`).toBe(errorColor);
+  });
 });
 
 // -------------------------------------------------------
