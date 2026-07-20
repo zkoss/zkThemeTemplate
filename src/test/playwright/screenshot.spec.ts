@@ -657,12 +657,12 @@ test.describe('timepicker', () => {
   // timepicker is a fixed-format, readonly time field but ZK hardcodes the input at
   // size="5" (fits HH:mm only). Under the old `flex:1;min-width:0` with no field-sizing,
   // an HH:mm:ss value ("10:30:00") CLIPS (scrollWidth > clientWidth) whenever the root
-  // isn't given an explicit width — every preview cell masked it with width="160px".
-  // pv/timepicker-content.zul adds one seeded auto-width HH:mm:ss cell to expose it.
-  // Fix mirrors timebox: field-sizing:content lets the input hug/grow to its time.
+  // isn't given an explicit width. pv/timepicker-content.zul renders its timepickers at
+  // content width (no forced width="160px"), so every seeded HH:mm:ss cell is a live clip
+  // target. Fix mirrors timebox: field-sizing:content lets the input hug/grow to its time.
   // Readonly (value picked from popup, not typed) → no per-keystroke jitter. RED before
-  // the fix (auto-width cell clipped), GREEN after. Order-independent: no seeded input
-  // may clip, and all must report field-sizing:content.
+  // the fix (seeded cells clipped), GREEN after. Order-independent: no seeded input may
+  // clip, and all must report field-sizing:content.
   test('input hugs its time content (field-sizing, no clip)', async ({ page }) => {
     const info = await page.evaluate(() => {
       const seeded = ([...document.querySelectorAll('.z-timepicker-input')] as HTMLInputElement[])

@@ -21,12 +21,13 @@
             <div sclass="z-text-xs z-text-secondary">hh:mm:ss a</div>
             <timepicker format="hh:mm:ss a" readonly="false"/>
         </div>
-        <!-- Content-fit probe: seeded HH:mm:ss with NO explicit width. ZK hardcodes the
-             input at size="5" (fits HH:mm only); without field-sizing the "10:30:00" value
-             is clipped (scrollWidth > clientWidth). Every other cell masks this by forcing
-            . This cell is the target of the timepicker content-fit guard. -->
+        <!-- Seeded HH:mm:ss content-fit example. ZK hardcodes the input at size="5"
+             (fits HH:mm only), so without field-sizing the "10:30:00" value would clip
+             (scrollWidth > clientWidth); field-sizing:content lets it hug/grow to fit.
+             With the fixed widths removed above, every cell now sizes to its content —
+             this seeded cell is one of the timepicker content-fit guard's targets. -->
         <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-            <div sclass="z-text-xs z-text-secondary">HH:mm:ss seeded (auto width)</div>
+            <div sclass="z-text-xs z-text-secondary">HH:mm:ss (seeded)</div>
             <timepicker format="HH:mm:ss" value="${sampleTime}"/>
         </div>
     </div>
