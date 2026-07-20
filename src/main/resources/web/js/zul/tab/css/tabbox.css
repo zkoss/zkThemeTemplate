@@ -32,7 +32,7 @@
     position: relative;  /* anchor for absolutely-positioned scroll arrows + toolbar */
     display: flex;
     flex-direction: column;
-    background-color: var(--zk-color-surface);
+    background-color: var(--zk-tab-bg);
     font-family: var(--zk-typescale-font-family);
 }
 
@@ -51,8 +51,8 @@
 /* ─── Tab bar (.z-tabs) ─────────────────────────────────────────────────── */
 .z-tabs {
     position: relative;
-    border-bottom: 1px solid var(--zk-color-outline-variant);
-    background-color: var(--zk-color-surface);
+    border-bottom: 1px solid var(--zk-tab-border-color);
+    background-color: var(--zk-tab-bg);
     flex-shrink: 0;
     overflow: hidden;   /* ZK manages scroll via JS scroll buttons */
     min-height: var(--zk-tab-height);
@@ -85,7 +85,7 @@
     flex-shrink: 0;   /* keeps natural width so ZK JS can detect overflow */
     min-height: var(--zk-tab-height);
     cursor: pointer;
-    color: var(--zk-color-on-surface-variant);
+    color: var(--zk-tab-fg);
     font-size: var(--zk-typescale-label-large-size);
     font-weight: var(--zk-typescale-label-large-weight);
     line-height: var(--zk-typescale-label-large-line-height);
@@ -105,14 +105,14 @@
     content: '';
     position: absolute;
     inset: 0;
-    background-color: var(--zk-color-primary);
+    background-color: var(--zk-tab-accent);
     opacity: 0;
     pointer-events: none;
     transition: var(--zk-state-layer-transition);
 }
 
 .z-tab:hover {
-    color: var(--zk-color-on-surface);
+    color: var(--zk-tab-fg-hover);
 }
 
 .z-tab:hover::before { opacity: var(--zk-state-hover-opacity); }
@@ -120,8 +120,8 @@
 
 /* ─── Selected tab ───────────────────────────────────────────────────────── */
 .z-tab.z-tab-selected {
-    color: var(--zk-color-primary);
-    border-bottom-color: var(--zk-color-primary);
+    color: var(--zk-tab-accent);
+    border-bottom-color: var(--zk-tab-accent);
 }
 
 /* ─── Disabled tab ───────────────────────────────────────────────────────── */
@@ -333,7 +333,7 @@
     overflow: auto;
     background-color: var(--zk-color-surface);
     position: relative;
-    border: 1px solid var(--zk-color-outline-variant);
+    border: 1px solid var(--zk-tab-border-color);
     border-top: none;
     border-radius: 0 0 var(--zk-shape-card) var(--zk-shape-card);
 }
@@ -347,19 +347,19 @@
 
 /* ─── Placement molds ────────────────────────────────────────────────────── */
 .z-tabbox-top .z-tabs {
-    border-bottom: 1px solid var(--zk-color-outline-variant);
+    border-bottom: 1px solid var(--zk-tab-border-color);
 }
 
 /* Bottom orientation: ZK mold renders tabpanels FIRST then tabs in DOM,
    so default flex column order already places panels on top, tabs on bottom. */
 .z-tabbox-bottom .z-tabs {
-    border-top: 1px solid var(--zk-color-outline-variant);
+    border-top: 1px solid var(--zk-tab-border-color);
     border-bottom: none;
 }
 
 /* Tabpanels border adjustment for bottom: border is on top/sides/none at bottom */
 .z-tabbox-bottom .z-tabpanels {
-    border-top: 1px solid var(--zk-color-outline-variant);
+    border-top: 1px solid var(--zk-tab-border-color);
     border-bottom: none;
     border-radius: var(--zk-shape-card) var(--zk-shape-card) 0 0;
 }
@@ -385,7 +385,7 @@
 .z-tabbox-vertical .z-tabs {
     flex-direction: column;
     border-bottom: none;
-    border-right: 1px solid var(--zk-color-outline-variant);
+    border-right: 1px solid var(--zk-tab-border-color);
     min-width: 120px;
     width: auto;
     overflow: hidden;
@@ -434,7 +434,7 @@
 .z-tabbox-right .z-tabs {
     flex-direction: column;
     border-bottom: none;
-    border-left: 1px solid var(--zk-color-outline-variant);
+    border-left: 1px solid var(--zk-tab-border-color);
     min-width: 120px;
     width: auto;
     overflow: hidden;
@@ -474,7 +474,7 @@
      * explicit height (e.g. height="300px"). The animation gets stuck at
      * height:0 and never restores natural height. See doc/skill-gaps.md
      * 2026-05-21 entry. */
-    border: 1px solid var(--zk-color-outline-variant);
+    border: 1px solid var(--zk-tab-border-color);
     /* No border-radius — MD3 expansion-panel groups render flat at the edges.
      * Adding radius to the parent while children (.z-tab headers, panel-content)
      * remain square produces sharp corners peeking out from under the rounded
@@ -497,7 +497,7 @@
  * subtracts inflated sibling offsetHeights from the tabbox height and
  * clamps the selected cave's height to 0 (B50-ZK-298 path). */
 .z-tabbox-accordion .z-tabpanel {
-    border-bottom: 1px solid var(--zk-color-outline-variant);
+    border-bottom: 1px solid var(--zk-tab-border-color);
     padding: 0;
     min-height: 0;
 }

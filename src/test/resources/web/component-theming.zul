@@ -202,5 +202,38 @@
             <comboitem label="Gamma"/>
         </combobox>
     </div>
+
+    <!-- Tab (tabbox): nav chrome + active accent -->
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Tabbox (default)</div>
+    <div sclass="z-mb-6">
+        <tabbox width="320px">
+            <tabs><tab label="One"/><tab label="Two"/><tab label="Three"/></tabs>
+            <tabpanels><tabpanel>One</tabpanel><tabpanel>Two</tabpanel><tabpanel>Three</tabpanel></tabpanels>
+        </tabbox>
+    </div>
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Tabbox (regional override)</div>
+    <div sclass="z-mb-8 z-p-4 z-bg-surface-variant z-rounded"
+         style="--zk-tab-border-color:#6750a4; --zk-tab-accent:#6750a4">
+        <tabbox width="320px">
+            <tabs><tab label="One"/><tab label="Two"/><tab label="Three"/></tabs>
+            <tabpanels><tabpanel>One</tabpanel><tabpanel>Two</tabpanel><tabpanel>Three</tabpanel></tabpanels>
+        </tabbox>
+    </div>
+
+    <!-- Menu: menubar surface + dropdown popup + selected item -->
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Menubar (default)</div>
+    <div sclass="z-mb-6">
+        <menubar width="320px">
+            <menu label="File"><menupopup><menuitem label="New"/><menuitem label="Open"/></menupopup></menu>
+            <menu label="Edit"><menupopup><menuitem label="Cut"/></menupopup></menu>
+        </menubar>
+    </div>
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Menubar (regional override)</div>
+    <div sclass="z-mb-8 z-p-4 z-bg-surface-variant z-rounded" style="--zk-menubar-bg:#6750a4">
+        <menubar width="320px">
+            <menu label="File"><menupopup><menuitem label="New"/><menuitem label="Open"/></menupopup></menu>
+            <menu label="Edit"><menupopup><menuitem label="Cut"/></menupopup></menu>
+        </menubar>
+    </div>
 </div>
 </zk>

@@ -286,6 +286,34 @@ dropdown-input family; datebox/timebox/spinner/bandbox share the field model (pl
 | `--zk-combobox-selected-bg` | `var(--zk-color-primary-container)` |
 | `--zk-combobox-selected-fg` | `var(--zk-color-on-primary-container)` |
 
+### Tab (tabbox) — shipped
+
+Nav chrome + active accent. State is a `::before` overlay; `--zk-tab-accent` colors the
+state-layer tint, the selected label, and the bottom indicator. `--zk-tab-border-color` drives
+every tab-component border (bar divider across top/bottom/left/right molds + tabpanel frames).
+
+| Knob | Default |
+|------|---------|
+| `--zk-tab-bg` | `var(--zk-color-surface)` |
+| `--zk-tab-border-color` | `var(--zk-color-outline-variant)` |
+| `--zk-tab-fg` | `var(--zk-color-on-surface-variant)` |
+| `--zk-tab-fg-hover` | `var(--zk-color-on-surface)` |
+| `--zk-tab-accent` | `var(--zk-color-primary)` |
+| `--zk-tab-height` (size — in `_sizing.css`) | `48px` |
+
+### Menu — shipped
+
+Menubar surface + dropdown popup + selected item (`.z-menubar` / `.z-menupopup` / `.z-menuitem`).
+Menu/menuitem hover uses a shared `::before` overlay (not knob-driven).
+
+| Knob | Default |
+|------|---------|
+| `--zk-menubar-bg` | `var(--zk-color-surface-container)` |
+| `--zk-menupopup-bg` | `var(--zk-color-surface)` |
+| `--zk-menupopup-radius` | `var(--zk-shape-menu)` |
+| `--zk-menupopup-border-color` | `var(--zk-color-outline-variant)` |
+| `--zk-menuitem-selected-bg` | `var(--zk-color-primary-container)` |
+
 ## Recipe — adding a component to the API
 
 Validated by the button pilot; repeat per component:
@@ -304,6 +332,7 @@ Validated by the button pilot; repeat per component:
 
 ## Status
 
-- **Shipped**: button, input (textbox family), window, grid, listbox, tree, panel, groupbox, combobox.
+- **Shipped**: button, input (textbox family), window, grid, listbox, tree, panel, groupbox,
+  combobox, tab (tabbox), menu.
 - **Planned**: the rest of the dropdown-input family (datebox/timebox/spinner/bandbox — share
-  combobox's field model), tab, menu, and hoisting the variant-local chip/avatar defaults.
+  combobox's field model), and hoisting the variant-local chip/avatar defaults.

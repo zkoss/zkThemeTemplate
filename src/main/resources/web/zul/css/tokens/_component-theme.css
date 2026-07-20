@@ -133,4 +133,20 @@
     --zk-combobox-item-hover-bg:      rgba(0, 0, 0, 0.08);
     --zk-combobox-selected-bg:        var(--zk-color-primary-container);
     --zk-combobox-selected-fg:        var(--zk-color-on-primary-container);
+
+    /* ── Tab (tabbox) — nav chrome + active accent ───────────────────────
+       State is a ::before overlay; the accent colors the state-layer tint,
+       the selected label, and the bottom indicator. */
+    --zk-tab-bg:           var(--zk-color-surface);
+    --zk-tab-border-color: var(--zk-color-outline-variant);
+    --zk-tab-fg:           var(--zk-color-on-surface-variant);
+    --zk-tab-fg-hover:     var(--zk-color-on-surface);
+    --zk-tab-accent:       var(--zk-color-primary);
+
+    /* ── Menu — menubar surface + dropdown popup + selected item ─────────── */
+    --zk-menubar-bg:             var(--zk-color-surface-container);
+    --zk-menupopup-bg:           var(--zk-color-surface);
+    --zk-menupopup-radius:       var(--zk-shape-menu);
+    --zk-menupopup-border-color: var(--zk-color-outline-variant);
+    --zk-menuitem-selected-bg:   var(--zk-color-primary-container);
 }

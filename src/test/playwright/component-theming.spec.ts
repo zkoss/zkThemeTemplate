@@ -18,6 +18,8 @@ const STOCK_RADIUS = '4px';                // --zk-shape-button (extra-small cor
 const radiusOf = (loc: Locator) => loc.evaluate((el) => getComputedStyle(el).borderTopLeftRadius);
 const bgOf = (loc: Locator) => loc.evaluate((el) => getComputedStyle(el).backgroundColor);
 const borderColorOf = (loc: Locator) => loc.evaluate((el) => getComputedStyle(el).borderTopColor);
+const borderBottomColorOf = (loc: Locator) => loc.evaluate((el) => getComputedStyle(el).borderBottomColor);
+const colorOf = (loc: Locator) => loc.evaluate((el) => getComputedStyle(el).color);
 
 test.describe('component theming API — button', () => {
   test.beforeEach(async ({ page }) => {
@@ -155,5 +157,29 @@ test.describe('component theming API — button', () => {
 
     expect(await radiusOf(def)).toBe('4px'); // stock --zk-shape-input
     expect(await borderColorOf(def)).not.toBe(SCOPED_PURPLE);
+  });
+
+  // ── tab: nav chrome + active accent (indicator + selected label) ──────────
+  test('tabbox — regional accent/border override, sibling untouched', async ({ page }) => {
+    const defBar = page.locator('.z-tabs').first();
+    const defSel = page.locator('.z-tab-selected').first();
+    const scopedBox = page.locator('div[style*="--zk-tab-accent"]');
+    const scopedBar = scopedBox.locator('.z-tabs').first();
+    const scopedSel = scopedBox.locator('.z-tab-selected').first();
+
+    expect(await borderBottomColorOf(scopedBar)).toBe(SCOPED_PURPLE);
+    expect(await colorOf(scopedSel)).toBe(SCOPED_PURPLE); // selected label = accent
+
+    expect(await borderBottomColorOf(defBar)).not.toBe(SCOPED_PURPLE);
+    expect(await colorOf(defSel)).not.toBe(SCOPED_PURPLE);
+  });
+
+  // ── menu: menubar surface (popup/selected-item also knob-driven) ──────────
+  test('menubar — regional surface override, sibling untouched', async ({ page }) => {
+    const def = page.locator('.z-menubar').first();
+    const scoped = page.locator('div[style*="--zk-menubar-bg"] .z-menubar').first();
+
+    expect(await bgOf(scoped)).toBe(SCOPED_PURPLE);
+    expect(await bgOf(def)).not.toBe(SCOPED_PURPLE);
   });
 });

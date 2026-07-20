@@ -58,7 +58,7 @@
     flex-direction: row;
     align-items: center;
     min-height: var(--zk-menubar-height);
-    background-color: var(--zk-color-surface-container);
+    background-color: var(--zk-menubar-bg);
     color: var(--zk-color-on-surface);
     padding: 0 var(--zk-spacing-4);
     box-sizing: border-box;
@@ -272,10 +272,10 @@
     z-index: 1600;
     margin: 2px 0 0;
     padding: var(--zk-spacing-1) 0;
-    background-color: var(--zk-color-surface);
-    border-radius: var(--zk-shape-menu);
+    background-color: var(--zk-menupopup-bg);
+    border-radius: var(--zk-menupopup-radius);
     box-shadow: var(--zk-elevation-dropdown);
-    border: 1px solid var(--zk-color-outline-variant);
+    border: 1px solid var(--zk-menupopup-border-color);
     min-width: 160px;
     box-sizing: border-box;
     font-family: var(--zk-typescale-font-family);
@@ -369,7 +369,7 @@
 /* Selected menuitem */
 .z-menuitem.z-menuitem-selected > .z-menuitem-content,
 .z-menuitem.z-selected > .z-menuitem-content {
-    background-color: var(--zk-color-primary-container);
+    background-color: var(--zk-menuitem-selected-bg);
     color: var(--zk-color-on-primary-container);
 }
 
