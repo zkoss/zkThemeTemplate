@@ -99,6 +99,7 @@ const PAGES = [
   '/radiogroup.zul',
   '/rangeslider.zul',
   '/rating.zul',
+  '/responsive-grid.zul',
   '/rowlayout.zul',
   '/scrollbar.zul',
   '/scrollview.zul',
