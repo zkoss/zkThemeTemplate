@@ -203,6 +203,27 @@
         </combobox>
     </div>
 
+    <!-- Datebox / Timebox / Spinner / Bandbox: dropdown-input family (wrapper-border model).
+         Border sits on the root wrapper; focus is an inset ring. Same field knobs as combobox. -->
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Datebox / Timebox / Spinner / Bandbox (default)</div>
+    <div sclass="z-hstack z-mb-6 z-align-center">
+        <datebox/>
+        <timebox/>
+        <spinner value="5"/>
+        <bandbox/>
+    </div>
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Dropdown-input family (regional override)</div>
+    <div sclass="z-hstack z-mb-8 z-align-center z-p-4 z-bg-surface-variant z-rounded"
+         style="--zk-datebox-radius:0px; --zk-datebox-border-color:#6750a4;
+                --zk-timebox-radius:0px; --zk-timebox-border-color:#6750a4;
+                --zk-spinner-radius:0px; --zk-spinner-border-color:#6750a4;
+                --zk-bandbox-radius:0px; --zk-bandbox-border-color:#6750a4">
+        <datebox/>
+        <timebox/>
+        <spinner value="5"/>
+        <bandbox/>
+    </div>
+
     <!-- Tab (tabbox): nav chrome + active accent -->
     <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Tabbox (default)</div>
     <div sclass="z-mb-6">

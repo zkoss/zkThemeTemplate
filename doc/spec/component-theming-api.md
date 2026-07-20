@@ -269,8 +269,11 @@ Bordered container with collapsible header (`.z-groupbox`).
 ### Combobox — shipped
 
 Outlined input field (`.z-combobox-input` + `.z-combobox-button`) + dropdown popup
-(`.z-combobox-popup`) + option selection (`.z-comboitem`). Representative of the
-dropdown-input family; datebox/timebox/spinner/bandbox share the field model (planned).
+(`.z-combobox-popup`) + option selection (`.z-comboitem`). Head of the dropdown-input
+family; datebox/timebox/spinner/bandbox share this field-knob vocabulary (see below).
+Note combobox uses a **split-border** DOM (input + button each carry half the border,
+focus grows border-width 1px→2px); the other four use a **wrapper-border** DOM (border
+on the root, focus = inset ring). Same knobs, different plumbing.
 
 | Knob | Default |
 |------|---------|
@@ -285,6 +288,30 @@ dropdown-input family; datebox/timebox/spinner/bandbox share the field model (pl
 | `--zk-combobox-item-hover-bg` | `rgba(0, 0, 0, 0.08)` |
 | `--zk-combobox-selected-bg` | `var(--zk-color-primary-container)` |
 | `--zk-combobox-selected-fg` | `var(--zk-color-on-primary-container)` |
+
+### Datebox / Timebox / Spinner / Bandbox — shipped
+
+The rest of the dropdown-input family. All four use the **wrapper-border** model: the
+border sits on the root wrapper (`.z-datebox` / `.z-timebox` / `.z-spinner` / `.z-bandbox`)
+and focus is an inset ring (Mechanism A — see `reference/focus-affordance-no-layout-shift.md`),
+so `--zk-<comp>-border-color-focus` tints **both** the outline and the ring (and, for datebox,
+the open-state trigger glyph). Datebox and bandbox add a popup surface; timebox and spinner are
+steppers with no popup. `.z-doublespinner` shares the spinner ruleset, so it reads the same
+`--zk-spinner-*` knobs. Invalid/error states stay on `--zk-color-error` (not a knob), and the
+internal stepper/divider lines + datebox's nested timezone `<select>` keep their base tokens.
+
+| Knob | Default | Applies to |
+|------|---------|------------|
+| `--zk-datebox-bg` / `--zk-timebox-bg` / `--zk-spinner-bg` / `--zk-bandbox-bg` | `var(--zk-color-surface)` | wrapper fill |
+| `--zk-datebox-fg` / `--zk-timebox-fg` / `--zk-spinner-fg` / `--zk-bandbox-fg` | `var(--zk-color-on-surface)` | input text |
+| `--zk-datebox-radius` / `--zk-timebox-radius` / `--zk-spinner-radius` / `--zk-bandbox-radius` | `var(--zk-shape-input)` | wrapper + trigger corners |
+| `--zk-<comp>-border-color` | `var(--zk-color-outline)` | resting outline |
+| `--zk-<comp>-border-color-hover` | `var(--zk-color-on-surface)` | hover outline |
+| `--zk-<comp>-border-color-focus` | `var(--zk-color-primary)` | focus/open outline + inset ring |
+| `--zk-datebox-popup-bg` | `var(--zk-color-surface)` | calendar popup surface |
+| `--zk-datebox-popup-radius` | `var(--zk-shape-corner-medium)` | calendar popup corners |
+| `--zk-bandbox-popup-bg` | `var(--zk-color-surface)` | band popup surface |
+| `--zk-bandbox-popup-radius` | `var(--zk-shape-menu)` | band popup corners |
 
 ### Tab (tabbox) — shipped
 
@@ -361,6 +388,9 @@ Validated by the button pilot; repeat per component:
 ## Status
 
 - **Shipped**: button, input (textbox family), window, grid, listbox, tree, panel, groupbox,
-  combobox, tab (tabbox), menu, avatar/avatar-group, chip (base hoisted; see caveat).
-- **Planned**: the rest of the dropdown-input family (datebox/timebox/spinner/bandbox — share
-  combobox's field model).
+  combobox, datebox, timebox, spinner (+ doublespinner), bandbox, tab (tabbox), menu,
+  avatar/avatar-group, chip (base hoisted; see caveat).
+- **Not exposed** (by design): purely structural/layout components (box, div, cell, separator,
+  layouts) and content atoms (label, image) have no meaningful appearance knob; selection
+  controls (checkbox/radio), slider, rating, and paging are candidates for a future pass if
+  adopter demand appears — add via the Recipe above.

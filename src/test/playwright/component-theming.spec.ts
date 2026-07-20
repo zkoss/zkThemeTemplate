@@ -159,6 +159,53 @@ test.describe('component theming API — button', () => {
     expect(await borderColorOf(def)).not.toBe(SCOPED_PURPLE);
   });
 
+  // ── dropdown-input family (datebox/timebox/spinner/bandbox): wrapper-border
+  // model — border on the root wrapper, focus = inset ring. Same field knobs as
+  // combobox; radius + resting border-color are the observable A/B here. ────────
+  test('datebox — regional border/radius override, sibling untouched', async ({ page }) => {
+    const def = page.locator('.z-datebox').first();
+    const scoped = page.locator('div[style*="--zk-datebox-radius"] .z-datebox').first();
+
+    expect(await radiusOf(scoped)).toBe('0px');
+    expect(await borderColorOf(scoped)).toBe(SCOPED_PURPLE);
+
+    expect(await radiusOf(def)).toBe('4px'); // stock --zk-shape-input
+    expect(await borderColorOf(def)).not.toBe(SCOPED_PURPLE);
+  });
+
+  test('timebox — regional border/radius override, sibling untouched', async ({ page }) => {
+    const def = page.locator('.z-timebox').first();
+    const scoped = page.locator('div[style*="--zk-timebox-radius"] .z-timebox').first();
+
+    expect(await radiusOf(scoped)).toBe('0px');
+    expect(await borderColorOf(scoped)).toBe(SCOPED_PURPLE);
+
+    expect(await radiusOf(def)).toBe('4px'); // stock --zk-shape-input
+    expect(await borderColorOf(def)).not.toBe(SCOPED_PURPLE);
+  });
+
+  test('spinner — regional border/radius override, sibling untouched', async ({ page }) => {
+    const def = page.locator('.z-spinner').first();
+    const scoped = page.locator('div[style*="--zk-spinner-radius"] .z-spinner').first();
+
+    expect(await radiusOf(scoped)).toBe('0px');
+    expect(await borderColorOf(scoped)).toBe(SCOPED_PURPLE);
+
+    expect(await radiusOf(def)).toBe('4px'); // stock --zk-shape-input
+    expect(await borderColorOf(def)).not.toBe(SCOPED_PURPLE);
+  });
+
+  test('bandbox — regional border/radius override, sibling untouched', async ({ page }) => {
+    const def = page.locator('.z-bandbox').first();
+    const scoped = page.locator('div[style*="--zk-bandbox-radius"] .z-bandbox').first();
+
+    expect(await radiusOf(scoped)).toBe('0px');
+    expect(await borderColorOf(scoped)).toBe(SCOPED_PURPLE);
+
+    expect(await radiusOf(def)).toBe('4px'); // stock --zk-shape-input
+    expect(await borderColorOf(def)).not.toBe(SCOPED_PURPLE);
+  });
+
   // ── tab: nav chrome + active accent (indicator + selected label) ──────────
   test('tabbox — regional accent/border override, sibling untouched', async ({ page }) => {
     const defBar = page.locator('.z-tabs').first();

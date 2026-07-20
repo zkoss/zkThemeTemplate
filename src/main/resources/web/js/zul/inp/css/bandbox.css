@@ -8,9 +8,9 @@
     display: inline-flex;
     align-items: center;
     position: relative;
-    border: 1px solid var(--zk-color-outline);
-    border-radius: var(--zk-shape-input);
-    background-color: var(--zk-color-surface);
+    border: 1px solid var(--zk-bandbox-border-color);
+    border-radius: var(--zk-bandbox-radius);
+    background-color: var(--zk-bandbox-bg);
     min-height: var(--zk-control-height);
     box-sizing: border-box;
     transition:
@@ -19,15 +19,15 @@
 }
 
 .z-bandbox:hover {
-    border-color: var(--zk-color-on-surface);
+    border-color: var(--zk-bandbox-border-color-hover);
 }
 
 /* Focus ring as an INSET box-shadow, not a border-width increase (and inset, not outset, to
    match the input family and stay clip-safe under an ancestor overflow:hidden): border stays
    1px so the box never grows. See reference/focus-affordance-no-layout-shift.md. */
 .z-bandbox:focus-within {
-    border-color: var(--zk-color-primary);
-    box-shadow: inset 0 0 0 1px var(--zk-color-primary);
+    border-color: var(--zk-bandbox-border-color-focus);
+    box-shadow: inset 0 0 0 1px var(--zk-bandbox-border-color-focus);
 }
 
 /* ─── Input field ─────────────────────────────────────────────────────── */
@@ -41,7 +41,7 @@
     min-height: calc(var(--zk-input-height) - 2px);
     font-family: var(--zk-typescale-font-family);
     font-size: var(--zk-typescale-body-medium-size);
-    color: var(--zk-color-on-surface);
+    color: var(--zk-bandbox-fg);
     outline: none;
     box-sizing: border-box;
 }
@@ -65,7 +65,7 @@
     color: var(--zk-color-on-surface-variant);
     cursor: pointer;
     flex-shrink: 0;
-    border-radius: 0 var(--zk-shape-input) var(--zk-shape-input) 0;
+    border-radius: 0 var(--zk-bandbox-radius) var(--zk-bandbox-radius) 0;
     overflow: hidden;
     transition: color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
 }
@@ -90,8 +90,8 @@
     z-index: 1600;
     margin: 4px 0 0;
     padding: var(--zk-spacing-2);
-    background-color: var(--zk-color-surface);
-    border-radius: var(--zk-shape-menu);
+    background-color: var(--zk-bandbox-popup-bg);
+    border-radius: var(--zk-bandbox-popup-radius);
     box-shadow: var(--zk-elevation-dropdown);
     border: 1px solid var(--zk-color-outline-variant);
     min-width: 300px;
@@ -160,15 +160,15 @@
    ring is a different halo and is clipped by ancestor overflow:hidden), so icon-open
    and input-focus look identical. See reference/focus-affordance-no-layout-shift.md. */
 .z-bandbox.z-bandbox-open {
-    border-color: var(--zk-color-primary);
-    box-shadow: inset 0 0 0 1px var(--zk-color-primary);
+    border-color: var(--zk-bandbox-border-color-focus);
+    box-shadow: inset 0 0 0 1px var(--zk-bandbox-border-color-focus);
 }
 
 /* ─── Bandpopup ───────────────────────────────────────────────────────── */
 /* bandpopup.css is never served (no <css> in lang.xml); rules must live here */
 /* .z-bandbox-popup already provides border/shadow/radius — no second border here */
 .z-bandpopup {
-    background-color: var(--zk-color-surface);
+    background-color: var(--zk-bandbox-popup-bg);
     padding: var(--zk-spacing-4);
 }
 }

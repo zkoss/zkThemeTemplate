@@ -120,8 +120,12 @@
     /* header height → --zk-groupbox-header-height (tokens/_sizing.css). */
 
     /* ── Combobox — outlined input field + dropdown popup + option selection.
-       Representative of the dropdown-input family; datebox/timebox/spinner/
-       bandbox share the field model (planned). */
+       Head of the dropdown-input family; datebox/timebox/spinner/bandbox share
+       this field-knob vocabulary (bg/fg/radius + per-state border colors). Note
+       combobox uses a SPLIT-border DOM (input + button each carry half the
+       border, focus grows border-width 1px→2px); the other four use a
+       WRAPPER-border DOM (border on the root, focus = inset ring). Same knobs,
+       different plumbing. */
     --zk-combobox-bg:                 var(--zk-color-surface);
     --zk-combobox-fg:                 var(--zk-color-on-surface);
     --zk-combobox-radius:             var(--zk-shape-input);
@@ -133,6 +137,48 @@
     --zk-combobox-item-hover-bg:      rgba(0, 0, 0, 0.08);
     --zk-combobox-selected-bg:        var(--zk-color-primary-container);
     --zk-combobox-selected-fg:        var(--zk-color-on-primary-container);
+
+    /* ── Datebox — outlined date-picker field + calendar popup ───────────
+       Wrapper-border model: border sits on .z-datebox and focus is an inset
+       ring (Mechanism A). border-color-focus tints BOTH the outline and the
+       ring. Invalid/error states stay on --zk-color-error (not a knob). The
+       nested timezone <select> inside the popup keeps its own selectbox styling. */
+    --zk-datebox-bg:                 var(--zk-color-surface);
+    --zk-datebox-fg:                 var(--zk-color-on-surface);
+    --zk-datebox-radius:             var(--zk-shape-input);
+    --zk-datebox-border-color:       var(--zk-color-outline);
+    --zk-datebox-border-color-hover: var(--zk-color-on-surface);
+    --zk-datebox-border-color-focus: var(--zk-color-primary);
+    --zk-datebox-popup-bg:           var(--zk-color-surface);
+    --zk-datebox-popup-radius:       var(--zk-shape-corner-medium);
+
+    /* ── Timebox — outlined time field + up/down stepper (no popup) ─────── */
+    --zk-timebox-bg:                 var(--zk-color-surface);
+    --zk-timebox-fg:                 var(--zk-color-on-surface);
+    --zk-timebox-radius:             var(--zk-shape-input);
+    --zk-timebox-border-color:       var(--zk-color-outline);
+    --zk-timebox-border-color-hover: var(--zk-color-on-surface);
+    --zk-timebox-border-color-focus: var(--zk-color-primary);
+
+    /* ── Spinner — numeric stepper field (no popup).
+       .z-doublespinner shares this ruleset, so it reads the same --zk-spinner-*
+       knobs (the two are styled by one selector list). */
+    --zk-spinner-bg:                 var(--zk-color-surface);
+    --zk-spinner-fg:                 var(--zk-color-on-surface);
+    --zk-spinner-radius:             var(--zk-shape-input);
+    --zk-spinner-border-color:       var(--zk-color-outline);
+    --zk-spinner-border-color-hover: var(--zk-color-on-surface);
+    --zk-spinner-border-color-focus: var(--zk-color-primary);
+
+    /* ── Bandbox — outlined field + arbitrary band popup ─────────────────── */
+    --zk-bandbox-bg:                 var(--zk-color-surface);
+    --zk-bandbox-fg:                 var(--zk-color-on-surface);
+    --zk-bandbox-radius:             var(--zk-shape-input);
+    --zk-bandbox-border-color:       var(--zk-color-outline);
+    --zk-bandbox-border-color-hover: var(--zk-color-on-surface);
+    --zk-bandbox-border-color-focus: var(--zk-color-primary);
+    --zk-bandbox-popup-bg:           var(--zk-color-surface);
+    --zk-bandbox-popup-radius:       var(--zk-shape-menu);
 
     /* ── Tab (tabbox) — nav chrome + active accent ───────────────────────
        State is a ::before overlay; the accent colors the state-layer tint,

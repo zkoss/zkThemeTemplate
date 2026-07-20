@@ -17,9 +17,9 @@
     display: inline-flex;
     align-items: center;
     position: relative;
-    border: 1px solid var(--zk-color-outline);
-    border-radius: var(--zk-shape-input);
-    background-color: var(--zk-color-surface);
+    border: 1px solid var(--zk-datebox-border-color);
+    border-radius: var(--zk-datebox-radius);
+    background-color: var(--zk-datebox-bg);
     min-height: var(--zk-control-height);
     box-sizing: border-box;
     transition:
@@ -28,15 +28,15 @@
 }
 
 .z-datebox:hover {
-    border-color: var(--zk-color-on-surface);
+    border-color: var(--zk-datebox-border-color-hover);
 }
 
 /* Focus ring as an INSET box-shadow, not a border-width increase: border stays 1px so the
    border-box content area never shrinks and the min-height-pinned input/button never force the
    root taller. See reference/focus-affordance-no-layout-shift.md. */
 .z-datebox:focus-within {
-    border-color: var(--zk-color-primary);
-    box-shadow: inset 0 0 0 1px var(--zk-color-primary);
+    border-color: var(--zk-datebox-border-color-focus);
+    box-shadow: inset 0 0 0 1px var(--zk-datebox-border-color-focus);
 }
 
 /* Content-hug (contract dw1/dw2/M1): ZK emits the <input> with no size/width
@@ -61,7 +61,7 @@
     min-height: calc(var(--zk-input-height) - 2px);
     font-family: var(--zk-typescale-font-family);
     font-size: var(--zk-typescale-body-medium-size);
-    color: var(--zk-color-on-surface);
+    color: var(--zk-datebox-fg);
     outline: none;
     box-sizing: border-box;
 }
@@ -115,7 +115,7 @@
     color: var(--zk-color-on-surface-variant);
     cursor: pointer;
     flex-shrink: 0;
-    border-radius: 0 var(--zk-shape-input) var(--zk-shape-input) 0;
+    border-radius: 0 var(--zk-datebox-radius) var(--zk-datebox-radius) 0;
     overflow: hidden;
     text-decoration: none;
     transition: color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
@@ -160,12 +160,12 @@
    min-height-pinned composite (~1px/side) and reads thicker than the input focus —
    the two focus styles would diverge. See reference/focus-affordance-no-layout-shift.md. */
 .z-datebox.z-datebox-open {
-    border-color: var(--zk-color-primary);
-    box-shadow: inset 0 0 0 1px var(--zk-color-primary);
+    border-color: var(--zk-datebox-border-color-focus);
+    box-shadow: inset 0 0 0 1px var(--zk-datebox-border-color-focus);
 }
 
 .z-datebox.z-datebox-open .z-datebox-button {
-    color: var(--zk-color-primary);
+    color: var(--zk-datebox-border-color-focus);
 }
 
 /* ─── Button hidden (buttonVisible="false") ──────────────────────────── */
@@ -206,8 +206,8 @@
 .z-datebox-popup {
     position: absolute;
     z-index: 1700;
-    background-color: var(--zk-color-surface);
-    border-radius: var(--zk-shape-corner-medium);
+    background-color: var(--zk-datebox-popup-bg);
+    border-radius: var(--zk-datebox-popup-radius);
     box-shadow: var(--zk-elevation-dialog);
     border: none;
     overflow: hidden;
