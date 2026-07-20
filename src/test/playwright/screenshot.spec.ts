@@ -502,6 +502,36 @@ test.describe('datebox', () => {
 });
 
 // -------------------------------------------------------
+// DateRangeBox
+// -------------------------------------------------------
+test.describe('daterangebox', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto('/daterangebox.zul');
+    await page.waitForLoadState('networkidle');
+    await page.evaluate(() => document.fonts.ready.then(() => true));
+  });
+
+  // gap 2026-07-20 (Contract M11 / c6a-c6b): the two inputs ship with no
+  // size/width (ZK Daterangebox.ts redraw() writes only class/aria/placeholder/
+  // autocomplete). Left unbounded each renders at the UA-default size=20 (~20ch,
+  // ~172px measured) and, with text-align:center, a short date sits centered with
+  // large symmetric gutters — making the field ~2x datebox width. field-sizing:
+  // content (daterangebox.css .z-daterangebox-input) must make each input hug its
+  // date content instead. RED before that fix (172px), GREEN after (~100px).
+  test('input hugs its date content (not the UA ~20ch default)', async ({ page }) => {
+    const begin = page.locator('.z-daterangebox-input.z-daterangebox-begin').first();
+    await expect(begin).toBeVisible();
+    // Sanity: the preview's first daterangebox is SEEDED, so we measure the
+    // content-fit case (a rendered date), not an empty box.
+    const value = await begin.inputValue();
+    expect(value.length, 'preview first daterangebox must be seeded').toBeGreaterThan(0);
+    const box = await begin.boundingBox();
+    const width = box!.width;
+    expect(width, `seeded input must hug its date content (< 130px), was ${width}px`).toBeLessThan(130);
+  });
+});
+
+// -------------------------------------------------------
 // Timebox
 // -------------------------------------------------------
 test.describe('timebox', () => {

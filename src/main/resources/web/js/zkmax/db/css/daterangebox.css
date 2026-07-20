@@ -74,9 +74,18 @@
 }
 
 /* ─── Inputs (both transparent — root supplies the only visible surface) ────────────────── */
+/* Content-hug (contract M11 / c6a-c6b): ZK emits both <input>s with no size/width
+   (see components/daterangebox.md), so each would fall back to the UA-default size=20
+   (~20ch, ~172px). Two such inputs + the centered short date read as a field ~2x datebox
+   width with large symmetric gutters. `field-sizing: content` makes each input hug its
+   date text; the `min-width` floor keeps an empty input a usable target and holds a
+   normal-length date without per-keystroke resize jitter. `flex: 0 1 auto` stops the input
+   growing past its content if the root is ever stretched (it may still shrink). Browsers
+   without `field-sizing` fall back to the prior ~20ch look — degradation, not breakage. */
 .z-daterangebox-input {
-    flex: 1;
-    min-width: 0;
+    flex: 0 1 auto;
+    field-sizing: content;
+    min-width: 6.5em;
     border: none;
     background: transparent;
     padding: 0 var(--zk-spacing-3);
