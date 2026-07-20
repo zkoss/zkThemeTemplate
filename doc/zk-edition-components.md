@@ -1,13 +1,23 @@
 # ZK Edition Components
 
+> Classified by which jar **registers** each component (verified against the ZK
+> `10.4.0-jakarta.FL.20260713-Eval` `lang.xml` / `lang-addon.xml`). Each component
+> is listed once — under its lowest edition. EE additionally *overrides* a few CE
+> components (grid, listbox, slider, tab, tree) with extra molds; those stay under CE.
+
 ## PE Components (`zkex.jar` — PE and EE)
 
 - Colorbox
 - Columnlayout
 - Columnchildren
+- Detail
 - Fisheye
 - Fisheyebar
+- Group
+- Groupfoot
 - JasperReport
+- Listgroup
+- Listgroupfoot
 - Pdfviewer
 - Rangeslider
 - Sliderbuttons
@@ -24,6 +34,7 @@
 - Chosenbox
 - Coachmark
 - Cropper
+- Daterangebox
 - Drawer
 - Dropupload
 - Fragment
@@ -68,25 +79,34 @@
 - Audio
 - Auxhead
 - Auxheader
+- Avatar
+- Avatargroup
+- Badge
 - Bandbox
 - Bandpopup
 - Borderlayout
 - Box
+- Breadcrumb
+- Breadcrumbitem
 - Button
 - Calendar
 - Captcha
 - Caption
+- Carousel
+- Carouselitem
 - Cell
 - Center
+- Chart
 - Checkbox
+- Chip
 - Column
 - Columns
 - Combobox
 - Combobutton
 - Comboitem
+- Confirmpopup
 - Datebox
 - Decimalbox
-- Detail
 - Div
 - Doublebox
 - Doublespinner
@@ -96,9 +116,7 @@
 - Footer
 - Frozen
 - Grid
-- Group
 - Groupbox
-- Groupfoot
 - Hbox (deprecated)
 - Hlayout
 - Html
@@ -113,8 +131,6 @@
 - Listcell
 - Listfoot
 - Listfooter
-- Listgroup
-- Listgroupfoot
 - Listhead
 - Listheader
 - Listitem
