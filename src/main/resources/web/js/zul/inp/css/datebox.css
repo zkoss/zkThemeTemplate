@@ -39,9 +39,21 @@
     box-shadow: inset 0 0 0 1px var(--zk-color-primary);
 }
 
+/* Content-hug (contract dw1/dw2/M1): ZK emits the <input> with no size/width
+   (InputWidget._cols=0 → ComboWidget.redraw_ writes only class/aria/autocomplete;
+   see components/combo-trio.md). The old `flex:1;min-width:0` collapsed the input to
+   a fixed ~108px that ignored its content — short/empty/long all rendered the same
+   width and long formats like "2025/01/15 00:00" were CLIPPED. `field-sizing: content`
+   makes the input hug its date text (short dates hug; long formats grow to fit — no
+   clipping). `flex: 1 1 auto` (basis = content) still lets an hflex / width-forced
+   field grow to fill its container, so form layouts keep working. The `min-width`
+   floor keeps an empty field a usable click target. Left-aligned (no text-align), so
+   hugging simply trims trailing dead space. Browsers without `field-sizing` fall back
+   to the prior look — degradation, not breakage. */
 .z-datebox-input {
-    flex: 1;
-    min-width: 0;
+    flex: 1 1 auto;
+    field-sizing: content;
+    min-width: 6.5em;
     border: none;
     background: transparent;
     padding: 0 var(--zk-spacing-3);

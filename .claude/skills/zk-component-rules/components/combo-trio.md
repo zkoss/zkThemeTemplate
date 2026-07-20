@@ -20,6 +20,12 @@ These are **Type A** for inplace. The border lives on the root `<span>`. See `re
 
 Standard pattern: `.z-{c}-disabled` class is added to the button element (`.z-{c}-button.z-{c}-disabled`). See `reference/buttonVisible-attribute.md`.
 
+## Input width: the inner `<input>` ships size-less
+
+ZK emits every combo-trio `<input>` (datebox / timebox / spinner / combobox / bandbox) with **no `size`, `cols`, or `width`** attribute: `InputWidget._cols` defaults to `0` (`getCols()` doc: "non-positive means the same as browser's default"), and `ComboWidget.redraw_` writes only `class` / `aria-*` / `autocomplete` / `value`. So the input's *intrinsic* width is the browser UA default (`size=20` ≈ 20ch) and the *rendered* width is entirely CSS-determined.
+
+Consequence for a theme: a `flex: 1; min-width: 0` on the input (a common pattern) collapses it to a **fixed** width inside the shrink-wrapped root that ignores content — a short value, an empty field, and a long-format value all render the same width, and a value longer than that fixed width is **clipped** (measured: datebox `yyyy/MM/dd HH:mm` needs 132px in a 108px input → truncated). Any theme must therefore pick an explicit input-width policy: either let the input **hug its content** (`field-sizing: content` + a `min-width` floor; `flex: 1 1 auto` so it still fills when `hflex`/width-forced) or accept/bound a fixed width. This is structural (true for every theme); *which* components hug is a theme decision — see this theme's `DESIGN.md §10`.
+
 ## Focus
 
 Use `:focus-within` on the root. The actual focus target is the inner input. See `reference/focus-vs-focus-within.md`.

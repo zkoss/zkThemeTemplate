@@ -8,6 +8,10 @@
     <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Calendar Popup Variants</div>
     <div sclass="z-d-flex z-flex-wrap z-gap-6 z-py-3">
         <div sclass="z-d-flex z-flex-col z-gap-2">
+            <label sclass="z-text-xs z-text-secondary">Seeded value (content-fit)</label>
+            <datebox value="${sampleDate}"/>
+        </div>
+        <div sclass="z-d-flex z-flex-col z-gap-2">
             <label sclass="z-text-xs z-text-secondary">Today link</label>
             <datebox showTodayLink="true"/>
         </div>
@@ -17,7 +21,7 @@
         </div>
         <div sclass="z-d-flex z-flex-col z-gap-2">
             <label sclass="z-text-xs z-text-secondary">Time in popup (yyyy/MM/dd HH:mm)</label>
-            <datebox format="yyyy/MM/dd HH:mm"/>
+            <datebox format="yyyy/MM/dd HH:mm" value="${sampleDate}"/>
         </div>
         <div sclass="z-d-flex z-flex-col z-gap-2">
             <label sclass="z-text-xs z-text-secondary">Timezone selector</label>

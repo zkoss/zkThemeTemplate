@@ -499,6 +499,40 @@ test.describe('datebox', () => {
       await padShot(page, page.locator('.z-datebox').first(), `${DIR}-${name}.png`);
     });
   }
+
+  // gap 2026-07-20 (Contract dw1/dw2/M1): the input ships size-less (ZK
+  // ComboWidget.redraw_ writes only class/aria/autocomplete; InputWidget._cols=0).
+  // The old `flex:1;min-width:0` collapsed it to a fixed ~108px that ignored
+  // content — a short date, an empty field, and a long-format date all rendered
+  // the SAME width, and the long format "2025/01/15 00:00" was CLIPPED
+  // (scrollWidth 132 > clientWidth 108). `field-sizing: content` (datebox.css) must
+  // make the input hug its date: short hugs, long grows to fit (no clip), so a
+  // longer value renders wider than a shorter one. Measures the seeded short-format
+  // and seeded long-format dateboxes in pv/datebox-content.zul.
+  // RED before the fix (fixed width, long clipped, long == short); GREEN after.
+  test('input hugs its date content (field-sizing, no clip, tracks length)', async ({ page }) => {
+    const info = await page.evaluate(() => {
+      const inputs = [...document.querySelectorAll('.z-datebox-input')] as HTMLInputElement[];
+      const seeded = inputs.filter(i => i.value && (i as HTMLElement).offsetParent !== null);
+      const measure = (i?: HTMLInputElement) => i && ({
+        w: Math.round(i.getBoundingClientRect().width),
+        clipped: i.scrollWidth > i.clientWidth + 1,
+        fieldSizing: getComputedStyle(i).getPropertyValue('field-sizing'),
+        value: i.value,
+      });
+      // long-format value contains "/" (yyyy/MM/dd HH:mm); the short default does not.
+      return {
+        short: measure(seeded.find(i => !i.value.includes('/'))),
+        long: measure(seeded.find(i => i.value.includes('/'))),
+      };
+    });
+    expect(info.short, 'seeded short-format datebox must be present').toBeTruthy();
+    expect(info.long, 'seeded long-format datebox must be present').toBeTruthy();
+    expect(info.long!.fieldSizing, 'field-sizing: content must be applied').toBe('content');
+    expect(info.long!.clipped, `long-format date "${info.long!.value}" must not be clipped`).toBe(false);
+    expect(info.long!.w, `input width must track content: long ${info.long!.w}px > short ${info.short!.w}px`)
+      .toBeGreaterThan(info.short!.w);
+  });
 });
 
 // -------------------------------------------------------
@@ -585,6 +619,28 @@ test.describe('timebox', () => {
       await padShot(page, page.locator('.z-timebox').first(), `${DIR}-${name}.png`);
     });
   }
+
+  // gap 2026-07-20 (Contract tw1/tw2/M1): same size-less input as datebox, with
+  // the same fixed-width collapse under the old `flex:1;min-width:0`. timebox's
+  // default time fits without clipping, so the clean RED->GREEN proof is the
+  // applied `field-sizing: content` (was the UA default `fixed`) that makes the
+  // input hug its time; the no-clip check guards a future long time format.
+  // Measures the seeded plain timebox in pv/timebox-content.zul.
+  test('input hugs its time content (field-sizing, no clip)', async ({ page }) => {
+    const info = await page.evaluate(() => {
+      const seeded = ([...document.querySelectorAll('.z-timebox-input')] as HTMLInputElement[])
+        .find(i => i.value && (i as HTMLElement).offsetParent !== null);
+      return seeded && ({
+        w: Math.round(seeded.getBoundingClientRect().width),
+        clipped: seeded.scrollWidth > seeded.clientWidth + 1,
+        fieldSizing: getComputedStyle(seeded).getPropertyValue('field-sizing'),
+        value: seeded.value,
+      });
+    });
+    expect(info, 'seeded timebox must be present').toBeTruthy();
+    expect(info!.fieldSizing, 'field-sizing: content must be applied').toBe('content');
+    expect(info!.clipped, `time "${info!.value}" must not be clipped`).toBe(false);
+  });
 });
 
 // -------------------------------------------------------

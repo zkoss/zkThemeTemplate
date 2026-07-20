@@ -46,9 +46,15 @@
     box-shadow: inset 0 0 0 1px var(--zk-color-primary);
 }
 
+/* Content-hug (contract tw1/tw2/M1): same size-less input as datebox (see
+   components/combo-trio.md). `field-sizing: content` makes the input hug its time
+   text; `flex: 1 1 auto` (basis = content) still lets an hflex / width-forced field
+   fill its container. The `min-width` floor keeps an empty field a usable target.
+   Left-aligned; degrades to the prior look where `field-sizing` is unsupported. */
 .z-timebox-input {
-    flex: 1;
-    min-width: 0;
+    flex: 1 1 auto;
+    field-sizing: content;
+    min-width: 5em;
     border: none;
     background: transparent;
     padding: 0 var(--zk-spacing-3);

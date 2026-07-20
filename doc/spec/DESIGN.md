@@ -201,6 +201,20 @@ The theme honors `@media (forced-colors: active)` (Windows High-Contrast Mode; a
 
 Rule: **table rows are ~52px** (16px padding all sides + 13px text + line-height). Inputs ~39px inner height. Buttons ~35px.
 
+### Input width: fixed-format date/time fields hug their content
+
+ZK ships every combo-trio input size-less (no `size`/`width`; see `zk-component-rules/components/combo-trio.md`), so the theme must choose a width policy. Marble's choice:
+
+| Field | Width behaviour |
+|-------|-----------------|
+| **datebox, timebox, daterangebox** (fixed-format date/time) | **hug content** — `field-sizing: content` + a `min-width` floor (`~6.5em` date, `~5em` time), so the field sizes to its value: short values hug, long formats (e.g. `yyyy/MM/dd HH:mm`) grow to fit instead of clipping. |
+| **combobox, bandbox** (free-text) | keep the default / container-fill width. Content-hug would resize the box on every keystroke while typing — jarring. |
+| **spinner, doublespinner** (numeric) | keep the default / container-fill width (numeric length is unbounded and typed). |
+
+datebox/timebox use `flex: 1 1 auto` (basis = content, so they hug in an auto context yet still **fill** an `hflex`/width-forced root — forms are unaffected); daterangebox uses `flex: 0 1 auto` because its two side-by-side inputs must not grow.
+
+This is a deliberate divergence from MUI, whose single `OutlinedInput` fills its container (or the UA default) with left-aligned text and no content-hug. MUI has no opinion on a *standalone* date field's width; Marble sizes it to its content so a bare date/time field reads as one compact field rather than a fixed box with dead space, and long formats are never clipped. See contracts `datebox.md` / `timebox.md` / `daterangebox.md` and `doc/skill-gaps.md` (2026-07-20).
+
 ### Table-header background: no fill
 
 Grid, Listbox, and Tree headers share **one rule**: **no background color**. Header cells inherit the body surface; visual hierarchy comes from three signals:
