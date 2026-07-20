@@ -149,5 +149,39 @@
             </treechildren>
         </tree>
     </div>
+
+    <!-- Panel: card surface + header (window-like, with elevation) -->
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Panel (default)</div>
+    <div sclass="z-mb-6">
+        <panel border="rounded" width="260px">
+            <caption label="Default Panel"/>
+            <panelchildren><div sclass="z-p-2">Body content</div></panelchildren>
+        </panel>
+    </div>
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Panel (regional override)</div>
+    <div sclass="z-mb-8 z-p-4 z-bg-surface-variant z-rounded"
+         style="--zk-panel-radius:0px; --zk-panel-border-color:#6750a4; --zk-panel-bg:#eef2ff">
+        <panel border="rounded" width="260px">
+            <caption label="Scoped Panel"/>
+            <panelchildren><div sclass="z-p-2">Body content</div></panelchildren>
+        </panel>
+    </div>
+
+    <!-- Groupbox: bordered container + header -->
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Groupbox (default)</div>
+    <div sclass="z-mb-6">
+        <groupbox width="260px">
+            <caption label="Default Group"/>
+            <div sclass="z-p-2">Body content</div>
+        </groupbox>
+    </div>
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Groupbox (regional override)</div>
+    <div sclass="z-mb-8 z-p-4 z-bg-surface-variant z-rounded"
+         style="--zk-groupbox-radius:0px; --zk-groupbox-border-color:#6750a4">
+        <groupbox width="260px">
+            <caption label="Scoped Group"/>
+            <div sclass="z-p-2">Body content</div>
+        </groupbox>
+    </div>
 </div>
 </zk>

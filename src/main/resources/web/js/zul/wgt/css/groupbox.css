@@ -11,10 +11,10 @@
 .z-groupbox {
     display: flex;
     flex-direction: column;
-    background-color: var(--zk-color-surface);
-    border-radius: var(--zk-shape-card);
-    border: 1px solid var(--zk-color-outline-variant);
-    box-shadow: var(--zk-elevation-card);
+    background-color: var(--zk-groupbox-bg);
+    border-radius: var(--zk-groupbox-radius);
+    border: 1px solid var(--zk-groupbox-border-color);
+    box-shadow: var(--zk-groupbox-elevation);
     overflow: hidden;
     box-sizing: border-box;
 }
@@ -24,8 +24,8 @@
     display: flex;
     align-items: center;
     padding: var(--zk-spacing-3) var(--zk-spacing-4);
-    border-bottom: 1px solid var(--zk-color-outline-variant);
-    background-color: var(--zk-color-surface);
+    border-bottom: 1px solid var(--zk-groupbox-border-color);
+    background-color: var(--zk-groupbox-bg);
     min-height: var(--zk-groupbox-header-height);
     flex-shrink: 0;
     cursor: pointer;
@@ -49,7 +49,7 @@
     font-size: var(--zk-typescale-title-medium-size);
     font-weight: var(--zk-typescale-title-medium-weight);
     line-height: var(--zk-typescale-title-medium-line-height);
-    color: var(--zk-color-on-surface);
+    color: var(--zk-groupbox-header-fg);
 }
 
 /* Title-based header (no caption child — uses .z-groupbox-title / .z-groupbox-title-content) */
@@ -66,7 +66,7 @@
     font-size: var(--zk-typescale-title-medium-size);
     font-weight: var(--zk-typescale-title-medium-weight);
     line-height: var(--zk-typescale-title-medium-line-height);
-    color: var(--zk-color-on-surface);
+    color: var(--zk-groupbox-header-fg);
     flex: 1;
     min-width: 0;
     overflow: hidden;
@@ -92,7 +92,7 @@
 
 .z-groupbox-header .z-groupbox-icon:hover,
 .z-groupbox-header [class*="z-icon-"]:hover {
-    background-color: var(--zk-color-surface-container);
+    background-color: var(--zk-groupbox-icon-hover-bg);
 }
 
 /* ─── Content area ───────────────────────────────────────────────────────── */

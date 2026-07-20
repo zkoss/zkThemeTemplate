@@ -236,6 +236,36 @@ Same as listbox, minus striping (`.z-tree` / `.z-treerow` / `.z-treecol`).
 | `--zk-tree-selected-fg` | `var(--zk-color-on-primary-container)` |
 | `--zk-tree-cell-padding` (size — in `_sizing.css`) | `var(--zk-spacing-2) var(--zk-spacing-4)` |
 
+### Panel — shipped
+
+Card container with header (`.z-panel`). Window-like, but carries a **resting elevation**
+(so `--zk-panel-elevation` is a knob, unlike window). Note the stock panel renders border-less
+(`.z-panel-noborder`), so `--zk-panel-border-color` only paints when a bordered mold is used.
+
+| Knob | Default |
+|------|---------|
+| `--zk-panel-bg` | `var(--zk-color-surface)` |
+| `--zk-panel-border-color` | `var(--zk-color-outline-variant)` |
+| `--zk-panel-radius` | `var(--zk-shape-card)` |
+| `--zk-panel-elevation` | `var(--zk-elevation-resting)` |
+| `--zk-panel-header-fg` | `var(--zk-color-on-surface)` |
+| `--zk-panel-icon-hover-bg` | `var(--zk-color-surface-container)` |
+| `--zk-panel-header-height` (size — in `_sizing.css`) | `48px` |
+
+### Groupbox — shipped
+
+Bordered container with collapsible header (`.z-groupbox`).
+
+| Knob | Default |
+|------|---------|
+| `--zk-groupbox-bg` | `var(--zk-color-surface)` |
+| `--zk-groupbox-border-color` | `var(--zk-color-outline-variant)` |
+| `--zk-groupbox-radius` | `var(--zk-shape-card)` |
+| `--zk-groupbox-elevation` | `var(--zk-elevation-card)` |
+| `--zk-groupbox-header-fg` | `var(--zk-color-on-surface)` |
+| `--zk-groupbox-icon-hover-bg` | `var(--zk-color-surface-container)` |
+| `--zk-groupbox-header-height` (size — in `_sizing.css`) | `48px` |
+
 ## Recipe — adding a component to the API
 
 Validated by the button pilot; repeat per component:
@@ -254,6 +284,6 @@ Validated by the button pilot; repeat per component:
 
 ## Status
 
-- **Shipped**: button, input (textbox family), window, grid, listbox, tree.
-- **Planned**: the remaining components (tab, combobox, menu, panel, …), and hoisting the
+- **Shipped**: button, input (textbox family), window, grid, listbox, tree, panel, groupbox.
+- **Planned**: the remaining components (combobox family, tab, menu), and hoisting the
   variant-local chip/avatar defaults into this API.

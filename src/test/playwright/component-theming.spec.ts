@@ -119,4 +119,29 @@ test.describe('component theming API — button', () => {
     expect(await borderColorOf(def)).not.toBe(SCOPED_PURPLE);
     expect(await bgOf(def.locator('.z-treerow-selected').first())).not.toBe(SCOPED_PURPLE);
   });
+
+  // ── panel + groupbox: surface containers ─────────────────────────────────
+  // Panel renders border-less by default (.z-panel-noborder), so assert the fill
+  // + radius knobs (border-color has no border to paint on the stock panel).
+  test('panel — regional surface/radius override, sibling untouched', async ({ page }) => {
+    const def = page.locator('.z-panel').first();
+    const scoped = page.locator('div[style*="--zk-panel-radius"] .z-panel').first();
+
+    expect(await radiusOf(scoped)).toBe('0px');
+    expect(await bgOf(scoped)).toBe('rgb(238, 242, 255)'); // #eef2ff
+
+    expect(await radiusOf(def)).toBe('6px'); // stock --zk-shape-card
+    expect(await bgOf(def)).not.toBe('rgb(238, 242, 255)');
+  });
+
+  test('groupbox — regional frame override, sibling untouched', async ({ page }) => {
+    const def = page.locator('.z-groupbox').first();
+    const scoped = page.locator('div[style*="--zk-groupbox-radius"] .z-groupbox').first();
+
+    expect(await radiusOf(scoped)).toBe('0px');
+    expect(await borderColorOf(scoped)).toBe(SCOPED_PURPLE);
+
+    expect(await radiusOf(def)).toBe('6px'); // stock --zk-shape-card
+    expect(await borderColorOf(def)).not.toBe(SCOPED_PURPLE);
+  });
 });

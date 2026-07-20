@@ -100,4 +100,22 @@
     --zk-tree-selected-bg:  var(--zk-color-primary-container);
     --zk-tree-selected-fg:  var(--zk-color-on-primary-container);
     /* cell padding → --zk-tree-cell-padding (tokens/_sizing.css). */
+
+    /* ── Panel — card surface + header (window-like; has resting elevation) */
+    --zk-panel-bg:            var(--zk-color-surface);
+    --zk-panel-border-color:  var(--zk-color-outline-variant);
+    --zk-panel-radius:        var(--zk-shape-card);
+    --zk-panel-elevation:     var(--zk-elevation-resting);
+    --zk-panel-header-fg:     var(--zk-color-on-surface);
+    --zk-panel-icon-hover-bg: var(--zk-color-surface-container);
+    /* header height → --zk-panel-header-height (tokens/_sizing.css). */
+
+    /* ── Groupbox — bordered container + header ──────────────────────────── */
+    --zk-groupbox-bg:            var(--zk-color-surface);
+    --zk-groupbox-border-color:  var(--zk-color-outline-variant);
+    --zk-groupbox-radius:        var(--zk-shape-card);
+    --zk-groupbox-elevation:     var(--zk-elevation-card);
+    --zk-groupbox-header-fg:     var(--zk-color-on-surface);
+    --zk-groupbox-icon-hover-bg: var(--zk-color-surface-container);
+    /* header height → --zk-groupbox-header-height (tokens/_sizing.css). */
 }
