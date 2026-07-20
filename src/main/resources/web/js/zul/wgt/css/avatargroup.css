@@ -10,8 +10,8 @@
 .z-avatargroup {
     display: inline-flex;
     align-items: center;
-
-    --zk-avatargroup-overlap: -8px;
+    /* --zk-avatargroup-overlap default lives at :root (tokens/_component-theme.css);
+       size variants (.z-avatargroup-small/-large) override it per-variant. */
 }
 
 .z-avatargroup > .z-avatar {

@@ -149,4 +149,20 @@
     --zk-menupopup-radius:       var(--zk-shape-menu);
     --zk-menupopup-border-color: var(--zk-color-outline-variant);
     --zk-menuitem-selected-bg:   var(--zk-color-primary-container);
+
+    /* ── Chip (native, ZK-6097) — base default hoisted here so a :root/region
+       override reaches plain chips; severity variants (.z-chip-info/-success/…)
+       still set these per-variant on the element. */
+    --zk-chip-bg:     var(--zk-color-surface-container-high);
+    --zk-chip-border: var(--zk-color-outline-variant);
+    --zk-chip-color:  var(--zk-color-on-surface-variant);
+
+    /* ── Avatar / avatar-group (native, ZK-6097) — base defaults hoisted here
+       (were declared on .z-avatar, which shadowed region overrides). Size
+       variants (.z-avatar-small/-large) still set size/font per-variant. */
+    --zk-avatar-bg:           var(--zk-color-primary-container);
+    --zk-avatar-fg:           var(--zk-color-on-primary-container);
+    --zk-avatar-size:         40px;
+    --zk-avatar-font-size:    var(--zk-typescale-label-large-size);
+    --zk-avatargroup-overlap: -8px;
 }

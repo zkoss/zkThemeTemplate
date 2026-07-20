@@ -182,4 +182,14 @@ test.describe('component theming API — button', () => {
     expect(await bgOf(scoped)).toBe(SCOPED_PURPLE);
     expect(await bgOf(def)).not.toBe(SCOPED_PURPLE);
   });
+
+  // ── avatar: base defaults hoisted from the .z-avatar element to :root, so a
+  // region override now reaches it (chip base is hoisted too, but ZK stamps a
+  // default severity class that element-shadows it — not regionally demonstrable).
+  test('avatar — regional fill override (hoisted base knob), sibling untouched', async ({ page }) => {
+    const def = page.locator('.z-avatar').first();
+    const scoped = page.locator('div[style*="--zk-avatar-bg"] .z-avatar').first();
+    expect(await bgOf(scoped)).toBe(SCOPED_PURPLE);
+    expect(await bgOf(def)).not.toBe(SCOPED_PURPLE);
+  });
 });

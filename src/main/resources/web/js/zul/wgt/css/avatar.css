@@ -18,13 +18,13 @@
     flex-shrink: 0;
     box-sizing: border-box;
     user-select: none;
-    background: var(--zk-color-primary-container);
-    color: var(--zk-color-on-primary-container);
+    background: var(--zk-avatar-bg);
+    color: var(--zk-avatar-fg);
     font-family: var(--zk-typescale-font-family);
 
-    /* Defaults equal the medium size class. */
-    --zk-avatar-size: 40px;
-    --zk-avatar-font-size: var(--zk-typescale-label-large-size);
+    /* Size/color defaults live at :root (tokens/_component-theme.css) so a
+       :root/region override reaches plain avatars; size classes
+       (.z-avatar-small/-large) override per-variant below. */
     width: var(--zk-avatar-size);
     height: var(--zk-avatar-size);
     font-size: var(--zk-avatar-font-size);

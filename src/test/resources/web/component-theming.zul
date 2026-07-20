@@ -235,5 +235,20 @@
             <menu label="Edit"><menupopup><menuitem label="Cut"/></menupopup></menu>
         </menubar>
     </div>
+
+    <!-- Avatar (native): base defaults hoisted to :root → regionally overridable.
+         Chip base is also hoisted for consistency, but ZK stamps a default severity
+         class (z-chip-info) that sets the fill on the element, so chip is themed
+         per-severity / inline — see doc/spec/component-theming-api.md. -->
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Avatar + Chip (default)</div>
+    <div sclass="z-hstack z-mb-6 z-align-center">
+        <avatar label="AB"/>
+        <chip label="Tag"/>
+    </div>
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Avatar (regional override)</div>
+    <div sclass="z-hstack z-mb-8 z-align-center z-p-4 z-bg-surface-variant z-rounded"
+         style="--zk-avatar-bg:#6750a4; --zk-avatar-fg:#ffffff">
+        <avatar label="AB"/>
+    </div>
 </div>
 </zk>

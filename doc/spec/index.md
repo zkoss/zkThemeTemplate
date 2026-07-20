@@ -16,7 +16,7 @@ under [`../`](../).
 | [design-decisions.md](design-decisions.md) | Scope & won't-do decisions — dark mode, dedicated high-contrast theme, RTL backlog, theme priority, absent font props, ZK version support |
 | [component-state-model.md](component-state-model.md) | Readonly vs disabled state model — popup controls render readonly as active, grey reserved for disabled |
 | [brand-override.md](brand-override.md) | Brand-color override: seed one token (`--zk-color-primary`) → containers/overlays derive via `oklch(from …)` absolute tone |
-| [component-theming-api.md](component-theming-api.md) | Per-component appearance knobs (`--zk-<comp>-*`) — restyle one component (fill/border/radius/state) at `:root` or a region without forking; cascade/load-order rules + per-family knob vocabulary. Shipped: button, input, window, grid, listbox, tree, panel, groupbox, combobox, tab, menu |
+| [component-theming-api.md](component-theming-api.md) | Per-component appearance knobs (`--zk-<comp>-*`) — restyle one component (fill/border/radius/state) at `:root` or a region without forking; cascade/load-order rules + per-family knob vocabulary. Shipped: button, input, window, grid, listbox, tree, panel, groupbox, combobox, tab, menu, avatar, chip |
 | [window-design-rules.md](window-design-rules.md) | Window `mode` → elevation mapping; `border` must never drive shadow |
 | [spacing-policy.md](spacing-policy.md) | Widgets carry zero default margins; spacing is opt-in via containers/utilities |
 | [navigation-surface-rules.md](navigation-surface-rules.md) | Navigation chrome uses MD3 tonal elevation (surface-container tiers), not box-shadows |

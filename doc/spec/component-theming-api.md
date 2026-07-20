@@ -314,6 +314,34 @@ Menu/menuitem hover uses a shared `::before` overlay (not knob-driven).
 | `--zk-menupopup-border-color` | `var(--zk-color-outline-variant)` |
 | `--zk-menuitem-selected-bg` | `var(--zk-color-primary-container)` |
 
+### Avatar / avatar-group — shipped
+
+Native ZK-6097 components. Base defaults were declared on the `.z-avatar` element (which
+shadowed region overrides); they are hoisted here so a `:root`/region override reaches plain
+avatars. Size variants (`.z-avatar-small/-large`) still set size/font per-variant.
+
+| Knob | Default |
+|------|---------|
+| `--zk-avatar-bg` | `var(--zk-color-primary-container)` |
+| `--zk-avatar-fg` | `var(--zk-color-on-primary-container)` |
+| `--zk-avatar-size` | `40px` |
+| `--zk-avatar-font-size` | `var(--zk-typescale-label-large-size)` |
+| `--zk-avatargroup-overlap` | `-8px` |
+
+### Chip — shipped (with a caveat)
+
+Base defaults (`--zk-chip-bg` / `-border` / `-color`) are hoisted here for consistency (no
+more inline fallback). **Caveat:** ZK stamps a default severity class (`z-chip-info`) on every
+chip, and the severity variants (`.z-chip-info/-success/…`) set these vars *on the element* —
+which shadows a `:root`/region override. So chip is themed **per-severity / inline**
+(`style="--zk-chip-bg:…"`), not regionally. The base knob applies only to a severity-less chip.
+
+| Knob | Default |
+|------|---------|
+| `--zk-chip-bg` | `var(--zk-color-surface-container-high)` |
+| `--zk-chip-border` | `var(--zk-color-outline-variant)` |
+| `--zk-chip-color` | `var(--zk-color-on-surface-variant)` |
+
 ## Recipe — adding a component to the API
 
 Validated by the button pilot; repeat per component:
@@ -333,6 +361,6 @@ Validated by the button pilot; repeat per component:
 ## Status
 
 - **Shipped**: button, input (textbox family), window, grid, listbox, tree, panel, groupbox,
-  combobox, tab (tabbox), menu.
+  combobox, tab (tabbox), menu, avatar/avatar-group, chip (base hoisted; see caveat).
 - **Planned**: the rest of the dropdown-input family (datebox/timebox/spinner/bandbox — share
-  combobox's field model), and hoisting the variant-local chip/avatar defaults.
+  combobox's field model).

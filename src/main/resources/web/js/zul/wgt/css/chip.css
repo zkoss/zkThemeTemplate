@@ -13,10 +13,10 @@
     align-items: center;
     gap: var(--zk-spacing-1);
     padding: 0 7px;
-    border: 1px solid var(--zk-chip-border, var(--zk-color-outline-variant));
+    border: 1px solid var(--zk-chip-border);
     border-radius: var(--zk-shape-corner-extra-small);
-    background: var(--zk-chip-bg, var(--zk-color-surface-container-high));
-    color: var(--zk-chip-color, var(--zk-color-on-surface-variant));
+    background: var(--zk-chip-bg);
+    color: var(--zk-chip-color);
     font-family: var(--zk-typescale-font-family);
     font-size: var(--zk-typescale-label-medium-size);
     font-weight: var(--zk-typescale-label-medium-weight);
