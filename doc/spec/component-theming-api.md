@@ -203,6 +203,39 @@ on the base tokens. `--zk-grid-row-hover-bg` keeps its stock `rgba` literal for 
 | `--zk-grid-foot-bg` | `var(--zk-color-surface-container-low)` |
 | `--zk-grid-cell-padding` (size — in `_sizing.css`) | `var(--zk-spacing-4)` |
 
+### Listbox — shipped
+
+Grid's outlined-table model **plus row selection** (`.z-listitem` / `.z-listheader`). Selection
+uses the MD3 list-row family (primary-container fill + paired text). Foot/group accents and
+legacy striping fallbacks stay on the base tokens.
+
+| Knob | Default |
+|------|---------|
+| `--zk-listbox-bg` | `var(--zk-color-surface)` |
+| `--zk-listbox-border-color` | `var(--zk-color-outline-variant)` |
+| `--zk-listbox-radius` | `var(--zk-shape-card)` |
+| `--zk-listbox-header-fg` | `var(--zk-color-on-surface-variant)` |
+| `--zk-listbox-row-hover-bg` | `color-mix(… on-surface 8%, surface)` |
+| `--zk-listbox-stripe-bg` | `var(--zk-color-surface-container-lowest)` |
+| `--zk-listbox-selected-bg` | `var(--zk-color-primary-container)` |
+| `--zk-listbox-selected-fg` | `var(--zk-color-on-primary-container)` |
+| `--zk-listbox-cell-padding` (size — in `_sizing.css`) | `var(--zk-spacing-4)` |
+
+### Tree — shipped
+
+Same as listbox, minus striping (`.z-tree` / `.z-treerow` / `.z-treecol`).
+
+| Knob | Default |
+|------|---------|
+| `--zk-tree-bg` | `var(--zk-color-surface)` |
+| `--zk-tree-border-color` | `var(--zk-color-outline-variant)` |
+| `--zk-tree-radius` | `var(--zk-shape-card)` |
+| `--zk-tree-header-fg` | `var(--zk-color-on-surface-variant)` |
+| `--zk-tree-row-hover-bg` | `color-mix(… on-surface 8%, surface)` |
+| `--zk-tree-selected-bg` | `var(--zk-color-primary-container)` |
+| `--zk-tree-selected-fg` | `var(--zk-color-on-primary-container)` |
+| `--zk-tree-cell-padding` (size — in `_sizing.css`) | `var(--zk-spacing-2) var(--zk-spacing-4)` |
+
 ## Recipe — adding a component to the API
 
 Validated by the button pilot; repeat per component:
@@ -221,6 +254,6 @@ Validated by the button pilot; repeat per component:
 
 ## Status
 
-- **Shipped**: button, input (textbox family), window, grid.
-- **Planned**: the remaining components (listbox, tree, tab, combobox, menu, panel, …),
-  and hoisting the variant-local chip/avatar defaults into this API.
+- **Shipped**: button, input (textbox family), window, grid, listbox, tree.
+- **Planned**: the remaining components (tab, combobox, menu, panel, …), and hoisting the
+  variant-local chip/avatar defaults into this API.

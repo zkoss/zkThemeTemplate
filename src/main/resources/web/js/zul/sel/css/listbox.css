@@ -8,9 +8,9 @@
    doc/spec/DESIGN.md §11. */
 @layer zk-components {
 .z-listbox {
-    background-color: var(--zk-color-surface);
-    border-radius: var(--zk-shape-card);
-    border: 1px solid var(--zk-color-outline-variant);
+    background-color: var(--zk-listbox-bg);
+    border-radius: var(--zk-listbox-radius);
+    border: 1px solid var(--zk-listbox-border-color);
     overflow: hidden;
     box-sizing: border-box;
     font-family: var(--zk-typescale-font-family);
@@ -45,7 +45,7 @@
     position: sticky;
     top: 0;
     z-index: 2;
-    background-color: var(--zk-color-surface);
+    background-color: var(--zk-listbox-bg);
 }
 
 /* Header cell — Mira / MD3 Data Table: no fill, hierarchy via weight + divider */
@@ -54,10 +54,10 @@
     font-size: var(--zk-typescale-label-large-size);
     font-weight: var(--zk-typescale-label-large-weight);
     line-height: var(--zk-typescale-label-large-line-height);
-    color: var(--zk-color-on-surface-variant);
+    color: var(--zk-listbox-header-fg);
     text-align: left;
     background-color: transparent;
-    border-bottom: 1px solid var(--zk-color-outline-variant);
+    border-bottom: 1px solid var(--zk-listbox-border-color);
     /* Allow long labels to wrap onto a second line so they never collide with
        the absolute-positioned listheader-button. Per-cell padding-right below
        still reserves slot for the button. */
@@ -221,8 +221,8 @@
 
 /* List item row */
 .z-listitem {
-    background-color: var(--zk-color-surface);
-    border-bottom: 1px solid var(--zk-color-outline-variant);
+    background-color: var(--zk-listbox-bg);
+    border-bottom: 1px solid var(--zk-listbox-border-color);
     transition: background-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
     cursor: pointer;
 }
@@ -233,16 +233,16 @@
 
 /* Row hover: MD3 state layer rgba(on-surface, 0.08) */
 .z-listitem:hover {
-    background-color: color-mix(in srgb, var(--zk-color-on-surface) 8%, var(--zk-color-surface));
+    background-color: var(--zk-listbox-row-hover-bg);
 }
 
 /* Odd striping: ZK applies z-listitem-odd class directly on TR */
 .z-listitem-odd {
-    background-color: var(--zk-color-surface-container-lowest);
+    background-color: var(--zk-listbox-stripe-bg);
 }
 
 .z-listitem-odd:hover {
-    background-color: color-mix(in srgb, var(--zk-color-on-surface) 8%, var(--zk-color-surface-container-lowest));
+    background-color: color-mix(in srgb, var(--zk-color-on-surface) 8%, var(--zk-listbox-stripe-bg));
 }
 
 /* Selected row
@@ -253,14 +253,14 @@
  * See reference/selected-state-families.md. */
 .z-listitem.z-listitem-selected,
 .z-listitem.z-selected {
-    background-color: var(--zk-color-primary-container);
-    color: var(--zk-color-on-primary-container);
+    background-color: var(--zk-listbox-selected-bg);
+    color: var(--zk-listbox-selected-fg);
 }
 
-/* Selected + hover: state layer on top of primary-container */
+/* Selected + hover: state layer on top of the selected fill */
 .z-listitem.z-listitem-selected:hover,
 .z-listitem.z-selected:hover {
-    background-color: color-mix(in srgb, var(--zk-color-on-primary-container) 8%, var(--zk-color-primary-container));
+    background-color: color-mix(in srgb, var(--zk-listbox-selected-fg) 8%, var(--zk-listbox-selected-bg));
 }
 
 /* Focus — outline on <tr> clips at cell boundaries; use box-shadow on the first cell instead */
@@ -296,7 +296,7 @@
 .z-listitem.z-listitem-selected .z-listcell-content,
 .z-listitem.z-selected .z-listcell-cnt,
 .z-listitem.z-selected .z-listcell-content {
-    color: var(--zk-color-on-primary-container);
+    color: var(--zk-listbox-selected-fg);
 }
 
 /* ─── Listgroup (collapsible group header rows) ────────────────────── */

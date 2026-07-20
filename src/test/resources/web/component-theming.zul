@@ -85,5 +85,69 @@
             </rows>
         </grid>
     </div>
+
+    <!-- Listbox: data table + row selection knobs -->
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Listbox (default)</div>
+    <div sclass="z-mb-6">
+        <listbox width="320px">
+            <listhead>
+                <listheader label="Name"/>
+                <listheader label="Value"/>
+            </listhead>
+            <listitem selected="true"><listcell label="Alpha"/><listcell label="1"/></listitem>
+            <listitem><listcell label="Beta"/><listcell label="2"/></listitem>
+            <listitem><listcell label="Gamma"/><listcell label="3"/></listitem>
+        </listbox>
+    </div>
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Listbox (regional override)</div>
+    <div sclass="z-mb-8 z-p-4 z-bg-surface-variant z-rounded"
+         style="--zk-listbox-radius:0px; --zk-listbox-border-color:#6750a4; --zk-listbox-selected-bg:#6750a4; --zk-listbox-selected-fg:#ffffff">
+        <listbox width="320px">
+            <listhead>
+                <listheader label="Name"/>
+                <listheader label="Value"/>
+            </listhead>
+            <listitem selected="true"><listcell label="Alpha"/><listcell label="1"/></listitem>
+            <listitem><listcell label="Beta"/><listcell label="2"/></listitem>
+            <listitem><listcell label="Gamma"/><listcell label="3"/></listitem>
+        </listbox>
+    </div>
+
+    <!-- Tree: tree table + row selection knobs -->
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Tree (default)</div>
+    <div sclass="z-mb-6">
+        <tree width="320px">
+            <treecols>
+                <treecol label="Name"/>
+                <treecol label="Type"/>
+            </treecols>
+            <treechildren>
+                <treeitem selected="true">
+                    <treerow><treecell label="Root"/><treecell label="folder"/></treerow>
+                </treeitem>
+                <treeitem>
+                    <treerow><treecell label="Leaf"/><treecell label="file"/></treerow>
+                </treeitem>
+            </treechildren>
+        </tree>
+    </div>
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Tree (regional override)</div>
+    <div sclass="z-mb-8 z-p-4 z-bg-surface-variant z-rounded"
+         style="--zk-tree-radius:0px; --zk-tree-border-color:#6750a4; --zk-tree-selected-bg:#6750a4; --zk-tree-selected-fg:#ffffff">
+        <tree width="320px">
+            <treecols>
+                <treecol label="Name"/>
+                <treecol label="Type"/>
+            </treecols>
+            <treechildren>
+                <treeitem selected="true">
+                    <treerow><treecell label="Root"/><treecell label="folder"/></treerow>
+                </treeitem>
+                <treeitem>
+                    <treerow><treecell label="Leaf"/><treecell label="file"/></treerow>
+                </treeitem>
+            </treechildren>
+        </tree>
+    </div>
 </div>
 </zk>

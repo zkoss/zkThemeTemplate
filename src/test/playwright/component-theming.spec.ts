@@ -91,4 +91,32 @@ test.describe('component theming API — button', () => {
     expect(await radiusOf(def)).toBe('6px'); // stock --zk-shape-card
     expect(await borderColorOf(def)).not.toBe(SCOPED_PURPLE);
   });
+
+  // ── listbox: data table + row selection ──────────────────────────────────
+  test('listbox — regional frame + selection override, sibling untouched', async ({ page }) => {
+    const def = page.locator('.z-listbox').first();
+    const scoped = page.locator('div[style*="--zk-listbox-radius"] .z-listbox').first();
+
+    expect(await radiusOf(scoped)).toBe('0px');
+    expect(await borderColorOf(scoped)).toBe(SCOPED_PURPLE);
+    expect(await bgOf(scoped.locator('.z-listitem-selected').first())).toBe(SCOPED_PURPLE);
+
+    expect(await radiusOf(def)).toBe('6px'); // stock --zk-shape-card
+    expect(await borderColorOf(def)).not.toBe(SCOPED_PURPLE);
+    expect(await bgOf(def.locator('.z-listitem-selected').first())).not.toBe(SCOPED_PURPLE);
+  });
+
+  // ── tree: tree table + row selection ──────────────────────────────────────
+  test('tree — regional frame + selection override, sibling untouched', async ({ page }) => {
+    const def = page.locator('.z-tree').first();
+    const scoped = page.locator('div[style*="--zk-tree-radius"] .z-tree').first();
+
+    expect(await radiusOf(scoped)).toBe('0px');
+    expect(await borderColorOf(scoped)).toBe(SCOPED_PURPLE);
+    expect(await bgOf(scoped.locator('.z-treerow-selected').first())).toBe(SCOPED_PURPLE);
+
+    expect(await radiusOf(def)).toBe('6px'); // stock --zk-shape-card
+    expect(await borderColorOf(def)).not.toBe(SCOPED_PURPLE);
+    expect(await bgOf(def.locator('.z-treerow-selected').first())).not.toBe(SCOPED_PURPLE);
+  });
 });

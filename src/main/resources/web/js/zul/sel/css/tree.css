@@ -11,9 +11,9 @@
    doc/spec/DESIGN.md §11. */
 @layer zk-components {
 .z-tree {
-    background-color: var(--zk-color-surface);
-    border-radius: var(--zk-shape-card);
-    border: 1px solid var(--zk-color-outline-variant);
+    background-color: var(--zk-tree-bg);
+    border-radius: var(--zk-tree-radius);
+    border: 1px solid var(--zk-tree-border-color);
     overflow: hidden;
     box-sizing: border-box;
     font-family: var(--zk-typescale-font-family);
@@ -48,7 +48,7 @@
     position: sticky;
     top: 0;
     z-index: 2;
-    background-color: var(--zk-color-surface);
+    background-color: var(--zk-tree-bg);
 }
 
 /* Header table uses separate borders so box-shadow and border-inline-end
@@ -68,9 +68,9 @@
     padding: var(--zk-spacing-3) var(--zk-spacing-4);
     font-size: var(--zk-typescale-label-large-size);
     font-weight: var(--zk-typescale-label-large-weight);
-    color: var(--zk-color-on-surface-variant);
+    color: var(--zk-tree-header-fg);
     text-align: left;
-    border-bottom: 1px solid var(--zk-color-outline-variant);
+    border-bottom: 1px solid var(--zk-tree-border-color);
     background-color: transparent;
     white-space: nowrap;
     user-select: none;
@@ -84,7 +84,7 @@
     gap: var(--zk-spacing-1);
     font-size: var(--zk-typescale-label-large-size);
     font-weight: var(--zk-typescale-label-large-weight);
-    color: var(--zk-color-on-surface-variant);
+    color: var(--zk-tree-header-fg);
 }
 
 /* Splitter bar between columns */
@@ -123,8 +123,8 @@
 
 /* Tree item row — TR.z-treerow */
 .z-treerow {
-    background-color: var(--zk-color-surface);
-    border-bottom: 1px solid var(--zk-color-outline-variant);
+    background-color: var(--zk-tree-bg);
+    border-bottom: 1px solid var(--zk-tree-border-color);
     transition: background-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
     cursor: pointer;
 }
@@ -135,25 +135,25 @@
 
 /* Row hover: MD3 state layer rgba(on-surface, 0.08) */
 .z-treerow:hover {
-    background-color: color-mix(in srgb, var(--zk-color-on-surface) 8%, var(--zk-color-surface));
+    background-color: var(--zk-tree-row-hover-bg);
 }
 
 /* Selected row — z-treerow-selected set by Treerow.domClass_ */
 .z-treerow.z-treerow-selected,
 .z-treerow.z-selected {
-    background-color: var(--zk-color-primary-container);
+    background-color: var(--zk-tree-selected-bg);
 }
 
 /* Selected row text color via cell content */
 .z-treerow.z-treerow-selected .z-treecell-content,
 .z-treerow.z-selected .z-treecell-content {
-    color: var(--zk-color-on-primary-container);
+    color: var(--zk-tree-selected-fg);
 }
 
 /* Selected + hover: slightly darker tint */
 .z-treerow.z-treerow-selected:hover,
 .z-treerow.z-selected:hover {
-    background-color: color-mix(in srgb, var(--zk-color-on-primary-container) 8%, var(--zk-color-primary-container));
+    background-color: color-mix(in srgb, var(--zk-tree-selected-fg) 8%, var(--zk-tree-selected-bg));
 }
 
 /* Disabled row — z-treerow-disabled set by Treerow.domClass_ */
