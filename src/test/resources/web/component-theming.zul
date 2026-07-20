@@ -183,5 +183,24 @@
             <div sclass="z-p-2">Body content</div>
         </groupbox>
     </div>
+
+    <!-- Combobox: outlined field + dropdown popup + option selection -->
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Combobox (default)</div>
+    <div sclass="z-hstack z-mb-6">
+        <combobox width="200px">
+            <comboitem label="Alpha"/>
+            <comboitem label="Beta"/>
+            <comboitem label="Gamma"/>
+        </combobox>
+    </div>
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Combobox (regional override)</div>
+    <div sclass="z-hstack z-mb-8 z-p-4 z-bg-surface-variant z-rounded"
+         style="--zk-combobox-radius:0px; --zk-combobox-border-color:#6750a4; --zk-combobox-selected-bg:#6750a4; --zk-combobox-selected-fg:#ffffff">
+        <combobox width="200px">
+            <comboitem label="Alpha"/>
+            <comboitem label="Beta"/>
+            <comboitem label="Gamma"/>
+        </combobox>
+    </div>
 </div>
 </zk>

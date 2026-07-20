@@ -118,4 +118,19 @@
     --zk-groupbox-header-fg:     var(--zk-color-on-surface);
     --zk-groupbox-icon-hover-bg: var(--zk-color-surface-container);
     /* header height → --zk-groupbox-header-height (tokens/_sizing.css). */
+
+    /* ── Combobox — outlined input field + dropdown popup + option selection.
+       Representative of the dropdown-input family; datebox/timebox/spinner/
+       bandbox share the field model (planned). */
+    --zk-combobox-bg:                 var(--zk-color-surface);
+    --zk-combobox-fg:                 var(--zk-color-on-surface);
+    --zk-combobox-radius:             var(--zk-shape-input);
+    --zk-combobox-border-color:       var(--zk-color-outline);
+    --zk-combobox-border-color-hover: var(--zk-color-on-surface);
+    --zk-combobox-border-color-focus: var(--zk-color-primary);
+    --zk-combobox-popup-bg:           var(--zk-color-surface);
+    --zk-combobox-popup-radius:       var(--zk-shape-menu);
+    --zk-combobox-item-hover-bg:      rgba(0, 0, 0, 0.08);
+    --zk-combobox-selected-bg:        var(--zk-color-primary-container);
+    --zk-combobox-selected-fg:        var(--zk-color-on-primary-container);
 }

@@ -7,7 +7,7 @@
     display: inline-flex;
     align-items: center;
     position: relative;
-    background-color: var(--zk-color-surface);
+    background-color: var(--zk-combobox-bg);
     min-height: var(--zk-control-height);
     overflow: visible;
     box-sizing: border-box;
@@ -15,12 +15,12 @@
 
 .z-combobox:hover .z-combobox-input,
 .z-combobox:hover .z-combobox-button {
-    border-color: var(--zk-color-on-surface);
+    border-color: var(--zk-combobox-border-color-hover);
 }
 
 .z-combobox:focus-within .z-combobox-input,
 .z-combobox:focus-within .z-combobox-button {
-    border-color: var(--zk-color-primary);
+    border-color: var(--zk-combobox-border-color-focus);
     border-width: 2px;
 }
 
@@ -37,9 +37,9 @@
 .z-combobox-input {
     flex: 1;
     min-width: 0;
-    border: 1px solid var(--zk-color-outline);
+    border: 1px solid var(--zk-combobox-border-color);
     border-right: none;
-    border-radius: var(--zk-shape-input) 0 0 var(--zk-shape-input);
+    border-radius: var(--zk-combobox-radius) 0 0 var(--zk-combobox-radius);
     background: transparent;
     padding: 0 var(--zk-spacing-3);
     height: 100%;
@@ -47,7 +47,7 @@
     font-family: var(--zk-typescale-font-family);
     font-size: var(--zk-typescale-body-medium-size);
     font-weight: var(--zk-typescale-body-medium-weight);
-    color: var(--zk-color-on-surface);
+    color: var(--zk-combobox-fg);
     outline: none;
     box-sizing: border-box;
     /* Only border-COLOR animates; border-width snaps with its padding compensator on
@@ -105,13 +105,13 @@
     justify-content: center;
     width: 32px;
     min-height: var(--zk-control-height);
-    border: 1px solid var(--zk-color-outline);
+    border: 1px solid var(--zk-combobox-border-color);
     border-left: none;
     background: transparent;
     color: var(--zk-color-on-surface-variant);
     cursor: pointer;
     flex-shrink: 0;
-    border-radius: 0 var(--zk-shape-input) var(--zk-shape-input) 0;
+    border-radius: 0 var(--zk-combobox-radius) var(--zk-combobox-radius) 0;
     /* border-width is intentionally NOT transitioned — it snaps 1px→2px on focus in
        step with the input's padding compensation so nothing drifts. */
     transition: color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard),
@@ -146,8 +146,8 @@
     list-style: none;
     margin: 4px 0 0;
     padding: 0;
-    background-color: var(--zk-color-surface);
-    border-radius: var(--zk-shape-menu);
+    background-color: var(--zk-combobox-popup-bg);
+    border-radius: var(--zk-combobox-popup-radius);
     box-shadow: var(--zk-elevation-dropdown);
     border: none;
     max-height: 280px;
@@ -184,13 +184,13 @@
 }
 
 .z-comboitem:hover {
-    background-color: rgba(0, 0, 0, 0.08);
+    background-color: var(--zk-combobox-item-hover-bg);
 }
 
 .z-comboitem.z-comboitem-selected,
 .z-comboitem.z-selected {
-    background-color: var(--zk-color-primary-container);
-    color: var(--zk-color-on-primary-container);
+    background-color: var(--zk-combobox-selected-bg);
+    color: var(--zk-combobox-selected-fg);
 }
 
 /* Disabled */
@@ -364,7 +364,7 @@
 
 .z-combobox-input.z-combobox-input-full {
     border-right: 1px solid var(--zk-color-outline);
-    border-radius: var(--zk-shape-input);
+    border-radius: var(--zk-combobox-radius);
 }
 
 /* ─── Inplace ─────────────────────────────────────────────────────────── */

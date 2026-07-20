@@ -266,6 +266,26 @@ Bordered container with collapsible header (`.z-groupbox`).
 | `--zk-groupbox-icon-hover-bg` | `var(--zk-color-surface-container)` |
 | `--zk-groupbox-header-height` (size — in `_sizing.css`) | `48px` |
 
+### Combobox — shipped
+
+Outlined input field (`.z-combobox-input` + `.z-combobox-button`) + dropdown popup
+(`.z-combobox-popup`) + option selection (`.z-comboitem`). Representative of the
+dropdown-input family; datebox/timebox/spinner/bandbox share the field model (planned).
+
+| Knob | Default |
+|------|---------|
+| `--zk-combobox-bg` | `var(--zk-color-surface)` |
+| `--zk-combobox-fg` | `var(--zk-color-on-surface)` |
+| `--zk-combobox-radius` | `var(--zk-shape-input)` |
+| `--zk-combobox-border-color` | `var(--zk-color-outline)` |
+| `--zk-combobox-border-color-hover` | `var(--zk-color-on-surface)` |
+| `--zk-combobox-border-color-focus` | `var(--zk-color-primary)` |
+| `--zk-combobox-popup-bg` | `var(--zk-color-surface)` |
+| `--zk-combobox-popup-radius` | `var(--zk-shape-menu)` |
+| `--zk-combobox-item-hover-bg` | `rgba(0, 0, 0, 0.08)` |
+| `--zk-combobox-selected-bg` | `var(--zk-color-primary-container)` |
+| `--zk-combobox-selected-fg` | `var(--zk-color-on-primary-container)` |
+
 ## Recipe — adding a component to the API
 
 Validated by the button pilot; repeat per component:
@@ -284,6 +304,6 @@ Validated by the button pilot; repeat per component:
 
 ## Status
 
-- **Shipped**: button, input (textbox family), window, grid, listbox, tree, panel, groupbox.
-- **Planned**: the remaining components (combobox family, tab, menu), and hoisting the
-  variant-local chip/avatar defaults into this API.
+- **Shipped**: button, input (textbox family), window, grid, listbox, tree, panel, groupbox, combobox.
+- **Planned**: the rest of the dropdown-input family (datebox/timebox/spinner/bandbox — share
+  combobox's field model), tab, menu, and hoisting the variant-local chip/avatar defaults.

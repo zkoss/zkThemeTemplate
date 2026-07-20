@@ -144,4 +144,16 @@ test.describe('component theming API — button', () => {
     expect(await radiusOf(def)).toBe('6px'); // stock --zk-shape-card
     expect(await borderColorOf(def)).not.toBe(SCOPED_PURPLE);
   });
+
+  // ── combobox: outlined field (dropdown popup/selection also knob-driven) ──
+  test('combobox — regional field override, sibling untouched', async ({ page }) => {
+    const def = page.locator('.z-combobox-input').first();
+    const scoped = page.locator('div[style*="--zk-combobox-radius"] .z-combobox-input').first();
+
+    expect(await radiusOf(scoped)).toBe('0px');
+    expect(await borderColorOf(scoped)).toBe(SCOPED_PURPLE);
+
+    expect(await radiusOf(def)).toBe('4px'); // stock --zk-shape-input
+    expect(await borderColorOf(def)).not.toBe(SCOPED_PURPLE);
+  });
 });
