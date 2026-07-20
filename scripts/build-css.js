@@ -67,6 +67,10 @@ const normFiles = [
     'zul/css/tokens/_shape.css',
     'zul/css/tokens/_sizing.css',
     'zul/css/tokens/_splitter.css',
+    // Component-level theming API — per-component appearance knobs (--zk-<comp>-*).
+    // Unlayered :root defs (like the other token files); placed after the base
+    // tokens it references. See doc/spec/component-theming-api.md.
+    'zul/css/tokens/_component-theme.css',
     // forced-colors (Windows High-Contrast) a11y guards — GAP 5. Unlayered, and
     // placed last among tokens so its `--zk-focus-ring` override wins over
     // _colors.css. See doc/spec/forced-colors.md.

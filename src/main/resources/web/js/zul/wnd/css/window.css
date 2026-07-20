@@ -14,9 +14,9 @@
 .z-window {
     display: flex;
     flex-direction: column;
-    background-color: var(--zk-color-surface);
-    border-radius: var(--zk-shape-corner-extra-small);
-    border: 1px solid var(--zk-color-outline-variant);
+    background-color: var(--zk-window-bg);
+    border-radius: var(--zk-window-radius);
+    border: 1px solid var(--zk-window-border-color);
     overflow: hidden;
     box-sizing: border-box;
     font-family: var(--zk-typescale-font-family);
@@ -49,8 +49,8 @@
     display: flex;
     align-items: center;
     padding: var(--zk-header-padding-y) var(--zk-spacing-4);
-    border-bottom: 1px solid var(--zk-color-outline-variant);
-    background-color: var(--zk-color-surface);
+    border-bottom: 1px solid var(--zk-window-border-color);
+    background-color: var(--zk-window-bg);
     flex-shrink: 0;
     min-height: var(--zk-window-header-height);
     position: relative;
@@ -64,7 +64,7 @@
     font-size: var(--zk-typescale-title-medium-size);
     font-weight: var(--zk-typescale-title-medium-weight);
     line-height: var(--zk-typescale-title-medium-line-height);
-    color: var(--zk-color-on-surface);
+    color: var(--zk-window-header-fg);
 }
 
 /* Draggable header on floating windows */
@@ -87,7 +87,7 @@
     font-size: var(--zk-typescale-title-medium-size);
     font-weight: var(--zk-typescale-title-medium-weight);
     line-height: var(--zk-typescale-title-medium-line-height);
-    color: var(--zk-color-on-surface);
+    color: var(--zk-window-header-fg);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -125,13 +125,13 @@
 }
 
 .z-window-icon:hover {
-    background-color: var(--zk-color-surface-container);
+    background-color: var(--zk-window-icon-hover-bg);
     color: var(--zk-color-on-surface);
 }
 
 /* Close button gets error tint on hover */
 .z-window-close:hover {
-    background-color: var(--zk-color-error-container);
+    background-color: var(--zk-window-close-hover-bg);
     color: var(--zk-color-on-error-container);
 }
 

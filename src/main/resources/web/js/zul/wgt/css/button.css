@@ -16,12 +16,12 @@
     gap: var(--zk-spacing-2);
     overflow: hidden;
     min-height: var(--zk-button-height);
-    padding: 6px var(--zk-spacing-4);
-    box-shadow: var(--zk-elevation-resting);
+    padding: var(--zk-button-padding-y) var(--zk-button-padding-x);
+    box-shadow: var(--zk-button-elevation);
     border: none;
-    border-radius: var(--zk-shape-button);
-    background-color: var(--zk-color-primary);
-    color: var(--zk-color-on-primary);
+    border-radius: var(--zk-button-radius);
+    background-color: var(--zk-button-bg);
+    color: var(--zk-button-fg);
     font-family: var(--zk-typescale-font-family);
     font-size: var(--zk-typescale-label-large-size);
     font-weight: var(--zk-typescale-label-large-weight);
@@ -48,15 +48,15 @@
     position: absolute;
     inset: 0;
     border-radius: inherit;
-    background-color: var(--zk-color-on-primary);
+    background-color: var(--zk-button-overlay-color);
     opacity: 0;
     pointer-events: none;
     transition: var(--zk-state-layer-transition);
 }
 
-.z-button:hover::before { opacity: var(--zk-state-hover-opacity); }
-.z-button:focus-visible::before { opacity: var(--zk-state-focus-opacity); }
-.z-button:active::before { opacity: var(--zk-state-pressed-opacity); }
+.z-button:hover::before { opacity: var(--zk-button-hover-opacity); }
+.z-button:focus-visible::before { opacity: var(--zk-button-focus-opacity); }
+.z-button:active::before { opacity: var(--zk-button-active-opacity); }
 
 /* Contained/filled hover — MD3: state layer + elevation lift.
    Scoped to filled variants only; flat (outlined/text/icon) & FAB variants excluded
@@ -113,9 +113,9 @@
     min-height: var(--zk-button-height);
     padding: 0 var(--zk-spacing-4);
     border: none;
-    border-radius: var(--zk-shape-button);
-    background-color: var(--zk-color-primary);
-    color: var(--zk-color-on-primary);
+    border-radius: var(--zk-button-radius);
+    background-color: var(--zk-button-bg);
+    color: var(--zk-button-fg);
     font-family: var(--zk-typescale-font-family);
     font-size: var(--zk-typescale-label-large-size);
     font-weight: var(--zk-typescale-label-large-weight);

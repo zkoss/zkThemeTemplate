@@ -9,13 +9,13 @@
    See doc/spec/DESIGN.md §11. */
 @layer zk-components {
 .z-grid {
-    background-color: var(--zk-color-surface);
+    background-color: var(--zk-grid-bg);
     overflow: hidden;
     box-sizing: border-box;
     width: 100%;
     font-family: var(--zk-typescale-font-family);
-    border-radius: var(--zk-shape-card);
-    border: 1px solid var(--zk-color-outline-variant);
+    border-radius: var(--zk-grid-radius);
+    border: 1px solid var(--zk-grid-border-color);
 }
 
 /* No-border variant — strip the frame when the grid is nested in another bounded
@@ -68,7 +68,7 @@
     position: sticky;
     top: 0;
     z-index: 2;
-    background-color: var(--zk-color-surface);
+    background-color: var(--zk-grid-bg);
 }
 
 /* The header table is emitted unclassed as <table id="…-headtbl"> in ZK 10 (grid.js),
@@ -92,10 +92,10 @@
     font-size: var(--zk-typescale-label-large-size);
     font-weight: var(--zk-typescale-label-large-weight);
     line-height: var(--zk-typescale-label-large-line-height);
-    color: var(--zk-color-on-surface-variant);
+    color: var(--zk-grid-header-fg);
     text-align: left;
     background-color: transparent;
-    border-bottom: 1px solid var(--zk-color-outline-variant);
+    border-bottom: 1px solid var(--zk-grid-border-color);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -207,8 +207,8 @@
 
 /* Row — TR.z-row */
 .z-row {
-    background-color: var(--zk-color-surface);
-    border-bottom: 1px solid var(--zk-color-outline-variant);
+    background-color: var(--zk-grid-bg);
+    border-bottom: 1px solid var(--zk-grid-border-color);
     transition: background-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
 }
 
@@ -218,16 +218,16 @@
 
 /* Row hover: MD3 state layer rgba(on-surface, 0.04) for surfaces */
 .z-row:hover {
-    background-color: rgba(0, 0, 0, 0.04);
+    background-color: var(--zk-grid-row-hover-bg);
 }
 
 /* Odd striping: ZK applies z-row-odd class directly on TR */
 .z-row-odd {
-    background-color: var(--zk-color-surface-container-lowest);
+    background-color: var(--zk-grid-stripe-bg);
 }
 
 .z-row-odd:hover {
-    background-color: color-mix(in srgb, var(--zk-color-on-surface) 8%, var(--zk-color-surface-container-lowest));
+    background-color: color-mix(in srgb, var(--zk-color-on-surface) 8%, var(--zk-grid-stripe-bg));
 }
 
 /* Grid does NOT support row selection — listbox/tree do, but Grid widget
@@ -278,7 +278,7 @@
 
 /* ─── Foot area ─────────────────────────────────────────────────────────── */
 .z-grid-foot {
-    background-color: var(--zk-color-surface-container-low);
+    background-color: var(--zk-grid-foot-bg);
     border-top: 2px solid var(--zk-color-outline-variant);
 }
 
@@ -372,11 +372,11 @@
    Specificity 0,2,0 overrides the bare .z-grid-odd rule (0,1,0) below,
    giving even TRs an explicit OPAQUE background so frozen-cell inherit works. */
 .z-row.z-grid-odd {
-    background-color: var(--zk-color-surface-container-lowest);
+    background-color: var(--zk-grid-stripe-bg);
 }
 
 .z-row.z-grid-odd:hover {
-    background-color: color-mix(in srgb, var(--zk-color-on-surface) 8%, var(--zk-color-surface-container-lowest));
+    background-color: color-mix(in srgb, var(--zk-color-on-surface) 8%, var(--zk-grid-stripe-bg));
 }
 
 /* ─── Legacy: sclass="z-grid-odd" on the <grid> container ───────────────── */
@@ -417,7 +417,7 @@
 
 /* ─── Footer row ─────────────────────────────────────────────────────────── */
 .z-grid-footer {
-    background-color: var(--zk-color-surface-container-low);
+    background-color: var(--zk-grid-foot-bg);
     border-top: 1px solid var(--zk-color-outline-variant);
 }
 

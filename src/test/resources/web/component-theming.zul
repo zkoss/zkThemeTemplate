@@ -1,0 +1,89 @@
+<?page title="Component Theming API" contentType="text/html;charset=UTF-8"?>
+<zk xmlns:h="native">
+<div sclass="z-p-8">
+    <div sclass="z-border-bottom z-text-xl z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Component Theming API</div>
+
+    <div sclass="z-text-sm z-text-secondary z-mb-8" style="max-width:60ch">
+        Adopters restyle one component by setting its --zk-&lt;comp&gt;-* custom properties,
+        either at :root (whole app) or on any container element (one region — descendants inherit it).
+        Each pair below shows a stock "Default" and a scoped override box; the defaults reproduce
+        stock Marble exactly. Pilot components: button, input, window, grid.
+        See doc/spec/component-theming-api.md.
+    </div>
+
+    <!-- Default: no override — proves zero regression -->
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Default (no override)</div>
+    <div sclass="z-hstack z-mb-8">
+        <button label="Default Primary"/>
+        <button label="Default Icon" iconSclass="z-icon-settings"/>
+        <button label="Default Disabled" disabled="true"/>
+    </div>
+
+    <!-- Regional override: pill radius + purple fill, scoped to THIS container only.
+         The buttons above are unaffected (override lives on this box, inherited only by its subtree). -->
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Regional override (scoped to this box)</div>
+    <div sclass="z-hstack z-mb-8 z-p-4 z-bg-surface-variant z-rounded"
+         style="--zk-button-bg:#6750a4; --zk-button-fg:#ffffff; --zk-button-overlay-color:#ffffff; --zk-button-radius:9999px">
+        <button label="Scoped Primary"/>
+        <button label="Scoped Icon" iconSclass="z-icon-settings"/>
+        <button label="Scoped Disabled" disabled="true"/>
+    </div>
+
+    <!-- Input: per-state border-color + surface knobs -->
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Input (default)</div>
+    <div sclass="z-hstack z-mb-6">
+        <textbox value="Default field"/>
+    </div>
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Input (regional override)</div>
+    <div sclass="z-hstack z-mb-8 z-p-4 z-bg-surface-variant z-rounded"
+         style="--zk-input-radius:12px; --zk-input-border-color:#6750a4; --zk-input-border-color-hover:#6750a4">
+        <textbox value="Scoped field"/>
+    </div>
+
+    <!-- Window: surface + chrome knobs (elevation stays mode-driven) -->
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Window (default)</div>
+    <div sclass="z-mb-6">
+        <window title="Default Window" border="normal" width="260px">
+            <div sclass="z-p-4">Body content</div>
+        </window>
+    </div>
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Window (regional override)</div>
+    <div sclass="z-mb-8 z-p-4 z-bg-surface-variant z-rounded"
+         style="--zk-window-radius:16px; --zk-window-bg:#eef2ff; --zk-window-border-color:#6750a4">
+        <window title="Scoped Window" border="normal" width="260px">
+            <div sclass="z-p-4">Body content</div>
+        </window>
+    </div>
+
+    <!-- Grid: outlined-table lines + fills -->
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Grid (default)</div>
+    <div sclass="z-mb-6">
+        <grid width="320px">
+            <columns>
+                <column label="Name"/>
+                <column label="Value"/>
+            </columns>
+            <rows>
+                <row><label value="Alpha"/><label value="1"/></row>
+                <row><label value="Beta"/><label value="2"/></row>
+                <row><label value="Gamma"/><label value="3"/></row>
+            </rows>
+        </grid>
+    </div>
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Grid (regional override)</div>
+    <div sclass="z-mb-8 z-p-4 z-bg-surface-variant z-rounded"
+         style="--zk-grid-radius:0px; --zk-grid-border-color:#6750a4; --zk-grid-stripe-bg:#efe6ff">
+        <grid width="320px">
+            <columns>
+                <column label="Name"/>
+                <column label="Value"/>
+            </columns>
+            <rows>
+                <row><label value="Alpha"/><label value="1"/></row>
+                <row><label value="Beta"/><label value="2"/></row>
+                <row><label value="Gamma"/><label value="3"/></row>
+            </rows>
+        </grid>
+    </div>
+</div>
+</zk>

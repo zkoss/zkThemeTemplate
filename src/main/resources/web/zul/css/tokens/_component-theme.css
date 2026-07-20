@@ -1,0 +1,79 @@
+/* Component-level theming API — per-component APPEARANCE knobs.
+ *
+ * Lets an adopter restyle ONE component's look (color / border / radius / state)
+ * WITHOUT forking the theme. Set these `--zk-<comp>-*` custom properties either
+ * at :root (whole app) or on any container element (one region — descendants
+ * inherit it). The defaults below reproduce the stock Marble rendering EXACTLY,
+ * so declaring nothing changes nothing; overriding is purely additive.
+ *
+ * ── Rules (full spec: doc/spec/component-theming-api.md) ────────────────────
+ *   1. Declared HERE at :root, NEVER on the component element. A custom property
+ *      declared on .z-button itself would shadow a :root/region override for its
+ *      own subtree — the same trap tokens/_sizing.css layer-3 documents.
+ *   2. Components consume these from inside @layer zk-components. These token defs
+ *      are UNLAYERED, so an adopter's unlayered :root override WINS the cascade
+ *      regardless of specificity — provided their stylesheet loads AFTER
+ *      norm.css.dsp, or raises specificity (e.g. :root[data-brand], as the brand
+ *      presets in _colors.css already do). A region override (on an ancestor
+ *      element) always wins by inheritance distance — no load-order concern.
+ *   3. This file is the APPEARANCE dimension. The SIZE dimension already ships in
+ *      tokens/_sizing.css (--zk-button-height, --zk-input-height, …); reuse those.
+ *
+ * Pilot component: button (filled base). input / window / grid follow.
+ */
+:root {
+    /* ── Button — filled base ────────────────────────────────────────────
+       The color VARIANTS (.z-button-secondary/-success/…, outlined, text, icon,
+       fab) keep their own colors via higher-specificity rules; these knobs drive
+       the default filled button. State is an MD3 ::before overlay (a tint whose
+       opacity animates), NOT a per-state background — so the knobs are an overlay
+       color + per-state opacities, matching the real implementation. */
+    --zk-button-bg:             var(--zk-color-primary);
+    --zk-button-fg:             var(--zk-color-on-primary);
+    --zk-button-radius:         var(--zk-shape-button);
+    --zk-button-elevation:      var(--zk-elevation-resting);
+    --zk-button-padding-y:      6px;                    /* off-token literal (kept as default) */
+    --zk-button-padding-x:      var(--zk-spacing-4);    /* 16px */
+    --zk-button-overlay-color:  var(--zk-color-on-primary);
+    --zk-button-hover-opacity:  var(--zk-state-hover-opacity);    /* .08 */
+    --zk-button-focus-opacity:  var(--zk-state-focus-opacity);    /* .12 */
+    --zk-button-active-opacity: var(--zk-state-pressed-opacity);  /* .12 */
+    /* height → --zk-button-height (tokens/_sizing.css, semantic alias layer). */
+
+    /* ── Input — outlined text field ─────────────────────────────────────
+       Shared by textbox / intbox / decimalbox / doublebox / longbox /
+       passwordbox. State is a per-state border-COLOR change (no overlay), so
+       the knobs are per-state border colors + the surface/text fill. */
+    --zk-input-bg:                 var(--zk-color-surface);
+    --zk-input-fg:                 var(--zk-color-on-surface);
+    --zk-input-radius:             var(--zk-shape-input);
+    --zk-input-border-color:       var(--zk-color-outline);
+    --zk-input-border-color-hover: var(--zk-color-on-surface);
+    --zk-input-border-color-focus: var(--zk-color-primary);
+    --zk-input-border-color-error: var(--zk-color-error);
+    /* height → --zk-input-height (tokens/_sizing.css). */
+
+    /* ── Window — surface + chrome ───────────────────────────────────────
+       Elevation stays MODE-driven (embedded/overlapped/modal → _elevation.css),
+       not a knob. The header shares the window surface fill. */
+    --zk-window-bg:             var(--zk-color-surface);
+    --zk-window-border-color:   var(--zk-color-outline-variant);
+    --zk-window-radius:         var(--zk-shape-corner-extra-small);
+    --zk-window-header-fg:      var(--zk-color-on-surface);
+    --zk-window-icon-hover-bg:  var(--zk-color-surface-container);
+    --zk-window-close-hover-bg: var(--zk-color-error-container);
+    /* header height / padding → --zk-window-header-height / --zk-header-padding-y. */
+
+    /* ── Grid — outlined data table ──────────────────────────────────────
+       Curated to the grid "lines" + fills. Secondary accents (group/foot
+       separators, legacy striping fallbacks) stay on the base tokens.
+       row-hover keeps its stock rgba literal (zero regression). */
+    --zk-grid-bg:           var(--zk-color-surface);
+    --zk-grid-border-color: var(--zk-color-outline-variant);
+    --zk-grid-radius:       var(--zk-shape-card);
+    --zk-grid-header-fg:    var(--zk-color-on-surface-variant);
+    --zk-grid-row-hover-bg: rgba(0, 0, 0, 0.04);
+    --zk-grid-stripe-bg:    var(--zk-color-surface-container-lowest);
+    --zk-grid-foot-bg:      var(--zk-color-surface-container-low);
+    /* cell padding → --zk-grid-cell-padding (tokens/_sizing.css). */
+}

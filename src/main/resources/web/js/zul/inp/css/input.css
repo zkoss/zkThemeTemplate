@@ -12,10 +12,10 @@
     display: inline-block;
     min-height: var(--zk-control-height);
     padding: 0 var(--zk-spacing-3);
-    border: 1px solid var(--zk-color-outline);
-    border-radius: var(--zk-shape-input);
-    background-color: var(--zk-color-surface);
-    color: var(--zk-color-on-surface);
+    border: 1px solid var(--zk-input-border-color);
+    border-radius: var(--zk-input-radius);
+    background-color: var(--zk-input-bg);
+    color: var(--zk-input-fg);
     font-family: var(--zk-typescale-font-family);
     font-size: var(--zk-typescale-body-medium-size);
     font-weight: var(--zk-typescale-body-medium-weight);
@@ -48,7 +48,7 @@
 .z-doublebox:hover,
 .z-longbox:hover,
 .z-passwordbox:hover {
-    border-color: var(--zk-color-on-surface);
+    border-color: var(--zk-input-border-color-hover);
 }
 
 /* Focus */
@@ -64,7 +64,7 @@
 .z-longbox:focus-visible,
 .z-passwordbox:focus,
 .z-passwordbox:focus-visible {
-    border-color: var(--zk-color-primary);
+    border-color: var(--zk-input-border-color-focus);
     border-width: 2px;
     padding: 0 calc(var(--zk-spacing-3) - 1px);
 }
@@ -131,12 +131,12 @@
 .z-textbox.z-error,
 .z-intbox.z-error,
 .z-textbox-error {
-    border-color: var(--zk-color-error);
+    border-color: var(--zk-input-border-color-error);
 }
 
 .z-textbox.z-error:focus,
 .z-intbox.z-error:focus {
-    border-color: var(--zk-color-error);
+    border-color: var(--zk-input-border-color-error);
     border-width: 2px;
     padding: 0 calc(var(--zk-spacing-3) - 1px);
 }
@@ -163,36 +163,36 @@ textarea.z-textbox:focus-visible {
 .z-decimalbox.z-decimalbox-invalid,
 .z-doublebox.z-doublebox-invalid,
 .z-longbox.z-longbox-invalid {
-    border-color: var(--zk-color-error);
+    border-color: var(--zk-input-border-color-error);
 }
 
 .z-intbox.z-intbox-invalid:focus,
 .z-decimalbox.z-decimalbox-invalid:focus,
 .z-doublebox.z-doublebox-invalid:focus,
 .z-longbox.z-longbox-invalid:focus {
-    border-color: var(--zk-color-error);
+    border-color: var(--zk-input-border-color-error);
     border-width: 2px;
 }
 
 .z-textbox-invalid,
 .z-textbox.z-textbox-invalid {
-    border-color: var(--zk-color-error);
+    border-color: var(--zk-input-border-color-error);
 }
 
 .z-textbox.z-textbox-invalid:focus,
 .z-textbox.z-textbox-invalid:focus-visible {
-    border-color: var(--zk-color-error);
+    border-color: var(--zk-input-border-color-error);
     border-width: 2px;
     padding: 0 calc(var(--zk-spacing-3) - 1px);
 }
 
 /* Passwordbox invalid (same ZK pattern as intbox) */
 .z-passwordbox.z-passwordbox-invalid {
-    border-color: var(--zk-color-error);
+    border-color: var(--zk-input-border-color-error);
 }
 
 .z-passwordbox.z-passwordbox-invalid:focus {
-    border-color: var(--zk-color-error);
+    border-color: var(--zk-input-border-color-error);
     border-width: 2px;
     padding: 0 calc(var(--zk-spacing-3) - 1px);
 }
