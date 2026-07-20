@@ -55,9 +55,19 @@
 }
 
 /* ─── Input ────────────────────────────────────────────────────────────────── */
+/* Content-hug (similar-case sweep of the datebox/timebox content-fit fix; see
+   components/combo-trio.md). ZK hardcodes this input at size="5" (fits HH:mm only);
+   under the old `flex:1;min-width:0` an HH:mm:ss value like "10:30:00" was CLIPPED
+   whenever the root had no explicit width. `field-sizing: content` lets the input hug
+   its time and grow to fit longer formats (no clip). `flex: 1 1 auto` (basis = content)
+   still lets a width-forced field fill its container. The `min-width` floor keeps an
+   empty field a usable target. The input is readonly (value picked from the popup, not
+   typed) so there is no per-keystroke jitter. Degrades to the prior look where
+   `field-sizing` is unsupported. */
 .z-timepicker-input {
-    flex: 1;
-    min-width: 0;
+    flex: 1 1 auto;
+    field-sizing: content;
+    min-width: 5em;
     border: none;
     background: transparent;
     padding: 0 var(--zk-spacing-3);
