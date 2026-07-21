@@ -1560,4 +1560,51 @@ test.describe('Component Theme Variables', () => {
     await page.addStyleTag({ content: ':root{--zk-portallayout-radius:0px}' });
     expect(await radiusOf(defFrame)).toBe('0px');
   });
+
+  // ── confirmpopup (native, CE): lightweight anchored confirmation popover
+  // (Popover analog, not a modal dialog). Confirmpopup extends Popup and its
+  // open() calls super.open(), inheriting Popup's own zk.makeVParent() call,
+  // which reparents the widget's real DOM node to document.body — the
+  // identical root cause as popup, its closest sibling — so, like
+  // messagebox/popup/coachmark, a REGIONAL (container) override cannot reach
+  // it; only the whole-app :root override applies. There is no "sibling
+  // untouched" test here for the same reason as messagebox/popup/coachmark
+  // (see the tracker). The severity icon color is a semantic status color
+  // (identical mapping to chip/badge), intentionally not knob-driven. ───────
+  test('confirmpopup — zero-regression defaults', async ({ page }) => {
+    await page.getByRole('button', { name: 'Show Confirmpopup', exact: true }).click();
+    const pop = page.locator('.z-confirmpopup.z-confirmpopup-open');
+    await expect(pop).toBeVisible();
+
+    expect(await radiusOf(pop)).toBe('6px'); // stock --zk-shape-card
+    expect(await bgOf(pop)).toBe('rgb(247, 249, 252)'); // stock --zk-color-surface-container-low
+    expect(await colorOf(pop)).toBe('rgba(0, 0, 0, 0.87)'); // stock --zk-color-on-surface
+
+    const ok = pop.locator('.z-confirmpopup-ok');
+    const cancel = pop.locator('.z-confirmpopup-cancel');
+    expect(await bgOf(ok)).toBe('rgb(55, 111, 208)'); // stock --zk-color-primary
+    expect(await colorOf(ok)).toBe('rgb(255, 255, 255)'); // stock --zk-color-on-primary
+    expect(await borderColorOf(cancel)).toBe('rgba(0, 0, 0, 0.23)'); // stock --zk-color-outline
+    expect(await colorOf(cancel)).toBe('rgba(0, 0, 0, 0.6)'); // stock --zk-color-on-surface-variant
+  });
+
+  test('confirmpopup — whole-app :root override wins (loaded after norm.css.dsp)', async ({ page }) => {
+    await page.getByRole('button', { name: 'Show Confirmpopup', exact: true }).click();
+    const pop = page.locator('.z-confirmpopup.z-confirmpopup-open');
+    await expect(pop).toBeVisible();
+    expect(await bgOf(pop)).not.toBe(SCOPED_PURPLE); // baseline before override
+    const icon = pop.locator('.z-confirmpopup-icon');
+    const iconColorBefore = await colorOf(icon);
+
+    // An adopter's :root override, injected after the theme bundle, must win the
+    // cascade and reach the popover even though it is not a descendant of any
+    // container in the page (Popup.open()'s makeVParent() attaches it to
+    // document.body).
+    await page.addStyleTag({ content: ':root{--zk-confirmpopup-bg:#6750a4}' });
+    expect(await bgOf(pop)).toBe(SCOPED_PURPLE);
+
+    // The severity icon color is a semantic status color, not knob-driven — it
+    // must stay unaffected by the bg override (state integrity, CTV-7).
+    expect(await colorOf(icon)).toBe(iconColorBefore);
+  });
 });

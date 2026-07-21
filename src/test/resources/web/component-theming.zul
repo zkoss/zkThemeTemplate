@@ -1170,5 +1170,28 @@
             </portalchildren>
         </portallayout>
     </div>
+
+    <!-- Confirmpopup (native, CE, zul/wgt/css/confirmpopup.css): lightweight anchored
+         confirmation popover (Popover analog, not a modal dialog). Knobs cover the
+         card fill/text/border/radius/elevation (zk-confirmpopup-bg/-fg/-header-fg/
+         -border-color/-radius/-elevation), plus the footer's OK (filled) / Cancel
+         (outlined) actions, which are plain native button elements rather than
+         .z-button widgets, so they read their own knobs (zk-confirmpopup-button-radius,
+         shared by both; zk-confirmpopup-ok-bg/-ok-fg; zk-confirmpopup-cancel-fg/
+         -cancel-border-color) instead of the button family's. Confirmpopup extends
+         Popup and its open() calls super.open(), inheriting Popup's own
+         zk.makeVParent() reparenting to document.body on open — the identical root
+         cause as zk-popup-*, its closest sibling — so, like messagebox/popup/coachmark,
+         a regional (container) override cannot reach it; only the whole-app :root
+         override applies (see the tracker). Severity recolors only the icon
+         (identical mapping to chip/badge) and stays on its own semantic tokens,
+         intentionally not knob-driven (same convention as messagebox's icon-type
+         colors). -->
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Confirmpopup (default)</div>
+    <div sclass="z-hstack z-mb-8">
+        <button label="Show Confirmpopup" popup="confirmpopupThemingDefault"/>
+        <confirmpopup id="confirmpopupThemingDefault" severity="warning" header="Confirm"
+                      message="Default confirmpopup, zero override applied."/>
+    </div>
 </div>
 </zk>

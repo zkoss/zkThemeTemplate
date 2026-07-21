@@ -1470,6 +1470,53 @@ normally.
 | `--zk-portallayout-counter-fg` | `var(--zk-color-primary)` | panel-count badge text |
 | `--zk-portallayout-counter-radius` | `var(--zk-shape-corner-full)` | panel-count badge shape |
 
+### Confirmpopup — shipped
+
+Lightweight anchored confirmation popover (CE, `zul/wgt/css/confirmpopup.css`) — a Popover
+analog, **not** a modal dialog: `.z-confirmpopup` card + a two-layer CSS-triangle `.z-confirmpopup-arrow`
++ an optional `.z-confirmpopup-header` + an unconditional `.z-confirmpopup-body` (icon + optional
+message) + an unconditional `.z-confirmpopup-footer` (Cancel/OK). `--zk-confirmpopup-bg` covers
+**both** the card's own fill **and** the arrow's inner fill layer (all four placements read the
+same surface token today), the same "one knob, several roles" precedent as tab/calendar/coachmark's
+shared fill. `--zk-confirmpopup-header-fg` covers **both** the root's own text color **and** the
+optional header's title text (both read on-surface); the message body reads the muted tone via its
+own `--zk-confirmpopup-fg` — the same "header vs body" fg pairing precedent as messagebox's
+`-header-fg`/`-fg`. `--zk-confirmpopup-border-color` covers the arrow's outer edge layer (all four
+placements) **and** both dividers (header's `border-bottom`, footer's `border-top`) — the same
+"one knob, several dividers" precedent as toolbar/messagebox's shared border-color. Severity
+recolors **only the icon** (identical severity→status-token mapping as chip/badge) and stays on
+its own semantic tokens, intentionally not knob-driven (same convention as
+button/progressmeter/messagebox's color/type variants). The footer's OK/Cancel are plain native
+`<button>` elements, **not** `.z-button` widgets, so they get their own knobs rather than reusing
+`--zk-button-*`: `--zk-confirmpopup-button-radius` is shared by both (one shape, same precedent as
+slider's shared track/fill/thumb radius); OK is the high-emphasis filled/committing action
+(`-ok-bg`/`-ok-fg`, the latter also driving its `::before` state-layer tint — same value today, one
+knob); Cancel is the low-emphasis outlined/dismissal action (`-cancel-border-color`/`-cancel-fg`,
+the latter likewise driving its own `::before` tint). Both buttons' focus ring stays on the global
+`--zk-focus-ring`, not a knob (same convention as button/window/grid).
+
+**CTV-3 (region scoping) is structurally N/A here, not a defect** — the identical root cause as
+popup, its closest sibling. `Confirmpopup` extends `Popup` and its `open()` override calls
+`super.open(...)`, inheriting `Popup.prototype.open()`'s own `zk.makeVParent()` call, which
+reparents the widget's real DOM node to `document.body` (confirmed in
+`zul/src/main/resources/web/js/zul/wgt/Popup.ts` and `Confirmpopup.ts`). A region override on an
+ancestor of the triggering button cannot reach the open popover for the same reason it cannot reach
+an open `.z-popup`; only the whole-app (`:root`) override path applies, and is unaffected.
+
+| Knob | Default | Scope |
+|------|---------|-------|
+| `--zk-confirmpopup-bg` | `var(--zk-color-surface-container-low)` | card fill + arrow inner-fill layer |
+| `--zk-confirmpopup-fg` | `var(--zk-color-on-surface-variant)` | message body text |
+| `--zk-confirmpopup-header-fg` | `var(--zk-color-on-surface)` | root text color + header title text |
+| `--zk-confirmpopup-border-color` | `var(--zk-color-outline-variant)` | arrow outer-edge layer + header/footer dividers |
+| `--zk-confirmpopup-radius` | `var(--zk-shape-card)` | card corners |
+| `--zk-confirmpopup-elevation` | `var(--zk-elevation-2)` | card shadow (static — always the same, not mode-driven) |
+| `--zk-confirmpopup-button-radius` | `var(--zk-shape-button)` | OK + Cancel shared corner radius |
+| `--zk-confirmpopup-ok-bg` | `var(--zk-color-primary)` | OK button fill |
+| `--zk-confirmpopup-ok-fg` | `var(--zk-color-on-primary)` | OK button text + its state-layer tint |
+| `--zk-confirmpopup-cancel-border-color` | `var(--zk-color-outline)` | Cancel button outline |
+| `--zk-confirmpopup-cancel-fg` | `var(--zk-color-on-surface-variant)` | Cancel button text + its state-layer tint |
+
 ## Recipe — adding a component
 
 Validated by the button pilot; repeat per component (then update the
@@ -1511,7 +1558,8 @@ Validated by the button pilot; repeat per component (then update the
   background and focus-ring exclusions), goldenlayout (see entry for the shared
   border-color/radius across the header strip and goldenpanel, and the drag-proxy/drop-target/
   overflow-dropdown exclusions), portallayout (see entry for the frame-only-surface convention and
-  the drag-ghost/drop-placeholder exclusions).
+  the drag-ghost/drop-placeholder exclusions), confirmpopup (see entry for the CTV-3 structural
+  exception — inherits Popup's own makeVParent() reparenting on open).
 - **Not exposed** (by design): purely structural/layout components (box, div, cell, separator,
   layouts) and content atoms (label, image) have no meaningful appearance knob — this excludes
   the anchor/link, which **is** exposed despite its similarly minimal text-only vocabulary (see

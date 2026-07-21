@@ -22,12 +22,12 @@
     box-sizing: border-box;
     min-width: 200px;
     max-width: 320px;
-    background-color: var(--zk-color-surface-container-low);
-    color: var(--zk-color-on-surface);
+    background-color: var(--zk-confirmpopup-bg);
+    color: var(--zk-confirmpopup-header-fg);
     border: none;
-    border-radius: var(--zk-shape-card);
+    border-radius: var(--zk-confirmpopup-radius);
     /* shadow alone supplies separation from the page (MUI Popover pattern) — no border drawn */
-    box-shadow: var(--zk-elevation-2);
+    box-shadow: var(--zk-confirmpopup-elevation);
     font-family: var(--zk-typescale-font-family);
 }
 
@@ -79,13 +79,13 @@
 .z-confirmpopup-placement-top > .z-confirmpopup-arrow::before {
     bottom: 1px;
     border-width: 8px 8px 0;
-    border-top-color: var(--zk-color-outline-variant);
+    border-top-color: var(--zk-confirmpopup-border-color);
 }
 .z-confirmpopup-placement-top > .z-confirmpopup-arrow::after {
     bottom: 2px;
     left: 1px;
     border-width: 7px 7px 0;
-    border-top-color: var(--zk-color-surface-container-low);
+    border-top-color: var(--zk-confirmpopup-bg);
 }
 
 /* placement-bottom: box sits below the trigger — arrow is on the box's TOP edge, pointing up */
@@ -93,13 +93,13 @@
 .z-confirmpopup-placement-bottom > .z-confirmpopup-arrow::before {
     top: 1px;
     border-width: 0 8px 8px;
-    border-bottom-color: var(--zk-color-outline-variant);
+    border-bottom-color: var(--zk-confirmpopup-border-color);
 }
 .z-confirmpopup-placement-bottom > .z-confirmpopup-arrow::after {
     top: 2px;
     left: 1px;
     border-width: 0 7px 7px;
-    border-bottom-color: var(--zk-color-surface-container-low);
+    border-bottom-color: var(--zk-confirmpopup-bg);
 }
 
 /* placement-left: box sits left of the trigger — arrow is on the box's RIGHT edge, pointing right */
@@ -107,13 +107,13 @@
 .z-confirmpopup-placement-left > .z-confirmpopup-arrow::before {
     right: 1px;
     border-width: 8px 0 8px 8px;
-    border-left-color: var(--zk-color-outline-variant);
+    border-left-color: var(--zk-confirmpopup-border-color);
 }
 .z-confirmpopup-placement-left > .z-confirmpopup-arrow::after {
     right: 2px;
     top: 1px;
     border-width: 7px 0 7px 7px;
-    border-left-color: var(--zk-color-surface-container-low);
+    border-left-color: var(--zk-confirmpopup-bg);
 }
 
 /* placement-right: box sits right of the trigger — arrow is on the box's LEFT edge, pointing left */
@@ -121,20 +121,20 @@
 .z-confirmpopup-placement-right > .z-confirmpopup-arrow::before {
     left: 1px;
     border-width: 8px 8px 8px 0;
-    border-right-color: var(--zk-color-outline-variant);
+    border-right-color: var(--zk-confirmpopup-border-color);
 }
 .z-confirmpopup-placement-right > .z-confirmpopup-arrow::after {
     left: 2px;
     top: 1px;
     border-width: 7px 7px 7px 0;
-    border-right-color: var(--zk-color-surface-container-low);
+    border-right-color: var(--zk-confirmpopup-bg);
 }
 
 /* ─── Header (optional) — DialogTitle analog ─────────────────────────── */
 .z-confirmpopup-header {
     padding: var(--zk-spacing-3) var(--zk-spacing-4);
-    border-bottom: 1px solid var(--zk-color-outline-variant);
-    color: var(--zk-color-on-surface);
+    border-bottom: 1px solid var(--zk-confirmpopup-border-color);
+    color: var(--zk-confirmpopup-header-fg);
     font-size: var(--zk-typescale-title-small-size);
     font-weight: var(--zk-typescale-title-small-weight);
     line-height: var(--zk-typescale-title-small-line-height);
@@ -158,7 +158,7 @@
 }
 
 .z-confirmpopup-message {
-    color: var(--zk-color-on-surface-variant);
+    color: var(--zk-confirmpopup-fg);
     font-size: var(--zk-typescale-body-medium-size);
     line-height: var(--zk-typescale-body-medium-line-height);
     word-break: break-word;
@@ -181,7 +181,7 @@
     justify-content: flex-end;
     gap: var(--zk-spacing-2);
     padding: var(--zk-spacing-2) var(--zk-spacing-4) var(--zk-spacing-3);
-    border-top: 1px solid var(--zk-color-outline-variant);
+    border-top: 1px solid var(--zk-confirmpopup-border-color);
 }
 
 .z-confirmpopup-ok,
@@ -192,7 +192,7 @@
     min-width: 64px;
     min-height: var(--zk-button-height-sm);
     padding: 0 var(--zk-spacing-4);
-    border-radius: var(--zk-shape-button);
+    border-radius: var(--zk-confirmpopup-button-radius);
     font-family: var(--zk-typescale-font-family);
     font-size: var(--zk-typescale-label-large-size);
     font-weight: var(--zk-typescale-label-large-weight);
@@ -232,16 +232,16 @@
 /* OK — high-emphasis, filled (the committing action) */
 .z-confirmpopup-ok {
     border: none;
-    background-color: var(--zk-color-primary);
-    color: var(--zk-color-on-primary);
+    background-color: var(--zk-confirmpopup-ok-bg);
+    color: var(--zk-confirmpopup-ok-fg);
 }
-.z-confirmpopup-ok::before { background-color: var(--zk-color-on-primary); }
+.z-confirmpopup-ok::before { background-color: var(--zk-confirmpopup-ok-fg); }
 
 /* Cancel — low-emphasis, outlined (the dismissal action; never confusable with OK) */
 .z-confirmpopup-cancel {
     background-color: transparent;
-    border: 1px solid var(--zk-color-outline);
-    color: var(--zk-color-on-surface-variant);
+    border: 1px solid var(--zk-confirmpopup-cancel-border-color);
+    color: var(--zk-confirmpopup-cancel-fg);
 }
-.z-confirmpopup-cancel::before { background-color: var(--zk-color-on-surface-variant); }
+.z-confirmpopup-cancel::before { background-color: var(--zk-confirmpopup-cancel-fg); }
 }

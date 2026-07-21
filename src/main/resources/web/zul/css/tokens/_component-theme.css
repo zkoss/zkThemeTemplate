@@ -1077,4 +1077,47 @@
     --zk-portallayout-counter-bg:     var(--zk-color-primary-container);
     --zk-portallayout-counter-fg:     var(--zk-color-primary);
     --zk-portallayout-counter-radius: var(--zk-shape-corner-full);
+
+    /* ── Confirmpopup (native, CE, zul/wgt/css/confirmpopup.css) — lightweight
+       anchored confirmation popover (Popover-analog, not a modal dialog). Extends
+       Popup and inherits its open() -> makeVParent() reparenting to document.body
+       (see Confirmpopup.ts's override open(), which calls super.open()), the
+       identical root cause as --zk-popup-*, its closest sibling — so, like
+       messagebox/popup/coachmark, region scoping (CTV-3) is structurally N/A; only
+       the whole-app :root override applies (see the tracker).
+       --zk-confirmpopup-bg covers BOTH the card's own fill AND the arrow's inner
+       ::after layer (all four placements read the same surface token today), the
+       same "one knob, several roles" precedent as tab/calendar/coachmark's shared
+       fill. --zk-confirmpopup-header-fg covers BOTH the root's own text color AND
+       the optional header's title text (both read on-surface today); the message
+       body reads the muted on-surface-variant tone via its own --zk-confirmpopup-fg,
+       the same "header vs body" fg pairing precedent as messagebox's
+       -header-fg/-fg. --zk-confirmpopup-border-color covers the arrow's outer
+       ::before edge (all four placements) AND both dividers (header's
+       border-bottom, footer's border-top) — the same "one knob, several dividers"
+       precedent as toolbar/messagebox's shared border-color. Severity recolors
+       ONLY the icon (identical severity->status-token mapping as chip/badge) and
+       stays on its own semantic tokens, intentionally not knob-driven (same
+       convention as button/progressmeter/messagebox's color/type variants).
+       The footer's OK/Cancel are plain native <button> elements, NOT .z-button
+       widgets, so they get their own knobs rather than reusing --zk-button-*:
+       --zk-confirmpopup-button-radius is shared by both (one shape, same
+       precedent as slider's shared track/fill/thumb radius); OK is the
+       high-emphasis filled/committing action (-ok-bg/-ok-fg, the latter also
+       driving its ::before state-layer tint — same value today, one knob);
+       Cancel is the low-emphasis outlined/dismissal action (-cancel-border-color/
+       -cancel-fg, the latter likewise driving its own ::before tint). Both
+       buttons' focus ring stays on the global --zk-focus-ring, not a knob (same
+       convention as button/window/grid). */
+    --zk-confirmpopup-bg:                  var(--zk-color-surface-container-low);
+    --zk-confirmpopup-fg:                  var(--zk-color-on-surface-variant);
+    --zk-confirmpopup-header-fg:           var(--zk-color-on-surface);
+    --zk-confirmpopup-border-color:        var(--zk-color-outline-variant);
+    --zk-confirmpopup-radius:              var(--zk-shape-card);
+    --zk-confirmpopup-elevation:           var(--zk-elevation-2);
+    --zk-confirmpopup-button-radius:       var(--zk-shape-button);
+    --zk-confirmpopup-ok-bg:               var(--zk-color-primary);
+    --zk-confirmpopup-ok-fg:               var(--zk-color-on-primary);
+    --zk-confirmpopup-cancel-border-color: var(--zk-color-outline);
+    --zk-confirmpopup-cancel-fg:           var(--zk-color-on-surface-variant);
 }
