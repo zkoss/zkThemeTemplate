@@ -503,6 +503,37 @@ test.describe('Component Theme Variables', () => {
     expect(await borderBottomColorOf(def)).toBe(SCOPED_PURPLE);
   });
 
+  // ── toolbarbutton: icon/text button rendered inside toolbar chrome (its own
+  // widget/knob family, not a button variant). fg drives both the resting
+  // text/icon color and the currentColor state-layer overlay; checked-bg/-fg
+  // is the one defining state (mode="toggle" checked="true"). ─────────────
+  test('toolbarbutton — regional fg/radius/checked override, sibling untouched', async ({ page }) => {
+    const def = page.locator('.z-toolbarbutton').first();
+    const defChecked = page.locator('.z-toolbarbutton-checked').first();
+    const scoped = page.locator('div[style*="--zk-toolbarbutton-fg"] .z-toolbarbutton').first();
+    const scopedChecked = page.locator('div[style*="--zk-toolbarbutton-fg"] .z-toolbarbutton-checked').first();
+
+    expect(await colorOf(scoped)).toBe(SCOPED_PURPLE);
+    expect(await radiusOf(scoped)).toBe('0px');
+    expect(await bgOf(scopedChecked)).toBe(SCOPED_PURPLE);
+    expect(await colorOf(scopedChecked)).toBe('rgb(255, 255, 255)');
+
+    expect(await colorOf(def)).not.toBe(SCOPED_PURPLE);
+    expect(await radiusOf(def)).toBe('9999px'); // stock --zk-shape-corner-full
+    expect(await bgOf(defChecked)).not.toBe(SCOPED_PURPLE);
+    expect(await colorOf(defChecked)).not.toBe('rgb(255, 255, 255)');
+  });
+
+  test('toolbarbutton — whole-app :root override wins (loaded after norm.css.dsp)', async ({ page }) => {
+    const def = page.locator('.z-toolbarbutton').first();
+    expect(await radiusOf(def)).toBe('9999px'); // baseline before override
+
+    // An adopter's :root override, injected after the theme bundle, must win the
+    // cascade and reach every toolbarbutton instance, including the default one.
+    await page.addStyleTag({ content: ':root{--zk-toolbarbutton-radius:0px}' });
+    expect(await radiusOf(def)).toBe('0px');
+  });
+
   // ── slider: MD3 range input (track + fill + thumb). zk-slider-accent covers
   // BOTH the active fill and the thumb (same "one knob, several roles" pattern
   // as tab/calendar's accent); disabled stays on opacity only, not knob-driven
@@ -535,6 +566,83 @@ test.describe('Component Theme Variables', () => {
     expect(await bgOf(defThumb)).toBe(SCOPED_PURPLE);
   });
 
+  // ── rangeslider (PE): MD3 dual-thumb range input — shares the Slider
+  // family's track/accent/radius/elevation vocabulary. zk-rangeslider-accent
+  // covers BOTH the active-range fill (between the two thumbs) AND each
+  // thumb's fill (same "one knob, several roles" pattern as tab/calendar/
+  // slider's accent); disabled stays on opacity only, not knob-driven (same
+  // convention as button/input/rating/slider). ──────────────────────────────
+  test('rangeslider — regional track/accent/radius override, sibling untouched', async ({ page }) => {
+    const def = page.locator('.z-rangeslider').first();
+    const scoped = page.locator('div[style*="--zk-rangeslider-radius"] .z-rangeslider').first();
+
+    const defTrack = def.locator('.z-rangeslider-track').first();
+    const scopedTrack = scoped.locator('.z-rangeslider-track').first();
+    const defArea = def.locator('.z-sliderbuttons-area').first();
+    const scopedArea = scoped.locator('.z-sliderbuttons-area').first();
+    const defThumb = def.locator('.z-sliderbuttons-button').first();
+    const scopedThumb = scoped.locator('.z-sliderbuttons-button').first();
+
+    expect(await radiusOf(scopedTrack)).toBe('0px');
+    expect(await bgOf(scopedTrack)).toBe('rgb(239, 230, 255)'); // #efe6ff track override
+    expect(await bgOf(scopedArea)).toBe(SCOPED_PURPLE); // accent override (active-range fill)
+    expect(await bgOf(scopedThumb)).toBe(SCOPED_PURPLE); // accent override (thumb fill)
+
+    expect(await radiusOf(defTrack)).toBe('9999px'); // stock --zk-shape-corner-full
+    expect(await bgOf(defTrack)).not.toBe('rgb(239, 230, 255)');
+    expect(await bgOf(defArea)).not.toBe(SCOPED_PURPLE);
+    expect(await bgOf(defThumb)).not.toBe(SCOPED_PURPLE);
+  });
+
+  test('rangeslider — whole-app :root override wins (loaded after norm.css.dsp)', async ({ page }) => {
+    const defThumb = page.locator('.z-rangeslider').first().locator('.z-sliderbuttons-button').first();
+    expect(await bgOf(defThumb)).not.toBe(SCOPED_PURPLE); // baseline before override
+
+    // An adopter's :root override, injected after the theme bundle, must win the
+    // cascade and reach every rangeslider instance, including the default one.
+    await page.addStyleTag({ content: ':root{--zk-rangeslider-accent:#6750a4}' });
+    expect(await bgOf(defThumb)).toBe(SCOPED_PURPLE);
+  });
+
+  // ── multislider (EE): MD3 multi-range slider — shares the Slider/
+  // Rangeslider family's track/accent/radius/elevation vocabulary (same
+  // Sliderbuttons sub-widget markup). zk-multislider-accent covers BOTH the
+  // active-range fill AND each thumb's fill (same "one knob, several roles"
+  // pattern as tab/calendar/slider/rangeslider's accent); disabled stays on
+  // opacity only, not knob-driven (same convention as button/input/rating/
+  // slider/rangeslider). ──────────────────────────────────────────────────
+  test('multislider — regional track/accent/radius override, sibling untouched', async ({ page }) => {
+    const def = page.locator('.z-multislider').first();
+    const scoped = page.locator('div[style*="--zk-multislider-radius"] .z-multislider').first();
+
+    const defTrack = def.locator('.z-multislider-track').first();
+    const scopedTrack = scoped.locator('.z-multislider-track').first();
+    const defArea = def.locator('.z-sliderbuttons-area').first();
+    const scopedArea = scoped.locator('.z-sliderbuttons-area').first();
+    const defThumb = def.locator('.z-sliderbuttons-button').first();
+    const scopedThumb = scoped.locator('.z-sliderbuttons-button').first();
+
+    expect(await radiusOf(scopedTrack)).toBe('0px');
+    expect(await bgOf(scopedTrack)).toBe('rgb(239, 230, 255)'); // #efe6ff track override
+    expect(await bgOf(scopedArea)).toBe(SCOPED_PURPLE); // accent override (active-range fill)
+    expect(await bgOf(scopedThumb)).toBe(SCOPED_PURPLE); // accent override (thumb fill)
+
+    expect(await radiusOf(defTrack)).toBe('9999px'); // stock --zk-shape-corner-full
+    expect(await bgOf(defTrack)).not.toBe('rgb(239, 230, 255)');
+    expect(await bgOf(defArea)).not.toBe(SCOPED_PURPLE);
+    expect(await bgOf(defThumb)).not.toBe(SCOPED_PURPLE);
+  });
+
+  test('multislider — whole-app :root override wins (loaded after norm.css.dsp)', async ({ page }) => {
+    const defThumb = page.locator('.z-multislider').first().locator('.z-sliderbuttons-button').first();
+    expect(await bgOf(defThumb)).not.toBe(SCOPED_PURPLE); // baseline before override
+
+    // An adopter's :root override, injected after the theme bundle, must win the
+    // cascade and reach every multislider instance, including the default one.
+    await page.addStyleTag({ content: ':root{--zk-multislider-accent:#6750a4}' });
+    expect(await bgOf(defThumb)).toBe(SCOPED_PURPLE);
+  });
+
   // ── checkbox: default mold — resting border/text + checked/indeterminate
   // accent (fill + border + hover-ring tint), the defining state. Switch/toggle
   // molds and radio/radiogroup are out of scope for this pass. ────────────────
@@ -561,6 +669,36 @@ test.describe('Component Theme Variables', () => {
     // cascade and reach every checkbox instance, including the default one.
     await page.addStyleTag({ content: ':root{--zk-checkbox-accent:#6750a4}' });
     expect(await bgOf(defMold)).toBe(SCOPED_PURPLE);
+  });
+
+  // ── radio: no z-radio-mold element — input[type="radio"] IS the visual.
+  // Resting (unselected) reads the border/text knobs; selected swaps the
+  // border-color (+ ring/inner-dot fill, same rule) to a single accent, the
+  // defining state, same "one knob, several roles" precedent as checkbox's
+  // accent. ────────────────────────────────────────────────────────────────
+  test('radio — regional border/accent override, sibling untouched', async ({ page }) => {
+    const defOff = page.locator('.z-radio-off').first();
+    const defOn = page.locator('.z-radio-on').first();
+    const scopedOff = page.locator('div[style*="--zk-radio-accent"] .z-radio-off').first();
+    const scopedOn = page.locator('div[style*="--zk-radio-accent"] .z-radio-on').first();
+
+    // Scoped instances pick up both knobs (resting border + selected accent border).
+    expect(await borderColorOf(scopedOff.locator('input[type="radio"]').first())).toBe(SCOPED_PURPLE);
+    expect(await borderColorOf(scopedOn.locator('input[type="radio"]').first())).toBe(SCOPED_PURPLE);
+
+    // Sibling defaults outside the region are untouched.
+    expect(await borderColorOf(defOff.locator('input[type="radio"]').first())).not.toBe(SCOPED_PURPLE);
+    expect(await borderColorOf(defOn.locator('input[type="radio"]').first())).not.toBe(SCOPED_PURPLE);
+  });
+
+  test('radio — whole-app :root override wins (loaded after norm.css.dsp)', async ({ page }) => {
+    const defInput = page.locator('.z-radio-on').first().locator('input[type="radio"]').first();
+    expect(await borderColorOf(defInput)).not.toBe(SCOPED_PURPLE); // baseline before override
+
+    // An adopter's :root override, injected after the theme bundle, must win the
+    // cascade and reach every radio instance, including the default one.
+    await page.addStyleTag({ content: ':root{--zk-radio-accent:#6750a4}' });
+    expect(await borderColorOf(defInput)).toBe(SCOPED_PURPLE);
   });
 
   // ── messagebox: MD3 alert dialog (Messagebox.show()). Messagebox.show()

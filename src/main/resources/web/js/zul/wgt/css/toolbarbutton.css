@@ -16,9 +16,9 @@
     height: 36px;
     padding: 0 var(--zk-spacing-2);
     border: none;
-    border-radius: var(--zk-shape-corner-full);
+    border-radius: var(--zk-toolbarbutton-radius);
     background-color: transparent;
-    color: var(--zk-color-primary);
+    color: var(--zk-toolbarbutton-fg);
     font-family: var(--zk-typescale-font-family);
     font-size: var(--zk-typescale-label-large-size);
     font-weight: var(--zk-typescale-label-large-weight);
@@ -66,8 +66,8 @@
 /* Checked (toggle) state — primary container background, aligned with other
    selection states across the theme (listitem/treerow/menu/comboitem/paging) */
 .z-toolbarbutton-checked {
-    background-color: var(--zk-color-primary-container);
-    color: var(--zk-color-on-primary-container);
+    background-color: var(--zk-toolbarbutton-checked-bg);
+    color: var(--zk-toolbarbutton-checked-fg);
 }
 
 /* Checked + hover/focus still show state layer (currentColor now = on-primary-container) */

@@ -25,13 +25,13 @@
    Vertical swaps width/height and uses left/top axis. */
 
 @layer zk-components {
+/* Appearance knobs (track-bg / accent / radius / elevation) are Component
+   Theme Variables — declared at :root in tokens/_component-theme.css so a
+   :root/region override reaches this component; only structural/sizing
+   custom properties remain local below. */
 :root {
     --zk-rangeslider-inner-size: 4px;
-    --zk-rangeslider-border-radius: var(--zk-shape-corner-full);
-    --zk-rangeslider-track-color: var(--zk-color-outline-variant);
     --zk-rangeslider-button-size: 20px;
-    --zk-rangeslider-button-color: var(--zk-color-primary);
-    --zk-rangeslider-area-color: var(--zk-color-primary);
     --zk-rangeslider-tooltip-bg: var(--zk-color-inverse-surface);
     --zk-rangeslider-tooltip-color: var(--zk-color-inverse-on-surface);
     --zk-rangeslider-dot-size: 8px;
@@ -79,8 +79,8 @@
 .z-rangeslider-track {
     position: absolute;
     inset: 0;
-    background-color: var(--zk-rangeslider-track-color);
-    border-radius: var(--zk-rangeslider-border-radius);
+    background-color: var(--zk-rangeslider-track-bg);
+    border-radius: var(--zk-rangeslider-radius);
 }
 
 /* ─── Sliderbuttons (thumb container) ───────────────────────────────── */
@@ -89,10 +89,16 @@
     inset: 0;
 }
 
-.z-sliderbuttons-area {
+/* Scoped under .z-rangeslider (not a bare .z-sliderbuttons-area selector):
+   multislider.css (a different component, zkmax) targets the same literal
+   class name via the shared Sliderbuttons sub-widget and would otherwise win
+   this property on equal (0,1,0) specificity depending on bundle order —
+   raising specificity here keeps the knob override reliably reaching this
+   component regardless of load order, with no default-value change. */
+.z-rangeslider .z-sliderbuttons-area {
     position: absolute;
-    background-color: var(--zk-rangeslider-area-color);
-    border-radius: var(--zk-rangeslider-border-radius);
+    background-color: var(--zk-rangeslider-accent);
+    border-radius: var(--zk-rangeslider-radius);
     z-index: 1;
 }
 
@@ -100,13 +106,16 @@
 .z-rangeslider-vertical   .z-sliderbuttons-area { left: 0; width: 100%; }
 
 /* ─── Thumb ─────────────────────────────────────────────────────────── */
-.z-sliderbuttons-button {
+/* Scoped under .z-rangeslider — see the .z-sliderbuttons-area comment above:
+   multislider.css targets the same literal class name and would otherwise
+   win these knob-driven properties on equal specificity. */
+.z-rangeslider .z-sliderbuttons-button {
     position: absolute;
     width: var(--zk-rangeslider-button-size);
     height: var(--zk-rangeslider-button-size);
     border-radius: 50%;
-    background-color: var(--zk-rangeslider-button-color);
-    box-shadow: var(--zk-elevation-1);
+    background-color: var(--zk-rangeslider-accent);
+    box-shadow: var(--zk-rangeslider-elevation);
     cursor: grab;
     z-index: 2;
     transition:
@@ -132,13 +141,14 @@
     margin-top: calc(var(--zk-rangeslider-button-size) / -2);
 }
 
-/* State ring */
-.z-sliderbuttons-button::before {
+/* State ring — scoped under .z-rangeslider, same collision-avoidance reason
+   as the .z-sliderbuttons-area/-button rules above. */
+.z-rangeslider .z-sliderbuttons-button::before {
     content: '';
     position: absolute;
     inset: -8px;
     border-radius: 50%;
-    background-color: var(--zk-rangeslider-button-color);
+    background-color: var(--zk-rangeslider-accent);
     opacity: 0;
     pointer-events: none;
     transition: var(--zk-state-layer-transition);
@@ -166,7 +176,7 @@
     width: var(--zk-rangeslider-dot-size);
     height: var(--zk-rangeslider-dot-size);
     background-color: var(--zk-color-surface);
-    border: var(--zk-rangeslider-dot-border-width) solid var(--zk-rangeslider-track-color);
+    border: var(--zk-rangeslider-dot-border-width) solid var(--zk-rangeslider-track-bg);
     border-radius: 50%;
     box-sizing: border-box;
 }

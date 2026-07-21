@@ -760,6 +760,35 @@ tokens, not knob-driven.
 | `--zk-toolbar-border-color` | `var(--zk-color-outline-variant)` |
 | `--zk-toolbar-height` (size — in `_sizing.css`) | `48px` |
 
+### Toolbarbutton — shipped
+
+Icon/text button rendered inside toolbar chrome (`.z-toolbarbutton`,
+`js/zul/wgt/css/toolbarbutton.css`) — its own widget/knob family, not a
+`--zk-button-*` variant. State is an MD3 `::before` overlay that reads
+`currentColor`, so `--zk-toolbarbutton-fg` drives **both** the resting
+text/icon color **and** the overlay tint automatically — no separate
+overlay-color knob is needed (unlike button/combobutton, whose overlay color
+differs from their fill). `--zk-toolbarbutton-radius` is the pill shape (the
+overlay clips to it via `border-radius: inherit`).
+`--zk-toolbarbutton-checked-bg` / `-checked-fg` is the one defining state
+(`mode="toggle" checked="true"`) — a resting/defining-state fill+text pair,
+the same precedent as listbox/tree's `-selected-bg`/`-fg`; the checked fg also
+re-tints the checked-state overlay via `currentColor`. The checked focus-ring
+recolor (`outline-color: var(--zk-color-primary)`) and the hover/focus/active
+overlay opacities stay on base tokens, not knob-driven (same convention as
+menu's `::before` overlay); so does disabled (opacity only, same convention as
+button/input/rating). The app-bar context variant (`.z-north .z-toolbar
+.z-toolbarbutton`, in `toolbar.css`) is a distinct color **VARIANT** that pins
+`on-primary` directly at higher specificity (same treatment as combobutton's
+`toolbar` mold), so it does not read these knobs.
+
+| Knob | Default |
+|------|---------|
+| `--zk-toolbarbutton-fg` | `var(--zk-color-primary)` |
+| `--zk-toolbarbutton-radius` | `var(--zk-shape-corner-full)` |
+| `--zk-toolbarbutton-checked-bg` | `var(--zk-color-primary-container)` |
+| `--zk-toolbarbutton-checked-fg` | `var(--zk-color-on-primary-container)` |
+
 ### Slider — shipped
 
 MD3 range input — track + fill + thumb (`.z-slider`); no text/border, so the knob
@@ -777,10 +806,8 @@ pins its own gradient at higher specificity, deliberately not knob-driven. The
 numeric-input overlay (`.z-slider-input`) and the value tooltip (`.z-slider-popup`)
 are minor sub-features kept on base tokens (same convention as calendar's
 week-of-year column); disabled dims via `opacity` only, not knob-driven (same
-convention as button/input/rating). **Out of scope**: rangeslider (PE) / multislider
-(EE) are separate style files (`zkex/slider/css/rangeslider.css`,
-`zkmax/slider/css/multislider.css`) and were not touched in this pass — still
-candidates for a follow-up.
+convention as button/input/rating). Rangeslider (PE) and multislider (EE) were
+each moved into their own knob family below in later passes.
 
 | Knob | Default | Scope |
 |------|---------|-------|
@@ -788,6 +815,66 @@ candidates for a follow-up.
 | `--zk-slider-accent` | `var(--zk-color-primary)` | active fill + thumb fill (+ PE knob-mold arc stroke) |
 | `--zk-slider-radius` | `var(--zk-shape-corner-full)` | track / fill / thumb corner radius |
 | `--zk-slider-elevation` | `var(--zk-elevation-1)` | thumb resting shadow |
+
+### Rangeslider — shipped
+
+MD3 dual-thumb range input (`zkex/slider/css/rangeslider.css`) — track + the
+active-range fill between the two thumbs + the thumbs themselves — reusing
+Slider's track/accent/radius/elevation vocabulary above. The resting track
+color (`--zk-rangeslider-track-bg`) doubles as the resting (unselected)
+mark-dot's `border-color`, a secondary role. A single defining accent
+(`--zk-rangeslider-accent`) drives the active-range fill between the two
+thumbs (`.z-sliderbuttons-area`), each thumb's fill (`.z-sliderbuttons-button`),
+and the thumb's hover/focus state-layer ring (`::before`) — merging the file's
+former separate `-area-color`/`-button-color` into one shared knob, the same
+"one knob, several roles" precedent as tab/calendar/slider's accent. A shared
+corner radius (`--zk-rangeslider-radius`) drives the track and the
+active-range fill; the thumb stays a hardcoded circular `50%` (a fixed shape
+like radio/badge's dot mode, not knob-driven). The thumb's resting elevation
+(`--zk-rangeslider-elevation`) is exposed; the pressed/active-state shadow
+stays on its own elevation token, not knob-driven. The marks system (mark
+dots, mark labels, the active mark-dot's border-color) and the value tooltip
+are minor sub-features kept on base tokens, not knob-driven (same convention
+as calendar's week-of-year column / slider's numeric-input-overlay and
+tooltip exclusions); disabled dims via `opacity` only, not knob-driven (same
+convention as button/input/rating/slider). Multislider (EE) shares this same
+Sliderbuttons sub-widget markup and was moved into its own knob family below
+in a later pass.
+
+| Knob | Default | Scope |
+|------|---------|-------|
+| `--zk-rangeslider-track-bg` | `var(--zk-color-outline-variant)` | resting track fill + resting mark-dot border |
+| `--zk-rangeslider-accent` | `var(--zk-color-primary)` | active-range fill + thumb fill + thumb hover ring |
+| `--zk-rangeslider-radius` | `var(--zk-shape-corner-full)` | track + active-range fill corner radius |
+| `--zk-rangeslider-elevation` | `var(--zk-elevation-1)` | thumb resting shadow |
+
+### Multislider — shipped
+
+MD3 multi-range slider (`zkmax/slider/css/multislider.css`, EE) — track + N
+active-range fills + N thumbs — sharing the same Sliderbuttons sub-widget
+markup (`.z-sliderbuttons-area` / `.z-sliderbuttons-button`) and the
+track/accent/radius/elevation vocabulary as Rangeslider above. The resting
+track color (`--zk-multislider-track-bg`) doubles as each mark dot's fill, a
+secondary role. A single defining accent (`--zk-multislider-accent`) drives
+every active-range fill, every thumb's fill, and each thumb's hover/focus
+state-layer ring (`::before`) — the same "one knob, several roles" precedent
+as tab/calendar/slider/rangeslider's accent. A shared corner radius
+(`--zk-multislider-radius`) drives the track and each active-range fill; each
+thumb stays a hardcoded circular `50%` (a fixed shape like rangeslider's
+thumb, not knob-driven). The thumb's resting elevation
+(`--zk-multislider-elevation`) is exposed; the pressed/active-state shadow
+stays on its own elevation token, not knob-driven. Mark labels and the value
+tooltip are minor sub-features kept on base tokens, not knob-driven (same
+convention as rangeslider's marks/tooltip exclusions); disabled dims via
+`opacity` only, not knob-driven (same convention as
+button/input/rating/slider/rangeslider).
+
+| Knob | Default | Scope |
+|------|---------|-------|
+| `--zk-multislider-track-bg` | `var(--zk-color-outline-variant)` | resting track fill + mark-dot fill |
+| `--zk-multislider-accent` | `var(--zk-color-primary)` | active-range fill + thumb fill + thumb hover ring |
+| `--zk-multislider-radius` | `var(--zk-shape-corner-full)` | track + active-range fill corner radius |
+| `--zk-multislider-elevation` | `var(--zk-elevation-1)` | thumb resting shadow |
 
 ### Checkbox — shipped (default mold only)
 
@@ -799,7 +886,8 @@ SVG baked into a `background-image` data URI (same limitation as selectbox's che
 stays hardcoded, not a knob. Disabled dims via opacity only, not knob-driven (same convention as
 button/input/rating). **Out of scope for this pass**: the `switch` and `toggle` molds are
 distinct visual treatments (different DOM/state model) and keep reading base tokens directly —
-natural follow-on candidates; radio/radiogroup are a separate widget and untouched here.
+a natural follow-on candidate. radio/radiogroup share this same CSS file but are a separate
+widget with their own knobs — see the Radio entry below.
 
 | Knob | Default | Scope |
 |------|---------|-------|
@@ -807,6 +895,25 @@ natural follow-on candidates; radio/radiogroup are a separate widget and untouch
 | `--zk-checkbox-border-color` | `var(--zk-color-on-surface-variant)` | resting (unchecked) mold border |
 | `--zk-checkbox-radius` | `2px` | mold corner radius |
 | `--zk-checkbox-accent` | `var(--zk-color-primary)` | checked/indeterminate fill + border + hover-ring tint |
+
+### Radio — shipped
+
+Consumed by `.z-radio` / `.z-radio-on` / `.z-radio-disabled` (`zul/wgt/checkbox.css` — shares
+the file with checkbox, but is a separate widget). There is no `z-radio-mold` element:
+`input[type="radio"]` itself is the visual, so unlike checkbox there's no separate mold element
+to knob. Resting (unselected) reads the border/text knobs; selected swaps the border color and
+the inner-dot fill (same rule) to a single accent, the defining state — the same "one knob,
+several roles" precedent as checkbox's accent. The circular shape (`border-radius: 50%`) stays
+hardcoded — a fixed shape concern, not a knob (same convention as badge's dot mode). Disabled
+dims via opacity only, not knob-driven (same convention as button/input/rating/checkbox).
+`z-radiogroup` (the horizontal/vertical layout container) has no color/border/radius surface of
+its own and is untouched.
+
+| Knob | Default | Scope |
+|------|---------|-------|
+| `--zk-radio-fg` | `var(--zk-color-on-surface)` | wrapper + label text |
+| `--zk-radio-border-color` | `var(--zk-color-on-surface-variant)` | resting (unselected) input border |
+| `--zk-radio-accent` | `var(--zk-color-primary)` | selected border-color + inner-dot fill |
 
 ### Messagebox — shipped
 
@@ -1385,9 +1492,11 @@ Validated by the button pilot; repeat per component (then update the
 - **Shipped**: button, input (textbox family), window, grid, listbox, tree, panel, groupbox,
   combobox, datebox, timebox, spinner (+ doublespinner), bandbox, daterangebox, timepicker, tab (tabbox), menu,
   avatar/avatar-group, chip (base hoisted; see caveat), badge (base hoisted; see caveat), rating,
-  progressmeter, paging, combobutton, selectbox, inputgroup, calendar, toolbar, slider, checkbox
-  (default mold only — see entry for the switch/toggle-mold and radio/radiogroup exclusions),
-  messagebox (see entry for the CTV-3 structural exception), notification (untyped/default card
+  progressmeter, paging, combobutton, selectbox, inputgroup, calendar, toolbar, toolbarbutton,
+  slider, rangeslider, multislider, checkbox
+  (default mold only — see entry for the switch/toggle-mold exclusion), radio (see entry above —
+  shares checkbox's CSS file but is its own widget/knob family), messagebox (see entry for the
+  CTV-3 structural exception), notification (untyped/default card
   only — see entry for the info/warning/error type-variant exclusion), toast (info-default
   variant only — see entry for the warning/error type-variant exclusion), a (anchor), chosenbox,
   cascader, searchbox, drawer (see entry for the CTV-3 structural exception — whole-root
@@ -1406,7 +1515,5 @@ Validated by the button pilot; repeat per component (then update the
 - **Not exposed** (by design): purely structural/layout components (box, div, cell, separator,
   layouts) and content atoms (label, image) have no meaningful appearance knob — this excludes
   the anchor/link, which **is** exposed despite its similarly minimal text-only vocabulary (see
-  the A entry above); radio/radiogroup and checkbox's switch/toggle molds are candidates for a
-  future pass if adopter demand appears — add via the Recipe above. rangeslider (PE) /
-  multislider (EE) are out of scope for this pass (see the Slider entry above) but are natural
-  follow-on candidates given the shared `--zk-slider-*` vocabulary.
+  the A entry above); checkbox's switch/toggle molds are a candidate for a
+  future pass if adopter demand appears — add via the Recipe above.

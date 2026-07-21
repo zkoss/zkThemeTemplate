@@ -13,6 +13,13 @@
    </div>
 */
 
+/* Appearance knobs (track-bg / accent / radius / elevation) are Component
+   Theme Variables — declared at :root in tokens/_component-theme.css (shared
+   Slider/Rangeslider vocabulary) so a :root/region override reaches this
+   component; the shared `--zk-rangeslider-inner-size`/`-label-gap` structural
+   fallbacks below are unrelated sizing custom properties, not part of this
+   knob surface. */
+
 /* ── Outer container ──────────────────────────────────── */
 @layer zk-components {
 .z-multislider {
@@ -52,8 +59,8 @@
 .z-multislider-track {
     position: absolute;
     inset: 0;
-    background-color: var(--zk-color-outline-variant);
-    border-radius: var(--zk-shape-corner-full);
+    background-color: var(--zk-multislider-track-bg);
+    border-radius: var(--zk-multislider-radius);
 }
 
 /* ── Horizontal orientation ───────────────────────────── */
@@ -82,8 +89,8 @@
     position: absolute;
     top: 0;
     height: 100%;
-    background-color: var(--zk-color-primary);
-    border-radius: var(--zk-shape-corner-full);
+    background-color: var(--zk-multislider-accent);
+    border-radius: var(--zk-multislider-radius);
 }
 
 /* ── Thumb handle ─────────────────────────────────────── */
@@ -95,8 +102,8 @@
     margin-top: -10px;
     margin-left: -10px;
     border-radius: 50%;
-    background-color: var(--zk-color-primary);
-    box-shadow: var(--zk-elevation-1);
+    background-color: var(--zk-multislider-accent);
+    box-shadow: var(--zk-multislider-elevation);
     cursor: grab;
     transition:
         box-shadow var(--zk-motion-duration-standard) var(--zk-motion-easing-standard),
@@ -109,7 +116,7 @@
     position: absolute;
     inset: -8px;
     border-radius: 50%;
-    background-color: var(--zk-color-primary);
+    background-color: var(--zk-multislider-accent);
     opacity: 0;
     pointer-events: none;
     transition: var(--zk-state-layer-transition);
@@ -208,7 +215,7 @@
     width: 2px;
     height: 2px;
     border-radius: 1px;
-    background-color: var(--zk-color-outline-variant);
+    background-color: var(--zk-multislider-track-bg);
     top: 50%;
     transform: translate(-1px, -50%);
 }

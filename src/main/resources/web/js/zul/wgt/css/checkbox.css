@@ -15,8 +15,9 @@
 
    Component Theme Variables (doc/spec/component-theme-variables.md): the default
    mold reads --zk-checkbox-fg / -border-color / -radius / -accent (defaults in
-   tokens/_component-theme.css). The switch/toggle molds below and the radio/
-   radiogroup rules keep reading base tokens directly — out of scope for this pass.
+   tokens/_component-theme.css). The switch/toggle molds below keep reading base
+   tokens directly — out of scope for this pass. The radio/radiogroup rules
+   further down this file read their own --zk-radio-* knobs — see that section.
    ─────────────────────────────────────────────────────────────────────────── */
 
 /* ── Wrapper ──────────────────────────────────────────────────────────────── */
@@ -226,6 +227,11 @@
      z-radio-off     → unselected
      z-radio-on      → selected
      z-radio-disabled
+
+   Component Theme Variables (doc/spec/component-theme-variables.md): reads
+   --zk-radio-fg / -border-color / -accent (defaults in tokens/_component-theme.css).
+   The circular shape (border-radius: 50%) stays hardcoded — a fixed shape
+   concern, not a knob (same convention as badge's dot mode).
    ─────────────────────────────────────────────────────────────────────────── */
 
 /* ── Radio wrapper ────────────────────────────────────────────────────────── */
@@ -238,7 +244,7 @@
     font-size: var(--zk-typescale-body-medium-size);
     font-weight: var(--zk-typescale-body-medium-weight);
     line-height: var(--zk-typescale-body-medium-line-height);
-    color: var(--zk-color-on-surface);
+    color: var(--zk-radio-fg);
     min-height: var(--zk-control-height);
 }
 
@@ -255,7 +261,7 @@
     width: 20px;
     height: 20px;
     min-width: 20px;
-    border: 2px solid var(--zk-color-on-surface-variant);
+    border: 2px solid var(--zk-radio-border-color);
     border-radius: 50%;
     background-color: transparent;
     cursor: pointer;
@@ -288,7 +294,7 @@
     width: 10px;
     height: 10px;
     border-radius: 50%;
-    background-color: var(--zk-color-primary);
+    background-color: var(--zk-radio-accent);
     pointer-events: none;
     transition: transform var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
 }
@@ -300,7 +306,7 @@
     font-size: var(--zk-typescale-label-large-size);
     font-weight: var(--zk-typescale-body-medium-weight);
     line-height: var(--zk-typescale-body-medium-line-height);
-    color: var(--zk-color-on-surface);
+    color: var(--zk-radio-fg);
     padding-inline-end: var(--zk-spacing-2);
 }
 
@@ -308,11 +314,11 @@
    Selected state  (.z-radio-on on wrapper)
    ═══════════════════════════════════════════════════════════════════ */
 .z-radio-on > input[type="radio"] {
-    border-color: var(--zk-color-primary);
+    border-color: var(--zk-radio-accent);
 }
 
 .z-radio-on > input[type="radio"]::before {
-    background-color: var(--zk-color-primary);
+    background-color: var(--zk-radio-accent);
 }
 
 .z-radio-on > input[type="radio"]::after {
