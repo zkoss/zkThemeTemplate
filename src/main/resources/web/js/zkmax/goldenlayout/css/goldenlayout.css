@@ -126,10 +126,10 @@
    strip (see .lm_tabs/.lm_tab below) instead of driving its height. Any delta
    makes .lm_items { overflow: hidden } clip the panel's bottom border (M17). */
 .z-goldenlayout .lm_header {
-    background-color: var(--zk-color-surface-container);
-    border-bottom: 1px solid var(--zk-color-outline-variant);
-    border-top-left-radius: var(--zk-shape-card);
-    border-top-right-radius: var(--zk-shape-card);
+    background-color: var(--zk-goldenlayout-header-bg);
+    border-bottom: 1px solid var(--zk-goldenlayout-border-color);
+    border-top-left-radius: var(--zk-goldenlayout-radius);
+    border-top-right-radius: var(--zk-goldenlayout-radius);
     box-sizing: border-box;
     min-height: 44px;
     overflow: hidden;
@@ -172,7 +172,7 @@
     align-items: center;
     position: relative;
     overflow: hidden;
-    color: var(--zk-color-on-surface-variant);
+    color: var(--zk-goldenlayout-fg);
     /* no block padding — the tab stretches to the strip height (height-sync) */
     padding: 0 var(--zk-spacing-4);
     cursor: pointer;
@@ -184,7 +184,7 @@
     content: '';
     position: absolute;
     inset: 0;
-    background-color: var(--zk-color-primary);
+    background-color: var(--zk-goldenlayout-accent);
     opacity: 0;
     pointer-events: none;
     transition: var(--zk-state-layer-transition);
@@ -192,7 +192,7 @@
 
 /* ── Tab — hover ───────────────────────────────────────────────────────── */
 .z-goldenlayout .lm_tab:hover {
-    color: var(--zk-color-on-surface);
+    color: var(--zk-goldenlayout-fg-hover);
 }
 
 .z-goldenlayout .lm_tab:hover::before {
@@ -205,7 +205,7 @@
    The earlier surface fill equaled --zk-color-background and read as a hole
    punched in the strip (tab-a2 corrected; tab-a7/a8 radii retired). */
 .z-goldenlayout .lm_tab.lm_active {
-    color: var(--zk-color-primary);
+    color: var(--zk-goldenlayout-accent);
 }
 
 .z-goldenlayout .lm_tab.lm_active::after {
@@ -217,7 +217,7 @@
     right: 0;
     width: 100%;
     height: 2px;
-    background-color: var(--zk-color-primary);
+    background-color: var(--zk-goldenlayout-accent);
 }
 
 /* ── Close icon on tab ─────────────────────────────────────────────────── */
@@ -242,7 +242,7 @@
     height: 16px;
     margin-left: var(--zk-spacing-1);
     border-radius: var(--zk-shape-corner-full);
-    color: var(--zk-color-on-surface-variant);
+    color: var(--zk-goldenlayout-fg);
     cursor: pointer;
     transition: background-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
 }
@@ -265,7 +265,7 @@
 }
 
 .z-goldenlayout .lm_close_tab:hover {
-    color: var(--zk-color-on-surface);
+    color: var(--zk-goldenlayout-fg-hover);
     background-color: color-mix(in srgb, var(--zk-color-on-surface) 12%, transparent);
 }
 
@@ -286,14 +286,14 @@
     width: 28px;
     height: 28px;
     border-radius: var(--zk-shape-corner-full);
-    color: var(--zk-color-on-surface-variant);
+    color: var(--zk-goldenlayout-fg);
     cursor: pointer;
     transition: background-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard),
                 color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
 }
 
 .z-goldenlayout .lm_controls > li:hover {
-    color: var(--zk-color-primary);
+    color: var(--zk-goldenlayout-accent);
     background-color: color-mix(in srgb, var(--zk-color-on-surface) 8%, transparent);
 }
 
@@ -432,10 +432,10 @@
    outline-variant border + elevation-1 shadow. The .lm_header (tab strip)
    sits above .z-goldenpanel and uses matching shape-card top radius. */
 .z-goldenpanel {
-    background-color: var(--zk-color-surface);
-    border: 1px solid var(--zk-color-outline-variant);
-    border-radius: var(--zk-shape-card);
-    box-shadow: var(--zk-elevation-1);
+    background-color: var(--zk-goldenlayout-panel-bg);
+    border: 1px solid var(--zk-goldenlayout-border-color);
+    border-radius: var(--zk-goldenlayout-radius);
+    box-shadow: var(--zk-goldenlayout-panel-elevation);
     padding: var(--zk-spacing-4) var(--zk-spacing-4) var(--zk-spacing-6);
     overflow: auto;
     box-sizing: border-box;

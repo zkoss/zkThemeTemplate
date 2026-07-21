@@ -99,9 +99,9 @@
 /* ─── Framed column chrome ───────────────────────────────────────────────── */
 /* Card-style container introduced by title="" attribute on Portalchildren */
 .z-portalchildren-frame {
-    border: 1px solid var(--zk-color-outline-variant);
-    border-radius: var(--zk-shape-card);
-    background: var(--zk-color-surface);
+    border: 1px solid var(--zk-portallayout-border-color);
+    border-radius: var(--zk-portallayout-radius);
+    background: var(--zk-portallayout-bg);
     padding: var(--zk-spacing-3);
     padding-bottom: 0;
     box-sizing: border-box;
@@ -112,7 +112,7 @@
     display: block;
     font-size: var(--zk-typescale-body-medium-size);
     font-weight: 500;
-    color: var(--zk-color-on-surface-variant);
+    color: var(--zk-portallayout-fg);
     padding-bottom: var(--zk-spacing-3);
 }
 
@@ -125,9 +125,9 @@
 /* Active badge: visible when counterVisible="true" (default) */
 .z-portalchildren-counter-on {
     display: inline;
-    background: var(--zk-color-primary-container);
-    color: var(--zk-color-primary);
-    border-radius: var(--zk-shape-corner-full);
+    background: var(--zk-portallayout-counter-bg);
+    color: var(--zk-portallayout-counter-fg);
+    border-radius: var(--zk-portallayout-counter-radius);
     font-size: var(--zk-typescale-body-small-size);
     font-weight: 600;
     padding: 0 6px;

@@ -1293,4 +1293,133 @@ test.describe('Component Theme Variables', () => {
     await page.addStyleTag({ content: ':root{--zk-dropupload-radius:0px}' });
     expect(await radiusOf(def)).toBe('0px');
   });
+
+  // ── organigram (EE, zkmax): org-chart tree — .z-orgnode card
+  // (bg/fg/radius/border-color, hover swaps border-color-hover/hover-bg) +
+  // connector lines (bus + drop segments share the same border-color knob as
+  // the card's resting border — one knob, several roles). Selected is the
+  // defining state — its own bg/border/fg triad; the selected node's icon
+  // reads the same selected-fg. Renders in place (no client-side
+  // reparenting), so region scoping works normally. ───────────────────────
+  test('organigram — regional border/radius/selected override, sibling untouched', async ({ page }) => {
+    const def = page.locator('.z-organigram').first();
+    const scoped = page.locator('div[style*="--zk-organigram-radius"] .z-organigram').first();
+
+    const defNode = def.locator('.z-orgnode').first();
+    const scopedNode = scoped.locator('.z-orgnode').first();
+    const defSelected = def.locator('.z-orgitem-selected > .z-orgnode').first();
+    const scopedSelected = scoped.locator('.z-orgitem-selected > .z-orgnode').first();
+
+    // Scoped organigram picks up the card radius/border-color, and the
+    // scoped selected node picks up the defining-state fill/text pair.
+    expect(await radiusOf(scopedNode)).toBe('0px');
+    expect(await borderColorOf(scopedNode)).toBe(SCOPED_PURPLE);
+    expect(await bgOf(scopedSelected)).toBe(SCOPED_PURPLE);
+    expect(await colorOf(scopedSelected)).toBe('rgb(255, 255, 255)');
+
+    // Sibling default is untouched — the override lives on the scoped box and
+    // is inherited only by its subtree, never leaking up to the default row.
+    expect(await radiusOf(defNode)).toBe('6px'); // stock --zk-shape-card
+    expect(await borderColorOf(defNode)).not.toBe(SCOPED_PURPLE);
+    expect(await bgOf(defSelected)).not.toBe(SCOPED_PURPLE);
+    expect(await colorOf(defSelected)).not.toBe('rgb(255, 255, 255)');
+  });
+
+  test('organigram — whole-app :root override wins (loaded after norm.css.dsp)', async ({ page }) => {
+    const def = page.locator('.z-organigram').first();
+    const defNode = def.locator('.z-orgnode').first();
+    expect(await radiusOf(defNode)).toBe('6px'); // baseline before override
+
+    // An adopter's :root override, injected after the theme bundle, must win the
+    // cascade and reach every organigram instance, including the default one.
+    await page.addStyleTag({ content: ':root{--zk-organigram-radius:0px}' });
+    expect(await radiusOf(defNode)).toBe('0px');
+  });
+
+  // ── goldenlayout (EE, zkmax): dockable tab layout — .lm_header tab strip
+  // (bg + shared border-color) + .lm_tab (resting/hover/active accent) +
+  // .z-goldenpanel content card (bg + the same shared border-color/radius as
+  // the header). Two panels share one area, so GL stacks them as tabs and
+  // the first-added panel starts active — exercising the accent knob.
+  // Renders in place (no client-side reparenting), so region scoping works
+  // normally. ────────────────────────────────────────────────────────────
+  test('goldenlayout — regional header/panel/accent override, sibling untouched', async ({ page }) => {
+    const def = page.locator('.z-goldenlayout').first();
+    const scoped = page.locator('div[style*="--zk-goldenlayout-radius"] .z-goldenlayout').first();
+
+    const defHeader = def.locator('.lm_header').first();
+    const scopedHeader = scoped.locator('.lm_header').first();
+    const defPanel = def.locator('.z-goldenpanel').first();
+    const scopedPanel = scoped.locator('.z-goldenpanel').first();
+    const defActiveTab = def.locator('.lm_tab.lm_active').first();
+    const scopedActiveTab = scoped.locator('.lm_tab.lm_active').first();
+
+    // Scoped goldenlayout picks up the header fill, the panel's shared
+    // radius/border-color, and the active tab's accent text color.
+    expect(await bgOf(scopedHeader)).toBe(SCOPED_PURPLE);
+    expect(await radiusOf(scopedPanel)).toBe('0px');
+    expect(await borderColorOf(scopedPanel)).toBe(SCOPED_PURPLE);
+    expect(await colorOf(scopedActiveTab)).toBe(SCOPED_PURPLE);
+
+    // Sibling default is untouched — the override lives on the scoped box and
+    // is inherited only by its subtree, never leaking up to the default row.
+    expect(await bgOf(defHeader)).not.toBe(SCOPED_PURPLE);
+    expect(await radiusOf(defPanel)).toBe('6px'); // stock --zk-shape-card
+    expect(await borderColorOf(defPanel)).not.toBe(SCOPED_PURPLE);
+    expect(await colorOf(defActiveTab)).not.toBe(SCOPED_PURPLE);
+  });
+
+  test('goldenlayout — whole-app :root override wins (loaded after norm.css.dsp)', async ({ page }) => {
+    const def = page.locator('.z-goldenlayout').first();
+    const defPanel = def.locator('.z-goldenpanel').first();
+    expect(await radiusOf(defPanel)).toBe('6px'); // baseline before override
+
+    // An adopter's :root override, injected after the theme bundle, must win the
+    // cascade and reach every goldenlayout instance, including the default one.
+    await page.addStyleTag({ content: ':root{--zk-goldenlayout-radius:0px}' });
+    expect(await radiusOf(defPanel)).toBe('0px');
+  });
+
+  // ── portallayout (EE, zkmax): transparent multi-column drag-drop dashboard
+  // shell — .z-portalchildren-frame is the component's ONLY card surface
+  // (shown only when a column carries a title attribute): bg/border-color/
+  // radius style the frame, fg styles its title text. The panel-count badge
+  // (.z-portalchildren-counter-on, counterVisible="true") is a distinct
+  // sub-part with its own bg/fg/radius triad. Renders in place (no
+  // client-side reparenting — only the drag ghost is prepended to <body>,
+  // and only during an active drag), so region scoping works normally. ────
+  test('portallayout — regional frame/counter override, sibling untouched', async ({ page }) => {
+    const def = page.locator('.z-portallayout').first();
+    const scoped = page.locator('div[style*="--zk-portallayout-radius"] .z-portallayout').first();
+
+    const defFrame = def.locator('.z-portalchildren-frame').first();
+    const scopedFrame = scoped.locator('.z-portalchildren-frame').first();
+    const defCounter = def.locator('.z-portalchildren-counter-on').first();
+    const scopedCounter = scoped.locator('.z-portalchildren-counter-on').first();
+
+    // Scoped portallayout picks up the frame's radius/border-color and the
+    // panel-count badge's bg/fg pair.
+    expect(await radiusOf(scopedFrame)).toBe('0px');
+    expect(await borderColorOf(scopedFrame)).toBe(SCOPED_PURPLE);
+    expect(await bgOf(scopedCounter)).toBe(SCOPED_PURPLE);
+    expect(await colorOf(scopedCounter)).toBe('rgb(255, 255, 255)');
+
+    // Sibling default is untouched — the override lives on the scoped box and
+    // is inherited only by its subtree, never leaking up to the default row.
+    expect(await radiusOf(defFrame)).toBe('6px'); // stock --zk-shape-card
+    expect(await borderColorOf(defFrame)).not.toBe(SCOPED_PURPLE);
+    expect(await bgOf(defCounter)).not.toBe(SCOPED_PURPLE);
+    expect(await colorOf(defCounter)).not.toBe('rgb(255, 255, 255)');
+  });
+
+  test('portallayout — whole-app :root override wins (loaded after norm.css.dsp)', async ({ page }) => {
+    const def = page.locator('.z-portallayout').first();
+    const defFrame = def.locator('.z-portalchildren-frame').first();
+    expect(await radiusOf(defFrame)).toBe('6px'); // baseline before override
+
+    // An adopter's :root override, injected after the theme bundle, must win the
+    // cascade and reach every portallayout instance, including the default one.
+    await page.addStyleTag({ content: ':root{--zk-portallayout-radius:0px}' });
+    expect(await radiusOf(defFrame)).toBe('0px');
+  });
 });

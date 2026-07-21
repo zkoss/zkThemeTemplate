@@ -989,5 +989,104 @@
             ]]></attribute>
         </dropupload>
     </div>
+
+    <!-- Organigram (EE, zkmax): org-chart tree — .z-orgnode card (bg/fg/
+         radius/border-color) + hover (-hover-bg/-border-color-hover) + the
+         connector lines (bus + drop-down/drop-out segments, sharing the same
+         -border-color knob as the card's resting border, one knob several
+         roles) + the expand/collapse icon (-icon-fg). Selected is the
+         defining state — its own bg/border/fg triad (-selected-bg/-border-
+         color/-fg); the selected node's icon reads the same -selected-fg.
+         A pre-selected leaf node is seeded so the selected-state knobs are
+         actually exercised by the demo. -->
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Organigram (default)</div>
+    <div sclass="z-mb-6">
+        <organigram>
+            <orgchildren>
+                <orgitem label="CEO">
+                    <orgchildren>
+                        <orgitem label="Selected" selected="true"/>
+                        <orgitem label="VP"/>
+                    </orgchildren>
+                </orgitem>
+            </orgchildren>
+        </organigram>
+    </div>
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Organigram (regional override)</div>
+    <div sclass="z-mb-8 z-p-4 z-bg-surface-variant z-rounded"
+         style="--zk-organigram-radius:0px; --zk-organigram-border-color:#6750a4; --zk-organigram-selected-bg:#6750a4; --zk-organigram-selected-fg:#ffffff">
+        <organigram>
+            <orgchildren>
+                <orgitem label="CEO">
+                    <orgchildren>
+                        <orgitem label="Selected" selected="true"/>
+                        <orgitem label="VP"/>
+                    </orgchildren>
+                </orgitem>
+            </orgchildren>
+        </organigram>
+    </div>
+
+    <!-- Goldenlayout (EE, zkmax): dockable tab layout — .lm_header tab strip
+         (-header-bg fill + shared -border-color bottom divider) + .lm_tab
+         (resting -fg, hover -fg-hover, active label/underline/state-layer
+         -accent) + .z-goldenpanel content card (-panel-bg fill + the same
+         shared -border-color + shared -radius as the header's top corners).
+         Two panels share one area so GL stacks them as tabs, seeding an
+         active tab (first-added) that exercises the -accent knob. -->
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Goldenlayout (default)</div>
+    <div sclass="z-mb-6">
+        <goldenlayout hflex="1" height="200px">
+            <attribute name="areas">
+                A
+            </attribute>
+            <goldenpanel area="A" title="Project">Project panel</goldenpanel>
+            <goldenpanel area="A" title="Files">Files panel</goldenpanel>
+        </goldenlayout>
+    </div>
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Goldenlayout (regional override)</div>
+    <div sclass="z-mb-8 z-p-4 z-bg-surface-variant z-rounded"
+         style="--zk-goldenlayout-radius:0px; --zk-goldenlayout-border-color:#6750a4; --zk-goldenlayout-header-bg:#6750a4; --zk-goldenlayout-accent:#6750a4">
+        <goldenlayout hflex="1" height="200px">
+            <attribute name="areas">
+                A
+            </attribute>
+            <goldenpanel area="A" title="Project">Project panel</goldenpanel>
+            <goldenpanel area="A" title="Files">Files panel</goldenpanel>
+        </goldenlayout>
+    </div>
+
+    <!-- Portallayout (EE, zkmax): transparent drag-drop dashboard shell — the
+         framed column (title="" attribute) is the component's only card
+         surface: -bg/-border-color/-radius style the frame, -fg styles the
+         title text. counterVisible="true" shows the panel-count badge,
+         styled by its own -counter-bg/-fg/-radius triad. -->
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Portallayout (default)</div>
+    <div sclass="z-mb-6">
+        <portallayout hflex="1" height="180px">
+            <portalchildren width="100%" title="Widgets" counterVisible="true">
+                <panel height="60px" title="Tasks" border="normal">
+                    <panelchildren>Pending tasks</panelchildren>
+                </panel>
+                <panel height="60px" title="Notes" border="normal">
+                    <panelchildren>Quick notes</panelchildren>
+                </panel>
+            </portalchildren>
+        </portallayout>
+    </div>
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Portallayout (regional override)</div>
+    <div sclass="z-mb-8 z-p-4 z-bg-surface-variant z-rounded"
+         style="--zk-portallayout-radius:0px; --zk-portallayout-border-color:#6750a4; --zk-portallayout-counter-bg:#6750a4; --zk-portallayout-counter-fg:#ffffff">
+        <portallayout hflex="1" height="180px">
+            <portalchildren width="100%" title="Widgets" counterVisible="true">
+                <panel height="60px" title="Tasks" border="normal">
+                    <panelchildren>Pending tasks</panelchildren>
+                </panel>
+                <panel height="60px" title="Notes" border="normal">
+                    <panelchildren>Quick notes</panelchildren>
+                </panel>
+            </portalchildren>
+        </portallayout>
+    </div>
 </div>
 </zk>

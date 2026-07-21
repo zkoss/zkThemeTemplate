@@ -1267,6 +1267,102 @@ normally.
 | `--zk-dropupload-border-color` | `var(--zk-color-outline)` | root resting border |
 | `--zk-dropupload-radius` | `var(--zk-shape-corner-extra-small)` | root corners |
 
+### Organigram — shipped
+
+Org-chart tree (EE, zkmax, `zkmax/layout/css/organigram.css`) — `.z-organigram` root plus
+`.z-orgnode` node card (the visible chip), `.z-orgchildren`/`.z-orgitem` connector lines (a
+horizontal bus segment and drop-down/drop-out vertical segments, all drawn via `::before`/
+`::after`), and `.z-orgnode-icon` expand/collapse glyph. Ten knobs total.
+`--zk-organigram-border-color` is shared by the node card's own resting border **and** every
+connector-line role (the bus segment and both vertical drop directions) — one knob, several
+roles, the same convention as grid/messagebox/toolbar's shared border-color. Hover swaps the
+card's border to `-border-color-hover` and its fill to `-hover-bg` (kept as the stock rgba
+literal, the same convention as grid/combobox's row-hover-bg). Selected is the defining state —
+its own bg/border/fg triad, the same three-axis shape as chip's bg/border/color; the selected
+node's icon reads the same `-selected-fg` (one knob, several roles, the same convention as
+tab/calendar's accent). The resting icon color gets its own `-icon-fg`. Disabled dims via opacity
+only and keeps its background on the base `--zk-color-surface` token, not the knob, so overriding
+`-bg` doesn't get inherited into the disabled state and lose its state distinction (CTV-7, the
+same convention as button/input/rating's disabled treatment). Focus stays on the global
+`--zk-focus-ring` (the same convention as button/window/grid), not a knob. `.z-organigram` renders
+in place with no client-side reparenting, so region scoping works normally.
+
+| Knob | Default | Scope |
+|------|---------|-------|
+| `--zk-organigram-bg` | `var(--zk-color-surface)` | node card resting fill |
+| `--zk-organigram-fg` | `var(--zk-color-on-surface)` | node card resting text |
+| `--zk-organigram-border-color` | `var(--zk-color-outline-variant)` | node card resting border + all connector-line segments (bus, drop-down, drop-out) |
+| `--zk-organigram-border-color-hover` | `var(--zk-color-on-surface)` | node card hover border |
+| `--zk-organigram-radius` | `var(--zk-shape-card)` | node card corners |
+| `--zk-organigram-hover-bg` | `rgba(0, 0, 0, 0.04)` | node card hover fill |
+| `--zk-organigram-selected-bg` | `var(--zk-color-primary-container)` | selected node card fill |
+| `--zk-organigram-selected-border-color` | `var(--zk-color-primary)` | selected node card border |
+| `--zk-organigram-selected-fg` | `var(--zk-color-on-primary-container)` | selected node card text + selected node's icon |
+| `--zk-organigram-icon-fg` | `var(--zk-color-on-surface-variant)` | resting expand/collapse icon color |
+
+### Goldenlayout — shipped
+
+Dockable tab layout (EE, `zkmax/goldenlayout/css/goldenlayout.css`) — `.z-goldenlayout` root
+(transparent, no card framing of its own) + `.lm_header` tab strip + `.lm_tab` (+ `.lm_close_tab`)
++ `.lm_controls` header icon buttons + `.z-goldenpanel` per-panel content card. Eight knobs total.
+`--zk-goldenlayout-border-color` is shared by the header strip's bottom divider **and** the
+goldenpanel's own border (both read the same token today) — one knob, several roles, the same
+convention as grid/messagebox/toolbar's shared border-color. `--zk-goldenlayout-radius` likewise
+drives **both** the header's top corners and the goldenpanel's corners (both read
+`var(--zk-shape-card)` today), the same convention as calendar's bg covering card + header fill.
+`--zk-goldenlayout-fg` / `-fg-hover` are the resting/hover text shared by the tab label, the
+close-tab icon, and the header-controls icon (all three read the same values today) — the same
+"one knob, several roles" precedent as tab's fg/fg-hover. `--zk-goldenlayout-accent` is the one
+defining-state color: the active tab's label + underline, the tab's MD3 state-layer overlay tint,
+and the header-controls hover icon (all read `var(--zk-color-primary)` today) — the same "one
+knob, several roles" precedent as tab/calendar's accent. `--zk-goldenlayout-panel-elevation` is
+the goldenpanel's static resting shadow (not mode-driven), the same convention as
+panel/groupbox's resting elevation. The drag-proxy (`.z-goldenlayout-dragProxy`), the drop-target
+indicator, and the overflow-tab dropdown (`.z-goldenlayout-dropdown`) stay on base tokens —
+transient/secondary sub-features kept out of the curated surface (same convention as
+calendar/toolbar's minor sub-features). `.z-goldenlayout`/`.z-goldenpanel` render in place with no
+client-side reparenting, so region scoping works normally.
+
+| Knob | Default | Scope |
+|------|---------|-------|
+| `--zk-goldenlayout-header-bg` | `var(--zk-color-surface-container)` | tab-strip fill |
+| `--zk-goldenlayout-panel-bg` | `var(--zk-color-surface)` | goldenpanel content fill |
+| `--zk-goldenlayout-border-color` | `var(--zk-color-outline-variant)` | header bottom divider + goldenpanel border |
+| `--zk-goldenlayout-radius` | `var(--zk-shape-card)` | header top corners + goldenpanel corners |
+| `--zk-goldenlayout-fg` | `var(--zk-color-on-surface-variant)` | resting tab text + close-icon + header-controls icon |
+| `--zk-goldenlayout-fg-hover` | `var(--zk-color-on-surface)` | tab hover text + close-icon hover text |
+| `--zk-goldenlayout-accent` | `var(--zk-color-primary)` | active tab text + underline, state-layer tint, header-controls hover |
+| `--zk-goldenlayout-panel-elevation` | `var(--zk-elevation-1)` | goldenpanel resting shadow |
+
+### Portallayout — shipped
+
+Transparent multi-column drag-drop dashboard shell (EE, `zkmax/layout/css/portallayout.css`) —
+`.z-portallayout` root + `.z-portalchildren` column (both always `background: transparent` by
+design, a layout shell rather than a card, same convention as stepbar/fisheyebar's transparent
+root) + the **optional** `.z-portalchildren-frame` card chrome (shown only when a column carries
+a `title=""` attribute) + its `.z-portalchildren-title` text + the
+`.z-portalchildren-counter-on` panel-count badge. `--zk-portallayout-bg` / `-border-color` /
+`-radius` style the frame — the component's **only** filled/carded surface (a plain, unframed
+column has nothing to knob); `--zk-portallayout-fg` is the frame's title text color. The
+panel-count badge is a visually distinct sub-part with its own bg/fg/radius triad
+(`--zk-portallayout-counter-bg` / `-fg` / `-radius`), the same "sub-part gets its own knob set"
+precedent as pdfviewer's toolbar/container knobs. The drag ghost (`.z-panel-move-ghost`) and drop
+placeholder (`.z-panel-move-block`) are transient drag-feedback surfaces — kept on base tokens,
+not knob-driven, the same convention as goldenlayout's drag-proxy / drop-target indicator.
+`.z-portallayout` renders in place with no client-side reparenting (only the drag ghost is
+prepended to `<body>`, and only for the duration of an active drag), so region scoping works
+normally.
+
+| Knob | Default | Scope |
+|------|---------|-------|
+| `--zk-portallayout-bg` | `var(--zk-color-surface)` | framed-column fill |
+| `--zk-portallayout-border-color` | `var(--zk-color-outline-variant)` | framed-column border |
+| `--zk-portallayout-radius` | `var(--zk-shape-card)` | framed-column corners |
+| `--zk-portallayout-fg` | `var(--zk-color-on-surface-variant)` | framed-column title text |
+| `--zk-portallayout-counter-bg` | `var(--zk-color-primary-container)` | panel-count badge fill |
+| `--zk-portallayout-counter-fg` | `var(--zk-color-primary)` | panel-count badge text |
+| `--zk-portallayout-counter-radius` | `var(--zk-shape-corner-full)` | panel-count badge shape |
+
 ## Recipe — adding a component
 
 Validated by the button pilot; repeat per component (then update the
@@ -1301,7 +1397,12 @@ Validated by the button pilot; repeat per component (then update the
   exclusion), pdfviewer, tbeditor (see entry for the no-border-color-hover-knob exclusion),
   signature (see entry for the no-hover-knob and no-fg-knob exclusions), cropper (see entry for
   the no-bg-knob and no-border-color-hover-knob exclusions), dropupload (see entry for the
-  no-hover/-focus/-disabled-knob and no-fg-knob exclusions).
+  no-hover/-focus/-disabled-knob and no-fg-knob exclusions), organigram (see entry for the
+  shared-border-color-across-card-and-connector-lines convention and the not-knob-driven disabled
+  background and focus-ring exclusions), goldenlayout (see entry for the shared
+  border-color/radius across the header strip and goldenpanel, and the drag-proxy/drop-target/
+  overflow-dropdown exclusions), portallayout (see entry for the frame-only-surface convention and
+  the drag-ghost/drop-placeholder exclusions).
 - **Not exposed** (by design): purely structural/layout components (box, div, cell, separator,
   layouts) and content atoms (label, image) have no meaningful appearance knob — this excludes
   the anchor/link, which **is** exposed despite its similarly minimal text-only vocabulary (see
