@@ -12,6 +12,11 @@
      z-checkbox-on           → checked
      z-checkbox-indeterminate → indeterminate
      z-checkbox-disabled     → disabled (also sets disabled attr on input)
+
+   Component Theme Variables (doc/spec/component-theme-variables.md): the default
+   mold reads --zk-checkbox-fg / -border-color / -radius / -accent (defaults in
+   tokens/_component-theme.css). The switch/toggle molds below and the radio/
+   radiogroup rules keep reading base tokens directly — out of scope for this pass.
    ─────────────────────────────────────────────────────────────────────────── */
 
 /* ── Wrapper ──────────────────────────────────────────────────────────────── */
@@ -25,7 +30,7 @@
     font-size: var(--zk-typescale-body-medium-size);
     font-weight: var(--zk-typescale-body-medium-weight);
     line-height: var(--zk-typescale-body-medium-line-height);
-    color: var(--zk-color-on-surface);
+    color: var(--zk-checkbox-fg);
     /* 40px minimum touch-target height */
     min-height: var(--zk-control-height);
 }
@@ -49,8 +54,8 @@
     width: 18px;
     height: 18px;
     min-width: 18px;
-    border: 2px solid var(--zk-color-on-surface-variant);
-    border-radius: 2px;
+    border: 2px solid var(--zk-checkbox-border-color);
+    border-radius: var(--zk-checkbox-radius);
     background-color: transparent;
     cursor: pointer;
     flex-shrink: 0;
@@ -95,7 +100,7 @@
     font-size: var(--zk-typescale-body-medium-size);
     font-weight: var(--zk-typescale-body-medium-weight);
     line-height: var(--zk-typescale-body-medium-line-height);
-    color: var(--zk-color-on-surface);
+    color: var(--zk-checkbox-fg);
     padding-inline-end: var(--zk-spacing-2);
 }
 
@@ -107,13 +112,13 @@
    ═══════════════════════════════════════════════════════════════════ */
 .z-checkbox-on > .z-checkbox-mold,
 .z-checkbox-tristate-on > .z-checkbox-mold {
-    background-color: var(--zk-color-primary);
-    border-color: var(--zk-color-primary);
+    background-color: var(--zk-checkbox-accent);
+    border-color: var(--zk-checkbox-accent);
 }
 
 .z-checkbox-on > .z-checkbox-mold::before,
 .z-checkbox-tristate-on > .z-checkbox-mold::before {
-    background-color: var(--zk-color-primary);
+    background-color: var(--zk-checkbox-accent);
 }
 
 .z-checkbox-on > .z-checkbox-mold::after,
@@ -126,13 +131,13 @@
    ═══════════════════════════════════════════════════════════════════ */
 .z-checkbox-indeterminate > .z-checkbox-mold,
 .z-checkbox-tristate-indeterminate > .z-checkbox-mold {
-    background-color: var(--zk-color-primary);
-    border-color: var(--zk-color-primary);
+    background-color: var(--zk-checkbox-accent);
+    border-color: var(--zk-checkbox-accent);
 }
 
 .z-checkbox-indeterminate > .z-checkbox-mold::before,
 .z-checkbox-tristate-indeterminate > .z-checkbox-mold::before {
-    background-color: var(--zk-color-primary);
+    background-color: var(--zk-checkbox-accent);
 }
 
 .z-checkbox-indeterminate > .z-checkbox-mold::after,

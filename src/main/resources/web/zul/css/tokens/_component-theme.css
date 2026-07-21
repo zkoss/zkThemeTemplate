@@ -363,4 +363,107 @@
     --zk-slider-accent:    var(--zk-color-primary);
     --zk-slider-radius:    var(--zk-shape-corner-full);
     --zk-slider-elevation: var(--zk-elevation-1);
+
+    /* ── Checkbox — selection control (default mold only) ────────────────
+       Resting (unchecked) reads the border/text knobs; checked and
+       indeterminate swap to a single accent (mold fill + border + the
+       hover-ring tint), the defining state — same "one knob, several
+       roles" precedent as tab/calendar's accent. The checkmark/dash glyph
+       is a literal-color SVG baked into a background-image data URI (same
+       limitation as selectbox's chevron), so it stays hardcoded, not a
+       knob. Disabled dims via opacity only, not knob-driven (same
+       convention as button/input/rating). Out of scope for this pass: the
+       switch/toggle molds are distinct visual treatments and keep reading
+       base tokens directly; radio/radiogroup are a separate widget. */
+    --zk-checkbox-fg:           var(--zk-color-on-surface);
+    --zk-checkbox-border-color: var(--zk-color-on-surface-variant);
+    --zk-checkbox-radius:       2px;                     /* off-token literal (kept as default) */
+    --zk-checkbox-accent:       var(--zk-color-primary);
+
+    /* ── Messagebox — MD3 alert dialog (Messagebox.show()) ───────────────
+       Distinct family from --zk-window-*: the dialog overrides window's
+       mode-driven chrome with its own fixed surface + border + a single
+       static elevation (always modal — no mode variation), so it gets its
+       own knobs rather than reusing --zk-window-*. --zk-messagebox-bg
+       covers the dialog surface, header, and content areas alike (all
+       three read the same surface fill, same "one knob, several roles"
+       precedent as window's header sharing its surface fill).
+       --zk-messagebox-border-color covers both divider lines (the header's
+       border-bottom AND the button row's border-top), the same "one knob,
+       several dividers" precedent as toolbar's --zk-toolbar-border-color.
+       The icon-type colors (information/exclamation/error/question) are
+       semantic status colors tied to the message type — kept on their own
+       tokens, not knob-driven (same convention as button/progressmeter's
+       color variants). */
+    --zk-messagebox-bg:           var(--zk-color-surface);
+    --zk-messagebox-fg:           var(--zk-color-on-surface-variant);
+    --zk-messagebox-header-fg:    var(--zk-color-on-surface);
+    --zk-messagebox-border-color: var(--zk-color-outline-variant);
+    --zk-messagebox-radius:       var(--zk-shape-dialog);
+    --zk-messagebox-elevation:    var(--zk-elevation-dialog);
+
+    /* ── Popup — floating surface (tooltips, dropdowns, overlays) ────────
+       .z-popup is the base surface; --zk-popup-fg covers .z-popup-content's
+       text. The tooltip variant (.z-popup-tooltip.z-popup — dark bg, white
+       text, small radius, no border) is a distinct color VARIANT that keeps
+       its own colors via higher-specificity rules (same treatment as
+       button's outlined/text variants), so it is intentionally not
+       knob-driven. Region scoping (CTV-3) is structurally N/A: Popup.ts's
+       open() reparents the widget's DOM node to document.body (zk.makeVParent()),
+       so a container override cannot reach it — only the whole-app :root
+       override applies (same class of exception as messagebox, different
+       root cause; see the tracker). */
+    --zk-popup-bg:           var(--zk-color-surface);
+    --zk-popup-fg:           var(--zk-color-on-surface);
+    --zk-popup-border-color: var(--zk-color-outline-variant);
+    --zk-popup-radius:       var(--zk-shape-corner-extra-small);
+    --zk-popup-elevation:    var(--zk-elevation-dropdown);
+
+    /* ── Notification — floating alert (Clients.showNotification()) ──────
+       .z-notification-content is the untyped/default card surface; the
+       info/warning/error type variants (.z-notification-info/-warning/-error)
+       pin their own bg/fg/accent via higher-specificity compound selectors
+       (same treatment as button/progressmeter's color variants), so only an
+       untyped notification responds to these knobs. --zk-notification-accent
+       colors the left accent stripe (::before) — the defining visual for the
+       untyped/default state; it stays --zk-color-status-info by default,
+       same as the stock (untyped) rendering. Elevation (box-shadow) stays on
+       its base token, not knob-driven — a deliberate curation choice to keep
+       the surface small (same convention as calendar/slider's minor
+       sub-features); height/width stay in tokens/_sizing.css (size
+       dimension, not appearance). The close-button icon's `color: inherit`
+       reads from .z-notification, not .z-notification-content, so it is
+       unaffected by these knobs — unchanged behavior either way. */
+    --zk-notification-bg:     var(--zk-color-surface-container-highest);
+    --zk-notification-fg:     var(--zk-color-on-surface);
+    --zk-notification-radius: var(--zk-shape-corner-extra-small);
+    --zk-notification-accent: var(--zk-color-status-info);
+
+    /* ── Toast — MD3 snackbar (zkmax) ─────────────────────────────────────
+       Every toast always carries a type variant (Toast.show() defaults a
+       null type to "info"), so unlike notification there is no untyped base
+       fill to route through — these knobs drive the INFO (default) variant;
+       warning/error pin their own bg/fg/accent via higher-specificity rules
+       (same treatment as notification's type variants), so a typed toast is
+       unaffected by an override. --zk-toast-accent colors both the icon and
+       the left accent stripe (::before) — the defining visual, same "one
+       knob, several roles" precedent as notification's --zk-notification-accent.
+       --zk-toast-radius is shared by EVERY toast (declared on the base
+       .z-toast-content rule, not per-type). The close-icon color per type
+       stays on its own token, not knob-driven (same convention as
+       notification's close icon). */
+    --zk-toast-bg:     var(--zk-color-surface-container-highest);
+    --zk-toast-fg:     var(--zk-color-on-surface);
+    --zk-toast-radius: var(--zk-shape-corner-extra-small);
+    --zk-toast-accent: var(--zk-color-status-info);
+
+    /* ── A (anchor/link) — MD3 text link ──────────────────────────────────
+       Text-only component: no bg/border/radius. Resting AND hover text color
+       are the same value (var(--zk-color-primary)) today, so a single fg
+       knob covers both — the same "one knob, several roles" precedent as
+       tab/calendar's accent. Focus stays on the global --zk-focus-ring (same
+       convention as button/window/grid), not a knob. Disabled dims via its
+       own --zk-color-disabled literal, not knob-driven (same convention as
+       button/input/rating). */
+    --zk-a-fg: var(--zk-color-primary);
 }

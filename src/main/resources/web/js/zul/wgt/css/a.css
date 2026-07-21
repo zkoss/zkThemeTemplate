@@ -3,7 +3,7 @@
 
 @layer zk-components {
 .z-a {
-    color: var(--zk-color-primary);
+    color: var(--zk-a-fg);
     text-decoration: none;
     font-family: var(--zk-typescale-font-family);
     font-size: inherit;
@@ -14,7 +14,7 @@
 
 .z-a:hover {
     text-decoration: underline;
-    color: var(--zk-color-primary);
+    color: var(--zk-a-fg);
 }
 
 .z-a:focus-visible {

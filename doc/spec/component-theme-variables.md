@@ -634,6 +634,121 @@ candidates for a follow-up.
 | `--zk-slider-radius` | `var(--zk-shape-corner-full)` | track / fill / thumb corner radius |
 | `--zk-slider-elevation` | `var(--zk-elevation-1)` | thumb resting shadow |
 
+### Checkbox — shipped (default mold only)
+
+Consumed by the default mold (`.z-checkbox` / `.z-checkbox-mold` / `.z-checkbox-content`).
+Resting (unchecked) reads the border/text knobs; checked and indeterminate swap to a single
+accent (mold fill + border + the hover-ring tint), the defining state — the same "one knob,
+several roles" precedent as tab/calendar's accent. The checkmark/dash glyph is a literal-color
+SVG baked into a `background-image` data URI (same limitation as selectbox's chevron), so it
+stays hardcoded, not a knob. Disabled dims via opacity only, not knob-driven (same convention as
+button/input/rating). **Out of scope for this pass**: the `switch` and `toggle` molds are
+distinct visual treatments (different DOM/state model) and keep reading base tokens directly —
+natural follow-on candidates; radio/radiogroup are a separate widget and untouched here.
+
+| Knob | Default | Scope |
+|------|---------|-------|
+| `--zk-checkbox-fg` | `var(--zk-color-on-surface)` | wrapper + label text |
+| `--zk-checkbox-border-color` | `var(--zk-color-on-surface-variant)` | resting (unchecked) mold border |
+| `--zk-checkbox-radius` | `2px` | mold corner radius |
+| `--zk-checkbox-accent` | `var(--zk-color-primary)` | checked/indeterminate fill + border + hover-ring tint |
+
+### Messagebox — shipped
+
+Consumed by the alert dialog `Messagebox.show()` creates (`.z-messagebox-window.z-window` +
+`.z-messagebox` + `.z-messagebox-buttons`). A distinct family from `--zk-window-*`: the dialog
+owns a fixed, mode-independent surface/border/elevation rather than window's mode-driven chrome,
+so it gets its own knobs. `--zk-messagebox-bg` covers the dialog surface, header, and content
+areas alike (all three read the same fill — the same "one knob, several roles" precedent as
+window's header sharing its surface fill). `--zk-messagebox-border-color` covers both divider
+lines — the header's `border-bottom` and the button row's `border-top` — the same "one knob,
+several dividers" precedent as toolbar's `--zk-toolbar-border-color`. Icon-type colors
+(information/exclamation/error/question) are semantic status colors tied to the message type,
+kept on their own tokens, not knob-driven (same convention as button/progressmeter's color
+variants).
+
+**CTV-3 (region scoping) is structurally N/A here, not a defect.** `Messagebox.show()` calls
+`Executions.createComponents(_templ, desktop.getFirstPage(), null, arg)`, so the dialog Window is
+always parented to the page root — never to the container that triggered it. A region override
+on an ancestor of the triggering button cannot reach the dialog: verified empirically (the
+dialog's DOM parent chain is `BODY`/`HTML`, a sibling of the triggering container, not its
+descendant; `isDescendantOf` the container is `false`). This is the same "not regionally
+demonstrable" class as chip, for a different root cause (chip pins vars on the component itself;
+messagebox re-mounts to the page root). The whole-app (`:root`) override path is unaffected and
+works normally.
+
+| Knob | Default | Scope |
+|------|---------|-------|
+| `--zk-messagebox-bg` | `var(--zk-color-surface)` | dialog surface + header + content fill |
+| `--zk-messagebox-fg` | `var(--zk-color-on-surface-variant)` | message body text |
+| `--zk-messagebox-header-fg` | `var(--zk-color-on-surface)` | title text |
+| `--zk-messagebox-border-color` | `var(--zk-color-outline-variant)` | header bottom border + button-row top border |
+| `--zk-messagebox-radius` | `var(--zk-shape-dialog)` | dialog corners |
+| `--zk-messagebox-elevation` | `var(--zk-elevation-dialog)` | dialog shadow (static — always modal, not mode-driven) |
+
+### Notification — shipped (untyped/default card only)
+
+Floating alert card created by `Clients.showNotification()` (`.z-notification` wrapper +
+`.z-notification-content` card + a left accent stripe on `::before`). Only the **untyped**
+(`type=null`) default card reads these knobs: `--zk-notification-bg` / `-fg` / `-radius` color
+the content card's fill, text, and corners; `--zk-notification-accent` colors the left accent
+stripe — the defining visual for the untyped/default state (default is
+`var(--zk-color-status-info)`, the same value the untyped card rendered before). The
+`.z-notification-info/-warning/-error` type variants pin their own bg/fg/accent via
+higher-specificity compound selectors (e.g. `.z-notification-info .z-notification-content`) —
+the same color-**variant** convention as button/progressmeter — so these knobs affect only an
+untyped notification; a typed notification's semantic color is unaffected by an override
+(CTV-7). Elevation (`box-shadow`) stays on its base token, not knob-driven — a deliberate
+curation choice to keep the surface small (same convention as calendar/slider's minor
+sub-features). Width/height are a size-dimension concern and already have their own knob
+(`--zk-notification-height` in `tokens/_sizing.css`), not duplicated here. The close button's
+icon `color: inherit` reads from `.z-notification`, not `.z-notification-content`, so it is
+unaffected by these knobs either way.
+
+| Knob | Default | Scope |
+|------|---------|-------|
+| `--zk-notification-bg` | `var(--zk-color-surface-container-highest)` | untyped card fill |
+| `--zk-notification-fg` | `var(--zk-color-on-surface)` | untyped card text |
+| `--zk-notification-radius` | `var(--zk-shape-corner-extra-small)` | untyped card corners |
+| `--zk-notification-accent` | `var(--zk-color-status-info)` | untyped card's left accent stripe |
+
+### Toast — shipped (info-default variant only)
+
+Floating MD3 snackbar created by `Toast.show()` (`.z-toast` wrapper + `.z-toast-content` card +
+icon + optional close button). Unlike notification, `Toast.show()` always defaults a `null` type
+to `"info"`, so there is no untyped/bare card to route through — these knobs drive the **info
+(default)** variant: `--zk-toast-bg` / `-fg` color `.z-toast-info .z-toast-content`'s fill and
+text; `--zk-toast-accent` colors both the icon and the left accent stripe (`::before`) — the
+defining visual, the same "one knob, several roles" precedent as notification's
+`--zk-notification-accent`. `--zk-toast-radius` is shared by **every** toast (declared on the base
+`.z-toast-content` rule, not per-type). The `.z-toast-warning` / `-error` type variants pin their
+own bg/fg/accent via higher-specificity compound selectors (same color-variant convention as
+notification/button/progressmeter), so they are unaffected by an override (CTV-7). The
+close-button icon's color per type stays on its own token, not knob-driven (same convention as
+notification's close icon). Elevation (`box-shadow`) stays on its base token, not knob-driven
+(same convention as notification/calendar/slider's minor sub-features).
+
+| Knob | Default | Scope |
+|------|---------|-------|
+| `--zk-toast-bg` | `var(--zk-color-surface-container-highest)` | info (default) toast card fill |
+| `--zk-toast-fg` | `var(--zk-color-on-surface)` | info (default) toast card text |
+| `--zk-toast-radius` | `var(--zk-shape-corner-extra-small)` | every toast's card corners |
+| `--zk-toast-accent` | `var(--zk-color-status-info)` | info (default) toast's icon + left accent stripe |
+
+### A (anchor) — shipped
+
+Consumed by `.z-a`, the plain-text MD3 link — no background, border, or radius knob applies.
+Resting and hover text color are the same value (`var(--zk-color-primary)`) today, so a single
+`fg` knob covers both — the same "one knob, several roles" precedent as tab/calendar's accent.
+Focus stays on the global `--zk-focus-ring` (same convention as button/window/grid), not a knob;
+disabled keeps its own `--zk-color-disabled` literal, also not knob-driven (same convention as
+button/input/rating). `.z-a` renders in place (no client-side reparenting), so region scoping
+works normally — unlike messagebox/popup's structural exceptions.
+
+| Knob | Default | Scope |
+|------|---------|-------|
+| `--zk-a-fg` | `var(--zk-color-primary)` | resting + hover text color |
+
 ## Recipe — adding a component
 
 Validated by the button pilot; repeat per component (then update the
@@ -656,10 +771,15 @@ Validated by the button pilot; repeat per component (then update the
 - **Shipped**: button, input (textbox family), window, grid, listbox, tree, panel, groupbox,
   combobox, datebox, timebox, spinner (+ doublespinner), bandbox, tab (tabbox), menu,
   avatar/avatar-group, chip (base hoisted; see caveat), badge (base hoisted; see caveat), rating,
-  progressmeter, paging, combobutton, selectbox, inputgroup, calendar, toolbar, slider.
+  progressmeter, paging, combobutton, selectbox, inputgroup, calendar, toolbar, slider, checkbox
+  (default mold only — see entry for the switch/toggle-mold and radio/radiogroup exclusions),
+  messagebox (see entry for the CTV-3 structural exception), notification (untyped/default card
+  only — see entry for the info/warning/error type-variant exclusion), toast (info-default
+  variant only — see entry for the warning/error type-variant exclusion), a (anchor).
 - **Not exposed** (by design): purely structural/layout components (box, div, cell, separator,
-  layouts) and content atoms (label, image) have no meaningful appearance knob; selection
-  controls (checkbox/radio) are candidates for a future pass if adopter demand appears — add
-  via the Recipe above. rangeslider (PE) / multislider (EE) are out of scope for this pass
-  (see the Slider entry above) but are natural follow-on candidates given the shared
-  `--zk-slider-*` vocabulary.
+  layouts) and content atoms (label, image) have no meaningful appearance knob — this excludes
+  the anchor/link, which **is** exposed despite its similarly minimal text-only vocabulary (see
+  the A entry above); radio/radiogroup and checkbox's switch/toggle molds are candidates for a
+  future pass if adopter demand appears — add via the Recipe above. rangeslider (PE) /
+  multislider (EE) are out of scope for this pass (see the Slider entry above) but are natural
+  follow-on candidates given the shared `--zk-slider-*` vocabulary.

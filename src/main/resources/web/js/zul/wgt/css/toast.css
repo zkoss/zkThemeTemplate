@@ -31,7 +31,7 @@
     display: flex;
     align-items: center;
     padding: 12px 48px;
-    border-radius: var(--zk-shape-corner-extra-small);
+    border-radius: var(--zk-toast-radius);
     box-shadow: var(--zk-elevation-3);
     position: relative;
     overflow: hidden;
@@ -98,13 +98,13 @@
 /* ─── Semantic variants ─────────────────────────────────────────────────── */
 
 /* info */
-.z-toast-info .z-toast-icon                       { color: var(--zk-color-status-info); }
+.z-toast-info .z-toast-icon                       { color: var(--zk-toast-accent); }
 .z-toast-info .z-toast-close > .z-toast-icon      { color: var(--zk-color-on-surface); }
 .z-toast-info .z-toast-content {
-    background-color: var(--zk-color-surface-container-highest);
-    color: var(--zk-color-on-surface);
+    background-color: var(--zk-toast-bg);
+    color: var(--zk-toast-fg);
 }
-.z-toast-info .z-toast-content::before            { background-color: var(--zk-color-status-info); }
+.z-toast-info .z-toast-content::before            { background-color: var(--zk-toast-accent); }
 
 /* warning */
 .z-toast-warning .z-toast-icon                    { color: var(--zk-color-status-warning); }

@@ -30,10 +30,10 @@
     padding: var(--zk-spacing-3) var(--zk-spacing-4) var(--zk-spacing-3) 52px;
     position: relative;
     overflow: hidden;
-    border-radius: var(--zk-shape-corner-extra-small);
+    border-radius: var(--zk-notification-radius);
     box-shadow: var(--zk-elevation-2);
-    background-color: var(--zk-color-surface-container-highest);
-    color: var(--zk-color-on-surface);
+    background-color: var(--zk-notification-bg);
+    color: var(--zk-notification-fg);
     line-height: 1.5;
 }
 
@@ -46,7 +46,7 @@
     top: 0;
     bottom: 0;
     left: 0;
-    background-color: var(--zk-color-status-info);
+    background-color: var(--zk-notification-accent);
 }
 
 /* ─── Icon (absolute inside the content area) ──────────────────────────── */

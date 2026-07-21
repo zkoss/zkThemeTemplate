@@ -446,5 +446,122 @@
          style="--zk-slider-track-bg:#efe6ff; --zk-slider-accent:#6750a4; --zk-slider-radius:0px">
         <slider curpos="60" width="200px"/>
     </div>
+
+    <!-- Checkbox: default mold — resting border/text + checked/indeterminate accent
+         (fill + border + hover-ring tint), the defining state. Switch/toggle molds
+         and radio/radiogroup are out of scope for this pass — see
+         doc/spec/component-theme-variables.md. -->
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Checkbox (default)</div>
+    <div sclass="z-hstack z-mb-6 z-align-center">
+        <checkbox label="Unchecked"/>
+        <checkbox label="Checked" checked="true"/>
+    </div>
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Checkbox (regional override)</div>
+    <div sclass="z-hstack z-mb-8 z-align-center z-p-4 z-bg-surface-variant z-rounded"
+         style="--zk-checkbox-border-color:#6750a4; --zk-checkbox-accent:#6750a4">
+        <checkbox label="Unchecked"/>
+        <checkbox label="Checked" checked="true"/>
+    </div>
+
+    <!-- Messagebox: MD3 alert dialog (Messagebox.show()) — a distinct knob family
+         from window's zk-window-*, covering the dialog surface/header/border/
+         radius/elevation. Messagebox.show() always parents its Window to the
+         page root (Executions.createComponents(…, desktop.getFirstPage(), …)),
+         never nested inside the invoking button's container, so a regional
+         (container) override cannot reach it — only the whole-app :root
+         override applies (same "not regionally demonstrable" precedent as
+         chip; see the tracker). The icon-type colors (information/exclamation/
+         error/question) are semantic status colors, intentionally not
+         knob-driven (same convention as progressmeter's color variants). -->
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Messagebox (default)</div>
+    <div sclass="z-hstack z-mb-8">
+        <button label="Show Messagebox">
+            <attribute name="onClick">
+                Messagebox.show("Default messagebox, zero override applied.", "Component Theming Demo", Messagebox.OK, Messagebox.INFORMATION);
+            </attribute>
+        </button>
+    </div>
+
+    <!-- Popup: floating surface (tooltips/dropdowns/overlays). Base knobs cover the
+         surface fill/text/border/radius/elevation. On open(), Popup.ts reparents the
+         widget's real DOM node to document.body (zk.makeVParent(), for stacking above
+         any ancestor's overflow/clipping) — verified empirically: the open .z-popup's
+         parentElement is BODY, not its authored ZUL ancestor. So — like messagebox,
+         for a different root cause — a regional (container) override cannot reach it;
+         only the whole-app :root override applies (see the tracker). The tooltip
+         variant (.z-popup-tooltip.z-popup — dark bg, white text) is a distinct color
+         VARIANT that keeps its own colors, not knob-driven (same convention as
+         button's outlined/text variants). -->
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Popup (default)</div>
+    <div sclass="z-hstack z-mb-8">
+        <button label="Show Popup" popup="popupThemingDefault"/>
+        <popup id="popupThemingDefault">
+            <div sclass="z-p-2">Default popup content</div>
+        </popup>
+    </div>
+
+    <!-- Notification: floating alert card (Clients.showNotification()). Only the
+         untyped/default state reads these knobs — the info/warning/error type
+         variants pin their own bg/fg/accent via higher-specificity compound
+         selectors (same treatment as button/progressmeter's color variants), so
+         a typed notification is unaffected by an override. Elevation (box-shadow)
+         stays on its base token, not knob-driven. Rendered here as static markup
+         (h:div), mirroring notification.zul's own demo, since Notification is a
+         transient JS popup, not an embeddable ZUL component. -->
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Notification (default)</div>
+    <div sclass="z-hstack z-mb-6 z-align-center">
+        <h:div class="z-notification" style="position:relative">
+            <h:div class="z-notification-content">Default notification message</h:div>
+        </h:div>
+    </div>
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Notification (regional override)</div>
+    <div sclass="z-hstack z-mb-8 z-align-center z-p-4 z-bg-surface-variant z-rounded"
+         style="--zk-notification-bg:#eef2ff; --zk-notification-fg:#1a1a2e; --zk-notification-radius:0px; --zk-notification-accent:#6750a4">
+        <h:div class="z-notification" style="position:relative">
+            <h:div class="z-notification-content">Scoped notification message</h:div>
+        </h:div>
+    </div>
+
+    <!-- Toast: MD3 snackbar (zkmax). Every toast always carries a type variant
+         (Toast.show() defaults a null type to "info"), so these knobs drive the
+         INFO (default) variant only — the warning/error type variants pin their
+         own bg/fg/accent via higher-specificity rules (same treatment as
+         notification's type variants), so a typed toast is unaffected by an
+         override. Rendered here as static markup (h:div), mirroring toast.zul's
+         own demo, since Toast is a transient JS popup, not an embeddable ZUL
+         component. -->
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Toast (default)</div>
+    <div sclass="z-hstack z-mb-6 z-align-center">
+        <h:div class="z-toast z-toast-info">
+            <h:i class="z-toast-icon z-icon-info"></h:i>
+            <h:div class="z-toast-content">Default toast message</h:div>
+            <h:div class="z-toast-close"><h:i class="z-toast-icon z-icon-x"></h:i></h:div>
+        </h:div>
+    </div>
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Toast (regional override)</div>
+    <div sclass="z-hstack z-mb-8 z-align-center z-p-4 z-bg-surface-variant z-rounded"
+         style="--zk-toast-bg:#eef2ff; --zk-toast-fg:#1a1a2e; --zk-toast-radius:0px; --zk-toast-accent:#6750a4">
+        <h:div class="z-toast z-toast-info">
+            <h:i class="z-toast-icon z-icon-info"></h:i>
+            <h:div class="z-toast-content">Scoped toast message</h:div>
+            <h:div class="z-toast-close"><h:i class="z-toast-icon z-icon-x"></h:i></h:div>
+        </h:div>
+    </div>
+
+    <!-- A (anchor/link): MD3 text link, text-only (no bg/border/radius). Resting
+         AND hover color read the same fg knob (both are the same value today),
+         so one knob keeps them in lockstep — the same "one knob, several roles"
+         precedent as tab/calendar's accent. Focus stays on the global focus-ring
+         token, not a knob; disabled stays on its own literal, not knob-driven
+         (same convention as button/input/rating). -->
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">A / Link (default)</div>
+    <div sclass="z-hstack z-mb-6 z-align-center">
+        <a href="https://www.zkoss.org" label="Default Link"/>
+    </div>
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">A / Link (regional override)</div>
+    <div sclass="z-hstack z-mb-8 z-align-center z-p-4 z-bg-surface-variant z-rounded"
+         style="--zk-a-fg:#6750a4">
+        <a href="https://www.zkoss.org" label="Scoped Link"/>
+    </div>
 </div>
 </zk>

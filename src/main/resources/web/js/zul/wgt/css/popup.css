@@ -4,10 +4,10 @@
 .z-popup {
     position: absolute;
     z-index: 1500;
-    background-color: var(--zk-color-surface);
-    border-radius: var(--zk-shape-corner-extra-small);
-    box-shadow: var(--zk-elevation-dropdown);
-    border: 1px solid var(--zk-color-outline-variant);
+    background-color: var(--zk-popup-bg);
+    border-radius: var(--zk-popup-radius);
+    box-shadow: var(--zk-popup-elevation);
+    border: 1px solid var(--zk-popup-border-color);
     padding: var(--zk-spacing-1) 0;
     min-width: 160px;
     overflow: auto;
@@ -18,7 +18,7 @@
     padding: var(--zk-spacing-2) var(--zk-spacing-4);
     font-family: var(--zk-typescale-font-family);
     font-size: var(--zk-typescale-body-medium-size);
-    color: var(--zk-color-on-surface);
+    color: var(--zk-popup-fg);
 }
 
 /* ─── Tooltip-style popup ─────────────────────────────────────────────────── */

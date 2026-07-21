@@ -508,4 +508,201 @@ test.describe('Component Theme Variables', () => {
     await page.addStyleTag({ content: ':root{--zk-slider-accent:#6750a4}' });
     expect(await bgOf(defThumb)).toBe(SCOPED_PURPLE);
   });
+
+  // ── checkbox: default mold — resting border/text + checked/indeterminate
+  // accent (fill + border + hover-ring tint), the defining state. Switch/toggle
+  // molds and radio/radiogroup are out of scope for this pass. ────────────────
+  test('checkbox — regional border/accent override, sibling untouched', async ({ page }) => {
+    const defOff = page.locator('.z-checkbox-off').first();
+    const defOn = page.locator('.z-checkbox-on').first();
+    const scopedOff = page.locator('div[style*="--zk-checkbox-accent"] .z-checkbox-off').first();
+    const scopedOn = page.locator('div[style*="--zk-checkbox-accent"] .z-checkbox-on').first();
+
+    // Scoped instances pick up both knobs (resting border + checked fill).
+    expect(await borderColorOf(scopedOff.locator('.z-checkbox-mold').first())).toBe(SCOPED_PURPLE);
+    expect(await bgOf(scopedOn.locator('.z-checkbox-mold').first())).toBe(SCOPED_PURPLE);
+
+    // Sibling defaults outside the region are untouched.
+    expect(await borderColorOf(defOff.locator('.z-checkbox-mold').first())).not.toBe(SCOPED_PURPLE);
+    expect(await bgOf(defOn.locator('.z-checkbox-mold').first())).not.toBe(SCOPED_PURPLE);
+  });
+
+  test('checkbox — whole-app :root override wins (loaded after norm.css.dsp)', async ({ page }) => {
+    const defMold = page.locator('.z-checkbox-on').first().locator('.z-checkbox-mold').first();
+    expect(await bgOf(defMold)).not.toBe(SCOPED_PURPLE); // baseline before override
+
+    // An adopter's :root override, injected after the theme bundle, must win the
+    // cascade and reach every checkbox instance, including the default one.
+    await page.addStyleTag({ content: ':root{--zk-checkbox-accent:#6750a4}' });
+    expect(await bgOf(defMold)).toBe(SCOPED_PURPLE);
+  });
+
+  // ── messagebox: MD3 alert dialog (Messagebox.show()). Messagebox.show()
+  // always parents its Window to the page root (Executions.createComponents(
+  // ..., desktop.getFirstPage(), ...)), never nested inside the invoking
+  // button's container, so — unlike every other family above — a REGIONAL
+  // (container) override cannot reach it; only the whole-app :root override
+  // applies. There is no "sibling untouched" test here because there is no
+  // scoped instance to compare against (see the tracker for this caveat). ──
+  test('messagebox — zero-regression defaults', async ({ page }) => {
+    await page.getByRole('button', { name: 'Show Messagebox' }).click();
+    const dlg = page.locator('.z-messagebox-window').filter({ hasText: 'Component Theming Demo' });
+    await expect(dlg).toBeVisible();
+
+    expect(await radiusOf(dlg)).toBe(STOCK_RADIUS); // stock --zk-shape-dialog (extra-small corner)
+    expect(await bgOf(dlg)).toBe('rgb(255, 255, 255)'); // stock --zk-color-surface
+    expect(await borderBottomColorOf(dlg.locator('.z-window-header').first())).toBe('rgba(0, 0, 0, 0.12)'); // stock --zk-color-outline-variant
+  });
+
+  test('messagebox — whole-app :root override wins (loaded after norm.css.dsp)', async ({ page }) => {
+    await page.getByRole('button', { name: 'Show Messagebox' }).click();
+    const dlg = page.locator('.z-messagebox-window').filter({ hasText: 'Component Theming Demo' });
+    await expect(dlg).toBeVisible();
+    expect(await bgOf(dlg)).not.toBe(SCOPED_PURPLE); // baseline before override
+    const icon = dlg.locator('.z-messagebox-information').first();
+    const iconColorBefore = await colorOf(icon);
+
+    // An adopter's :root override, injected after the theme bundle, must win the
+    // cascade and reach the dialog even though it is not a descendant of any
+    // container in the page (Messagebox.show() attaches it to the page root).
+    await page.addStyleTag({ content: ':root{--zk-messagebox-bg:#6750a4}' });
+    expect(await bgOf(dlg)).toBe(SCOPED_PURPLE);
+
+    // The icon-type color is a semantic status color, not knob-driven — it
+    // must stay unaffected by the bg override (state integrity, CTV-7).
+    expect(await colorOf(icon)).toBe(iconColorBefore);
+  });
+
+  // ── popup: floating surface (tooltips/dropdowns/overlays). On open(), Popup.ts
+  // reparents the widget's real DOM node to document.body (zk.makeVParent()) —
+  // verified empirically (the open .z-popup's parentElement is BODY, not its
+  // authored ZUL ancestor) — so, like messagebox (a different root cause), a
+  // REGIONAL (container) override cannot reach it; only the whole-app :root
+  // override applies. There is no "sibling untouched" test here for the same
+  // reason as messagebox (see the tracker). The <popup> widget also lazily
+  // creates its DOM node on first open. The tooltip variant (.z-popup-tooltip)
+  // is a distinct color variant, not knob-driven. ──────────────────────────────
+  test('popup — zero-regression defaults', async ({ page }) => {
+    await page.getByRole('button', { name: 'Show Popup', exact: true }).click();
+    const def = page.locator('.z-popup.z-popup-open');
+    await expect(def).toBeVisible();
+
+    expect(await radiusOf(def)).toBe(STOCK_RADIUS); // stock --zk-shape-corner-extra-small
+    expect(await bgOf(def)).toBe('rgb(255, 255, 255)'); // stock --zk-color-surface
+    expect(await borderColorOf(def)).toBe('rgba(0, 0, 0, 0.12)'); // stock --zk-color-outline-variant
+  });
+
+  test('popup — whole-app :root override wins (loaded after norm.css.dsp)', async ({ page }) => {
+    await page.getByRole('button', { name: 'Show Popup', exact: true }).click();
+    const def = page.locator('.z-popup.z-popup-open');
+    await expect(def).toBeVisible();
+    expect(await bgOf(def)).not.toBe(SCOPED_PURPLE); // baseline before override
+
+    // An adopter's :root override, injected after the theme bundle, must win the
+    // cascade and reach the popup even though it is not a descendant of any
+    // container in the page (open() reparents it to document.body).
+    await page.addStyleTag({ content: ':root{--zk-popup-bg:#6750a4}' });
+    expect(await bgOf(def)).toBe(SCOPED_PURPLE);
+  });
+
+  // ── notification: floating alert card (Clients.showNotification()). Only
+  // the untyped/default state reads these knobs — the info/warning/error type
+  // variants pin their own bg/fg/accent via higher-specificity compound
+  // selectors (same treatment as button/progressmeter's color variants), so a
+  // typed notification is unaffected by an override. Unlike messagebox/popup,
+  // the demo markup is a plain static div (not a JS-reparented widget), so
+  // region scoping works normally here. ──────────────────────────────────────
+  test('notification — regional bg/fg/radius/accent override, sibling untouched', async ({ page }) => {
+    const def = page.locator('.z-notification').first().locator('.z-notification-content').first();
+    const scoped = page
+      .locator('div[style*="--zk-notification-bg"] .z-notification')
+      .first()
+      .locator('.z-notification-content')
+      .first();
+
+    // Scoped card picks up every knob (bg + fg + radius + accent stripe).
+    expect(await bgOf(scoped)).toBe('rgb(238, 242, 255)'); // #eef2ff
+    expect(await colorOf(scoped)).toBe('rgb(26, 26, 46)'); // #1a1a2e
+    expect(await radiusOf(scoped)).toBe('0px');
+    expect(await pseudoBgOf(scoped, '::before')).toBe(SCOPED_PURPLE);
+
+    // Sibling default is untouched — the override lives on the scoped box and
+    // is inherited only by its subtree, never leaking up to the default row.
+    expect(await bgOf(def)).not.toBe('rgb(238, 242, 255)');
+    expect(await colorOf(def)).not.toBe('rgb(26, 26, 46)');
+    expect(await radiusOf(def)).toBe(STOCK_RADIUS); // stock --zk-shape-corner-extra-small
+    expect(await pseudoBgOf(def, '::before')).not.toBe(SCOPED_PURPLE);
+  });
+
+  test('notification — whole-app :root override wins (loaded after norm.css.dsp)', async ({ page }) => {
+    const defContent = page.locator('.z-notification').first().locator('.z-notification-content').first();
+    expect(await pseudoBgOf(defContent, '::before')).not.toBe(SCOPED_PURPLE); // baseline before override
+
+    // An adopter's :root override, injected after the theme bundle, must win the
+    // cascade and reach every untyped notification instance, including the default one.
+    await page.addStyleTag({ content: ':root{--zk-notification-accent:#6750a4}' });
+    expect(await pseudoBgOf(defContent, '::before')).toBe(SCOPED_PURPLE);
+  });
+
+  // ── toast: MD3 snackbar (zkmax). Every toast always carries a type variant
+  // (Toast.show() defaults null → "info"), so these knobs drive the INFO
+  // (default) variant only — warning/error pin their own bg/fg/accent via
+  // higher-specificity rules, unaffected by an override (same convention as
+  // notification's type variants). Demo markup is a plain static div (not a
+  // JS-reparented widget), so region scoping works normally here. ──────────
+  test('toast — regional bg/fg/radius/accent override, sibling untouched', async ({ page }) => {
+    const def = page.locator('.z-toast').first().locator('.z-toast-content').first();
+    const scoped = page
+      .locator('div[style*="--zk-toast-bg"] .z-toast')
+      .first()
+      .locator('.z-toast-content')
+      .first();
+
+    // Scoped toast picks up every knob (bg + fg + radius + accent stripe).
+    expect(await bgOf(scoped)).toBe('rgb(238, 242, 255)'); // #eef2ff
+    expect(await colorOf(scoped)).toBe('rgb(26, 26, 46)'); // #1a1a2e
+    expect(await radiusOf(scoped)).toBe('0px');
+    expect(await pseudoBgOf(scoped, '::before')).toBe(SCOPED_PURPLE);
+
+    // Sibling default is untouched — the override lives on the scoped box and
+    // is inherited only by its subtree, never leaking up to the default row.
+    expect(await bgOf(def)).not.toBe('rgb(238, 242, 255)');
+    expect(await colorOf(def)).not.toBe('rgb(26, 26, 46)');
+    expect(await radiusOf(def)).toBe(STOCK_RADIUS); // stock --zk-shape-corner-extra-small
+    expect(await pseudoBgOf(def, '::before')).not.toBe(SCOPED_PURPLE);
+  });
+
+  test('toast — whole-app :root override wins (loaded after norm.css.dsp)', async ({ page }) => {
+    const defContent = page.locator('.z-toast').first().locator('.z-toast-content').first();
+    expect(await pseudoBgOf(defContent, '::before')).not.toBe(SCOPED_PURPLE); // baseline before override
+
+    // An adopter's :root override, injected after the theme bundle, must win the
+    // cascade and reach every info-type toast instance, including the default one.
+    await page.addStyleTag({ content: ':root{--zk-toast-accent:#6750a4}' });
+    expect(await pseudoBgOf(defContent, '::before')).toBe(SCOPED_PURPLE);
+  });
+
+  // ── a (anchor/link): text-only (no bg/border/radius). Resting AND hover
+  // color read the same --zk-a-fg knob (both are the same value today).
+  test('a — regional fg override, sibling untouched', async ({ page }) => {
+    const def = page.locator('.z-a').first();
+    const scoped = page.locator('div[style*="--zk-a-fg"] .z-a').first();
+
+    // Scoped link picks up the fg override.
+    expect(await colorOf(scoped)).toBe(SCOPED_PURPLE);
+
+    // Sibling default link is untouched — the override lives on the scoped box
+    // and is inherited only by its subtree, never leaking up to the default row.
+    expect(await colorOf(def)).not.toBe(SCOPED_PURPLE);
+  });
+
+  test('a — whole-app :root override wins (loaded after norm.css.dsp)', async ({ page }) => {
+    const def = page.locator('.z-a').first();
+    expect(await colorOf(def)).not.toBe(SCOPED_PURPLE); // baseline before override
+
+    // An adopter's :root override, injected after the theme bundle, must win the
+    // cascade and reach every link instance, including the default one.
+    await page.addStyleTag({ content: ':root{--zk-a-fg:#6750a4}' });
+    expect(await colorOf(def)).toBe(SCOPED_PURPLE);
+  });
 });
