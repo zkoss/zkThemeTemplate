@@ -330,5 +330,121 @@
          style="--zk-paging-radius:4px; --zk-paging-selected-bg:#6750a4; --zk-paging-selected-fg:#ffffff">
         <paging mold="os" totalSize="200" pageSize="10" activePage="4"/>
     </div>
+
+    <!-- Combobutton: split button (filled base) — shares the button family's overlay
+         state model (bg/fg + radius + overlay color/opacities), plus its own divider
+         accent between the content and arrow areas. The toolbar mold is a color
+         VARIANT (like button's outlined/text variants) and disabled stays on base
+         tokens — both intentionally not knob-driven, same convention as button. -->
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Combobutton (default)</div>
+    <div sclass="z-hstack z-mb-6">
+        <combobutton label="Default Action">
+            <menupopup><menuitem label="Option 1"/><menuitem label="Option 2"/></menupopup>
+        </combobutton>
+    </div>
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Combobutton (regional override)</div>
+    <div sclass="z-hstack z-mb-8 z-p-4 z-bg-surface-variant z-rounded"
+         style="--zk-combobutton-bg:#6750a4; --zk-combobutton-fg:#ffffff; --zk-combobutton-overlay-color:#ffffff; --zk-combobutton-radius:9999px">
+        <combobutton label="Scoped Action">
+            <menupopup><menuitem label="Option 1"/><menuitem label="Option 2"/></menupopup>
+        </combobutton>
+    </div>
+
+    <!-- Selectbox: native select element (Listbox "select" mold, .z-select).
+         Renders as a single native select, no wrapper; state is a per-state
+         border-color change (no overlay), same model as Input. Disabled stays
+         off the knobs (same convention as input/button). -->
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Selectbox (default)</div>
+    <div sclass="z-hstack z-mb-6">
+        <listbox rows="1" mold="select">
+            <listitem label="Inbox"/>
+            <listitem label="Sent"/>
+            <listitem label="Draft"/>
+        </listbox>
+    </div>
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Selectbox (regional override)</div>
+    <div sclass="z-hstack z-mb-8 z-p-4 z-bg-surface-variant z-rounded"
+         style="--zk-selectbox-radius:0px; --zk-selectbox-border-color:#6750a4">
+        <listbox rows="1" mold="select">
+            <listitem label="Inbox"/>
+            <listitem label="Sent"/>
+            <listitem label="Draft"/>
+        </listbox>
+    </div>
+
+    <!-- Inputgroup: input + addon(s) combined into a single field. Border color
+         and radius are shared by the addon and the grouped input (one continuous
+         outline); the addon also carries its own fill/text pair. Focus stays on
+         the global focus-ring token (same as button/window/grid), not a knob. -->
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Inputgroup (default)</div>
+    <div sclass="z-hstack z-mb-6">
+        <inputgroup>@<textbox placeholder="username"/></inputgroup>
+    </div>
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Inputgroup (regional override)</div>
+    <div sclass="z-hstack z-mb-8 z-p-4 z-bg-surface-variant z-rounded"
+         style="--zk-inputgroup-radius:0px; --zk-inputgroup-border-color:#6750a4; --zk-inputgroup-text-bg:#efe6ff; --zk-inputgroup-text-fg:#6750a4">
+        <inputgroup>@<textbox placeholder="username"/></inputgroup>
+    </div>
+
+    <!-- Calendar: self-contained month grid + nav header. zk-calendar-accent
+         and zk-calendar-accent-fg are a single defining-state pair — they
+         recolor the selected day's fill, that day's own hover blend, the
+         today ring, and the Today-link label together (same "one knob,
+         several roles" pattern as tab's accent). A fixed value date keeps
+         the selected cell deterministic for the regression test below. -->
+    <zscript>
+        java.util.Calendar _calThemingCal = java.util.Calendar.getInstance();
+        _calThemingCal.set(2020, java.util.Calendar.MARCH, 15, 10, 30, 0);
+        java.util.Date calendarThemingDate = _calThemingCal.getTime();
+    </zscript>
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Calendar (default)</div>
+    <div sclass="z-hstack z-mb-6">
+        <calendar value="${calendarThemingDate}"/>
+    </div>
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Calendar (regional override)</div>
+    <div sclass="z-hstack z-mb-8 z-p-4 z-bg-surface-variant z-rounded"
+         style="--zk-calendar-radius:0px; --zk-calendar-border-color:#6750a4; --zk-calendar-accent:#6750a4; --zk-calendar-accent-fg:#ffffff">
+        <calendar value="${calendarThemingDate}"/>
+    </div>
+
+    <!-- Toolbar: chrome bar — fill + shared divider-line knob (border-color drives
+         the bar's own edge — border-bottom in the default horizontal mold — same
+         "one knob, multiple border roles" precedent as tab's zk-tab-border-color).
+         The app-bar context variant (.z-north .z-toolbar) is a distinct color
+         VARIANT and keeps its own colors, not knob-driven (same convention as
+         combobutton's toolbar mold). -->
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Toolbar (default)</div>
+    <div sclass="z-mb-6">
+        <toolbar>
+            <toolbarbutton label="Cut" iconSclass="z-icon-scissors"/>
+            <toolbarbutton label="Copy" iconSclass="z-icon-copy"/>
+            <toolbarbutton label="Paste" iconSclass="z-icon-clipboard"/>
+        </toolbar>
+    </div>
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Toolbar (regional override)</div>
+    <div sclass="z-mb-8 z-p-4 z-bg-surface-variant z-rounded"
+         style="--zk-toolbar-bg:#eef2ff; --zk-toolbar-border-color:#6750a4">
+        <toolbar>
+            <toolbarbutton label="Cut" iconSclass="z-icon-scissors"/>
+            <toolbarbutton label="Copy" iconSclass="z-icon-copy"/>
+            <toolbarbutton label="Paste" iconSclass="z-icon-clipboard"/>
+        </toolbar>
+    </div>
+
+    <!-- Slider: MD3 range input (track + fill + thumb). zk-slider-accent is a
+         single defining-state pair role — it colors the active fill AND the
+         thumb (same "one knob, several roles" pattern as tab/calendar's
+         accent); the hover/focus/active state-layer ring is a tint of the
+         same accent. Disabled stays on opacity only, not knob-driven (same
+         convention as button/input/rating). -->
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Slider (default)</div>
+    <div sclass="z-hstack z-mb-6 z-align-center">
+        <slider curpos="60" width="200px"/>
+    </div>
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Slider (regional override)</div>
+    <div sclass="z-hstack z-mb-8 z-align-center z-p-4 z-bg-surface-variant z-rounded"
+         style="--zk-slider-track-bg:#efe6ff; --zk-slider-accent:#6750a4; --zk-slider-radius:0px">
+        <slider curpos="60" width="200px"/>
+    </div>
 </div>
 </zk>

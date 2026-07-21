@@ -20,6 +20,8 @@ const bgOf = (loc: Locator) => loc.evaluate((el) => getComputedStyle(el).backgro
 const borderColorOf = (loc: Locator) => loc.evaluate((el) => getComputedStyle(el).borderTopColor);
 const borderBottomColorOf = (loc: Locator) => loc.evaluate((el) => getComputedStyle(el).borderBottomColor);
 const colorOf = (loc: Locator) => loc.evaluate((el) => getComputedStyle(el).color);
+const pseudoBgOf = (loc: Locator, pseudo: string) =>
+  loc.evaluate((el, p) => getComputedStyle(el, p).backgroundColor, pseudo);
 
 test.describe('Component Theme Variables', () => {
   test.beforeEach(async ({ page }) => {
@@ -333,5 +335,177 @@ test.describe('Component Theme Variables', () => {
     // cascade and reach every paging instance, including the default one.
     await page.addStyleTag({ content: ':root{--zk-paging-selected-bg:#6750a4}' });
     expect(await bgOf(defSelected)).toBe(SCOPED_PURPLE);
+  });
+
+  // ── combobutton: split button (filled base) — shares the button family's
+  // overlay state model. Toolbar mold is a color variant (like button's
+  // outlined/text variants) and disabled stays on base tokens — both
+  // intentionally not knob-driven, same convention as button. ─────────────
+  test('combobutton — regional bg/fg/radius override, sibling untouched', async ({ page }) => {
+    const def = page.locator('.z-combobutton-content').first();
+    const scoped = page.locator('div[style*="--zk-combobutton-radius"] .z-combobutton-content').first();
+    const scopedRoot = page.locator('div[style*="--zk-combobutton-radius"] .z-combobutton').first();
+
+    expect(await radiusOf(scopedRoot)).toBe('9999px');
+    expect(await bgOf(scoped)).toBe(SCOPED_PURPLE);
+
+    expect(await radiusOf(page.locator('.z-combobutton').first())).toBe(STOCK_RADIUS);
+    expect(await bgOf(def)).not.toBe(SCOPED_PURPLE);
+  });
+
+  test('combobutton — whole-app :root override wins (loaded after norm.css.dsp)', async ({ page }) => {
+    const defContent = page.locator('.z-combobutton-content').first();
+    expect(await bgOf(defContent)).not.toBe(SCOPED_PURPLE); // baseline before override
+
+    // An adopter's :root override, injected after the theme bundle, must win the
+    // cascade and reach every combobutton instance, including the default one.
+    await page.addStyleTag({ content: ':root{--zk-combobutton-bg:#6750a4}' });
+    expect(await bgOf(defContent)).toBe(SCOPED_PURPLE);
+  });
+
+  // ── selectbox: native <select> element (Listbox "select" mold, .z-select).
+  // Renders as a single native select (no wrapper); state is a per-state
+  // border-color change (no overlay), same model as Input. ──────────────────
+  test('selectbox — regional border/radius override, sibling untouched', async ({ page }) => {
+    const def = page.locator('.z-select').first();
+    const scoped = page.locator('div[style*="--zk-selectbox-radius"] .z-select').first();
+
+    expect(await radiusOf(scoped)).toBe('0px');
+    expect(await borderColorOf(scoped)).toBe(SCOPED_PURPLE);
+
+    expect(await radiusOf(def)).toBe('4px'); // stock --zk-shape-input
+    expect(await borderColorOf(def)).not.toBe(SCOPED_PURPLE);
+  });
+
+  test('selectbox — whole-app :root override wins (loaded after norm.css.dsp)', async ({ page }) => {
+    const def = page.locator('.z-select').first();
+    expect(await radiusOf(def)).toBe('4px'); // baseline before override
+
+    // An adopter's :root override, injected after the theme bundle, must win the
+    // cascade and reach every selectbox instance, including the default one.
+    await page.addStyleTag({ content: ':root{--zk-selectbox-radius:0px}' });
+    expect(await radiusOf(def)).toBe('0px');
+  });
+
+  // ── inputgroup: input + addon(s) combined into a single field. Border color
+  // and radius are shared by the addon and the grouped input (one continuous
+  // outline); the addon also carries its own fill/text pair. Focus stays on
+  // the global focus-ring token (same as button/window/grid), not a knob. ──
+  test('inputgroup — regional border/radius/addon override, sibling untouched', async ({ page }) => {
+    const def = page.locator('.z-inputgroup').first();
+    const scoped = page.locator('div[style*="--zk-inputgroup-radius"] .z-inputgroup').first();
+
+    const defAddon = def.locator('.z-inputgroup-text').first();
+    const scopedAddon = scoped.locator('.z-inputgroup-text').first();
+
+    expect(await radiusOf(scopedAddon)).toBe('0px');
+    expect(await borderColorOf(scopedAddon)).toBe(SCOPED_PURPLE);
+    expect(await bgOf(scopedAddon)).toBe('rgb(239, 230, 255)'); // #efe6ff
+    expect(await colorOf(scopedAddon)).toBe(SCOPED_PURPLE);
+
+    expect(await radiusOf(defAddon)).toBe('4px'); // stock --zk-shape-input
+    expect(await borderColorOf(defAddon)).not.toBe(SCOPED_PURPLE);
+    expect(await bgOf(defAddon)).not.toBe('rgb(239, 230, 255)');
+    expect(await colorOf(defAddon)).not.toBe(SCOPED_PURPLE);
+  });
+
+  test('inputgroup — whole-app :root override wins (loaded after norm.css.dsp)', async ({ page }) => {
+    const defAddon = page.locator('.z-inputgroup').first().locator('.z-inputgroup-text').first();
+    expect(await radiusOf(defAddon)).toBe('4px'); // baseline before override
+
+    // An adopter's :root override, injected after the theme bundle, must win the
+    // cascade and reach every inputgroup instance, including the default one.
+    await page.addStyleTag({ content: ':root{--zk-inputgroup-radius:0px}' });
+    expect(await radiusOf(defAddon)).toBe('0px');
+  });
+
+  // ── calendar: self-contained month grid + nav header. zk-calendar-accent /
+  // zk-calendar-accent-fg is a single defining-state pair — it colors the
+  // selected day's disc fill (::before) + text, the today ring, and the
+  // Today-link label together (same "one knob, several roles" pattern as
+  // tab's accent). ──────────────────────────────────────────────────────────
+  test('calendar — regional border/radius/accent override, sibling untouched', async ({ page }) => {
+    const def = page.locator('.z-calendar').first();
+    const scoped = page.locator('div[style*="--zk-calendar-radius"] .z-calendar').first();
+
+    const defSelected = def.locator('.z-calendar-selected').first();
+    const scopedSelected = scoped.locator('.z-calendar-selected').first();
+
+    // --zk-calendar-accent-fg (on-primary) is #ffffff stock, same as the demo's
+    // override value, so it can't distinguish scoped from default here — the
+    // disc fill (accent) + shell border/radius already prove region scoping.
+    expect(await radiusOf(scoped)).toBe('0px');
+    expect(await borderColorOf(scoped)).toBe(SCOPED_PURPLE);
+    expect(await pseudoBgOf(scopedSelected, '::before')).toBe(SCOPED_PURPLE);
+
+    expect(await radiusOf(def)).toBe('6px'); // stock --zk-shape-card
+    expect(await borderColorOf(def)).not.toBe(SCOPED_PURPLE);
+    expect(await pseudoBgOf(defSelected, '::before')).not.toBe(SCOPED_PURPLE);
+  });
+
+  test('calendar — whole-app :root override wins (loaded after norm.css.dsp)', async ({ page }) => {
+    const defSelected = page.locator('.z-calendar').first().locator('.z-calendar-selected').first();
+    expect(await pseudoBgOf(defSelected, '::before')).not.toBe(SCOPED_PURPLE); // baseline before override
+
+    // An adopter's :root override, injected after the theme bundle, must win the
+    // cascade and reach every calendar instance, including the default one.
+    await page.addStyleTag({ content: ':root{--zk-calendar-accent:#6750a4}' });
+    expect(await pseudoBgOf(defSelected, '::before')).toBe(SCOPED_PURPLE);
+  });
+
+  // ── toolbar: chrome bar — fill + shared divider-line knob (border-color drives
+  // the bar's own edge; the app-bar context variant keeps its own colors, not
+  // knob-driven — same convention as combobutton's toolbar mold). ─────────────
+  test('toolbar — regional bg/border override, sibling untouched', async ({ page }) => {
+    const def = page.locator('.z-toolbar').first();
+    const scoped = page.locator('div[style*="--zk-toolbar-bg"] .z-toolbar').first();
+
+    expect(await bgOf(scoped)).toBe('rgb(238, 242, 255)'); // #eef2ff
+    expect(await borderBottomColorOf(scoped)).toBe(SCOPED_PURPLE);
+
+    expect(await bgOf(def)).not.toBe('rgb(238, 242, 255)');
+    expect(await borderBottomColorOf(def)).not.toBe(SCOPED_PURPLE);
+  });
+
+  test('toolbar — whole-app :root override wins (loaded after norm.css.dsp)', async ({ page }) => {
+    const def = page.locator('.z-toolbar').first();
+    expect(await borderBottomColorOf(def)).not.toBe(SCOPED_PURPLE); // baseline before override
+
+    // An adopter's :root override, injected after the theme bundle, must win the
+    // cascade and reach every toolbar instance, including the default one.
+    await page.addStyleTag({ content: ':root{--zk-toolbar-border-color:#6750a4}' });
+    expect(await borderBottomColorOf(def)).toBe(SCOPED_PURPLE);
+  });
+
+  // ── slider: MD3 range input (track + fill + thumb). zk-slider-accent covers
+  // BOTH the active fill and the thumb (same "one knob, several roles" pattern
+  // as tab/calendar's accent); disabled stays on opacity only, not knob-driven
+  // (same convention as button/input/rating). ──────────────────────────────
+  test('slider — regional track/accent/radius override, sibling untouched', async ({ page }) => {
+    const def = page.locator('.z-slider').first();
+    const scoped = page.locator('div[style*="--zk-slider-radius"] .z-slider').first();
+
+    const defTrack = def.locator('.z-slider-center').first();
+    const scopedTrack = scoped.locator('.z-slider-center').first();
+    const defThumb = def.locator('.z-slider-button').first();
+    const scopedThumb = scoped.locator('.z-slider-button').first();
+
+    expect(await radiusOf(scopedTrack)).toBe('0px');
+    expect(await bgOf(scopedTrack)).toBe('rgb(239, 230, 255)'); // #efe6ff track override
+    expect(await bgOf(scopedThumb)).toBe(SCOPED_PURPLE); // accent override (fill + thumb)
+
+    expect(await radiusOf(defTrack)).toBe('9999px'); // stock --zk-shape-corner-full
+    expect(await bgOf(defTrack)).not.toBe('rgb(239, 230, 255)');
+    expect(await bgOf(defThumb)).not.toBe(SCOPED_PURPLE);
+  });
+
+  test('slider — whole-app :root override wins (loaded after norm.css.dsp)', async ({ page }) => {
+    const defThumb = page.locator('.z-slider').first().locator('.z-slider-button').first();
+    expect(await bgOf(defThumb)).not.toBe(SCOPED_PURPLE); // baseline before override
+
+    // An adopter's :root override, injected after the theme bundle, must win the
+    // cascade and reach every slider instance, including the default one.
+    await page.addStyleTag({ content: ':root{--zk-slider-accent:#6750a4}' });
+    expect(await bgOf(defThumb)).toBe(SCOPED_PURPLE);
   });
 });

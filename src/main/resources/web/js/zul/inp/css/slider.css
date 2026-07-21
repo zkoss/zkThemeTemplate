@@ -24,8 +24,8 @@
 .z-slider-center {
     position: relative;
     height: 4px;
-    background-color: var(--zk-color-outline-variant);
-    border-radius: var(--zk-shape-corner-full);
+    background-color: var(--zk-slider-track-bg);
+    border-radius: var(--zk-slider-radius);
     /* horizontal: small vertical margin so thumb doesn't clip parent */
     margin-block: 10px;
 }
@@ -36,8 +36,8 @@
     top: 0;
     left: 0;
     height: 100%;
-    background-color: var(--zk-color-primary);
-    border-radius: var(--zk-shape-corner-full);
+    background-color: var(--zk-slider-accent);
+    border-radius: var(--zk-slider-radius);
 }
 
 /* ── Thumb ────────────────────────────────────────────── */
@@ -51,9 +51,9 @@
     margin-top: -10px;
     /* center thumb on its JS-set left position */
     margin-left: -10px;
-    border-radius: var(--zk-shape-corner-full);
-    background-color: var(--zk-color-primary);
-    box-shadow: var(--zk-elevation-1);
+    border-radius: var(--zk-slider-radius);
+    background-color: var(--zk-slider-accent);
+    box-shadow: var(--zk-slider-elevation);
     cursor: grab;
     transition:
         box-shadow var(--zk-motion-duration-standard) var(--zk-motion-easing-standard),
@@ -62,16 +62,16 @@
 
 /* State-layer ring via box-shadow (MUI Slider pattern: 16% alpha, not MD3 8%) */
 .z-slider-button:hover {
-    box-shadow: 0 0 0 8px color-mix(in srgb, var(--zk-color-primary) 16%, transparent);
+    box-shadow: 0 0 0 8px color-mix(in srgb, var(--zk-slider-accent) 16%, transparent);
 }
 
 .z-slider-button:focus-visible {
-    box-shadow: 0 0 0 8px color-mix(in srgb, var(--zk-color-primary) 16%, transparent);
+    box-shadow: 0 0 0 8px color-mix(in srgb, var(--zk-slider-accent) 16%, transparent);
 }
 
 .z-slider-button:active {
     cursor: grabbing;
-    box-shadow: 0 0 0 14px color-mix(in srgb, var(--zk-color-primary) 16%, transparent);
+    box-shadow: 0 0 0 14px color-mix(in srgb, var(--zk-slider-accent) 16%, transparent);
 }
 
 /* ── Horizontal slider ────────────────────────────────── */
@@ -128,12 +128,12 @@
 /* ── Knob mold (PE) ───────────────────────────────────── */
 /* SVG arc strokes — stroke-width and arc geometry are JS-controlled (NOT CSS-themable) */
 .z-slider-knob-inner {
-    stroke: var(--zk-color-outline-variant);
+    stroke: var(--zk-slider-track-bg);
     fill: none;
 }
 
 .z-slider-knob-area {
-    stroke: var(--zk-color-primary);
+    stroke: var(--zk-slider-accent);
     fill: none;
 }
 

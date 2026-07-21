@@ -25,14 +25,14 @@
 
 /* Left-edge child gets left border-radius (horizontal layout) */
 .z-inputgroup:not(.z-inputgroup-vertical) > :first-child {
-    border-top-left-radius: var(--zk-shape-input);
-    border-bottom-left-radius: var(--zk-shape-input);
+    border-top-left-radius: var(--zk-inputgroup-radius);
+    border-bottom-left-radius: var(--zk-inputgroup-radius);
 }
 
 /* Right-edge child gets right border-radius (horizontal layout) */
 .z-inputgroup:not(.z-inputgroup-vertical) > :last-child {
-    border-top-right-radius: var(--zk-shape-input);
-    border-bottom-right-radius: var(--zk-shape-input);
+    border-top-right-radius: var(--zk-inputgroup-radius);
+    border-bottom-right-radius: var(--zk-inputgroup-radius);
 }
 
 /* Flatten child heights in horizontal mode */
@@ -46,9 +46,9 @@
     align-items: center;
     padding: 0 var(--zk-spacing-3);
     min-height: var(--zk-control-height);
-    background-color: var(--zk-color-surface-container-low);
-    border: 1px solid var(--zk-color-outline);
-    color: var(--zk-color-on-surface-variant);
+    background-color: var(--zk-inputgroup-text-bg);
+    border: 1px solid var(--zk-inputgroup-border-color);
+    color: var(--zk-inputgroup-text-fg);
     font-family: var(--zk-typescale-font-family);
     font-size: var(--zk-typescale-body-medium-size);
     white-space: nowrap;
@@ -70,7 +70,7 @@
 /* Input inside inputgroup — integrate with the group border */
 .z-inputgroup .z-textbox,
 .z-inputgroup .z-combobox .z-combobox-input {
-    border: 1px solid var(--zk-color-outline);
+    border: 1px solid var(--zk-inputgroup-border-color);
     border-radius: 0;
     flex: 1;
     min-width: 0;
@@ -93,7 +93,7 @@
 .z-inputgroup:focus-within {
     outline: var(--zk-focus-ring);
     outline-offset: 0;
-    border-radius: var(--zk-shape-input);
+    border-radius: var(--zk-inputgroup-radius);
 }
 
 /* Neutralize the single-input Mechanism-B focus rule (input.css) on grouped
@@ -126,13 +126,13 @@
 }
 
 .z-inputgroup-vertical > :first-child {
-    border-top-left-radius: var(--zk-shape-input);
-    border-top-right-radius: var(--zk-shape-input);
+    border-top-left-radius: var(--zk-inputgroup-radius);
+    border-top-right-radius: var(--zk-inputgroup-radius);
 }
 
 .z-inputgroup-vertical > :last-child {
-    border-bottom-left-radius: var(--zk-shape-input);
-    border-bottom-right-radius: var(--zk-shape-input);
+    border-bottom-left-radius: var(--zk-inputgroup-radius);
+    border-bottom-right-radius: var(--zk-inputgroup-radius);
 }
 
 .z-inputgroup-vertical .z-inputgroup-text {

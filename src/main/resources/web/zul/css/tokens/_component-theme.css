@@ -258,4 +258,109 @@
     --zk-paging-input-bg:            var(--zk-color-surface);
     --zk-paging-input-fg:            var(--zk-color-on-surface);
     --zk-paging-input-border-color:  var(--zk-color-outline);
+
+    /* ── Combobutton — split button (filled base + dropdown arrow) ───────
+       Shares the button family's overlay state model: state is an MD3
+       ::before overlay on the content area (a tint whose opacity animates),
+       not a per-state background, so the knobs are bg/fg + radius + an
+       overlay color/opacities pair, matching the real implementation. The
+       divider between the content and arrow areas is its own accent knob.
+       The toolbar mold is a color VARIANT (like button's outlined/text
+       variants) and keeps its own colors via higher-specificity rules;
+       disabled likewise stays off the knobs — both intentionally not
+       knob-driven, same convention as button. */
+    --zk-combobutton-bg:             var(--zk-color-primary);
+    --zk-combobutton-fg:             var(--zk-color-on-primary);
+    --zk-combobutton-radius:         var(--zk-shape-button);
+    --zk-combobutton-divider-color:  rgba(255, 255, 255, 0.3);
+    --zk-combobutton-overlay-color:  var(--zk-color-on-primary);
+    --zk-combobutton-hover-opacity:  var(--zk-state-hover-opacity);
+    --zk-combobutton-focus-opacity:  var(--zk-state-focus-opacity);
+    --zk-combobutton-active-opacity: var(--zk-state-pressed-opacity);
+
+    /* ── Selectbox — native <select> element (Listbox "select" mold, `.z-select`)
+       Renders as a single native <select class="z-select">, no wrapper. State is
+       a per-state border-color change (no overlay), same model as Input. Disabled
+       uses opacity only, not knob-driven (same convention as input/button). The
+       dropdown chevron is a literal-color SVG baked into a background-image data
+       URI — a CSS custom property can't be interpolated inside a url() string, so
+       its stroke color stays a hardcoded literal, not a knob. */
+    --zk-selectbox-bg:                 var(--zk-color-surface);
+    --zk-selectbox-fg:                 var(--zk-color-on-surface);
+    --zk-selectbox-radius:             var(--zk-shape-input);
+    --zk-selectbox-border-color:       var(--zk-color-outline);
+    --zk-selectbox-border-color-hover: var(--zk-color-on-surface);
+    --zk-selectbox-border-color-focus: var(--zk-color-primary);
+
+    /* ── Inputgroup — input + addon(s) combined into a single field ──────
+       The addon (.z-inputgroup-text) carries its own fill/text pair. The
+       border color is shared by the addon AND the grouped input/combobox
+       border override, so the whole group reads as one continuous outline;
+       the radius likewise applies to the group's rounded ends (horizontal
+       and vertical) and the focus-within ring's corner. Focus stays on the
+       global --zk-focus-ring (same as button/window/grid), not a knob. */
+    --zk-inputgroup-text-bg:      var(--zk-color-surface-container-low);
+    --zk-inputgroup-text-fg:      var(--zk-color-on-surface-variant);
+    --zk-inputgroup-border-color: var(--zk-color-outline);
+    --zk-inputgroup-radius:       var(--zk-shape-input);
+
+    /* ── Calendar — self-contained month grid + nav header (also the shell
+       used inside a datebox popup, which flattens it back to flat content —
+       see the :not() guard in calendar.css). --zk-calendar-fg is the day-
+       number/title text; --zk-calendar-header-fg is the muted weekday-label
+       + nav-icon (resting) text. --zk-calendar-accent / -accent-fg is a
+       single defining-state pair — it colors the selected-day fill, that
+       day's own hover blend, the today ring, and the Today-link label (all
+       four read var(--zk-color-primary)/-on-primary today), the same "one
+       knob, several roles" precedent as tab's --zk-tab-accent. Hover state
+       layers (title/icon/day-cell hover tints, the Today-link hover tint)
+       stay on base tokens, not knob-driven (same convention as menu's
+       ::before overlay). Disabled/outside/out-of-range days, the
+       week-of-year column, and the month/year/decade picker's pill radius
+       also stay on base tokens — secondary/minor sub-features kept out of
+       the curated surface (same convention as grid/listbox). */
+    --zk-calendar-bg:           var(--zk-color-surface);
+    --zk-calendar-fg:           var(--zk-color-on-surface);
+    --zk-calendar-header-fg:    var(--zk-color-on-surface-variant);
+    --zk-calendar-border-color: var(--zk-color-outline-variant);
+    --zk-calendar-radius:       var(--zk-shape-card);
+    --zk-calendar-accent:       var(--zk-color-primary);
+    --zk-calendar-accent-fg:    var(--zk-color-on-primary);
+
+    /* ── Toolbar — chrome bar (bg + divider line) ─────────────────────────
+       A plain surface bar, no radius (full-width chrome, like menubar). One
+       shared border-color knob drives every divider in the family: the bar's
+       own edge (border-bottom horizontal / border-right vertical) AND the
+       .z-toolbarseparator item divider (both orientations) — same precedent
+       as tab's --zk-tab-border-color driving every tab-family border. The
+       app-bar context variant (.z-north .z-toolbar, incl. its toolbarseparator
+       color-mix tint) is a distinct color VARIANT (like combobutton's toolbar
+       mold) and keeps its own colors, not knob-driven; likewise the tabs-host
+       variant (.z-toolbar-tabs, transparent/no-border) and the overflow popup
+       (.z-toolbar-popup, a minor sub-feature) stay on base tokens. */
+    --zk-toolbar-bg:           var(--zk-color-surface);
+    --zk-toolbar-border-color: var(--zk-color-outline-variant);
+    /* height → --zk-toolbar-height (tokens/_sizing.css). */
+
+    /* ── Slider — MD3 range input (track + fill + thumb) ─────────────────
+       No text/border — a track-and-thumb control, so the knobs are the
+       resting track color, a single defining accent, a shared radius, and
+       the thumb's resting elevation. --zk-slider-accent covers the active
+       fill AND the thumb (both read var(--zk-color-primary) today, so one
+       shared knob keeps them in lockstep), the same "one knob, several
+       roles" precedent as tab/calendar's accent; the thumb's hover/focus/
+       active state-layer ring is a color-mix tint of this same accent, and
+       the knob mold (PE)'s SVG arc strokes mirror the identical track/fill
+       concept, so both read these same knobs too. The sphere mold's 3D
+       gradient thumb is a color VARIANT (like button's outlined/text
+       variants) and keeps its own colors, not knob-driven. The numeric
+       input overlay (.z-slider-input) and the value tooltip
+       (.z-slider-popup) are minor sub-features kept on base tokens (same
+       convention as calendar's week-of-year column). Disabled dims via
+       opacity only, not knob-driven (same convention as button/input/
+       rating). */
+    --zk-slider-track-bg:  var(--zk-color-outline-variant);
+    --zk-slider-accent:    var(--zk-color-primary);
+    --zk-slider-radius:    var(--zk-shape-corner-full);
+    --zk-slider-elevation: var(--zk-elevation-1);
 }

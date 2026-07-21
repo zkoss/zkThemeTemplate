@@ -25,9 +25,9 @@
 .z-calendar {
     display: flex;
     flex-direction: column;
-    background-color: var(--zk-color-surface);
-    border-radius: var(--zk-shape-card);
-    border: 1px solid var(--zk-color-outline-variant);
+    background-color: var(--zk-calendar-bg);
+    border-radius: var(--zk-calendar-radius);
+    border: 1px solid var(--zk-calendar-border-color);
     overflow: hidden;
     box-sizing: border-box;
     width: 100%;
@@ -43,7 +43,7 @@
     align-items: center;
     justify-content: space-between;
     padding: var(--zk-spacing-2) var(--zk-spacing-3);
-    background-color: var(--zk-color-surface);
+    background-color: var(--zk-calendar-bg);
     min-height: 48px;
     box-sizing: border-box;
 }
@@ -52,7 +52,7 @@
 .z-calendar-title {
     font-size: var(--zk-typescale-title-small-size);
     font-weight: var(--zk-typescale-title-small-weight);
-    color: var(--zk-color-on-surface);
+    color: var(--zk-calendar-fg);
     cursor: pointer;
     padding: var(--zk-spacing-1) var(--zk-spacing-2);
     border-radius: var(--zk-shape-button);
@@ -79,7 +79,7 @@
     width: 36px;
     height: 36px;
     border-radius: var(--zk-shape-corner-full);
-    color: var(--zk-color-on-surface-variant);
+    color: var(--zk-calendar-header-fg);
     text-decoration: none;
     font-size: 16px;
     cursor: pointer;
@@ -114,7 +114,7 @@
     text-align: center;
     vertical-align: middle;
     height: 36px;
-    color: var(--zk-color-on-surface-variant);
+    color: var(--zk-calendar-header-fg);
     font-weight: var(--zk-typescale-label-medium-weight);
     padding: 0;
     font-size: var(--zk-typescale-label-medium-size);
@@ -122,7 +122,7 @@
 
 /* Weekend TH — no red, same as weekday */
 .z-calendar-body thead th.z-calendar-weekend {
-    color: var(--zk-color-on-surface-variant);
+    color: var(--zk-calendar-header-fg);
 }
 
 /* ─── Day cells (TD) ─────────────────────────────────────────────────────── *
@@ -145,7 +145,7 @@
     height: 40px;
     font-size: var(--zk-typescale-body-medium-size);
     font-weight: var(--zk-typescale-body-medium-weight);
-    color: var(--zk-color-on-surface);
+    color: var(--zk-calendar-fg);
     cursor: pointer;
     transition: color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
 }
@@ -177,7 +177,7 @@
 
 /* Weekend body cells — no red, same as weekday */
 .z-calendar-body tbody td.z-calendar-weekend {
-    color: var(--zk-color-on-surface);
+    color: var(--zk-calendar-fg);
 }
 
 /* ─── Outside-month days ─────────────────────────────────────────────────── */
@@ -193,16 +193,16 @@
  * is painted by `::before` (same pseudo-element as hover) to keep the shape
  * identical across cell widths. */
 .z-calendar-body tbody td.z-calendar-cell.z-calendar-selected {
-    color: var(--zk-color-on-primary);
+    color: var(--zk-calendar-accent-fg);
     font-weight: var(--zk-typescale-label-large-weight);
 }
 
 .z-calendar-body tbody td.z-calendar-cell.z-calendar-selected::before {
-    background-color: var(--zk-color-primary);
+    background-color: var(--zk-calendar-accent);
 }
 
 .z-calendar-body tbody td.z-calendar-cell.z-calendar-selected:hover::before {
-    background-color: color-mix(in srgb, var(--zk-color-primary) 85%, var(--zk-color-on-primary));
+    background-color: color-mix(in srgb, var(--zk-calendar-accent) 85%, var(--zk-calendar-accent-fg));
 }
 
 /* ─── Today's date cell (z-calendar-today class added by ZK when present) ── */
@@ -217,7 +217,7 @@
     width: 28px;
     height: 28px;
     transform: translate(-50%, -50%);
-    border: 1px solid var(--zk-color-primary);
+    border: 1px solid var(--zk-calendar-accent);
     border-radius: 50%;
     pointer-events: none;
     z-index: -1;
@@ -300,7 +300,7 @@
 /* ─── Today link footer (showTodayLink=true) ─────────────────────────────── */
 /* DOM: .z-calendar-header.z-calendar-today > a.z-calendar-title */
 .z-calendar-header.z-calendar-today {
-    border-top: 1px solid var(--zk-color-outline-variant);
+    border-top: 1px solid var(--zk-calendar-border-color);
     min-height: 40px;
     padding: var(--zk-spacing-1) var(--zk-spacing-3);
     justify-content: center;
@@ -309,7 +309,7 @@
 .z-calendar-header.z-calendar-today .z-calendar-title {
     font-size: var(--zk-typescale-label-large-size);
     font-weight: var(--zk-typescale-label-large-weight);
-    color: var(--zk-color-primary);
+    color: var(--zk-calendar-accent);
     padding: var(--zk-spacing-1) var(--zk-spacing-3);
     border-radius: var(--zk-shape-corner-full);
 }
@@ -334,9 +334,9 @@
  * three properties twice.
  * See MD3 selection / picker guidance and tasks/design-review-2026-05-29.md §2a. */
 .z-calendar:not(.z-datebox-popup .z-calendar) {
-    background: var(--zk-color-surface);
-    border: 1px solid var(--zk-color-outline-variant);
-    border-radius: var(--zk-shape-card);
+    background: var(--zk-calendar-bg);
+    border: 1px solid var(--zk-calendar-border-color);
+    border-radius: var(--zk-calendar-radius);
     box-shadow: var(--zk-elevation-2);
 }
 

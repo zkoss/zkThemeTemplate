@@ -482,6 +482,158 @@ buttons), noted here rather than fixed.
 | `--zk-paging-input-fg` | `var(--zk-color-on-surface)` | jump-to-page input (default mold only) |
 | `--zk-paging-input-border-color` | `var(--zk-color-outline)` | jump-to-page input (default mold only) |
 
+### Combobutton — shipped
+
+Split button (primary action + dropdown arrow), `.z-combobutton` /
+`.z-combobutton-content` / `.z-combobutton-button`. Reuses button's overlay
+state model (an MD3 `::before` tint over the content area whose opacity
+animates per state) rather than a per-state background, plus a
+`-divider-color` knob for the 1px seam between the content and arrow areas
+(default is the stock literal `rgba(255, 255, 255, 0.3)`, kept as-is — it
+only reads against the filled `bg`, so it isn't promoted to a token).
+`toolbar` mold is a **color variant** (same treatment as button's
+outlined/text variants): it pins its own semantic colors
+(`--zk-color-on-surface-variant` / `--zk-color-outline`) directly on the
+element at higher specificity, so it does not read the base knobs. Disabled
+is likewise not knob-driven (button convention).
+
+| Knob | Default |
+|------|---------|
+| `--zk-combobutton-bg` | `var(--zk-color-primary)` |
+| `--zk-combobutton-fg` | `var(--zk-color-on-primary)` |
+| `--zk-combobutton-radius` | `var(--zk-shape-button)` |
+| `--zk-combobutton-divider-color` | `rgba(255, 255, 255, 0.3)` |
+| `--zk-combobutton-overlay-color` | `var(--zk-color-on-primary)` |
+| `--zk-combobutton-hover-opacity` / `-focus-opacity` / `-active-opacity` | state-layer opacity tokens |
+
+### Selectbox — shipped
+
+Native `<select>` element — `<listbox mold="select">` renders `<select
+class="z-select">` directly (no wrapper); Listbox's `css-uri` covers every
+mold, so listbox.css's `.z-select` block is the effective ruleset (not
+select.css's — see note below). State is a per-state border-color change, no
+overlay, same model as Input. Disabled is opacity-only, not knob-driven (same
+convention as input/button). The dropdown chevron is a literal-color SVG
+baked into a `background-image` data URI — a custom property can't be
+interpolated inside a `url()` string, so its stroke color stays hardcoded,
+not a knob.
+
+| Knob | Default |
+|------|---------|
+| `--zk-selectbox-bg` | `var(--zk-color-surface)` |
+| `--zk-selectbox-fg` | `var(--zk-color-on-surface)` |
+| `--zk-selectbox-radius` | `var(--zk-shape-input)` |
+| `--zk-selectbox-border-color` | `var(--zk-color-outline)` |
+| `--zk-selectbox-border-color-hover` | `var(--zk-color-on-surface)` |
+| `--zk-selectbox-border-color-focus` | `var(--zk-color-primary)` |
+
+**Duplicate `.z-select` ruleset note**: `js/zul/sel/css/select.css` also
+declares a `.z-select` block (reading the same six knobs), but its
+`select.css.dsp` is never requested by Listbox's `css-uri` (confirmed via
+`check:css-dsp` — it's an unreferenced "extra"); it is dormant duplicate
+coverage, not the effective stylesheet. Both files consume the identical
+knobs so they stay in lockstep regardless of which one ever loads.
+
+### Inputgroup — shipped
+
+Input + addon(s) combined into a single field (`.z-inputgroup` +
+`.z-inputgroup-text` addon + the grouped textbox/combobox). Border color and
+radius are **shared** axes: `--zk-inputgroup-border-color` paints both the
+addon's `border` and the grouped input/combobox's border override, so the
+whole group reads as one continuous outline; `--zk-inputgroup-radius` drives
+the rounded ends in both horizontal and vertical layout, plus the
+`:focus-within` ring's corner. The addon also carries its own fill/text pair.
+Focus stays on the global `--zk-focus-ring` (same convention as
+button/window/grid), not a knob.
+
+| Knob | Default |
+|------|---------|
+| `--zk-inputgroup-text-bg` | `var(--zk-color-surface-container-low)` |
+| `--zk-inputgroup-text-fg` | `var(--zk-color-on-surface-variant)` |
+| `--zk-inputgroup-border-color` | `var(--zk-color-outline)` |
+| `--zk-inputgroup-radius` | `var(--zk-shape-input)` |
+
+### Calendar — shipped
+
+Self-contained month grid + nav header (`.z-calendar`); also the shell used inside a
+datebox popup, which flattens it back to flat content (see the `:not()` guard in
+calendar.css) — unaffected by these knobs. `--zk-calendar-fg` is the day-number/title
+text; `--zk-calendar-header-fg` is the muted weekday-label + nav-icon (resting) text.
+`--zk-calendar-accent` / `-accent-fg` is a single defining-state pair — it colors the
+selected-day disc fill (`::before`) + text, the today ring, and the Today-link label
+together (all four read `var(--zk-color-primary)`/`-on-primary` today), the same "one
+knob, several roles" precedent as tab's `--zk-tab-accent`. Hover state layers
+(title/icon/day-cell hover tints, the Today-link hover tint) stay on base tokens, not
+knob-driven (same convention as menu's `::before` overlay). Disabled/outside/out-of-range
+days, the week-of-year column, and the month/year/decade picker's pill radius
+(`--zk-shape-button`) also stay on base tokens — secondary/minor sub-features kept out of
+the curated surface (same convention as grid/listbox).
+
+| Knob | Default | Scope |
+|------|---------|-------|
+| `--zk-calendar-bg` | `var(--zk-color-surface)` | card + header fill |
+| `--zk-calendar-fg` | `var(--zk-color-on-surface)` | day-number + title text |
+| `--zk-calendar-header-fg` | `var(--zk-color-on-surface-variant)` | weekday-label + nav-icon (resting) text |
+| `--zk-calendar-border-color` | `var(--zk-color-outline-variant)` | card border + today-link divider |
+| `--zk-calendar-radius` | `var(--zk-shape-card)` | card corners |
+| `--zk-calendar-accent` | `var(--zk-color-primary)` | selected-day fill, today ring, Today-link text |
+| `--zk-calendar-accent-fg` | `var(--zk-color-on-primary)` | selected-day text |
+
+### Toolbar — shipped
+
+Full-width chrome bar (`.z-toolbar`), no radius (same treatment as menubar). A
+single shared border-color knob styles two things: the bar's own edge
+(`border-bottom` in the horizontal mold, `border-right` in the vertical mold —
+the only edge with a real DOM match, and the one the Playwright test asserts)
+and the `.z-toolbarseparator` item divider (both orientations). **Caveat**:
+`.z-toolbarseparator` has no matching class in current ZK 10 core —
+`<separator bar="true">` renders `z-separator-horizontal-bar`/
+`-vertical-bar`, not `z-toolbarseparator` — so that half of the knob's
+"family-wide" reach is CSS-only (pre-existing dead code, unrelated to this
+knob, zero regression either way). The app-bar context variant (`.z-north
+.z-toolbar`, including its toolbarseparator color-mix tint) is a distinct
+color **VARIANT** (same treatment as combobutton's `toolbar` mold): it pins
+its own semantic colors (`--zk-color-primary`/`-on-primary`) directly on the
+element at higher specificity, so it does not read the base knobs. The
+tabs-embedded variant (`.z-toolbar-tabs`, transparent/no-border) and the
+overflow popup (`.z-toolbar-popup`, a minor sub-feature) also stay on base
+tokens, not knob-driven.
+
+| Knob | Default |
+|------|---------|
+| `--zk-toolbar-bg` | `var(--zk-color-surface)` |
+| `--zk-toolbar-border-color` | `var(--zk-color-outline-variant)` |
+| `--zk-toolbar-height` (size — in `_sizing.css`) | `48px` |
+
+### Slider — shipped
+
+MD3 range input — track + fill + thumb (`.z-slider`); no text/border, so the knob
+surface is: the resting track color (`--zk-slider-track-bg`), a single defining accent
+(`--zk-slider-accent`) that drives both the active fill and the thumb (both read
+`var(--zk-color-primary)` today, so they share one knob — the same "one knob, several
+roles" precedent as tab/calendar's accent), a shared corner radius used by the track,
+fill, and thumb alike (`--zk-slider-radius`), and the thumb's resting elevation
+(`--zk-slider-elevation`). The thumb's hover/focus/active state-layer ring (a
+`color-mix` tint) reads the same accent, so an override stays tonally consistent; the
+knob mold (PE)'s SVG arc strokes (`.z-slider-knob-inner` / `-area`) mirror the
+identical track/fill concept and read the same two knobs too. The sphere mold's
+3D-gradient thumb is a color **VARIANT** (like button's outlined/text variants) that
+pins its own gradient at higher specificity, deliberately not knob-driven. The
+numeric-input overlay (`.z-slider-input`) and the value tooltip (`.z-slider-popup`)
+are minor sub-features kept on base tokens (same convention as calendar's
+week-of-year column); disabled dims via `opacity` only, not knob-driven (same
+convention as button/input/rating). **Out of scope**: rangeslider (PE) / multislider
+(EE) are separate style files (`zkex/slider/css/rangeslider.css`,
+`zkmax/slider/css/multislider.css`) and were not touched in this pass — still
+candidates for a follow-up.
+
+| Knob | Default | Scope |
+|------|---------|-------|
+| `--zk-slider-track-bg` | `var(--zk-color-outline-variant)` | resting track fill |
+| `--zk-slider-accent` | `var(--zk-color-primary)` | active fill + thumb fill (+ PE knob-mold arc stroke) |
+| `--zk-slider-radius` | `var(--zk-shape-corner-full)` | track / fill / thumb corner radius |
+| `--zk-slider-elevation` | `var(--zk-elevation-1)` | thumb resting shadow |
+
 ## Recipe — adding a component
 
 Validated by the button pilot; repeat per component (then update the
@@ -504,8 +656,10 @@ Validated by the button pilot; repeat per component (then update the
 - **Shipped**: button, input (textbox family), window, grid, listbox, tree, panel, groupbox,
   combobox, datebox, timebox, spinner (+ doublespinner), bandbox, tab (tabbox), menu,
   avatar/avatar-group, chip (base hoisted; see caveat), badge (base hoisted; see caveat), rating,
-  progressmeter, paging.
+  progressmeter, paging, combobutton, selectbox, inputgroup, calendar, toolbar, slider.
 - **Not exposed** (by design): purely structural/layout components (box, div, cell, separator,
   layouts) and content atoms (label, image) have no meaningful appearance knob; selection
-  controls (checkbox/radio) and slider are candidates for a future pass if
-  adopter demand appears — add via the Recipe above.
+  controls (checkbox/radio) are candidates for a future pass if adopter demand appears — add
+  via the Recipe above. rangeslider (PE) / multislider (EE) are out of scope for this pass
+  (see the Slider entry above) but are natural follow-on candidates given the shared
+  `--zk-slider-*` vocabulary.

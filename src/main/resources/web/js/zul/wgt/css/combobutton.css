@@ -16,7 +16,7 @@
 .z-combobutton {
     display: inline-flex;
     align-items: stretch;
-    border-radius: var(--zk-shape-button);
+    border-radius: var(--zk-combobutton-radius);
     overflow: hidden;
     cursor: pointer;
     vertical-align: middle;
@@ -40,8 +40,8 @@
     padding-right: calc(var(--zk-spacing-4) + 32px);
     border: none;
     border-radius: 0;
-    background-color: var(--zk-color-primary);
-    color: var(--zk-color-on-primary);
+    background-color: var(--zk-combobutton-bg);
+    color: var(--zk-combobutton-fg);
     font-family: var(--zk-typescale-font-family);
     font-size: var(--zk-typescale-label-large-size);
     font-weight: var(--zk-typescale-label-large-weight);
@@ -56,15 +56,15 @@
     content: '';
     position: absolute;
     inset: 0;
-    background-color: var(--zk-color-on-primary);
+    background-color: var(--zk-combobutton-overlay-color);
     opacity: 0;
     pointer-events: none;
     transition: var(--zk-state-layer-transition);
 }
 
-.z-combobutton:hover .z-combobutton-content::before { opacity: var(--zk-state-hover-opacity); }
-.z-combobutton:active .z-combobutton-content::before { opacity: var(--zk-state-pressed-opacity); }
-.z-combobutton:focus-within .z-combobutton-content::before { opacity: var(--zk-state-focus-opacity); }
+.z-combobutton:hover .z-combobutton-content::before { opacity: var(--zk-combobutton-hover-opacity); }
+.z-combobutton:active .z-combobutton-content::before { opacity: var(--zk-combobutton-active-opacity); }
+.z-combobutton:focus-within .z-combobutton-content::before { opacity: var(--zk-combobutton-focus-opacity); }
 
 /* Dropdown arrow portion — positioned absolutely on the right */
 .z-combobutton-button {
@@ -76,9 +76,9 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    border-left: 1px solid rgba(255, 255, 255, 0.3);
-    background-color: var(--zk-color-primary);
-    color: var(--zk-color-on-primary);
+    border-left: 1px solid var(--zk-combobutton-divider-color);
+    background-color: var(--zk-combobutton-bg);
+    color: var(--zk-combobutton-fg);
     z-index: 1;
     transition: background-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
 }
@@ -96,7 +96,7 @@
 
 /* Open state — pressed appearance on the wrapper */
 .z-combobutton-open .z-combobutton-content::before {
-    opacity: var(--zk-state-pressed-opacity);
+    opacity: var(--zk-combobutton-active-opacity);
 }
 
 /* ─── Toolbar mold ─────────────────────────────────────────────────────── */
