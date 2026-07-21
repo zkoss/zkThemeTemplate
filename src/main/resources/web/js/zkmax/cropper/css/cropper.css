@@ -2,8 +2,8 @@
 .z-cropper {
     display: inline-block; /* c6: structural — shrink-wraps border to image (upstream codegen) */
     position: relative;
-    border: 1px solid var(--zk-color-outline-variant);
-    border-radius: var(--zk-shape-corner-extra-small);
+    border: 1px solid var(--zk-cropper-border-color);
+    border-radius: var(--zk-cropper-radius);
     overflow: hidden;
 }
 
@@ -175,8 +175,8 @@
     position: absolute;
     margin: var(--zk-spacing-2) var(--zk-spacing-1); /* c8: 8px clearance from selection edge */
     padding: var(--zk-spacing-1);
-    background-color: var(--zk-color-surface-container);
-    border-radius: var(--zk-shape-corner-full);
+    background-color: var(--zk-cropper-toolbar-bg);
+    border-radius: var(--zk-cropper-toolbar-radius);
     box-shadow: var(--zk-elevation-2);
     -webkit-user-select: none;
     user-select: none;
@@ -207,11 +207,11 @@
 }
 
 .z-cropper-crop > a {
-    color: var(--zk-color-primary); /* c9: confirming action */
+    color: var(--zk-cropper-accent); /* c9: confirming action */
 }
 
 .z-cropper-cancel > a {
-    color: var(--zk-color-on-surface-variant); /* c10: dismissive action */
+    color: var(--zk-cropper-fg); /* c10: dismissive action */
 }
 
 /* c11: standard theme state-layer (button.css ::before convention) */

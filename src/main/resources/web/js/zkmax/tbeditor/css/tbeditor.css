@@ -22,18 +22,18 @@
     /* Trumbowyg positions the formatting/link dropdowns absolutely with
      * top/left relative to this box, so it must be the offset parent. */
     position: relative;
-    border: 1px solid var(--zk-color-outline);
-    border-radius: var(--zk-shape-corner-small);
+    border: 1px solid var(--zk-tbeditor-border-color);
+    border-radius: var(--zk-tbeditor-radius);
     overflow: hidden;
-    box-shadow: var(--zk-elevation-1);
-    background-color: var(--zk-color-surface);
+    box-shadow: var(--zk-tbeditor-elevation);
+    background-color: var(--zk-tbeditor-bg);
     min-height: 300px;
 }
 
 /* Focus state — highlight the wrapper, not the contenteditable (avoids the
  * browser's default focus ring spanning the whole editor canvas). */
 .z-tbeditor-box:focus-within {
-    border-color: var(--zk-color-primary);
+    border-color: var(--zk-tbeditor-border-color-focus);
 }
 
 /* ── Toolbar / Button Pane ───────────────────────────────────────────────── */
@@ -41,7 +41,7 @@
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    background-color: var(--zk-color-surface-container);
+    background-color: var(--zk-tbeditor-toolbar-bg);
     border-bottom: 1px solid var(--zk-color-outline-variant);
     padding: 0 var(--zk-spacing-1);
     min-height: 36px;
@@ -98,7 +98,7 @@
 
 /* Active (toggled formatting command) */
 .z-tbeditor-button-pane button.z-tbeditor-active {
-    background-color: var(--zk-color-primary-container);
+    background-color: var(--zk-tbeditor-active-bg);
 }
 
 /* ── Button groups — must flow horizontally in the toolbar row ───────────── */
@@ -120,8 +120,8 @@
 
 /* ── Editor canvas ───────────────────────────────────────────────────────── */
 .z-tbeditor-editor {
-    background-color: var(--zk-color-surface);
-    color: var(--zk-color-on-surface);
+    background-color: var(--zk-tbeditor-bg);
+    color: var(--zk-tbeditor-fg);
     font-size: var(--zk-typescale-body-medium-size);
     padding: var(--zk-spacing-4);
     outline: none;
@@ -146,8 +146,8 @@
     border: none;
     outline: none;
     resize: none;
-    background-color: var(--zk-color-surface);
-    color: var(--zk-color-on-surface);
+    background-color: var(--zk-tbeditor-bg);
+    color: var(--zk-tbeditor-fg);
     font-family: var(--zk-typescale-mono-family);
     font-size: var(--zk-typescale-body-medium-size);
 }
@@ -206,11 +206,11 @@ body.z-tbeditor-body-fullscreen {
 .z-tbeditor-dropdown {
     width: 200px;
     padding: var(--zk-spacing-1) 0;
-    background-color: var(--zk-color-surface);
+    background-color: var(--zk-tbeditor-popup-bg);
     border: 1px solid var(--zk-color-outline-variant);
     /* Same radius token as every other floating menu popup (combobox, bandbox,
      * selectbox) so all dropdowns share one corner shape. */
-    border-radius: var(--zk-shape-menu);
+    border-radius: var(--zk-tbeditor-popup-radius);
     box-shadow: var(--zk-elevation-2);
 }
 
@@ -222,7 +222,7 @@ body.z-tbeditor-body-fullscreen {
     padding: 0 var(--zk-spacing-3);
     font-size: var(--zk-typescale-body-medium-size);
     white-space: nowrap;
-    color: var(--zk-color-on-surface);
+    color: var(--zk-tbeditor-fg);
     background: transparent;
     border: none;
     cursor: pointer;

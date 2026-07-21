@@ -1125,4 +1125,172 @@ test.describe('Component Theme Variables', () => {
     await page.addStyleTag({ content: ':root{--zk-biglistbox-radius:0px}' });
     expect(await radiusOf(def)).toBe('0px');
   });
+
+  // ── fisheye / fisheyebar (PE, zkex): magnetic dock icon bar. Magnification
+  // is JS-driven (mousemove sets inline width/height), so there is no
+  // hover/selected color state to expose — the item label text and the
+  // icon's corner radius are the observable A/B here; the bar's own
+  // background stays transparent by design, not knob-driven. ──────────────
+  test('fisheye — regional label/radius override, sibling untouched', async ({ page }) => {
+    const defText = page.locator('.z-fisheye-text').first();
+    const defImage = page.locator('.z-fisheye-image').first();
+    const scopedText = page.locator('div[style*="--zk-fisheye-radius"] .z-fisheye-text').first();
+    const scopedImage = page.locator('div[style*="--zk-fisheye-radius"] .z-fisheye-image').first();
+
+    expect(await colorOf(scopedText)).toBe(SCOPED_PURPLE);
+    expect(await radiusOf(scopedImage)).toBe('0px');
+
+    expect(await colorOf(defText)).not.toBe(SCOPED_PURPLE);
+    expect(await radiusOf(defImage)).toBe('4px'); // stock --zk-shape-corner-extra-small
+  });
+
+  test('fisheye — whole-app :root override wins (loaded after norm.css.dsp)', async ({ page }) => {
+    const defImage = page.locator('.z-fisheye-image').first();
+    expect(await radiusOf(defImage)).toBe('4px'); // baseline before override
+
+    // An adopter's :root override, injected after the theme bundle, must win the
+    // cascade and reach every fisheye instance, including the default one.
+    await page.addStyleTag({ content: ':root{--zk-fisheye-radius:0px}' });
+    expect(await radiusOf(defImage)).toBe('0px');
+  });
+
+  // ── pdfviewer (PE, zkex): PDF document viewer — root wrapper + scrollable
+  // canvas area + a floating, bottom-centred toolbar. The border-color knob
+  // is shared by the root wrapper's own border and the toolbar separator's
+  // border-left (one knob, several roles); the canvas area and floating
+  // toolbar are separate surfaces with their own bg/radius knobs. ─────────
+  test('pdfviewer — regional border/radius/toolbar override, sibling untouched', async ({ page }) => {
+    const def = page.locator('.z-pdfviewer').first();
+    const scoped = page.locator('div[style*="--zk-pdfviewer-radius"] .z-pdfviewer').first();
+
+    expect(await radiusOf(scoped)).toBe('0px');
+    expect(await borderColorOf(scoped)).toBe(SCOPED_PURPLE);
+    expect(await bgOf(scoped.locator('.z-pdfviewer-toolbar').first())).toBe(SCOPED_PURPLE);
+
+    expect(await radiusOf(def)).toBe('12px'); // stock --zk-shape-corner-medium
+    expect(await borderColorOf(def)).not.toBe(SCOPED_PURPLE);
+    expect(await bgOf(def.locator('.z-pdfviewer-toolbar').first())).not.toBe(SCOPED_PURPLE);
+  });
+
+  test('pdfviewer — whole-app :root override wins (loaded after norm.css.dsp)', async ({ page }) => {
+    const def = page.locator('.z-pdfviewer').first();
+    expect(await radiusOf(def)).toBe('12px'); // baseline before override
+
+    // An adopter's :root override, injected after the theme bundle, must win the
+    // cascade and reach every pdfviewer instance, including the default one.
+    await page.addStyleTag({ content: ':root{--zk-pdfviewer-radius:0px}' });
+    expect(await radiusOf(def)).toBe('0px');
+  });
+
+  // ── tbeditor (EE, zkmax): MD3 outlined rich-text editor — .z-tbeditor-box
+  // wrapper (border-color/radius) + the toolbar pane's own tonal fill
+  // (--zk-tbeditor-toolbar-bg). bg/fg are shared by the wrapper, editor
+  // canvas, source textarea, and dropdown text (one knob, several roles). ──
+  test('tbeditor — regional border/radius/toolbar override, sibling untouched', async ({ page }) => {
+    const def = page.locator('.z-tbeditor-box').first();
+    const scoped = page.locator('div[style*="--zk-tbeditor-radius"] .z-tbeditor-box').first();
+
+    expect(await radiusOf(scoped)).toBe('0px');
+    expect(await borderColorOf(scoped)).toBe(SCOPED_PURPLE);
+    expect(await bgOf(scoped.locator('.z-tbeditor-button-pane').first())).toBe(SCOPED_PURPLE);
+
+    expect(await radiusOf(def)).toBe('8px'); // stock --zk-shape-corner-small
+    expect(await borderColorOf(def)).not.toBe(SCOPED_PURPLE);
+    expect(await bgOf(def.locator('.z-tbeditor-button-pane').first())).not.toBe(SCOPED_PURPLE);
+  });
+
+  test('tbeditor — whole-app :root override wins (loaded after norm.css.dsp)', async ({ page }) => {
+    const def = page.locator('.z-tbeditor-box').first();
+    expect(await radiusOf(def)).toBe('8px'); // baseline before override
+
+    // An adopter's :root override, injected after the theme bundle, must win the
+    // cascade and reach every tbeditor instance, including the default one.
+    await page.addStyleTag({ content: ':root{--zk-tbeditor-radius:0px}' });
+    expect(await radiusOf(def)).toBe('0px');
+  });
+
+  // ── signature (EE, zkmax): signature-pad canvas field — .z-signature root
+  // wrapper. The wrapper's only border states are resting + focus-within (no
+  // hover), so there is no border-color-hover knob; radius + resting
+  // border-color are the observable A/B here, the same wrapper-border knob
+  // vocabulary as colorbox/datebox/timebox/spinner/bandbox/daterangebox. ───
+  test('signature — regional border/radius override, sibling untouched', async ({ page }) => {
+    const def = page.locator('.z-signature').first();
+    const scoped = page.locator('div[style*="--zk-signature-radius"] .z-signature').first();
+
+    expect(await radiusOf(scoped)).toBe('0px');
+    expect(await borderColorOf(scoped)).toBe(SCOPED_PURPLE);
+
+    expect(await radiusOf(def)).toBe('12px'); // stock --zk-shape-corner-medium
+    expect(await borderColorOf(def)).not.toBe(SCOPED_PURPLE);
+  });
+
+  test('signature — whole-app :root override wins (loaded after norm.css.dsp)', async ({ page }) => {
+    const def = page.locator('.z-signature').first();
+    expect(await radiusOf(def)).toBe('12px'); // baseline before override
+
+    // An adopter's :root override, injected after the theme bundle, must win the
+    // cascade and reach every signature instance, including the default one.
+    await page.addStyleTag({ content: ':root{--zk-signature-radius:0px}' });
+    expect(await radiusOf(def)).toBe('0px');
+  });
+
+  // ── cropper (EE, zkmax): image-crop field — .z-cropper root wrapper
+  // (border-color/radius only, no bg) + a floating, pill-shaped toolbar with
+  // two text action links. The toolbar is the component's one filled surface
+  // (its own bg/radius knobs); the Crop (confirming) link reads the defining
+  // accent, the Cancel (dismissive) link reads the resting/neutral fg. ─────
+  test('cropper — regional border/radius/toolbar/text override, sibling untouched', async ({ page }) => {
+    const def = page.locator('.z-cropper').first();
+    const scoped = page.locator('div[style*="--zk-cropper-radius"] .z-cropper').first();
+
+    expect(await radiusOf(scoped)).toBe('0px');
+    expect(await borderColorOf(scoped)).toBe(SCOPED_PURPLE);
+    expect(await bgOf(scoped.locator('.z-cropper-toolbar').first())).toBe(SCOPED_PURPLE);
+    expect(await colorOf(scoped.locator('.z-cropper-crop > a').first())).toBe('rgb(255, 255, 255)');
+    expect(await colorOf(scoped.locator('.z-cropper-cancel > a').first())).toBe('rgb(255, 255, 255)');
+
+    expect(await radiusOf(def)).toBe('4px'); // stock --zk-shape-corner-extra-small
+    expect(await borderColorOf(def)).not.toBe(SCOPED_PURPLE);
+    expect(await bgOf(def.locator('.z-cropper-toolbar').first())).not.toBe(SCOPED_PURPLE);
+    expect(await colorOf(def.locator('.z-cropper-crop > a').first())).not.toBe('rgb(255, 255, 255)');
+    expect(await colorOf(def.locator('.z-cropper-cancel > a').first())).not.toBe('rgb(255, 255, 255)');
+  });
+
+  test('cropper — whole-app :root override wins (loaded after norm.css.dsp)', async ({ page }) => {
+    const def = page.locator('.z-cropper').first();
+    expect(await radiusOf(def)).toBe('4px'); // baseline before override
+
+    // An adopter's :root override, injected after the theme bundle, must win the
+    // cascade and reach every cropper instance, including the default one.
+    await page.addStyleTag({ content: ':root{--zk-cropper-radius:0px}' });
+    expect(await radiusOf(def)).toBe('0px');
+  });
+
+  // ── dropupload (EE, zkmax): HTML5 drag-and-drop file-upload drop zone —
+  // .z-dropupload root is the ONLY themeable surface (border-color/radius/
+  // background only; ZK emits no drag-over or disabled state class, so there
+  // is no hover/focus/disabled knob, and no fg/text knob either). ──────────
+  test('dropupload — regional border/radius/bg override, sibling untouched', async ({ page }) => {
+    const def = page.locator('.z-dropupload').first();
+    const scoped = page.locator('div[style*="--zk-dropupload-radius"] .z-dropupload').first();
+
+    expect(await radiusOf(scoped)).toBe('0px');
+    expect(await borderColorOf(scoped)).toBe(SCOPED_PURPLE);
+    expect(await bgOf(scoped)).toBe(SCOPED_PURPLE);
+
+    expect(await radiusOf(def)).toBe('4px'); // stock --zk-shape-corner-extra-small
+    expect(await borderColorOf(def)).not.toBe(SCOPED_PURPLE);
+    expect(await bgOf(def)).not.toBe(SCOPED_PURPLE);
+  });
+
+  test('dropupload — whole-app :root override wins (loaded after norm.css.dsp)', async ({ page }) => {
+    const def = page.locator('.z-dropupload').first();
+    expect(await radiusOf(def)).toBe('4px'); // baseline before override
+
+    // An adopter's :root override, injected after the theme bundle, must win the
+    // cascade and reach every dropupload instance, including the default one.
+    await page.addStyleTag({ content: ':root{--zk-dropupload-radius:0px}' });
+    expect(await radiusOf(def)).toBe('0px');
+  });
 });

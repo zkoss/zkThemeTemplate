@@ -1111,6 +1111,162 @@ normally.
 | `--zk-biglistbox-header-fg` | `var(--zk-color-on-surface-variant)` | header text |
 | `--zk-biglistbox-row-hover-bg` | `rgba(0, 0, 0, 0.04)` | row hover fill |
 
+### Fisheye / Fisheyebar — shipped
+
+Magnetic dock icon bar (PE, `zkex/menu/css/fisheye.css`) — `.z-fisheyebar` container +
+`.z-fisheye` item (`.z-fisheye-image` icon + `.z-fisheye-text` label). Magnification is
+JS-driven (`zul.menu.Fisheye` sets inline `width`/`height` on `mousemove`), so there is no
+hover/selected color state to expose — the curated surface is just the label text color and the
+icon's corner radius: `--zk-fisheye-fg` (`.z-fisheye-text`'s `color`), `--zk-fisheye-radius`
+(`.z-fisheye-image`'s `border-radius`). **No bg/border knob**: `.z-fisheyebar` keeps
+`background: transparent` by design — a floating dock overlay, not a card, the same convention as
+stepbar's transparent root — so it isn't listed as a variable. `.z-fisheyebar` renders in place
+with no client-side reparenting, so region scoping works normally.
+
+| Knob | Default | Scope |
+|------|---------|-------|
+| `--zk-fisheye-fg` | `var(--zk-color-on-surface)` | label text |
+| `--zk-fisheye-radius` | `var(--zk-shape-corner-extra-small)` | icon corners |
+
+### Pdfviewer — shipped
+
+PDF document viewer (PE, `zkex/pdfviewer/css/pdfviewer.css`) — `.z-pdfviewer` root wrapper +
+`.z-pdfviewer-container` scrollable canvas + a floating, bottom-centred `.z-pdfviewer-toolbar`
+(pill-shaped, icon buttons). Seven knobs total. `--zk-pdfviewer-border-color` drives two roles at
+once: the root wrapper's own `border` and the toolbar separator's (`.z-pdfviewer-toolbar-separator`)
+`border-left` (both read the same token today) — the same "one knob, several roles" precedent as
+toolbar/messagebox's shared border-color. `--zk-pdfviewer-bg`/`-radius` are the root wrapper's
+fill and corners. The canvas area (`--zk-pdfviewer-container-bg`) and the floating toolbar
+(`--zk-pdfviewer-toolbar-bg`/`-radius`/`-fg`) are visually distinct surfaces from the root card,
+each with their own fill/radius — `-toolbar-fg` is the toolbar icon buttons' resting icon color.
+The per-page `box-shadow` (paper-lift effect) and the floating toolbar's own `box-shadow` stay on
+base tokens, not knob-driven — same convention as the wrapper-border family's popup shadows
+(combobox/datebox/bandbox). Toolbar-button hover/active state-layer tints (`color-mix` on
+`--zk-color-on-surface`) and the disabled icon color also stay on base tokens — minor
+sub-features kept out of the curated surface (same convention as calendar/toolbar). `.z-pdfviewer`
+renders in place with no client-side reparenting, so region scoping works normally.
+
+| Knob | Default | Scope |
+|------|---------|-------|
+| `--zk-pdfviewer-bg` | `var(--zk-color-surface)` | root fill |
+| `--zk-pdfviewer-border-color` | `var(--zk-color-outline-variant)` | root border + toolbar separator border |
+| `--zk-pdfviewer-radius` | `var(--zk-shape-corner-medium)` | root corners |
+| `--zk-pdfviewer-container-bg` | `var(--zk-color-surface-variant)` | scrollable canvas fill |
+| `--zk-pdfviewer-toolbar-bg` | `var(--zk-color-surface-container-high)` | floating toolbar fill |
+| `--zk-pdfviewer-toolbar-radius` | `var(--zk-shape-corner-full)` | floating toolbar corners |
+| `--zk-pdfviewer-toolbar-fg` | `var(--zk-color-on-surface)` | toolbar icon buttons' resting icon color |
+
+### Tbeditor — shipped
+
+MD3 outlined rich-text editor (EE, `zkmax/tbeditor/css/tbeditor.css`) — `.z-tbeditor-box` outer
+wrapper + `.z-tbeditor-button-pane` toolbar + `.z-tbeditor-editor` contenteditable canvas (+
+`.z-tbeditor-textarea` HTML-source view) + `.z-tbeditor-dropdown` formatting/link popup. Ten
+knobs total. `--zk-tbeditor-bg` is shared by the wrapper, the editor canvas, and the source
+textarea (all three read the same token today) — the same "one knob, several roles" precedent as
+tab/calendar's accent; `--zk-tbeditor-fg` likewise covers the editor/textarea text and the
+dropdown button labels. The wrapper's only border states are resting + focus-within (no hover),
+so there is **no** `-border-color-hover` knob. `--zk-tbeditor-elevation` is the wrapper's static
+resting shadow (not mode-driven), the same convention as panel/groupbox's resting elevation.
+`--zk-tbeditor-toolbar-bg` is the button-pane's own tonal surface, distinct from the wrapper fill
+(same convention as pdfviewer's floating toolbar). `--zk-tbeditor-active-bg` is the toggled
+formatting button's fill (`.z-tbeditor-active`, e.g. Bold when the caret is inside bold text) —
+the defining state. The dropdown popup gets its own `-popup-bg`/`-popup-radius` pair, following
+the same vocabulary as the rest of the family's popups; its `border-color` and `box-shadow` stay
+on base tokens, the same convention as combobox/datebox/bandbox/colorbox's popups. Toolbar-button
+hover/active state-layer tints (`color-mix` on `--zk-color-primary`), the SVG icon fill
+(resting/hover/active), the dropdown-caret affordance, and the button-group separator stay on
+base tokens — minor sub-features kept out of the curated surface (same convention as
+calendar/toolbar). Disabled dims the toolbar buttons via opacity only and keeps the wrapper border
+on its own muted literal, not knob-driven (same convention as datebox/timebox/timepicker's
+disabled treatment); fullscreen mode's border/radius/box-shadow reset to `none`, also not
+knob-driven. `.z-tbeditor-box` renders in place with no client-side reparenting, so region scoping
+works normally.
+
+| Knob | Default | Scope |
+|------|---------|-------|
+| `--zk-tbeditor-bg` | `var(--zk-color-surface)` | wrapper + editor canvas + source textarea fill |
+| `--zk-tbeditor-fg` | `var(--zk-color-on-surface)` | editor/textarea text + dropdown button labels |
+| `--zk-tbeditor-radius` | `var(--zk-shape-corner-small)` | wrapper corners |
+| `--zk-tbeditor-border-color` | `var(--zk-color-outline)` | wrapper resting border |
+| `--zk-tbeditor-border-color-focus` | `var(--zk-color-primary)` | wrapper focus-within border |
+| `--zk-tbeditor-elevation` | `var(--zk-elevation-1)` | wrapper resting shadow |
+| `--zk-tbeditor-toolbar-bg` | `var(--zk-color-surface-container)` | button-pane fill |
+| `--zk-tbeditor-active-bg` | `var(--zk-color-primary-container)` | toggled formatting-button fill |
+| `--zk-tbeditor-popup-bg` | `var(--zk-color-surface)` | dropdown popup fill |
+| `--zk-tbeditor-popup-radius` | `var(--zk-shape-menu)` | dropdown popup corners |
+
+### Signature — shipped
+
+Signature-pad canvas field (EE, `zkmax/signature/css/signature.css`) — `.z-signature` root
+wrapper (canvas + a floating toolbar of icon-only tool buttons). Four knobs total.
+`--zk-signature-bg`/`-radius` are the root wrapper's fill and corners; `--zk-signature-border-color`/
+`-border-color-focus` are the wrapper's resting and focus-within border colors. The wrapper's only
+border states are resting + focus-within (no hover), so there is **no** `-border-color-hover` knob
+— same convention as tbeditor's no-hover exception. There is also **no** fg/text knob: the root
+shows no text, only the canvas and the toolbar's icon-only buttons. The floating toolbar's tool
+buttons (background/border/hover/active state, icon color, box-shadow) stay on base tokens, not
+knob-driven — a secondary sub-feature kept out of the curated surface (same convention as
+calendar/toolbar's minor sub-features). Disabled dims via opacity only, not knob-driven (same
+convention as button/input/rating). `.z-signature` renders in place with no client-side
+reparenting, so region scoping works normally.
+
+| Knob | Default | Scope |
+|------|---------|-------|
+| `--zk-signature-bg` | `var(--zk-color-surface)` | root fill |
+| `--zk-signature-radius` | `var(--zk-shape-corner-medium)` | root corners |
+| `--zk-signature-border-color` | `var(--zk-color-outline)` | wrapper resting border |
+| `--zk-signature-border-color-focus` | `var(--zk-color-primary)` | wrapper focus-within border |
+
+### Cropper — shipped
+
+Image-crop field (EE, `zkmax/cropper/css/cropper.css`) — `.z-cropper` root wrapper (shrink-wraps
+its border to the image, no fill of its own) plus a floating, pill-shaped `.z-cropper-toolbar`
+carrying two text action links (Crop / Cancel). Six knobs total. There is **no** bg knob on the
+root: `.z-cropper` paints no background — it wraps the (opaque) image, so only its border-color
+and radius are exposed. There is also **no** `-border-color-hover` knob: the wrapper has no
+interactive hover state, just a resting border — same convention as tbeditor/signature's no-hover
+exception. The floating toolbar is the component's one filled surface, so it gets its own
+`-toolbar-bg`/`-toolbar-radius` pair, the same convention as pdfviewer's floating toolbar; its
+`box-shadow` stays on the base elevation token, not knob-driven — same convention as
+pdfviewer/tbeditor's toolbar and popup shadows. The two action links follow a rating-style
+resting/accent pair: `--zk-cropper-fg` is the Cancel (dismissive, neutral) link text,
+`--zk-cropper-accent` is the Crop (confirming) link text — the defining action. Both links' hover/
+active state-layer tint is a `currentColor` overlay, so it automatically follows whichever of
+`-fg`/`-accent` is in effect — no separate state-layer knob needed. The Jcrop-injected selection
+geometry (drag handles, dragbars, selection outline/lines) keeps its literal white — an
+intentional Jcrop visibility convention over a dimmed photo, not a token, and not adopter-facing
+appearance. `.z-cropper` renders in place with no client-side reparenting, so region scoping works
+normally.
+
+| Knob | Default | Scope |
+|------|---------|-------|
+| `--zk-cropper-border-color` | `var(--zk-color-outline-variant)` | root wrapper resting border |
+| `--zk-cropper-radius` | `var(--zk-shape-corner-extra-small)` | root wrapper corners |
+| `--zk-cropper-toolbar-bg` | `var(--zk-color-surface-container)` | floating toolbar fill |
+| `--zk-cropper-toolbar-radius` | `var(--zk-shape-corner-full)` | floating toolbar corners |
+| `--zk-cropper-fg` | `var(--zk-color-on-surface-variant)` | Cancel (dismissive) link text |
+| `--zk-cropper-accent` | `var(--zk-color-primary)` | Crop (confirming) link text — defining action |
+
+### Dropupload — shipped
+
+HTML5 drag-and-drop file-upload drop zone (EE, `zkmax/wgt/css/dropupload.css`) — `.z-dropupload`
+root is the **only** themable surface: the resting box's border, radius, and background. Three
+knobs total. ZK never emits a drag-over or disabled state class (verified against
+`Dropupload.ts`/`.java` — drag feedback is the native browser cursor only, see
+`.claude/skills/zk-component-rules/components/dropupload.md`), so there is **no** hover/focus/
+disabled knob. There is also **no** fg/text knob: the `content` attribute is arbitrary author
+HTML appended as a child and toggled visible/hidden — the component itself never repaints it.
+`border-width` (2px) and `border-style` (dashed) stay on their literal values, not knob-driven —
+same convention as the rest of the family (only border-color is exposed, not width/style).
+`.z-dropupload` renders in place with no client-side reparenting, so region scoping works
+normally.
+
+| Knob | Default | Scope |
+|------|---------|-------|
+| `--zk-dropupload-bg` | `transparent` | root fill (paints no background of its own) |
+| `--zk-dropupload-border-color` | `var(--zk-color-outline)` | root resting border |
+| `--zk-dropupload-radius` | `var(--zk-shape-corner-extra-small)` | root corners |
+
 ## Recipe — adding a component
 
 Validated by the button pilot; repeat per component (then update the
@@ -1141,7 +1297,11 @@ Validated by the button pilot; repeat per component (then update the
   cascader, searchbox, drawer (see entry for the CTV-3 structural exception — whole-root
   reparenting on open), nav, anchornav, stepbar, coachmark (see entry for the CTV-3 structural
   exception — whole-root reparenting on open), colorbox (see entry for the no-focus-knob and
-  no-fg-knob exclusions), biglistbox.
+  no-fg-knob exclusions), biglistbox, fisheye/fisheyebar (see entry for the no-bg/-border-knob
+  exclusion), pdfviewer, tbeditor (see entry for the no-border-color-hover-knob exclusion),
+  signature (see entry for the no-hover-knob and no-fg-knob exclusions), cropper (see entry for
+  the no-bg-knob and no-border-color-hover-knob exclusions), dropupload (see entry for the
+  no-hover/-focus/-disabled-knob and no-fg-knob exclusions).
 - **Not exposed** (by design): purely structural/layout components (box, div, cell, separator,
   layouts) and content atoms (label, image) have no meaningful appearance knob — this excludes
   the anchor/link, which **is** exposed despite its similarly minimal text-only vocabulary (see

@@ -40,7 +40,7 @@
     width: 100%;
     height: 100%;
     object-fit: contain;
-    border-radius: var(--zk-shape-corner-extra-small);
+    border-radius: var(--zk-fisheye-radius);
     transition: inherit;
 }
 
@@ -48,7 +48,7 @@
 .z-fisheye-text {
     font-size: 13px;
     font-family: var(--zk-typescale-font-family);
-    color: var(--zk-color-on-surface);
+    color: var(--zk-fisheye-fg);
     text-align: center;
     white-space: nowrap;
     margin-top: var(--zk-spacing-1);

@@ -865,5 +865,129 @@
             </template>
         </biglistbox>
     </div>
+
+    <!-- Fisheye / Fisheyebar (PE, zkex): magnetic dock icon bar. Magnification
+         is JS-driven (mousemove sets inline width/height), so there is no
+         hover/selected color state to expose. The knob surface is just the
+         item label text and the icon's corner radius; the bar's own
+         background stays transparent by design (a floating dock overlay, not
+         a card), not knob-driven. -->
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Fisheye (default)</div>
+    <div sclass="z-hstack z-mb-6">
+        <fisheyebar attachEdge="bottom" itemWidth="48" itemHeight="48" itemMaxHeight="96" itemMaxWidth="96">
+            <fisheye image="~./img/Centigrade-Widget-Icons/FolderABlue-128x128.png" label="Folder"/>
+            <fisheye image="~./img/Centigrade-Widget-Icons/ReadingGlass-128x128.png" label="Search"/>
+            <fisheye image="~./img/Centigrade-Widget-Icons/MailboxFlag-128x128.png" label="Mail"/>
+        </fisheyebar>
+    </div>
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Fisheye (regional override)</div>
+    <div sclass="z-hstack z-mb-8 z-p-4 z-bg-surface-variant z-rounded"
+         style="--zk-fisheye-fg:#6750a4; --zk-fisheye-radius:0px">
+        <fisheyebar attachEdge="bottom" itemWidth="48" itemHeight="48" itemMaxHeight="96" itemMaxWidth="96">
+            <fisheye image="~./img/Centigrade-Widget-Icons/FolderABlue-128x128.png" label="Folder"/>
+            <fisheye image="~./img/Centigrade-Widget-Icons/ReadingGlass-128x128.png" label="Search"/>
+            <fisheye image="~./img/Centigrade-Widget-Icons/MailboxFlag-128x128.png" label="Mail"/>
+        </fisheyebar>
+    </div>
+
+    <!-- Pdfviewer (PE, zkex): PDF document viewer — root wrapper + scrollable
+         canvas area + a floating, bottom-centred toolbar (pill-shaped, icon
+         buttons). The border-color knob is shared by BOTH the root
+         wrapper's own border AND the toolbar separator's border-left (one
+         knob, several roles, same precedent as toolbar/messagebox's shared
+         border-color knob). The canvas area and floating toolbar are
+         separate surfaces with their own bg/radius knobs; the per-page and
+         toolbar box-shadows stay on base tokens, not knob-driven (same
+         convention as the wrapper-border family's popup shadows). -->
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Pdfviewer (default)</div>
+    <div sclass="z-mb-6">
+        <pdfviewer src="~./link-annotation.pdf" width="320px" height="200px"/>
+    </div>
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Pdfviewer (regional override)</div>
+    <div sclass="z-mb-8 z-p-4 z-bg-surface-variant z-rounded"
+         style="--zk-pdfviewer-radius:0px; --zk-pdfviewer-border-color:#6750a4; --zk-pdfviewer-toolbar-bg:#6750a4; --zk-pdfviewer-toolbar-fg:#ffffff">
+        <pdfviewer src="~./link-annotation.pdf" width="320px" height="200px"/>
+    </div>
+
+    <!-- Tbeditor (EE, zkmax): MD3 outlined rich-text editor — .z-tbeditor-box
+         wrapper (border-color/radius/elevation + focus-within outline) + the
+         toolbar pane's own tonal fill + the editor canvas (bg/fg, shared with
+         the source textarea and the formatting/link dropdown's text — one
+         knob, several roles). The toggled-button accent (active-bg, the
+         defining state) and the dropdown popup's own bg/radius are also
+         knob-driven but not demonstrable via static markup (no pre-toggled
+         button, no open popup), same convention as the wrapper-border
+         family's popup knobs. -->
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Tbeditor (default)</div>
+    <div sclass="z-mb-6">
+        <tbeditor width="100%"/>
+    </div>
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Tbeditor (regional override)</div>
+    <div sclass="z-mb-8 z-p-4 z-bg-surface-variant z-rounded"
+         style="--zk-tbeditor-radius:0px; --zk-tbeditor-border-color:#6750a4; --zk-tbeditor-toolbar-bg:#6750a4">
+        <tbeditor width="100%"/>
+    </div>
+
+    <!-- Signature (EE, zkmax): signature-pad canvas field — .z-signature root
+         wrapper (canvas + a floating toolbar of icon-only tool buttons). The
+         wrapper's only border states are resting + focus-within (no hover),
+         so there is no border-color-hover knob; there is also no fg/text
+         knob — the root shows no text, only the canvas and the toolbar's
+         icon-only buttons, which stay on base tokens (not knob-driven). -->
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Signature (default)</div>
+    <div sclass="z-mb-6">
+        <signature width="200px" height="120px"/>
+    </div>
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Signature (regional override)</div>
+    <div sclass="z-mb-8 z-p-4 z-bg-surface-variant z-rounded"
+         style="--zk-signature-radius:0px; --zk-signature-border-color:#6750a4">
+        <signature width="200px" height="120px"/>
+    </div>
+
+    <!-- Cropper (EE, zkmax): image-crop field — .z-cropper root wrapper
+         (border-color/radius only; no bg knob, since the root paints no fill
+         of its own, it just wraps the opaque image) + a floating, pill-shaped
+         toolbar with two text action links (Crop / Cancel). The toolbar is
+         the component's one filled surface, so it gets its own bg/radius
+         pair; the Cancel link reads the resting/neutral zk-cropper-fg, the
+         Crop (confirming) link reads the defining zk-cropper-accent — a
+         rating-style resting/accent pair. An initial selection (x/y/w/h) is
+         seeded so the toolbar actually renders for the demo. -->
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Cropper (default)</div>
+    <div sclass="z-mb-6">
+        <cropper src="~./img/sun.jpg" width="200px" x="20" y="20" w="80" h="80" toolbarVisible="true"/>
+    </div>
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Cropper (regional override)</div>
+    <div sclass="z-mb-8 z-p-4 z-bg-surface-variant z-rounded"
+         style="--zk-cropper-radius:0px; --zk-cropper-border-color:#6750a4; --zk-cropper-toolbar-bg:#6750a4; --zk-cropper-accent:#ffffff; --zk-cropper-fg:#ffffff">
+        <cropper src="~./img/sun.jpg" width="200px" x="20" y="20" w="80" h="80" toolbarVisible="true"/>
+    </div>
+
+    <!-- Dropupload (EE, zkmax): HTML5 drag-and-drop file-upload drop zone —
+         .z-dropupload root is the ONLY themeable surface (border-color/
+         radius/background only; border-width/style stay literal, same
+         convention as every other family). ZK emits no drag-over or
+         disabled state class (see .claude/skills/zk-component-rules/
+         components/dropupload.md), so there is no hover/focus/disabled
+         knob to expose, and no fg/text knob — the content attribute is
+         arbitrary author HTML, never restyled by the component.
+         detection="none" keeps the box always visible for the demo. -->
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Dropupload (default)</div>
+    <div sclass="z-mb-6">
+        <dropupload detection="none">
+            <attribute name="content"><![CDATA[
+                <b>Drop Here</b>
+            ]]></attribute>
+        </dropupload>
+    </div>
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Dropupload (regional override)</div>
+    <div sclass="z-mb-8 z-p-4 z-bg-surface-variant z-rounded"
+         style="--zk-dropupload-radius:0px; --zk-dropupload-border-color:#6750a4; --zk-dropupload-bg:#6750a4">
+        <dropupload detection="none">
+            <attribute name="content"><![CDATA[
+                <b>Drop Here</b>
+            ]]></attribute>
+        </dropupload>
+    </div>
 </div>
 </zk>

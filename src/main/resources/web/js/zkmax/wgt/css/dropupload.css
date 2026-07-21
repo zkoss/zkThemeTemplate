@@ -6,8 +6,8 @@
 .z-dropupload {
     border-width: 2px;
     border-style: dashed;
-    border-color: var(--zk-color-outline);
-    border-radius: var(--zk-shape-corner-extra-small);
-    background-color: transparent;
+    border-color: var(--zk-dropupload-border-color);
+    border-radius: var(--zk-dropupload-radius);
+    background-color: var(--zk-dropupload-bg);
 }
 }
