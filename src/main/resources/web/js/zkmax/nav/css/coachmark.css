@@ -18,10 +18,10 @@
        the mask comes from the elevation shadow on the dark scrim, not a brand fill. */
     /* positioned context for the absolutely-pinned close button */
     position: relative;
-    background-color: var(--zk-color-surface-container-low);
-    color: var(--zk-color-on-surface);
-    border-radius: var(--zk-shape-card);
-    box-shadow: var(--zk-elevation-2);
+    background-color: var(--zk-coachmark-bg);
+    color: var(--zk-coachmark-fg);
+    border-radius: var(--zk-coachmark-radius);
+    box-shadow: var(--zk-coachmark-elevation);
     /* right padding reserves room for the top-right close icon-button: 8px inset + 28px
        circular target + 8px gap before the text = 44px (mirrors ZK default's asymmetric padding) */
     padding: var(--zk-spacing-4) calc(var(--zk-spacing-2) + var(--zk-control-height-xs) + var(--zk-spacing-2)) var(--zk-spacing-4) var(--zk-spacing-4);
@@ -40,19 +40,19 @@
 
 /* pointer triangle matches the neutral card so it reads as an extension of it */
 .z-coachmark-pointer.z-coachmark-up {
-    border-bottom-color: var(--zk-color-surface-container-low);
+    border-bottom-color: var(--zk-coachmark-bg);
 }
 
 .z-coachmark-pointer.z-coachmark-down {
-    border-top-color: var(--zk-color-surface-container-low);
+    border-top-color: var(--zk-coachmark-bg);
 }
 
 .z-coachmark-pointer.z-coachmark-left {
-    border-right-color: var(--zk-color-surface-container-low);
+    border-right-color: var(--zk-coachmark-bg);
 }
 
 .z-coachmark-pointer.z-coachmark-right {
-    border-left-color: var(--zk-color-surface-container-low);
+    border-left-color: var(--zk-coachmark-bg);
 }
 
 .z-coachmark-close {

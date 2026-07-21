@@ -16,16 +16,16 @@
 @layer zk-components {
 .z-anchornav .z-a {
     font-size: var(--zk-typescale-label-large-size);
-    color: var(--zk-color-on-surface-variant);
+    color: var(--zk-anchornav-fg);
     text-decoration: none;
 }
 
 /* ─── Active/selected item ───────────────────────────────────────────────── */
 .z-anchornav .z-listitem-selected {
-    border-left: 3px solid var(--zk-color-primary);
+    border-left: 3px solid var(--zk-anchornav-accent);
 }
 
 .z-anchornav .z-listitem-selected .z-a {
-    color: var(--zk-color-primary);
+    color: var(--zk-anchornav-accent);
 }
 }

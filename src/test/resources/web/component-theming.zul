@@ -698,5 +698,172 @@
             <div sclass="z-p-2">Default drawer, zero override applied.</div>
         </drawer>
     </div>
+
+    <!-- Nav (EE, zkmax): navbar container + collapsible nav group + leaf
+         navitem sidebar navigation. zk-navitem-fg / -radius are shared by
+         BOTH the group header link (.z-nav-content) and the leaf item link
+         (.z-navitem-content, same value today). The selected leaf item is
+         the defining state: a rounded tonal pill, zk-navitem-selected-bg /
+         -fg (no left-edge accent bar — see doc/contracts/navbar.md c7). -->
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Nav (default)</div>
+    <div sclass="z-mb-6">
+        <navbar orient="vertical" width="200px">
+            <navitem label="Home" iconSclass="z-icon-home"/>
+            <navitem label="Dashboard" iconSclass="z-icon-gauge" selected="true"/>
+            <navseparator/>
+            <nav label="Settings" iconSclass="z-icon-cog">
+                <navitem label="Profile"/>
+                <navitem label="Security"/>
+            </nav>
+        </navbar>
+    </div>
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Nav (regional override)</div>
+    <div sclass="z-mb-8 z-p-4 z-bg-surface-variant z-rounded"
+         style="--zk-navbar-bg:#efe6ff; --zk-navitem-radius:0px; --zk-navitem-selected-bg:#6750a4; --zk-navitem-selected-fg:#ffffff">
+        <navbar orient="vertical" width="200px">
+            <navitem label="Home" iconSclass="z-icon-home"/>
+            <navitem label="Dashboard" iconSclass="z-icon-gauge" selected="true"/>
+            <navseparator/>
+            <nav label="Settings" iconSclass="z-icon-cog">
+                <navitem label="Profile"/>
+                <navitem label="Security"/>
+            </nav>
+        </navbar>
+    </div>
+
+    <!-- Anchornav (EE, zkmax): anchor-link navigation list built on a plain
+         listbox. zk-anchornav-accent is a single defining-state knob that
+         colors BOTH the active item's left border indicator and the item's
+         own link text (both read the primary color token today, the same
+         "one knob, several roles" precedent as tab/calendar/nav's accent);
+         zk-anchornav-fg is the resting (non-active) item link's text color.
+         The indicator's border-left WIDTH (3px) stays hardcoded (same
+         convention as tab's border-bottom-color knob). -->
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Anchornav (default)</div>
+    <div sclass="z-mb-6">
+        <anchornav>
+            <listbox sizedByContent="true" hflex="min">
+                <listitem><listcell><a>Overview</a></listcell></listitem>
+                <listitem selected="true"><listcell><a>Details</a></listcell></listitem>
+                <listitem><listcell><a>Summary</a></listcell></listitem>
+            </listbox>
+        </anchornav>
+    </div>
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Anchornav (regional override)</div>
+    <div sclass="z-mb-8 z-p-4 z-bg-surface-variant z-rounded"
+         style="--zk-anchornav-fg:#6750a4; --zk-anchornav-accent:#6750a4">
+        <anchornav>
+            <listbox sizedByContent="true" hflex="min">
+                <listitem><listcell><a>Overview</a></listcell></listitem>
+                <listitem selected="true"><listcell><a>Details</a></listcell></listitem>
+                <listitem><listcell><a>Summary</a></listcell></listitem>
+            </listbox>
+        </anchornav>
+    </div>
+
+    <!-- Stepbar (EE, zkmax): connected-circle step-progress indicator.
+         activeIndex=1 with 3 steps exercises all three states at once: the
+         first step is complete, the second is active, the third is
+         upcoming. zk-stepbar-accent is a single defining-state knob that
+         colors the active/complete icon fill + border AND the lit connector
+         leading into them, paired with zk-stepbar-accent-fg for the glyph
+         inside that filled circle (same "one knob, several roles"
+         precedent as tab/calendar/nav's accent). zk-stepbar-connector-color
+         is the resting (upcoming) connector line; zk-stepbar-icon-border-color
+         is the upcoming icon's ring color. zk-stepbar-fg is the resting AND
+         complete title text; zk-stepbar-fg-active is the active title text.
+         Error state stays on zk-color-error, not knob-driven. -->
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Stepbar (default)</div>
+    <div sclass="z-mb-6">
+        <stepbar activeIndex="1" width="480px">
+            <step title="First Step"/>
+            <step title="Second Step"/>
+            <step title="Third Step"/>
+        </stepbar>
+    </div>
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Stepbar (regional override)</div>
+    <div sclass="z-mb-8 z-p-4 z-bg-surface-variant z-rounded"
+         style="--zk-stepbar-connector-color:#6750a4; --zk-stepbar-icon-border-color:#6750a4; --zk-stepbar-fg:#6750a4; --zk-stepbar-fg-active:#6750a4; --zk-stepbar-accent:#6750a4; --zk-stepbar-accent-fg:#1a1a1a">
+        <stepbar activeIndex="1" width="480px">
+            <step title="First Step"/>
+            <step title="Second Step"/>
+            <step title="Third Step"/>
+        </stepbar>
+    </div>
+
+    <!-- Coachmark (EE, zkmax): guided-tour rich-tooltip card pointing at a
+         target element. Knobs cover the card fill (shared by the pointer-
+         triangle border-color, so the triangle always reads as an extension
+         of the card), text, radius, and elevation. Coachmark's _open() calls
+         zk.makeVParent() on the root .z-coachmark node, reparenting the
+         ENTIRE root (content + pointer + close button) to the floating root
+         (document.body) while visible, and undoVParent() restores it on
+         close() (confirmed in the compiled zkmax widget bundle) — so, like
+         drawer, a regional (container) override cannot reach it; only the
+         whole-app :root override applies (see the tracker). The close
+         button's icon color and hover overlay stay on base tokens, not
+         knob-driven. -->
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Coachmark (default)</div>
+    <div sclass="z-hstack z-mb-8 z-align-center">
+        <button id="coachmarkTarget" label="Target Button"/>
+        <button label="Show Coachmark" onClick="coachmarkTheming.open()"/>
+        <coachmark id="coachmarkTheming" visible="false" target="coachmarkTarget" position="after_center">
+            Default coachmark, zero override applied.
+        </coachmark>
+    </div>
+
+    <!-- Colorbox (PE, zkex): color-picker swatch trigger + gradient/palette
+         popup. No focus/open border state exists on .z-colorbox (only resting
+         + hover), so there is no border-color-focus knob; there is also no
+         fg/text knob — the root shows only the swatch (colored inline per
+         selection) and a caret icon, no visible text. The popup reuses the
+         bg/radius pair convention from the other dropdown-input family
+         members' popups (border-color/box-shadow stay on base tokens). -->
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Colorbox (default)</div>
+    <div sclass="z-hstack z-mb-6">
+        <colorbox color="#184dc6"/>
+    </div>
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Colorbox (regional override)</div>
+    <div sclass="z-hstack z-mb-8 z-p-4 z-bg-surface-variant z-rounded"
+         style="--zk-colorbox-radius:0px; --zk-colorbox-border-color:#6750a4; --zk-colorbox-border-color-hover:#6750a4">
+        <colorbox color="#184dc6"/>
+    </div>
+
+    <!-- Biglistbox (EE, zkmax): virtual/lazy-loading data table. Same curated
+         surface as Grid (no stripe/foot rows in this component): a single
+         border-color knob is shared by the wrapper's own border, the
+         header's border-bottom, and each row's border-bottom; row-hover
+         keeps its stock rgba literal (zero regression, same as
+         zk-grid-row-hover-bg). The sort-icon color, the sort-hover tint, and
+         the custom WScroll scrollbar colors stay on base tokens, not
+         knob-driven (same convention as grid's column-sort-icon). -->
+    <zscript>
+        import zk.example.FakerMatrixModel;
+        FakerMatrixModel biglistboxThemingModel = new FakerMatrixModel(2, 3);
+        FakerMatrixModel biglistboxThemingScopedModel = new FakerMatrixModel(2, 3);
+    </zscript>
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Biglistbox (default)</div>
+    <div sclass="z-mb-6">
+        <biglistbox model="${biglistboxThemingModel}" width="300px" height="140px" colWidth="140px">
+            <template name="heads">
+                <html><![CDATA[<div>${each[matrixInfo[0]]}</div>]]></html>
+            </template>
+            <template name="rows">
+                <html><![CDATA[<div>${each[matrixInfo[0]]}</div>]]></html>
+            </template>
+        </biglistbox>
+    </div>
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Biglistbox (regional override)</div>
+    <div sclass="z-mb-8 z-p-4 z-bg-surface-variant z-rounded"
+         style="--zk-biglistbox-radius:0px; --zk-biglistbox-border-color:#6750a4; --zk-biglistbox-header-fg:#6750a4">
+        <biglistbox model="${biglistboxThemingScopedModel}" width="300px" height="140px" colWidth="140px">
+            <template name="heads">
+                <html><![CDATA[<div>${each[matrixInfo[0]]}</div>]]></html>
+            </template>
+            <template name="rows">
+                <html><![CDATA[<div>${each[matrixInfo[0]]}</div>]]></html>
+            </template>
+        </biglistbox>
+    </div>
 </div>
 </zk>

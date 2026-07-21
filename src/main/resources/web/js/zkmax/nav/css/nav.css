@@ -42,7 +42,7 @@
     position: relative;
     font-family: var(--zk-typescale-font-family);
     font-size: var(--zk-typescale-body-medium-size);
-    background-color: var(--zk-color-surface-container-low);
+    background-color: var(--zk-navbar-bg);
     box-sizing: border-box;
 }
 
@@ -54,9 +54,9 @@
     align-items: center;
     gap: var(--zk-spacing-2);
     padding: 10px var(--zk-spacing-4);
-    color: var(--zk-color-on-surface-variant);
+    color: var(--zk-navitem-fg);
     text-decoration: none;
-    border-radius: var(--zk-shape-corner-small);
+    border-radius: var(--zk-navitem-radius);
     overflow: hidden;
     cursor: pointer;
     transition:
@@ -186,8 +186,8 @@
 /* ─── Active/selected states ────────────────────────────────────────────── */
 .z-navitem-selected > .z-navitem-content,
 .z-navitem.z-navitem-selected > .z-navitem-content {
-    color: var(--zk-color-primary);
-    background-color: color-mix(in srgb, var(--zk-color-primary) 12%, transparent);
+    color: var(--zk-navitem-selected-fg);
+    background-color: var(--zk-navitem-selected-bg);
     font-weight: 600;
 }
 

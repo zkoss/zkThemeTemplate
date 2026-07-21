@@ -18,9 +18,9 @@
     height: 36px;
     padding: 3px;
     gap: 2px;
-    border: 1px solid var(--zk-color-outline);
-    border-radius: var(--zk-shape-input);
-    background-color: var(--zk-color-surface);
+    border: 1px solid var(--zk-colorbox-border-color);
+    border-radius: var(--zk-colorbox-radius);
+    background-color: var(--zk-colorbox-bg);
     box-sizing: border-box;
     vertical-align: middle;
     cursor: pointer;
@@ -29,7 +29,7 @@
 }
 
 .z-colorbox:hover {
-    border-color: var(--zk-color-on-surface);
+    border-color: var(--zk-colorbox-border-color-hover);
 }
 
 /* ─── Color swatch ────────────────────────────────────────────────────── */
@@ -99,9 +99,9 @@
 .z-menu-popup {
     position: absolute;
     z-index: 1600;
-    background-color: var(--zk-color-surface);
+    background-color: var(--zk-colorbox-popup-bg);
     border: 1px solid var(--zk-color-outline-variant);
-    border-radius: var(--zk-shape-menu);
+    border-radius: var(--zk-colorbox-popup-radius);
     box-shadow: var(--zk-elevation-dropdown);
     box-sizing: border-box;
     overflow: visible;

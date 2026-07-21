@@ -36,7 +36,7 @@
     flex: 1;
     height: 2px;
     margin: 0 var(--zk-spacing-3);
-    background-color: var(--zk-color-outline-variant);
+    background-color: var(--zk-stepbar-connector-color);
     transition: background-color var(--zk-motion-duration-short2) var(--zk-motion-easing-standard);
     box-sizing: border-box;
 }
@@ -47,12 +47,12 @@
 
 /* Lit connector — active step (the segment leading into the active step) */
 .z-stepbar-linear .z-step-active::before {
-    background-color: var(--zk-color-primary);
+    background-color: var(--zk-stepbar-accent);
 }
 
 /* Lit connector — complete step */
 .z-stepbar-linear .z-step-complete::before {
-    background-color: var(--zk-color-primary);
+    background-color: var(--zk-stepbar-accent);
 }
 
 /* ── Step content wrapper (always present) ── */
@@ -72,7 +72,7 @@
     align-items: center;
     justify-content: center;
     font-size: 16px;
-    color: var(--zk-color-on-primary);
+    color: var(--zk-stepbar-accent-fg);
     flex-shrink: 0;
     box-sizing: border-box;
     transition:
@@ -88,22 +88,22 @@
    flattens the done-vs-todo distinction. */
 .z-step-content > .z-step-icon-empty {
     background-color: transparent;
-    border: 2px solid var(--zk-color-outline);
+    border: 2px solid var(--zk-stepbar-icon-border-color);
     color: transparent;
 }
 
 /* ── Active step circle ── */
 .z-step-active .z-step-content > .z-step-icon {
-    background-color: var(--zk-color-primary);
-    border: 2px solid var(--zk-color-primary);
-    color: var(--zk-color-on-primary);
+    background-color: var(--zk-stepbar-accent);
+    border: 2px solid var(--zk-stepbar-accent);
+    color: var(--zk-stepbar-accent-fg);
 }
 
 /* ── Complete step circle ── */
 .z-step-complete .z-step-content > .z-step-icon {
-    background-color: var(--zk-color-primary);
-    border: 2px solid var(--zk-color-primary);
-    color: var(--zk-color-on-primary);
+    background-color: var(--zk-stepbar-accent);
+    border: 2px solid var(--zk-stepbar-accent);
+    color: var(--zk-stepbar-accent-fg);
 }
 
 /* ── Error step circle ── */
@@ -118,19 +118,19 @@
     font-size: var(--zk-typescale-body-medium-size);
     font-weight: var(--zk-typescale-body-medium-weight);
     line-height: var(--zk-typescale-body-medium-line-height);
-    color: var(--zk-color-on-surface-variant);
+    color: var(--zk-stepbar-fg);
     white-space: nowrap;
 }
 
 /* Active title */
 .z-step-active .z-step-content > .z-step-title {
-    color: var(--zk-color-on-surface);
+    color: var(--zk-stepbar-fg-active);
     font-weight: var(--zk-typescale-label-large-weight);
 }
 
 /* Complete title */
 .z-step-complete .z-step-content > .z-step-title {
-    color: var(--zk-color-on-surface-variant);
+    color: var(--zk-stepbar-fg);
 }
 
 /* Error title */
@@ -177,11 +177,11 @@
 }
 
 .z-stepbar-vertical.z-stepbar-linear .z-step-active::before {
-    background-color: var(--zk-color-primary);
+    background-color: var(--zk-stepbar-accent);
 }
 
 .z-stepbar-vertical.z-stepbar-linear .z-step-complete::before {
-    background-color: var(--zk-color-primary);
+    background-color: var(--zk-stepbar-accent);
 }
 
 /* ── Wrapped-label mode ── */
@@ -227,7 +227,7 @@
     height: 2px;
     /* circle mid-height: (circle 24px − stroke 2px) / 2 = 11px */
     top: calc((24px - 2px) / 2);
-    background-color: var(--zk-color-outline-variant);
+    background-color: var(--zk-stepbar-connector-color);
     transition: background-color var(--zk-motion-duration-short2) var(--zk-motion-easing-standard);
 }
 
@@ -256,7 +256,7 @@
 .z-stepbar-wrapped-label.z-stepbar-linear .z-step-complete .z-step-content::before,
 .z-stepbar-wrapped-label.z-stepbar-linear .z-step-complete .z-step-content::after,
 .z-stepbar-wrapped-label.z-stepbar-linear .z-step-active .z-step-content::before {
-    background-color: var(--zk-color-primary);
+    background-color: var(--zk-stepbar-accent);
 }
 
 /* Title stacks below the icon and wraps long labels. */

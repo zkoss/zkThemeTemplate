@@ -19,6 +19,7 @@ const radiusOf = (loc: Locator) => loc.evaluate((el) => getComputedStyle(el).bor
 const bgOf = (loc: Locator) => loc.evaluate((el) => getComputedStyle(el).backgroundColor);
 const borderColorOf = (loc: Locator) => loc.evaluate((el) => getComputedStyle(el).borderTopColor);
 const borderBottomColorOf = (loc: Locator) => loc.evaluate((el) => getComputedStyle(el).borderBottomColor);
+const borderLeftColorOf = (loc: Locator) => loc.evaluate((el) => getComputedStyle(el).borderLeftColor);
 const colorOf = (loc: Locator) => loc.evaluate((el) => getComputedStyle(el).color);
 const pseudoBgOf = (loc: Locator, pseudo: string) =>
   loc.evaluate((el, p) => getComputedStyle(el, p).backgroundColor, pseudo);
@@ -899,5 +900,229 @@ test.describe('Component Theme Variables', () => {
     // container in the page while open (setVisible() reparents it to document.body).
     await page.addStyleTag({ content: ':root{--zk-drawer-header-fg:#6750a4}' });
     expect(await colorOf(header)).toBe(SCOPED_PURPLE);
+  });
+
+  // ── nav (EE, zkmax): navbar container + collapsible nav group + leaf
+  // navitem sidebar navigation. zk-navitem-fg / -radius are shared by both
+  // the group header link (.z-nav-content) and the leaf item link
+  // (.z-navitem-content, same value today); the selected leaf item is the
+  // defining state — a rounded tonal pill, zk-navitem-selected-bg / -fg (no
+  // left-edge accent bar — see doc/contracts/navbar.md c7). Renders in
+  // place (no client-side reparenting), so region scoping works normally. ──
+  test('nav — regional bg/radius/selected override, sibling untouched', async ({ page }) => {
+    const def = page.locator('.z-navbar').first();
+    const scoped = page.locator('div[style*="--zk-navbar-bg"] .z-navbar').first();
+
+    const defContent = def.locator('.z-navitem-content').first();
+    const scopedContent = scoped.locator('.z-navitem-content').first();
+    const defSelected = def.locator('.z-navitem-selected > .z-navitem-content').first();
+    const scopedSelected = scoped.locator('.z-navitem-selected > .z-navitem-content').first();
+
+    // Scoped navbar picks up the container bg + item radius; the scoped
+    // selected item picks up the defining-state fill/text pair.
+    expect(await bgOf(scoped)).toBe('rgb(239, 230, 255)'); // #efe6ff navbar-bg override
+    expect(await radiusOf(scopedContent)).toBe('0px');
+    expect(await bgOf(scopedSelected)).toBe(SCOPED_PURPLE);
+    expect(await colorOf(scopedSelected)).toBe('rgb(255, 255, 255)');
+
+    // Sibling default is untouched — the override lives on the scoped box and
+    // is inherited only by its subtree, never leaking up to the default row.
+    expect(await bgOf(def)).toBe('rgb(247, 249, 252)'); // stock --zk-color-surface-container-low
+    expect(await radiusOf(defContent)).toBe('8px'); // stock --zk-shape-corner-small
+    expect(await bgOf(defSelected)).toBe('color(srgb 0.215686 0.435294 0.815686 / 0.12)'); // stock color-mix 12% primary
+    expect(await colorOf(defSelected)).toBe('rgb(55, 111, 208)'); // stock --zk-color-primary
+  });
+
+  test('nav — whole-app :root override wins (loaded after norm.css.dsp)', async ({ page }) => {
+    const def = page.locator('.z-navbar').first();
+    const defSelected = def.locator('.z-navitem-selected > .z-navitem-content').first();
+    expect(await colorOf(defSelected)).not.toBe(SCOPED_PURPLE); // baseline before override
+
+    // An adopter's :root override, injected after the theme bundle, must win the
+    // cascade and reach every navbar instance, including the default one.
+    await page.addStyleTag({ content: ':root{--zk-navitem-selected-fg:#6750a4}' });
+    expect(await colorOf(defSelected)).toBe(SCOPED_PURPLE);
+  });
+
+  // ── anchornav (EE, zkmax): anchor-link navigation list built on a plain
+  // listbox. zk-anchornav-accent is a single defining-state knob that colors
+  // BOTH the active item's left border indicator and the item's own link
+  // text (border-left WIDTH stays hardcoded, same convention as tab's
+  // border-bottom-color knob); zk-anchornav-fg is the resting item link's
+  // text color. Renders in place (no client-side reparenting), so region
+  // scoping works normally. ──
+  test('anchornav — regional fg/accent override, sibling untouched', async ({ page }) => {
+    const def = page.locator('.z-anchornav').first();
+    const scoped = page.locator('div[style*="--zk-anchornav-fg"] .z-anchornav').first();
+
+    const defRestingLink = def.locator('.z-a').first();
+    const scopedRestingLink = scoped.locator('.z-a').first();
+    const defSelectedRow = def.locator('.z-listitem-selected').first();
+    const scopedSelectedRow = scoped.locator('.z-listitem-selected').first();
+    const defSelectedLink = defSelectedRow.locator('.z-a').first();
+    const scopedSelectedLink = scopedSelectedRow.locator('.z-a').first();
+
+    // Scoped anchornav picks up the resting link color (fg) + the defining
+    // accent (indicator border-left color + selected link text color).
+    expect(await colorOf(scopedRestingLink)).toBe(SCOPED_PURPLE);
+    expect(await borderLeftColorOf(scopedSelectedRow)).toBe(SCOPED_PURPLE);
+    expect(await colorOf(scopedSelectedLink)).toBe(SCOPED_PURPLE);
+
+    // Sibling default is untouched — the override lives on the scoped box and
+    // is inherited only by its subtree, never leaking up to the default row.
+    expect(await colorOf(defRestingLink)).toBe('rgba(0, 0, 0, 0.6)'); // stock --zk-color-on-surface-variant
+    expect(await borderLeftColorOf(defSelectedRow)).toBe('rgb(55, 111, 208)'); // stock --zk-color-primary
+    expect(await colorOf(defSelectedLink)).toBe('rgb(55, 111, 208)'); // stock --zk-color-primary
+  });
+
+  test('anchornav — whole-app :root override wins (loaded after norm.css.dsp)', async ({ page }) => {
+    const def = page.locator('.z-anchornav').first();
+    const defSelectedLink = def.locator('.z-listitem-selected .z-a').first();
+    expect(await colorOf(defSelectedLink)).not.toBe(SCOPED_PURPLE); // baseline before override
+
+    // An adopter's :root override, injected after the theme bundle, must win the
+    // cascade and reach every anchornav instance, including the default one.
+    await page.addStyleTag({ content: ':root{--zk-anchornav-accent:#6750a4}' });
+    expect(await colorOf(defSelectedLink)).toBe(SCOPED_PURPLE);
+  });
+
+  // ── stepbar (EE, zkmax): connected-circle step-progress indicator.
+  // zk-stepbar-accent is a single defining-state knob that colors the
+  // active/complete icon fill + border AND the lit connector leading into
+  // them, paired with zk-stepbar-accent-fg for the glyph inside that filled
+  // circle (same "one knob, several roles" precedent as tab/calendar/nav's
+  // accent). zk-stepbar-connector-color is the resting (upcoming) connector
+  // line; zk-stepbar-icon-border-color is the upcoming icon's ring color.
+  // zk-stepbar-fg is the resting AND complete title text; zk-stepbar-fg-active
+  // is the active title text. Renders in place (no client-side reparenting),
+  // so region scoping works normally. The demo uses activeIndex=1 with 3
+  // steps: step 1 is complete, step 2 is active, step 3 is upcoming. ──
+  const STEPBAR_ACCENT_FG = 'rgb(26, 26, 26)'; // #1a1a1a override (default --zk-stepbar-accent-fg is white)
+
+  test('stepbar — regional connector/icon/title override, sibling untouched', async ({ page }) => {
+    const def = page.locator('.z-stepbar').first();
+    const scoped = page.locator('div[style*="--zk-stepbar-accent"] .z-stepbar').first();
+
+    const defComplete = def.locator('.z-step-complete').first();
+    const defActive = def.locator('.z-step-active').first();
+    const defUpcoming = def.locator('.z-step:not(.z-step-active):not(.z-step-complete):not(.z-step-error)').first();
+    const scopedComplete = scoped.locator('.z-step-complete').first();
+    const scopedActive = scoped.locator('.z-step-active').first();
+    const scopedUpcoming = scoped.locator('.z-step:not(.z-step-active):not(.z-step-complete):not(.z-step-error)').first();
+
+    // Scoped stepbar picks up the resting connector/icon-border colors (on
+    // the upcoming step), the defining accent (complete/active icon fill +
+    // border, and the lit connector leading into the active step), the
+    // accent-fg glyph color, and the fg/fg-active title colors.
+    expect(await pseudoBgOf(scopedUpcoming, '::before')).toBe(SCOPED_PURPLE);
+    expect(await borderColorOf(scopedUpcoming.locator('.z-step-icon'))).toBe(SCOPED_PURPLE);
+    expect(await bgOf(scopedComplete.locator('.z-step-icon'))).toBe(SCOPED_PURPLE);
+    expect(await colorOf(scopedComplete.locator('.z-step-icon'))).toBe(STEPBAR_ACCENT_FG);
+    expect(await pseudoBgOf(scopedActive, '::before')).toBe(SCOPED_PURPLE);
+    expect(await colorOf(scopedComplete.locator('.z-step-title'))).toBe(SCOPED_PURPLE);
+    expect(await colorOf(scopedActive.locator('.z-step-title'))).toBe(SCOPED_PURPLE);
+
+    // Sibling default is untouched — the override lives on the scoped box
+    // and is inherited only by its subtree, never leaking up to the default row.
+    expect(await pseudoBgOf(defUpcoming, '::before')).toBe('rgba(0, 0, 0, 0.12)'); // stock --zk-color-outline-variant
+    expect(await borderColorOf(defUpcoming.locator('.z-step-icon'))).toBe('rgba(0, 0, 0, 0.23)'); // stock --zk-color-outline
+    expect(await bgOf(defComplete.locator('.z-step-icon'))).toBe('rgb(55, 111, 208)'); // stock --zk-color-primary
+    expect(await colorOf(defComplete.locator('.z-step-icon'))).toBe('rgb(255, 255, 255)'); // stock --zk-color-on-primary
+    expect(await pseudoBgOf(defActive, '::before')).toBe('rgb(55, 111, 208)'); // stock --zk-color-primary
+    expect(await colorOf(defComplete.locator('.z-step-title'))).toBe('rgba(0, 0, 0, 0.6)'); // stock --zk-color-on-surface-variant
+    expect(await colorOf(defActive.locator('.z-step-title'))).toBe('rgba(0, 0, 0, 0.87)'); // stock --zk-color-on-surface
+  });
+
+  test('stepbar — whole-app :root override wins (loaded after norm.css.dsp)', async ({ page }) => {
+    const def = page.locator('.z-stepbar').first();
+    const defComplete = def.locator('.z-step-complete').first();
+    expect(await bgOf(defComplete.locator('.z-step-icon'))).not.toBe(SCOPED_PURPLE); // baseline before override
+
+    // An adopter's :root override, injected after the theme bundle, must win the
+    // cascade and reach every stepbar instance, including the default one.
+    await page.addStyleTag({ content: ':root{--zk-stepbar-accent:#6750a4}' });
+    expect(await bgOf(defComplete.locator('.z-step-icon'))).toBe(SCOPED_PURPLE);
+  });
+
+  // ── coachmark (EE, zkmax): guided-tour rich-tooltip card pointing at a
+  // target element. Coachmark's _open() calls zk.makeVParent() on the root
+  // .z-coachmark node (confirmed in the compiled zkmax widget bundle),
+  // reparenting the ENTIRE root (content + pointer + close button) to the
+  // floating root (document.body) on open() and moves it back with
+  // undoVParent() on close() — so, like drawer (a different root cause each
+  // time), a REGIONAL (container) override cannot reach it; only the
+  // whole-app :root override applies. There is no "sibling untouched" test
+  // here for the same reason as drawer/messagebox/popup (see the tracker). ──
+  test('coachmark — zero-regression defaults', async ({ page }) => {
+    await page.getByRole('button', { name: 'Show Coachmark' }).click();
+    const card = page.locator('.z-coachmark.z-coachmark-open .z-coachmark-content');
+    await expect(card).toBeVisible();
+
+    expect(await radiusOf(card)).toBe('6px'); // stock --zk-shape-card
+    expect(await bgOf(card)).toBe('rgb(247, 249, 252)'); // stock --zk-color-surface-container-low
+    expect(await colorOf(card)).toBe('rgba(0, 0, 0, 0.87)'); // stock --zk-color-on-surface
+  });
+
+  test('coachmark — whole-app :root override wins (loaded after norm.css.dsp)', async ({ page }) => {
+    await page.getByRole('button', { name: 'Show Coachmark' }).click();
+    const card = page.locator('.z-coachmark.z-coachmark-open .z-coachmark-content');
+    await expect(card).toBeVisible();
+    expect(await bgOf(card)).not.toBe(SCOPED_PURPLE); // baseline before override
+
+    // An adopter's :root override, injected after the theme bundle, must win the
+    // cascade and reach the coachmark even though it is not a descendant of any
+    // container in the page while open (_open() reparents it to document.body).
+    await page.addStyleTag({ content: ':root{--zk-coachmark-bg:#6750a4}' });
+    expect(await bgOf(card)).toBe(SCOPED_PURPLE);
+  });
+
+  // ── colorbox (PE, zkex): color-picker swatch trigger + gradient/palette
+  // popup. No focus/open border state exists (only resting + hover), so
+  // there is no border-color-focus knob; radius + resting border-color are
+  // the observable A/B for the wrapper here, the same wrapper-border knob
+  // vocabulary as datebox/timebox/spinner/bandbox/daterangebox. ────────────
+  test('colorbox — regional border/radius override, sibling untouched', async ({ page }) => {
+    const def = page.locator('.z-colorbox').first();
+    const scoped = page.locator('div[style*="--zk-colorbox-radius"] .z-colorbox').first();
+
+    expect(await radiusOf(scoped)).toBe('0px');
+    expect(await borderColorOf(scoped)).toBe(SCOPED_PURPLE);
+
+    expect(await radiusOf(def)).toBe('4px'); // stock --zk-shape-input
+    expect(await borderColorOf(def)).not.toBe(SCOPED_PURPLE);
+  });
+
+  test('colorbox — whole-app :root override wins (loaded after norm.css.dsp)', async ({ page }) => {
+    const def = page.locator('.z-colorbox').first();
+    expect(await radiusOf(def)).toBe('4px'); // baseline before override
+
+    // An adopter's :root override, injected after the theme bundle, must win the
+    // cascade and reach every colorbox instance, including the default one.
+    await page.addStyleTag({ content: ':root{--zk-colorbox-radius:0px}' });
+    expect(await radiusOf(def)).toBe('0px');
+  });
+
+  // ── biglistbox: virtual/lazy-loading data table (EE, zkmax) ─────────────────
+  test('biglistbox — regional border/radius/header-fg override, sibling untouched', async ({ page }) => {
+    const def = page.locator('.z-biglistbox').first();
+    const scoped = page.locator('div[style*="--zk-biglistbox-radius"] .z-biglistbox').first();
+
+    expect(await radiusOf(scoped)).toBe('0px');
+    expect(await borderColorOf(scoped)).toBe(SCOPED_PURPLE);
+    expect(await colorOf(scoped.locator('.z-biglistbox-header').first())).toBe(SCOPED_PURPLE);
+
+    expect(await radiusOf(def)).toBe('6px'); // stock --zk-shape-card
+    expect(await borderColorOf(def)).not.toBe(SCOPED_PURPLE);
+    expect(await colorOf(def.locator('.z-biglistbox-header').first())).not.toBe(SCOPED_PURPLE);
+  });
+
+  test('biglistbox — whole-app :root override wins (loaded after norm.css.dsp)', async ({ page }) => {
+    const def = page.locator('.z-biglistbox').first();
+    expect(await radiusOf(def)).toBe('6px'); // baseline before override
+
+    // An adopter's :root override, injected after the theme bundle, must win the
+    // cascade and reach every biglistbox instance, including the default one.
+    await page.addStyleTag({ content: ':root{--zk-biglistbox-radius:0px}' });
+    expect(await radiusOf(def)).toBe('0px');
   });
 });

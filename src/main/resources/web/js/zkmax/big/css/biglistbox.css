@@ -10,9 +10,9 @@
 .z-biglistbox {
     display: block;
     position: relative;          /* anchor the custom scrollbar to the component… */
-    background-color: var(--zk-color-surface);
-    border: 1px solid var(--zk-color-outline-variant);
-    border-radius: var(--zk-shape-card);
+    background-color: var(--zk-biglistbox-bg);
+    border: 1px solid var(--zk-biglistbox-border-color);
+    border-radius: var(--zk-biglistbox-radius);
     overflow: hidden;
     box-sizing: border-box;
     font-family: var(--zk-typescale-font-family);
@@ -39,10 +39,10 @@
     padding: var(--zk-spacing-2) var(--zk-spacing-4);
     font-size: var(--zk-typescale-label-large-size);
     font-weight: var(--zk-typescale-label-large-weight);
-    color: var(--zk-color-on-surface-variant);
+    color: var(--zk-biglistbox-header-fg);
     text-align: left;
     background-color: transparent;
-    border-bottom: 1px solid var(--zk-color-outline-variant);
+    border-bottom: 1px solid var(--zk-biglistbox-border-color);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -81,7 +81,7 @@
 
 /* ─── Rows ─────────────────────────────────────────────────────────────── */
 .z-biglistbox-row:hover {
-    background-color: rgba(0, 0, 0, 0.04);
+    background-color: var(--zk-biglistbox-row-hover-bg);
 }
 
 /* ─── Cells ────────────────────────────────────────────────────────────── */
@@ -89,7 +89,7 @@
     padding: var(--zk-spacing-2) var(--zk-spacing-4);
     font-size: var(--zk-typescale-body-medium-size);
     color: var(--zk-color-on-surface);
-    border-bottom: 1px solid var(--zk-color-outline-variant);
+    border-bottom: 1px solid var(--zk-biglistbox-border-color);
     box-sizing: border-box;
     vertical-align: middle;
 }

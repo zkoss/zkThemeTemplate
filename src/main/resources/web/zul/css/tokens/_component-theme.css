@@ -611,4 +611,145 @@
     --zk-drawer-elevation:      var(--zk-elevation-3);
     --zk-drawer-header-fg:      var(--zk-color-on-surface);
     --zk-drawer-close-hover-bg: var(--zk-color-surface-container);
+
+    /* ── Nav (EE, zkmax) — navbar container + collapsible nav group + leaf
+       navitem sidebar/top navigation (zkmax/nav/css/nav.css).
+       --zk-navbar-bg is the container's own tonal surface (MD3 Navigation
+       Drawer — always a tonal step, not inherited page background).
+       --zk-navitem-fg / -radius are shared by BOTH the collapsible group
+       header link (.z-nav-content) AND the leaf item link
+       (.z-navitem-content) — one ruleset styles both today, the same "one
+       knob, several roles" precedent as tab/calendar's accent. The selected
+       leaf item is the defining state — a rounded tonal pill (MD3
+       Navigation Drawer active indicator, no left-edge accent bar, see
+       doc/contracts/navbar.md c7) — so it gets its own fill/text pair,
+       --zk-navitem-selected-bg / -fg, the same pairing precedent as
+       listbox/tree's selected-bg/-fg. The group header's own open/selected
+       color swap (.z-nav-open/.z-nav-selected > .z-nav-content), the hover
+       state layer (::before overlay + navitem's rgba hover fill), the
+       group-label text (.z-nav-header), the horizontal mode's submenu/
+       overflow popup surface (.z-nav-popup, .z-navbar-horizontal .z-nav >
+       ul), and the badge (.z-nav-info/-navitem-info) stay on base tokens —
+       secondary sub-features kept out of the curated surface (same
+       convention as calendar/toolbar's minor sub-features). Disabled dims
+       via its own --zk-color-disabled literal, not knob-driven (same
+       convention as button/input/rating). */
+    --zk-navbar-bg:           var(--zk-color-surface-container-low);
+    --zk-navitem-fg:          var(--zk-color-on-surface-variant);
+    --zk-navitem-radius:      var(--zk-shape-corner-small);
+    --zk-navitem-selected-bg: color-mix(in srgb, var(--zk-color-primary) 12%, transparent);
+    --zk-navitem-selected-fg: var(--zk-color-primary);
+
+    /* ── Anchornav (EE, zkmax) — anchor-link navigation list built on a plain
+       listbox (zkmax/nav/css/anchornav.css): .z-anchornav wraps a listbox
+       whose item links (.z-a) jump to page sections. --zk-anchornav-fg is
+       the resting (non-active) item link's text color. The active item is
+       the component's one defining state — --zk-anchornav-accent colors
+       BOTH the left border indicator and the active item's own link text
+       (both read var(--zk-color-primary) today), the same "one knob,
+       several roles" precedent as tab/calendar/nav's accent. The
+       indicator's border-left WIDTH (3px) stays hardcoded, same convention
+       as tab's border-bottom-color knob leaving its indicator width fixed.
+       The underlying listbox chrome (.z-listbox / .z-listitem) is already
+       a separate conformant family (its own --zk-listbox-* knobs);
+       text-decoration:none is structural, not a themeable axis. */
+    --zk-anchornav-fg:     var(--zk-color-on-surface-variant);
+    --zk-anchornav-accent: var(--zk-color-primary);
+
+    /* ── Stepbar (EE, zkmax) — connected-circle step-progress indicator
+       (zkmax/wgt/css/stepbar.css). --zk-stepbar-connector-color is the
+       resting (upcoming) connector-line color, shared by BOTH the inline
+       .z-step::before segment and the wrapped-label mode's
+       .z-step-content::before/::after overlay (both read the same token
+       today), the same "one knob, several roles" precedent as
+       toolbar/messagebox's shared border-color. --zk-stepbar-icon-border-color
+       is the upcoming (empty) step circle's ring color. Active and complete
+       are the SAME defining state visually (a filled primary circle) — a
+       single --zk-stepbar-accent drives the icon fill + border AND the lit
+       connector (inline, vertical, and wrapped-label variants alike), the
+       same "one knob, several roles" precedent as tab/calendar's accent;
+       --zk-stepbar-accent-fg is the paired glyph color inside that filled
+       circle (same pairing precedent as calendar's accent/accent-fg).
+       --zk-stepbar-fg is the resting AND complete step title text (both
+       read the same token today); --zk-stepbar-fg-active is the active
+       step's title text — the same "resting + active pair" precedent as
+       tab's fg/fg-hover. Error state (icon fill/border/text + title) stays
+       on --zk-color-error/-on-error, not knob-driven (same convention as
+       datebox/timebox/timepicker's invalid state). The icon circle's
+       border-radius (50%) is a fixed shape concern, not a knob (same
+       convention as badge's dot mode / avatar). No bg knob: the root
+       renders background: transparent by design — it embeds in the page
+       surface, not a card (doc/contracts/stepbar.md s5). */
+    --zk-stepbar-connector-color:   var(--zk-color-outline-variant);
+    --zk-stepbar-icon-border-color: var(--zk-color-outline);
+    --zk-stepbar-fg:                var(--zk-color-on-surface-variant);
+    --zk-stepbar-fg-active:         var(--zk-color-on-surface);
+    --zk-stepbar-accent:            var(--zk-color-primary);
+    --zk-stepbar-accent-fg:         var(--zk-color-on-primary);
+
+    /* ── Coachmark (EE, zkmax) — guided-tour rich-tooltip card pointing at a
+       target element (zkmax/nav/css/coachmark.css): .z-coachmark-content card
+       + .z-coachmark-pointer directional triangle + .z-coachmark-close button.
+       --zk-coachmark-bg is shared by BOTH the card's own fill AND all four
+       pointer-triangle variants' border-color (up/down/left/right — all four
+       read the same token today, so the triangle always reads as an extension
+       of the card), the same "one knob, several roles" precedent as tab/
+       calendar's accent. The close button's icon color, its hover/focus
+       overlay tint, and the pointer triangle's fixed 10px border-width stay
+       on base tokens/literals, not knob-driven — minor sub-features kept out
+       of the curated surface (same convention as calendar/toolbar's minor
+       sub-features). CTV-3 (region scoping) is structurally N/A, the same
+       class of exception as drawer: Coachmark's _open() calls
+       zk.makeVParent() on the root .z-coachmark node (confirmed in the
+       compiled zkmax 10.4 widget bundle), reparenting the ENTIRE root
+       (content + pointer + close) to the floating root while visible, with
+       undoVParent() restoring it on close — so there is no in-place remnant
+       to test region scoping against; only the whole-app :root override path
+       is exercised (see the tracker). */
+    --zk-coachmark-bg:        var(--zk-color-surface-container-low);
+    --zk-coachmark-fg:        var(--zk-color-on-surface);
+    --zk-coachmark-radius:    var(--zk-shape-card);
+    --zk-coachmark-elevation: var(--zk-elevation-2);
+
+    /* ── Colorbox (PE, zkex) — color-picker swatch trigger + gradient/palette
+       popup (zkex/inp/css/colorbox.css). Unlike the other wrapper-border field
+       components (datebox/timebox/spinner/bandbox/daterangebox/…), .z-colorbox
+       has NO focus/open border state — only resting + hover — so there is no
+       border-color-focus knob. There is also no fg/text knob: the root shows
+       no text, only the swatch (its color set inline per selection) and a
+       caret icon. The popup (.z-colorbox-popup, shared with the .z-menu-popup
+       menu-content mold) gets the same bg/radius pair as the other family
+       members' popups; its border-color and box-shadow stay on base tokens,
+       same convention as combobox/datebox/bandbox's popups. The swatch's own
+       border (.z-colorbox-current) and the caret-button icon color
+       (.z-colorbox-button) stay on base tokens too, not knob-driven — minor
+       sub-features kept out of the curated surface (same convention as
+       cascader/searchbox's trigger icons). Disabled dims via opacity only,
+       not knob-driven (same convention as button/input/rating); its :hover
+       border stays the resting outline literal, same convention as
+       datebox/timebox/timepicker's disabled treatment. */
+    --zk-colorbox-bg:                 var(--zk-color-surface);
+    --zk-colorbox-radius:             var(--zk-shape-input);
+    --zk-colorbox-border-color:       var(--zk-color-outline);
+    --zk-colorbox-border-color-hover: var(--zk-color-on-surface);
+    --zk-colorbox-popup-bg:           var(--zk-color-surface);
+    --zk-colorbox-popup-radius:       var(--zk-shape-menu);
+
+    /* ── Biglistbox (EE, zkmax) — outlined virtual/lazy-loading data table
+       (zkmax/big/css/biglistbox.css). Same curated surface as Grid (no
+       stripe/foot rows exist in this component): border-color is shared by
+       the wrapper's own border, the header's border-bottom, and each row's
+       border-bottom — one knob, several roles, the same precedent as
+       grid-border-color. row-hover keeps its stock rgba literal (zero
+       regression, same as grid-row-hover-bg). The sort-icon color, the
+       sort-hover tint, and the custom WScroll scrollbar's thumb/track colors
+       stay on base tokens — minor sub-features kept out of the curated
+       surface (same convention as grid's column-sort-icon/sort-hover). Cell
+       text color also stays on the base token, matching Grid (no --zk-grid-fg
+       exists either). */
+    --zk-biglistbox-bg:           var(--zk-color-surface);
+    --zk-biglistbox-border-color: var(--zk-color-outline-variant);
+    --zk-biglistbox-radius:       var(--zk-shape-card);
+    --zk-biglistbox-header-fg:    var(--zk-color-on-surface-variant);
+    --zk-biglistbox-row-hover-bg: rgba(0, 0, 0, 0.04);
 }

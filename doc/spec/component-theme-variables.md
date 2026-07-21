@@ -940,6 +940,177 @@ no in-place remnant to test region scoping on; only the whole-app (`:root`) path
 | `--zk-drawer-header-fg` | `var(--zk-color-on-surface)` | header title text |
 | `--zk-drawer-close-hover-bg` | `var(--zk-color-surface-container)` | close-button hover fill |
 
+### Nav — shipped
+
+Side/top navigation (EE, `zkmax/nav/css/nav.css`) — `.z-navbar` container + collapsible nav
+group `.z-nav` (header `.z-nav-content`) + leaf `.z-navitem` (link `.z-navitem-content`) +
+divider `.z-navseparator`. `--zk-navbar-bg` is the container's own tonal surface fill (MD3
+Navigation Drawer convention — always a tonal step, never inherits the page background).
+`--zk-navitem-fg` and `--zk-navitem-radius` are shared by **both** the collapsible group header
+link (`.z-nav-content`) and the leaf item link (`.z-navitem-content`) — one ruleset styles both
+today, the same "one knob, several roles" precedent as tab/calendar's accent. The selected leaf
+item is the component's defining state — a rounded tonal pill (MD3 Navigation Drawer's active
+indicator, no left-edge accent bar; see `doc/contracts/navbar.md` c7) — so it gets its own
+fill/text pair, `--zk-navitem-selected-bg` / `-fg`, the same pairing precedent as listbox/tree's
+`-selected-bg`/`-fg`. The group header's own open/selected color swap
+(`.z-nav-open`/`.z-nav-selected > .z-nav-content`), the hover state layer (`::before` overlay +
+navitem's `rgba` hover fill), the group-label text (`.z-nav-header`), the horizontal mode's
+submenu/overflow popup surface (`.z-nav-popup`, `.z-navbar-horizontal .z-nav > ul`), and the
+badge (`.z-nav-info`/`.z-navitem-info`, which read `--zk-color-primary`/`-on-primary` directly)
+stay on base tokens — secondary sub-features kept out of the curated surface (same convention as
+calendar/toolbar's minor sub-features). Disabled dims via its own `--zk-color-disabled` literal,
+not knob-driven (same convention as button/input/rating). `.z-navbar` renders in place with no
+client-side reparenting, so region scoping works normally — unlike messagebox/popup/drawer's
+structural exceptions.
+
+| Knob | Default | Scope |
+|------|---------|-------|
+| `--zk-navbar-bg` | `var(--zk-color-surface-container-low)` | navbar container fill |
+| `--zk-navitem-fg` | `var(--zk-color-on-surface-variant)` | group-header + leaf item link text |
+| `--zk-navitem-radius` | `var(--zk-shape-corner-small)` | group-header + leaf item link corners |
+| `--zk-navitem-selected-bg` | `color-mix(in srgb, var(--zk-color-primary) 12%, transparent)` | selected leaf item pill fill |
+| `--zk-navitem-selected-fg` | `var(--zk-color-primary)` | selected leaf item text |
+
+### Anchornav — shipped
+
+Anchor-link navigation list (EE, `zkmax/nav/css/anchornav.css`) — `.z-anchornav` wraps a plain
+listbox whose item links (`.z-a`) jump to page sections. No background, border, or radius knob
+applies — the container paints no fill/border of its own; the listbox's chrome is already its own
+established variable family (`--zk-listbox-*`) and isn't re-exposed here. Only two color axes:
+`--zk-anchornav-fg` is the resting (non-active) item link's text color. The active item is the
+component's one defining state — `--zk-anchornav-accent` colors **both** the left-edge border
+indicator (`.z-listitem-selected`'s `border-left`) and the active item's own link text — both read
+`var(--zk-color-primary)` today, one knob keeping them in sync, the same "one knob, several roles"
+precedent as tab/calendar/nav's accent. The indicator's border width (`3px`) stays a literal, not
+knob-driven (same convention as tab's `border-bottom-color` knob — width stays fixed, only color is
+exposed). `text-decoration: none` is a structural declaration, not a themeable appearance axis, so
+it isn't exposed. `.z-anchornav` renders in place with no client-side reparenting, so region
+scoping works normally — unlike messagebox/popup/drawer's structural exceptions.
+
+| Knob | Default | Scope |
+|------|---------|-------|
+| `--zk-anchornav-fg` | `var(--zk-color-on-surface-variant)` | resting item link text |
+| `--zk-anchornav-accent` | `var(--zk-color-primary)` | active item's left-edge border indicator + link text |
+
+### Stepbar — shipped
+
+Connected-circle step-progress indicator (EE, `zkmax/wgt/css/stepbar.css`) — `.z-stepbar` container
++ `.z-step` step item + `.z-step-content` wrapper (always present) + `.z-step-icon` circular marker
++ `.z-step-title` label text. `--zk-stepbar-connector-color` is the resting (upcoming) connector-line
+color — it's layered onto both the inline `.z-step::before` segment and the wrapped-label mode's
+`.z-step-content::before`/`::after` halves (both read the same token today), the same "one knob,
+several roles" precedent as toolbar/messagebox's shared border-color. `--zk-stepbar-icon-border-color`
+is the upcoming (empty) circle's outline color. Active and complete are visually the same defining
+state — a filled primary circle — so a single `--zk-stepbar-accent` drives both the icon fill/border
+and the lit connector (inline, vertical, and wrapped-label variants alike), the same "one knob,
+several roles" precedent as tab/calendar's accent; `--zk-stepbar-accent-fg` is the paired glyph color
+inside that filled circle (the same accent/accent-fg pairing precedent as calendar).
+`--zk-stepbar-fg` is the title text color shared by the resting and complete states (both read the
+same token today); `--zk-stepbar-fg-active` is the active state's title text color — a
+"resting + active" pairing precedent like tab's fg/fg-hover. The error state (icon fill/border/text
++ title) stays on `--zk-color-error`/`-on-error` directly, not knob-driven — the same convention as
+datebox/timebox/timepicker's invalid state. The circle's `border-radius` (50%) is a fixed shape
+constraint, not a themeable knob (same convention as badge's dot mode / avatar). There is no
+background knob: the root renders `background: transparent` by design — it's meant to sit on the
+embedding page's own surface, not read as its own card (see `doc/contracts/stepbar.md` s5).
+`.z-stepbar` renders in place with no client-side reparenting, so region scoping works normally —
+unlike messagebox/popup/drawer's structural exceptions.
+
+| Knob | Default | Scope |
+|------|---------|-------|
+| `--zk-stepbar-connector-color` | `var(--zk-color-outline-variant)` | resting (upcoming) connector line — inline `::before` + wrapped-label `::before`/`::after` |
+| `--zk-stepbar-icon-border-color` | `var(--zk-color-outline)` | upcoming (empty) circle outline |
+| `--zk-stepbar-fg` | `var(--zk-color-on-surface-variant)` | resting + complete step title text |
+| `--zk-stepbar-fg-active` | `var(--zk-color-on-surface)` | active step title text |
+| `--zk-stepbar-accent` | `var(--zk-color-primary)` | active/complete icon fill + border, lit connector |
+| `--zk-stepbar-accent-fg` | `var(--zk-color-on-primary)` | active/complete icon glyph color |
+
+### Coachmark — shipped
+
+MD3 guided-tour rich-tooltip card (EE, `zkmax/nav/css/coachmark.css`) pointing at a target
+element — `.z-coachmark-content` card body + `.z-coachmark-pointer` directional triangle
+(up/down/left/right) + `.z-coachmark-close` button. `--zk-coachmark-bg` is shared by **both** the
+card's own fill **and** all four pointer-triangle variants' `border-color` (all four read the same
+token today, so the triangle always reads as an extension of the card), the same "one knob,
+several roles" precedent as tab/calendar's accent. The close button's icon color, its hover/focus
+overlay tint, and the pointer triangle's fixed `10px` border-width stay on base tokens/literals,
+not knob-driven — minor sub-features kept out of the curated surface (same convention as
+calendar/toolbar's minor sub-features).
+
+**CTV-3 (region scoping) is structurally N/A here, not a defect** — same exception class as
+drawer, for the same root cause. `Coachmark.prototype._open()` calls `zk(n).makeVParent()` on the
+root `.z-coachmark` node (reparenting the **entire** root — content + pointer + close together —
+to the floating root, `document.body`) and `undoVParent()` on close (confirmed in the compiled
+zkmax 10.4 widget bundle). As with drawer, there is no in-place remnant to test region scoping
+against; only the whole-app (`:root`) path is exercised.
+
+| Knob | Default | Scope |
+|------|---------|-------|
+| `--zk-coachmark-bg` | `var(--zk-color-surface-container-low)` | card fill + all four pointer-triangle border-colors |
+| `--zk-coachmark-fg` | `var(--zk-color-on-surface)` | card text |
+| `--zk-coachmark-radius` | `var(--zk-shape-card)` | card corners |
+| `--zk-coachmark-elevation` | `var(--zk-elevation-2)` | card shadow |
+
+### Colorbox — shipped
+
+Color-picker swatch trigger + gradient/palette popup (PE, `zkex/inp/css/colorbox.css`) —
+`.z-colorbox` root + `.z-colorbox-current` color swatch + `.z-colorbox-button` caret button +
+`.z-colorbox-popup` (detached to `<body>` when open; popup chrome is shared with the
+menu-content mold's `.z-menu-popup`). Unlike the other wrapper-border field components
+(datebox/timebox/spinner/bandbox/daterangebox/timepicker/chosenbox/cascader/searchbox),
+`.z-colorbox` has only resting + hover states — no focus/open border state — so there is no
+`-border-color-focus` knob. There is also no fg/text knob: the root shows no text, only the
+swatch (its color set inline per selection) and a caret icon. Six knobs total:
+`--zk-colorbox-bg`/`-radius`/`-border-color`/`-border-color-hover` style the wrapper itself;
+`-popup-bg`/`-popup-radius` follow the same bg/radius vocabulary as the rest of the
+dropdown-input family's popups — the popup's own `border-color` and `box-shadow` stay on base
+tokens, the same convention as combobox/datebox/bandbox's popups. The swatch's own border
+(`.z-colorbox-current`) and the caret-button icon color (`.z-colorbox-button`) stay on base
+tokens too, not knob-driven — minor sub-features kept out of the curated surface (same
+convention as cascader/searchbox's trigger icons). Disabled dims via opacity only, not
+knob-driven; its `:hover` border stays the resting outline literal (`--zk-color-outline`), not
+the hover knob, the same convention as datebox/timebox/timepicker's disabled treatment. Only
+`.z-colorbox`'s popup reparents to `<body>` on open — the wrapper itself renders in place with
+no client-side reparenting, the same structure as the rest of the combobox/datebox/…/searchbox
+family, so region scoping is exercised on the wrapper the same way as those family members.
+
+| Knob | Default | Scope |
+|------|---------|-------|
+| `--zk-colorbox-bg` | `var(--zk-color-surface)` | wrapper fill |
+| `--zk-colorbox-radius` | `var(--zk-shape-input)` | wrapper corners |
+| `--zk-colorbox-border-color` | `var(--zk-color-outline)` | wrapper resting border |
+| `--zk-colorbox-border-color-hover` | `var(--zk-color-on-surface)` | wrapper hover border |
+| `--zk-colorbox-popup-bg` | `var(--zk-color-surface)` | popup fill |
+| `--zk-colorbox-popup-radius` | `var(--zk-shape-menu)` | popup corners |
+
+### Biglistbox — shipped
+
+Virtual/lazy-loading data grid (EE, `zkmax/big/css/biglistbox.css`) — `.z-biglistbox` root +
+`.z-biglistbox-header` column header + `.z-biglistbox-row td` data cell + a self-drawn `WScroll`
+scrollbar (see `doc/contracts/biglistbox.md`). Shares the same curated surface as the Grid
+family — this component has no stripe/foot rows to mirror, so those two knobs aren't repeated.
+`--zk-biglistbox-border-color` drives three roles at once: the root's own `border`, the header's
+`border-bottom`, and every data row's `border-bottom` (all three read the same token today), the
+same "one knob, several roles" precedent as grid's `-border-color`. `--zk-biglistbox-header-fg`
+is the header text color. `--zk-biglistbox-row-hover-bg` keeps the stock `rgba(0, 0, 0, 0.04)`
+literal for zero regression, the same convention as grid's `-row-hover-bg`. The sort-icon color
+(`.z-biglistbox-sorticon`), the sort-hover fill (`.z-biglistbox-sort:hover`), and the self-drawn
+scrollbar's thumb/track/groove colors stay on base tokens, not knob-driven — minor sub-features
+kept out of the curated surface (same convention as grid's column-sort-icon/sort-hover). The data
+cell's text color (`.z-biglistbox-row td { color }`) also stays on a base token, matching grid
+(which has no `--zk-grid-fg` either). Cell padding is a size-dimension concern, not added here —
+size stays in `_sizing.css`, untouched by this pass (same convention as the rest of the family).
+`.z-biglistbox` renders in place with no client-side reparenting, so region scoping works
+normally.
+
+| Knob | Default | Scope |
+|------|---------|-------|
+| `--zk-biglistbox-bg` | `var(--zk-color-surface)` | root fill |
+| `--zk-biglistbox-border-color` | `var(--zk-color-outline-variant)` | root border + header bottom border + row bottom border |
+| `--zk-biglistbox-radius` | `var(--zk-shape-card)` | root corners |
+| `--zk-biglistbox-header-fg` | `var(--zk-color-on-surface-variant)` | header text |
+| `--zk-biglistbox-row-hover-bg` | `rgba(0, 0, 0, 0.04)` | row hover fill |
+
 ## Recipe — adding a component
 
 Validated by the button pilot; repeat per component (then update the
@@ -968,7 +1139,9 @@ Validated by the button pilot; repeat per component (then update the
   only — see entry for the info/warning/error type-variant exclusion), toast (info-default
   variant only — see entry for the warning/error type-variant exclusion), a (anchor), chosenbox,
   cascader, searchbox, drawer (see entry for the CTV-3 structural exception — whole-root
-  reparenting on open).
+  reparenting on open), nav, anchornav, stepbar, coachmark (see entry for the CTV-3 structural
+  exception — whole-root reparenting on open), colorbox (see entry for the no-focus-knob and
+  no-fg-knob exclusions), biglistbox.
 - **Not exposed** (by design): purely structural/layout components (box, div, cell, separator,
   layouts) and content atoms (label, image) have no meaningful appearance knob — this excludes
   the anchor/link, which **is** exposed despite its similarly minimal text-only vocabulary (see
