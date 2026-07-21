@@ -8,7 +8,11 @@
    children) flows it inline. The widget omits the indicator when hidden
    (count 0 without showZero, empty value), so CSS only styles what renders.
    NOTE: the host overhangs its corner — keep it in a non-clipping flex row
-   (z-d-flex / z-hstack), never inside an overflow:hidden container. */
+   (z-d-flex / z-hstack), never inside an overflow:hidden container.
+   Theming: the indicator resolves --zk-badge-bg / --zk-badge-fg / --zk-badge-radius
+   (base defaults at :root in tokens/_component-theme.css). --zk-badge-fg / -radius
+   apply to every badge; --zk-badge-bg controls the default (info) fill and is
+   region/inline overridable, while non-default severities pin their own fill. */
 
 @layer zk-components {
 .z-badge {
@@ -39,13 +43,13 @@
     min-width: 20px;
     height: 20px;
     padding: 0 6px;
-    border-radius: 10px;
+    border-radius: var(--zk-badge-radius);
     font-size: var(--zk-typescale-label-medium-size);
     font-weight: var(--zk-typescale-label-medium-weight);
     line-height: 1;
     white-space: nowrap;
-    color: var(--zk-color-on-status);
-    background: var(--zk-color-status-neutral);
+    color: var(--zk-badge-fg);
+    background: var(--zk-badge-bg);
     transition: transform var(--zk-motion-duration-standard) var(--zk-motion-easing-emphasized-decelerate);
 }
 
@@ -63,10 +67,13 @@
     border-radius: 50%;
 }
 
-/* Severity → indicator color. info is the widget default. */
-.z-badge-info > .z-badge-indicator      { background: var(--zk-color-status-info); }
-.z-badge-success > .z-badge-indicator   { background: var(--zk-color-status-success); }
-.z-badge-warning > .z-badge-indicator   { background: var(--zk-color-status-warning); }
-.z-badge-danger > .z-badge-indicator     { background: var(--zk-color-status-error); }
-.z-badge-secondary > .z-badge-indicator { background: var(--zk-color-status-neutral); }
+/* Severity → indicator color. info is the widget default and is intentionally
+   NOT emitted here: it flows through the base --zk-badge-bg (info) declared at
+   :root, so a default badge stays region/inline overridable. The non-default
+   severities set --zk-badge-bg per-variant on the indicator (which shadows a
+   :root/inline override — expected, they carry their semantic color). */
+.z-badge-success > .z-badge-indicator   { --zk-badge-bg: var(--zk-color-status-success); }
+.z-badge-warning > .z-badge-indicator   { --zk-badge-bg: var(--zk-color-status-warning); }
+.z-badge-danger > .z-badge-indicator     { --zk-badge-bg: var(--zk-color-status-error); }
+.z-badge-secondary > .z-badge-indicator { --zk-badge-bg: var(--zk-color-status-neutral); }
 }

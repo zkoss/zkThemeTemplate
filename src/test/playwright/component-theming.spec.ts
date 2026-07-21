@@ -239,4 +239,21 @@ test.describe('component theming API — button', () => {
     expect(await bgOf(scoped)).toBe(SCOPED_PURPLE);
     expect(await bgOf(def)).not.toBe(SCOPED_PURPLE);
   });
+
+  // ── badge: default (info) fill is routed through the base --zk-badge-bg (no
+  // .z-badge-info rule), so a region override reaches a default badge; explicit
+  // non-default severities pin --zk-badge-bg on the indicator and stay semantic.
+  test('badge — default fill region-overridable, non-default severity pinned', async ({ page }) => {
+    const scopedBox = page.locator('div[style*="--zk-badge-bg"]');
+    const scopedDefault = scopedBox.locator('.z-badge-info > .z-badge-indicator').first();
+    const scopedSuccess = scopedBox.locator('.z-badge-success > .z-badge-indicator').first();
+    const outsideDefault = page.locator('.z-badge-info > .z-badge-indicator').first();
+
+    // Default (info) badge inside the region takes the override.
+    expect(await bgOf(scopedDefault)).toBe(SCOPED_PURPLE);
+    // A non-default severity keeps its semantic color despite the region override.
+    expect(await bgOf(scopedSuccess)).not.toBe(SCOPED_PURPLE);
+    // A default badge outside the region is untouched.
+    expect(await bgOf(outsideDefault)).not.toBe(SCOPED_PURPLE);
+  });
 });

@@ -369,6 +369,24 @@ which shadows a `:root`/region override. So chip is themed **per-severity / inli
 | `--zk-chip-border` | `var(--zk-color-outline-variant)` |
 | `--zk-chip-color` | `var(--zk-color-on-surface-variant)` |
 
+### Badge — shipped
+
+The fourth ZK-6097 native (completing the badge/chip/avatar/avatar-group set). The
+`.z-badge-indicator` resolves the knobs from `:root`. ZK always stamps a severity class
+(default `info`) and the indicator is a **child** of it, so a per-severity rule on the indicator
+shadows any inherited value. We exploit that deliberately: the default `info` fill is routed
+through the base `--zk-badge-bg` (there is **no** `.z-badge-info` rule), so a **default badge is
+region- and inline-overridable**; the non-default severities (`.z-badge-success/-warning/-danger/-secondary`)
+pin `--zk-badge-bg` per-variant and keep their semantic color. `--zk-badge-fg` and
+`--zk-badge-radius` have no per-severity override, so they apply to **every** badge. Dot-mode
+radius (`50%`) is a shape concern and stays hardcoded, not a knob.
+
+| Knob | Default | Scope |
+|------|---------|-------|
+| `--zk-badge-bg` | `var(--zk-color-status-info)` | default (info) badge only; non-default severities pin their own |
+| `--zk-badge-fg` | `var(--zk-color-on-status)` | every badge |
+| `--zk-badge-radius` | `10px` | every badge (count/pill; dot stays `50%`) |
+
 ## Recipe — adding a component to the API
 
 Validated by the button pilot; repeat per component:
@@ -389,7 +407,7 @@ Validated by the button pilot; repeat per component:
 
 - **Shipped**: button, input (textbox family), window, grid, listbox, tree, panel, groupbox,
   combobox, datebox, timebox, spinner (+ doublespinner), bandbox, tab (tabbox), menu,
-  avatar/avatar-group, chip (base hoisted; see caveat).
+  avatar/avatar-group, chip (base hoisted; see caveat), badge (base hoisted; see caveat).
 - **Not exposed** (by design): purely structural/layout components (box, div, cell, separator,
   layouts) and content atoms (label, image) have no meaningful appearance knob; selection
   controls (checkbox/radio), slider, rating, and paging are candidates for a future pass if

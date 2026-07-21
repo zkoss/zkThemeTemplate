@@ -271,5 +271,20 @@
          style="--zk-avatar-bg:#6750a4; --zk-avatar-fg:#ffffff">
         <avatar label="AB"/>
     </div>
+
+    <!-- Badge (native): the default (info) fill flows through the base zk-badge-bg
+         knob at :root, so a region override DOES reach a default badge; explicit
+         non-default severities pin their own fill. See component-theming-api spec. -->
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Badge (default + success)</div>
+    <div sclass="z-hstack z-mb-6 z-align-center">
+        <badge count="4"/>
+        <badge count="4" severity="success"/>
+    </div>
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Badge (regional override — default fill only)</div>
+    <div sclass="z-hstack z-mb-8 z-align-center z-p-4 z-bg-surface-variant z-rounded"
+         style="--zk-badge-bg:#6750a4">
+        <badge count="4"/>
+        <badge count="4" severity="success"/>
+    </div>
 </div>
 </zk>

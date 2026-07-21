@@ -196,6 +196,19 @@
     --zk-menupopup-border-color: var(--zk-color-outline-variant);
     --zk-menuitem-selected-bg:   var(--zk-color-primary-container);
 
+    /* ── Badge (native, ZK-6097) — the indicator resolves these. ZK always stamps
+       a severity class (default `info`), and the indicator is a CHILD of it, so a
+       per-severity rule on the indicator shadows any inherited :root/inline value.
+       We therefore route the default `info` fill through --zk-badge-bg here (no
+       explicit .z-badge-info rule) so default badges stay region/inline overridable;
+       the non-default severities (.z-badge-success/-warning/-danger/-secondary) set
+       --zk-badge-bg per-variant and keep their semantic color. --zk-badge-fg and
+       --zk-badge-radius have no per-severity override, so they apply to every badge.
+       Dot-mode radius stays 50% in badge.css (shape mode, not a themeable knob). */
+    --zk-badge-bg:     var(--zk-color-status-info);
+    --zk-badge-fg:     var(--zk-color-on-status);
+    --zk-badge-radius: 10px;
+
     /* ── Chip (native, ZK-6097) — base default hoisted here so a :root/region
        override reaches plain chips; severity variants (.z-chip-info/-success/…)
        still set these per-variant on the element. */
