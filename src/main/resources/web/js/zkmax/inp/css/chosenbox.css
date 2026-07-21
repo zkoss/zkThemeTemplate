@@ -13,21 +13,21 @@
     position: relative;
     min-height: var(--zk-control-height);
     padding: 4px 6px;
-    border: 1px solid var(--zk-color-outline);
-    border-radius: var(--zk-shape-input);
-    background-color: var(--zk-color-surface);
+    border: 1px solid var(--zk-chosenbox-border-color);
+    border-radius: var(--zk-chosenbox-radius);
+    background-color: var(--zk-chosenbox-bg);
     cursor: text;
     box-sizing: border-box;
     transition: border-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
 }
 
 .z-chosenbox:hover {
-    border-color: var(--zk-color-on-surface);
+    border-color: var(--zk-chosenbox-border-color-hover);
 }
 
 .z-chosenbox-focus {
-    border-color: var(--zk-color-primary);
-    box-shadow: 0 0 0 1px var(--zk-color-primary);
+    border-color: var(--zk-chosenbox-border-color-focus);
+    box-shadow: 0 0 0 1px var(--zk-chosenbox-border-color-focus);
     transition: none;
 }
 
@@ -38,7 +38,7 @@
     height: 28px;
     padding: 0 4px 0 10px;
     border-radius: var(--zk-shape-corner-extra-small);
-    background-color: var(--zk-color-surface-container-high);
+    background-color: var(--zk-chosenbox-item-bg);
     cursor: default;
     flex-shrink: 0;
     user-select: none;
@@ -46,14 +46,14 @@
 }
 
 .z-chosenbox-item-focus {
-    background-color: var(--zk-color-primary-container);
+    background-color: var(--zk-chosenbox-item-focus-bg);
 }
 
 .z-chosenbox-item-content {
     font-family: var(--zk-typescale-font-family);
     font-size: var(--zk-typescale-label-large-size);
     font-weight: var(--zk-typescale-label-large-weight);
-    color: var(--zk-color-on-surface);
+    color: var(--zk-chosenbox-fg);
     white-space: nowrap;
 }
 
@@ -90,7 +90,7 @@
     padding: 0 4px;
     font-family: var(--zk-typescale-font-family);
     font-size: var(--zk-typescale-body-medium-size);
-    color: var(--zk-color-on-surface);
+    color: var(--zk-chosenbox-fg);
     box-shadow: none;
 }
 
@@ -110,9 +110,9 @@
 .z-chosenbox-popup {
     position: absolute;
     z-index: 1600;
-    background-color: var(--zk-color-surface);
+    background-color: var(--zk-chosenbox-popup-bg);
     border: 1px solid var(--zk-color-outline-variant);
-    border-radius: var(--zk-shape-menu);
+    border-radius: var(--zk-chosenbox-popup-radius);
     overflow: auto;
     box-sizing: border-box;
     max-height: 280px;

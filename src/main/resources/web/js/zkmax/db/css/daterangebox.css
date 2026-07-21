@@ -46,9 +46,9 @@
     display: inline-flex;
     align-items: center;
     position: relative;
-    border: 1px solid var(--zk-color-outline);
-    border-radius: var(--zk-shape-corner-extra-small);
-    background-color: var(--zk-color-surface);
+    border: 1px solid var(--zk-daterangebox-border-color);
+    border-radius: var(--zk-daterangebox-radius);
+    background-color: var(--zk-daterangebox-bg);
     min-height: var(--zk-control-height);
     box-sizing: border-box;
     transition:
@@ -57,7 +57,7 @@
 }
 
 .z-daterangebox:hover {
-    border-color: var(--zk-color-on-surface);
+    border-color: var(--zk-daterangebox-border-color-hover);
 }
 
 /* Focus ring as an INSET box-shadow, not a border-width increase (Mechanism A) — border stays
@@ -69,8 +69,8 @@
    open yet. See reference/focus-affordance-no-layout-shift.md. */
 .z-daterangebox.z-daterangebox-focused,
 .z-daterangebox:focus-within {
-    border-color: var(--zk-color-primary);
-    box-shadow: inset 0 0 0 1px var(--zk-color-primary);
+    border-color: var(--zk-daterangebox-border-color-focus);
+    box-shadow: inset 0 0 0 1px var(--zk-daterangebox-border-color-focus);
 }
 
 /* ─── Inputs (both transparent — root supplies the only visible surface) ────────────────── */
@@ -93,7 +93,7 @@
     min-height: calc(var(--zk-input-height) - 2px);
     font-family: var(--zk-typescale-font-family);
     font-size: var(--zk-typescale-body-medium-size);
-    color: var(--zk-color-on-surface);
+    color: var(--zk-daterangebox-fg);
     text-align: center;
     outline: none;
     box-sizing: border-box;
@@ -166,7 +166,7 @@
     color: var(--zk-color-on-surface-variant);
     cursor: pointer;
     flex-shrink: 0;
-    border-radius: 0 var(--zk-shape-corner-extra-small) var(--zk-shape-corner-extra-small) 0;
+    border-radius: 0 var(--zk-daterangebox-radius) var(--zk-daterangebox-radius) 0;
     overflow: hidden;
     text-decoration: none;
     transition: color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
@@ -209,8 +209,8 @@
 .z-daterangebox-popup {
     position: absolute;
     z-index: 1700;
-    background-color: var(--zk-color-surface);
-    border-radius: var(--zk-shape-menu);
+    background-color: var(--zk-daterangebox-popup-bg);
+    border-radius: var(--zk-daterangebox-popup-radius);
     box-shadow: var(--zk-elevation-dropdown);
     border: none;
     box-sizing: border-box;

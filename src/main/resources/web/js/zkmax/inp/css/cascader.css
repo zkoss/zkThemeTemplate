@@ -10,9 +10,9 @@
     align-items: center;
     position: relative;
     height: 40px;
-    border: 1px solid var(--zk-color-outline);
-    border-radius: var(--zk-shape-input);
-    background-color: var(--zk-color-surface);
+    border: 1px solid var(--zk-cascader-border-color);
+    border-radius: var(--zk-cascader-radius);
+    background-color: var(--zk-cascader-bg);
     cursor: pointer;
     box-sizing: border-box;
     outline: none;
@@ -20,13 +20,13 @@
 }
 
 .z-cascader:hover {
-    border-color: var(--zk-color-on-surface);
+    border-color: var(--zk-cascader-border-color-hover);
 }
 
 .z-cascader-focus,
 .z-cascader-open {
-    border-color: var(--zk-color-primary);
-    box-shadow: 0 0 0 1px var(--zk-color-primary);
+    border-color: var(--zk-cascader-border-color-focus);
+    box-shadow: 0 0 0 1px var(--zk-cascader-border-color-focus);
     transition: none;
 }
 
@@ -46,7 +46,7 @@
 }
 
 .z-cascader-label {
-    color: var(--zk-color-on-surface);
+    color: var(--zk-cascader-fg);
 }
 
 .z-cascader-placeholder {
@@ -87,9 +87,9 @@
    rules must be unscoped so they apply after detachment. */
 .z-cascader-popup {
     position: absolute;
-    background-color: var(--zk-color-surface);
+    background-color: var(--zk-cascader-popup-bg);
     border: 1px solid var(--zk-color-outline-variant);
-    border-radius: var(--zk-shape-menu);
+    border-radius: var(--zk-cascader-popup-radius);
     overflow: hidden;
     white-space: nowrap;
 }
@@ -133,7 +133,7 @@
     user-select: none;
     font-family: var(--zk-typescale-font-family);
     font-size: var(--zk-typescale-body-medium-size);
-    color: var(--zk-color-on-surface);
+    color: var(--zk-cascader-fg);
     box-sizing: border-box;
     transition: background-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
 }
@@ -144,7 +144,7 @@
 }
 
 .z-cascader-item.z-cascader-selected {
-    color: var(--zk-color-primary);
+    color: var(--zk-cascader-accent);
 }
 
 /* expand chevron on items that have children — MD3 trailing-icon slot: anchored at

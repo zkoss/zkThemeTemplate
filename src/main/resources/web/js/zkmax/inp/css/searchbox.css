@@ -29,10 +29,10 @@
     position: relative;
     min-height: var(--zk-control-height);
     padding: 0 var(--zk-spacing-3);
-    border: 1px solid var(--zk-color-outline);
-    border-radius: var(--zk-shape-input);
-    background-color: var(--zk-color-surface);
-    color: var(--zk-color-on-surface);
+    border: 1px solid var(--zk-searchbox-border-color);
+    border-radius: var(--zk-searchbox-radius);
+    background-color: var(--zk-searchbox-bg);
+    color: var(--zk-searchbox-fg);
     font-family: var(--zk-typescale-font-family);
     font-size: var(--zk-typescale-body-medium-size);
     box-sizing: border-box;
@@ -42,13 +42,13 @@
 }
 
 .z-searchbox:hover {
-    border-color: var(--zk-color-on-surface);
+    border-color: var(--zk-searchbox-border-color-hover);
 }
 
 .z-searchbox-focus,
 .z-searchbox-open {
-    border-color: var(--zk-color-primary);
-    box-shadow: 0 0 0 1px var(--zk-color-primary);
+    border-color: var(--zk-searchbox-border-color-focus);
+    box-shadow: 0 0 0 1px var(--zk-searchbox-border-color-focus);
     transition: none;
 }
 
@@ -130,9 +130,9 @@
     flex-direction: column;
     box-sizing: border-box;
     padding: var(--zk-spacing-2);
-    background-color: var(--zk-color-surface);
-    color: var(--zk-color-on-surface);
-    border-radius: var(--zk-shape-corner-medium);
+    background-color: var(--zk-searchbox-popup-bg);
+    color: var(--zk-searchbox-fg);
+    border-radius: var(--zk-searchbox-popup-radius);
     box-shadow: var(--zk-elevation-3);
     font-family: var(--zk-typescale-font-family);
     font-size: var(--zk-typescale-body-medium-size);
@@ -156,7 +156,7 @@
     border: 1px solid var(--zk-color-outline);
     border-radius: var(--zk-shape-input);
     background-color: var(--zk-color-surface);
-    color: var(--zk-color-on-surface);
+    color: var(--zk-searchbox-fg);
     font-family: inherit;
     font-size: inherit;
     outline: none;
@@ -188,7 +188,7 @@
     padding: var(--zk-spacing-2) var(--zk-spacing-3);
     border-radius: var(--zk-shape-corner-small);
     cursor: pointer;
-    color: var(--zk-color-on-surface);
+    color: var(--zk-searchbox-fg);
     transition: background-color var(--zk-motion-duration-short2) var(--zk-motion-easing-standard);
 }
 
@@ -208,12 +208,12 @@
  * chip family (secondary-container) — those are filter tags, not list rows.
  * See reference/selected-state-families.md. */
 .z-searchbox-selected {
-    color: var(--zk-color-on-primary-container);
-    background-color: var(--zk-color-primary-container);
+    color: var(--zk-searchbox-selected-fg);
+    background-color: var(--zk-searchbox-selected-bg);
 }
 
 .z-searchbox-selected:hover {
-    background-color: color-mix(in srgb, var(--zk-color-on-primary-container) 8%, var(--zk-color-primary-container));
+    background-color: color-mix(in srgb, var(--zk-searchbox-selected-fg) 8%, var(--zk-searchbox-selected-bg));
 }
 
 /* ── Multi-select checkbox icon (only rendered when multiple="true") ─── */

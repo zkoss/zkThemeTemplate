@@ -44,8 +44,8 @@
     position: absolute;
     display: flex;
     flex-direction: column;
-    background-color: var(--zk-color-surface);
-    box-shadow: var(--zk-elevation-3);
+    background-color: var(--zk-drawer-bg);
+    box-shadow: var(--zk-drawer-elevation);
     overflow: hidden;
     font-family: var(--zk-typescale-font-family);
     transition: transform var(--zk-motion-duration-medium2) var(--zk-motion-easing-emphasized);
@@ -104,11 +104,11 @@
     align-items: center;
     padding: 16px 24px;
     flex-shrink: 0;
-    border-bottom: 1px solid var(--zk-color-outline-variant);
+    border-bottom: 1px solid var(--zk-drawer-border-color);
     font-size: var(--zk-typescale-title-medium-size);
     font-weight: var(--zk-typescale-title-medium-weight);
     line-height: var(--zk-typescale-title-medium-line-height);
-    color: var(--zk-color-on-surface);
+    color: var(--zk-drawer-header-fg);
 }
 
 /* ─── Close button (closable=true) ───────────────────────────────────────────
@@ -136,7 +136,7 @@
 }
 
 .z-drawer-close:hover {
-    background-color: var(--zk-color-surface-container);
+    background-color: var(--zk-drawer-close-hover-bg);
     color: var(--zk-color-on-surface);
 }
 

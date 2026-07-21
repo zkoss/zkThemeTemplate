@@ -224,6 +224,25 @@
         <bandbox/>
     </div>
 
+    <!-- Daterangebox (EE, zkmax): two-ended date-range picker field + range-calendar popup.
+         Same wrapper-border knob vocabulary as datebox/timebox/spinner/bandbox (bg/fg/radius,
+         per-state border color, plus a popup-bg/popup-radius pair); the trigger button's
+         radius reuses the same radius knob. Invalid state stays on the color-error token,
+         not knob-driven (same convention as datebox). -->
+    <zscript>
+        java.util.Date daterangeThemingBegin = new java.util.Date(125, 0, 10);  // 2025-01-10
+        java.util.Date daterangeThemingEnd   = new java.util.Date(125, 0, 15);  // 2025-01-15
+    </zscript>
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Daterangebox (default)</div>
+    <div sclass="z-hstack z-mb-6 z-align-center">
+        <daterangebox beginValue="${daterangeThemingBegin}" endValue="${daterangeThemingEnd}"/>
+    </div>
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Daterangebox (regional override)</div>
+    <div sclass="z-hstack z-mb-8 z-align-center z-p-4 z-bg-surface-variant z-rounded"
+         style="--zk-daterangebox-radius:0px; --zk-daterangebox-border-color:#6750a4">
+        <daterangebox beginValue="${daterangeThemingBegin}" endValue="${daterangeThemingEnd}"/>
+    </div>
+
     <!-- Tab (tabbox): nav chrome + active accent -->
     <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Tabbox (default)</div>
     <div sclass="z-mb-6">
@@ -562,6 +581,122 @@
     <div sclass="z-hstack z-mb-8 z-align-center z-p-4 z-bg-surface-variant z-rounded"
          style="--zk-a-fg:#6750a4">
         <a href="https://www.zkoss.org" label="Scoped Link"/>
+    </div>
+
+    <!-- Timepicker (EE, zkmax): outlined time field + time-list popup. Same
+         wrapper-border knob vocabulary as datebox/timebox/spinner/bandbox
+         (bg/fg/radius, per-state border color, plus a popup-bg/popup-radius
+         pair); the clock-trigger button's radius reuses the same radius knob.
+         Invalid state stays on the color-error token, not knob-driven (same
+         convention as datebox/timebox). readonly="false" works around
+         ZK-6122 (a bare <timepicker/> renders readonly=true on the client). -->
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Timepicker (default)</div>
+    <div sclass="z-hstack z-mb-6 z-align-center">
+        <timepicker format="HH:mm" readonly="false"/>
+    </div>
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Timepicker (regional override)</div>
+    <div sclass="z-hstack z-mb-8 z-align-center z-p-4 z-bg-surface-variant z-rounded"
+         style="--zk-timepicker-radius:0px; --zk-timepicker-border-color:#6750a4">
+        <timepicker format="HH:mm" readonly="false"/>
+    </div>
+
+    <!-- Chosenbox (EE, zkmax): multi-select input field + option popup. Same
+         wrapper-border knob vocabulary as datebox/timebox/spinner/bandbox/
+         daterangebox/timepicker (bg/fg/radius, per-state border color, plus a
+         popup-bg/popup-radius pair); zk-chosenbox-fg covers both the search
+         input's text and each chip's text (same value today). Selected chips
+         get their own resting/defining-state fill pair: zk-chosenbox-item-bg
+         is the resting fill, zk-chosenbox-item-focus-bg is the fill a chip
+         swaps to once clicked (armed for keyboard delete) — the defining
+         state, same "one knob per state" precedent as listbox/tree's
+         selected-bg. A pre-selected model gives two chips to theme. -->
+    <zscript>
+        org.zkoss.zul.ListModelList chosenboxThemingModel =
+            new org.zkoss.zul.ListModelList(new String[]{"Apple", "Banana", "Cherry"});
+        chosenboxThemingModel.setMultiple(true);
+        chosenboxThemingModel.addToSelection(chosenboxThemingModel.get(0));
+        chosenboxThemingModel.addToSelection(chosenboxThemingModel.get(1));
+    </zscript>
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Chosenbox (default)</div>
+    <div sclass="z-hstack z-mb-6 z-align-center">
+        <chosenbox model="${chosenboxThemingModel}" width="220px"/>
+    </div>
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Chosenbox (regional override)</div>
+    <div sclass="z-hstack z-mb-8 z-align-center z-p-4 z-bg-surface-variant z-rounded"
+         style="--zk-chosenbox-radius:0px; --zk-chosenbox-border-color:#6750a4;
+                --zk-chosenbox-item-bg:#efe6ff; --zk-chosenbox-item-focus-bg:#6750a4">
+        <chosenbox model="${chosenboxThemingModel}" width="220px"/>
+    </div>
+
+    <!-- Cascader (EE, zkmax): read-only trigger + right-expanding tree popup.
+         Same wrapper-border knob vocabulary as datebox/timebox/spinner/
+         bandbox/daterangebox/timepicker/chosenbox (bg/fg/radius, per-state
+         border color, plus a popup-bg/popup-radius pair); zk-cascader-fg
+         covers both the trigger's selected-path label text and each popup
+         item's text (same value today). zk-cascader-accent is the defining
+         state: the selected item's text color inside the popup. A
+         pre-selected model gives the trigger a visible label to theme. -->
+    <zscript>
+        org.zkoss.zul.DefaultTreeNode cascaderThemingLeaf = new org.zkoss.zul.DefaultTreeNode("Kyoto");
+        org.zkoss.zul.DefaultTreeModel cascaderThemingModel = new org.zkoss.zul.DefaultTreeModel(
+            new org.zkoss.zul.DefaultTreeNode("ROOT", java.util.Arrays.asList(new org.zkoss.zul.TreeNode[]{
+                new org.zkoss.zul.DefaultTreeNode("Japan", java.util.Arrays.asList(new org.zkoss.zul.TreeNode[]{
+                    new org.zkoss.zul.DefaultTreeNode("Tokyo"), cascaderThemingLeaf}))
+            })));
+        cascaderThemingModel.addToSelection(cascaderThemingLeaf);
+    </zscript>
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Cascader (default)</div>
+    <div sclass="z-hstack z-mb-6 z-align-center">
+        <cascader model="${cascaderThemingModel}" width="200px"/>
+    </div>
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Cascader (regional override)</div>
+    <div sclass="z-hstack z-mb-8 z-align-center z-p-4 z-bg-surface-variant z-rounded"
+         style="--zk-cascader-radius:0px; --zk-cascader-border-color:#6750a4; --zk-cascader-fg:#6750a4">
+        <cascader model="${cascaderThemingModel}" width="200px"/>
+    </div>
+
+    <!-- Searchbox (EE, zkmax): multi-select dropdown trigger + detached search
+         popup. Same wrapper-border knob vocabulary as datebox/timebox/spinner/
+         bandbox/daterangebox/timepicker/chosenbox/cascader (bg/fg/radius,
+         per-state border color, plus a popup-bg/popup-radius pair);
+         zk-searchbox-fg covers the trigger's selected-label text, the popup's
+         own text, the search input's text, and each item's text (same value
+         today). The selected item is the defining state:
+         zk-searchbox-selected-bg / -fg (the LIST-ROW family, NOT the chip
+         family — see doc/contracts/searchbox.md). A pre-selected model gives
+         the trigger a visible label to theme. -->
+    <zscript>
+        org.zkoss.zul.ListModelList searchboxThemingModel =
+            new org.zkoss.zul.ListModelList(new String[]{"Apple", "Banana", "Cherry"});
+        searchboxThemingModel.addToSelection(searchboxThemingModel.get(0));
+    </zscript>
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Searchbox (default)</div>
+    <div sclass="z-hstack z-mb-6 z-align-center">
+        <searchbox model="${searchboxThemingModel}" width="200px"/>
+    </div>
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Searchbox (regional override)</div>
+    <div sclass="z-hstack z-mb-8 z-align-center z-p-4 z-bg-surface-variant z-rounded"
+         style="--zk-searchbox-radius:0px; --zk-searchbox-border-color:#6750a4; --zk-searchbox-fg:#6750a4">
+        <searchbox model="${searchboxThemingModel}" width="200px"/>
+    </div>
+
+    <!-- Drawer (EE, zkmax): sliding side-sheet panel + header + close button.
+         Knobs cover the panel fill, its static elevation (every position gets
+         the same shadow, unlike window's mode-driven elevation), the header's
+         divider color and text color, and the close button's hover fill.
+         Drawer.prototype.setVisible() reparents the ENTIRE .z-drawer root to
+         the floating root (document.body) on open() and moves it back on
+         close() (confirmed empirically: an open drawer's parentElement is
+         BODY, not its authored ZUL ancestor), so a regional (container)
+         override cannot reach it while open — same "not regionally
+         demonstrable" class as messagebox/popup, a different root cause each
+         time. Only the whole-app :root override applies (see the tracker). -->
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Drawer (default)</div>
+    <div sclass="z-hstack z-mb-8">
+        <button label="Open Drawer" onClick="drawerTheming.open()"/>
+        <drawer id="drawerTheming" title="Component Theming Demo" closable="true">
+            <div sclass="z-p-2">Default drawer, zero override applied.</div>
+        </drawer>
     </div>
 </div>
 </zk>

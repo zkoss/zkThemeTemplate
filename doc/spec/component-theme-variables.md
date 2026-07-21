@@ -348,6 +348,161 @@ internal stepper/divider lines + datebox's nested timezone `<select>` keep their
 | `--zk-bandbox-popup-bg` | `var(--zk-color-surface)` | band popup surface |
 | `--zk-bandbox-popup-radius` | `var(--zk-shape-menu)` | band popup corners |
 
+### Daterangebox — shipped
+
+Two-ended date-range picker field + range-calendar popup (EE, `zkmax/db/daterangebox.css`).
+Same **wrapper-border** model as datebox/timebox/spinner/bandbox above: the border sits on the
+root `.z-daterangebox` and focus is an inset ring (Mechanism A — see
+`reference/focus-affordance-no-layout-shift.md`), so `--zk-daterangebox-border-color-focus` tints
+both the outline and the ring. The trigger button's `border-radius` reuses the same
+`--zk-daterangebox-radius` knob (it caps one corner of the shared field). Invalid state stays on
+`--zk-color-error` (not a knob, same convention as datebox); disabled's surface/border likewise
+stay on base tokens, not knob-driven. The range-highlight fills (begin/mid/end/preview-mid/
+preview-end `::before` cells), the popup footer's Clear/Today/Cancel buttons, and the
+begin/end input separator stay on base tokens — secondary sub-features kept out of the curated
+surface (same convention as calendar/toolbar's minor sub-features).
+
+| Knob | Default | Scope |
+|------|---------|-------|
+| `--zk-daterangebox-bg` | `var(--zk-color-surface)` | wrapper fill |
+| `--zk-daterangebox-fg` | `var(--zk-color-on-surface)` | begin/end input text |
+| `--zk-daterangebox-radius` | `var(--zk-shape-corner-extra-small)` | wrapper + trigger-button corners |
+| `--zk-daterangebox-border-color` | `var(--zk-color-outline)` | resting outline |
+| `--zk-daterangebox-border-color-hover` | `var(--zk-color-on-surface)` | hover outline |
+| `--zk-daterangebox-border-color-focus` | `var(--zk-color-primary)` | focus outline + inset ring |
+| `--zk-daterangebox-popup-bg` | `var(--zk-color-surface)` | range-calendar popup surface |
+| `--zk-daterangebox-popup-radius` | `var(--zk-shape-menu)` | range-calendar popup corners |
+
+### Timepicker — shipped
+
+Composite time-input field + time-list popup (PE, `zkmax/inp/timepicker.css`). Same
+**wrapper-border** model as datebox/timebox/spinner/bandbox/daterangebox above: the border sits on
+the root `.z-timepicker` and focus is an inset ring (Mechanism A — see
+`reference/focus-affordance-no-layout-shift.md`), so `--zk-timepicker-border-color-focus` tints
+both the outline and the ring. The clock trigger button's `border-radius` reuses the same
+`--zk-timepicker-radius` knob (it caps one corner of the shared field, same convention as the
+datebox/daterangebox trigger buttons). Invalid state (`:has(.z-timepicker-invalid)`) stays on
+`--zk-color-error` (not a knob, same convention as datebox/timebox); the clock button's hover fill
+(`color-mix` on-surface 8%) and disabled's opacity fade likewise stay on base tokens, not
+knob-driven (same convention as button/input). The popup's `.z-timepicker-option`/`-selected` text
+and hover fill stay on base tokens — a secondary sub-feature kept out of the curated surface (same
+convention as calendar/toolbar's minor sub-features).
+
+| Knob | Default | Scope |
+|------|---------|-------|
+| `--zk-timepicker-bg` | `var(--zk-color-surface)` | wrapper fill |
+| `--zk-timepicker-fg` | `var(--zk-color-on-surface)` | input text |
+| `--zk-timepicker-radius` | `var(--zk-shape-corner-extra-small)` | wrapper + trigger-button corners |
+| `--zk-timepicker-border-color` | `var(--zk-color-outline)` | resting outline |
+| `--zk-timepicker-border-color-hover` | `var(--zk-color-on-surface)` | hover outline |
+| `--zk-timepicker-border-color-focus` | `var(--zk-color-primary)` | focus outline + inset ring |
+| `--zk-timepicker-popup-bg` | `var(--zk-color-surface)` | time-list popup surface |
+| `--zk-timepicker-popup-radius` | `var(--zk-shape-menu)` | time-list popup corners |
+
+### Chosenbox — shipped
+
+Multi-select input field + option popup (EE, `zkmax/inp/css/chosenbox.css`). Same
+**wrapper-border** model as datebox/timebox/spinner/bandbox/daterangebox/timepicker above: the
+border sits on the root `.z-chosenbox` and focus (`.z-chosenbox-focus`) is a `box-shadow` inset
+ring, so `--zk-chosenbox-border-color-focus` tints both the outline and the ring.
+`--zk-chosenbox-fg` covers **both** the search input's text (`.z-chosenbox-input`) **and** each
+selected chip's text (`.z-chosenbox-item-content`) — both read `var(--zk-color-on-surface)`
+today, so one shared knob keeps them in lockstep, the same "one knob, several roles" precedent as
+tab/calendar's accent. The selected chip has its own resting/defining-state fill pair:
+`--zk-chosenbox-item-bg` is the resting chip fill (`.z-chosenbox-item`), and
+`--zk-chosenbox-item-focus-bg` is the fill a chip swaps to once clicked and armed for keyboard
+delete (`.z-chosenbox-item-focus`) — the defining state, same "one knob per state" precedent as
+listbox/tree's `-selected-bg`. The delete-button's hover fill, the popup option's hover fill, and
+the creatable-option accent stay on base tokens — secondary sub-features kept out of the curated
+surface (same convention as calendar/toolbar's minor sub-features). Disabled
+(`.z-chosenbox-disabled`) stays on its own surface token, not knob-driven (same convention as
+input/button).
+
+| Knob | Default | Scope |
+|------|---------|-------|
+| `--zk-chosenbox-bg` | `var(--zk-color-surface)` | wrapper fill |
+| `--zk-chosenbox-fg` | `var(--zk-color-on-surface)` | search-input text + selected-chip text |
+| `--zk-chosenbox-radius` | `var(--zk-shape-input)` | wrapper corners |
+| `--zk-chosenbox-border-color` | `var(--zk-color-outline)` | resting outline |
+| `--zk-chosenbox-border-color-hover` | `var(--zk-color-on-surface)` | hover outline |
+| `--zk-chosenbox-border-color-focus` | `var(--zk-color-primary)` | focus outline + inset ring |
+| `--zk-chosenbox-popup-bg` | `var(--zk-color-surface)` | option-popup surface |
+| `--zk-chosenbox-popup-radius` | `var(--zk-shape-menu)` | option-popup corners |
+| `--zk-chosenbox-item-bg` | `var(--zk-color-surface-container-high)` | selected-chip resting fill |
+| `--zk-chosenbox-item-focus-bg` | `var(--zk-color-primary-container)` | selected-chip armed-for-delete fill |
+
+### Cascader — shipped
+
+Read-only trigger field (not an `<input>` — shows the selected-path text or a placeholder,
+`.z-cascader`) + a right-expanding tree popup (EE, `zkmax/inp/css/cascader.css`). Same
+**wrapper-border** model as datebox/timebox/spinner/bandbox/daterangebox/timepicker/chosenbox
+above: the border sits on the root `.z-cascader` and focus/open (`.z-cascader-focus` /
+`.z-cascader-open`, one shared rule) is a `box-shadow` inset ring, so
+`--zk-cascader-border-color-focus` tints both the outline and the ring. `--zk-cascader-fg` covers
+**both** the trigger's selected-path label (`.z-cascader-label`) **and** each popup item's text
+(`.z-cascader-item`) — both read `var(--zk-color-on-surface)` today, the same "one knob, several
+roles" precedent as chosenbox's `fg`. `--zk-cascader-accent` is the component's one path-selection
+signal: the currently-selected node's text color (`.z-cascader-item.z-cascader-selected`), the
+defining state. The placeholder text, the trigger/item icons, the item hover/active fill (a
+literal `rgba`), the cave-column divider, and the popup's own `border-color` stay on base tokens —
+secondary sub-features kept out of the curated surface (same convention as
+calendar/toolbar/timepicker's minor sub-features). Disabled (`.z-cascader-disabled`) dims via
+`opacity` only, not knob-driven (same convention as button/input/rating).
+
+| Knob | Default | Scope |
+|------|---------|-------|
+| `--zk-cascader-bg` | `var(--zk-color-surface)` | wrapper fill |
+| `--zk-cascader-fg` | `var(--zk-color-on-surface)` | trigger's selected-path text + popup item text |
+| `--zk-cascader-radius` | `var(--zk-shape-input)` | wrapper corners |
+| `--zk-cascader-border-color` | `var(--zk-color-outline)` | resting outline |
+| `--zk-cascader-border-color-hover` | `var(--zk-color-on-surface)` | hover outline |
+| `--zk-cascader-border-color-focus` | `var(--zk-color-primary)` | focus/open outline + inset ring |
+| `--zk-cascader-popup-bg` | `var(--zk-color-surface)` | tree-popup surface |
+| `--zk-cascader-popup-radius` | `var(--zk-shape-menu)` | tree-popup corners |
+| `--zk-cascader-accent` | `var(--zk-color-primary)` | selected-path node text |
+
+### Searchbox — shipped
+
+Multi-select dropdown trigger field (not an `<input>` — shows the selected-label text or a
+placeholder, `.z-searchbox`) + a detached search popup (EE, `zkmax/inp/css/searchbox.css`). Same
+**wrapper-border** model as datebox/timebox/spinner/bandbox/daterangebox/timepicker/chosenbox/
+cascader above: the border sits on the root `.z-searchbox` and focus/open is a `box-shadow` inset
+ring (Mechanism A), so `--zk-searchbox-border-color-focus` tints both the outline and the ring.
+`--zk-searchbox-fg` covers **four** roles: the trigger's selected-label text
+(`.z-searchbox-label`), the popup's own text color, the search input's text, and each
+(non-selected) item's text — all four read `var(--zk-color-on-surface)` today, the same "one
+knob, several roles" precedent as chosenbox/cascader's `fg`. The selected item is the component's
+one defining state, and per `doc/contracts/searchbox.md` it belongs to the **LIST-ROW** selection
+family (primary-container fill + paired text — NOT the chip/secondary-container family), so it
+gets its own pair: `--zk-searchbox-selected-bg` / `-selected-fg` (same pairing precedent as
+combobox's `-selected-bg`/`-fg`); the selected item's hover fill (`color-mix`) also reads this
+pair, so an override stays tonally consistent. The placeholder text, trigger/item icons, item
+hover/keyboard-active background, the nested search input's own bg/border/radius, and the
+multi-select check-icon's fill stay on base tokens — secondary sub-features kept out of the
+curated surface (same convention as chosenbox/cascader's minor sub-features). Disabled dims via
+opacity (plus its own surface token), not knob-driven (same convention as button/input).
+
+**CTV-3 scope note** (same convention as combobox/datebox/bandbox/daterangebox/timepicker/
+chosenbox/cascader's option popups): `.z-searchbox-popup` is reparented to `<body>` via
+`makeVParent()` on open, so the region/whole-app assertions cover only the trigger field left in
+place (wrapper `border-radius`/`border-color` and `.z-searchbox-label`'s `fg`), not the
+reparented popup or its selected item — the `popup-bg`/`-popup-radius`/`-selected-bg`/
+`-selected-fg` knobs are declared and consumed but not individually asserted, matching the
+existing treatment of the other wrapper-border family members' popup knobs.
+
+| Knob | Default | Scope |
+|------|---------|-------|
+| `--zk-searchbox-bg` | `var(--zk-color-surface)` | wrapper fill |
+| `--zk-searchbox-fg` | `var(--zk-color-on-surface)` | trigger's selected-label text + popup text + search-input text + item text |
+| `--zk-searchbox-radius` | `var(--zk-shape-input)` | wrapper corners |
+| `--zk-searchbox-border-color` | `var(--zk-color-outline)` | resting outline |
+| `--zk-searchbox-border-color-hover` | `var(--zk-color-on-surface)` | hover outline |
+| `--zk-searchbox-border-color-focus` | `var(--zk-color-primary)` | focus/open outline + inset ring |
+| `--zk-searchbox-popup-bg` | `var(--zk-color-surface)` | search-popup surface |
+| `--zk-searchbox-popup-radius` | `var(--zk-shape-corner-medium)` | search-popup corners |
+| `--zk-searchbox-selected-bg` | `var(--zk-color-primary-container)` | selected-item fill (+ hover) |
+| `--zk-searchbox-selected-fg` | `var(--zk-color-on-primary-container)` | selected-item text |
+
 ### Tab (tabbox) — shipped
 
 Nav chrome + active accent. State is a `::before` overlay; `--zk-tab-accent` colors the
@@ -749,6 +904,42 @@ works normally — unlike messagebox/popup's structural exceptions.
 |------|---------|-------|
 | `--zk-a-fg` | `var(--zk-color-primary)` | resting + hover text color |
 
+### Drawer — shipped
+
+MD3 side-sheet panel (EE, `zkmax/wgt/css/drawer.css`) — `.z-drawer` fixed-position container +
+`.z-drawer-mask` backdrop scrim + `.z-drawer-real` sliding panel + `.z-drawer-header` +
+`.z-drawer-close` button + `.z-drawer-container`/`-cave` content area. All four directions
+(left/right/top/bottom) share the same ruleset. `--zk-drawer-elevation` is a single **static**
+shadow — every position gets the same shadow, unlike window's mode-driven elevation (same
+convention as panel's resting-elevation knob). `--zk-drawer-border-color` is the header's bottom
+divider, the panel's only dividing line (same convention as window/panel's shared border-color
+knob). The close button's hover fill (`--zk-drawer-close-hover-bg`) mirrors the
+window/panel/groupbox icon-hover-bg precedent; its resting/hover text color and the backdrop
+mask's scrim color (a literal `rgba(0, 0, 0, 0.32)`, distinct from `--zk-color-scrim`'s `0.5`)
+stay on base tokens/literals, not knob-driven (same convention as window's icon text color and the
+shared modal-mask scrim). The panel renders edge-to-edge with no border-radius, so there is no
+radius knob.
+
+**CTV-3 (region scoping) is structurally N/A here, not a defect** — same exception class as
+messagebox/popup, for a different root cause. `Drawer.prototype.setVisible()` calls
+`zk.makeVParent()` on open (reparenting the **entire** `.z-drawer` root — header + real + close +
+mask together — to the floating root, `document.body`) and `undoVParent()` on close (confirmed in
+the compiled zkmax 10.4 widget bundle). Verified empirically: overriding
+`--zk-drawer-border-color`/`--zk-drawer-header-fg` on a container ancestor of the trigger button
+does not reach the open drawer (its `parentElement` is `BODY`, a sibling of the container, not a
+descendant); the same override at `:root` hits normally. Unlike the
+combobox/datebox/…/searchbox popup family — which reparents only the popup and leaves a trigger
+wrapper in place to assert region scoping against — drawer reparents its whole root, so there is
+no in-place remnant to test region scoping on; only the whole-app (`:root`) path is exercised.
+
+| Knob | Default | Scope |
+|------|---------|-------|
+| `--zk-drawer-bg` | `var(--zk-color-surface)` | sliding panel fill |
+| `--zk-drawer-border-color` | `var(--zk-color-outline-variant)` | header bottom divider |
+| `--zk-drawer-elevation` | `var(--zk-elevation-3)` | panel shadow (static — every direction, not mode-driven) |
+| `--zk-drawer-header-fg` | `var(--zk-color-on-surface)` | header title text |
+| `--zk-drawer-close-hover-bg` | `var(--zk-color-surface-container)` | close-button hover fill |
+
 ## Recipe — adding a component
 
 Validated by the button pilot; repeat per component (then update the
@@ -769,13 +960,15 @@ Validated by the button pilot; repeat per component (then update the
 ## Status
 
 - **Shipped**: button, input (textbox family), window, grid, listbox, tree, panel, groupbox,
-  combobox, datebox, timebox, spinner (+ doublespinner), bandbox, tab (tabbox), menu,
+  combobox, datebox, timebox, spinner (+ doublespinner), bandbox, daterangebox, timepicker, tab (tabbox), menu,
   avatar/avatar-group, chip (base hoisted; see caveat), badge (base hoisted; see caveat), rating,
   progressmeter, paging, combobutton, selectbox, inputgroup, calendar, toolbar, slider, checkbox
   (default mold only — see entry for the switch/toggle-mold and radio/radiogroup exclusions),
   messagebox (see entry for the CTV-3 structural exception), notification (untyped/default card
   only — see entry for the info/warning/error type-variant exclusion), toast (info-default
-  variant only — see entry for the warning/error type-variant exclusion), a (anchor).
+  variant only — see entry for the warning/error type-variant exclusion), a (anchor), chosenbox,
+  cascader, searchbox, drawer (see entry for the CTV-3 structural exception — whole-root
+  reparenting on open).
 - **Not exposed** (by design): purely structural/layout components (box, div, cell, separator,
   layouts) and content atoms (label, image) have no meaningful appearance knob — this excludes
   the anchor/link, which **is** exposed despite its similarly minimal text-only vocabulary (see

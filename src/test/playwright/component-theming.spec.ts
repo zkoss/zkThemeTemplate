@@ -208,6 +208,31 @@ test.describe('Component Theme Variables', () => {
     expect(await borderColorOf(def)).not.toBe(SCOPED_PURPLE);
   });
 
+  // ── daterangebox (EE, zkmax): two-ended date-range picker field + range-calendar
+  // popup. Same wrapper-border knob vocabulary as datebox/timebox/spinner/bandbox —
+  // radius + resting border-color are the observable A/B here (the trigger button's
+  // radius reuses the same radius knob). ────────────────────────────────────────
+  test('daterangebox — regional border/radius override, sibling untouched', async ({ page }) => {
+    const def = page.locator('.z-daterangebox').first();
+    const scoped = page.locator('div[style*="--zk-daterangebox-radius"] .z-daterangebox').first();
+
+    expect(await radiusOf(scoped)).toBe('0px');
+    expect(await borderColorOf(scoped)).toBe(SCOPED_PURPLE);
+
+    expect(await radiusOf(def)).toBe('4px'); // stock --zk-shape-corner-extra-small
+    expect(await borderColorOf(def)).not.toBe(SCOPED_PURPLE);
+  });
+
+  test('daterangebox — whole-app :root override wins (loaded after norm.css.dsp)', async ({ page }) => {
+    const def = page.locator('.z-daterangebox').first();
+    expect(await radiusOf(def)).toBe('4px'); // baseline before override
+
+    // An adopter's :root override, injected after the theme bundle, must win the
+    // cascade and reach every daterangebox instance, including the default one.
+    await page.addStyleTag({ content: ':root{--zk-daterangebox-radius:0px}' });
+    expect(await radiusOf(def)).toBe('0px');
+  });
+
   // ── tab: nav chrome + active accent (indicator + selected label) ──────────
   test('tabbox — regional accent/border override, sibling untouched', async ({ page }) => {
     const defBar = page.locator('.z-tabs').first();
@@ -704,5 +729,175 @@ test.describe('Component Theme Variables', () => {
     // cascade and reach every link instance, including the default one.
     await page.addStyleTag({ content: ':root{--zk-a-fg:#6750a4}' });
     expect(await colorOf(def)).toBe(SCOPED_PURPLE);
+  });
+
+  // ── timepicker (EE, zkmax): outlined time field + time-list popup. Same
+  // wrapper-border knob vocabulary as datebox/timebox/spinner/bandbox —
+  // radius + resting border-color are the observable A/B here (the
+  // clock-trigger button's radius reuses the same radius knob). ───────────
+  test('timepicker — regional border/radius override, sibling untouched', async ({ page }) => {
+    const def = page.locator('.z-timepicker').first();
+    const scoped = page.locator('div[style*="--zk-timepicker-radius"] .z-timepicker').first();
+
+    expect(await radiusOf(scoped)).toBe('0px');
+    expect(await borderColorOf(scoped)).toBe(SCOPED_PURPLE);
+
+    expect(await radiusOf(def)).toBe('4px'); // stock --zk-shape-corner-extra-small
+    expect(await borderColorOf(def)).not.toBe(SCOPED_PURPLE);
+  });
+
+  test('timepicker — whole-app :root override wins (loaded after norm.css.dsp)', async ({ page }) => {
+    const def = page.locator('.z-timepicker').first();
+    expect(await radiusOf(def)).toBe('4px'); // baseline before override
+
+    // An adopter's :root override, injected after the theme bundle, must win the
+    // cascade and reach every timepicker instance, including the default one.
+    await page.addStyleTag({ content: ':root{--zk-timepicker-radius:0px}' });
+    expect(await radiusOf(def)).toBe('0px');
+  });
+
+  // ── chosenbox (EE, zkmax): multi-select input field + option popup. Same
+  // wrapper-border knob vocabulary as datebox/timebox/spinner/bandbox/
+  // daterangebox/timepicker — radius + resting border-color are the
+  // observable A/B for the wrapper here. Selected chips get their own
+  // resting/defining-state fill pair (item-bg / item-focus-bg, the latter
+  // applied once a chip is clicked, armed for keyboard delete). ─────────────
+  test('chosenbox — regional border/radius/chip override, sibling untouched', async ({ page }) => {
+    const def = page.locator('.z-chosenbox').first();
+    const scoped = page.locator('div[style*="--zk-chosenbox-radius"] .z-chosenbox').first();
+
+    const defItem = def.locator('.z-chosenbox-item').first();
+    const scopedItem = scoped.locator('.z-chosenbox-item').first();
+
+    // Scoped wrapper picks up border/radius; scoped chip picks up the resting item-bg.
+    expect(await radiusOf(scoped)).toBe('0px');
+    expect(await borderColorOf(scoped)).toBe(SCOPED_PURPLE);
+    expect(await bgOf(scopedItem)).toBe('rgb(239, 230, 255)'); // #efe6ff item-bg override
+
+    // Clicking a chip arms it for delete (.z-chosenbox-item-focus) — the
+    // defining state — which should pick up the item-focus-bg override.
+    await scopedItem.click();
+    expect(await bgOf(scopedItem)).toBe(SCOPED_PURPLE);
+
+    // Sibling default is untouched — the override lives on the scoped box and
+    // is inherited only by its subtree, never leaking up to the default row.
+    expect(await radiusOf(def)).toBe('4px'); // stock --zk-shape-input
+    expect(await borderColorOf(def)).not.toBe(SCOPED_PURPLE);
+    expect(await bgOf(defItem)).not.toBe('rgb(239, 230, 255)');
+    await defItem.click();
+    expect(await bgOf(defItem)).not.toBe(SCOPED_PURPLE);
+  });
+
+  test('chosenbox — whole-app :root override wins (loaded after norm.css.dsp)', async ({ page }) => {
+    const def = page.locator('.z-chosenbox').first();
+    expect(await radiusOf(def)).toBe('4px'); // baseline before override
+
+    // An adopter's :root override, injected after the theme bundle, must win the
+    // cascade and reach every chosenbox instance, including the default one.
+    await page.addStyleTag({ content: ':root{--zk-chosenbox-radius:0px}' });
+    expect(await radiusOf(def)).toBe('0px');
+  });
+
+  // ── cascader (EE, zkmax): read-only trigger + right-expanding tree popup.
+  // Same wrapper-border knob vocabulary as datebox/timebox/spinner/bandbox/
+  // daterangebox/timepicker/chosenbox — radius + resting border-color are
+  // the observable A/B for the wrapper here; zk-cascader-fg also colors the
+  // trigger's selected-path label text (a pre-selected model gives it
+  // visible content). ──────────────────────────────────────────────────────
+  test('cascader — regional border/radius/fg override, sibling untouched', async ({ page }) => {
+    const def = page.locator('.z-cascader').first();
+    const scoped = page.locator('div[style*="--zk-cascader-radius"] .z-cascader').first();
+
+    const defLabel = def.locator('.z-cascader-label').first();
+    const scopedLabel = scoped.locator('.z-cascader-label').first();
+
+    // Scoped trigger picks up border/radius; scoped label picks up the fg override.
+    expect(await radiusOf(scoped)).toBe('0px');
+    expect(await borderColorOf(scoped)).toBe(SCOPED_PURPLE);
+    expect(await colorOf(scopedLabel)).toBe(SCOPED_PURPLE);
+
+    // Sibling default is untouched — the override lives on the scoped box and
+    // is inherited only by its subtree, never leaking up to the default row.
+    expect(await radiusOf(def)).toBe('4px'); // stock --zk-shape-input
+    expect(await borderColorOf(def)).not.toBe(SCOPED_PURPLE);
+    expect(await colorOf(defLabel)).not.toBe(SCOPED_PURPLE);
+  });
+
+  test('cascader — whole-app :root override wins (loaded after norm.css.dsp)', async ({ page }) => {
+    const def = page.locator('.z-cascader').first();
+    expect(await radiusOf(def)).toBe('4px'); // baseline before override
+
+    // An adopter's :root override, injected after the theme bundle, must win the
+    // cascade and reach every cascader instance, including the default one.
+    await page.addStyleTag({ content: ':root{--zk-cascader-radius:0px}' });
+    expect(await radiusOf(def)).toBe('0px');
+  });
+
+  // ── searchbox (EE, zkmax): multi-select dropdown trigger + detached search
+  // popup. Same wrapper-border knob vocabulary as datebox/timebox/spinner/
+  // bandbox/daterangebox/timepicker/chosenbox/cascader — radius + resting
+  // border-color are the observable A/B for the wrapper here; zk-searchbox-fg
+  // also colors the trigger's selected-label text (a pre-selected model gives
+  // it visible content). ──────────────────────────────────────────────────────
+  test('searchbox — regional border/radius/fg override, sibling untouched', async ({ page }) => {
+    const def = page.locator('.z-searchbox').first();
+    const scoped = page.locator('div[style*="--zk-searchbox-radius"] .z-searchbox').first();
+
+    const defLabel = def.locator('.z-searchbox-label').first();
+    const scopedLabel = scoped.locator('.z-searchbox-label').first();
+
+    // Scoped trigger picks up border/radius; scoped label picks up the fg override.
+    expect(await radiusOf(scoped)).toBe('0px');
+    expect(await borderColorOf(scoped)).toBe(SCOPED_PURPLE);
+    expect(await colorOf(scopedLabel)).toBe(SCOPED_PURPLE);
+
+    // Sibling default is untouched — the override lives on the scoped box and
+    // is inherited only by its subtree, never leaking up to the default row.
+    expect(await radiusOf(def)).toBe('4px'); // stock --zk-shape-input
+    expect(await borderColorOf(def)).not.toBe(SCOPED_PURPLE);
+    expect(await colorOf(defLabel)).not.toBe(SCOPED_PURPLE);
+  });
+
+  test('searchbox — whole-app :root override wins (loaded after norm.css.dsp)', async ({ page }) => {
+    const def = page.locator('.z-searchbox').first();
+    expect(await radiusOf(def)).toBe('4px'); // baseline before override
+
+    // An adopter's :root override, injected after the theme bundle, must win the
+    // cascade and reach every searchbox instance, including the default one.
+    await page.addStyleTag({ content: ':root{--zk-searchbox-radius:0px}' });
+    expect(await radiusOf(def)).toBe('0px');
+  });
+
+  // ── drawer (EE, zkmax): sliding side-sheet panel + header + close button.
+  // Drawer.prototype.setVisible() reparents the ENTIRE .z-drawer root to the
+  // floating root (document.body) on open() and moves it back on close()
+  // (confirmed empirically: an open drawer's parentElement is BODY, not its
+  // authored ZUL ancestor) — so, like messagebox/popup (a different root
+  // cause each time), a REGIONAL (container) override cannot reach it; only
+  // the whole-app :root override applies. There is no "sibling untouched"
+  // test here for the same reason as messagebox/popup (see the tracker). ────
+  test('drawer — zero-regression defaults', async ({ page }) => {
+    await page.getByRole('button', { name: 'Open Drawer' }).click();
+    const real = page.locator('.z-drawer.z-drawer-open .z-drawer-real');
+    await expect(real).toBeVisible();
+
+    expect(await bgOf(real)).toBe('rgb(255, 255, 255)'); // stock --zk-color-surface
+    const header = real.locator('.z-drawer-header').first();
+    expect(await borderBottomColorOf(header)).toBe('rgba(0, 0, 0, 0.12)'); // stock --zk-color-outline-variant
+    expect(await colorOf(header)).toBe('rgba(0, 0, 0, 0.87)'); // stock --zk-color-on-surface
+  });
+
+  test('drawer — whole-app :root override wins (loaded after norm.css.dsp)', async ({ page }) => {
+    await page.getByRole('button', { name: 'Open Drawer' }).click();
+    const real = page.locator('.z-drawer.z-drawer-open .z-drawer-real');
+    await expect(real).toBeVisible();
+    const header = real.locator('.z-drawer-header').first();
+    expect(await colorOf(header)).not.toBe(SCOPED_PURPLE); // baseline before override
+
+    // An adopter's :root override, injected after the theme bundle, must win the
+    // cascade and reach the drawer even though it is not a descendant of any
+    // container in the page while open (setVisible() reparents it to document.body).
+    await page.addStyleTag({ content: ':root{--zk-drawer-header-fg:#6750a4}' });
+    expect(await colorOf(header)).toBe(SCOPED_PURPLE);
   });
 });
