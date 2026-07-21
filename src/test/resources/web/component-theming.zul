@@ -1,14 +1,14 @@
-<?page title="Component Theming API" contentType="text/html;charset=UTF-8"?>
+<?page title="Component Theme Variables" contentType="text/html;charset=UTF-8"?>
 <zk xmlns:h="native">
 <div sclass="z-p-8">
-    <div sclass="z-border-bottom z-text-xl z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Component Theming API</div>
+    <div sclass="z-border-bottom z-text-xl z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Component Theme Variables</div>
 
     <div sclass="z-text-sm z-text-secondary z-mb-8" style="max-width:60ch">
         Adopters restyle one component by setting its --zk-&lt;comp&gt;-* custom properties,
         either at :root (whole app) or on any container element (one region — descendants inherit it).
         Each pair below shows a stock "Default" and a scoped override box; the defaults reproduce
         stock Marble exactly. Pilot components: button, input, window, grid.
-        See doc/spec/component-theming-api.md.
+        See doc/spec/component-theme-variables.md.
     </div>
 
     <!-- Default: no override — proves zero regression -->
@@ -260,7 +260,7 @@
     <!-- Avatar (native): base defaults hoisted to :root → regionally overridable.
          Chip base is also hoisted for consistency, but ZK stamps a default severity
          class (z-chip-info) that sets the fill on the element, so chip is themed
-         per-severity / inline — see doc/spec/component-theming-api.md. -->
+         per-severity / inline — see doc/spec/component-theme-variables.md. -->
     <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Avatar + Chip (default)</div>
     <div sclass="z-hstack z-mb-6 z-align-center">
         <avatar label="AB"/>
@@ -274,7 +274,7 @@
 
     <!-- Badge (native): the default (info) fill flows through the base zk-badge-bg
          knob at :root, so a region override DOES reach a default badge; explicit
-         non-default severities pin their own fill. See component-theming-api spec. -->
+         non-default severities pin their own fill. See component-theme-variables spec. -->
     <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Badge (default + success)</div>
     <div sclass="z-hstack z-mb-6 z-align-center">
         <badge count="4"/>
@@ -285,6 +285,50 @@
          style="--zk-badge-bg:#6750a4">
         <badge count="4"/>
         <badge count="4" severity="success"/>
+    </div>
+
+    <!-- Rating: star glyph fill only (no bg/border/radius — icon-only, no
+         container box). Resting stars read the fg knob; selected/hover swap to
+         the accent knob (the defining state). -->
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Rating (default)</div>
+    <div sclass="z-hstack z-mb-6 z-align-center">
+        <rating rating="3"/>
+    </div>
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Rating (regional override)</div>
+    <div sclass="z-hstack z-mb-8 z-align-center z-p-4 z-bg-surface-variant z-rounded"
+         style="--zk-rating-accent:#6750a4">
+        <rating rating="3"/>
+    </div>
+
+    <!-- Progressmeter: MD3 linear progress — track fill + progress-bar fill knobs.
+         The color variants (z-progressmeter-secondary/-success/-warning/-error) keep
+         their own semantic colors via higher-specificity rules, same treatment as
+         button's color variants — not knob-driven. -->
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Progressmeter (default)</div>
+    <div sclass="z-hstack z-mb-6 z-align-center">
+        <progressmeter value="60" width="200px"/>
+    </div>
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Progressmeter (regional override)</div>
+    <div sclass="z-hstack z-mb-8 z-align-center z-p-4 z-bg-surface-variant z-rounded"
+         style="--zk-progressmeter-bg:#efe6ff; --zk-progressmeter-fill:#6750a4">
+        <progressmeter value="60" width="200px"/>
+    </div>
+
+    <!-- Paging: pager button shape/fg + selected (current-page) fill/text.
+         mold="os" is required to render numbered page buttons — the default
+         mold only shows prev/next + a jump-to-page input, with no
+         .z-paging-selected. The jump-to-page input (default mold only) has
+         its own bg/fg/border-color trio (see spec), not demoed on this page.
+         Disabled buttons are intentionally not knob-driven (same convention
+         as button/input). -->
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Paging (default)</div>
+    <div sclass="z-hstack z-mb-6 z-align-center">
+        <paging mold="os" totalSize="200" pageSize="10" activePage="4"/>
+    </div>
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Paging (regional override)</div>
+    <div sclass="z-hstack z-mb-8 z-align-center z-p-4 z-bg-surface-variant z-rounded"
+         style="--zk-paging-radius:4px; --zk-paging-selected-bg:#6750a4; --zk-paging-selected-fg:#ffffff">
+        <paging mold="os" totalSize="200" pageSize="10" activePage="4"/>
     </div>
 </div>
 </zk>

@@ -12,7 +12,7 @@
     padding: var(--zk-spacing-2) var(--zk-spacing-4);
     font-family: var(--zk-typescale-font-family);
     font-size: var(--zk-typescale-body-medium-size);
-    color: var(--zk-color-on-surface-variant);
+    color: var(--zk-paging-fg);
     box-sizing: border-box;
 }
 
@@ -43,8 +43,8 @@
     padding: 0 var(--zk-spacing-1);
     border: none;
     background: transparent;
-    color: var(--zk-color-on-surface-variant);
-    border-radius: var(--zk-shape-corner-full);
+    color: var(--zk-paging-fg);
+    border-radius: var(--zk-paging-radius);
     cursor: pointer;
     font-family: var(--zk-typescale-font-family);
     font-size: var(--zk-typescale-body-medium-size);
@@ -78,8 +78,8 @@
 
 /* ─── Active / selected page ────────────────────────────────────────────── */
 .z-paging-selected {
-    background-color: var(--zk-color-primary-container);
-    color: var(--zk-color-primary);
+    background-color: var(--zk-paging-selected-bg);
+    color: var(--zk-paging-selected-fg);
     font-weight: var(--zk-typescale-label-large-weight);
 }
 
@@ -166,7 +166,7 @@
     align-items: center;
     padding: 0 var(--zk-spacing-2);
     font-size: var(--zk-typescale-body-medium-size);
-    color: var(--zk-color-on-surface-variant);
+    color: var(--zk-paging-fg);
 }
 
 /* ─── Page text info ("1 / 10") ─────────────────────────────────────────── */
@@ -175,7 +175,7 @@
     align-items: center;
     padding: 0 var(--zk-spacing-2);
     font-size: var(--zk-typescale-body-medium-size);
-    color: var(--zk-color-on-surface-variant);
+    color: var(--zk-paging-fg);
     white-space: nowrap;
 }
 
@@ -193,12 +193,12 @@
     min-height: var(--zk-paging-control-size);
     width: 48px;
     text-align: center;
-    border: 1px solid var(--zk-color-outline);
+    border: 1px solid var(--zk-paging-input-border-color);
     border-radius: var(--zk-shape-corner-extra-small);
-    background-color: var(--zk-color-surface);
+    background-color: var(--zk-paging-input-bg);
     font-family: var(--zk-typescale-font-family);
     font-size: var(--zk-typescale-body-medium-size);
-    color: var(--zk-color-on-surface);
+    color: var(--zk-paging-input-fg);
     outline: none;
     padding: 0 var(--zk-spacing-1);
     box-sizing: border-box;

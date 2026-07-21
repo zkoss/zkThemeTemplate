@@ -49,7 +49,7 @@ export default defineConfig({
       use: { ...devices['Desktop Chrome'] },
     },
     {
-      // Component Theming API knob-contract regression (--zk-<comp>-* overrides).
+      // Component Theme Variables knob-contract regression (--zk-<comp>-* overrides).
       name: 'component-theming',
       testMatch: /component-theming\.spec\.ts/,
       use: { ...devices['Desktop Chrome'] },

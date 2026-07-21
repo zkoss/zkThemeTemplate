@@ -1,7 +1,7 @@
 import { test, expect, type Locator } from '@playwright/test';
 
-// Component Theming API — proof for the button pilot (Tier 1 #1, see
-// doc/spec/component-theming-api.md).
+// Component Theme Variables — proof for the button pilot (Tier 1 #1, see
+// doc/spec/component-theme-variables.md).
 // Verifies the --zk-button-* knob contract:
 //   1. a REGIONAL override (custom props on a container) restyles only that
 //      subtree's buttons, leaving sibling defaults untouched;
@@ -21,7 +21,7 @@ const borderColorOf = (loc: Locator) => loc.evaluate((el) => getComputedStyle(el
 const borderBottomColorOf = (loc: Locator) => loc.evaluate((el) => getComputedStyle(el).borderBottomColor);
 const colorOf = (loc: Locator) => loc.evaluate((el) => getComputedStyle(el).color);
 
-test.describe('component theming API — button', () => {
+test.describe('Component Theme Variables', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto(PAGE, { waitUntil: 'networkidle' });
     // Kill transitions so getComputedStyle reads settled values, not a start frame.
@@ -255,5 +255,83 @@ test.describe('component theming API — button', () => {
     expect(await bgOf(scopedSuccess)).not.toBe(SCOPED_PURPLE);
     // A default badge outside the region is untouched.
     expect(await bgOf(outsideDefault)).not.toBe(SCOPED_PURPLE);
+  });
+
+  // ── rating: star glyph fill only (no bg/border/radius). Resting stars read
+  // --zk-rating-fg; selected/hover swap to --zk-rating-accent (the defining state).
+  test('rating — regional accent override, sibling untouched', async ({ page }) => {
+    const def = page.locator('.z-rating').first();
+    const scoped = page.locator('div[style*="--zk-rating-accent"] .z-rating').first();
+
+    // Scoped rating's selected stars pick up the accent override.
+    expect(await colorOf(scoped.locator('.z-rating-selected').first())).toBe(SCOPED_PURPLE);
+
+    // Sibling default rating's selected stars are untouched.
+    expect(await colorOf(def.locator('.z-rating-selected').first())).not.toBe(SCOPED_PURPLE);
+  });
+
+  test('rating — whole-app :root override wins (loaded after norm.css.dsp)', async ({ page }) => {
+    const defSelected = page.locator('.z-rating').first().locator('.z-rating-selected').first();
+    expect(await colorOf(defSelected)).not.toBe(SCOPED_PURPLE); // baseline before override
+
+    // An adopter's :root override, injected after the theme bundle, must win the
+    // cascade and reach every rating instance, including the default one.
+    await page.addStyleTag({ content: ':root{--zk-rating-accent:#6750a4}' });
+    expect(await colorOf(defSelected)).toBe(SCOPED_PURPLE);
+  });
+
+  // ── progressmeter: MD3 linear progress (track + fill). Color variants
+  // (secondary/success/warning/error) keep their own semantic colors, same
+  // treatment as button's color variants — not knob-driven. ─────────────────
+  test('progressmeter — regional track/fill override, sibling untouched', async ({ page }) => {
+    const def = page.locator('.z-progressmeter').first();
+    const scoped = page.locator('div[style*="--zk-progressmeter-bg"] .z-progressmeter').first();
+
+    expect(await bgOf(scoped)).toBe('rgb(239, 230, 255)'); // #efe6ff track override
+    expect(await bgOf(scoped.locator('.z-progressmeter-image').first())).toBe(SCOPED_PURPLE);
+
+    expect(await bgOf(def)).not.toBe('rgb(239, 230, 255)');
+    expect(await bgOf(def.locator('.z-progressmeter-image').first())).not.toBe(SCOPED_PURPLE);
+  });
+
+  test('progressmeter — whole-app :root override wins (loaded after norm.css.dsp)', async ({ page }) => {
+    const defFill = page.locator('.z-progressmeter').first().locator('.z-progressmeter-image').first();
+    expect(await bgOf(defFill)).not.toBe(SCOPED_PURPLE); // baseline before override
+
+    // An adopter's :root override, injected after the theme bundle, must win the
+    // cascade and reach every progressmeter instance, including the default one.
+    await page.addStyleTag({ content: ':root{--zk-progressmeter-fill:#6750a4}' });
+    expect(await bgOf(defFill)).toBe(SCOPED_PURPLE);
+  });
+
+  // ── paging: pager button shape/fg + selected (current-page) fill/text.
+  // Demo uses mold="os" so numbered page buttons (and .z-paging-selected)
+  // render — the default mold only shows prev/next + a jump-to-page input,
+  // with no page numbers. Disabled buttons are intentionally not knob-driven
+  // (same convention as button/input). ──────────────────────────────────────
+  test('paging — regional radius/selected override, sibling untouched', async ({ page }) => {
+    const def = page.locator('.z-paging').first();
+    const scoped = page.locator('div[style*="--zk-paging-radius"] .z-paging').first();
+
+    const defSelected = def.locator('.z-paging-selected').first();
+    const scopedSelected = scoped.locator('.z-paging-selected').first();
+
+    expect(await radiusOf(scopedSelected)).toBe('4px');
+    expect(await bgOf(scopedSelected)).toBe(SCOPED_PURPLE);
+    expect(await colorOf(scopedSelected)).toBe('rgb(255, 255, 255)');
+
+    expect(await radiusOf(defSelected)).toBe('9999px'); // stock --zk-shape-corner-full
+    expect(await bgOf(defSelected)).not.toBe(SCOPED_PURPLE);
+    expect(await colorOf(defSelected)).not.toBe('rgb(255, 255, 255)');
+  });
+
+  test('paging — whole-app :root override wins (loaded after norm.css.dsp)', async ({ page }) => {
+    const defSelected = page.locator('.z-paging').first().locator('.z-paging-selected').first();
+    expect(await bgOf(defSelected)).not.toBe(SCOPED_PURPLE); // baseline before override
+
+    // An adopter's :root override, injected after the theme bundle, must win the
+    // cascade and reach every paging instance, including the default one.
+    await page.addStyleTag({ content: ':root{--zk-paging-selected-bg:#6750a4}' });
+    expect(await bgOf(defSelected)).toBe(SCOPED_PURPLE);
   });
 });

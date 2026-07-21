@@ -1,4 +1,4 @@
-/* Component-level theming API — per-component APPEARANCE knobs.
+/* Component Theme Variables — per-component APPEARANCE variables (informally "knobs").
  *
  * Lets an adopter restyle ONE component's look (color / border / radius / state)
  * WITHOUT forking the theme. Set these `--zk-<comp>-*` custom properties either
@@ -6,7 +6,7 @@
  * inherit it). The defaults below reproduce the stock Marble rendering EXACTLY,
  * so declaring nothing changes nothing; overriding is purely additive.
  *
- * ── Rules (full spec: doc/spec/component-theming-api.md) ────────────────────
+ * ── Rules (full spec: doc/spec/component-theme-variables.md) ────────────────
  *   1. Declared HERE at :root, NEVER on the component element. A custom property
  *      declared on .z-button itself would shadow a :root/region override for its
  *      own subtree — the same trap tokens/_sizing.css layer-3 documents.
@@ -224,4 +224,38 @@
     --zk-avatar-size:         40px;
     --zk-avatar-font-size:    var(--zk-typescale-label-large-size);
     --zk-avatargroup-overlap: -8px;
+
+    /* ── Rating — star glyph fill. No bg/border/radius (icon-only, no container
+       box). Resting stars read the fg knob; selected + hover swap to the accent
+       knob (the defining state). Disabled/readonly dim via opacity only, not
+       knob-driven, so the accent still shows through (dimmed) under an override. */
+    --zk-rating-fg:     var(--zk-color-outline);
+    --zk-rating-accent: var(--zk-color-primary);
+
+    /* ── Progressmeter — MD3 linear progress (track + fill) ──────────────
+       The color VARIANTS (.z-progressmeter-secondary/-success/-warning/-error)
+       keep their own semantic colors via higher-specificity rules (same
+       treatment as button's color variants); these knobs drive the default
+       (primary) bar. No border/text — an icon-less, two-layer bar, so the
+       knobs are the track fill, the fill-bar color, and the shared radius. */
+    --zk-progressmeter-bg:     var(--zk-color-primary-container);
+    --zk-progressmeter-fill:   var(--zk-color-primary);
+    --zk-progressmeter-radius: 2px;                     /* off-token literal (kept as default) */
+
+    /* ── Paging — pagination controls ────────────────────────────────────
+       State is a per-page background swap (selected/current page), not an
+       overlay — --zk-paging-selected-bg/-fg is the defining state (the
+       current page). --zk-paging-radius is the shared pill shape for every
+       pager button. The jump-to-page input (default mold only) gets its own
+       small fill/text/border set. Disabled buttons/input stay on
+       --zk-color-disabled* directly, not knob-driven (same convention as
+       button/input); the input's hover/focus border tints likewise stay on
+       base tokens (a minor sub-feature, kept out of the curated surface). */
+    --zk-paging-fg:                  var(--zk-color-on-surface-variant);
+    --zk-paging-radius:              var(--zk-shape-corner-full);
+    --zk-paging-selected-bg:         var(--zk-color-primary-container);
+    --zk-paging-selected-fg:         var(--zk-color-primary);
+    --zk-paging-input-bg:            var(--zk-color-surface);
+    --zk-paging-input-fg:            var(--zk-color-on-surface);
+    --zk-paging-input-border-color:  var(--zk-color-outline);
 }

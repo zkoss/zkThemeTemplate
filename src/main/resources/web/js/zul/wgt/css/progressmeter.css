@@ -12,8 +12,8 @@
 .z-progressmeter {
     width: 100%;
     height: 4px;
-    background-color: var(--zk-color-primary-container);
-    border-radius: 2px;
+    background-color: var(--zk-progressmeter-bg);
+    border-radius: var(--zk-progressmeter-radius);
     overflow: hidden;
     position: relative;
 }
@@ -22,8 +22,8 @@
 .z-progressmeter-image {
     display: block;
     height: 100%;
-    background-color: var(--zk-color-primary);
-    border-radius: 2px;
+    background-color: var(--zk-progressmeter-fill);
+    border-radius: var(--zk-progressmeter-radius);
     transition: width var(--zk-motion-duration-medium2) var(--zk-motion-easing-standard);
     min-width: 0;
 }

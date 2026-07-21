@@ -1,18 +1,26 @@
-# Component Theming API
+# Component Theme Variables
+
+> **Feature name:** *Component Theme Variables* (CTV). The individual `--zk-<comp>-*` custom
+> properties are the theme variables; this doc also calls a single one a **knob** informally.
+> This is a **declarative CSS custom-property** surface — there is **no** JS/Java call API (that
+> role belongs to `MarbleBrand` / `MarbleDensity`).
 
 Marble's tokens recolor the *whole* theme coherently (see [brand-override.md](brand-override.md))
 and resize it coherently (see [data-dense-mode.md](data-dense-mode.md)). But enterprise
 adopters also routinely need to restyle **one component** — "make *our* buttons pill-shaped",
 "give the grid header our brand tint" — without forking the theme or fighting it with
-brittle `!important` overrides. Marble exposes this as **per-component appearance knobs**:
+brittle `!important` overrides. Marble exposes this as **per-component theme variables**:
 each themed component reads a small, curated set of `--zk-<comp>-*` custom properties. Set
 them at `:root` (whole app) or on any container (one region) and only that component changes.
 No forking, no build step, no recompilation.
 
 This is the same mechanism the theme already uses internally for control *sizes*
-(`tokens/_sizing.css`) and for the splitter family (`tokens/_splitter.css`); this API
-generalizes it to the **appearance** dimension (color / border / radius / state) and
-documents it as a public, supported surface.
+(`tokens/_sizing.css`) and for the splitter family (`tokens/_splitter.css`); Component Theme
+Variables generalize it to the **appearance** dimension (color / border / radius / state) and
+document it as a public, supported surface.
+
+> **Progress tracking:** conformance of each component against the criteria below is tracked
+> separately in [`../component-theme-variables-progress.md`](../component-theme-variables-progress.md).
 
 ## How it works
 
@@ -39,7 +47,8 @@ Each component consumes the knob from inside `@layer zk-components`:
 ```
 
 Because every default equals the value the component used before, **declaring nothing
-changes nothing** — the API is purely additive and render-neutral until an adopter opts in.
+changes nothing** — Component Theme Variables are purely additive and render-neutral until an
+adopter opts in.
 
 ### Where knob defaults live — centralized, not per-component
 
@@ -58,7 +67,7 @@ on the component element would shadow `:root`/region overrides for that element'
 > re-parameterize its base rule — e.g. `.z-chip-info { --zk-chip-bg: … }`,
 > `.z-avatar-small { --zk-avatar-size: … }`. That is a private *variant* mechanism, not an
 > adopter-facing default, and is overridable only per-instance (inline) — not the whole-app +
-> region contract this API defines. To bring such a component fully into this API, hoist its
+> region contract Component Theme Variables define. To bring such a component fully in, hoist its
 > base default into `tokens/_component-theme.css`.
 
 ## Overriding
@@ -121,14 +130,40 @@ Since unlayered rules always beat layered ones, the mechanics are:
 |----------|-----|
 | Recolor the **whole theme** from one seed | `--zk-color-primary` (+ role seeds) — [brand-override.md](brand-override.md) |
 | Resize the **whole theme / a region** | `data-density` + `--zk-*-height` — [data-dense-mode.md](data-dense-mode.md) |
-| Restyle **one component's appearance** | this API's `--zk-<comp>-*` knobs |
+| Restyle **one component's appearance** | this feature's `--zk-<comp>-*` variables |
 
 > **Freeze caveat.** Overriding an upstream *global* seed (e.g. `--zk-color-primary`) on a
 > *region* will **not** reflow a knob whose default is `var(--zk-color-primary)` — that value
 > was substituted at `:root` and inherited frozen. To recolor a region, override the component
 > **knob** directly; to recolor the whole app, override the seed at `:root`.
 
-## Knob reference
+## Conformance criteria (檢驗條件)
+
+The purpose in one line: *let an adopter restyle **one** component — whole-app or in one
+region — by overriding **only that component's** `--zk-<comp>-*` variables, **never** a shared
+global token, and with **zero regression** when they override nothing.*
+
+A component **conforms** when it satisfies every applicable criterion below. The
+[progress tracker](../component-theme-variables-progress.md) records each component's status
+against these IDs. CTV-1…4 are the load-bearing *purpose* gates; CTV-5…9 are the
+mechanics / hygiene / verification that keep them true.
+
+| ID | Criterion | How to check |
+|----|-----------|--------------|
+| **CTV-1** | **Zero-regression default.** Every `--zk-<comp>-*` default resolves to the component's exact pre-existing value; overriding nothing renders identically to before the variables existed. | Default in `_component-theme.css` equals the old token/literal; computed style unchanged before/after. |
+| **CTV-2** | **Isolation from global tokens (core purpose).** The exposed appearance properties are read *through* the component's own variables, so an adopter restyles them by overriding only `--zk-<comp>-*` — **never** a global `--zk-color-*` / `--zk-shape-*` / …. No exposed property still reads a global token directly, bypassing the variable. | Overriding the component variable changes only this component; the global token it defaults to and other components are unaffected. |
+| **CTV-3** | **Region scoping.** Setting a variable on a container restyles only that subtree's instances; siblings outside are unchanged. | Playwright: scoped instance takes the value, sibling default does not. Documented per-variant exceptions (e.g. severity-pinned chip/badge) are stated in the component entry. |
+| **CTV-4** | **Whole-app override wins.** A `:root` override loaded after `norm.css.dsp` (or at higher specificity) wins for all instances. | Inject a `:root` override; assert it applies. |
+| **CTV-5** | **Declared at `:root`, unlayered, not on the element.** Defaults live in `tokens/_component-theme.css` at `:root`; not declared on the base component element (which would shadow region overrides for its own subtree). Variant/modifier re-parameterization is allowed but must be documented. | Grep the component CSS: no base `.z-<comp> { --zk-<comp>-*: … }`; default present in `_component-theme.css`. |
+| **CTV-6** | **Meaningful coverage.** The variables cover the component's salient appearance axes (as applicable: fill, text, border, radius, the defining state/accent) — enough for a recognizable restyle without forking. Size lives in `_sizing.css`; elevation may be intentionally mode-driven. | Review against the component's DOM + states; record deliberate exclusions. |
+| **CTV-7** | **State integrity.** Disabled / readonly / selected / error treatments stay correct under an override (they don't accidentally inherit a fill/border variable and lose their state distinction) — unless a state is itself an intentional, documented variable. | Override the region; assert the disabled (etc.) instance keeps its treatment. |
+| **CTV-8** | **Documented.** Variable names + defaults (+ scope/exceptions) are listed in this doc's per-family table. | This file's reference section has the entry. |
+| **CTV-9** | **Regression-tested.** A demo instance in `component-theming.zul` + a Playwright assertion in `component-theming.spec.ts` prove CTV-1/2/3/4. | Test exists and is green. |
+
+> CTV-6 and CTV-7 are judgment calls (what counts as "enough" coverage / a preserved state);
+> the tracker records the rationale, not just a checkmark.
+
+## Variable reference (per component)
 
 ### Button — shipped
 
@@ -387,9 +422,70 @@ radius (`50%`) is a shape concern and stays hardcoded, not a knob.
 | `--zk-badge-fg` | `var(--zk-color-on-status)` | every badge |
 | `--zk-badge-radius` | `10px` | every badge (count/pill; dot stays `50%`) |
 
-## Recipe — adding a component to the API
+### Rating — shipped
 
-Validated by the button pilot; repeat per component:
+Star-rating glyph fill only (`.z-rating-icon`) — an icon-only component, so there is no
+background, border, or radius knob to expose. Two color axes cover it: `--zk-rating-fg` for
+the resting (outline) star and `--zk-rating-accent` for the selected/hover (filled) star —
+the defining state. Disabled dims via `--zk-state-disabled-opacity`; readonly disables
+interaction only, at full opacity. Neither disabled nor readonly is knob-driven.
+
+| Knob | Default | Scope |
+|------|---------|-------|
+| `--zk-rating-fg` | `var(--zk-color-outline)` | resting (outline) star |
+| `--zk-rating-accent` | `var(--zk-color-primary)` | selected/hover (filled) star |
+
+### Progressmeter — shipped
+
+MD3 linear progress: a two-layer bar (track + fill), no icon, no text. Two color knobs
+cover it — `--zk-progressmeter-bg` for the track and `--zk-progressmeter-fill` for the
+progress bar — plus a shared radius knob for both layers. The color **variants**
+(`.z-progressmeter-secondary/-success/-warning/-error`) keep their own semantic colors via
+higher-specificity rules on the element (same treatment as button's color variants); they
+are intentionally **not** knob-driven, so only the default (primary) bar responds to an
+override.
+
+| Knob | Default | Scope |
+|------|---------|-------|
+| `--zk-progressmeter-bg` | `var(--zk-color-primary-container)` | track (default/primary bar only) |
+| `--zk-progressmeter-fill` | `var(--zk-color-primary)` | fill bar (default/primary bar only) |
+| `--zk-progressmeter-radius` | `2px` | every progressmeter (track + fill) |
+
+### Paging — shipped
+
+MD3 pagination bar. Two color/shape axes cover the pager buttons —
+`--zk-paging-fg` for the button text/icon and `--zk-paging-radius` for the
+shared pill shape — plus the current-page indicator's own fill/text pair
+(`--zk-paging-selected-bg` / `-fg`, the defining state). The jump-to-page
+input (rendered only by the **default** mold) gets its own bg/fg/border-color
+trio, curated separately from the pager buttons.
+
+Numbered page buttons — and therefore `.z-paging-selected` — only render in
+the **`os`** mold; the default mold shows prev/next buttons plus the
+jump-to-page input, with no page numbers. `component-theming.zul` demos
+paging with `mold="os"` so `--zk-paging-selected-bg/-fg/-radius` are actually
+exercised; the jump-to-page input knobs are shipped but not demoed on that
+page (it uses the `os` mold, which never renders the input). Disabled
+buttons/input are intentionally not knob-driven (same convention as
+button/input). The jump-input's `border-radius` also stays hardcoded on
+`--zk-shape-corner-extra-small` rather than exposed as a knob — a defensible
+curation choice (the shared `--zk-paging-radius` only applies to pager
+buttons), noted here rather than fixed.
+
+| Knob | Default | Scope |
+|------|---------|-------|
+| `--zk-paging-fg` | `var(--zk-color-on-surface-variant)` | every pager button (text/icon) |
+| `--zk-paging-radius` | `var(--zk-shape-corner-full)` | every pager button (pill shape) |
+| `--zk-paging-selected-bg` | `var(--zk-color-primary-container)` | current-page button fill |
+| `--zk-paging-selected-fg` | `var(--zk-color-primary)` | current-page button text |
+| `--zk-paging-input-bg` | `var(--zk-color-surface)` | jump-to-page input (default mold only) |
+| `--zk-paging-input-fg` | `var(--zk-color-on-surface)` | jump-to-page input (default mold only) |
+| `--zk-paging-input-border-color` | `var(--zk-color-outline)` | jump-to-page input (default mold only) |
+
+## Recipe — adding a component
+
+Validated by the button pilot; repeat per component (then update the
+[progress tracker](../component-theme-variables-progress.md)):
 
 1. **Audit** the component CSS: which properties are worth exposing, and how are states
    implemented (overlay vs border-color vs background swap)? The knob names follow that model.
@@ -407,8 +503,9 @@ Validated by the button pilot; repeat per component:
 
 - **Shipped**: button, input (textbox family), window, grid, listbox, tree, panel, groupbox,
   combobox, datebox, timebox, spinner (+ doublespinner), bandbox, tab (tabbox), menu,
-  avatar/avatar-group, chip (base hoisted; see caveat), badge (base hoisted; see caveat).
+  avatar/avatar-group, chip (base hoisted; see caveat), badge (base hoisted; see caveat), rating,
+  progressmeter, paging.
 - **Not exposed** (by design): purely structural/layout components (box, div, cell, separator,
   layouts) and content atoms (label, image) have no meaningful appearance knob; selection
-  controls (checkbox/radio), slider, rating, and paging are candidates for a future pass if
+  controls (checkbox/radio) and slider are candidates for a future pass if
   adopter demand appears — add via the Recipe above.

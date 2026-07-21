@@ -38,7 +38,7 @@ Marble 同時橫跨兩種角色 —— 既是「元件主題」（對齊 MUI）�
 
 | # | 落差 | 主流框架怎麼做 | Marble 現況 | 為何重要 |
 |---|------|---------------|------------|---------|
-| 1 | **元件級主題 API** | MUI `theme.components.MuiButton.styleOverrides` / `variants`；Ant `ConfigProvider theme.components.Button.*`；Chakra component theme | 只有全域 token + 單一品牌 seed；改單一元件外觀要手寫 CSS override（少數元件如 splitter 有 `--zk-splitter-*` 但沒系統化） | **MUI / Ant 最大賣點**。企業客戶最常要「只改我們的 button / grid 樣式而不 fork 主題」 |
+| 1 | **元件級主題變數(Component Theme Variables)** | MUI `theme.components.MuiButton.styleOverrides` / `variants`；Ant `ConfigProvider theme.components.Button.*`；Chakra component theme | **已落地**：18+ 元件 family 已宣告可覆寫 `--zk-<comp>-*`，含 CTV-1…9 檢驗條件 + 進度 tracker（原為缺口，現已系統化） | **MUI / Ant 最大賣點**。企業客戶最常要「只改我們的 button / grid 樣式而不 fork 主題」 |
 | 2 | **裝置自適應控制**（container queries + 響應可見性） | Tailwind `@container` / `md:`；Bootstrap `.d-md-none` 響應顯示；MUI breakpoints | utility CSS 完全無 `@media`；只有 intrinsic auto-fit，沒有「窄螢幕隱藏側欄 / 切換版面」的手段 | Dashboard / ERP 常需「依容器寬度切換」。**Container queries** 比 breakpoint 更貼合 Marble 的 intrinsic 哲學 |
 | 3 | **列印樣式** `@media print` | Bootstrap `.d-print-*` + print reset | 完全沒有 | ERP / CRM 天天印報表、發票、清單。目標客群最需要，卻是 0 覆蓋 |
 | 4 | **z-index / 疊層尺度** | MUI `theme.zIndex`（appBar / drawer / modal / snackbar / tooltip）；Bootstrap `$zindex-*`；Chakra `zIndices` | 無 z-index token scale、無 utility | 框架衛生。避免企業 App 自訂 overlay 時的 z-index 大戰；主題自身 overlay 排序也該有文件化尺度 |
@@ -77,7 +77,7 @@ ZK 多以 JS 定位 overlay、企業需求低，選擇性補（如圖廊用 scro
 
 排除 RTL / Dark 後，Marble 的 **token 與架構層已對齊甚至領先**主流框架；真正的落差集中在兩處：
 
-1. **元件級客製 API**（MUI / Ant 的核心賣點）—— 結構性、最該補；
+1. **元件級客製（Component Theme Variables）**（MUI / Ant 的核心賣點）—— 結構性;**現已落地**;
 2. **應用層 CSS 廣度**（列印、container queries、skeleton、z-index 尺度、opacity / aspect-ratio / line-clamp 等 utility）—— 量多但單項成本低，可批次補齊。
 
 Tooling（token 匯出 / Figma）是導入推力但屬周邊。前沿 primitive 可延後。
@@ -88,7 +88,7 @@ Tooling（token 匯出 / Figma）是導入推力但屬周邊。前沿 primitive 
 
 | # | 項目 | Impact | Effort | 實作切入點（要動哪些檔） |
 |---|------|--------|--------|------------------------|
-| 1 | **元件級主題 API** | 高（最大賣點） | 高 | 為每元件定義可覆寫 `--zk-<comp>-*`，component CSS 以 fallback 讀取：`background: var(--zk-button-bg, var(--zk-color-primary))`。**沿用既有 precedent**：`tokens/_splitter.css` 的 `--zk-splitter-*` 與 `tokens/_sizing.css` 的 semantic-alias 層。**先做 3–5 個高需求元件**（button / textbox / grid / window / tab）當 pattern，再擴。檔：`src/main/resources/web/js/zul/**/css/*.css` + 新 `doc/spec/component-theming-api.md` |
+| 1 | **元件級主題變數(Component Theme Variables)** | 高（最大賣點） | 高 | 為每元件定義可覆寫 `--zk-<comp>-*`，component CSS 以 fallback 讀取：`background: var(--zk-button-bg, var(--zk-color-primary))`。**沿用既有 precedent**：`tokens/_splitter.css` 的 `--zk-splitter-*` 與 `tokens/_sizing.css` 的 semantic-alias 層。**先做 3–5 個高需求元件**（button / textbox / grid / window / tab）當 pattern，再擴。檔：`src/main/resources/web/js/zul/**/css/*.css` + `doc/spec/component-theme-variables.md`（已建立）+ `doc/component-theme-variables-progress.md` |
 | 2 | **裝置自適應**（container queries + 響應可見性） | 中高 | 中 | (a) 響應可見性 utility `.z-d-none-sm` / `.z-d-block-md`…，對齊 `responsive-design.md` §5 已預留的 MUI breakpoint（sm 600 / md 900 / lg 1200 / xl 1536）。(b) 加 `@container`（`container-type: inline-size` + `@container` 變體）—— 貼合 intrinsic 哲學。檔：`utility/_layout.css`；更新 `doc/spec/responsive-design.md` §5 |
 | 3 | **列印樣式** `@media print` | 中高（企業） | 低 | 新 `utility/_print.css`：`.z-d-print-none` / `.z-d-print-block`、elevation → border、展開 overflow 讓 grid 完整印出、移除 sticky。經 `scripts/build-css.js` bundle 進 `norm.css.dsp`。檔：新 utility + build script + 新 `doc/spec/print-styles.md` |
 | 4 | **z-index / 疊層尺度** | 中 | 低中 | 新 `tokens/_zindex.css` token ladder（dropdown 1000 / sticky 1020 / fixed 1030 / modal-backdrop 1040 / modal 1050 / popover 1060 / tooltip 1070 / toast 1080，對齊 Bootstrap / MUI）+ `.z-index-*` utility。稽核既有 window / popup / menu z-index 對齊。bundle 進 `norm.css.dsp` |
@@ -101,6 +101,6 @@ Tooling（token 匯出 / Figma）是導入推力但屬周邊。前沿 primitive 
 ## Verification（如何驗證補上的功能）
 
 - 新 utility：`npm run build:css` 後在 preview app（`withjdk.sh 17 mvn test exec:java@preview-app`）用實際 ZUL 頁驗證，並沿用 `src/test/playwright/` 幾何 / computed-style 斷言（如 `tablet.spec.ts` 模式）。
-- 元件級主題 API：寫一頁覆寫 `--zk-<comp>-*` 的 demo，Playwright 量 computed style 確認生效且**不影響其他元件**。
+- 元件級主題變數（Component Theme Variables）：寫一頁覆寫 `--zk-<comp>-*` 的 demo，Playwright 量 computed style 確認生效且**不影響其他元件**（已落地,見 CTV-1…9 檢驗條件）。
 - 列印樣式：Playwright `page.emulateMedia({ media: 'print' })` 斷言 `.z-d-print-none` 等隱藏 / 顯示行為。
 - Skeleton：`prefers-reduced-motion` 下 shimmer 動畫須停止（比照 `tokens/_motion.css` 既有守則）。
