@@ -257,9 +257,15 @@
    no default margin, so without the rule below the native <select> sits
    flush against the popup's bottom-left corner. The inner <select> mirrors
    the .z-selectbox styling so the timezone picker matches every other native
-   select in the theme. */
+   select in the theme.
+
+   The top margin gives the selector breathing room from the calendar grid
+   (the calendar body only carries an 8px bottom padding), matching the 12px
+   top margin the sibling .z-timebox uses above. It is a layout margin, so the
+   gap is identical whether or not forced-colors is active (WHCM strips
+   box-shadow/remaps colors but never touches margins). */
 .z-datebox-timezone {
-    margin: 0 var(--zk-spacing-3) var(--zk-spacing-3);
+    margin: var(--zk-spacing-3);
 }
 
 .z-datebox-timezone > select {

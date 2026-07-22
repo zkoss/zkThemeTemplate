@@ -1,84 +1,70 @@
 # BUG: datebox focus outline missing in Windows High-Contrast (forced-colors)
 
-**Status:** OPEN · pre-existing · **NOT** a Component-Theme-Variables regression
-(verified: fails identically on clean commit `12ed13f` via `git stash`).
-**Owner:** to be handled in a dedicated session.
+**Status:** ✅ RESOLVED (2026-07-21) — **not** an a11y defect; it was a **test-harness
+measurement race**. The forced-colors guard and its cascade were correct all along.
 **Filed:** 2026-07-21 (surfaced while verifying the CTV rollout batch).
+**Fix:** `src/test/playwright/forced-colors.spec.ts` — the *"text-input focus draws a
+real outline"* test now uses auto-retrying web-first assertions
+(`expect(box).toHaveCSS('outline-style','solid')`) instead of a single-shot
+`getComputedStyle` read taken immediately after `.focus()`.
 
 ---
 
-## Summary
+## Root cause (confirmed by runtime probe)
 
-In forced-colors (Windows High-Contrast) mode, focusing a **datebox** does **not**
-render the expected real `outline`. The a11y guard rule that should draw it *exists
-and is compiled into `norm.css.dsp`*, yet at runtime the focused `.z-datebox` reports
-`outline-style: none`. So keyboard focus on a datebox is invisible in High-Contrast —
-a real accessibility defect (the box-shadow focus ring is stripped by forced-colors,
-and the outline that's supposed to replace it isn't taking effect).
+A temporary probe was added right after `.focus()` and run under the `forced-colors`
+project. It captured, on the focused datebox:
 
-## Reproduce
-
-```bash
-# preview app must be up (withjdk.sh 17 mvn test exec:java@preview-app)
-npx playwright test --config=src/test/playwright/playwright.config.ts \
-  --project=forced-colors -g "text-input focus draws a real outline"
+```
+mediaActive : true                       // forced-colors emulation IS active
+activeEl    : z-datebox-input            // focus DID land on the input
+focusWithin : true                       // .z-datebox DOES match :focus-within
+outline     : rgba(5, 0, 73, 0.8) solid 2px   // the guard's outline IS applied
+boxShadow   : none                       // normal-mode ring correctly stripped by WHCM
 ```
 
-Test: [`src/test/playwright/forced-colors.spec.ts:50`](../src/test/playwright/forced-colors.spec.ts#L50)
-— goes to `/datebox.zul`, focuses `.z-datebox-input`, reads `.z-datebox` computed style.
+So the guard `.z-datebox:focus-within { outline: 2px solid Highlight; outline-offset: -1px }`
+(unlayered in `norm.css.dsp`, the sole rule setting `outline` on the wrapper) applies
+exactly as designed. The reported `outline-style: none` was **not** a real missing
+outline — it was the original test reading computed style in a single shot **immediately**
+after `.focus()`, with no auto-retry and no focus/settle wait. On a slow/cold ZK render
+that eager read could land before the client-side widget finished wiring and the style
+resolved, so it observed `none`. Every *other* forced-colors assertion checks a static
+state (selected row, glyph, border) that needs no interactive focus — which is why this
+was the only failing one.
 
-| | Value |
-|---|---|
-| Expected `outline-style` | `solid` |
-| Expected `outline-width` | `2px` |
-| **Actual `outline-style`** | **`none`** |
+Why the original doc "verified" it on `12ed13f`: the CTV batch never touched
+`datebox.css` / `_forced-colors.css`, so the guard was identical on both commits; the
+race is timing/environment-dependent (cold app, load), not commit-dependent — it does
+**not** reproduce on a warm app (8/8 in isolation, 13/13 in the full project).
 
-## Evidence gathered
+## Fix
 
-1. **The guard rule exists** — [`tokens/_forced-colors.css`](../src/main/resources/web/zul/css/tokens/_forced-colors.css) block "(1b) Text-input focus …" (~L95–105), inside the `@media (forced-colors: active)` block:
-   ```css
-   .z-datebox:focus-within, .z-timebox:focus-within, .z-spinner:focus-within,
-   .z-doublespinner:focus-within, .z-bandbox:focus-within, .z-combobox:focus-within {
-       outline: 2px solid Highlight;
-       outline-offset: -1px;
-   }
-   ```
-2. **It is in the build** — `grep z-datebox:focus-within target/classes/web/marble/zul/css/norm.css.dsp` returns the rule (unlayered, so it should beat layered component rules).
-3. **Selector is correct** — the datebox mold renders `<input class="z-datebox-input">` inside `.z-datebox`; the test focuses `.z-datebox-input`, so `.z-datebox:focus-within` *should* match.
-4. **Normal-mode focus is Mechanism A** — [`datebox.css:34–39`](../src/main/resources/web/js/zul/inp/css/datebox.css#L34) uses an **inset `box-shadow`** ring (border stays 1px). forced-colors strips box-shadow, which is exactly why the (1b) outline guard is needed.
-5. **Forced-colors emulation works** — 12 of 13 forced-colors assertions pass (including "forced-colors is actually emulated" and other outline guards), so the media emulation and most guards are fine. Only this datebox-focus outline is missing.
-6. **Pre-existing** — reproduced on clean HEAD `12ed13f` (stashed the CTV batch, rebuilt, re-ran → still `none`). The CTV rollout did not touch `datebox.css`, `input.css`, or `_forced-colors.css`.
+`src/test/playwright/forced-colors.spec.ts` (the `text-input focus…` test):
 
-## Hypotheses (ranked, for the fix session)
+- Wait for `.z-datebox-input` to be **visible**, then `.focus()`.
+- Assert the outline with **web-first `toHaveCSS`** assertions on `.z-datebox`, which
+  auto-retry until the guard's outline lands (or time out and fail — so a *genuinely*
+  missing outline would still be caught).
 
-1. **`:focus-within` never activates.** `.z-datebox-input.focus()` under Playwright may not
-   establish focus inside `.z-datebox` (ZK client focus management, or the input not being the
-   real focusable node as currently rendered) — so the guard rule simply never matches.
-   *Check:* after `.focus()`, assert `.z-datebox` actually matches `:focus-within`
-   (`el.matches(':focus-within')`) and that `document.activeElement` is the datebox input.
-2. **Cascade override.** Another unlayered / higher-specificity rule sets `outline` on
-   `.z-datebox` (or forces it to `none`) and beats the guard. *Check:* DevTools computed
-   → "outline" origin, or a probe reading `outline` before/after removing candidate rules.
-3. **ZK DOM drift.** A ZK version bump may have changed the datebox DOM so the focused element
-   is no longer a descendant of `.z-datebox` (e.g. a portalized popup), breaking `:focus-within`.
-4. **Playwright forced-colors + outline quirk.** Least likely (other outline guards pass), but
-   confirm the same rule works for `.z-combobox:focus-within` (shares the guard) — if combobox
-   passes and datebox fails, it's datebox-specific (points to #1/#3).
+This eliminates the race class without touching any theme CSS (the guard is correct;
+per `doc/spec/forced-colors.md` forced-colors remedies stay in the central unlayered
+`tokens/_forced-colors.css`, never per-component).
 
-## Suggested first step
+## Verification
 
-Add a temporary probe (or a `page.evaluate`) in the fix session to capture, right after focus:
-`document.activeElement.className`, `.z-datebox` `:focus-within` match, and the computed
-`outline`/`box-shadow` — that single measurement should discriminate #1/#3 (focus not landing)
-from #2 (override).
+```bash
+# preview app up: withjdk.sh 17 mvn test exec:java@preview-app
+npx playwright test --config=src/test/playwright/playwright.config.ts \
+  --project=forced-colors -g "text-input focus draws a real outline" --repeat-each=10
+# → 10 passed
+npx playwright test --config=src/test/playwright/playwright.config.ts --project=forced-colors
+# → 13 passed (no regression)
+```
 
 ## Relevant files
 
-- Test: `src/test/playwright/forced-colors.spec.ts:50`
-- Guard: `src/main/resources/web/zul/css/tokens/_forced-colors.css` (block 1b)
-- Datebox focus: `src/main/resources/web/js/zul/inp/css/datebox.css` (~L34)
+- Test (fixed): `src/test/playwright/forced-colors.spec.ts` (the `text-input focus…` test)
+- Guard (correct, unchanged): `src/main/resources/web/zul/css/tokens/_forced-colors.css` (block 1b)
+- Datebox focus mechanism (box-shadow inset, stripped by WHCM): `src/main/resources/web/js/zul/inp/css/datebox.css` (~L37)
 - Forced-colors design notes: `doc/spec/forced-colors.md`
-- Focus mechanism: `doc/reference/focus-affordance-no-layout-shift.md` (Mechanism A)
-
-> Note: the *review-only* `forced-colors-gallery.spec.ts` (writes PNGs directly, no assertion)
-> is unrelated to this failure — the real gate is the assertion spec above.

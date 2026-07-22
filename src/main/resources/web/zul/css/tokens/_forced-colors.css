@@ -31,6 +31,8 @@
     .z-menu-popup,
     .z-combobox-popup,
     .z-bandbox-popup,
+    .z-datebox-popup,
+    .z-daterangebox-popup,
     .z-listbox,
     .z-grid,
     .z-card {
@@ -59,6 +61,7 @@
 
     /* (1a-cont) Floating popups/menus/dropdowns not already covered above. */
     .z-coachmark-content,
+    .z-confirmpopup,
     .z-cascader-shadow,
     .z-chosenbox-shadow,
     .z-searchbox-popup,
@@ -88,6 +91,7 @@
        forced-colors maps the transparent sides to CanvasText → opaque square.
        Opt out to keep the triangle (the box boundary still reads via its 1a border). */
     .z-coachmark-pointer,
+    .z-confirmpopup-arrow,
     .z-errorbox-pointer {
         forced-color-adjust: none;
     }

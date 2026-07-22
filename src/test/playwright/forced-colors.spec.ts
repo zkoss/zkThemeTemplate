@@ -49,14 +49,17 @@ test.describe('forced-colors (Windows High-Contrast) a11y guards', () => {
 
   test('text-input focus draws a real outline (box-shadow focus ring is stripped)', async ({ page }) => {
     await page.goto('/datebox.zul', { waitUntil: 'domcontentloaded' });
-    await page.waitForSelector('.z-datebox', { timeout: 10000 });
-    await page.locator('.z-datebox-input').first().focus();
-    const { style, width } = await page.locator('.z-datebox').first().evaluate(el => {
-      const cs = getComputedStyle(el);
-      return { style: cs.outlineStyle, width: cs.outlineWidth };
-    });
-    expect(style).toBe('solid');
-    expect(width).toBe('2px');
+    const input = page.locator('.z-datebox-input').first();
+    await input.waitFor({ state: 'visible', timeout: 10000 });
+    await input.focus();
+    // ZK wires the widget client-side, so the guard's outline may not be applied on the
+    // very first frame after focus (the original single-shot getComputedStyle raced this,
+    // reading outline-style:none on a slow/cold render). Web-first assertions auto-retry
+    // until the forced-colors outline lands — the box-shadow focus ring is stripped in WHCM,
+    // so a real 2px solid outline on the wrapper is the only surviving focus affordance.
+    const box = page.locator('.z-datebox').first();
+    await expect(box).toHaveCSS('outline-style', 'solid');
+    await expect(box).toHaveCSS('outline-width', '2px');
   });
 
   test('selected list row uses the system selection colors (tint would otherwise vanish)', async ({ page }) => {
@@ -189,5 +192,46 @@ test.describe('forced-colors (Windows High-Contrast) a11y guards', () => {
     });
     expect(bg).not.toBe('rgba(0, 0, 0, 0)');
     expect(color).not.toBe(bg);
+  });
+
+  test('datebox popup gains a border (box-shadow elevation is stripped)', async ({ page }) => {
+    await page.goto('/datebox.zul', { waitUntil: 'domcontentloaded' });
+    await page.waitForSelector('.z-datebox-button', { timeout: 10000 });
+    // Open a datebox popup (the "Time in popup" variant, index 3, whose popup is
+    // larger than the calendar so the missing frame is the visible defect).
+    await page.locator('.z-datebox-button').nth(3).click();
+    const popup = page.locator('.z-datebox-popup.z-datebox-open').first();
+    await popup.waitFor({ state: 'visible', timeout: 5000 });
+    // In WHCM the popup's only boundary is a box-shadow elevation, which is stripped.
+    // A real border must replace it so the floating surface stays delineated.
+    await expect(popup).toHaveCSS('border-top-style', 'solid');
+    await expect(popup).toHaveCSS('border-top-width', '1px');
+  });
+
+  test('confirmpopup gains a border and keeps its arrow (elevation + CSS-triangle beak)', async ({ page }) => {
+    await page.goto('/confirmpopup.zul', { waitUntil: 'domcontentloaded' });
+    const box = page.locator('.z-confirmpopup').first();
+    await box.waitFor({ state: 'visible', timeout: 10000 });
+    // Same (1a) gap as the datebox popup: shadow-only boundary, stripped in WHCM.
+    await expect(box).toHaveCSS('border-top-style', 'solid');
+    await expect(box).toHaveCSS('border-top-width', '1px');
+    // The arrow is a CSS triangle (transparent sides + one filled); without
+    // forced-color-adjust:none the transparent sides map to CanvasText and it
+    // collapses into an opaque square. forced-color-adjust inherits to ::before/::after.
+    const arrow = page.locator('.z-confirmpopup-arrow').first();
+    await expect(arrow).toHaveCSS('forced-color-adjust', 'none');
+  });
+
+  test('datebox timezone selector keeps its top gap from the calendar (spacing is a margin, mode-independent)', async ({ page }) => {
+    await page.goto('/datebox.zul', { waitUntil: 'domcontentloaded' });
+    await page.waitForSelector('.z-datebox-button', { timeout: 10000 });
+    // Open the "Timezone selector" variant (index 4): calendar + native <select>.
+    await page.locator('.z-datebox-button').nth(4).click();
+    const tz = page.locator('.z-datebox-popup.z-datebox-open .z-datebox-timezone').first();
+    await tz.waitFor({ state: 'visible', timeout: 5000 });
+    // The gap between the calendar grid and the timezone <select> is a plain layout
+    // margin. WHCM strips box-shadow / remaps colors but never touches margins, so the
+    // separation must be byte-identical to normal mode (12px, matching the timebox).
+    await expect(tz).toHaveCSS('margin-top', '12px');
   });
 });
