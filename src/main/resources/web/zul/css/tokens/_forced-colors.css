@@ -299,6 +299,18 @@
         border-color: GrayText;
     }
 
+    /* (3b) Carousel arrow — same "no border, background-only affordance" risk as
+       (3)'s buttons, under its own selector (it is not itself .z-button). Its
+       entire circular boundary against arbitrary (always-Canvas, under
+       forced-colors) slide content is carried by background-color alone. */
+    .z-carousel-arrow {
+        border: 1px solid ButtonText;
+    }
+    .z-carousel-arrow[disabled] {
+        color: GrayText;
+        border-color: GrayText;
+    }
+
     /* (3a) Checked toolbarbutton shows "on" only via a primary-container pill →
        force-maps to Canvas (= unchecked). Toolbarbuttons have no default border, so a
        Highlight border is the non-colour checked affordance. */
@@ -325,6 +337,14 @@
     .z-multislider-track    { background-color: GrayText; }
     .z-slider-area,
     .z-sliderbuttons-area   { background-color: Highlight; }
+
+    /* Carousel indicator — resting vs. active is carried ONLY by which of two
+       overlay fills is applied (no shape/icon/text difference); once both
+       force-map toward the same neutral the active dot becomes indistinguishable
+       from a resting one. Same "selection" risk as (2a)'s listbox/tree/paging
+       rows and this block's own slider track/fill. */
+    .z-carousel-indicator::before          { background-color: GrayText; border-color: GrayText; }
+    .z-carousel-indicator-active::before   { background-color: Highlight; border-color: Highlight; }
 
     /* (4a) Thumbs rendered inconsistently (hollow rings + a stray ::before halo)
        because the primary fill force-maps to Canvas while the (1a) border stays. Give

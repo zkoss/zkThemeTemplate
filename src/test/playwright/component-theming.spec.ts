@@ -1607,4 +1607,67 @@ test.describe('Component Theme Variables', () => {
     // must stay unaffected by the bg override (state integrity, CTV-7).
     expect(await colorOf(icon)).toBe(iconColorBefore);
   });
+
+  // ── breadcrumb (native, CE): plain inline nav trail (borderless text chrome,
+  // same curation choice as `a`/`caption` — no bg/border/radius knob to expose).
+  // --zk-breadcrumb-fg covers the separator + ellipsis button (resting) + link
+  // item (resting); --zk-breadcrumb-current-fg is the one defining-state knob
+  // (the terminal "you are here" item). Renders in place (no client-side
+  // reparenting), so region scoping works normally. ─────────────────────────
+  test('breadcrumb — regional fg/current-fg override, sibling untouched', async ({ page }) => {
+    const def = page.locator('.z-breadcrumb').first();
+    const scoped = page.locator('div[style*="--zk-breadcrumb-fg"] .z-breadcrumb').first();
+
+    // Scoped breadcrumb's link picks up the fg override; its terminal (current)
+    // item picks up the current-fg override.
+    expect(await colorOf(scoped.locator('.z-breadcrumbitem > a').first())).toBe(SCOPED_PURPLE);
+    expect(await colorOf(scoped.locator('.z-breadcrumbitem > span').first())).toBe(SCOPED_PURPLE);
+
+    // Sibling default breadcrumb is untouched — the override lives on the scoped
+    // box and is inherited only by its subtree, never leaking up to the default row.
+    expect(await colorOf(def.locator('.z-breadcrumbitem > a').first())).not.toBe(SCOPED_PURPLE);
+    expect(await colorOf(def.locator('.z-breadcrumbitem > span').first())).not.toBe(SCOPED_PURPLE);
+  });
+
+  test('breadcrumb — whole-app :root override wins (loaded after norm.css.dsp)', async ({ page }) => {
+    const defLink = page.locator('.z-breadcrumb').first().locator('.z-breadcrumbitem > a').first();
+    expect(await colorOf(defLink)).not.toBe(SCOPED_PURPLE); // baseline before override
+
+    // An adopter's :root override, injected after the theme bundle, must win the
+    // cascade and reach every breadcrumb instance, including the default one.
+    await page.addStyleTag({ content: ':root{--zk-breadcrumb-fg:#6750a4}' });
+    expect(await colorOf(defLink)).toBe(SCOPED_PURPLE);
+  });
+
+  // ── carousel (native, CE): full-bleed slideshow frame with overlay arrows/
+  // indicators/caption atop arbitrary slide content — none of the overlay chrome
+  // keys off surface/on-surface tokens. --zk-carousel-arrow-bg is the arrow's
+  // resting scrim fill; --zk-carousel-indicator-active-bg is the active
+  // indicator dot's fill (read off its ::before pseudo-element, not the button
+  // itself). Renders in place (no client-side reparenting), so region scoping
+  // works normally. ─────────────────────────────────────────────────────────
+  test('carousel — regional arrow-bg/indicator-active-bg override, sibling untouched', async ({ page }) => {
+    const def = page.locator('.z-carousel').first();
+    const scoped = page.locator('div[style*="--zk-carousel-arrow-bg"] .z-carousel').first();
+
+    // Scoped carousel's arrow picks up the arrow-bg override; its active
+    // indicator dot picks up the indicator-active-bg override.
+    expect(await bgOf(scoped.locator('.z-carousel-arrow').first())).toBe(SCOPED_PURPLE);
+    expect(await pseudoBgOf(scoped.locator('.z-carousel-indicator-active').first(), '::before')).toBe(SCOPED_PURPLE);
+
+    // Sibling default carousel is untouched — the override lives on the scoped
+    // box and is inherited only by its subtree, never leaking up to the default row.
+    expect(await bgOf(def.locator('.z-carousel-arrow').first())).not.toBe(SCOPED_PURPLE);
+    expect(await pseudoBgOf(def.locator('.z-carousel-indicator-active').first(), '::before')).not.toBe(SCOPED_PURPLE);
+  });
+
+  test('carousel — whole-app :root override wins (loaded after norm.css.dsp)', async ({ page }) => {
+    const defArrow = page.locator('.z-carousel').first().locator('.z-carousel-arrow').first();
+    expect(await bgOf(defArrow)).not.toBe(SCOPED_PURPLE); // baseline before override
+
+    // An adopter's :root override, injected after the theme bundle, must win the
+    // cascade and reach every carousel instance, including the default one.
+    await page.addStyleTag({ content: ':root{--zk-carousel-arrow-bg:#6750a4}' });
+    expect(await bgOf(defArrow)).toBe(SCOPED_PURPLE);
+  });
 });

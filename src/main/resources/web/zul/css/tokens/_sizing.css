@@ -59,6 +59,7 @@
     --zk-groupbox-header-height: var(--zk-control-height-lg);  /* 48 */
     --zk-notification-height:    var(--zk-control-height-lg);  /* 48 */
     --zk-paging-control-size:    var(--zk-control-height-sm);  /* 32 */
+    --zk-carousel-arrow-size:    var(--zk-control-height-sm);  /* 32 — same rung as paging's arrow-pair precedent */
     --zk-data-row-min-height:    52px;                         /* off-ladder: tree data row + grid/list paging bar */
 
     /* ── Layer 3: data-cell padding ─────────────────────────────────────
@@ -111,6 +112,7 @@
     --zk-groupbox-header-height: 40px;
     --zk-notification-height: 40px;
     --zk-paging-control-size: 28px;
+    --zk-carousel-arrow-size: 28px;
     --zk-data-row-min-height: 36px;
 
     /* data-cell padding (biggest table-density lever) */

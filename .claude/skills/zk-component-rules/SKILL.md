@@ -80,8 +80,10 @@ Load only the file for the component you are working on.
 | `components/bandbox.md` | bandbox (popup vs bandpopup, button class location) |
 | `components/borderlayout.md` | borderlayout (JS absolute-positioning engine, 5 regions, splitter bar + pill button DOM, collapsed placeholder, z-index map, do-not-flex rule) |
 | `components/box.md` | hbox + vbox (default mold is nested TABLES — never change `display`; `-chdex`/`-chdex2` anatomy; no `-cell` classes exist; splitter drag depends on the table chain) |
+| `components/breadcrumb.md` | breadcrumb + breadcrumbitem (CE, new in ZK 10.4.0) — T1 nav trail, client-only `maxItems` collapse-to-ellipsis (`.z-breadcrumb-ellipsis` never appears in the mold, only injected post-mount), `data-zk-bc-hidden`/`data-zk-bc-injected` attribute-driven hide (not inline style), item content has no label-wrapping element, disabled forces `<span>` even when `href` is set |
 | `components/button.md` | button (vertical orient via `<br/>`, `:has(br)` selector) |
 | `components/calendar.md` | calendar (z-calendar-today not on cells, cell-width arithmetic) |
+| `components/carousel.md` | carousel + carouselitem (CE, new in ZK 10.4.0) — T2 slideshow, no MUI analog; flex track + peek-past-the-end loop clones (`.z-carousel-clone` drops `.z-carouselitem`, inserted client-side only); arrows/indicators structurally absent below 2 slides regardless of `showArrows`/`showIndicators`; `[disabled]` on arrows is a native attribute (loop="false" boundary only), not a class; `.z-carouselitem-active`/`.z-carousel-indicator-active` are client-added on every bind, never in server HTML; `domIcon_()` is dead code for carouselitem; ARIA/live-status entirely EE `za11y`-gated in CE |
 | `components/checkbox.md` | checkbox + 3 molds (checkbox, switch, toggle) — mold-prefixed state classes |
 | `components/cascader.md` | cascader (EE) — hierarchical tree-picker, read-only trigger + side-by-side cave columns, `.z-cascader-label` / `.z-cascader-placeholder` (not `-input`), `.z-cascader-disabled` class, popup detached to body |
 | `components/chosenbox.md` | chosenbox (chip class = `.z-chosenbox-item`, EE-only) |

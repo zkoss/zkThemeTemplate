@@ -1193,5 +1193,64 @@
         <confirmpopup id="confirmpopupThemingDefault" severity="warning" header="Confirm"
                       message="Default confirmpopup, zero override applied."/>
     </div>
+
+    <!-- Breadcrumb (native, CE, zul/wgt/css/breadcrumb.css): plain inline nav trail,
+         no card surface (borderless text chrome, same curation choice as `a`/
+         `caption`) so there is no bg/border/radius knob. The zk-breadcrumb-fg knob covers
+         the separator + ellipsis button (resting) + link item (resting); the
+         zk-breadcrumb-fg-hover knob covers link-hover/focus + ellipsis-hover/focus; the
+         zk-breadcrumb-current-fg knob is the one defining-state knob (the terminal
+         "you are here" item). Renders in place (no client-side reparenting), so
+         region scoping works normally. -->
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Breadcrumb (default)</div>
+    <div sclass="z-hstack z-mb-6">
+        <breadcrumb>
+            <breadcrumbitem label="Home" href="/"/>
+            <breadcrumbitem label="Products" href="/products"/>
+            <breadcrumbitem label="Current Page"/>
+        </breadcrumb>
+    </div>
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Breadcrumb (regional override)</div>
+    <div sclass="z-hstack z-mb-8 z-p-4 z-bg-surface-variant z-rounded"
+         style="--zk-breadcrumb-fg:#6750a4; --zk-breadcrumb-fg-hover:#6750a4; --zk-breadcrumb-current-fg:#6750a4">
+        <breadcrumb>
+            <breadcrumbitem label="Home" href="/"/>
+            <breadcrumbitem label="Products" href="/products"/>
+            <breadcrumbitem label="Current Page"/>
+        </breadcrumb>
+    </div>
+
+    <!-- Carousel (native, CE, zul/wgt/css/carousel.css): full-bleed slideshow frame
+         with overlay arrows/indicators/caption atop arbitrary slide content; see
+         doc/contracts/carousel.md Design Contract. Because the slide content is
+         arbitrary imagery, none of the overlay chrome keys off surface/on-surface
+         tokens; the eight knobs instead cover the arrow/indicator/label regions'
+         dark voice (the scrim token) plus light voice (the inverse-on-surface
+         token) pairing, plus a shared radius knob for the root frame and caption
+         chip. Renders in place (no client-side reparenting), so region scoping
+         works normally. -->
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Carousel (default)</div>
+    <div sclass="z-mb-6">
+        <carousel width="240px" height="140px">
+            <carouselitem label="Slide 1">
+                <div sclass="z-w-full z-h-full z-bg-primary-container"/>
+            </carouselitem>
+            <carouselitem>
+                <div sclass="z-w-full z-h-full z-bg-secondary-container"/>
+            </carouselitem>
+        </carousel>
+    </div>
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Carousel (regional override)</div>
+    <div sclass="z-hstack z-mb-8 z-p-4 z-bg-surface-variant z-rounded"
+         style="--zk-carousel-arrow-bg:#6750a4; --zk-carousel-indicator-active-bg:#6750a4">
+        <carousel width="240px" height="140px">
+            <carouselitem label="Slide 1">
+                <div sclass="z-w-full z-h-full z-bg-primary-container"/>
+            </carouselitem>
+            <carouselitem>
+                <div sclass="z-w-full z-h-full z-bg-secondary-container"/>
+            </carouselitem>
+        </carousel>
+    </div>
 </div>
 </zk>

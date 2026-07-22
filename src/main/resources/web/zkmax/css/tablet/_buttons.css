@@ -33,3 +33,30 @@
 .z-combobutton-button {
     width: var(--zk-touch-target-min);
 }
+
+/* Breadcrumb ellipsis: the only way to reach a maxItems-collapsed run of
+ * items, so a missed tap has no fallback (unlike the a/span items, which
+ * are exempt inline nav text). Grow the hit area around the unchanged "…"
+ * glyph — same "enlarge the box, not the mark" idiom as the icon-only
+ * button above. */
+.z-breadcrumb-ellipsis > button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: var(--zk-touch-target-min);
+    min-height: var(--zk-touch-target-min);
+}
+
+/* Carousel arrow + indicator: both are small discrete tap targets sitting
+ * directly atop swipeable, single-purpose media content (no Tab-order
+ * fallback the way breadcrumb's inline text items have). Grow the hit box
+ * around the unchanged visible chevron/dot mark — same "enlarge the box, not
+ * the mark" idiom as the icon-only button above. */
+.z-carousel-arrow {
+    width: var(--zk-touch-target-min);
+    height: var(--zk-touch-target-min);
+}
+.z-carousel-indicator {
+    width: var(--zk-touch-target-min);
+    height: var(--zk-touch-target-min);
+}

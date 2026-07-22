@@ -1120,4 +1120,62 @@
     --zk-confirmpopup-ok-fg:               var(--zk-color-on-primary);
     --zk-confirmpopup-cancel-border-color: var(--zk-color-outline);
     --zk-confirmpopup-cancel-fg:           var(--zk-color-on-surface-variant);
+
+    /* ── Breadcrumb (native, CE, zul/wgt/css/breadcrumb.css) — plain inline nav
+       trail: no card surface (borderless text chrome, the same curation choice
+       as `a`/`caption`), so there is no -bg/-border-color/-radius knob to expose.
+       --zk-breadcrumb-fg covers THREE roles: the separator, the ellipsis
+       button (resting), and a link item (resting) — all three read the muted
+       on-surface-variant tone today, the same "one knob, several roles"
+       precedent as tab's --zk-tab-fg / calendar's --zk-calendar-accent.
+       --zk-breadcrumb-fg-hover covers link-hover/focus AND ellipsis-hover/
+       focus together (same precedent). --zk-breadcrumb-current-fg is the one
+       defining-state knob — the terminal "you are here" item's full-emphasis
+       color, the same "one knob per defining state" precedent as chosenbox's
+       -item-focus-bg / tab's -accent. The focus ring stays on the global
+       --zk-focus-ring (button/window/grid convention), not a knob. */
+    --zk-breadcrumb-fg:         var(--zk-color-on-surface-variant);
+    --zk-breadcrumb-fg-hover:   var(--zk-color-on-surface);
+    --zk-breadcrumb-current-fg: var(--zk-color-on-surface);
+
+    /* ── Carousel (native, CE, zul/wgt/css/carousel.css) — full-bleed media frame:
+       flex track of slides + overlay arrows/indicators/caption atop arbitrary
+       photographic content. --zk-carousel-radius is shared by BOTH the root
+       frame's clip AND the caption chip's own corners (c1/c27) — both are
+       "containers" under DESIGN.md §5's container/control rule, the same "one
+       knob, several roles" precedent as tab/calendar's accent. Because the
+       slide content underneath is arbitrary imagery, none of the overlay chrome
+       can safely key off surface/on-surface tokens (it would vanish against a
+       photo) — all three overlay regions (arrow / indicator / label) instead
+       speak exactly two brand-independent voices, each exposed per-region
+       rather than shared: a "dark voice" defaulting to --zk-color-scrim (the
+       theme's existing translucent-black overlay token) and a "light voice"
+       defaulting to --zk-color-inverse-on-surface — a literal hex, never
+       re-derived from --zk-color-primary, deliberately NOT --zk-color-on-primary
+       (brand-override.md documents that token as one integrators repoint to a
+       DARK value for a light-primary rebrand, which would flip every carousel
+       overlay foreground dark-on-dark against the always-dark scrim fill — see
+       doc/contracts/carousel.md Design Contract). --zk-carousel-arrow-bg-hover is
+       the one non-token-rooted default (a hand-picked darkening of the scrim,
+       matching the existing --zk-grid-row-hover-bg / --zk-combobox-item-hover-bg
+       literal-hover-color precedent) — hover darkens the scrim rather than
+       layering a currentColor state-layer overlay, since the arrow's foreground
+       is already light and a standard tint would lighten the dark scrim toward
+       white, the wrong direction. The indicator ring color is NOT a separate
+       knob — it is whichever of -indicator-bg/-indicator-active-bg is not the
+       current fill, so overriding either knob recolors both a fill and a ring.
+       Hover/focus/disabled opacities and the chevron/dot geometry stay on base
+       tokens or literal geometry, not knob-driven (same convention as
+       button/input/rating). Arrow size lives in tokens/_sizing.css
+       (--zk-carousel-arrow-size, density-bound); the indicator hit-area stays a
+       fixed 24px literal (WCAG 2.1 SC 2.5.8 floor, exempt from density in
+       either direction). */
+    --zk-carousel-radius:              var(--zk-shape-card);
+    --zk-carousel-arrow-bg:            var(--zk-color-scrim);
+    --zk-carousel-arrow-bg-hover:      rgba(0, 0, 0, 0.65);
+    --zk-carousel-arrow-fg:            var(--zk-color-inverse-on-surface);
+    --zk-carousel-indicator-bg:        var(--zk-color-scrim);
+    --zk-carousel-indicator-active-bg: var(--zk-color-inverse-on-surface);
+    --zk-carousel-label-bg:            var(--zk-color-scrim);
+    --zk-carousel-label-fg:            var(--zk-color-inverse-on-surface);
 }
