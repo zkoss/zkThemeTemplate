@@ -123,6 +123,16 @@ Since unlayered rules always beat layered ones, the mechanics are:
    a fallback that could drift from the `:root` default.
 4. **Curate the surface.** Expose the themeable essentials (fill / text / border / radius / key
    states / size) — not every property. A knob is a supported contract; keep the set small.
+5. **Typography stays global — it is not a component knob.** Font size / weight / line-height /
+   family remain on the shared `--zk-typescale-*` scale. A component consuming
+   `--zk-typescale-title-medium-*` (as `window` does for its title) is *correct*, not a gap:
+   per-component type fragments the system's vertical rhythm, and every mainstream framework keeps
+   typography a system token (MUI components reference typography *variants*; Ant font derives from
+   global aliases; Chakra / Tailwind / Bootstrap use a shared scale). If a real need arises to
+   restyle **one** component's type in isolation, expose a knob that *defaults to the typescale
+   slot* — `--zk-window-title-size: var(--zk-typescale-title-medium-size)`, never a literal like
+   `16px` — and do not add it speculatively. Rationale + framework survey:
+   [component-theme-typography-scope.md](../component-theme-typography-scope.md).
 
 ### Relationship to brand override & density
 
