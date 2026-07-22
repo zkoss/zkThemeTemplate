@@ -66,6 +66,7 @@ You receive a single argument: `<comp>` (e.g. `stepbar`). Required reads, in pri
 6. **MD3 tokens** at `src/main/resources/web/zul/css/tokens/_{colors,elevation,motion,shape,spacing,typography}.css`. The contract's expected-values column must cite a `var(--zk-…)` token when one exists; raw values only as a last resort.
 7. **Skill index** at `.claude/skills/zk-component-rules/SKILL.md`. After you create the new component file, you MUST update this index.
 8. **Theme rules** at `doc/spec/DESIGN.md`.
+9. **Cross-cutting checklist** at `doc/spec/new-component-checklist.md` — defines the mandatory `## Cross-cutting features` contract section (§6 below) and the obligations behind each field. When filling it in, also consult the feature specs it links: `doc/spec/component-theme-variables.md` (knob vocabulary — follow the shipped family tables), `doc/spec/data-dense-mode.md` + `tokens/_sizing.css` (ladder/alias tokens), `doc/spec/forced-colors.md` (WHCM risk triage), `doc/spec/brand-override.md`.
 
 ## Workflow
 
@@ -275,7 +276,7 @@ The Evaluator's §3b-outcome / §3b-macro step enforces these as a top-down gate
 | c2 | `.z-<comp>` | <property> | `var(--zk-spacing-4)` | DESIGN.md §5 |
 | ... |
 
-Rule: cite a `--zk-*` token wherever one exists. Raw rgb/px only as last resort.
+Rule: cite a `--zk-*` token wherever one exists. Raw rgb/px only as last resort. **Sizing rule**: when the Cross-cutting section below declares `density: bound`, every height/padding row for the control MUST cite the ladder/alias token from `tokens/_sizing.css` (e.g. `var(--zk-input-height)`) — a raw px height on a density-bound control is a contract defect.
 
 ## State matrix
 
@@ -286,6 +287,32 @@ Rule: cite a `--zk-*` token wherever one exists. Raw rgb/px only as last resort.
 | focus-visible | `.z-<comp>:focus-visible` | <ids> |
 | disabled | `.z-<comp>.z-<comp>-disabled` | <ids> |
 | <variant>-default | `.z-<comp>.z-<comp>-<variant>` | <ids> |
+
+## Cross-cutting features
+
+<!-- MANDATORY — all five subsections, fixed field names; N/A requires a rationale.
+     Obligations, roles, and the x-* verification procedures are defined in
+     doc/spec/new-component-checklist.md (read it plus the linked feature specs
+     before filling this in). -->
+
+### Component Theme Variables
+ctv: shipped | N/A — <rationale>
+ctv-knobs: --zk-<comp>-bg, --zk-<comp>-fg, --zk-<comp>-radius, …
+ctv-probe: { knob: --zk-<comp>-radius, property: border-radius, value: 2px }
+
+### Density
+density: bound | N/A — <rationale>
+density-tokens: <--zk-*-height alias(es) from tokens/_sizing.css>
+
+### Forced colors
+fc-risk: none | [mask-glyph, box-shadow-focus, selection, background-affordance]
+fc-guards: N/A | <selectors to guard in tokens/_forced-colors.css>
+
+### Brand override
+brand-allowed-literals: none | <literal — reason>
+
+### Tablet
+tablet: central-touch-rules | needs-specific — <what> | N/A — <rationale>
 
 ## States to evaluate
 - [ ] default
@@ -384,6 +411,12 @@ grep -nE "^\.z-|^\s+├─|^\s+└─|^\s+│" doc/contracts/<comp>.md
 # Contract must declare rules: cross-ref and contract-approved: false
 grep -E "^rules:|^contract-approved:" doc/contracts/<comp>.md
 # Must return both lines.
+
+# Contract must carry the mandatory Cross-cutting features section (all five fields)
+grep -c "^## Cross-cutting features" doc/contracts/<comp>.md
+# Must return 1.
+grep -E "^(ctv|density|fc-risk|brand-allowed-literals|tablet):" doc/contracts/<comp>.md
+# Must return exactly 5 lines, none still holding template placeholders like "<rationale>".
 
 # Contract HTML must exist
 test -f doc/contracts/<comp>.html

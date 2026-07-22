@@ -82,10 +82,13 @@ invariants) and `.claude/skills/zk-component-rules/tools/check-framework-classes
 
 - **Two structural page families** (`screenshot.spec.ts` header comment):
   - **Gallery pages** (button, textbox, the input controls): one `.z-p-8` wrapper holding
-    `pv-cols-N` / `pv-row` demo rows. Gallery shot captures the whole `.z-p-8`; dynamic
-    states target a bare `.z-*` element (`.z-textbox`, `.z-combobox-input`, …).
-  - **Variant pages** (listbox, grid, tabbox, tree, window, panel): each demo is wrapped
-    in `.pv-variant-<name>`; capture/scope by that wrapper.
+    state-matrix rows built from generic utilities (`z-grid-cols-auto` / `z-d-contents` —
+    the old `pv-cols-N` / `pv-row` classes were dissolved with pv.css). Gallery shot
+    captures the whole `.z-p-8`; dynamic states target a bare `.z-*` element
+    (`.z-textbox`, `.z-combobox-input`, …).
+  - **Variant pages** (listbox, grid, tabbox, tree, window, panel): variants are laid out
+    with the same generic utilities — there is no longer a `.pv-variant-*` wrapper to
+    scope to; gallery shoots the whole `.z-p-8` page.
 - **Reusable state arrays:** `hoverFocusStates` (hover, focus) and `buttonDynamicStates`
   (adds `active` via `mouse.down()`).
 - **Baseline layout:** one folder per preview page — `doc/screenshots/<page>/<file>.png`,
@@ -191,7 +194,7 @@ components are covered by default.** Recommended order:
    `coachmark`) — a second run with no `--update` passes deterministically. A new `.zul`
    is now covered the moment it's added.
    - Hand-written blocks remain in `screenshot.spec.ts` for the richer state matrices
-     (button variants, input hover/focus, `.pv-variant-*` layout pages) and the
+     (button variants, input hover/focus, the layout pages — formerly `.pv-variant-*`-scoped) and the
      computed-style guards — the depth layer; the scan is the breadth layer.
    - Regenerate after intentional visual changes: `npm run screenshot:update`.
 3. ~~**Backfill state coverage**~~ ✅ **Done 2026-06-29 (first pass) + 2026-06-30 (second

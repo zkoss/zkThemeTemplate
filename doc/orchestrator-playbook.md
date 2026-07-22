@@ -2,20 +2,37 @@
 
 How the main Claude session (any model — Opus, Sonnet, Haiku) drives the ZK-Material verification harness. This is the only file you need open to run the loop.
 
-Companion docs: `doc/harness-plan.md` (architecture), `tasks/work-status.md` (state).
+Companion docs: `doc/verification-harness-decisions.md` (architecture decision records), `tasks/work-status.md` (state; its Status legend is the canonical status vocabulary), `doc/spec/new-component-checklist.md` (cross-cutting Definition of Done — CTV, brand, forced-colors, density, tablet; Step 4c).
 
 ---
 
 ## Contract selector convention
 
-Preview pages render many instances of each component in different states. Contracts MUST use **structural anchor selectors** that point at exactly the canonical instance for each state (default, disabled, readonly, invalid, etc.), not bare class selectors.
+Preview pages render many instances of each component in different states, laid out as one or more **state matrices** produced by `src/test/resources/web/pv/matrix.zul` (pure `z-*` utilities — the old `pv-*` classes were dissolved with `pv.css` and no longer exist in any preview page). Rendered structure per matrix:
 
-See `doc/contracts/textbox.md` Preview Anchors section as the reference example. When you write a new contract or fix a flaky one, anchor on:
-- `.pv-state-gallery.pv-variant-default .pv-state-col:nth-child(N)` for components that use the standard state gallery
-- a text-match on `.pv-state-label` as fallback if positional indexing isn't reliable
-- explicit attribute filters (e.g. `[readonly]`, `[disabled]`) when the variant isn't in a state gallery
+```
+div.z-d-grid.z-grid-cols-auto        ← matrix container (one per section)
+├─ div.z-grid-col-full               ← section title ("States", "Multiline", …)
+├─ div.z-d-contents                  ← header row: empty cell + one header cell per state column
+└─ div.z-d-contents                  ← data row: label cell + one component cell per state
+   …                                    (more data rows)
+```
 
-The Evaluator must NEVER use bare `input.z-textbox` because the page has 20+ matches. The default-state row was originally measured against a sibling that interfered with focus measurement — anchoring fixes this.
+Contracts MUST anchor on **matrix title + header/label text** — robust to reordering — not bare class selectors or positional `nth-child` chains:
+
+```js
+const matrix = [...document.querySelectorAll('.z-d-grid.z-grid-cols-auto')]
+  .find(m => m.querySelector('.z-grid-col-full')?.textContent.trim() === 'States');
+const rows = [...matrix.querySelectorAll(':scope > .z-d-contents')];
+const col  = [...rows[0].children].findIndex(c => c.textContent.trim() === 'Disabled');
+const el   = rows.find(r => r.children[0].textContent.trim() === 'Text')
+               .children[col].querySelector('input.z-textbox');
+```
+
+- Explicit attribute filters (e.g. `[readonly]`, `[disabled]`) remain fine when the variant isn't in a state matrix.
+- The Evaluator must NEVER use bare `input.z-textbox` because the page has 20+ matches. The default-state row was originally measured against a sibling that interfered with focus measurement — anchoring fixes this.
+
+See `doc/contracts/textbox.md` Preview Anchors section as the reference example.
 
 ---
 
@@ -32,7 +49,7 @@ Before the first dispatch in any session:
    withjdk.sh 17 mvn test exec:java@preview-app
    ```
 
-2. Verify the three agents are registered in the running session. The Task tool's available-agent list (shown at session start) must include `zk-theme-evaluator`, `zk-theme-generator`, and `md3-design-verifier`. If not, the user must restart Claude Code — agents in `.claude/agents/` are loaded only at session boot.
+2. Verify the three agents are registered in the running session. The Agent tool's available-agent list (shown at session start) must include `zk-theme-evaluator`, `zk-theme-generator`, and `md3-design-verifier`. If not, the user must restart Claude Code — agents in `.claude/agents/` are loaded only at session boot.
 
 3. Read `tasks/work-status.md` to load current state.
 
@@ -42,7 +59,9 @@ Before the first dispatch in any session:
 
 **`VERIFIED` is dual-gate**: Gate 1 (`zk-theme-evaluator` — conformance to the contract) AND Gate 2 (`md3-design-verifier` — MD3/MUI design quality) must both pass. The evaluator never writes `VERIFIED`; its all-measurements-pass result is `GATE2_PENDING`, and only the orchestrator flips `GATE2_PENDING → VERIFIED` after a `GATE2: PASS`.
 
-Repeat until every row is `VERIFIED`, `STALLED`, `OSCILLATING`, `CONSTRAINT`, or `ESCALATED_TOKEN_FIX`:
+**Manual-verification exception (audit-trail rule)**: the orchestrator may exceptionally perform Gate-1 measurement itself (e.g. the Evaluator agent is unavailable), but the artefact obligations do NOT lapse — it must still write `tasks/eval-reports/<component>.md` and capture `doc/screenshots/<component>/` before the row may leave a Gate-1 state. A row with no eval report and no screenshots cannot reach `GATE2_PENDING` (Gate 2 would be `BLOCKED` anyway — screenshots are its only visual input) and can never be flipped to `VERIFIED`.
+
+Repeat until every row is `VERIFIED`, `STALLED`, `OSCILLATING`, `CONSTRAINT`, `ESCALATED_TOKEN_FIX`, or `ESCALATED_LIBRARY_CONFIG` (the canonical status vocabulary lives in the `tasks/work-status.md` Status legend):
 
 ### Step 1 — Pick the next work batch
 
@@ -65,25 +84,25 @@ Compute two batches from `tasks/work-status.md`:
 
 ### Step 2 — Dispatch the Evaluator batch (parallel)
 
-Issue **one message with multiple Task tool calls** (this is what makes them parallel):
+Issue **one message with multiple Agent tool calls** (this is what makes them parallel):
 
 ```
-Task(
+Agent(
   description="Evaluate textbox",
   subagent_type="zk-theme-evaluator",
   prompt="Component: textbox\n\nFollow your agent definition. Use a fresh Chrome tab."
 )
-Task(
+Agent(
   description="Evaluate button",
   subagent_type="zk-theme-evaluator",
   prompt="Component: button\n\nFollow your agent definition. Use a fresh Chrome tab."
 )
-Task(
+Agent(
   description="Evaluate grid",
   subagent_type="zk-theme-evaluator",
   prompt="Component: grid\n\nFollow your agent definition. Use a fresh Chrome tab."
 )
-Task(
+Agent(
   description="Evaluate checkbox",
   subagent_type="zk-theme-evaluator",
   prompt="Component: checkbox\n\nFollow your agent definition. Use a fresh Chrome tab."
@@ -92,15 +111,13 @@ Task(
 
 Wait for all four to return.
 
-### Step 3 — Merge Evaluator results
+### Step 3 — Merge Evaluator results (orchestrator is the SOLE writer of work-status.md)
 
-Each Evaluator emits a status-row update (its agent definition tells it to update `tasks/work-status.md` directly). With parallel Evaluators there's a file-write race. The orchestrator handles this:
+Each Evaluator returns a machine-readable **status delta block** in its final output (its agent definition §7); it does NOT write `tasks/work-status.md` itself. This eliminates the parallel-write race by design. The orchestrator merges:
 
-- After all Evaluators return, **re-read `tasks/work-status.md` and check for missing rows / duplicate writes**.
-- If a row looks stale or wrong, read the corresponding `tasks/eval-reports/<component>.md` (single-writer per file) — that is the authoritative source of truth.
-- If two Evaluator writes interleaved, manually reconcile by reading each eval report and rewriting the affected rows.
-
-**Cheaper alternative if races become frequent:** ask the user to switch to "Evaluator emits status delta in its return value, orchestrator merges" by editing the agent definition. For now, the file-rewrite-is-quick assumption holds because rows are short.
+- After all Evaluators return, apply each delta to `tasks/work-status.md`: update the row's `status` / `iter` / `failing-set` columns and append the delta's history line to the **Failing-set history** section.
+- The `failing-set` column holds **check ids only** (e.g. `c2, c8, M3`). Narrative history, root-cause notes, and fix chronicles belong in `tasks/eval-reports/<component>.md` — never in the status table (paragraph-length cells made the table unreadable and expensive to reconcile — the 2026-07-22 process audit found the column had degenerated into changelogs).
+- If a delta looks inconsistent, read the corresponding `tasks/eval-reports/<component>.md` (single-writer per file) — that is the authoritative source of truth.
 
 ### Step 4 — Triage results
 
@@ -122,7 +139,7 @@ For each Evaluator return:
 For every component in `GATE2_PENDING`, dispatch the design reviewer (parallel-safe; may share a message with Evaluator dispatches):
 
 ```
-Task(
+Agent(
   description="Design-review textbox",
   subagent_type="md3-design-verifier",
   prompt="Component: textbox\nMode: loop-gate\n\nFollow your agent definition. Screenshots are pre-captured under doc/screenshots/textbox/."
@@ -133,21 +150,34 @@ The reviewer reads the contract, component CSS, and the evaluator's screenshots;
 
 | Gate 2 result | Action |
 |---------------|--------|
-| `GATE2: PASS` | Flip status to `VERIFIED`. Component is done. |
+| `GATE2: PASS` | Run Step 4c (cross-cutting Definition of Done). Only after its items are confirmed, flip status to `VERIFIED`. |
 | `GATE2: FAIL (critical=N)` | **Contract revision path.** Read the report's `## Findings` table. For each Critical row: (a) if it maps to a contract row (`suspected-row` set), revise that row's expected value; (b) if `suspected-row` is blank, add a new D-tier or M-row; (c) if the user rules the deviation intentional, add it to the contract's `## Accepted MD3 deviations` section instead (user-only decision — the orchestrator never adds entries autonomously). Contract changes of design substance require user re-approval (`contract-approved` gate). Then flip status to `NEEDS_FIX` with the findings as the Action-required input → Generator → `RE_EVAL_NEEDED` → next round runs **both gates** again. |
 | `GATE2: BLOCKED (missing screenshots)` | The evaluator's artefacts are missing. Re-dispatch the Evaluator (its §3a captures them), then retry Gate 2. |
 
 Rules:
 - **Skip rule**: never dispatch Gate 2 for a component whose Gate 1 failed this round (the CSS is about to change anyway).
 - **Convergence**: Gate 2 blocks only on Critical findings; Suggested findings never block. Deviations listed in the contract's `## Accepted MD3 deviations` are skipped by the reviewer — this is what guarantees the loop converges despite intentional MD3 deviations (Marble policy: MD3 token naming, MUI v7 visual values).
+- **Gate-2 iteration cap**: track a per-component `gate2-iter` count (increment on every `GATE2: FAIL`). After **2 consecutive** Gate-2 FAILs for the same component, do NOT start another revision round — stop and escalate to the user (the D3 detectors watch only Gate-1 `failing_set`, which is empty in this loop, so nothing else trips). The usual resolution is a user-added `## Accepted MD3 deviations` entry or a user-directed contract redesign.
 - The reviewer is read-only: it never edits CSS, contracts, or `work-status.md`. All flips and revisions are orchestrator/user actions.
+
+### Step 4c — Cross-cutting Definition of Done (before the `VERIFIED` flip)
+
+`VERIFIED` certifies more than MD3 appearance. For any component whose contract carries a `## Cross-cutting features` section (mandatory for contracts authored/re-authored after 2026-07-22 — see `doc/spec/new-component-checklist.md`), confirm before flipping:
+
+1. **Gate 1 covered the `x-*` rows** — the eval report's `## Cross-cutting checks` table exists and every row is PASS or `SKIPPED (contract N/A)`. (`x-*` FAILs would have forced `NEEDS_FIX` already; this is a bookkeeping re-check, not a re-measurement.)
+2. **CTV tracker row** — `doc/component-theme-variables-progress.md` has a row for the component (➖ with rationale when `ctv: N/A`). The orchestrator writes it — same single-writer rule as `work-status.md`.
+3. **CTV spec family table** — when `ctv: shipped`, port the contract's knob table into `doc/spec/component-theme-variables.md` (CTV-8) and add the component to its Shipped list (mechanical copy of user-approved content).
+4. **Render smoke** — `src/test/playwright/render-smoke.spec.ts` `PAGES` contains `/<component>.zul`; add the one-liner if missing.
+5. **Forced-colors snapshot** — `doc/screenshots/<component>-forced-colors.png` exists (produced by the evaluator's `x-fc-capture`).
+
+**Legacy contracts** (no `## Cross-cutting features` section — everything authored before 2026-07-22) flip on `GATE2: PASS` as before; their `x-*` rows read `SKIPPED (legacy contract)` and their CTV state is governed by the progress tracker. When such a contract is re-authored for any reason (js-source drift, Gate-2 revision), spec-author adds the section and the component joins this gate.
 
 ### Step 5 — Dispatch one Generator (serial)
 
 Pick the highest-priority `NEEDS_FIX` component (per group order). Verify no other component with the same `shared-css-file` is currently in `FIXING` (read work-status.md). Then:
 
 ```
-Task(
+Agent(
   description="Generate fix for textbox",
   subagent_type="zk-theme-generator",
   prompt="Component: textbox\n\nFollow your agent definition: read eval report, print contract, edit input.css, run npm run build:css, write gen report."
@@ -176,14 +206,14 @@ Go to Step 1.
 
 | Phase | Concurrency | Reason |
 |-------|-------------|--------|
-| Evaluator | up to 4 parallel | Each uses its own Chrome tab; eval reports are one-file-per-component (no write conflict). Status-file race is small and recoverable. |
+| Evaluator | up to 4 parallel | Each uses its own Chrome tab; eval reports are one-file-per-component (no write conflict). Evaluators return status deltas; only the orchestrator writes `work-status.md` (no status-file race). |
 | Design reviewer (Gate 2) | freely parallel | Read-only: CSS + pre-captured screenshots, no Chrome. Design reports are one-file-per-component. Only constraint: not while a Generator targets the same `shared-css-file` (avoids reviewing mid-edit CSS). |
 | Generator | strictly 1 at a time | `npm run build:css` writes `target/` non-atomically; concurrent builds race. |
 | Mixed Eval+Gen | OK in same outer iteration | Evaluator reads CSS files (no edits); Generator edits and rebuilds. They don't conflict if they target different components — but for clarity, run Eval batch, then Gen, then re-Eval. |
 
 **File-lock invariant.** The orchestrator enforces the lock by **not dispatching** a second Generator while the first is still running, and by **not dispatching** an Evaluator on a component whose `shared-css-file` matches a currently-running Generator's target (avoids reading mid-edit CSS).
 
-In practice this is easy: the orchestrator runs synchronously between dispatches. Each Task tool call blocks until the agent returns. So serializing Generators is just "don't issue a second Task call until the first returns."
+In practice this is easy: the orchestrator runs synchronously between dispatches. Each Agent tool call blocks until the agent returns. So serializing Generators is just "don't issue a second Agent call until the first returns."
 
 ---
 
@@ -191,7 +221,7 @@ In practice this is easy: the orchestrator runs synchronously between dispatches
 
 The orchestrator stops the loop and reports to the user when:
 
-1. All rows are in a terminal state (`VERIFIED`, `STALLED`, `OSCILLATING`, `CONSTRAINT`, `ESCALATED_TOKEN_FIX`).
+1. All rows are in a terminal state (`VERIFIED`, `STALLED`, `OSCILLATING`, `CONSTRAINT`, `ESCALATED_TOKEN_FIX`, `ESCALATED_LIBRARY_CONFIG`).
 2. `tasks/escalation.md` has new entries since the last user check-in.
 3. A Generator build fails.
 4. Preview app dies (any `EVALUATING_BLOCKED` return).
@@ -243,12 +273,12 @@ After the user fixes the token, they run `npm run build:css` and re-dispatch the
 ```
 [orchestrator] reads work-status.md
 [orchestrator] picks Evaluator batch: textbox, button, grid, checkbox  (Group A+E+C+B first row each)
-[orchestrator] dispatches 4 Task() calls in one message
-[evaluator-1]  measures textbox, writes report, status=NEEDS_FIX, action requires TOKEN_FIX for c2,c8
-[evaluator-2]  measures button, writes report, status=NEEDS_FIX, action lists 3 component-level fixes
-[evaluator-3]  measures grid, writes report, status=GATE2_PENDING
-[evaluator-4]  measures checkbox, writes report, status=NEEDS_FIX, 2 component-level fixes
-[orchestrator] reads all 4 reports
+[orchestrator] dispatches 4 Agent() calls in one message
+[evaluator-1]  measures textbox, writes report, returns delta status=NEEDS_FIX, action requires TOKEN_FIX for c2,c8
+[evaluator-2]  measures button, writes report, returns delta status=NEEDS_FIX, action lists 3 component-level fixes
+[evaluator-3]  measures grid, writes report, returns delta status=GATE2_PENDING
+[evaluator-4]  measures checkbox, writes report, returns delta status=NEEDS_FIX, 2 component-level fixes
+[orchestrator] merges the 4 deltas into work-status.md, reads the reports for triage
 [orchestrator] textbox → ESCALATED_TOKEN_FIX (append to token-issues.md)
 [orchestrator] dispatches md3-design-verifier for grid (Gate 2)
 [design-rev-1] reads grid contract + CSS + screenshots, writes design-reviews/grid.md, returns GATE2: PASS
@@ -284,7 +314,7 @@ The orchestrator should NOT dispatch the evaluator on such a component — the e
 After `zk-spec-author <component>` produces (or updates) the artifacts but BEFORE the user approval gate, dispatch:
 
 ```
-Task(
+Agent(
   description="Contract-audit <component>",
   subagent_type="md3-design-verifier",
   prompt="Component: <component>\nMode: contract-audit\n\nAudit the proposed contract + HTML mockup. No Marble CSS or screenshots exist yet."
@@ -298,7 +328,7 @@ This catches MD3/MUI violations and **prose↔table contradictions** in the prop
 After `zk-spec-author <component>` produces (or updates) the artifacts:
 
 1. `.claude/skills/zk-component-rules/components/<component>.md` (structural facts only — DOM tree, state classes, composition invariants).
-2. `doc/contracts/<component>.md` (theme contract — tokens, references, expected values, State matrix).
+2. `doc/contracts/<component>.md` (theme contract — tokens, references, expected values, State matrix, **and the mandatory `## Cross-cutting features` section**: CTV knobs, density binding, forced-colors risk triage, brand literals, tablet triage — the user approves these decisions together with the visual design; see `doc/spec/new-component-checklist.md`).
 3. `doc/contracts/<component>.html` (static mockup rendered with `--zk-*` tokens).
 4. `doc/contracts/baselines/<component>-iceblue.png` (iceblue reference screenshot).
 
@@ -319,6 +349,7 @@ If the evaluator returns status `BLOCKED: js-source drift — re-run zk-spec-aut
 ## When the orchestrator should ask the user
 
 - Token escalation accumulates ≥ 3 components blocked on the same token (probably a real spec issue).
+- A component hits the Gate-2 iteration cap (2 consecutive `GATE2: FAIL` rounds — see Step 4b Rules).
 - Stalled or oscillating component (D3 terminal states).
 - Preview app stops responding.
 - More than 5 consecutive components verified — good time to checkpoint progress with the user.

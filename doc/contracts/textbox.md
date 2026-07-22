@@ -11,18 +11,30 @@ preview: http://localhost:8080/textbox.zul
 
 ## Preview anchors (use these — not bare `input.z-textbox`)
 
-The textbox preview page renders 20+ instances in different states. Use structural anchors to pick the canonical state for each measurement:
+The textbox preview page renders 20+ instances in different states, laid out as state matrices from `pv/matrix.zul` (see `pv/textbox-content.zul`): a **States** matrix (columns Default / Disabled / Readonly / Invalid / Inplace; rows Text / Password / Placeholder) and a **Multiline** matrix (columns Default / Disabled / Readonly; one unlabeled row). Anchor by matrix title + row label + column header — robust to reordering:
 
-| State | Anchor selector |
-|-------|----------------|
-| default | `.pv-state-gallery.pv-variant-default .pv-state-col:nth-child(1) input.z-textbox` |
-| disabled | `.pv-state-gallery.pv-variant-default .pv-state-col:nth-child(2) input.z-textbox` |
-| readonly | `.pv-state-gallery.pv-variant-default .pv-state-col:nth-child(3) input.z-textbox` |
-| placeholder | `.pv-state-gallery.pv-variant-default .pv-state-col:nth-child(4) input.z-textbox` |
-| invalid | `.pv-state-gallery.pv-variant-default .pv-state-col:nth-child(5) input.z-textbox` |
-| textarea | `textarea.z-textbox` (first match — only one in the Multiline section) |
+```js
+function matrixCell(title, rowLabel, colHeader) {
+  const m = [...document.querySelectorAll('.z-d-grid.z-grid-cols-auto')]
+    .find(x => x.querySelector('.z-grid-col-full')?.textContent.trim() === title);
+  const rows = [...m.querySelectorAll(':scope > .z-d-contents')];
+  const col = [...rows[0].children].findIndex(c => c.textContent.trim() === colHeader);
+  const row = rows.slice(1).find(r => r.children[0].textContent.trim() === rowLabel);
+  return row.children[col];
+}
+```
 
-If the preview ZUL is reordered, the Evaluator should fall back to text-match on the `.pv-state-label` sibling: `Array.from(document.querySelectorAll('.pv-state-col')).find(c => c.querySelector('.pv-state-label')?.textContent.trim() === 'Default').querySelector('input.z-textbox')`.
+| State | Anchor |
+|-------|--------|
+| default | `matrixCell('States', 'Text', 'Default').querySelector('input.z-textbox')` |
+| disabled | `matrixCell('States', 'Text', 'Disabled').querySelector('input.z-textbox')` |
+| readonly | `matrixCell('States', 'Text', 'Readonly').querySelector('input.z-textbox')` |
+| invalid | `matrixCell('States', 'Text', 'Invalid').querySelector('input.z-textbox')` |
+| inplace | `matrixCell('States', 'Text', 'Inplace').querySelector('input.z-textbox')` |
+| placeholder | `matrixCell('States', 'Placeholder', 'Default').querySelector('input.z-textbox')` |
+| textarea | Multiline matrix, first data row (its label cell is empty — pass `''` as rowLabel), Default column: `matrixCell('Multiline', '', 'Default').querySelector('textarea.z-textbox')` |
+
+Note the layout inversion vs. the old gallery: **Placeholder is a row, not a column**, and the Multiline section now renders three textareas (Default / Disabled / Readonly) — `textarea.z-textbox` first-match is no longer unambiguous.
 
 ## DOM key selectors (raw — for reference)
 

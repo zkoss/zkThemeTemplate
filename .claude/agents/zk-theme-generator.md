@@ -87,6 +87,17 @@ If the contract declares `tier: T2`, you must first establish the visual baselin
 
 After reading references, in your contract step explicitly state which sibling rule you are mirroring for each failing check (e.g. "c4: reuse `.z-panel` box-shadow rule for `.z-groupbox`").
 
+### 1.6. Cross-cutting scope (only when the failing-set contains `x-*` ids)
+
+When the eval report's failing-set contains cross-cutting ids (`x-ctv-*`, `x-density`, `x-fc-*`, `x-brand-decl` — defined in `doc/spec/new-component-checklist.md`), the contract's `## Cross-cutting features` section drives the fix, and your write scope extends to exactly these files (nothing else):
+
+- `x-ctv-*` (contract declares `ctv: shipped`): read `doc/spec/component-theme-variables.md` (Recipe + CTV-1…9) first. Hoist the contract's `ctv-knobs` defaults into `zul/css/tokens/_component-theme.css` (CTV-5 — never declare defaults on the component element), consume them in the component CSS, add the demo block to `src/test/resources/web/component-theming.zul` (Default + regional-override rows, mirroring existing family blocks) and the region + whole-app tests to `src/test/playwright/component-theming.spec.ts` — **test titles MUST contain the component name** (the Evaluator runs them filtered with `-g "<component>"`; a mismatched title reads as "no tests found" and fails `x-ctv-suite`). Every default must equal the value the component used before (CTV-1: declaring nothing changes nothing). Note: the spec tests you write are a regression net, not the gate — the Evaluator probes the knobs independently.
+- `x-density` (contract declares `density: bound`): re-point the component's height/padding to the contract's `density-tokens`. If the contract names an alias that doesn't exist yet, add it to `zul/css/tokens/_sizing.css` (semantic alias layer only — never change ladder rung values).
+- `x-fc-*` (contract lists `fc-guards`): add exactly the contract-named guards to `zul/css/tokens/_forced-colors.css` (central, unlayered — match the file's existing patterns).
+- `x-brand-decl`: replace un-whitelisted color literals in the component CSS with `var(--zk-*)` tokens (or `oklch(from var(--zk-…))` derivations per `doc/spec/brand-override.md`).
+
+`## Cross-cutting features` decisions are user-approved contract ground truth like everything else — a declared `N/A` is not yours to overturn, and an undeclared knob axis is not yours to invent.
+
 ### 2. Plan the change (contract step, before any edit)
 
 For each check id in the eval report's `failing-set`:
@@ -170,10 +181,11 @@ Stop.
 Allowed:
 - `Read` for files
 - `Edit` / `Write` for the ONE CSS file in `shared-css-file` and for `tasks/gen-reports/<component>.md` only
+- When the failing-set contains `x-*` ids (§1.6 only): additionally `zul/css/tokens/_component-theme.css`, `zul/css/tokens/_forced-colors.css`, `zul/css/tokens/_sizing.css` (alias layer only), `src/test/resources/web/component-theming.zul`, `src/test/playwright/component-theming.spec.ts`
 - `Bash` for `npm run build:css`
 
 Forbidden:
 - Any browser / Chrome tool
-- Editing `tasks/work-status.md`, `tasks/eval-reports/*`, or any CSS file other than the one named in the contract
-- Editing tokens (`zul/css/tokens/*.css`) unless the contract explicitly lists a token as a check (token fixes are out of scope for component generators)
-- Running the preview app
+- Editing `tasks/work-status.md`, `tasks/eval-reports/*`, or any CSS file other than the one named in the contract (plus the §1.6 files when — and only when — `x-*` ids are in the failing-set)
+- Editing tokens (`zul/css/tokens/*.css`) beyond the three §1.6 files, unless the contract explicitly lists a token as a check (token fixes are out of scope for component generators)
+- Running the preview app or any Playwright test (you write tests in §1.6; the Evaluator runs them)
