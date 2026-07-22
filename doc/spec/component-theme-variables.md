@@ -1527,6 +1527,72 @@ an open `.z-popup`; only the whole-app (`:root`) override path applies, and is u
 | `--zk-confirmpopup-cancel-border-color` | `var(--zk-color-outline)` | Cancel button outline |
 | `--zk-confirmpopup-cancel-fg` | `var(--zk-color-on-surface-variant)` | Cancel button text + its state-layer tint |
 
+### Breadcrumb — shipped
+
+Inline text-chrome navigation trail (CE, `zul/wgt/css/breadcrumb.css`) — rendered as borderless
+inline text like an `a`/`caption`, **not** a card: `.z-breadcrumb` root `<nav>` +
+`.z-breadcrumb-list` `<ol>` + `.z-breadcrumbitem` entries (a link `<a>` or the terminal current
+`<span>`) + `.z-breadcrumb-separator` + a client-injected collapse `.z-breadcrumb-ellipsis`
+button. There is deliberately **no `-bg` / `-border-color` / `-radius` knob** — the trail has no
+card surface for those axes to theme (the same curation choice as `a`). `--zk-breadcrumb-fg`
+covers **three** roles at once — the separator, the ellipsis button (resting), and a link item
+(resting) — all three share the identical muted tone by design, the same "one knob, several
+roles" precedent as tab's `--zk-tab-fg` / calendar's `--zk-calendar-accent`.
+`--zk-breadcrumb-fg-hover` covers link-hover/focus and ellipsis-hover/focus together (same
+precedent). `--zk-breadcrumb-current-fg` is the one defining-state knob — the terminal "you are
+here" item's full-emphasis color, matching the "one knob per defining state" precedent
+(chosenbox's `-item-focus-bg`, tab's `-accent`). The disabled item's opacity fade, the ellipsis
+button's stripped native-button chrome (`background`/`border`/`padding` zeroed), and the focus
+ring (global `--zk-focus-ring`) stay on base tokens/literals, not knob-driven (same convention as
+button/window/grid). Breadcrumb renders in place with no client-side reparenting, so region
+scoping (CTV-3) works normally — unlike popup/messagebox/confirmpopup.
+
+| Knob | Default | Scope |
+|------|---------|-------|
+| `--zk-breadcrumb-fg` | `var(--zk-color-on-surface-variant)` | separator + ellipsis button (resting) + link item (resting) |
+| `--zk-breadcrumb-fg-hover` | `var(--zk-color-on-surface)` | link + ellipsis hover/focus |
+| `--zk-breadcrumb-current-fg` | `var(--zk-color-on-surface)` | terminal "current page" item text |
+
+### Carousel — shipped
+
+Full-bleed media frame (CE, `zul/wgt/css/carousel.css`) — `.z-carousel` root (clipped to a
+rounded rectangle) + `.z-carousel-track` flex track + `.z-carouselitem` slides + overlay
+`.z-carousel-arrow-prev`/`-next` + overlay `.z-carousel-indicators`/`.z-carousel-indicator` + an
+optional `.z-carouselitem-label` caption chip. Eight knobs. One shape knob (`--zk-carousel-radius`)
+is shared by the root frame **and** the caption chip — both are "containers" under DESIGN.md §5's
+container/control rule, so one knob moves both together (see c1/c27). The seven color knobs split
+three ways by overlay region (arrow / indicator / label), each region pairing a "dark voice"
+(defaults to `--zk-color-scrim`) with a "light voice" (defaults to `--zk-color-inverse-on-surface`
+— brand-**independent** by design, **not** `--zk-color-on-primary`, which a light-primary rebrand
+would flip dark; see the contract), because the slides underneath are arbitrary imagery and the
+overlay chrome cannot key off surface/on-surface tokens. The one exception is
+`--zk-carousel-arrow-bg-hover`, the single non-token-rooted literal default (`rgba(0, 0, 0, 0.65)`
+— a hand-picked darkening of the scrim with no token to derive from), matching the
+`--zk-grid-row-hover-bg` / `--zk-combobox-item-hover-bg` literal-hover precedent. The indicator
+ring color is **not** a separate knob — it is whichever of `-indicator-bg`/`-indicator-active-bg`
+is not the current fill (resting and active swap fill and ring), so overriding either knob
+recolors both a fill and a ring somewhere in the component, by design. Hover/focus/disabled
+opacities and the chevron/dot geometry stay on base tokens or literal geometry, not knob-driven
+(same convention as button/input/rating) — the one exception is the indicator's hover cue
+(`transform: scale(1.25)`, c30), which is geometry rather than a color/opacity token specifically
+because it must work against either fill knob. Arrow size is density-bound via the new
+`--zk-carousel-arrow-size` alias in `tokens/_sizing.css` (`var(--zk-control-height-sm)`, 32px);
+the indicator's 24px hit area is a WCAG 2.1 SC 2.5.8 accessibility floor, deliberately **not**
+ladder-bound and exempt from density scaling in both directions. Carousel renders in place with
+no client-side reparenting, so region scoping (CTV-3) works normally — unlike
+popup/messagebox/confirmpopup.
+
+| Knob | Default | Scope |
+|------|---------|-------|
+| `--zk-carousel-radius` | `var(--zk-shape-card)` | root frame corners + caption chip corners |
+| `--zk-carousel-arrow-bg` | `var(--zk-color-scrim)` | arrow resting background |
+| `--zk-carousel-arrow-bg-hover` | `rgba(0, 0, 0, 0.65)` | arrow hover background (literal — no darker-scrim token) |
+| `--zk-carousel-arrow-fg` | `var(--zk-color-inverse-on-surface)` | arrow chevron color |
+| `--zk-carousel-indicator-bg` | `var(--zk-color-scrim)` | resting dot fill / active dot ring |
+| `--zk-carousel-indicator-active-bg` | `var(--zk-color-inverse-on-surface)` | active dot fill / resting dot ring |
+| `--zk-carousel-label-bg` | `var(--zk-color-scrim)` | caption chip backdrop |
+| `--zk-carousel-label-fg` | `var(--zk-color-inverse-on-surface)` | caption text |
+
 ## Recipe — adding a component
 
 Validated by the button pilot; repeat per component (then update the
@@ -1569,7 +1635,10 @@ Validated by the button pilot; repeat per component (then update the
   border-color/radius across the header strip and goldenpanel, and the drag-proxy/drop-target/
   overflow-dropdown exclusions), portallayout (see entry for the frame-only-surface convention and
   the drag-ghost/drop-placeholder exclusions), confirmpopup (see entry for the CTV-3 structural
-  exception — inherits Popup's own makeVParent() reparenting on open).
+  exception — inherits Popup's own makeVParent() reparenting on open), breadcrumb (borderless
+  inline text chrome — no bg/border/radius knob; renders in place, so region scoping works),
+  carousel (full-bleed media frame — scrim/inverse-on-surface overlay voices, arrow size
+  density-bound, indicator 24px WCAG floor; renders in place, so region scoping works).
 - **Not exposed** (by design): purely structural/layout components (box, div, cell, separator,
   layouts) and content atoms (label, image) have no meaningful appearance knob — this excludes
   the anchor/link, which **is** exposed despite its similarly minimal text-only vocabulary (see
