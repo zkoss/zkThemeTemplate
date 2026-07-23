@@ -3,6 +3,15 @@
 > 分析日期：2026-07-20。基準 ZK 版本：10.4.0-jakarta。
 > 本文件是**分析 + roadmap**，非 normative spec（規範以 `doc/spec/` 為準）。
 
+> **進度更新（2026-07-23）— Tier 1 #1 已交付。** 「元件級主題變數（Component Theme Variables）」
+> 從 3 元件 pilot 擴為**全面完工並入庫**：每個有專屬 stylesheet 的視覺元件都已套上可覆寫的
+> `--zk-<comp>-*`（`_component-theme.css` 共 **73** 個 `--zk-<comp>-` 家族、tracker A 表 **61** 列元件），
+> 含 **CTV-1…9** 檢驗條件、`component-theming` 測試 **105 綠**、涵蓋全 **172** 元件的進度 tracker（**B / D 皆清空**——
+> 連原本受阻、無 base CSS 的 breadcrumb / carousel 也已補齊 base 元件 CSS + 變數）。另補 **Authoring rule 5**：
+> typography 屬全域 typescale、非元件旋鈕。實作採 generator（sonnet）↔ 獨立 Opus checker 的雙角色 workflow。
+> 規範見 [`spec/component-theme-variables.md`](spec/component-theme-variables.md)；逐元件進度見
+> [`component-theme-variables-progress.md`](component-theme-variables-progress.md)。commits `12ed13f`→`87d5dfb`（+`69415b6`）。
+
 ## 目的
 
 Marble 即將成為 ZK 11.0 的預設外觀主題。本文回答一個問題：**排除 RTL 與 Dark Theme 之後**，
@@ -38,7 +47,7 @@ Marble 同時橫跨兩種角色 —— 既是「元件主題」（對齊 MUI）�
 
 | # | 落差 | 主流框架怎麼做 | Marble 現況 | 為何重要 |
 |---|------|---------------|------------|---------|
-| 1 | **元件級主題變數(Component Theme Variables)** | MUI `theme.components.MuiButton.styleOverrides` / `variants`；Ant `ConfigProvider theme.components.Button.*`；Chakra component theme | **已落地**：18+ 元件 family 已宣告可覆寫 `--zk-<comp>-*`，含 CTV-1…9 檢驗條件 + 進度 tracker（原為缺口，現已系統化） | **MUI / Ant 最大賣點**。企業客戶最常要「只改我們的 button / grid 樣式而不 fork 主題」 |
+| 1 | **元件級主題變數(Component Theme Variables)** ✅ | MUI `theme.components.MuiButton.styleOverrides` / `variants`；Ant `ConfigProvider theme.components.Button.*`；Chakra component theme | **✅ 已完成**：所有有 stylesheet 的視覺元件皆宣告可覆寫 `--zk-<comp>-*`（**73** 家族／A 表 **61** 列元件），含 CTV-1…9 檢驗條件 + 全 **172** 元件 tracker（B/D 清空）、`component-theming` **105** 測試綠（原為缺口，現已系統化並完工） | **MUI / Ant 最大賣點**。企業客戶最常要「只改我們的 button / grid 樣式而不 fork 主題」 |
 | 2 | **裝置自適應控制**（container queries + 響應可見性） | Tailwind `@container` / `md:`；Bootstrap `.d-md-none` 響應顯示；MUI breakpoints | utility CSS 完全無 `@media`；只有 intrinsic auto-fit，沒有「窄螢幕隱藏側欄 / 切換版面」的手段 | Dashboard / ERP 常需「依容器寬度切換」。**Container queries** 比 breakpoint 更貼合 Marble 的 intrinsic 哲學 |
 | 3 | **列印樣式** `@media print` | Bootstrap `.d-print-*` + print reset | 完全沒有 | ERP / CRM 天天印報表、發票、清單。目標客群最需要，卻是 0 覆蓋 |
 | 4 | **z-index / 疊層尺度** | MUI `theme.zIndex`（appBar / drawer / modal / snackbar / tooltip）；Bootstrap `$zindex-*`；Chakra `zIndices` | 無 z-index token scale、無 utility | 框架衛生。避免企業 App 自訂 overlay 時的 z-index 大戰；主題自身 overlay 排序也該有文件化尺度 |
@@ -88,7 +97,7 @@ Tooling（token 匯出 / Figma）是導入推力但屬周邊。前沿 primitive 
 
 | # | 項目 | Impact | Effort | 實作切入點（要動哪些檔） |
 |---|------|--------|--------|------------------------|
-| 1 | **元件級主題變數(Component Theme Variables)** | 高（最大賣點） | 高 | 為每元件定義可覆寫 `--zk-<comp>-*`，component CSS 以 fallback 讀取：`background: var(--zk-button-bg, var(--zk-color-primary))`。**沿用既有 precedent**：`tokens/_splitter.css` 的 `--zk-splitter-*` 與 `tokens/_sizing.css` 的 semantic-alias 層。**先做 3–5 個高需求元件**（button / textbox / grid / window / tab）當 pattern，再擴。檔：`src/main/resources/web/js/zul/**/css/*.css` + `doc/spec/component-theme-variables.md`（已建立）+ `doc/component-theme-variables-progress.md` |
+| 1 | **元件級主題變數(Component Theme Variables)** ✅ 已完成 | 高（最大賣點） | 高（已投入） | **✅ 已交付**（commits `12ed13f`→`87d5dfb`）。落地做法與原規劃有一處**設計修正**：改採 **no-fallback** —— 每元件於 `tokens/_component-theme.css` 的 `:root` 宣告 `--zk-<comp>-*`（預設 = 原值、零回歸），component CSS 於 `@layer zk-components` 內以 `var(--zk-button-bg)` **無 fallback** 消費（非原規劃的 `var(--zk-button-bg, …)`；理由見 Authoring rule 3：預設只在 `:root` 宣告一次、避免 fallback 漂移、DevTools 可探）。原「先做 3–5 個 pilot」已擴至**全部**有 stylesheet 的視覺元件（含新做 base CSS 的 breadcrumb / carousel）。流程：generator（sonnet）實作 ↔ 獨立 Opus checker 驗 CTV-1…9。檔：`src/main/resources/web/js/zul/**/css/*.css` + `doc/spec/component-theme-variables.md` + `doc/component-theme-variables-progress.md` |
 | 2 | **裝置自適應**（container queries + 響應可見性） | 中高 | 中 | (a) 響應可見性 utility `.z-d-none-sm` / `.z-d-block-md`…，對齊 `responsive-design.md` §5 已預留的 MUI breakpoint（sm 600 / md 900 / lg 1200 / xl 1536）。(b) 加 `@container`（`container-type: inline-size` + `@container` 變體）—— 貼合 intrinsic 哲學。檔：`utility/_layout.css`；更新 `doc/spec/responsive-design.md` §5 |
 | 3 | **列印樣式** `@media print` | 中高（企業） | 低 | 新 `utility/_print.css`：`.z-d-print-none` / `.z-d-print-block`、elevation → border、展開 overflow 讓 grid 完整印出、移除 sticky。經 `scripts/build-css.js` bundle 進 `norm.css.dsp`。檔：新 utility + build script + 新 `doc/spec/print-styles.md` |
 | 4 | **z-index / 疊層尺度** | 中 | 低中 | 新 `tokens/_zindex.css` token ladder（dropdown 1000 / sticky 1020 / fixed 1030 / modal-backdrop 1040 / modal 1050 / popover 1060 / tooltip 1070 / toast 1080，對齊 Bootstrap / MUI）+ `.z-index-*` utility。稽核既有 window / popup / menu z-index 對齊。bundle 進 `norm.css.dsp` |
