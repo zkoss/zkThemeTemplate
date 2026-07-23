@@ -173,10 +173,47 @@
 
 ---
 
-## 5. Breakpoint 說明
+## 5. Breakpoint 與「依裝置／容器切換版面」utility
 
-- `z-grid-fill` 與 `z-grid-cols-auto` 都**不用** breakpoint（intrinsic / 捲動容器處理 RWD）。
-- 目前 utility CSS **完全沒有 `@media`**；若未來要做「依裝置切換版面」的 App 級需求，再評估是否補一組對齊 MUI 的響應式 utility（sm 600 / md 900 / lg 1200 / xl 1536）。
+- `z-grid-fill` 與 `z-grid-cols-auto`（第 2、2.5 節）都**不用** breakpoint（intrinsic / 捲動容器處理 RWD）——
+  能用 intrinsic 就優先用，這是本 theme 的取向。
+- 當真的需要「依裝置切換版面」（隱藏側欄、堆疊↔並排、只在手機顯示漢堡鈕）時，提供一組對齊 **MUI**
+  的響應式 display utility。**breakpoint 尺度**：`sm` 600 / `md` 900 / `lg` 1200 / `xl` 1536（`xs` 0 = base）。
+  互動教學頁：`usecase/index.zul#utility/responsive`（原始檔 `src/test/resources/web/utility/responsive.zul`）。
+
+### 5.1 依 viewport —— `z-d-{value}-{bp}`（mobile-first / min-width）
+
+`z-d-{value}-{bp}` = 「viewport ≥ bp 時 `display:{value}`」。採 **mobile-first**：無後綴的 base `z-d-*`
+（見 `_layout.css`「Display」）覆蓋 xs(0)，`-{bp}` 在該寬度**以上**疊加覆寫。`value` 精選
+`none / block / flex / grid / inline-block`（涵蓋 hide/show + 版面切換）。
+
+```xml
+<!-- 側欄：手機隱藏，≥md 顯示 -->
+<div sclass="z-d-none z-d-block-md">…sidebar…</div>
+<!-- 漢堡鈕：只在 <md 顯示 -->
+<button sclass="z-d-block z-d-none-md">☰</button>
+<!-- 版面切換：手機堆疊、≥md 並排（純 display 切換） -->
+<div sclass="z-d-block z-d-flex-md z-gap-3"> … </div>
+```
+
+> 注意：`@media` 條件**不能**用 `var()`，故 breakpoint 為字面 px（於 `_layout.css` 註解列出 MUI 尺度）。
+
+### 5.2 依容器 —— `z-container` + `z-cq-{value}-{bp}`（container queries）
+
+貼合 intrinsic 哲學：讓元件**依自己容器的寬度**（而非 viewport）調整——同一元件放到寬／窄區域會各自適應，
+特別適合 dashboard 磚、split pane。用 `.z-container`（`container-type: inline-size`）標記查詢容器，
+其後代用 `z-cq-{value}-{bp}` 反應**該容器**的 inline size。value 與 bp 尺度同 5.1。
+
+```xml
+<div sclass="z-container">                        <!-- 查詢容器（必要前提） -->
+    <div sclass="z-d-block z-cq-flex-md z-gap-3">  <!-- 容器 ≥md 時並排，否則堆疊 -->
+        <div>Summary</div>
+        <div sclass="z-cq-none z-cq-block-sm">Details</div>  <!-- 容器 ≥sm 才顯示 -->
+    </div>
+</div>
+```
+
+> `z-cq-*` **必須**有 `z-container` 祖先才有可量測的容器——請成對使用。breakpoint 量的是**容器**寬度，非 viewport。
 
 ## 6. 測試守則
 

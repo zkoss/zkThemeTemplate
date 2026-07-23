@@ -1,0 +1,102 @@
+<?page title="Responsive Utilities"?>
+<zk>
+<style src="~./usecase/usecase.css"/>
+<vlayout hflex="1" sclass="z-d-flex z-flex-col z-gap-4 z-p-4 z-bg-surface-low">
+
+    <label value="Responsive Utilities" sclass="z-h2"/>
+
+    <!-- Intro -->
+    <div sclass="z-card">
+        <label value="Two ways to adapt a layout" sclass="z-d-block z-text-base z-fw-medium z-text-on-surface z-mb-3"/>
+        <div sclass="z-d-grid z-grid-fill z-gap-3" style="--zk-grid-min: 260px">
+            <div sclass="z-bg-surface-variant z-rounded z-p-3">
+                <label value="By viewport  ·  z-d-{value}-{bp}" sclass="z-d-block z-fw-medium z-mb-1"/>
+                <label value="Show/hide or switch display based on the WINDOW width. Mobile-first: the base .z-d-* covers phones, a -{bp} class layers on at that width and up." sclass="z-text-secondary z-text-sm"/>
+            </div>
+            <div sclass="z-bg-surface-variant z-rounded z-p-3">
+                <label value="By container  ·  z-container + z-cq-{value}-{bp}" sclass="z-d-block z-fw-medium z-mb-1"/>
+                <label value="React to the CONTAINER'S width instead. The same component adapts to how much room it was actually given — ideal for dashboard tiles and split panes." sclass="z-text-secondary z-text-sm"/>
+            </div>
+        </div>
+        <label value="Breakpoints (MUI scale): sm 600px · md 900px · lg 1200px · xl 1536px  ·  xs (0) = the un-suffixed base." sclass="z-d-block z-text-muted z-text-xs z-mt-3"/>
+    </div>
+
+    <!-- Viewport responsive visibility -->
+    <div sclass="z-card">
+        <label value="Viewport visibility  (.z-d-none-* / .z-d-block-*)" sclass="z-d-block z-text-base z-fw-medium z-text-on-surface z-mb-2"/>
+        <div sclass="z-bg-surface-variant z-rounded z-p-2 z-mb-3">
+            <label value="↔ Resize the browser window to watch these appear and disappear at each breakpoint." sclass="z-text-secondary z-text-sm"/>
+        </div>
+        <div sclass="z-d-flex z-gap-2 z-flex-wrap z-align-center">
+            <div sclass="z-bg-secondary-container z-rounded-xs z-py-2 z-px-3 z-text-sm z-fw-medium z-d-block z-d-none-sm">visible &lt; sm (&lt;600)</div>
+            <div sclass="z-bg-primary-container z-rounded-xs z-py-2 z-px-3 z-text-sm z-fw-medium z-d-none z-d-block-sm">visible ≥ sm (600)</div>
+            <div sclass="z-bg-primary-container z-rounded-xs z-py-2 z-px-3 z-text-sm z-fw-medium z-d-none z-d-block-md">visible ≥ md (900)</div>
+            <div sclass="z-bg-primary-container z-rounded-xs z-py-2 z-px-3 z-text-sm z-fw-medium z-d-none z-d-block-lg">visible ≥ lg (1200)</div>
+            <div sclass="z-bg-primary-container z-rounded-xs z-py-2 z-px-3 z-text-sm z-fw-medium z-d-none z-d-block-xl">visible ≥ xl (1536)</div>
+        </div>
+        <label value="&lt;div class=&quot;z-d-none z-d-block-md&quot;&gt; — hidden on phones, shown from md up." sclass="z-d-block z-text-muted z-text-xs z-mt-2"/>
+    </div>
+
+    <!-- Viewport layout switch (display only) -->
+    <div sclass="z-card">
+        <label value="Viewport layout switch  (.z-d-block → .z-d-flex-md)" sclass="z-d-block z-text-base z-fw-medium z-text-on-surface z-mb-2"/>
+        <div sclass="z-bg-surface-variant z-rounded z-p-2 z-mb-3">
+            <label value="Cards stack on phones, sit in a row from md (≥900) up — pure display switch, no grid record-keeping." sclass="z-text-secondary z-text-sm"/>
+        </div>
+        <div sclass="z-d-block z-d-flex-md z-gap-3">
+            <div sclass="z-bg-primary-container z-rounded z-p-4 z-flex-1 z-mb-2">Panel A</div>
+            <div sclass="z-bg-primary-container z-rounded z-p-4 z-flex-1 z-mb-2">Panel B</div>
+            <div sclass="z-bg-primary-container z-rounded z-p-4 z-flex-1 z-mb-2">Panel C</div>
+        </div>
+        <label value="&lt;div class=&quot;z-d-block z-d-flex-md z-gap-3&quot;&gt; — block (stacked) below md, flex row at md+." sclass="z-d-block z-text-muted z-text-xs z-mt-2"/>
+    </div>
+
+    <!-- Container queries -->
+    <div sclass="z-card">
+        <label value="Container queries  (.z-container + .z-cq-*)" sclass="z-d-block z-text-base z-fw-medium z-text-on-surface z-mb-2"/>
+        <div sclass="z-bg-surface-variant z-rounded z-p-2 z-mb-3">
+            <label value="The three cards below are IDENTICAL markup — only their container width differs. Each card adapts to its own container, not the window. No resizing needed." sclass="z-text-secondary z-text-sm"/>
+        </div>
+        <vlayout sclass="z-gap-4">
+            <!-- 300px container: narrow — stacked, details hidden -->
+            <div>
+                <label value="Container width: 300px  (&lt; sm)" sclass="z-d-block z-text-muted z-text-xs z-mb-1"/>
+                <div sclass="z-overflow-x-auto">
+                    <div sclass="z-container z-bg-surface-low z-border z-rounded z-p-3" style="width:300px">
+                        <div sclass="z-d-block z-cq-flex-md z-gap-3 z-align-center">
+                            <div sclass="z-bg-primary-container z-rounded z-p-3 z-flex-1 z-mb-2">Summary</div>
+                            <div sclass="z-bg-secondary-container z-rounded z-p-3 z-flex-1 z-mb-2 z-cq-none z-cq-block-sm">Details (≥ sm container)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 700px container: medium — stacked, details shown -->
+            <div>
+                <label value="Container width: 700px  (≥ sm, &lt; md)" sclass="z-d-block z-text-muted z-text-xs z-mb-1"/>
+                <div sclass="z-overflow-x-auto">
+                    <div sclass="z-container z-bg-surface-low z-border z-rounded z-p-3" style="width:700px">
+                        <div sclass="z-d-block z-cq-flex-md z-gap-3 z-align-center">
+                            <div sclass="z-bg-primary-container z-rounded z-p-3 z-flex-1 z-mb-2">Summary</div>
+                            <div sclass="z-bg-secondary-container z-rounded z-p-3 z-flex-1 z-mb-2 z-cq-none z-cq-block-sm">Details (≥ sm container)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 950px container: wide — row, details shown -->
+            <div>
+                <label value="Container width: 950px  (≥ md)" sclass="z-d-block z-text-muted z-text-xs z-mb-1"/>
+                <div sclass="z-overflow-x-auto">
+                    <div sclass="z-container z-bg-surface-low z-border z-rounded z-p-3" style="width:950px">
+                        <div sclass="z-d-block z-cq-flex-md z-gap-3 z-align-center">
+                            <div sclass="z-bg-primary-container z-rounded z-p-3 z-flex-1 z-mb-2">Summary</div>
+                            <div sclass="z-bg-secondary-container z-rounded z-p-3 z-flex-1 z-mb-2 z-cq-none z-cq-block-sm">Details (≥ sm container)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </vlayout>
+        <label value="Body: z-d-block z-cq-flex-md (stacks &lt; md container, row ≥ md).  Details chip: z-cq-none z-cq-block-sm (hidden &lt; sm container)." sclass="z-d-block z-text-muted z-text-xs z-mt-3"/>
+    </div>
+
+</vlayout>
+</zk>

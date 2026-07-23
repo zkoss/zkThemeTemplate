@@ -36,6 +36,107 @@
 .z-d-contents     { display: contents; }
 
 /* ============================================
+   Responsive display — by VIEWPORT width (mobile-first / min-width)
+   --------------------------------------------
+   `.z-d-{value}-{bp}` = "at viewport width >= bp, set display:{value}".
+   Mobile-first (min-width), aligned with MUI/Tailwind — the base `.z-d-*`
+   above covers the xs (0) range; a `-{bp}` class layers on top at that width
+   and up. Compose a base display with one breakpoint override to hide/show:
+
+     hide a sidebar on phones, show it >= md:   z-d-none  z-d-block-md
+     show a hamburger only below md:            z-d-block z-d-none-md
+
+   Breakpoints follow the MUI scale (see doc/spec/responsive-design.md §5):
+     sm = 600px, md = 900px, lg = 1200px, xl = 1536px.  (xs = 0 = the base.)
+   Values are literal px — a media-query condition cannot read a CSS var().
+   Value set is deliberately curated (none/block/flex/grid/inline-block):
+   these cover hide/show + layout switching; add more only on a real need.
+   ============================================ */
+@media (min-width: 600px) {
+    .z-d-none-sm         { display: none; }
+    .z-d-block-sm        { display: block; }
+    .z-d-flex-sm         { display: flex; }
+    .z-d-grid-sm         { display: grid; }
+    .z-d-inline-block-sm { display: inline-block; }
+}
+@media (min-width: 900px) {
+    .z-d-none-md         { display: none; }
+    .z-d-block-md        { display: block; }
+    .z-d-flex-md         { display: flex; }
+    .z-d-grid-md         { display: grid; }
+    .z-d-inline-block-md { display: inline-block; }
+}
+@media (min-width: 1200px) {
+    .z-d-none-lg         { display: none; }
+    .z-d-block-lg        { display: block; }
+    .z-d-flex-lg         { display: flex; }
+    .z-d-grid-lg         { display: grid; }
+    .z-d-inline-block-lg { display: inline-block; }
+}
+@media (min-width: 1536px) {
+    .z-d-none-xl         { display: none; }
+    .z-d-block-xl        { display: block; }
+    .z-d-flex-xl         { display: flex; }
+    .z-d-grid-xl         { display: grid; }
+    .z-d-inline-block-xl { display: inline-block; }
+}
+
+/* ============================================
+   Container queries — adapt to the CONTAINER'S width, not the viewport
+   --------------------------------------------
+   `.z-container` marks an element as an inline-size query container; any
+   descendant carrying a `.z-cq-{value}-{bp}` class then reacts to THAT
+   container's inline size (not the viewport). This is the intrinsic
+   counterpart to the viewport classes above — a card/panel/split-pane can
+   switch its own layout based on how much room it was actually given, so the
+   same component adapts wherever it is placed.
+
+     <div class="z-container">                 <!-- query container -->
+         <div class="z-cq-none z-cq-flex-md">  <!-- flex once the container is >= 900px -->
+
+   `z-cq-*` require a `.z-container` ancestor to have anything to measure —
+   always pair them. Breakpoints reuse the same sm/md/lg/xl scale as the
+   viewport classes (measured against the container's inline size). Same
+   curated value set. `z-cq-{value}` (no suffix) is the base within a
+   container; `z-cq-{value}-{bp}` layers on at that container width and up. */
+.z-container { container-type: inline-size; }
+
+.z-cq-none         { display: none; }
+.z-cq-block        { display: block; }
+.z-cq-flex         { display: flex; }
+.z-cq-grid         { display: grid; }
+.z-cq-inline-block { display: inline-block; }
+
+@container (min-width: 600px) {
+    .z-cq-none-sm         { display: none; }
+    .z-cq-block-sm        { display: block; }
+    .z-cq-flex-sm         { display: flex; }
+    .z-cq-grid-sm         { display: grid; }
+    .z-cq-inline-block-sm { display: inline-block; }
+}
+@container (min-width: 900px) {
+    .z-cq-none-md         { display: none; }
+    .z-cq-block-md        { display: block; }
+    .z-cq-flex-md         { display: flex; }
+    .z-cq-grid-md         { display: grid; }
+    .z-cq-inline-block-md { display: inline-block; }
+}
+@container (min-width: 1200px) {
+    .z-cq-none-lg         { display: none; }
+    .z-cq-block-lg        { display: block; }
+    .z-cq-flex-lg         { display: flex; }
+    .z-cq-grid-lg         { display: grid; }
+    .z-cq-inline-block-lg { display: inline-block; }
+}
+@container (min-width: 1536px) {
+    .z-cq-none-xl         { display: none; }
+    .z-cq-block-xl        { display: block; }
+    .z-cq-flex-xl         { display: flex; }
+    .z-cq-grid-xl         { display: grid; }
+    .z-cq-inline-block-xl { display: inline-block; }
+}
+
+/* ============================================
    Grid — template columns
    `minmax(0, 1fr)` lets children shrink below their min-content width,
    preventing long inline content from forcing column overflow.

@@ -60,6 +60,13 @@ export default defineConfig({
       use: { ...devices['Desktop Chrome'] },
     },
     {
+      // Responsive display utilities: viewport @media (.z-d-*-{bp}) + container
+      // queries (.z-container / .z-cq-*). See responsive-utilities.spec.ts.
+      name: 'responsive',
+      testMatch: /responsive-utilities\.spec\.ts/,
+      use: { ...devices['Desktop Chrome'] },
+    },
+    {
       // Windows High-Contrast a11y regression for tokens/_forced-colors.css.
       // NOTE: the emulation is applied IN the spec via page.emulateMedia(
       // { forcedColors:'active' }) — the context-option form below does not take
