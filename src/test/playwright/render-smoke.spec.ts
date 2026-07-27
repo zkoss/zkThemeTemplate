@@ -127,6 +127,7 @@ const PAGES = [
   '/tree.zul',
   '/utility/grid-layout.zul',
   '/utility/print.zul',
+  '/utility/zindex.zul',
   '/video.zul',
   '/vlayout.zul',
   '/window.zul',

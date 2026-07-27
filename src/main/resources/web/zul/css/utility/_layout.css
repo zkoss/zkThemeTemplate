@@ -315,6 +315,20 @@
 }
 
 /* ============================================
+   Stacking (z-index) — see doc/spec/zindex-scale.md
+   ============================================ */
+/* For APP-authored positioned elements, NOT ZK widgets: ZK stamps floating-widget
+   z-index inline at runtime (base 1800), so these classes never control a ZK popup.
+   Compose with a .z-position-* class (z-index needs a positioned element). To sit
+   UNDER ZK popups keep below --zk-index-float-fallback (1800); to sit OVER them
+   prefer a real ZK widget / setTopmost() over out-bidding the runtime counter. */
+.z-index-nav            { z-index: var(--zk-index-nav); }
+.z-index-float-fallback { z-index: var(--zk-index-float-fallback); }
+.z-index-loading        { z-index: var(--zk-index-loading); }
+.z-index-loadingbar     { z-index: var(--zk-index-loadingbar); }
+.z-index-error          { z-index: var(--zk-index-error); }
+
+/* ============================================
    Truncation & Accessibility
    ============================================ */
 .z-text-truncate {

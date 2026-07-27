@@ -75,6 +75,14 @@ export default defineConfig({
       use: { ...devices['Desktop Chrome'] },
     },
     {
+      // Stacking scale: --zk-index-* tokens + .z-index-* utilities resolve to
+      // their values, and the token ladder's three hard constraints hold. See
+      // zindex-scale.spec.ts and doc/spec/zindex-scale.md.
+      name: 'zindex',
+      testMatch: /zindex-scale\.spec\.ts/,
+      use: { ...devices['Desktop Chrome'] },
+    },
+    {
       // Windows High-Contrast a11y regression for tokens/_forced-colors.css.
       // NOTE: the emulation is applied IN the spec via page.emulateMedia(
       // { forcedColors:'active' }) — the context-option form below does not take

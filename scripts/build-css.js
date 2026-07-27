@@ -67,6 +67,10 @@ const normFiles = [
     'zul/css/tokens/_shape.css',
     'zul/css/tokens/_sizing.css',
     'zul/css/tokens/_splitter.css',
+    // Stacking scale — --zk-index-* (load-bearing z-index values only). Unlayered
+    // :root defs. ZK sets floating-widget z-index inline at runtime (base 1800), so
+    // only non-floating elements are tokenized here. See doc/spec/zindex-scale.md.
+    'zul/css/tokens/_zindex.css',
     // Component Theme Variables — per-component appearance vars (--zk-<comp>-*).
     // Unlayered :root defs (like the other token files); placed after the base
     // tokens it references. See doc/spec/component-theme-variables.md.

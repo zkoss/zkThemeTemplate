@@ -30,6 +30,18 @@
 > - 預覽頁 `utility/print.zul`（英文、`z-h4` section 標題、逐字原始碼區塊）+「Utility CSS → Print」navitem；規範 `doc/spec/print-styles.md`。
 > 驗證：`print` 專案 2 綠、`smoke` 113 綠（含新路徑 `/utility/print.zul`）。**已知限制**：凍結欄（`<frozen>`）JS 定位，非 CSS，無法單靠列印樣式完整展開。#4 / #5 仍待補。
 
+> **進度更新（2026-07-27）— Tier 1 #4 疊層尺度（z-index）已交付。** 先做**完整稽核**（[`zindex-audit.md`](zindex-audit.md)），
+> 交叉比對 ZK runtime 後得到**翻案級關鍵發現**：ZK 的 JS client 在浮層一顯示時，以 `_topZIndex()`（base **1800**、
+> 扁平全域計數器）寫上 **inline** `z-index` ≥1800，永遠蓋過 CSS。故 #4 從原規劃「造一把 Bootstrap 式 ladder 管浮層順序」
+> 修正為**更誠實、更小**的形狀：
+> - 新 `tokens/_zindex.css`：只 token 化**真正 load-bearing**（ZK 不當它是 floating widget）的值——`--zk-index-{nav 1000 /
+>   loading 1450 / float-fallback 1800 / loadingbar 2000 / slider-tooltip 60000 / busy-mask 89000 / busy-loading 89500 /
+>   fullscreen 99999 / error 9999999}`（值 = 原值，**零回歸**）。1000–2000 的元件浮層值維持 cosmetic fallback（ZK runtime 覆寫），**刻意不重編**。
+> - `.z-index-*` utility（`_layout.css`）+ 企業指南：自訂 chrome 想在 ZK 浮層之下 → 保持 &lt; 1800；想在其上 → 用 `setTopmost()`，別和計數器出價。
+> - 順手清兩個**死值**：searchbox `88000`（誤抄，ZK 官方主題用 1000）→ float-fallback；drag-ghost `90000`（ZK 拖曳時 inline 蓋為 88800）→ 加註。
+> - 規範 [`spec/zindex-scale.md`](spec/zindex-scale.md)、稽核全紀錄 [`zindex-audit.md`](zindex-audit.md)、預覽頁 `utility/zindex.zul` +「Stacking (z-index)」navitem。
+> 驗證：`zindex` 專案 2 綠、`smoke` **114 綠**（含新路徑 `/utility/zindex.zul`）。#5（Skeleton）仍待補。
+
 ## 目的
 
 Marble 即將成為 ZK 11.0 的預設外觀主題。本文回答一個問題：**排除 RTL 與 Dark Theme 之後**，
@@ -68,7 +80,7 @@ Marble 同時橫跨兩種角色 —— 既是「元件主題」（對齊 MUI）�
 | 1 | **元件級主題變數(Component Theme Variables)** ✅ | MUI `theme.components.MuiButton.styleOverrides` / `variants`；Ant `ConfigProvider theme.components.Button.*`；Chakra component theme | **✅ 已完成**：所有有 stylesheet 的視覺元件皆宣告可覆寫 `--zk-<comp>-*`（**73** 家族／A 表 **61** 列元件），含 CTV-1…9 檢驗條件 + 全 **172** 元件 tracker（B/D 清空）、`component-theming` **105** 測試綠（原為缺口，現已系統化並完工） | **MUI / Ant 最大賣點**。企業客戶最常要「只改我們的 button / grid 樣式而不 fork 主題」 |
 | 2 | **裝置自適應控制**（container queries + 響應可見性） ✅ | Tailwind `@container` / `md:`；Bootstrap `.d-md-none` 響應顯示；MUI breakpoints | **✅ 已完成**：`_layout.css` 新增 viewport `.z-d-{value}-{bp}`（mobile-first / min-width，sm 600 / md 900 / lg 1200 / xl 1536）＋ container query `.z-container` / `.z-cq-{value}-{bp}`（`container-type: inline-size` + `@container`）；預覽頁 `utility/responsive.zul`、`responsive` Playwright 專案 4 綠、`responsive-design.md` §5 更新 | Dashboard / ERP 常需「依容器寬度切換」。**Container queries** 比 breakpoint 更貼合 Marble 的 intrinsic 哲學 |
 | 3 | **列印樣式** `@media print` ✅ | Bootstrap `.d-print-*` + print reset | **✅ 已完成**：`utility/_print.css` 提供 opt-in `.z-d-print-*` 可見性 + 自動列印 reset（隱藏浮層 chrome、解除 sticky 表頭、展開卷軸、陰影→邊框）；`print` 專案 2 綠。規範 `doc/spec/print-styles.md`（原為 0 覆蓋，現已補齊） | ERP / CRM 天天印報表、發票、清單。目標客群最需要，卻曾是 0 覆蓋 |
-| 4 | **z-index / 疊層尺度** | MUI `theme.zIndex`（appBar / drawer / modal / snackbar / tooltip）；Bootstrap `$zindex-*`；Chakra `zIndices` | 無 z-index token scale、無 utility | 框架衛生。避免企業 App 自訂 overlay 時的 z-index 大戰；主題自身 overlay 排序也該有文件化尺度 |
+| 4 | **z-index / 疊層尺度** ✅ | MUI `theme.zIndex`（appBar / drawer / modal / snackbar / tooltip）；Bootstrap `$zindex-*`；Chakra `zIndices` | **✅ 已完成**：`tokens/_zindex.css` 提供 `--zk-index-*`（只 token 化 load-bearing 值）+ `.z-index-*` utility。**關鍵發現**：ZK runtime 以 base 1800 **inline** 覆寫浮層 z-index，故元件 CSS 只是 fallback → 不造假 ladder；清 searchbox/drag-ghost 兩死值；規範 [`spec/zindex-scale.md`](spec/zindex-scale.md)、稽核 [`zindex-audit.md`](zindex-audit.md)、`zindex` 專案 2 綠 | 框架衛生。避免企業 App 自訂 overlay 時的 z-index 大戰；主題自身 overlay 排序也該有文件化尺度 |
 | 5 | **Skeleton / shimmer 載入態** | MUI `Skeleton`、Ant `Skeleton`、Bootstrap placeholders | 只有 spinner / progress bar 元件 | 資料密集型 App（正是目標客群）載入時幾乎都用骨架屏。缺一個 `.z-skeleton` utility |
 
 ### Tier 2 — Utility 廣度與細節打磨（可批次補齊）
@@ -105,7 +117,7 @@ ZK 多以 JS 定位 overlay、企業需求低，選擇性補（如圖廊用 scro
 排除 RTL / Dark 後，Marble 的 **token 與架構層已對齊甚至領先**主流框架；真正的落差集中在兩處：
 
 1. **元件級客製（Component Theme Variables）**（MUI / Ant 的核心賣點）—— 結構性;**現已落地**;
-2. **應用層 CSS 廣度**（container queries ✅、列印 ✅ 已交付；剩 skeleton、z-index 尺度、opacity / aspect-ratio / line-clamp 等 utility）—— 量多但單項成本低，可批次補齊。
+2. **應用層 CSS 廣度**（container queries ✅、列印 ✅、z-index 尺度 ✅ 已交付；剩 skeleton、opacity / aspect-ratio / line-clamp 等 utility）—— 量多但單項成本低，可批次補齊。
 
 Tooling（token 匯出 / Figma）是導入推力但屬周邊。前沿 primitive 可延後。
 
@@ -118,7 +130,7 @@ Tooling（token 匯出 / Figma）是導入推力但屬周邊。前沿 primitive 
 | 1 | **元件級主題變數(Component Theme Variables)** ✅ 已完成 | 高（最大賣點） | 高（已投入） | **✅ 已交付**（commits `12ed13f`→`87d5dfb`）。落地做法與原規劃有一處**設計修正**：改採 **no-fallback** —— 每元件於 `tokens/_component-theme.css` 的 `:root` 宣告 `--zk-<comp>-*`（預設 = 原值、零回歸），component CSS 於 `@layer zk-components` 內以 `var(--zk-button-bg)` **無 fallback** 消費（非原規劃的 `var(--zk-button-bg, …)`；理由見 Authoring rule 3：預設只在 `:root` 宣告一次、避免 fallback 漂移、DevTools 可探）。原「先做 3–5 個 pilot」已擴至**全部**有 stylesheet 的視覺元件（含新做 base CSS 的 breadcrumb / carousel）。流程：generator（sonnet）實作 ↔ 獨立 Opus checker 驗 CTV-1…9。檔：`src/main/resources/web/js/zul/**/css/*.css` + `doc/spec/component-theme-variables.md` + `doc/component-theme-variables-progress.md` |
 | 2 | **裝置自適應**（container queries + 響應可見性） **✅ 已交付** | 中高 | 中 | (a) ✅ viewport 響應可見性 `.z-d-{value}-{bp}`（`value` ∈ none/block/flex/grid/inline-block × bp ∈ sm 600/md 900/lg 1200/xl 1536，mobile-first）。(b) ✅ container queries：`.z-container`（`container-type: inline-size`）＋ `.z-cq-{value}-{bp}`（`@container` 變體，同尺度）。落地：`utility/_layout.css` 既有 `@layer zk-utilities` 塊內（`@media`/`@container` 已驗證通過 CleanCSS build）；預覽頁 `src/test/resources/web/utility/responsive.zul` + `usecase` navitem「Responsive」；`responsive-design.md` §5 改寫為「已提供 + 用法」；回歸測試 `responsive-utilities.spec.ts`（`responsive` 專案，4 綠）。**設計注記**：value 精選 5 個（非全矩陣，Simplicity First）；`z-cq-*` 必須有 `z-container` 祖先 |
 | 3 | **列印樣式** `@media print` **✅ 已交付** | 中高（企業） | 低 | **✅ 已交付**（本 session）。落地：`utility/_print.css` = `@layer zk-utilities` 內的單一 `@media print` 區塊 —— opt-in `.z-d-print-{none/block/flex/grid/inline-block}` + 自動 reset（elevation→hairline 邊框、展開 grid/list/tree overflow、解除 `.z-sticky-header`、隱藏浮層 chrome）。**設計注記**：使用者選定 **standard reset**（保留品牌色，非 ink-saving 變體）；因 `zk-utilities` 是最上層 layer，覆蓋 `zk-components` 無需 `!important`。註冊進 `build-css.js` `normFiles`（bundle 進 `norm.css.dsp`）。檔：`utility/_print.css` + `scripts/build-css.js` + `doc/spec/print-styles.md` + 預覽頁 `utility/print.zul` + `print` Playwright 專案 |
-| 4 | **z-index / 疊層尺度** | 中 | 低中 | 新 `tokens/_zindex.css` token ladder（dropdown 1000 / sticky 1020 / fixed 1030 / modal-backdrop 1040 / modal 1050 / popover 1060 / tooltip 1070 / toast 1080，對齊 Bootstrap / MUI）+ `.z-index-*` utility。稽核既有 window / popup / menu z-index 對齊。bundle 進 `norm.css.dsp` |
+| 4 | **z-index / 疊層尺度** **✅ 已交付** | 中 | 低中 | **✅ 已交付**（本 session）。稽核後發現 ZK runtime 以 base 1800 **inline** 覆寫浮層 → 原規劃的 Bootstrap ladder 對 ZK 浮層無效，改為**誠實版**：`tokens/_zindex.css` 只 token 化 load-bearing 值（nav 1000 / loading 1450 / float-fallback 1800 / loadingbar 2000 / slider-tooltip 60000 / busy-mask 89000 / busy-loading 89500 / fullscreen 99999 / error 9999999，值=原值零回歸）+ `.z-index-*` utility（`_layout.css`）；1000–2000 cosmetic 浮層值不動；清 searchbox 88000 / drag-ghost 90000 兩死值。檔：`tokens/_zindex.css` + `build-css.js` + `_layout.css` + 9 元件 CSS + `doc/spec/zindex-scale.md` + `doc/zindex-audit.md` + 預覽頁 `utility/zindex.zul` + `zindex` Playwright 專案 |
 | 5 | **Skeleton / shimmer** | 中高 | 低中 | 純 CSS utility `.z-skeleton`（surface-variant + shimmer keyframe，**須 reduced-motion guard**）+ `-text` / `-circle` / `-rect` 變體。沿用 `js/zul/wgt/css` 既有 keyframe 寫法。檔：新 `utility/_skeleton.css`（或併入 `_components.css`） |
 
 **Tier 2** 建議打包成一次「utility 廣度 pass」（多為附加、低風險）：opacity / cursor / user-select / aspect-ratio / object-fit / 多行 line-clamp / backdrop-blur / transform / gradient / border-color·width / elevation 4·5 / 更細尺寸尺度 / 動效 preset / `accent-color`。落在既有 `_layout.css`、`_borders.css`、`_colors.css`、`_elevation.css` + 新 `_effects.css`。

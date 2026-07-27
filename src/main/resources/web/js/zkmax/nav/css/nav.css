@@ -232,7 +232,7 @@
 
 .z-navbar-horizontal .z-nav > ul {
     position: absolute;
-    z-index: 1000;
+    z-index: var(--zk-index-nav);
     background: var(--zk-color-surface-container);
     border-radius: var(--zk-shape-corner-medium);
     box-shadow: var(--zk-elevation-2);

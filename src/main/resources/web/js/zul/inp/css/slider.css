@@ -176,7 +176,7 @@
 /* ZK renders: <div id="zul_slidetip" class="z-slider-popup"> */
 .z-slider-popup {
     position: absolute;
-    z-index: 60000;
+    z-index: var(--zk-index-slider-tooltip);
     padding: 4px 8px;
     background-color: var(--zk-color-inverse-surface);
     color: var(--zk-color-inverse-on-surface);

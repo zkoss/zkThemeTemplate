@@ -17,7 +17,7 @@
 @layer zk-components {
 .z-loading {
     position: absolute;
-    z-index: 1450;
+    z-index: var(--zk-index-loading);
     background-color: var(--zk-color-surface-container-high);
     color: var(--zk-color-on-surface);
     border-radius: var(--zk-shape-corner-medium);
@@ -94,12 +94,12 @@
 .z-apply-mask {
     position: absolute;
     background-color: var(--zk-color-scrim);
-    z-index: 89000;
+    z-index: var(--zk-index-busy-mask);
 }
 
 .z-apply-loading {
     position: absolute;
-    z-index: 89500;
+    z-index: var(--zk-index-busy-loading);
     background-color: var(--zk-color-surface-container-high);
     color: var(--zk-color-on-surface);
     border-radius: var(--zk-shape-corner-medium);
@@ -203,7 +203,7 @@
     box-shadow: var(--zk-elevation-dialog);
     font-family: var(--zk-typescale-font-family);
     overflow: hidden;
-    z-index: 9999999;
+    z-index: var(--zk-index-error);
 }
 
 .z-error #zk_err-p {

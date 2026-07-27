@@ -137,7 +137,9 @@
     font-family: var(--zk-typescale-font-family);
     font-size: var(--zk-typescale-body-medium-size);
     /* min-width inline-set to trigger width by JS; do NOT add width:100%/min-width:100% */
-    z-index: 88000;
+    /* Fallback only — Searchbox is a floating widget, so ZK stamps an inline
+       z-index >= 1800 at open (widget.ts:589). The old stray 88000 never applied. */
+    z-index: var(--zk-index-float-fallback);
     overflow: hidden;
 }
 

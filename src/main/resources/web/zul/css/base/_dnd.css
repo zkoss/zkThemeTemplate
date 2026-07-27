@@ -41,7 +41,7 @@
     box-shadow: var(--zk-elevation-4);
     overflow: hidden;
     pointer-events: none;
-    z-index: 90000;
+    z-index: 90000; /* dead fallback — ZK sets inline 88800 on the ghost at drag-start (zk/drag.ts) */
 }
 
 /* Message ghost (listitem/row drag): a small elevated chip showing the drag message. */
@@ -60,7 +60,7 @@
     line-height: var(--zk-typescale-body-small-line-height, 1.33);
     white-space: nowrap;
     pointer-events: none;
-    z-index: 90000;
+    z-index: 90000; /* dead fallback — ZK sets inline 88800 on the ghost at drag-start (zk/drag.ts) */
 }
 
 .z-drop-content {

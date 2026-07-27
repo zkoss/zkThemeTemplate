@@ -89,7 +89,7 @@
     width: 100%;
     left: 0;
     pointer-events: none;
-    z-index: 2000;
+    z-index: var(--zk-index-loadingbar);
 }
 
 /* Alternate bar color for stacked bars */

@@ -231,7 +231,7 @@
     font-size: var(--zk-typescale-label-small-size);
     pointer-events: none;
     white-space: nowrap;
-    z-index: 60000;
+    z-index: var(--zk-index-slider-tooltip);
     opacity: 0;
     visibility: hidden;
     transition:

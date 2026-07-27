@@ -192,7 +192,7 @@ body.z-tbeditor-body-fullscreen {
     border: none;
     border-radius: 0;
     box-shadow: none;
-    z-index: 99999;
+    z-index: var(--zk-index-fullscreen);
 }
 
 .z-tbeditor-fullscreen .z-tbeditor-editor {
