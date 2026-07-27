@@ -215,6 +215,13 @@
 
 > `z-cq-*` **必須**有 `z-container` 祖先才有可量測的容器——請成對使用。breakpoint 量的是**容器**寬度，非 viewport。
 
+### 5.3 客製 breakpoint
+
+**斷點數值不是 runtime CSS 變數。** CSS 規定 `@media` / `@container` 的條件**不能**讀 `var()`，故 sm/md/lg/xl 是
+**編譯期常數**。要調整就改 `_layout.css` 的 4 組 `@media` 與 4 組 `@container` 區塊（同一處），再 `npm run build:css`。
+真正可在 runtime（`:root` 或 inline）覆寫的是 intrinsic grid 的旋鈕——`--zk-grid-min`（及 `-xs/-sm/-lg/-xl`）、
+`--zk-cols`、`--zk-col-min`（見第 2、2.5 節），這些不是斷點。互動教學頁 `utility/responsive.zul` 第 3 部分有完整範例。
+
 ## 6. 測試守則
 
 響應式版面的回歸測試放在 `src/test/playwright/tablet.spec.ts`（mobile UA 專案）：
