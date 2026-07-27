@@ -154,6 +154,7 @@
                     <navitem label="Layout"             selected="@load(vm.currentPage eq '~./utility/layout.zul')" onClick="@command('navigate', page='~./utility/layout.zul')" />
                     <navitem label="Grid Layout"        selected="@load(vm.currentPage eq '~./utility/grid-layout.zul')" onClick="@command('navigate', page='~./utility/grid-layout.zul')" />
                     <navitem label="Responsive"         selected="@load(vm.currentPage eq '~./utility/responsive.zul')" onClick="@command('navigate', page='~./utility/responsive.zul')" />
+                    <navitem label="Print"              selected="@load(vm.currentPage eq '~./utility/print.zul')" onClick="@command('navigate', page='~./utility/print.zul')" />
                     <navitem label="Border &amp; Shape" selected="@load(vm.currentPage eq '~./utility/borders.zul')" onClick="@command('navigate', page='~./utility/borders.zul')" />
                     <navitem label="Elevation"          selected="@load(vm.currentPage eq '~./utility/elevation.zul')" onClick="@command('navigate', page='~./utility/elevation.zul')" />
                     <navitem label="Components"         selected="@load(vm.currentPage eq '~./utility/components.zul')" onClick="@command('navigate', page='~./utility/components.zul')" />

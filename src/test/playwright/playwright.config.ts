@@ -67,6 +67,14 @@ export default defineConfig({
       use: { ...devices['Desktop Chrome'] },
     },
     {
+      // Print stylesheet: opt-in .z-d-print-* visibility + standard reset
+      // (elevation→border). page.emulateMedia({ media:'print' }) is applied in
+      // the spec. See print-utilities.spec.ts and doc/spec/print-styles.md.
+      name: 'print',
+      testMatch: /print-utilities\.spec\.ts/,
+      use: { ...devices['Desktop Chrome'] },
+    },
+    {
       // Windows High-Contrast a11y regression for tokens/_forced-colors.css.
       // NOTE: the emulation is applied IN the spec via page.emulateMedia(
       // { forcedColors:'active' }) — the context-option form below does not take
