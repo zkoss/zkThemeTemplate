@@ -12,6 +12,17 @@
 > 規範見 [`spec/component-theme-variables.md`](spec/component-theme-variables.md)；逐元件進度見
 > [`component-theme-variables-progress.md`](component-theme-variables-progress.md)。commits `12ed13f`→`87d5dfb`（+`69415b6`）。
 
+> **進度更新（2026-07-27）— Tier 1 #2 使用文件 / 預覽頁完善。** 「裝置自適應」核心 utility 早於 `1515fd3` 交付；
+> 本次把**使用文件與預覽頁**打磨到位（非狀態變更，屬既交付項目的文件品質提升）：
+> - `utility/responsive.zul` 由「功能清單」改寫為**情境導向使用指南**（仿 Bootstrap grid docs）：Part 1 依 viewport、
+>   Part 2 依 container、Part 3 客製化（含「breakpoint 非 runtime 變數、需改 `_layout.css` 重編」的誠實說明），
+>   每個 part 與情境都附**原始碼**，並全面**英文化**。
+> - 修正一個既有缺陷：預覽頁的程式碼區塊原以 native `<h:pre>` + CDATA 輸出，會把片段當**真 HTML 渲染**（顯示成方塊而非原始碼）；
+>   改用 `<div><label multiline pre>` escape，現逐字顯示原始碼。此寫法同步套用到 grid 頁。
+> - `grid-utilities.zul`（原置於 web root、緊鄰 `grid.zul` 等元件頁，易誤認為元件）**移入 `utility/grid-layout.zul`**，
+>   補上「Utility CSS → Grid Layout」navitem（原為 nav 孤兒頁）、統一標題為 `z-h2`（section 標題改用 `z-h4` 語意 heading utility）、全面**英文化**。
+> 驗證：`responsive` 專案 4 綠、`smoke` 112 綠（含新路徑 `/utility/grid-layout.zul`）。commits `23b82f6`→`4ebd48c`。
+
 ## 目的
 
 Marble 即將成為 ZK 11.0 的預設外觀主題。本文回答一個問題：**排除 RTL 與 Dark Theme 之後**，
