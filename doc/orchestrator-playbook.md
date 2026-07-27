@@ -59,7 +59,7 @@ Before the first dispatch in any session:
 
 **`VERIFIED` is dual-gate**: Gate 1 (`zk-theme-evaluator` — conformance to the contract) AND Gate 2 (`md3-design-verifier` — MD3/MUI design quality) must both pass. The evaluator never writes `VERIFIED`; its all-measurements-pass result is `GATE2_PENDING`, and only the orchestrator flips `GATE2_PENDING → VERIFIED` after a `GATE2: PASS`.
 
-**Manual-verification exception (audit-trail rule)**: the orchestrator may exceptionally perform Gate-1 measurement itself (e.g. the Evaluator agent is unavailable), but the artefact obligations do NOT lapse — it must still write `tasks/eval-reports/<component>.md` and capture `doc/screenshots/<component>/` before the row may leave a Gate-1 state. A row with no eval report and no screenshots cannot reach `GATE2_PENDING` (Gate 2 would be `BLOCKED` anyway — screenshots are its only visual input) and can never be flipped to `VERIFIED`.
+**Manual-verification exception (audit-trail rule)**: the orchestrator may exceptionally perform Gate-1 measurement itself (e.g. the Evaluator agent is unavailable), but the artefact obligations do NOT lapse — it must still write `tasks/eval-reports/<component>.md` and capture flat `doc/screenshots/<component>-*.png` before the row may leave a Gate-1 state. A row with no eval report and no screenshots cannot reach `GATE2_PENDING` (Gate 2 would be `BLOCKED` anyway — screenshots are its only visual input) and can never be flipped to `VERIFIED`.
 
 Repeat until every row is `VERIFIED`, `STALLED`, `OSCILLATING`, `CONSTRAINT`, `ESCALATED_TOKEN_FIX`, or `ESCALATED_LIBRARY_CONFIG` (the canonical status vocabulary lives in the `tasks/work-status.md` Status legend):
 
@@ -142,7 +142,7 @@ For every component in `GATE2_PENDING`, dispatch the design reviewer (parallel-s
 Agent(
   description="Design-review textbox",
   subagent_type="md3-design-verifier",
-  prompt="Component: textbox\nMode: loop-gate\n\nFollow your agent definition. Screenshots are pre-captured under doc/screenshots/textbox/."
+  prompt="Component: textbox\nMode: loop-gate\n\nFollow your agent definition. Screenshots are pre-captured as flat doc/screenshots/textbox-*.png."
 )
 ```
 

@@ -50,7 +50,26 @@ Dedicated pages: `badge.zul`, `chip.zul`, `avatar.zul` (component browser → **
 Showcase: `utility/components.zul`. Migrated real usages: `usecase/ticket-inbox`,
 `inventory-table`, `ops-dashboard`, `item-editor`.
 
+## Naming: `severity` (`danger`/`secondary`) — proposed ZK API change
+
+The native `severity` values `danger` and `secondary` are Bootstrap-lineage palette words that
+are inconsistent with ZK's own vocabulary (`notification`/`messagebox` already use `error`) and
+with the cross-framework norm. A standing proposal recommends renaming the *component API*
+(not the theme) to `error` / `neutral` while ZK 11 is still in development. Full rationale,
+framework survey, ZK-internal evidence, and migration notes:
+**[../native-severity-naming-proposal.md](../native-severity-naming-proposal.md)**.
+
+Until/unless ZK changes the enum, the mapping table above is the source of truth and the
+per-theme intent→palette bridge in `chip.css`/`badge.css` is intentional, not a defect.
+
 ## Follow-up (out of scope here)
 The 10.4 upgrade also introduced three more native components — **breadcrumb, carousel,
-confirmpopup** — currently **empty-stubbed** in `build-css.js` (render with ZK default styling).
-They still need real Marble theming.
+confirmpopup**. **confirmpopup** is now themed (source `js/zul/wgt/css/confirmpopup.css`;
+contract `doc/contracts/confirmpopup.md`; preview `confirmpopup.zul`; severity reuses the same
+info/success/warning/danger/secondary mapping as badge/chip, icon-only recolor). **breadcrumb**
+and **carousel** remain **empty-stubbed** in `build-css.js` (render with ZK default styling) and
+still need real Marble theming.
+
+The same upgrade also brought the zkmax **daterangebox** (date-range picker) live; it is likewise
+now themed (`js/zkmax/db/css/daterangebox.css`; contract `doc/contracts/daterangebox.md`; preview
+`daterangebox.zul`).

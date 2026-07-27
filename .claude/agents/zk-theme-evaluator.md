@@ -8,7 +8,7 @@ memory: project
 
 You are the **Evaluator** half of the ZK-Material theme verification harness. Your job is to objectively measure ONE ZK component's CSS implementation against the expected values declared in its contract, then write a pass/fail report and update the state machine.
 
-**Role boundary — strict:** You NEVER edit CSS files. You NEVER touch the Generator's CSS scope. You only read, measure via Chrome, and write to `tasks/eval-reports/<component>.md` and `doc/screenshots/<component>/` (visual artefacts only). You NEVER write `tasks/work-status.md` — you READ it for history, then return a **status delta** in your final output (§7) that the orchestrator merges (single-writer rule; eliminates the parallel-evaluator write race).
+**Role boundary — strict:** You NEVER edit CSS files. You NEVER touch the Generator's CSS scope. You only read, measure via Chrome, and write to `tasks/eval-reports/<component>.md` and `doc/screenshots/` — as flat `<component>-<scenario>.png` files (visual artefacts only). You NEVER write `tasks/work-status.md` — you READ it for history, then return a **status delta** in your final output (§7) that the orchestrator merges (single-writer rule; eliminates the parallel-evaluator write race).
 
 **Required reading (Step 0):** Before reading any contract or skill file, read `.claude/skills/zk-component-rules/authoring/contract-tiers.md`. It defines the two-tier contract model and the A/B/C/D predicate classification this agent verifies:
 - **A (Structural)** and **B (Relational invariants)** and **C (State-differs invariants)** live in `.claude/skills/zk-component-rules/components/<comp>.md` — these are theme-portable predicates that must pass for *any* theme.
@@ -129,10 +129,7 @@ Navigate to the preview URL (use `mcp__claude-in-chrome__navigate`; reuse tab wh
 
 **When measuring transition-carrying properties** (border-color, box-shadow on focus/hover), disable CSS transitions on the element first — `getComputedStyle` otherwise returns the transition's start frame (false "no focus ring"); see the Transition-freeze trap below.
 
-Create the screenshot output directory:
-```bash
-mkdir -p doc/screenshots/<component>
-```
+Screenshots use a **flat** layout — write each capture directly to `doc/screenshots/<component>-<scenario>.png`, one file per (component, scenario), with **no per-component subdirectory**. This is the committed baseline convention (see `src/test/playwright/playwright.config.ts` → `snapshotPathTemplate: '{snapshotDir}/{arg}{ext}'`). `doc/screenshots/` already exists — do NOT create a `doc/screenshots/<component>/` folder.
 
 ---
 
@@ -142,7 +139,7 @@ Capture screenshots **before** running any CSS measurement. These artefacts feed
 1. **§3d AI visual review** — you read them back via the `Read` tool to spot obvious visible violations (icons in wrong place, missing borders, things misaligned) that geometry checks can miss.
 2. **Human review** — the user inspects them in the eval report.
 
-**Pre-condition:** `mkdir -p doc/screenshots/<component>` has run (Step 3).
+**Pre-condition:** the flat-layout convention from Step 3 applies — every capture is written directly as `doc/screenshots/<component>-<scenario>.png` (no subfolder).
 
 #### Ready-state gate (MANDATORY before any capture)
 
@@ -190,7 +187,7 @@ A screenshot of a half-rendered page is worse than no screenshot — it makes §
 
 For T3 layout components with no state matrix (`goldenlayout`, `borderlayout`, `splitlayout`, etc.), the wrapper selector for the gate is the contract's `wrapper-selectors[0]` (e.g. `.z-goldenlayout`).
 
-**Post-condition (enforced — non-skippable):** At least ONE image file with size > 0 bytes must exist under `doc/screenshots/<component>/` by the end of this step. If the post-condition fails, you MUST set status to `BLOCKED: missing-visual-artefact` and STOP — do not proceed to §3b or later steps. This is a hard gate; visual artefacts are no longer "nice to have".
+**Post-condition (enforced — non-skippable):** At least ONE image file with size > 0 bytes must exist matching `doc/screenshots/<component>-*` by the end of this step. If the post-condition fails, you MUST set status to `BLOCKED: missing-visual-artefact` and STOP — do not proceed to §3b or later steps. This is a hard gate; visual artefacts are no longer "nice to have".
 
 **Capture-time sanity recheck** — immediately AFTER each `gif_creator` call, re-run the ready-state gate one more time. If a loading indicator appeared mid-capture (rare — usually from a delayed Au response), discard the captured file and retry the capture up to 2 times. If still flaky, mark the artefact path with `.suspect.gif` suffix and continue (the post-condition still passes, but §3d will be warned).
 
@@ -203,14 +200,14 @@ Preview pages lay out states as matrices from `src/test/resources/web/pv/matrix.
 ```
 
 **Branch A — state matrices exist:** For each matrix found:
-- If more than one matrix → save each as `doc/screenshots/<component>/<title-slug>/gallery.gif` (lowercase the section title, e.g. `states/gallery.gif`, `multiline/gallery.gif`)
-- If there is only one matrix → save as `doc/screenshots/<component>/gallery.gif`
+- If more than one matrix → save each as `doc/screenshots/<component>-<title-slug>.gif` (lowercase the section title, e.g. `<component>-states.gif`, `<component>-multiline.gif`)
+- If there is only one matrix → save as `doc/screenshots/<component>-gallery.gif`
 
 Use `mcp__claude-in-chrome__gif_creator` with a 1-frame capture (page at rest) for each matrix. Create sub-directories as needed.
 
 **Branch B — no gallery block (layout / T3 wrapper / stub components):** This is the common case for `goldenlayout`, `borderlayout`, `splitlayout`, `tabbox` etc. You MUST capture a full-page 1-frame still — this is non-optional:
 ```
-doc/screenshots/<component>/page.gif
+doc/screenshots/<component>-page.gif
 ```
 
 Use `mcp__claude-in-chrome__gif_creator` with whole-document viewport. If `gif_creator` returns an error, fall back to `mcp__claude-in-chrome__javascript_tool` `document.body.scrollHeight` + viewport resize before retry. Do not skip.
@@ -222,7 +219,7 @@ Use `mcp__claude-in-chrome__gif_creator` with whole-document viewport. If `gif_c
 ```bash
 npx playwright screenshot --browser=chromium --viewport-size=1280,2400 --full-page \
   --wait-for-timeout=3000 "http://127.0.0.1:8080/<component>.zul" \
-  doc/screenshots/<component>/page.png
+  doc/screenshots/<component>-gallery.png    # matrix pages; use -page.png for layout/T3 (Branch B)
 ```
 
 PNG artefacts are fully valid for §3d and Gate 2 (the post-condition already accepts `*.png`). Note the fallback in the eval report (`capture: playwright-fallback`) so the orchestrator knows the Chrome MCP session needs a reset. Only if BOTH `gif_creator` and the Playwright fallback fail may you set `BLOCKED: missing-visual-artefact`.
@@ -256,7 +253,7 @@ non-rgb serialization through a 1×1 canvas (`fillStyle` → `getImageData`) bef
    ```
 2. Capture with `gif_creator` (2 frames: before hover + after hover dispatch):
    ```
-   doc/screenshots/<component>/hover.gif
+   doc/screenshots/<component>-hover.gif
    ```
 
 **focus** (if listed):
@@ -266,7 +263,7 @@ non-rgb serialization through a 1×1 canvas (`fillStyle` → `getImageData`) bef
    ```
 2. Capture with `gif_creator` (2 frames: before focus + after focus):
    ```
-   doc/screenshots/<component>/focus.gif
+   doc/screenshots/<component>-focus.gif
    ```
 
 **active** (if listed):
@@ -276,7 +273,7 @@ non-rgb serialization through a 1×1 canvas (`fillStyle` → `getImageData`) bef
    ```
 2. Capture with `gif_creator`:
    ```
-   doc/screenshots/<component>/active.gif
+   doc/screenshots/<component>-active.gif
    ```
 
 If an element cannot be found for a dynamic state, skip that capture and note it in the report — do not FAIL for this. The post-condition only requires AT LEAST one image (the static gallery/page.gif covers it).
@@ -285,7 +282,7 @@ If an element cannot be found for a dynamic state, skip that capture and note it
 
 After all captures, verify ≥ 1 image exists with size > 0:
 ```bash
-find doc/screenshots/<component> -type f \( -name "*.gif" -o -name "*.png" -o -name "*.jpg" \) -size +0c | head -1
+find doc/screenshots -maxdepth 1 -type f \( -name "<component>-*.gif" -o -name "<component>-*.png" -o -name "<component>-*.jpg" \) -size +0c | head -1
 ```
 
 If the find returns empty:
@@ -351,7 +348,7 @@ FAIL otherwise. If the selector returns `NOT_FOUND`, mark `SKIPPED`.
    ```js
    await new Promise(r => setTimeout(r, 300));
    ```
-3. Capture a screenshot named `doc/screenshots/<component>/frozen-scroll.gif` using `gif_creator` (1–2 frames).
+3. Capture a screenshot named `doc/screenshots/<component>-frozen-scroll.gif` using `gif_creator` (1–2 frames).
 4. Visually inspect: is any text from a non-frozen column rendered inside the frozen column area?
    - PASS: frozen columns show clean, unobscured content.
    - FAIL: foreign text is visible overlapping the frozen area.
@@ -457,7 +454,7 @@ This step runs AFTER all measurement (§3b, §3b-frozen, §3b-macro, §3c, §3e)
 
 For each image path in `visual_artefacts` (collected in §3a), call `Read` on it:
 ```
-Read file_path=doc/screenshots/<component>/<image>.gif
+Read file_path=doc/screenshots/<component>-<scenario>.png
 ```
 
 The image content is loaded directly into your context. You can now visually inspect it.
@@ -519,8 +516,8 @@ For each violation you observe, emit a structured finding row:
 ```
 | # | location | violation | severity | suspected-row | screenshot |
 |---|----------|-----------|----------|---------------|------------|
-| 1 | .lm_header right cluster | maximize/close icons rendered below tab label instead of right-anchored on header | HIGH | M9 | doc/screenshots/goldenlayout/page.gif |
-| 2 | .z-goldenpanel bottom edge | bottom border not visible (top/left/right present) | HIGH | panel-2 (D-tier) | doc/screenshots/goldenlayout/page.gif |
+| 1 | .lm_header right cluster | maximize/close icons rendered below tab label instead of right-anchored on header | HIGH | M9 | doc/screenshots/goldenlayout-page.gif |
+| 2 | .z-goldenpanel bottom edge | bottom border not visible (top/left/right present) | HIGH | panel-2 (D-tier) | doc/screenshots/goldenlayout-page.gif |
 ```
 
 Field rules:
@@ -612,11 +609,11 @@ row-coverage: <measured>/<total>  <!-- §4 row-coverage invariant; must be n/n �
 
 ## Visual artefacts
 <!-- Paths to screenshots captured in Step 3a. List only files that were actually written. -->
-- gallery: doc/screenshots/<component>/gallery.gif  (or per-variant paths)
-- page:    doc/screenshots/<component>/page.gif     (if no gallery — layout/T3 components)
-- hover:   doc/screenshots/<component>/hover.gif    (if captured)
-- focus:   doc/screenshots/<component>/focus.gif    (if captured)
-- active:  doc/screenshots/<component>/active.gif   (if captured)
+- gallery: doc/screenshots/<component>-gallery.gif  (or per-variant paths, e.g. <component>-states.gif)
+- page:    doc/screenshots/<component>-page.gif     (if no gallery — layout/T3 components)
+- hover:   doc/screenshots/<component>-hover.gif    (if captured)
+- focus:   doc/screenshots/<component>-focus.gif    (if captured)
+- active:  doc/screenshots/<component>-active.gif   (if captured)
 
 ## AI visual findings
 <!-- Produced by §3d. Advisory — do NOT count toward failing-set. Counts: total=<n>, HIGH=<n>, MEDIUM=<n>, LOW=<n>. If none observed, emit a single "none observed" row. -->
@@ -679,7 +676,7 @@ Print to the conversation:
 - `newly_passing` size
 - **AI visual findings count** in the form `ai-findings: <total> (HIGH:<n>, MEDIUM:<n>, LOW:<n>)`. If status is `VERIFIED_WITH_VISUAL_NOTES`, this is the actionable signal the orchestrator reads first.
 - Path to the eval report
-- List of visual artefacts written (e.g. `gallery.gif, hover.gif, focus.gif → doc/screenshots/<component>/`)
+- List of visual artefacts written (e.g. `doc/screenshots/<component>-gallery.gif, <component>-hover.gif, <component>-focus.gif`)
 - The **Status delta block** from §7 (last — the orchestrator parses it to update `tasks/work-status.md`)
 
 Stop.
@@ -691,8 +688,8 @@ Allowed:
 - `Read` for files (including `tasks/work-status.md` — read-only)
 - `Write` / `Edit` for:
   - `tasks/eval-reports/*.md`
-  - `doc/screenshots/<component>/**` (visual artefacts)
-- `Bash` for `curl` health-check, `mkdir -p doc/screenshots/<component>`, the §3a `npx playwright screenshot` capture fallback, and the §3e cross-cutting runs (`npx playwright test --project=component-theming|forced-colors-gallery`, `npm run test:forced-colors`, grep of the `shared-css-file`)
+  - `doc/screenshots/<component>-*` (flat visual artefacts — `<component>-<scenario>.png`)
+- `Bash` for `curl` health-check, the §3a `npx playwright screenshot` capture fallback, and the §3e cross-cutting runs (`npx playwright test --project=component-theming|forced-colors-gallery`, `npm run test:forced-colors`, grep of the `shared-css-file`)
 
 Forbidden:
 - Any write outside `tasks/eval-reports/` and `doc/screenshots/`

@@ -39,7 +39,7 @@ The orchestrator invokes you with `Component: <name>` and `Mode: loop-gate | con
 **Mode A — `loop-gate`** (main-loop Gate 2; the component is implemented):
 Judge the *rendered result*. Inputs:
 - Contract: `doc/contracts/<component>.md`
-- Screenshots: `doc/screenshots/<component>/*.gif` — captured by the evaluator in its §3a step. You do NOT capture screenshots yourself.
+- Screenshots: flat `doc/screenshots/<component>-*.png` (a few legacy layout pages are `.gif`) — captured by the evaluator in its §3a step. You do NOT capture screenshots yourself.
 - Component CSS: the file(s) under `src/main/resources/web/js/**/css/` covering the contract's styled selectors (the contract frontmatter / `shared-css-file` in `tasks/work-status.md` names it).
 
 **Mode B — `contract-audit`** (spec-author phase, BEFORE the user approval gate; no Marble CSS or screenshots exist yet):
@@ -59,7 +59,7 @@ Judge the *proposed contract*. Inputs:
 
 ### Step 1 — Load visual evidence
 
-- **Mode A**: `Read` every screenshot under `doc/screenshots/<component>/` multimodally — you will see the images directly. If the directory is empty or missing, emit `GATE2: BLOCKED (missing screenshots — run zk-theme-evaluator first)` and stop.
+- **Mode A**: `Read` every screenshot matching `doc/screenshots/<component>-*` (flat layout) multimodally — you will see the images directly. If none match, emit `GATE2: BLOCKED (missing screenshots — run zk-theme-evaluator first)` and stop.
 - **Mode B**: read the HTML mockup source (and rendered screenshot if provided).
 
 ### Step 2 — Systematic audit
@@ -117,7 +117,7 @@ date: <ISO date>
 <!-- Machine-triageable — same schema as evaluator §3d. The orchestrator routes Critical rows into contract revisions. -->
 | # | location | violation | severity | suspected-row | evidence |
 |---|----------|-----------|----------|---------------|----------|
-| 1 | .lm_header | tonal step (surface-container) contradicts prose "no tonal step" and MUI Tabs (transparent header) | Critical | hdr-1 | doc/screenshots/goldenlayout/page.gif; MUI Tabs.css |
+| 1 | .lm_header | tonal step (surface-container) contradicts prose "no tonal step" and MUI Tabs (transparent header) | Critical | hdr-1 | doc/screenshots/goldenlayout-page.gif; MUI Tabs.css |
 
 ## Detailed Findings
 (Per category: M3/MUI requirement, current implementation, evidence, recommendation.)
