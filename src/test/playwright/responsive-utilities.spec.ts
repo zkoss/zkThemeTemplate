@@ -17,11 +17,11 @@ const URL = '/utility/responsive.zul';
 
 // Scenario 1.4 chip labels — exact rendered text, one element each.
 const CHIP = {
-  ltSm: '顯示於 < sm (<600)',
-  geSm: '顯示於 ≥ sm (600)',
-  geMd: '顯示於 ≥ md (900)',
-  geLg: '顯示於 ≥ lg (1200)',
-  geXl: '顯示於 ≥ xl (1536)',
+  ltSm: 'Visible < sm (<600)',
+  geSm: 'Visible ≥ sm (600)',
+  geMd: 'Visible ≥ md (900)',
+  geLg: 'Visible ≥ lg (1200)',
+  geXl: 'Visible ≥ xl (1536)',
 };
 
 async function open(page: Page) {
