@@ -2,7 +2,7 @@
 <zk xmlns:h="native">
 <style src="~./usecase/usecase.css"/>
 <div sclass="z-p-8">
-    <div sclass="z-h3 z-text-on-surface z-mb-2">Responsive Utilities</div>
+    <label value="Responsive Utilities" sclass="z-h2 z-mb-2"/>
     <div sclass="z-text-sm z-text-secondary z-mb-4 z-border-bottom z-pb-4">
         Two ways to adapt a layout by size: <h:b>by viewport</h:b> (window width) and <h:b>by container</h:b> (container width).
         This page shows how to use them through real scenarios, each with its source code; the last section explains how to customize the breakpoints.
@@ -10,7 +10,7 @@
 
     <!-- prefer-intrinsic callout -->
     <div sclass="z-bg-secondary-container z-rounded z-p-3 z-text-sm z-mb-8">
-        <h:b>Try intrinsic first</h:b>: for independent card walls / dashboard tiles, prefer <h:code>z-grid-fill</h:code> (column count grows and shrinks with width, <h:b>zero breakpoints</h:b> — see <h:code>grid-utilities.zul</h:code> or the sidebar's "Layout").
+        <h:b>Try intrinsic first</h:b>: for independent card walls / dashboard tiles, prefer <h:code>z-grid-fill</h:code> (column count grows and shrinks with width, <h:b>zero breakpoints</h:b> — see the <h:code>Grid Layout</h:code> page under "Utility CSS").
         Only reach for the breakpoint utilities below when you truly need to "hide a sidebar on narrow screens", "stack ↔ row", or "show an element on mobile only".
     </div>
 
@@ -221,7 +221,7 @@
 /* or override a single block inline */
 <div class="z-d-grid z-grid-fill z-gap-4" style="--zk-grid-min: 240px"> ... </div>]]></label></div>
     <div sclass="z-text-sm z-text-secondary z-mt-3">
-        See <h:code>grid-utilities.zul</h:code> and <h:code>doc/spec/responsive-design.md</h:code> for the full explanation of these grid knobs.
+        See the <h:code>Grid Layout</h:code> page and <h:code>doc/spec/responsive-design.md</h:code> for the full explanation of these grid knobs.
     </div>
 
 </div>

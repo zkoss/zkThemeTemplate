@@ -3,7 +3,7 @@
 本文件說明 Marble 目前的響應式版面做法、設計取捨，以及如何使用。
 
 > **互動式教學頁**（由淺入深 + 企業應用範例）：啟動 preview app 後開啟
-> <http://localhost:8080/grid-utilities.zul>（原始檔 `src/test/resources/web/grid-utilities.zul`）。
+> <http://localhost:8080/utility/grid-layout.zul>（原始檔 `src/test/resources/web/utility/grid-layout.zul`）。
 
 ## 0. TL;DR
 

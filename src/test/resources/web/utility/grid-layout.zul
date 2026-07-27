@@ -1,7 +1,7 @@
-<?page title="Responsive Grid Utilities" contentType="text/html;charset=UTF-8"?>
+<?page title="Grid Layout Utilities" contentType="text/html;charset=UTF-8"?>
 <zk xmlns:h="native">
 <div sclass="z-p-8">
-    <div sclass="z-border-bottom z-text-xl z-fw-medium z-text-on-surface z-mb-3 z-pb-3">Responsive Grid Utilities</div>
+    <label value="Grid Layout Utilities" sclass="z-h2 z-mb-2"/>
     <div sclass="z-text-sm z-text-secondary z-mb-8">
         Marble 提供三個版面工具，全部用原生 CSS Grid、對齊 MD3/MUI，且大多 <h:b>不需要 breakpoint</h:b>。
         本頁由淺入深：先看基本用法，再對應到實際企業應用情境（不限本專案）。把瀏覽器拉寬縮窄，觀察各區塊的響應行為。
@@ -27,12 +27,12 @@
             <div sclass="z-card z-text-center">卡片 5</div>
             <div sclass="z-card z-text-center">卡片 6</div>
         </div>
-        <h:pre class="z-bg-surface-variant z-rounded z-p-3 z-text-sm z-overflow-x-auto"><![CDATA[<div class="z-d-grid z-grid-fill z-gap-4">
+        <div sclass="z-bg-surface-variant z-rounded z-p-3 z-text-sm z-overflow-x-auto"><label multiline="true" pre="true"><![CDATA[<div class="z-d-grid z-grid-fill z-gap-4">
     <div class="z-card">卡片 1</div>
     <div class="z-card">卡片 2</div>
     ...
 </div>
-<!-- 想要更寬的卡片：style="--zk-grid-min: 240px" -->]]></h:pre>
+<!-- 想要更寬的卡片：style="--zk-grid-min: 240px" -->]]></label></div>
     </div>
 
     <!-- 1.2 z-grid-cols-auto   -->
@@ -56,12 +56,12 @@
             <div sclass="z-card z-py-2 z-text-center">B2</div>
             <div sclass="z-card z-py-2 z-text-center">C2</div>
         </div>
-        <h:pre class="z-bg-surface-variant z-rounded z-p-3 z-text-sm z-overflow-x-auto"><![CDATA[<div class="z-d-grid z-grid-cols-auto z-gap-3" style="--zk-cols: 3">
+        <div sclass="z-bg-surface-variant z-rounded z-p-3 z-text-sm z-overflow-x-auto"><label multiline="true" pre="true"><![CDATA[<div class="z-d-grid z-grid-cols-auto z-gap-3" style="--zk-cols: 3">
     <div></div>      <div>欄 A</div> <div>欄 B</div> <div>欄 C</div>  <!-- 表頭 -->
     <div>第一列</div> <div>A1</div>  <div>B1</div>  <div>C1</div>   <!-- 資料列 -->
     <div>第二列</div> <div>A2</div>  <div>B2</div>  <div>C2</div>
 </div>
-<!-- 所有 cell 是同一個 grid 的直接子元素，每 (1+N) 個自動換到下一列 -->]]></h:pre>
+<!-- 所有 cell 是同一個 grid 的直接子元素，每 (1+N) 個自動換到下一列 -->]]></label></div>
         <div sclass="z-bg-secondary-container z-rounded z-p-3 z-text-sm z-mt-3">
             <h:b>對齊重點</h:b>：上面所有 cell 都在<h:b>同一個 grid</h:b> 裡，所以 <h:code>auto</h:code> 標籤欄由全體最寬的標籤算一次、跨列對齊。
             如果你的每一列被包成<h:b>各自獨立的 wrapper</h:b>（例如資料列模板各包一個 div），各列就會各自算自己的 <h:code>auto</h:code> 欄寬而<h:b>失準</h:b>；
@@ -80,7 +80,7 @@
             <div sclass="z-card z-text-center">2 / 3</div>
             <div sclass="z-card z-text-center">3 / 3</div>
         </div>
-        <h:pre class="z-bg-surface-variant z-rounded z-p-3 z-text-sm z-overflow-x-auto"><![CDATA[<div class="z-d-grid z-grid-cols-3 z-gap-3"> ... </div>]]></h:pre>
+        <div sclass="z-bg-surface-variant z-rounded z-p-3 z-text-sm z-overflow-x-auto"><label multiline="true" pre="true"><![CDATA[<div class="z-d-grid z-grid-cols-3 z-gap-3"> ... </div>]]></label></div>
     </div>
 
     <!-- 1.4 怎麼選 (用 z-grid-cols-auto 本身排版 — dogfood)   -->
