@@ -13,10 +13,10 @@
 |---|---|---|---|---|---|
 | P0 建立工作區與基準 | DONE | G-zero | `files differing: 0`(77 檔 / 14323 條) | `ae4ca36` | 2026-07-29 |
 | P1 LESS 釘到 4.x | BLOCKED | G-zero | — | — | — |
-| P2 雙來源 build | TODO | G-zero | — | — | — |
+| P2 雙來源 build | DONE | G-zero | `files differing: 0`(77 檔 / 14323 條);儀器證明另見下方〈P2 儀器證明〉 | *(待 orchestrator 填)* | 2026-07-30 |
 | P3 元件掃描 74 檔 | TODO | G-zero | — | — | — |
 | **視覺 A/B harness**(P4 前置) | TODO | 自我驗證須為 0 | — | — | — |
-| P4 vendor prefix 政策 | BLOCKED | G-delta | 上限 1127 條移除 | — | — |
+| P4 vendor prefix 政策 | BLOCKED | G-delta | 可移除上限 **1089**(1127 − 38 carve-out) | — | — |
 | P5 `norm.css` | TODO | G-delta | 842 token 須零差異 | — | — |
 | P6 Font Awesome | TODO | G-zero | 4545 條 | — | — |
 | P7 `tablet` + profile API | BLOCKED | G-delta | — | — | — |
@@ -71,6 +71,98 @@ P6 因此從 BLOCKED 轉 TODO。但它**相依於 P2** —— 產生出來的 `.
 | 3 | 2026-07-29 | P0 G-zero | `baseline/` | `target/classes/web/iceblue` | **0** | **0** | **PASS** — 工具鏈確定性成立 |
 | 4 | 2026-07-30 | 開工前重驗 | `baseline/` | `target/classes/web/iceblue` | **0** | **0** | **PASS** — 77 檔 / 14323 條。確認 P0 之後(兩次 doc commit)基準與樹仍然對齊,workflow 的前置條件成立 |
 | 5 | 2026-07-30 | 規則表產生器 | `baseline/` | `target/classes/web/iceblue` | **0** | **0** | **PASS** — 77 檔 / 14323 條。本階段只寫 doc + scripts,不動 theme 輸出,閘門本應不變 —— 跑它是為了證明「不動」而不是假設 |
+| 6 | 2026-07-30 | P2 開工前 | `baseline/` | `target/classes/web/iceblue` | **0** | **0** | **PASS** — 77 檔 / 14323 條。動手前先確認起點乾淨 |
+| 7 | 2026-07-30 | P2 儀器證明(全樹走 CSS 路徑) | `baseline/` | scratchpad:75 檔經 `build-css.js`,`norm`/`tablet` 沿用 baseline(兩者留在 LESS) | **0** | **0** | **PASS** — **12142 / 14323 條**(84.8%)實際走過新的 CSS 路徑。這是 P2 唯一有力的證據,見〈P2 儀器證明〉 |
+| 8 | 2026-07-30 | P2 round-trip `tablelayout`(1 條) | `baseline/` | `target/classes/web/iceblue` | **0** | **0** | **PASS** — `.less` 刪除、`.css` 就位;輸出與 baseline **逐 byte 相同** |
+| 9 | 2026-07-30 | P2 round-trip `button`(36 條) | `baseline/` | `target/classes/web/iceblue` | **0** | **0** | **PASS** — 含 8 條 mixin 展開的 vendor prefix(P4 標的);輸出**逐 byte 相同** |
+| 10 | 2026-07-30 | P2 負向控制(故意讓 `HEADER` 少一個 taglib) | `baseline/` | `target/classes/web/iceblue` | **2** | **2** | **預期 FAIL(exit 1)** — 閘門抓到 `- <%@ taglib … prefix="z" %>`。**沒有這一步就不知道閘門會不會失敗**;已還原 |
+| 11 | 2026-07-30 | P2 還原後重驗 | `baseline/` | `target/classes/web/iceblue` | **0** | **0** | **PASS** — 兩檔以檔案複製(不是 `git checkout`)還原,`git status --porcelain` 無 `.css`/`.less` 殘留 |
+
+---
+
+## P2 儀器證明
+
+**閘門在 P2 是無效的,必須另外補證。** P2 結束時樹上有 **0 個 `.css`**,所以 `build-css.js` 什麼都
+不處理,閘門是**空轉通過**的 —— 它只證明 zklessc 沒被弄壞,對新程式碼路徑**一個字都沒證明**。
+所以照 P0 證明 `cssdiff` 的方式證明這支 builder:
+
+| # | 做法 | 結果 |
+|---|---|---|
+| 1 | 動手前跑閘門 | 0 差異(紀錄 #6) |
+| 2 | **全樹重導**:zklessc 不壓縮編出 77 檔 → 抽掉 header → 當成 `.css` 來源 → 全部餵給 `build-css.js` → 比 baseline | **0 差異 / 12142 條**(紀錄 #7)。`norm`(header 在檔中間,P5)與 `tablet`(含 DSP tag,P7)沿用 LESS 輸出 |
+| 3 | round-trip 最小檔 `tablelayout`(1 條):`.less`→`.css`、刪 `.less`、重編 | 0 差異,**byte-identical**(紀錄 #8) |
+| 4 | round-trip `button`(36 條,含 vendor-prefix mixin 展開) | 0 差異,**byte-identical**(紀錄 #9) |
+| 5 | **負向控制**:故意破壞 header 發射 | 閘門 **FAIL**,exit 1(紀錄 #10)。抓不到失敗的閘門不是閘門 |
+| 6 | 以檔案複製還原,重跑閘門 | 0 差異,無殘留(紀錄 #11) |
+| 7 | `withjdk.sh 17 mvn -o process-resources` | `compile-less` → `compile-css` 依序執行,BUILD SUCCESS。pom 接線經過實際執行驗證,不是只有寫進 XML |
+
+> **覆蓋率數字被更正過(兩個 agent 互相矛盾,算術裁決)。** 實作者回報 13642 條 / 75 檔,
+> 對抗性審核獨立重跑後回報 12142 條 / 75 檔。驗算:`14323 − 1500(norm) − 681(tablet) = 12142`
+> 對應 75 檔;而 `14323 − 681 = 13642` 對應的是 **76** 檔 —— 所以 13642 與「75 檔」不可能同時成立。
+> **以 12142(84.8%)為準。** 這件事的意義不只是改個數字:兩個 agent 都回報「0 差異 PASS」,
+> 但其中一個的覆蓋率是錯的 —— **閘門結果正確不代表關於閘門的敘述正確**。
+
+### 為什麼是 CleanCSS **level 0**,不是 Marble 用的 level 1
+
+計畫書只說「minifier 換成 CleanCSS」。實測**這個選擇不夠精確** —— level 1 產生 60 檔差異。
+用第 2 項的全樹語料掃了四種設定:
+
+| 設定 | 差異檔數 | 差異條數 |
+|---|---|---|
+| level 1(預設,= Marble 的設定) | 60 | 2034 |
+| level 1 + 關掉 selector 排序 | 53 | 936 |
+| level 1 `all:false` + `removeWhitespace` | 34 | 583 |
+| **level 0 + 自寫註解剝除 + `@media` prelude 收緊** | **0** | **0** |
+
+`zklessc --compress` **不改寫值**,level 1 會,而且有四種是 `cssdiff` 無法(也不應該)正規化掉的:
+
+1. 具名顏色 → hex(`black` → `#000`)
+2. ` !important` → `!important`
+3. **IE star hack 被刪掉**(`*zoom:1`、`*z-index:3`)—— 這是**真的少了 declaration**
+4. selector list 被按字母重排
+
+**`level: {1: {all: false}}` 關不掉這些**:CleanCSS 的 `all` 只翻**布林**選項,所以
+`selectorsSortingMethod: 'standard'` 活著,而顏色改寫根本沒有選項可關。
+
+level 0 是純重新序列化,但有兩件 LESS 壓縮器會做的事它不做,所以 builder 自己做:
+
+- **註解**:level 0 全部保留(`specialComments` 是 level-1 選項)。`stripComments()` 刪一般註解、
+  留 `/*!` 授權註解 —— 與 LESS 一致。**這件事對 P3 特別重要**,因為 P3 刻意在來源保留段落註解,
+  不剝除的話每個輸出都會把它們一起帶進 jar。
+- **`@media` prelude**:LESS 輸出 `@media (max-width:767px)`,CleanCSS 保留作者寫的
+  `(max-width: 767px)`。`tidyMediaPreludes()` 補這一段。**`@supports` 故意不收緊** ——
+  baseline 的 `@supports (-ms-accelerator: true)` 保留了空格,一起收緊會多出 4 條差異。
+
+### 新發現的第三種「靜默摧毀」構造:選擇器位置的 DSP tag
+
+計畫書 §4 的風險列只寫了 `@scope` 與裸 `@layer`,並說對策是「檢查 `output.warnings`(不只
+`errors`)」。**實測那個對策不足以覆蓋這一類。**
+
+`tablet.less` 的 browserDefault 開關會輸出 `<c:if …>${".z-page "}</c:if>*` 這種選擇器。
+CleanCSS 5.3.3 把它改寫成 `<c:if …>${}".z-page "</c:if>*` —— **把字串搬出 EL 運算式之外**,
+而且 `errors` 與 `warnings` **都是 0**(level 0 亦然)。這會讓 `${...}` 求值出錯,
+是一條 warnings 檢查完全看不到的靜默毀損路徑。
+
+`build-css.js` 因此改成 4 條前置守衛(`HOSTILE_CONSTRUCTS`),命中就**讓 build 失敗**,不是警告:
+
+| 構造 | CleanCSS 的行為 | 何時會遇到 |
+|---|---|---|
+| `@scope` | 輸出全空,只在 warnings 報 | P5(browserDefault 改寫) |
+| 裸 `@layer a,b;` | 連同**後面第一條規則**一起消失,只在 warnings 報 | §0 已排除,未來分支 |
+| **DSP tag(`<c:if>` 等)** | `${"…"}` → `${}"…"`,**0 errors 0 warnings** | P5 的 reset、P7 的 `tablet` |
+| 來源已含 taglib header | builder 會再加一次 → header 出現兩次 | P3 步驟 3 漏做時 |
+
+P5/P7 要處理前兩類與第三類時,**正確做法不是放寬守衛**,而是「先 minify 內層,再包外層 /
+先換佔位符,再還原」。守衛訊息裡直接寫了做法。
+
+### 順手撿到的兩件 P3 要知道的事
+
+1. **未壓縮輸出的 header 也不一定在 offset 0。** `tbeditor` 的展開輸出開頭是一段 `/*! … */`
+   授權註解,taglib 在它**後面**。`less2css.js` 的步驟 3(去掉 header)不能用
+   `startsWith`,要全域比對 —— 用 `startsWith` 會漏掉 `js/zkmax/{inp,tbeditor}/css/tbeditor`
+   兩檔,而漏掉的結果是 header 被 builder 加成兩份(現在會被上表第 4 條守衛擋下來)。
+2. **來源樹沒有 `css/` 目錄。** 現況每個元件只有 `<pkg>/less/`。P3 步驟 4 要
+   `mkdir -p <pkg>/css/`,否則寫檔會失敗(第一次 round-trip 就踩到了)。
 
 ---
 
@@ -166,6 +258,26 @@ M5 是關鍵的一項:它證明這個閘門在 P3(展開後的 CSS 格式必然�
 **教訓**:「數字對得上」不等於「數的是同一件事」。兩個內部一致的數對(24/32、30/38)交叉組合出
 一個看起來合理、實際上不存在的 24/38 —— 而它之所以被抓到,是因為產生器**自帶斷言而且拒絕
 為了通過而改斷言**,以及審核 agent 用**另一支獨立寫的 parser** 重數。單靠一次量測不會發現。
+
+### workflow 的 args bug(2026-07-30,已修)
+
+用 `{phase:"P2"}` 啟動的那一次,`args` 是以 **JSON 字串**而不是物件抵達腳本的,所以
+`args.phase` 是 `undefined`,`|| 'prereq'` 的預設值讓它**又跑了一次 prereq** ——
+回報 `phase:"prereq"`,燒掉 2 個 agent 去做已經 commit 完的事。
+
+**第一次 prereq 之所以「成功」是巧合** —— 它根本沒讀到參數,只是預設值剛好就是 prereq。
+
+兩個修法都做了:`readArgs()` 同時接受物件、JSON 字串與裸字串;而且**認不出來的 phase 直接
+報錯**,不再回退到某個看起來像成功的東西。**預設值是一個合法階段**,正是讓這個 bug 無聲的原因。
+
+### P4 carve-out:38 條前綴宣告不能移除(順手撿到的)
+
+`-webkit-font-smoothing` 16、`-moz-osx-font-smoothing` 16、`-webkit-touch-callout` 6 ——
+這三個**沒有**無前綴對應物,它們是唯一寫法,不是死前綴。可移除上限因此從 1127 降為 **1089**。
+
+危險在於:機械掃描產生的 1127 條差異裡,這 38 條是**真回歸**,但形狀跟另外 1089 條**完全一樣**,
+G-delta 的形狀檢查分不出來 → carve-out 清單必須在動手前存在,否則 P4 的閘門實際上失效。
+詳見計畫書 §P4。
 
 ### CAVEAT-3:master 既有的潛在 bug(順手撿到的)
 

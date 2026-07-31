@@ -97,12 +97,16 @@
 					<exclude>web/**</exclude>
 				</excludes>
 			</resource>
-			<!-- copy non-less into theme folder,
-					less files will be handled by plugin below -->
+			<!-- copy non-stylesheet resources into theme folder,
+					less files are handled by zklessc and css files by
+					scripts/build-css.js in the plugin below (both emit *.css.dsp).
+					Without the *.css exclude, a converted source would be copied
+					verbatim alongside its own generated .css.dsp. -->
 			<resource>
 				<directory>${zktheme.web.resources}</directory>
 				<excludes>
 					<exclude>**/*.less</exclude>
+					<exclude>**/*.css</exclude>
 				</excludes>
 				<targetPath>${zktheme.theme.outputDirectory}</targetPath>
 			</resource>
@@ -128,6 +132,26 @@
 								<argument>--output</argument>
 								<argument>${zktheme.theme.outputDirectory}</argument>
 								<argument>--compress</argument>
+							</arguments>
+						</configuration>
+					</execution>
+					<!-- Dual-source build: zklessc above handles *.less, this handles *.css.
+						 Same phase, declared second, so it runs after zklessc. A no-op while
+						 the tree has no *.css sources. See scripts/build-css.js. -->
+					<execution>
+						<id>compile-css</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<configuration>
+							<executable>node</executable>
+							<arguments>
+								<argument>${project.basedir}/scripts/build-css.js</argument>
+								<argument>--source</argument>
+								<argument>${zktheme.web.resources}</argument>
+								<argument>--output</argument>
+								<argument>${zktheme.theme.outputDirectory}</argument>
 							</arguments>
 						</configuration>
 					</execution>

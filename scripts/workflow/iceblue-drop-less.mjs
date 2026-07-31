@@ -41,8 +41,38 @@ export const meta = {
 
 const WT = '/Users/hawk/Documents/workspace/zkThemeTemplate-iceblue'
 
-const PHASE = (args && args.phase) || 'prereq'
-const BATCH = args && args.batch
+// `args` may arrive as a parsed object OR as a JSON string, depending on how the caller passed it.
+// This bit me for real: a run launched with {phase:"P2"} arrived as the STRING '{"phase": "P2"}',
+// so `args.phase` was undefined and the `|| 'prereq'` default silently re-ran prereq — burning two
+// agents on already-committed work and reporting phase:"prereq" for a run labelled P2. The default
+// being a real phase is what made it silent, so: normalize the input, and make an unparseable or
+// unrecognized phase FAIL LOUDLY instead of falling back to something that looks like success.
+function readArgs(raw) {
+	if (raw == null) return {}
+	if (typeof raw === 'object') return raw
+	if (typeof raw === 'string') {
+		const s = raw.trim()
+		if (!s) return {}
+		// Accept both '{"phase":"P2"}' and a bare 'P2'.
+		if (s[0] !== '{') return { phase: s }
+		try {
+			return JSON.parse(s)
+		} catch (e) {
+			return { __parseError: `args was an unparseable string: ${s.slice(0, 120)}` }
+		}
+	}
+	return {}
+}
+
+const ARGS = readArgs(args)
+const PHASE = ARGS.phase || (ARGS.__parseError ? '__error' : 'prereq')
+const BATCH = ARGS.batch
+
+if (ARGS.__parseError) {
+	log(ARGS.__parseError)
+	return { status: 'bad-args', reason: ARGS.__parseError }
+}
+log(`phase=${PHASE}${BATCH ? ` batch=${BATCH}` : ''}`)
 
 const RULES = `
 WORKING TREE
