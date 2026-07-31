@@ -24,8 +24,9 @@ fork this repository to another git repository, so this will make it easier to m
 
 `./init.sh`
 
-* install [zkless-engine](https://github.com/zkoss/zkless-engine).
-The LESS processor customized for ZK.
+* install the build dependencies. This pulls in
+[zkless-engine](https://github.com/zkoss/zkless-engine) — the LESS build runner for ZK themes —
+along with the LESS compiler itself. Nothing needs to be installed by hand.
 
 `npm install`
   

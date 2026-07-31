@@ -699,24 +699,29 @@ Report defects precisely. Fix only unambiguous ones. Do NOT commit.`,
 }
 
 // ---------------------------------------------------------------------------
-// Phases that are still gated on a human decision, not on work.
+// Phases this workflow will not run. Mostly gated on a human decision rather
+// than on work — but `status` must say which, because "blocked" and "already
+// finished" are not the same answer and a caller acts differently on each.
 // ---------------------------------------------------------------------------
 
-const GATED = {
-	P1: 'OPTIONAL, not blocked by anything technical. Pinning LESS to 4.8.1 changes no deliverable — 3.13.1 and 4.8.1 already produce byte-equivalent output on this source tree. It buys one exit-0 guardrail for hand-edits during the transition window, and P8 deletes it again along with zkless-engine. Someone has to decide whether it is worth touching the version of the dependency this branch exists to remove.',
-	P4: 'BLOCKED on L-2 — IceBlue\'s browser-support declaration as a ZK 11 add-on. The declaration delta is already measured (1127 prefixed declarations: -webkit- 313, -moz- 283, -ms- 281, -o- 250), so the work is trivial once the policy exists. A screenshot cannot answer "is this prefix dead"; only the support policy can.',
-	P5: 'BLOCKED on the visual A/B harness, which is a real prerequisite rather than a decision. P5 restructures browserDefault from a descendant selector to @scope, which changes WHICH ELEMENTS MATCH — declaration diff is structurally blind to that, so this is the one phase where computed-style and screenshot A/B are necessary evidence rather than a nice-to-have.',
-	P7: 'BLOCKED on L-4 — the replacement mechanism for the compact profile. LESS import-path interpolation (@import "profiles/_@{themeProfile}") has no pure-CSS equivalent, and does not need one: the two profiles are just different values for the same 842 tokens, so a runtime override sheet covers it. But that is an outward API change and needs a migration-guide entry.',
-	P8: 'BLOCKED on P4+P5+P7 — its G-zero reconciliation is defined as "the total diff equals the sum of the approved deltas from those three phases", so it cannot run before they produce those deltas. Its PREREQUISITE rule tables are NOT blocked and have a deadline: run this workflow with {phase:"prereq"} now, while _zkvariables.less and _zkmixins.less still exist.',
+const NOT_RUNNABLE = {
+	P1: { status: 'done', reason: 'ALREADY DONE (2026-07-31), not runnable and not blocked — nothing to do here. Shipped as S0+S1 in one commit: npm `overrides` pinning zkless-engine\'s less to 4.8.1, plus scripts/check-less-conventions.js enforcing the entry-file-only `~./` import invariant. Gate: files differing 0 (77 files / 14323 declarations), with a negative control on the S1 guard. Note the pin does NOT disappear at P8 — it becomes a direct `"less": "4.8.1"` devDependency, because build-css.js\'s .less branch calls less.render itself.' },
+	P4a: { status: 'blocked', reason: 'BLOCKED on L-2 — IceBlue\'s browser-support declaration as a ZK 11 add-on. P4a is the mechanical 83%: 945 declarations (border-radius 532, transform 181, box-shadow 168, box-sizing 60), every one with an unprefixed sibling in the same rule, so exactly one diff shape is legal and any `+` record is a bug. Trivial once the policy exists. A screenshot cannot answer "is this prefix dead"; only the support policy can.' },
+	P4b: { status: 'blocked', reason: 'BLOCKED on L-2, same decision as P4a. P4b is the 143 hand-written prefixes where all the judgement lives, including 26 sites needing paired replacement rather than removal. The 44-declaration carve-out (-webkit-font-smoothing, -moz-osx-font-smoothing, -webkit-touch-callout and friends) must not appear in the diff at all: those have no standard equivalent, so removing them deletes a feature — and their diff shape is identical to the removable ones.' },
+	P4: { status: 'blocked', reason: 'SPLIT into P4a and P4b (2026-07-30). Ask for one of those instead — the split exists because a single phase with three legal diff shapes cannot enforce "any unexpected shape is a bug", which is the whole content of the G-delta gate.' },
+	P5: { status: 'blocked', reason: 'BLOCKED on the visual A/B harness, which is a real prerequisite rather than a decision. P5 restructures browserDefault from a descendant selector to @scope, which changes WHICH ELEMENTS MATCH — declaration diff is structurally blind to that, so this is the one phase where computed-style and screenshot A/B are necessary evidence rather than a nice-to-have.' },
+	P7: { status: 'blocked', reason: 'BLOCKED on L-4 — the replacement mechanism for the compact profile. LESS import-path interpolation (@import "profiles/_@{themeProfile}") has no pure-CSS equivalent, and does not need one: the two profiles are just different values for the same 842 tokens, so a runtime override sheet covers it. But that is an outward API change and needs a migration-guide entry.' },
+	P8: { status: 'blocked', reason: 'BLOCKED on P4+P5+P7 — its G-zero reconciliation is defined as "the total diff equals the sum of the approved deltas from those three phases", so it cannot run before they produce those deltas. Its PREREQUISITE rule tables are NOT blocked and have a deadline: run this workflow with {phase:"prereq"} now, while _zkvariables.less and _zkmixins.less still exist.' },
 }
 
-if (GATED[PHASE]) {
-	log(`${PHASE} is not runnable yet.`)
-	return { phase: PHASE, status: 'blocked', reason: GATED[PHASE] }
+if (NOT_RUNNABLE[PHASE]) {
+	const { status, reason } = NOT_RUNNABLE[PHASE]
+	log(`${PHASE} will not run — ${status === 'done' ? 'it is already complete' : 'still gated'}.`)
+	return { phase: PHASE, status, reason }
 }
 
 return {
 	phase: PHASE,
 	status: 'unknown-phase',
-	reason: `Unknown phase "${PHASE}". Runnable now: prereq, P2, P3 (optional batch 1|2|3), P6. Gated: ${Object.keys(GATED).join(', ')}.`,
+	reason: `Unknown phase "${PHASE}". Runnable now: prereq, P2, P3 (optional batch 1|2|3), P6. Not runnable: ${Object.keys(NOT_RUNNABLE).join(', ')}.`,
 }

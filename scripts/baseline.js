@@ -40,7 +40,10 @@ execFileSync('npx', ['zklessc', '-s', 'src/main/resources/web', '-o', `${OUT}/`,
 
 const commit = execFileSync('git', ['rev-parse', 'HEAD']).toString().trim();
 const dirty = execFileSync('git', ['status', '--porcelain', 'src/main/resources/web']).toString().trim();
-const less = execFileSync('node', ['-e', "process.stdout.write(require('less/package.json').version)"]).toString().trim();
+// NOT `require('less/package.json')`: LESS 4 declares an `exports` map that does not expose
+// ./package.json, so that form throws ERR_PACKAGE_PATH_NOT_EXPORTED. `less.version` is an
+// array ([4,8,1]) in both 3.x and 4.x.
+const less = execFileSync('node', ['-e', "const v=require('less').version;process.stdout.write(Array.isArray(v)?v.join('.'):String(v))"]).toString().trim();
 const engine = execFileSync('node', ['-e', "process.stdout.write(require('zkless-engine/package.json').version)"]).toString().trim();
 
 const stamp = [

@@ -11,9 +11,9 @@
 
 | 階段 | 狀態 | 閘門 | 量測 | commit | 日期 |
 |---|---|---|---|---|---|
-| P0 建立工作區與基準 | DONE | G-zero | `files differing: 0`(77 檔 / 14323 條) | `ae4ca36` | 2026-07-29 |
-| P1 LESS 釘到 4.x | BLOCKED | G-zero | — | — | — |
-| P2 雙來源 build | DONE | G-zero | `files differing: 0`(77 檔 / 14323 條);儀器證明另見下方〈P2 儀器證明〉 | `6eb89e0` | 2026-07-30 |
+| P0 建立工作區與基準 | DONE | G-zero | `files differing: 0`(77 檔 / 14323 條) | `f34ca01` | 2026-07-29 |
+| P1 LESS 釘到 4.x(S0+S1) | **DONE** | G-zero | `files differing: 0`(77 檔 / 14323 條);`less` 解析為 4.8.1;S1 守衛有負向控制 | 主旨 `P1(drop-less):` ⁺ | 2026-07-31 |
+| P2 雙來源 build | DONE | G-zero | `files differing: 0`(77 檔 / 14323 條);儀器證明另見下方〈P2 儀器證明〉 | `dc46cd3` | 2026-07-30 |
 | P3 元件掃描 74 檔 | TODO | G-zero | — | — | — |
 | **視覺 A/B harness**(P4 前置) | TODO | 自我驗證須為 0 | — | — | — |
 | **P4a** 前綴純移除(A 群) | BLOCKED | G-delta | **945** 條,全部有無前綴同伴 → 只允許 `- <prefixed>`,任何 `+` 都是 bug | — | — |
@@ -21,7 +21,7 @@
 | P5 `norm.css` | TODO | G-delta | 842 token 須零差異 | — | — |
 | P6 Font Awesome | TODO | G-zero | 4545 條 | — | — |
 | P7 `tablet` + profile API | BLOCKED | G-delta | — | — | — |
-| **規則表產生器**(P8 前置,有期限) | **DONE** | 846 列 / 834 語法 1:1 / **830** 行為 1:1 / 16 例外;**30** mixin / 38 定義列 | `c240e20` | 2026-07-30 |
+| **規則表產生器**(P8 前置,有期限) | **DONE** | 846 列 / 834 語法 1:1 / **830** 行為 1:1 / 16 例外;**30** mixin / 38 定義列 | `3f3de5f` | 2026-07-30 |
 | P8 收尾 | TODO | G-zero | 須等於 P4+P5+P7 已核准 delta 總和 | — | — |
 
 ### 兩個前置項的說明
@@ -41,15 +41,16 @@
 
 | 階段 | 卡在什麼 |
 |---|---|
-| P1 | 計畫書 §P1 判定此階段**可選**,要不要留這個 pin 尚未拍板。不做也不影響 P2/P3。 |
-| P4 | L-2 —— IceBlue 作為 add-on 的瀏覽器支援聲明未定 |
-| P7 | L-4 —— compact profile 的替代機制未定 |
+| P4a / P4b | L-2 —— IceBlue 作為 add-on 的瀏覽器支援聲明未定 |
+| P7 | L-4 —— compact profile 的替代機制未定(**colour 那一半已解除**,density 那一半仍未定) |
 
 ### 已解除的 BLOCKED
 
 | 階段 | 原本卡在 | 決定 | 日期 |
 |---|---|---|---|
 | P6 | L-5 —— ZK 11 的 icon 方向(FA / Lucide) | **Font Awesome 保留**。走計畫書 §P6 的「若 FA 保留」分支:寫 `scripts/gen-fa-css.js`,G-zero 4545 條。**不是**刪除 + 空 stub 分支 | 2026-07-30 |
+| P1 | 計畫書 §P1 判定此階段**可選**,要不要留這個 pin 尚未拍板 | **做,而且不再是可選的。** L-7 拍板 Theme Pack 走「runtime `--zk-*` sheet + 新 CSS 語法」,而 3.13.1 靜默改壞的四種語法**正好落在那個語法區** → pin 從「過渡期護欄」升級成「下一步的前提」。已實作並過閘,見下方〈Tier 1〉 | 2026-07-30 決定 / 2026-07-31 實作 |
+| P7(palette 半) | L-7 —— 23 套付費佈景以 `palettes/*.less` 出貨 | **palette 改成 runtime `--zk-*` override sheet**,沒有「編譯期換 palette」需要保留 → 整個轉換案不再被 Theme Pack 擋住。**density 那一半(L-4)仍未定** | 2026-07-30 |
 
 P6 因此從 BLOCKED 轉 TODO。但它**相依於 P2** —— 產生出來的 `.css` 需要 `build-css.js` 才會變成
 `.css.dsp`,否則閘門會把該檔報成 missing(看起來像產生器寫錯,其實不是)。順序:P2 → P6。
@@ -78,6 +79,50 @@ P6 因此從 BLOCKED 轉 TODO。但它**相依於 P2** —— 產生出來的 `.
 | 9 | 2026-07-30 | P2 round-trip `button`(36 條) | `baseline/` | `target/classes/web/iceblue` | **0** | **0** | **PASS** — 含 8 條 mixin 展開的 vendor prefix(P4 標的);輸出**逐 byte 相同** |
 | 10 | 2026-07-30 | P2 負向控制(故意讓 `HEADER` 少一個 taglib) | `baseline/` | `target/classes/web/iceblue` | **2** | **2** | **預期 FAIL(exit 1)** — 閘門抓到 `- <%@ taglib … prefix="z" %>`。**沒有這一步就不知道閘門會不會失敗**;已還原 |
 | 11 | 2026-07-30 | P2 還原後重驗 | `baseline/` | `target/classes/web/iceblue` | **0** | **0** | **PASS** — 兩檔以檔案複製(不是 `git checkout`)還原,`git status --porcelain` 無 `.css`/`.less` 殘留 |
+| 12 | 2026-07-31 | **P1(S0+S1)** | `baseline/` | `target/classes/web/iceblue` | **0** | **0** | **PASS** — 77 檔 / 14323 條,`less` 實際解析為 **4.8.1**、engine 1.1.13。順帶驗掉 zkless doc 列為「要明確驗證」的一項:`compress: true` 在 LESS 4 已 deprecated 但**輸出沒有位移** |
+| 13 | 2026-07-31 | **S1 守衛負向控制** | — | 在 `zul/less/_zkmixins.less` 尾端塞 `@import "~./zul/less/_reset.less";` | — | — | **預期 FAIL(exit 1)** — 守衛以指名檔案+行號的訊息失敗,整條 `check:cssdiff` 在 `zklessc` **之前**就中止。以檔案複製還原,md5 相同、`git status` 無殘留 |
+
+> ⁺ **P1 那一列刻意不寫 hash。** 這一列本身就在那顆 commit 裡,寫 hash 會自我指涉 ——
+> 填上去、`--amend` 一次,hash 就變了,填的值當場失效(已經踩過一次)。
+> 過去的做法是「再補一顆 commit 記 hash」,而那正是這次要整併掉的碎片來源。
+> 用主旨定位:`git log --grep '^P1(drop-less)'`。
+>
+> **閘門紀錄 #1–#11 的 commit hash 已因 2026-07-31 的歷史整併而改變**(13 顆併成 5 顆,
+> 樹逐位元組相同)。差異檔數/條數這些**量測**不受影響,只有 hash 要換算:
+> `ae4ca36`→`f34ca01`、`77e0ce0`+`45d8544`→`20ea296`、`c240e20`+`3f1f457`+`37a2e93`+`9d210d0`→`3f3de5f`、
+> `0fc113c`+`6eb89e0`→`dc46cd3`、`769f374`+`accc02a`+`e1b83d7`→`bd699de`。
+> 舊 hash 仍可在 `backup/pre-squash-2026-07-31` 分支上查到。
+
+---
+
+## Tier 1(P1 = S0 + S1)
+
+原本以獨立專案「拿掉 zkless-engine」評估,結論是**併入本計畫**:實測該引擎沒有註冊任何自訂 LESS
+function / plugin / visitor / pre-post-processor,語法層面的全部貢獻是 `src/index.js:31` 那一行
+`~./`→`/`;其餘都是建置流程。獨立做等於把 P2/P8 要寫的東西寫兩次。
+完整分析:[iceblue-remove-zkless-engine.md](iceblue-remove-zkless-engine.md)。
+
+| | 做了什麼 | 驗證 |
+|---|---|---|
+| **S0** | `package.json` 加 `"overrides": { "zkless-engine": { "less": "4.8.1" } }` | 閘門 #12,`less` 實際解析為 4.8.1 |
+| **S1** | `scripts/check-less-conventions.js`(~120 行),串在 `check:cssdiff` 最前面 | 負向控制 #13 |
+| 副作用修正 | `scripts/baseline.js` 改用 `require('less').version` —— LESS 4 宣告了 `exports` map 且**不**暴露 `./package.json`,舊寫法會丟 `ERR_PACKAGE_PATH_NOT_EXPORTED` | 基準腳本能跑 |
+| 順手 | `readme.md:27` 的「install zkless-engine」是**過時的前置條件**(它是普通 devDependency,沒人手動裝)| — |
+
+**為什麼 S0+S1 是一顆 commit 而不是兩顆。** zkless doc 原本要求各自一顆、各自跑閘門,好讓失敗
+歸因到單一變數。歸因要的是**分開跑**,不是分開 commit —— 而 S1 在構造上不可能影響輸出(只新增
+一支檢查腳本與一個 npm script 前綴),所以單次閘門的結果就已經歸因到 S0。
+
+**S1 守住的是什麼(前提 #20)。** `~./` import 只在 **entry 檔的 buffer** 被改寫,partial 由 LESS
+自己的 file manager 讀、看不到那個改寫 → partial 裡的 `~./` import 永遠解不開,而且失敗訊息是
+**指路徑的 `FileError`,不是指規則的 `ParseError`**,所以沒有任何東西會指向真正的錯誤。
+實測 74 個 entry 用 `~./`、partial 0 個 —— 這條不變條件從 ZK commit `53589bc7a8`(2013-05-20)
+起就承重,**從未寫下來**。這才是這支守衛的價值:把部落知識變成具名的 build error。
+
+**沒做的事:把 93 處 `@import "~./"` 正規化成 `/`-rooted。** 早期草案這樣提,兩邊都不划算 ——
+`/`-rooted 其實是**引擎自己文件裡的寫法**,所以改寫不是「移除引擎語法」;而 66 個與 ZK core
+共用的 `.less` 裡有 52 個目前**位元組相同**,其中 **34 個帶 `~./` import** → 改寫會讓還對齊的
+那三分之二全部分歧,換來的只是「可用裸 lessc 編譯」這個沒人用的能力(永遠是透過 builder 編)。
 
 ---
 
@@ -342,7 +387,12 @@ P3 尚未開工。批次已於 2026-07-30 用 `cssdiff --list` 實測分界(原�
 | `P2` | `build-css.js` + round-trip 自我證明 | ✅ |
 | `P3` | 元件轉換,可加 `{batch:1\|2\|3}` | ✅(需 P2) |
 | `P6` | `gen-fa-css.js` | ✅(需 P2) |
-| `P1`/`P4`/`P5`/`P7`/`P8` | 回報 blocked 與卡住的原因 | ❌ |
+| `P1` | 回報 **`status: done`** —— 已於 2026-07-31 完成(S0+S1) | ❌(沒事可做) |
+| `P4` | 回報「已拆成 P4a/P4b,請改指定其中一個」 | ❌ |
+| `P4a`/`P4b`/`P5`/`P7`/`P8` | 回報 blocked 與卡住的原因 | ❌ |
+
+> 「已完成」與「被卡住」不是同一個答案,所以 `P1` 回報的 `status` 是 `done` 而不是 `blocked` ——
+> 呼叫端對這兩者的處置不同。`NOT_RUNNABLE` 的值因此從字串改成 `{status, reason}`。
 
 **為什麼轉換本身不並行**(寫在腳本開頭的註解裡,這裡摘要):
 
