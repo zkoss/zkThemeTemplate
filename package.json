@@ -6,7 +6,11 @@
     "zklessc": "zklessc -s src/main/resources/web -o target/classes/web/___THEME_NAME___",
     "zklessc-dev": "zklessc -s src/main/resources/web -o target/classes/web/___THEME_NAME___ -w",
     "baseline": "node scripts/baseline.js",
-    "check:cssdiff": "zklessc -s src/main/resources/web -o target/classes/web/iceblue --compress && node scripts/cssdiff.js baseline/ target/classes/web/iceblue"
+    "gen:var-table": "node scripts/gen-var-table.js",
+    "check:var-table": "node scripts/gen-var-table.js --check",
+    "check:cssdiff": "zklessc -s src/main/resources/web -o target/classes/web/iceblue --compress && node scripts/cssdiff.js baseline/ target/classes/web/iceblue",
+    "gen:mixin-table": "node scripts/gen-mixin-table.js",
+    "check:mixin-table": "node scripts/gen-mixin-table.js --check"
   },
   "devDependencies": {
     "zkless-engine": "^1.1.9"

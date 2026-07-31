@@ -303,12 +303,32 @@ converted component files are self-contained with NO \`@import\`. So the compone
 read → prepend taglib header → minify → write. Only \`norm.css\` will ever need concatenation,
 and that is P5's problem, not yours.
 
-BEHAVIOUR IT MUST REPRODUCE EXACTLY:
-  * The three-line taglib header that zklessc emits — byte-identical, including blank lines.
-  * The three files that must NOT get a header (plan premise #9, re-verified in P0):
+BEHAVIOUR IT MUST REPRODUCE EXACTLY — I measured all of this from \`baseline/\` before dispatching
+you, so take it as given rather than re-deriving it (but do verify, cheaply):
+
+  * THE HEADER IS ONE LINE, NOT THREE. In \`--compress\` output the three directives are
+    concatenated with NO separator and NO trailing newline, and CSS begins immediately after:
+      <%@ taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" %><%@ taglib uri="http://www.zkoss.org/dsp/zk/core" prefix="z" %><%@ taglib uri="http://www.zkoss.org/dsp/web/theme" prefix="t" %>
+    Verified: \`baseline/js/zul/wgt/css/button.css.dsp\` has ZERO newlines in its first 200 bytes.
+    If you emit three lines, cssdiff's DSP-directive list still matches (it collapses whitespace)
+    but the file is needlessly different from what master shipped. Match the single line.
+
+  * EXACTLY 3 of the 77 outputs have no header at all (plan premise #9, re-verified):
       js/zkmax/sel/css/listbox.css.dsp
       js/zkmax/sel/css/tree.css.dsp
       js/zkmax/grid/css/grid.css.dsp
+    73 of 77 begin with the header. The 4th file that does not BEGIN with it is
+    \`zul/css/norm.css.dsp\`, and it is NOT an exception — see the next point.
+
+  * NORM'S HEADER IS MID-FILE, AT BYTE 43088 OF 72140. This surprised me and it would have
+    surprised you: \`norm.css.dsp\` opens with ~43 KB of \`:root{--zk-*}\` tokens, THEN the three
+    taglib directives, THEN normalize.css and the \`<c:if>\` reset. The directives sit exactly at
+    the point where \`norm.less\` pulls in \`_reset.less\`, which carries its own header that zklessc
+    emits inline. JSP page directives are position-independent so this is legal, just unusual.
+    You do not have to handle norm (it stays LESS until P5), but do NOT write a builder that
+    assumes "header always goes at offset 0" — P5 concatenates norm from several sources and will
+    need the header preserved at its concatenation boundary, not hoisted. Leave a comment saying so.
+
   * Minified output equivalent to zklessc's \`--compress\`.
 
 MINIFIER TRAP — do not skip this, it is a known silent-corruption path in this codebase:

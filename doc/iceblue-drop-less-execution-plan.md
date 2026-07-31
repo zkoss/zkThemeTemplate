@@ -50,8 +50,12 @@
 | 10 | 規模分佈(**輸出端**) | **2** 檔 ≤4 條;最大 4 檔:font-awesome **4545**、norm **1500**、tablet **681**、combo **586**(原記 ~~12 檔 ≤4~~、~~norm 1243、font-awesome 910、tablet 421、combo 407~~ 是來源端數字) |
 | 11 | `goldenlayout.css.dsp` 有**兩份逐條相同的輸出** | `js/zkmax/goldenlayout/css/` 與 `js/zkmax/layout/css/`,各 413 條、diff 0 → P3 要一起轉,或先確認哪一份是死路徑 |
 | 12 | `tbeditor.css.dsp` 也有兩份,但**不相同** | `js/zkmax/tbeditor/` 380 條 vs `js/zkmax/inp/` 375 條,67 條差異 → 是兩個不同來源,不能當複本處理 |
-| 13 | **有第二個 `_zkvariables.less`** | `zkmax/less/_zkvariables.less`,4 行 2 條,而且**不是 token**(`@iphone`/`@android` 是 media query 字串,`tablet.less` 用)→ §P8 的例外分類要加一類,刪檔清單要加一檔 |
-| 14 | `_zkmixins.less` 是 **24 個名稱 / 38 個定義列** | 原記「32 個定義」有誤。差額是 LESS 的同名多載(依參數個數或 `when` guard 分派) |
+| 13 | **有第二個 `_zkvariables.less`** | `zkmax/less/_zkvariables.less`,4 行 2 條,而且**不是 token**(`@iphone`/`@android` 是 media query 字串)→ §P8 的例外分類要加一類,刪檔清單要加一檔。**更正(prereq 實測)**:這兩條**是死的** —— `tablet.less:2` 只是 `@import` 了這個檔,但全樹 153 個 `.less` 對這兩個名稱是 **0 次引用**。分類要加,但 P7 不需要為它們編列移植工作 |
+| 14 | `_zkmixins.less` 是 **30 個名稱 / 38 個定義列** | ~~24 個名稱~~、~~32 個定義~~ 都是量錯的。`24/32` 與 `30/38` 各自內部一致,`24/38` 各取一個 —— 描述不了任何檔案。`24` 來自 `\w`-only 的名稱 pattern,會**無聲丟掉 6 個帶連字號但可呼叫**的 mixin(`.encodeURL-verGradient`、`.gradient-ver/-hor/-diagm/-diagp/-rad`)。38 個定義列則一直是對的:差額是 LESS 的同名多載(依參數個數或 `when` guard 分派) |
+| 15 | **11 個 mixin 是死的**(30 個中),分佈在 38 個定義列裡的 13 列 | 整個 gradient / IE9 堆疊。輸出端獨立佐證:baseline 裡 0 個 `linear-gradient`、`radial-gradient`、`-webkit-gradient(`、SVG data URI、`progid:` |
+| 16 | **§P4 的估算被獨立重現,分毫不差** | 呼叫點 `borderRadius` 103、`boxShadow` 46、`transform` 42、`applyCSS3` 30、四角 24 = **245**,展開 **1225** —— 用另一支獨立寫的 parser 數出同樣結果 → P4 的 ≤1127 上限更可信 |
+| 17 | **taglib header 是「一行」不是「三行」** | `--compress` 輸出裡三個 directive **無分隔字元串接、後面沒有換行**,CSS 緊接著開始(`button.css.dsp` 前 200 bytes 有 **0** 個換行)。P2 的 `build-css.js` 要照這個形狀產生 |
+| 18 | **`norm.css.dsp` 的 taglib 在檔案中間**(byte 43088 / 72140) | 它先是 ~43 KB 的 `:root{--zk-*}`,**然後**才三個 taglib,再 normalize.css + `<c:if>` reset —— directive 落在 `norm.less` 引入 `_reset.less` 的接縫上。JSP page directive 位置無關所以合法,只是少見。**前提 #9 仍然成立**(真正完全沒有 header 的還是那 3 檔;77 檔中有 73 檔以 header 開頭)。影響:P2 的 builder **不可以假設「header 一定在 offset 0」**,P5 串接 norm 時要保留它在接縫的位置,不能上提 |
 
 ### 1.1 最關鍵的一項:第 5 點
 
@@ -488,27 +492,48 @@ declaration diff 看不出這件事,computed-style A/B 與截圖 A/B 在這裡�
 `_zkvariables.less` 與 `_zkmixins.less` 一旦刪掉,下面兩張表就只能靠考古還原。
 **產生器必須在這兩個檔還存在時跑完並提交。**
 
+> **✅ 已完成(2026-07-30)。** 產生器與兩張表都已產出並提交,期限風險解除。
+> `scripts/gen-var-table.js`(`npm run gen:var-table` / `check:var-table`)、
+> `scripts/gen-mixin-table.js`(`gen:mixin-table` / `check:mixin-table`),兩支都自帶斷言、
+> 輸出跨次執行 byte-identical、且可在**客戶自己的 fork** 上重跑(`--fork` 把 drift 降級為報告)。
+
 | 產出 | 內容 | 來源(P8 會刪掉) |
 |---|---|---|
-| `doc/migration/less-var-to-token.md` + `.json` | 844 列。其中 **834** 列是乾淨的 1:1 `@var → var(--zk-token)`,另 **10** 列例外逐條列出。**外加** `zkmax/less/_zkvariables.less` 的 2 列(前提 #13) | `_zkvariables.less` ×**2 檔** |
-| `doc/migration/mixin-to-css.md` | **24** 個 mixin(分佈在 **38** 個定義列 —— LESS 允許同名依參數個數或 `when` guard 多載)各自展開成什麼 | `_zkmixins.less` |
+| `doc/migration/less-var-to-token.md` + `.json` | 844 + 2 = **846** 列。其中 **834** 列**語法上**是乾淨的 1:1 `@var → var(--zk-token)`,但只有 **830** 列**行為上**可以機械改名(見下);例外共 **16** 列 | `_zkvariables.less` ×**2 檔** |
+| `doc/migration/mixin-to-css.md` | **30** 個 mixin(分佈在 **38** 個定義列 —— LESS 允許同名依參數個數或 `when` guard 多載)各自展開成什麼,含 11 個死 mixin 標記與 §P4 交叉引用 | `_zkmixins.less` |
 
-那 10 個例外(P0 實測,不是估計),以及前提 #13 新增的第四類:
+例外從原記的 10 條變成 **16** 條:12 條是**分類上**的例外,另 4 條**語法上是 1:1、行為上不是**:
 
 | 類別 | 項目 |
 |---|---|
 | 設定字串(不是 token) | `@themeProfile`、`@themePalette` |
 | 圖檔路徑 | `@loadingAnimationDefer`、`@loadingAnimationLoad`、`@sliderTicks`、`@progressmeterBackgroundImage` |
 | 一對多 token 清單 | `@containerButtonColors`、`@borderlayoutCollapsedIconColors`、`@splitterButtonTextColors`、`@menuScrollableIconColors` |
-| **media query 字串**(前提 #13,原本漏列) | `@iphone`、`@android`(在 `zkmax/less/_zkvariables.less`,`tablet.less` 使用) |
+| **media query 字串**(前提 #13) | `@iphone`、`@android` —— 而且**兩條都是死的**,全樹 0 引用 |
+| **data URI 內的 `var()`**(CAVEAT-2) | `@iconColor`、`@activeColor`、`@inputDisableColor` |
+| **編譯期顏色函式運算元**(CAVEAT-3) | `@baseBackgroundColor` |
 
-**產生器要自帶斷言**(844 / 834 / 10+2 / 24 名稱 / 38 定義列),對不上就 fail —— 否則表格會
+**產生器要自帶斷言**(846 / 834 / 16 / **30** 名稱 / 38 定義列),對不上就 fail —— 否則表格會
 無聲漂移,而它一旦漂移,發現的人是客戶而不是我們。
 
-**還沒解決、不要假裝解決的一項**:覆寫 `--zk-color-primary` 是否**行為上**等價於覆寫
-`@colorPrimary`?目前只證明了**語法上**的 1:1,而 `readme.md:8-10` 暗示兩條路徑並不完全對稱。
-反例會長成「某個變數在 LESS **編譯期**被用在 runtime custom property 做不到的位置」——
-import 路徑插值、guard 條件、算術運算元。這件事屬於規則表產生器的工作範圍。
+#### ✅ 已解決:覆寫 token 不等價於覆寫 LESS 變數(原本列為「還沒解決」)
+
+原問題:覆寫 `--zk-color-primary` 是否**行為上**等價於覆寫 `@colorPrimary`?
+**答案是不等價**,而且是三個獨立方向。全部實測驗證,全部**先於本次轉換就存在於 master**,
+`cssdiff` 逐條比對看不到它們(它們原樣通過),所以閘門不受影響:
+
+| | 機制 | 證據 |
+|---|---|---|
+| **CAVEAT-1** | 覆寫 LESS 變數會把 `var(--zk-token)` **換成字面值**,token 從編譯輸出裡**消失** → 下游的 runtime 覆寫從此無聲失效。LESS 覆寫比較「強」但比較不可組合 —— 這正是 `readme.md:8-10` 在警告的事 | 編譯輸出 |
+| **CAVEAT-2** | `var()` 落在 `data:image/svg+xml` URI **裡面**,不會對宿主頁面求值 → 覆寫 token 完全無效,覆寫 LESS 變數才有效 | `baseline/js/zul/wgt/css/selectbox.css.dsp` 內含 URL-encoded 的 `fill='var(--zk-icon-color)'`;來源 `js/zul/wgt/less/selectbox.less:3-5` |
+| **CAVEAT-3** | `contrast(@baseBackgroundColor)`:值是 `var()` 時 LESS **無法求值**,原樣輸出成 `contrast(var(--zk-base-background-color))` —— 而 CSS **沒有**產生顏色的 `contrast()`(只有 `filter: contrast()`),所以該宣告**無效、被瀏覽器丟棄**。值是字面值(`#FFFFFF`,正是 `readme.md:69` 建議的客製方式)時,LESS 編譯期算成 `background: #000000`。**覆寫 LESS 變數會啟用一條目前失效的宣告;覆寫 token 永遠影響不到這個位置** | `js/zkmax/big/less/biglistbox.less:281,389`,以隔離的 `lessc` 執行驗證;未求值的形式原樣出現在 baseline 輸出裡 |
+
+CAVEAT-3 是**master 既有的潛在 bug**,不是轉換造成的 —— 但它必須寫進 migration guide,
+因為一個照著 `readme.md:69` 做的客戶會**意外啟用**它。
+
+窮盡掃過全樹確認例外集合完整:153 個 `.less` 裡只有 **16 處**編譯期函式呼叫吃 `_zkvariables`
+的變數 —— 2 處 `contrast()`(上面那條)與 14 處 `extract()`(就是那 4 條一對多清單,分類正確)。
+沒有 `@media` prelude 引用變數,`calc()` 之外沒有變數算術。
 
 **為什麼這是最有價值的升級產出**:`readme.md:69` 建議客戶「以覆寫變數的方式客製」,所以一個
 守規矩的客戶的客製內容**幾乎就是一堆變數覆寫**。他的遷移因此主要是**改名**:
