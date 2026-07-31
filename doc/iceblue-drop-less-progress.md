@@ -15,11 +15,23 @@
 | P1 LESS 釘到 4.x | BLOCKED | G-zero | — | — | — |
 | P2 雙來源 build | TODO | G-zero | — | — | — |
 | P3 元件掃描 74 檔 | TODO | G-zero | — | — | — |
+| **視覺 A/B harness**(P4 前置) | TODO | 自我驗證須為 0 | — | — | — |
 | P4 vendor prefix 政策 | BLOCKED | G-delta | 上限 1127 條移除 | — | — |
 | P5 `norm.css` | TODO | G-delta | 842 token 須零差異 | — | — |
-| P6 Font Awesome | BLOCKED | G-zero | 4545 條 | — | — |
+| P6 Font Awesome | TODO | G-zero | 4545 條 | — | — |
 | P7 `tablet` + profile API | BLOCKED | G-delta | — | — | — |
+| **規則表產生器**(P8 前置,有期限) | TODO | 844+2 列 / 834 為 1:1;24 mixin / 38 定義列 | — | — | — |
 | P8 收尾 | TODO | G-zero | 須等於 P4+P5+P7 已核准 delta 總和 | — | — |
+
+### 兩個前置項的說明
+
+- **視覺 A/B harness** —— 重用 Marble 既有的 preview 頁面與 Playwright,不搬語料進本分支。
+  只需讓 preview app 能載入本模板編出的 theme jar,A/B 兩邊是**同一分支的兩次 build**
+  (P0 的 LESS build vs 轉換後的 CSS build)。**先拿同一個 build 截兩次確認 diff 為零**,
+  才可以拿它比對不同 build。計畫書 §2.4。
+- **規則表產生器** —— **有期限**:`_zkvariables.less` / `_zkmixins.less` 在 P8 被刪,
+  刪掉之後 `@var → --zk-token`(844 列,其中 834 列 1:1)與 24 個 mixin(**38** 個定義列)的
+  對應表就只能靠考古還原。產生器必須在刪檔前跑完並提交。計畫書 §P8。
 
 **BLOCKED 的原因**(都是等決策,不是等工作):
 
@@ -27,8 +39,20 @@
 |---|---|
 | P1 | 計畫書 §P1 判定此階段**可選**,要不要留這個 pin 尚未拍板。不做也不影響 P2/P3。 |
 | P4 | L-2 —— IceBlue 作為 add-on 的瀏覽器支援聲明未定 |
-| P6 | L-5 —— ZK 11 的 icon 方向(FA / Lucide)未定 |
 | P7 | L-4 —— compact profile 的替代機制未定 |
+
+### 已解除的 BLOCKED
+
+| 階段 | 原本卡在 | 決定 | 日期 |
+|---|---|---|---|
+| P6 | L-5 —— ZK 11 的 icon 方向(FA / Lucide) | **Font Awesome 保留**。走計畫書 §P6 的「若 FA 保留」分支:寫 `scripts/gen-fa-css.js`,G-zero 4545 條。**不是**刪除 + 空 stub 分支 | 2026-07-30 |
+
+P6 因此從 BLOCKED 轉 TODO。但它**相依於 P2** —— 產生出來的 `.css` 需要 `build-css.js` 才會變成
+`.css.dsp`,否則閘門會把該檔報成 missing(看起來像產生器寫錯,其實不是)。順序:P2 → P6。
+
+> Marble 的 `font-awesome.css.dsp` 是**空 stub**,因為 Marble 自己做 Lucide mask
+> (見 `project_fa_to_lucide_migration`)。那是 Marble 的決定,**與本分支無關** ——
+> IceBlue 保留 FA,兩個主題在這件事上分道揚鑣是預期的,不是不一致。
 
 ---
 
@@ -42,6 +66,7 @@
 | 1 | 2026-07-29 | P0 自我測試 | `baseline/` | `baseline/`(同一份) | 0 | 0 | PASS — 比對器對相同輸入回報零 |
 | 2 | 2026-07-29 | P0 突變測試 | `baseline/` | 注入 5 種已知缺陷 | 2 | 6 | PASS — 見下方〈突變測試〉 |
 | 3 | 2026-07-29 | P0 G-zero | `baseline/` | `target/classes/web/iceblue` | **0** | **0** | **PASS** — 工具鏈確定性成立 |
+| 4 | 2026-07-30 | 開工前重驗 | `baseline/` | `target/classes/web/iceblue` | **0** | **0** | **PASS** — 77 檔 / 14323 條。確認 P0 之後(兩次 doc commit)基準與樹仍然對齊,workflow 的前置條件成立 |
 
 ---
 
@@ -118,18 +143,57 @@ M5 是關鍵的一項:它證明這個閘門在 P3(展開後的 CSS 格式必然�
 |---|---|---|
 | 11 | `goldenlayout.css.dsp` 有**兩份逐條相同**的輸出(`js/zkmax/goldenlayout/css/`、`js/zkmax/layout/css/`,各 413 條,diff 0) | P3:要嘛一起轉,要嘛先確認哪份是死路徑 |
 | 12 | `tbeditor.css.dsp` 也有兩份,但**不相同**(380 vs 375,67 條差異) | P3:是兩個不同來源,不能當複本處理 |
+| 13 | **有第二個 `_zkvariables.less`**:`zkmax/less/_zkvariables.less`,4 行、2 條宣告。而且它們**不是 token** —— `@iphone` / `@android` 是 media query 字串,由 `tablet.less` 使用 | 規則表產生器:計畫書的 10 個例外**沒有這一類**(它只列了設定字串、圖檔路徑、一對多清單)。P8 的刪檔清單也要含這一檔 |
+| 14 | `_zkmixins.less` 是 **24 個唯一 mixin 名稱、38 個定義列**(不是 32)。差額來自 LESS 允許同名多載 —— 依參數個數或 `when` guard 分派,例如 `.boxShadow(@value)` 有 `isstring` 與 non-`isstring` 兩個版本 | 規則表產生器:計畫書與本文件原記「32 個定義」,**已就地更正為 38** |
 
 ---
 
 ## P3 批次
 
-P3 尚未開工。批次清單在開工時依輸出端條數排序決定(見計畫書 §P3)。
+P3 尚未開工。批次已於 2026-07-30 用 `cssdiff --list` 實測分界(原本的 `~8 / ~55 / ~11` 是估計值,
+**三個數字都不對**):
 
 | 批 | 範圍 | 檔數 | 狀態 |
 |---|---|---|---|
-| 批 1 | 輸出端 ≤20 條 | ~8 | TODO |
-| 批 2 | 輸出端 20–200 條 | ~55 | TODO |
-| 批 3 | 輸出端 >200 條 | ~11 | TODO |
+| 批 1 | 輸出端 ≤20 條 | **20**(原估 ~8) | TODO |
+| 批 2 | 輸出端 21–200 條 | **43**(原估 ~55) | TODO |
+| 批 3 | 輸出端 >200 條 | **11** | TODO |
+| | | 20+43+11 = **74** ✓ | |
+
+74 = 77 個輸出減掉三個留在 LESS 的:`norm`(P5)、`font-awesome`(P6)、`tablet`(P7)。
+
+批 1 有 20 檔而非 8 檔,對「批 1 的目的是驗證腳本」這件事是**好事** —— 語料更大,但每檔仍
+≤20 條、可逐檔人工看完。批 3 的 11 檔:`popup` 217、`menu` 218、`tabbox` 237、`colorbox` 246、
+`listbox` 261、`biglistbox` 299、`tbeditor` 375 + 380、`goldenlayout` 413 + 413、`combo` 586。
+
+---
+
+## 執行機制:workflow
+
+`scripts/workflow/iceblue-drop-less.mjs` —— 一次跑**一個階段**,用 `{phase:"…"}` 指定:
+
+| `phase` | 做什麼 | 可跑? |
+|---|---|---|
+| `prereq` | P8 的兩張規則表(**有期限**) | ✅ 現在就該跑 |
+| `P2` | `build-css.js` + round-trip 自我證明 | ✅ |
+| `P3` | 元件轉換,可加 `{batch:1\|2\|3}` | ✅(需 P2) |
+| `P6` | `gen-fa-css.js` | ✅(需 P2) |
+| `P1`/`P4`/`P5`/`P7`/`P8` | 回報 blocked 與卡住的原因 | ❌ |
+
+**為什麼轉換本身不並行**(寫在腳本開頭的註解裡,這裡摘要):
+
+- 整棵樹編譯只要 ~1.4 秒。74 檔是一次序列腳本執行,**沒有時間可省**。
+- 每個會 build 的 agent 都寫 `target/classes/web/iceblue`,每次轉換都改**共用的來源樹** ——
+  兩個轉換同時進行,等於 A 的閘門在編譯 B 刪了一半的 `.less`。失效是非決定性的,而且**長得像
+  轉換 bug**。
+- 一檔一顆 commit(§2.5)會搶同一個 git index。
+
+**真正該 fan-out 的是複審** —— 計畫書 §P3 列的三件事(可讀性分段、註解位置、mixin 展開產生的
+重複宣告)腳本判斷不了,共 74 檔,而複審是**唯讀**的。所以腳本的形狀是:序列轉換 → 並行複審 →
+序列套用複審結果。
+
+**階段之間不串接**,因為計畫書每個階段邊界都是「閘門 + 人工複審」。一次跑完好幾階的背景執行,
+會在**跳過那些檢查點**的情況下回報成功 —— 而檢查點正是讓結果可信的東西。
 
 ---
 

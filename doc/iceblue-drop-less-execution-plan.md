@@ -50,6 +50,8 @@
 | 10 | 規模分佈(**輸出端**) | **2** 檔 ≤4 條;最大 4 檔:font-awesome **4545**、norm **1500**、tablet **681**、combo **586**(原記 ~~12 檔 ≤4~~、~~norm 1243、font-awesome 910、tablet 421、combo 407~~ 是來源端數字) |
 | 11 | `goldenlayout.css.dsp` 有**兩份逐條相同的輸出** | `js/zkmax/goldenlayout/css/` 與 `js/zkmax/layout/css/`,各 413 條、diff 0 → P3 要一起轉,或先確認哪一份是死路徑 |
 | 12 | `tbeditor.css.dsp` 也有兩份,但**不相同** | `js/zkmax/tbeditor/` 380 條 vs `js/zkmax/inp/` 375 條,67 條差異 → 是兩個不同來源,不能當複本處理 |
+| 13 | **有第二個 `_zkvariables.less`** | `zkmax/less/_zkvariables.less`,4 行 2 條,而且**不是 token**(`@iphone`/`@android` 是 media query 字串,`tablet.less` 用)→ §P8 的例外分類要加一類,刪檔清單要加一檔 |
+| 14 | `_zkmixins.less` 是 **24 個名稱 / 38 個定義列** | 原記「32 個定義」有誤。差額是 LESS 的同名多載(依參數個數或 `when` guard 分派) |
 
 ### 1.1 最關鍵的一項:第 5 點
 
@@ -123,6 +125,74 @@
 
 declaration diff 在瀏覽器實際收到的 CSS 這一層是**完整的等價證明**(DSP 求值不變)。
 視覺回歸只在 P4/P5/P7 這些有意改變輸出的階段才是必要的補充。
+
+推論要講清楚:**P0–P3 與 P6 不需要截圖。** 這幾階段是 G-zero,declaration 相同就等於 render 相同,
+截圖只會增加 flake、不會增加資訊。硬加視覺檢查反而製造一種假的安心感。
+真正需要視覺 A/B 的機制見 §2.4。
+
+### 2.4 視覺 A/B harness(P4 的前置)
+
+**在哪些階段有價值,差別很大 —— 不要一視同仁:**
+
+| 階段 | 價值 | 理由 |
+|---|---|---|
+| P5 | **最高** | `browserDefault` 從 descendant selector 改成 `@scope`,是真的會改變「誰被選到」的結構性變更 |
+| P7 | 中 | profile 從編譯期 import 插值改成 runtime override sheet,機制換了 |
+| P4 | **最低** | 「`-webkit-border-radius` 是不是死前綴」是**瀏覽器支援政策**問題,Chrome 截圖答不出來。這裡真正的證據是 §P4 的 declaration delta,不是像素 |
+
+**做法:重用 Marble 已有的 harness,不搬頁面。** Marble repo 已經有:
+
+- 158 個 preview `.zul` 頁面
+- `src/test/java/zk/example/iceblue/ThemePreviewIceblueApp.java`(:8081)
+- `scripts/capture-iceblue.js`、`scripts/render-iceblue-baseline.sh`
+- pom execution `preview-app-iceblue`、Playwright 專案與既有 baseline
+
+要補的只有一件事:**讓 preview app 能載入本模板編出來的 theme jar**。
+現況 `ThemePreviewIceblueApp.java:27` 是刻意**不設** preferred theme —— 它渲染的是 ZK 內建的
+iceblue,不是本模板的輸出。所以 A/B 的兩邊應該是**同一分支的兩次 build**:
+
+```
+P0 的 LESS build  →  theme jar A   ┐
+                                    ├─→ 同一組 preview 頁面 → 截圖 diff
+轉換後的 CSS build →  theme jar B  ┘
+```
+
+**兩個必須寫下來的限制:**
+
+1. **157/158 個頁面用到 Marble 的 `z-*` utility classes,IceBlue 沒有這些 class**(§0 已排除移植)。
+   對「自己比自己」的 A/B 這是可接受的 —— 兩邊一樣沒有 utility,而被轉換的 CSS 是**元件內部**的,
+   照樣渲染。但**訊號品質會下降**:塌掉的版面可能遮住 P4/P5 改到的 border / shadow / spacing。
+   看到乾淨的 diff 時要記得這一點,別把「沒看到差異」當成「沒有差異」。
+2. **先證明儀器,再相信儀器。** 跟 P0 對 `cssdiff` 做的一樣:先拿**同一個 build** 截兩次、
+   確認 diff 為零,才能開始拿它比對兩個不同 build。
+
+**不做**:把 158 個 `.zul` + 221 個素材(9.2 MB)+ composer/VM Java 搬進本 worktree。
+那會產生第二份會各自漂移的 preview 語料,而且本分支沒有 Playwright / npm test 相依。
+「讓模板本身附帶更豐富的 preview 語料」(模板現在只有 `preview.zul`,`readme.md:84` 是叫使用者
+自己加)是**產品改善,不是轉換需求** —— 與 §0 其他排除項同一個理由。
+
+### 2.5 commit 粒度:為了 fork-merge,不是為了 AI 考古
+
+`readme.md:20` 寫得很明白,本模板的使用方式是 **fork**,而且理由正是
+「easier to merge bug fixes from the original repository and **migrate to the new version**」。
+所以 merge 衝突的品質**直接取決於 commit 粒度** —— 這是本節的主要理由,比「留給 AI 看歷史」強得多。
+
+一個客戶 fork 之後客製了 `button.less`。若整個 P3 是一顆 commit,他 merge 上游時會對一個
+74 檔的巨大變更產生衝突;若是一檔一顆,git 能自動解掉他沒動過的絕大多數,衝突被侷限在那一檔。
+
+**粒度跟著「變更的性質」走,不是跟著階段走:**
+
+| 階段 | 粒度 | 理由 |
+|---|---|---|
+| P3 | **一檔一顆**(~74) | 變更是**逐檔特有**的。commit message 由 `less2css.js` 統一產生(檔名、輸出端條數、`cssdiff` 結果)。批次仍然是**複審與閘門**單位,但不再是 commit 單位 |
+| P4 | 一顆 | 規則是**均勻**的(移除死前綴),客戶可以機械式重新套用,不需要逐檔歷史 |
+| P5 | ~5 顆 | 每個拆出來的檔案都是一個獨立的結構決策 |
+| P7 | 1–2 顆 | 對外 API 變更,與 migration guide 的條目成對 |
+
+**要對 AI 的作用講實話**(免得高估):commit 歷史**是**有幫助,但它是三種機制裡**最弱**的一種 ——
+它帶的是**個案**而不是**規則**,需要 clone 完整歷史再翻 70+ 顆 commit,而 P3 的 diff 特別不會教人
+(刪掉 40 行 LESS、加上 120 行展開後的 CSS,那是規則的一次套用,不是規則本身)。
+真正讓升級可行的是 §P8 的**規則表**與**可執行的工具**。粒度值得做,但理由是 fork-merge。
 
 ---
 
@@ -249,19 +319,31 @@ target/classes/web/<theme>/
 順序:由小到大,每一批都跑閘門。
 
 > **P0 更正**:原批次規劃建立在「12 檔 ≤4 條」上,但那是來源端數字 —— 輸出端只有 **2** 檔
-> (`tablelayout` 1 條、`cardlayout` 4 條)。批 1 太小,不足以驗證腳本,所以改成以輸出端條數分界:
+> (`tablelayout` 1 條、`cardlayout` 4 條)。批 1 太小,不足以驗證腳本,所以改成以輸出端條數分界。
+>
+> **2026-07-30 實測**:三個批次的檔數估計(`~8 / ~55 / ~11`)也**都不對**,已用
+> `cssdiff --list` 實測更正如下。
 
-- 批 1(~8 檔,≤20 條):`tablelayout` 1、`cardlayout` 4 起算 —— 目的是驗證**腳本本身**,
-  不是趕進度。這批要逐檔人工看過展開結果。
-- 批 2:一般元件(輸出端 20–200 條,~55 檔)
-- 批 3:大檔(輸出端 >200 條):`combo` 586、`goldenlayout` 413×2、`tbeditor` 380/375、
-  `biglistbox`、`colorbox` 等
+- 批 1(**20** 檔,≤20 條;原估 ~8):`tablelayout` 1、`cardlayout` 4 起算 —— 目的是驗證
+  **腳本本身**,不是趕進度。這批要逐檔人工看過展開結果。
+  20 檔比原估的 8 檔**更好**:語料更大,但每檔仍 ≤20 條,人工逐檔看得完。
+- 批 2(**43** 檔,21–200 條;原估 ~55):一般元件
+- 批 3(**11** 檔,>200 條):`popup` 217、`menu` 218、`tabbox` 237、`colorbox` 246、
+  `listbox` 261、`biglistbox` 299、`tbeditor` 375+380、`goldenlayout` 413+413、`combo` 586
 
-批 1 的實際檔案清單在 P3 開工時由 `scripts/cssdiff.js --list` 的條數排序決定,不預先寫死。
+20 + 43 + 11 = **74** ✓(= 77 個輸出減掉 `norm`/`font-awesome`/`tablet` 三個留在 LESS 的)。
+
+檔案清單仍由 `scripts/cssdiff.js --list` 的條數排序在開工時決定,不預先寫死 ——
+但**檔數要對得上**:上面三個數字是斷言,對不上就代表推導錯了或樹動過,要停下來查,
+不能改斷言去迎合實測結果。
 
 **保留在 LESS 的**:`norm.less`(P5)、`font-awesome.less`(P6)、`tablet.less`(P7)。
 
 **G-zero**:每一檔、每一批,以及全樹。
+
+**commit 粒度:一檔一顆(~74 顆)**,理由見 §2.5(fork-merge 衝突侷限化)。
+批次仍是複審與閘門單位,但不是 commit 單位。message 由 `less2css.js` 統一產生,內容至少要有:
+被轉換的檔名、輸出端 declaration 條數、該檔 `cssdiff` 的結果。
 
 人工複審重點(腳本無法判斷的):
 - 展開後的 CSS 可讀性 —— 需不需要重新分段、把註解移到正確位置
@@ -308,6 +390,12 @@ target/classes/web/<theme>/
 
 放在 P3 之後、獨立一階的理由見 §2.2。
 
+**commit 粒度:一顆**(§2.5)—— 規則均勻,客戶可機械式重新套用。
+
+**視覺 A/B 在這一階價值最低**(§2.4):截圖回答不了「這個前綴在我們宣告支援的瀏覽器裡是不是死的」。
+這一階的證據是上面的 declaration delta 加上 L-2 的支援政策,不是像素。
+但 §2.4 的 harness 應該在**進入 P4 之前**就架好並自我驗證過,因為 P5 會真的需要它。
+
 ---
 
 ### P5 — `norm.css`:tokens + reset + 全域(設計工作)
@@ -334,24 +422,46 @@ ThemeWebAppInit / ThemeProvider 讀 org.zkoss.zul.theme.browserDefault 選一份
 注意 CleanCSS 會摧毀 `@scope`(實測輸出全空)→ 必須**先 minify 內層、再包 `@scope`**。
 
 **G-delta**:
-- 842 個 token declaration 必須**零差異**(這部分是純搬移)
+- 842 個 token declaration 必須**零差異**(這部分是純搬移;P0 已重驗:正好 842 條、全在 `:root`、
+  842 個不重複名稱)
 - reset 部分是刻意的結構改變 → 需要 `browserDefault` 開/關兩種設定下的 computed-style A/B
 - 必須沿用 Marble 已記載的限制:open float 會被移到 `document.body`、落在 `.z-page` 之外
   ——`master` 現行的 descendant-selector 做法有**同樣**限制,所以不是回歸,但要寫進文件
+
+**這是視覺 A/B 價值最高的一階**(§2.4):descendant selector → `@scope` 改變的是「誰被選到」,
+declaration diff 看不出這件事,computed-style A/B 與截圖 A/B 在這裡是**必要**的補充,不是加分項。
+
+**commit 粒度:~5 顆**(§2.5)—— 上面每個拆出來的檔案各自是一個獨立結構決策。
 
 ---
 
 ### P6 — Font Awesome 生成
 
-`font-awesome.less`(910 條)是 `each()` + 遞迴 mixin 產生的。
+`font-awesome.less`(來源端 910 條 → **輸出端 4545 條**)是 `each()` + 遞迴 mixin 產生的。
 
-**先確認決策**(評估文 L-5):ZK 11 的 icon 方向是 FA 還是 Lucide?
+> **決策已定(2026-07-30):Font Awesome 保留。** L-5 拍板 —— ZK 11 繼續用 FA。
+> 本階段因此走「FA 保留」分支,**不是**刪除 + 空 stub 分支。P6 從 BLOCKED 轉 TODO。
 
-- 若 FA 保留 → 寫 `scripts/gen-fa-css.js`(Marble 的 `getLucideIcons()` 是同一形狀的先例)
-- 若 FA 移除 → 本階段變成刪除 + 空 stub
+- ✅ **FA 保留** → 寫 `scripts/gen-fa-css.js`(Marble 的 `getLucideIcons()` 是同一形狀的先例)
+- ~~若 FA 移除 → 本階段變成刪除 + 空 stub~~(不採用)
 
-**G-zero**(若保留):**4545** 條 declaration 零差異(~~910~~ 是 `.less` 來源端條數;`each()`
+**為什麼這一階是「產生器」而不是「轉換」**:P3 其他 74 檔都適用「拿編譯輸出當新來源」,
+但這裡那樣做會產出一個 **4545 條、沒有人維護得動**的檔案,而且每加一個 icon 都要手改。
+所以要寫的是 icon 清單 + 產生邏輯,不是把展開結果存檔。
+使用者必須能在**不手改 4545 條**的前提下加一個 icon —— 這是驗收條件。
+
+**相依於 P2**:產生出來的 `.css` 需要 `build-css.js` 才會變成 `.css.dsp`。P2 未完成就跑 P6,
+閘門會把該檔報成 missing —— 那看起來像產生器寫錯,其實不是。順序:P2 → P6。
+
+**G-zero**:**4545** 條 declaration 零差異(~~910~~ 是 `.less` 來源端條數;`each()`
 展開後輸出端是 4545,為全樹最大單檔)。
+
+**閘門的盲點要另外補**:條數相符**不代表** codepoint 正確 —— 一個寫錯的 codepoint
+條數照樣過關,只是渲染出錯的字形。所以 P6 除了 G-zero 還要抽驗 codepoint 對應,
+並實測「加一個 icon → 重新產生 → 只多出預期的宣告 → 移除後回到 0」這個往返。
+
+> Marble 的 `font-awesome.css.dsp` 是**空 stub**(Marble 自己做 Lucide mask)。
+> 那是 Marble 的決定,**與本分支無關** —— 兩個主題在 icon 這件事上分道揚鑣是預期的。
 
 ---
 
@@ -365,18 +475,67 @@ ThemeWebAppInit / ThemeProvider 讀 org.zkoss.zul.theme.browserDefault 選一份
 **G-delta**:這是刻意的對外 API 變更(「改 LESS 變數重編 jar」→「載入 override sheet」),
 必須寫進 migration guide。與評估文 L-4 同一決策。
 
+**視覺 A/B 價值中等**(§2.4):機制換了,值得比對;但 tablet 需要 mobile UA 的 Playwright 專案。
+
+**commit 粒度:1–2 顆**(§2.5),與 migration guide 的對應條目成對進版。
+
 ---
 
 ### P8 — 收尾
 
-- 刪 `_zkmixins.less`、`_zkvariables.less`、`_header.less`、`_zkcssvariables.less`
+#### ⚠ 前置:規則表要在刪檔**之前**產生(這一項有期限)
+
+`_zkvariables.less` 與 `_zkmixins.less` 一旦刪掉,下面兩張表就只能靠考古還原。
+**產生器必須在這兩個檔還存在時跑完並提交。**
+
+| 產出 | 內容 | 來源(P8 會刪掉) |
+|---|---|---|
+| `doc/migration/less-var-to-token.md` + `.json` | 844 列。其中 **834** 列是乾淨的 1:1 `@var → var(--zk-token)`,另 **10** 列例外逐條列出。**外加** `zkmax/less/_zkvariables.less` 的 2 列(前提 #13) | `_zkvariables.less` ×**2 檔** |
+| `doc/migration/mixin-to-css.md` | **24** 個 mixin(分佈在 **38** 個定義列 —— LESS 允許同名依參數個數或 `when` guard 多載)各自展開成什麼 | `_zkmixins.less` |
+
+那 10 個例外(P0 實測,不是估計),以及前提 #13 新增的第四類:
+
+| 類別 | 項目 |
+|---|---|
+| 設定字串(不是 token) | `@themeProfile`、`@themePalette` |
+| 圖檔路徑 | `@loadingAnimationDefer`、`@loadingAnimationLoad`、`@sliderTicks`、`@progressmeterBackgroundImage` |
+| 一對多 token 清單 | `@containerButtonColors`、`@borderlayoutCollapsedIconColors`、`@splitterButtonTextColors`、`@menuScrollableIconColors` |
+| **media query 字串**(前提 #13,原本漏列) | `@iphone`、`@android`(在 `zkmax/less/_zkvariables.less`,`tablet.less` 使用) |
+
+**產生器要自帶斷言**(844 / 834 / 10+2 / 24 名稱 / 38 定義列),對不上就 fail —— 否則表格會
+無聲漂移,而它一旦漂移,發現的人是客戶而不是我們。
+
+**還沒解決、不要假裝解決的一項**:覆寫 `--zk-color-primary` 是否**行為上**等價於覆寫
+`@colorPrimary`?目前只證明了**語法上**的 1:1,而 `readme.md:8-10` 暗示兩條路徑並不完全對稱。
+反例會長成「某個變數在 LESS **編譯期**被用在 runtime custom property 做不到的位置」——
+import 路徑插值、guard 條件、算術運算元。這件事屬於規則表產生器的工作範圍。
+
+**為什麼這是最有價值的升級產出**:`readme.md:69` 建議客戶「以覆寫變數的方式客製」,所以一個
+守規矩的客戶的客製內容**幾乎就是一堆變數覆寫**。他的遷移因此主要是**改名**:
+`@colorPrimary: red` → `--zk-color-primary: red`。有了這張表,AI 幾乎可以機械式完成;沒有這張表,
+就得逐一猜對應關係。
+
+#### 前置:把工具做成客戶可執行
+
+- `scripts/less2css.js` + `scripts/cssdiff.js` 要能在**客戶自己的 fork** 上跑:
+  他把自己的 `.less` 轉成 `.css`,並用同一道閘門**證明**轉換前後等價。
+  邊際成本接近零(P3 本來就要做這兩支),而且比歷史有用 —— 這是「教他釣魚」那一項。
+- migration guide 要寫明**逃生門**:客戶可以把被刪掉的 partial(`_zkvariables.less`、
+  `_zkmixins.less`、`_header.less`)vendor 進自己的 fork,繼續用 LESS。
+  **「升級到 ZK 11」和「跟著棄用 LESS」是兩個可以分開的決定** —— 不要讓客戶以為被迫一起做。
+
+#### 收尾本體
+
+- 刪 `_zkmixins.less`、`_zkvariables.less`(**兩個** —— `zul/less/` 與 `zkmax/less/`,前提 #13)、
+  `_header.less`、`_zkcssvariables.less`(**確認上面兩張表已提交後**才刪)
 - 移除 `zkless-engine` 依賴、pom 的 `zklessc` execution
-- 更新 `readme.md`(目前寫著「We assume you're already familiar with Less」)
-- 寫 migration guide:P4 的前綴政策、P7 的 profile/palette API 變更
+- 更新 `readme.md`:目前寫著「We assume you're already familiar with Less」(第 6 行),
+  以及第 45–51、68–77 行整段以 LESS 變數/`_header.less` import 為前提的客製教學都要改寫
+- 寫 migration guide:P4 的前綴政策、P7 的 profile/palette API 變更、上面兩張規則表、逃生門
 - **同步義務**:ZK core `zk/zul/**/less` 那 66 個逐位元組相同的複本要一併處理(評估文 §4.4)
 
 **G-zero**:全樹最終輸出 vs P0 baseline,差異必須完全等於 P4 + P5 + P7 三階段已核准的
-delta 總和 —— 不多不少。
+delta 總和 —— 不多不少。核帳資料來自進度文件的〈閘門紀錄〉。
 
 ---
 
@@ -388,8 +547,12 @@ delta 總和 —— 不多不少。
 | minifier 取代 LESS 成為新風險源 | CleanCSS 會摧毀 `@scope`/裸 `@layer`;builder 內建防護 + 檢查 `output.warnings`(不只 `errors`) |
 | 展開後 CSS 可讀性下降 | `//`→`/* */` 前處理保留段落註解(只對入口檔);人工複審分段 |
 | 元件檔 mixin 展開產生重複宣告 | 複審項;非阻斷(語意不變) |
-| P4/P5/P7 的 delta 審不完 | 三階段分開做,每階段的預期 delta 事先估算(P4 已估 ~980) |
+| P4/P5/P7 的 delta 審不完 | 三階段分開做,每階段的預期 delta 事先估算(P4 已實測校準為 ≤1127) |
 | 決策未定就開工 | L-2(前綴政策)、L-5(FA 方向)分別是 P4、P6 的前置;P0–P3 不受影響,可以先做 |
+| **規則表隨 P8 刪檔一起消失** | `@var → --zk-token`(834/844)與 24 個 mixin 的對應表**只存在於即將被刪的檔案裡**。P8 把「產生器先跑完並提交」列為刪檔前置(見 §P8) |
+| **基準被污染,閘門變成空轉** | P3 之後若重跑基準建置,`cssdiff` 會拿轉換結果跟自己比,回報 0 卻什麼都沒證明。`scripts/baseline.js` 預設拒絕覆寫,且在 `.less` 檔數為 0 時拒絕執行(P0 已實作) |
+| **視覺 A/B 訊號被塌掉的版面遮住** | 157/158 個 preview 頁面依賴 IceBlue 沒有的 `z-*` utility。截圖乾淨**不等於**沒有差異;P5 要同時做 computed-style A/B,不能只看圖(§2.4) |
+| **一顆巨大 commit 讓客戶 merge 不了** | 客戶的升級路徑是 fork + merge(`readme.md:20`)。P3 一檔一顆 commit,把衝突侷限在他真正改過的檔案(§2.5) |
 
 ---
 
@@ -432,8 +595,8 @@ repo 裡真正**被 git 追蹤**的狀態文件都在 `doc/`,而且都是同一�
 
 | 階段 | 狀態 | 閘門 | 量測 | commit | 日期 |
 |---|---|---|---|---|---|
-| P0 | DONE | G-zero | files differing: 0(77 檔 / 14807 條) | `abc1234` | — |
-| P1 | TODO | G-zero | — | — | — |
+| P0 | DONE | G-zero | files differing: 0(77 檔 / 14323 條) | `ae4ca36` | 2026-07-29 |
+| P1 | BLOCKED | G-zero | — | — | — |
 
 - 狀態詞彙沿用 harness 既有的(`TODO` / `IN_PROGRESS` / `DONE` / `BLOCKED`),不另創一套。
 - 每跑一次 `cssdiff` 就在**附加式**的〈閘門紀錄〉段加一行(階段、baseline、差異檔數、差異條數)。
@@ -445,15 +608,35 @@ repo 裡真正**被 git 追蹤**的狀態文件都在 `doc/`,而且都是同一�
 
 ## 6. 現在需要你決定的
 
-**可以立刻開工的:P0 → P1 → P2 → P3。** 這四階段全部是 G-zero,不需要任何政策決策,
-而且 P3 是工作量主體。做完就已經證明了核心命題(「IceBlue 不需要 LESS」),
-剩下的都是有意識的取捨。
+**P0 已完成並過閘**(`ae4ca36`,`files differing: 0`)。
+
+**可以立刻開工的:P2 → P3。** 兩階段都是 G-zero,不需要任何政策決策,而且 P3 是工作量主體。
+做完就已經證明了核心命題(「IceBlue 不需要 LESS」),剩下的都是有意識的取捨。
 
 其中 **P1 是可選的**(理由見該節):它不改變任何交付物,只是過渡窗口的 exit-0 護欄。
-要不要留這個 pin 是唯一一個落在 P0–P3 範圍內的取捨。
+要不要留這個 pin 是唯一一個落在 P0–P3 範圍內的取捨 —— **尚未拍板**。
 
 **在 P4 之前要定**:L-2 —— IceBlue 作為 add-on 的瀏覽器支援聲明。
-**在 P6 之前要定**:L-5 —— ZK 11 的 icon 方向(FA / Lucide)。
+~~**在 P6 之前要定**:L-5~~ → **已定,見下表**。
 **在 P7 之前要定**:L-4 —— compact profile 的替代機制。
 
-要我直接從 P0 開始嗎?
+### 已拍板的三件事(2026-07-30)
+
+| 議題 | 決定 |
+|---|---|
+| 視覺檢查怎麼做 | **重用 Marble 既有的 harness,不搬 preview 頁面進本分支**。範圍限 P4/P5/P7,P0–P3/P6 是 G-zero 不需要截圖。見 §2.4 |
+| commit 粒度 | **P3 一檔一顆,之後按政策一顆**。理由是 fork-merge 衝突侷限化(`readme.md:20`),不是 AI 考古。見 §2.5 |
+| **L-5 —— icon 方向** | **Font Awesome 保留**。P6 走「寫產生器」分支,不是「刪除 + 空 stub」。**P6 解除 BLOCKED**,但相依於 P2。見 §P6 |
+
+連帶新增兩個**前置工作項**(不是新階段,不產生 theme 輸出):
+視覺 A/B harness(P4 前)、規則表產生器(P8 前,**有期限** —— 來源檔會被刪)。
+
+### 執行機制
+
+`scripts/workflow/iceblue-drop-less.mjs` —— 一次跑一個階段(`{phase:"prereq"|"P2"|"P3"|"P6"}`,
+P3 可加 `{batch:1|2|3}`)。被 gate 住的階段會回報 blocked 與原因,不會偷跑。
+形狀是**序列轉換 → 並行複審 → 序列套用複審結果**;為什麼轉換不並行、階段之間為什麼不串接,
+寫在腳本開頭的註解與進度文件的〈執行機制〉。
+
+**現在最該跑的是 `prereq`** —— 它是唯一**有期限**的工作項(來源檔在 P8 被刪),
+而且它不動 theme 輸出、動不到閘門。
