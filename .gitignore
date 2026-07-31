@@ -3,3 +3,8 @@ target/
 .classpath
 .project
 .settings
+
+# drop-LESS conversion: immutable reference build + gate reports.
+# Rebuildable with `npm run baseline` — never committed, so it cannot drift silently.
+baseline/
+*-gate.json
