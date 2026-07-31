@@ -120,7 +120,7 @@
 | 閘門 | 用在 | 判準 |
 |---|---|---|
 | **G-zero** | P1、P2、P3、P6 | `files differing: 0`。任何差異都是 bug |
-| **G-delta** | P4、P5、P7 | 差異必須**逐條對應到已決策的變更**,且總數符合預估 |
+| **G-delta** | P4a、P4b、P5、P7 | 差異必須**逐條對應到已決策的變更**,且總數符合預估。**每個階段只允許一種形狀** —— 這是 P4 拆成 P4a/P4b 的理由(見 §P4) |
 
 **這是方法論上的重點:先把所有能「零差異」驗證的事做完,再做會改變輸出的事。**
 如果邊轉換邊移除 vendor prefix,一旦出現差異就分不清是「轉換寫錯」還是「政策生效」。
@@ -389,27 +389,159 @@ target/classes/web/<theme>/
 但 `progid:DXImageTransform` 在輸出端是 **0 處**(它在 `_zkmixins.less:240`,該 mixin 沒有可達
 呼叫點)→ 不會出現在 delta 裡,別把它列進預期。
 
-**G-delta**:diff 只能出現「移除 `-webkit-` / `-moz-` / `-o-` / `-ms-` 宣告」這一類記錄,
-總數 ≤ **1089**(見下方 carve-out;原記 1127 是**含**不可移除者的總數)。**任何非移除類的差異都是 bug。**
+**G-delta —— 分兩階,各有各的判準**(原本寫成一階「總數 ≤ 1127 的純移除」,實測後不成立):
 
-#### ⚠ carve-out:38 條前綴宣告**沒有**無前綴對應物,一律移除會改壞東西
-
-prereq 階段順手發現、並在 baseline 輸出端逐條驗證過。這些**不是**「死前綴」,它們是唯一的寫法:
-
-| 屬性 | 輸出端條數 | 為什麼不能移除 |
+| | 允許的 diff | 上限 |
 |---|---|---|
-| `-webkit-font-smoothing` | 16 | 字體平滑**從來沒有**標準化的無前綴版本 |
-| `-moz-osx-font-smoothing` | 16 | 同上(macOS Firefox 專用) |
-| `-webkit-touch-callout` | 6 | 沒有標準對應物 |
-| **合計不可移除** | **38** | → 可移除上限從 1127 降為 **1089** |
+| **P4a** | 只有 `- <prefixed>`,且屬性必須在 A 群清單內 | **945**(全數移除的上限) |
+| **P4b** | `- <prefixed>`,或**成對**的 `- <prefixed>` + `+ <standard>` | 143 條之內,實際數量由 L-2 決定 |
+| 兩階皆然 | B 群 44 條 carve-out **不得出現在 diff 裡**;成對替換落單即為 bug | — |
 
-對照組(**可以**討論移除的):`user-select` 無前綴版本在輸出端有 **44** 條,前綴版本
-`-webkit-` 11、`-moz-` 8、`-ms-` 6 —— 這一族有無前綴版本兜底,是 L-2 政策的真正標的。
-`-webkit-user-select` 屬邊界案例(舊 Safari 仍需要),取決於支援聲明。
+理由與分群見下一節。
+
+#### P4 拆成 P4a / P4b(2026-07-30 決定)
+
+**理由是「每個階段只留一種允許的 diff 形狀」。** 實測後發現 P4 的難度**極度不平均**,
+把三種形狀混在一顆階段裡,G-delta 那句「任何非預期形狀的差異都是 bug」就等於檢查不了 ——
+同一階段內同時存在三種合法形狀時,任何東西都能被解釋成其中一種。
+
+前綴宣告 **1132** 條(原記 1127 —— 少算了 5 條 `-khtml-user-select`,原本只數 `-webkit-`/
+`-moz-`/`-ms-`/`-o-` 四種)的完整分解:
+
+| 群 | 條數 | 佔比 | 內容 | 允許的 diff 形狀 |
+|---|---|---|---|---|
+| **A** | **945** | **83%** | `border-radius`(含四角)532、`transform` 181、`box-shadow` 168、`box-sizing` 60。**逐 rule 實測:945 條全部有無前綴同伴,無同伴 0 條** | 只有 `- <prefixed>`。單一規則、零判斷 |
+| **B** | 44 | 4% | carve-out,無標準對應物(見下) | **不出現在 diff 裡** |
+| **C** | 143 | 13% | 手寫的前綴宣告,**全部的判斷都在這裡**;其中 26 條無同伴須成對替換 | `- <prefixed>`,或成對的 `- <prefixed>` + `+ <standard>` |
+
+- **P4a —— A 群 945 條純移除。** 規則均勻(「移除有同伴的前綴」),閘門形狀**只有一種**:
+  出現任何 `+` 記錄就是 bug,移除任何不在 A 群屬性清單裡的東西也是 bug。一顆 commit。
+  **83% 的量,幾乎零判斷成分。**
+- **P4b —— C 群 143 條逐條判斷。** 含 26 條成對替換、`user-select` 的 Safari 下限、
+  `-ms-flex-*` 舊 flexbox 語法、`-ms-accelerator`/`-ms-zoom` 等 IE 專屬。
+  需要 L-2 支援聲明**加上**逐條複審,無法機械化。
+
+**分群是按「屬性」而不是按「哪個 mixin 產生的」** —— 這一點很重要,因為前一節已經證明
+按 mixin 分會出錯(`.userSelectNone()` 一個 mixin 裡就有三種命運)。具體後果:
+`.applyCSS3(@key, @value)` 是**通用的 pass-through mixin**,它 30 個呼叫點吐出的屬性各不相同,
+所以它的產物**橫跨 A 群與 C 群**(`box-sizing` 落 A;`transition-*` 28、`box-orient` 16、
+`box-flex` 12 落 C)。前提 #16 那組「245 呼叫點 / 1225 展開」是**來源端的 mixin 統計**,
+不能直接當成 A 群的條數 —— A 群 945 是**輸出端逐屬性**量出來的。
+
+C 群較大的項目:`-webkit-appearance` 13、`-webkit-user-select` 11、`-ms-flex-direction` 9、
+`-moz-user-select` 8、`-moz-appearance` 7、`-ms-user-select` 6、`-webkit-backface-visibility` 6、
+`-khtml-user-select` 5、`-ms-accelerator` 4、`*-box-orient` 16、`*-transition-*` 28、`*-box-flex` 12。
+
+> **考慮過但不採用的變體:在 LESS 階段改 mixin 定義。**
+> 動 4 個 mixin 定義就能影響 945 條,比 P3 之後編輯 945 條宣告省事得多 —— 這個想法很自然。
+> **但不要**:它會讓 P3 的比較基準從「master 的原始輸出」變成「已被政策改過的輸出」,
+> 破壞單一不可變基準(而基準污染是 §4 風險表裡最嚴重的一條)。
+> 它省下的只是**編輯成本**(腳本反正逐條做),換掉的是**驗證品質**。
+> 而且移除前綴無論在 LESS 或 CSS 做都是 G-delta,所以這個變體**不改變階段順序的理由**,
+> 只改變編輯面 —— 編輯面不是瓶頸。
+
+#### ⚠ carve-out:44 條前綴宣告**沒有**標準對應物,一律移除會改壞東西
+
+prereq 階段順手發現、並在 baseline 輸出端逐條驗證過。這些**不是**「死前綴」,它們是唯一的寫法。
+
+**關鍵觀念:有兩種東西長得都像 `-webkit-xxx`,但性質完全相反。**
+
+| | A 類:真正的 vendor prefix | B 類:私有屬性 |
+|---|---|---|
+| 本質 | 標準屬性的**過渡期寫法** | **前綴就是它的正式名字** |
+| 有無標準版 | 有,而且現代瀏覽器都支援 | **從來沒有標準化過** |
+| 例子 | `-webkit-border-radius` → `border-radius`、`-webkit-box-shadow`、`-webkit-transform`、`-webkit-user-select` | `-webkit-font-smoothing`、`-moz-osx-font-smoothing`、`-webkit-touch-callout` |
+| 移除的後果 | **行為不變** —— 無前綴版本接手 | **功能消失** —— 沒有東西接手 |
+| 該不該移除 | L-2 政策決定(這是 P4 的正題) | **不可移除** |
+
+所以「移除死前綴」對 A 類是清理,對 B 類是**刪功能**。這 44 條全是 B 類:
+
+| 屬性 | 值 | 條數 | 具體作用與移除後果 |
+|---|---|---|---|
+| `-webkit-font-smoothing` | `antialiased` | 16 | 把 macOS/iOS 的字體反鋸齒從 **subpixel(次像素)改成 grayscale(灰階)**,字看起來較細、較輕。移除 → macOS 上文字變粗變重,**是看得見的視覺變化**。曾有標準提案 `font-smooth`,但**已從 CSS Fonts 規範移除**,無任何瀏覽器實作無前綴版 → 沒有可替代語法 |
+| `-moz-osx-font-smoothing` | `grayscale` | 16 | 同一件事的 **macOS Firefox** 版。名字裡直接寫了 `-osx-` —— 一個把平台寫進屬性名的屬性,本來就不是通往標準的過渡。與上一條**總是成對出現**(所以兩者都是 16) |
+| `-webkit-touch-callout` | `none` | 6 | 關掉 **iOS 長按**時彈出的系統 callout 選單(儲存圖片/複製/拷貝連結)。移除 → iOS 上長按會跳出系統選單 |
+| `-webkit-tap-highlight-color` | `transparent` / `rgba(…)` | 4 | 關掉 iOS/Android 點擊時的**藍灰色高亮方塊**。沒有標準對應物。移除 → 觸控時整個元件閃一下灰底 |
+| `-webkit-user-drag` | `none` | 1 | 禁止元素被拖曳。CSS 沒有 `user-drag`(HTML 有 `draggable` 屬性,但那是 HTML 不是 CSS) |
+| `-webkit-user-modify` | `read-write-plaintext-only` | 1 | 已廢棄且從未標準化。移除會改變 `textarea` 的編輯行為 |
+| **合計不可移除** | | **44** | → 可移除上限從 1127 降為 **1083** |
+
+#### ⚠⚠ 更嚴重的一件事:A 類**也不能**直接移除,因為無前綴同伴常常不存在
+
+原本的假設是「A 類可以安全移除,因為無前綴版本會接手」。**逐 rule 實測後這個假設不成立。**
+
+| 屬性 | 前綴宣告**有**無前綴同伴 | 前綴宣告**沒有**同伴 |
+|---|---|---|
+| `user-select` | 22 | **8** |
+| `appearance` | 2 | **18** |
+| | | **合計 26 條** |
+
+這 26 條所在的 rule 裡**根本沒有標準宣告**。它們不是 fallback 鏈,而是**刻意只寫給某個引擎的規則**:
+
+- `norm.css.dsp`:`.gecko .z-draggable-over>*{-moz-user-select:none}` —— `.gecko` 就是
+  Firefox-only 的 class,前綴是「引擎選擇器」的一部分。
+- `norm.css.dsp`:`.z-focus-a{-moz-user-select:text;-khtml-user-select:text}` —— 只有前綴版。
+- `tablet.css.dsp`:`*:after{-webkit-user-drag:none;-webkit-user-select:none}`。
+- `cropper`:`.z-cropper-tracker{…-webkit-touch-callout:none;-webkit-user-select:none}` ——
+  手寫的 WebKit-only 規則(同檔的 `.z-cropper-toolbar` 才是 mixin 產生的完整鏈)。
+- `pdfviewer` / `slider`:`-webkit-appearance:textfield;-moz-appearance:textfield`,**沒有**
+  `appearance:textfield`。
+
+**對這 26 條,「移除前綴」不是清理,是刪功能** —— 正確做法是**換成標準宣告**,
+也就是「移除一條 + 新增一條」。
+
+**這直接推翻 P4 現行的 G-delta 形狀檢查。** 上面寫著「diff 只能出現移除類記錄,任何非移除類的
+差異都是 bug」—— 但正確處理這 26 條**必然產生新增記錄**,會被判成 bug。P4 開工前必須把判準改成
+**三種**允許的形狀,而不是一種:
+
+| 允許的 diff 形狀 | 適用 |
+|---|---|
+| 單純移除 `- <prefixed decl>` | 有無前綴同伴的 A 類(user-select 22、appearance 2、以及 borderRadius/boxShadow/transform 等) |
+| **成對替換** `- <prefixed>` + `+ <standard>` | 上面那 26 條。**兩者必須成對出現且屬性語意相同**,落單就是 bug |
+| 不出現在 diff 裡 | 44 條 B 類 carve-out |
+
+**看它們用在哪就知道不是可有可無的:**
+
+- `font-smoothing` 兩條來自 `.baseIconFont()`(`_zkmixins.less:279`,9 個呼叫點),
+  落在 `font-awesome`、`norm`、signature、camera、colorbox、goldenlayout(4 條)、searchbox。
+  **icon font 特別需要** —— 圖示字形在 subpixel 反鋸齒下邊緣會出現彩色噪點。
+- `touch-callout` 來自 `.userSelectNone()`(`_zkmixins.less:318`,4 個呼叫點),
+  落在 `cropper`(裁圖)、`tabbox` —— **正是需要「按住拖曳」的元件**,長按跳出系統選單會直接
+  破壞互動。
+
+#### `.userSelectNone()`:一個 mixin 裡三種命運
+
+`_zkmixins.less:318`,4 個呼叫點。它 6 條宣告要分成三類處理,**這正是「不能以 mixin 為單位
+決定,要以屬性為單位」的證明**:
+
+| 宣告 | 類別 | 處置 | 理由 |
+|---|---|---|---|
+| `-webkit-touch-callout: none` | **B** | **必須留** | 沒有標準對應物 |
+| `-webkit-user-select: none` | A(邊界) | **看 L-2** | Safari 直到 **17.4**(2024-03)才支援無前綴 `user-select`。支援下限若含更舊的 Safari,這條必須留 |
+| `-khtml-user-select: none` | A(死透) | **刪** | Konqueror,2005 年前。無條件可刪 |
+| `-moz-user-select: none` | A | **刪** | Firefox **69**(2019)起支援無前綴 |
+| `-ms-user-select: none` | A | **刪** | IE 10/11 專用,IE 已 EOL;Edge(Chromium)不需要 |
+| `user-select: none` | 標準 | **留** | 就是它接手上面三條 |
+
+所以純 CSS 版本是 **6 條縮到 2 條**(Safari 下限 ≥ 17.4)或 **3 條**(含舊 Safari):
+
+```css
+-webkit-touch-callout: none;   /* B 類:無標準對應物,不可刪 */
+/* -webkit-user-select: none;     只在支援 Safari < 17.4 時需要 */
+user-select: none;
+```
+
+**但要注意**:上表只涵蓋這個 mixin 的 4 個呼叫點。真正的麻煩在 mixin **之外** ——
+手寫的 prefixed-only 站點(見上一節那 26 條)沒有無前綴宣告可以接手。
+
+`user-select` 全樹計數:無前綴 **14** 條,前綴 30 條(`-webkit-` 11、`-moz-` 8、`-ms-` 6、
+`-khtml-` 5),合計 44。
+> **更正**:本文件先前寫「無前綴有 44 條兜底」是錯的 —— 44 是**含前綴的總數**,無前綴只有 **14**。
+> 這個錯誤會讓人以為前綴一律有標準宣告兜底,而實際上 8 條沒有。
 
 **方法論上的重點**:P4 的閘門是「差異必須逐條對應到已決策的變更」。如果沒有先列出 carve-out,
-一個「移除所有 `-webkit-`」的機械掃描會產生 1127 條差異,而其中 38 條是**真正的回歸** ——
-但它們長得跟其他 1089 條**一模一樣**,G-delta 的形狀檢查分不出來。carve-out 清單必須在動手前
+一個「移除所有 `-webkit-`」的機械掃描會產生 1127 條差異,而其中 44 條是**真正的回歸** ——
+但它們長得跟其他可移除的**一模一樣**,G-delta 的形狀檢查分不出來。carve-out 清單必須在動手前
 就存在,否則這一階的閘門實際上是失效的。
 
 放在 P3 之後、獨立一階的理由見 §2.2。
