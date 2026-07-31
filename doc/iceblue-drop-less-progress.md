@@ -409,6 +409,35 @@ G-delta 的形狀檢查分不出來 → carve-out 清單必須在動手前存在
 | 批 3 | 輸出端 >200 條 | **11** | 步 4 | TODO |
 | | | 20+43+11 = **74** ✓ | | |
 
+### 每一步「你可以自己檢查什麼」(步 0 定型,步 1–4 照用)
+
+由**最不需要信任**排到**最需要信任**。前三項完全不經過任何自製工具。
+
+```bash
+# 1. 讀 diff —— 步 0 是 8 行,一眼看完
+git show 194f8f4 -- src/
+
+# 2. 交付物有沒有變:built 的 .css.dsp 對 master 出的 baseline 逐 byte 比
+cmp baseline/js/zkmax/layout/css/tablelayout.css.dsp \
+    target/classes/web/iceblue/js/zkmax/layout/css/tablelayout.css.dsp && echo "0 byte 差異"
+
+# 3. 有沒有順手動到別的檔(全樹位元組,完全不經過 cssdiff)
+diff -rq -x .built-from baseline/ target/classes/web/iceblue
+#    預期只有 zul/font/font-awesome.css.dsp —— 那是 P1 換 LESS 版本的既有差異(紀錄 #14),
+#    跟轉換無關。除了它以外出現任何檔名,就是這一步弄壞了東西。
+
+# 4. 閘門
+npm run check:cssdiff        # files differing: 0
+
+# 5. 閘門到底有沒有在做事(最強的一項,但會暫時改壞 build-css.js)
+#    把 scripts/build-css.js 的 minify() 結尾改成 `return '';`,再跑第 4 項。
+#    現在會 files differing: 1 / exit 1。步 0 之前同樣的破壞是 0 / exit 0(紀錄 #15 vs #19)。
+#    還原請用檔案複製,不要 git checkout。
+```
+
+**第 2 項是重點:步 0 對「跑起來的 theme」的影響是 0。** 改的不是輸出,是**這個檔由誰編** ——
+以前 `zklessc` 從 `.less` 編,現在 `build-css.js` 從 `.css` 編,兩條路徑產出同一串 byte。
+
 ### 步 0 的複核包(2026-07-31)
 
 | 欄位 | 值 |
