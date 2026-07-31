@@ -15,7 +15,8 @@
 | P1 LESS 釘到 4.x(S0+S1) | **DONE** | G-zero | `files differing: 0`(77 檔 / 14323 條);`less` 解析為 4.8.1;S1 守衛有負向控制 | 主旨 `P1(drop-less):` ⁺ | 2026-07-31 |
 | P2 雙來源 build | DONE | G-zero | `files differing: 0`(77 檔 / 14323 條);儀器證明另見下方〈P2 儀器證明〉 | `dc46cd3` | 2026-07-30 |
 | P3 元件掃描 74 檔 | TODO | G-zero + 逐步人工確認 | — | — | — |
-| ↳ **P3 前置**:量全樹經 CSS 路徑的位元組相同率 | TODO | — | 現有證據都是 declaration 級;byte 級只有 `tablelayout`/`button` 兩個單檔(紀錄 #8、#9) | — | — |
+| ↳ **P3 前置**:量全樹經 CSS 路徑的位元組相同率 | **DONE** | — | **24/75 位元組相同**;其餘 51 檔的差異全部分類到 5 類封閉清單,0 檔無法分類 | 見 `check:build-css` | 2026-07-31 |
+| ↳ **P3 前置**:`build-css.js` 要有可重跑的檢查 | **DONE** | 自我證明 + 負向控制 | `npm run check:build-css` → 75 檔 / `files differing: 0` / exit 0;負向控制(`minify` 回傳空字串)→ exit 1 | 見〈P2 儀器證明〉 | 2026-07-31 |
 | ↳ **P3 前置**:workflow 腳本加 `{step}` | TODO | — | 目前 P3 最小單位是 `{batch:1}` = 20 檔,計畫書步 0 是 1 檔 | — | — |
 | **視覺 A/B harness**(P4 前置) | TODO | 自我驗證須為 0 | — | — | — |
 | **P4a** 前綴純移除(A 群) | BLOCKED | G-delta | **945** 條,全部有無前綴同伴 → 只允許 `- <prefixed>`,任何 `+` 都是 bug | — | — |
@@ -84,6 +85,9 @@ P6 因此從 BLOCKED 轉 TODO。但它**相依於 P2** —— 產生出來的 `.
 | 12 | 2026-07-31 | **P1(S0+S1)** | `baseline/` | `target/classes/web/iceblue` | **0** | **0** | **PASS** — 77 檔 / 14323 條,`less` 實際解析為 **4.8.1**、engine 1.1.13。順帶驗掉 zkless doc 列為「要明確驗證」的一項:`compress: true` 在 LESS 4 已 deprecated 但**輸出沒有位移** |
 | 13 | 2026-07-31 | **S1 守衛負向控制** | — | 在 `zul/less/_zkmixins.less` 尾端塞 `@import "~./zul/less/_reset.less";` | — | — | **預期 FAIL(exit 1)** — 守衛以指名檔案+行號的訊息失敗,整條 `check:cssdiff` 在 `zklessc` **之前**就中止。以檔案複製還原,md5 相同、`git status` 無殘留 |
 | 14 | 2026-07-31 | §P2 複審(只動 doc) | `baseline/` | `target/classes/web/iceblue` | **0** | **0** | **PASS** — 77 檔 / 14323 條。**另加位元組層獨立複核**(`diff -rq -x .built-from`,完全不經過 `cssdiff`):**77 檔中 76 檔逐 byte 相同**;唯一例外 `font-awesome.css.dsp` 差 **7 個 byte** = 7 個前導零(`.1em`→`0.1em` 等)。方向是 **3.13.1 多加了來源沒有的零、4.8.1 照來源輸出**(來源 `zul/less/font/_variables.less:16-19,41` 本來就寫 `.1em`),落在 `canonical-number` 正規化內 → `cssdiff` 報 0 是正確而非寬鬆。計畫書 §2.6 第 1–2 層 |
+| 15 | 2026-07-31 | **證明 P2 閘門真的空轉** | `baseline/` | `target/classes/web/iceblue`,但 `build-css.js` 的 `minify()` 改成 `return ''` | **0** | **0** | **PASS(而這正是問題)** — 每個產生的檔都會是空的,`check:cssdiff` 照樣 exit 0。**「沒有輸入時差異 0 是免費的」從論述變成實測。** 以檔案複製還原,md5 相同 |
+| 16 | 2026-07-31 | **`check:build-css` 首跑**(全樹重導,自動化版) | `baseline/` | 暫存目錄:**75** 檔經 `build-css.js`,`norm`/`tablet` 由 baseline 原樣複製 | **0** | **0** | **PASS** — 77 檔比對 / 14323 條 / 覆蓋 **75** 檔。**位元組相同 24/75**;其餘 51 檔全部分類到 5 類序列化寫法差異(空白 48、前導零 33、`;}` 7、零值單位 7、空規則 2),**0 檔無法分類**。第一次跑時只有 4 類,抓到 `tbeditor` 兩份的**空規則**解釋不了 → 補成第 5 類,並記為 P3 來源清理項 |
+| 17 | 2026-07-31 | **`check:build-css` 負向控制** | `baseline/` | 同 #16,但 `minify()` 改成 `return ''` | 多數 | 上千 | **預期 FAIL(exit 1)** — 與紀錄 #15 同一個破壞,`check:cssdiff` 沉默、這支檢查大聲失敗。**這就是補這支檢查的全部理由。** 以檔案複製還原,md5 `4cee89ed…` 相同 |
 
 > ⁺ **P1 那一列刻意不寫 hash。** 這一列本身就在那顆 commit 裡,寫 hash 會自我指涉 ——
 > 填上去、`--amend` 一次,hash 就變了,填的值當場失效(已經踩過一次)。
@@ -144,6 +148,36 @@ function / plugin / visitor / pre-post-processor,語法層面的全部貢獻是 
 | 5 | **負向控制**:故意破壞 header 發射 | 閘門 **FAIL**,exit 1(紀錄 #10)。抓不到失敗的閘門不是閘門 |
 | 6 | 以檔案複製還原,重跑閘門 | 0 差異,無殘留(紀錄 #11) |
 | 7 | `withjdk.sh 17 mvn -o process-resources` | `compile-less` → `compile-css` 依序執行,BUILD SUCCESS。pom 接線經過實際執行驗證,不是只有寫進 XML |
+
+### 2026-07-31:上面這六步已經變成一支可重跑的檢查
+
+**原本的缺口不是「證明不夠」,是「證明不會重跑」。** 上表第 2 項做在 scratchpad,第 3、4 項
+round-trip 的兩個檔**事後被還原**(紀錄 #11)。所以從 2026-07-30 起,`build-css.js` 是**無人看守
+的程式碼**:來源樹 0 個 `.css`,閘門走不到它,改壞了不會有人知道。
+
+實測(紀錄 #15):把 `minify()` 改成 `return ''` —— 每個產生的檔都空 ——
+`npm run check:cssdiff` 仍然 `files differing: 0`、exit 0。
+
+```bash
+npm run check:build-css
+```
+
+`scripts/check-build-css.js` 把上表第 2 項自動化,並補了兩件當初沒做的事:
+
+| | 內容 |
+|---|---|
+| 覆蓋 | **75** 檔經 `build-css.js`;`norm`(header 在檔中間)/`tablet`(選擇器位置 DSP tag)由 baseline 原樣複製補足 77 檔比對,輸出標為 `passthrough … (not evidence)` |
+| 結果 | `files differing: 0`、**位元組相同 24/75** |
+| 位元組差異分類 | 51 檔全部落在 5 類封閉清單(空白 48 / 前導零 33 / `;}` 7 / 零值單位 7 / 空規則 2);**分類不出來就 exit 1 並列出檔名** |
+| 負向控制 | 同一個 `return ''` 破壞 → **exit 1**(紀錄 #17)。`check:cssdiff` 沉默、這支大聲失敗,這就是它存在的理由 |
+
+**沒有併進 `check:cssdiff`**:它要多編一次整棵樹(~2–4 分鐘),而 `check:cssdiff` 是會一直跑的那支;
+兩者問的也是不同問題 —— 一個驗**現在這棵樹**,一個用合成輸入驗**builder 本身**。
+**要跑的時機**:P3 步 0 之前、以及每次改 `build-css.js` 之後。
+
+**副產品**:5 類清單第一次跑只有 4 類,`tbeditor`(兩份)解釋不了 —— 查出來是**空規則** `.sel{}`
+(LESS 壓縮器會刪、CleanCSS level 0 不刪)。補成第 5 類,並記成 P3 的來源清理項:
+空規則要在來源清掉,不要在 builder 加特例隱藏。
 
 > **覆蓋率數字被更正過(兩個 agent 互相矛盾,算術裁決)。** 實作者回報 13642 條 / 75 檔,
 > 對抗性審核獨立重跑後回報 12142 條 / 75 檔。驗算:`14323 − 1500(norm) − 681(tablet) = 12142`
