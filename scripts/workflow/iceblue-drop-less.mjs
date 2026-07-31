@@ -2,13 +2,13 @@ export const meta = {
 	name: 'iceblue-drop-less',
 	description: 'Run one gated phase of the IceBlue drop-LESS conversion behind the cssdiff G-zero gate',
 	whenToUse:
-		'Executing doc/iceblue-drop-less-execution-plan.md on the `iceblue` branch. Pass {phase:"prereq"|"P2"|"P3"|"P6"}; P3 also takes an optional {batch:1|2|3}. One phase per run — the plan gates and reviews between phases, so a single run that swallows several phases would skip the human checkpoint that the gate exists to create.',
+		'Executing doc/iceblue-drop-less-execution-plan.md on the `iceblue` branch. Pass {phase:"prereq"|"P2"|"P3"|"P6"}; P3 REQUIRES {step:0|1|2|3|4} — the ladder is 1→4→15→43→11 files and one run does exactly one step. One phase (and one step) per run — the plan gates and reviews between them, so a single run that swallowed several would skip the human checkpoint that the gate exists to create.',
 	phases: [
 		{ title: 'Prereq: rule tables', detail: 'two generators, disjoint outputs, no build' },
 		{ title: 'Prereq: audit tables', detail: 'independent recount against the LESS sources' },
 		{ title: 'P2: dual-source build', detail: 'scripts/build-css.js + round-trip proof' },
 		{ title: 'P2: adversarial gate check', detail: 'mutate, confirm the gate catches it' },
-		{ title: 'P3: convert', detail: 'less2css.js over one batch, per-file commits' },
+		{ title: 'P3: convert', detail: 'less2css.js over one step of the ladder, per-file commits' },
 		{ title: 'P3: review', detail: 'read-only fan-out over the converted files' },
 		{ title: 'P3: polish', detail: 'apply review findings' },
 		{ title: 'P6: font-awesome generator', detail: 'gen-fa-css.js, G-zero on 4545 declarations' },
@@ -67,12 +67,13 @@ function readArgs(raw) {
 const ARGS = readArgs(args)
 const PHASE = ARGS.phase || (ARGS.__parseError ? '__error' : 'prereq')
 const BATCH = ARGS.batch
+const STEP = ARGS.step
 
 if (ARGS.__parseError) {
 	log(ARGS.__parseError)
 	return { status: 'bad-args', reason: ARGS.__parseError }
 }
-log(`phase=${PHASE}${BATCH ? ` batch=${BATCH}` : ''}`)
+log(`phase=${PHASE}${STEP != null ? ` step=${STEP}` : ''}${BATCH ? ` batch=${BATCH}` : ''}`)
 
 const RULES = `
 WORKING TREE
@@ -437,33 +438,107 @@ unambiguous; otherwise report precisely. Do NOT commit.`,
 // ---------------------------------------------------------------------------
 
 if (PHASE === 'P3') {
-	// Thresholds and counts measured on the P0 baseline, 2026-07-30, via
-	// `node scripts/cssdiff.js baseline/ target/classes/web/iceblue --list`.
-	// 74 = 77 outputs minus the three holdouts (norm P5, font-awesome P6, tablet P7).
-	const BATCHES = [
-		{ n: 1, range: 'output-side ≤20 declarations', expect: 20, reviewers: 2 },
-		{ n: 2, range: 'output-side 21–200 declarations', expect: 43, reviewers: 3 },
-		{ n: 3, range: 'output-side >200 declarations', expect: 11, reviewers: 2 },
+	// STEPS, not batches. Plan §2.6: the batch is the GATE AND REVIEW boundary (by output-side
+	// declaration count, unchanged); the step is HOW MUCH IS DONE AT ONCE AND WHEN TO STOP.
+	// The distinction exists because batch 1 = 20 files was still too big for a first run: a
+	// systematic bug in less2css.js would cost 20 redone files and 20 review packets at once.
+	//
+	// Steps 0+1+2 = batch 1. Step 3 = batch 2. Step 4 = batch 3. Ladder: 1 → 4 → 15 → 43 → 11.
+	// Counts measured on the P0 baseline via `cssdiff --list`; re-verified 2026-07-31 (20/43/11).
+	const STEPS = [
+		{
+			n: 0, batch: 1, expect: 1, reviewers: 1,
+			range: 'exactly one file',
+			select: 'ONLY `js/zkmax/layout/css/tablelayout.css.dsp` — 1 declaration, the smallest output in the theme.',
+			why: `Validate the MECHANISM, not make progress: the six steps of less2css.js, the shape of the
+commit message, the shape of the review packet. A 1-declaration file means reviewing the whole
+output takes seconds, so if anything about the mechanism is wrong you pay for one file.`,
+		},
+		{
+			n: 1, batch: 1, expect: 4, reviewers: 1,
+			range: 'four files chosen for BRANCH COVERAGE, not for size',
+			select: `EXACTLY these four:
+    js/zkmax/layout/css/cardlayout.css.dsp      (4 decl)
+    js/zul/layout/css/absolutelayout.css.dsp    (5 decl)
+    js/zul/layout/css/anchorlayout.css.dsp      (5 decl)
+    js/zkmax/grid/css/grid.css.dsp              (6 decl)`,
+			why: `These are NOT merely "the next smallest" — they are picked to reach code paths step 0 cannot.
+\`js/zkmax/grid/css/grid.css.dsp\` is one of the three NO_HEADER outputs (build-css.js:116), so it
+is the only way to exercise that script's single conditional; tablelayout takes the header branch.
+The other three bring the first real mixin/vendor-prefix expansion. Same reasoning as the vacuous-
+gate finding that produced check:build-css — choose inputs that reach the code, not inputs that
+are convenient.`,
+		},
+		{
+			n: 2, batch: 1, expect: 15, reviewers: 2,
+			range: 'the rest of batch 1',
+			select: 'every remaining unconverted output with ≤20 declarations (15 files; batch 1 totals 20 across steps 0–2).',
+			why: 'Corpus enlargement at unchanged per-file risk — still ≤20 declarations each, so every file is still readable end to end.',
+		},
+		{
+			n: 3, batch: 2, expect: 43, reviewers: 3,
+			range: 'batch 2 — output-side 21–200 declarations',
+			select: 'every remaining unconverted output with 21–200 declarations (43 files).',
+			why: 'The main body of ordinary components. By now the mechanism has survived 20 files.',
+		},
+		{
+			n: 4, batch: 3, expect: 11, reviewers: 2,
+			range: 'batch 3 — output-side >200 declarations',
+			select: 'every remaining unconverted output with >200 declarations (11 files).',
+			why: 'The largest files last, when the mechanism is at its most trustworthy.',
+		},
 	]
-	const todo = BATCH ? BATCHES.filter((b) => b.n === BATCH) : BATCHES
+
+	// `{batch:N}` is how this workflow used to be driven. Batch 1 no longer maps to a single run,
+	// so accepting it silently would reintroduce exactly the thing the ladder exists to prevent
+	// (20 files before the first human look). Batches 2 and 3 ARE single steps, so they alias.
+	if (STEP == null) {
+		if (BATCH === 2 || BATCH === 3) {
+			log(`batch ${BATCH} == step ${BATCH + 1}; treating it as that step`)
+		} else {
+			const reason =
+				BATCH === 1
+					? 'batch 1 is no longer one run: plan §2.6 splits it into step 0 (1 file), step 1 (4 files) and step 2 (15 files). Pass {step:0} — and do not skip ahead, because each step ends at a human confirmation.'
+					: 'P3 needs an explicit step. Ladder: {step:0}=1 file, {step:1}=4, {step:2}=15, {step:3}=43, {step:4}=11. Start at {step:0}.'
+			log(`P3 refused: ${reason}`)
+			return { phase: 'P3', status: 'needs-step', reason }
+		}
+	}
+
+	const stepN = STEP != null ? Number(STEP) : BATCH + 1
+	const b = STEPS.find((s) => s.n === stepN)
+	if (!b) {
+		const reason = `unknown step "${STEP}". Valid: 0 (1 file), 1 (4), 2 (15), 3 (43), 4 (11).`
+		log(`P3 refused: ${reason}`)
+		return { phase: 'P3', status: 'bad-step', reason }
+	}
 
 	const results = []
 	let carriedFindings = []
 
-	for (const b of todo) {
+	// Exactly one step per run. There is deliberately no loop: plan §2.6 —「每一步結束就停,
+	// 等人工確認才進下一步」. A run that continued into step N+1 would report success having
+	// skipped the confirmation that is the entire point of the ladder.
+	{
 		phase('P3: convert')
 
-		const first = b.n === 1
+		const first = b.n === 0
 		const conv = await agent(
 			`${RULES}
 
-TASK — P3 batch ${b.n}: convert the ${b.range} component entry files to plain CSS (plan §P3).
+TASK — P3 step ${b.n} (batch ${b.batch}): convert ${b.range} to plain CSS (plan §P3, §2.6).
+
+WHY THIS STEP HAS THIS SIZE
+${b.why}
+
+THE FILES — this is a step, so the set is FIXED, not derived by you:
+${b.select}
 
 ${
 	first
-		? `You are FIRST, so you also write the converter: \`scripts/less2css.js\`. Batch 1 exists to
-validate the script, not to make progress — 20 files at ≤20 declarations each is a deliberately
-low-stakes corpus. Read every expanded result yourself before gating.
+		? `You are FIRST, so you also write the converter: \`scripts/less2css.js\`. Step 0 exists to
+validate the mechanism, not to make progress — ONE file, ONE declaration. Read the expanded
+result yourself before gating.
 
 The insight that makes P3 a script rather than weeks of hand-rewriting (plan §1.1): zklessc's
 UNCOMPRESSED output is already usable CSS source — LESS variables have already resolved to
@@ -484,15 +559,15 @@ Per-file procedure:
   6. Gate that single file. Must be 0.
 
 Add \`less2css.js\` to package.json.`
-		: `\`scripts/less2css.js\` already exists from batch 1. Reuse it; improve it only where this
-batch's files need something batch 1 did not.`
+		: `\`scripts/less2css.js\` already exists from step 0. Reuse it; improve it only where this
+step's files need something the earlier steps did not.`
 }
 
-DERIVE THE FILE LIST, do not trust a hardcoded one:
+CONFIRM THE SET against the live tree before converting anything:
   node scripts/cssdiff.js baseline/ target/classes/web/iceblue --list
-sort by declaration count, take ${b.range}, and EXCLUDE the three holdouts that stay in LESS:
+and EXCLUDE the three holdouts that stay in LESS:
   zul/css/norm.css.dsp (P5), zul/font/font-awesome.css.dsp (P6), zkmax/css/tablet.css.dsp (P7).
-I measured ${b.expect} files in this batch. If you get a different number, STOP and report both
+This step is ${b.expect} file(s). If the tree gives you a different number, STOP and report both
 numbers — a changed count means either the tree moved or the derivation is wrong, and converting
 the wrong set is not recoverable by re-running.
 
@@ -502,9 +577,9 @@ TWO FILES NEED A DECISION, NOT A SCRIPT (plan premises #11/#12):
     establish that one is a dead path. Do not convert one and leave the other.
   * tbeditor.css.dsp also has two, but they are NOT identical: 380 vs 375 declarations, 67
     differences. These are two genuinely different sources. Do not treat them as duplicates.
-  Both land in batch 3.
+  Both land in batch 3 = step 4.
 
-COMMITS — one per converted file, ~${b.expect} for this batch (plan §2.5). The reason is
+COMMITS — one per converted file, ${b.expect} for this step (plan §2.5). The reason is
 fork-merge, not history-keeping: readme.md:20 tells customers to fork, so a customer who
 customized \`button.less\` merges upstream, and one monolithic 74-file commit guarantees a
 conflict against everything they touched. Per-file commits let git auto-resolve the untouched
@@ -513,28 +588,28 @@ the output-side declaration count, and that file's cssdiff result. Batches remai
 gate unit, but are no longer the commit unit.
 Stage explicit paths only — never \`git add -A\`.
 
-GATE — per file, then the whole batch, then the whole tree. All must be \`files differing: 0\`.
-${
-	carriedFindings.length
-		? `\nAPPLY THESE REVIEW FINDINGS from the previous batch before you start; they are defects in
-already-converted files:\n${JSON.stringify(carriedFindings, null, 2)}`
-		: ''
-}
+GATE — per file, then this step's files together, then the whole tree. All \`files differing: 0\`.
+
+REVIEW PACKET — the gate is not the whole bar (plan §2.6 layer 3). For EACH converted file report:
+filename; output-side declaration count; whether the built \`.css.dsp\` is BYTE-IDENTICAL to
+\`baseline/\` and, if not, which of the 5 named serialization classes the difference falls into
+(\`npm run check:build-css\` documents them); source \`.less\` line count -> generated \`.css\` line
+count. A byte difference that fits none of the 5 classes is a STOP, not a footnote.
 
 Report the gate numbers verbatim and every commit hash.`,
-			{ label: `P3:convert-batch${b.n}`, schema: OUTCOME, effort: 'high' },
+			{ label: `P3:convert-step${b.n}`, schema: OUTCOME, effort: 'high' },
 		)
 
-		results.push({ batch: b.n, conv })
+		results.push({ step: b.n, batch: b.batch, conv })
 
 		if (conv.status !== 'done') {
-			log(`P3 batch ${b.n} stopped: ${conv.blockedReason || conv.summary}`)
-			break
+			log(`P3 step ${b.n} stopped: ${conv.blockedReason || conv.summary}`)
+			return { phase: 'P3', step: b.n, status: 'stopped', steps: results }
 		}
 
 		const converted = (conv.filesWritten || []).filter((f) => f.endsWith('.css'))
 		if (converted.length !== b.expect) {
-			log(`batch ${b.n}: converted ${converted.length} .css files, expected ${b.expect} — review coverage may be incomplete`)
+			log(`step ${b.n}: converted ${converted.length} .css files, expected ${b.expect} — review coverage may be incomplete`)
 		}
 
 		phase('P3: review')
@@ -574,7 +649,7 @@ The gate cannot see any of the following, which is exactly why a human review st
 
 Report only findings you would actually act on. An empty findings array is a perfectly good
 result and much better than padding.`,
-					{ label: `P3:review-b${b.n}-${i + 1}`, phase: 'P3: review', schema: REVIEW },
+					{ label: `P3:review-s${b.n}-${i + 1}`, phase: 'P3: review', schema: REVIEW },
 				),
 			),
 		)
@@ -584,7 +659,7 @@ result and much better than padding.`,
 			.flatMap((r) => r.findings || [])
 			.filter((f) => f.kind !== 'other' || f.detail)
 
-		log(`batch ${b.n}: ${converted.length} files converted, ${carriedFindings.length} review findings`)
+		log(`step ${b.n}: ${converted.length} files converted, ${carriedFindings.length} review findings`)
 		results[results.length - 1].reviewFindings = carriedFindings
 	}
 
@@ -610,10 +685,12 @@ a later G-delta phase, not here. Fix comment placement and sectioning; report th
 Commit as one \`style(drop-less): ...\` commit, explicit paths only. Report the final gate numbers.`,
 			{ label: 'P3:polish', schema: OUTCOME },
 		)
-		return { phase: 'P3', batches: results, polish }
+		return { phase: 'P3', step: b.n, steps: results, polish, nextStep: STEPS.find((s) => s.n === b.n + 1) ? b.n + 1 : null }
 	}
 
-	return { phase: 'P3', batches: results }
+	// The run ENDS here even though steps remain. Plan §2.6: the next step starts only after a
+	// human has read this step's review packets and said so.
+	return { phase: 'P3', step: b.n, steps: results, nextStep: STEPS.find((s) => s.n === b.n + 1) ? b.n + 1 : null }
 }
 
 // ---------------------------------------------------------------------------
@@ -723,5 +800,5 @@ if (NOT_RUNNABLE[PHASE]) {
 return {
 	phase: PHASE,
 	status: 'unknown-phase',
-	reason: `Unknown phase "${PHASE}". Runnable now: prereq, P2, P3 (optional batch 1|2|3), P6. Not runnable: ${Object.keys(NOT_RUNNABLE).join(', ')}.`,
+	reason: `Unknown phase "${PHASE}". Runnable now: prereq, P2, P3 (REQUIRES step 0|1|2|3|4), P6. Not runnable: ${Object.keys(NOT_RUNNABLE).join(', ')}.`,
 }

@@ -11,6 +11,7 @@
     "check:var-table": "node scripts/gen-var-table.js --check",
     "check:less-conventions": "node scripts/check-less-conventions.js",
     "check:build-css": "node scripts/check-build-css.js",
+    "less2css": "node scripts/less2css.js",
     "check:cssdiff": "npm run check:less-conventions && zklessc -s src/main/resources/web -o target/classes/web/iceblue --compress && npm run build:css && node scripts/cssdiff.js baseline/ target/classes/web/iceblue",
     "gen:mixin-table": "node scripts/gen-mixin-table.js",
     "check:mixin-table": "node scripts/gen-mixin-table.js --check"

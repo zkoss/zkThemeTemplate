@@ -279,3 +279,8 @@ function main(argv) {
 }
 
 if (require.main === module) process.exit(main(process.argv.slice(2)));
+
+// `less2css.js` reuses the classifier so the closed list of 5 serialization classes stays
+// SINGLE-SOURCED. A second copy would drift, and then "falls outside the list" — the one signal
+// that is supposed to stop a conversion for human review — would mean two different things.
+module.exports = { classify, SERIALIZATION_CLASSES };
