@@ -1,0 +1,22 @@
+.z-columnlayout {
+	white-space: nowrap;
+}
+.z-columnlayout,
+.z-columnchildren,
+.z-columnchildren-content {
+	overflow: hidden;
+}
+.z-columnchildren {
+	height: 100%;
+	display: inline-block;
+	vertical-align: top;
+	white-space: initial;
+}
+.z-columnchildren-content {
+	width: 100%;
+	height: 100%;
+}
+.z-columnlayout,
+.z-columnchildren {
+	-ms-zoom: 1;
+}
