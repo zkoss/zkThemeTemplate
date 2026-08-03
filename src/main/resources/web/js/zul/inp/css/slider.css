@@ -1,0 +1,149 @@
+.z-slider {
+	background-image: none;
+	overflow: hidden;
+	position: relative;
+	width: 100%;
+	height: 100%;
+}
+.z-slider-center {
+	background-color: var(--zk-slider-background-color);
+	cursor: pointer;
+}
+.z-slider-button {
+	width: var(--zk-base-icon-width);
+	height: var(--zk-base-icon-height);
+	-webkit-border-radius: var(--zk-base-border-radius);
+	-moz-border-radius: var(--zk-base-border-radius);
+	-o-border-radius: var(--zk-base-border-radius);
+	-ms-border-radius: var(--zk-base-border-radius);
+	border-radius: var(--zk-base-border-radius);
+	-webkit-box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16);
+	-moz-box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16);
+	-o-box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16);
+	-ms-box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16);
+	box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16);
+	background-color: var(--zk-button-background-color);
+	position: relative;
+	cursor: pointer;
+}
+.z-slider-button:hover {
+	background: var(--zk-button-hover-background-color);
+}
+.z-slider-button:active {
+	background-color: var(--zk-button-active-background-color);
+}
+.z-slider-area {
+	position: absolute;
+	background-color: var(--zk-slider-area-background-color);
+}
+.z-slider-knob-area {
+	stroke: var(--zk-slider-area-background-color);
+}
+.z-slider-knob-inner {
+	stroke: var(--zk-slider-background-color);
+}
+.z-slider-knob-svg {
+	width: 100%;
+	height: 100%;
+	cursor: pointer;
+}
+.z-slider-input {
+	border: 1px solid var(--zk-input-border-color);
+	-webkit-border-radius: var(--zk-base-border-radius);
+	-moz-border-radius: var(--zk-base-border-radius);
+	-o-border-radius: var(--zk-base-border-radius);
+	-ms-border-radius: var(--zk-base-border-radius);
+	border-radius: var(--zk-base-border-radius);
+	background: var(--zk-input-background-color);
+	-webkit-appearance: textfield;
+	-moz-appearance: textfield;
+	text-align: center;
+	position: absolute;
+	line-height: 1.5;
+	padding: 1px;
+	font-family: var(--zk-base-content-font-family);
+	font-size: var(--zk-input-text-size);
+	font-weight: bold;
+	font-style: normal;
+	color: var(--zk-slider-input-color);
+}
+.z-slider-input:hover {
+	border-color: var(--zk-input-hover-border-color);
+}
+.z-slider-input:focus {
+	border-color: var(--zk-input-focus-border-color);
+	-webkit-appearance: textfield;
+	-moz-appearance: textfield;
+}
+.z-slider-horizontal {
+	height: var(--zk-base-bar-height);
+	width: 200px;
+}
+.z-slider-horizontal .z-slider-center {
+	width: 100%;
+	height: var(--zk-slider-area-size);
+	margin-top: -3px;
+	position: relative;
+	top: 50%;
+}
+.z-slider-horizontal .z-slider-area {
+	height: var(--zk-slider-area-size);
+}
+.z-slider-horizontal .z-slider-button {
+	top: -5px;
+	left: 0;
+}
+.z-slider-vertical {
+	font-size: 0;
+	width: var(--zk-base-bar-width);
+	margin-right: 0;
+	line-height: 0;
+	height: 200px;
+}
+.z-slider-vertical .z-slider-area {
+	width: var(--zk-slider-area-size);
+}
+.z-slider-vertical .z-slider-button {
+	left: -5px;
+}
+.z-slider-vertical .z-slider-center {
+	width: var(--zk-slider-area-size);
+	height: 100%;
+	margin: auto;
+}
+.z-slider-popup {
+	font-family: var(--zk-base-content-font-family);
+	font-size: var(--zk-slider-popup-font-size);
+	font-weight: normal;
+	padding: 4px;
+	color: var(--zk-tooltip-color);
+	background-color: var(--zk-tooltip-background-color);
+	position: absolute;
+	z-index: 60000;
+	-webkit-border-radius: var(--zk-base-border-radius);
+	-moz-border-radius: var(--zk-base-border-radius);
+	-o-border-radius: var(--zk-base-border-radius);
+	-ms-border-radius: var(--zk-base-border-radius);
+	border-radius: var(--zk-base-border-radius);
+	-webkit-box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16);
+	-moz-box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16);
+	-o-box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16);
+	-ms-box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16);
+	box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16);
+}
+.z-slider-sphere .z-slider-vertical .z-slider-button {
+	bottom: 0;
+}
+.z-slider-sphere .z-slider-button,
+.z-slider-scale .z-slider-button {
+	-webkit-border-radius: 50%;
+	-moz-border-radius: 50%;
+	-o-border-radius: 50%;
+	-ms-border-radius: 50%;
+	border-radius: 50%;
+}
+.z-slider-scale.z-slider-horizontal {
+	background-image: url(${c:encodeThemeURL("~./zul/img/slider/scale-ticks.png")});
+	background-position: 0 22px;
+	background-repeat: repeat-x;
+}
