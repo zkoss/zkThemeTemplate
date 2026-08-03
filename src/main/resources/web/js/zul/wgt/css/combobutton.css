@@ -1,0 +1,113 @@
+.z-combobutton {
+	display: inline-block;
+	vertical-align: middle;
+	min-height: var(--zk-base-button-height);
+	cursor: pointer;
+	-webkit-border-radius: var(--zk-input-border-radius);
+	-moz-border-radius: var(--zk-input-border-radius);
+	-o-border-radius: var(--zk-input-border-radius);
+	-ms-border-radius: var(--zk-input-border-radius);
+	border-radius: var(--zk-input-border-radius);
+	-webkit-box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16);
+	-moz-box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16);
+	-o-box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16);
+	-ms-box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16);
+	box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16);
+	overflow: hidden;
+	/* toolbar mold */
+}
+.z-combobutton-content {
+	font-family: var(--zk-base-content-font-family);
+	font-size: var(--zk-input-text-size);
+	font-weight: normal;
+	font-style: normal;
+	color: var(--zk-button-color);
+	display: block;
+	min-height: var(--zk-base-button-height);
+	border: var(--zk-button-border-width) solid var(--zk-button-border-color);
+	padding: var(--zk-combobutton-padding);
+	line-height: normal;
+	background-color: var(--zk-button-background-color);
+	vertical-align: middle;
+	position: relative;
+	white-space: nowrap;
+}
+.z-combobutton-button {
+	font-weight: normal;
+	display: block;
+	width: var(--zk-combobutton-button-width);
+	height: 100%;
+	border-left: 1px solid var(--zk-button-separator-border-color);
+	line-height: normal;
+	position: absolute;
+	top: 0;
+	right: 0;
+}
+.z-combobutton-icon {
+	font-size: var(--zk-font-size-large);
+}
+.z-combobutton-icon.z-icon-caret-down {
+	display: block;
+	margin-top: -8px;
+	position: absolute;
+	top: 50%;
+	left: var(--zk-combobutton-button-icon-left);
+}
+.z-combobutton-image {
+	vertical-align: text-bottom;
+}
+.z-combobutton-toolbar {
+	-webkit-box-shadow: none;
+	-moz-box-shadow: none;
+	-o-box-shadow: none;
+	-ms-box-shadow: none;
+	box-shadow: none;
+}
+.z-combobutton-toolbar .z-combobutton-content {
+	font-size: var(--zk-combobutton-toolbar-font-size);
+	padding: var(--zk-combobutton-toolbar-padding);
+	color: var(--zk-toolbar-button-color);
+	background-color: var(--zk-toolbar-button-background-color);
+}
+.z-combobutton-toolbar .z-combobutton-content .z-combobutton-button {
+	border-color: transparent;
+}
+.z-combobutton-toolbar:hover .z-combobutton-button,
+.z-combobutton-toolbar:focus .z-combobutton-button,
+.z-combobutton-toolbar:active .z-combobutton-button {
+	border-color: var(--zk-button-separator-border-color);
+}
+.z-combobutton-toolbar[disabled] .z-combobutton-button {
+	border-color: var(--zk-button-disable-separator-border-color);
+}
+.z-combobutton-toolbar.z-combobutton-open .z-combobutton-content {
+	color: var(--zk-button-color);
+	background-color: var(--zk-button-background-color);
+}
+.z-combobutton:hover .z-combobutton-content {
+	color: var(--zk-button-hover-color);
+	border-color: var(--zk-button-hover-border-color);
+	background-color: var(--zk-button-hover-background-color);
+}
+.z-combobutton:focus .z-combobutton-content {
+	color: var(--zk-button-focus-color);
+	border-color: var(--zk-button-focus-border-color);
+	background-color: var(--zk-button-focus-background-color);
+}
+.z-combobutton:active .z-combobutton-content {
+	color: var(--zk-button-active-color);
+	border-color: var(--zk-button-active-border-color);
+	background-color: var(--zk-button-active-background-color);
+}
+.z-combobutton[disabled] {
+	cursor: default;
+}
+.z-combobutton[disabled] .z-combobutton-content {
+	color: var(--zk-button-disable-color);
+	border-color: var(--zk-button-disable-border-color);
+	background-color: var(--zk-button-disable-background-color);
+	cursor: default;
+}
+.z-combobutton[disabled] .z-combobutton-button {
+	border-color: var(--zk-button-disable-separator-border-color);
+}
