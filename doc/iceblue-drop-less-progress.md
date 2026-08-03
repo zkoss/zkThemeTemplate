@@ -14,7 +14,7 @@
 | P0 建立工作區與基準 | DONE | G-zero | `files differing: 0`(77 檔 / 14323 條) | `f34ca01` | 2026-07-29 |
 | P1 LESS 釘到 4.x(S0+S1) | **DONE** | G-zero | `files differing: 0`(77 檔 / 14323 條);`less` 解析為 4.8.1;S1 守衛有負向控制 | 主旨 `P1(drop-less):` ⁺ | 2026-07-31 |
 | P2 雙來源 build | DONE | G-zero | `files differing: 0`(77 檔 / 14323 條);儀器證明另見下方〈P2 儀器證明〉 | `dc46cd3` | 2026-07-30 |
-| P3 元件掃描 74 檔 | **進行中** | G-zero + 逐步人工確認 | **步 0 完成:1/74 檔**(`tablelayout`)。`files differing: 0`、位元組與 baseline 相同 | `194f8f4`(工具 `8da83ed`) | 2026-07-31 |
+| P3 元件掃描 74 檔 | **進行中** | G-zero + 逐步人工確認 | **步 1 完成:5/74 檔**(`tablelayout` / `cardlayout` / `absolutelayout` / `anchorlayout` / `grid`)。`files differing: 0`,**5 檔全部與 baseline 逐 byte 相同** | 步 0 `194f8f4`;步 1 `a046bdb`…`370d45b`(工具 `8da83ed`、`82bea4d`) | 2026-08-03 |
 | ↳ **P3 前置**:量全樹經 CSS 路徑的位元組相同率 | **DONE** | — | **24/75 位元組相同**;其餘 51 檔的差異全部分類到 5 類封閉清單,0 檔無法分類 | 見 `check:build-css` | 2026-07-31 |
 | ↳ **P3 前置**:`build-css.js` 要有可重跑的檢查 | **DONE** | 自我證明 + 負向控制 | `npm run check:build-css` → 75 檔 / `files differing: 0` / exit 0;負向控制(`minify` 回傳空字串)→ exit 1 | 見〈P2 儀器證明〉 | 2026-07-31 |
 | ↳ **P3 前置**:workflow 腳本加 `{step}` | **DONE** | 六條路徑實測 | `{step:0..4}` = 1/4/15/43/11,**一次只跑一步、跑完就回傳**;`{batch:1}` 改成**拒絕並說明**(接受它就等於回到「第一次人工檢查前先做 20 檔」),批 2/3 仍可別名 | `8da83ed` | 2026-07-31 |
@@ -91,6 +91,9 @@ P6 因此從 BLOCKED 轉 TODO。但它**相依於 P2** —— 產生出來的 `.
 | 18 | 2026-07-31 | **P3 步 0**(`tablelayout`,第一個真正轉換的檔) | `baseline/` | `target/classes/web/iceblue` | **0** | **0** | **PASS** — 77 檔 / 14323 條。build 訊息從 `no .css sources … (nothing to do)` 變成 **`compiled 1 file(s)`** → `check:cssdiff` 從這一刻起真的走到 `build-css.js`。位元組層:`diff -rq` 全樹只有 `font-awesome` 不同(紀錄 #14 已解釋的 7 個前導零),`tablelayout.css.dsp` **逐 byte 相同** |
 | 19 | 2026-07-31 | **步 0 之後重跑 #15 的破壞**(證明閘門不再空轉) | `baseline/` | `target/classes/web/iceblue`,`minify()` 改成 `return ''` | **1** | — | **預期 FAIL(exit 1)** — **同一個破壞,紀錄 #15 是 exit 0、現在是 exit 1。** 空轉不是被論述掉的,是被**第一個轉換過的檔**填掉的:有輸入之後,差異 0 就不再免費。以檔案複製還原,md5 `4cee89ed…` 相同,`git status` 無殘留 |
 | 20 | 2026-08-03 | **縮排拍板 tab**(`tabIndent()` + 步 0 產物回頭套用) | `baseline/` | `target/classes/web/iceblue` | **0** | **0** | **PASS** — 77 檔 / 14323 條。改的是**來源**的前導空白,所以這一跑是在證明「縮排不進輸出」而不是假設:`tablelayout.css.dsp` 與 baseline **仍逐 byte 相同**,全樹 `diff -rq` 也只剩 `font-awesome`(紀錄 #14 的 7 個前導零) |
+
+| 21 | 2026-08-03 | **P3 步 1**(4 檔:`cardlayout` 4、`absolutelayout` 5、`anchorlayout` 5、`grid` 6) | `baseline/` | `target/classes/web/iceblue` | **0** | **0** | **PASS** — 77 檔 / 14323 條,build 訊息 `compiled 5 file(s)`。**四檔逐 byte 都與 baseline 相同**(每檔轉換當下由 `less2css.js` 自己驗一次,步末再全樹驗一次:`diff -rq` 只剩 `font-awesome`)。來源端 5 `.css` + 72 `.less` = **77** ✓。`grid` 是**第一個 `NO_HEADER` 檔** → 順帶證明 `build-css.js` 對這三檔是**不注入** header,而不是「還沒遇到」 |
+| 22 | 2026-08-03 | **`check:build-css` 在步 1 之後假警報 → 修好** | `baseline/` | 暫存目錄 | **5 → 0** | **0 → 0** | **先 FAIL 後 PASS** —— 失敗的是**檢查本身**:已轉換的檔沒有 `.less` 可重建,於是從候選樹裡消失,`cssdiff` 報 **`files differing: 5` / `diff records: 0`**(差異數 0 卻報差異 = 檔案不存在的形狀)。加了步 2b 直接複製已轉換的**真實來源**,回到紀錄 #16 的數字:覆蓋 **75**、位元組相同 **24/75**、0 檔無法分類,其中 **5 檔是真實來源、70 檔是重建**。**這條會隨每次轉換自己變紅**,不修就會變成沒人看的紅燈 |
 
 > ⁺ **P1 那一列刻意不寫 hash。** 這一列本身就在那顆 commit 裡,寫 hash 會自我指涉 ——
 > 填上去、`--amend` 一次,hash 就變了,填的值當場失效(已經踩過一次)。
@@ -405,7 +408,7 @@ G-delta 的形狀檢查分不出來 → carve-out 清單必須在動手前存在
 
 | 批 | 範圍 | 檔數 | 步階 | 狀態 |
 |---|---|---|---|---|
-| 批 1 | 輸出端 ≤20 條 | **20**(原估 ~8) | 步 0 `tablelayout` → 步 1 `cardlayout`/`absolutelayout`/`anchorlayout`/`grid` → 步 2(+15) | **步 0 DONE**(`194f8f4`);步 1–2 待確認後開始 |
+| 批 1 | 輸出端 ≤20 條 | **20**(原估 ~8) | 步 0 `tablelayout` → 步 1 `cardlayout`/`absolutelayout`/`anchorlayout`/`grid` → 步 2(+15) | **步 0 DONE**(`194f8f4`)、**步 1 DONE**(`a046bdb`/`c8a6fbc`/`af89eda`/`370d45b`);步 2 待確認後開始 |
 | 批 2 | 輸出端 21–200 條 | **43**(原估 ~55) | 步 3 | TODO |
 | 批 3 | 輸出端 >200 條 | **11** | 步 4 | TODO |
 | | | 20+43+11 = **74** ✓ | | |
@@ -476,6 +479,35 @@ npm run check:cssdiff        # files differing: 0
 >
 > **步 0 產物已回頭套用**:`tablelayout.css` 的那一行改成 tab,閘門仍 `files differing: 0`,
 > 且 `tablelayout.css.dsp` 與 baseline **仍逐 byte 相同**(紀錄 #20)—— 縮排確實不進輸出。
+
+### 步 1 的複核包(2026-08-03,4 檔)
+
+| 輸出 | 條數 | 來源 → 產物 | 位元組 | 空規則 | commit |
+|---|---|---|---|---|---|
+| `js/zkmax/layout/css/cardlayout.css.dsp` | 4 | 11 行 → 9 行 | **相同** | 0 | `a046bdb` |
+| `js/zul/layout/css/absolutelayout.css.dsp` | 5 | 11 行 → 10 行 | **相同** | 0 | `c8a6fbc` |
+| `js/zul/layout/css/anchorlayout.css.dsp` | 5 | 18 行 → 15 行 | **相同** | 0 | `af89eda` |
+| `js/zkmax/grid/css/grid.css.dsp` | 6 | 18 行 → 19 行 | **相同** | 0 | `370d45b` |
+
+**步 1 比步 0 多驗到的兩件事**(這才是它作為獨立一步的價值,不只是「多做 4 檔」):
+
+1. **兩條 header 分支都走過了。** `grid` 是 `NO_HEADER` 三檔的**第一個**,輸出確認以 `.z-grid`
+   起頭、**沒有** taglib —— 所以 `build-css.js` 對這三檔是「刻意不注入」,不是「還沒遇到」。
+   另三檔走注入分支。
+2. **`tabIndent()` 第一次由腳本自己套用**(步 0 是事後回頭套的),含 `grid` 的兩個
+   `/* … */` 段落註解 —— 註解跟著 tab 一起進來源、且不進輸出。
+
+**步 1 撿到的三件事**(同樣都是機制的問題,不是這 4 個元件的問題):
+
+| # | 發現 | 處置 |
+|---|---|---|
+| 1 | `less2css.js` 產生的 commit message 一律寫 `injects the taglib header` —— 對 `NO_HEADER` 三檔是**假話**,而 `grid` 就是其中一檔,假話已經進過一次 log | 已改成依 `NO_HEADER` 分支換句(`f1e422b`),`grid` 那顆 `--amend` 掉。`NO_HEADER` **從 `build-css.js` import**,不另抄一份 —— 抄了就會和真正做決定的那支漂移 |
+| 2 | `npm run check:build-css` 在步 1 之後**失敗**:已轉換的檔沒有 `.less` 可重建 → 從候選樹消失 → `files differing: 5` 但 `diff records: 0` | 加步 2b:直接複製已轉換的真實來源(`07f0708`)。**不修的話它會隨每次轉換更紅**,最後變成沒人看的紅燈。修完回到紀錄 #16 的數字,其中 5 檔已是真實來源 |
+| 3 | `anchorlayout` 帶一條 `-ms-zoom: 1` | **不動**。P3 是 G-zero,前綴是 P4 的標的;在這裡順手刪就是把 delta 混進零差異階段 |
+
+> **`git diff --cached --name-only` 只印出目的檔是正常的。** 4 檔裡有 3 檔被 git 判為 rename
+> (`less/x.less => css/x.css`),`--name-only` 對 rename 只印目的路徑 —— `.less` 的刪除**在**那顆
+> commit 裡(`git show --stat` 看得到)。步階檢查清單第 1 項照 `git show` 讀就不會誤判。
 
 74 = 77 個輸出減掉三個留在 LESS 的:`norm`(P5)、`font-awesome`(P6)、`tablet`(P7)。
 
