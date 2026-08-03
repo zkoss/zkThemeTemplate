@@ -22,6 +22,7 @@
  * ---------------------------------------------
  *   1. compile the LESS tree UNCOMPRESSED           -> readable `.css.dsp`
  *   2. strip the taglib directives from each output  -> a plausible P3 `.css` source
+ *      2b. copy the sources P3 has ALREADY converted -> the real thing, not a reconstruction
  *   3. feed all of them to `build-css.js`            -> `.css.dsp` via the NEW path
  *   4. copy the two holdouts from `baseline/`        -> so the comparison covers all 77
  *   5. `cssdiff baseline/ <tmp>`                     -> must be 0
@@ -29,6 +30,13 @@
  * Step 2 is what makes this a real test rather than a tautology: the input to `build-css.js`
  * is the same shape P3 will produce (expanded CSS, no header), and the expected output is
  * `baseline/`, which was produced by a DIFFERENT toolchain. Agreement is therefore evidence.
+ *
+ * Step 2b exists because a converted file has no `.less` left for step 1 to reconstruct: without
+ * it the file is simply absent from the candidate tree, which `cssdiff` reports as a difference
+ * with zero diff records — this check would go red purely because P3 made progress, one file per
+ * conversion. As coverage shifts from reconstructed to real sources, the evidence gets stronger,
+ * not weaker: for a converted file the shipped build runs this exact input through this exact
+ * builder. The report keeps the two counts separate so that shift stays visible.
  *
  * TWO FILES CANNOT GO THROUGH THIS PATH, AND THAT IS NOT A BUG
  * -----------------------------------------------------------
@@ -141,6 +149,16 @@ function walk(dir, base = dir, acc = []) {
 	return acc;
 }
 
+/** Real `.css` sources in the tree — i.e. the files P3 has already converted. `_*` are partials. */
+function walkCssSources(dir, base = dir, acc = []) {
+	for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+		const full = path.join(dir, entry.name);
+		if (entry.isDirectory()) walkCssSources(full, base, acc);
+		else if (entry.name.endsWith('.css') && !entry.name.startsWith('_')) acc.push(path.relative(base, full));
+	}
+	return acc;
+}
+
 function run(cmd, args, label) {
 	try {
 		execFileSync(cmd, args, { stdio: ['ignore', 'pipe', 'pipe'] });
@@ -192,6 +210,22 @@ function main(argv) {
 			fs.writeFileSync(dest, body);
 			staged++;
 		}
+
+		// 2b. Every file P3 has already converted has no `.less` left, so step 1 cannot
+		//     reconstruct it and it would be MISSING from the candidate tree — reported as a
+		//     difference with 0 diff records, i.e. this check going red on its own progress
+		//     (measured 2026-08-03 after step 1: `files differing: 5`, `diff records: 0`).
+		//     Stage the REAL sources instead. That is not a workaround but better evidence:
+		//     for these files the shipped build genuinely runs build-css.js over exactly this
+		//     input, where the reconstructed ones are only the right SHAPE of input.
+		const real = walkCssSources(SOURCE).sort();
+		for (const rel of real) {
+			const dest = path.join(cssSrc, rel);
+			fs.mkdirSync(path.dirname(dest), { recursive: true });
+			fs.copyFileSync(path.join(SOURCE, rel), dest);
+			staged++;
+		}
+		if (real.length) console.log(`2/5  + ${real.length} already-converted source(s) copied verbatim (P3)`);
 
 		// 3. The path under test.
 		console.log(`3/5  running build-css.js over ${staged} .css source(s)…`);
@@ -246,6 +280,9 @@ function main(argv) {
 
 		console.log('');
 		console.log(`through build-css.js: ${covered.length} file(s)`);
+		if (real.length) {
+			console.log(`  of which:          ${real.length} P3-converted (real source), ${covered.length - real.length} reconstructed from LESS`);
+		}
 		console.log(`passthrough:         ${PASSTHROUGH.size} file(s) (not evidence)`);
 		console.log(`byte-identical:      ${covered.length - byteDiff.length}/${covered.length}`);
 		if (byteDiff.length) {
@@ -266,7 +303,7 @@ function main(argv) {
 		if (code === 0) {
 			console.log('\nOK — build-css.js reproduces baseline/ from CSS sources.');
 		} else {
-			console.log('\nFAIL — build-css.js does NOT reproduce baseline/. Do not proceed to P3.');
+			console.log('\nFAIL — build-css.js does NOT reproduce baseline/. Stop; do not convert more files.');
 		}
 		return code;
 	} catch (e) {
