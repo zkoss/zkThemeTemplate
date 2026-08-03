@@ -245,6 +245,75 @@ directive、107 處選擇器位置的 `<c:if>`、44 處 EL)與 Font Awesome 的 
 ...   ← checkbox.css.dsp 裡出現的其實是變數檔的註解
 ```
 
+### 1.3 一個 `.css.dsp` 是怎麼被產出來的
+
+這張圖是後面每一階的共同底圖:§2.1 比的是哪一層、§P2 的雙來源是哪兩條 lane、§P3 一次動一個檔
+動的是哪一格、§P5 要串接的是哪一個節點、§P8 拿掉的是哪一條 lane。
+
+```mermaid
+flowchart TD
+    subgraph SRC["來源樹 src/main/resources/web/"]
+        E["76 個 entry .less<br/>**/less/x.less"]
+        FA["zul/font/font-awesome.less<br/>唯一不在 less/ 底下的 entry"]
+        PT["76 個 _partial.less<br/>只被 @import,自己永不產出"]
+        CS["1 → 74 個 .css<br/>P3 逐檔長出來"]
+        AS["素材:img、font、*.js"]
+    end
+
+    Z["zklessc --compress<br/>跳過 _*、entry buffer 改寫 ~./ → /<br/>less.render、路徑 less/ → css/"]
+    BC["build-css.js<br/>跳過 _*、conflictingLess 守門、assertMinifierSafe<br/>stripComments → CleanCSS level 0 → tidyMediaPreludes<br/>依 NO_HEADER 決定是否前置 taglib header"]
+    OUT["target/classes/web/iceblue/**/*.css.dsp —— 77 檔<br/>73 檔 header 在 offset 0、1 檔在檔中間 norm、3 檔無 header"]
+    G{"npm run check:cssdiff<br/>對 baseline/ 逐檔比 declaration"}
+    JAR["mvn package → theme jar"]
+    STOP["停手,走 §2.6 的三層人工複核"]
+
+    subgraph RT["runtime —— 本分支一個 byte 都不動(§B1:DSP 層不會消失)"]
+        RQ["誰要求哪個 .css.dsp<br/>ZK lang.xml 的 &lt;css-uri&gt;(逐元件)<br/>zul/css/zk.wcs 的 &lt;stylesheet&gt;<br/>WcsExtendlet 內建的 footer.css.dsp"]
+        TP["ThemeProvider.beforeWidgetCSS → ServletFns.resolveThemeURL<br/>~./zul/css/norm.css.dsp → ~./iceblue/zul/css/norm.css.dsp"]
+        IN["DspExtendlet → Interpreter.parse,快取 Interpretation<br/>求值 &lt;%@ taglib %&gt;、&lt;c:if&gt;、EL c:encodeThemeURL"]
+        BR["瀏覽器收到的純 CSS"]
+    end
+
+    PT -. "@import,LESS 在 build time 解析" .-> E
+    E --> Z
+    FA --> Z
+    CS --> BC
+    AS -- "maven resources<br/>排除 **/*.less 與 **/*.css" --> OUT
+    Z --> OUT
+    BC --> OUT
+    OUT --> G
+    G -- "files differing: 0" --> JAR
+    G -- "≠ 0" --> STOP
+    JAR --> RQ
+    RQ --> TP --> IN --> BR
+```
+
+**每個節點的程式碼位置**(圖不重複寫細節,細節在這裡):
+
+| 節點 | 程式碼 / 設定 |
+|---|---|
+| `zklessc` | `node_modules/zkless-engine/src/index.js:17-38` 的 `compileFile` —— 跳過 `_*`、`~./`→`/`、`less/`→`css/`。前提 #19/#20:引擎在語法層的全部貢獻就是第 31 行那個 replace |
+| `build-css.js` | `scripts/build-css.js`:`walk` 254、`conflictingLess` 280、`minify` 235、`HEADER` 110、`NO_HEADER` 116 |
+| 三條路徑、同一個輸出目錄 | `pom.xml:92-113`(resources,排除 `**/*.less` 與 `**/*.css`)、`:121-137`(`compile-less`)、`:142-157`(`compile-css`) |
+| 閘門 | `package.json` 的 `check:cssdiff` → `scripts/cssdiff.js`(§2.1) |
+| 誰要求 `.css.dsp` | ZK `zul/src/main/resources/metainfo/zk/lang.xml` 的 `<css-uri>`;`web/zul/css/zk.wcs:24-25`;`WcsExtendlet.java:141` |
+| `~./` → `~./iceblue/` | `zul/theme/StandardThemeProvider.java:81-87` → `web/fn/ServletFns.java:95`。**前綴是逐 edition 白名單**,所以 zkmax / zkex 各自有一份(`zkmax/theme/StandardThemeProvider.java:33-40`、`zkex/…:27-31`) |
+| DSP 求值 | `zweb/…/resource/DspExtendlet.java:76-82`、`144-152` |
+
+**三件從圖上讀得出來、但值得寫成句子的事:**
+
+1. **`.css.dsp` 不是 CSS,是一個模板** —— runtime 那條 lane 在本分支完全不動,而它是**唯一**會
+   把檔案內容變成瀏覽器可用 CSS 的地方。這就是 §2.3 的根據:兩邊 declaration 相同 ⇒ 同一個
+   interpreter 吃進去 ⇒ 送出的 byte 相同,不需要靠截圖。反過來也成立 —— §B1 的
+   「純 CSS 不是字面真實」在圖上就是那條永遠不會消失的 lane。
+2. **有三條路徑寫進同一個輸出目錄,而它們互相看不見。** `compile-css` 與 `compile-less` 同一個
+   phase、宣告在後所以跑在後,一個忘記刪的 `.less` 會讓兩套工具鏈輸出同名檔案、後跑的靜默覆蓋 ——
+   這正是 P3 漏掉第 5 步的形狀。守門員是 `conflictingLess`,不是閘門(閘門只會報一個查不出原因的
+   逐檔差異)。
+3. **這張圖會被改兩次,而且都是刻意的。** P5:`norm.css` 從單檔變成多來源串接,且 taglib 必須
+   留在接縫、不可上提(見 `build-css.js` 檔頭的 P5 NOTE)。P8:`zklessc` 整條 lane 消失,
+   左半邊只剩 `.css`。
+
 ---
 
 ## 2. 驗證策略
@@ -674,6 +743,8 @@ target/classes/web/<theme>/
   ├── zklessc  處理所有 .less（逐檔 → .css.dsp）
   └── build-css.js  處理所有 .css（逐檔 → .css.dsp，加 taglib header、minify）
 ```
+
+**全圖見 §1.3** —— 包含 maven resources 那條路徑、閘門,以及本分支不動的 runtime 段。
 
 比 Marble 的版本簡單得多 —— 因為轉換後的元件檔是**自給自足、沒有 `@import`** 的(前提 6),
 所以元件路徑只要「讀檔 → 加 header → minify → 寫出」。只有 `norm.css` 需要串接多個來源。
