@@ -166,6 +166,44 @@ function tabIndent(css) {
 	return css.replace(/^ +/gm, (ws) => '\t'.repeat(ws.length >> 1) + ' '.repeat(ws.length & 1));
 }
 
+/**
+ * Rules whose body is empty, or holds nothing but comments. BOTH shapes reach the output as `sel{}`.
+ *
+ * The comment-only shape is the common one on this branch, and it is CREATED BY STEP 1: rewriting
+ * `// tree cell` to a block comment means a LESS rule whose only content was a line comment above a
+ * NESTED rule now survives un-nesting as a comment-only husk. LESS used to drop it silently — it
+ * drops `//` first, so the rule was genuinely empty and got removed — which is why `baseline/` has
+ * no such rule while the built output does. `build-css.js` strips comments, then CleanCSS level 0
+ * keeps the bare `{}`. Declaration-neutral, so the gate stays at 0 and only this packet can see it.
+ *
+ * The two are counted separately because the cleanup differs: a truly empty rule is just deleted,
+ * whereas a comment-only rule must have its comment MOVED OUT first. Those comments are
+ * load-bearing (`/* ZK-2151: … *\/`, `/* Bug 2949287 *\/`) and several of them describe the child
+ * rules that un-nesting hoisted away, so deleting the husk would delete the explanation with it.
+ *
+ * Innermost blocks only (`[^{}]*` cannot span a nested rule), which is the right granularity: an
+ * `@media` wrapper holding real rules is not an empty rule, and an empty one still gets counted.
+ *
+ * Comments are masked to a brace-free sentinel BEFORE scanning, because a `}` inside a comment
+ * would otherwise close a body early and hide the rule. That is not hypothetical here: both
+ * `tbeditor.less` licence headers contain `@{zprefix}` — LESS does not interpolate inside comments,
+ * so the braces reach the CSS source verbatim, in the two files that also hold the only truly empty
+ * `.sel{}` rules in the tree.
+ */
+function emptyRuleCounts(css) {
+	// NUL rather than a space: the sentinel must survive `trim()`, or a comment-only body would
+	// read as bare and the packet would print the wrong one of the two cleanup recipes.
+	const masked = css.replace(/\/\*[\s\S]*?\*\//g, '\0');
+	let bare = 0;
+	let commentOnly = 0;
+	for (const m of masked.matchAll(/\{([^{}]*)\}/g)) {
+		const body = m[1];
+		if (!body.trim()) bare++;
+		else if (!body.replace(/\0/g, '').trim()) commentOnly++;
+	}
+	return { bare, commentOnly, total: bare + commentOnly };
+}
+
 function run(cmd, args, label) {
 	try {
 		return execFileSync(cmd, args, { encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] });
@@ -315,7 +353,7 @@ function main(argv) {
 
 		const lessLines = lessSrc.split('\n').length;
 		const cssLines = body.split('\n').length;
-		const emptyRules = (body.match(/[^{}]*\{\s*\}/g) || []).length;
+		const empty = emptyRuleCounts(body);
 
 		// Review packet (plan §2.6 layer 3) — the fixed shape a human reads instead of trusting
 		// the gate. The gate cannot see readability, comment placement, or duplicate declarations.
@@ -327,8 +365,12 @@ function main(argv) {
 		console.log(`  expansion         ${(cssLines / lessLines).toFixed(1)}x`);
 		console.log(`  bytes vs baseline ${bytes}`);
 		console.log(`  gate              files differing: ${g.differing}`);
-		if (emptyRules) {
-			console.log(`  ⚠ empty rules     ${emptyRules} — delete from the CSS source (plan §P3 review item)`);
+		if (empty.total) {
+			const shape = [
+				empty.bare ? `${empty.bare} empty` : '',
+				empty.commentOnly ? `${empty.commentOnly} comment-only` : '',
+			].filter(Boolean).join(' + ');
+			console.log(`  ⚠ empty rules     ${shape} — reach the output as \`sel{}\` (plan §P3 source-cleanup item)`);
 		}
 
 		if (g.failed || g.differing !== 0 || unclassified) {
