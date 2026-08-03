@@ -1,0 +1,48 @@
+.z-button {
+	font-family: var(--zk-base-title-font-family);
+	font-size: var(--zk-input-text-size);
+	font-weight: normal;
+	font-style: normal;
+	color: var(--zk-button-color);
+	min-height: var(--zk-base-button-height);
+	border: var(--zk-button-border-width) solid var(--zk-button-border-color);
+	-webkit-border-radius: var(--zk-input-border-radius);
+	-moz-border-radius: var(--zk-input-border-radius);
+	-o-border-radius: var(--zk-input-border-radius);
+	-ms-border-radius: var(--zk-input-border-radius);
+	border-radius: var(--zk-input-border-radius);
+	padding: var(--zk-button-padding);
+	line-height: normal;
+	background-color: var(--zk-button-background-color);
+	-webkit-box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16);
+	-moz-box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16);
+	-o-box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16);
+	-ms-box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16);
+	box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16);
+	cursor: pointer;
+	white-space: nowrap;
+}
+.z-button-image {
+	vertical-align: text-bottom;
+}
+.z-button:hover {
+	color: var(--zk-button-hover-color);
+	border-color: var(--zk-button-hover-border-color);
+	background-color: var(--zk-button-hover-background-color);
+}
+.z-button:focus {
+	color: var(--zk-button-focus-color);
+	border-color: var(--zk-button-focus-border-color);
+	background-color: var(--zk-button-focus-background-color);
+}
+.z-button:active {
+	color: var(--zk-button-active-color);
+	border-color: var(--zk-button-active-border-color);
+	background-color: var(--zk-button-active-background-color);
+}
+.z-button[disabled] {
+	color: var(--zk-button-disable-color);
+	border-color: var(--zk-button-disable-border-color);
+	background-color: var(--zk-button-disable-background-color);
+	cursor: default;
+}
