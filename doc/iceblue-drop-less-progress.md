@@ -90,6 +90,7 @@ P6 因此從 BLOCKED 轉 TODO。但它**相依於 P2** —— 產生出來的 `.
 | 17 | 2026-07-31 | **`check:build-css` 負向控制** | `baseline/` | 同 #16,但 `minify()` 改成 `return ''` | 多數 | 上千 | **預期 FAIL(exit 1)** — 與紀錄 #15 同一個破壞,`check:cssdiff` 沉默、這支檢查大聲失敗。**這就是補這支檢查的全部理由。** 以檔案複製還原,md5 `4cee89ed…` 相同 |
 | 18 | 2026-07-31 | **P3 步 0**(`tablelayout`,第一個真正轉換的檔) | `baseline/` | `target/classes/web/iceblue` | **0** | **0** | **PASS** — 77 檔 / 14323 條。build 訊息從 `no .css sources … (nothing to do)` 變成 **`compiled 1 file(s)`** → `check:cssdiff` 從這一刻起真的走到 `build-css.js`。位元組層:`diff -rq` 全樹只有 `font-awesome` 不同(紀錄 #14 已解釋的 7 個前導零),`tablelayout.css.dsp` **逐 byte 相同** |
 | 19 | 2026-07-31 | **步 0 之後重跑 #15 的破壞**(證明閘門不再空轉) | `baseline/` | `target/classes/web/iceblue`,`minify()` 改成 `return ''` | **1** | — | **預期 FAIL(exit 1)** — **同一個破壞,紀錄 #15 是 exit 0、現在是 exit 1。** 空轉不是被論述掉的,是被**第一個轉換過的檔**填掉的:有輸入之後,差異 0 就不再免費。以檔案複製還原,md5 `4cee89ed…` 相同,`git status` 無殘留 |
+| 20 | 2026-08-03 | **縮排拍板 tab**(`tabIndent()` + 步 0 產物回頭套用) | `baseline/` | `target/classes/web/iceblue` | **0** | **0** | **PASS** — 77 檔 / 14323 條。改的是**來源**的前導空白,所以這一跑是在證明「縮排不進輸出」而不是假設:`tablelayout.css.dsp` 與 baseline **仍逐 byte 相同**,全樹 `diff -rq` 也只剩 `font-awesome`(紀錄 #14 的 7 個前導零) |
 
 > ⁺ **P1 那一列刻意不寫 hash。** 這一列本身就在那顆 commit 裡,寫 hash 會自我指涉 ——
 > 填上去、`--amend` 一次,hash 就變了,填的值當場失效(已經踩過一次)。
@@ -457,12 +458,24 @@ npm run check:cssdiff        # files differing: 0
 | # | 發現 | 處置 |
 |---|---|---|
 | 1 | 來源樹裡**沒有 `css/` 目錄** —— 它至今只當輸出目錄用。第一次跑直接 ENOENT | `less2css.js` 每次轉換都 `mkdir -p`。74 檔會在來源樹長出 74 個新的 `css/` 目錄 |
-| 2 | 產物是 **2 空格縮排**(LESS 輸出的預設),但本 repo 的 `.less` 來源用 **tab** | **待拍板**,見下。現在改只影響 1 檔,73 檔之後再改就是全樹重寫 |
+| 2 | 產物是 **2 空格縮排**(LESS 輸出的預設),但本 repo 的 `.less` 來源用 **tab** | **已拍板:tab**(2026-08-03,見下)。`less2css.js` 加 `tabIndent()`,步 0 的產物已回頭套用 |
 | 3 | 我原本把 `less.render` 的 rejection 和 `finish()` 的錯誤用同一個 `.catch()` 接,於是寫檔失敗被標成「LESS failed」 | 已分開。步 0 的**全部意義**就是分辨「轉換器錯」與「builder 錯」,一個混淆兩者的錯誤訊息會直接抵銷掉它 |
 
-> **待拍板:產物的縮排要 2 空格還是 tab?** `build-css.js` 會把縮排全部壓掉,所以**輸出完全不受
-> 影響**,純粹是這 74 個「新的、要人維護的來源檔」讀起來要跟 repo 一致還是跟 LESS 預設一致。
-> 現在改成 tab 是 `less2css.js` 裡一行;等 74 檔轉完再改,就是一次橫跨全樹的空白 commit。
+> **已拍板(2026-08-03):tab,跟 repo 一致。** `build-css.js` 會把縮排全部壓掉,所以**輸出完全
+> 不受影響** —— 這純粹是這 74 個「新的、要人維護的來源檔」讀起來要跟 repo 一致還是跟 LESS 預設
+> 一致。趁只有 1 檔的時候改;73 檔之後再改就是一次橫跨全樹的空白 commit。
+>
+> **實作:`less2css.js` 的 `tabIndent()`,只動每行的前導空白,`floor(n/2)` 個 tab + 奇數餘 1 空格。**
+> 唯一會被一個天真的 replace 改壞的是**多行註解的對齊** —— `/*` 開頭在第 4 欄、`*` 續行在第 5 欄的話,
+> 變成 2 tab 與 2 tab + 1 空格,不管 tab 寬度多少都還是往內一欄。**保留餘數就是為了這個。**
+>
+> **這不是推論,是對整個語料量過的**(73 個尚未轉換的入口檔全部 in-process 編一次):前導空白
+> 只出現 **0 / 1 / 2 / 4 / 5** 欄五種,**所有奇數欄都是註解續行**(非註解行的奇數欄 = **0**),
+> 沒有任何一行已經含 tab,也沒有任何一行落在多行字串裡(CSS 字串不能跨行)。`ws=5` 只有 4 行,
+> 全在 `tbeditor` 的兩份 vendor 註解區塊。
+>
+> **步 0 產物已回頭套用**:`tablelayout.css` 的那一行改成 tab,閘門仍 `files differing: 0`,
+> 且 `tablelayout.css.dsp` 與 baseline **仍逐 byte 相同**(紀錄 #20)—— 縮排確實不進輸出。
 
 74 = 77 個輸出減掉三個留在 LESS 的:`norm`(P5)、`font-awesome`(P6)、`tablet`(P7)。
 

@@ -132,6 +132,24 @@ function stripHeader(css) {
 	return css.replace(/^\s*(?:<%[\s\S]*?%>\s*)+/, '');
 }
 
+/**
+ * Re-indent to tabs: LESS emits 2 spaces per nesting level, every `.less` source in this repo is
+ * tab-indented. `build-css.js` collapses indentation, so THE OUTPUT IS UNAFFECTED — this is only
+ * about the 74 new files a human now has to maintain reading like the rest of the tree. Doing it
+ * here rather than later is deliberate: after 74 conversions the same change is a whole-tree
+ * whitespace commit.
+ *
+ * `floor(n/2)` tabs plus the odd remainder space preserves RELATIVE alignment, which is the one
+ * thing a naive replace can break — a multi-line comment with its `/*` opener at 4 spaces and `*`
+ * continuations at 5 becomes 2 tabs and 2 tabs + 1 space, still one column in at any tab width.
+ * Measured over all 73 remaining entry files: leading runs are only 0/1/2/4/5 columns, every odd
+ * run is a comment continuation, no line carries a tab already, and none sits inside a multi-line
+ * string. Leading whitespace only, so a value can never be touched.
+ */
+function tabIndent(css) {
+	return css.replace(/^ +/gm, (ws) => '\t'.repeat(ws.length >> 1) + ' '.repeat(ws.length & 1));
+}
+
 function run(cmd, args, label) {
 	try {
 		return execFileSync(cmd, args, { encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] });
@@ -228,7 +246,8 @@ function main(argv) {
 	function finish(compiled) {
 		// 3. Strip the taglib header. build-css.js hard-fails on a source that still carries one,
 		//    so a miss here surfaces at build time rather than silently double-emitting.
-		const body = stripHeader(compiled);
+		//    Then re-indent to tabs — cosmetic for the new source, invisible in the output.
+		const body = tabIndent(stripHeader(compiled));
 		if (/<%/.test(body)) {
 			console.error(`less2css: ${lessRel} has a DSP directive that is not part of the leading header — needs a decision, not a script.`);
 			return 1;
@@ -342,4 +361,4 @@ if (require.main === module) {
 	Promise.resolve(main(process.argv.slice(2))).then((code) => process.exit(code));
 }
 
-module.exports = { rewriteLineComments, stripHeader };
+module.exports = { rewriteLineComments, stripHeader, tabIndent };
