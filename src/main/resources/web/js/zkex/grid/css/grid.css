@@ -1,0 +1,41 @@
+.z-row .z-detail-outer {
+	min-width: 40px;
+	line-height: normal;
+	background-color: var(--zk-mesh-background-color);
+	vertical-align: top;
+	border-top: 1px solid var(--zk-mesh-content-border-color);
+	padding: var(--zk-mesh-row-detail-outer-padding);
+	position: relative;
+}
+.z-detail {
+	font-size: var(--zk-base-font-size);
+	width: var(--zk-base-icon-width);
+	height: var(--zk-base-icon-height);
+	padding: 0;
+	line-height: var(--zk-base-line-height);
+	text-align: center;
+	overflow: hidden;
+	white-space: nowrap;
+	cursor: pointer;
+	margin-left: -3px;
+}
+.z-detail-icon {
+	font-size: var(--zk-font-size-large);
+	color: var(--zk-text-color-default);
+	position: relative;
+	left: 1px;
+}
+.z-detail-open .z-detail-icon {
+	line-height: calc(var(--zk-base-line-height) + 2px);
+	left: 0;
+}
+.z-detail-content {
+	padding: var(--zk-grid-detail-content-padding);
+}
+.z-detail-content:before {
+	content: '';
+	display: block;
+	height: 1px;
+	border-top: 1px solid var(--zk-mesh-content-border-color);
+	margin: var(--zk-grid-detail-content-before-margin);
+}
