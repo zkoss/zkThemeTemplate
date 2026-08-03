@@ -1,0 +1,20 @@
+.z-a {
+	font-family: var(--zk-base-title-font-family);
+	font-size: var(--zk-font-size-medium);
+	color: var(--zk-color-primary);
+}
+.z-a:hover {
+	color: var(--zk-color-primary-dark);
+}
+.z-a:visited {
+	color: var(--zk-color-primary-dark);
+}
+.z-a[disabled] {
+	color: var(--zk-disabled-color);
+	cursor: default;
+	text-decoration: none;
+}
+.z-a[disabled]:hover,
+.z-a[disabled]:visited {
+	color: var(--zk-disabled-color);
+}
