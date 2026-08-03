@@ -14,7 +14,7 @@
 | P0 建立工作區與基準 | DONE | G-zero | `files differing: 0`(77 檔 / 14323 條) | `f34ca01` | 2026-07-29 |
 | P1 LESS 釘到 4.x(S0+S1) | **DONE** | G-zero | `files differing: 0`(77 檔 / 14323 條);`less` 解析為 4.8.1;S1 守衛有負向控制 | 主旨 `P1(drop-less):` ⁺ | 2026-07-31 |
 | P2 雙來源 build | DONE | G-zero | `files differing: 0`(77 檔 / 14323 條);儀器證明另見下方〈P2 儀器證明〉 | `dc46cd3` | 2026-07-30 |
-| P3 元件掃描 74 檔 | **進行中** | G-zero + 逐步人工確認 | **步 1 完成:5/74 檔**(`tablelayout` / `cardlayout` / `absolutelayout` / `anchorlayout` / `grid`)。`files differing: 0`,**5 檔全部與 baseline 逐 byte 相同** | 步 0 `194f8f4`;步 1 `a046bdb`…`370d45b`(工具 `8da83ed`、`82bea4d`) | 2026-08-03 |
+| P3 元件掃描 74 檔 | **進行中** | G-zero + 逐步人工確認 | **步 2 完成:20/74 檔 —— 批 1 收工。**`files differing: 0`;來源端 20 `.css` + 57 `.less` = **77** ✓。位元組層 **71/77 逐 byte 相同**,其餘 6 檔(含 P1 就已知的 `font-awesome`)**全部只差空白與前導零**,全樹沒有一個語意 byte 不同 | 步 0 `194f8f4`;步 1 `a046bdb`…`370d45b`;步 2 `aa3fac3`…`fbe44bf`(工具 `8da83ed`、`82bea4d`、`7f8cd23`) | 2026-08-03 |
 | ↳ **P3 前置**:量全樹經 CSS 路徑的位元組相同率 | **DONE** | — | **24/75 位元組相同**;其餘 51 檔的差異全部分類到 5 類封閉清單,0 檔無法分類 | 見 `check:build-css` | 2026-07-31 |
 | ↳ **P3 前置**:`build-css.js` 要有可重跑的檢查 | **DONE** | 自我證明 + 負向控制 | `npm run check:build-css` → 75 檔 / `files differing: 0` / exit 0;負向控制(`minify` 回傳空字串)→ exit 1 | 見〈P2 儀器證明〉 | 2026-07-31 |
 | ↳ **P3 前置**:workflow 腳本加 `{step}` | **DONE** | 六條路徑實測 | `{step:0..4}` = 1/4/15/43/11,**一次只跑一步、跑完就回傳**;`{batch:1}` 改成**拒絕並說明**(接受它就等於回到「第一次人工檢查前先做 20 檔」),批 2/3 仍可別名 | `8da83ed` | 2026-07-31 |
@@ -94,6 +94,8 @@ P6 因此從 BLOCKED 轉 TODO。但它**相依於 P2** —— 產生出來的 `.
 
 | 21 | 2026-08-03 | **P3 步 1**(4 檔:`cardlayout` 4、`absolutelayout` 5、`anchorlayout` 5、`grid` 6) | `baseline/` | `target/classes/web/iceblue` | **0** | **0** | **PASS** — 77 檔 / 14323 條,build 訊息 `compiled 5 file(s)`。**四檔逐 byte 都與 baseline 相同**(每檔轉換當下由 `less2css.js` 自己驗一次,步末再全樹驗一次:`diff -rq` 只剩 `font-awesome`)。來源端 5 `.css` + 72 `.less` = **77** ✓。`grid` 是**第一個 `NO_HEADER` 檔** → 順帶證明 `build-css.js` 對這三檔是**不注入** header,而不是「還沒遇到」 |
 | 22 | 2026-08-03 | **`check:build-css` 在步 1 之後假警報 → 修好** | `baseline/` | 暫存目錄 | **5 → 0** | **0 → 0** | **先 FAIL 後 PASS** —— 失敗的是**檢查本身**:已轉換的檔沒有 `.less` 可重建,於是從候選樹裡消失,`cssdiff` 報 **`files differing: 5` / `diff records: 0`**(差異數 0 卻報差異 = 檔案不存在的形狀)。加了步 2b 直接複製已轉換的**真實來源**,回到紀錄 #16 的數字:覆蓋 **75**、位元組相同 **24/75**、0 檔無法分類,其中 **5 檔是真實來源、70 檔是重建**。**這條會隨每次轉換自己變紅**,不修就會變成沒人看的紅燈 |
+| 23 | 2026-08-03 | **`stripHeader` 的 offset-0 假設破功**(`footer` 被腳本拒收) | — | — | — | — | **預期 REFUSE(exit 1)** —— `less2css.js` 對 `zul/less/footer.less` 印「有不屬於前導 header 的 DSP 指令」。查出來不是 footer 的問題:`stripHeader` 把 `<%@ … %>` 錨在 offset 0,而**有三檔在 `@import "_header.less"` 之前先吐一段區塊註解**,header 因此落在第 3 行。**只有未壓縮路徑看得見** —— `--compress` 會刪註解,所以 77 個 baseline 的 header 全在 offset 0,這個缺口一路到第一個這種檔要轉才浮出來。修在腳本(`7f8cd23`):跳過「只由註解與空白構成」的前綴、**保留該前綴**,只拿掉 header 那一段。六種形狀逐一斷言(offset 0 / 一段註解 / 兩段註解 / 完全沒有 header / 檔中間 / `${…}` EL 保留) |
+| 24 | 2026-08-03 | **P3 步 2**(15 檔,批 1 收工:`listbox` 6、`tree` 6、`footer` 7、`video` 8、`columnlayout` 9、`anchornav` 9、`dropupload` 9、`a` 9、`sliderbuttons` 10、`barcodescanner` 13、`layout` 13、`rowlayout` 14、`frozen` 15、`rating` 18、`auxhead` 19) | `baseline/` | `target/classes/web/iceblue` | **0** | **0** | **PASS** — 77 檔 / 14323 條。來源端 20 `.css` + 57 `.less` = **77** ✓。**第一次出現位元組不同的轉換**(步 0/1 的 5 檔剛好全相同):15 檔中 10 檔逐 byte 相同、5 檔不同(`footer`、`video`、`layout`、`frozen`、`rating`)。全樹獨立複核 → **71/77 相同**,不同的 6 檔(含 `font-awesome`)**先正規化前導零、再去掉全部空白之後兩邊完全相等** ⇒ 全樹**零個語意 byte** 不同。`listbox`+`tree` 補完 `NO_HEADER` 三檔 → **三條都走過了**。`check:build-css` 仍 exit 0:覆蓋 75、位元組相同 24/75、51 檔落在同 5 類、0 檔無法分類,真實來源/重建從 5/70 變 **20/55** |
 
 > ⁺ **P1 那一列刻意不寫 hash。** 這一列本身就在那顆 commit 裡,寫 hash 會自我指涉 ——
 > 填上去、`--amend` 一次,hash 就變了,填的值當場失效(已經踩過一次)。
@@ -183,7 +185,7 @@ npm run check:build-css
 
 **副產品**:5 類清單第一次跑只有 4 類,`tbeditor`(兩份)解釋不了 —— 查出來是**空規則** `.sel{}`
 (LESS 壓縮器會刪、CleanCSS level 0 不刪)。補成第 5 類,並記成 P3 的來源清理項:
-空規則要在來源清掉,不要在 builder 加特例隱藏。
+空規則要在來源清掉,不要在 builder 加特例隱藏。**完整清單見下方〈P3 來源清理待辦〉。**
 
 > **覆蓋率數字被更正過(兩個 agent 互相矛盾,算術裁決)。** 實作者回報 13642 條 / 75 檔,
 > 對抗性審核獨立重跑後回報 12142 條 / 75 檔。驗算:`14323 − 1500(norm) − 681(tablet) = 12142`
@@ -402,14 +404,14 @@ G-delta 的形狀檢查分不出來 → carve-out 清單必須在動手前存在
 
 ## P3 批次
 
-**已開工:步 0 完成(1/74)。** 批次已於 2026-07-30 用 `cssdiff --list` 實測分界(原本的
+**批 1 收工:20/74。** 批次已於 2026-07-30 用 `cssdiff --list` 實測分界(原本的
 `~8 / ~55 / ~11` 是估計值,**三個數字都不對**);**2026-07-31 開工當天重新推導一次,20 + 43 + 11
 仍然成立** —— 這個數字是斷言,對不上就要停下來查,不能改斷言迎合實測。
 
 | 批 | 範圍 | 檔數 | 步階 | 狀態 |
 |---|---|---|---|---|
-| 批 1 | 輸出端 ≤20 條 | **20**(原估 ~8) | 步 0 `tablelayout` → 步 1 `cardlayout`/`absolutelayout`/`anchorlayout`/`grid` → 步 2(+15) | **步 0 DONE**(`194f8f4`)、**步 1 DONE**(`a046bdb`/`c8a6fbc`/`af89eda`/`370d45b`);步 2 待確認後開始 |
-| 批 2 | 輸出端 21–200 條 | **43**(原估 ~55) | 步 3 | TODO |
+| 批 1 | 輸出端 ≤20 條 | **20**(原估 ~8) | 步 0 `tablelayout` → 步 1 `cardlayout`/`absolutelayout`/`anchorlayout`/`grid` → 步 2(+15) | **批 1 DONE(20/20)** —— 步 0 `194f8f4`、步 1 `a046bdb`/`c8a6fbc`/`af89eda`/`370d45b`、步 2 `aa3fac3`…`fbe44bf` |
+| 批 2 | 輸出端 21–200 條 | **43**(原估 ~55) | 步 3 | 待確認後開始 |
 | 批 3 | 輸出端 >200 條 | **11** | 步 4 | TODO |
 | | | 20+43+11 = **74** ✓ | | |
 
@@ -508,6 +510,75 @@ npm run check:cssdiff        # files differing: 0
 > **`git diff --cached --name-only` 只印出目的檔是正常的。** 4 檔裡有 3 檔被 git 判為 rename
 > (`less/x.less => css/x.css`),`--name-only` 對 rename 只印目的路徑 —— `.less` 的刪除**在**那顆
 > commit 裡(`git show --stat` 看得到)。步階檢查清單第 1 項照 `git show` 讀就不會誤判。
+
+### 步 2 的複核包(2026-08-03,15 檔 —— 批 1 收工 20/20)
+
+| 輸出 | 條數 | 來源 → 產物 | 位元組 | commit |
+|---|---|---|---|---|
+| `js/zkmax/sel/css/listbox.css.dsp` | 6 | 16 行 → 17 行 | **相同** | `aa3fac3` |
+| `js/zkmax/sel/css/tree.css.dsp` | 6 | 15 行 → 16 行 | **相同** | `7192bb3` |
+| `zul/css/footer.css.dsp` | 7 | 32 行 → 22 行 | 差 `>` 兩側空白 | `771974e` |
+| `js/zkmax/med/css/video.css.dsp` | 8 | 24 行 → 19 行 | 差前導零 | `0d05a41` |
+| `js/zkex/layout/css/columnlayout.css.dsp` | 9 | 26 行 → 23 行 | **相同** | `c46d038` |
+| `js/zkmax/nav/css/anchornav.css.dsp` | 9 | 19 行 → 16 行 | **相同** | `c9bbdb0` |
+| `js/zkmax/wgt/css/dropupload.css.dsp` | 9 | 8 行 → 12 行 | **相同** | `7fb47fa` |
+| `js/zul/wgt/css/a.css.dsp` | 9 | 25 行 → 21 行 | **相同** | `1180888` |
+| `js/zkex/slider/css/sliderbuttons.css.dsp` | 10 | 23 行 → 17 行 | **相同** | `f49a3d6` |
+| `js/zkmax/barscanner/css/barcodescanner.css.dsp` | 13 | 24 行 → 20 行 | **相同** | `a744070` |
+| `js/zul/box/css/layout.css.dsp` | 13 | 38 行 → 37 行 | 差 `,`/`>` 兩側空白 | `be92b3c` |
+| `js/zkmax/layout/css/rowlayout.css.dsp` | 14 | 21 行 → 26 行 | **相同** | `f21049e` |
+| `js/zul/mesh/css/frozen.css.dsp` | 15 | 41 行 → 36 行 | 差空白 | `5f1e667` |
+| `js/zul/wgt/css/rating.css.dsp` | 18 | 40 行 → 33 行 | 差前導零 + 空白 | `c0260c1` |
+| `js/zul/mesh/css/auxhead.css.dsp` | 19 | 33 行 → 31 行 | **相同** | `fbe44bf` |
+
+**步 2 比步 0+1 多驗到的兩件事:**
+
+1. **`NO_HEADER` 三檔全部走過了。** `listbox` 與 `tree` 補完 `grid`(步 1)剩下的兩檔 ——
+   這條分支現在是**被三次量到**,不是「有一個樣本」。(步 1 的口頭回報把這兩檔說成落在步 3,
+   那是回報錯了 —— 計畫書 §2.6 一直寫的是「`listbox`、`tree` 留在步 2」。每一步的檔案清單
+   都用 `cssdiff --list` 當場重推,而不是沿用上一步的說法,就是為了讓這種錯自己現形。)
+2. **第一次出現位元組不同的轉換。** 步 0/1 的 5 檔剛好全部逐 byte 相同,所以複核第 1 層
+   (byte-identity,完全不需要 `cssdiff` 的六種正規化)一路都成立。步 2 的 15 檔裡有 5 檔不同
+   —— **這是預期的,不是退步**:`check:build-css` 早就量到全樹 51/75 檔會差,分成 5 類封閉的
+   序列化寫法。意思是**第 1 層對這些檔在結構上就不可用**,由第 2 層(直接讀差異 byte)承擔。
+
+**步 2 末的全樹獨立複核**(不經過 `cssdiff`,可自己重跑):
+
+```
+byte-identical: 71/77
+  差異 6 檔:video / layout / frozen / rating / footer / font-awesome
+  先把前導零正規化(0.5 → .5)、再去掉全部空白 ⇒ 六檔兩邊完全相等
+⇒ 全樹零個語意 byte 不同
+```
+
+> **正規化的順序會決定結論,踩過一次。** 先去空白再正規化前導零,`0.2em 0.25em` 會併成
+> `0.2em0.25em`,第二個零前面變成字母 `m` 就不再符合「前導」的條件 —— `font-awesome` 因此被
+> 誤報成「無法解釋」。**先零、後空白。** 這個假警報值得記,因為它長得跟真的差異一模一樣。
+
+**步 2 撿到的四件事**(前兩件是機制,後兩件是來源內容):
+
+| # | 發現 | 處置 |
+|---|---|---|
+| 1 | `stripHeader` 把 taglib 那一段錨在 offset 0,**三檔在 `@import "_header.less"` 之前先吐一段區塊註解**,header 因此落在第 3 行 → `footer` 被腳本拒收。`--compress` 會刪註解,所以 77 個 baseline 全在 offset 0,**只有未壓縮路徑看得見** | 修在腳本(`7f8cd23`):跳過只由註解與空白構成的前綴、**保留該前綴**,只拿掉 header。**不改 footer 的來源** —— 另兩檔是 `tbeditor` 的 Trumbowyg MIT 授權標頭,那段必須原字保留進新來源,改來源就等於在步 4 讓同一個問題再爆一次 |
+| 2 | `footer` 是第一個非逐-byte-相同的轉換 | 逐 byte 讀過:全部差異就是一個子選擇器,baseline `.z-flex>:not(.z-flex-item)`、我們 `.z-flex > :not(…)`;去掉空白兩邊相等。LESS 壓縮器會收緊組合子,CleanCSS level 0 不會(level 1 在 P2 已因別處位移被否決) |
+| 3 | `footer` 帶著全樹**唯一**一個 LESS namespace hook:`#footer() { .append-style() {} }`,在檔尾以 `#footer.append-style();` 呼叫。純 CSS 表達不出來,轉換必然刪掉它 | **就這樣刪**。它是空的,而且 `append-style` 在整個 repo 只出現在這一個檔 → 這裡沒有東西被弄壞。但「別的主題會不會填這個 hook」是**產品面**問題,記到 P8 一併回答,不在 P3 決定 |
+| 4 | 兩份 `tbeditor.less` 的授權標頭寫 `@{zprefix} v2.7.2`,而 `@zprefix: z-tbeditor` 定義在**第 13 行**、標頭在第 2–5 行,且 **LESS 不會在 `/* */` 裡做插值** → 編出來是字面的 `@{zprefix}` | 記成來源清理項(見下)。今天看不到是因為 `--compress` 會刪註解;一旦這兩檔變成 CSS **來源**,這段字就會留在人要維護的檔案裡。而且授權標頭該寫的是 **Trumbowyg**,不是一個 CSS class 名 —— 這是既有的 latent 錯字,不是轉換造成的 |
+
+### P3 來源清理待辦
+
+一律**改來源**,不在 `build-css.js` 加特例隱藏。全部會改變輸出 byte,所以**不屬於 G-zero**,
+排在 P3 全部轉完之後、以一顆可複審的 commit 處理(或併入 P4)。
+
+| # | 項目 | 檔案 | 發現於 |
+|---|---|---|---|
+| 1 | 2 個空規則 `.sel{}`(LESS 壓縮器會刪、CleanCSS level 0 不刪) | 兩份 `tbeditor` | `check:build-css` 首跑(紀錄 #16) |
+| 2 | 授權標頭裡字面的 `@{zprefix}`,應還原為 `Trumbowyg` | 兩份 `tbeditor` | P3 步 2 |
+| 3 | `/* For customized style */` 這段註解原本在說明 `#footer.append-style()` hook,hook 已隨轉換消失,註解留著會誤導 | `zul/css/footer.css` | P3 步 2 |
+
+> **為什麼第 3 項不當場順手刪掉。** 目前每一個轉換後的 `.css` 都**恰好等於腳本會產生的內容** ——
+> 這個性質讓任何人都能用 `less2css.js` 重跑一次來驗,不必信任我手改了什麼。手改一個註解就會
+> 破壞它,而換來的只是少一行誤導。跟 `-ms-zoom: 1`(步 1 第 3 項)同一個判斷:**不要把來源
+> 清理的 delta 混進零差異階段。**
 
 74 = 77 個輸出減掉三個留在 LESS 的:`norm`(P5)、`font-awesome`(P6)、`tablet`(P7)。
 
