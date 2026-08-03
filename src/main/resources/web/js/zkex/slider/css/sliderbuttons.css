@@ -1,0 +1,16 @@
+.z-sliderbuttons-button {
+	position: absolute;
+	border-style: solid;
+}
+.z-sliderbuttons-tooltip {
+	font-family: var(--zk-base-title-font-family);
+	position: absolute;
+	display: none;
+	color: var(--zk-text-color-default3);
+	vertical-align: top;
+	line-height: 1;
+	font-size: var(--zk-font-size-medium);
+}
+.z-sliderbuttons-area {
+	position: absolute;
+}
