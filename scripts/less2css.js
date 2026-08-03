@@ -57,6 +57,7 @@ const path = require('path');
 const { execFileSync } = require('child_process');
 const less = require('less');
 const { classify } = require('./check-build-css.js');
+const { NO_HEADER } = require('./build-css.js');
 
 const SOURCE = 'src/main/resources/web';
 const BASELINE = 'baseline';
@@ -332,7 +333,11 @@ function main(argv) {
 			'',
 			`Adopts zklessc's uncompressed output as the new source (plan §1.1): variables are`,
 			`already resolved to var(--zk-*), mixins already expanded. build-css.js now compiles`,
-			`this file and injects the taglib header.`,
+			NO_HEADER.has(outRel)
+				// The three NO_HEADER outputs carry no taglib header in the baseline either, so
+				// claiming injection here would put a falsehood in the permanent log.
+				? `this file, and correctly does NOT inject a taglib header (NO_HEADER output).`
+				: `this file and injects the taglib header.`,
 			'',
 			`declarations:       ${g.declarations} (output side)`,
 			`gate:               files differing: 0`,
