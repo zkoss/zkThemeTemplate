@@ -1,0 +1,44 @@
+.z-inputgroup {
+	display: -ms-inline-flexbox;
+	display: inline-flex;
+	/* Workaround for .z-toolbarbutton (The load order of toolbar.less is after inputgroup.less) */
+}
+.z-inputgroup-text {
+	display: -ms-flexbox;
+	display: flex;
+	background: var(--zk-inputgroup-text-background-color);
+	border: 1px solid var(--zk-input-border-color);
+	padding: 0 12px;
+	min-height: var(--zk-input-height);
+	/* same as .z-textbox */
+	-ms-flex-align: center;
+	align-items: center;
+}
+.z-inputgroup > :nth-child(n) {
+	/* "> :nth-child(n)" has a higher specificity than "> *" */
+	border-radius: 0;
+}
+.z-inputgroup-vertical {
+	-ms-flex-direction: column;
+	flex-direction: column;
+}
+.z-inputgroup-vertical > :first-child {
+	border-top-left-radius: var(--zk-input-border-radius);
+	border-top-right-radius: var(--zk-input-border-radius);
+}
+.z-inputgroup-vertical > :last-child {
+	border-bottom-left-radius: var(--zk-input-border-radius);
+	border-bottom-right-radius: var(--zk-input-border-radius);
+}
+.z-inputgroup:not(.z-inputgroup-vertical) > :nth-child(n) {
+	/* for a higher specificity see above */
+	height: auto;
+}
+.z-inputgroup:not(.z-inputgroup-vertical) > :first-child {
+	border-top-left-radius: var(--zk-input-border-radius);
+	border-bottom-left-radius: var(--zk-input-border-radius);
+}
+.z-inputgroup:not(.z-inputgroup-vertical) > :last-child {
+	border-top-right-radius: var(--zk-input-border-radius);
+	border-bottom-right-radius: var(--zk-input-border-radius);
+}
