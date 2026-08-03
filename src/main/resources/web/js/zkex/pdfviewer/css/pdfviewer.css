@@ -1,0 +1,151 @@
+.z-pdfviewer {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	/* Safari fullscreen workaround */
+	/* IE fullscreen workaround */
+}
+.z-pdfviewer:-webkit-full-screen {
+	width: 100% !important;
+	height: 100% !important;
+}
+.z-pdfviewer:-ms-fullscreen {
+	width: 100% !important;
+	height: 100% !important;
+}
+.z-pdfviewer:fullscreen .z-pdfviewer-toolbar-fullscreen > i::before {
+	content: '\f066';
+	/* fa-icon-compress */
+}
+.z-pdfviewer:-webkit-full-screen .z-pdfviewer-toolbar-fullscreen > i::before {
+	content: '\f066';
+	/* fa-icon-compress */
+}
+.z-pdfviewer:-ms-fullscreen .z-pdfviewer-toolbar-fullscreen > i::before {
+	content: '\f066';
+	/* fa-icon-compress */
+}
+.z-pdfviewer:hover .z-pdfviewer-toolbar {
+	opacity: 0.5;
+}
+.z-pdfviewer:hover .z-pdfviewer-toolbar:hover {
+	opacity: 1;
+}
+.z-pdfviewer:focus-within .z-pdfviewer-toolbar {
+	opacity: 1;
+}
+.z-pdfviewer-container {
+	overflow: auto;
+	height: 100%;
+	width: 100%;
+	background: var(--zk-pdfviewer-container-background-color);
+}
+.z-pdfviewer-page {
+	position: relative;
+	margin: 0 auto;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+	overflow: hidden;
+}
+.z-pdfviewer-text-layer {
+	position: absolute;
+	left: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	overflow: hidden;
+	opacity: 0.2;
+	line-height: 1;
+}
+.z-pdfviewer-text-layer ::selection {
+	background: var(--zk-pdfviewer-selection-background-color);
+}
+.z-pdfviewer-text-layer > span {
+	color: transparent;
+	position: absolute;
+	white-space: pre;
+	cursor: text;
+	transform-origin: 0 0;
+}
+.z-pdfviewer-annotation-layer .linkAnnotation {
+	position: absolute;
+}
+.z-pdfviewer-annotation-layer .linkAnnotation > a {
+	position: absolute;
+	font-size: 1em;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+.z-pdfviewer-toolbar {
+	background: var(--zk-pdfviewer-toolbar-background-color);
+	border: 1px solid var(--zk-pdfviewer-toolbar-border-color);
+	border-radius: var(--zk-pdfviewer-toolbar-border-radius);
+	padding: var(--zk-pdfviewer-toolbar-padding);
+	opacity: 0;
+	position: absolute;
+	bottom: 1em;
+	left: 50%;
+	transform: translateX(-50%);
+	font-size: var(--zk-base-font-size);
+	font-family: var(--zk-base-content-font-family);
+}
+.z-pdfviewer-toolbar-button {
+	height: var(--zk-pdfviewer-toolbar-button-size);
+	width: var(--zk-pdfviewer-toolbar-button-size);
+	padding: 0;
+	border-radius: var(--zk-base-border-radius);
+	border: 0;
+	color: var(--zk-pdfviewer-toolbar-button-color);
+	background: var(--zk-pdfviewer-toolbar-button-background-color);
+	margin-left: var(--zk-pdfviewer-toolbar-margins);
+}
+.z-pdfviewer-toolbar-button:nth-child(1) {
+	margin-left: 0;
+}
+.z-pdfviewer-toolbar-button > i {
+	pointer-events: none;
+}
+.z-pdfviewer-toolbar-button:hover {
+	color: var(--zk-pdfviewer-toolbar-button-hover-color);
+	background: var(--zk-pdfviewer-toolbar-button-hover-background-color);
+}
+.z-pdfviewer-toolbar-button:active {
+	color: var(--zk-pdfviewer-toolbar-button-active-color);
+	background: var(--zk-pdfviewer-toolbar-button-active-background-color);
+}
+.z-pdfviewer-toolbar-button[disabled] {
+	color: var(--zk-disabled-color);
+	background: var(--zk-pdfviewer-toolbar-button-background-color);
+}
+.z-pdfviewer-toolbar-separator {
+	height: var(--zk-pdfviewer-toolbar-separator-height);
+	width: 1px;
+	display: inline-block;
+	vertical-align: middle;
+	border-left: 1px solid var(--zk-pdfviewer-toolbar-separator-color);
+	margin-left: var(--zk-pdfviewer-toolbar-margins);
+}
+.z-pdfviewer-toolbar-page {
+	vertical-align: middle;
+}
+.z-pdfviewer-toolbar-page-active {
+	-moz-appearance: textfield;
+	-webkit-appearance: textfield;
+	width: var(--zk-pdfviewer-toolbar-page-active-width);
+	padding-top: 0;
+	padding-bottom: 0;
+	margin-left: var(--zk-pdfviewer-toolbar-margins);
+}
+.z-pdfviewer-toolbar-page-active:focus {
+	/* ZK input:hover style workaround */
+	-moz-appearance: textfield;
+	-webkit-appearance: textfield;
+}
+.z-pdfviewer-toolbar-page-active:invalid {
+	border-color: var(--zk-invalid-border-color);
+}
+.z-pdfviewer-toolbar-zoom.z-selectbox {
+	min-width: auto;
+	margin-left: var(--zk-pdfviewer-toolbar-margins);
+}
