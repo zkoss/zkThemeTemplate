@@ -1,0 +1,8 @@
+.z-cardlayout {
+	position: relative;
+	overflow: hidden;
+}
+.z-cardlayout-inner {
+	position: absolute;
+	overflow: hidden;
+}
