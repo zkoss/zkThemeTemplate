@@ -1,0 +1,91 @@
+.z-organigram {
+	overflow: auto;
+}
+.z-orgchildren {
+	display: flex;
+}
+.z-orgchildren:not(:only-child) > .z-orgitem:after {
+	content: '';
+	border-left: var(--zk-organigram-line);
+	height: 10px;
+	position: absolute;
+	left: 50%;
+	top: 0px;
+}
+.z-orgitem {
+	flex: auto;
+	display: flex;
+	flex-direction: column;
+	position: relative;
+}
+.z-orgitem:not(:only-child)::before {
+	content: '';
+	border-top: var(--zk-organigram-line);
+	width: 100%;
+	height: 1px;
+	top: 0px;
+	position: absolute;
+}
+.z-orgitem:first-child:before {
+	width: 50%;
+	left: 50%;
+}
+.z-orgitem:last-child:before {
+	width: 50%;
+}
+.z-orgitem:not(.z-orgitem-disabled) > .z-orgnode:hover {
+	color: var(--zk-orgnode-color);
+	background-color: var(--zk-orgnode-hover-background-color);
+}
+.z-orgitem-selected > .z-orgnode {
+	color: var(--zk-orgnode-selected-color);
+	background-color: var(--zk-orgnode-selected-background-color);
+}
+.z-orgitem-disabled > .z-orgnode {
+	color: var(--zk-orgnode-disabled-color);
+	background-color: var(--zk-orgnode-disabled-background-color);
+	cursor: default;
+}
+.z-orgitem-non-selectable > .z-orgnode {
+	cursor: default;
+}
+.z-orgitem-close > .z-orgchildren {
+	display: none;
+}
+.z-orgitem-close > .z-orgnode:after {
+	display: none;
+}
+.z-orgnode {
+	align-self: center;
+	position: relative;
+	margin: 10px;
+	padding: var(--zk-orgnode-padding);
+	cursor: pointer;
+	border: var(--zk-orgnode-border);
+	border-radius: var(--zk-orgnode-border-radius);
+	background-color: var(--zk-orgnode-background-color);
+	color: var(--zk-orgnode-color);
+	font-size: var(--zk-font-size-medium);
+	font-family: var(--zk-base-content-font-family);
+}
+.z-orgnode > i[class="z-orgnode-icon"] {
+	display: none;
+}
+.z-orgnode-icon {
+	position: absolute;
+	width: 12px;
+	height: 12px;
+	right: 0;
+	bottom: 0;
+	cursor: pointer;
+	color: var(--zk-orgnode-color);
+	font-size: 12px;
+}
+.z-orgnode:not(:only-child)::after {
+	content: '';
+	border-left: var(--zk-organigram-line);
+	height: 10px;
+	position: absolute;
+	bottom: -11px;
+	left: 50%;
+}
