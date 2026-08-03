@@ -1,0 +1,94 @@
+/* coachmark */
+.z-coachmark {
+	position: absolute;
+	top: 0;
+	left: 0;
+	opacity: 0;
+	visibility: hidden;
+}
+@keyframes expand {
+	0% {
+		transform: scale(0);
+	}
+	100% {
+		transform: scale(1);
+		opacity: 1;
+		visibility: visible;
+	}
+}
+.z-coachmark-open {
+	animation: expand 0.8s 0.2s ease-in-out;
+	animation-fill-mode: forwards;
+}
+.z-coachmark-content {
+	font-family: var(--zk-base-content-font-family);
+	font-size: var(--zk-font-size-medium);
+	font-weight: normal;
+	position: relative;
+	overflow: hidden;
+	height: 100%;
+	padding: var(--zk-coachmark-padding) var(--zk-coachmark-padding-right) var(--zk-coachmark-padding) var(--zk-coachmark-padding-left);
+	vertical-align: middle;
+	background-color: var(--zk-coachmark-background-color);
+	-webkit-border-radius: var(--zk-base-border-radius);
+	-moz-border-radius: var(--zk-base-border-radius);
+	-o-border-radius: var(--zk-base-border-radius);
+	-ms-border-radius: var(--zk-base-border-radius);
+	border-radius: var(--zk-base-border-radius);
+}
+.z-coachmark-pointer {
+	display: none;
+	width: 0;
+	height: 0;
+	border: 10px solid transparent;
+	position: absolute;
+	z-index: 100;
+}
+.z-coachmark-close {
+	font-size: var(--zk-coachmark-icon-size);
+	width: var(--zk-coachmark-icon-size);
+	height: var(--zk-coachmark-icon-size);
+	position: absolute;
+	top: var(--zk-coachmark-padding);
+	right: calc(var(--zk-coachmark-padding) / 2);
+	color: var(--zk-icon-color);
+	cursor: pointer;
+}
+.z-coachmark-icon {
+	background-color: var(--zk-coachmark-background-color);
+	position: absolute;
+	z-index: 1;
+}
+.z-coachmark-mask {
+	position: fixed;
+	background: transparent;
+	animation: mask 0.3s 0.3s ease-in-out;
+	animation-fill-mode: forwards;
+}
+@keyframes mask {
+	0% {
+		background: transparent;
+	}
+	100% {
+		background: var(--zk-coachmark-mask-background);
+	}
+}
+/* coachmark arrow: base style */
+.z-coachmark-right ~ .z-coachmark-close {
+	right: calc(var(--zk-coachmark-padding) + 16px);
+}
+.z-coachmark-up ~ .z-coachmark-close {
+	top: calc(var(--zk-coachmark-padding) + 16px);
+}
+.z-coachmark-left {
+	border-right-color: var(--zk-coachmark-background-color);
+}
+.z-coachmark-right {
+	border-left-color: var(--zk-coachmark-background-color);
+}
+.z-coachmark-up {
+	border-bottom-color: var(--zk-coachmark-background-color);
+}
+.z-coachmark-down {
+	border-top-color: var(--zk-coachmark-background-color);
+}
