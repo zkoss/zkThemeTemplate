@@ -128,9 +128,24 @@ function rewriteLineComments(src) {
 	return out;
 }
 
-/** The leading run of `<%@ … %>` directives, plus the whitespace around it. `${…}` EL is kept. */
+/**
+ * The leading run of `<%@ … %>` directives, plus the whitespace around it. `${…}` EL is kept.
+ *
+ * THE RUN IS NOT ALWAYS AT OFFSET 0. Three entry files emit a block comment above their
+ * `@import "_header.less"`, so the header lands on line 3: `zul/less/footer.less`
+ * (`/* For customized style *\/`) and both `tbeditor.less` (the Trumbowyg MIT license and
+ * attribution). Only the UNCOMPRESSED path ever sees this — `--compress` drops those comments,
+ * which is why every `.css.dsp` baseline has its header at offset 0 and this stayed invisible
+ * until the first such file was converted.
+ *
+ * So skip a leading prefix of comments/whitespace and remove the run alone, KEEPING the prefix:
+ * for two of the three files that prefix is a vendor licence, which must survive into the new
+ * source. Everything before the run has to be comment-or-whitespace, so this can never step over
+ * real CSS — a directive that sits after a declaration still lands in the body, where the caller's
+ * `/<%/` guard refuses the file and asks for a human decision (that is `norm`'s shape, a P5 holdout).
+ */
 function stripHeader(css) {
-	return css.replace(/^\s*(?:<%[\s\S]*?%>\s*)+/, '');
+	return css.replace(/^((?:\s|\/\*[\s\S]*?\*\/)*)(?:<%[\s\S]*?%>\s*)+/, '$1');
 }
 
 /**
