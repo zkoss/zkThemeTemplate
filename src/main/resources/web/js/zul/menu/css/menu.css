@@ -1,0 +1,372 @@
+/* define common font property */
+.z-menubar {
+	display: block;
+	border-top: 1px solid var(--zk-base-border-color);
+	border-bottom: 1px solid var(--zk-base-border-color);
+	padding: var(--zk-menubar-padding);
+	position: relative;
+	background: var(--zk-menu-background);
+}
+.z-menubar ul {
+	overflow: hidden;
+	background: transparent none repeat 0 0;
+	border: 0;
+	-webkit-border-radius: var(--zk-base-border-radius);
+	-moz-border-radius: var(--zk-base-border-radius);
+	-o-border-radius: var(--zk-base-border-radius);
+	-ms-border-radius: var(--zk-base-border-radius);
+	border-radius: var(--zk-base-border-radius);
+	padding: 0;
+	margin: 0;
+	position: relative;
+	list-style: none outside none;
+}
+.z-menubar li {
+	display: block;
+	padding: 0;
+	position: relative;
+}
+.z-menubar-horizontal li {
+	margin: var(--zk-menubar-horizontal-margin);
+	float: left;
+}
+.z-menubar-horizontal .z-menuseparator {
+	display: block;
+	width: 1px;
+	border-left: 1px solid var(--zk-menu-separator-border-color);
+	line-height: var(--zk-menubar-horizontal-separator-line-height);
+	margin: var(--zk-menubar-horizontal-separator-margin);
+}
+.z-menubar-vertical {
+	padding: 4px 2px;
+}
+.z-menubar-vertical ul {
+	display: inline-table;
+}
+.z-menubar-vertical li {
+	margin: 2px;
+}
+.z-menubar-vertical .z-menu-clickable .z-menu-text {
+	margin-right: 20px;
+}
+.z-menubar-vertical .z-menuseparator {
+	height: 0;
+	min-height: 0;
+	border-top: 1px solid var(--zk-menu-separator-border-color);
+	line-height: 0;
+}
+.z-menu,
+.z-menuitem {
+	background: transparent none repeat 0 0;
+	border: 0;
+	-webkit-border-radius: var(--zk-base-border-radius);
+	-moz-border-radius: var(--zk-base-border-radius);
+	-o-border-radius: var(--zk-base-border-radius);
+	-ms-border-radius: var(--zk-base-border-radius);
+	border-radius: var(--zk-base-border-radius);
+	padding: 0;
+	margin: 0;
+	position: relative;
+	list-style: none outside none;
+	/* avoid using none default zclass */
+	/* icon sclass */
+}
+.z-menu-text,
+.z-menuitem-text {
+	font-family: var(--zk-base-title-font-family);
+	font-size: var(--zk-menu-text-font-size);
+	font-weight: normal;
+	display: inline-block;
+	vertical-align: middle;
+	/* align for img + text */
+}
+img ~ .z-menu-text,
+img ~ .z-menuitem-text {
+	vertical-align: middle;
+}
+.z-menu-text:empty,
+.z-menuitem-text:empty {
+	display: none;
+}
+.z-menu-image,
+.z-menuitem-image {
+	max-width: var(--zk-menu-image-size);
+	line-height: normal;
+	margin-right: 4px;
+}
+.z-menu-content,
+.z-menuitem-content {
+	color: var(--zk-menu-item-color);
+	background: var(--zk-menu-item-background);
+	display: block;
+	border: 1px solid transparent;
+	-webkit-border-radius: var(--zk-base-border-radius);
+	-moz-border-radius: var(--zk-base-border-radius);
+	-o-border-radius: var(--zk-base-border-radius);
+	-ms-border-radius: var(--zk-base-border-radius);
+	border-radius: var(--zk-base-border-radius);
+	padding: var(--zk-menu-content-padding);
+	line-height: var(--zk-menu-content-line-height);
+	position: relative;
+	cursor: pointer;
+	text-decoration: none;
+	white-space: nowrap;
+	min-height: var(--zk-menu-content-min-height);
+	z-index: 20;
+	/* the 20 is greater than menupopup-separator's z-index */
+}
+.z-menu-content:hover,
+.z-menuitem-content:hover {
+	color: var(--zk-menu-item-hover-color);
+	background-color: var(--zk-menu-item-hover-background);
+}
+.z-menu-content:focus,
+.z-menuitem-content:focus {
+	color: var(--zk-menu-item-hover-color);
+	background-color: var(--zk-menu-item-hover-background);
+}
+.z-menu-content:active,
+.z-menuitem-content:active {
+	color: var(--zk-menu-item-active-color);
+	background-color: var(--zk-menu-item-active-background);
+}
+.z-menu-content[disabled],
+.z-menuitem-content[disabled] {
+	border: 1px solid transparent;
+	cursor: default;
+	color: var(--zk-disabled-color);
+	background: var(--zk-menu-item-background);
+	text-decoration: none;
+}
+.z-menu-content[disabled]:active,
+.z-menuitem-content[disabled]:active,
+.z-menu-content[disabled]:hover,
+.z-menuitem-content[disabled]:hover {
+	color: var(--zk-disabled-color);
+	background: 0;
+}
+.z-menu-content i,
+.z-menuitem-content i {
+	margin-right: var(--zk-menu-icon-margin-right);
+	vertical-align: middle;
+}
+.z-menu-separator {
+	display: none;
+}
+.z-menu-clickable .z-menu-separator {
+	width: 1px;
+	height: 100%;
+	display: block;
+	background: transparent;
+	position: absolute;
+	top: 0;
+	right: 30px;
+}
+.z-menu-clickable.z-menu:active,
+.z-menu-clickable.z-menu-selected {
+	outline: 2px solid var(--zk-focus-border-color);
+}
+.z-menu-clickable.z-menu:active .z-menu-separator,
+.z-menu-clickable.z-menu-selected .z-menu-separator {
+	background: var(--zk-menu-separator-background-color);
+}
+.z-menu-clickable .z-menu-text {
+	margin-right: 8px;
+}
+.z-menu-content {
+	padding-right: var(--zk-menu-content-padding-right);
+}
+.z-menu-icon {
+	font-size: var(--zk-menu-icon-size);
+	position: absolute;
+	right: 0;
+	top: var(--zk-menu-icon-position-top);
+}
+.z-menu-selected > .z-menu-content {
+	color: var(--zk-menu-item-active-color);
+	background-color: var(--zk-menu-item-active-background);
+}
+.z-menuitem-selected > .z-menuitem-content {
+	color: var(--zk-menu-item-active-color);
+	background-color: var(--zk-menu-item-active-background);
+}
+/* menupopup */
+.z-menupopup-shadow,
+.z-menu-palette-popup,
+.z-menu-picker-popup,
+.z-menu-content-popup {
+	-webkit-box-shadow: 0 3px 6px 0 rgba(0,0,0,0.16), 0 2px 4px 0 rgba(0,0,0,0.24);
+	-moz-box-shadow: 0 3px 6px 0 rgba(0,0,0,0.16), 0 2px 4px 0 rgba(0,0,0,0.24);
+	-o-box-shadow: 0 3px 6px 0 rgba(0,0,0,0.16), 0 2px 4px 0 rgba(0,0,0,0.24);
+	-ms-box-shadow: 0 3px 6px 0 rgba(0,0,0,0.16), 0 2px 4px 0 rgba(0,0,0,0.24);
+	box-shadow: 0 3px 6px 0 rgba(0,0,0,0.16), 0 2px 4px 0 rgba(0,0,0,0.24);
+}
+.z-menu-content-popup {
+	display: none;
+	width: auto;
+	height: auto;
+	position: absolute;
+	overflow: auto;
+	z-index: var(--zk-base-popup-z-index);
+}
+.z-menupopup {
+	border: 1px solid var(--zk-base-border-color);
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	-o-border-radius: 4px;
+	-ms-border-radius: 4px;
+	border-radius: 4px;
+	padding: 4px;
+	background: var(--zk-menu-popup-background);
+	left: 0;
+	top: 0;
+	white-space: nowrap;
+	z-index: var(--zk-base-popup-z-index);
+	max-height: 100%;
+	overflow-y: auto;
+}
+.z-menupopup ul {
+	background: transparent none repeat 0 0;
+	border: 0;
+	-webkit-border-radius: var(--zk-base-border-radius);
+	-moz-border-radius: var(--zk-base-border-radius);
+	-o-border-radius: var(--zk-base-border-radius);
+	-ms-border-radius: var(--zk-base-border-radius);
+	border-radius: var(--zk-base-border-radius);
+	padding: 0;
+	margin: 0;
+	position: relative;
+	list-style: none outside none;
+}
+.z-menupopup-separator {
+	display: none;
+}
+.z-menupopup .z-menu-content,
+.z-menupopup .z-menuitem-content {
+	color: var(--zk-menu-popup-item-color);
+	background: var(--zk-menu-popup-item-background);
+}
+.z-menupopup .z-menu-content:active,
+.z-menupopup .z-menuitem-content:active {
+	color: var(--zk-menu-popup-item-active-color);
+	background-color: var(--zk-menu-popup-item-active-background);
+}
+.z-menupopup .z-menu-content[disabled],
+.z-menupopup .z-menuitem-content[disabled] {
+	border: 1px solid transparent;
+	cursor: default;
+	color: var(--zk-disabled-color);
+	background: var(--zk-menu-popup-item-background);
+	text-decoration: none;
+}
+.z-menupopup .z-menu-content[disabled]:active,
+.z-menupopup .z-menuitem-content[disabled]:active,
+.z-menupopup .z-menu-content[disabled]:hover,
+.z-menupopup .z-menuitem-content[disabled]:hover {
+	color: var(--zk-disabled-color);
+	background: 0;
+}
+.z-menupopup .z-menu-image,
+.z-menupopup .z-menuitem-image {
+	min-width: var(--zk-menu-image-size);
+	min-height: var(--zk-menu-image-size);
+	line-height: normal;
+	background-repeat: no-repeat;
+	margin-right: 8px;
+}
+.z-menupopup .z-menuitem-icon {
+	font-size: var(--zk-menu-popup-item-icon-size);
+	color: var(--zk-menu-checked-color);
+	display: none;
+	position: absolute;
+	top: var(--zk-menu-popup-item-icon-position-top);
+	left: var(--zk-menu-popup-item-icon-position-left);
+}
+.z-menupopup .z-menuseparator {
+	font-size: 1px;
+	display: block;
+	width: auto;
+	min-height: 2px;
+	border-bottom: 1px solid var(--zk-menu-popup-separator-border);
+	padding: 0;
+	line-height: 1px;
+	margin: 4px 0;
+	position: relative;
+}
+.z-menupopup [class^="z-icon"] {
+	text-align: center;
+	display: inline-block;
+	min-width: var(--zk-menu-image-size);
+	/* for text alignment */
+	margin-right: 8px;
+	line-height: normal;
+}
+.z-menupopup .z-menu-hover > .z-menu-content,
+.z-menupopup .z-menu-focus > .z-menu-content,
+.z-menupopup .z-menuitem-hover > .z-menuitem-content,
+.z-menupopup .z-menuitem-focus > .z-menuitem-content {
+	color: var(--zk-menu-popup-item-hover-color);
+	background-color: var(--zk-menu-popup-item-hover-background);
+}
+/* define checked menuitem effect in menupopup */
+.z-menuitem-checkable .z-menuitem-image {
+	border: 1px solid var(--zk-checked-border-color);
+	-webkit-border-radius: var(--zk-base-border-radius);
+	-moz-border-radius: var(--zk-base-border-radius);
+	-o-border-radius: var(--zk-base-border-radius);
+	-ms-border-radius: var(--zk-base-border-radius);
+	border-radius: var(--zk-base-border-radius);
+	background: var(--zk-checked-background-color);
+}
+.z-menuitem-checked.z-menuitem-checkable .z-menuitem-image {
+	background: var(--zk-menu-checked-background-color);
+}
+.z-menuitem-checked.z-menuitem-checkable .z-menuitem-icon {
+	display: block;
+}
+/* define menubar hor scroll */
+.z-menubar-scroll {
+	overflow: hidden;
+}
+.z-menubar-body {
+	width: 100%;
+	margin: 0 var(--zk-base-bar-width);
+	position: relative;
+	overflow: hidden;
+}
+.z-menubar-content {
+	width: 5000px;
+}
+.z-menubar-icon {
+	font-size: var(--zk-font-size-x-large);
+	color: var(--zk-menu-scrollable-icon-color);
+	margin-top: calc(var(--zk-font-size-x-large) * -0.5);
+	margin-left: calc(var(--zk-font-size-x-large) * -0.5 + 2px);
+	position: absolute;
+	top: 50%;
+	left: 50%;
+}
+.z-menubar-left:hover > .z-menubar-icon,
+.z-menubar-right:hover > .z-menubar-icon {
+	color: var(--zk-menu-scrollable-icon-hover-color);
+}
+.z-menubar-left {
+	left: 0;
+}
+.z-menubar-scrollable {
+	width: var(--zk-base-bar-width);
+	height: 100%;
+	line-height: normal;
+	position: absolute;
+	top: 0;
+	right: 0;
+	cursor: pointer;
+	z-index: 25;
+}
+/* Icon replacement */
+.z-menubar-left > i:before {
+	content: '\f104';
+}
+.z-menubar-right > i:before {
+	content: '\f105';
+}
