@@ -2,11 +2,9 @@
 	display: inline-block;
 	height: var(--zk-combo-input-height);
 	font-size: var(--zk-input-text-size);
-	line-height: normal;
-	/* reset for inside other component */
+	line-height: normal; /* reset for inside other component */
 	white-space: nowrap;
 	position: relative;
-	/* Inplace editing */
 }
 .z-combobox-input {
 	font-family: var(--zk-base-content-font-family);
@@ -27,8 +25,8 @@
 	padding-right: var(--zk-combo-input-padding-right);
 	line-height: var(--zk-base-line-height);
 	background: var(--zk-input-background-color);
-	/* Placeholder ZK-3876: combobox does not provide proper placeholder style */
 }
+/* Placeholder ZK-3876: combobox does not provide proper placeholder style */
 .z-combobox-input::-webkit-input-placeholder {
 	color: var(--zk-input-placeholder-color);
 }
@@ -126,6 +124,7 @@
 	color: var(--zk-input-readonly-color);
 	background-color: var(--zk-input-background-color);
 }
+/* Inplace editing */
 .z-combobox-inplace .z-combobox-input {
 	border: 0;
 	padding: 3px;
@@ -139,11 +138,9 @@
 	display: inline-block;
 	height: var(--zk-combo-input-height);
 	font-size: var(--zk-input-text-size);
-	line-height: normal;
-	/* reset for inside other component */
+	line-height: normal; /* reset for inside other component */
 	white-space: nowrap;
 	position: relative;
-	/* Inplace editing */
 }
 .z-bandbox-input {
 	font-family: var(--zk-base-content-font-family);
@@ -164,8 +161,8 @@
 	padding-right: var(--zk-combo-input-padding-right);
 	line-height: var(--zk-base-line-height);
 	background: var(--zk-input-background-color);
-	/* Placeholder ZK-3876: combobox does not provide proper placeholder style */
 }
+/* Placeholder ZK-3876: combobox does not provide proper placeholder style */
 .z-bandbox-input::-webkit-input-placeholder {
 	color: var(--zk-input-placeholder-color);
 }
@@ -263,6 +260,7 @@
 	color: var(--zk-input-readonly-color);
 	background-color: var(--zk-input-background-color);
 }
+/* Inplace editing */
 .z-bandbox-inplace .z-bandbox-input {
 	border: 0;
 	padding: 3px;
@@ -276,11 +274,9 @@
 	display: inline-block;
 	height: var(--zk-combo-input-height);
 	font-size: var(--zk-input-text-size);
-	line-height: normal;
-	/* reset for inside other component */
+	line-height: normal; /* reset for inside other component */
 	white-space: nowrap;
 	position: relative;
-	/* Inplace editing */
 }
 .z-datebox-input {
 	font-family: var(--zk-base-content-font-family);
@@ -301,8 +297,8 @@
 	padding-right: var(--zk-combo-input-padding-right);
 	line-height: var(--zk-base-line-height);
 	background: var(--zk-input-background-color);
-	/* Placeholder ZK-3876: combobox does not provide proper placeholder style */
 }
+/* Placeholder ZK-3876: combobox does not provide proper placeholder style */
 .z-datebox-input::-webkit-input-placeholder {
 	color: var(--zk-input-placeholder-color);
 }
@@ -400,6 +396,7 @@
 	color: var(--zk-input-readonly-color);
 	background-color: var(--zk-input-background-color);
 }
+/* Inplace editing */
 .z-datebox-inplace .z-datebox-input {
 	border: 0;
 	padding: 3px;
@@ -413,11 +410,9 @@
 	display: inline-block;
 	height: var(--zk-combo-input-height);
 	font-size: var(--zk-input-text-size);
-	line-height: normal;
-	/* reset for inside other component */
+	line-height: normal; /* reset for inside other component */
 	white-space: nowrap;
 	position: relative;
-	/* Inplace editing */
 }
 .z-timebox-input {
 	font-family: var(--zk-base-content-font-family);
@@ -438,8 +433,8 @@
 	padding-right: var(--zk-combo-input-padding-right);
 	line-height: var(--zk-base-line-height);
 	background: var(--zk-input-background-color);
-	/* Placeholder ZK-3876: combobox does not provide proper placeholder style */
 }
+/* Placeholder ZK-3876: combobox does not provide proper placeholder style */
 .z-timebox-input::-webkit-input-placeholder {
 	color: var(--zk-input-placeholder-color);
 }
@@ -537,6 +532,7 @@
 	color: var(--zk-input-readonly-color);
 	background-color: var(--zk-input-background-color);
 }
+/* Inplace editing */
 .z-timebox-inplace .z-timebox-input {
 	border: 0;
 	padding: 3px;
@@ -550,11 +546,9 @@
 	display: inline-block;
 	height: var(--zk-combo-input-height);
 	font-size: var(--zk-input-text-size);
-	line-height: normal;
-	/* reset for inside other component */
+	line-height: normal; /* reset for inside other component */
 	white-space: nowrap;
 	position: relative;
-	/* Inplace editing */
 }
 .z-spinner-input {
 	font-family: var(--zk-base-content-font-family);
@@ -575,8 +569,8 @@
 	padding-right: var(--zk-combo-input-padding-right);
 	line-height: var(--zk-base-line-height);
 	background: var(--zk-input-background-color);
-	/* Placeholder ZK-3876: combobox does not provide proper placeholder style */
 }
+/* Placeholder ZK-3876: combobox does not provide proper placeholder style */
 .z-spinner-input::-webkit-input-placeholder {
 	color: var(--zk-input-placeholder-color);
 }
@@ -674,6 +668,7 @@
 	color: var(--zk-input-readonly-color);
 	background-color: var(--zk-input-background-color);
 }
+/* Inplace editing */
 .z-spinner-inplace .z-spinner-input {
 	border: 0;
 	padding: 3px;
@@ -687,11 +682,9 @@
 	display: inline-block;
 	height: var(--zk-combo-input-height);
 	font-size: var(--zk-input-text-size);
-	line-height: normal;
-	/* reset for inside other component */
+	line-height: normal; /* reset for inside other component */
 	white-space: nowrap;
 	position: relative;
-	/* Inplace editing */
 }
 .z-doublespinner-input {
 	font-family: var(--zk-base-content-font-family);
@@ -712,8 +705,8 @@
 	padding-right: var(--zk-combo-input-padding-right);
 	line-height: var(--zk-base-line-height);
 	background: var(--zk-input-background-color);
-	/* Placeholder ZK-3876: combobox does not provide proper placeholder style */
 }
+/* Placeholder ZK-3876: combobox does not provide proper placeholder style */
 .z-doublespinner-input::-webkit-input-placeholder {
 	color: var(--zk-input-placeholder-color);
 }
@@ -811,6 +804,7 @@
 	color: var(--zk-input-readonly-color);
 	background-color: var(--zk-input-background-color);
 }
+/* Inplace editing */
 .z-doublespinner-inplace .z-doublespinner-input {
 	border: 0;
 	padding: 3px;
@@ -861,7 +855,6 @@
 .z-doublespinner-button {
 	width: var(--zk-spinner-button-width);
 	padding: 0;
-	/* separator */
 }
 .z-timebox-button:hover,
 .z-spinner-button:hover,
@@ -871,6 +864,7 @@
 .z-doublespinner-button:active {
 	background: var(--zk-input-background-color);
 }
+/* separator */
 .z-timebox-button > i,
 .z-spinner-button > i,
 .z-doublespinner-button > i {

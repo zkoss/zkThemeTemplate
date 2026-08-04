@@ -2,12 +2,6 @@
 	position: relative;
 	overflow: hidden;
 	white-space: nowrap;
-	/* content and child
- */
-	/* scrollbar
- */
-	/* loading image
- */
 }
 .z-scrollview-horizontal .z-scrollview-content {
 	height: 100%;
@@ -37,6 +31,7 @@
 .z-scrollview-vertical .z-scrollview-scrollbar-indicator {
 	width: 100%;
 }
+/* content and child */
 .z-scrollview-content {
 	-webkit-transition-duration: 0;
 	-moz-transition-duration: 0;
@@ -68,6 +63,7 @@
 	position: relative;
 	zoom: 1;
 }
+/* scrollbar */
 .z-scrollview-scrollbar {
 	position: absolute;
 	z-index: 100;
@@ -118,6 +114,7 @@
 	-ms-transform: translate3d(0, 0, 0);
 	transform: translate3d(0, 0, 0);
 }
+/* loading image */
 .z-scrollview-load {
 	display: none;
 	width: 100%;

@@ -18,9 +18,8 @@
 	padding: var(--zk-input-padding);
 	line-height: var(--zk-input-line-height);
 	background: var(--zk-input-background-color);
-	/* Placeholder */
-	/* Inplace editing */
 }
+/* Placeholder */
 .z-textbox::-webkit-input-placeholder,
 .z-decimalbox::-webkit-input-placeholder,
 .z-intbox::-webkit-input-placeholder,
@@ -120,6 +119,7 @@
 .z-doublebox[disabled]:focus {
 	border-color: var(--zk-input-border-color);
 }
+/* Inplace editing */
 .z-textbox-inplace,
 .z-decimalbox-inplace,
 .z-intbox-inplace,

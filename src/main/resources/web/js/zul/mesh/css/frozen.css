@@ -1,8 +1,6 @@
 .z-frozen {
 	background-image: url(${c:encodeThemeURL("~./zul/img/common/bar-bg.png")});
 	overflow: hidden;
-	/* for new frozen
- */
 }
 .z-frozen-body {
 	overflow: hidden;
@@ -19,6 +17,7 @@
 	overflow: hidden;
 	float: right;
 }
+/* for new frozen */
 .z-frozen-col {
 	border-left: none !important;
 	border-right: 1px solid var(--zk-mesh-title-border-color);

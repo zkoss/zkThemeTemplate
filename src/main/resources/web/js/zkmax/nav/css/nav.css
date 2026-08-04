@@ -6,9 +6,6 @@
 	border-top: 1px solid var(--zk-nav-border-color);
 	border-bottom: 1px solid var(--zk-nav-border-color);
 	padding: var(--zk-navbar-padding);
-	/* overall style */
-	/* horizontal style */
-	/* vertical style */
 }
 .z-navbar ul {
 	background: var(--zk-nav-background-color);
@@ -17,9 +14,7 @@
 	margin: 0;
 	list-style: none;
 }
-.z-navbar > ul {
-	/* first level */
-}
+/* overall style */
 .z-navbar > ul ul {
 	/* second level */
 	display: none;
@@ -39,6 +34,7 @@
 	color: var(--zk-nav-selected-color);
 	background: var(--zk-nav-selected-background-color);
 }
+/* horizontal style */
 .z-navbar-horizontal {
 	padding: var(--zk-navbar-horizontal-padding);
 }
@@ -48,9 +44,6 @@
 	border-bottom: 2px solid transparent;
 	min-width: 182px;
 	vertical-align: middle;
-}
-.z-navbar-horizontal > ul {
-	/* topmost level */
 }
 .z-navbar-horizontal > ul ul {
 	/* second level */
@@ -69,15 +62,11 @@
 	box-shadow: 0 3px 6px 0 rgba(0,0,0,0.16), 0 2px 4px 0 rgba(0,0,0,0.24);
 	z-index: var(--zk-base-popup-z-index);
 }
-.z-navbar-horizontal > ul ul ul {
-	/* third level */
-}
 .z-navbar-horizontal .z-navseparator {
 	min-width: 1px;
 	width: 1px;
 	line-height: var(--zk-navbar-horizontal-line-height);
-	vertical-align: top;
-	/* for collapsed navbar */
+	vertical-align: top; /* for collapsed navbar */
 	position: relative;
 	border-left: 1px solid var(--zk-nav-border-color);
 	margin: 0 6px;
@@ -86,9 +75,7 @@
 .z-navbar-horizontal .z-navitem-selected {
 	border-bottom: 2px solid var(--zk-color-primary);
 }
-.z-navbar-vertical > ul {
-	/* topmost level */
-}
+/* vertical style */
 .z-navbar-vertical > ul > li:first-child a {
 	border-top-width: 1px;
 }
@@ -175,9 +162,6 @@
 	background: var(--zk-nav-background-color);
 }
 /* Collapsed */
-.z-navbar-collapsed > ul {
-	/* topmost level */
-}
 .z-navbar-collapsed > ul > .z-nav > .z-nav-content,
 .z-navbar-collapsed > ul > .z-navitem > .z-navitem-content {
 	border-width: 0;
@@ -209,9 +193,6 @@
 	position: relative;
 	top: var(--zk-navbar-collapsed-info-position-top);
 	left: 0;
-}
-.z-navbar-horizontal.z-navbar-collapsed > ul {
-	/* topmost level */
 }
 .z-navbar-horizontal.z-navbar-collapsed > ul > .z-nav,
 .z-navbar-horizontal.z-navbar-collapsed > ul > .z-navitem {

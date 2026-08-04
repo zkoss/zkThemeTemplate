@@ -1,14 +1,14 @@
 /**
- * @{zprefix} v2.7.2 - A lightweight WYSIWYG editor
- * Default stylesheet for @{zprefix} editor
+ * Trumbowyg v2.7.2 - A lightweight WYSIWYG editor
+ * Default stylesheet for Trumbowyg editor
  * ------------------------
- * @link http://alex-d.github.io/@{zprefix}
+ * @link http://alex-d.github.io/Trumbowyg
  * @license MIT
  * @author Alexandre Demode (Alex-D)
  *         Twitter : @AlexandreDemode
  *         Website : alex-d.fr
  */
-/* Potix: turn trumbowyg.css into tbeditor.less */
+/* Potix: derived from Trumbowyg's trumbowyg.css; class prefix z-tbeditor */
 #z-tbeditor-icons {
 	overflow: hidden;
 	visibility: hidden;
@@ -36,15 +36,13 @@
 	border: 1px solid #DDD;
 	width: 100%;
 	min-height: 300px;
-	margin: 0px auto;
+	margin: 0px auto; /* Potix: style modified */
 }
-/* Potix: style modified */
 .z-tbeditor-box .z-tbeditor-editor {
 	margin: 0 auto;
 }
 .z-tbeditor-editor p {
-	margin: 0 0 1em;
-	/* Potix: style modified */
+	margin: 0 0 1em; /* Potix: style modified */
 }
 .z-tbeditor-box.z-tbeditor-fullscreen {
 	background: #FEFEFE;
@@ -158,9 +156,8 @@
 	background: #d7e0e2;
 	margin: 0 5px;
 	height: 35px;
-	vertical-align: top;
+	vertical-align: top; /* Potix: ZK-4916: style modified for trumbowyg v2.7.2 */
 }
-/* Potix: ZK-4916: style modified for trumbowyg v2.7.2 */
 .z-tbeditor-button-pane button {
 	display: inline-block;
 	position: relative;
@@ -172,8 +169,7 @@
 	border: none;
 	cursor: pointer;
 	background: none;
-	vertical-align: baseline;
-	/* Potix: ZK-4916: style modified for trumbowyg v2.7.2 */
+	vertical-align: baseline; /* Potix: ZK-4916: style modified for trumbowyg v2.7.2 */
 	transition: background-color 150ms, opacity 150ms;
 }
 .z-tbeditor-button-pane button.z-tbeditor-textual-button {
@@ -450,11 +446,6 @@ body.z-tbeditor-body-fullscreen {
 	color: #222;
 	fill: transparent;
 }
-.z-tbeditor-editor {
-	/*
-		 * lset for resetCss option
-		 */
-}
 .z-tbeditor-editor object,
 .z-tbeditor-editor embed,
 .z-tbeditor-editor video,
@@ -468,6 +459,7 @@ body.z-tbeditor-body-fullscreen {
 .z-tbeditor-editor img {
 	cursor: move;
 }
+/* lset for resetCss option */
 .z-tbeditor-editor.z-tbeditor-reset-css {
 	background: #FEFEFE !important;
 	font-family: "Trebuchet MS", Helvetica, Verdana, sans-serif !important;

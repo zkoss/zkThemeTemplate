@@ -6,7 +6,6 @@
 	background-color: var(--zk-calendar-background-color);
 	min-width: 230px;
 	padding: var(--zk-calendar-padding);
-	/* for transition's animation use only */
 }
 .z-calendar a {
 	text-decoration: none;
@@ -117,6 +116,7 @@
 	color: var(--zk-weekofyear-color);
 	background: var(--zk-weekofyear-background-color);
 }
+/* for transition's animation use only */
 .z-calendar-anima {
 	overflow: hidden;
 	position: relative;

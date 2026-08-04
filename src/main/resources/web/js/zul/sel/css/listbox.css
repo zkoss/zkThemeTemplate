@@ -1,25 +1,21 @@
-/* reset table */
-/* checkbox style */
 /* listbox */
 .z-listbox {
 	background: var(--zk-mask-background-color);
 	border: 1px solid var(--zk-base-border-color);
 	overflow: hidden;
 	zoom: 1;
-	/* listbox header */
-	/* listbox body */
-	/* listbox footer */
-	/* ZK-3138: ROD loading indicator */
 }
 .z-listbox:focus-visible {
 	box-shadow: var(--zk-mesh-focus-box-shadow);
 	transition: unset;
 }
+/* listbox header */
 .z-listbox-header {
 	width: 100%;
 	position: relative;
 	overflow: hidden;
 }
+/* reset table (same shape expanded on .z-listbox-header/-body/-footer table) */
 .z-listbox-header table {
 	border-spacing: 0;
 }
@@ -31,6 +27,7 @@
 .z-listbox-header table th {
 	text-align: inherit;
 }
+/* listbox body */
 .z-listbox-body {
 	position: relative;
 	overflow: hidden;
@@ -61,6 +58,7 @@
 	background: var(--zk-mesh-background-color);
 	padding: var(--zk-mesh-empty-body-padding);
 }
+/* listbox footer */
 .z-listbox-footer {
 	overflow: hidden;
 	white-space: nowrap;
@@ -90,6 +88,7 @@
 .z-listbox-odd > .z-listcell {
 	background: var(--zk-mesh-stripe-background-color);
 }
+/* ZK-3138: ROD loading indicator */
 .z-listbox-loading {
 	background: transparent no-repeat center;
 	background-image: url(${c:encodeThemeURL("~./zul/img/misc/progress-72.gif")});
@@ -97,8 +96,8 @@
 /* listhead */
 .z-listhead th:first-child {
 	border-left: none;
-	/* B50-3306729: the first header should have border-left when the first column is covered with other header */
 }
+/* B50-3306729: the first header should have border-left when the first column is covered with other header */
 .z-listhead th:first-child.z-listhead-border {
 	border-left: 1px solid var(--zk-mesh-title-border-color);
 }
@@ -160,6 +159,7 @@
 .z-listheader-visited .z-listheader-content {
 	color: var(--zk-mesh-title-active-color);
 }
+/* checkbox style (same shape expanded on .z-listheader-/.z-listitem-/.z-listgroup-checkable) */
 .z-listheader-checkable {
 	display: inline-block;
 	width: var(--zk-checkbox-size);
@@ -220,13 +220,6 @@
 }
 /* ZK-2151: use strict selector to prevent nest problem */
 /* list item and cell */
-.z-listitem {
-	/* list cell */
-	/* check mark */
-	/* selected list cell */
-	/* selected check mark */
-	/* disabled */
-}
 .z-listitem .z-listcell {
 	border-top: 1px solid var(--zk-mesh-content-border-color);
 	overflow: hidden;
@@ -240,6 +233,7 @@
 .z-listitem:hover > .z-listcell > .z-listcell-content {
 	color: var(--zk-hover-color);
 }
+/* check mark */
 .z-listitem-checkable {
 	display: inline-block;
 	width: var(--zk-checkbox-size);
@@ -272,6 +266,7 @@
 	display: none;
 	cursor: default;
 }
+/* selected list cell */
 .z-listitem.z-listitem-selected > .z-listcell {
 	background: var(--zk-selected-background-color);
 }
@@ -311,10 +306,11 @@
 .z-listitem-focus .z-listcell-content {
 	color: var(--zk-hover-color);
 }
+/* selected check mark */
 .z-listitem-selected > .z-listcell > .z-listcell-content > .z-listitem-checkable .z-listitem-icon {
+	/* the check glyph comes from the .z-icon-check font-awesome class on this element — it needs no rule of its own */
 	display: block;
 	cursor: pointer;
-	/* for checkbox, use font-awesome */
 }
 .z-listitem-selected > .z-listcell > .z-listcell-content > .z-listitem-checkable .z-listitem-icon.z-icon-radio {
 	/* for radio */
@@ -335,6 +331,7 @@
 	-ms-transform: translate(-50%, -50%);
 	transform: translate(-50%, -50%);
 }
+/* disabled */
 .z-listitem.z-listitem-disabled * {
 	color: var(--zk-disabled-color) !important;
 	cursor: default !important;
@@ -350,10 +347,6 @@
 	text-decoration: none;
 }
 /* Group */
-.z-listgroup {
-	/* check mark */
-	/* selected check mark */
-}
 .z-listgroup-inner {
 	border-top: 1px solid var(--zk-mesh-content-border-color);
 	border-bottom: 1px solid var(--zk-mesh-group-border-color);
@@ -373,6 +366,7 @@
 .z-listgroup.z-listgroup-open .z-listgroup-inner .z-listcell-content {
 	color: var(--zk-mesh-group-open-color);
 }
+/* check mark */
 .z-listgroup-checkable {
 	display: inline-block;
 	width: var(--zk-checkbox-size);
@@ -395,6 +389,7 @@
 	display: none;
 	cursor: default;
 }
+/* selected check mark */
 .z-listgroup-selected .z-listgroup-checkable .z-listgroup-icon {
 	display: block;
 	cursor: pointer;

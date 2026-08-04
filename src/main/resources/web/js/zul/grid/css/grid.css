@@ -1,20 +1,17 @@
-/* reset table */
 /* grid */
 .z-grid {
 	background: var(--zk-mask-background-color);
 	border: 1px solid var(--zk-base-border-color);
 	overflow: hidden;
 	zoom: 1;
-	/* grid header */
-	/* grid body */
-	/* grid footer */
-	/* ZK-3138: ROD loading indicator */
 }
+/* grid header */
 .z-grid-header {
 	width: 100%;
 	position: relative;
 	overflow: hidden;
 }
+/* reset table (same shape expanded on .z-grid-header/-body/-footer table) */
 .z-grid-header table {
 	border-spacing: 0;
 }
@@ -26,6 +23,7 @@
 .z-grid-header table th {
 	text-align: inherit;
 }
+/* grid body */
 .z-grid-body {
 	margin-top: auto;
 	position: relative;
@@ -57,6 +55,7 @@
 	background: var(--zk-mesh-background-color);
 	padding: var(--zk-mesh-empty-body-padding);
 }
+/* grid footer */
 .z-grid-footer {
 	overflow: hidden;
 	white-space: nowrap;
@@ -93,6 +92,7 @@
 .z-grid-odd > .z-cell {
 	background: var(--zk-mesh-stripe-background-color);
 }
+/* ZK-3138: ROD loading indicator */
 .z-grid-loading {
 	background: transparent no-repeat center;
 	background-image: url(${c:encodeThemeURL("~./zul/img/misc/progress-72.gif")});
@@ -100,8 +100,8 @@
 /* column */
 .z-columns th:first-child {
 	border-left: none;
-	/* B50-3306729: the first header should have border-left when the first column is covered with other header */
 }
+/* B50-3306729: the first header should have border-left when the first column is covered with other header */
 .z-columns th:first-child.z-columns-border {
 	border-left: 1px solid var(--zk-mesh-title-border-color);
 }

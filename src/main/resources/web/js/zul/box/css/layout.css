@@ -4,9 +4,8 @@
 }
 .z-hlayout {
 	white-space: nowrap;
-	/* css flex
- */
 }
+/* css flex */
 .z-hlayout.z-valign-bottom.z-flex {
 	align-items: flex-end;
 }

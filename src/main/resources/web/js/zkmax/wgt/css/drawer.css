@@ -4,8 +4,6 @@
 	z-index: 1000;
 	width: 0;
 	height: 0;
-	/* open style */
-	/* position */
 }
 .z-drawer-open {
 	width: 100%;
@@ -68,6 +66,7 @@
 	padding: var(--zk-drawer-container-padding);
 	height: 100%;
 }
+/* open style */
 .z-drawer-open.z-drawer-left .z-drawer-real {
 	box-shadow: 4px 0 8px var(--zk-drawer-shadow-color);
 	transform: translateX(0%);
@@ -84,6 +83,7 @@
 	box-shadow: 0 -4px 8px var(--zk-drawer-shadow-color);
 	transform: translateY(0%);
 }
+/* position */
 .z-drawer-left .z-drawer-real {
 	left: 0;
 	width: 280px;

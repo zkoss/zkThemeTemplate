@@ -55,8 +55,7 @@
 	color: var(--zk-base-text-color);
 	background: var(--zk-base-background-color);
 	display: block;
-	height: inherit;
-	/* Firefox bug: content cant be collapsed when scrolling */
+	height: inherit; /* Firefox bug: content cant be collapsed when scrolling */
 	border: 1px solid var(--zk-base-border-color);
 	border-top: 0;
 	padding: var(--zk-groupbox-content-padding);

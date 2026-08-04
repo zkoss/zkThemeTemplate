@@ -22,11 +22,11 @@
   - [L2.1 階段狀態](#l21-階段狀態)
   - [L2.2 前置工作項與 BLOCKED](#l22-前置工作項與-blocked)
   - [L2.3 P3 批次與步階](#l23-p3-批次與步階已收工-7474) — 已收工 74/74
-  - [L2.4 P3 來源清理待辦](#l24-p3-來源清理待辦7-項排在-p3-全部轉完之後) — 7 項
+  - [L2.4 P3 來源清理待辦](#l24-p3-來源清理待辦7-項排在-p3-全部轉完之後) — 7 項,**1–4、6 已收工**,剩 5、7 等 P4
   - [L2.5 交給 P8 的產品面問題](#l25-交給-p8-的產品面問題2026-08-033-項不阻擋-p4-p7) — 3 項
 - **[L3 技術附錄](#l3-技術附錄獨立檔)** — 索引在本檔;**內容在 [iceblue-drop-less-progress-appendix.md](iceblue-drop-less-progress-appendix.md)**
   - [階段與 commit 對照](iceblue-drop-less-progress-appendix.md#階段與-commit-對照)
-  - [L3-A 閘門紀錄](iceblue-drop-less-progress-appendix.md#l3-a-閘門紀錄附加式不覆寫) — 31 列,附加式不覆寫
+  - [L3-A 閘門紀錄](iceblue-drop-less-progress-appendix.md#l3-a-閘門紀錄附加式不覆寫) — 33 列,附加式不覆寫
   - [L3-B Tier 1](iceblue-drop-less-progress-appendix.md#l3-b-tier-1p1--s0--s1) — P1 = S0 + S1
   - [L3-C P2 儀器證明](iceblue-drop-less-progress-appendix.md#l3-c-p2-儀器證明)
   - [L3-D P0 交付物、基準、突變測試](iceblue-drop-less-progress-appendix.md#l3-d-p0-交付物基準的不可變性突變測試)
@@ -34,7 +34,7 @@
   - [L3-F P3 逐檔複核包](iceblue-drop-less-progress-appendix.md#l3-f-p3-批次的檔案清單每一步可以自己檢查什麼步-0-4-的逐檔複核包) — [步 0](iceblue-drop-less-progress-appendix.md#步-0-的複核包2026-07-31) · [步 1](iceblue-drop-less-progress-appendix.md#步-1-的複核包2026-08-034-檔) · [步 2](iceblue-drop-less-progress-appendix.md#步-2-的複核包2026-08-0315-檔--批-1-收工-2020) · [步 3](iceblue-drop-less-progress-appendix.md#步-3-的複核包2026-08-0343-檔--批-2-收工-6374) · [步 4](iceblue-drop-less-progress-appendix.md#步-4-的複核包2026-08-0311-檔--批-3-收工p3-收工-7474)
   - [L3-G P3 收工複審](iceblue-drop-less-progress-appendix.md#l3-g-p3-收工複審74-檔獨立-fan-out2026-08-04計畫書-l3-c-26-第-4-層首次執行) — 74 檔獨立 fan-out
   - [L3-H 執行機制:workflow](iceblue-drop-less-progress-appendix.md#l3-h-執行機制workflow)
-  - [L3-I Change Log](iceblue-drop-less-progress-appendix.md#l3-i-change-log--狀態層的敘述更正) — 14 條狀態層更正
+  - [L3-I Change Log](iceblue-drop-less-progress-appendix.md#l3-i-change-log--狀態層的敘述更正) — 17 條狀態層更正
 
 ---
 
@@ -48,6 +48,10 @@
 **P6 收工後**來源端是 **75 `.css` + 2 `.less` = 77 ✓**;剩下的 2 個 `.less` 是**刻意**保留的
 holdout(`norm`/P5、`tablet`/P7)。全樹閘門 `files differing: 0`(77 輸出檔 / 14323 輸出端條數),
 而 `build-css.js` 現在覆蓋 **75 檔 —— 正好是 P2 儀器預估的上限,builder 覆蓋率到頂**。
+
+**來源端的清理也做完了** —— L2.4 第 1–4、6 項於 2026-08-04 收工:**空殼規則全樹歸零**
+(15 → 0),`check:build-css` 的封閉清單從 **5 類降到 4 類**(「空規則」那一類整個消失),
+註解位置錯誤 55 處 / 28 檔全部歸位。**閘門在整個過程中沒有動過一個數字。**
 
 **剩下的階段都是有意識的取捨**(前綴政策、reset 機制、profile API),
 不是「還不知道做不做得到」。
@@ -71,13 +75,13 @@ holdout(`norm`/P5、`tablet`/P7)。全樹閘門 `files differing: 0`(77 輸出�
 
 ### 下一步(依「不等任何人」排序)
 
-1. **L2.4 清理待辦的第 1–4、6 項(共 5 項)** —— 全部 G-zero、不等任何決策(排程判斷已由
-   **S13** 改正),可以自成一顆可複審的 commit。**現在就能開,而且是剩下最便宜的一項。**
-2. **視覺 A/B harness** —— P4 / P5 / P7 的共同前置,**尚未開始**;先自我驗證(同一 build 截兩次 diff 為 0)。
-3. **L-2** 瀏覽器支援聲明 —— 解鎖 P4a / P4b。
-4. **L-4 的 density 那一半** —— 解鎖 P7(colour 那一半已由 L-7 解除)。
+1. **視覺 A/B harness** —— P4 / P5 / P7 的共同前置,**尚未開始**;先自我驗證(同一 build 截兩次 diff 為 0)。
+2. **L-2** 瀏覽器支援聲明 —— 解鎖 P4a / P4b。
+3. **L-4 的 density 那一半** —— 解鎖 P7(colour 那一半已由 L-7 解除)。
 
-> **下一步不再是 P3。** 未決的都是各後續階段自己的前置,不是主線工作。
+> **不等任何人的工作已經做完了。** L2.4 清理待辦第 1–4、6 項已於 2026-08-04 收工(紀錄 #32、#33),
+> 剩下三項全部是**別人的決定或還沒建的工具**,不是可以直接開工的實作。要繼續推進,
+> 第 1 項是唯一自己動手就能解的 —— 而且它同時解鎖三個階段。
 
 ---
 
@@ -168,6 +172,12 @@ P6 因此從 BLOCKED 轉 TODO。但它**相依於 P2** —— 產生出來的 `.
 一律**改來源**,不在 `build-css.js` 加特例隱藏。P3 已收工,所以 7 項現在都可以開始 ——
 但**它們的閘門形狀有三種,不可以當成一批處理**:
 
+> **狀態(2026-08-04):第 1、2、3、4、6 項已收工**,一顆 commit,32 個 `.css` 檔,
+> 閘門 `files differing: 0` / 14323 條不動,證據見〈L3-A 閘門紀錄〉**#32**,第 4 層獨立驗證見 **#33**。
+> **第 5、7 項仍未動**,兩者都是 G-delta,等 P4。逐條發現原文(未套用的 54 條)已搬進
+> [iceblue-p3-review-residual-findings.md](iceblue-p3-review-residual-findings.md) ——
+> 原本只存在於一次性工作目錄裡。
+
 | 閘門 | 哪幾項 | 為什麼 |
 |---|---|---|
 | **G-zero,且輸出逐 byte 相同** | **2、3、6** | 只動註解。`build-css.js` 在 minify **之前**就跑 `stripComments()`,所以註解搬到哪、寫錯什麼,輸出**根本看不到** |
@@ -177,14 +187,30 @@ P6 因此從 BLOCKED 轉 TODO。但它**相依於 P2** —— 產生出來的 `.
 排程結論:**1–4、6 共 5 項不必等 P4**,可以自成一顆可複審的 commit 並用閘門證明;
 **只有第 5、7 項**要排進 P4 或自帶 G-delta 核准。
 
+> **上表三個預測的實測結果(2026-08-04,套用後)。** 兩個成立、一個比預測更強:
+>
+> | 預測 | 實測 |
+> |---|---|
+> | 2、3、6 只動註解 → 輸出逐 byte 不變 | ✅ `check:bytes` 的 `byte-identical 26/77` 與 `UNEXPLAINED 0` **完全沒動** |
+> | 1、4 刪空殼 → 「空規則」那一類檔數**下降** | ✅ **但比預測更強:整個類別消失** —— `check:build-css` 的封閉清單從 **5 類變 4 類**(`8 file(s) 空規則` → 不再出現) |
+> | 1、4 不改 declaration 數 | ✅ 14323 條不動,`files differing: 0` |
+>
+> **一個預測沒說到、但實際發生了的事:** `unit on a zero length` 8 → 7、
+> `whitespace around , and >` 49 → 48。**這不是 CSS 變了** —— `classify()`
+> (`scripts/check-build-css.js:128-141`)是「**改到就算用到**」而且 `x === y` 就 `break`。
+> `biglistbox` 原本的真差異只有 {leading zero, 空規則},空規則差異撐著讓迴圈跑過第 3、4 關,
+> 那兩關**兩邊都改**(無害)卻被計入;空規則消失後它在第 2 關就相等、直接 `break`,
+> 於是那兩筆順帶消失。實測:`biglistbox.css.dsp` 現在 `used = ["leading zero on decimals"]` 一類。
+> 也就是說**那兩個數字本來就是虛胖的**,這次順便暴露了 `classify()` 會高報類別。
+
 | # | 項目 | 檔案 | 發現於 |
 |---|---|---|---|
-| 1 | `&-editor` 的規則主體只剩一段區塊註解(`lset for resetCss option`)→ 輸出成 `sel{}`。**LESS 壓縮器會刪、CleanCSS level 0 不刪**。~~2 個空規則 `.sel{}`~~ —— `.sel{}` 是 `check:build-css` 類別說明裡的**示意**選擇器,被誤讀成字面值了;它也**不是**真的空規則,而是註解空殼(步 3 第 3 項改正) | 兩份 `tbeditor` | `check:build-css` 首跑(紀錄 #16),步 3 改正 |
-| 2 | 授權標頭裡字面的 `@{zprefix}`,應還原為 `Trumbowyg` | 兩份 `tbeditor` | P3 步 2 |
-| 3 | `/* For customized style */` 這段註解原本在說明 `#footer.append-style()` hook,hook 已隨轉換消失,註解留著會誤導 | `zul/css/footer.css` | P3 步 2 |
-| 4 | **解巢造成的註解孤兒:~~9~~ → 15 個「主體只剩註解」的空殼規則**,註解要說明的子規則已被 LESS 提到殼外。處置是**把註解搬到它說明的規則上面、再刪掉空殼**,不是整段刪掉(內容有用:`/* ZK-2151: … */`、`/* Bug 2949287 */`) | `nav`(6)、`listbox`(2)、`biglistbox`(2)、`borderlayout`(1)、`paging`(1)、`tree`(1)、兩份 `tbeditor`(各 1) | P3 步 3(9 處)+ **步 4(+6 處)**,`13da402` 修好偵測器後才看得見 |
+| 1 | **[DONE 2026-08-04]** `&-editor` 的規則主體只剩一段區塊註解(`lset for resetCss option`)→ 輸出成 `sel{}`。**LESS 壓縮器會刪、CleanCSS level 0 不刪**。~~2 個空規則 `.sel{}`~~ —— `.sel{}` 是 `check:build-css` 類別說明裡的**示意**選擇器,被誤讀成字面值了;它也**不是**真的空規則,而是註解空殼(步 3 第 3 項改正) | 兩份 `tbeditor` | `check:build-css` 首跑(紀錄 #16),步 3 改正 |
+| 2 | **[DONE 2026-08-04]** 授權標頭裡字面的 `@{zprefix}`,應還原為 `Trumbowyg` | 兩份 `tbeditor` | P3 步 2 |
+| 3 | **[DONE 2026-08-04]** `/* For customized style */` 這段註解原本在說明 `#footer.append-style()` hook,hook 已隨轉換消失,註解留著會誤導 | `zul/css/footer.css` | P3 步 2 |
+| 4 | **[DONE 2026-08-04]** **解巢造成的註解孤兒:~~9~~ → 15 個「主體只剩註解」的空殼規則**,註解要說明的子規則已被 LESS 提到殼外。處置是**把註解搬到它說明的規則上面、再刪掉空殼**,不是整段刪掉(內容有用:`/* ZK-2151: … */`、`/* Bug 2949287 */`) | `nav`(6)、`listbox`(2)、`biglistbox`(2)、`borderlayout`(1)、`paging`(1)、`tree`(1)、兩份 `tbeditor`(各 1) | P3 步 3(9 處)+ **步 4(+6 處)**,`13da402` 修好偵測器後才看得見 |
 | 5 | **`combo` 的 6× 重複宣告併成原生選擇器清單**(586 → **191** 條實測,−67%;`~100` 是舊估計,見〈P3 收工複審〉)。**這是 L-8 的 B 案,已拍板為「先 A 後 B」的 B 那一半** —— 步 4 已按 A 案逐字轉完,所以現在的工作是「改一個已經產生好的檔」,而不是「決定它怎麼產生」。限制:`&` 不能字串串接,`&-input` 必須展開成 6 個選擇器的明列清單;來源順序會從 per-component 分組改掉,所以要**逐條對應 + 視覺 A/B**。**P7 的 `tablet/compact/_combo.less:27,36` 同形狀,歸在同一項**,不要在 P7 重新爭論 | `js/zul/inp/css/combo.css`(+ P7 的 `_combo`) | P3 步 4,L-8 拍板(2026-08-03) |
-| 6 | **位置錯的註解 55 處、22 檔** —— 與第 4 項不同類:這些註解所在的規則**仍有宣告**,所以空殼偵測器結構上看不到它們。最常見的形狀是解巢把子規則提走、留下一串區塊註解黏在父規則的**尾端**(`nav.css:9` 的 `/* overall style */ /* horizontal style */ /* vertical style */`)。**這一項是 G-zero** —— 只動註解,輸出 byte 不變,可用閘門證明 | 22 檔,最密的是 `goldenlayout` 6、`combo` 4、`borderlayout` 4、`tbeditor`(zkmax/inp) 4 | P3 收工複審(2026-08-04) |
+| 6 | **[DONE 2026-08-04]** **位置錯的註解 55 處、~~22~~ → 28 檔**(檔數更正見 S15;「55 處」未變) —— 與第 4 項不同類:這些註解所在的規則**仍有宣告**,所以空殼偵測器結構上看不到它們。最常見的形狀是解巢把子規則提走、留下一串區塊註解黏在父規則的**尾端**(`nav.css:9` 的 `/* overall style */ /* horizontal style */ /* vertical style */`)。**這一項是 G-zero** —— 只動註解,輸出 byte 不變,可用閘門證明 | 28 檔,最密的是 `goldenlayout` 6、`combo` 4、`borderlayout` 4、`tbeditor`(zkmax/inp) 4 | P3 收工複審(2026-08-04) |
 | 7 | **重複/矛盾宣告 14 處** —— mixin 展開造成的同屬性重複(`.boxShadow()`/`.borderRadius()` 的舊瀏覽器前綴、圖示字型 mixin 的 `font-size: inherit`),以及**同一個選擇器被輸出兩次且值矛盾**:`tabbox.css` 的 `.z-tabbox-right > .z-tabs` 在 161 行 `float: left`、194 行 `float: right`(後者生效,前者是死碼)。**全部是來源既有的噪音,不是轉換造成的**(閘門證明輸出與 baseline 相同)。刪除**會改宣告數**,所以不能在零差異階段做 | `caption`、`fisheye`、`goldenlayout`(4)、`combo`(2)、`camera`、`searchbox`、`signature`、`popup`、`tabbox`、`nav` | P3 收工複審(2026-08-04) |
 
 > **第 1 與第 4 項是同一個輸出現象、兩個不同來源。** P3 收工後全樹共 **8 個 empty-rule 輸出、
@@ -229,7 +255,7 @@ L1/L2 只寫當前狀態;**要複核那些狀態是怎麼得出來的,去那裡�
 | 節 | 內容 | 何時要看 |
 |---|---|---|
 | **[階段與 commit 對照](iceblue-drop-less-progress-appendix.md#階段與-commit-對照)** | 每一階對應哪些 commit | 要回溯某一階實際改了什麼 |
-| **[L3-A](iceblue-drop-less-progress-appendix.md#l3-a-閘門紀錄附加式不覆寫)** | **閘門紀錄 30 列**(附加式,**不覆寫**) | P8 核帳、以及要確認某個數字是哪一次跑出來的 |
+| **[L3-A](iceblue-drop-less-progress-appendix.md#l3-a-閘門紀錄附加式不覆寫)** | **閘門紀錄 33 列**(附加式,**不覆寫**) | P8 核帳、以及要確認某個數字是哪一次跑出來的 |
 | **[L3-B](iceblue-drop-less-progress-appendix.md#l3-b-tier-1p1--s0--s1)** | Tier 1:P1 = S0 + S1 的實作與論證 | 要動 LESS 版本 pin 或 `check-less-conventions.js` 時 |
 | **[L3-C](iceblue-drop-less-progress-appendix.md#l3-c-p2-儀器證明)** | P2 儀器證明(六步)+ 為什麼是 CleanCSS level 0 + 第三種靜默摧毀構造 | 要改 `build-css.js` 或 minifier 設定時 |
 | **[L3-D](iceblue-drop-less-progress-appendix.md#l3-d-p0-交付物基準的不可變性突變測試)** | P0 交付物、基準的不可變性、突變測試、重建基準的方法 | 基準出問題時 |
@@ -238,3 +264,8 @@ L1/L2 只寫當前狀態;**要複核那些狀態是怎麼得出來的,去那裡�
 | **[L3-G](iceblue-drop-less-progress-appendix.md#l3-g-p3-收工複審74-檔獨立-fan-out2026-08-04計畫書-l3-c-26-第-4-層首次執行)** | P3 收工複審:74 檔獨立 fan-out(第 4 層首次執行) | 要設計下一次獨立驗證時 |
 | **[L3-H](iceblue-drop-less-progress-appendix.md#l3-h-執行機制workflow)** | 執行機制 workflow 的細節與三個設計決定 | 要跑 workflow 或改它時 |
 | **[L3-I](iceblue-drop-less-progress-appendix.md#l3-i-change-log--狀態層的敘述更正)** | **Change Log —— 狀態層的敘述更正** | 看到兩個矛盾的說法時 |
+
+> **另一份獨立檔:[iceblue-p3-review-residual-findings.md](iceblue-p3-review-residual-findings.md)**
+> —— P3 收工複審 120 條發現裡**還沒套用的 54 條**原文(`duplicate-declaration` 14 = L2.4 第 7 項、
+> `token-clarity` 5、`readability` 35)。已套用的 66 條見紀錄 **#32**、**#33**。
+> 之所以存在:那份清單原本只在一次性工作目錄裡,消耗掉前半部時若不落地,後半部就找不回來。

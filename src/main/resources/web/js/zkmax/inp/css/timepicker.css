@@ -22,8 +22,8 @@
 	padding-right: var(--zk-timepicker-padding-right);
 	line-height: var(--zk-timepicker-line-height);
 	background: var(--zk-input-background-color);
-	/* Placeholder ZK-3876: combobox does not provide proper placeholder style */
 }
+/* Placeholder ZK-3876: combobox does not provide proper placeholder style */
 .z-timepicker-input::-webkit-input-placeholder {
 	color: var(--zk-input-placeholder-color);
 }

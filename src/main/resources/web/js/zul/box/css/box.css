@@ -46,8 +46,7 @@ td.z-splitter-outer {
 	color: var(--zk-splitter-button-text-color);
 	display: inline-block;
 	position: relative;
-	vertical-align: top;
-	/* vertical-align: make it looks same in diff browsers */
+	vertical-align: top; /* vertical-align: make it looks same in diff browsers */
 	cursor: pointer;
 }
 .z-splitter-button-disabled {

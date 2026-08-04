@@ -1,19 +1,4 @@
-/* Width variables (appears count calculates by raw css) */
-/* Appears 3 times */
-/* Appears 2 times */
-/* Appears 1 time */
-/* Appears 1 time */
-/* Appears 1 time */
-/* Appears 1 time */
-/* Appears 1 time */
-/* Height variables (appears count calculates by raw css) */
-/* Appears 4 times */
-/* Appears 2 times */
-/* Appears 2 times */
-/* Appears 1 time */
-/* Appears 1 time */
-/* Appears 1 time */
-/* Appears 1 time */
+/* Base layout metrics are inlined literally (formerly the @width0..@height6 variables). */
 .lm_root {
 	position: relative;
 }
@@ -46,6 +31,7 @@
 	position: relative;
 	z-index: 2;
 }
+/* When hovered by mouse... */
 .lm_splitter:hover,
 .lm_splitter.lm_dragging {
 	background: orange;
@@ -70,8 +56,6 @@
 	position: relative;
 	z-index: 1;
 	user-select: none;
-	/* Pane controls (popout, maximize, minimize, close) */
-	/* Single Tab container. A single Tab is set for each pane, a group of Tabs are contained in ".lm_header" */
 }
 .lm_header.lm_selectable {
 	cursor: pointer;
@@ -79,6 +63,7 @@
 .lm_header [class^=lm_] {
 	box-sizing: content-box !important;
 }
+/* Pane controls (popout, maximize, minimize, close) */
 .lm_header .lm_controls {
 	position: absolute;
 	right: 3px;
@@ -98,6 +83,7 @@
 .lm_header .lm_tabs {
 	position: absolute;
 }
+/* Single Tab container. A single Tab is set for each pane, a group of Tabs are contained in ".lm_header" */
 .lm_header .lm_tab {
 	cursor: pointer;
 	float: left;
@@ -106,7 +92,6 @@
 	padding: 0px 10px 5px;
 	padding-right: 25px;
 	position: relative;
-	/* Close Tab Icon */
 }
 .lm_header .lm_tab i {
 	width: 2px;
@@ -126,6 +111,7 @@
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
+/* Close Tab Icon */
 .lm_header .lm_tab .lm_close_tab {
 	width: 14px;
 	height: 22px;
@@ -206,8 +192,7 @@
 .lm_right.lm_stack .lm_header .lm_tabs {
 	transform-origin: left top;
 	top: 0;
-	width: 1000px;
-	/*hack*/
+	width: 1000px; /* hack */
 }
 .lm_left.lm_dragProxy .lm_header .lm_controls,
 .lm_right.lm_dragProxy .lm_header .lm_controls,
@@ -283,8 +268,7 @@
 	border-top: 5px dashed;
 	border-right: 5px solid transparent;
 	border-left: 5px solid transparent;
-	color: white;
-	/* Overriden in specific Themes */
+	color: white; /* Overriden in specific Themes */
 }
 .lm_header .lm_tabdropdown_list {
 	position: absolute;
@@ -327,8 +311,8 @@
 	position: absolute;
 	z-index: 20;
 	transition: all 200ms ease;
-	/* Inner Placeholder */
 }
+/* Inner Placeholder */
 .lm_dropTargetIndicator .lm_inner {
 	width: 100%;
 	height: 100%;

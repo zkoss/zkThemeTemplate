@@ -4,8 +4,8 @@
 	padding: var(--zk-toolbar-padding);
 	background: var(--zk-base-background-color);
 	position: relative;
-	/* toolbar horizontal alignment */
 }
+/* toolbar horizontal alignment */
 .z-toolbar-start {
 	float: left;
 	clear: none;
@@ -138,8 +138,8 @@
 	border: var(--zk-button-border-width) solid transparent;
 	background-color: var(--zk-toolbar-button-background-color);
 	padding: var(--zk-toolbar-button-padding);
-	/* A hack to make the content vertical centering, see ZK-4532 */
 }
+/* A hack to make the content vertical centering, see ZK-4532 */
 .z-toolbarbutton:before {
 	content: '';
 	height: 100%;

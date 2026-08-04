@@ -2,13 +2,13 @@
 	position: relative;
 	display: flex;
 	flex-direction: column;
-	/* Safari fullscreen workaround */
-	/* IE fullscreen workaround */
 }
+/* Safari fullscreen workaround */
 .z-pdfviewer:-webkit-full-screen {
 	width: 100% !important;
 	height: 100% !important;
 }
+/* IE fullscreen workaround */
 .z-pdfviewer:-ms-fullscreen {
 	width: 100% !important;
 	height: 100% !important;

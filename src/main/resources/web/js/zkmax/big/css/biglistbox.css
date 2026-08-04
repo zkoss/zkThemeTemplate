@@ -4,12 +4,6 @@
 	position: relative;
 	overflow: hidden;
 	zoom: 1;
-	/* head */
-	/* body */
-	/* odd rows */
-	/* sort */
-	/* frozen */
-	/* WScroll bar */
 }
 .z-biglistbox-outer {
 	border: 1px solid var(--zk-base-border-color);
@@ -29,6 +23,7 @@
 	line-height: 0;
 	overflow: hidden;
 }
+/* head */
 .z-biglistbox-head-outer {
 	overflow: hidden;
 }
@@ -76,6 +71,7 @@
 .z-biglistbox-header-leftmost {
 	border-left: none;
 }
+/* body */
 .z-biglistbox-body-outer {
 	overflow: hidden;
 }
@@ -86,7 +82,6 @@
 	position: relative;
 	overflow: hidden;
 	float: left;
-	/* body content */
 }
 .z-biglistbox-body table {
 	border-spacing: 0;
@@ -95,6 +90,7 @@
 .z-biglistbox-body table td {
 	background-clip: padding-box;
 }
+/* body content */
 .z-biglistbox-body td {
 	font-family: var(--zk-base-content-font-family);
 	font-size: var(--zk-font-size-medium);
@@ -128,9 +124,11 @@
 	background: var(--zk-selected-hover-background-color);
 	position: relative;
 }
+/* odd rows */
 .z-biglistbox-odd {
 	background: var(--zk-mesh-stripe-background-color);
 }
+/* sort */
 .z-biglistbox-sort {
 	cursor: pointer;
 }
@@ -144,6 +142,7 @@
 	/* sortable header hover status */
 	position: relative;
 }
+/* frozen */
 .z-biglistbox-head-shim,
 .z-biglistbox-body-shim {
 	width: 3px;
@@ -196,10 +195,8 @@
 	background-color: var(--zk-biglistbox-scrollbar-active-background-color);
 	border: 1px solid var(--zk-biglistbox-scrollbar-active-border-color);
 }
-.z-biglistbox-wscroll {
-	/* vertical */
-	/* horizontal */
-}
+/* WScroll bar */
+/* vertical */
 .z-biglistbox-wscroll-vertical {
 	width: var(--zk-biglistbox-size);
 	height: 100%;
@@ -347,6 +344,7 @@
 	right: 0;
 	z-index: 20;
 }
+/* horizontal */
 .z-biglistbox-wscroll-horizontal {
 	width: 100%;
 	height: var(--zk-biglistbox-size);
@@ -477,10 +475,7 @@
 	overflow: hidden;
 	z-index: 20;
 }
-.z-biglistbox-wscroll-vertical,
-.z-biglistbox-wscroll-horizontal {
-	/* Disabled button style */
-}
+/* Disabled button style */
 .z-biglistbox-wscroll-vertical .z-biglistbox-wscroll-head .z-biglistbox-wscroll-home,
 .z-biglistbox-wscroll-horizontal .z-biglistbox-wscroll-head .z-biglistbox-wscroll-home,
 .z-biglistbox-wscroll-vertical .z-biglistbox-wscroll-head .z-biglistbox-wscroll-up,

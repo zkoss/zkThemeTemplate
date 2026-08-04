@@ -13,10 +13,8 @@
 }
 .z-progressmeter-image {
 	font-size: 0;
-	display: inline-block;
-	/* inline-block has filled bug in Firefox */
-	vertical-align: top;
-	/* prevent filled bug */
+	display: inline-block; /* inline-block has filled bug in Firefox */
+	vertical-align: top; /* prevent filled bug */
 	height: calc(var(--zk-base-icon-height) - 2px);
 	line-height: 0;
 	background-color: var(--zk-progressmeter-background-color);

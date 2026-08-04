@@ -81,7 +81,6 @@
 	position: relative;
 	overflow: hidden;
 	padding: var(--zk-colorpicker-padding);
-	/* old theme compatible */
 }
 .z-colorpicker-main {
 	position: relative;
@@ -222,6 +221,7 @@
 	cursor: pointer;
 	width: var(--zk-colorpicker-button-width);
 }
+/* old theme compatible */
 .z-colorpicker-r,
 .z-colorpicker-g,
 .z-colorpicker-b,
@@ -365,12 +365,13 @@
 }
 .z-colorpalette-popup .z-colorbox-paletteicon,
 .z-colorpalette-popup .z-menu-paletteicon {
-	/* copied form toolbar.less: z-toolbarbutton-checked */
+	/* copied from toolbar.css: z-toolbarbutton-checked */
 	color: var(--zk-toolbar-button-checked-color);
 	background-color: var(--zk-toolbar-button-checked-background-color);
 }
 .z-colorpicker-popup .z-colorbox-pickericon,
 .z-colorpicker-popup .z-menu-pickericon {
+	/* copied from toolbar.css: z-toolbarbutton-checked */
 	color: var(--zk-toolbar-button-checked-color);
 	background-color: var(--zk-toolbar-button-checked-background-color);
 }

@@ -137,9 +137,6 @@
 	border-bottom: none;
 	padding-bottom: 4px;
 }
-.z-paging-os ul {
-	/* for special case */
-}
 .z-paging-os ul > li {
 	margin-left: 4px;
 }
@@ -147,6 +144,7 @@
 .z-paging-os ul > li + li.z-paging-navigate {
 	margin-left: 8px;
 }
+/* for special case */
 .z-paging-os ul > li.z-paging-navigate + li.z-paging-navigate {
 	margin-left: 4px;
 }

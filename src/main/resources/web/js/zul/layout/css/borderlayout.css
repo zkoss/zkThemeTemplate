@@ -1,7 +1,5 @@
 @media print {
-	.safari {
-		/* Bug 2949287 */
-	}
+	/* Bug 2949287 */
 	.safari .z-borderlayout {
 		position: static;
 	}
@@ -111,8 +109,7 @@
 	background: var(--zk-color-background1);
 	position: absolute;
 	overflow: hidden;
-	cursor: pointer;
-	/* ios issue */
+	cursor: pointer; /* ios issue */
 }
 .z-north-collapsed .z-borderlayout-icon,
 .z-south-collapsed .z-borderlayout-icon,
@@ -242,13 +239,11 @@
 .z-north,
 .z-south,
 .z-center {
-	width: 100%;
-	/* Fixed for B30-1902533.zul */
+	width: 100%; /* Fixed for B30-1902533.zul */
 }
 .z-west,
 .z-east {
-	height: 100%;
-	/* Fixed for B30-1902533.zul */
+	height: 100%; /* Fixed for B30-1902533.zul */
 }
 .z-west-title,
 .z-east-title {
@@ -294,16 +289,15 @@
 	position: absolute;
 	overflow: hidden;
 	cursor: ew-resize;
-	/* splitter-button */
 }
+/* splitter-button */
 .z-east-splitter-button,
 .z-west-splitter-button,
 .z-north-splitter-button,
 .z-south-splitter-button {
 	color: var(--zk-splitter-button-text-color);
 	display: inline-block;
-	vertical-align: top;
-	/* vertical-align: make it looks same in diff browsers */
+	vertical-align: top; /* vertical-align: make it looks same in diff browsers */
 	position: relative;
 	cursor: pointer;
 }

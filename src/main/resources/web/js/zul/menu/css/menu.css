@@ -1,4 +1,3 @@
-/* define common font property */
 .z-menubar {
 	display: block;
 	border-top: 1px solid var(--zk-base-border-color);
@@ -67,9 +66,7 @@
 	padding: 0;
 	margin: 0;
 	position: relative;
-	list-style: none outside none;
-	/* avoid using none default zclass */
-	/* icon sclass */
+	list-style: none outside none; /* avoid using none default zclass */
 }
 .z-menu-text,
 .z-menuitem-text {
@@ -78,8 +75,8 @@
 	font-weight: normal;
 	display: inline-block;
 	vertical-align: middle;
-	/* align for img + text */
 }
+/* align for img + text */
 img ~ .z-menu-text,
 img ~ .z-menuitem-text {
 	vertical-align: middle;
@@ -145,6 +142,7 @@ img ~ .z-menuitem-text {
 	color: var(--zk-disabled-color);
 	background: 0;
 }
+/* icon sclass */
 .z-menu-content i,
 .z-menuitem-content i {
 	margin-right: var(--zk-menu-icon-margin-right);

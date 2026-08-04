@@ -1,25 +1,21 @@
-/* reset table */
 /* tree */
 .z-tree {
 	background: var(--zk-mask-background-color);
 	border: 1px solid var(--zk-base-border-color);
 	overflow: hidden;
 	zoom: 1;
-	/* tree header div */
-	/* tree body div */
-	/* tree footer div */
-	/* ZK-3138: ROD loading indicator */
-	/* tree open icon and indent space */
 }
 .z-tree:focus-visible {
 	box-shadow: var(--zk-mesh-focus-box-shadow);
 	transition: unset;
 }
+/* tree header div */
 .z-tree-header {
 	width: 100%;
 	position: relative;
 	overflow: hidden;
 }
+/* reset table (same shape expanded on .z-tree-header/-body/-footer table) */
 .z-tree-header table {
 	border-spacing: 0;
 }
@@ -31,6 +27,7 @@
 .z-tree-header table th {
 	text-align: inherit;
 }
+/* tree body div */
 .z-tree-body {
 	position: relative;
 	overflow: hidden;
@@ -58,6 +55,7 @@
 	height: 1px;
 	padding: 12px 16px;
 }
+/* tree footer div */
 .z-tree-footer {
 	overflow: hidden;
 	white-space: nowrap;
@@ -81,10 +79,12 @@
 .z-tree-footer .z-treefoot-bar {
 	background: var(--zk-mesh-foot-background-color);
 }
+/* ZK-3138: ROD loading indicator */
 .z-tree-loading {
 	background: transparent no-repeat center;
 	background-image: url(${c:encodeThemeURL("~./zul/img/misc/progress-72.gif")});
 }
+/* tree open icon and indent space */
 .z-tree-icon,
 .z-tree-line {
 	display: inline-block;
@@ -129,8 +129,8 @@
 /* treecols */
 .z-treecols th:first-child {
 	border-left: none;
-	/* B50-3306729: the first header should have border-left when the first column is covered with other header */
 }
+/* B50-3306729: the first header should have border-left when the first column is covered with other header */
 .z-treecols th:first-child.z-treecols-border {
 	border-left: 1px solid var(--zk-mesh-title-border-color);
 }
@@ -202,9 +202,9 @@
 	display: block;
 }
 .z-treecol-partial > .z-treecol-icon {
+	/* the partial glyph comes from the .z-icon-minus font-awesome class on this element — it needs no rule of its own */
 	color: var(--zk-checked-color);
 	display: block;
-	/* for checkbox partial selected state, use font-awesome */
 }
 /* paging */
 .z-tree-paging-top {
@@ -225,14 +225,6 @@
 }
 /* ZK-2151: use strict selector to prevent nest problem */
 /* tree row and cell */
-.z-treerow {
-	/* tree cell */
-	/* check mark */
-	/* selected tree cell */
-	/* selected check mark */
-	/* disabled */
-	/* partial */
-}
 .z-treerow .z-treecell {
 	border-top: 1px solid var(--zk-mesh-content-border-color);
 	overflow: hidden;
@@ -259,6 +251,7 @@
 .z-treerow:hover > .z-treecell > .z-treecell-content {
 	color: var(--zk-hover-color);
 }
+/* check mark */
 .z-treerow-checkable {
 	display: inline-block;
 	width: var(--zk-checkbox-size);
@@ -286,6 +279,7 @@
 	display: none;
 	cursor: default;
 }
+/* selected tree cell */
 .z-treerow.z-treerow-selected > .z-treecell {
 	background: var(--zk-selected-background-color);
 }
@@ -310,10 +304,11 @@
 .z-treerow.z-treerow-selected.z-treerow-focus:hover > .z-treecell > .z-treecell-content {
 	color: var(--zk-selected-hover-color);
 }
+/* selected check mark */
 .z-treerow-selected > .z-treecell > .z-treecell-content > .z-treerow-checkable .z-treerow-icon {
+	/* the check glyph comes from the .z-icon-check font-awesome class on this element — it needs no rule of its own */
 	color: var(--zk-checked-color);
 	display: block;
-	/* for checkbox, use font-awesome */
 }
 .z-treerow-selected > .z-treecell > .z-treecell-content > .z-treerow-checkable .z-treerow-icon.z-icon-radio {
 	/* for radio */
@@ -334,14 +329,16 @@
 	-ms-transform: translate(-50%, -50%);
 	transform: translate(-50%, -50%);
 }
+/* disabled */
 .z-treerow.z-treerow-disabled * {
 	color: var(--zk-disabled-color) !important;
 	cursor: default !important;
 }
+/* partial */
 .z-treerow-partial > .z-treecell > .z-treecell-content > .z-treerow-checkable .z-treerow-icon {
+	/* the partial glyph comes from the .z-icon-minus font-awesome class on this element — it needs no rule of its own */
 	color: var(--zk-checked-color);
 	display: block;
-	/* for checkbox partial selected state, use font-awesome */
 }
 /* hidden col */
 .z-treecell-hidden-col {
