@@ -34,7 +34,7 @@
   - [L3-F P3 逐檔複核包](iceblue-drop-less-progress-appendix.md#l3-f-p3-批次的檔案清單每一步可以自己檢查什麼步-0-4-的逐檔複核包) — [步 0](iceblue-drop-less-progress-appendix.md#步-0-的複核包2026-07-31) · [步 1](iceblue-drop-less-progress-appendix.md#步-1-的複核包2026-08-034-檔) · [步 2](iceblue-drop-less-progress-appendix.md#步-2-的複核包2026-08-0315-檔--批-1-收工-2020) · [步 3](iceblue-drop-less-progress-appendix.md#步-3-的複核包2026-08-0343-檔--批-2-收工-6374) · [步 4](iceblue-drop-less-progress-appendix.md#步-4-的複核包2026-08-0311-檔--批-3-收工p3-收工-7474)
   - [L3-G P3 收工複審](iceblue-drop-less-progress-appendix.md#l3-g-p3-收工複審74-檔獨立-fan-out2026-08-04計畫書-l3-c-26-第-4-層首次執行) — 74 檔獨立 fan-out
   - [L3-H 執行機制:workflow](iceblue-drop-less-progress-appendix.md#l3-h-執行機制workflow)
-  - [L3-I Change Log](iceblue-drop-less-progress-appendix.md#l3-i-change-log--狀態層的敘述更正) — 12 條狀態層更正
+  - [L3-I Change Log](iceblue-drop-less-progress-appendix.md#l3-i-change-log--狀態層的敘述更正) — 13 條狀態層更正
 
 ---
 
@@ -160,8 +160,17 @@ P6 因此從 BLOCKED 轉 TODO。但它**相依於 P2** —— 產生出來的 `.
 ### L2.4 P3 來源清理待辦(7 項,排在 P3 全部轉完之後)
 
 
-一律**改來源**,不在 `build-css.js` 加特例隱藏。全部會改變輸出 byte,所以**不屬於 G-zero**,
-排在 P3 全部轉完之後、以一顆可複審的 commit 處理(或併入 P4)。
+一律**改來源**,不在 `build-css.js` 加特例隱藏。P3 已收工,所以 7 項現在都可以開始 ——
+但**它們的閘門形狀有三種,不可以當成一批處理**:
+
+| 閘門 | 哪幾項 | 為什麼 |
+|---|---|---|
+| **G-zero,且輸出逐 byte 相同** | **2、3、6** | 只動註解。`build-css.js` 在 minify **之前**就跑 `stripComments()`,所以註解搬到哪、寫錯什麼,輸出**根本看不到** |
+| **G-zero,但輸出 byte 會變** | **1、4** | 刪掉的是註解空殼**產生的空規則**。空規則沒有 declaration,`cssdiff` 的 `files differing` 不動;而「空規則」本身就是 5 類封閉清單之一。方向是**往 baseline 靠**(baseline 沒有那些 `sel{}`,是 LESS 壓縮器刪掉的),所以預期 `check:build-css` 的「空規則」那一類檔數會**下降** —— 套用後跑一次就證明得出來 |
+| **G-delta** | **5、7** | 這兩項**改變 declaration 數**(`combo` 586 → 191、刪掉 14 處重複/矛盾宣告),必須逐條對應到已核准的變更 |
+
+排程結論:**1–4、6 共 5 項不必等 P4**,可以自成一顆可複審的 commit 並用閘門證明;
+**只有第 5、7 項**要排進 P4 或自帶 G-delta 核准。
 
 | # | 項目 | 檔案 | 發現於 |
 |---|---|---|---|

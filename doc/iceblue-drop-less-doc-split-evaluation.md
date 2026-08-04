@@ -99,7 +99,7 @@ P3 收工複審那種 74 檔 fan-out 再發生一次(P4b 就會),差額是百萬
 
 4. **外部引用** —— `scripts/gen-mixin-table.js`(3 處)、`doc/migration/mixin-to-css.md`(10 處)用 `§P4` / `§P8` 指向計畫書。這些指的是**規範定義**,而規範定義留在 L2.3,**檔名與落點都不變 → 不需要改**。若日後希望它們落在 L3-D 的細節,改 `gen-mixin-table.js` 一行再重新產生即可。
 
-`scripts/build-css.js`、`scripts/gen-var-table.js`、`scripts/cssdiff.js`、`doc/iceblue-remove-zkless-engine.md`、`doc/css-preprocessor-industry-direction.md` 引用的都是檔名,主檔名不變 → 全部不受影響。
+`scripts/build-css.js`、`scripts/gen-var-table.js`、`scripts/cssdiff.js`、`doc/css-preprocessor-industry-direction.md` 引用的都是檔名,主檔名不變 → 全部不受影響。
 
 ---
 

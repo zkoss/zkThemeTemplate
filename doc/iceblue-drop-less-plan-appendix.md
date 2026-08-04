@@ -201,9 +201,9 @@ directive、107 處選擇器位置的 `<c:if>`、44 處 EL)與 Font Awesome 的 
 | 17 | **taglib header 是「一行」不是「三行」** | `--compress` 輸出裡三個 directive **無分隔字元串接、後面沒有換行**,CSS 緊接著開始(`button.css.dsp` 前 200 bytes 有 **0** 個換行)。P2 的 `build-css.js` 要照這個形狀產生 |
 | 18 | **`norm.css.dsp` 的 taglib 在檔案中間**(byte 43088 / 72140) | 它先是 ~43 KB 的 `:root{--zk-*}`,**然後**才三個 taglib,再 normalize.css + `<c:if>` reset —— directive 落在 `norm.less` 引入 `_reset.less` 的接縫上。JSP page directive 位置無關所以合法,只是少見。**前提 #9 仍然成立**(真正完全沒有 header 的還是那 3 檔;77 檔中有 73 檔以 header 開頭)。影響:P2 的 builder **不可以假設「header 一定在 offset 0」**,P5 串接 norm 時要保留它在接縫的位置,不能上提 |
 | 19 | **裸 `lessc` 能編這棵樹的 100% 語法 —— 唯一的障礙是 `@import "~./"`** | 用 `./node_modules/.bin/lessc` 繞過 `zkless-engine` 實測:`_header.less` 的 `e()`(吐 `<%@ taglib %>`)✅、`_reset.less` 的 **58** 處選擇器位置 `<c:if …>${".z-page "}</c:if>` ✅、guarded mixin ✅、`each()` ✅。`grid.less` ❌ —— 但錯在**第 1 行**且是 `FileError` 不是 `ParseError`(`@import` 在 parse time 解析,所以 2–309 行從未被讀到);把 `~./`→`/` 用 `sed` 過一遍(不改檔),**輸出與 `baseline/js/zul/grid/css/grid.css.dsp` 位元組相同**。影響:**P8 的 `.less` 分支是一行 shim,不是重寫一個編譯器** —— 引擎在語法層面的全部貢獻就是 `src/index.js:31` 那個 replace |
-| 20 | **`~./` 出現的**位置**決定它是不是問題,而它只在 entry 檔被改寫** | `@import "~./…"`(第 1 行)由 **LESS 在 build time** 解析 → 必須翻譯;`.encodeThemeURL(background-image, '~./zul/img/…')`(第 295 行)由 **ZK 在 runtime** 解析成 `${c:encodeThemeURL("~./…")}` → 對 LESS 只是字串,原樣通過。而引擎只對**entry 檔的 buffer** 做那個 replace(partial 由 LESS 自己的 file manager 讀,看不到),所以 partial 裡的 `~./` import 永遠解不開。實測:**74 個 entry 用 `~./` import,partial 0 個** —— 這條不變條件從 ZK commit `53589bc7a8`(2013-05-20)起就承重,**從未寫下來**,現由 `scripts/check-less-conventions.js` 守住(S1) |
+| 20 | **`~./` 出現的**位置**決定它是不是問題,而它只在 entry 檔被改寫** | `@import "~./…"`(第 1 行)由 **LESS 在 build time** 解析 → 必須翻譯;`.encodeThemeURL(background-image, '~./zul/img/…')`(第 295 行)由 **ZK 在 runtime** 解析成 `${c:encodeThemeURL("~./…")}` → 對 LESS 只是字串,原樣通過。而引擎只對**entry 檔的 buffer** 做那個 replace(partial 由 LESS 自己的 file manager 讀,看不到),所以 partial 裡的 `~./` import 永遠解不開。實測:**74 個 entry 用 `~./` import,partial 0 個** —— 這條不變條件從 ZK commit `53589bc7a8`(2013-05-20)起就承重,**從未寫下來**,現由 `scripts/check-less-conventions.js` 守住(S1)。**為什麼當年沒人直接改掉那個路徑**:2013–2019 之間 `.less` 來源帶著裸 `<%@ taglib %>` 與 `${…}`,裸 `lessc` 連 parse 都做不到 —— 不是沒人想改,是**改了也沒用**;**ZK-4358**(2019-08-06)把那些改寫成 stock LESS 的 `e()` escape 之後,語法才變成 100% 標準,`@import "~./"` 就是那次清理**沒做完的尾巴**。這也界定了保留條件:`~./` 該留多久取決於這些檔要跟 ZK core 同步多久(見 B6),**與 LESS 或 zkless-engine 都無關** |
 | 21 | **現代 CSS 走 LESS 4.8.1 出來是位元組正確的** | 實測(真正的 `zklessc --compress` 管線):`@layer a{…}` / 巢狀 `@layer` / `@layer` 裡包 `@media` / `@container` / `@scope` / `oklch(from red calc(l * .5) c h)` / `:has()` / `clamp()` / `container-type` / `aspect-ratio: 16 / 9` **全部正確**。兩個推論:(a) §0 排除 `@layer` 的理由是**cascade 語意**,不是「LESS 做不到」—— 不要日後把它誤記成工具限制;(b) `@layer` 連 3.13.1 都過得去,所以 **S0 解鎖的是更廣的 modern-CSS 方向,不是 `@layer`**(3.13.1 真正擋掉的是 `oklch(from …)`,那是硬 `ParseError`)。**真正的風險源在 minifier 那一端,不在 LESS**,見 §4 |
-| 22 | **迴圈不只在 Font Awesome —— `each()` 有 6 處,分佈在 4 個檔、跨 3 個階段** | 實測(`grep -rn "each(" --include=*.less`):`zul/less/font/_icons.less:7,11` + `zul/less/font/_sizing.less:15`(→ **P6**,§P6 已交代)、**`js/zul/inp/less/combo.less:4`(→ P3 批 3,輸出端 586 條)**、**`zkmax/less/tablet/compact/_combo.less:27,36`(→ P7)**。另有 **2 處遞迴 mixin 迴圈**(`when` guard 當迭代條件):`font/_shims.less:314` `.gen_fa6_style(@i,…) when (@i > 0)`、`font/_sizing.less:5` `.sizes-literal(@factor) when (@factor > 0)` —— 兩處都在 FA,P6 已覆蓋。**判準:迴圈的歸屬階段由它所在的 entry 檔決定,不是由「它看起來像不像 FA」決定。** 影響:B2 原本只講 FA,而 §P3 / §P7 對自己的迴圈完全沒提 —— 已補,並開 **L-8**。注意 `doc/iceblue-remove-zkless-engine.md:30` 的計數(6 處)一直是對的,錯的是同檔 L382 把它們全歸給 FA |
+| 22 | **迴圈不只在 Font Awesome —— `each()` 有 6 處,分佈在 4 個檔、跨 3 個階段** | 實測(`grep -rn "each(" --include=*.less`):`zul/less/font/_icons.less:7,11` + `zul/less/font/_sizing.less:15`(→ **P6**,§P6 已交代)、**`js/zul/inp/less/combo.less:4`(→ P3 批 3,輸出端 586 條)**、**`zkmax/less/tablet/compact/_combo.less:27,36`(→ P7)**。另有 **2 處遞迴 mixin 迴圈**(`when` guard 當迭代條件):`font/_shims.less:314` `.gen_fa6_style(@i,…) when (@i > 0)`、`font/_sizing.less:5` `.sizes-literal(@factor) when (@factor > 0)` —— 兩處都在 FA,P6 已覆蓋。**判準:迴圈的歸屬階段由它所在的 entry 檔決定,不是由「它看起來像不像 FA」決定。** 影響:B2 原本只講 FA,而 §P3 / §P7 對自己的迴圈完全沒提 —— 已補,並開 **L-8**。注意**計數(6 處)一直是對的**,錯的只有階段歸屬 —— 原始評估把六處全歸給了 FA |
 
 #### 1.1 最關鍵的一項:第 5 點
 
@@ -718,7 +718,6 @@ L-7 拍板 Theme Pack 走「runtime `--zk-*` sheet + 新 CSS 語法」(§6)。�
 
 ##### S0 + S1 實作紀錄
 
-完整分析:[`doc/iceblue-remove-zkless-engine.md`](iceblue-remove-zkless-engine.md)。
 原本被當成獨立專案(「拿掉 zkless-engine」)評估,結論是**併入本計畫**——
 實測該引擎沒有註冊任何自訂 LESS function / plugin / visitor,語法層面只有一行 `~./`→`/` 字串取代
 (見前提 #19/#20),獨立做等於把 P2/P8 要寫的東西寫兩次。
@@ -1487,8 +1486,6 @@ holdout:`norm`(P5)、`font-awesome`(P6)、`tablet`(P7)。閘門 `files differing
 | **L-5 —— icon 方向** | **Font Awesome 保留**。P6 走「寫產生器」分支,不是「刪除 + 空 stub」。**P6 解除 BLOCKED**,但相依於 P2。見 §P6 |
 
 #### 追加拍板(2026-07-30,來自「拿掉 zkless-engine」的評估)
-
-完整分析:[`doc/iceblue-remove-zkless-engine.md`](iceblue-remove-zkless-engine.md)
 
 | 議題 | 決定 |
 |---|---|

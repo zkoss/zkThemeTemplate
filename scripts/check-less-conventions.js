@@ -31,7 +31,7 @@
  * respelled it `~./zul/less/font/_all.less` — a partial is imported from many directory depths,
  * so its relative import broke when the line moved. `zkless.jar` was modified in the same commit
  * to support the new spelling. The entry-file-only constraint has been load-bearing ever since
- * and was never written down. See doc/iceblue-remove-zkless-engine.md.
+ * and was never written down. Recorded as premise #20 in doc/iceblue-drop-less-plan-appendix.md.
  *
  * Measured when this script was added: 74 entry files use `~./` imports, 0 partials do.
  *
@@ -106,7 +106,7 @@ function main(argv) {
 		for (const b of bad) console.error(`  ${b.rel}:${b.line}  ${b.text}`);
 		console.error(
 			'\nFix: move the import into an entry file, or make it relative to this partial.\n' +
-			'Background: doc/iceblue-remove-zkless-engine.md');
+			'Background: doc/iceblue-drop-less-plan-appendix.md, premise #20');
 		return 1;
 	}
 

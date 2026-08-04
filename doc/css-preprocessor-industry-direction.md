@@ -72,8 +72,15 @@
 | `@layer` / `@scope` / `@container` | ✅ 只有原生有 —— preprocessor 這邊是**負分** |
 
 **唯一真正的缺口是迴圈。** 這正好命中 IceBlue:Font Awesome 的 `each()` 迴圈
-(P5/P6 的範圍)是全專案裡最難用純 CSS 表達的部分。反過來說,
+(**P6** 的範圍)是全專案裡最難用純 CSS 表達的部分 —— 它是 ~700 組 name→codepoint 對應,
+清單本身就是資料,所以只能寫產生器。反過來說,
 `@layer` / `@scope` / container query 這些我們想用的東西,preprocessor 一點忙都幫不上。
+
+> **精確一點:迴圈不只在 FA,但只有 FA 缺原生解法。** 全樹 `each()` 共 6 處,
+> 3 處在 FA(P6),另外 `js/zul/inp/less/combo.less:4` 在 **P3**、
+> `zkmax/less/tablet/compact/_combo.less:27,36` 在 **P7**。後兩者只是把名稱扇開到
+> 選擇器前綴,**原生選擇器清單就表達得出來**(限制:原生嵌套的 `&` 不能字串串接,
+> 所以 `&-input` 必須展開成明列清單)。詳見執行計畫的前提 #22 與拍板項 L-8。
 
 ## D. Ant Design 的弧線 —— 對 ZK 最貼切的前車之鑑
 
@@ -102,7 +109,8 @@ v6:  cssVar 預設開啟,LESS 正式除名
 |---|---|
 | 主流在棄用 preprocessor 嗎? | **部分是。** 棄用它當 theming 機制 = 是,已定案。整個拿掉 = 只有 CSS-first 專案做到 |
 | 那我們該不該拿掉 LESS? | **「離開 LESS」的理由比「離開 preprocessor」強很多。** LESS 已無旗艦使用者、無新功能 |
-| 現在拿掉會不會太早? | 唯一還需要 preprocessor 的是**迴圈**(Font Awesome `each()`)。
+| 現在拿掉會不會太早? | 唯一還需要**產生器**的是 **Font Awesome 的迴圈**(P6)—— 全樹 `each()` 共 6 處,
+  但另外 3 處(P3 `combo`、P7 `tablet/compact/_combo`)原生選擇器清單就夠。
   mixin/function 要等 Chrome 146,但我們的 30 個 mixin call 幾乎都可以用 custom property 改寫 |
 | 我們已經做對的事 | Marble 已經是純 CSS + custom properties;IceBlue master 已經外露 842 個 `--zk-*`
   作為公開 API(ZK 10.3 起)。**token API 這一層我們已經在終點了**,剩下的是 build pipeline |
@@ -111,10 +119,12 @@ v6:  cssVar 預設開啟,LESS 正式除名
 
 - Theme Pack → CSS 變數的方向 **有明確的業界背書**(Ant v5.12/v6、Bootstrap 6 目標、Tailwind v4)。
   不是我們自己發明的路。
-- 現在就可以在 `.less` 裡寫 `@layer` —— 已實測通過(見
-  [iceblue-remove-zkless-engine.md](iceblue-remove-zkless-engine.md) §B2)。
-  preprocessor 不擋這件事。
-- 迴圈(`each()`)是 P5/P6 唯一真正需要「產生器」的地方。
+- 現在就可以在 `.less` 裡寫 `@layer` —— 已實測通過(見執行計畫
+  [L3-B 前提 #21](iceblue-drop-less-plan-appendix.md#l3-b-已驗證的前提實測不是推論);
+  真正的風險源是 minifier 不是 LESS,見同檔 B5)。preprocessor 不擋這件事。
+- 迴圈(`each()`)是 **P6**(Font Awesome)唯一真正需要「產生器」的地方 ——
+  P3 的 `combo` 與 P7 的 `tablet/compact/_combo` 也有 `each()`,但那兩處**不需要產生器**,
+  原生選擇器清單就夠(見上方 §C 的補註與 L-8)。
   如果最後保留一個 build script,它存在的理由應該是**這個**,不是變數或巢狀。
 - **不要考慮 LESS → Sass。** 那只是換一個同樣要淘汰的東西,而且要重寫全部語法。
 
