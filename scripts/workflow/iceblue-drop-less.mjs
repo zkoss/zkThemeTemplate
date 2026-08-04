@@ -83,8 +83,17 @@ WORKING TREE
 
 READ THESE FIRST — they are the spec; this prompt is only a task order and may be less precise:
   ${WT}/doc/iceblue-drop-less-execution-plan.md   phase definitions, G-zero/G-delta criteria, scope
-  ${WT}/doc/iceblue-drop-less-progress.md         current status, append-only gate log
+  ${WT}/doc/iceblue-drop-less-progress.md         current status, phase + prereq state
   ${WT}/scripts/cssdiff.js                        the gate (read its header comment)
+
+DO NOT READ THESE WHOLESALE — the two docs above are L1+L2 only (415 and 226 lines) and are
+enough to execute a phase. Everything else — rationale, per-phase argument, the append-only
+gate log, the per-file review packets, the change logs — is L3 and lives in two SEPARATE files:
+  ${WT}/doc/iceblue-drop-less-plan-appendix.md      1691 lines
+  ${WT}/doc/iceblue-drop-less-progress-appendix.md   986 lines
+Each main doc's 「L3 技術附錄」 section is an index whose 〈何時要看〉 column states exactly when
+a given section is needed. Open an appendix section only when that column matches what you are
+doing, and reach for grep + a bounded read rather than loading the whole file.
 
 THE GATE
   cd ${WT} && npm run check:cssdiff
