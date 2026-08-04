@@ -912,6 +912,7 @@ npm run check:build-css        # 把紀錄 #7 的全樹重導自動化
 不能改斷言去迎合實測結果。
 
 **保留在 LESS 的**:`norm.less`(P5)、`font-awesome.less`(P6)、`tablet.less`(P7)。
+(這是 **P3 時點**的三檔。P6 已收工,現在只剩 `norm` 與 `tablet` —— 見下方 P6 段。)
 
 ##### `combo` 的迴圈 —— 唯一 loop-generated 的 P3 檔(前提 #22)
 
@@ -1245,6 +1246,19 @@ declaration diff 看不出這件事,computed-style A/B 與截圖 A/B 在這裡�
 > Marble 的 `font-awesome.css.dsp` 是**空 stub**(Marble 自己做 Lucide mask)。
 > 那是 Marble 的決定,**與本分支無關** —— 兩個主題在 icon 這件事上分道揚鑣是預期的。
 
+> **P6 已收工(2026-08-04),FA 的 16 個 `.less` 來源都刪掉了** ——
+> `zul/font/font-awesome.less` 與 `zul/less/font/_*.less` ×15。落點:
+> `scripts/gen-fa-css.js`(產生器)、`scripts/fa-icons.json`(資料)、
+> `zul/font/_font-awesome.css`(手寫樣板,4 個 `/* @generate … */` 標記)、
+> `zul/font/font-awesome.css`(產物,不手改)。狀態與量測看進度書 L2.1 與閘門紀錄 #31。
+>
+> **本文件(以及本檔其他各節)對 `zul/less/font/_*.less` 的行號引用,一律指 P6 之前的樹
+> —— commit `d6a48ef`。** 那些引用是各自論證的**當時證據**,依「既有段落原文不改寫,只指路」
+> 的規則保持原狀;要重看原文用 `git show d6a48ef:src/main/resources/web/zul/less/font/<檔>`。
+> 同理,進度書閘門紀錄 #14 講的「FA 差 7 個 byte = 7 個前導零」對**它那個時點**是對的
+> (獨立驗證重跑確認過);P6 把這個檔從 LESS 的序列化器換到 CleanCSS level 0 之後,
+> 它的位元組輪廓就併入 5 類封閉清單的一般族群了(實測用到 3 類)。閘門紀錄**附加式不覆寫**。
+
 ---
 
 #### P7 — `tablet.less` + `@themeProfile` / `@themePalette`
@@ -1532,8 +1546,10 @@ holdout:`norm`(P5)、`font-awesome`(P6)、`tablet`(P7)。閘門 `files differing
 
 #### 執行機制
 
-`scripts/workflow/iceblue-drop-less.mjs` —— 一次跑一個階段(`{phase:"prereq"|"P2"|"P3"|"P6"}`,
-P3 **必須**加 `{step:0|1|2|3|4}`)。被 gate 住的階段會回報 blocked 與原因,不會偷跑。
+`scripts/workflow/iceblue-drop-less.mjs` —— 一次跑一個階段(`{phase:"prereq"|"P2"|"P3"}`,
+P3 **必須**加 `{step:0|1|2|3|4}`;**`P6` 已收工,連同它的任務指令一起移進 `NOT_RUNNABLE`**,
+因為指令指向的 16 個 `.less` 已經不存在,留著會叫代理去轉換不存在的檔)。
+被 gate 住的階段會回報 blocked 與原因,不會偷跑。
 形狀是**序列轉換 → 並行複審 → 序列套用複審結果**;為什麼轉換不並行、階段之間為什麼不串接,
 寫在腳本開頭的註解與進度文件的〈執行機制〉。
 

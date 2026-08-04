@@ -2,7 +2,7 @@ export const meta = {
 	name: 'iceblue-drop-less',
 	description: 'Run one gated phase of the IceBlue drop-LESS conversion behind the cssdiff G-zero gate',
 	whenToUse:
-		'Executing doc/iceblue-drop-less-execution-plan.md on the `iceblue` branch. Pass {phase:"prereq"|"P2"|"P3"|"P6"}; P3 REQUIRES {step:0|1|2|3|4} — the ladder is 1→4→15→43→11 files and one run does exactly one step. One phase (and one step) per run — the plan gates and reviews between them, so a single run that swallowed several would skip the human checkpoint that the gate exists to create.',
+		'Executing doc/iceblue-drop-less-execution-plan.md on the `iceblue` branch. Pass {phase:"prereq"|"P2"|"P3"}; P3 REQUIRES {step:0|1|2|3|4} — the ladder is 1→4→15→43→11 files and one run does exactly one step. One phase (and one step) per run — the plan gates and reviews between them, so a single run that swallowed several would skip the human checkpoint that the gate exists to create.',
 	phases: [
 		{ title: 'Prereq: rule tables', detail: 'two generators, disjoint outputs, no build' },
 		{ title: 'Prereq: audit tables', detail: 'independent recount against the LESS sources' },
@@ -703,88 +703,6 @@ Commit as one \`style(drop-less): ...\` commit, explicit paths only. Report the 
 }
 
 // ---------------------------------------------------------------------------
-// P6 — Font Awesome. Unblocked 2026-07-30: L-5 decided, FA stays.
-// ---------------------------------------------------------------------------
-
-if (PHASE === 'P6') {
-	phase('P6: font-awesome generator')
-
-	const gen = await agent(
-		`${RULES}
-
-TASK — P6, Font Awesome (plan §P6).
-
-THE DECISION IS SETTLED: **Font Awesome stays.** L-5 was decided on 2026-07-30 — ZK 11 keeps FA,
-so this phase is the "若 FA 保留" branch of the plan: write the generator. It is NOT the delete-
-and-stub branch. Do not remove FA, do not stub it, do not introduce Lucide.
-
-SOURCE: src/main/resources/web/zul/font/font-awesome.less
-  910 source-side declarations that expand to 4545 output-side declarations — the largest single
-  output in the tree, larger than norm.css.dsp. The expansion is LESS \`each()\` plus a recursive
-  mixin over the icon list.
-
-WHY THIS ONE IS A GENERATOR AND NOT A CONVERSION: everywhere else in P3, "adopt the compiler
-output as the new source" works. Here it would produce a 4545-declaration file that no human can
-maintain and that must be hand-edited every time an icon is added. So write
-\`scripts/gen-fa-css.js\`: an icon-name→codepoint list plus emission logic. Marble's
-\`getLucideIcons()\` is the same shape and a useful precedent — read it at
-/Users/hawk/Documents/workspace/zkThemeTemplate/scripts/ (search for getLucideIcons).
-
-Decide and JUSTIFY one of: (a) the generator runs at build time as part of build-css.js, or
-(b) it emits a committed \`.css\` that is regenerated when the icon list changes. State the
-trade-off you chose and why — (a) keeps one source of truth but makes the build depend on more
-code; (b) keeps the build simple but lets the committed file drift from the generator. Whichever
-you pick, a customer must be able to add an icon without hand-editing 4545 declarations.
-
-PRECONDITION: \`scripts/build-css.js\` must already exist (P2). If it does not, return
-status \`blocked\` immediately — without it a generated \`.css\` never becomes a \`.css.dsp\` and
-the gate will report the file as missing, which looks like a generator bug and is not one.
-
-G-ZERO: 4545 declarations, zero differences. This is the phase where an off-by-one in the icon
-list is most likely and least visible, so gate before you believe anything. If you cannot reach
-0, report the actual diff records — the first few differing records will name the icons.
-
-Commit as one \`feat(drop-less): generate font-awesome CSS\` commit plus the deleted .less.
-Explicit paths only.`,
-		{ label: 'P6:gen-fa', schema: OUTCOME, effort: 'high' },
-	)
-
-	if (gen.status !== 'done') {
-		log(`P6 did not complete: ${gen.blockedReason || gen.summary}`)
-		return { phase: 'P6', gen }
-	}
-
-	phase('P6: audit')
-
-	const audit = await agent(
-		`${RULES}
-
-TASK — audit the Font Awesome generator. A green gate here is necessary but not sufficient, and
-your job is to find what it missed.
-
-The gate proves the generator reproduces TODAY's 4545 declarations. It says nothing about whether
-the generator is maintainable, which is the entire reason the plan chose a generator over adopting
-the expanded output. So check:
-
-  1. ICON COVERAGE — count the icons in the generated output and in the original
-     \`font-awesome.less\` icon list independently. Every icon in, every icon out, no extras.
-  2. CODEPOINT FIDELITY — sample at least 20 icons spread across the list and verify the emitted
-     \`content:\` codepoint matches the LESS source. A transposed codepoint passes the declaration
-     count and renders the wrong glyph, which is exactly the defect a count-based gate cannot see.
-  3. ADD-AN-ICON — actually add one throwaway icon to the list, regenerate, confirm exactly the
-     expected declarations appear, then remove it and confirm the gate returns to 0. If that round
-     trip is awkward, the generator has failed at its one job.
-  4. DETERMINISM — regenerate and confirm byte-identical output.
-  5. Confirm the source \`.less\` is deleted and nothing still imports it.
-
-Report defects precisely. Fix only unambiguous ones. Do NOT commit.`,
-		{ label: 'P6:audit', schema: OUTCOME, effort: 'high' },
-	)
-
-	return { phase: 'P6', gen, audit }
-}
-
-// ---------------------------------------------------------------------------
 // Phases this workflow will not run. Mostly gated on a human decision rather
 // than on work — but `status` must say which, because "blocked" and "already
 // finished" are not the same answer and a caller acts differently on each.
@@ -792,6 +710,7 @@ Report defects precisely. Fix only unambiguous ones. Do NOT commit.`,
 
 const NOT_RUNNABLE = {
 	P1: { status: 'done', reason: 'ALREADY DONE (2026-07-31), not runnable and not blocked — nothing to do here. Shipped as S0+S1 in one commit: npm `overrides` pinning zkless-engine\'s less to 4.8.1, plus scripts/check-less-conventions.js enforcing the entry-file-only `~./` import invariant. Gate: files differing 0 (77 files / 14323 declarations), with a negative control on the S1 guard. Note the pin does NOT disappear at P8 — it becomes a direct `"less": "4.8.1"` devDependency, because build-css.js\'s .less branch calls less.render itself.' },
+	P6: { status: 'done', reason: 'ALREADY DONE (2026-08-04), not runnable and not blocked. The task order used to live here and was deleted with the phase, because it pointed at src/main/resources/web/zul/font/font-awesome.less and the 15 partials in zul/less/font/ — all 16 are gone. Outcome: scripts/gen-fa-css.js splices scripts/fa-icons.json (1951 icons + 506 brand icons + 308 FA4 aliases + 786 FA4 style classes) into the hand-written template zul/font/_font-awesome.css and writes the committed zul/font/font-awesome.css. Of the two options the order asked to choose between, (b) won: a committed .css, with `npm run check:fa-css` wired into check:cssdiff so drift aborts the gate rather than being tolerated. Gate: files differing 0 (77 files / 14323 declarations), font-awesome.css.dsp ok at 4545 declarations, build-css 74 -> 75 files and zklessc 3 -> 2. The decisive evidence is stronger than the gate: the generator\'s output is byte-identical to less.render() of the deleted .less minus its taglib header, so fidelity is guaranteed by construction. Also removed one dead `@import "~./zul/less/font/_variables.less"` from zul/less/norm.less (zero references tree-wide; norm.css.dsp stayed byte-identical, which is the proof it was dead).' },
 	P4a: { status: 'blocked', reason: 'BLOCKED on L-2 — IceBlue\'s browser-support declaration as a ZK 11 add-on. P4a is the mechanical 83%: 945 declarations (border-radius 532, transform 181, box-shadow 168, box-sizing 60), every one with an unprefixed sibling in the same rule, so exactly one diff shape is legal and any `+` record is a bug. Trivial once the policy exists. A screenshot cannot answer "is this prefix dead"; only the support policy can.' },
 	P4b: { status: 'blocked', reason: 'BLOCKED on L-2, same decision as P4a. P4b is the 143 hand-written prefixes where all the judgement lives, including 26 sites needing paired replacement rather than removal. The 44-declaration carve-out (-webkit-font-smoothing, -moz-osx-font-smoothing, -webkit-touch-callout and friends) must not appear in the diff at all: those have no standard equivalent, so removing them deletes a feature — and their diff shape is identical to the removable ones.' },
 	P4: { status: 'blocked', reason: 'SPLIT into P4a and P4b (2026-07-30). Ask for one of those instead — the split exists because a single phase with three legal diff shapes cannot enforce "any unexpected shape is a bug", which is the whole content of the G-delta gate.' },
@@ -809,5 +728,5 @@ if (NOT_RUNNABLE[PHASE]) {
 return {
 	phase: PHASE,
 	status: 'unknown-phase',
-	reason: `Unknown phase "${PHASE}". Runnable now: prereq, P2, P3 (REQUIRES step 0|1|2|3|4), P6. Not runnable: ${Object.keys(NOT_RUNNABLE).join(', ')}.`,
+	reason: `Unknown phase "${PHASE}". Runnable now: prereq, P2, P3 (REQUIRES step 0|1|2|3|4). Not runnable: ${Object.keys(NOT_RUNNABLE).join(', ')}.`,
 }

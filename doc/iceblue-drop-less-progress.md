@@ -26,7 +26,7 @@
   - [L2.5 交給 P8 的產品面問題](#l25-交給-p8-的產品面問題2026-08-033-項不阻擋-p4-p7) — 3 項
 - **[L3 技術附錄](#l3-技術附錄獨立檔)** — 索引在本檔;**內容在 [iceblue-drop-less-progress-appendix.md](iceblue-drop-less-progress-appendix.md)**
   - [階段與 commit 對照](iceblue-drop-less-progress-appendix.md#階段與-commit-對照)
-  - [L3-A 閘門紀錄](iceblue-drop-less-progress-appendix.md#l3-a-閘門紀錄附加式不覆寫) — 30 列,附加式不覆寫
+  - [L3-A 閘門紀錄](iceblue-drop-less-progress-appendix.md#l3-a-閘門紀錄附加式不覆寫) — 31 列,附加式不覆寫
   - [L3-B Tier 1](iceblue-drop-less-progress-appendix.md#l3-b-tier-1p1--s0--s1) — P1 = S0 + S1
   - [L3-C P2 儀器證明](iceblue-drop-less-progress-appendix.md#l3-c-p2-儀器證明)
   - [L3-D P0 交付物、基準、突變測試](iceblue-drop-less-progress-appendix.md#l3-d-p0-交付物基準的不可變性突變測試)
@@ -34,7 +34,7 @@
   - [L3-F P3 逐檔複核包](iceblue-drop-less-progress-appendix.md#l3-f-p3-批次的檔案清單每一步可以自己檢查什麼步-0-4-的逐檔複核包) — [步 0](iceblue-drop-less-progress-appendix.md#步-0-的複核包2026-07-31) · [步 1](iceblue-drop-less-progress-appendix.md#步-1-的複核包2026-08-034-檔) · [步 2](iceblue-drop-less-progress-appendix.md#步-2-的複核包2026-08-0315-檔--批-1-收工-2020) · [步 3](iceblue-drop-less-progress-appendix.md#步-3-的複核包2026-08-0343-檔--批-2-收工-6374) · [步 4](iceblue-drop-less-progress-appendix.md#步-4-的複核包2026-08-0311-檔--批-3-收工p3-收工-7474)
   - [L3-G P3 收工複審](iceblue-drop-less-progress-appendix.md#l3-g-p3-收工複審74-檔獨立-fan-out2026-08-04計畫書-l3-c-26-第-4-層首次執行) — 74 檔獨立 fan-out
   - [L3-H 執行機制:workflow](iceblue-drop-less-progress-appendix.md#l3-h-執行機制workflow)
-  - [L3-I Change Log](iceblue-drop-less-progress-appendix.md#l3-i-change-log--狀態層的敘述更正) — 13 條狀態層更正
+  - [L3-I Change Log](iceblue-drop-less-progress-appendix.md#l3-i-change-log--狀態層的敘述更正) — 14 條狀態層更正
 
 ---
 
@@ -45,8 +45,9 @@
 ### 現況
 
 **核心命題已經證明完畢** —— IceBlue 的 **74 個元件輸出不需要 LESS,而且是零差異證明的**。
-來源端現在是 **74 `.css` + 3 `.less` = 77 ✓**;剩下的 3 個 `.less` 是**刻意**保留的 holdout。
-全樹閘門 `files differing: 0`(77 輸出檔 / 14323 輸出端條數)。
+**P6 收工後**來源端是 **75 `.css` + 2 `.less` = 77 ✓**;剩下的 2 個 `.less` 是**刻意**保留的
+holdout(`norm`/P5、`tablet`/P7)。全樹閘門 `files differing: 0`(77 輸出檔 / 14323 輸出端條數),
+而 `build-css.js` 現在覆蓋 **75 檔 —— 正好是 P2 儀器預估的上限,builder 覆蓋率到頂**。
 
 **剩下的階段都是有意識的取捨**(前綴政策、reset 機制、profile API),
 不是「還不知道做不做得到」。
@@ -58,7 +59,7 @@
 | **M1** 基礎建設與閘門(P0 · P1 · P2) | **DONE** | 基準不可變、LESS 釘到 4.8.1、來源樹可同時容納 `.less` 與 `.css` |
 | **M2** 元件轉換 74 檔(P3) | **DONE** | 74/74 轉完,逐檔閘門全 0、無一次失敗;**0 檔無法解釋** |
 | **M3** vendor prefix 政策(P4a · P4b) | **BLOCKED** | 等 **L-2** 瀏覽器支援聲明;另等視覺 A/B harness |
-| **M4** 三個 holdout(P5 · P6 · P7) | 部分可開 | **P6 可以直接開**;P5 等 harness、P7 等 **L-4** 的 density 那一半 |
+| **M4** 三個 holdout(P5 · P6 · P7) | **1 / 3 DONE** | **P6 DONE** —— FA 的 `each()` 迴圈換成 `gen-fa-css.js`;P5 等 harness、P7 等 **L-4** 的 density 那一半 |
 | **M5** 收尾與遷移指南(P8) | TODO | 兩張規則表已產出,期限風險已解除 |
 
 ### 總體進度
@@ -66,11 +67,12 @@
 | 量法 | 數字 |
 |---|---|
 | **里程碑進度** | **2 / 5 = 40%** |
-| **輸出檔脫離 LESS** | **74 / 77 = 96%** |
+| **輸出檔脫離 LESS** | **75 / 77 = 97%** |
 
 ### 下一步(依「不等任何人」排序)
 
-1. **P6 Font Awesome** —— G-zero、不等任何決策、L-5 已拍板保留 FA。**現在就能開。**
+1. **L2.4 清理待辦的第 1–4、6 項(共 5 項)** —— 全部 G-zero、不等任何決策(排程判斷已由
+   **S13** 改正),可以自成一顆可複審的 commit。**現在就能開,而且是剩下最便宜的一項。**
 2. **視覺 A/B harness** —— P4 / P5 / P7 的共同前置,**尚未開始**;先自我驗證(同一 build 截兩次 diff 為 0)。
 3. **L-2** 瀏覽器支援聲明 —— 解鎖 P4a / P4b。
 4. **L-4 的 density 那一半** —— 解鎖 P7(colour 那一半已由 L-7 解除)。
@@ -102,7 +104,7 @@
 | **P4a** 前綴純移除(A 群) | BLOCKED | G-delta | **945** 條,全部有無前綴同伴 → 只允許 `- <prefixed>`,任何 `+` 都是 bug | — |
 | **P4b** 前綴逐條判斷(C 群) | BLOCKED | G-delta | **143** 條,含 **26** 條須成對替換;B 群 **44** 條 carve-out 不得出現在 diff | — |
 | P5 `norm.css` | TODO | G-delta | **842** 個 token 須零差異 | — |
-| P6 Font Awesome | TODO | G-zero | **4545** 條 | — |
+| **P6 Font Awesome** | **DONE** | G-zero | **4545** 條零差異;產生器輸出與被刪掉的 `.less` 經 `less.render()` **逐 byte 相同**(獨立複核:**3611** 個選擇器 0 增 0 減);codepoint 抽驗 + 「加一個 icon」往返實測;`build-css` 74 → **75** 檔 | 2026-08-04 |
 | P7 `tablet` + profile API | BLOCKED | G-delta | — | — |
 | **規則表產生器**(P8 前置,**有期限**) | **DONE** | 自帶斷言 | **846** 列 / **834** 語法 1:1 / **830** 行為 1:1 / **16** 例外;**30** mixin 名稱 / **38** 定義列 | 2026-07-30 |
 | P8 收尾 | TODO | G-zero | 須等於 P4 + P5 + P7 已核准 delta 總和 | — |
@@ -119,7 +121,10 @@
 - **規則表產生器** —— ✅ **已完成(2026-07-30),期限風險解除。**
   `scripts/gen-var-table.js` + `scripts/gen-mixin-table.js`,各自自帶斷言、輸出跨次執行
   byte-identical、可在客戶 fork 上重跑。四支 npm script:`gen:var-table` / `check:var-table` /
-  `gen:mixin-table` / `check:mixin-table`,全部 exit 0。
+  `gen:mixin-table` / `check:mixin-table`。
+  ⚠️ **其中兩支 `check:*` 現在 exit 1,而且不是 P6 造成的** —— 成因是 P3 刪掉 74 個 entry
+  之後,「LESS 名稱有沒有被引用」這個量測失去了量測對象;見 L3-I 的 **S14**。
+  兩張表的**產出內容不受影響**,是儀器過期而不是遷移表錯。
   產出:`doc/migration/less-var-to-token.{md,json}`、`doc/migration/mixin-to-css.md`。
   它解掉的風險是:這兩張表**只存在於即將被刪的檔案裡**,刪掉之後只能靠考古還原。
 

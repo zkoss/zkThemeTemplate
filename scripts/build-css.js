@@ -272,10 +272,15 @@ function walk(dir, base, acc = []) {
  *   `<pkg>/less/x.less` -> `<pkg>/css/x.css.dsp`   (73 of the 77 outputs)
  *   `<pkg>/x.less`      -> `<pkg>/x.css.dsp`       (`zul/font/font-awesome.less`)
  * Checking only the first missed font-awesome — the largest output in the theme (4545 of 14323
- * declarations) — entirely: its `.less` sits in the SAME directory as its output, so the
+ * declarations) — entirely: its `.less` sat in the SAME directory as its output, so the
  * `basename(dir) === 'css'` precondition short-circuited before the existence test. Verified:
  * with `zul/font/font-awesome.{css,less}` both present the build exited 0 and build-css's
  * output silently overwrote zklessc's.
+ *
+ * P6 has since deleted that `.less` (the icons come from `scripts/gen-fa-css.js` now), so the
+ * second mapping currently has no `.less` left to collide with. Keep it anyway: it is the mapping
+ * that covers `zul/font/font-awesome.css`, which is STILL the only source outside a `less/`
+ * or `css/` directory, and it is what would catch a stale `.less` reappearing from a bad merge.
  */
 function conflictingLess(sourceDir, rel) {
 	const dir = path.dirname(rel);

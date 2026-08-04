@@ -1,0 +1,475 @@
+/* Font Awesome 6.4.2 for the IceBlue theme -- HAND-WRITTEN TEMPLATE.
+ *
+ * This file is the input to scripts/gen-fa-css.js, which splices the four
+ * data-driven blocks marked below and writes zul/font/font-awesome.css.
+ * Everything OUTSIDE those markers is authored here and copied through verbatim.
+ *
+ * Adding or changing an icon is a scripts/fa-icons.json edit, never an edit here
+ * and never an edit of the generated file. After either, run: npm run gen:fa-css
+ *
+ * The leading underscore keeps build-css.js from compiling this file to a
+ * .css.dsp of its own (it treats _*.css as a partial), and the .css extension
+ * keeps Maven from copying it into the jar.
+ */
+/*!
+ * Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com
+ * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
+ * Copyright 2023 Fonticons, Inc.
+ */
+/* FONT PATH
+ * -------------------------- */
+@font-face {
+  font-family: 'ZK85Icons';
+  src: url(${c:encodeURL("~./zul/less/font/ZK85Icons.eot?v=4.7.0")});
+  src: url(${c:encodeURL("~./zul/less/font/ZK85Icons.eot?#iefix&v=4.7.0")}) format("embedded-opentype"),
+    url(${c:encodeURL("~./zul/less/font/ZK85Icons.woff?v=4.7.0")}) format("woff"),
+    url(${c:encodeURL("~./zul/less/font/ZK85Icons.ttf?v=4.7.0")}) format("truetype"),
+    url(${c:encodeURL("~./zul/less/font/ZK85Icons.svg?v=4.7.0#ZK85Icons")}) format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+/*!
+ * Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com
+ * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
+ * Copyright 2023 Fonticons, Inc.
+ */
+@font-face {
+  font-family: 'FontAwesome';
+  font-style: normal;
+  font-weight: 900;
+  font-display: block;
+  src: url(${c:encodeURL("~./zul/less/font/fa-solid-900.woff2")}) format("woff2"),
+  url(${c:encodeURL("~./zul/less/font/fa-solid-900.ttf")}) format("truetype"),
+  url(${c:encodeURL("~./zul/less/font/solid.svg")}) format("svg");
+}
+@font-face {
+  font-family: 'FontAwesome';
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+  src: url(${c:encodeURL("~./zul/less/font/fa-regular-400.woff2")}) format("woff2"),
+  url(${c:encodeURL("~./zul/less/font/fa-regular-400.ttf")}) format("truetype"),
+  url(${c:encodeURL("~./zul/less/font/regular.svg")}) format("svg");
+}
+@font-face {
+  font-family: 'FontAwesome';
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+  src: url(${c:encodeURL("~./zul/less/font/fa-brands-400.woff2")}) format("woff2"),
+  url(${c:encodeURL("~./zul/less/font/fa-brands-400.ttf")}) format("truetype"),
+  url(${c:encodeURL("~./zul/less/font/brands.svg")}) format("svg");
+}
+.z-icon {
+  font-family: var(--z-icon-style-family, 'FontAwesome');
+  font-weight: var(--z-icon-style, 900);
+}
+[class*="z-icon"],
+.fas,
+.z-icon-solid,
+.fass,
+.z-icon-sharp,
+.far,
+.z-icon-regular,
+.fab,
+.z-icon-brands {
+  display: inline-block;
+  font: normal normal normal 14px/1 FontAwesome;
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.fas,
+.z-icon-classic,
+.z-icon-solid,
+.far,
+.z-icon-regular,
+.fab,
+.z-icon-brands {
+  font-family: FontAwesome;
+}
+.z-icon-1x {
+  font-size: 1em;
+}
+.z-icon-2x {
+  font-size: 2em;
+}
+.z-icon-3x {
+  font-size: 3em;
+}
+.z-icon-4x {
+  font-size: 4em;
+}
+.z-icon-5x {
+  font-size: 5em;
+}
+.z-icon-6x {
+  font-size: 6em;
+}
+.z-icon-7x {
+  font-size: 7em;
+}
+.z-icon-8x {
+  font-size: 8em;
+}
+.z-icon-9x {
+  font-size: 9em;
+}
+.z-icon-10x {
+  font-size: 10em;
+}
+.z-icon-2xs {
+  font-size: 0.625em;
+  line-height: 0.1em;
+  vertical-align: 0.225em;
+}
+.z-icon-xs {
+  font-size: 0.75em;
+  line-height: 0.08333333em;
+  vertical-align: 0.125em;
+}
+.z-icon-sm {
+  font-size: 0.875em;
+  line-height: 0.07142857em;
+  vertical-align: 0.05357143em;
+}
+.z-icon-lg {
+  font-size: 1.25em;
+  line-height: 0.05em;
+  vertical-align: -0.075em;
+}
+.z-icon-xl {
+  font-size: 1.5em;
+  line-height: 0.04166667em;
+  vertical-align: -0.125em;
+}
+.z-icon-2xl {
+  font-size: 2em;
+  line-height: 0.03125em;
+  vertical-align: -0.1875em;
+}
+.z-icon-fw {
+  text-align: center;
+  width: 1.25em;
+}
+.z-icon-ul {
+  list-style-type: none;
+  margin-left: var(--z-icon-li-margin, 2.5em);
+  padding-left: 0;
+}
+.z-icon-ul > li {
+  position: relative;
+}
+.z-icon-li {
+  left: calc(var(--z-icon-li-width, 2em) * -1);
+  position: absolute;
+  text-align: center;
+  width: var(--z-icon-li-width, 2em);
+  line-height: inherit;
+}
+.z-icon-border {
+  border-color: var(--z-icon-border-color, #eee);
+  border-radius: var(--z-icon-border-radius, 0.1em);
+  border-style: var(--z-icon-border-style, solid);
+  border-width: var(--z-icon-border-width, 0.08em);
+  padding: var(--z-icon-border-padding, 0.2em 0.25em 0.15em);
+}
+.z-icon-pull-left {
+  float: left;
+  margin-right: var(--z-icon-pull-margin, 0.3em);
+}
+.z-icon-pull-right {
+  float: right;
+  margin-left: var(--z-icon-pull-margin, 0.3em);
+}
+.z-icon-beat {
+  animation-name: z-icon-beat;
+  animation-delay: var(--z-icon-animation-delay, 0s);
+  animation-direction: var(--z-icon-animation-direction, normal);
+  animation-duration: var(--z-icon-animation-duration, 1s);
+  animation-iteration-count: var(--z-icon-animation-iteration-count, infinite);
+  animation-timing-function: var(--z-icon-animation-timing, ease-in-out);
+}
+.z-icon-bounce {
+  animation-name: z-icon-beat;
+  animation-delay: var(--z-icon-animation-delay, 0s);
+  animation-direction: var(--z-icon-animation-direction, normal);
+  animation-duration: var(--z-icon-animation-duration, 1s);
+  animation-iteration-count: var(--z-icon-animation-iteration-count, infinite);
+  animation-timing-function: var(--z-icon-animation-timing, cubic-bezier(0.280, 0.840, 0.420, 1));
+}
+.z-icon-fade {
+  animation-name: z-icon-fade;
+  animation-delay: var(--z-icon-animation-delay, 0s);
+  animation-direction: var(--z-icon-animation-direction, normal);
+  animation-duration: var(--z-icon-animation-duration, 1s);
+  animation-iteration-count: var(--z-icon-animation-iteration-count, infinite);
+  animation-timing-function: var(--z-icon-animation-timing, cubic-bezier(.4,0,.6,1));
+}
+.z-icon-beat-fade {
+  animation-name: z-icon-beat-fade;
+  animation-delay: var(--z-icon-animation-delay, 0s);
+  animation-direction: var(--z-icon-animation-direction, normal);
+  animation-duration: var(--z-icon-animation-duration, 1s);
+  animation-iteration-count: var(--z-icon-animation-iteration-count, infinite);
+  animation-timing-function: var(--z-icon-animation-timing, cubic-bezier(.4,0,.6,1));
+}
+.z-icon-flip {
+  animation-name: z-icon-flip;
+  animation-delay: var(--z-icon-animation-delay, 0s);
+  animation-direction: var(--z-icon-animation-direction, normal);
+  animation-duration: var(--z-icon-animation-duration, 1s);
+  animation-iteration-count: var(--z-icon-animation-iteration-count, infinite);
+  animation-timing-function: var(--z-icon-animation-timing, ease-in-out);
+}
+.z-icon-shake {
+  animation-name: z-icon-shake;
+  animation-delay: var(--z-icon-animation-delay, 0s);
+  animation-direction: var(--z-icon-animation-direction, normal);
+  animation-duration: var(--z-icon-animation-duration, 1s);
+  animation-iteration-count: var(--z-icon-animation-iteration-count, infinite);
+  animation-timing-function: var(--z-icon-animation-timing, ease-in-out);
+}
+.z-icon-spin {
+  animation-name: z-icon-spin;
+  animation-delay: var(--z-icon-animation-delay, 0s);
+  animation-direction: var(--z-icon-animation-direction, normal);
+  animation-duration: var(--z-icon-animation-duration, 2s);
+  animation-iteration-count: var(--z-icon-animation-iteration-count, infinite);
+  animation-timing-function: var(--z-icon-animation-timing, linear);
+}
+.z-icon-spin-reverse {
+  --z-icon-animation-direction: reverse;
+}
+.z-icon-pulse,
+.z-icon-spin-pulse {
+  animation-name: z-icon-spin;
+  animation-direction: var(--z-icon-animation-direction, normal);
+  animation-duration: var(--z-icon-animation-duration, 1s);
+  animation-iteration-count: var(--z-icon-animation-iteration-count, infinite);
+  animation-timing-function: var(--z-icon-animation-timing, steps(8));;
+}
+@media (prefers-reduced-motion: reduce) {
+  .z-icon-beat,
+  .z-icon-bounce,
+  .z-icon-fade,
+  .z-icon-beat-fade,
+  .z-icon-flip,
+  .z-icon-pulse,
+  .z-icon-shake,
+  .z-icon-spin,
+  .z-icon-spin-pulse {
+    animation-delay: -1ms;
+    animation-duration: 1ms;
+    animation-iteration-count: 1;
+    transition-delay: 0s;
+    transition-duration: 0s;
+  }
+}
+@keyframes z-icon-beat {
+  0%,
+  90% {
+    transform: scale(1);
+  }
+  45% {
+    transform: scale(var(--z-icon-beat-scale, 1.25));
+  }
+}
+@keyframes z-icon-bounce {
+  0% {
+    transform: scale(1, 1) translateY(0);
+  }
+  10% {
+    transform: scale(var(--z-icon-bounce-start-scale-x, 1.1),var(--z-icon-bounce-start-scale-y, 0.9)) translateY(0);
+  }
+  30% {
+    transform: scale(var(--z-icon-bounce-jump-scale-x, 0.9),var(--z-icon-bounce-jump-scale-y, 1.1)) translateY(var(--z-icon-bounce-height, -0.5em));
+  }
+  50% {
+    transform: scale(var(--z-icon-bounce-land-scale-x, 1.05),var(--z-icon-bounce-land-scale-y, 0.95)) translateY(0);
+  }
+  57% {
+    transform: scale(1,1) translateY(var(--z-icon-bounce-rebound, -0.125em));
+  }
+  64% {
+    transform: scale(1, 1) translateY(0);
+  }
+  100% {
+    transform: scale(1, 1) translateY(0);
+  }
+}
+@keyframes z-icon-fade {
+  50% {
+    opacity: var(--z-icon-fade-opacity, 0.4);
+  }
+}
+@keyframes z-icon-beat-fade {
+  0%,
+  100% {
+    opacity: var(--z-icon-beat-fade-opacity, 0.4);
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(var(--z-icon-beat-fade-scale, 1.125));
+  }
+}
+@keyframes z-icon-flip {
+  50% {
+    transform: rotate3d(var(--z-icon-flip-x, 0), var(--z-icon-flip-y, 1), var(--z-icon-flip-z, 0), var(--z-icon-flip-angle, -180deg));
+  }
+}
+@keyframes z-icon-shake {
+  0% {
+    transform: rotate(-15deg);
+  }
+  4% {
+    transform: rotate(15deg);
+  }
+  8%,
+  24% {
+    transform: rotate(-18deg);
+  }
+  12%,
+  28% {
+    transform: rotate(18deg);
+  }
+  16% {
+    transform: rotate(-22deg);
+  }
+  20% {
+    transform: rotate(22deg);
+  }
+  32% {
+    transform: rotate(-12deg);
+  }
+  36% {
+    transform: rotate(12deg);
+  }
+  40%,
+  100% {
+    transform: rotate(0deg);
+  }
+}
+@keyframes z-icon-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.z-icon-rotate-90 {
+  transform: rotate(90deg);
+}
+.z-icon-rotate-180 {
+  transform: rotate(180deg);
+}
+.z-icon-rotate-270 {
+  transform: rotate(270deg);
+}
+.z-icon-flip-horizontal {
+  transform: scale(-1, 1);
+}
+.z-icon-flip-vertical {
+  transform: scale(1, -1);
+}
+.z-icon-flip-both,
+.z-icon-flip-horizontal.z-icon-flip-vertical {
+  transform: scale(-1, -1);
+}
+.z-icon-rotate-by {
+  transform: rotate(var(--z-icon-rotate-angle, none));
+}
+.z-icon-stack {
+  display: inline-block;
+  height: 2em;
+  line-height: 2em;
+  position: relative;
+  vertical-align: middle;
+  width: 2.5em;
+}
+.z-icon-stack-1x,
+.z-icon-stack-2x {
+  left: 0;
+  position: absolute;
+  text-align: center;
+  width: 100%;
+  z-index: var(--z-icon-stack-z-index, auto);
+}
+.z-icon-stack-1x {
+  line-height: inherit;
+}
+.z-icon-stack-2x {
+  font-size: 2em;
+}
+.z-icon-inverse {
+  color: var(--z-icon-inverse, #fff);
+}
+/* Font Awesome uses the Unicode Private Use Area (PUA) to ensure screen
+   readers do not read off random characters that represent icons */
+/* @generate icons */
+/* @generate brand-icons */
+.sr-only,
+.z-icon-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+.sr-only-focusable:not(:focus),
+.z-icon-sr-only-focusable:not(:focus) {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+/* @generate fa4-aliases */
+/* @generate fa4-styles */
+.z-icon-circle-o:before {
+  content: "\f10c";
+}
+.z-icon-envelope-o:before {
+  content: "\f003";
+}
+.z-icon-flag-o:before {
+  content: "\f11d";
+}
+.z-icon-question-circle-o:before {
+  content: "\f29c";
+}
+.z-icon-times-circle-o:before {
+  content: "\f05c";
+}
+.z-icon-user-o:before {
+  content: "\f2c0";
+}
+[class*="z-icon-"] {
+  font-family: ZK85Icons, FontAwesome;
+}
+.fas,
+.z-icon-solid {
+  font-family: FontAwesome;
+  font-weight: 900;
+}
+.far,
+.z-icon-regular {
+  font-family: FontAwesome;
+  font-weight: 400;
+}
+.fab,
+.z-icon-brands {
+  font-family: FontAwesome;
+  font-weight: 400;
+}
