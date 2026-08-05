@@ -26,5 +26,5 @@ package org.zkoss.theme.iceblue_css;
 public class Version {
 	/** Returns the version UID.
 	 */
-	public static final String UID = "10.2.1-jakarta-Eval";
+	public static final String UID = "10.4.0-jakarta-Eval";
 }

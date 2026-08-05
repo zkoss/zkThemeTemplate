@@ -3,7 +3,12 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.zkoss.theme</groupId>
 	<artifactId>iceblue_css</artifactId>
-	<version>10.2.1-jakarta-Eval</version>
+	<!-- Tracks the ZK version this theme targets, per the iceblue_c convention. Deliberately NOT
+		 `10.4.0-jakarta.FL.20260713-Eval`: the FL date describes the *dependency* (zk.version below)
+		 and is a moving target, whereas this string identifies the artifact. Must stay in lockstep
+		 with the three version-uid siblings (config.xml, lang-addon.xml, Version.java) — those only
+		 have to agree with each other, so nothing detects a drift. -->
+	<version>10.4.0-jakarta-Eval</version>
 	<properties>
 		<maven.compiler.source>11</maven.compiler.source>
 		<maven.compiler.target>11</maven.compiler.target>
