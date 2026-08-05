@@ -8,9 +8,15 @@
 # zkless-engine: 1.1.13
 # less:          3.13.1
 # .less sources: 153
+# 
+# backfill for ZK 10.4 parity (2026-08-05) — see tasks/backfill-8-components-and-version.md
+# zul/css/norm.css.dsp is no longer purely the above commit's output: it gained the
+# 20 --zk-severity-* tokens, compiled from ZK 10.4's own zul/less/profiles/_default.less
+# imported byte-identically. Every other file here is still that commit's output,
+# proven by the 1-changed/0-missing/0-extra manifest check taken across the update.
 #
 # files: 78
-6e160f9bfe63b8079b264629cc6d6a813a7f5c470753be804349778dbacfa372  baseline/.built-from
+76de8772301e1c8ae504c8babafad256d57f67eee885bf897eda6743a2adcf9c  baseline/.built-from
 1c905b7f0438d19ca2d8c763211e58266783eecb7dfff022298537c1e9bc8b17  baseline/js/zkex/grid/css/grid.css.dsp
 4766e8dcb502071e5361d7dacced8591d8d4b86cc8ba31a58af75872758cf24e  baseline/js/zkex/inp/css/colorbox.css.dsp
 cb17b1c7626655c3cade3190623a13049cbd91c21a958c798026f826cbc37e04  baseline/js/zkex/layout/css/columnlayout.css.dsp
@@ -86,5 +92,5 @@ dad160ea3ca1bdb4fda89d97dd7ae1eded7f2beafdb2b5005697656023de92f4  baseline/js/zu
 e53ab34982f000e1aeacf400285977fc27aacc00afd27a4ac39faf67b37b63e3  baseline/js/zul/wnd/css/window.css.dsp
 433e1f4b013e745abc527b7ab55ef877a2d50537206afca35317f9a8e37f815d  baseline/zkmax/css/tablet.css.dsp
 2912cca69ab86de2939307c02da6ac44b54f3b3a2616f5d3c65f7072612530ee  baseline/zul/css/footer.css.dsp
-6be6752a57b082265979da1928603e4c444f0b2a02b2369ce626a28d45a8a31b  baseline/zul/css/norm.css.dsp
+3975e6515e71bbfb7c645a2b9b5bcd06b22ecf7dda28d9a2f72c0021655a0a33  baseline/zul/css/norm.css.dsp
 9e4bd5c59052e1a0accaab2b92b3e83e04d6f7447d60cd1b5bdad074401c3bc3  baseline/zul/font/font-awesome.css.dsp
