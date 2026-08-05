@@ -26,7 +26,7 @@
   - [L2.5 交給 P8 的產品面問題](#l25-交給-p8-的產品面問題2026-08-033-項不阻擋-p4-p7) — 3 項
 - **[L3 技術附錄](#l3-技術附錄獨立檔)** — 索引在本檔;**內容在 [iceblue-drop-less-progress-appendix.md](iceblue-drop-less-progress-appendix.md)**
   - [階段與 commit 對照](iceblue-drop-less-progress-appendix.md#階段與-commit-對照)
-  - [L3-A 閘門紀錄](iceblue-drop-less-progress-appendix.md#l3-a-閘門紀錄附加式不覆寫) — 36 列,附加式不覆寫
+  - [L3-A 閘門紀錄](iceblue-drop-less-progress-appendix.md#l3-a-閘門紀錄附加式不覆寫) — 37 列,附加式不覆寫
   - [L3-B Tier 1](iceblue-drop-less-progress-appendix.md#l3-b-tier-1p1--s0--s1) — P1 = S0 + S1
   - [L3-C P2 儀器證明](iceblue-drop-less-progress-appendix.md#l3-c-p2-儀器證明)
   - [L3-D P0 交付物、基準、突變測試](iceblue-drop-less-progress-appendix.md#l3-d-p0-交付物基準的不可變性突變測試)
@@ -34,7 +34,7 @@
   - [L3-F P3 逐檔複核包](iceblue-drop-less-progress-appendix.md#l3-f-p3-批次的檔案清單每一步可以自己檢查什麼步-0-4-的逐檔複核包) — [步 0](iceblue-drop-less-progress-appendix.md#步-0-的複核包2026-07-31) · [步 1](iceblue-drop-less-progress-appendix.md#步-1-的複核包2026-08-034-檔) · [步 2](iceblue-drop-less-progress-appendix.md#步-2-的複核包2026-08-0315-檔--批-1-收工-2020) · [步 3](iceblue-drop-less-progress-appendix.md#步-3-的複核包2026-08-0343-檔--批-2-收工-6374) · [步 4](iceblue-drop-less-progress-appendix.md#步-4-的複核包2026-08-0311-檔--批-3-收工p3-收工-7474)
   - [L3-G P3 收工複審](iceblue-drop-less-progress-appendix.md#l3-g-p3-收工複審74-檔獨立-fan-out2026-08-04計畫書-l3-c-26-第-4-層首次執行) — 74 檔獨立 fan-out
   - [L3-H 執行機制:workflow](iceblue-drop-less-progress-appendix.md#l3-h-執行機制workflow)
-  - [L3-I Change Log](iceblue-drop-less-progress-appendix.md#l3-i-change-log--狀態層的敘述更正) — 23 條狀態層更正
+  - [L3-I Change Log](iceblue-drop-less-progress-appendix.md#l3-i-change-log--狀態層的敘述更正) — 24 條狀態層更正
 
 ---
 
@@ -82,10 +82,15 @@ holdout(`norm`/P5、`tablet`/P7)。全樹閘門 `files differing: 0`(77 輸出�
    **接線那一半也做完了**:`init.sh` 已執行(紀錄 #35),而主題名撞上 `StandardTheme.DEFAULT_NAME`
    的問題(**S21**)已由**改名 `iceblue` → `iceblue_css`** 解除(**S23** 決策、紀錄 #36)。
    **A/B 現在真的量得到東西**:同一個 `zk.wcs`,A 側 530434 B / B 側 531482 B、sha256 不同,
-   而兩者經 5 類序列化正規化後**完全相同(524709 B)** —— 「byte 不同、語意相同」第一次在
+   而兩者經 5 類序列化正規化後**完全相同(525145 B)** —— 「byte 不同、語意相同」第一次在
    **HTTP 層**被證明,不再只是磁碟上的比對。
    **剩下的就只有缺頁面與缺工具**:此 worktree 只有 `preview.zul` 一頁,`package.json` 裡沒有
    playwright。這是純實作,**不等任何人** —— 也是目前唯一還擋著 P4 / P5 / P7 的東西。
+   **但先把一個上限寫清楚**:A/B 的覆蓋率是 **74/77**,不是 77/77 —— `font-awesome`
+   (**P6 的交付物、全樹最大檔、佔位元組 28.3%**)在目前釘的 `zk.version` = `10.2.1-jakarta-Eval`
+   上**永遠不會被主題改寫**,因為該版 `StandardThemeProvider` 的前綴白名單沒有 `~./zul/font/`
+   (10.4 才加)。**升到 10.4.0 FL 就會納入**;在那之前不能把「A/B 沒差異」讀成
+   「這個檔沒問題」。另兩個沒到的是舊路徑死複本(S18)與 `disabled` 的 tablet(P7),都是預期的。細節見 **S24**。
 2. **L-2** 瀏覽器支援聲明 —— 解鎖 P4a / P4b。
 3. **L-4 的 density 那一半** —— 解鎖 P7(colour 那一半已由 L-7 解除)。
 
@@ -119,9 +124,9 @@ holdout(`norm`/P5、`tablet`/P7)。全樹閘門 `files differing: 0`(77 輸出�
 | ↳ **P3 前置**:workflow 腳本加 `{step}` | **DONE** | 六條路徑實測 | `{step:0..4}` = **1 / 4 / 15 / 43 / 11**,一次只跑一步;`{batch:1}` 改成**拒絕並說明** | 2026-07-31 |
 | **視覺 A/B harness**(P4 / P5 / P7 前置) | TODO | 自我驗證須為 0 | — | — |
 | ↳ **A 側(基準)可用性 + 完整性** | **DONE** | 無損可逆 + 三個負向控制 | `install a` → **77/77 逐 byte 等於 `baseline/`**;`install b` → 77 檔**逐 byte 回到切換前快照**;`shasum -a 256 -c doc/baseline-manifest.sha256` → **78/78 OK**(可脫離腳本驗證);manifest 損毀 → `check:baseline` exit 1 且 `install a` 拒絕 | 2026-08-05 |
-| ↳ **四個名字統一**(`init.sh` 已執行,theme name = `iceblue`) | **DONE** | 閘門不得動 | registered / preferred / maven `<artifactId>` / 腳本輸出目錄 **全部 = `iceblue`**;`npm run ab` 由 exit 1 轉 **exit 0**;`web/iceblue` 首次帶齊 **29 個資產**;閘門 **77 檔 / 14323 條 / 0**(紀錄 #35) | 2026-08-05 |
-| ↳ **主題有沒有被服務**(A/B 能不能看見) | **DONE** | 服務出來的 CSS 必須是本主題 | **是 —— 改名 `iceblue` → `iceblue_css` 之後解除**(S23 決策、紀錄 #36)。主題段回到 URL(`_zkiju-iceblue_css/zul/css/zk.wcs`);服務出來的 `zk.wcs` **415355 → 531482 B**、`--zk-` **0 → 4171**;`iceblue_css/zul/css/norm.css.dsp` → 200 / **63161 B**(這次**是被要求的**);app log `FileNotFoundException` **0 條** ⇒ 77 檔覆蓋完整 | 2026-08-05 |
-| ↳ **A/B 有沒有訊號**(harness 的自我驗證) | **DONE** | 兩側服務出來的 byte 必須不同 | **有。** 同一個 `zk.wcs`:A 側 `a56858a9…` / **530434 B**,B 側 `6f293b24…` / **531482 B**(對照 S21 當時兩側 sha256 完全相同)。**而且差異性質也證明了**:套上 `check-bytes.js` 那 5 類封閉序列化正規化後,兩邊都是 **524709 B 且字串完全相同** ⇒ 瀏覽器收到的是**「byte 不同、語意相同」**的 CSS —— 核心主張第一次在 **HTTP 層**被證明 | 2026-08-05 |
+| ↳ **四個名字統一**(`init.sh` 已執行 → 之後改名為 `iceblue_css`,見 #36) | **DONE** | 閘門不得動 | registered / preferred / maven `<artifactId>` / 腳本輸出目錄 **當時全部 = `iceblue`,現為 `iceblue_css`**;`npm run ab` 由 exit 1 轉 **exit 0**;`web/iceblue` 首次帶齊 **29 個資產**;閘門 **77 檔 / 14323 條 / 0**(紀錄 #35) | 2026-08-05 |
+| ↳ **主題有沒有被服務**(A/B 能不能看見) | **DONE** | 服務出來的 CSS 必須是本主題 | **是 —— 改名 `iceblue` → `iceblue_css` 之後解除**(S23 決策、紀錄 #36)。主題段回到 URL(`_zkiju-iceblue_css/zul/css/zk.wcs`);服務出來的 `zk.wcs` **415355 → 531482 B**、`--zk-` 出現次數 **0 → 4171**(其中真正的自訂屬性宣告 **842** 條);`iceblue_css/zul/css/norm.css.dsp` → 200 / **63161 B**(這次**是被要求的**,標記探針證實)。**但覆蓋率不是 77/77 而是 74/77** —— `font-awesome`(P6 交付物,全樹最大檔)在目前釘的 ZK 10.2.1 上**永遠不會被主題改寫**,見 **S24** | 2026-08-05 |
+| ↳ **A/B 有沒有訊號**(harness 的自我驗證) | **DONE** | 兩側服務出來的 byte 必須不同 | **有。** 同一個 `zk.wcs`:A 側 `a56858a9…` / **530434 B**,B 側 `6f293b24…` / **531482 B**(對照 S21 當時兩側 sha256 完全相同)。**而且差異性質也證明了**:套上 `check-bytes.js` 那 5 類封閉序列化正規化後,兩邊都是 **525145 B 且字串完全相同** ⇒ 瀏覽器收到的是**「byte 不同、語意相同」**的 CSS —— 核心主張第一次在 **HTTP 層**被證明 | 2026-08-05 |
 | **P4a** 前綴純移除(A 群) | BLOCKED | G-delta | **945** 條,全部有無前綴同伴 → 只允許 `- <prefixed>`,任何 `+` 都是 bug | — |
 | **P4b** 前綴逐條判斷(C 群) | BLOCKED | G-delta | **143** 條,含 **26** 條須成對替換;B 群 **44** 條 carve-out 不得出現在 diff | — |
 | P5 `norm.css` | TODO | G-delta | **842** 個 token 須零差異 | — |

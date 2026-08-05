@@ -293,11 +293,16 @@ function inspectWiring() {
 	// pointed somewhere else — that is exactly the shape of the `uiceblue` bug, which stayed invisible
 	// only because init.sh happened to corrupt the class and the config in the same way.
 	const listener = /<listener-class>([^<]+)<\/listener-class>/.exec(read(CONFIG_XML))?.[1];
-	const expected = `org.zkoss.theme.${path.basename(path.dirname(INIT_JAVA))}.${path.basename(INIT_JAVA, '.java')}`;
-	const wired = listener === expected;
+	// Derived from the file's own `package` declaration, not from its directory: a package line that
+	// disagrees with its directory is a third way to make the listener unreachable, and building
+	// `expected` from the path would silently agree with itself and report everything fine.
+	const pkg = /^package\s+([\w.]+)\s*;/m.exec(read(INIT_JAVA))?.[1];
+	const expected = pkg ? `${pkg}.${path.basename(INIT_JAVA, '.java')}` : '(no package declaration found)';
+	const pkgMatchesDir = pkg ? pkg.split('.').pop() === path.basename(path.dirname(INIT_JAVA)) : false;
+	const wired = listener === expected && pkgMatchesDir;
 	const served = Boolean(registered) && dirs.includes(registered);
 	const agree = registered === preferred && registered === artifactId && registered === mine;
-	return { registered, preferred, artifactId, mine, dirs, listener, expected, wired, served, agree, ok: served && agree && wired };
+	return { registered, preferred, artifactId, mine, dirs, listener, expected, pkg, pkgMatchesDir, wired, served, agree, ok: served && agree && wired };
 }
 
 function printWiring(w) {
@@ -309,7 +314,11 @@ function printWiring(w) {
 	console.log(`                config.xml listener:  ${w.wired ? 'wired to ' + w.listener : `${w.listener} — EXPECTED ${w.expected}`}`);
 	if (!w.wired)
 		console.log(`
-                ⇒ config.xml points at a class that is not the one holding THEME_NAME, so
+                ⇒ ${
+						w.pkgMatchesDir
+							? 'config.xml points at a class that is not the one holding THEME_NAME'
+							: `the package declaration (${w.pkg}) does not match its directory`
+					}, so
                   Themes.register never runs and the name above is fiction.`);
 	if (w.ok) {
 		console.log(`

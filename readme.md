@@ -34,7 +34,7 @@ along with the LESS compiler itself. Nothing needs to be installed by hand.
 ## build jar file
 `mvn clean package`
 
-It will compile `.less` files and package the source into jar. The jar file will be at `target/iceblue_css.jar`
+It will compile `.less` files and package the source into jar. The jar file will be at `target/iceblue_css-${project.version}.jar` (the unversioned `iceblue_css.jar` name only exists inside the `bin` zip)
 
 # How to Customize a Theme
 This project contains the default theme (`iceblue`) .less files. 
