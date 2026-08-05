@@ -34,7 +34,7 @@
   - [L3-F P3 逐檔複核包](iceblue-drop-less-progress-appendix.md#l3-f-p3-批次的檔案清單每一步可以自己檢查什麼步-0-4-的逐檔複核包) — [步 0](iceblue-drop-less-progress-appendix.md#步-0-的複核包2026-07-31) · [步 1](iceblue-drop-less-progress-appendix.md#步-1-的複核包2026-08-034-檔) · [步 2](iceblue-drop-less-progress-appendix.md#步-2-的複核包2026-08-0315-檔--批-1-收工-2020) · [步 3](iceblue-drop-less-progress-appendix.md#步-3-的複核包2026-08-0343-檔--批-2-收工-6374) · [步 4](iceblue-drop-less-progress-appendix.md#步-4-的複核包2026-08-0311-檔--批-3-收工p3-收工-7474)
   - [L3-G P3 收工複審](iceblue-drop-less-progress-appendix.md#l3-g-p3-收工複審74-檔獨立-fan-out2026-08-04計畫書-l3-c-26-第-4-層首次執行) — 74 檔獨立 fan-out
   - [L3-H 執行機制:workflow](iceblue-drop-less-progress-appendix.md#l3-h-執行機制workflow)
-  - [L3-I Change Log](iceblue-drop-less-progress-appendix.md#l3-i-change-log--狀態層的敘述更正) — 28 條狀態層更正
+  - [L3-I Change Log](iceblue-drop-less-progress-appendix.md#l3-i-change-log--狀態層的敘述更正) — 29 條狀態層更正
 
 ---
 
@@ -104,11 +104,24 @@
    再逐檔轉成 CSS。輸出 **77 → 85**、declaration **14323 → 14863**、來源端 **83 `.css` + 2 `.less`**。
    實測驗收:8 個元件的選擇器全部進到瀏覽器實收的 CSS、20 個 token 全部被服務、
    `Unable to load` **歸零**。**artifact 自己的版號也一併跟上** `10.4.0-jakarta-Eval`(4 處)。
-2. **L-2** 瀏覽器支援聲明 —— 解鎖 P4a / P4b。
-3. **L-4 的 density 那一半** —— 解鎖 P7(colour 那一半已由 L-7 解除)。
+2. **補齊的第 4 層獨立驗證仍然欠著** —— 常規是「P3 之後每步收工都要獨立 agent 覆核」,而這一輪
+   獨立 agent **連續三次死在 API 529**(伺服器端,與內容無關),三次都沒留下產出。已改用自我複核
+   頂替(`doc/self-verify-zk104-backfill.md`),**C1 / C4 / C5 / C6 / C11 / C12 都 CONFIRMED,
+   但 C2 被推翻**(見 S29),而 C3 / C7 / C8 / C9 / C10 只有我自己的量測。
+   **自我複核有一個結構盲點:它檢查不到我沒想到要檢查的東西** —— 而前面每一輪獨立覆核抓到的缺陷
+   多半正屬於那一類。**不等任何人,重跑即可。**
+3. **palette 的 `_css` 覆蓋機制是斷的**(S29,**既有缺口、非本輪造成**)—— `_zkcssvariables.less`
+   少了 `@import "colors/_@{themePalette}_css";`,連帶沒有 `colors/_iceblue_css.less`。
+   對現狀**零影響**(iceblue 那份是空的),但**換 palette 就靜默失效**,而 `readme.md:50` 正是教
+   使用者設 `@themePalette` 的那一行。修法是補 import + 補檔,**必須成對**(單獨補 import 會建置
+   失敗),兩者都不改輸出 ⇒ **待決定要不要納入本分支**。
+4. **L-2** 瀏覽器支援聲明 —— 解鎖 P4a / P4b。
+5. **L-4 的 density 那一半** —— 解鎖 P7(colour 那一半已由 L-7 解除)。
 
-> **不等任何人的工作已經做完了。** L2.4 清理待辦第 1–4、6 項已於 2026-08-04 收工(紀錄 #32、#33),
-> 剩下三項全部是**別人的決定或還沒建的工具**,不是可以直接開工的實作。要繼續推進,
+> ~~**不等任何人的工作已經做完了。**~~ **←2026-08-05 補齊收工後不再成立:上面 5 項裡有 3 項
+> 不等任何人**(第 1 項的頁面與 playwright、第 2 項重跑第 4 層驗證、第 3 項只差一個要不要做的決定)。
+> L2.4 清理待辦第 1–4、6 項已於 2026-08-04 收工(紀錄 #32、#33),
+> 剩下的 L2.4 兩項是**別人的決定或還沒建的工具**,不是可以直接開工的實作。要繼續推進,
 > ~~第 1 項是唯一自己動手就能解的 —— 而且它同時解鎖三個階段。~~
 > **←第 1 項在 2026-08-05 一天之內從「等決策」變回「純實作」。** A 側基準收工(#34)、名字統一
 > (#35)、撞號解除(改名 `iceblue_css`,S23 / #36)。**現在它是三項裡唯一不等任何人的**:
