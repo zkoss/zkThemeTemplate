@@ -4,6 +4,10 @@ target/
 .project
 .settings
 
+# Playwright's per-failure artefact dir (visual A/B harness). The harness's own output —
+# screenshots, manifests, diff report — goes under target/, which is already ignored.
+test-results/
+
 # drop-LESS conversion: immutable reference build + gate reports.
 # Rebuildable with `npm run baseline` — never committed, so it cannot drift silently.
 baseline/

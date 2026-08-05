@@ -20,9 +20,13 @@
     "check:fa-css": "node scripts/gen-fa-css.js --check",
     "check:cssdiff": "npm run check:less-conventions && npm run check:fa-css && zklessc -s src/main/resources/web -o target/classes/web/iceblue_css --compress && npm run build:css && node scripts/cssdiff.js baseline/ target/classes/web/iceblue_css",
     "gen:mixin-table": "node scripts/gen-mixin-table.js",
-    "check:mixin-table": "node scripts/gen-mixin-table.js --check"
+    "check:mixin-table": "node scripts/gen-mixin-table.js --check",
+    "visual:selftest": "node scripts/ab-visual.js selftest",
+    "visual:capture": "node scripts/ab-visual.js capture",
+    "visual:diff": "node scripts/ab-visual.js diff"
   },
   "devDependencies": {
+    "@playwright/test": "1.62.1",
     "clean-css": "^5.3.3",
     "zkless-engine": "^1.1.9"
   },

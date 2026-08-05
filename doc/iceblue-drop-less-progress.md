@@ -26,7 +26,7 @@
   - [L2.5 交給 P8 的產品面問題](#l25-交給-p8-的產品面問題2026-08-033-項不阻擋-p4-p7) — 3 項
 - **[L3 技術附錄](#l3-技術附錄獨立檔)** — 索引在本檔;**內容在 [iceblue-drop-less-progress-appendix.md](iceblue-drop-less-progress-appendix.md)**
   - [階段與 commit 對照](iceblue-drop-less-progress-appendix.md#階段與-commit-對照)
-  - [L3-A 閘門紀錄](iceblue-drop-less-progress-appendix.md#l3-a-閘門紀錄附加式不覆寫) — 43 列,附加式不覆寫
+  - [L3-A 閘門紀錄](iceblue-drop-less-progress-appendix.md#l3-a-閘門紀錄附加式不覆寫) — 44 列,附加式不覆寫
   - [L3-B Tier 1](iceblue-drop-less-progress-appendix.md#l3-b-tier-1p1--s0--s1) — P1 = S0 + S1
   - [L3-C P2 儀器證明](iceblue-drop-less-progress-appendix.md#l3-c-p2-儀器證明)
   - [L3-D P0 交付物、基準、突變測試](iceblue-drop-less-progress-appendix.md#l3-d-p0-交付物基準的不可變性突變測試)
@@ -34,7 +34,7 @@
   - [L3-F P3 逐檔複核包](iceblue-drop-less-progress-appendix.md#l3-f-p3-批次的檔案清單每一步可以自己檢查什麼步-0-4-的逐檔複核包) — [步 0](iceblue-drop-less-progress-appendix.md#步-0-的複核包2026-07-31) · [步 1](iceblue-drop-less-progress-appendix.md#步-1-的複核包2026-08-034-檔) · [步 2](iceblue-drop-less-progress-appendix.md#步-2-的複核包2026-08-0315-檔--批-1-收工-2020) · [步 3](iceblue-drop-less-progress-appendix.md#步-3-的複核包2026-08-0343-檔--批-2-收工-6374) · [步 4](iceblue-drop-less-progress-appendix.md#步-4-的複核包2026-08-0311-檔--批-3-收工p3-收工-7474)
   - [L3-G P3 收工複審](iceblue-drop-less-progress-appendix.md#l3-g-p3-收工複審74-檔獨立-fan-out2026-08-04計畫書-l3-c-26-第-4-層首次執行) — 74 檔獨立 fan-out
   - [L3-H 執行機制:workflow](iceblue-drop-less-progress-appendix.md#l3-h-執行機制workflow)
-  - [L3-I Change Log](iceblue-drop-less-progress-appendix.md#l3-i-change-log--狀態層的敘述更正) — 31 條狀態層更正
+  - [L3-I Change Log](iceblue-drop-less-progress-appendix.md#l3-i-change-log--狀態層的敘述更正) — 32 條狀態層更正
 
 ---
 
@@ -67,8 +67,8 @@
 |---|---|---|
 | **M1** 基礎建設與閘門(P0 · P1 · P2) | **DONE** | 基準不可變、LESS 釘到 4.8.1、來源樹可同時容納 `.less` 與 `.css` |
 | **M2** 元件轉換 82 檔(P3) | **DONE** | 74/74 轉完,逐檔閘門全 0、無一次失敗;**0 檔無法解釋**。2026-08-05 追加 ZK 10.4 補齊的 8 檔,同樣逐檔閘門全 0(S26) |
-| **M3** vendor prefix 政策(P4a · P4b) | **BLOCKED** | 等 **L-2** 瀏覽器支援聲明;另等視覺 A/B harness |
-| **M4** 三個 holdout(P5 · P6 · P7) | **1 / 3 DONE** | **P6 DONE** —— FA 的 `each()` 迴圈換成 `gen-fa-css.js`;P5 等 harness、P7 等 **L-4** 的 density 那一半 |
+| **M3** vendor prefix 政策(P4a · P4b) | **BLOCKED** | 只等 **L-2** 瀏覽器支援聲明(視覺 A/B harness 已於 2026-08-05 完成) |
+| **M4** 三個 holdout(P5 · P6 · P7) | **1 / 3 DONE** | **P6 DONE** —— FA 的 `each()` 迴圈換成 `gen-fa-css.js`;P5 的 harness 前置已解除,**只剩 S16**(`less2css.js` 的 CR 處理);P7 等 **L-4** 的 density 那一半 |
 | **M5** 收尾與遷移指南(P8) | TODO | 兩張規則表已產出,期限風險已解除 |
 
 ### 總體進度
@@ -89,8 +89,15 @@
    **A/B 現在真的量得到東西**:同一個 `zk.wcs`,A 側 530434 B / B 側 531482 B、sha256 不同,
    而兩者經 5 類序列化正規化後**完全相同(525145 B)** —— 「byte 不同、語意相同」第一次在
    **HTTP 層**被證明,不再只是磁碟上的比對。
-   **剩下的就只有缺頁面與缺工具**:此 worktree 只有 `preview.zul` 一頁,`package.json` 裡沒有
-   playwright。這是純實作,**不等任何人** —— 也是目前唯一還擋著 P4 / P5 / P7 的東西。
+   ~~**剩下的就只有缺頁面與缺工具**:此 worktree 只有 `preview.zul` 一頁,`package.json` 裡沒有
+   playwright。這是純實作,**不等任何人** —— 也是目前唯一還擋著 P4 / P5 / P7 的東西。~~
+   **←2026-08-05 已完成,P4 / P5 / P7 的這道前置解除。** 頁面**不搬進本分支**:直接讀 Marble
+   worktree 已編好的測試資源(**116 頁**),theme 由命令列 `-Dorg.zkoss.theme.preferred=iceblue_css`
+   選定 —— ZK 的 `Library.getProperty` 會退回 `System.getProperty`,而 Marble 的
+   `ThemePreviewIceblueApp` 本來就故意不設 preferred theme,所以**Marble worktree 一個檔都不用改**。
+   自我驗證**連續兩輪 pages differing: 0**;反向控制(對輸出注入一行 button 圓角)**36 頁差異**,
+   最小 370px ⇒ 對噪音上限有 ≈6 倍餘裕。規格與實測發現見
+   [visual-ab-harness.md](visual-ab-harness.md),閘門紀錄 **#44**,方法學發現 **S32**。
    **`zk.version` 已升到 `10.4.0-jakarta.FL.20260713-Eval`**(紀錄 #38,S24 的修法):
    A/B 覆蓋率 **74/77 → 75/77**、未參與畫面的位元組 **35.4% → 7.0%**,`font-awesome`
    (P6 交付物、全樹最大檔)**現在真的是我們那一份**在服務。剩下 2 個沒到的是舊路徑死複本(S18)
@@ -129,10 +136,14 @@
 5. **L-4 的 density 那一半** —— 解鎖 P7(colour 那一半已由 L-7 解除)。
 
 > ~~**不等任何人的工作已經做完了。**~~ **←2026-08-05 補齊收工後不再成立:上面 5 項裡有 ~~3 項~~
-> ~~2 項~~ 1 項不等任何人**(只剩第 1 項的頁面與 playwright;
+> ~~2 項~~ ~~1 項~~ 0 項不等任何人**(~~只剩第 1 項的頁面與 playwright~~ **←已完成**;
 > ~~第 2 項重跑第 4 層驗證~~ **←已完成**;
 > ~~第 3 項只差一個要不要做的決定~~ **←已裁示歸 P7,不再是可以現在開工的項目**)。
-> **⇒ 這句話又成立了,而且比原本更窄**:唯一不等任何人的實作就是第 1 項,它同時解鎖 P4 / P5 / P7。
+> ~~**⇒ 這句話又成立了,而且比原本更窄**:唯一不等任何人的實作就是第 1 項,它同時解鎖 P4 / P5 / P7。~~
+> **←2026-08-05 傍晚:第 1 項也收工了(#44)⇒ 原句第三次成立,而且這次是完整成立**:
+> **五項全部不是「可以現在自己動手」的實作**。P4a / P4b 等 **L-2**、P7 等 **L-4 的 density 那一半**,
+> **而 P5 的兩個前置(視覺 A/B harness、`less2css.js` 的 CR 處理 S16)只剩後者** ——
+> ⇒ **下一個可以自己動手的實作是 S16,它是 P5 唯一還缺的前置。**
 > L2.4 清理待辦第 1–4、6 項已於 2026-08-04 收工(紀錄 #32、#33),
 > 剩下的 L2.4 兩項是**別人的決定或還沒建的工具**,不是可以直接開工的實作。要繼續推進,
 > ~~第 1 項是唯一自己動手就能解的 —— 而且它同時解鎖三個階段。~~
@@ -163,7 +174,7 @@
 | ↳ **P3 前置**:workflow 腳本加 `{step}` | **DONE** | 六條路徑實測 | `{step:0..4}` = **1 / 4 / 15 / 43 / 11**,一次只跑一步;`{batch:1}` 改成**拒絕並說明** | 2026-07-31 |
 | ↳ **ZK 10.4 補齊 8 檔**(S25 的欠債 → 議題 A 選項 B) | **DONE** | **G-delta**(輸出 77 → 85) | 三層各自可驗:token 層 **+20 條、1 檔差異、全部 `+`**(ZK 10.4 定義 **862** 個 `--zk-*`、主題原有 **842**,差的就是這組);匯入層 **85 檔 / 8 檔 `ONLY IN CANDIDATE`**,且 8 這個數字用**來源樹逐檔對**獨立確認(ZK 81 entry vs 主題 77)而非信 app log;轉換層 **8/8 逐檔閘門全 0、520 條**,`check:bytes` 全樹 UNEXPLAINED **0**。三個 token 檔與 8 個元件 LESS 匯入後**與 ZK 10.4 逐 byte 相同**。既有 baseline 未被動到是量出來的:**1 changed / 0 missing / 0 extra** 與 manifest hash 行 **0 刪 / 8 增**。**⚠ 匯入那一步的閘門是因構造成立的,不是證據 —— 見 S26**(紀錄 #40–#42) | 2026-08-05 |
 | ↳ **ZK 10.4 補齊 8 檔的第 4 層獨立驗證** | **DONE** | 覆核者重跑閘門須重現三個數字 | **PASS-WITH-FINDINGS** —— 12 條斷言 **11 CONFIRMED / 1 REFUTED**,而 REFUTED 的那條(C2 後半段)正是自我複核**自己已承認**的 S29,獨立重跑得到**相同的 5 處差異、相同的 1 處真缺口**,無新增分歧。閘門由第三方重現 **85 / 14863 / 0**(紀錄 #43)、`check:bytes` UNEXPLAINED **0**。原本單方量測的 5 條全部補上第三方證據:C3 用 `shasum` 對 `git show 0fede67:` 的 8 個檔(8/8 相同)、C7 起 app 直接 `curl` 瀏覽器實收的 `zk.wcs`(**551518 B**;8 個元件選擇器命中 + 20 個 severity token + `Unable to load` **0**)、C9 查出本主題 `lang-addon.xml` **沒有** `<component>` 區塊且 `zk.xml` **不存在於此 repo**、C10 四處版號逐字相同、C11 整份附錄 diff **只有 1 個 `-` 行**(計數標籤 25→29)。**追加的目錄掃描沒有第二個 S29 同性質缺口**:`zkmax/less/` 與 ZK 10.4 逐 byte 相同,3 組 `js/**/less/` 兩側皆空。順手撿到 **S30**(選擇器命中數缺口徑)與 **S31**(版號四處一致性無腳本守著)。報告 `doc/l4-verify-zk104-backfill.md`;委託書 `tasks/l4-verify-zk104-backfill-brief.md`(派工五次死於 API 529,故落地成檔) | 2026-08-05 |
-| **視覺 A/B harness**(P4 / P5 / P7 前置) | TODO | 自我驗證須為 0 | — | — |
+| **視覺 A/B harness**(P4 / P5 / P7 前置) | **DONE** | 自我驗證須為 0 | **0 差異,連續兩輪** —— 語料 **116 頁**(Marble 的頁面,**不搬進本分支**:直接讀它已編好的 `target/test-classes/web`),theme 指紋 `6e5a856e8a80ddf9` / 85 檔。**反向控制證明它看得見**:對輸出注入一行 `.z-button{border-radius:12px}` → **36 頁差異**(全部有 button 的頁)、最小 370px,對噪音上限 64px 有 **≈6 倍**餘裕。**啟動守門探針**證明服務中的 CSS 真的是本主題(`_zkiju-iceblue_css` 在、`marble` 0 次)—— 沒有它,一個「主題沒載到」的 harness 會回報完美的零,就是 #41 那種空轉。收斂過程 **14/115 → 0/116**,每一步都是量測逼出來的(**S32**);規格 [visual-ab-harness.md](visual-ab-harness.md);紀錄 **#44** | 2026-08-05 |
 | ↳ **A 側(基準)可用性 + 完整性** | **DONE** | 無損可逆 + 三個負向控制 | `install a` → **77/77 逐 byte 等於 `baseline/`**;`install b` → 77 檔**逐 byte 回到切換前快照**;`shasum -a 256 -c doc/baseline-manifest.sha256` → **78/78 OK**(可脫離腳本驗證);manifest 損毀 → `check:baseline` exit 1 且 `install a` 拒絕 | 2026-08-05 |
 | ↳ **四個名字統一**(`init.sh` 已執行 → 之後改名為 `iceblue_css`,見 #36) | **DONE** | 閘門不得動 | registered / preferred / maven `<artifactId>` / 腳本輸出目錄 **當時全部 = `iceblue`,現為 `iceblue_css`**;`npm run ab` 由 exit 1 轉 **exit 0**;`web/iceblue` 首次帶齊 **29 個資產**;閘門 **77 檔 / 14323 條 / 0**(紀錄 #35) | 2026-08-05 |
 | ↳ **主題有沒有被服務**(A/B 能不能看見) | **DONE** | 服務出來的 CSS 必須是本主題 | **是 —— 改名 `iceblue` → `iceblue_css` 之後解除**(S23 決策、紀錄 #36)。主題段回到 URL(`_zkiju-iceblue_css/zul/css/zk.wcs`);服務出來的 `zk.wcs` **415355 → 531482 B**、`--zk-` 出現次數 **0 → 4171**(其中真正的自訂屬性宣告 **842** 條);`iceblue_css/zul/css/norm.css.dsp` → 200 / **63161 B**(這次**是被要求的**,標記探針證實)。**覆蓋率 75/77**(`zk.version` 升到 10.4.0 FL 後由 74/77 提升 —— 紀錄 #38;`font-awesome` 現在服務的是我們那一份),未參與畫面位元組 **7.0%**;剩下 2 個是舊路徑死複本(S18)與桌機 UA 下 `disabled` 的 tablet(P7),見 **S24**。~~另有 8 個元件本主題完全沒有 CSS,見 S25~~ **←已補齊(2026-08-05,S26);8 個元件的選擇器現在全部進到瀏覽器實收的 CSS、`Unable to load` 歸零。** 注意 **75/77 是 2026-08-05 升版當時的量測**,輸出檔數已變成 85,而本輪**沒有**產出可信的新覆蓋率數字(探針壞了,**見 S28**)—— 要重算得用 S24 那個標記探針 | 2026-08-05 |
@@ -181,10 +192,13 @@
 
 #### 兩個前置項的說明
 
-- **視覺 A/B harness** —— 重用 Marble 既有的 preview 頁面與 Playwright,不搬語料進本分支。
-  只需讓 preview app 能載入本模板編出的 theme jar,A/B 兩邊是**同一分支的兩次 build**
-  (P0 的 LESS build vs 轉換後的 CSS build)。**先拿同一個 build 截兩次確認 diff 為零**,
-  才可以拿它比對不同 build。計畫書 §2.4。
+- **視覺 A/B harness** —— ✅ **已完成(2026-08-05)。** 重用 Marble 既有的 preview 頁面與
+  Playwright,不搬語料進本分支:頁面由 Marble worktree 已編好的測試資源**掃描**取得(116 頁),
+  本分支只放 harness 本身(`scripts/ab-visual.js`、`scripts/png-compare.js`、
+  `src/test/playwright/`)。A/B 兩邊是**同一分支的兩次 build**。
+  **自我驗證 0 差異(連續兩輪)+ 反向控制 36 頁**,所以它現在既不會漏報也不會假陽性。
+  三支指令:`visual:selftest` / `visual:capture` / `visual:diff`。
+  規格 [visual-ab-harness.md](visual-ab-harness.md),計畫書 §2.4。
 - **規則表產生器** —— ✅ **已完成(2026-07-30),期限風險解除。**
   `scripts/gen-var-table.js` + `scripts/gen-mixin-table.js`,各自自帶斷言、輸出跨次執行
   byte-identical、可在客戶 fork 上重跑。四支 npm script:`gen:var-table` / `check:var-table` /
@@ -318,7 +332,7 @@ L1/L2 只寫當前狀態;**要複核那些狀態是怎麼得出來的,去那裡�
 | 節 | 內容 | 何時要看 |
 |---|---|---|
 | **[階段與 commit 對照](iceblue-drop-less-progress-appendix.md#階段與-commit-對照)** | 每一階對應哪些 commit | 要回溯某一階實際改了什麼 |
-| **[L3-A](iceblue-drop-less-progress-appendix.md#l3-a-閘門紀錄附加式不覆寫)** | **閘門紀錄 43 列**(附加式,**不覆寫**) | P8 核帳、以及要確認某個數字是哪一次跑出來的 |
+| **[L3-A](iceblue-drop-less-progress-appendix.md#l3-a-閘門紀錄附加式不覆寫)** | **閘門紀錄 44 列**(附加式,**不覆寫**) | P8 核帳、以及要確認某個數字是哪一次跑出來的 |
 | **[L3-B](iceblue-drop-less-progress-appendix.md#l3-b-tier-1p1--s0--s1)** | Tier 1:P1 = S0 + S1 的實作與論證 | 要動 LESS 版本 pin 或 `check-less-conventions.js` 時 |
 | **[L3-C](iceblue-drop-less-progress-appendix.md#l3-c-p2-儀器證明)** | P2 儀器證明(六步)+ 為什麼是 CleanCSS level 0 + 第三種靜默摧毀構造 | 要改 `build-css.js` 或 minifier 設定時 |
 | **[L3-D](iceblue-drop-less-progress-appendix.md#l3-d-p0-交付物基準的不可變性突變測試)** | P0 交付物、基準的不可變性、突變測試、重建基準的方法 | 基準出問題時 |

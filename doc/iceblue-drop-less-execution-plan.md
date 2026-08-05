@@ -286,7 +286,7 @@ DSP 層與 Font Awesome 的生成內容都還在,零 build step 兌現不了(L3-
 | **目標** | 把 `norm.less`(輸出端 **1500** 條)拆成 tokens / palette / reset / 全域四類檔案,由 `build-css.js` 串接;`browserDefault` 從 descendant selector 改成 `@scope` |
 | **輸入 → 輸出** | `norm.less` → `zul/css/tokens/_default.css`、`_compact.css`、`_iceblue.css`、`base/_reset.css`、`norm.css` |
 | **驗收閘門** | **G-delta** —— **842 個 token 宣告必須零差異**(純搬移);reset 部分是刻意的結構變更,需要 `browserDefault` 開/關兩種設定下的 **computed-style A/B** |
-| **前置** | 視覺 A/B harness(**這一階價值最高** —— declaration diff 看不出「誰被選到」變了) |
+| **前置** | ~~視覺 A/B harness~~ **←已完成(2026-08-05,見 L2.4)**(**這一階價值最高** —— declaration diff 看不出「誰被選到」變了)。**另一個前置:先修 `less2css.js` 的 CR 處理(S16)** —— `norm.less` 匯入的 `_reset.less` 有 431 個 CR,不先修就會重新產生一批 `/* x\n */` 畸形註解、把 P3 的清理重做一次 |
 | **commit 粒度** | ~5 顆(每個拆出來的檔案各是一個獨立結構決策) |
 
 > CleanCSS 會**摧毀 `@scope`**(輸出全空,只在 warnings 報)→ 必須**先 minify 內層、再包 `@scope`**。
@@ -366,7 +366,7 @@ DSP 層與 Font Awesome 的生成內容都還在,零 build step 兌現不了(L3-
 
 | 工作項 | 是誰的前置 | 內容 | 狀態 |
 |---|---|---|---|
-| **視覺 A/B harness** | P4 / P5 / P7 | **重用 Marble 既有的 preview 頁面與 Playwright,不搬語料進本分支**。只需讓 preview app 能載入本模板編出的 theme jar;A/B 兩邊是**同一分支的兩次 build**。**先拿同一個 build 截兩次確認 diff 為零**,才可以拿它比對不同 build | TODO |
+| **視覺 A/B harness** | P4 / P5 / P7 | **重用 Marble 既有的 preview 頁面與 Playwright,不搬語料進本分支**。只需讓 preview app 能載入本模板編出的 theme jar;A/B 兩邊是**同一分支的兩次 build**。**先拿同一個 build 截兩次確認 diff 為零**,才可以拿它比對不同 build | **DONE**(2026-08-05)—— 語料 **116 頁**、自我驗證 **0 差異**、反向控制 **36 頁**。規格 [visual-ab-harness.md](visual-ab-harness.md) |
 | **規則表產生器** | P8(**有期限** —— 來源檔會被刪) | `scripts/gen-var-table.js` + `scripts/gen-mixin-table.js`,各自自帶斷言、輸出跨次執行 byte-identical、可在客戶 fork 上重跑 | **DONE** |
 
 > **harness 的訊號品質限制要記住**:157/158 個 preview 頁面用到 IceBlue 沒有的 `z-*` utility
