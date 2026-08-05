@@ -325,6 +325,25 @@ DSP 層與 Font Awesome 的生成內容都還在,零 build step 兌現不了(L3-
 > `tablet/compact/_combo.less` 的兩個 `each()` **與 P3 的 `combo` 完全同形狀**,
 > 歸在同一個拍板項 **L-8** 底下處理。**不要在 P7 重新爭論一次。**
 
+> **P7 順手要補的既有缺口**(**S29**,見
+> [進度文件附錄 L3-I](iceblue-drop-less-progress-appendix.md#l3-i-change-log--狀態層的敘述更正);
+> 2026-08-05 裁示歸入本階):本主題的
+> `zul/less/_zkcssvariables.less` 少了 `@import "colors/_@{themePalette}_css";`,連帶
+> `zul/less/colors/` 底下沒有 `_iceblue_css.less`(ZK 10.4 兩者都有)。
+>
+> - **對 `iceblue` 零影響、閘門看不到** —— ZK 那份 `_iceblue_css.less` 只有 34 B 的註解
+>   (預設 palette 沒有東西要覆蓋),所以缺這一行**不改變任何輸出**。
+> - **但它是真缺口** —— 換成別的 palette 就靜默失效:`palettes/_amber_css.less` 是
+>   **1114 B 的 `:root { --zk-* }` 覆蓋**,在本主題的 chain 裡會被無聲丟掉。而 `readme.md:50`
+>   正是教使用者設 `@themePalette` 的那一行。
+> - **修法必須成對**:補 import **且**補檔 —— 只補 import 會找不到檔、建置直接失敗。
+> - **為什麼歸 P7**:P7 本來就要把 `@themeProfile` / `@themePalette` 的**編譯期插值**換成
+>   runtime `--zk-*` override sheet(L-7 拍板)。這個缺口屬於**同一個機制**,而且
+>   在 P7 之後 `_@{themePalette}_css` 這條 import 路徑本身可能就不存在了 ⇒
+>   **不要在 P7 之前單獨補**,否則補的是一個即將被換掉的東西。
+> - **P7 的驗收要多一條**:runtime override sheet 必須能表達 palette 覆蓋,
+>   且要有一個**非 iceblue** palette 的實測(現況下這個路徑從來沒有被走過)。
+
 #### P8 —— 收尾
 
 | | |

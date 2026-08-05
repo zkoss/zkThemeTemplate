@@ -114,12 +114,18 @@
    少了 `@import "colors/_@{themePalette}_css";`,連帶沒有 `colors/_iceblue_css.less`。
    對現狀**零影響**(iceblue 那份是空的),但**換 palette 就靜默失效**,而 `readme.md:50` 正是教
    使用者設 `@themePalette` 的那一行。修法是補 import + 補檔,**必須成對**(單獨補 import 會建置
-   失敗),兩者都不改輸出 ⇒ **待決定要不要納入本分支**。
+   失敗),兩者都不改輸出 ⇒ ~~**待決定要不要納入本分支**。~~
+   **←2026-08-05 裁示:本輪不做,歸入 P7 的待辦**(計畫書 §P7 已收錄為交付項與驗收條件)。
+   理由不只是「同一個機制」:P7 要把 `@themePalette` 的**編譯期插值**整個換成 runtime
+   `--zk-*` override sheet,`_@{themePalette}_css` 這條 import 路徑到那時可能已經不存在
+   ⇒ **現在補等於補一個即將被換掉的東西**。P7 的驗收因此多一條:override sheet 必須表達得出
+   palette 覆蓋,且要有一次**非 iceblue** palette 的實測 —— 現況下這條路徑從來沒被走過。
 4. **L-2** 瀏覽器支援聲明 —— 解鎖 P4a / P4b。
 5. **L-4 的 density 那一半** —— 解鎖 P7(colour 那一半已由 L-7 解除)。
 
-> ~~**不等任何人的工作已經做完了。**~~ **←2026-08-05 補齊收工後不再成立:上面 5 項裡有 3 項
-> 不等任何人**(第 1 項的頁面與 playwright、第 2 項重跑第 4 層驗證、第 3 項只差一個要不要做的決定)。
+> ~~**不等任何人的工作已經做完了。**~~ **←2026-08-05 補齊收工後不再成立:上面 5 項裡有 ~~3 項~~
+> 2 項不等任何人**(第 1 項的頁面與 playwright、第 2 項重跑第 4 層驗證;
+> ~~第 3 項只差一個要不要做的決定~~ **←第 3 項已裁示歸 P7,不再是可以現在開工的項目**)。
 > L2.4 清理待辦第 1–4、6 項已於 2026-08-04 收工(紀錄 #32、#33),
 > 剩下的 L2.4 兩項是**別人的決定或還沒建的工具**,不是可以直接開工的實作。要繼續推進,
 > ~~第 1 項是唯一自己動手就能解的 —— 而且它同時解鎖三個階段。~~
@@ -158,7 +164,7 @@
 | **P4b** 前綴逐條判斷(C 群) | BLOCKED | G-delta | **143** 條,含 **26** 條須成對替換;B 群 **44** 條 carve-out 不得出現在 diff | — |
 | P5 `norm.css` | TODO | G-delta | **842** 個 token 須零差異 | — |
 | **P6 Font Awesome** | **DONE** | G-zero | **4545** 條零差異;產生器輸出與被刪掉的 `.less` 經 `less.render()` **逐 byte 相同**(獨立複核:**3611** 個選擇器 0 增 0 減);codepoint 抽驗 + 「加一個 icon」往返實測;`build-css` 74 → **75** 檔 | 2026-08-04 |
-| P7 `tablet` + profile API | BLOCKED | G-delta | — | — |
+| P7 `tablet` + profile API | BLOCKED | G-delta | **多一個交付項**:補 `_zkcssvariables.less` 缺的 `@import "colors/_@{themePalette}_css";` + `colors/_iceblue_css.less`(**見 S29**,2026-08-05 裁示歸入本階);驗收多一條 —— runtime override sheet 必須表達得出 palette 覆蓋,且要有一次**非 iceblue** palette 的實測 | — |
 | **規則表產生器**(P8 前置,**有期限**) | **DONE** | 自帶斷言 | **846** 列 / **834** 語法 1:1 / **830** 行為 1:1 / **16** 例外;**30** mixin 名稱 / **38** 定義列 | 2026-07-30 |
 | P8 收尾 | TODO | G-zero | 須等於 P4 + P5 + P7 已核准 delta 總和 | — |
 
