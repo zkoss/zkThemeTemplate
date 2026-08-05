@@ -26,7 +26,7 @@
   - [L2.5 交給 P8 的產品面問題](#l25-交給-p8-的產品面問題2026-08-033-項不阻擋-p4-p7) — 3 項
 - **[L3 技術附錄](#l3-技術附錄獨立檔)** — 索引在本檔;**內容在 [iceblue-drop-less-progress-appendix.md](iceblue-drop-less-progress-appendix.md)**
   - [階段與 commit 對照](iceblue-drop-less-progress-appendix.md#階段與-commit-對照)
-  - [L3-A 閘門紀錄](iceblue-drop-less-progress-appendix.md#l3-a-閘門紀錄附加式不覆寫) — 42 列,附加式不覆寫
+  - [L3-A 閘門紀錄](iceblue-drop-less-progress-appendix.md#l3-a-閘門紀錄附加式不覆寫) — 43 列,附加式不覆寫
   - [L3-B Tier 1](iceblue-drop-less-progress-appendix.md#l3-b-tier-1p1--s0--s1) — P1 = S0 + S1
   - [L3-C P2 儀器證明](iceblue-drop-less-progress-appendix.md#l3-c-p2-儀器證明)
   - [L3-D P0 交付物、基準、突變測試](iceblue-drop-less-progress-appendix.md#l3-d-p0-交付物基準的不可變性突變測試)
@@ -34,7 +34,7 @@
   - [L3-F P3 逐檔複核包](iceblue-drop-less-progress-appendix.md#l3-f-p3-批次的檔案清單每一步可以自己檢查什麼步-0-4-的逐檔複核包) — [步 0](iceblue-drop-less-progress-appendix.md#步-0-的複核包2026-07-31) · [步 1](iceblue-drop-less-progress-appendix.md#步-1-的複核包2026-08-034-檔) · [步 2](iceblue-drop-less-progress-appendix.md#步-2-的複核包2026-08-0315-檔--批-1-收工-2020) · [步 3](iceblue-drop-less-progress-appendix.md#步-3-的複核包2026-08-0343-檔--批-2-收工-6374) · [步 4](iceblue-drop-less-progress-appendix.md#步-4-的複核包2026-08-0311-檔--批-3-收工p3-收工-7474)
   - [L3-G P3 收工複審](iceblue-drop-less-progress-appendix.md#l3-g-p3-收工複審74-檔獨立-fan-out2026-08-04計畫書-l3-c-26-第-4-層首次執行) — 74 檔獨立 fan-out
   - [L3-H 執行機制:workflow](iceblue-drop-less-progress-appendix.md#l3-h-執行機制workflow)
-  - [L3-I Change Log](iceblue-drop-less-progress-appendix.md#l3-i-change-log--狀態層的敘述更正) — 29 條狀態層更正
+  - [L3-I Change Log](iceblue-drop-less-progress-appendix.md#l3-i-change-log--狀態層的敘述更正) — 31 條狀態層更正
 
 ---
 
@@ -104,12 +104,17 @@
    再逐檔轉成 CSS。輸出 **77 → 85**、declaration **14323 → 14863**、來源端 **83 `.css` + 2 `.less`**。
    實測驗收:8 個元件的選擇器全部進到瀏覽器實收的 CSS、20 個 token 全部被服務、
    `Unable to load` **歸零**。**artifact 自己的版號也一併跟上** `10.4.0-jakarta-Eval`(4 處)。
-2. **補齊的第 4 層獨立驗證仍然欠著** —— 常規是「P3 之後每步收工都要獨立 agent 覆核」,而這一輪
-   獨立 agent **連續三次死在 API 529**(伺服器端,與內容無關),三次都沒留下產出。已改用自我複核
-   頂替(`doc/self-verify-zk104-backfill.md`),**C1 / C4 / C5 / C6 / C11 / C12 都 CONFIRMED,
-   但 C2 被推翻**(見 S29),而 C3 / C7 / C8 / C9 / C10 只有我自己的量測。
-   **自我複核有一個結構盲點:它檢查不到我沒想到要檢查的東西** —— 而前面每一輪獨立覆核抓到的缺陷
-   多半正屬於那一類。**不等任何人,重跑即可。**
+2. ~~**補齊的第 4 層獨立驗證仍然欠著**~~ **←2026-08-05 已完成,見
+   `doc/l4-verify-zk104-backfill.md` 與紀錄 #43。** 結果 **PASS-WITH-FINDINGS**:12 條斷言
+   **11 條 CONFIRMED**,唯一 REFUTED 的是 C2 後半段 —— 而那正是自我複核**自己已經承認**的推翻
+   (S29),覆核者獨立重跑 `diff -rq` 得到**相同的 5 處差異、相同的 1 處真缺口**,沒有新增判定分歧。
+   **原本只有實作者單方量測的 C3 / C7 / C8 / C9 / C10 現在都有第三方證據**(C3 用 sha256 對
+   `git show 0fede67:` 的 8 個檔;C7 起 app 直接 `curl` 瀏覽器實收的 `zk.wcs`;C9 查到本主題的
+   `lang-addon.xml` 根本沒有 `<component>` 區塊、`zk.xml` 在此 repo **不存在**)。
+   **這一輪的委託書留在 repo 裡**(`tasks/l4-verify-zk104-backfill-brief.md`),因為前後
+   **五次**派工死在 API 529、每次都要從對話重建委託。**追加的目錄掃描沒有找到第二個 S29
+   同性質缺口**;順手撿到兩件事:選擇器命中數的口徑沒記(**S30**)、版號四處一致性沒有腳本守著
+   (**S31**,建議排 P8)。
 3. **palette 的 `_css` 覆蓋機制是斷的**(S29,**既有缺口、非本輪造成**)—— `_zkcssvariables.less`
    少了 `@import "colors/_@{themePalette}_css";`,連帶沒有 `colors/_iceblue_css.less`。
    對現狀**零影響**(iceblue 那份是空的),但**換 palette 就靜默失效**,而 `readme.md:50` 正是教
@@ -124,8 +129,10 @@
 5. **L-4 的 density 那一半** —— 解鎖 P7(colour 那一半已由 L-7 解除)。
 
 > ~~**不等任何人的工作已經做完了。**~~ **←2026-08-05 補齊收工後不再成立:上面 5 項裡有 ~~3 項~~
-> 2 項不等任何人**(第 1 項的頁面與 playwright、第 2 項重跑第 4 層驗證;
-> ~~第 3 項只差一個要不要做的決定~~ **←第 3 項已裁示歸 P7,不再是可以現在開工的項目**)。
+> ~~2 項~~ 1 項不等任何人**(只剩第 1 項的頁面與 playwright;
+> ~~第 2 項重跑第 4 層驗證~~ **←已完成**;
+> ~~第 3 項只差一個要不要做的決定~~ **←已裁示歸 P7,不再是可以現在開工的項目**)。
+> **⇒ 這句話又成立了,而且比原本更窄**:唯一不等任何人的實作就是第 1 項,它同時解鎖 P4 / P5 / P7。
 > L2.4 清理待辦第 1–4、6 項已於 2026-08-04 收工(紀錄 #32、#33),
 > 剩下的 L2.4 兩項是**別人的決定或還沒建的工具**,不是可以直接開工的實作。要繼續推進,
 > ~~第 1 項是唯一自己動手就能解的 —— 而且它同時解鎖三個階段。~~
@@ -155,6 +162,7 @@
 | ↳ **P3 前置**:`build-css.js` 要有可重跑的檢查 | **DONE** | 自我證明 + 負向控制 | `npm run check:build-css` → 75 檔 / `files differing: 0` / exit 0;負向控制(`minify` 回傳空字串)→ exit 1 | 2026-07-31 |
 | ↳ **P3 前置**:workflow 腳本加 `{step}` | **DONE** | 六條路徑實測 | `{step:0..4}` = **1 / 4 / 15 / 43 / 11**,一次只跑一步;`{batch:1}` 改成**拒絕並說明** | 2026-07-31 |
 | ↳ **ZK 10.4 補齊 8 檔**(S25 的欠債 → 議題 A 選項 B) | **DONE** | **G-delta**(輸出 77 → 85) | 三層各自可驗:token 層 **+20 條、1 檔差異、全部 `+`**(ZK 10.4 定義 **862** 個 `--zk-*`、主題原有 **842**,差的就是這組);匯入層 **85 檔 / 8 檔 `ONLY IN CANDIDATE`**,且 8 這個數字用**來源樹逐檔對**獨立確認(ZK 81 entry vs 主題 77)而非信 app log;轉換層 **8/8 逐檔閘門全 0、520 條**,`check:bytes` 全樹 UNEXPLAINED **0**。三個 token 檔與 8 個元件 LESS 匯入後**與 ZK 10.4 逐 byte 相同**。既有 baseline 未被動到是量出來的:**1 changed / 0 missing / 0 extra** 與 manifest hash 行 **0 刪 / 8 增**。**⚠ 匯入那一步的閘門是因構造成立的,不是證據 —— 見 S26**(紀錄 #40–#42) | 2026-08-05 |
+| ↳ **ZK 10.4 補齊 8 檔的第 4 層獨立驗證** | **DONE** | 覆核者重跑閘門須重現三個數字 | **PASS-WITH-FINDINGS** —— 12 條斷言 **11 CONFIRMED / 1 REFUTED**,而 REFUTED 的那條(C2 後半段)正是自我複核**自己已承認**的 S29,獨立重跑得到**相同的 5 處差異、相同的 1 處真缺口**,無新增分歧。閘門由第三方重現 **85 / 14863 / 0**(紀錄 #43)、`check:bytes` UNEXPLAINED **0**。原本單方量測的 5 條全部補上第三方證據:C3 用 `shasum` 對 `git show 0fede67:` 的 8 個檔(8/8 相同)、C7 起 app 直接 `curl` 瀏覽器實收的 `zk.wcs`(**551518 B**;8 個元件選擇器命中 + 20 個 severity token + `Unable to load` **0**)、C9 查出本主題 `lang-addon.xml` **沒有** `<component>` 區塊且 `zk.xml` **不存在於此 repo**、C10 四處版號逐字相同、C11 整份附錄 diff **只有 1 個 `-` 行**(計數標籤 25→29)。**追加的目錄掃描沒有第二個 S29 同性質缺口**:`zkmax/less/` 與 ZK 10.4 逐 byte 相同,3 組 `js/**/less/` 兩側皆空。順手撿到 **S30**(選擇器命中數缺口徑)與 **S31**(版號四處一致性無腳本守著)。報告 `doc/l4-verify-zk104-backfill.md`;委託書 `tasks/l4-verify-zk104-backfill-brief.md`(派工五次死於 API 529,故落地成檔) | 2026-08-05 |
 | **視覺 A/B harness**(P4 / P5 / P7 前置) | TODO | 自我驗證須為 0 | — | — |
 | ↳ **A 側(基準)可用性 + 完整性** | **DONE** | 無損可逆 + 三個負向控制 | `install a` → **77/77 逐 byte 等於 `baseline/`**;`install b` → 77 檔**逐 byte 回到切換前快照**;`shasum -a 256 -c doc/baseline-manifest.sha256` → **78/78 OK**(可脫離腳本驗證);manifest 損毀 → `check:baseline` exit 1 且 `install a` 拒絕 | 2026-08-05 |
 | ↳ **四個名字統一**(`init.sh` 已執行 → 之後改名為 `iceblue_css`,見 #36) | **DONE** | 閘門不得動 | registered / preferred / maven `<artifactId>` / 腳本輸出目錄 **當時全部 = `iceblue`,現為 `iceblue_css`**;`npm run ab` 由 exit 1 轉 **exit 0**;`web/iceblue` 首次帶齊 **29 個資產**;閘門 **77 檔 / 14323 條 / 0**(紀錄 #35) | 2026-08-05 |
@@ -310,7 +318,7 @@ L1/L2 只寫當前狀態;**要複核那些狀態是怎麼得出來的,去那裡�
 | 節 | 內容 | 何時要看 |
 |---|---|---|
 | **[階段與 commit 對照](iceblue-drop-less-progress-appendix.md#階段與-commit-對照)** | 每一階對應哪些 commit | 要回溯某一階實際改了什麼 |
-| **[L3-A](iceblue-drop-less-progress-appendix.md#l3-a-閘門紀錄附加式不覆寫)** | **閘門紀錄 42 列**(附加式,**不覆寫**) | P8 核帳、以及要確認某個數字是哪一次跑出來的 |
+| **[L3-A](iceblue-drop-less-progress-appendix.md#l3-a-閘門紀錄附加式不覆寫)** | **閘門紀錄 43 列**(附加式,**不覆寫**) | P8 核帳、以及要確認某個數字是哪一次跑出來的 |
 | **[L3-B](iceblue-drop-less-progress-appendix.md#l3-b-tier-1p1--s0--s1)** | Tier 1:P1 = S0 + S1 的實作與論證 | 要動 LESS 版本 pin 或 `check-less-conventions.js` 時 |
 | **[L3-C](iceblue-drop-less-progress-appendix.md#l3-c-p2-儀器證明)** | P2 儀器證明(六步)+ 為什麼是 CleanCSS level 0 + 第三種靜默摧毀構造 | 要改 `build-css.js` 或 minifier 設定時 |
 | **[L3-D](iceblue-drop-less-progress-appendix.md#l3-d-p0-交付物基準的不可變性突變測試)** | P0 交付物、基準的不可變性、突變測試、重建基準的方法 | 基準出問題時 |

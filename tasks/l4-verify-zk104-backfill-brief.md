@@ -1,5 +1,13 @@
 # 第 4 層獨立驗證委託書 —— ZK 10.4 補齊 8 個元件 + artifact 版號
 
+> **狀態:已執行完畢(2026-08-05)。報告 → `doc/l4-verify-zk104-backfill.md`,結果
+> PASS-WITH-FINDINGS(11 / 12 CONFIRMED)。** 本檔保留為委託當時的內容,只就分支名那一處
+> 明顯錯誤做了就地更正(見下)。
+>
+> **派工史值得記一筆**:同一份委託在 Opus tier 上**連續五次**死在 API 529,五次都在寫下第一個字
+> 之前就中斷 ⇒ 磁碟上什麼都沒留下。第六次改用**不同 model tier** 才跑完。
+> 這是把委託書落地成檔的直接原因 —— 前五次每一次都得從對話裡重建委託。
+
 > 這份委託書是給**獨立覆核者**看的。前三次派工都死在 API 529、沒有留下任何產出,
 > 所以本檔把全部委託內容落在磁碟上,重派時直接讀這一份即可。
 >
@@ -10,7 +18,8 @@
 ## 驗收對象
 
 13 顆 commit,`4aac5e5`(artifact 版號)→ `c89e4b2`(自我複核文件)。
-工作目錄 **`/Users/hawk/Documents/workspace/zkThemeTemplate-iceblue`**(分支 `drop-less`)。
+工作目錄 **`/Users/hawk/Documents/workspace/zkThemeTemplate-iceblue`**(分支 ~~`drop-less`~~ **`iceblue`**
+—— 委託書原本寫錯,由覆核者用 `git branch --show-current` 實測指出)。
 計畫書 `tasks/backfill-8-components-and-version.md`;進度文件
 `doc/iceblue-drop-less-progress.md`(L1/L2)+ `doc/iceblue-drop-less-progress-appendix.md`(L3)。
 
