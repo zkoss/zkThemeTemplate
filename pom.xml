@@ -7,7 +7,13 @@
 	<properties>
 		<maven.compiler.source>11</maven.compiler.source>
 		<maven.compiler.target>11</maven.compiler.target>
-		<zk.version>10.2.1-jakarta-Eval</zk.version>
+		<!-- 10.4.0 FL, jakarta variant. The `-jakarta.FL.<date>-Eval` shape is load-bearing: the
+			 `X.FL.<date>-Eval` builds ship javax, and the Spring Boot 3.x preview app dies on those
+			 with NoClassDefFoundError javax/servlet/*. Bumped from 10.2.1 because 10.2.1's
+			 StandardThemeProvider does not theme-rewrite `~./zul/font/`, so the theme's own
+			 font-awesome.css.dsp (P6's whole deliverable, 28% of the tree) could never be served
+			 and the visual A/B could never see it. See S24. -->
+		<zk.version>10.4.0-jakarta.FL.20260713-Eval</zk.version>
 		<zkspringboot.version>3.2.6</zkspringboot.version>
 		<springboot.version>3.2.6</springboot.version>
 		<maven.build.timestamp.format>yyyy-MM-dd</maven.build.timestamp.format>
