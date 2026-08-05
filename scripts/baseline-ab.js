@@ -39,10 +39,16 @@
  *   A swap into a directory the running app does not read is the same silent failure one level out:
  *   the screenshot looks fine and shows something else. Four names must be one string — registered
  *   theme name, the preview app's preferred theme, maven's output dir (`<artifactId>`), and the
- *   directory this script writes to. In this worktree they are three different strings: registered
- *   and preferred do agree (both the unsubstituted placeholder), but maven and this script each go
- *   somewhere else. `status` prints the disagreement rather than letting it be discovered from a
- *   confusing image — see `inspectWiring` for why artifactId is load-bearing and not decoration.
+ *   directory this script writes to — plus config.xml's listener-class, which decides whether the
+ *   class holding that name ever runs. `status` prints them rather than letting a mismatch be
+ *   discovered from a confusing image; see `inspectWiring` for why artifactId and the listener are
+ *   load-bearing and not decoration.
+ *
+ *   Agreement is necessary, not sufficient. Since `init.sh` ran, all four here are `iceblue` and the
+ *   theme is STILL not served, because `iceblue` is the one name that cannot work: it is literally
+ *   `StandardTheme.DEFAULT_NAME`, and `ServletFns.resolveThemeURL` skips the `~./` → `~./<theme>/`
+ *   rewrite for the default theme, so ZK serves its own jar copy and these 77 files are dead output.
+ *   See S21 in doc/iceblue-drop-less-progress-appendix.md.
  *
  *   node scripts/baseline-ab.js status        which side is installed, and is the baseline intact
  *   node scripts/baseline-ab.js check         verify baseline/ against the tracked manifest
@@ -65,8 +71,26 @@ const MANIFEST = path.join(ROOT, 'doc/baseline-manifest.sha256');
 const MARKER = path.join(OUT, '.ab-side');
 const SRC = 'src/main/resources/web';
 const WEB = path.join(ROOT, 'target/classes/web');
-const INIT_JAVA = path.join(ROOT, 'src/main/java/org/zkoss/theme/___THEME_NAME___/___THEME_NAME_CAP___ThemeWebAppInit.java');
+// Located, not hard-coded: `init.sh` renames both the package directory and this file to match the
+// theme name, so any literal path here is correct for exactly one moment in the project's life.
+const INIT_JAVA = (() => {
+	const dir = path.join(ROOT, 'src/main/java/org/zkoss/theme');
+	// A path that cannot exist, NOT `dir` itself: every consumer reads this with readFileSync, and
+	// handing back a directory turns "not found" into an EISDIR crash. This whole IIFE runs at module
+	// load, so anything that throws here kills every subcommand — including `check`, which does not
+	// care about the theme name at all. Hence withFileTypes (a stray .DS_Store here would be ENOTDIR)
+	// and a sorted walk (readdir order is not defined, and an arbitrary pick would cite a random file).
+	const none = path.join(dir, '(no ThemeWebAppInit.java found)');
+	if (!fs.existsSync(dir)) return none;
+	for (const e of fs.readdirSync(dir, { withFileTypes: true }).sort((a, b) => a.name.localeCompare(b.name))) {
+		if (!e.isDirectory()) continue;
+		const hit = fs.readdirSync(path.join(dir, e.name)).sort().find((f) => f.endsWith('ThemeWebAppInit.java'));
+		if (hit) return path.join(dir, e.name, hit);
+	}
+	return none;
+})();
 const PREVIEW_JAVA = path.join(ROOT, 'src/test/java/zk/example/ThemePreviewApp.java');
+const CONFIG_XML = path.join(ROOT, 'src/main/resources/metainfo/zk/config.xml');
 
 const rel = (p) => path.relative(ROOT, p);
 
@@ -263,9 +287,16 @@ function inspectWiring() {
 	const artifactId = /<artifactId>([^<]+)<\/artifactId>/.exec(read(path.join(ROOT, 'pom.xml')))?.[1];
 	const mine = path.basename(OUT);
 	const dirs = fs.existsSync(WEB) ? fs.readdirSync(WEB, { withFileTypes: true }).filter((e) => e.isDirectory()).map((e) => e.name) : [];
+	// The names above only matter if the class holding THEME_NAME actually runs. config.xml's
+	// listener-class is what makes `Themes.register` execute, and nothing else here would notice if it
+	// pointed somewhere else — that is exactly the shape of the `uiceblue` bug, which stayed invisible
+	// only because init.sh happened to corrupt the class and the config in the same way.
+	const listener = /<listener-class>([^<]+)<\/listener-class>/.exec(read(CONFIG_XML))?.[1];
+	const expected = `org.zkoss.theme.${path.basename(path.dirname(INIT_JAVA))}.${path.basename(INIT_JAVA, '.java')}`;
+	const wired = listener === expected;
 	const served = Boolean(registered) && dirs.includes(registered);
 	const agree = registered === preferred && registered === artifactId && registered === mine;
-	return { registered, preferred, artifactId, mine, dirs, served, agree, ok: served && agree };
+	return { registered, preferred, artifactId, mine, dirs, listener, expected, wired, served, agree, ok: served && agree && wired };
 }
 
 function printWiring(w) {
@@ -274,6 +305,11 @@ function printWiring(w) {
 	console.log(`                maven writes to       target/classes/web/${w.artifactId}   (pom <artifactId>; carries the 29 assets)`);
 	console.log(`                this script writes to ${rel(OUT)}`);
 	console.log(`                dirs present:         ${w.dirs.join(', ') || '(none)'}`);
+	console.log(`                config.xml listener:  ${w.wired ? 'wired to ' + w.listener : `${w.listener} — EXPECTED ${w.expected}`}`);
+	if (!w.wired)
+		console.log(`
+                ⇒ config.xml points at a class that is not the one holding THEME_NAME, so
+                  Themes.register never runs and the name above is fiction.`);
 	if (w.ok) {
 		console.log(`
                 ⇒ all four agree. ONE ORDERING HAZARD follows from that: maven's process-resources
@@ -314,7 +350,7 @@ function cmdStatus() {
 	const others = fs.existsSync(OUT) ? walk(OUT, false).filter((f) => f.endsWith('.css.dsp') === false && f !== '.ab-side') : [];
 	console.log(`theme output    ${rel(OUT)} — ${fs.existsSync(OUT) ? walk(OUT, true).length : 0} .css.dsp, ${others.length} other file(s)`);
 	if (fs.existsSync(OUT) && others.length === 0)
-		console.log('                note: no image assets here — maven copies those to web/<artifactId>, a different dir');
+		console.log('                note: no image assets here yet — only maven copies those, so this is an npm-only build');
 	const s = inspectSide();
 	console.log(`side installed  ${s.text}`);
 	const w = inspectWiring();

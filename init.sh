@@ -72,7 +72,10 @@ done
 set -e
 
 themeName=$artifactId
-themeNameCap=$(echo $themeName | sed 's/.*/\u&/g')
+# NOT `sed 's/.*/\u&/'`: \u is a GNU extension. BSD sed (macOS) emits a literal `u` instead, so
+# `iceblue` became `uiceblue` — a class named uiceblueThemeWebAppInit, wired into config.xml, that
+# compiles fine and looks like a typo nobody made. Portable form, POSIX shell parameter expansion.
+themeNameCap="$(echo "${themeName%"${themeName#?}"}" | tr '[:lower:]' '[:upper:]')${themeName#?}"
 
 # 2. check all expected files exist
 echo Checking files
