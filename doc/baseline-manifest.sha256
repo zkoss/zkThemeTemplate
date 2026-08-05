@@ -1,0 +1,90 @@
+# sha256 manifest of baseline/ — the unconverted reference build (see scripts/baseline-ab.js).
+#
+# baseline/ is gitignored, so this file is the only committed evidence of what it contained.
+# Verify with either:   npm run check:baseline   |   shasum -a 256 -c doc/baseline-manifest.sha256
+#
+# commit:        a89d44e03ab732fb32aeb43f8e7e9ba29c701382
+# src dirty:     no
+# zkless-engine: 1.1.13
+# less:          3.13.1
+# .less sources: 153
+#
+# files: 78
+6e160f9bfe63b8079b264629cc6d6a813a7f5c470753be804349778dbacfa372  baseline/.built-from
+1c905b7f0438d19ca2d8c763211e58266783eecb7dfff022298537c1e9bc8b17  baseline/js/zkex/grid/css/grid.css.dsp
+4766e8dcb502071e5361d7dacced8591d8d4b86cc8ba31a58af75872758cf24e  baseline/js/zkex/inp/css/colorbox.css.dsp
+cb17b1c7626655c3cade3190623a13049cbd91c21a958c798026f826cbc37e04  baseline/js/zkex/layout/css/columnlayout.css.dsp
+8cca9422cc5d962f4db77452c17b6ecbf39e7fcd6faf0517b7d9b6bbe85ff8d0  baseline/js/zkex/menu/css/fisheye.css.dsp
+e587265cbdd77ec98c872b93a9db21b349bc702b5326d08fadb7596abc139761  baseline/js/zkex/pdfviewer/css/pdfviewer.css.dsp
+60bf65ddd24b777604ae96fde88c17b2cb4b6cfcff140bfa556ce01b89a29de2  baseline/js/zkex/slider/css/rangeslider.css.dsp
+8c4a1c86ad26bcb1d6dded4a10165015bc4e4110d999b958fd6b2d15d28686db  baseline/js/zkex/slider/css/sliderbuttons.css.dsp
+4192fa551fc5550aaa39ab63d2325ddc7780d4f843cb24edb3197a183d1666fa  baseline/js/zkmax/barscanner/css/barcodescanner.css.dsp
+df54c745629840587a65f0effe87b1c89944364bf54d309af36873188d06dc94  baseline/js/zkmax/big/css/biglistbox.css.dsp
+75ad20b0a6814599eaff9adf701eb4f358e1e4d0d79b95d0022c6c67fa6fd65f  baseline/js/zkmax/cropper/css/cropper.css.dsp
+0eb95a1bc5baead1a496da587942c271c1e8e67bab298de53b87ab6b8d14581f  baseline/js/zkmax/goldenlayout/css/goldenlayout.css.dsp
+fe2b076577031707b17d22d005f3d5a58bbaa42492a4ca1e898a4a9b4b8fbfd6  baseline/js/zkmax/grid/css/grid.css.dsp
+56a50a7e2f4c69794d06a605064a585dd77c5f2c6593bfe6561720cf43216966  baseline/js/zkmax/inp/css/cascader.css.dsp
+d57849606e636002c66fa3d8cddc9a1c4ecac01ef260a7307aca16f06534c087  baseline/js/zkmax/inp/css/chosenbox.css.dsp
+15835bf8297ceb7fe49f453903fe82d659c2156e095364378d20b7723c0027bf  baseline/js/zkmax/inp/css/searchbox.css.dsp
+38b550d4bd9262aa1764e7831157ee3191f2acf0b0a7d76a9a2ccabf35f6c002  baseline/js/zkmax/inp/css/tbeditor.css.dsp
+903994dffb3c54c3a270e0f96a472d83f14725672e10e54690fbb54f4713a908  baseline/js/zkmax/inp/css/timepicker.css.dsp
+6048a5f6ab59ddc0223cf3b6dd11117c1db4dd877a17ffad54d9637f48c3d65c  baseline/js/zkmax/layout/css/cardlayout.css.dsp
+0eb95a1bc5baead1a496da587942c271c1e8e67bab298de53b87ab6b8d14581f  baseline/js/zkmax/layout/css/goldenlayout.css.dsp
+83dce98bb80f02416d811fe756cb5c9f66f6b94f3fe0ff9aac7c6715ba57decd  baseline/js/zkmax/layout/css/linelayout.css.dsp
+2030741b8e8a10f654f23f4bfb56b03cdb3d35366165861c0bb784c508fa4ff8  baseline/js/zkmax/layout/css/organigram.css.dsp
+68e4060f7f8a0bd4cc41867723212ff4e276458a9af28bde2915053864f8c432  baseline/js/zkmax/layout/css/portallayout.css.dsp
+2b11c3854df4500f8badd4bde355d7efadfec0ca0cd586401c6604f5226bf77e  baseline/js/zkmax/layout/css/rowlayout.css.dsp
+36be044323f8053a2337424c30401300b6a6bc15d24a99d2c461311315e2c5c5  baseline/js/zkmax/layout/css/scrollview.css.dsp
+da6d33fb05cc32a33eb98cfff164a654f5a518012f59e9ec99039a347398e49e  baseline/js/zkmax/layout/css/splitlayout.css.dsp
+1972deb446c33f27f362abf45208e28a88c2d9b58b84d5e867095e26271f39e4  baseline/js/zkmax/layout/css/tablelayout.css.dsp
+9098e02cd76c79dd4ab3034f9319394eb03232d2dacae50d75dfadfbce334ef7  baseline/js/zkmax/med/css/camera.css.dsp
+75ad20b0a6814599eaff9adf701eb4f358e1e4d0d79b95d0022c6c67fa6fd65f  baseline/js/zkmax/med/css/cropper.css.dsp
+d8bce9f011f956abdba9efbb84616ca9a00e16a497b9ef5b8e0712c611f2c266  baseline/js/zkmax/med/css/video.css.dsp
+0a881d66d6697f68fc1c5ba8a55a19654f51ed234df290e7439f6c74e6208b6c  baseline/js/zkmax/nav/css/anchornav.css.dsp
+5b934565dd48533b06304e4efe72ca6758d51a7a210b415f6d86576e213de213  baseline/js/zkmax/nav/css/coachmark.css.dsp
+ad7be70806c2b39eec03c53296e5fa419dafa37314508738cca849d2fc5b1e26  baseline/js/zkmax/nav/css/nav.css.dsp
+a7cc48ff434788b1e5210311464974fd62b76ae8b625291e19740fc27600ad62  baseline/js/zkmax/sel/css/listbox.css.dsp
+a03320635146caad6073b2416bcc96bbca80974f7087060ec8d9f53c2895a460  baseline/js/zkmax/sel/css/tree.css.dsp
+454d9aea7b7b18f99188f06816cc418a7d0e7d843badf7ceb7f0a0773394086b  baseline/js/zkmax/signature/css/signature.css.dsp
+20097895449a539cb475833077bcfd00fe8f401621591a9ceb44482b4943d1c1  baseline/js/zkmax/slider/css/multislider.css.dsp
+2cc4b2179afeaa2c0f7a4ce25ab2be8c010bddf83c516d0f55f96410c4d8a79c  baseline/js/zkmax/tbeditor/css/tbeditor.css.dsp
+55e8cb5029c7e7450526f07e44d7884affe514219cd07f921f75807d9029ebdc  baseline/js/zkmax/wgt/css/drawer.css.dsp
+cb9779b68d4f3a177dc26417424311e458e8fc09e91a2eb44a579d524b2e8c9b  baseline/js/zkmax/wgt/css/dropupload.css.dsp
+454d9aea7b7b18f99188f06816cc418a7d0e7d843badf7ceb7f0a0773394086b  baseline/js/zkmax/wgt/css/signature.css.dsp
+fcbab738192e65f7d9ca90bbf4aaf5590ac23785236929afb48ed6c2c5a6a4b4  baseline/js/zkmax/wgt/css/stepbar.css.dsp
+f222c02212f97b1955e029c78311c58e77c697a8743a9b24874b6995b902411c  baseline/js/zul/box/css/box.css.dsp
+ecd0440774ecb1353486c7006983144d183f015b6968aa26b702edb7dd295c81  baseline/js/zul/box/css/layout.css.dsp
+f835225bfcf3e07dad04453c07be9c3a7ad635137c3e9a3990739f1d6c715ff1  baseline/js/zul/db/css/calendar.css.dsp
+2c4d140253536f17940707182aa3ce73373058ba1485d097f7ec033bf38746df  baseline/js/zul/grid/css/grid.css.dsp
+83b7587b693a471cb1905f852cf3f9194388d83741d3799c65c6d8978e4dd55c  baseline/js/zul/inp/css/combo.css.dsp
+8a2cb6f35f2ea5d9ab85d74f7039d6ad83ec932364757e94f6402e9c3e07a4ca  baseline/js/zul/inp/css/input.css.dsp
+13bbd45ce1785414544e96a4674a7e8787ae010fee92258dfff4961dc600f470  baseline/js/zul/inp/css/slider.css.dsp
+0cd66afa8b5c5c75c537c768ecf4ce520d137274ec5ad0bac04ff796866e536a  baseline/js/zul/layout/css/absolutelayout.css.dsp
+71138c7505256646979b118c2f077fa58a503b078805f33afc32f1a9807f19a7  baseline/js/zul/layout/css/anchorlayout.css.dsp
+67bb7a03b9b147c5078af63d909f932f006f18d5fa63ac9c38efdc420b81a73d  baseline/js/zul/layout/css/borderlayout.css.dsp
+fa65f0ced618803bb7c82c548beca30e9998c7611f814ebfc0444a6044a8ee97  baseline/js/zul/menu/css/menu.css.dsp
+aeb604185368080882a9c1379f7e3ea6946d49e392f65aa014c7036380c4461e  baseline/js/zul/mesh/css/auxhead.css.dsp
+1785797002dc714beb96e6ec69ab49065be0b86929ef91bcca6c2d66eee7e36e  baseline/js/zul/mesh/css/frozen.css.dsp
+e0575c08e460e7e085a755e0ed419b0fd29cd7f88b29f0770e670554d010a2f1  baseline/js/zul/mesh/css/paging.css.dsp
+f18078d92876581259c6e5bef5e7e37cd17cf3968908de4cd09201007028ce71  baseline/js/zul/sel/css/listbox.css.dsp
+caf812d23b3e08e53b75a424de75ccb22811888f38a196dccef024cece37ab89  baseline/js/zul/sel/css/tree.css.dsp
+76d937732530d46095fd22fa635f4153fc155b13749a0b6828d9089b50765ea9  baseline/js/zul/tab/css/tabbox.css.dsp
+2247aff275c6f8142f77304f24c874fd0afb4595c6d0e92dab36312969210e62  baseline/js/zul/wgt/css/a.css.dsp
+e080b21197329904f06dcf315847b93a55fe6acfb24d57b9b9cab54838408e12  baseline/js/zul/wgt/css/button.css.dsp
+788603395352b32a9340ffbc6f85f2680c2eb31742dc6a53ed7c09a78d5b525b  baseline/js/zul/wgt/css/caption.css.dsp
+8fc4f45ba3a12453b49d19bfe4c72fbfd9f45000790875ec58ffe96a035f7960  baseline/js/zul/wgt/css/checkbox.css.dsp
+8608973911d4f3703c63e2f771ba4aedf326ddce7183c087dfe0be454508781d  baseline/js/zul/wgt/css/combobutton.css.dsp
+f4af43c0cd44a81e3b53182dc91258f885645f4eaccb5a77289137484682af22  baseline/js/zul/wgt/css/groupbox.css.dsp
+263907b71ea452ced39c5b166970b403709f7467e66ee95e1cd3abb62f5b7b51  baseline/js/zul/wgt/css/inputgroup.css.dsp
+910b406341048fd095296f0c195dedf9171d8009d692a575af22fb54ce2959a7  baseline/js/zul/wgt/css/popup.css.dsp
+bffcf06aeb3f72bdfc96a1cebb4c7543eb53f8e26b20ca859f49f724b4e79267  baseline/js/zul/wgt/css/progressmeter.css.dsp
+b66a0891ffccdb7971e0773056febe483e6f22c22b2c2cca843b1c987f5d02fe  baseline/js/zul/wgt/css/rating.css.dsp
+90f3be049ebd194563d0dc11250004777b9c3ce81bdf8895f3c9bb55d2dfd9df  baseline/js/zul/wgt/css/selectbox.css.dsp
+a9e8a839276311e87dc51851d263e47f3de3896d86fea4c958e59c4073479c89  baseline/js/zul/wgt/css/separator.css.dsp
+8fc5e000e3815e4793e3c1bdfee7864e82a8a431c3aed8853ae8ab4537760de4  baseline/js/zul/wgt/css/toolbar.css.dsp
+dad160ea3ca1bdb4fda89d97dd7ae1eded7f2beafdb2b5005697656023de92f4  baseline/js/zul/wnd/css/panel.css.dsp
+e53ab34982f000e1aeacf400285977fc27aacc00afd27a4ac39faf67b37b63e3  baseline/js/zul/wnd/css/window.css.dsp
+433e1f4b013e745abc527b7ab55ef877a2d50537206afca35317f9a8e37f815d  baseline/zkmax/css/tablet.css.dsp
+2912cca69ab86de2939307c02da6ac44b54f3b3a2616f5d3c65f7072612530ee  baseline/zul/css/footer.css.dsp
+6be6752a57b082265979da1928603e4c444f0b2a02b2369ce626a28d45a8a31b  baseline/zul/css/norm.css.dsp
+9e4bd5c59052e1a0accaab2b92b3e83e04d6f7447d60cd1b5bdad074401c3bc3  baseline/zul/font/font-awesome.css.dsp

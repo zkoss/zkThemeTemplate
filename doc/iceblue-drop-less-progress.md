@@ -34,7 +34,7 @@
   - [L3-F P3 逐檔複核包](iceblue-drop-less-progress-appendix.md#l3-f-p3-批次的檔案清單每一步可以自己檢查什麼步-0-4-的逐檔複核包) — [步 0](iceblue-drop-less-progress-appendix.md#步-0-的複核包2026-07-31) · [步 1](iceblue-drop-less-progress-appendix.md#步-1-的複核包2026-08-034-檔) · [步 2](iceblue-drop-less-progress-appendix.md#步-2-的複核包2026-08-0315-檔--批-1-收工-2020) · [步 3](iceblue-drop-less-progress-appendix.md#步-3-的複核包2026-08-0343-檔--批-2-收工-6374) · [步 4](iceblue-drop-less-progress-appendix.md#步-4-的複核包2026-08-0311-檔--批-3-收工p3-收工-7474)
   - [L3-G P3 收工複審](iceblue-drop-less-progress-appendix.md#l3-g-p3-收工複審74-檔獨立-fan-out2026-08-04計畫書-l3-c-26-第-4-層首次執行) — 74 檔獨立 fan-out
   - [L3-H 執行機制:workflow](iceblue-drop-less-progress-appendix.md#l3-h-執行機制workflow)
-  - [L3-I Change Log](iceblue-drop-less-progress-appendix.md#l3-i-change-log--狀態層的敘述更正) — 19 條狀態層更正
+  - [L3-I Change Log](iceblue-drop-less-progress-appendix.md#l3-i-change-log--狀態層的敘述更正) — 20 條狀態層更正
 
 ---
 
@@ -75,18 +75,28 @@ holdout(`norm`/P5、`tablet`/P7)。全樹閘門 `files differing: 0`(77 輸出�
 
 ### 下一步(依「不等任何人」排序)
 
-1. **視覺 A/B harness** —— P4 / P5 / P7 的共同前置,**尚未開始**;先自我驗證(同一 build 截兩次 diff 為 0)。
-   **A 側基準不必重編譯 LESS**:`baseline/` 那 77 個 `.css.dsp` 就是轉換前的產出,而 `.css.dsp` 正是
-   runtime 唯一吃的東西 ⇒ 蓋到 `target/classes/web/iceblue/` 再重啟 preview app 即為 A 側,
-   同一顆 jar、同一批資產,唯一變數是那 77 個檔。要重建則 `git worktree add <dir> a89d44e`
-   (該 commit 樹上 153 `.less` / 0 `.css`)。**真正缺的是被截圖的頁面**:此 worktree 只有
-   `preview.zul` 一頁,且沒有 playwright。細節與殘餘風險見 **S19**。
+1. **視覺 A/B harness** —— P4 / P5 / P7 的共同前置。**A 側(基準)這一半已經做完**(紀錄 #34):
+   `npm run check:baseline` 讓 `baseline/` 的遺失與損毀**可偵測**(78 檔 sha256,`shasum -c` 也能單獨驗),
+   `node scripts/baseline-ab.js install a|b` 把側邊切換變成一個會**自我驗證**的指令(覆蓋後立刻重算
+   雜湊,不符就 exit 1),`npm run ab` 印出現在裝的是哪一側。已實測無損可逆與三個負向控制。
+   **但 harness 現在卡在別的地方,而且比缺頁面嚴重**:這個 worktree 的主題**根本沒有被服務** ——
+   註冊主題名是 `___THEME_NAME___`、maven 寫到 `web/___ARTIFACT_ID___`、npm 閘門寫到 `web/iceblue`,
+   四個名字互不相同,`~./___THEME_NAME___/…` 一律 404,服務出來的是**幾乎沒有樣式的頁面**
+   (只剩 icon 字型;`--zk-` 自訂屬性 **0 個**,而本主題 `norm` 單檔就有 1496 個)。
+   **在修好名字之前,A 側與 B 側會拍出一模一樣的畫面** —— 已量到服務出來的 byte 在兩側
+   **sha256 相同** —— 視覺 A/B 會回報「零差異」而其實什麼都沒測到,**假成功**。
+   修法已量測(6 檔 + 2 個改名,外加 `package.json` 兩支會寫到第三個目錄的 script),
+   但那是產品面決定,而且修完還有一個「啟動 app 會蓋掉 A 側」的順序陷阱,見 **S20**。
+   其次才是缺頁面:此 worktree 只有 `preview.zul` 一頁,且沒有 playwright。
 2. **L-2** 瀏覽器支援聲明 —— 解鎖 P4a / P4b。
 3. **L-4 的 density 那一半** —— 解鎖 P7(colour 那一半已由 L-7 解除)。
 
 > **不等任何人的工作已經做完了。** L2.4 清理待辦第 1–4、6 項已於 2026-08-04 收工(紀錄 #32、#33),
 > 剩下三項全部是**別人的決定或還沒建的工具**,不是可以直接開工的實作。要繼續推進,
-> 第 1 項是唯一自己動手就能解的 —— 而且它同時解鎖三個階段。
+> ~~第 1 項是唯一自己動手就能解的 —— 而且它同時解鎖三個階段。~~
+> **←第 1 項只有一半是自己動手就能解的(2026-08-05)。** A 側基準那一半已收工(紀錄 #34);
+> 另一半卡在**主題註冊名**,而改主題的公開身分是產品面決定 —— 也就是說它跟第 2、3 項同類。
+> 它仍然是最該先處理的,因為**不修它,之後每一次視覺 A/B 都會回報假的零差異**(見 **S20**)。
 
 ---
 
@@ -110,6 +120,8 @@ holdout(`norm`/P5、`tablet`/P7)。全樹閘門 `files differing: 0`(77 輸出�
 | ↳ **P3 前置**:`build-css.js` 要有可重跑的檢查 | **DONE** | 自我證明 + 負向控制 | `npm run check:build-css` → 75 檔 / `files differing: 0` / exit 0;負向控制(`minify` 回傳空字串)→ exit 1 | 2026-07-31 |
 | ↳ **P3 前置**:workflow 腳本加 `{step}` | **DONE** | 六條路徑實測 | `{step:0..4}` = **1 / 4 / 15 / 43 / 11**,一次只跑一步;`{batch:1}` 改成**拒絕並說明** | 2026-07-31 |
 | **視覺 A/B harness**(P4 / P5 / P7 前置) | TODO | 自我驗證須為 0 | — | — |
+| ↳ **A 側(基準)可用性 + 完整性** | **DONE** | 無損可逆 + 三個負向控制 | `install a` → **77/77 逐 byte 等於 `baseline/`**;`install b` → 77 檔**逐 byte 回到切換前快照**;`shasum -a 256 -c doc/baseline-manifest.sha256` → **78/78 OK**(可脫離腳本驗證);manifest 損毀 → `check:baseline` exit 1 且 `install a` 拒絕 | 2026-08-05 |
+| ↳ **主題有沒有被服務**(A/B 能不能看見) | **BLOCKED** | 服務出來的 CSS 必須是本主題 | **否 —— 兩側都拍到幾乎沒有樣式的頁面(只剩 icon 字型)。** 服務出來的 `zk.wcs` 命中本地 `norm` 規則 **0/28**、`--zk-` 自訂屬性 **0 個**(本主題 `norm` 單檔就有 **1496** 個);`~./___THEME_NAME___/…` 全數 **404**(app log 70 條)。**裝 A 側與裝 B 側時服務出來的 byte sha256 相同** ⇒ 截圖會逐像素相同。四個名字不一致,見 **S20** | 2026-08-05 |
 | **P4a** 前綴純移除(A 群) | BLOCKED | G-delta | **945** 條,全部有無前綴同伴 → 只允許 `- <prefixed>`,任何 `+` 都是 bug | — |
 | **P4b** 前綴逐條判斷(C 群) | BLOCKED | G-delta | **143** 條,含 **26** 條須成對替換;B 群 **44** 條 carve-out 不得出現在 diff | — |
 | P5 `norm.css` | TODO | G-delta | **842** 個 token 須零差異 | — |
