@@ -14,9 +14,17 @@
 # 20 --zk-severity-* tokens, compiled from ZK 10.4's own zul/less/profiles/_default.less
 # imported byte-identically. Every other file here is still that commit's output,
 # proven by the 1-changed/0-missing/0-extra manifest check taken across the update.
+# 
+# Also backfilled (same date): 8 component outputs that never existed in this theme —
+# js/zul/wgt/css/{avatar,avatargroup,badge,breadcrumb,carousel,chip,confirmpopup}.css.dsp
+# and js/zkmax/db/css/daterangebox.css.dsp. Their baseline is the zklessc output of ZK
+# 10.4's own LESS, imported byte-identically, so for these 8 the LESS lane is the reference
+# just as it is for the other 77. NOTE: at the moment of import baseline and candidate come
+# from the SAME compile, so cssdiff's "0 differing" is true by construction and proves
+# nothing for them; the real comparison starts when they are converted to CSS.
 #
-# files: 78
-76de8772301e1c8ae504c8babafad256d57f67eee885bf897eda6743a2adcf9c  baseline/.built-from
+# files: 86
+e6e044f96093a510d3f3ae1b1fd7cf4f6d20d61de506f2711084483ef71ffea7  baseline/.built-from
 1c905b7f0438d19ca2d8c763211e58266783eecb7dfff022298537c1e9bc8b17  baseline/js/zkex/grid/css/grid.css.dsp
 4766e8dcb502071e5361d7dacced8591d8d4b86cc8ba31a58af75872758cf24e  baseline/js/zkex/inp/css/colorbox.css.dsp
 cb17b1c7626655c3cade3190623a13049cbd91c21a958c798026f826cbc37e04  baseline/js/zkex/layout/css/columnlayout.css.dsp
@@ -27,6 +35,7 @@ e587265cbdd77ec98c872b93a9db21b349bc702b5326d08fadb7596abc139761  baseline/js/zk
 4192fa551fc5550aaa39ab63d2325ddc7780d4f843cb24edb3197a183d1666fa  baseline/js/zkmax/barscanner/css/barcodescanner.css.dsp
 df54c745629840587a65f0effe87b1c89944364bf54d309af36873188d06dc94  baseline/js/zkmax/big/css/biglistbox.css.dsp
 75ad20b0a6814599eaff9adf701eb4f358e1e4d0d79b95d0022c6c67fa6fd65f  baseline/js/zkmax/cropper/css/cropper.css.dsp
+e0d2b851d6f1e18999389b907aff330f12379d7831558ed946e7db938b557239  baseline/js/zkmax/db/css/daterangebox.css.dsp
 0eb95a1bc5baead1a496da587942c271c1e8e67bab298de53b87ab6b8d14581f  baseline/js/zkmax/goldenlayout/css/goldenlayout.css.dsp
 fe2b076577031707b17d22d005f3d5a58bbaa42492a4ca1e898a4a9b4b8fbfd6  baseline/js/zkmax/grid/css/grid.css.dsp
 56a50a7e2f4c69794d06a605064a585dd77c5f2c6593bfe6561720cf43216966  baseline/js/zkmax/inp/css/cascader.css.dsp
@@ -76,10 +85,17 @@ f18078d92876581259c6e5bef5e7e37cd17cf3968908de4cd09201007028ce71  baseline/js/zu
 caf812d23b3e08e53b75a424de75ccb22811888f38a196dccef024cece37ab89  baseline/js/zul/sel/css/tree.css.dsp
 76d937732530d46095fd22fa635f4153fc155b13749a0b6828d9089b50765ea9  baseline/js/zul/tab/css/tabbox.css.dsp
 2247aff275c6f8142f77304f24c874fd0afb4595c6d0e92dab36312969210e62  baseline/js/zul/wgt/css/a.css.dsp
+b6a559f23ad4526c5ba7ad94837b71154bff8ef66f6b947b763b18e276262c06  baseline/js/zul/wgt/css/avatar.css.dsp
+fd5f3e4b53a0f5fa3c08870558bf8efb9503db665a3e31a02e0ef8c04054f080  baseline/js/zul/wgt/css/avatargroup.css.dsp
+c8db56b03dbbded6c1cf407d58af6a0d193328f3cde83de0f0af0582f4a250f6  baseline/js/zul/wgt/css/badge.css.dsp
+7954ae79c2e4179820bd0c5e786c007a4da7d628048e3d9a91ba288dc3e4cac4  baseline/js/zul/wgt/css/breadcrumb.css.dsp
 e080b21197329904f06dcf315847b93a55fe6acfb24d57b9b9cab54838408e12  baseline/js/zul/wgt/css/button.css.dsp
 788603395352b32a9340ffbc6f85f2680c2eb31742dc6a53ed7c09a78d5b525b  baseline/js/zul/wgt/css/caption.css.dsp
+5f29b699cd37cdc9bf58319f43a6c02a0860f9a2eb01696c9e0c718c9f9c7d91  baseline/js/zul/wgt/css/carousel.css.dsp
 8fc4f45ba3a12453b49d19bfe4c72fbfd9f45000790875ec58ffe96a035f7960  baseline/js/zul/wgt/css/checkbox.css.dsp
+c7da310688d3421dd759d1f5de89c6b97b68266f5eade458d3f9c59345194728  baseline/js/zul/wgt/css/chip.css.dsp
 8608973911d4f3703c63e2f771ba4aedf326ddce7183c087dfe0be454508781d  baseline/js/zul/wgt/css/combobutton.css.dsp
+a8e412af38be5bdc34fb8cfb75cae6030ccaf39a20d13693fe9b5224ff564451  baseline/js/zul/wgt/css/confirmpopup.css.dsp
 f4af43c0cd44a81e3b53182dc91258f885645f4eaccb5a77289137484682af22  baseline/js/zul/wgt/css/groupbox.css.dsp
 263907b71ea452ced39c5b166970b403709f7467e66ee95e1cd3abb62f5b7b51  baseline/js/zul/wgt/css/inputgroup.css.dsp
 910b406341048fd095296f0c195dedf9171d8009d692a575af22fb54ce2959a7  baseline/js/zul/wgt/css/popup.css.dsp
