@@ -34,7 +34,7 @@
   - [L3-F P3 逐檔複核包](iceblue-drop-less-progress-appendix.md#l3-f-p3-批次的檔案清單每一步可以自己檢查什麼步-0-4-的逐檔複核包) — [步 0](iceblue-drop-less-progress-appendix.md#步-0-的複核包2026-07-31) · [步 1](iceblue-drop-less-progress-appendix.md#步-1-的複核包2026-08-034-檔) · [步 2](iceblue-drop-less-progress-appendix.md#步-2-的複核包2026-08-0315-檔--批-1-收工-2020) · [步 3](iceblue-drop-less-progress-appendix.md#步-3-的複核包2026-08-0343-檔--批-2-收工-6374) · [步 4](iceblue-drop-less-progress-appendix.md#步-4-的複核包2026-08-0311-檔--批-3-收工p3-收工-7474)
   - [L3-G P3 收工複審](iceblue-drop-less-progress-appendix.md#l3-g-p3-收工複審74-檔獨立-fan-out2026-08-04計畫書-l3-c-26-第-4-層首次執行) — 74 檔獨立 fan-out
   - [L3-H 執行機制:workflow](iceblue-drop-less-progress-appendix.md#l3-h-執行機制workflow)
-  - [L3-I Change Log](iceblue-drop-less-progress-appendix.md#l3-i-change-log--狀態層的敘述更正) — 17 條狀態層更正
+  - [L3-I Change Log](iceblue-drop-less-progress-appendix.md#l3-i-change-log--狀態層的敘述更正) — 19 條狀態層更正
 
 ---
 
@@ -76,6 +76,11 @@ holdout(`norm`/P5、`tablet`/P7)。全樹閘門 `files differing: 0`(77 輸出�
 ### 下一步(依「不等任何人」排序)
 
 1. **視覺 A/B harness** —— P4 / P5 / P7 的共同前置,**尚未開始**;先自我驗證(同一 build 截兩次 diff 為 0)。
+   **A 側基準不必重編譯 LESS**:`baseline/` 那 77 個 `.css.dsp` 就是轉換前的產出,而 `.css.dsp` 正是
+   runtime 唯一吃的東西 ⇒ 蓋到 `target/classes/web/iceblue/` 再重啟 preview app 即為 A 側,
+   同一顆 jar、同一批資產,唯一變數是那 77 個檔。要重建則 `git worktree add <dir> a89d44e`
+   (該 commit 樹上 153 `.less` / 0 `.css`)。**真正缺的是被截圖的頁面**:此 worktree 只有
+   `preview.zul` 一頁,且沒有 playwright。細節與殘餘風險見 **S19**。
 2. **L-2** 瀏覽器支援聲明 —— 解鎖 P4a / P4b。
 3. **L-4 的 density 那一半** —— 解鎖 P7(colour 那一半已由 L-7 解除)。
 
@@ -235,8 +240,8 @@ P6 因此從 BLOCKED 轉 TODO。但它**相依於 P2** —— 產生出來的 `.
 | # | 問題 | P3 的處置 | 為什麼要問 |
 |---|---|---|---|
 | 1 | **別的主題會不會填 `#footer() { .append-style() {} }` 這個 hook?** | 照刪(`footer` 步 2)。它是空的,`append-style` 全 repo 只出現在這一個檔 | 純 CSS 表達不出 LESS namespace hook。IceBlue 自己沒用到,但這是**對外的擴充點**,別的主題或客戶 fork 可能有填 |
-| 2 | **`goldenlayout` / `cropper` / `signature` 三對來源要不要收斂成一份?** | 不收斂,逐檔各自轉(每對兩檔逐 byte 相同,md5 一致) | 純**去重**問題:內容相同,但**兩個輸出路徑都必須繼續存在**(元件會各自去要),所以收斂需要建置期複製或 import 機制 |
-| 3 | **兩份 `tbeditor` 版本落後,要不要對齊?** | 不動,兩個版本各自轉(375 / 380 條) | **與第 2 項不同,這不是去重** —— `js/zkmax/inp` 是上游 Trumbowyg **v2.7.2**、`js/zkmax/tbeditor` 是 **v2.31**,Potix 的改法也不同。合併等於**挑一個版本**並可能改變其中一個元件的外觀,是產品決定,不是清理 |
+| 2 | ~~**`goldenlayout` / `cropper` / `signature` 三對來源要不要收斂成一份?**~~ → **四對(加 `tbeditor`)的舊路徑要不要直接刪掉?** | 不收斂,逐檔各自轉(前三對每對兩檔逐 byte 相同,md5 一致) | ~~純**去重**問題:內容相同,但**兩個輸出路徑都必須繼續存在**(元件會各自去要),所以收斂需要建置期複製或 import 機制~~ **←這個理由是錯的,見 S18。** 實測 `lang-addon.xml`:每個 `css-uri` 只有**一個** `widget-package` 會要,一律是**新路徑**(`zkmax.goldenlayout` / `.cropper` / `.signature` / `.tbeditor`);**4 個舊路徑輸出從來沒有人要**。所以不需要建置期複製,問題變成「刪掉 4 個死檔要不要走 G-delta」(**77 → 73** 輸出檔)。**上游也該報** —— 產品端 `zkmax/src` 只留新路徑,同時帶新舊兩份的是 `zkthemebuilder/template`,每個從樣板長出來的主題都繼承 |
+| 3 | **兩份 `tbeditor` 版本落後,要不要對齊?** | 不動,兩個版本各自轉(375 / 380 條) | **與第 2 項不同,這不是去重** —— `js/zkmax/inp` 是上游 Trumbowyg **v2.7.2**、`js/zkmax/tbeditor` 是 **v2.31**,Potix 的改法也不同(v2.31 那份多了整組 `.z-tbeditor-editor-box` 與 flex 版面)。~~合併等於**挑一個版本**並可能改變其中一個元件的外觀~~ **←實測後這不是選擇,見 S18**:`<widget-package>zkmax.tbeditor</widget-package>` 只要新路徑,**v2.7.2 那份是死輸出**,所以「對齊」的答案就是第 2 項的答案(刪掉舊路徑),**不會改變任何元件的外觀**。仍留在 P8 的理由只剩相容性:舊 `widget-package` 可能還被更舊的 ZK 版本或客戶手寫的 `<?link?>` 指到 |
 
 
 ---
