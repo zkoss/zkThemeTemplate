@@ -25,7 +25,7 @@ const path = require('path');
 
 const ROOT = path.resolve(__dirname, '..');
 const BASE = path.join(ROOT, 'baseline');
-const BUILT = path.join(ROOT, 'target/classes/web/iceblue');
+const BUILT = path.join(ROOT, 'target/classes/web/iceblue_css');
 
 function walk(dir, base = dir, out = []) {
 	for (const e of fs.readdirSync(dir, { withFileTypes: true })) {

@@ -44,11 +44,12 @@
  *   discovered from a confusing image; see `inspectWiring` for why artifactId and the listener are
  *   load-bearing and not decoration.
  *
- *   Agreement is necessary, not sufficient. Since `init.sh` ran, all four here are `iceblue` and the
- *   theme is STILL not served, because `iceblue` is the one name that cannot work: it is literally
- *   `StandardTheme.DEFAULT_NAME`, and `ServletFns.resolveThemeURL` skips the `~./` → `~./<theme>/`
- *   rewrite for the default theme, so ZK serves its own jar copy and these 77 files are dead output.
- *   See S21 in doc/iceblue-drop-less-progress-appendix.md.
+ *   Agreement is necessary, not sufficient — and the name itself must not be `iceblue`. That string
+ *   is literally `StandardTheme.DEFAULT_NAME`, and `ServletFns.resolveThemeURL` skips the
+ *   `~./` → `~./<theme>/` rewrite for the default theme, so a theme named `iceblue` never gets its
+ *   own directory requested: ZK serves its own jar copy and these files become dead output, on a
+ *   page that looks perfectly normal. That is why the theme is `iceblue_css`. See S21/S23 in
+ *   doc/iceblue-drop-less-progress-appendix.md.
  *
  *   node scripts/baseline-ab.js status        which side is installed, and is the baseline intact
  *   node scripts/baseline-ab.js check         verify baseline/ against the tracked manifest
@@ -66,7 +67,7 @@ const path = require('path');
 
 const ROOT = path.resolve(__dirname, '..');
 const BASE = path.join(ROOT, 'baseline');
-const OUT = path.join(ROOT, 'target/classes/web/iceblue');
+const OUT = path.join(ROOT, 'target/classes/web/iceblue_css');
 const MANIFEST = path.join(ROOT, 'doc/baseline-manifest.sha256');
 const MARKER = path.join(OUT, '.ab-side');
 const SRC = 'src/main/resources/web';

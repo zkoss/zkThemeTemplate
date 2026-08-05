@@ -104,7 +104,7 @@ const path = require('path');
 const CleanCSS = require('clean-css');
 
 const DEFAULT_SOURCE = 'src/main/resources/web';
-const DEFAULT_OUTPUT = 'target/classes/web/iceblue';
+const DEFAULT_OUTPUT = 'target/classes/web/iceblue_css';
 
 /** Exactly the byte sequence the 73 header-carrying baseline files begin with. One line. */
 const HEADER =

@@ -2,7 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.zkoss.theme</groupId>
-	<artifactId>iceblue</artifactId>
+	<artifactId>iceblue_css</artifactId>
 	<version>10.2.1-jakarta-Eval</version>
 	<properties>
 		<maven.compiler.source>11</maven.compiler.source>
@@ -17,11 +17,11 @@
 		<zktheme.theme.outputDirectory>${project.build.outputDirectory}/web/${project.artifactId}</zktheme.theme.outputDirectory>
 	</properties>
 	<packaging>jar</packaging>
-	<name>iceblue</name>
+	<name>iceblue_css</name>
 	<scm>
 		<url>https://mavensync.zkoss.org/maven2</url>
 	</scm>
-	<description>Iceblue</description>
+	<description>Iceblue CSS</description>
 	<licenses>
 		<license>
 			<name>GNU LESSER GENERAL PUBLIC LICENSE, Version 3</name>

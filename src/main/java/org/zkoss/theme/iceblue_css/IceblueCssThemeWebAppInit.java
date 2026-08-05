@@ -1,4 +1,4 @@
-/* IceblueThemeWebAppInit.java
+/* IceblueCssThemeWebAppInit.java
 
 	Purpose:
 		
@@ -14,7 +14,7 @@ Copyright (C) 2010 Potix Corporation. All Rights Reserved.
 	it will be useful, but WITHOUT ANY WARRANTY.
 }}IS_RIGHT
 */
-package org.zkoss.theme.iceblue;
+package org.zkoss.theme.iceblue_css;
 
 import org.zkoss.zk.ui.WebApp;
 import org.zkoss.zk.ui.WebApps;
@@ -27,10 +27,10 @@ import org.zkoss.zul.theme.Themes;
  * Library property setting, Theme provider setting and Component definition setting 
  * 
  */
-public class IceblueThemeWebAppInit implements WebAppInit {
+public class IceblueCssThemeWebAppInit implements WebAppInit {
 
-	private final static String THEME_NAME = "iceblue";
-	private final static String THEME_DISPLAY = "Iceblue";
+	private final static String THEME_NAME = "iceblue_css";
+	private final static String THEME_DISPLAY = "Iceblue CSS";
 	private final static int THEME_PRIORITY = 700;
 	
 	public void init(WebApp webapp) throws Exception {

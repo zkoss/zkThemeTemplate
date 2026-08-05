@@ -26,7 +26,7 @@
   - [L2.5 交給 P8 的產品面問題](#l25-交給-p8-的產品面問題2026-08-033-項不阻擋-p4-p7) — 3 項
 - **[L3 技術附錄](#l3-技術附錄獨立檔)** — 索引在本檔;**內容在 [iceblue-drop-less-progress-appendix.md](iceblue-drop-less-progress-appendix.md)**
   - [階段與 commit 對照](iceblue-drop-less-progress-appendix.md#階段與-commit-對照)
-  - [L3-A 閘門紀錄](iceblue-drop-less-progress-appendix.md#l3-a-閘門紀錄附加式不覆寫) — 35 列,附加式不覆寫
+  - [L3-A 閘門紀錄](iceblue-drop-less-progress-appendix.md#l3-a-閘門紀錄附加式不覆寫) — 36 列,附加式不覆寫
   - [L3-B Tier 1](iceblue-drop-less-progress-appendix.md#l3-b-tier-1p1--s0--s1) — P1 = S0 + S1
   - [L3-C P2 儀器證明](iceblue-drop-less-progress-appendix.md#l3-c-p2-儀器證明)
   - [L3-D P0 交付物、基準、突變測試](iceblue-drop-less-progress-appendix.md#l3-d-p0-交付物基準的不可變性突變測試)
@@ -34,7 +34,7 @@
   - [L3-F P3 逐檔複核包](iceblue-drop-less-progress-appendix.md#l3-f-p3-批次的檔案清單每一步可以自己檢查什麼步-0-4-的逐檔複核包) — [步 0](iceblue-drop-less-progress-appendix.md#步-0-的複核包2026-07-31) · [步 1](iceblue-drop-less-progress-appendix.md#步-1-的複核包2026-08-034-檔) · [步 2](iceblue-drop-less-progress-appendix.md#步-2-的複核包2026-08-0315-檔--批-1-收工-2020) · [步 3](iceblue-drop-less-progress-appendix.md#步-3-的複核包2026-08-0343-檔--批-2-收工-6374) · [步 4](iceblue-drop-less-progress-appendix.md#步-4-的複核包2026-08-0311-檔--批-3-收工p3-收工-7474)
   - [L3-G P3 收工複審](iceblue-drop-less-progress-appendix.md#l3-g-p3-收工複審74-檔獨立-fan-out2026-08-04計畫書-l3-c-26-第-4-層首次執行) — 74 檔獨立 fan-out
   - [L3-H 執行機制:workflow](iceblue-drop-less-progress-appendix.md#l3-h-執行機制workflow)
-  - [L3-I Change Log](iceblue-drop-less-progress-appendix.md#l3-i-change-log--狀態層的敘述更正) — 22 條狀態層更正
+  - [L3-I Change Log](iceblue-drop-less-progress-appendix.md#l3-i-change-log--狀態層的敘述更正) — 23 條狀態層更正
 
 ---
 
@@ -79,28 +79,22 @@ holdout(`norm`/P5、`tablet`/P7)。全樹閘門 `files differing: 0`(77 輸出�
    `npm run check:baseline` 讓 `baseline/` 的遺失與損毀**可偵測**(78 檔 sha256,`shasum -c` 也能單獨驗),
    `node scripts/baseline-ab.js install a|b` 把側邊切換變成一個會**自我驗證**的指令(覆蓋後立刻重算
    雜湊,不符就 exit 1),`npm run ab` 印出現在裝的是哪一側。已實測無損可逆與三個負向控制。
-   **`init.sh` 已於 2026-08-05 執行(theme name = `iceblue`),四個名字現在一致**(紀錄 #35),
-   但**主題仍然沒有被服務,原因換成了名字撞號**:`StandardTheme.DEFAULT_NAME` 字面上就是
-   `"iceblue"`,而 `resolveThemeURL` 對預設主題名**不做 `~./` → `~./<theme>/` 改寫** ⇒ 服務的是
-   ZK 自己 jar 裡那份 CSS,我們的 77 個檔沒有人要求。**而且頁面看起來完全正常**(它就是真的
-   iceblue,只是 jar 那份),所以 A/B 會回報零差異卻什麼都沒測到 —— 比之前的無樣式更難察覺。
-   **兩條出路(見 S21)**:(a) 主題名改成不是 `iceblue`;(b) 保留 `iceblue`,把輸出目錄改成
-   `web/` 本身、靠 `target/classes` 先於 jar 來**遮蔽 ZK core 的路徑** —— (b) **已用探針實測可行**,
-   而且更貼近本專案的真正歸宿(`baseline/` 的路徑形狀本來就是 core 的,不是主題子目錄的)。
-   **選哪一條會改到 `package.json`、閘門 candidate 路徑,以及 `doc/*.md` 裡 35 處 `target/classes/web/iceblue`
-   當中真正需要跟著改的 11 處**(另外 24 處落在附加式不覆寫的 L3-A 紀錄列,是歷史,不改)**,待決策。**
-   其次才是缺頁面:此 worktree 只有 `preview.zul` 一頁,且沒有 playwright。
+   **接線那一半也做完了**:`init.sh` 已執行(紀錄 #35),而主題名撞上 `StandardTheme.DEFAULT_NAME`
+   的問題(**S21**)已由**改名 `iceblue` → `iceblue_css`** 解除(**S23** 決策、紀錄 #36)。
+   **A/B 現在真的量得到東西**:同一個 `zk.wcs`,A 側 530434 B / B 側 531482 B、sha256 不同,
+   而兩者經 5 類序列化正規化後**完全相同(524709 B)** —— 「byte 不同、語意相同」第一次在
+   **HTTP 層**被證明,不再只是磁碟上的比對。
+   **剩下的就只有缺頁面與缺工具**:此 worktree 只有 `preview.zul` 一頁,`package.json` 裡沒有
+   playwright。這是純實作,**不等任何人** —— 也是目前唯一還擋著 P4 / P5 / P7 的東西。
 2. **L-2** 瀏覽器支援聲明 —— 解鎖 P4a / P4b。
 3. **L-4 的 density 那一半** —— 解鎖 P7(colour 那一半已由 L-7 解除)。
 
 > **不等任何人的工作已經做完了。** L2.4 清理待辦第 1–4、6 項已於 2026-08-04 收工(紀錄 #32、#33),
 > 剩下三項全部是**別人的決定或還沒建的工具**,不是可以直接開工的實作。要繼續推進,
 > ~~第 1 項是唯一自己動手就能解的 —— 而且它同時解鎖三個階段。~~
-> **←第 1 項只有一半是自己動手就能解的(2026-08-05)。** A 側基準那一半已收工(紀錄 #34);
-> 名字統一那一步也做完了(紀錄 #35),但**主題還是沒有被服務** —— 因為 `iceblue` 正好撞上
-> `StandardTheme.DEFAULT_NAME`(**S21**)。剩下的是一個二選一,兩條路都會改到輸出路徑與
-> 文件裡 11 處活引用(另 24 處在附加式不覆寫的紀錄列裡,不改),所以它跟第 2、3 項同類:**等決策,不是等實作**。
-> 它仍然是最該先處理的,因為**不修它,之後每一次視覺 A/B 都會回報假的零差異**。
+> **←第 1 項在 2026-08-05 一天之內從「等決策」變回「純實作」。** A 側基準收工(#34)、名字統一
+> (#35)、撞號解除(改名 `iceblue_css`,S23 / #36)。**現在它是三項裡唯一不等任何人的**:
+> 缺的只有被截圖的頁面與 playwright,而且**harness 已經證明自己量得到訊號**,不會再回報假的零差異。
 
 ---
 
@@ -126,7 +120,8 @@ holdout(`norm`/P5、`tablet`/P7)。全樹閘門 `files differing: 0`(77 輸出�
 | **視覺 A/B harness**(P4 / P5 / P7 前置) | TODO | 自我驗證須為 0 | — | — |
 | ↳ **A 側(基準)可用性 + 完整性** | **DONE** | 無損可逆 + 三個負向控制 | `install a` → **77/77 逐 byte 等於 `baseline/`**;`install b` → 77 檔**逐 byte 回到切換前快照**;`shasum -a 256 -c doc/baseline-manifest.sha256` → **78/78 OK**(可脫離腳本驗證);manifest 損毀 → `check:baseline` exit 1 且 `install a` 拒絕 | 2026-08-05 |
 | ↳ **四個名字統一**(`init.sh` 已執行,theme name = `iceblue`) | **DONE** | 閘門不得動 | registered / preferred / maven `<artifactId>` / 腳本輸出目錄 **全部 = `iceblue`**;`npm run ab` 由 exit 1 轉 **exit 0**;`web/iceblue` 首次帶齊 **29 個資產**;閘門 **77 檔 / 14323 條 / 0**(紀錄 #35) | 2026-08-05 |
-| ↳ **主題有沒有被服務**(A/B 能不能看見) | **BLOCKED** | 服務出來的 CSS 必須是本主題 | **仍然不是 —— 但原因換了:`iceblue` 恰好是唯一不能用的主題名。** `StandardTheme.DEFAULT_NAME` 字面上就是 `"iceblue"`,`resolveThemeURL` 對它**不做 `~./` 前綴改寫** ⇒ 服務的是 ZK **自己 jar 裡**那份(`/zul/css/norm.css.dsp` **15824 B**),我們那份(**63125 B**)在 `/iceblue/zul/css/…` 可服務但**沒人要求**。兩側服務出來的 byte **sha256 相同**(`95c350b0…`),而我們自己的 `input.css.dsp` **確實隨側邊變**(`c6beb62e` vs `dab86e19`)⇒ 切換有效、沒人在看。**且頁面看起來完全正常**,比 S20 的無樣式更難察覺。兩條出路見 **S21**(其中「遮蔽 core 路徑」已實測可行:探針讓 `/zul/css/norm.css.dsp` 回傳 63125 B) | 2026-08-05 |
+| ↳ **主題有沒有被服務**(A/B 能不能看見) | **DONE** | 服務出來的 CSS 必須是本主題 | **是 —— 改名 `iceblue` → `iceblue_css` 之後解除**(S23 決策、紀錄 #36)。主題段回到 URL(`_zkiju-iceblue_css/zul/css/zk.wcs`);服務出來的 `zk.wcs` **415355 → 531482 B**、`--zk-` **0 → 4171**;`iceblue_css/zul/css/norm.css.dsp` → 200 / **63161 B**(這次**是被要求的**);app log `FileNotFoundException` **0 條** ⇒ 77 檔覆蓋完整 | 2026-08-05 |
+| ↳ **A/B 有沒有訊號**(harness 的自我驗證) | **DONE** | 兩側服務出來的 byte 必須不同 | **有。** 同一個 `zk.wcs`:A 側 `a56858a9…` / **530434 B**,B 側 `6f293b24…` / **531482 B**(對照 S21 當時兩側 sha256 完全相同)。**而且差異性質也證明了**:套上 `check-bytes.js` 那 5 類封閉序列化正規化後,兩邊都是 **524709 B 且字串完全相同** ⇒ 瀏覽器收到的是**「byte 不同、語意相同」**的 CSS —— 核心主張第一次在 **HTTP 層**被證明 | 2026-08-05 |
 | **P4a** 前綴純移除(A 群) | BLOCKED | G-delta | **945** 條,全部有無前綴同伴 → 只允許 `- <prefixed>`,任何 `+` 都是 bug | — |
 | **P4b** 前綴逐條判斷(C 群) | BLOCKED | G-delta | **143** 條,含 **26** 條須成對替換;B 群 **44** 條 carve-out 不得出現在 diff | — |
 | P5 `norm.css` | TODO | G-delta | **842** 個 token 須零差異 | — |

@@ -24,7 +24,7 @@ export const meta = {
 //
 //   * The whole tree compiles in ~1.4s. Converting 74 files is a serial script run, not a
 //     fan-out opportunity — there is no wall-clock to reclaim.
-//   * Every agent that builds writes `target/classes/web/iceblue`, and every conversion
+//   * Every agent that builds writes `target/classes/web/iceblue_css`, and every conversion
 //     mutates the SHARED source tree. Two conversions in flight means agent A's gate compiles
 //     agent B's half-deleted `.less`. The failure is nondeterministic and looks like a
 //     conversion bug.
@@ -99,7 +99,7 @@ THE GATE
   cd ${WT} && npm run check:cssdiff
   Rebuilds the whole tree and compares it to \`baseline/\` at declaration level. For a G-zero
   phase the ONLY acceptable result is exit 0 with the literal line \`files differing: 0\`.
-  Useful extras: \`node scripts/cssdiff.js baseline/ target/classes/web/iceblue --list\` prints
+  Useful extras: \`node scripts/cssdiff.js baseline/ target/classes/web/iceblue_css --list\` prints
   every file with its declaration count; \`--json <path>\` writes a machine-readable report.
 
 HARD PROHIBITIONS
@@ -573,7 +573,7 @@ step's files need something the earlier steps did not.`
 }
 
 CONFIRM THE SET against the live tree before converting anything:
-  node scripts/cssdiff.js baseline/ target/classes/web/iceblue --list
+  node scripts/cssdiff.js baseline/ target/classes/web/iceblue_css --list
 and EXCLUDE the three holdouts that stay in LESS:
   zul/css/norm.css.dsp (P5), zul/font/font-awesome.css.dsp (P6), zkmax/css/tablet.css.dsp (P7).
 This step is ${b.expect} file(s). If the tree gives you a different number, STOP and report both
