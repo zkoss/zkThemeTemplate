@@ -1,0 +1,52 @@
+.z-avatar {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	vertical-align: middle;
+	overflow: hidden;
+	background: var(--zk-color-grey-light);
+	color: var(--zk-color-grey-dark);
+	font-family: var(--zk-base-title-font-family);
+	user-select: none;
+	box-sizing: border-box;
+	/* Customization hooks — override on the element via inline style
+	   (style="--zk-avatar-size:48px;") or a parent rule. Defaults equal
+	   the medium size class so an avatar with no size= still looks right. */
+	--zk-avatar-size: 36px;
+	--zk-avatar-font-size: 14px;
+	width: var(--zk-avatar-size);
+	height: var(--zk-avatar-size);
+	font-size: var(--zk-avatar-font-size);
+}
+.z-avatar-circle {
+	border-radius: 50%;
+}
+.z-avatar-square {
+	border-radius: var(--zk-base-border-radius);
+}
+.z-avatar-small {
+	--zk-avatar-size: 24px;
+	--zk-avatar-font-size: 10px;
+}
+.z-avatar-medium {
+	--zk-avatar-size: 36px;
+	--zk-avatar-font-size: 14px;
+}
+.z-avatar-large {
+	--zk-avatar-size: 48px;
+	--zk-avatar-font-size: 18px;
+}
+.z-avatar > img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+.z-avatar-text {
+	/* default gap (Avatar.java DEFAULT_GAP / Avatar.ts _gap = 4); for a
+		   non-default gap, domContent_ emits an inline `padding` that overrides
+		   this. Without this rule the default gap renders 0px. */
+	padding: 0 4px;
+	line-height: 1;
+	font-weight: 600;
+	text-transform: uppercase;
+}
