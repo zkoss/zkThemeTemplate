@@ -52,7 +52,7 @@
  * `output.warnings` — never in `output.errors`. A builder that checks `errors` alone ships
  * empty CSS at exit 0. Neither construct is used on this branch (`@layer` is excluded by the
  * plan's §0; `@scope` was evaluated for P5's browserDefault and NOT adopted — see
- * doc/spec/browserdefault-masking.md), so the guards below cost nothing today and exist so that
+ * doc/browserdefault-masking.md), so the guards below cost nothing today and exist so that
  * the day one of them IS introduced, the build STOPS.
  *
  * The fix is never to relax these guards: minify the inner CSS first, then wrap the minified
@@ -145,7 +145,7 @@ const NO_HEADER = new Set([
  *   ZKBD-OFF-*      the same switch in BLOCK position, and the reason `@scope` cannot replace
  *                   this: `html` / `body` / `main` must not be scoped when embedded, they must
  *                   be ABSENT, and CSS has no "does not exist" operator. Only a server-side
- *                   conditional can delete a rule. See doc/spec/browserdefault-masking.md.
+ *                   conditional can delete a rule. See doc/browserdefault-masking.md.
  *
  * Order matters: the prefix tag ENDS with `</c:if>`, so restoring it before the block-close would
  * be fine, but masking in the other direction (conversion side) must do the prefix first.

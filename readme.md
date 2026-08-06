@@ -43,8 +43,16 @@ The suggested steps:
 2. Add a new `.less` file to override the existing variables.
 
 ## switch to compact profile (since 9.5.0)
-1. Open [`src/main/resources/web/zul/less/_zkvariables.less`](src/main/resources/web/zul/less/_zkvariables.less)
-2. Modify `@themeProfile` to `compact`.
+The profile is selected in **two** places, because the two stylesheets that read it are built by
+different toolchains at the moment. Set both, or the desktop theme and the tablet theme disagree.
+
+1. Open [`src/main/resources/web/zul/css/norm.css`](src/main/resources/web/zul/css/norm.css) and
+   point the first import at the compact token file:
+``` css
+@import "tokens/_compact.css";
+```
+2. Open [`src/main/resources/web/zul/less/_zkvariables.less`](src/main/resources/web/zul/less/_zkvariables.less)
+   and modify `@themeProfile` to `compact` — this one still drives `zkmax`'s tablet stylesheet:
 ``` less
 @themeProfile:                 "compact";
 @themePalette:                 "iceblue";

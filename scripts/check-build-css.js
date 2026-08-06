@@ -38,15 +38,18 @@
  * not weaker: for a converted file the shipped build runs this exact input through this exact
  * builder. The report keeps the two counts separate so that shift stays visible.
  *
- * TWO FILES CANNOT GO THROUGH THIS PATH, AND THAT IS NOT A BUG
- * -----------------------------------------------------------
- * `zul/css/norm.css.dsp`   — its taglib header sits at byte 43088, not offset 0 (premise #18).
- *                            Stripping and re-prepending would move it. P5 owns this file.
+ * ONE FILE CANNOT GO THROUGH THIS PATH, AND THAT IS NOT A BUG
+ * ----------------------------------------------------------
  * `zkmax/css/tablet.css.dsp` — carries `<c:if>` DSP tags in SELECTOR position, which
  *                            `build-css.js` deliberately hard-fails on (CleanCSS rewrites them
  *                            with 0 errors and 0 warnings). P7 owns this file.
- * Both are copied from `baseline/` unchanged so the diff covers the whole theme, and both are
- * reported as passthrough so the coverage number is never read as 77.
+ * It is copied from `baseline/` unchanged so the diff covers the whole theme, and it is reported
+ * as passthrough so the coverage number is never read as the full output count.
+ *
+ * `zul/css/norm.css.dsp` used to sit here too — its taglib header is at byte 43785, not offset 0
+ * (premise #18), so stripping and re-prepending would have MOVED it. P5 removed the obstacle
+ * rather than the file: `norm.css` positions its own header with a marker, and its browserDefault
+ * DSP is carried as build-safe placeholders. It is covered now, from a real source.
  *
  * BYTE-IDENTITY IS REPORTED TOO
  * -----------------------------
@@ -75,7 +78,6 @@ const BASELINE = 'baseline';
 
 /** Outputs that legitimately cannot round-trip through the CSS path. See header. */
 const PASSTHROUGH = new Map([
-	['zul/css/norm.css.dsp', 'taglib header sits mid-file (premise #18) — P5 owns it'],
 	['zkmax/css/tablet.css.dsp', 'DSP tags in selector position — P7 owns it'],
 ]);
 
@@ -149,12 +151,16 @@ function walk(dir, base = dir, acc = []) {
 	return acc;
 }
 
-/** Real `.css` sources in the tree — i.e. the files P3 has already converted. `_*` are partials. */
+/**
+ * Real `.css` sources in the tree — the files P3/P5 have converted, INCLUDING `_*` partials.
+ * Partials produce no output of their own, but `norm.css` @imports four of them, so staging only
+ * the entry files would make build-css.js fail to resolve them.
+ */
 function walkCssSources(dir, base = dir, acc = []) {
 	for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
 		const full = path.join(dir, entry.name);
 		if (entry.isDirectory()) walkCssSources(full, base, acc);
-		else if (entry.name.endsWith('.css') && !entry.name.startsWith('_')) acc.push(path.relative(base, full));
+		else if (entry.name.endsWith('.css')) acc.push(path.relative(base, full));
 	}
 	return acc;
 }
@@ -225,7 +231,13 @@ function main(argv) {
 			fs.copyFileSync(path.join(SOURCE, rel), dest);
 			staged++;
 		}
-		if (real.length) console.log(`2/5  + ${real.length} already-converted source(s) copied verbatim (P3)`);
+		// Partials are staged but produce no output, so they must not be counted as coverage.
+		const entries = real.filter((rel) => !path.basename(rel).startsWith('_'));
+		if (real.length) {
+			const partials = real.length - entries.length;
+			console.log(`2/5  + ${entries.length} already-converted source(s) copied verbatim` +
+				`${partials ? `, plus ${partials} partial(s) they @import` : ''}`);
+		}
 
 		// 3. The path under test.
 		console.log(`3/5  running build-css.js over ${staged} .css source(s)…`);
@@ -280,8 +292,8 @@ function main(argv) {
 
 		console.log('');
 		console.log(`through build-css.js: ${covered.length} file(s)`);
-		if (real.length) {
-			console.log(`  of which:          ${real.length} P3-converted (real source), ${covered.length - real.length} reconstructed from LESS`);
+		if (entries.length) {
+			console.log(`  of which:          ${entries.length} converted (real source), ${covered.length - entries.length} reconstructed from LESS`);
 		}
 		console.log(`passthrough:         ${PASSTHROUGH.size} file(s) (not evidence)`);
 		console.log(`byte-identical:      ${covered.length - byteDiff.length}/${covered.length}`);

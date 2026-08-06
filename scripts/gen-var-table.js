@@ -446,16 +446,22 @@ function readProfileTokens(profileDir) {
 	const result = new Map(); // file -> Map(token -> declared value)
 	if (!fs.existsSync(profileDir)) return result;
 	for (const name of fs.readdirSync(profileDir).sort()) {
-		if (!name.endsWith('.less')) continue;
+		// `.css` since P5 converted the zul profiles; `.less` while zkmax still has any.
+		if (!name.endsWith('.less') && !name.endsWith('.css')) continue;
 		const decls = new Map();
 		for (const line of fs.readFileSync(path.join(profileDir, name), 'utf8').split(/\r?\n/)) {
 			const m = PROFILE_DECL_RE.exec(line);
-			// Strip a trailing `// comment` BEFORE the `;`, otherwise the captured value keeps both
-			// the semicolon and the comment text (6 declarations in profiles/_default.less have one,
-			// e.g. `--zk-color-accent3: #261429; // Tooltip Bg`). Verified: no profile value
-			// legitimately contains `//`. The value is quoted verbatim into the generated document,
-			// so a malformed one would ship a wrong declaration in the migration example.
-			if (m) decls.set(m[1], line.slice(line.indexOf(':') + 1).replace(/\/\/.*$/, '').replace(/;\s*$/, '').trim());
+			// Strip a trailing comment BEFORE the `;`, otherwise the captured value keeps both the
+			// semicolon and the comment text (6 declarations in the default profile have one,
+			// e.g. `--zk-color-accent3: #261429; // Tooltip Bg` — now `/* Tooltip Bg */`, which
+			// LESS moved onto its own line during the P5 conversion, but an author will write it
+			// inline again). Verified: no profile value legitimately contains `//` or `/*`. The
+			// value is quoted verbatim into the generated document, so a malformed one would ship
+			// a wrong declaration in the migration example.
+			if (m) {
+				decls.set(m[1], line.slice(line.indexOf(':') + 1)
+					.replace(/\/\*[\s\S]*$/, '').replace(/\/\/.*$/, '').replace(/;\s*$/, '').trim());
+			}
 		}
 		result.set(name, decls);
 	}
@@ -497,8 +503,13 @@ function build(srcRoot) {
 		}
 	}
 
-	// Profiles live next to the variables file that forwards to them.
-	const profileDirs = [...new Set(varFiles.map((p) => path.join(path.dirname(p), 'profiles')))];
+	// Profiles live next to the variables file that forwards to them — `<pkg>/less/profiles/` while
+	// they were LESS, `<pkg>/css/tokens/` since P5 converted the zul ones. Both are read: zkmax's
+	// `_zkvariables.less` still forwards nowhere, and P7 will move whatever is left.
+	const profileDirs = [...new Set(varFiles.flatMap((p) => [
+		path.join(path.dirname(p), 'profiles'),
+		path.join(path.dirname(path.dirname(p)), 'css', 'tokens'),
+	]))];
 	const profiles = new Map();
 	for (const dir of profileDirs) {
 		for (const [name, decls] of readProfileTokens(dir)) {
