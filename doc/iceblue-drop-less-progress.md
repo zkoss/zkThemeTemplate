@@ -40,19 +40,24 @@
 
 ## L1 執行摘要
 
-**最後更新**:2026-08-05
+**最後更新**:2026-08-06
 
 ### 現況
 
 **核心命題已經證明完畢** —— IceBlue 的 **82 個元件輸出不需要 LESS,而且是零差異證明的**。
-**ZK 10.4 補齊收工後**來源端是 **83 `.css` + 2 `.less` = 85 ✓**;剩下的 2 個 `.less` 是**刻意**
-保留的 holdout(`norm`/P5、`tablet`/P7)。全樹閘門 `files differing: 0`(85 輸出檔 / 14863 輸出端
-條數),而 `build-css.js` 現在覆蓋 **83 檔**,`zklessc` 只剩 2 檔。
+**P5 收工後**來源端是 **84 `.css` entry + 5 `.css` partial + 1 `.less` = 85 輸出 ✓**;
+最後 1 個 `.less` 是**刻意**保留的 holdout(`tablet`/P7)。全樹閘門 `files differing: 0`
+(85 輸出檔 / 14863 輸出端條數),而 `build-css.js` 現在覆蓋 **84 檔**,`zklessc` 只剩 **1** 檔。
+
+> **P5 同時回答了一個一直沒問對的問題**:「reset 一定要拆成獨立檔案載入嗎?」——
+> 不但不必,而且**拆檔是唯一會弄丟單一 WCS 的做法**。`zk.wcs` 是 **ZK core** 的檔案,主題
+> **無法**往那個聚合裡加檔案(`beforeWidgetCSS` 能改寫、能跳過,**不能新增**),能新增的
+> `getThemeURIs` 會掛在聚合**外面** = 多一個 request。詳見 `tasks/p5-browserdefault-options.md`。
 
 > **~~75 檔正好是 P2 儀器預估的上限,builder 覆蓋率到頂~~ ←這個結論在 2026-08-05 失效,見 S27。**
 > P2 的儀器是對「當時樹上有的 76 個 entry」做的預估,上限 75 在那個檔集裡成立;ZK 10.4 補齊帶進
 > 8 個 P2 從未看過的檔,所以 83 不是「突破上限」,而是**檔集本身變大了**。真正的不變量是
-> 「holdout 只有 2 個」,不是那個絕對數字。
+> 「holdout 剩幾個」,不是那個絕對數字 —— **2026-08-06 P5 收工後剩 1 個(`tablet`/P7)。**
 
 **來源端的清理也做完了** —— L2.4 第 1–4、6 項於 2026-08-04 收工:**空殼規則全樹歸零**
 (15 → 0),`check:build-css` 的封閉清單從 **5 類降到 4 類**(「空規則」那一類整個消失),
@@ -68,7 +73,7 @@
 | **M1** 基礎建設與閘門(P0 · P1 · P2) | **DONE** | 基準不可變、LESS 釘到 4.8.1、來源樹可同時容納 `.less` 與 `.css` |
 | **M2** 元件轉換 82 檔(P3) | **DONE** | 74/74 轉完,逐檔閘門全 0、無一次失敗;**0 檔無法解釋**。2026-08-05 追加 ZK 10.4 補齊的 8 檔,同樣逐檔閘門全 0(S26) |
 | **M3** vendor prefix 政策(P4a · P4b) | **BLOCKED** | 只等 **L-2** 瀏覽器支援聲明(視覺 A/B harness 已於 2026-08-05 完成) |
-| **M4** 三個 holdout(P5 · P6 · P7) | **1 / 3 DONE** | **P6 DONE** —— FA 的 `each()` 迴圈換成 `gen-fa-css.js`;**P5 的兩個前置(視覺 A/B harness、S16 的 CR 處理)全部解除,可開工**;P7 等 **L-4** 的 density 那一半 |
+| **M4** 三個 holdout(P5 · P6 · P7) | **2 / 3 DONE** | **P6 DONE** —— FA 的 `each()` 迴圈換成 `gen-fa-css.js`;**P5 DONE(2026-08-06)** —— `norm` 轉純 CSS,`browserDefault` 用 build 期遮罩而**不是** `@scope`,閘門由 G-delta 收在 **G-zero**;P7 等 **L-4** 的 density 那一半 |
 | **M5** 收尾與遷移指南(P8) | TODO | 兩張規則表已產出,期限風險已解除 |
 
 ### 總體進度
@@ -187,7 +192,7 @@
 | ↳ **A/B 有沒有訊號**(harness 的自我驗證) | **DONE** | 兩側服務出來的 byte 必須不同 | **有。** 同一個 `zk.wcs`:A 側 `a56858a9…` / **530434 B**,B 側 `6f293b24…` / **531482 B**(對照 S21 當時兩側 sha256 完全相同)。**而且差異性質也證明了**:套上 `check-bytes.js` 那 5 類封閉序列化正規化後,兩邊都是 **525145 B 且字串完全相同** ⇒ 瀏覽器收到的是**「byte 不同、語意相同」**的 CSS —— 核心主張第一次在 **HTTP 層**被證明 | 2026-08-05 |
 | **P4a** 前綴純移除(A 群) | BLOCKED | G-delta | **945** 條,全部有無前綴同伴 → 只允許 `- <prefixed>`,任何 `+` 都是 bug | — |
 | **P4b** 前綴逐條判斷(C 群) | BLOCKED | G-delta | **143** 條,含 **26** 條須成對替換;B 群 **44** 條 carve-out 不得出現在 diff | — |
-| P5 `norm.css` | TODO | G-delta | **842** 個 token 須零差異 | — |
+| **P5 `norm.css`** | **DONE** | ~~G-delta~~ → **G-zero** | **整份 `norm.css.dsp` 零差異**,不只 token 那 **862** 條 —— 因為 `browserDefault` **不改 `@scope`**,runtime 行為一個 byte 都沒動。輸出端 DSP 逐項對齊 baseline:selector 前綴 **90 = 90**、`<c:if>` 開/關 **93 / 93**、`${}` 腐化 **0**、taglib 三條指令仍在 tokens/reset 接縫(**不在 offset 0**)、規則區塊 **357 = 357**。`build-css.js` 覆蓋 83 → **84** 檔,`zklessc` 只剩 **1** 檔。`check:build-css` 的 `norm` 從 passthrough 轉為**真來源實測**(84 檔全部來自真來源、0 未分類);`check:bytes` UNEXPLAINED **0**;`mvn package` 出來的 jar **85 個 `.css.dsp` / 0 個原始 `.css`/`.less`**。決策 [browserdefault-masking.md](browserdefault-masking.md),被否決的選項 `tasks/p5-browserdefault-options.md`(紀錄 **#47**、**#48**) | 2026-08-06 |
 | **P6 Font Awesome** | **DONE** | G-zero | **4545** 條零差異;產生器輸出與被刪掉的 `.less` 經 `less.render()` **逐 byte 相同**(獨立複核:**3611** 個選擇器 0 增 0 減);codepoint 抽驗 + 「加一個 icon」往返實測;`build-css` 74 → **75** 檔 | 2026-08-04 |
 | P7 `tablet` + profile API | BLOCKED | G-delta | **多一個交付項**:補 `_zkcssvariables.less` 缺的 `@import "colors/_@{themePalette}_css";` + `colors/_iceblue_css.less`(**見 S29**,2026-08-05 裁示歸入本階);驗收多一條 —— runtime override sheet 必須表達得出 palette 覆蓋,且要有一次**非 iceblue** palette 的實測 | — |
 | **規則表產生器**(P8 前置,**有期限**) | **DONE** | 自帶斷言 | **846** 列 / **834** 語法 1:1 / **830** 行為 1:1 / **16** 例外;**30** mixin 名稱 / **38** 定義列 | 2026-07-30 |

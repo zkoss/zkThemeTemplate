@@ -283,16 +283,36 @@ DSP 層與 Font Awesome 的生成內容都還在,零 build step 兌現不了(L3-
 
 | | |
 |---|---|
-| **目標** | 把 `norm.less`(輸出端 **1500** 條)拆成 tokens / palette / reset / 全域四類檔案,由 `build-css.js` 串接;`browserDefault` 從 descendant selector 改成 `@scope` |
-| **輸入 → 輸出** | `norm.less` → `zul/css/tokens/_default.css`、`_compact.css`、`_iceblue.css`、`base/_reset.css`、`norm.css` |
-| **驗收閘門** | **G-delta** —— **842 個 token 宣告必須零差異**(純搬移);reset 部分是刻意的結構變更,需要 `browserDefault` 開/關兩種設定下的 **computed-style A/B** |
-| **前置** | **兩項都已解除,P5 可開工。** ~~視覺 A/B harness~~ **←已完成(2026-08-05,見 L2.4)**(**這一階價值最高** —— declaration diff 看不出「誰被選到」變了;但採信範圍受 **S33** 限制:低頻元件不能單獨拿它收工)。~~另一個前置:先修 `less2css.js` 的 CR 處理(S16)~~ **←已完成(2026-08-06,紀錄 #46)** —— `norm.less` 匯入的 `_reset.less` 431 個 CR / 13 個 `//` 註解,轉換器修好之前會產出 13 個 `/* x\n */` 畸形註解,現在是 **0** |
-| **commit 粒度** | ~5 顆(每個拆出來的檔案各是一個獨立結構決策) |
+**DONE(2026-08-06,commit `fea5f32` + `a03edcf`)。**
 
-> CleanCSS 會**摧毀 `@scope`**(輸出全空,只在 warnings 報)→ 必須**先 minify 內層、再包 `@scope`**。
-> 正確做法不是放寬 `HOSTILE_CONSTRUCTS` 守衛。
+| | |
+|---|---|
+| **目標** | 把 `norm.less`(輸出端 **1500** 條)拆成 tokens / palette / reset / 全域四類檔案,由 `build-css.js` 串接;~~`browserDefault` 從 descendant selector 改成 `@scope`~~ **←不採用,見下方** |
+| **輸入 → 輸出** | `norm.less` → `zul/css/tokens/_default.css`、`_compact.css`、`_iceblue.css`、`base/_reset.css`、`norm.css` |
+| **驗收閘門** | ~~G-delta~~ → **G-zero** —— **842**(現為 **862**)個 token 宣告零差異之外,**整份 `norm.css.dsp` 都零差異**:runtime 行為完全沒動,所以不需要 `browserDefault` 開/關兩種設定的 computed-style A/B |
+| **前置** | **兩項都已解除,P5 可開工。** ~~視覺 A/B harness~~ **←已完成(2026-08-05,見 L2.4)**(**這一階價值最高** —— declaration diff 看不出「誰被選到」變了;但採信範圍受 **S33** 限制:低頻元件不能單獨拿它收工)。~~另一個前置:先修 `less2css.js` 的 CR 處理(S16)~~ **←已完成(2026-08-06,紀錄 #46)** —— `norm.less` 匯入的 `_reset.less` 431 個 CR / 13 個 `//` 註解,轉換器修好之前會產出 13 個 `/* x\n */` 畸形註解,現在是 **0**。**另有一項本階段才發現的隱藏前置**:原本的 `@scope` 寫法其實相依於未拍板的 **L-2**,選了遮罩法之後這個相依消失 |
+| **commit 粒度** | ~~~5 顆~~ → **2 顆**(機制 `fea5f32` / 轉換 `a03edcf`)—— 拆出來的 5 個檔案不是 5 個獨立結構決策,而是**同一個決策的 5 個部位**:`norm.less` 存在或 `norm.css` 存在,中間沒有可交付的狀態 |
+
+> **`browserDefault` 不改 `@scope`,改用 build 期遮罩** —— 決策記錄
+> [browserdefault-masking.md](browserdefault-masking.md),被否決的選項見
+> [tasks/p5-browserdefault-options.md](../tasks/p5-browserdefault-options.md)。
+>
+> 理由是實測出來的:輸出端有**兩種**形狀 —— **90** 個 selector 前綴,`@scope` 表達得出來;
+> 但還有 **3 對整塊 `<c:if test="${empty …}">`**,`@scope` **表達不出來**。embed 模式下
+> `html` / `body` / `main` 不是要被 scope,是**必須不存在**,而 CSS 沒有「不存在」這個運算子。
+> **所以 `@scope` 不會讓 DSP 消失**,卻會把閘門從 G-zero 拉成 G-delta,再加上一個未拍板的
+> **L-2** 相依(`@scope` 需要 Chrome/Edge 118+、Safari 17.4+、Firefox 128+)。
+>
+> 改用的做法是 `HOSTILE_CONSTRUCTS` 那條 DSP 守衛**自己開的處方**:來源檔寫合法 CSS 佔位符
+> (`.ZKBD `、`/*!ZKBD-OFF-*/`),`build-css.js` 在 minify **之後**還原成 DSP。守衛沒有被放寬 ——
+> `assertMinifierSafe()` 改成跑在去註解後的文字上(壓縮器真正看到的東西),來源檔裡出現真的
+> DSP 標籤依舊 hard-fail。
+>
+> `@scope` 的守衛**保留**:成本為零,擋的是 CleanCSS 把 `@scope` 整份清空、且只在 warnings 報。
+>
 > 另須沿用 Marble 已記載的限制:open float 會被移到 `document.body`、落在 `.z-page` 之外 ——
-> 現行 descendant-selector 做法有**同樣**限制,所以不是回歸,但要寫進文件。
+> 現行 descendant-selector 做法有**同樣**限制,所以不是回歸,**已寫進
+> [browserdefault-masking.md](browserdefault-masking.md) §5**。
 
 #### P6 —— Font Awesome 產生器
 
