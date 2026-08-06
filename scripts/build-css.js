@@ -14,8 +14,8 @@
  * This is far simpler than a general CSS pipeline because the plan's premise #6 established
  * that components are not coupled: a converted component file is self-contained and has NO
  * `@import`. So the component path is literally read -> prepend header -> minify -> write.
- * The only file that will ever need concatenation is `norm.css` (tokens + reset + globals),
- * and that is phase P5's problem, not this script's.
+ * The one file that needs concatenation is `norm.css` (tokens + palette + reset + globals);
+ * P5 added `resolveImports()` for it and nothing else uses it.
  *
  * THE TAGLIB HEADER IS ONE LINE, NOT THREE  (plan premise #17)
  * -----------------------------------------------------------
@@ -29,16 +29,16 @@
  * THE HEADER IS NOT ALWAYS AT OFFSET 0  (plan premise #18)
  * -------------------------------------------------------
  * `zul/css/norm.css.dsp` opens with ~43 KB of `:root{--zk-*}` tokens, THEN the three
- * directives (byte 43088 of 72140), THEN normalize.css and the `<c:if>` reset — because the
- * directives sit on the seam where `norm.less` imports `_reset.less`, which carries its own
- * header that zklessc emits inline. JSP page directives are position-independent, so this is
+ * directives (byte 43785 of 72837), THEN normalize.css and the `<c:if>` reset — because the
+ * directives sit on the seam where `norm.less` imported `_reset.less`, which carried its own
+ * header that zklessc emitted inline. JSP page directives are position-independent, so this is
  * legal, just unusual.
  *
- *   >>> P5 NOTE: when norm.css becomes a concatenation of several sources, the header must be
- *   >>> PRESERVED AT ITS CONCATENATION BOUNDARY, not hoisted to offset 0. Do not "fix" this
- *   >>> script by assuming a header always belongs at the top of a file. The generic path
- *   >>> below prepends because every generic (component) output does start with the header;
- *   >>> that is a property of those 73 files, not an invariant of `.css.dsp`.
+ * P5 kept that seam rather than hoisting the header to offset 0, so `norm.css.dsp` stays
+ * byte-identical to what master shipped. `norm.css` marks the spot with TAGLIB_MARKER; a source
+ * that places its own header opts out of the prepend. The generic path still prepends because
+ * every generic (component) output does start with the header — that is a property of those 73
+ * files, not an invariant of `.css.dsp`.
  *
  * THREE FILES CARRY NO HEADER AT ALL  (plan premise #9)
  * ----------------------------------------------------
@@ -51,17 +51,24 @@
  * `@layer a, b;` order statement, EMPTIES the affected output, and reports the problem only in
  * `output.warnings` — never in `output.errors`. A builder that checks `errors` alone ships
  * empty CSS at exit 0. Neither construct is used on this branch (`@layer` is excluded by the
- * plan's §0; `@scope` arrives with P5's browserDefault rewrite), so the guards below cost
- * nothing today and exist so that the day one of them IS introduced, the build STOPS.
+ * plan's §0; `@scope` was evaluated for P5's browserDefault and NOT adopted — see
+ * doc/spec/browserdefault-masking.md), so the guards below cost nothing today and exist so that
+ * the day one of them IS introduced, the build STOPS.
  *
- * When P5 needs `@scope`, the fix is NOT to relax these guards: minify the inner CSS first,
- * then wrap the minified result in `@scope (...) { ... }` so CleanCSS never sees the at-rule.
+ * The fix is never to relax these guards: minify the inner CSS first, then wrap the minified
+ * result in `@scope (...) { ... }` so CleanCSS never sees the at-rule.
  *
  * A THIRD hostile construct was found while proving this script (it is not in the plan): CSS
  * carrying DSP TAGS in selector position — `<c:if …>${".z-page "}</c:if>*` in `tablet.less`'s
  * browserDefault switch. CleanCSS rewrites that to `<c:if …>${}".z-page "</c:if>*`, hoisting
  * the string OUT of the EL expression, and reports **0 errors and 0 warnings** at level 0.
  * So the warnings check alone does NOT cover this class; the guard below does.
+ *
+ * P5 needed exactly that construct in `norm.css`, and took the guard's own advice rather than
+ * weakening it: the SOURCE carries build-safe placeholders (a `.ZKBD` class, `ZKBD-OFF` marker
+ * comments) that are ordinary CSS the minifier has no opinion about, and PLACEHOLDERS below
+ * restores them to DSP AFTER minification. So the guard still fires on any real DSP tag in a
+ * source, and the source stays valid CSS that an editor and a linter can read.
  *
  * WHY LEVEL 0 AND NOT LEVEL 1
  * ---------------------------
@@ -119,6 +126,39 @@ const NO_HEADER = new Set([
 	'js/zkmax/grid/css/grid.css.dsp',
 ]);
 
+/**
+ * BUILD-SAFE PLACEHOLDERS -> THE DSP THEY STAND FOR, substituted AFTER minification.
+ *
+ * Two things a `.css.dsp` can contain that a `.css` source cannot: the taglib header (`<%@ … %>`)
+ * and DSP tags in selector position (`<c:if …>`). Both are hostile to CleanCSS — see the file
+ * header — and both are also hostile to the ordinary CSS tooling a human edits the source with.
+ * So the source says what it means in plain CSS, and this table is the only place that knows the
+ * DSP spelling.
+ *
+ *   TAGLIB_MARKER   a `/*!` comment, so it survives stripComments() and level 0, and it survives
+ *                   AT ITS POSITION — which is the point: norm.css.dsp's header sits at byte
+ *                   43785, on the tokens/reset seam, not at offset 0.
+ *   `.ZKBD `        `org.zkoss.zul.theme.browserDefault` in SELECTOR position: when the property
+ *                   is set, ZK's rules are confined to the `.z-page ` subtree so the theme does
+ *                   not restyle a host page it was embedded into. The trailing space is part of
+ *                   the placeholder because `${".z-page "}` supplies its own separator.
+ *   ZKBD-OFF-*      the same switch in BLOCK position, and the reason `@scope` cannot replace
+ *                   this: `html` / `body` / `main` must not be scoped when embedded, they must
+ *                   be ABSENT, and CSS has no "does not exist" operator. Only a server-side
+ *                   conditional can delete a rule. See doc/spec/browserdefault-masking.md.
+ *
+ * Order matters: the prefix tag ENDS with `</c:if>`, so restoring it before the block-close would
+ * be fine, but masking in the other direction (conversion side) must do the prefix first.
+ */
+const TAGLIB_MARKER = '/*!ZK-TAGLIB-HEADER*/';
+const BROWSER_DEFAULT = "c:property('org.zkoss.zul.theme.browserDefault')";
+const PLACEHOLDERS = [
+	[TAGLIB_MARKER, HEADER],
+	['.ZKBD ', `<c:if test="\${not empty ${BROWSER_DEFAULT}}">\${".z-page "}</c:if>`],
+	['/*!ZKBD-OFF-START*/', `<c:if test="\${empty ${BROWSER_DEFAULT}}">`],
+	['/*!ZKBD-OFF-END*/', '</c:if>'],
+];
+
 // level 0 = pure re-serialization: collapse whitespace, rewrite nothing. See "WHY LEVEL 0"
 // above — every level-1 option set measurably diverges from `zklessc --compress`.
 // rebase:false leaves `url()` bodies alone, which matters because component CSS embeds
@@ -149,7 +189,15 @@ const HOSTILE_CONSTRUCTS = [
 		name: 'taglib header already present in the source',
 		re: /<%/,
 		how: 'this script prepends the header itself, so the output would carry it twice',
-		fix: 'strip the taglib directives when converting the .less (P3 step 3)',
+		fix: 'strip the taglib directives when converting the .less (P3 step 3), and use the ZK-TAGLIB-HEADER marker if the header belongs mid-file',
+	},
+	{
+		// resolveImports() runs first and is exhaustive, so reaching here means an @import this
+		// script did not recognise — e.g. written mid-line, or `url(...)` form.
+		name: 'unresolved @import',
+		re: /@import\b/,
+		how: 'CleanCSS would inline it ITSELF, resolving the path against the process cwd rather than the source tree',
+		fix: 'write it as a line of its own: @import "<path relative to this file>";',
 	},
 ];
 
@@ -232,9 +280,48 @@ function tidyMediaPreludes(css) {
 	return css.replace(/@media[^{;]*/g, (m) => m.replace(/\s*:\s*/g, ':').replace(/\s+/g, ' '));
 }
 
+/**
+ * Inline `@import "<relative>.css";` — one line, one file, resolved against the IMPORTING file's
+ * directory. Only `norm.css` uses it (tokens + palette + reset + globals), which is why it is 15
+ * lines and not a resolver: component sources have no imports at all (plan premise #6).
+ *
+ * It runs BEFORE minify() so CleanCSS never sees an `@import`. That is not a nicety — CleanCSS's
+ * `inline` option defaults to `['local']` and would resolve the path against the process cwd, so
+ * leaving one in place means the minifier quietly pulls in the wrong file or none at all. The
+ * HOSTILE_CONSTRUCTS entry catches anything this function did not recognise.
+ *
+ * The import statement is replaced IN PLACE, not hoisted: `norm.css` deliberately interleaves its
+ * imports with the taglib marker, because the header sits on the tokens/reset seam.
+ */
+function resolveImports(sourceDir, rel, stack = []) {
+	if (stack.includes(rel)) {
+		throw new Error(`${rel}: circular @import (${[...stack, rel].join(' -> ')})`);
+	}
+	const text = fs.readFileSync(path.join(sourceDir, rel), 'utf8');
+	return text.replace(/^[ \t]*@import\s+["']([^"']+)["']\s*;[ \t]*\r?\n?/gm, (_m, spec) => {
+		const target = path.join(path.dirname(rel), spec);
+		if (!fs.existsSync(path.join(sourceDir, target))) {
+			throw new Error(`${rel}: @import "${spec}" does not resolve (looked for ${target})`);
+		}
+		return resolveImports(sourceDir, target, [...stack, rel]);
+	});
+}
+
+/** Placeholders -> DSP. After minification, so the minifier only ever sees ordinary CSS. */
+function restorePlaceholders(css) {
+	let out = css;
+	for (const [placeholder, dsp] of PLACEHOLDERS) out = out.split(placeholder).join(dsp);
+	return out;
+}
+
 function minify(css, rel) {
-	assertMinifierSafe(css, rel);
 	const stripped = stripComments(css);
+	// Assert on what the MINIFIER will see, not on the raw source. A hostile construct inside a
+	// regular comment never reaches CleanCSS and cannot be corrupted by it, whereas norm.css's
+	// own header comment legitimately NAMES `@import` and the taglib directives while explaining
+	// them — asserting on the raw text made documenting the mechanism impossible. `/*!` comments
+	// do survive stripComments(), so anything hostile inside one is still caught.
+	assertMinifierSafe(stripped, rel);
 	const output = cleanCss.minify(stripped);
 	// errors AND warnings are both fatal: the @scope / @layer failure mode reports itself
 	// exclusively through warnings, so treating warnings as advisory reintroduces exactly the
@@ -247,7 +334,7 @@ function minify(css, rel) {
 	if (stripped.trim() && !output.styles.trim()) {
 		throw new Error(`${rel}: minifier produced empty output from non-empty input`);
 	}
-	return tidyMediaPreludes(output.styles);
+	return restorePlaceholders(tidyMediaPreludes(output.styles));
 }
 
 /** `*.css`, skipping `_partial.css` (partials are inputs to a concatenation, not outputs). */
@@ -337,15 +424,24 @@ function main(argv) {
 	for (const rel of sources) {
 		const outRel = `${rel}.dsp`;
 		let body;
+		let placesOwnHeader;
 		try {
-			body = minify(fs.readFileSync(path.join(sourceDir, rel), 'utf8'), rel);
+			const src = resolveImports(sourceDir, rel);
+			// Read off the SOURCE, not the output: the marker is gone by then, and asking
+			// "does the output contain HEADER" would also answer yes to a file that ended up
+			// with one by accident.
+			placesOwnHeader = src.includes(TAGLIB_MARKER);
+			if (placesOwnHeader && NO_HEADER.has(outRel)) {
+				throw new Error(`${rel}: places a taglib header, but ${outRel} is a NO_HEADER output`);
+			}
+			body = minify(src, rel);
 		} catch (e) {
 			console.error(`build-css: ${e.message}`);
 			return 1;
 		}
-		// Generic path: header at offset 0. See the P5 note in the file header before
-		// generalizing this — norm.css.dsp's header legitimately sits mid-file.
-		const content = NO_HEADER.has(outRel) ? body : HEADER + body;
+		// Generic path: header at offset 0, because every component output starts with one.
+		// A source that positions its own (norm.css, on the tokens/reset seam) opts out.
+		const content = NO_HEADER.has(outRel) || placesOwnHeader ? body : HEADER + body;
 		const outPath = path.join(outputDir, outRel);
 		fs.mkdirSync(path.dirname(outPath), { recursive: true });
 		fs.writeFileSync(outPath, content);
@@ -359,4 +455,7 @@ function main(argv) {
 
 if (require.main === module) process.exit(main(process.argv.slice(2)));
 
-module.exports = { HEADER, NO_HEADER, minify, assertMinifierSafe, stripComments, tidyMediaPreludes };
+module.exports = {
+	HEADER, NO_HEADER, TAGLIB_MARKER, PLACEHOLDERS,
+	minify, assertMinifierSafe, stripComments, tidyMediaPreludes, resolveImports, restorePlaceholders,
+};
