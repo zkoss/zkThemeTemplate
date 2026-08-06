@@ -171,8 +171,7 @@ div.z-log button {
 	font-size: var(--zk-font-size-x-small);
 }
 /* General */
-.noscript {
-	/* the content of noscript */
+.noscript { /* the content of noscript */
 	width: 100%;
 	height: 100%;
 	background: #E0E1E3;
@@ -355,13 +354,11 @@ div.z-log button {
 	left: 0;
 }
 #zk_proc > .z-modal-mask {
-	opacity: 1;
-	/* ZK-5017.zul, before zk processing ready, we should hide the screen to avoid flickering. */
+	opacity: 1; /* ZK-5017.zul, before zk processing ready, we should hide the screen to avoid flickering. */
 }
 .mobile .z-temp,
 .mobile .z-modal-mask {
-	min-height: 100vh;
-	/* ZK-4483 */
+	min-height: 100vh; /* ZK-4483 */
 }
 .z-initing {
 	width: 60px;
@@ -449,11 +446,9 @@ div.z-log button {
 	left: 0;
 	z-index: 89000;
 }
-.z-inline-block {
-	/* used with label/checkbox and others to ensure the dimension */
+.z-inline-block { /* used with label/checkbox and others to ensure the dimension */
 	display: inline-block;
-	vertical-align: top;
-	/* vertical-align: make it looks same in diff browsers */
+	vertical-align: top; /* vertical-align: make it looks same in diff browsers */
 }
 .z-word-wrap {
 	word-wrap: break-word;
@@ -473,8 +468,7 @@ div.z-log button {
 	top: 0;
 	z-index: 16800;
 }
-.z-temp * {
-	/* temporary */
+.z-temp * { /* temporary */
 	font-size: 5px;
 	color: #FFFFFF;
 	text-decoration: none;

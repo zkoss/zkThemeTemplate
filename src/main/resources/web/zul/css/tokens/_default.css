@@ -38,21 +38,15 @@
 	--zk-color-primary: #0093F9;
 	--zk-color-primary-dark: #0064ED;
 	--zk-color-primary-light: hsl(from var(--zk-color-primary) h s calc(l + 25));
-	--zk-color-primary-lighter: hsl(from var(--zk-color-primary) h s calc(l + 45));
-	/* List hover Bg */
+	--zk-color-primary-lighter: hsl(from var(--zk-color-primary) h s calc(l + 45)); /* List hover Bg */
 	--zk-color-accent: #FFA516;
 	--zk-color-accent2: #FF4051;
-	--zk-color-accent3: #261429;
-	/* Tooltip Bg */
-	--zk-color-background1: #F9FCFF;
-	/* Window Bg, Panel Bg */
-	--zk-color-background3: #FFFFFF;
-	/* Container Bg */
+	--zk-color-accent3: #261429; /* Tooltip Bg */
+	--zk-color-background1: #F9FCFF; /* Window Bg, Panel Bg */
+	--zk-color-background3: #FFFFFF; /* Container Bg */
 	--zk-color-grey-dark: #A8A8A8;
-	--zk-color-grey-light: #D9D9D9;
-	/* Btn disabled Bg */
-	--zk-color-grey-lighter: #F2F2F2;
-	/* Field disabled Bg */
+	--zk-color-grey-light: #D9D9D9; /* Btn disabled Bg */
+	--zk-color-grey-lighter: #F2F2F2; /* Field disabled Bg */
 	--zk-base-text-color: var(--zk-text-color-default);
 	/* Border color */
 	--zk-base-border-color: var(--zk-color-grey-light);

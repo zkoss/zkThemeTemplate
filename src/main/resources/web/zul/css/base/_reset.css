@@ -10,11 +10,9 @@
  */
 /*!ZKBD-OFF-START*/
 html {
-	line-height: normal;
-	/* 1 */
+	line-height: normal; /* 1 */
 	/* James chu, Potix, 20240124, reported issue: https://github.com/necolas/normalize.css/issues/865 */
-	-webkit-text-size-adjust: 100%;
-	/* 2 */
+	-webkit-text-size-adjust: 100%; /* 2 */
 }
 /* Sections
 	 ========================================================================== */
@@ -46,22 +44,17 @@ main {
  * 2. Show the overflow in Edge and IE.
  */
 .ZKBD hr {
-	box-sizing: content-box;
-	/* 1 */
-	height: 0;
-	/* 1 */
-	overflow: visible;
-	/* 2 */
+	box-sizing: content-box; /* 1 */
+	height: 0; /* 1 */
+	overflow: visible; /* 2 */
 }
 /**
  * 1. Correct the inheritance and scaling of font size in all browsers.
  * 2. Correct the odd `em` font sizing in all browsers.
  */
 .ZKBD pre {
-	font-family: monospace, monospace;
-	/* 1 */
-	font-size: 1em;
-	/* 2 */
+	font-family: monospace, monospace; /* 1 */
+	font-size: 1em; /* 2 */
 }
 /* Text-level semantics
 	 ========================================================================== */
@@ -76,12 +69,9 @@ main {
  * 2. Add the correct text decoration in Chrome, Edge, IE, Opera, and Safari.
  */
 .ZKBD abbr[title] {
-	border-bottom: none;
-	/* 1 */
-	text-decoration: underline;
-	/* 2 */
-	text-decoration: underline dotted;
-	/* 2 */
+	border-bottom: none; /* 1 */
+	text-decoration: underline; /* 2 */
+	text-decoration: underline dotted; /* 2 */
 }
 /**
  * Add the correct font weight in Chrome, Edge, and Safari.
@@ -97,10 +87,8 @@ main {
 .ZKBD code,
 .ZKBD kbd,
 .ZKBD samp {
-	font-family: monospace, monospace;
-	/* 1 */
-	font-size: 1em;
-	/* 2 */
+	font-family: monospace, monospace; /* 1 */
+	font-size: 1em; /* 2 */
 }
 /**
  * Add the correct font size in all browsers.
@@ -131,8 +119,7 @@ main {
  * Remove the border on images inside links in IE 10.
  */
 .ZKBD img {
-	vertical-align: middle;
-	/* James chu, Potix, 20240125, aligns the image vertically with the text */
+	vertical-align: middle; /* James chu, Potix, 20240125, aligns the image vertically with the text */
 	border-style: none;
 }
 /* Forms
@@ -146,24 +133,18 @@ main {
 .ZKBD optgroup,
 .ZKBD select,
 .ZKBD textarea {
-	font-family: inherit;
-	/* 1 */
-	font-size: 100%;
-	/* 1 */
-	line-height: 1.15;
-	/* 1 */
-	margin: 0;
-	/* 2 */
-	vertical-align: middle;
-	/* James chu, Potix, 20240205, aligns vertically with the text */
+	font-family: inherit; /* 1 */
+	font-size: 100%; /* 1 */
+	line-height: 1.15; /* 1 */
+	margin: 0; /* 2 */
+	vertical-align: middle; /* James chu, Potix, 20240205, aligns vertically with the text */
 }
 /**
  * Show the overflow in IE.
  * 1. Show the overflow in Edge.
  */
 .ZKBD button,
-.ZKBD input {
-	/* 1 */
+.ZKBD input { /* 1 */
 	overflow: visible;
 }
 /**
@@ -171,8 +152,7 @@ main {
  * 1. Remove the inheritance of text transform in Firefox.
  */
 .ZKBD button,
-.ZKBD select {
-	/* 1 */
+.ZKBD select { /* 1 */
 	text-transform: none;
 }
 /* James chu, Potix, 20240205, cursor should be pointer */
@@ -180,8 +160,7 @@ main {
 .ZKBD select,
 .ZKBD input[type="radio"],
 .ZKBD input[type="checkbox"] {
-	cursor: pointer;
-	/* Improves usability and consistency of cursor style between image-type `input` and others. */
+	cursor: pointer; /* Improves usability and consistency of cursor style between image-type `input` and others. */
 }
 /**
  * Correct the inability to style clickable types in iOS and Safari.
@@ -192,8 +171,7 @@ main {
 .ZKBD [type="submit"] {
 	-webkit-appearance: button;
 	/* James chu, Potix, 20240205, cursor should be pointer */
-	cursor: pointer;
-	/* Improves usability and consistency of cursor style between image-type `input` and others. */
+	cursor: pointer; /* Improves usability and consistency of cursor style between image-type `input` and others. */
 }
 /**
  * Remove the inner border and padding in Firefox.
@@ -227,18 +205,12 @@ main {
  *    `fieldset` elements in all browsers.
  */
 .ZKBD legend {
-	box-sizing: border-box;
-	/* 1 */
-	color: inherit;
-	/* 2 */
-	display: table;
-	/* 1 */
-	max-width: 100%;
-	/* 1 */
-	padding: 0;
-	/* 3 */
-	white-space: normal;
-	/* 1 */
+	box-sizing: border-box; /* 1 */
+	color: inherit; /* 2 */
+	display: table; /* 1 */
+	max-width: 100%; /* 1 */
+	padding: 0; /* 3 */
+	white-space: normal; /* 1 */
 }
 /**
  * Add the correct vertical alignment in Chrome, Firefox, and Opera.
@@ -258,10 +230,8 @@ main {
  */
 .ZKBD [type="checkbox"],
 .ZKBD [type="radio"] {
-	box-sizing: border-box;
-	/* 1 */
-	padding: 0;
-	/* 2 */
+	box-sizing: border-box; /* 1 */
+	padding: 0; /* 2 */
 }
 /**
  * Correct the cursor style of increment and decrement buttons in Chrome.
@@ -275,10 +245,8 @@ main {
  * 2. Correct the outline style in Safari.
  */
 .ZKBD [type="search"] {
-	-webkit-appearance: textfield;
-	/* 1 */
-	outline-offset: -2px;
-	/* 2 */
+	-webkit-appearance: textfield; /* 1 */
+	outline-offset: -2px; /* 2 */
 }
 /**
  * Remove the inner padding in Chrome and Safari on macOS.
@@ -291,10 +259,8 @@ main {
  * 2. Change font properties to `inherit` in Safari.
  */
 .ZKBD ::-webkit-file-upload-button {
-	-webkit-appearance: button;
-	/* 1 */
-	font: inherit;
-	/* 2 */
+	-webkit-appearance: button; /* 1 */
+	font: inherit; /* 2 */
 }
 /* Interactive
 	 ========================================================================== */
@@ -354,8 +320,7 @@ main {
 		page-break-inside: avoid;
 	}
 	thead {
-		display: table-header-group;
-		/* h5bp.com/t */
+		display: table-header-group; /* h5bp.com/t */
 	}
 	tr,
 	img {
