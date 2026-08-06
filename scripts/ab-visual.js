@@ -328,7 +328,11 @@ function diff(labelA, labelB) {
 	for (const m of missing) console.log(`  MISSING  ${m}`);
 
 	// The four-way reading of (fingerprint, count) — doc/visual-ab-harness.md §2.3.
-	if (sameTheme && differing.length === 0) {
+	// `missing` is read FIRST: a side with no usable shot cannot be called deterministic,
+	// however few pages differ among the ones that did come out.
+	if (missing.length) {
+		console.log(`\nverdict:         ${missing.length} page(s) MISSING on one side — capture failed there. Fix that before reading any count below.`);
+	} else if (sameTheme && differing.length === 0) {
 		console.log(`\nverdict:         harness is deterministic (same theme bytes → identical pixels)`);
 	} else if (sameTheme) {
 		console.log(`\nverdict:         HARNESS IS FLAKY — same theme bytes, different pixels. Fix the harness, not the theme.`);

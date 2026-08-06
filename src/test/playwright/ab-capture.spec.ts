@@ -37,18 +37,43 @@ const SKIP = new Map<string, string>([
   ['preview', 'aggregate overview page: 174404px tall, 11MB per shot, ~20s to load. Every component it shows also has its own page, so it adds cost without coverage — and a diff inside it cannot be localised'],
 ]);
 
-// The theme ships FIVE animated GIFs, all under zul/img/misc/: prgmeter-anim.gif (the
-// .z-progressmeter background) and progress{,-dark}-{32,72}.gif (busy indicators). A GIF is
-// not a CSS animation, so neither `animation: none` nor Playwright's
-// `animations: 'disabled'` freezes it — six pages (progressmeter, component-theming and
-// four usecase pages) never reached a stable frame, changing by up to 2.7% of the viewport
-// with full-range channel deltas between consecutive frames.
+// A GIF is not a CSS animation: neither `animation: none` nor Playwright's
+// `animations: 'disabled'` freezes it, so an animated GIF anywhere in the shot keeps the page
+// from ever reaching two equal frames. Six pages behaved exactly that way on the first
+// selftest (progressmeter, component-theming and four usecase pages), changing by up to 2.7%
+// of the viewport between consecutive frames.
 //
-// Aborting the request leaves the element's box and background-COLOUR intact — only the
-// moving texture is gone. The blind spot is therefore one binary asset that this branch's
-// LESS→CSS conversion never touches, while everything CSS controls about the widget
-// (size, border, radius, colour) stays visible.
-const ANIMATED_ASSETS = /\/zul\/img\/misc\/(prgmeter-anim|progress(-dark)?-(32|72))\.gif/;
+// This started as a hard-coded list of the theme's five animated GIFs under zul/img/misc/
+// (prgmeter-anim.gif and progress{,-dark}-{32,72}.gif). That list was incomplete in the
+// direction that matters: the CORPUS has animated GIFs too — toolbar.zul shows ZK's own
+// ~./img/network.gif — which made `toolbar` flake roughly one run in three (255px / maxΔ 59,
+// and once a page that never stabilised at all). Deciding by CONTENT instead of by path covers
+// both trees and cannot go stale when either side adds an asset.
+//
+// NETSCAPE2.0 is the looping Application Extension block — the same marker used to enumerate
+// the theme's five. A multi-frame GIF without it would slip through; neither tree has one.
+//
+// Aborting leaves the element's box and background-COLOUR intact — only the moving texture is
+// gone, and it is gone identically on both sides of the A/B. The blind spot is therefore a
+// binary asset that this branch's LESS→CSS conversion never touches, while everything CSS
+// controls about the widget (size, border, radius, colour) stays visible.
+// `;jsessionid=…` is a PATH parameter, so an asset URL does not necessarily end at `.gif` —
+// ZK rewrites it in that way until the session cookie comes back. Anchoring on `$` alone
+// silently missed every GIF requested early in a page, network.gif included.
+const GIF = /\.gif(?:[;?]|$)/i;
+
+async function abortAnimatedGifs(page: import('@playwright/test').Page) {
+  await page.route(GIF, async route => {
+    let res;
+    try {
+      res = await route.fetch();
+    } catch {
+      return route.continue(); // the request would have failed anyway; let the page see that
+    }
+    const body = await res.body();
+    return body.includes('NETSCAPE2.0') ? route.abort() : route.fulfill({ response: res, body });
+  });
+}
 
 function discover(): string[] {
   const zuls = (dir: string, prefix = '') =>
@@ -66,6 +91,36 @@ function discover(): string[] {
 const pages = discover();
 
 const SHOT = { fullPage: true, animations: 'disabled', caret: 'hide' } as const;
+
+const NO_MOTION = `*, *::before, *::after {
+  transition: none !important;
+  animation: none !important;
+  scroll-behavior: auto !important;
+}`;
+
+/**
+ * Settle one CHILD frame. Whatever a child frame renders is inside the fullPage shot, but
+ * none of the page-level waits reach into it: waitForFunction, addStyleTag and fonts.ready
+ * all run in the main frame only. So on iframe.zul — which embeds ~./html.zul in a real
+ * <iframe> — whether the inner ZK page had painted was never waited on at all. The L4
+ * review measured that as a reproducible 6855px / maxΔ255 false difference between two
+ * captures of the SAME theme bytes. See doc/visual-ab-harness.md §5 #7.
+ *
+ * `zk` is REQUIRED in the main frame but only awaited-if-present here: a child frame is not
+ * necessarily a ZK page. A frame that detaches mid-settle throws, failing the page — which
+ * `diff` then reports as `missing`. That is the intended loud failure, not a reason to catch.
+ */
+async function settleFrame(frame: import('@playwright/test').Frame) {
+  await frame.waitForFunction(() => {
+    const zk = (window as any).zk;
+    return document.readyState === 'complete' && (!zk || !zk.loading);
+  });
+  await frame
+    .waitForFunction(() => Array.from(document.images).every(i => i.complete), null, { timeout: 5_000 })
+    .catch(() => {});
+  await frame.addStyleTag({ content: NO_MOTION });
+  await frame.evaluate(() => document.fonts.ready.then(() => true));
+}
 
 /**
  * Screenshot only once the page has STOPPED CHANGING: keep shooting until two consecutive
@@ -114,7 +169,7 @@ test.beforeAll(() => {
 test.describe('ab-capture', () => {
   for (const name of pages) {
     test(name, async ({ page }) => {
-      await page.route(ANIMATED_ASSETS, route => route.abort());
+      await abortAnimatedGifs(page);
 
       // networkidle HANGS here: ZK keeps an AU channel open on the usecase SPA host.
       await page.goto(`/${name}.zul`, { waitUntil: 'domcontentloaded' });
@@ -138,17 +193,16 @@ test.describe('ab-capture', () => {
       // Kill transitions and animations before measuring anything. This trades away
       // visibility of transition/animation changes (declaration-level — covered by
       // check:cssdiff) for a deterministic frame.
-      await page.addStyleTag({
-        content: `*, *::before, *::after {
-          transition: none !important;
-          animation: none !important;
-          scroll-behavior: auto !important;
-        }`,
-      });
+      await page.addStyleTag({ content: NO_MOTION });
 
       // The Inter web font loading late shifts the whole page vertically ~7px. Without
       // this wait the same build screenshotted twice does not match itself.
       await page.evaluate(() => document.fonts.ready.then(() => true));
+
+      // Every wait above stops at the main frame. Child frames are in the shot too.
+      for (const frame of page.frames()) {
+        if (frame !== page.mainFrame()) await settleFrame(frame);
+      }
 
       // usecase/x → usecase__x, so every shot is one flat file per page.
       await shootStable(page, path.join(OUT, `${name.replace(/\//g, '__')}.png`));
