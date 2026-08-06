@@ -71,6 +71,7 @@ The `watch-css` Maven execution (bound to `process-resources`, `async: true`) st
 - `src/main/resources/web/**/*.css` → rebuilds theme CSS → browser hot-swaps (no reload)
 - `src/test/resources/web/**/*.zul` → copies to target → browser reloads page
 - `src/test/resources/web/**/*.css` → copies to target → browser hot-swaps (no reload)
+- `src/test/resources/web/**/*.js` → copies to target → browser reloads page
 - `src/test/resources/web/**/*.{png,jpg,gif,svg,webp}` → copies to target → browser reloads page
 
 The live-reload client script is injected via `preview.zul` and the UseCase SPA host (`usecase/index.zul`).
@@ -126,6 +127,8 @@ Located in `doc/` directory:
 | [zk-source-reference.md](doc/zk-source-reference.md) | How to navigate ZK source code |
 | [css-dsp-file-structure.md](doc/spec/css-dsp-file-structure.md) | All required *.css.dsp output files for the theme |
 | [usecase-driven-iteration.md](doc/usecase-driven-iteration.md) | Use-case driven iteration workflow (OBSERVE→AUDIT→FIX→VERIFY) |
+| [preview-deployment.md](doc/preview-deployment.md) | Packaging the preview app as a WAR (`scripts/build-preview-war.sh`) and deploying it to a shared Tomcat for design review (`scripts/deploy-preview.sh`); javax vs jakarta flavour |
+| [design-review-feedback.md](doc/design-review-feedback.md) | Designer feedback loop — private `hawkchen/marble-issue` tracker + the "Report this page" deep-link button in the preview sidebar (auto-captures page/URL/viewport/density/browser) |
 | [preview-page-descriptions.md](doc/preview-page-descriptions.md) | ZUL page descriptions for 8 use-case enterprise scenarios |
 | [zk-edition-components.md](doc/zk-edition-components.md) | Components by ZK edition (CE/PE/EE) |
 | [window-design-rules.md](doc/spec/window-design-rules.md) | Window mode↔elevation mapping; `border` must not drive shadow |

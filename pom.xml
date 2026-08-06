@@ -169,6 +169,16 @@
 							<executable>${project.basedir}/scripts/check-icon-coverage.sh</executable>
 						</configuration>
 					</execution>
+					<execution> <!-- stamp HEAD commit date+hash for the use-case sidebar build marker -->
+						<id>stamp-commit</id>
+						<phase>process-test-resources</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<configuration>
+							<executable>${project.basedir}/scripts/stamp-commit.sh</executable>
+						</configuration>
+					</execution>
 					<execution> <!-- continuous compile/watch CSS files -->
 						<id>watch-css</id>
 						<phase>process-resources</phase>

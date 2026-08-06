@@ -7,6 +7,9 @@ import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.theme.marble.MarbleDensity;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -68,6 +71,21 @@ public class UseCaseVM {
         }
     }
 
+    /** HEAD commit date + short hash, stamped onto the classpath at build time by
+        scripts/stamp-commit.sh and shown beside the sidebar wordmark, so a design
+        reviewer can pin a screenshot to a commit. Captured at build time rather than
+        read from git here because the review WAR ships without a .git directory.
+        Empty when the tree was built outside a git repo. */
+    private static final String COMMIT_STAMP = readCommitStamp();
+
+    private static String readCommitStamp() {
+        try (InputStream in = UseCaseVM.class.getResourceAsStream("commit-stamp.txt")) {
+            return in == null ? "" : new String(in.readAllBytes(), StandardCharsets.UTF_8).trim();
+        } catch (IOException e) {
+            return "";
+        }
+    }
+
     private String currentPage = DEFAULT_PAGE;
     private String openNavLabel = DEFAULT_NAV;
     private boolean compactMode = false;
@@ -98,6 +116,10 @@ public class UseCaseVM {
 
     public String getOpenNavLabel() {
         return openNavLabel;
+    }
+
+    public String getCommitStamp() {
+        return COMMIT_STAMP;
     }
 
     public boolean isCompactMode() {

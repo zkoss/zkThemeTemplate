@@ -1,17 +1,27 @@
 <?page title="Marble Use Cases"?>
 <?link rel="stylesheet" type="text/css" href="~./usecase/usecase.css"?><zk>
 <script src="http://localhost:50000/zk-live-reload.js" defer="true"/>
+<!-- defines marbleReportIssue(), called by the sidebar's "Report this page" button -->
+<script src="~./usecase/report-issue.js"/>
 <borderlayout height="100vh" viewModel="@id('vm') @init('zk.example.UseCaseVM')"
     onBookmarkChange="@command('handleBookmarkChange', bookmark=event.bookmark)">
 
     <west size="258px" border="none" collapsible="false">
         <div sclass="z-p-2">
-            <div sclass="sidebar-brand">Marble</div>
+            <div sclass="sidebar-brand z-d-flex z-align-baseline z-gap-2">
+                <label value="Marble"/>
+                <!-- HEAD commit date + short hash, stamped in at build time so a design
+                     reviewer can pin a screenshot to a commit. See UseCaseVM.getCommitStamp(). -->
+                <label value="@load(vm.commitStamp)" sclass="z-text-xs z-fw-regular z-text-muted"/>
+            </div>
             <div sclass="z-d-flex z-align-center z-gap-2 z-px-2 z-py-2 z-mb-2 z-border-bottom">
                 <label value="Compact density" sclass="z-text-sm z-flex-1"/>
                 <checkbox mold="switch" checked="@load(vm.compactMode)"
                           onCheck="@command('toggleCompactMode', on=self.checked)"/>
             </div>
+            <button label="Report this page" iconSclass="z-icon-flag"
+                    sclass="z-button-outlined z-w-full z-mb-2"
+                    xmlns:w="client" w:onClick="marbleReportIssue()"/>
             <navbar orient="vertical">
                 <nav label="Use Cases" open="@load(vm.openNavLabel eq 'Use Cases')">
                     <navitem label="Inventory List"       selected="@load(vm.currentPage eq '~./usecase/inventory-table.zul')" onClick="@command('navigate', page='~./usecase/inventory-table.zul')" />

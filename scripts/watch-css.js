@@ -49,6 +49,7 @@ function copyTestResource(srcPath, label) {
 function copyZul(srcPath)      { copyTestResource(srcPath, 'ZUL'); notify.notifyPage(); }
 function copyTestCss(srcPath)  { copyTestResource(srcPath, 'CSS'); notify.notifyCss();  }
 function copyImage(srcPath)    { copyTestResource(srcPath, 'IMG'); notify.notifyPage(); }
+function copyTestJs(srcPath)   { copyTestResource(srcPath, 'JS');  notify.notifyPage(); }
 
 runBuild(); // initial build on startup
 
@@ -67,6 +68,12 @@ chokidar.watch('src/test/resources/web/**/*.css', { ignoreInitial: true, persist
     .on('change', (f) => { console.log('[watch] Test CSS Changed:', f); copyTestCss(f); })
     .on('add',    (f) => { console.log('[watch] Test CSS Added:', f);   copyTestCss(f); });
 
+// Watch test JS (usecase/report-issue.js etc.) — full reload, the globals it
+// defines are only re-evaluated on a fresh page
+chokidar.watch('src/test/resources/web/**/*.js', { ignoreInitial: true, persistent: true })
+    .on('change', (f) => { console.log('[watch] Test JS Changed:', f); copyTestJs(f); })
+    .on('add',    (f) => { console.log('[watch] Test JS Added:', f);   copyTestJs(f); });
+
 // Watch images — full reload needed
 chokidar.watch('src/test/resources/web/**/*.{png,jpg,jpeg,gif,svg,webp}', { ignoreInitial: true, persistent: true })
     .on('change', (f) => { console.log('[watch] Image Changed:', f); copyImage(f); })
@@ -75,4 +82,5 @@ chokidar.watch('src/test/resources/web/**/*.{png,jpg,jpeg,gif,svg,webp}', { igno
 console.log('[watch] Watching CSS        (src/main/resources/web/**/*.css)');
 console.log('[watch] Watching ZUL        (src/test/resources/web/**/*.zul)');
 console.log('[watch] Watching Test CSS   (src/test/resources/web/**/*.css)');
+console.log('[watch] Watching Test JS    (src/test/resources/web/**/*.js)');
 console.log('[watch] Watching Images     (src/test/resources/web/**/*.{png,jpg,gif,svg,webp})');
