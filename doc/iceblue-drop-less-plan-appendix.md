@@ -313,9 +313,15 @@ flowchart TD
    phase、宣告在後所以跑在後,一個忘記刪的 `.less` 會讓兩套工具鏈輸出同名檔案、後跑的靜默覆蓋 ——
    這正是 P3 漏掉第 5 步的形狀。守門員是 `conflictingLess`,不是閘門(閘門只會報一個查不出原因的
    逐檔差異)。
-3. **這張圖會被改兩次,而且都是刻意的。** P5:`norm.css` 從單檔變成多來源串接,且 taglib 必須
-   留在接縫、不可上提(見 `build-css.js` 檔頭的 P5 NOTE)。P8:`zklessc` 整條 lane 消失,
-   左半邊只剩 `.css`。
+3. **這張圖會被改兩次,而且都是刻意的。** ~~P5~~ **←已發生(2026-08-06)**:`norm.css` 從單檔
+   變成多來源串接(`build-css.js` 的 `resolveImports()`),taglib 留在接縫、沒有上提
+   (`TAGLIB_MARKER`),而 `browserDefault` 的 DSP 以佔位符穿過壓縮器再還原(`PLACEHOLDERS`)。
+   P8:`zklessc` 整條 lane 消失,左半邊只剩 `.css`。
+
+   > **圖本身還沒重畫,而且它的數字在 P5 之前就已經舊了** —— 圖上寫 75 entry / 77 輸出 /
+   > `target/classes/web/iceblue`,實際是 **1 個 `.less` entry / 85 輸出 /
+   > `target/classes/web/iceblue_css`**(ZK 10.4 補齊與改名帶來的,不是 P5)。重畫時一次改齊,
+   > 不要只改 P5 那一格。
 
 
 </details>
@@ -345,7 +351,7 @@ flowchart TD
 | 閘門 | 用在 | 判準 |
 |---|---|---|
 | **G-zero** | P1、P2、P3、P6 | `files differing: 0`。任何差異都是 bug |
-| **G-delta** | P4a、P4b、P5、P7 | 差異必須**逐條對應到已決策的變更**,且總數符合預估。**每個階段只允許一種形狀** —— 這是 P4 拆成 P4a/P4b 的理由(見 §P4) |
+| **G-delta** | P4a、P4b、~~P5~~、P7 | 差異必須**逐條對應到已決策的變更**,且總數符合預估。**每個階段只允許一種形狀** —— 這是 P4 拆成 P4a/P4b 的理由(見 §P4)。**P5 於 2026-08-06 收在 G-zero**:不採 `@scope`,runtime 行為沒動,所以沒有要對應的 delta —— 見 **S35** |
 
 **這是方法論上的重點:先把所有能「零差異」驗證的事做完,再做會改變輸出的事。**
 如果邊轉換邊移除 vendor prefix,一旦出現差異就分不清是「轉換寫錯」還是「政策生效」。
@@ -368,7 +374,7 @@ declaration diff 在瀏覽器實際收到的 CSS 這一層是**完整的等價�
 
 | 階段 | 價值 | 理由 |
 |---|---|---|
-| P5 | **最高** | `browserDefault` 從 descendant selector 改成 `@scope`,是真的會改變「誰被選到」的結構性變更 |
+| ~~P5~~ | ~~**最高**~~ **→ 事後看是「低」** | 前提寫的是「`browserDefault` 從 descendant selector 改成 `@scope`,**真的會改變『誰被選到』**」。**那個前提沒有成真** —— P5 不採 `@scope`,選擇器一個都沒換(輸出端前綴 **90 = 90**),所以「誰被選到」完全沒動,視覺 A/B 在這一階只是**確認沒動**而不是**判定改動對不對**。**判準留著,結論改掉**:視覺 A/B 的價值取決於**該階段有沒有真的改選擇器**,不取決於階段編號 |
 | P7 | 中 | profile 從編譯期 import 插值改成 runtime override sheet,機制換了 |
 | P4 | **最低** | 「`-webkit-border-radius` 是不是死前綴」是**瀏覽器支援政策**問題,Chrome 截圖答不出來。這裡真正的證據是 §P4 的 declaration delta,不是像素 |
 
@@ -418,7 +424,7 @@ P0 的 LESS build  →  theme jar A   ┐
 |---|---|---|
 | P3 | **一檔一顆**(~74) | 變更是**逐檔特有**的。commit message 由 `less2css.js` 統一產生(檔名、輸出端條數、`cssdiff` 結果)。批次仍然是**複審與閘門**單位,但不再是 commit 單位 |
 | P4 | 一顆 | 規則是**均勻**的(移除死前綴),客戶可以機械式重新套用,不需要逐檔歷史 |
-| P5 | ~5 顆 | 每個拆出來的檔案都是一個獨立的結構決策 |
+| ~~P5~~ | ~~~5 顆~~ **→ 實際 3 顆**(機制 / 轉換 / 註解歸位) | 前提是「每個拆出來的檔案都是一個獨立的結構決策」。**不是** —— 5 個檔案是**同一個決策的 5 個部位**:`norm.less` 存在或 `norm.css` 存在,中間沒有可交付、可過閘門的狀態。真正可以獨立成顆的是**機制**(對既有 83 檔無作用,可單獨驗證)與**轉換** |
 | P7 | 1–2 顆 | 對外 API 變更,與 migration guide 的條目成對 |
 
 **要對 AI 的作用講實話**(免得高估):commit 歷史**是**有幫助,但它是三種機制裡**最弱**的一種 ——
@@ -912,7 +918,7 @@ npm run check:build-css        # 把紀錄 #7 的全樹重導自動化
 不能改斷言去迎合實測結果。
 
 **保留在 LESS 的**:`norm.less`(P5)、`font-awesome.less`(P6)、`tablet.less`(P7)。
-(這是 **P3 時點**的三檔。P6 已收工,現在只剩 `norm` 與 `tablet` —— 見下方 P6 段。)
+(這是 **P3 時點**的三檔。P6 已收工、**P5 於 2026-08-06 收工**,現在只剩 `tablet` 一個。)
 
 ##### `combo` 的迴圈 —— 唯一 loop-generated 的 P3 檔(前提 #22)
 
@@ -1185,7 +1191,18 @@ zul/css/norm.css                  ← 全域樣式 + 由 build-css.js 串接上�
 **`browserDefault`(來源端 **91** 個插值站點 → 輸出端 **107** 處)—— 唯一的真設計題。**
 兩個數字都對,不要當成矛盾:91 是 `.less` 裡的插值站點(`_reset.less:7-8` + 3 份複本),
 107 是 `.css.dsp` 裡選擇器位置的 `<c:if>`(`norm` 93 + `tablet` 14)。
-**P5 的閘門要用輸出端的 107**(理由同前提 #1 的更正:閘門比的是輸出)。移植 Marble 已實證的機制:
+**P5 的閘門要用輸出端的 107**(理由同前提 #1 的更正:閘門比的是輸出)。
+
+> **⚠ 以下的規劃在 2026-08-06 實作時被推翻,保留原文以便對照。實際做法見
+> [browserdefault-masking.md](browserdefault-masking.md);推翻的理由見 S35。**
+>
+> **107 這個數字本身還要再拆一次**:`norm` 的 93 不是 93 個同形狀 —— 是 **90 個 selector 前綴
+> + 3 對整塊 `<c:if test="${empty …}">`**。`@scope` 表達得出前 90 個,**表達不出後 3 對**:
+> embed 模式下 `html` / `body` / `main` 不是要被 scope,是**必須不存在**,而 CSS 沒有「不存在」
+> 這個運算子。**所以 `@scope` 不會讓 DSP 消失**,只會把閘門從 G-zero 拉成 G-delta,並多背一個
+> 未拍板的 **L-2** 相依。實際採用的是 build 期佔位符(來源寫合法 CSS,minify 之後才還原成 DSP)。
+
+~~移植 Marble 已實證的機制:~~
 
 ```
 單一來源 base/_reset.css
@@ -1194,19 +1211,32 @@ zul/css/norm.css                  ← 全域樣式 + 由 build-css.js 串接上�
 ThemeWebAppInit / ThemeProvider 讀 org.zkoss.zul.theme.browserDefault 選一份
 ```
 
-注意 CleanCSS 會摧毀 `@scope`(實測輸出全空)→ 必須**先 minify 內層、再包 `@scope`**。
+> **這一段照抄了 Marble 的結論,而 Marble 的前提在本分支不成立。** Marble 之所以非拆檔不可,
+> 是因為它**刻意不用 DSP**;本分支 §B1 明文保留 DSP 層,檔內就有伺服器端開關可用。
+> 更要緊的是**拆檔會弄丟單一 WCS**:`zk.wcs` 是 ZK core 的檔案,主題**無法**往那個聚合裡加檔案
+> (`beforeWidgetCSS` 能改寫、能跳過,**不能新增**),能新增的 `getThemeURIs` 會掛在聚合外面
+> = 多一個 HTTP request。**照抄等於為一個本分支不存在的限制付代價。**
 
-**G-delta**:
-- 842 個 token declaration 必須**零差異**(這部分是純搬移;P0 已重驗:正好 842 條、全在 `:root`、
-  842 個不重複名稱)
-- reset 部分是刻意的結構改變 → 需要 `browserDefault` 開/關兩種設定下的 computed-style A/B
+注意 CleanCSS 會摧毀 `@scope`(實測輸出全空)→ 必須**先 minify 內層、再包 `@scope`**。
+(**守衛保留**,即使不採 `@scope`:成本為零。)
+
+~~**G-delta**~~ **→ 實際收在 G-zero**:
+- 842(現為 **862**)個 token declaration 必須**零差異**(這部分是純搬移;P0 已重驗:正好 842 條、
+  全在 `:root`、842 個不重複名稱)—— **實際做到的是整份 `norm.css.dsp` 零差異**
+- ~~reset 部分是刻意的結構改變 → 需要 `browserDefault` 開/關兩種設定下的 computed-style A/B~~
+  **←結構沒有改變,所以不需要**
 - 必須沿用 Marble 已記載的限制:open float 會被移到 `document.body`、落在 `.z-page` 之外
   ——`master` 現行的 descendant-selector 做法有**同樣**限制,所以不是回歸,但要寫進文件
+  **←已寫進 [browserdefault-masking.md](browserdefault-masking.md) §5**
 
-**這是視覺 A/B 價值最高的一階**(§2.4):descendant selector → `@scope` 改變的是「誰被選到」,
-declaration diff 看不出這件事,computed-style A/B 與截圖 A/B 在這裡是**必要**的補充,不是加分項。
+~~**這是視覺 A/B 價值最高的一階**(§2.4):descendant selector → `@scope` 改變的是「誰被選到」,
+declaration diff 看不出這件事,computed-style A/B 與截圖 A/B 在這裡是**必要**的補充,不是加分項。~~
+**←這句話的前提(改 `@scope`)沒有成真,選擇器一個都沒換(輸出端前綴 90 = 90),
+所以視覺 A/B 在這一階是「確認沒動」而不是「判定改動對不對」。**
 
-**commit 粒度:~5 顆**(§2.5)—— 上面每個拆出來的檔案各自是一個獨立結構決策。
+~~**commit 粒度:~5 顆**(§2.5)—— 上面每個拆出來的檔案各自是一個獨立結構決策。~~
+**←實際 3 顆。5 個檔案是同一個決策的 5 個部位,中間沒有可交付的狀態;
+可以獨立成顆的是「機制」與「轉換」。**
 
 ---
 
