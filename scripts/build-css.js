@@ -151,6 +151,8 @@ const NO_HEADER = new Set([
  * be fine, but masking in the other direction (conversion side) must do the prefix first.
  */
 const TAGLIB_MARKER = '/*!ZK-TAGLIB-HEADER*/';
+/** The only source allowed to carry placeholders. See assertPlaceholdersAllowed(). */
+const PLACEHOLDER_SOURCE = 'zul/css/norm.css';
 const BROWSER_DEFAULT = "c:property('org.zkoss.zul.theme.browserDefault')";
 const PLACEHOLDERS = [
 	[TAGLIB_MARKER, HEADER],
@@ -307,6 +309,31 @@ function resolveImports(sourceDir, rel, stack = []) {
 	});
 }
 
+/**
+ * The OUTBOUND guard (HOSTILE_CONSTRUCTS) is strict; without this the RETURN path was not.
+ * restorePlaceholders() runs on every output, so any source that happens to contain the
+ * placeholder text gets DSP injected into it at exit 0 with no warning — demonstrated with
+ * `a::after { content: ".ZKBD " }`, which emitted a `<c:if>` inside a quoted value. Two taglib
+ * markers emitted the header twice, equally quietly.
+ *
+ * Nothing in the tree does this today, and the point is to keep it that way: placeholders are a
+ * property of ONE file, so say so, rather than relying on `.ZKBD` staying an unlikely string.
+ */
+function assertPlaceholdersAllowed(css, rel) {
+	const found = PLACEHOLDERS.map(([p]) => p).filter((p) => css.includes(p));
+	if (!found.length) return;
+	if (rel !== PLACEHOLDER_SOURCE) {
+		throw new Error(
+			`${rel}: contains build placeholder(s) ${found.join(', ')}, which are substituted for ` +
+			`DSP after minification — only ${PLACEHOLDER_SOURCE} may carry them. If this is ` +
+			`literal CSS content and not a placeholder, spell it some other way.`);
+	}
+	const markers = css.split(TAGLIB_MARKER).length - 1;
+	if (markers > 1) {
+		throw new Error(`${rel}: ${markers} ${TAGLIB_MARKER} markers — the header goes in exactly one place.`);
+	}
+}
+
 /** Placeholders -> DSP. After minification, so the minifier only ever sees ordinary CSS. */
 function restorePlaceholders(css) {
 	let out = css;
@@ -322,6 +349,10 @@ function minify(css, rel) {
 	// them — asserting on the raw text made documenting the mechanism impossible. `/*!` comments
 	// do survive stripComments(), so anything hostile inside one is still caught.
 	assertMinifierSafe(stripped, rel);
+	// On the RAW source, not `stripped`: the taglib marker is a `/*!` comment and survives, but
+	// checking before the strip also catches a placeholder hidden in a comment that is about to
+	// be dropped — cheap, and it keeps the rule "placeholders belong to one file" literal.
+	assertPlaceholdersAllowed(css, rel);
 	const output = cleanCss.minify(stripped);
 	// errors AND warnings are both fatal: the @scope / @layer failure mode reports itself
 	// exclusively through warnings, so treating warnings as advisory reintroduces exactly the
@@ -456,6 +487,7 @@ function main(argv) {
 if (require.main === module) process.exit(main(process.argv.slice(2)));
 
 module.exports = {
-	HEADER, NO_HEADER, TAGLIB_MARKER, PLACEHOLDERS,
-	minify, assertMinifierSafe, stripComments, tidyMediaPreludes, resolveImports, restorePlaceholders,
+	HEADER, NO_HEADER, TAGLIB_MARKER, PLACEHOLDERS, PLACEHOLDER_SOURCE,
+	minify, assertMinifierSafe, assertPlaceholdersAllowed, stripComments, tidyMediaPreludes,
+	resolveImports, restorePlaceholders,
 };
