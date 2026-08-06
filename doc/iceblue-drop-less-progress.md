@@ -26,7 +26,7 @@
   - [L2.5 交給 P8 的產品面問題](#l25-交給-p8-的產品面問題2026-08-033-項不阻擋-p4-p7) — 3 項
 - **[L3 技術附錄](#l3-技術附錄獨立檔)** — 索引在本檔;**內容在 [iceblue-drop-less-progress-appendix.md](iceblue-drop-less-progress-appendix.md)**
   - [階段與 commit 對照](iceblue-drop-less-progress-appendix.md#階段與-commit-對照)
-  - [L3-A 閘門紀錄](iceblue-drop-less-progress-appendix.md#l3-a-閘門紀錄附加式不覆寫) — 45 列,附加式不覆寫
+  - [L3-A 閘門紀錄](iceblue-drop-less-progress-appendix.md#l3-a-閘門紀錄附加式不覆寫) — 46 列,附加式不覆寫
   - [L3-B Tier 1](iceblue-drop-less-progress-appendix.md#l3-b-tier-1p1--s0--s1) — P1 = S0 + S1
   - [L3-C P2 儀器證明](iceblue-drop-less-progress-appendix.md#l3-c-p2-儀器證明)
   - [L3-D P0 交付物、基準、突變測試](iceblue-drop-less-progress-appendix.md#l3-d-p0-交付物基準的不可變性突變測試)
@@ -34,7 +34,7 @@
   - [L3-F P3 逐檔複核包](iceblue-drop-less-progress-appendix.md#l3-f-p3-批次的檔案清單每一步可以自己檢查什麼步-0-4-的逐檔複核包) — [步 0](iceblue-drop-less-progress-appendix.md#步-0-的複核包2026-07-31) · [步 1](iceblue-drop-less-progress-appendix.md#步-1-的複核包2026-08-034-檔) · [步 2](iceblue-drop-less-progress-appendix.md#步-2-的複核包2026-08-0315-檔--批-1-收工-2020) · [步 3](iceblue-drop-less-progress-appendix.md#步-3-的複核包2026-08-0343-檔--批-2-收工-6374) · [步 4](iceblue-drop-less-progress-appendix.md#步-4-的複核包2026-08-0311-檔--批-3-收工p3-收工-7474)
   - [L3-G P3 收工複審](iceblue-drop-less-progress-appendix.md#l3-g-p3-收工複審74-檔獨立-fan-out2026-08-04計畫書-l3-c-26-第-4-層首次執行) — 74 檔獨立 fan-out
   - [L3-H 執行機制:workflow](iceblue-drop-less-progress-appendix.md#l3-h-執行機制workflow)
-  - [L3-I Change Log](iceblue-drop-less-progress-appendix.md#l3-i-change-log--狀態層的敘述更正) — 33 條狀態層更正
+  - [L3-I Change Log](iceblue-drop-less-progress-appendix.md#l3-i-change-log--狀態層的敘述更正) — 34 條狀態層更正
 
 ---
 
@@ -68,7 +68,7 @@
 | **M1** 基礎建設與閘門(P0 · P1 · P2) | **DONE** | 基準不可變、LESS 釘到 4.8.1、來源樹可同時容納 `.less` 與 `.css` |
 | **M2** 元件轉換 82 檔(P3) | **DONE** | 74/74 轉完,逐檔閘門全 0、無一次失敗;**0 檔無法解釋**。2026-08-05 追加 ZK 10.4 補齊的 8 檔,同樣逐檔閘門全 0(S26) |
 | **M3** vendor prefix 政策(P4a · P4b) | **BLOCKED** | 只等 **L-2** 瀏覽器支援聲明(視覺 A/B harness 已於 2026-08-05 完成) |
-| **M4** 三個 holdout(P5 · P6 · P7) | **1 / 3 DONE** | **P6 DONE** —— FA 的 `each()` 迴圈換成 `gen-fa-css.js`;P5 的 harness 前置已解除,**只剩 S16**(`less2css.js` 的 CR 處理);P7 等 **L-4** 的 density 那一半 |
+| **M4** 三個 holdout(P5 · P6 · P7) | **1 / 3 DONE** | **P6 DONE** —— FA 的 `each()` 迴圈換成 `gen-fa-css.js`;**P5 的兩個前置(視覺 A/B harness、S16 的 CR 處理)全部解除,可開工**;P7 等 **L-4** 的 density 那一半 |
 | **M5** 收尾與遷移指南(P8) | TODO | 兩張規則表已產出,期限風險已解除 |
 
 ### 總體進度
@@ -145,8 +145,10 @@
 > ~~**⇒ 這句話又成立了,而且比原本更窄**:唯一不等任何人的實作就是第 1 項,它同時解鎖 P4 / P5 / P7。~~
 > **←2026-08-05 傍晚:第 1 項也收工了(#44)⇒ 原句第三次成立,而且這次是完整成立**:
 > **五項全部不是「可以現在自己動手」的實作**。P4a / P4b 等 **L-2**、P7 等 **L-4 的 density 那一半**,
-> **而 P5 的兩個前置(視覺 A/B harness、`less2css.js` 的 CR 處理 S16)只剩後者** ——
-> ⇒ **下一個可以自己動手的實作是 S16,它是 P5 唯一還缺的前置。**
+> ~~**而 P5 的兩個前置(視覺 A/B harness、`less2css.js` 的 CR 處理 S16)只剩後者** ——
+> ⇒ **下一個可以自己動手的實作是 S16,它是 P5 唯一還缺的前置。**~~
+> **←2026-08-06:S16 也收工了(紀錄 #46,順帶推翻紀錄 #28 的「不需要改腳本」,見 S34)⇒
+> P5 的兩個前置全部解除,`P5` 本身成為下一個可以自己動手的階段。**
 > L2.4 清理待辦第 1–4、6 項已於 2026-08-04 收工(紀錄 #32、#33),
 > 剩下的 L2.4 兩項是**別人的決定或還沒建的工具**,不是可以直接開工的實作。要繼續推進,
 > ~~第 1 項是唯一自己動手就能解的 —— 而且它同時解鎖三個階段。~~
@@ -339,7 +341,7 @@ L1/L2 只寫當前狀態;**要複核那些狀態是怎麼得出來的,去那裡�
 | 節 | 內容 | 何時要看 |
 |---|---|---|
 | **[階段與 commit 對照](iceblue-drop-less-progress-appendix.md#階段與-commit-對照)** | 每一階對應哪些 commit | 要回溯某一階實際改了什麼 |
-| **[L3-A](iceblue-drop-less-progress-appendix.md#l3-a-閘門紀錄附加式不覆寫)** | **閘門紀錄 45 列**(附加式,**不覆寫**) | P8 核帳、以及要確認某個數字是哪一次跑出來的 |
+| **[L3-A](iceblue-drop-less-progress-appendix.md#l3-a-閘門紀錄附加式不覆寫)** | **閘門紀錄 46 列**(附加式,**不覆寫**) | P8 核帳、以及要確認某個數字是哪一次跑出來的 |
 | **[L3-B](iceblue-drop-less-progress-appendix.md#l3-b-tier-1p1--s0--s1)** | Tier 1:P1 = S0 + S1 的實作與論證 | 要動 LESS 版本 pin 或 `check-less-conventions.js` 時 |
 | **[L3-C](iceblue-drop-less-progress-appendix.md#l3-c-p2-儀器證明)** | P2 儀器證明(六步)+ 為什麼是 CleanCSS level 0 + 第三種靜默摧毀構造 | 要改 `build-css.js` 或 minifier 設定時 |
 | **[L3-D](iceblue-drop-less-progress-appendix.md#l3-d-p0-交付物基準的不可變性突變測試)** | P0 交付物、基準的不可變性、突變測試、重建基準的方法 | 基準出問題時 |

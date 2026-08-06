@@ -94,8 +94,17 @@ function rewriteLineComments(src) {
 			continue;
 		}
 		if (c === '/' && src[i + 1] === '/') {
-			let end = src.indexOf('\n', i);
-			if (end === -1) end = n;
+			// Ends at the first LINE TERMINATOR, and `\r` is one of them. `indexOf('\n')` swallowed
+			// the `\r` of a CRLF source INTO the comment text, producing `/* x\r */`. The `\r` never
+			// reached the output — LESS normalizes line endings, inside comments too — so what came
+			// out was `/* x\n */`: a one-line comment split across two lines, with `*/` alone on the
+			// second. 14 of those were hand-fixed across 5 files (record #32) before the cause was
+			// pinned here. Left unfixed it is not history: `zul/less/_reset.less` is 431 CRLF lines
+			// with 14 `//` comments, and P5 converts it into `base/_reset.css` — at which point it
+			// stops being a partial LESS silently drops and starts being a file the rewriter reads.
+			// See S16. A lone `\r` (classic-Mac) is covered by the same scan at no extra cost.
+			let end = i;
+			while (end < n && src[end] !== '\n' && src[end] !== '\r') end++;
 			// `*/` inside the comment text would close the block early and leak the tail as code.
 			const text = src.slice(i + 2, end).replace(/\*\//g, '* /');
 			// Keep the trailing space pattern tidy: `// x` -> `/* x */`, `//x` -> `/* x */`.

@@ -62,7 +62,7 @@ DSP 層與 Font Awesome 的生成內容都還在,零 build step 兌現不了(L3-
 | **M1** 基礎建設與閘門 | P0 基準 · P1 LESS 4.8.1 pin · P2 雙來源 build | **DONE** |
 | **M2** 元件轉換(工作量主體) | P3 —— 74 個元件檔 `.less` → `.css` | **DONE** |
 | **M3** vendor prefix 政策 | P4a 純移除 · P4b 逐條判斷 | **BLOCKED** —— 等 L-2 |
-| **M4** 三個 holdout | P5 `norm` · P6 Font Awesome · P7 `tablet` | P6 可開;P5 / P7 待前置 |
+| **M4** 三個 holdout | P5 `norm` · P6 Font Awesome · P7 `tablet` | P6 已收工;**P5 前置全部解除、可開工**;P7 待前置 |
 | **M5** 收尾與遷移指南 | P8 | TODO |
 
 ### 總體進度
@@ -286,7 +286,7 @@ DSP 層與 Font Awesome 的生成內容都還在,零 build step 兌現不了(L3-
 | **目標** | 把 `norm.less`(輸出端 **1500** 條)拆成 tokens / palette / reset / 全域四類檔案,由 `build-css.js` 串接;`browserDefault` 從 descendant selector 改成 `@scope` |
 | **輸入 → 輸出** | `norm.less` → `zul/css/tokens/_default.css`、`_compact.css`、`_iceblue.css`、`base/_reset.css`、`norm.css` |
 | **驗收閘門** | **G-delta** —— **842 個 token 宣告必須零差異**(純搬移);reset 部分是刻意的結構變更,需要 `browserDefault` 開/關兩種設定下的 **computed-style A/B** |
-| **前置** | ~~視覺 A/B harness~~ **←已完成(2026-08-05,見 L2.4)**(**這一階價值最高** —— declaration diff 看不出「誰被選到」變了)。**另一個前置:先修 `less2css.js` 的 CR 處理(S16)** —— `norm.less` 匯入的 `_reset.less` 有 431 個 CR,不先修就會重新產生一批 `/* x\n */` 畸形註解、把 P3 的清理重做一次 |
+| **前置** | **兩項都已解除,P5 可開工。** ~~視覺 A/B harness~~ **←已完成(2026-08-05,見 L2.4)**(**這一階價值最高** —— declaration diff 看不出「誰被選到」變了;但採信範圍受 **S33** 限制:低頻元件不能單獨拿它收工)。~~另一個前置:先修 `less2css.js` 的 CR 處理(S16)~~ **←已完成(2026-08-06,紀錄 #46)** —— `norm.less` 匯入的 `_reset.less` 431 個 CR / 13 個 `//` 註解,轉換器修好之前會產出 13 個 `/* x\n */` 畸形註解,現在是 **0** |
 | **commit 粒度** | ~5 顆(每個拆出來的檔案各是一個獨立結構決策) |
 
 > CleanCSS 會**摧毀 `@scope`**(輸出全空,只在 warnings 報)→ 必須**先 minify 內層、再包 `@scope`**。
