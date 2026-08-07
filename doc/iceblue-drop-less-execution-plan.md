@@ -170,6 +170,12 @@ DSP 層與 Font Awesome 的生成內容都還在,零 build step 兌現不了(L3-
 空規則),由 `check:build-css` 逐檔分類回報;**落在清單外就讓檢查失敗並列出檔名**。
 清單是封閉的才有用 —— 新形狀會被擋下來讓人看,而不是被「反正閘門過了」吸收掉。細節見 L3-C。
 
+**第 1、2 層在 G-delta 階段比對的是「調整後的基準」**(2026-08-07 起,S41 選項 A / S44):
+比對目標從 `baseline/` 換成「`baseline/` + 該階段已核准的 delta」,而 delta 由
+`scripts/p4a-delta.js` 從 `baseline/` **重新推導**,不是記在 manifest 裡。
+兩層的問題因此完全沒有變弱 —— 仍然是「逐 byte 相同 _or_ 落在封閉清單內」,
+只是「相同於什麼」的定義跟著階段走。`baseline/` 本身永遠不寫。
+
 #### 步階與批次是兩件事
 
 | | 是什麼 | 值 |
@@ -282,7 +288,12 @@ DSP 層與 Font Awesome 的生成內容都還在,零 build step 兌現不了(L3-
 > (`scripts/check-p4a-delta.js`)exit 0 —— 它問的是**正確的下一個問題**:
 > 「差異是否**恰好等於**已核准的 delta?」同理 `check:bytes`(第 2 層)與
 > `check:build-css`(第 1 層)在本階之後會轉紅,**這是結構必然,不是缺陷**;
-> 兩者尚無 delta-aware 版本,列為待處理(**S41**)。
+> ~~兩者尚無 delta-aware 版本,列為待處理(**S41**)。~~
+> **←2026-08-07 同日補上(S41 裁示選項 A,S44 結案)。** 那 728 條是 `baseline/` 的
+> **純函數**(四個條件全部讀得出來),所以 `scripts/p4a-delta.js` 重新推導出來,
+> 兩支複核改與**調整後的基準**比對:`baseline/` 不動、無 manifest、無快照。
+> **P7 的第二段 delta 沿用同一個機制**:在 `p4a-delta.js` 解除 `DEFERRED` 並更新
+> `EXPECTED_REMOVALS`,兩支複核自動跟上,不需要再改一次。
 
 #### P4b —— vendor prefix 逐條判斷(C 群)
 

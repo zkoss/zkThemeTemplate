@@ -1,0 +1,288 @@
+#!/usr/bin/env node
+/**
+ * p4a-delta — "what P4a removed", expressed as a PURE FUNCTION OF `baseline/`.
+ *
+ * WHY THIS EXISTS
+ * ---------------
+ * Review layers 1 and 2 (`check:bytes`, `check:build-css`) both ask "does the built tree equal
+ * `baseline/`?". From P4a onward the honest answer is no, and it is supposed to be no: 728
+ * dead vendor-prefix declarations are gone on purpose. Left as-is, both checks go permanently
+ * red and stop carrying information — which is worse than useless, because the next person
+ * reads a red gate as "known-broken, ignore" and then cannot tell a real regression from the
+ * expected delta. (Recorded as S41; the user chose option A on 2026-08-07.)
+ *
+ * The fix rests on one property of P4a: the delta is DERIVABLE. A declaration was removed iff
+ *
+ *     its property carries `-moz-` / `-ms-` / `-o-` / `-khtml-`,          and
+ *     it is not the `-moz-osx-font-smoothing` carve-out,                  and
+ *     the SAME rule block also declares the unprefixed property,          and
+ *     it is not in the P7 holdout `zkmax/css/tablet.css.dsp`.
+ *
+ * All four conditions are readable off `baseline/` alone. So instead of recording the 728
+ * removals in a manifest (which would go stale, and which nothing would then be checking), the
+ * checks re-derive them and compare the built tree against the ADJUSTED baseline. `baseline/`
+ * itself is never touched — it stays the immutable pre-conversion truth.
+ *
+ * WHY THIS IS NOT A TAUTOLOGY
+ * ---------------------------
+ * `p4a-strip-prefixes.js` edited the SOURCE `.css` files line by line. This reads the COMPILED,
+ * MINIFIED `.css.dsp` OUTPUT and works on brace/semicolon structure. Different input, different
+ * representation, independently written. Agreement therefore means the source edit produced
+ * exactly the output delta the rule predicts — byte for byte, which is more than `cssdiff` can
+ * say. A single extra or missing removal anywhere shows up as an unexplained byte difference.
+ *
+ * WHY 728 IS DECLARED TWICE
+ * -------------------------
+ * `EXPECTED_REMOVALS` here, and `--expect 728` on `check:p4a` in package.json. That is
+ * deliberate, not duplication: the two are reached by different code over different inputs
+ * (this one re-derives from `baseline/`, that one counts records in a `cssdiff` of the built
+ * tree). If they ever disagree, the disagreement is the finding — do not reconcile by editing
+ * one to match the other.
+ *
+ * USAGE
+ *   node scripts/p4a-delta.js [--list]     report the derived delta and stop
+ *
+ * EXIT CODE  0 = the derived delta has the expected size, 1 = it does not, 2 = usage/IO error.
+ */
+
+'use strict';
+
+const fs = require('fs');
+const path = require('path');
+
+const ROOT = path.resolve(__dirname, '..');
+const BASELINE = path.join(ROOT, 'baseline');
+
+/** L-2 option C: these four go, `-webkit-` stays. */
+const STRIP_PREFIX = /^-(?:moz|ms|o|khtml)-/;
+/** Never standardized, so nothing takes over from it — B-group carve-out. */
+const CARVE_OUT = new Set(['-moz-osx-font-smoothing']);
+/** P4a deliberately skipped the P7 holdout; its 60 eligible declarations move to P7. */
+const DEFERRED = new Set(['zkmax/css/tablet.css.dsp']);
+const EXPECTED_REMOVALS = 728;
+const EXPECTED_FILES = 45;
+
+/**
+ * Blank out everything that must not be read as CSS structure, preserving offsets so the mask
+ * can be used to find delimiters while slicing still happens on the original text:
+ *
+ *   - comments                     `/ * … * /`  (2 baseline files carry them)
+ *   - quoted strings               including the `"${…}"` inside a `<c:if test="…">`
+ *   - `;` `:` `{` `}` inside `()`  `url(data:image/png;base64,…)` is real — norm and selectbox
+ *
+ * DSP tags themselves need no special case: `<c:if …>` bodies are plain CSS, and the one
+ * construct that carries braces — `${".z-page "}` in selector position — is brace-balanced and
+ * declares nothing, so it parses as an empty block and contributes no removals.
+ */
+function maskCode(text) {
+	const a = text.split('');
+	let i = 0;
+	let paren = 0;
+	while (i < a.length) {
+		const c = text[i];
+		if (c === '/' && text[i + 1] === '*') {
+			const e = text.indexOf('*/', i + 2);
+			const end = e < 0 ? a.length : e + 2;
+			for (let k = i; k < end; k++) a[k] = ' ';
+			i = end;
+			continue;
+		}
+		if (c === '"' || c === "'") {
+			let k = i + 1;
+			while (k < a.length && text[k] !== c) k += text[k] === '\\' ? 2 : 1;
+			const end = Math.min(k, a.length - 1);
+			for (let m = i; m <= end; m++) a[m] = ' ';
+			i = end + 1;
+			continue;
+		}
+		if (c === '(') paren++;
+		else if (c === ')') { if (paren) paren--; }
+		else if (paren > 0 && (c === ';' || c === ':' || c === '{' || c === '}')) a[i] = ' ';
+		i++;
+	}
+	return a.join('');
+}
+
+/**
+ * Apply the P4a rule to one compiled `.css.dsp`.
+ *
+ * Only INNERMOST brace pairs are treated as declaration blocks, so `@media`/`@supports` wrappers
+ * are traversed rather than parsed — and each repetition of a selector is its own block, which is
+ * what makes the "same rule block" half of the rule mean what it says (`combo.css.dsp` repeats one
+ * selector six times; the 4th-layer review on 2026-08-07 caught the selector-keyed variant of this
+ * being weaker than advertised).
+ *
+ * @returns {{text: string, removed: string[]}} rewritten file, and one `<prop>` per removal.
+ */
+function applyP4a(text) {
+	const code = maskCode(text);
+	const del = new Uint8Array(text.length);
+	const removed = [];
+	let open = -1;
+
+	for (let i = 0; i < code.length; i++) {
+		if (code[i] === '{') {
+			open = i;
+			continue;
+		}
+		if (code[i] !== '}') continue;
+		const close = i;
+		if (open < 0) continue; // closing an outer wrapper — its own children were handled already
+		const start = open;
+		open = -1;
+
+		// Split the block on top-level `;`. A trailing `;` before `}` yields an empty last part,
+		// which `prop === null` drops.
+		const parts = [];
+		let s = start + 1;
+		for (let k = start + 1; k < close; k++) {
+			if (code[k] === ';') {
+				parts.push([s, k]);
+				s = k + 1;
+			}
+		}
+		parts.push([s, close]);
+
+		const declared = new Set();
+		const parsed = parts.map(([a, b]) => {
+			let colon = -1;
+			for (let k = a; k < b; k++) if (code[k] === ':') { colon = k; break; }
+			if (colon < 0) return null;
+			const prop = text.slice(a, colon).trim();
+			if (!prop) return null;
+			declared.add(prop);
+			return { a, b, prop };
+		});
+
+		for (let j = 0; j < parsed.length; j++) {
+			const d = parsed[j];
+			if (!d) continue;
+			if (!STRIP_PREFIX.test(d.prop) || CARVE_OUT.has(d.prop)) continue;
+			if (!declared.has(d.prop.replace(STRIP_PREFIX, ''))) continue; // P4b orphan — leave it
+			for (let k = d.a; k < d.b; k++) del[k] = 1;
+			// Take the separator with it. Marking a char twice is harmless, which is what makes
+			// consecutive removals (the common case: -moz-/-o-/-ms- in a row) fall out for free.
+			if (d.b < close) del[d.b] = 1; // its own trailing `;`
+			else if (text[d.a - 1] === ';') del[d.a - 1] = 1; // last in block: the one in front
+			removed.push(d.prop);
+		}
+	}
+
+	if (!removed.length) return { text, removed };
+	let out = '';
+	for (let i = 0; i < text.length; i++) if (!del[i]) out += text[i];
+	return { text: out, removed };
+}
+
+function walk(dir, base = dir, acc = []) {
+	for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
+		const p = path.join(dir, e.name);
+		if (e.isDirectory()) walk(p, base, acc);
+		else if (e.name.endsWith('.css.dsp')) acc.push(path.relative(base, p));
+	}
+	return acc;
+}
+
+/** The adjusted baseline for one file: `baseline/` with the P4a delta applied. */
+function adjustedBaseline(rel) {
+	const text = fs.readFileSync(path.join(BASELINE, rel), 'utf8');
+	if (DEFERRED.has(rel)) return { text, removed: [] };
+	return applyP4a(text);
+}
+
+/**
+ * Materialize the whole adjusted baseline into `destDir`, and assert it has the approved size.
+ * Callers get a hard error rather than a quietly-wrong comparison target.
+ */
+function materialize(destDir) {
+	const files = walk(BASELINE).sort();
+	let removed = 0;
+	let changedFiles = 0;
+	for (const rel of files) {
+		const r = adjustedBaseline(rel);
+		const to = path.join(destDir, rel);
+		fs.mkdirSync(path.dirname(to), { recursive: true });
+		fs.writeFileSync(to, r.text);
+		if (r.removed.length) {
+			removed += r.removed.length;
+			changedFiles++;
+		}
+	}
+	return { files: files.length, removed, changedFiles };
+}
+
+/** Shared by both review layers so the two cannot drift apart on what "approved" means. */
+function assertApprovedSize({ removed, changedFiles }) {
+	const bad = [];
+	if (removed !== EXPECTED_REMOVALS) bad.push(`derived ${removed} removals, expected ${EXPECTED_REMOVALS}`);
+	if (changedFiles !== EXPECTED_FILES) bad.push(`derived ${changedFiles} changed files, expected ${EXPECTED_FILES}`);
+	return bad;
+}
+
+function main(argv) {
+	let list = false;
+	for (const a of argv) {
+		if (a === '--list') list = true;
+		else {
+			console.error(`unknown option: ${a}`);
+			return 2;
+		}
+	}
+	if (!fs.existsSync(BASELINE)) {
+		console.error(`p4a-delta: no ${path.relative(ROOT, BASELINE)}/ — nothing to derive from.`);
+		return 2;
+	}
+
+	const byPrefix = new Map();
+	const byProp = new Map();
+	const perFile = [];
+	let removed = 0;
+	for (const rel of walk(BASELINE).sort()) {
+		const r = adjustedBaseline(rel);
+		if (!r.removed.length) continue;
+		perFile.push({ rel, n: r.removed.length });
+		removed += r.removed.length;
+		for (const prop of r.removed) {
+			const pre = STRIP_PREFIX.exec(prop)[0];
+			byPrefix.set(pre, (byPrefix.get(pre) || 0) + 1);
+			const bare = prop.replace(STRIP_PREFIX, '');
+			byProp.set(bare, (byProp.get(bare) || 0) + 1);
+		}
+	}
+
+	console.log(`derived from:         ${path.relative(ROOT, BASELINE)}/`);
+	console.log(`files with removals:  ${perFile.length}`);
+	console.log(`declarations removed: ${removed}`);
+	console.log('\nby prefix:');
+	for (const [p, c] of [...byPrefix].sort((a, b) => b[1] - a[1])) console.log(`  ${p.padEnd(9)} ${c}`);
+	console.log('\nby property:');
+	for (const [p, c] of [...byProp].sort((a, b) => b[1] - a[1])) console.log(`  ${p.padEnd(28)} ${c}`);
+	if (list) {
+		console.log('\nper file:');
+		for (const f of perFile.sort((a, b) => b.n - a.n)) console.log(`  ${String(f.n).padStart(4)}  ${f.rel}`);
+	}
+	console.log(`\ndeferred (untouched): ${[...DEFERRED].join(', ')}`);
+
+	const bad = assertApprovedSize({ removed, changedFiles: perFile.length });
+	if (bad.length) {
+		console.error(`\n!!! ${bad.length} violation(s):`);
+		for (const b of bad) console.error(`  ${b}`);
+		return 1;
+	}
+	console.log('\nOK — the derived delta is exactly the approved P4a shape.');
+	return 0;
+}
+
+if (require.main === module) process.exit(main(process.argv.slice(2)));
+
+module.exports = {
+	STRIP_PREFIX,
+	CARVE_OUT,
+	DEFERRED,
+	EXPECTED_REMOVALS,
+	EXPECTED_FILES,
+	applyP4a,
+	adjustedBaseline,
+	materialize,
+	assertApprovedSize,
+};

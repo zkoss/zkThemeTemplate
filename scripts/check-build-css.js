@@ -18,14 +18,15 @@
  * HAND-RUN EXPERIMENT IN A SCRATCHPAD, and the two files it round-tripped were reverted
  * afterwards. Nothing in the repo re-runs it. This script is that experiment, made repeatable.
  *
- * WHAT IT DOES  (the same five steps, automated)
- * ---------------------------------------------
+ * WHAT IT DOES  (the same five steps, automated, plus the P4a derivation)
+ * ----------------------------------------------------------------------
+ *   0. re-derive the P4a delta from `baseline/`      -> the adjusted comparison target
  *   1. compile the LESS tree UNCOMPRESSED           -> readable `.css.dsp`
  *   2. strip the taglib directives from each output  -> a plausible P3 `.css` source
  *      2b. copy the sources P3 has ALREADY converted -> the real thing, not a reconstruction
  *   3. feed all of them to `build-css.js`            -> `.css.dsp` via the NEW path
- *   4. copy the two holdouts from `baseline/`        -> so the comparison covers all 77
- *   5. `cssdiff baseline/ <tmp>`                     -> must be 0
+ *   4. copy the two holdouts from the adjusted tree  -> so the comparison covers all 85
+ *   5. `cssdiff <adjusted> <tmp>`                    -> must be 0
  *
  * Step 2 is what makes this a real test rather than a tautology: the input to `build-css.js`
  * is the same shape P3 will produce (expanded CSS, no header), and the expected output is
@@ -58,6 +59,20 @@
  * makes it the primary human-review lens for P3, and until now the rate through the CSS path
  * had never been measured: all existing evidence was declaration-level plus two single files.
  *
+ * FROM P4a ON, THE TARGET IS THE ADJUSTED BASELINE (S41, option A)
+ * ---------------------------------------------------------------
+ * P4a deleted 728 dead vendor-prefix declarations from the CSS sources on purpose, so the built
+ * tree no longer reproduces `baseline/` and never will again. Asked unchanged, this check would
+ * be permanently red — which is worse than uninformative, because a red gate that is "known
+ * broken" can no longer report a real regression.
+ *
+ * `p4a-delta.js` RE-DERIVES the delta from `baseline/` (all four of its conditions are readable
+ * off the baseline text, so it is a pure function of it — no manifest, no snapshot, and
+ * `baseline/` is still never written to). Steps 4 and 5 then compare against that adjusted tree,
+ * staged inside the same temp dir. The question this check asks is unchanged in strength: it is
+ * still "does build-css.js reproduce the approved output, byte for byte" — only the definition
+ * of approved moved, and it moved to something derived rather than asserted.
+ *
  * USAGE
  *   node scripts/check-build-css.js [--keep]
  *
@@ -72,6 +87,7 @@ const fs = require('fs');
 const os = require('os');
 const path = require('path');
 const { execFileSync } = require('child_process');
+const p4a = require('./p4a-delta.js');
 
 const SOURCE = 'src/main/resources/web';
 const BASELINE = 'baseline';
@@ -191,8 +207,23 @@ function main(argv) {
 	const lessOut = path.join(tmp, 'lessout');
 	const cssSrc = path.join(tmp, 'cssrc');
 	const cssOut = path.join(tmp, 'cssout');
+	const expected = path.join(tmp, 'expected'); // `baseline/` + the approved P4a delta
 
 	try {
+		// 0. The comparison target. Derived, not stored — see the header. Staged in the temp dir
+		//    so nothing outside `target/` is ever written, and so a failed run leaves no artefact
+		//    that a later run could mistake for the real baseline.
+		console.log('0/5  deriving the P4a delta from baseline/…');
+		const d = p4a.materialize(expected);
+		const bad = p4a.assertApprovedSize(d);
+		if (bad.length) {
+			console.error(`check-build-css: derived delta is not the approved P4a shape:`);
+			for (const b of bad) console.error(`  ${b}`);
+			return 2;
+		}
+		console.log(`0/5  ${d.removed} declaration(s) removed across ${d.changedFiles} file(s); ` +
+			`${[...p4a.DEFERRED].join(', ')} left alone`);
+
 		// 1. Uncompressed, so the intermediate is the readable CSS that P3 adopts as source.
 		//    Premise #3: --compress on/off is declaration-equivalent, so this loses no fidelity.
 		console.log('1/5  compiling LESS tree (uncompressed)…');
@@ -246,7 +277,7 @@ function main(argv) {
 		// 4. Holdouts copied verbatim so the diff covers the whole theme rather than a subset.
 		//    A missing file reads as "builder lost a file", which would be the wrong diagnosis.
 		for (const [rel, why] of PASSTHROUGH) {
-			const from = path.join(BASELINE, rel);
+			const from = path.join(expected, rel);
 			if (!fs.existsSync(from)) continue;
 			const to = path.join(cssOut, rel);
 			fs.mkdirSync(path.dirname(to), { recursive: true });
@@ -262,7 +293,7 @@ function main(argv) {
 		const unclassified = [];
 		const classHits = new Map();
 		for (const rel of covered) {
-			const a = path.join(BASELINE, rel);
+			const a = path.join(expected, rel);
 			if (!fs.existsSync(a)) {
 				byteDiff.push(rel);
 				unclassified.push(rel);
@@ -277,10 +308,10 @@ function main(argv) {
 			else for (const n of used) classHits.set(n, (classHits.get(n) || 0) + 1);
 		}
 
-		console.log('5/5  declaration-level diff against baseline…\n');
+		console.log('5/5  declaration-level diff against the adjusted baseline…\n');
 		let code = 0;
 		try {
-			const out = execFileSync('node', ['scripts/cssdiff.js', BASELINE, cssOut], {
+			const out = execFileSync('node', ['scripts/cssdiff.js', expected, cssOut], {
 				encoding: 'utf8',
 			});
 			process.stdout.write(out);
@@ -313,9 +344,9 @@ function main(argv) {
 			for (const rel of unclassified) console.log(`  ${rel}`);
 		}
 		if (code === 0) {
-			console.log('\nOK — build-css.js reproduces baseline/ from CSS sources.');
+			console.log('\nOK — build-css.js reproduces baseline/ + the approved P4a delta from CSS sources.');
 		} else {
-			console.log('\nFAIL — build-css.js does NOT reproduce baseline/. Stop; do not convert more files.');
+			console.log('\nFAIL — build-css.js does NOT reproduce it. Stop; do not convert more files.');
 		}
 		return code;
 	} catch (e) {

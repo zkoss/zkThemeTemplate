@@ -17,11 +17,21 @@
  * rule stops matching, and the file reports as unexplained — a false alarm that looks exactly like
  * a real defect. This bit twice during P3; do not reorder.
  *
+ * FROM P4a ON, THE COMPARISON TARGET IS THE ADJUSTED BASELINE (S41, option A)
+ *   P4a removed 728 dead vendor-prefix declarations on purpose, so "equals `baseline/`" stopped
+ *   being the right question — asked unchanged, this check would be permanently red and would
+ *   stop distinguishing a regression from the approved delta. `p4a-delta.js` RE-DERIVES that
+ *   delta from `baseline/` (it is a pure function of it — no manifest, no snapshot) and this
+ *   compares against the result. `baseline/` is still never written to. A removal that P4a did
+ *   not authorise, or one it authorised but the source missed, lands here as an unexplained
+ *   byte difference exactly as before.
+ *
  * Exit 0 means zero semantic bytes differ anywhere. Exit 1 means a human is needed.
  */
 'use strict';
 const fs = require('fs');
 const path = require('path');
+const p4a = require('./p4a-delta.js');
 
 const ROOT = path.resolve(__dirname, '..');
 const BASE = path.join(ROOT, 'baseline');
@@ -61,9 +71,16 @@ const files = walk(BASE).sort();
 let identical = 0;
 const differing = [];
 const unexplained = [];
+let delta = 0;
+let deltaFiles = 0;
 
 for (const rel of files) {
-	const a = fs.readFileSync(path.join(BASE, rel), 'utf8');
+	const adjusted = p4a.adjustedBaseline(rel);
+	const a = adjusted.text;
+	if (adjusted.removed.length) {
+		delta += adjusted.removed.length;
+		deltaFiles++;
+	}
 	const bPath = path.join(BUILT, rel);
 	if (!fs.existsSync(bPath)) {
 		unexplained.push({ rel, why: 'MISSING in built output' });
@@ -85,7 +102,15 @@ for (const rel of files) {
 const extra = walk(BUILT).filter((rel) => !fs.existsSync(path.join(BASE, rel)));
 extra.forEach((rel) => unexplained.push({ rel, why: 'EXTRA output — no counterpart in baseline/' }));
 
+// The derived delta must be the APPROVED one. Without this the check would keep passing while
+// silently re-deriving a different (larger) delta — e.g. if someone widened STRIP_PREFIX — and a
+// real removal would hide inside it. The size is the one thing the derivation cannot self-check.
+p4a.assertApprovedSize({ removed: delta, changedFiles: deltaFiles })
+	.forEach((why) => unexplained.push({ rel: 'p4a-delta.js', why }));
+
 console.log(`files compared:            ${files.length}`);
+console.log(`P4a delta re-derived:      ${delta} declaration(s) in ${deltaFiles} file(s), ` +
+	`${[...p4a.DEFERRED].join(', ')} left alone`);
 console.log(`byte-identical:            ${identical}/${files.length}`);
 console.log(`differing but explained:   ${differing.length}`);
 differing.forEach((f) => console.log(`    ${f}`));
