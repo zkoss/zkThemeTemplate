@@ -387,4 +387,11 @@ env:
 	}
 }
 
-main(process.argv.slice(2)).then(rc => process.exit(rc));
+if (require.main === module) {
+	main(process.argv.slice(2)).then(rc => process.exit(rc));
+}
+
+// Shared with scripts/ab-coverage.js — the coverage probe needs the same app, the same
+// classpath guard (note 2) and the same theme fingerprint, and duplicating them would let
+// the two harnesses drift apart.
+module.exports = { REPO, WORK, THEME_DIR, BASE_URL, walk, sha256, die, startApp, guardProbe, themeFingerprint };

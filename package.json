@@ -23,7 +23,8 @@
     "check:mixin-table": "node scripts/gen-mixin-table.js --check",
     "visual:selftest": "node scripts/ab-visual.js selftest",
     "visual:capture": "node scripts/ab-visual.js capture",
-    "visual:diff": "node scripts/ab-visual.js diff"
+    "visual:diff": "node scripts/ab-visual.js diff",
+    "visual:coverage": "node scripts/ab-coverage.js"
   },
   "devDependencies": {
     "@playwright/test": "1.62.1",
