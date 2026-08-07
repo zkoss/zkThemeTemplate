@@ -73,6 +73,32 @@ function split(rec) {
 	return { ctx: rec.slice(0, sep), prop: decl.slice(0, decl.indexOf(':')) };
 }
 
+/**
+ * Rebuild the individual rule blocks from the flat record list. `parse()` emits declarations in
+ * document order and a block's declarations are contiguous, so a run of records sharing a context
+ * is one block — which is what lets us tell six repetitions of the same selector apart.
+ */
+function blockInstances(records) {
+	const out = [];
+	let cur = null;
+	for (let i = 0; i < records.length; i++) {
+		const { ctx, prop } = split(records[i]);
+		if (!cur || cur.ctx !== ctx) {
+			cur = { ctx, props: new Set(), from: i, to: i };
+			out.push(cur);
+		}
+		cur.props.add(prop);
+		cur.to = i;
+	}
+	return out;
+}
+
+/** Which block instance owns baseline record index `i`. */
+function blockAt(blocks, i) {
+	for (let k = 0; k < blocks.length; k++) if (i >= blocks[k].from && i <= blocks[k].to) return k;
+	return -1;
+}
+
 function main(argv) {
 	let expect = null;
 	let list = false;
@@ -118,12 +144,24 @@ function main(argv) {
 		const diff = diffRecords(A.records, B.records);
 		if (!diff.length) continue;
 
-		// Index the candidate's declarations per rule so we can prove the twin survived.
-		const candByCtx = new Map();
-		for (const r of B.records) {
-			const { ctx, prop } = split(r);
-			if (!candByCtx.has(ctx)) candByCtx.set(ctx, new Set());
-			candByCtx.get(ctx).add(prop);
+		// Per-BLOCK-INSTANCE indexes, not per-selector-string. Keying on the selector merges
+		// every block that happens to share it, and `combo.css` alone repeats one selector six
+		// times: a block that lost its only twin would then be vouched for by a sibling block.
+		// The 4th-layer review caught that on 2026-08-07 — no case existed in the tree, but the
+		// assertion was weaker than its own docstring claimed.
+		const baseBlocks = blockInstances(A.records);
+		const candBlocks = blockInstances(B.records);
+		// Removals never empty a block (the twin is what stays) and never reorder, so the k-th
+		// block on each side is the same block. Anything else means an assumption broke.
+		if (baseBlocks.length !== candBlocks.length) {
+			violations.push(`${rel}: rule-block count changed ${baseBlocks.length} -> ${candBlocks.length}`);
+			continue;
+		}
+		for (let k = 0; k < baseBlocks.length; k++) {
+			if (baseBlocks[k].ctx !== candBlocks[k].ctx) {
+				violations.push(`${rel}: rule-block ${k} moved: ${baseBlocks[k].ctx} -> ${candBlocks[k].ctx}`);
+				break;
+			}
 		}
 
 		let n = 0;
@@ -146,8 +184,11 @@ function main(argv) {
 				continue;
 			}
 			const bare = prop.replace(STRIP_PREFIX, '');
-			if (!candByCtx.get(ctx)?.has(bare)) {
-				violations.push(`${rel}: removal left no unprefixed twin in the candidate -> ${ctx} || ${prop}`);
+			// `d.at` is the record's index on the BASELINE side, so it identifies which block
+			// instance lost the declaration — and the k-th block is the same block on both sides.
+			const k = blockAt(baseBlocks, d.at);
+			if (k < 0 || !candBlocks[k]?.props.has(bare)) {
+				violations.push(`${rel}: removal left no unprefixed twin in that same rule block -> ${ctx} || ${prop}`);
 				continue;
 			}
 			n++;
