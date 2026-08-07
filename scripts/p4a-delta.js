@@ -33,11 +33,13 @@
  *
  * WHY 728 IS DECLARED TWICE
  * -------------------------
- * `EXPECTED_REMOVALS` here, and `--expect 728` on `check:p4a` in package.json. That is
- * deliberate, not duplication: the two are reached by different code over different inputs
- * (this one re-derives from `baseline/`, that one counts records in a `cssdiff` of the built
- * tree). If they ever disagree, the disagreement is the finding — do not reconcile by editing
- * one to match the other.
+ * `EXPECTED_REMOVALS` here, and `--expect 728` on `check:p4a` in package.json. Be precise about
+ * what that buys: the constant is ASSERTED twice, not DERIVED twice. What is independent is the
+ * two counts it is checked against — this one re-derives from `baseline/`, that one counts
+ * records in a `cssdiff` of the built tree. So the pair is a tripwire against the RULE being
+ * quietly widened (see the third negative control: adding `-webkit-` to STRIP_PREFIX makes this
+ * derive 975/47 and fail), not a second independent census. If the two ever disagree, the
+ * disagreement is the finding — do not reconcile by editing one to match the other.
  *
  * USAGE
  *   node scripts/p4a-delta.js [--list]     report the derived delta and stop
@@ -66,9 +68,11 @@ const EXPECTED_FILES = 45;
  * Blank out everything that must not be read as CSS structure, preserving offsets so the mask
  * can be used to find delimiters while slicing still happens on the original text:
  *
- *   - comments                     `/ * … * /`  (2 baseline files carry them)
+ *   - comments                     `/ * … * /`  (norm and font-awesome carry them)
  *   - quoted strings               including the `"${…}"` inside a `<c:if test="…">`
- *   - `;` `:` `{` `}` inside `()`  `url(data:image/png;base64,…)` is real — norm and selectbox
+ *   - `;` `:` `{` `}` inside `()`  data URIs are real, and both shapes occur:
+ *                                  norm has `url(${c:encodeURL("data:image/gif;base64,…"))`
+ *                                  selectbox has `url("data:image/svg+xml;charset=utf8,…")`
  *
  * DSP tags themselves need no special case: `<c:if …>` bodies are plain CSS, and the one
  * construct that carries braces — `${".z-page "}` in selector position — is brace-balanced and
