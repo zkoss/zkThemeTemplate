@@ -19,7 +19,6 @@
 	border-radius: 0;
 }
 .z-inputgroup-vertical {
-	-ms-flex-direction: column;
 	flex-direction: column;
 }
 .z-inputgroup-vertical > :first-child {

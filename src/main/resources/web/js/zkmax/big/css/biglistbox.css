@@ -171,9 +171,6 @@
 	background-color: var(--zk-base-background-color);
 	border: 1px solid var(--zk-biglistbox-scrollbar-border-color);
 	-webkit-border-radius: 2px;
-	-moz-border-radius: 2px;
-	-o-border-radius: 2px;
-	-ms-border-radius: 2px;
 	border-radius: 2px;
 	bottom: var(--zk-biglistbox-vertical-tick-position-bottom);
 	overflow: hidden;
@@ -276,9 +273,6 @@
 .z-biglistbox-wscroll-vertical .z-biglistbox-wscroll-drag .z-biglistbox-wscroll-home {
 	top: 0;
 	-webkit-border-radius: 2px 2px 0 0;
-	-moz-border-radius: 2px 2px 0 0;
-	-o-border-radius: 2px 2px 0 0;
-	-ms-border-radius: 2px 2px 0 0;
 	border-radius: 2px 2px 0 0;
 }
 .z-biglistbox-wscroll-vertical .z-biglistbox-wscroll-drag .z-biglistbox-wscroll-home:before {
@@ -305,9 +299,6 @@
 .z-biglistbox-wscroll-vertical .z-biglistbox-wscroll-drag .z-biglistbox-wscroll-end {
 	bottom: 0;
 	-webkit-border-radius: 0 0 2px 2px;
-	-moz-border-radius: 0 0 2px 2px;
-	-o-border-radius: 0 0 2px 2px;
-	-ms-border-radius: 0 0 2px 2px;
 	border-radius: 0 0 2px 2px;
 }
 .z-biglistbox-wscroll-vertical .z-biglistbox-wscroll-drag .z-biglistbox-wscroll-end:before {
@@ -318,9 +309,6 @@
 	width: 18px;
 	height: 115px;
 	-webkit-border-radius: 2px;
-	-moz-border-radius: 2px;
-	-o-border-radius: 2px;
-	-ms-border-radius: 2px;
 	border-radius: 2px;
 	background: contrast(var(--zk-base-background-color));
 	opacity: 0.25;
@@ -334,9 +322,6 @@
 	height: 8px;
 	border: 1px solid var(--zk-biglistbox-scrollbar-border-color);
 	-webkit-border-radius: 2px;
-	-moz-border-radius: 2px;
-	-o-border-radius: 2px;
-	-ms-border-radius: 2px;
 	border-radius: 2px;
 	background-color: var(--zk-biglistbox-scrollbar-end-bar-background-color);
 	overflow: hidden;
@@ -449,9 +434,6 @@
 	width: var(--zk-biglistbox-wscroll-horizontal-pos-width);
 	height: var(--zk-biglistbox-size);
 	-webkit-border-radius: 2px;
-	-moz-border-radius: 2px;
-	-o-border-radius: 2px;
-	-ms-border-radius: 2px;
 	border-radius: 2px;
 	background: contrast(var(--zk-base-background-color));
 	opacity: 0.25;
@@ -465,9 +447,6 @@
 	height: var(--zk-biglistbox-size);
 	border: 1px solid var(--zk-biglistbox-scrollbar-border-color);
 	-webkit-border-radius: 2px;
-	-moz-border-radius: 2px;
-	-o-border-radius: 2px;
-	-ms-border-radius: 2px;
 	border-radius: 2px;
 	background-color: var(--zk-biglistbox-scrollbar-end-bar-background-color);
 	position: absolute;

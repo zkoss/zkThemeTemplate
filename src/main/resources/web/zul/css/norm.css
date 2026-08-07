@@ -39,9 +39,6 @@ body {
 [class*=" z-"]:before,
 .z-borderbox {
 	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	-o-box-sizing: border-box;
-	-ms-box-sizing: border-box;
 	box-sizing: border-box;
 }
 /* Reset */
@@ -92,9 +89,6 @@ body {
 	color: var(--zk-errorbox-color);
 	border: 1px solid var(--zk-errorbox-border-color);
 	-webkit-border-radius: var(--zk-base-border-radius);
-	-moz-border-radius: var(--zk-base-border-radius);
-	-o-border-radius: var(--zk-base-border-radius);
-	-ms-border-radius: var(--zk-base-border-radius);
 	border-radius: var(--zk-base-border-radius);
 	padding: var(--zk-error-padding);
 	background: var(--zk-errorbox-background-color);
@@ -102,9 +96,6 @@ body {
 	top: 0;
 	left: 40%;
 	-webkit-box-shadow: 0 3px 6px 0 rgba(0,0,0,0.16), 0 2px 4px 0 rgba(0,0,0,0.24);
-	-moz-box-shadow: 0 3px 6px 0 rgba(0,0,0,0.16), 0 2px 4px 0 rgba(0,0,0,0.24);
-	-o-box-shadow: 0 3px 6px 0 rgba(0,0,0,0.16), 0 2px 4px 0 rgba(0,0,0,0.24);
-	-ms-box-shadow: 0 3px 6px 0 rgba(0,0,0,0.16), 0 2px 4px 0 rgba(0,0,0,0.24);
 	box-shadow: 0 3px 6px 0 rgba(0,0,0,0.16), 0 2px 4px 0 rgba(0,0,0,0.24);
 	z-index: 9999999;
 }
@@ -162,9 +153,6 @@ div.z-log textarea {
 	border-color: rgba(82, 168, 236, 0.8);
 	outline: 0;
 	-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(82,168,236,0.6);
-	-moz-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(82,168,236,0.6);
-	-o-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(82,168,236,0.6);
-	-ms-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(82,168,236,0.6);
 	box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(82,168,236,0.6);
 }
 div.z-log button {
@@ -198,9 +186,6 @@ div.z-log button {
 	background: var(--zk-input-background-color);
 	border: 1px solid var(--zk-input-border-color);
 	-webkit-border-radius: 50%;
-	-moz-border-radius: 50%;
-	-o-border-radius: 50%;
-	-ms-border-radius: 50%;
 	border-radius: 50%;
 	width: var(--zk-checkbox-size);
 	height: var(--zk-checkbox-size);
@@ -218,17 +203,11 @@ div.z-log button {
 	width: 12px;
 	height: 12px;
 	-webkit-border-radius: 50%;
-	-moz-border-radius: 50%;
-	-o-border-radius: 50%;
-	-ms-border-radius: 50%;
 	border-radius: 50%;
 	position: relative;
 	top: 50%;
 	left: 50%;
 	-webkit-transform: translate(-50%, -50%);
-	-moz-transform: translate(-50%, -50%);
-	-o-transform: translate(-50%, -50%);
-	-ms-transform: translate(-50%, -50%);
 	transform: translate(-50%, -50%);
 }
 .ZKBD input[type="radio"]:checked {
@@ -281,9 +260,6 @@ div.z-log button {
 	background: var(--zk-input-background-color);
 	border: 1px solid var(--zk-input-border-color);
 	-webkit-border-radius: var(--zk-input-border-radius);
-	-moz-border-radius: var(--zk-input-border-radius);
-	-o-border-radius: var(--zk-input-border-radius);
-	-ms-border-radius: var(--zk-input-border-radius);
 	border-radius: var(--zk-input-border-radius);
 	width: var(--zk-checkbox-size);
 	height: var(--zk-checkbox-size);
@@ -316,9 +292,6 @@ div.z-log button {
 .ZKBD input[type="checkbox"]::-ms-check {
 	border: 0;
 	-webkit-border-radius: var(--zk-input-border-radius);
-	-moz-border-radius: var(--zk-input-border-radius);
-	-o-border-radius: var(--zk-input-border-radius);
-	-ms-border-radius: var(--zk-input-border-radius);
 	border-radius: var(--zk-input-border-radius);
 }
 .ZKBD input[type="checkbox"]:checked::-ms-check {
@@ -373,9 +346,6 @@ div.z-log button {
 .z-apply-loading {
 	background: var(--zk-loading-background-color);
 	-webkit-border-radius: var(--zk-base-border-radius);
-	-moz-border-radius: var(--zk-base-border-radius);
-	-o-border-radius: var(--zk-base-border-radius);
-	-ms-border-radius: var(--zk-base-border-radius);
 	border-radius: var(--zk-base-border-radius);
 	position: absolute;
 	cursor: wait;
@@ -509,14 +479,8 @@ div.z-log button {
 .z-drop-allow {
 	background: var(--zk-drag-background-color);
 	-webkit-box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16);
-	-moz-box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16);
-	-o-box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16);
-	-ms-box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16);
 	box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16);
 	-webkit-border-radius: var(--zk-base-border-radius);
-	-moz-border-radius: var(--zk-base-border-radius);
-	-o-border-radius: var(--zk-base-border-radius);
-	-ms-border-radius: var(--zk-base-border-radius);
 	border-radius: var(--zk-base-border-radius);
 	overflow: hidden;
 }
@@ -529,14 +493,8 @@ div.z-log button {
 .z-drop-disallow {
 	background: var(--zk-drag-background-color);
 	-webkit-box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16);
-	-moz-box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16);
-	-o-box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16);
-	-ms-box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16);
 	box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16);
 	-webkit-border-radius: var(--zk-base-border-radius);
-	-moz-border-radius: var(--zk-base-border-radius);
-	-o-border-radius: var(--zk-base-border-radius);
-	-ms-border-radius: var(--zk-base-border-radius);
 	border-radius: var(--zk-base-border-radius);
 	overflow: hidden;
 }
@@ -584,14 +542,12 @@ div.z-log button {
 	position: absolute;
 	top: 0;
 	left: 0;
-	-moz-outline: 0 none;
 	outline: 0 none;
 	-moz-user-select: text;
 	-khtml-user-select: text;
 	overflow: hidden;
 }
 .z-focus-a:focus {
-	-moz-outline: 0 none;
 	outline: 0 none;
 }
 /* upload button */
@@ -645,9 +601,6 @@ span.z-upload input {
 .z-scrollbar-indicator {
 	border: 1px solid var(--zk-scrollbar-border-color);
 	-webkit-border-radius: calc(var(--zk-scrollbar-bar-size) / 2);
-	-moz-border-radius: calc(var(--zk-scrollbar-bar-size) / 2);
-	-o-border-radius: calc(var(--zk-scrollbar-bar-size) / 2);
-	-ms-border-radius: calc(var(--zk-scrollbar-bar-size) / 2);
 	border-radius: calc(var(--zk-scrollbar-bar-size) / 2);
 	background-color: var(--zk-scrollbar-bar-background-color);
 	position: absolute;
@@ -663,9 +616,6 @@ span.z-upload input {
 	height: 100%;
 	background: var(--zk-scrollbar-background-color);
 	-webkit-border-radius: calc(var(--zk-scrollbar-rail-size) / 2);
-	-moz-border-radius: calc(var(--zk-scrollbar-rail-size) / 2);
-	-o-border-radius: calc(var(--zk-scrollbar-rail-size) / 2);
-	-ms-border-radius: calc(var(--zk-scrollbar-rail-size) / 2);
 	border-radius: calc(var(--zk-scrollbar-rail-size) / 2);
 }
 .z-scrollbar-icon {
@@ -700,16 +650,10 @@ span.z-upload input {
 	left: -1px;
 	top: 50%;
 	-webkit-transform: scale(0.5, 0.7);
-	-moz-transform: scale(0.5, 0.7);
-	-o-transform: scale(0.5, 0.7);
-	-ms-transform: scale(0.5, 0.7);
 	transform: scale(0.5, 0.7);
 }
 .z-scrollbar-vertical-embed {
 	-webkit-border-radius: calc(var(--zk-scrollbar-embedded-size) / 2);
-	-moz-border-radius: calc(var(--zk-scrollbar-embedded-size) / 2);
-	-o-border-radius: calc(var(--zk-scrollbar-embedded-size) / 2);
-	-ms-border-radius: calc(var(--zk-scrollbar-embedded-size) / 2);
 	border-radius: calc(var(--zk-scrollbar-embedded-size) / 2);
 	background-color: var(--zk-scrollbar-embedded-color);
 	position: absolute;
@@ -763,16 +707,10 @@ span.z-upload input {
 	left: 50%;
 	top: -1px;
 	-webkit-transform: rotate(90deg) scale(0.5, 0.7);
-	-moz-transform: rotate(90deg) scale(0.5, 0.7);
-	-o-transform: rotate(90deg) scale(0.5, 0.7);
-	-ms-transform: rotate(90deg) scale(0.5, 0.7);
 	transform: rotate(90deg) scale(0.5, 0.7);
 }
 .z-scrollbar-horizontal-embed {
 	-webkit-border-radius: calc(var(--zk-scrollbar-embedded-size) / 2);
-	-moz-border-radius: calc(var(--zk-scrollbar-embedded-size) / 2);
-	-o-border-radius: calc(var(--zk-scrollbar-embedded-size) / 2);
-	-ms-border-radius: calc(var(--zk-scrollbar-embedded-size) / 2);
 	border-radius: calc(var(--zk-scrollbar-embedded-size) / 2);
 	background-color: var(--zk-scrollbar-embedded-color);
 	position: absolute;

@@ -16,9 +16,6 @@
 	height: var(--zk-combo-input-height);
 	border: 1px solid var(--zk-input-border-color);
 	-webkit-border-radius: var(--zk-base-border-radius);
-	-moz-border-radius: var(--zk-base-border-radius);
-	-o-border-radius: var(--zk-base-border-radius);
-	-ms-border-radius: var(--zk-base-border-radius);
 	border-radius: var(--zk-base-border-radius);
 	margin: 0;
 	padding: var(--zk-input-padding);
@@ -68,9 +65,6 @@
 	height: var(--zk-combo-input-height);
 	border: 1px solid var(--zk-input-border-color);
 	-webkit-border-radius: 0 var(--zk-base-border-radius) var(--zk-base-border-radius) 0;
-	-moz-border-radius: 0 var(--zk-base-border-radius) var(--zk-base-border-radius) 0;
-	-o-border-radius: 0 var(--zk-base-border-radius) var(--zk-base-border-radius) 0;
-	-ms-border-radius: 0 var(--zk-base-border-radius) var(--zk-base-border-radius) 0;
 	border-radius: 0 var(--zk-base-border-radius) var(--zk-base-border-radius) 0;
 	padding: var(--zk-combo-button-padding);
 	line-height: var(--zk-base-line-height);
@@ -152,9 +146,6 @@
 	height: var(--zk-combo-input-height);
 	border: 1px solid var(--zk-input-border-color);
 	-webkit-border-radius: var(--zk-base-border-radius);
-	-moz-border-radius: var(--zk-base-border-radius);
-	-o-border-radius: var(--zk-base-border-radius);
-	-ms-border-radius: var(--zk-base-border-radius);
 	border-radius: var(--zk-base-border-radius);
 	margin: 0;
 	padding: var(--zk-input-padding);
@@ -204,9 +195,6 @@
 	height: var(--zk-combo-input-height);
 	border: 1px solid var(--zk-input-border-color);
 	-webkit-border-radius: 0 var(--zk-base-border-radius) var(--zk-base-border-radius) 0;
-	-moz-border-radius: 0 var(--zk-base-border-radius) var(--zk-base-border-radius) 0;
-	-o-border-radius: 0 var(--zk-base-border-radius) var(--zk-base-border-radius) 0;
-	-ms-border-radius: 0 var(--zk-base-border-radius) var(--zk-base-border-radius) 0;
 	border-radius: 0 var(--zk-base-border-radius) var(--zk-base-border-radius) 0;
 	padding: var(--zk-combo-button-padding);
 	line-height: var(--zk-base-line-height);
@@ -288,9 +276,6 @@
 	height: var(--zk-combo-input-height);
 	border: 1px solid var(--zk-input-border-color);
 	-webkit-border-radius: var(--zk-base-border-radius);
-	-moz-border-radius: var(--zk-base-border-radius);
-	-o-border-radius: var(--zk-base-border-radius);
-	-ms-border-radius: var(--zk-base-border-radius);
 	border-radius: var(--zk-base-border-radius);
 	margin: 0;
 	padding: var(--zk-input-padding);
@@ -340,9 +325,6 @@
 	height: var(--zk-combo-input-height);
 	border: 1px solid var(--zk-input-border-color);
 	-webkit-border-radius: 0 var(--zk-base-border-radius) var(--zk-base-border-radius) 0;
-	-moz-border-radius: 0 var(--zk-base-border-radius) var(--zk-base-border-radius) 0;
-	-o-border-radius: 0 var(--zk-base-border-radius) var(--zk-base-border-radius) 0;
-	-ms-border-radius: 0 var(--zk-base-border-radius) var(--zk-base-border-radius) 0;
 	border-radius: 0 var(--zk-base-border-radius) var(--zk-base-border-radius) 0;
 	padding: var(--zk-combo-button-padding);
 	line-height: var(--zk-base-line-height);
@@ -424,9 +406,6 @@
 	height: var(--zk-combo-input-height);
 	border: 1px solid var(--zk-input-border-color);
 	-webkit-border-radius: var(--zk-base-border-radius);
-	-moz-border-radius: var(--zk-base-border-radius);
-	-o-border-radius: var(--zk-base-border-radius);
-	-ms-border-radius: var(--zk-base-border-radius);
 	border-radius: var(--zk-base-border-radius);
 	margin: 0;
 	padding: var(--zk-input-padding);
@@ -476,9 +455,6 @@
 	height: var(--zk-combo-input-height);
 	border: 1px solid var(--zk-input-border-color);
 	-webkit-border-radius: 0 var(--zk-base-border-radius) var(--zk-base-border-radius) 0;
-	-moz-border-radius: 0 var(--zk-base-border-radius) var(--zk-base-border-radius) 0;
-	-o-border-radius: 0 var(--zk-base-border-radius) var(--zk-base-border-radius) 0;
-	-ms-border-radius: 0 var(--zk-base-border-radius) var(--zk-base-border-radius) 0;
 	border-radius: 0 var(--zk-base-border-radius) var(--zk-base-border-radius) 0;
 	padding: var(--zk-combo-button-padding);
 	line-height: var(--zk-base-line-height);
@@ -560,9 +536,6 @@
 	height: var(--zk-combo-input-height);
 	border: 1px solid var(--zk-input-border-color);
 	-webkit-border-radius: var(--zk-base-border-radius);
-	-moz-border-radius: var(--zk-base-border-radius);
-	-o-border-radius: var(--zk-base-border-radius);
-	-ms-border-radius: var(--zk-base-border-radius);
 	border-radius: var(--zk-base-border-radius);
 	margin: 0;
 	padding: var(--zk-input-padding);
@@ -612,9 +585,6 @@
 	height: var(--zk-combo-input-height);
 	border: 1px solid var(--zk-input-border-color);
 	-webkit-border-radius: 0 var(--zk-base-border-radius) var(--zk-base-border-radius) 0;
-	-moz-border-radius: 0 var(--zk-base-border-radius) var(--zk-base-border-radius) 0;
-	-o-border-radius: 0 var(--zk-base-border-radius) var(--zk-base-border-radius) 0;
-	-ms-border-radius: 0 var(--zk-base-border-radius) var(--zk-base-border-radius) 0;
 	border-radius: 0 var(--zk-base-border-radius) var(--zk-base-border-radius) 0;
 	padding: var(--zk-combo-button-padding);
 	line-height: var(--zk-base-line-height);
@@ -696,9 +666,6 @@
 	height: var(--zk-combo-input-height);
 	border: 1px solid var(--zk-input-border-color);
 	-webkit-border-radius: var(--zk-base-border-radius);
-	-moz-border-radius: var(--zk-base-border-radius);
-	-o-border-radius: var(--zk-base-border-radius);
-	-ms-border-radius: var(--zk-base-border-radius);
 	border-radius: var(--zk-base-border-radius);
 	margin: 0;
 	padding: var(--zk-input-padding);
@@ -748,9 +715,6 @@
 	height: var(--zk-combo-input-height);
 	border: 1px solid var(--zk-input-border-color);
 	-webkit-border-radius: 0 var(--zk-base-border-radius) var(--zk-base-border-radius) 0;
-	-moz-border-radius: 0 var(--zk-base-border-radius) var(--zk-base-border-radius) 0;
-	-o-border-radius: 0 var(--zk-base-border-radius) var(--zk-base-border-radius) 0;
-	-ms-border-radius: 0 var(--zk-base-border-radius) var(--zk-base-border-radius) 0;
 	border-radius: 0 var(--zk-base-border-radius) var(--zk-base-border-radius) 0;
 	padding: var(--zk-combo-button-padding);
 	line-height: var(--zk-base-line-height);
@@ -897,9 +861,6 @@
 .z-spinner-button > a > i,
 .z-doublespinner-button > a > i {
 	-webkit-transform: var(--zk-spinner-button-icon-transform);
-	-moz-transform: var(--zk-spinner-button-icon-transform);
-	-o-transform: var(--zk-spinner-button-icon-transform);
-	-ms-transform: var(--zk-spinner-button-icon-transform);
 	transform: var(--zk-spinner-button-icon-transform);
 }
 .z-timebox-button > a:hover,
@@ -943,9 +904,6 @@
 	position: relative;
 	min-height: calc(var(--zk-combo-popup-item-size) + 2px + 4px * 2);
 	-webkit-border-radius: var(--zk-base-border-radius);
-	-moz-border-radius: var(--zk-base-border-radius);
-	-o-border-radius: var(--zk-base-border-radius);
-	-ms-border-radius: var(--zk-base-border-radius);
 	border-radius: var(--zk-base-border-radius);
 	color: var(--zk-disabled-color);
 }
@@ -966,9 +924,6 @@
 	min-height: var(--zk-comboitem-empty-height);
 	/* ZK-2783: give default height to empty item */
 	-webkit-border-radius: var(--zk-base-border-radius);
-	-moz-border-radius: var(--zk-base-border-radius);
-	-o-border-radius: var(--zk-base-border-radius);
-	-ms-border-radius: var(--zk-base-border-radius);
 	border-radius: var(--zk-base-border-radius);
 }
 .z-comboitem-inner,
@@ -1018,9 +973,6 @@
 	display: block;
 	border: 1px solid var(--zk-combo-popup-border-color);
 	-webkit-border-radius: var(--zk-base-border-radius);
-	-moz-border-radius: var(--zk-base-border-radius);
-	-o-border-radius: var(--zk-base-border-radius);
-	-ms-border-radius: var(--zk-base-border-radius);
 	border-radius: var(--zk-base-border-radius);
 	padding: var(--zk-comboitem-padding);
 	background: var(--zk-popup-background-color);
@@ -1051,8 +1003,5 @@
 .z-bandbox-shadow,
 .z-datebox-shadow {
 	-webkit-box-shadow: 0 3px 6px 0 rgba(0,0,0,0.16), 0 2px 4px 0 rgba(0,0,0,0.24);
-	-moz-box-shadow: 0 3px 6px 0 rgba(0,0,0,0.16), 0 2px 4px 0 rgba(0,0,0,0.24);
-	-o-box-shadow: 0 3px 6px 0 rgba(0,0,0,0.16), 0 2px 4px 0 rgba(0,0,0,0.24);
-	-ms-box-shadow: 0 3px 6px 0 rgba(0,0,0,0.16), 0 2px 4px 0 rgba(0,0,0,0.24);
 	box-shadow: 0 3px 6px 0 rgba(0,0,0,0.16), 0 2px 4px 0 rgba(0,0,0,0.24);
 }

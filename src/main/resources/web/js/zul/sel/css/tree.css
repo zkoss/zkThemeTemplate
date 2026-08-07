@@ -162,9 +162,6 @@
 	top: -7px;
 	left: 50%;
 	-webkit-transform: translateX(-50%);
-	-moz-transform: translateX(-50%);
-	-o-transform: translateX(-50%);
-	-ms-transform: translateX(-50%);
 	transform: translateX(-50%);
 }
 .z-treecol-sort .z-treecol-sorticon :active {
@@ -185,9 +182,6 @@
 	vertical-align: text-top;
 	margin-right: 8px;
 	-webkit-border-radius: var(--zk-base-border-radius);
-	-moz-border-radius: var(--zk-base-border-radius);
-	-o-border-radius: var(--zk-base-border-radius);
-	-ms-border-radius: var(--zk-base-border-radius);
 	border-radius: var(--zk-base-border-radius);
 }
 .z-treecol-checkable:focus-visible {
@@ -263,16 +257,10 @@
 	vertical-align: text-top;
 	margin-right: 8px;
 	-webkit-border-radius: var(--zk-base-border-radius);
-	-moz-border-radius: var(--zk-base-border-radius);
-	-o-border-radius: var(--zk-base-border-radius);
-	-ms-border-radius: var(--zk-base-border-radius);
 	border-radius: var(--zk-base-border-radius);
 }
 .z-treerow-checkable.z-treerow-radio {
 	-webkit-border-radius: 50%;
-	-moz-border-radius: 50%;
-	-o-border-radius: 50%;
-	-ms-border-radius: 50%;
 	border-radius: 50%;
 }
 .z-treerow-checkable .z-treerow-icon {
@@ -315,18 +303,12 @@
 	width: 10px;
 	height: 10px;
 	-webkit-border-radius: 50%;
-	-moz-border-radius: 50%;
-	-o-border-radius: 50%;
-	-ms-border-radius: 50%;
 	border-radius: 50%;
 	background: var(--zk-checked-color);
 	position: relative;
 	top: 50%;
 	left: 50%;
 	-webkit-transform: translate(-50%, -50%);
-	-moz-transform: translate(-50%, -50%);
-	-o-transform: translate(-50%, -50%);
-	-ms-transform: translate(-50%, -50%);
 	transform: translate(-50%, -50%);
 }
 /* disabled */

@@ -13,14 +13,8 @@
 	width: var(--zk-base-icon-width);
 	height: var(--zk-base-icon-height);
 	-webkit-border-radius: var(--zk-base-border-radius);
-	-moz-border-radius: var(--zk-base-border-radius);
-	-o-border-radius: var(--zk-base-border-radius);
-	-ms-border-radius: var(--zk-base-border-radius);
 	border-radius: var(--zk-base-border-radius);
 	-webkit-box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16);
-	-moz-box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16);
-	-o-box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16);
-	-ms-box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16);
 	box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16);
 	background-color: var(--zk-button-background-color);
 	position: relative;
@@ -50,9 +44,6 @@
 .z-slider-input {
 	border: 1px solid var(--zk-input-border-color);
 	-webkit-border-radius: var(--zk-base-border-radius);
-	-moz-border-radius: var(--zk-base-border-radius);
-	-o-border-radius: var(--zk-base-border-radius);
-	-ms-border-radius: var(--zk-base-border-radius);
 	border-radius: var(--zk-base-border-radius);
 	background: var(--zk-input-background-color);
 	-webkit-appearance: textfield;
@@ -121,14 +112,8 @@
 	position: absolute;
 	z-index: 60000;
 	-webkit-border-radius: var(--zk-base-border-radius);
-	-moz-border-radius: var(--zk-base-border-radius);
-	-o-border-radius: var(--zk-base-border-radius);
-	-ms-border-radius: var(--zk-base-border-radius);
 	border-radius: var(--zk-base-border-radius);
 	-webkit-box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16);
-	-moz-box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16);
-	-o-box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16);
-	-ms-box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16);
 	box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16);
 }
 .z-slider-sphere .z-slider-vertical .z-slider-button {
@@ -137,9 +122,6 @@
 .z-slider-sphere .z-slider-button,
 .z-slider-scale .z-slider-button {
 	-webkit-border-radius: 50%;
-	-moz-border-radius: 50%;
-	-o-border-radius: 50%;
-	-ms-border-radius: 50%;
 	border-radius: 50%;
 }
 .z-slider-scale.z-slider-horizontal {

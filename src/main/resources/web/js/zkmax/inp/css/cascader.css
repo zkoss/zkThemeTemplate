@@ -74,7 +74,6 @@
 	position: absolute;
 	right: 8px;
 	top: 50%;
-	-ms-transform: translateY(-50%);
 	transform: translateY(-50%);
 }
 .z-cascader-popup {
@@ -114,9 +113,7 @@
 	padding: var(--zk-cascader-popup-item-padding);
 	border-radius: var(--zk-cascader-border-radius);
 	cursor: pointer;
-	-moz-user-select: none;
 	-webkit-user-select: none;
-	-ms-user-select: none;
 	user-select: none;
 	min-width: 148px;
 	height: var(--zk-cascader-popup-item-height);

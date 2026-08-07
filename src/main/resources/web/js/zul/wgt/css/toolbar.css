@@ -33,9 +33,6 @@
 	position: absolute;
 	top: 50%;
 	-webkit-transform: translateY(-50%);
-	-moz-transform: translateY(-50%);
-	-o-transform: translateY(-50%);
-	-ms-transform: translateY(-50%);
 	transform: translateY(-50%);
 	right: var(--zk-toolbar-horizontal-padding);
 }
@@ -52,15 +49,9 @@
 .z-toolbar-popup {
 	border: 1px solid var(--zk-popup-border-color);
 	-webkit-border-radius: var(--zk-base-border-radius);
-	-moz-border-radius: var(--zk-base-border-radius);
-	-o-border-radius: var(--zk-base-border-radius);
-	-ms-border-radius: var(--zk-base-border-radius);
 	border-radius: var(--zk-base-border-radius);
 	background-color: var(--zk-popup-background-color);
 	-webkit-box-shadow: 0 3px 6px 0 rgba(0,0,0,0.16), 0 2px 4px 0 rgba(0,0,0,0.24);
-	-moz-box-shadow: 0 3px 6px 0 rgba(0,0,0,0.16), 0 2px 4px 0 rgba(0,0,0,0.24);
-	-o-box-shadow: 0 3px 6px 0 rgba(0,0,0,0.16), 0 2px 4px 0 rgba(0,0,0,0.24);
-	-ms-box-shadow: 0 3px 6px 0 rgba(0,0,0,0.16), 0 2px 4px 0 rgba(0,0,0,0.24);
 	box-shadow: 0 3px 6px 0 rgba(0,0,0,0.16), 0 2px 4px 0 rgba(0,0,0,0.24);
 	display: block;
 	position: absolute;
@@ -125,9 +116,6 @@
 	position: relative;
 	cursor: pointer;
 	-webkit-border-radius: var(--zk-input-border-radius);
-	-moz-border-radius: var(--zk-input-border-radius);
-	-o-border-radius: var(--zk-input-border-radius);
-	-ms-border-radius: var(--zk-input-border-radius);
 	border-radius: var(--zk-input-border-radius);
 	overflow: hidden;
 	font-family: var(--zk-base-title-font-family);

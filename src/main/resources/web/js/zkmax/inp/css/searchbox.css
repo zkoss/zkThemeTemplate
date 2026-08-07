@@ -82,7 +82,6 @@
 	position: absolute;
 	right: var(--zk-searchbox-icon-right);
 	top: 50%;
-	-ms-transform: translateY(-50%);
 	transform: translateY(-50%);
 }
 .z-searchbox-clear {
@@ -152,9 +151,7 @@
 	cursor: pointer;
 	border-radius: var(--zk-searchbox-popup-item-border-radius);
 	vertical-align: middle;
-	-moz-user-select: none;
 	-webkit-user-select: none;
-	-ms-user-select: none;
 	user-select: none;
 }
 .z-searchbox-item:before {

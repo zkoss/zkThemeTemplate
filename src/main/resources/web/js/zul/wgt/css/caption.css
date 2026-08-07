@@ -44,9 +44,6 @@
 }
 .z-caption .z-button {
 	-webkit-box-shadow: none;
-	-moz-box-shadow: none;
-	-o-box-shadow: none;
-	-ms-box-shadow: none;
 	box-shadow: none;
 	padding: var(--zk-caption-button-padding);
 	font-size: var(--zk-caption-button-font-size);

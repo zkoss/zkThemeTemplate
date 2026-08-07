@@ -31,9 +31,6 @@
 	vertical-align: middle;
 	background-color: var(--zk-coachmark-background-color);
 	-webkit-border-radius: var(--zk-base-border-radius);
-	-moz-border-radius: var(--zk-base-border-radius);
-	-o-border-radius: var(--zk-base-border-radius);
-	-ms-border-radius: var(--zk-base-border-radius);
 	border-radius: var(--zk-base-border-radius);
 }
 .z-coachmark-pointer {

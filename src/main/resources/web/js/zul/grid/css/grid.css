@@ -173,9 +173,6 @@
 	cursor: pointer;
 	text-decoration: none;
 	-webkit-box-shadow: inset 1px 0 var(--zk-mesh-title-border-color);
-	-moz-box-shadow: inset 1px 0 var(--zk-mesh-title-border-color);
-	-o-box-shadow: inset 1px 0 var(--zk-mesh-title-border-color);
-	-ms-box-shadow: inset 1px 0 var(--zk-mesh-title-border-color);
 	box-shadow: inset 1px 0 var(--zk-mesh-title-border-color);
 }
 .z-column-hover {
@@ -210,9 +207,6 @@
 	top: var(--zk-mesh-column-sort-icon-top);
 	left: 50%;
 	-webkit-transform: translateX(-50%);
-	-moz-transform: translateX(-50%);
-	-o-transform: translateX(-50%);
-	-ms-transform: translateX(-50%);
 	transform: translateX(-50%);
 }
 .z-column-sort .z-column-sorticon :active {

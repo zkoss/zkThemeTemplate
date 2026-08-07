@@ -2,9 +2,6 @@
 	height: var(--zk-base-icon-height);
 	border: 1px solid var(--zk-progressmeter-border-color);
 	-webkit-border-radius: var(--zk-base-border-radius);
-	-moz-border-radius: var(--zk-base-border-radius);
-	-o-border-radius: var(--zk-base-border-radius);
-	-ms-border-radius: var(--zk-base-border-radius);
 	border-radius: var(--zk-base-border-radius);
 	background: var(--zk-base-background-color) 0 0 repeat-x;
 	background-image: url(${c:encodeThemeURL("~./zul/img/misc/prgmeter-anim.gif")});
@@ -119,13 +116,11 @@
 	background-color: var(--zk-loadingbar-secondary-color);
 }
 .z-loadingbar-position-top {
-	-ms-flex-direction: column;
 	flex-direction: column;
 	bottom: unset;
 	top: 0;
 }
 .z-loadingbar-position-bottom {
-	-ms-flex-direction: column-reverse;
 	flex-direction: column-reverse;
 	top: unset;
 	bottom: 0;

@@ -24,30 +24,18 @@
 }
 .z-cropper .jcrop-dragbar.ord-n {
 	-webkit-transform: translateY(-50%);
-	-moz-transform: translateY(-50%);
-	-o-transform: translateY(-50%);
-	-ms-transform: translateY(-50%);
 	transform: translateY(-50%);
 }
 .z-cropper .jcrop-dragbar.ord-e {
 	-webkit-transform: translateX(50%);
-	-moz-transform: translateX(50%);
-	-o-transform: translateX(50%);
-	-ms-transform: translateX(50%);
 	transform: translateX(50%);
 }
 .z-cropper .jcrop-dragbar.ord-w {
 	-webkit-transform: translateX(-50%);
-	-moz-transform: translateX(-50%);
-	-o-transform: translateX(-50%);
-	-ms-transform: translateX(-50%);
 	transform: translateX(-50%);
 }
 .z-cropper .jcrop-dragbar.ord-s {
 	-webkit-transform: translateY(50%);
-	-moz-transform: translateY(50%);
-	-o-transform: translateY(50%);
-	-ms-transform: translateY(50%);
 	transform: translateY(50%);
 }
 .z-cropper-handle {
@@ -60,33 +48,21 @@
 .z-cropper-handle.ord-n {
 	left: 50%;
 	-webkit-transform: translate(-50%, -50%);
-	-moz-transform: translate(-50%, -50%);
-	-o-transform: translate(-50%, -50%);
-	-ms-transform: translate(-50%, -50%);
 	transform: translate(-50%, -50%);
 }
 .z-cropper-handle.ord-e {
 	top: 50%;
 	-webkit-transform: translate(50%, -50%);
-	-moz-transform: translate(50%, -50%);
-	-o-transform: translate(50%, -50%);
-	-ms-transform: translate(50%, -50%);
 	transform: translate(50%, -50%);
 }
 .z-cropper-handle.ord-w {
 	top: 50%;
 	-webkit-transform: translate(-50%, -50%);
-	-moz-transform: translate(-50%, -50%);
-	-o-transform: translate(-50%, -50%);
-	-ms-transform: translate(-50%, -50%);
 	transform: translate(-50%, -50%);
 }
 .z-cropper-handle.ord-s {
 	left: 50%;
 	-webkit-transform: translate(-50%, 50%);
-	-moz-transform: translate(-50%, 50%);
-	-o-transform: translate(-50%, 50%);
-	-ms-transform: translate(-50%, 50%);
 	transform: translate(-50%, 50%);
 }
 .z-cropper .ord-n {
@@ -110,9 +86,6 @@
 	top: 0;
 	right: 0;
 	-webkit-transform: translate(50%, -50%);
-	-moz-transform: translate(50%, -50%);
-	-o-transform: translate(50%, -50%);
-	-ms-transform: translate(50%, -50%);
 	transform: translate(50%, -50%);
 }
 .z-cropper .ord-nw {
@@ -120,9 +93,6 @@
 	top: 0;
 	left: 0;
 	-webkit-transform: translate(-50%, -50%);
-	-moz-transform: translate(-50%, -50%);
-	-o-transform: translate(-50%, -50%);
-	-ms-transform: translate(-50%, -50%);
 	transform: translate(-50%, -50%);
 }
 .z-cropper .ord-se {
@@ -130,9 +100,6 @@
 	bottom: 0;
 	right: 0;
 	-webkit-transform: translate(50%, 50%);
-	-moz-transform: translate(50%, 50%);
-	-o-transform: translate(50%, 50%);
-	-ms-transform: translate(50%, 50%);
 	transform: translate(50%, 50%);
 }
 .z-cropper .ord-sw {
@@ -140,9 +107,6 @@
 	bottom: 0;
 	left: 0;
 	-webkit-transform: translate(-50%, 50%);
-	-moz-transform: translate(-50%, 50%);
-	-o-transform: translate(-50%, 50%);
-	-ms-transform: translate(-50%, 50%);
 	transform: translate(-50%, 50%);
 }
 .z-cropper-holder {
@@ -187,18 +151,12 @@
 	margin: 8px 4px;
 	-webkit-touch-callout: none;
 	-webkit-user-select: none;
-	-khtml-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
 	user-select: none;
 }
 .z-cropper-toolbar > ul {
 	font-family: var(--zk-base-title-font-family);
 	background: var(--zk-color-primary);
 	-webkit-border-radius: var(--zk-base-border-radius);
-	-moz-border-radius: var(--zk-base-border-radius);
-	-o-border-radius: var(--zk-base-border-radius);
-	-ms-border-radius: var(--zk-base-border-radius);
 	border-radius: var(--zk-base-border-radius);
 	box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.16);
 	list-style-type: none;

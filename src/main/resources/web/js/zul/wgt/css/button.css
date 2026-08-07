@@ -7,17 +7,11 @@
 	min-height: var(--zk-base-button-height);
 	border: var(--zk-button-border-width) solid var(--zk-button-border-color);
 	-webkit-border-radius: var(--zk-input-border-radius);
-	-moz-border-radius: var(--zk-input-border-radius);
-	-o-border-radius: var(--zk-input-border-radius);
-	-ms-border-radius: var(--zk-input-border-radius);
 	border-radius: var(--zk-input-border-radius);
 	padding: var(--zk-button-padding);
 	line-height: normal;
 	background-color: var(--zk-button-background-color);
 	-webkit-box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16);
-	-moz-box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16);
-	-o-box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16);
-	-ms-box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16);
 	box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16);
 	cursor: pointer;
 	white-space: nowrap;

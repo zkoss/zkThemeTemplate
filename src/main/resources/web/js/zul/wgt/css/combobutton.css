@@ -4,14 +4,8 @@
 	min-height: var(--zk-base-button-height);
 	cursor: pointer;
 	-webkit-border-radius: var(--zk-input-border-radius);
-	-moz-border-radius: var(--zk-input-border-radius);
-	-o-border-radius: var(--zk-input-border-radius);
-	-ms-border-radius: var(--zk-input-border-radius);
 	border-radius: var(--zk-input-border-radius);
 	-webkit-box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16);
-	-moz-box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16);
-	-o-box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16);
-	-ms-box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16);
 	box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16);
 	overflow: hidden;
 }
@@ -58,9 +52,6 @@
 /* toolbar mold */
 .z-combobutton-toolbar {
 	-webkit-box-shadow: none;
-	-moz-box-shadow: none;
-	-o-box-shadow: none;
-	-ms-box-shadow: none;
 	box-shadow: none;
 }
 .z-combobutton-toolbar .z-combobutton-content {

@@ -11,9 +11,6 @@
 	height: var(--zk-input-height);
 	border: 1px solid var(--zk-input-border-color);
 	-webkit-border-radius: var(--zk-base-border-radius);
-	-moz-border-radius: var(--zk-base-border-radius);
-	-o-border-radius: var(--zk-base-border-radius);
-	-ms-border-radius: var(--zk-base-border-radius);
 	border-radius: var(--zk-base-border-radius);
 	padding: var(--zk-input-padding);
 	line-height: var(--zk-input-line-height);
@@ -171,9 +168,6 @@ textarea.z-textbox {
 	width: 100%;
 	border: 1px solid var(--zk-errorbox-border-color);
 	-webkit-border-radius: var(--zk-base-border-radius);
-	-moz-border-radius: var(--zk-base-border-radius);
-	-o-border-radius: var(--zk-base-border-radius);
-	-ms-border-radius: var(--zk-base-border-radius);
 	border-radius: var(--zk-base-border-radius);
 	padding: var(--zk-errorbox-content-padding);
 	background: var(--zk-errorbox-background-color);

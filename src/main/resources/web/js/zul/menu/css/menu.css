@@ -11,9 +11,6 @@
 	background: transparent none repeat 0 0;
 	border: 0;
 	-webkit-border-radius: var(--zk-base-border-radius);
-	-moz-border-radius: var(--zk-base-border-radius);
-	-o-border-radius: var(--zk-base-border-radius);
-	-ms-border-radius: var(--zk-base-border-radius);
 	border-radius: var(--zk-base-border-radius);
 	padding: 0;
 	margin: 0;
@@ -59,9 +56,6 @@
 	background: transparent none repeat 0 0;
 	border: 0;
 	-webkit-border-radius: var(--zk-base-border-radius);
-	-moz-border-radius: var(--zk-base-border-radius);
-	-o-border-radius: var(--zk-base-border-radius);
-	-ms-border-radius: var(--zk-base-border-radius);
 	border-radius: var(--zk-base-border-radius);
 	padding: 0;
 	margin: 0;
@@ -98,9 +92,6 @@ img ~ .z-menuitem-text {
 	display: block;
 	border: 1px solid transparent;
 	-webkit-border-radius: var(--zk-base-border-radius);
-	-moz-border-radius: var(--zk-base-border-radius);
-	-o-border-radius: var(--zk-base-border-radius);
-	-ms-border-radius: var(--zk-base-border-radius);
 	border-radius: var(--zk-base-border-radius);
 	padding: var(--zk-menu-content-padding);
 	line-height: var(--zk-menu-content-line-height);
@@ -194,9 +185,6 @@ img ~ .z-menuitem-text {
 .z-menu-picker-popup,
 .z-menu-content-popup {
 	-webkit-box-shadow: 0 3px 6px 0 rgba(0,0,0,0.16), 0 2px 4px 0 rgba(0,0,0,0.24);
-	-moz-box-shadow: 0 3px 6px 0 rgba(0,0,0,0.16), 0 2px 4px 0 rgba(0,0,0,0.24);
-	-o-box-shadow: 0 3px 6px 0 rgba(0,0,0,0.16), 0 2px 4px 0 rgba(0,0,0,0.24);
-	-ms-box-shadow: 0 3px 6px 0 rgba(0,0,0,0.16), 0 2px 4px 0 rgba(0,0,0,0.24);
 	box-shadow: 0 3px 6px 0 rgba(0,0,0,0.16), 0 2px 4px 0 rgba(0,0,0,0.24);
 }
 .z-menu-content-popup {
@@ -210,9 +198,6 @@ img ~ .z-menuitem-text {
 .z-menupopup {
 	border: 1px solid var(--zk-base-border-color);
 	-webkit-border-radius: 4px;
-	-moz-border-radius: 4px;
-	-o-border-radius: 4px;
-	-ms-border-radius: 4px;
 	border-radius: 4px;
 	padding: 4px;
 	background: var(--zk-menu-popup-background);
@@ -227,9 +212,6 @@ img ~ .z-menuitem-text {
 	background: transparent none repeat 0 0;
 	border: 0;
 	-webkit-border-radius: var(--zk-base-border-radius);
-	-moz-border-radius: var(--zk-base-border-radius);
-	-o-border-radius: var(--zk-base-border-radius);
-	-ms-border-radius: var(--zk-base-border-radius);
 	border-radius: var(--zk-base-border-radius);
 	padding: 0;
 	margin: 0;
@@ -310,9 +292,6 @@ img ~ .z-menuitem-text {
 .z-menuitem-checkable .z-menuitem-image {
 	border: 1px solid var(--zk-checked-border-color);
 	-webkit-border-radius: var(--zk-base-border-radius);
-	-moz-border-radius: var(--zk-base-border-radius);
-	-o-border-radius: var(--zk-base-border-radius);
-	-ms-border-radius: var(--zk-base-border-radius);
 	border-radius: var(--zk-base-border-radius);
 	background: var(--zk-checked-background-color);
 }

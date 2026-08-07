@@ -15,9 +15,6 @@
 	height: 36px;
 	min-width: 32px;
 	-webkit-border-radius: var(--zk-base-border-radius);
-	-moz-border-radius: var(--zk-base-border-radius);
-	-o-border-radius: var(--zk-base-border-radius);
-	-ms-border-radius: var(--zk-base-border-radius);
 	border-radius: var(--zk-base-border-radius);
 	font-family: var(--zk-base-title-font-family);
 	font-size: var(--zk-calendar-font-size-small);
@@ -64,9 +61,6 @@
 	text-align: center;
 	cursor: pointer;
 	-webkit-border-radius: var(--zk-base-border-radius);
-	-moz-border-radius: var(--zk-base-border-radius);
-	-o-border-radius: var(--zk-base-border-radius);
-	-ms-border-radius: var(--zk-base-border-radius);
 	border-radius: var(--zk-base-border-radius);
 }
 .z-calendar-cell:hover {
@@ -132,9 +126,6 @@
 }
 .z-calendar-selected {
 	-webkit-border-radius: var(--zk-base-border-radius);
-	-moz-border-radius: var(--zk-base-border-radius);
-	-o-border-radius: var(--zk-base-border-radius);
-	-ms-border-radius: var(--zk-base-border-radius);
 	border-radius: var(--zk-base-border-radius);
 	color: var(--zk-calendar-selected-color);
 	background: var(--zk-calendar-selected-background-color);
@@ -179,9 +170,6 @@
 .z-calendar-today {
 	border: 1px solid var(--zk-base-border-color);
 	-webkit-border-radius: var(--zk-base-border-radius);
-	-moz-border-radius: var(--zk-base-border-radius);
-	-o-border-radius: var(--zk-base-border-radius);
-	-ms-border-radius: var(--zk-base-border-radius);
 	border-radius: var(--zk-base-border-radius);
 	background-color: var(--zk-calendar-background-color);
 	margin-top: var(--zk-calendar-today-margin-top);

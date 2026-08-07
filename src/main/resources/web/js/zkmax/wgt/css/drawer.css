@@ -26,14 +26,12 @@
 	background-color: var(--zk-drawer-background-color);
 	display: -ms-flexbox;
 	display: flex;
-	-ms-flex-direction: column;
 	flex-direction: column;
 	/* animation */
 	will-change: transform;
 	transition: transform 200ms ease-out;
 }
 .z-drawer-container {
-	-ms-flex: 1;
 	flex: 1;
 	overflow: auto;
 }

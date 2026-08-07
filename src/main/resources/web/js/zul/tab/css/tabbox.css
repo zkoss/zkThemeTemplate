@@ -5,9 +5,6 @@
 	background: var(--zk-tabbox-background-color);
 	border: 1px solid var(--zk-base-border-color);
 	-webkit-border-radius: var(--zk-base-border-radius);
-	-moz-border-radius: var(--zk-base-border-radius);
-	-o-border-radius: var(--zk-base-border-radius);
-	-ms-border-radius: var(--zk-base-border-radius);
 	border-radius: var(--zk-base-border-radius);
 }
 /* horizontal (default) */
@@ -25,9 +22,6 @@
 	background: var(--zk-tabbox-tabs-background-color);
 	-webkit-touch-callout: none;
 	-webkit-user-select: none;
-	-khtml-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
 	user-select: none;
 }
 .z-tabbox-icon > i {
@@ -87,9 +81,6 @@
 	border-top: 2px solid var(--zk-tabbox-selected-border-color);
 	border-bottom: 0;
 	-webkit-border-radius: 0 0 var(--zk-tabbox-selected-radius) var(--zk-tabbox-selected-radius);
-	-moz-border-radius: 0 0 var(--zk-tabbox-selected-radius) var(--zk-tabbox-selected-radius);
-	-o-border-radius: 0 0 var(--zk-tabbox-selected-radius) var(--zk-tabbox-selected-radius);
-	-ms-border-radius: 0 0 var(--zk-tabbox-selected-radius) var(--zk-tabbox-selected-radius);
 	border-radius: 0 0 var(--zk-tabbox-selected-radius) var(--zk-tabbox-selected-radius);
 }
 .z-tabbox-bottom > .z-toolbar.z-toolbar-tabs {
@@ -136,9 +127,6 @@
 .z-tabbox-left > .z-tabs .z-tab.z-tab-selected {
 	border-right: 2px solid var(--zk-tabbox-selected-border-color);
 	-webkit-border-radius: var(--zk-tabbox-selected-radius) 0 0 var(--zk-tabbox-selected-radius);
-	-moz-border-radius: var(--zk-tabbox-selected-radius) 0 0 var(--zk-tabbox-selected-radius);
-	-o-border-radius: var(--zk-tabbox-selected-radius) 0 0 var(--zk-tabbox-selected-radius);
-	-ms-border-radius: var(--zk-tabbox-selected-radius) 0 0 var(--zk-tabbox-selected-radius);
 	border-radius: var(--zk-tabbox-selected-radius) 0 0 var(--zk-tabbox-selected-radius);
 }
 .z-tabbox-left > .z-tabs .z-tab-button {
@@ -201,9 +189,6 @@
 .z-tabbox-right > .z-tabs .z-tab.z-tab-selected {
 	border-left: 2px solid var(--zk-tabbox-selected-border-color);
 	-webkit-border-radius: 0 var(--zk-tabbox-selected-radius) var(--zk-tabbox-selected-radius) 0;
-	-moz-border-radius: 0 var(--zk-tabbox-selected-radius) var(--zk-tabbox-selected-radius) 0;
-	-o-border-radius: 0 var(--zk-tabbox-selected-radius) var(--zk-tabbox-selected-radius) 0;
-	-ms-border-radius: 0 var(--zk-tabbox-selected-radius) var(--zk-tabbox-selected-radius) 0;
 	border-radius: 0 var(--zk-tabbox-selected-radius) var(--zk-tabbox-selected-radius) 0;
 }
 .z-tabbox-right > .z-tabpanels > .z-tabpanel {
@@ -296,9 +281,6 @@
 .z-tab-icon {
 	display: block;
 	-webkit-transform: translateY(-50%);
-	-moz-transform: translateY(-50%);
-	-o-transform: translateY(-50%);
-	-ms-transform: translateY(-50%);
 	transform: translateY(-50%);
 	line-height: normal;
 	position: absolute;
@@ -339,9 +321,6 @@
 	zoom: 1;
 	-webkit-touch-callout: none;
 	-webkit-user-select: none;
-	-khtml-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
 	user-select: none;
 }
 .z-tab-button:hover {
@@ -355,9 +334,6 @@
 }
 .z-tab-selected {
 	-webkit-border-radius: var(--zk-tabbox-selected-radius) var(--zk-tabbox-selected-radius) 0 0;
-	-moz-border-radius: var(--zk-tabbox-selected-radius) var(--zk-tabbox-selected-radius) 0 0;
-	-o-border-radius: var(--zk-tabbox-selected-radius) var(--zk-tabbox-selected-radius) 0 0;
-	-ms-border-radius: var(--zk-tabbox-selected-radius) var(--zk-tabbox-selected-radius) 0 0;
 	border-radius: var(--zk-tabbox-selected-radius) var(--zk-tabbox-selected-radius) 0 0;
 	border-bottom: 2px solid var(--zk-tabbox-selected-border-color);
 	background: var(--zk-tabbox-selected-background-color);

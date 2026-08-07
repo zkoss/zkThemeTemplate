@@ -27,9 +27,6 @@
 	height: var(--zk-paging-button-height);
 	border: none;
 	-webkit-border-radius: var(--zk-border-radius-small);
-	-moz-border-radius: var(--zk-border-radius-small);
-	-o-border-radius: var(--zk-border-radius-small);
-	-ms-border-radius: var(--zk-border-radius-small);
 	border-radius: var(--zk-border-radius-small);
 	padding: var(--zk-paging-button-padding);
 	margin: var(--zk-paging-button-margin);
@@ -86,9 +83,6 @@
 	height: var(--zk-paging-input-height);
 	border: 1px solid var(--zk-paging-border-color);
 	-webkit-border-radius: var(--zk-base-border-radius);
-	-moz-border-radius: var(--zk-base-border-radius);
-	-o-border-radius: var(--zk-base-border-radius);
-	-ms-border-radius: var(--zk-base-border-radius);
 	border-radius: var(--zk-base-border-radius);
 	background: var(--zk-input-background-color);
 	margin-left: 6px;

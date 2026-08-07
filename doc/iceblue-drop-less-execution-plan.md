@@ -270,6 +270,20 @@ DSP 層與 Font Awesome 的生成內容都還在,零 build step 兌現不了(L3-
 | **前置** | ~~**L-2**(瀏覽器支援聲明)~~ **←2026-08-07 已拍板(選項 C)**;視覺 A/B harness 已架好並自我驗證過 ⇒ **前置全部解除** |
 | **commit 粒度** | 一顆 |
 
+> **`tablet` 的 60 條刻意不在本階。** `zkmax/css/tablet.css.dsp` 仍由 `zklessc` 從
+> `tablet.less` 編出來(P7 holdout),它的前綴是 mixin 展開的產物,不是來源檔裡的字面文字 ——
+> 要在本階移除就得改 `_zkmixins.less` 的定義,而那正是本節下面明文否決過的變體。
+> 因此 **P4a = 788 − 60 = 728**,那 60 條(`border-radius` 24 / `box-shadow` 12 /
+> `box-orient` 12 / `box-flex` 9 / `background-size` 3)**隨 P7 一起處理**,
+> 並計入 P7 的 delta。`check-p4a-delta.js` 用 `DEFERRED` 明文擋住 tablet 在本階被動到。
+
+> **本階起,`cssdiff` 的 exit code 不再是通過訊號。** 它問「candidate 是否**等於**
+> baseline」,而 G-delta 的正確答案就是「不等於」。判準改為 `npm run check:p4a`
+> (`scripts/check-p4a-delta.js`)exit 0 —— 它問的是**正確的下一個問題**:
+> 「差異是否**恰好等於**已核准的 delta?」同理 `check:bytes`(第 2 層)與
+> `check:build-css`(第 1 層)在本階之後會轉紅,**這是結構必然,不是缺陷**;
+> 兩者尚無 delta-aware 版本,列為待處理(**S41**)。
+
 #### P4b —— vendor prefix 逐條判斷(C 群)
 
 | | |
@@ -354,6 +368,13 @@ DSP 層與 Font Awesome 的生成內容都還在,零 build step 兌現不了(L3-
 
 > `tablet/compact/_combo.less` 的兩個 `each()` **與 P3 的 `combo` 完全同形狀**,
 > 歸在同一個拍板項 **L-8** 底下處理。**不要在 P7 重新爭論一次。**
+
+> **P4a 移交過來的 60 條前綴(2026-08-07)。** L-2 選項 C 的移除範圍裡,`tablet.css.dsp`
+> 佔 **60** 條(`border-radius` 24 / `box-shadow` 12 / `box-orient` 12 / `box-flex` 9 /
+> `background-size` 3),因為本階之前它仍由 `zklessc` 從 mixin 展開,不是來源檔裡的字面文字。
+> **本階轉成 `.css` 之後要一併移除**,並計入 P7 的 delta ——
+> P8 的 G-zero 核帳是 P4 + P5 + P7 三段相加,這 60 條必須落在 P7 那一段,不能兩邊都不算。
+> 驗收方式與 P4a 相同:移除後每一條在同一個 rule 裡都要有無前綴同伴,`-webkit-` 不動。
 
 > **P7 順手要補的既有缺口**(**S29**,見
 > [進度文件附錄 L3-I](iceblue-drop-less-progress-appendix.md#l3-i-change-log--狀態層的敘述更正);

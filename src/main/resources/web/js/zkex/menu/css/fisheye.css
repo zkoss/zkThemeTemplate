@@ -20,17 +20,11 @@
 	color: var(--zk-tooltip-color);
 	display: none;
 	-webkit-border-radius: var(--zk-base-border-radius);
-	-moz-border-radius: var(--zk-base-border-radius);
-	-o-border-radius: var(--zk-base-border-radius);
-	-ms-border-radius: var(--zk-base-border-radius);
 	border-radius: var(--zk-base-border-radius);
 	padding: 4px;
 	background: var(--zk-tooltip-background-color);
 	text-align: center;
 	-webkit-box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16);
-	-moz-box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16);
-	-o-box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16);
-	-ms-box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16);
 	box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16);
 }
 .z-fisheyebar-inner {

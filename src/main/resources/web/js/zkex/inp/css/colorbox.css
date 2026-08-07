@@ -4,9 +4,6 @@
 	height: var(--zk-colorbox-height);
 	border: 1px solid var(--zk-base-border-color);
 	-webkit-border-radius: var(--zk-base-border-radius);
-	-moz-border-radius: var(--zk-base-border-radius);
-	-o-border-radius: var(--zk-base-border-radius);
-	-ms-border-radius: var(--zk-base-border-radius);
 	border-radius: var(--zk-base-border-radius);
 	margin: 0 2px;
 	padding: 4px;
@@ -54,9 +51,6 @@
 .z-colorbox-shadow,
 .z-menu-shadow {
 	-webkit-box-shadow: 0 3px 6px 0 rgba(0,0,0,0.16), 0 2px 4px 0 rgba(0,0,0,0.24);
-	-moz-box-shadow: 0 3px 6px 0 rgba(0,0,0,0.16), 0 2px 4px 0 rgba(0,0,0,0.24);
-	-o-box-shadow: 0 3px 6px 0 rgba(0,0,0,0.16), 0 2px 4px 0 rgba(0,0,0,0.24);
-	-ms-box-shadow: 0 3px 6px 0 rgba(0,0,0,0.16), 0 2px 4px 0 rgba(0,0,0,0.24);
 	box-shadow: 0 3px 6px 0 rgba(0,0,0,0.16), 0 2px 4px 0 rgba(0,0,0,0.24);
 }
 .z-colorbox-popup,
@@ -67,9 +61,6 @@
 	z-index: var(--zk-base-popup-z-index);
 	border: 1px solid var(--zk-popup-border-color);
 	-webkit-border-radius: var(--zk-base-border-radius);
-	-moz-border-radius: var(--zk-base-border-radius);
-	-o-border-radius: var(--zk-base-border-radius);
-	-ms-border-radius: var(--zk-base-border-radius);
 	border-radius: var(--zk-base-border-radius);
 	padding: var(--zk-colorbox-popup-padding);
 	background-color: var(--zk-popup-background-color);
@@ -151,9 +142,6 @@
 	width: var(--zk-colorpicker-color-width);
 	height: var(--zk-colorpicker-color-height);
 	-webkit-border-radius: 2px;
-	-moz-border-radius: 2px;
-	-o-border-radius: 2px;
-	-ms-border-radius: 2px;
 	border-radius: 2px;
 	top: 0;
 	right: var(--zk-colorpicker-color-position-right);
@@ -252,9 +240,6 @@
 	width: var(--zk-colorpalette-new-color-width);
 	height: var(--zk-colorpalette-new-color-height);
 	-webkit-border-radius: 2px;
-	-moz-border-radius: 2px;
-	-o-border-radius: 2px;
-	-ms-border-radius: 2px;
 	border-radius: 2px;
 	border: 1px solid var(--zk-base-border-color);
 	position: absolute;
@@ -277,9 +262,6 @@
 	height: var(--zk-colorpalette-color-size);
 	border: 1px solid var(--zk-base-border-color);
 	-webkit-border-radius: 2px;
-	-moz-border-radius: 2px;
-	-o-border-radius: 2px;
-	-ms-border-radius: 2px;
 	border-radius: 2px;
 	cursor: pointer;
 	float: left;
@@ -303,9 +285,6 @@
 	color: var(--zk-toolbar-button-color);
 	font-size: var(--zk-colorbox-icon-font-size);
 	-webkit-border-radius: var(--zk-input-border-radius);
-	-moz-border-radius: var(--zk-input-border-radius);
-	-o-border-radius: var(--zk-input-border-radius);
-	-ms-border-radius: var(--zk-input-border-radius);
 	border-radius: var(--zk-input-border-radius);
 	padding: var(--zk-colorbox-icon-padding);
 }

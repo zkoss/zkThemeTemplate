@@ -51,14 +51,8 @@
 	left: 0;
 	margin-top: 5px;
 	-webkit-border-radius: 4px;
-	-moz-border-radius: 4px;
-	-o-border-radius: 4px;
-	-ms-border-radius: 4px;
 	border-radius: 4px;
 	-webkit-box-shadow: 0 3px 6px 0 rgba(0,0,0,0.16), 0 2px 4px 0 rgba(0,0,0,0.24);
-	-moz-box-shadow: 0 3px 6px 0 rgba(0,0,0,0.16), 0 2px 4px 0 rgba(0,0,0,0.24);
-	-o-box-shadow: 0 3px 6px 0 rgba(0,0,0,0.16), 0 2px 4px 0 rgba(0,0,0,0.24);
-	-ms-box-shadow: 0 3px 6px 0 rgba(0,0,0,0.16), 0 2px 4px 0 rgba(0,0,0,0.24);
 	box-shadow: 0 3px 6px 0 rgba(0,0,0,0.16), 0 2px 4px 0 rgba(0,0,0,0.24);
 	z-index: var(--zk-base-popup-z-index);
 }
@@ -134,9 +128,6 @@
 	font-style: normal;
 	color: var(--zk-nav-badge-text-color);
 	-webkit-border-radius: 10px;
-	-moz-border-radius: 10px;
-	-o-border-radius: 10px;
-	-ms-border-radius: 10px;
 	border-radius: 10px;
 	padding: 2px 8px;
 	line-height: normal;
@@ -215,14 +206,8 @@
 	white-space: nowrap;
 	z-index: var(--zk-base-popup-z-index);
 	-webkit-border-radius: var(--zk-base-border-radius) var(--zk-base-border-radius) 0 0;
-	-moz-border-radius: var(--zk-base-border-radius) var(--zk-base-border-radius) 0 0;
-	-o-border-radius: var(--zk-base-border-radius) var(--zk-base-border-radius) 0 0;
-	-ms-border-radius: var(--zk-base-border-radius) var(--zk-base-border-radius) 0 0;
 	border-radius: var(--zk-base-border-radius) var(--zk-base-border-radius) 0 0;
 	-webkit-box-shadow: 0 3px 6px 0 rgba(0,0,0,0.16), 0 2px 4px 0 rgba(0,0,0,0.24);
-	-moz-box-shadow: 0 3px 6px 0 rgba(0,0,0,0.16), 0 2px 4px 0 rgba(0,0,0,0.24);
-	-o-box-shadow: 0 3px 6px 0 rgba(0,0,0,0.16), 0 2px 4px 0 rgba(0,0,0,0.24);
-	-ms-box-shadow: 0 3px 6px 0 rgba(0,0,0,0.16), 0 2px 4px 0 rgba(0,0,0,0.24);
 	box-shadow: 0 3px 6px 0 rgba(0,0,0,0.16), 0 2px 4px 0 rgba(0,0,0,0.24);
 }
 .z-nav-text-popup[disabled],
@@ -236,15 +221,9 @@
 .z-nav-text-popup + .z-nav-popup,
 .z-navitem-text-popup + .z-nav-popup {
 	-webkit-border-radius: 0 0 var(--zk-base-border-radius) var(--zk-base-border-radius);
-	-moz-border-radius: 0 0 var(--zk-base-border-radius) var(--zk-base-border-radius);
-	-o-border-radius: 0 0 var(--zk-base-border-radius) var(--zk-base-border-radius);
-	-ms-border-radius: 0 0 var(--zk-base-border-radius) var(--zk-base-border-radius);
 	border-radius: 0 0 var(--zk-base-border-radius) var(--zk-base-border-radius);
 	/* Prevent top shadow */
 	-webkit-box-shadow: 0 -3px 0 0 var(--zk-nav-popup-background-color), 0 3px 6px 0 rgba(0,0,0,0.16), 0 2px 4px 0 rgba(0,0,0,0.24);
-	-moz-box-shadow: 0 -3px 0 0 var(--zk-nav-popup-background-color), 0 3px 6px 0 rgba(0,0,0,0.16), 0 2px 4px 0 rgba(0,0,0,0.24);
-	-o-box-shadow: 0 -3px 0 0 var(--zk-nav-popup-background-color), 0 3px 6px 0 rgba(0,0,0,0.16), 0 2px 4px 0 rgba(0,0,0,0.24);
-	-ms-box-shadow: 0 -3px 0 0 var(--zk-nav-popup-background-color), 0 3px 6px 0 rgba(0,0,0,0.16), 0 2px 4px 0 rgba(0,0,0,0.24);
 	box-shadow: 0 -3px 0 0 var(--zk-nav-popup-background-color), 0 3px 6px 0 rgba(0,0,0,0.16), 0 2px 4px 0 rgba(0,0,0,0.24);
 }
 .z-navbar-vertical li,
@@ -306,14 +285,8 @@
 	z-index: var(--zk-base-popup-z-index);
 	background: var(--zk-nav-popup-background-color);
 	-webkit-border-radius: var(--zk-base-border-radius);
-	-moz-border-radius: var(--zk-base-border-radius);
-	-o-border-radius: var(--zk-base-border-radius);
-	-ms-border-radius: var(--zk-base-border-radius);
 	border-radius: var(--zk-base-border-radius);
 	-webkit-box-shadow: 0 3px 6px 0 rgba(0,0,0,0.16), 0 2px 4px 0 rgba(0,0,0,0.24);
-	-moz-box-shadow: 0 3px 6px 0 rgba(0,0,0,0.16), 0 2px 4px 0 rgba(0,0,0,0.24);
-	-o-box-shadow: 0 3px 6px 0 rgba(0,0,0,0.16), 0 2px 4px 0 rgba(0,0,0,0.24);
-	-ms-box-shadow: 0 3px 6px 0 rgba(0,0,0,0.16), 0 2px 4px 0 rgba(0,0,0,0.24);
 	box-shadow: 0 3px 6px 0 rgba(0,0,0,0.16), 0 2px 4px 0 rgba(0,0,0,0.24);
 }
 .z-nav-popup .z-nav-text,
