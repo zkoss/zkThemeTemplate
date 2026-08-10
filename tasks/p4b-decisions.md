@@ -72,8 +72,12 @@ P4b 唯一需要判斷的事,是每一條該**純移除**還是**成對替換**�
 
 ### 3.1 `-ms-zoom: 1` ×3 —— 純移除,而且整條 rule 一起走
 
-`-ms-zoom` **不是任何瀏覽器認得的屬性**。IE 用的是**無前綴**的 `zoom`(hasLayout hack),
-`-ms-zoom` 是 mixin 盲目加前綴的產物,連 IE 都不吃 —— 它從寫下的第一天起就是死的。
+**沒有任何現代瀏覽器認得 `-ms-zoom`。** `zoom` 本身是 IE 的 hasLayout hack,
+標準化過程中從未採用這個前綴拼法,今天要嘛讀無前綴的 `zoom`、要嘛什麼都不做。
+
+> ~~「連 IE 都不吃,它從寫下的第一天起就是死的」~~ —— **這句話是錯的,2026-08-10 第 4 層覆核指正**:
+> Microsoft 確實在 IE8 standards mode 出過 `-ms-zoom`。**但這不影響本條決策** ——
+> 判準問的是「**今天**的現代瀏覽器會不會變」,而答案仍是不會。
 
 三條 rule 都**只有這一條宣告**,拿掉之後 block 是空的,所以連 selector 一起移除。
 
@@ -117,6 +121,11 @@ P4b 唯一需要判斷的事,是每一條該**純移除**還是**成對替換**�
 > `-ms-inline-flexbox` 合計 **13 條** —— 這些是**前綴在「值」上,不在「屬性」上**,
 > 結構上是 P4a/P4b 的普查看不到的第三類。另有約 **79 處前綴 pseudo selector**
 > (`::-moz-placeholder`、`:-ms-input-placeholder`、`::-ms-check` …)也同理。列為後續議題。
+>
+> **第 4 層覆核補充的一點**:那 13 條裡有一條(`display: -ms-flexbox`)就在
+> **本條剛清掉一半的同一個 block 裡** —— 拿掉 `-ms-flex-align` 之後,
+> `.z-inputgroup-text` 留下的是**半套 IE10 fallback**。行為零影響(IE10 不在支援範圍),
+> 但「同一個 block 清一半」值得在後續議題裡一併收掉,而不是分兩次。
 
 ### 3.4 `-moz-appearance` ×5 —— 改名成標準 `appearance`
 
@@ -159,9 +168,24 @@ selector 帶 `.gecko`,**這條 rule 本來就只在 Firefox 生效**。改成 `u
 
 * Firefox:`-moz-user-select` → `user-select`,同值,**不變**。
 * webkit:此 block 原本**沒有** `-webkit-user-select`,所以現在多了一條會生效的 `user-select: text`。
-  嚴格說這是 webkit 上的**新增行為** —— 但 `.z-focus-a` 是
-  `font-size:0; width:1px; height:1px` 的隱形焦點錨點,「這 1px 能不能被選取」**不可觀察**。
-  **據實記錄,不視為例外。**
+  嚴格說這是 webkit 上的**新增行為**。
+
+> ~~理由:`.z-focus-a` 是 `font-size:0; width:1px; height:1px` 的隱形焦點錨點,
+> 「這 1px 能不能被選取」不可觀察。~~
+> **2026-08-10 第 4 層覆核指正:這個理由不成立,結論才成立。**
+> 「1px + `font-size:0`」**證明不了**不可觀察 —— `overflow:hidden` 裁掉的是**繪製**,不是**選取**;
+> 一個帶文字節點的 1px 元素仍然可以被拖選、被複製。
+>
+> **真正成立的兩個理由**(原文沒寫出來,補上):
+> ① ZK 各 mold 產生的 `.z-focus-a` 是**沒有文字節點的空 `<div>`**(覆核者在 ZK 原始碼的
+> listbox / tree / Window / menupopup / calendar 逐一確認),沒有可選取的內容;
+> ② `user-select` 的初始值 `auto` 本來就**計算成 `text`**,除非祖先是 `none`。
+>
+> **另一個原文漏掉的結構變化(覆核者發現)**:`tablet.css.dsp` 有
+> `${".z-page "}*{-webkit-user-select:none}`,特異性 (0,1,0)。改動前 webkit **根本看不到**
+> `.z-focus-a` 的 `-moz-`/`-khtml-` 宣告,**沒有競爭**;現在 `user-select: text` 與它
+> **特異性打平**,結果取決於樣式表順序。因為 ①,實際不可觀察 ——
+> 但這是真的結構變化,**且 P7 處理 tablet 時會再遇到一次**,先記在這裡。
 
 ---
 
