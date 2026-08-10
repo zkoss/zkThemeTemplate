@@ -19,7 +19,7 @@
     "gen:fa-css": "node scripts/gen-fa-css.js",
     "check:fa-css": "node scripts/gen-fa-css.js --check",
     "build:tree": "zklessc -s src/main/resources/web -o target/classes/web/iceblue_css --compress && npm run build:css",
-    "check:gate": "npm run check:less-conventions && npm run check:fa-css && npm run build:tree && npm run check:p4a",
+    "check:gate": "npm run check:baseline && npm run check:less-conventions && npm run check:fa-css && npm run build:tree && npm run check:p4a",
     "check:cssdiff": "npm run check:less-conventions && npm run check:fa-css && npm run build:tree && node scripts/cssdiff.js baseline/ target/classes/web/iceblue_css",
     "p4a:strip": "node scripts/p4a-strip-prefixes.js",
     "p4a:delta": "node scripts/p4a-delta.js",

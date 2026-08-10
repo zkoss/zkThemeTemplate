@@ -160,8 +160,16 @@ DSP 層與 Font Awesome 的生成內容都還在,零 build step 兌現不了(L3-
 | **G-zero** | P0、P1、P2、P3、P6、P8 | `files differing: 0`。**任何差異都是 bug** |
 | **G-delta** | P4a、P4b、~~P5~~、P7 | 差異必須**逐條對應到已決策的變更**,且總數符合預估。**每個階段只允許一種 diff 形狀** —— 這是 P4 拆成 P4a / P4b 的理由。**P5 實際收在 G-zero**:不採 `@scope`,runtime 行為沒動,沒有要對應的 delta(**S35**) |
 
-**閘門指令是 `npm run check:gate`;判準就是它的 exit code。** 它 = `check:less-conventions`
-+ `check:fa-css` + `build:tree` + **`check:p4a`**。
+**閘門指令是 `npm run check:gate`;判準就是它的 exit code。** 它 = **`check:baseline`** +
+`check:less-conventions` + `check:fa-css` + `build:tree` + **`check:p4a`**。
+
+> **為什麼 `check:baseline` 排第一。** 閘門說的每一句話都是「相對於 `baseline/`」,
+> 所以基準本身若被污染,後面四步全部失去意義 —— 而且不一定會叫。把它排在最前面,
+> 基準一有問題就**在編譯之前**停下來,錯誤訊息直接指向真正的原因。
+> **負向控制(2026-08-10)**:對 `baseline/js/zkex/menu/css/fisheye.css.dsp` 追加 5 個 byte
+> → `check:gate` 在**第一步** exit 1(`CHANGED … / 0 missing, 1 changed, 0 extra`),
+> **完全沒有走到 `build:tree`**。以 scratchpad 副本還原,還原後 sha256、`git status`、
+> manifest **三條路徑各自驗過**。
 
 主閘門**儀器**是 `scripts/cssdiff.js` —— 把每個輸出檔攤平成**有序**的
 `context || property:value` 記錄清單再逐筆比對。設計要點與踩過的坑見 L3-C。
