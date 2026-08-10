@@ -1,0 +1,1 @@
+.z-grid.z-sticky-header{overflow:visible}.z-grid.z-sticky-header .z-grid-header{position:sticky;top:0;z-index:1}.z-column.z-frozen-sticky,.z-row .z-row-inner.z-frozen-sticky,.z-row .z-cell.z-frozen-sticky,.z-group-inner.z-frozen-sticky,.z-detail-outer.z-frozen-sticky{position:sticky;z-index:1}

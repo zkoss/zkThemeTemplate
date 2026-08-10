@@ -34,7 +34,7 @@
   - [L3-F P3 逐檔複核包](iceblue-drop-less-progress-appendix.md#l3-f-p3-批次的檔案清單每一步可以自己檢查什麼步-0-4-的逐檔複核包) — [步 0](iceblue-drop-less-progress-appendix.md#步-0-的複核包2026-07-31) · [步 1](iceblue-drop-less-progress-appendix.md#步-1-的複核包2026-08-034-檔) · [步 2](iceblue-drop-less-progress-appendix.md#步-2-的複核包2026-08-0315-檔--批-1-收工-2020) · [步 3](iceblue-drop-less-progress-appendix.md#步-3-的複核包2026-08-0343-檔--批-2-收工-6374) · [步 4](iceblue-drop-less-progress-appendix.md#步-4-的複核包2026-08-0311-檔--批-3-收工p3-收工-7474)
   - [L3-G P3 收工複審](iceblue-drop-less-progress-appendix.md#l3-g-p3-收工複審74-檔獨立-fan-out2026-08-04計畫書-l3-c-26-第-4-層首次執行) — 74 檔獨立 fan-out
   - [L3-H 執行機制:workflow](iceblue-drop-less-progress-appendix.md#l3-h-執行機制workflow)
-  - [L3-I Change Log](iceblue-drop-less-progress-appendix.md#l3-i-change-log--狀態層的敘述更正) — 46 條狀態層更正
+  - [L3-I Change Log](iceblue-drop-less-progress-appendix.md#l3-i-change-log--狀態層的敘述更正) — 47 條狀態層更正
 
 ---
 
@@ -58,7 +58,8 @@
 > **調整後的基準**比對。`baseline/` 仍然一個 byte 都沒動,也沒有 manifest 或快照。
 > **三支複核現在同時 exit 0**(紀錄 #54)。第 4 層獨立驗證 **C1–C11 全部 CONFIRMED**,
 > 並揪出**驗證協定自己**的盲點 —— `baseline/` 被 gitignore,`git status` 證明不了它沒被寫
-> (**S45**,已改為加驗 `npm run check:baseline`)。報告 [l4-verify-s41-delta-aware.md](l4-verify-s41-delta-aware.md),紀錄 #55。
+> (**S45**,先加驗 `npm run check:baseline`;**2026-08-10 進一步從源頭堵掉,`baseline/` 改為
+> 追蹤 —— 暫時性,P8 移掉,見 S47**)。報告 [l4-verify-s41-delta-aware.md](l4-verify-s41-delta-aware.md),紀錄 #55。
 
 > **P5 同時回答了一個一直沒問對的問題**:「reset 一定要拆成獨立檔案載入嗎?」——
 > 不但不必,而且**拆檔是唯一會弄丟單一 WCS 的做法**。`zk.wcs` 是 **ZK core** 的檔案,主題

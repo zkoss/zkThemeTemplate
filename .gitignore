@@ -8,7 +8,19 @@ target/
 # screenshots, manifests, diff report — goes under target/, which is already ignored.
 test-results/
 
-# drop-LESS conversion: immutable reference build + gate reports.
-# Rebuildable with `npm run baseline` — never committed, so it cannot drift silently.
-baseline/
+# drop-LESS conversion: gate reports.
 *-gate.json
+
+# `baseline/` USED TO BE IGNORED HERE. It is now TRACKED, deliberately and TEMPORARILY,
+# for the duration of the drop-LESS conversion — untrack it again at P8 (see S47).
+#
+# WHY: every 4th-layer verification round is required to prove it did not touch `baseline/`,
+# and the proof it was told to use is `git status --porcelain`. While the directory was
+# ignored, that command could not go red no matter what happened to the reference build —
+# the single most important invariant in the plan was being reported green by a check
+# structurally incapable of failing (found 2026-08-07, recorded as S45).
+# `doc/baseline-manifest.sha256` pins the bytes, but nothing made a WRITE visible at a glance.
+# Tracking it makes any write show up in `git status` and `git diff` immediately.
+#
+# COST: ~832 KB / 86 files of build output in history, and `npm run baseline` now produces a
+# working-tree diff instead of nothing. That is the point — it should be loud.

@@ -1,0 +1,1 @@
+<%@ taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c" %><%@ taglib uri="http://www.zkoss.org/dsp/zk/core" prefix="z" %><%@ taglib uri="http://www.zkoss.org/dsp/web/theme" prefix="t" %>.z-flex{display:flex}.z-flex>:not(.z-flex-item){flex-shrink:0}.z-flex-row{flex-direction:row}.z-flex-column{flex-direction:column}.z-flex-item{flex:1 1 0;min-height:0;min-width:0}

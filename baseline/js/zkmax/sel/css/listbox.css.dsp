@@ -1,0 +1,1 @@
+.z-listbox.z-sticky-header{overflow:visible}.z-listbox.z-sticky-header .z-listbox-header{position:sticky;top:0;z-index:1}.z-listheader.z-frozen-sticky,.z-listitem .z-listcell.z-frozen-sticky,.z-listgroup-inner.z-frozen-sticky{position:sticky;z-index:1}

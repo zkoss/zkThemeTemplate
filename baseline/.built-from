@@ -1,0 +1,19 @@
+commit:        a89d44e03ab732fb32aeb43f8e7e9ba29c701382
+src dirty:     no
+zkless-engine: 1.1.13
+less:          3.13.1
+.less sources: 153
+
+backfill for ZK 10.4 parity (2026-08-05) — see tasks/backfill-8-components-and-version.md
+zul/css/norm.css.dsp is no longer purely the above commit's output: it gained the
+20 --zk-severity-* tokens, compiled from ZK 10.4's own zul/less/profiles/_default.less
+imported byte-identically. Every other file here is still that commit's output,
+proven by the 1-changed/0-missing/0-extra manifest check taken across the update.
+
+Also backfilled (same date): 8 component outputs that never existed in this theme —
+js/zul/wgt/css/{avatar,avatargroup,badge,breadcrumb,carousel,chip,confirmpopup}.css.dsp
+and js/zkmax/db/css/daterangebox.css.dsp. Their baseline is the zklessc output of ZK
+10.4's own LESS, imported byte-identically, so for these 8 the LESS lane is the reference
+just as it is for the other 77. NOTE: at the moment of import baseline and candidate come
+from the SAME compile, so cssdiff's "0 differing" is true by construction and proves
+nothing for them; the real comparison starts when they are converted to CSS.
