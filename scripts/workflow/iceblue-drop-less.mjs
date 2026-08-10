@@ -96,9 +96,16 @@ a given section is needed. Open an appendix section only when that column matche
 doing, and reach for grep + a bounded read rather than loading the whole file.
 
 THE GATE
-  cd ${WT} && npm run check:cssdiff
-  Rebuilds the whole tree and compares it to \`baseline/\` at declaration level. For a G-zero
-  phase the ONLY acceptable result is exit 0 with the literal line \`files differing: 0\`.
+  cd ${WT} && npm run check:gate
+  Rebuilds the whole tree, then judges it. Exit 0 is the ONLY acceptable result, in every phase.
+
+  \`npm run check:cssdiff\` is the INSTRUMENT, not the verdict — it prints the raw declaration
+  diff against \`baseline/\`. In a G-zero phase the two agree and it exits 0 with the literal
+  line \`files differing: 0\`. From P4a on they do NOT: the built tree is deliberately no longer
+  equal to \`baseline/\`, so cssdiff exits 1 BY CONSTRUCTION (currently 45 files / 728 records)
+  and \`check:gate\` — which ends in \`check:p4a\` — is what says whether that difference is
+  exactly the approved delta. Read cssdiff's output when you need to see the differences
+  themselves; never quote its exit code as a pass or a failure.
   Useful extras: \`node scripts/cssdiff.js baseline/ target/classes/web/iceblue_css --list\` prints
   every file with its declaration count; \`--json <path>\` writes a machine-readable report.
 
@@ -140,7 +147,7 @@ const OUTCOME = {
 				declarations: { type: 'number' },
 				filesCompared: { type: 'number' },
 			},
-			description: 'Verbatim numbers from the final `npm run check:cssdiff` run.',
+			description: 'Verbatim numbers from the final `npm run check:cssdiff` run — the instrument. In a G-delta phase filesDiffering is SUPPOSED to be non-zero; the verdict comes from `npm run check:gate`, not from these.',
 		},
 		filesWritten: { type: 'array', items: { type: 'string' }, description: 'Repo-relative paths created or modified.' },
 		commits: { type: 'array', items: { type: 'string' }, description: 'Short hashes you created, oldest first.' },

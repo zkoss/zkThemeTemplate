@@ -160,8 +160,30 @@ DSP 層與 Font Awesome 的生成內容都還在,零 build step 兌現不了(L3-
 | **G-zero** | P0、P1、P2、P3、P6、P8 | `files differing: 0`。**任何差異都是 bug** |
 | **G-delta** | P4a、P4b、~~P5~~、P7 | 差異必須**逐條對應到已決策的變更**,且總數符合預估。**每個階段只允許一種 diff 形狀** —— 這是 P4 拆成 P4a / P4b 的理由。**P5 實際收在 G-zero**:不採 `@scope`,runtime 行為沒動,沒有要對應的 delta(**S35**) |
 
-主閘門工具:`scripts/cssdiff.js`(`npm run check:cssdiff`)—— 把每個輸出檔攤平成
-**有序**的 `context || property:value` 記錄清單再逐筆比對。設計要點與踩過的坑見 L3-C。
+**閘門指令是 `npm run check:gate`;判準就是它的 exit code。** 它 = `check:less-conventions`
++ `check:fa-css` + `build:tree` + **`check:p4a`**。
+
+主閘門**儀器**是 `scripts/cssdiff.js` —— 把每個輸出檔攤平成**有序**的
+`context || property:value` 記錄清單再逐筆比對。設計要點與踩過的坑見 L3-C。
+
+> **儀器與判準在 P4a 之後分家了(2026-08-10)。** G-zero 階段兩者合一:「差異 0」既是
+> cssdiff 的輸出也是判準,所以 `npm run check:cssdiff` 的 exit code 直接可用。G-delta 階段
+> 不是 —— cssdiff 問「candidate 是否**等於** baseline」,而正確答案是「不等於」,
+> 於是它**因構造而 exit 1**(P4a 之後固定 45 檔 / 728 條)。
+> 判準改由 `check:p4a` 回答「差異是否**恰好等於**已核准的 delta」。
+>
+> **所以現在有兩支,用途不同,不要互相替代:**
+>
+> | 指令 | 是什麼 | 在 G-delta 階段的 exit code |
+> |---|---|---|
+> | **`npm run check:gate`** | **判準**。要回答「現在過了沒」就跑這支 | **0 才算過** |
+> | `npm run check:cssdiff` | **儀器**。要看原始差異長什麼樣(核帳、debug)才跑這支 | **1,而且是對的** |
+>
+> 為什麼不讓 cssdiff 自己收斂:P8 的 G-zero 核帳要把 P4 + P5 + P7 的 delta 加總對帳,
+> 那時需要的是**未經判斷的原始差異**。把判準塞進儀器就取不到它了。
+>
+> 第 1、2 層複核(`check:bytes`、`check:build-css`)刻意**不在** `check:gate` 裡 ——
+> 它們是**複核**不是閘門(見下一節),而且 `check:build-css` 會重編整棵 LESS 樹,慢得多。
 
 兩個附帶條件,兩種閘門都適用:
 
