@@ -108,20 +108,24 @@ function maskCode(text) {
 }
 
 /**
- * Apply the P4a rule to one compiled `.css.dsp`.
+ * Walk one compiled `.css.dsp` and hand every declaration block to `cb`.
  *
  * Only INNERMOST brace pairs are treated as declaration blocks, so `@media`/`@supports` wrappers
  * are traversed rather than parsed — and each repetition of a selector is its own block, which is
- * what makes the "same rule block" half of the rule mean what it says (`combo.css.dsp` repeats one
- * selector six times; the 4th-layer review on 2026-08-07 caught the selector-keyed variant of this
- * being weaker than advertised).
+ * what makes the "same rule block" half of the P4a rule mean what it says (`combo.css.dsp` repeats
+ * one selector six times; the 4th-layer review on 2026-08-07 caught the selector-keyed variant of
+ * this being weaker than advertised).
  *
- * @returns {{text: string, removed: string[]}} rewritten file, and one `<prop>` per removal.
+ * `p4b-delta.js` walks with this same function ON PURPOSE. P4a's population (prefixed WITH an
+ * unprefixed twin in the block) and P4b's (prefixed WITHOUT one) are defined as complements of each
+ * other, so if the two phases disagreed on where a block starts and ends, a declaration could fall
+ * into both or into neither. Sharing the walk makes that unrepresentable.
+ *
+ * @param cb receives `{ start, close, declared, parsed, code }`; `parsed` holds one
+ *           `{ a, b, colon, prop }` per declaration (or `null` for a non-declaration part).
  */
-function applyP4a(text) {
+function eachBlock(text, cb) {
 	const code = maskCode(text);
-	const del = new Uint8Array(text.length);
-	const removed = [];
 	let open = -1;
 
 	for (let i = 0; i < code.length; i++) {
@@ -155,11 +159,24 @@ function applyP4a(text) {
 			const prop = text.slice(a, colon).trim();
 			if (!prop) return null;
 			declared.add(prop);
-			return { a, b, prop };
+			return { a, b, colon, prop };
 		});
 
-		for (let j = 0; j < parsed.length; j++) {
-			const d = parsed[j];
+		cb({ start, close, declared, parsed, code });
+	}
+}
+
+/**
+ * Apply the P4a rule to one compiled `.css.dsp`.
+ *
+ * @returns {{text: string, removed: string[]}} rewritten file, and one `<prop>` per removal.
+ */
+function applyP4a(text) {
+	const del = new Uint8Array(text.length);
+	const removed = [];
+
+	eachBlock(text, ({ close, declared, parsed }) => {
+		for (const d of parsed) {
 			if (!d) continue;
 			if (!STRIP_PREFIX.test(d.prop) || CARVE_OUT.has(d.prop)) continue;
 			if (!declared.has(d.prop.replace(STRIP_PREFIX, ''))) continue; // P4b orphan — leave it
@@ -170,7 +187,7 @@ function applyP4a(text) {
 			else if (text[d.a - 1] === ';') del[d.a - 1] = 1; // last in block: the one in front
 			removed.push(d.prop);
 		}
-	}
+	});
 
 	if (!removed.length) return { text, removed };
 	let out = '';
@@ -285,6 +302,8 @@ module.exports = {
 	DEFERRED,
 	EXPECTED_REMOVALS,
 	EXPECTED_FILES,
+	maskCode,
+	eachBlock,
 	applyP4a,
 	adjustedBaseline,
 	materialize,

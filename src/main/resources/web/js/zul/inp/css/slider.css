@@ -47,7 +47,7 @@
 	border-radius: var(--zk-base-border-radius);
 	background: var(--zk-input-background-color);
 	-webkit-appearance: textfield;
-	-moz-appearance: textfield;
+	appearance: textfield;
 	text-align: center;
 	position: absolute;
 	line-height: 1.5;
@@ -64,7 +64,7 @@
 .z-slider-input:focus {
 	border-color: var(--zk-input-focus-border-color);
 	-webkit-appearance: textfield;
-	-moz-appearance: textfield;
+	appearance: textfield;
 }
 .z-slider-horizontal {
 	height: var(--zk-base-bar-height);

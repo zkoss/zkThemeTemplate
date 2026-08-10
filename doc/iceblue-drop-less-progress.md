@@ -34,7 +34,7 @@
   - [L3-F P3 逐檔複核包](iceblue-drop-less-progress-appendix.md#l3-f-p3-批次的檔案清單每一步可以自己檢查什麼步-0-4-的逐檔複核包) — [步 0](iceblue-drop-less-progress-appendix.md#步-0-的複核包2026-07-31) · [步 1](iceblue-drop-less-progress-appendix.md#步-1-的複核包2026-08-034-檔) · [步 2](iceblue-drop-less-progress-appendix.md#步-2-的複核包2026-08-0315-檔--批-1-收工-2020) · [步 3](iceblue-drop-less-progress-appendix.md#步-3-的複核包2026-08-0343-檔--批-2-收工-6374) · [步 4](iceblue-drop-less-progress-appendix.md#步-4-的複核包2026-08-0311-檔--批-3-收工p3-收工-7474)
   - [L3-G P3 收工複審](iceblue-drop-less-progress-appendix.md#l3-g-p3-收工複審74-檔獨立-fan-out2026-08-04計畫書-l3-c-26-第-4-層首次執行) — 74 檔獨立 fan-out
   - [L3-H 執行機制:workflow](iceblue-drop-less-progress-appendix.md#l3-h-執行機制workflow)
-  - [L3-I Change Log](iceblue-drop-less-progress-appendix.md#l3-i-change-log--狀態層的敘述更正) — 49 條狀態層更正
+  - [L3-I Change Log](iceblue-drop-less-progress-appendix.md#l3-i-change-log--狀態層的敘述更正) — 51 條狀態層更正
 
 ---
 
@@ -64,6 +64,15 @@
 > 並揪出**驗證協定自己**的盲點 —— `baseline/` 被 gitignore,`git status` 證明不了它沒被寫
 > (**S45**,先加驗 `npm run check:baseline`;**2026-08-10 進一步從源頭堵掉,`baseline/` 改為
 > 追蹤 —— 暫時性,P8 移掉,見 S47**)。報告 [l4-verify-s41-delta-aware.md](l4-verify-s41-delta-aware.md),紀錄 #55。
+>
+> **2026-08-10 P4b 收工,M3 全數完成。** 閘門指令再加一支:`check:gate` 現在
+> = `check:baseline` + less-conventions + fa-css + build:tree + `check:p4a` + **`check:p4b`**。
+> 原始差異(儀器 `check:cssdiff`)來到 **48 檔 / 749 筆** = 728 + 14 移除 + 7 新增。
+> **兩支 shape 閘門互相抵銷對方的 delta**(`check:p4a` 左側 = `baseline + P4b`,反之亦然),
+> 所以 P4a 那六項斷言**一條都沒有放寬**,而整份 diff 剛好被兩支認領完(**S50**)。
+> P4b 的 delta **不是** `baseline/` 的純函數 —— 它的母體恰好是 P4a 的補集(孤兒),
+> 沒有規則能決定每一條該怎麼辦,所以核准清單是**明文 table**,理由逐條寫在
+> [tasks/p4b-decisions.md](../tasks/p4b-decisions.md)。
 
 > **P5 同時回答了一個一直沒問對的問題**:「reset 一定要拆成獨立檔案載入嗎?」——
 > 不但不必,而且**拆檔是唯一會弄丟單一 WCS 的做法**。`zk.wcs` 是 **ZK core** 的檔案,主題
@@ -88,7 +97,7 @@
 |---|---|---|
 | **M1** 基礎建設與閘門(P0 · P1 · P2) | **DONE** | 基準不可變、LESS 釘到 4.8.1、來源樹可同時容納 `.less` 與 `.css` |
 | **M2** 元件轉換 82 檔(P3) | **DONE** | 74/74 轉完,逐檔閘門全 0、無一次失敗;**0 檔無法解釋**。2026-08-05 追加 ZK 10.4 補齊的 8 檔,同樣逐檔閘門全 0(S26) |
-| **M3** vendor prefix 政策(P4a · P4b) | **1 / 2 DONE** | **L-2 已於 2026-08-07 拍板(選項 C:`-webkit-` 全數保留)**。**P4a DONE(同日)** —— 728 條 / 45 檔純移除,G-delta 由 `check:p4a` 六項斷言收下,`-webkit-` 313 條與 B 群 44 條原封不動;**P4b(15 條逐條判斷)TODO** |
+| **M3** vendor prefix 政策(P4a · P4b) | **DONE** | **L-2 已於 2026-08-07 拍板(選項 C:`-webkit-` 全數保留)**。**P4a DONE(同日)** —— 728 條 / 45 檔純移除,G-delta 由 `check:p4a` 六項斷言收下,`-webkit-` 313 條與 B 群 44 條原封不動;**P4b DONE(2026-08-10)** —— 實際 **14** 條(第 15 條在 P7 holdout),移除 14 / 新增 7 / 9 檔,由 `check:p4b` 八項斷言收下 |
 | **M4** 三個 holdout(P5 · P6 · P7) | **2 / 3 DONE** | **P6 DONE** —— FA 的 `each()` 迴圈換成 `gen-fa-css.js`;**P5 DONE(2026-08-06)** —— `norm` 轉純 CSS,`browserDefault` 用 build 期遮罩而**不是** `@scope`,閘門由 G-delta 收在 **G-zero**;P7 等 **L-4** 的 density 那一半 |
 | **M5** 收尾與遷移指南(P8) | TODO | 兩張規則表已產出,期限風險已解除 |
 
@@ -207,7 +216,7 @@
 | ↳ **主題有沒有被服務**(A/B 能不能看見) | **DONE** | 服務出來的 CSS 必須是本主題 | **是 —— 改名 `iceblue` → `iceblue_css` 之後解除**(S23 決策、紀錄 #36)。主題段回到 URL(`_zkiju-iceblue_css/zul/css/zk.wcs`);服務出來的 `zk.wcs` **415355 → 531482 B**、`--zk-` 出現次數 **0 → 4171**(其中真正的自訂屬性宣告 **842** 條);`iceblue_css/zul/css/norm.css.dsp` → 200 / **63161 B**(這次**是被要求的**,標記探針證實)。**覆蓋率 75/77**(`zk.version` 升到 10.4.0 FL 後由 74/77 提升 —— 紀錄 #38;`font-awesome` 現在服務的是我們那一份),未參與畫面位元組 **7.0%**;剩下 2 個是舊路徑死複本(S18)與桌機 UA 下 `disabled` 的 tablet(P7),見 **S24**。~~另有 8 個元件本主題完全沒有 CSS,見 S25~~ **←已補齊(2026-08-05,S26);8 個元件的選擇器現在全部進到瀏覽器實收的 CSS、`Unable to load` 歸零。** ~~注意 **75/77 是 2026-08-05 升版當時的量測**,輸出檔數已變成 85,而本輪**沒有**產出可信的新覆蓋率數字(探針壞了,**見 S28**)—— 要重算得用 S24 那個標記探針~~ **←2026-08-07 已重算,並且推翻了 75/77:實測 `80` 到彙整檔 / `1` 被連但 disabled(tablet)/ `4` 從來沒人要 ⇒ 覆蓋率上界 **80/85**、未參與畫面位元組 **6.1%**。75/77 是**高報 3 個** —— goldenlayout / cropper / signature 的兩份輸出**逐 byte 相同**,內容比對分不出是哪一份在彙整檔裡(**S38**)。重算成為可重跑的 `npm run visual:coverage`,自帶正向 / 負向 / 跨頁三個控制組,口徑寫在 [visual-ab-harness.md §6](visual-ab-harness.md)(紀錄 **#51**) | 2026-08-05 |
 | ↳ **A/B 有沒有訊號**(harness 的自我驗證) | **DONE** | 兩側服務出來的 byte 必須不同 | **有。** 同一個 `zk.wcs`:A 側 `a56858a9…` / **530434 B**,B 側 `6f293b24…` / **531482 B**(對照 S21 當時兩側 sha256 完全相同)。**而且差異性質也證明了**:套上 `check-bytes.js` 那 5 類封閉序列化正規化後,兩邊都是 **525145 B 且字串完全相同** ⇒ 瀏覽器收到的是**「byte 不同、語意相同」**的 CSS —— 核心主張第一次在 **HTTP 層**被證明 | 2026-08-05 |
 | **P4a** 前綴純移除 | **DONE** | G-delta | **728 條 / 45 檔實測移除**,與拍板預測相同(788 − tablet 60,tablet 是 P7 holdout 故不在本階)。判準改為 `npm run check:p4a` **exit 0** —— 六項斷言含「每一筆移除在 candidate 仍有無前綴同伴」與「`-webkit-` 313 = 313」;三個負向控制全部觸發。編輯由 `npm run p4a:strip` 產生且**冪等**。**第 4 層獨立驗證 PASS-WITH-FINDINGS,C1–C12 全部 CONFIRMED**,並揪出閘門自身的弱點(同伴桶原本以 selector 字串為 key,同名區塊會互相背書)—— 同日改為 per-block-instance,**修正後仍 exit 0**,新斷言另有負向控制。**同日再補上 delta-aware 的第 1、2 層**(S41 裁示選項 A):`scripts/p4a-delta.js` 從 `baseline/` 重新推導那 728 條,`check:bytes` 與 `check:build-css` 改與調整後的基準比對 —— 兩套獨立實作(來源端逐行 vs 輸出端結構)算出**完全相同的 728 / 45 與 14 項屬性直方圖**,三支複核同時 exit 0。紀錄 **#52 / #53 / #54 / #55**,報告 [l4-verify-p4a.md](l4-verify-p4a.md) | 2026-08-07 |
-| **P4b** 前綴逐條判斷 | **TODO** | G-delta | **15** 條(~~143~~):non-`-webkit-` 且所在 rule 無標準宣告者。B 群 **44** 條 carve-out 與 `-webkit-` **285** 條真前綴都不得出現在 diff | — |
+| **P4b** 前綴逐條判斷 | **DONE** | G-delta | ~~**15** 條~~ **實測 14 條** —— 第 15 條(`-moz-appearance`)落在 **P7 holdout `tablet.css.dsp`**,隨 P7 處理。**移除 14 條前綴宣告 / 新增 7 條標準宣告 / 9 個輸出檔**;action 分佈 `rename` 7、`remove` 4、`remove-rule` 3。判準 `npm run check:p4b` **exit 0**(八項斷言,含「改名必須同 rule 同**值**」與「純移除不得夾帶新增」)。**判準是「選讓現代瀏覽器行為不變的那一邊」,雙向都用到** —— Firefox 今天確實吃 `-moz-appearance`/`-moz-user-select` ⇒ 改名;`-ms-zoom`/`-ms-touch-action`/`-ms-flex-align`/`-khtml-user-select` 現代瀏覽器全不吃 ⇒ 純移除(補標準宣告反而是**新增行為**)。所以 **P4b 沒有夾帶任何功能變更**。P4b 的 delta **不可推導**(母體是 P4a 的補集),核准清單為 `scripts/p4b-delta.js` 明文 table,理由見 [tasks/p4b-decisions.md](../tasks/p4b-decisions.md)。**兩支 shape 閘門互相抵銷對方的 delta**,故 P4a 六項斷言**一條未放寬**;順序可交換由 `p4b-delta.js` 實測斷言。三個負向控制全部觸發(改名偷改值 / 漏做一條 / `remove-rule` 遇到非空 block)。`check:bytes` UNEXPLAINED **0**、`check:build-css` **14128 條 / files differing 0**(紀錄 **#56**) | 2026-08-10 |
 | **P5 `norm.css`** | **DONE** | ~~G-delta~~ → **G-zero** | **整份 `norm.css.dsp` 零差異**,不只 token 那 **862** 條 —— 因為 `browserDefault` **不改 `@scope`**,runtime 行為一個 byte 都沒動。輸出端 DSP 逐項對齊 baseline:selector 前綴 **90 = 90**、`<c:if>` 開/關 **93 / 93**、`${}` 腐化 **0**、taglib 三條指令仍在 tokens/reset 接縫(**不在 offset 0**)、規則區塊 **357 = 357**。`build-css.js` 覆蓋 83 → **84** 檔,`zklessc` 只剩 **1** 檔。`check:build-css` 的 `norm` 從 passthrough 轉為**真來源實測**(84 檔全部來自真來源、0 未分類);`check:bytes` UNEXPLAINED **0**;`mvn package` 出來的 jar **85 個 `.css.dsp` / 0 個原始 `.css`/`.less`**。決策 [browserdefault-masking.md](browserdefault-masking.md),被否決的選項 `tasks/p5-browserdefault-options.md`(紀錄 **#47**、**#48**) | 2026-08-06 |
 | ↳ **P5 的第 4 層獨立驗證** | **DONE** | 覆核者須自己重推每一個數字,不得引用 commit message | **PASS-WITH-FINDINGS** —— **C1–C9 九條全部 CONFIRMED**,其中 C4 用**比自我複核更強**的方法:覆核者不信任專案第 4 類序列化那個「全空白剝除」的實作,自寫只剝標點相鄰空白的正規化器,在它底下兩份 `norm.css.dsp` **逐 byte 相同(72646 = 72646)**,並手眼看過全部 45 個差異片段。**找到 1 個真缺口並已修(`364f8ec`)**:佔位符的**還原方向沒有守衛**,`content:".ZKBD "` 會把 DSP 注進帶引號的值、exit 0 零警告。**更正 S37 一句**(「逐項相同」實為 10/12)。**獨立證明了 compact 旋鈕的等價性,也證明了 S36 的分裂主題真的會發生且無檢查看得到。** 報告 [l4-verify-p5-norm.md](l4-verify-p5-norm.md)(紀錄 **#49**) | 2026-08-06 |
 | ↳ **P5 的視覺 A/B** | **DONE** | 兩側指紋須不同,且頁面差異須為 0 | **116 頁比對、pages differing: 0**,而 **theme 指紋 DIFFERENT**(`75f538af22468640` / `5c570ab19195cdc2`)—— 所以這個 0 **不是空轉**,是「20 個序列化差異區塊在 116 頁裡照不出畫面變化」的端對端確認。跑之前先 `visual:selftest` 得 0 / 0 證明 harness 當下決定性;雜訊 4 頁全在噪音下限內。**採信範圍照 S33**:語料非針對 85 個輸出檔設計,稀有元件會漏接 ⇒ 這是「看不到差異」不是「沒有差異」(紀錄 **#50**) | 2026-08-06 |
@@ -364,7 +373,7 @@ L1/L2 只寫當前狀態;**要複核那些狀態是怎麼得出來的,去那裡�
 | 節 | 內容 | 何時要看 |
 |---|---|---|
 | **[階段與 commit 對照](iceblue-drop-less-progress-appendix.md#階段與-commit-對照)** | 每一階對應哪些 commit | 要回溯某一階實際改了什麼 |
-| **[L3-A](iceblue-drop-less-progress-appendix.md#l3-a-閘門紀錄附加式不覆寫)** | **閘門紀錄 55 列**(附加式,**不覆寫**) | P8 核帳、以及要確認某個數字是哪一次跑出來的 |
+| **[L3-A](iceblue-drop-less-progress-appendix.md#l3-a-閘門紀錄附加式不覆寫)** | **閘門紀錄 56 列**(附加式,**不覆寫**) | P8 核帳、以及要確認某個數字是哪一次跑出來的 |
 | **[L3-B](iceblue-drop-less-progress-appendix.md#l3-b-tier-1p1--s0--s1)** | Tier 1:P1 = S0 + S1 的實作與論證 | 要動 LESS 版本 pin 或 `check-less-conventions.js` 時 |
 | **[L3-C](iceblue-drop-less-progress-appendix.md#l3-c-p2-儀器證明)** | P2 儀器證明(六步)+ 為什麼是 CleanCSS level 0 + 第三種靜默摧毀構造 | 要改 `build-css.js` 或 minifier 設定時 |
 | **[L3-D](iceblue-drop-less-progress-appendix.md#l3-d-p0-交付物基準的不可變性突變測試)** | P0 交付物、基準的不可變性、突變測試、重建基準的方法 | 基準出問題時 |

@@ -113,7 +113,6 @@
 	direction: ltr;
 	cursor: crosshair;
 	text-align: left;
-	-ms-touch-action: none;
 }
 .z-cropper-holder img {
 	max-width: none;

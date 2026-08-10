@@ -61,7 +61,7 @@ DSP 層與 Font Awesome 的生成內容都還在,零 build step 兌現不了(L3-
 |---|---|---|
 | **M1** 基礎建設與閘門 | P0 基準 · P1 LESS 4.8.1 pin · P2 雙來源 build | **DONE** |
 | **M2** 元件轉換(工作量主體) | P3 —— 74 個元件檔 `.less` → `.css` | **DONE** |
-| **M3** vendor prefix 政策 | P4a 純移除 · P4b 逐條判斷 | **TODO** —— **L-2 已於 2026-08-07 拍板(選項 C)**,前置全部解除,可開工 |
+| **M3** vendor prefix 政策 | P4a 純移除 · P4b 逐條判斷 | **DONE**(P4a 2026-08-07 · P4b 2026-08-10) |
 | **M4** 三個 holdout | P5 `norm` · P6 Font Awesome · P7 `tablet` | **P6、P5 已收工(P5 於 2026-08-06,收在 G-zero)**;P7 待前置 |
 | **M5** 收尾與遷移指南 | P8 | TODO |
 
@@ -161,7 +161,7 @@ DSP 層與 Font Awesome 的生成內容都還在,零 build step 兌現不了(L3-
 | **G-delta** | P4a、P4b、~~P5~~、P7 | 差異必須**逐條對應到已決策的變更**,且總數符合預估。**每個階段只允許一種 diff 形狀** —— 這是 P4 拆成 P4a / P4b 的理由。**P5 實際收在 G-zero**:不採 `@scope`,runtime 行為沒動,沒有要對應的 delta(**S35**) |
 
 **閘門指令是 `npm run check:gate`;判準就是它的 exit code。** 它 = **`check:baseline`** +
-`check:less-conventions` + `check:fa-css` + `build:tree` + **`check:p4a`**。
+`check:less-conventions` + `check:fa-css` + `build:tree` + **`check:p4a`** + **`check:p4b`**。
 
 > **為什麼 `check:baseline` 排第一。** 閘門說的每一句話都是「相對於 `baseline/`」,
 > 所以基準本身若被污染,後面四步全部失去意義 —— 而且不一定會叫。把它排在最前面,
@@ -177,8 +177,10 @@ DSP 層與 Font Awesome 的生成內容都還在,零 build step 兌現不了(L3-
 > **儀器與判準在 P4a 之後分家了(2026-08-10)。** G-zero 階段兩者合一:「差異 0」既是
 > cssdiff 的輸出也是判準,所以 `npm run check:cssdiff` 的 exit code 直接可用。G-delta 階段
 > 不是 —— cssdiff 問「candidate 是否**等於** baseline」,而正確答案是「不等於」,
-> 於是它**因構造而 exit 1**(P4a 之後固定 45 檔 / 728 條)。
-> 判準改由 `check:p4a` 回答「差異是否**恰好等於**已核准的 delta」。
+> 於是它**因構造而 exit 1**(P4a 之後 45 檔 / 728 條;**P4b 之後實測 48 檔 / 749 筆記錄**
+> = 728 移除 + 14 移除 + 7 新增;48 = 45 + 9 − 6 檔重疊)。
+> 判準改由 `check:p4a` **與 `check:p4b`** 回答「差異是否**恰好等於**已核准的 delta」——
+> 兩支各自把對方的 delta 從 baseline 側抵銷掉,所以合起來剛好把整份 diff 認領完,沒有灰色地帶。
 >
 > **所以現在有兩支,用途不同,不要互相替代:**
 >
@@ -361,16 +363,47 @@ DSP 層與 Font Awesome 的生成內容都還在,零 build step 兌現不了(L3-
 
 #### P4b —— vendor prefix 逐條判斷(C 群)
 
+**DONE(2026-08-10)。** 決策清單:[tasks/p4b-decisions.md](../tasks/p4b-decisions.md)
+
 | | |
 |---|---|
 | **目標** | C 群 143 條手寫前綴宣告裡,**L-2 拍板後真正需要判斷的只剩 15 條** —— non-`-webkit-` 且所在 rule 裡**沒有**標準宣告者:`-moz-appearance` 6 / `-ms-zoom` 3 / `-ms-touch-action` 2 / `-moz-user-select` 2 / `-ms-flex-align` 1 / `-khtml-user-select` 1。其餘 C 群 non-`-webkit-` 80 條有同伴 → 併入 P4a;`-webkit-` 48 條保留 |
-| **輸入 → 輸出** | 同上 → **15** 條之內的移除與成對替換 |
-| **驗收閘門** | **G-delta** —— 允許 `- <prefixed>`,或**成對**的 `- <prefixed>` + `+ <standard>`;**落單即為 bug**。**B 群 44 條 carve-out 與 `-webkit-` 285 條真前綴都不得出現在 diff 裡** |
+| **輸入 → 輸出** | 同上 → ~~**15**~~ **14** 條(見下方 holdout)的移除與成對替換:**移除 14 條前綴宣告、新增 7 條標準宣告**,涉及 **9 個輸出檔** |
+| **驗收閘門** | **G-delta** —— 允許 `- <prefixed>`,或**成對**的 `- <prefixed>` + `+ <standard>`;**落單即為 bug**。**B 群 44 條 carve-out 與 `-webkit-` 285 條真前綴都不得出現在 diff 裡**。實作為 `npm run check:p4b`(`scripts/check-p4b-delta.js`),八項斷言 |
 | **前置** | 同 P4a。**carve-out 清單必須在動手前就存在**,否則這一階的閘門實際上失效 |
-
-> **`-ms-zoom` 3 條不是成對替換,是純移除** —— `zoom: 1` 是 IE 的 hasLayout hack,
-> 沒有要接手的標準宣告。上面 15 條是「需要逐條判斷」的清單,**不是「15 條都要換成標準宣告」**。
 | **commit 粒度** | 一顆 |
+
+> **實測 14 條,不是 15 條。** 那 15 條的第 15 條(`-moz-appearance: none`)落在
+> **P7 holdout `zkmax/css/tablet.css.dsp`** —— 和 P4a 讓掉的 60 條同一個理由:它仍由
+> `zklessc` 從 `tablet.less` 編出來。**P4b = 15 − 1 = 14**,那 1 條計入 P7 的 delta。
+> 原本寫「15 條」時沒有把 holdout 拆出來。
+
+> **判準是「選讓現代瀏覽器行為不變的那一邊」,而且雙向都會用到。**
+> `-moz-appearance` / `-moz-user-select` 今天 Firefox **確實吃**,純移除會退化 ⇒ **改名成標準屬性**;
+> `-ms-zoom` / `-ms-touch-action` / `-ms-flex-align` / `-khtml-user-select` 今天沒有任何現代瀏覽器吃,
+> 純移除等於沒動,**補標準宣告反而是新增行為** ⇒ **純移除**。
+> 兩個方向都收斂到「不改行為」,所以 **P4b 沒有夾帶任何功能變更**。
+> `-ms-zoom` 三條各是其 block 的唯一宣告,連 selector 一起移除(`remove-rule`,並斷言 block 確實只有那一條)。
+
+> **P4b 的 delta 不是 `baseline/` 的純函數,這是它與 P4a 的結構差異。** P4a 的母體是
+> 「有無前綴同伴」,規則讀得出來;P4b 的母體**恰好是其補集**(孤兒),所以沒有規則能決定
+> 每一條該怎麼辦 —— 那是判斷。核准清單因此是 `scripts/p4b-delta.js` 裡的**明文 table**
+> (14 筆,每筆帶 `count`),理由逐條寫在 [tasks/p4b-decisions.md](../tasks/p4b-decisions.md)。
+> **14 筆是人真的複核得完的量,這正是 P4 當初拆成「可推導的一半」與「要判斷的一半」的理由。**
+
+> **兩支 shape 閘門互相把對方的 delta 從 baseline 側抵銷掉**,各自只看得到自己那一段:
+> `check:p4a` 的左側是 `baseline + P4b`、`check:p4b` 的左側是 `baseline + P4a`。
+> 這樣 **`check-p4a-delta.js` 的六項斷言一條都不必放寬** —— 它看到的樹就跟 P4b 從未發生過一樣。
+> 兩者順序可交換,由 `p4b-delta.js` **實測斷言**(不是用講的)。
+> 第 1、2 層(`check:bytes`、`check:build-css`)則與 `baseline + P4a + P4b` 逐 byte 比對;
+> 這一層抓得到 shape 閘門看不到的東西 —— 例如改名後的宣告**落在什麼位置**。
+
+> **本階順帶量到、但結構上不在母體裡的三類殘留(都不動,列為後續議題)** ——
+> 普查是按「**屬性**帶不帶前綴」做的,所以以下三類它**看不到**:
+> ① 無前綴的 `zoom: 1` **22 條**(同樣是死掉的 IE hasLayout hack,只是沒有前綴);
+> ② 前綴在**值**上的 `display: -ms-flexbox` / `-webkit-box` / `-moz-box` / `-ms-inline-flexbox` **13 條**;
+> ③ 前綴 **pseudo selector** 約 **79 處**(`::-moz-placeholder`、`:-ms-input-placeholder`、`::-ms-check` …)。
+> 動它們會讓本階的 diff 超出已核准的 14 條,違反 G-delta,所以**明確不做**。
 
 > **B 群 44 條不是死前綴,是唯一寫法** —— `-webkit-font-smoothing` 16、
 > `-moz-osx-font-smoothing` 16、`-webkit-touch-callout` 6、`-webkit-tap-highlight-color` 4、

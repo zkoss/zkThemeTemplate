@@ -102,10 +102,13 @@ THE GATE
   \`npm run check:cssdiff\` is the INSTRUMENT, not the verdict — it prints the raw declaration
   diff against \`baseline/\`. In a G-zero phase the two agree and it exits 0 with the literal
   line \`files differing: 0\`. From P4a on they do NOT: the built tree is deliberately no longer
-  equal to \`baseline/\`, so cssdiff exits 1 BY CONSTRUCTION (currently 45 files / 728 records)
-  and \`check:gate\` — which ends in \`check:p4a\` — is what says whether that difference is
-  exactly the approved delta. Read cssdiff's output when you need to see the differences
-  themselves; never quote its exit code as a pass or a failure.
+  equal to \`baseline/\`, so cssdiff exits 1 BY CONSTRUCTION (currently 48 files / 749 records
+  = P4a's 728 removals + P4b's 14 removals and 7 additions) and \`check:gate\` — which ends in
+  \`check:p4a\` and \`check:p4b\` — is what says whether that difference is exactly the approved
+  delta. Those two shape gates each neutralise the OTHER phase's delta on the baseline side, so
+  between them they claim the whole diff and neither one's assertions had to be loosened. Read
+  cssdiff's output when you need to see the differences themselves; never quote its exit code as
+  a pass or a failure.
   Useful extras: \`node scripts/cssdiff.js baseline/ target/classes/web/iceblue_css --list\` prints
   every file with its declaration count; \`--json <path>\` writes a machine-readable report.
 

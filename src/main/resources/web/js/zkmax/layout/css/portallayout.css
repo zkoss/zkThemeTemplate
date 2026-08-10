@@ -15,10 +15,6 @@
 .z-portallayout-horizontal .z-portalchildren-content > .z-panel-move-block {
 	float: left;
 }
-.z-portallayout,
-.z-portalchildren {
-	-ms-zoom: 1;
-}
 .z-portalchildren-counter {
 	display: none;
 	border-radius: var(--zk-portalchildren-counter-radius);

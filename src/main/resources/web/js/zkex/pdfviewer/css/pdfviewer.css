@@ -130,7 +130,7 @@
 	vertical-align: middle;
 }
 .z-pdfviewer-toolbar-page-active {
-	-moz-appearance: textfield;
+	appearance: textfield;
 	-webkit-appearance: textfield;
 	width: var(--zk-pdfviewer-toolbar-page-active-width);
 	padding-top: 0;
@@ -139,7 +139,7 @@
 }
 .z-pdfviewer-toolbar-page-active:focus {
 	/* ZK input:hover style workaround */
-	-moz-appearance: textfield;
+	appearance: textfield;
 	-webkit-appearance: textfield;
 }
 .z-pdfviewer-toolbar-page-active:invalid {

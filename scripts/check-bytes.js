@@ -26,12 +26,20 @@
  *   not authorise, or one it authorised but the source missed, lands here as an unexplained
  *   byte difference exactly as before.
  *
+ *   P4b then added a SECOND delta on top — 14 judged edits that no derivation could have chosen
+ *   (see `p4b-delta.js`). It is written down rather than derived, so this layer now compares
+ *   against `baseline + P4a + P4b` via `p4b-delta.adjustedBaseline`. That composition is where
+ *   this check earns its keep in a G-delta phase: the two shape gates each verify their own
+ *   phase's diff at DECLARATION level, and only this one proves the whole tree is right at BYTE
+ *   level — including the bytes neither shape gate looks at, like where a renamed property sits.
+ *
  * Exit 0 means zero semantic bytes differ anywhere. Exit 1 means a human is needed.
  */
 'use strict';
 const fs = require('fs');
 const path = require('path');
 const p4a = require('./p4a-delta.js');
+const p4b = require('./p4b-delta.js');
 
 const ROOT = path.resolve(__dirname, '..');
 const BASE = path.join(ROOT, 'baseline');
@@ -73,13 +81,21 @@ const differing = [];
 const unexplained = [];
 let delta = 0;
 let deltaFiles = 0;
+let deltaB = 0;
+let addedB = 0;
+let deltaFilesB = 0;
 
 for (const rel of files) {
-	const adjusted = p4a.adjustedBaseline(rel);
+	const adjusted = p4b.adjustedBaseline(rel);
 	const a = adjusted.text;
-	if (adjusted.removed.length) {
-		delta += adjusted.removed.length;
+	if (adjusted.removedP4a.length) {
+		delta += adjusted.removedP4a.length;
 		deltaFiles++;
+	}
+	if (adjusted.editsP4b.length) {
+		deltaB += adjusted.editsP4b.length;
+		addedB += adjusted.editsP4b.filter((e) => e.action === 'rename').length;
+		deltaFilesB++;
 	}
 	const bPath = path.join(BUILT, rel);
 	if (!fs.existsSync(bPath)) {
@@ -105,12 +121,15 @@ extra.forEach((rel) => unexplained.push({ rel, why: 'EXTRA output — no counter
 // The derived delta must be the APPROVED one. Without this the check would keep passing while
 // silently re-deriving a different (larger) delta — e.g. if someone widened STRIP_PREFIX — and a
 // real removal would hide inside it. The size is the one thing the derivation cannot self-check.
-p4a.assertApprovedSize({ removed: delta, changedFiles: deltaFiles })
-	.forEach((why) => unexplained.push({ rel: 'p4a-delta.js', why }));
+p4b.assertApprovedSize({
+	removedP4a: delta, filesP4a: deltaFiles,
+	removedP4b: deltaB, addedP4b: addedB, filesP4b: deltaFilesB,
+}).forEach((why) => unexplained.push({ rel: 'p4a/p4b-delta.js', why }));
 
 console.log(`files compared:            ${files.length}`);
 console.log(`P4a delta re-derived:      ${delta} declaration(s) in ${deltaFiles} file(s), ` +
 	`${[...p4a.DEFERRED].join(', ')} left alone`);
+console.log(`P4b delta from table:      ${deltaB} removed / ${addedB} added in ${deltaFilesB} file(s)`);
 console.log(`byte-identical:            ${identical}/${files.length}`);
 console.log(`differing but explained:   ${differing.length}`);
 differing.forEach((f) => console.log(`    ${f}`));

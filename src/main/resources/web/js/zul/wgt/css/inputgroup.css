@@ -10,7 +10,6 @@
 	padding: 0 12px;
 	min-height: var(--zk-input-height);
 	/* same as .z-textbox */
-	-ms-flex-align: center;
 	align-items: center;
 }
 /* Workaround for .z-toolbarbutton: toolbar.css is loaded after inputgroup.css */

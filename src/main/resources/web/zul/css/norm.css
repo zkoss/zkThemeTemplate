@@ -52,7 +52,7 @@ body {
 .ZKBD textarea,
 .ZKBD textarea:focus {
 	-webkit-appearance: none;
-	-moz-appearance: none;
+	appearance: none;
 	outline: none;
 	-webkit-user-select: text;
 }
@@ -474,7 +474,7 @@ div.z-log button {
 }
 /* ZK-3195: only apply to the first layer of children */
 .gecko .z-draggable-over > * {
-	-moz-user-select: none;
+	user-select: none;
 }
 .z-drop-allow {
 	background: var(--zk-drag-background-color);
@@ -543,8 +543,7 @@ div.z-log button {
 	top: 0;
 	left: 0;
 	outline: 0 none;
-	-moz-user-select: text;
-	-khtml-user-select: text;
+	user-select: text;
 	overflow: hidden;
 }
 .z-focus-a:focus {

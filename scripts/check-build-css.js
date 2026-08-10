@@ -73,6 +73,12 @@
  * still "does build-css.js reproduce the approved output, byte for byte" — only the definition
  * of approved moved, and it moved to something derived rather than asserted.
  *
+ * P4b then layered on 14 JUDGED edits, which by their nature cannot be derived — they are an
+ * explicit table in `p4b-delta.js`. So the target is now `baseline + P4a + P4b`, composed by
+ * `p4b-delta.materialize`. Note what this buys that the two shape gates cannot: they compare
+ * DECLARATION records, so a renamed property landing in the wrong place, or minifier output that
+ * differs only in byte layout, is invisible to them and caught only here.
+ *
  * USAGE
  *   node scripts/check-build-css.js [--keep]
  *
@@ -88,6 +94,7 @@ const os = require('os');
 const path = require('path');
 const { execFileSync } = require('child_process');
 const p4a = require('./p4a-delta.js');
+const p4b = require('./p4b-delta.js');
 
 const SOURCE = 'src/main/resources/web';
 const BASELINE = 'baseline';
@@ -207,21 +214,22 @@ function main(argv) {
 	const lessOut = path.join(tmp, 'lessout');
 	const cssSrc = path.join(tmp, 'cssrc');
 	const cssOut = path.join(tmp, 'cssout');
-	const expected = path.join(tmp, 'expected'); // `baseline/` + the approved P4a delta
+	const expected = path.join(tmp, 'expected'); // `baseline/` + the approved P4a and P4b deltas
 
 	try {
 		// 0. The comparison target. Derived, not stored — see the header. Staged in the temp dir
 		//    so nothing outside `target/` is ever written, and so a failed run leaves no artefact
 		//    that a later run could mistake for the real baseline.
-		console.log('0/5  deriving the P4a delta from baseline/…');
-		const d = p4a.materialize(expected);
-		const bad = p4a.assertApprovedSize(d);
+		console.log('0/5  applying the approved P4a + P4b deltas to baseline/…');
+		const d = p4b.materialize(expected);
+		const bad = p4b.assertApprovedSize(d);
 		if (bad.length) {
-			console.error(`check-build-css: derived delta is not the approved P4a shape:`);
+			console.error(`check-build-css: comparison target is not the approved P4a+P4b shape:`);
 			for (const b of bad) console.error(`  ${b}`);
 			return 2;
 		}
-		console.log(`0/5  ${d.removed} declaration(s) removed across ${d.changedFiles} file(s); ` +
+		console.log(`0/5  P4a: ${d.removedP4a} removed across ${d.filesP4a} file(s); ` +
+			`P4b: ${d.removedP4b} removed / ${d.addedP4b} added across ${d.filesP4b} file(s); ` +
 			`${[...p4a.DEFERRED].join(', ')} left alone`);
 
 		// 1. Uncompressed, so the intermediate is the readable CSS that P3 adopts as source.
@@ -344,7 +352,7 @@ function main(argv) {
 			for (const rel of unclassified) console.log(`  ${rel}`);
 		}
 		if (code === 0) {
-			console.log('\nOK — build-css.js reproduces baseline/ + the approved P4a delta from CSS sources.');
+			console.log('\nOK — build-css.js reproduces baseline/ + the approved P4a and P4b deltas from CSS sources.');
 		} else {
 			console.log('\nFAIL — build-css.js does NOT reproduce it. Stop; do not convert more files.');
 		}

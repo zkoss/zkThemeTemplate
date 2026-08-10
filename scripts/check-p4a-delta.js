@@ -27,6 +27,14 @@
  * It doubles as the standing guard against re-introduction: `baseline/` never changes, so a
  * `-moz-` prefix added back later shows up as a `+` record and fails assertion 1.
  *
+ * WHY THE BASELINE SIDE IS NOT RAW `baseline/`
+ * --------------------------------------------
+ * From P4b on, the built tree carries TWO approved deltas, and a gate that diffed raw `baseline/`
+ * against it would see both — assertion 1 alone would fail on P4b's 7 paired additions. The fix is
+ * not to loosen the assertions (that would quietly cost P4a its guarantee); it is to apply P4b's
+ * approved edits to the BASELINE side first, so this gate sees a tree in which P4b never happened.
+ * All six assertions below are therefore byte-for-byte the ones that passed on 2026-08-07.
+ *
  * USAGE
  *   node scripts/check-p4a-delta.js [--expect N] [--list]
  *
@@ -38,6 +46,7 @@
 const fs = require('fs');
 const path = require('path');
 const { parse, extractDsp, diffRecords } = require('./cssdiff.js');
+const p4b = require('./p4b-delta.js');
 
 const REPO = path.resolve(__dirname, '..');
 const BASELINE = path.join(REPO, 'baseline');
@@ -61,8 +70,8 @@ function walk(dir, base = dir, acc = []) {
 	return acc;
 }
 
-function load(file) {
-	const { css, directives } = extractDsp(fs.readFileSync(file, 'utf8'));
+function load(text) {
+	const { css, directives } = extractDsp(text);
 	return { records: parse(css), directives };
 }
 
@@ -126,14 +135,18 @@ function main(argv) {
 	const perFile = [];
 
 	for (const rel of walk(BASELINE).sort()) {
-		const bFile = path.join(BASELINE, rel);
 		const cFile = path.join(CANDIDATE, rel);
 		if (!fs.existsSync(cFile)) {
 			violations.push(`${rel}: missing from candidate`);
 			continue;
 		}
-		const A = load(bFile);
-		const B = load(cFile);
+		// The baseline side gets P4b's approved edits applied FIRST, so what is left between the
+		// two sides is the P4a delta and nothing else. That is what lets all six assertions below
+		// stay exactly as strict as they were written — none of them had to be relaxed to make
+		// room for a second phase. The mirror gate `check-p4b-delta.js` neutralises P4a the same
+		// way, and `p4b-delta.js` asserts the two orders commute.
+		const A = load(p4b.baselinePlusP4b(rel));
+		const B = load(fs.readFileSync(cFile, 'utf8'));
 
 		for (const r of A.records) if (WEBKIT.test(split(r).prop)) webkitBase++;
 		for (const r of B.records) if (WEBKIT.test(split(r).prop)) webkitCand++;
