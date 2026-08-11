@@ -1,0 +1,46 @@
+<?page title="Drag &amp; Drop" contentType="text/html;charset=UTF-8"?>
+<zk xmlns:h="native">
+	<div sclass="z-p-8">
+		<div sclass="z-border-bottom z-text-xl z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Drag &amp; drop feedback</div>
+
+		<!-- Live drag & drop (manual): listitem (message-ghost path) + div (clone-ghost path).
+		     Frozen-column .z-word-nowrap is covered by grid.zul (Frozen Columns example). -->
+		<div sclass="z-mb-8">
+			<div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Live drag &amp; drop (drag to see ghost feedback)</div>
+			<div sclass="z-d-flex z-gap-6 z-align-start z-mb-6">
+				<listbox id="srcList" width="200px">
+					<listhead><listheader label="Drag a row"/></listhead>
+					<listitem draggable="true" label="Item Alpha"/>
+					<listitem draggable="true" label="Item Beta"/>
+				</listbox>
+				<listbox id="dropList" width="200px" droppable="true">
+					<listhead><listheader label="Drop zone"/></listhead>
+					<listitem label="(drop here)"/>
+				</listbox>
+			</div>
+			<div sclass="z-d-flex z-gap-6 z-align-center">
+				<div draggable="true" sclass="z-bg-primary-container z-text-on-primary-container z-rounded z-p-3 z-text-sm z-fw-medium">Drag me (div)</div>
+				<div droppable="true" sclass="z-bg-surface-variant z-text-secondary z-rounded z-p-6 z-text-sm" style="min-width:160px;min-height:72px;display:flex;align-items:center;justify-content:center;">Drop target</div>
+			</div>
+		</div>
+
+		<!-- Static swatches: rendered ghost structures for visual reference (no drag needed) -->
+		<div sclass="z-mb-8">
+			<div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Ghost appearance reference (static replicas)</div>
+			<div sclass="z-d-flex z-gap-8 z-align-center" style="position:relative;height:48px;">
+				<h:div class="z-drop-ghost z-drop-disallow" style="position:static;">
+					<h:div class="z-drop-content">
+						<h:span class="z-drop-icon"></h:span>
+						<h:span class="z-drop-text">Item Alpha (invalid)</h:span>
+					</h:div>
+				</h:div>
+				<h:div class="z-drop-ghost z-drop-allow" style="position:static;">
+					<h:div class="z-drop-content">
+						<h:span class="z-drop-icon"></h:span>
+						<h:span class="z-drop-text">Item Alpha (drop ok)</h:span>
+					</h:div>
+				</h:div>
+			</div>
+		</div>
+	</div>
+</zk>

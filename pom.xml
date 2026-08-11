@@ -84,6 +84,15 @@
 			<optional>true</optional>
 		</dependency>
 		<!-- test dependencies for preview app -->
+		<!-- zuti registers the ZK EE <apply> component the preview pages use to
+		     compose the pv/*-content.zul partials; test scope keeps it out of the
+		     published theme artifact's POM. -->
+		<dependency>
+			<groupId>org.zkoss.zk</groupId>
+			<artifactId>zuti</artifactId>
+			<version>${zk.version}</version>
+			<scope>test</scope>
+		</dependency>
 		<dependency>
 			<groupId>org.zkoss.zkspringboot</groupId>
 			<artifactId>zkspringboot-autoconfig</artifactId>

@@ -1,0 +1,20 @@
+<?page title="Scrollview" contentType="text/html;charset=UTF-8"?>
+<zk xmlns:h="native">
+<div sclass="z-p-8">
+    <div sclass="z-border-bottom z-text-xl z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Scrollview</div>
+
+    <div sclass="z-mb-6">
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Scrollable Container</div>
+        <div sclass="z-py-3">
+            <scrollview height="300px" hflex="1">
+                <zk forEach="1,2,3,4,5">
+                    <window title="Window ${each}" border="normal">
+                        This is Window ${each}
+                    </window>
+                </zk>
+            </scrollview>
+        </div>
+    </div>
+
+</div>
+</zk>

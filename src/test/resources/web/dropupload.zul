@@ -1,0 +1,34 @@
+<?page title="Dropupload" contentType="text/html;charset=UTF-8"?>
+<zk xmlns:h="native">
+<div sclass="z-p-8">
+    <div sclass="z-border-bottom z-text-xl z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Dropupload</div>
+    <div sclass="z-mb-6">
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Default (detection="none")</div>
+        <dropupload maxsize="5120" detection="none">
+            <attribute name="content"><![CDATA[
+                <b>Drop Here</b><br/>
+                size &lt; 5MB
+            ]]></attribute>
+            <attribute name="onUpload">
+                org.zkoss.util.media.Media media = event.getMedia();
+            </attribute>
+        </dropupload>
+        <div sclass="z-text-xs z-text-secondary z-mt-2">Drag feedback is the browser's native copy cursor — the box has no
+            drag-over highlight or disabled state (ZK emits no such class).</div>
+    </div>
+    <div sclass="z-mb-6">
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">detection="self"</div>
+        <dropupload maxsize="5120" detection="self">
+            <attribute name="content"><![CDATA[
+                <b>Drop Here</b><br/>
+                size &lt; 5MB
+            ]]></attribute>
+            <attribute name="onUpload">
+                org.zkoss.util.media.Media media = event.getMedia();
+            </attribute>
+        </dropupload>
+        <div sclass="z-text-xs z-text-secondary z-mt-2">Same box styling as Default — only the behavior differs: the content
+            stays hidden until a file is dragged over the zone.</div>
+    </div>
+</div>
+</zk>

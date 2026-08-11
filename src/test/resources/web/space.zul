@@ -1,0 +1,51 @@
+<?page title="Space" contentType="text/html;charset=UTF-8"?>
+<zk xmlns:h="native">
+<div sclass="z-p-8">
+    <div sclass="z-border-bottom z-text-xl z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Space</div>
+
+    <div sclass="z-mb-6">
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Space (bar=false, default)</div>
+        <div sclass="z-d-flex z-align-start z-flex-wrap z-gap-6 z-py-3">
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <div sclass="z-text-xs z-text-secondary">Default (no bar)</div>
+                <hlayout>
+                    <button label="Left"/>
+                    <space/>
+                    <button label="Right"/>
+                </hlayout>
+            </div>
+        </div>
+    </div>
+
+    <div sclass="z-mb-6">
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Space (bar=true — renders separator bar)</div>
+        <div sclass="z-d-flex z-align-start z-flex-wrap z-gap-6 z-py-3">
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <div sclass="z-text-xs z-text-secondary">bar="true"</div>
+                <hlayout>
+                    <button label="Left"/>
+                    <space bar="true"/>
+                    <button label="Right"/>
+                </hlayout>
+            </div>
+        </div>
+    </div>
+
+    <div sclass="z-mb-6">
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Space with Spacing</div>
+        <div sclass="z-d-flex z-align-start z-flex-wrap z-gap-6 z-py-3">
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <div sclass="z-text-xs z-text-secondary">spacing="20px" / bar + spacing="40px"</div>
+                <hlayout>
+                    <button label="A"/>
+                    <space spacing="20px"/>
+                    <button label="B"/>
+                    <space spacing="40px" bar="true"/>
+                    <button label="C"/>
+                </hlayout>
+            </div>
+        </div>
+    </div>
+
+</div>
+</zk>

@@ -1,0 +1,137 @@
+<?page title="Carousel" contentType="text/html;charset=UTF-8"?>
+<zk xmlns:h="native">
+<div sclass="z-p-8">
+    <div sclass="z-border-bottom z-text-xl z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Carousel</div>
+
+    <div sclass="z-mb-8">
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Default</div>
+        <div sclass="z-mb-2">
+            <carousel id="pv-carousel-default" width="600px" height="300px">
+                <carouselitem image="~./img/item1.jpg" label="Mountain View"/>
+                <carouselitem image="~./img/item2.jpg"/>
+                <carouselitem label="Custom slide body">
+                    <vlayout>
+                        <label value="This slide holds arbitrary markup"/>
+                        <button label="Action"/>
+                    </vlayout>
+                </carouselitem>
+                <carouselitem image="~./img/item3.jpg"/>
+            </carousel>
+        </div>
+        <div sclass="z-text-sm z-text-secondary">4 slides; arrows + indicators mounted (count &gt; 1). Slide 1 has an image + label caption; slide 3 nests a vlayout with a label and a button.</div>
+    </div>
+
+    <div sclass="z-mb-8">
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Loop = false (boundary disabled arrow)</div>
+        <div sclass="z-mb-2">
+            <carousel id="pv-carousel-loop-false" width="600px" height="300px" loop="false" activeIndex="0">
+                <carouselitem image="~./img/item1.jpg"/>
+                <carouselitem image="~./img/item2.jpg"/>
+                <carouselitem image="~./img/item3.jpg"/>
+            </carousel>
+        </div>
+        <div sclass="z-text-sm z-text-secondary">loop="false" parked at activeIndex="0" — the prev arrow is statically rendered with the [disabled] attribute since there is no earlier slide to wrap to.</div>
+    </div>
+
+    <div sclass="z-mb-8">
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Effect</div>
+        <div sclass="z-d-flex z-flex-wrap z-gap-6 z-py-3">
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <div sclass="z-text-xs z-text-secondary">effect="slide" (default)</div>
+                <carousel id="pv-carousel-effect-slide" width="320px" height="200px" effect="slide">
+                    <carouselitem>
+                        <div sclass="z-w-full z-h-full z-d-flex z-align-center z-justify-center z-bg-primary-container">
+                            <label value="Slide 1"/>
+                        </div>
+                    </carouselitem>
+                    <carouselitem>
+                        <div sclass="z-w-full z-h-full z-d-flex z-align-center z-justify-center z-bg-secondary-container">
+                            <label value="Slide 2"/>
+                        </div>
+                    </carouselitem>
+                    <carouselitem>
+                        <div sclass="z-w-full z-h-full z-d-flex z-align-center z-justify-center z-bg-success-container">
+                            <label value="Slide 3"/>
+                        </div>
+                    </carouselitem>
+                </carousel>
+            </div>
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <div sclass="z-text-xs z-text-secondary">effect="fade"</div>
+                <carousel id="pv-carousel-effect-fade" width="320px" height="200px" effect="fade">
+                    <carouselitem>
+                        <div sclass="z-w-full z-h-full z-d-flex z-align-center z-justify-center z-bg-primary-container">
+                            <label value="Slide 1"/>
+                        </div>
+                    </carouselitem>
+                    <carouselitem>
+                        <div sclass="z-w-full z-h-full z-d-flex z-align-center z-justify-center z-bg-secondary-container">
+                            <label value="Slide 2"/>
+                        </div>
+                    </carouselitem>
+                    <carouselitem>
+                        <div sclass="z-w-full z-h-full z-d-flex z-align-center z-justify-center z-bg-success-container">
+                            <label value="Slide 3"/>
+                        </div>
+                    </carouselitem>
+                </carousel>
+            </div>
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <div sclass="z-text-xs z-text-secondary">effect="none"</div>
+                <carousel id="pv-carousel-effect-none" width="320px" height="200px" effect="none">
+                    <carouselitem>
+                        <div sclass="z-w-full z-h-full z-d-flex z-align-center z-justify-center z-bg-primary-container">
+                            <label value="Slide 1"/>
+                        </div>
+                    </carouselitem>
+                    <carouselitem>
+                        <div sclass="z-w-full z-h-full z-d-flex z-align-center z-justify-center z-bg-secondary-container">
+                            <label value="Slide 2"/>
+                        </div>
+                    </carouselitem>
+                    <carouselitem>
+                        <div sclass="z-w-full z-h-full z-d-flex z-align-center z-justify-center z-bg-success-container">
+                            <label value="Slide 3"/>
+                        </div>
+                    </carouselitem>
+                </carousel>
+            </div>
+        </div>
+        <div sclass="z-text-sm z-text-secondary">Same 3 slides under each of the three effect modes — track transform (slide), cross-fade (fade), and instant jump with no transition (none).</div>
+    </div>
+
+    <div sclass="z-mb-8">
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Vertical orientation</div>
+        <div sclass="z-mb-2">
+            <carousel id="pv-carousel-vertical" width="280px" height="360px" orient="vertical">
+                <carouselitem image="~./img/item1.jpg"/>
+                <carouselitem image="~./img/item2.jpg"/>
+                <carouselitem image="~./img/item3.jpg"/>
+            </carousel>
+        </div>
+        <div sclass="z-text-sm z-text-secondary">orient="vertical" — track transforms along the Y axis; up/down arrow keys and vertical drag apply instead of left/right.</div>
+    </div>
+
+    <div sclass="z-mb-8">
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Single slide (arrows/indicators suppressed)</div>
+        <div sclass="z-mb-2">
+            <carousel id="pv-carousel-single-slide" width="400px" height="240px" showArrows="true" showIndicators="true">
+                <carouselitem image="~./img/item4.jpg" label="Only slide"/>
+            </carousel>
+        </div>
+        <div sclass="z-text-sm z-text-secondary">showArrows="true" showIndicators="true" set explicitly, but with only 1 slide the count &gt; 1 gate suppresses both structurally — no arrows, no indicator row.</div>
+    </div>
+
+    <div sclass="z-mb-8">
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Autoplay (manual/visual confirmation)</div>
+        <div sclass="z-mb-2">
+            <carousel id="pv-carousel-autoplay" width="400px" height="240px" autoplay="true" interval="2000">
+                <carouselitem image="~./img/item1.jpg"/>
+                <carouselitem image="~./img/item2.jpg"/>
+                <carouselitem image="~./img/item3.jpg"/>
+            </carousel>
+        </div>
+        <div sclass="z-text-sm z-text-secondary">autoplay="true" interval="2000" — advances every 2s, pauses on hover; not part of any static-frame assertion, for visual confirmation only.</div>
+    </div>
+</div>
+</zk>

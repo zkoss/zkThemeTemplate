@@ -1,0 +1,45 @@
+<?page title="Signature" contentType="text/html;charset=UTF-8"?>
+<zk xmlns:h="native">
+<div sclass="z-p-8">
+    <div sclass="z-border-bottom z-text-xl z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Signature</div>
+    <div sclass="z-mb-6">
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Signature Pad</div>
+        <div sclass="z-py-3 z-d-flex z-flex-col z-gap-4">
+            <signature id="signature" width="600px" height="200px"
+                       onSave="image.content = event.media"
+                       undoLabel="Undo" saveLabel="Save" clearLabel="Clear"/>
+        </div>
+    </div>
+    <div sclass="z-mb-6">
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Customization</div>
+        <div sclass="z-d-flex z-align-start z-flex-wrap z-gap-6 z-py-3">
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <div sclass="z-text-xs z-text-secondary">Pen color</div>
+                <colorbox onChange="signature.penColor = self.value"/>
+            </div>
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <div sclass="z-text-xs z-text-secondary">Background color</div>
+                <colorbox onChange="signature.backgroundColor = self.value" color="#FFFFFF"/>
+            </div>
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <div sclass="z-text-xs z-text-secondary">Pen size</div>
+                <spinner onChange="signature.penSize = self.value" value="1"/>
+            </div>
+        </div>
+    </div>
+    <div sclass="z-mb-6">
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Saved Signature</div>
+        <div sclass="z-py-3">
+            <image id="image" width="600px" height="200px" style="border: 1px solid var(--zk-color-outline);"/>
+        </div>
+    </div>
+
+    <div sclass="z-mb-6">
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Toolbar Hidden</div>
+        <div sclass="z-py-3 z-d-flex z-flex-col z-gap-4">
+            <div sclass="z-text-xs z-text-secondary">toolbarVisible="false" — toolbar strip permanently hidden (.z-signature-toolbar-hide)</div>
+            <signature width="600px" height="200px" toolbarVisible="false"/>
+        </div>
+    </div>
+</div>
+</zk>

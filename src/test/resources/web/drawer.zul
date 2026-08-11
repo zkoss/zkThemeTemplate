@@ -1,0 +1,71 @@
+<?page title="Drawer" contentType="text/html;charset=UTF-8"?>
+<zk xmlns:h="native">
+<div sclass="z-p-8">
+    <div sclass="z-border-bottom z-text-xl z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Drawer</div>
+
+    <div sclass="z-mb-6">
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Basic Drawer</div>
+        <div sclass="z-py-3">
+            <button label="Show File Info" onClick="fi.open()"/>
+            <drawer id="fi" title="File information">
+                <grid>
+                    <rows>
+                        <row>
+                            <label value="Name"/>
+                            1.jpg
+                        </row>
+                        <row>
+                            <label value="Size"/>
+                            1.8 Megabytes
+                        </row>
+                        <row>
+                            <label value="Dimensions"/>
+                            1920x1080
+                        </row>
+                    </rows>
+                </grid>
+            </drawer>
+        </div>
+    </div>
+
+    <div sclass="z-mb-6">
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Positions</div>
+        <div sclass="z-py-3 z-d-flex z-gap-4 z-flex-wrap">
+            <button label="Open Left" onClick="dleft.open()"/>
+            <drawer id="dleft" title="Left Drawer" position="left">
+                <label value="Drawer slides in from the left."/>
+                <button label="Close" onClick="dleft.close()"/>
+            </drawer>
+
+            <button label="Open Top" onClick="dtop.open()"/>
+            <drawer id="dtop" title="Top Drawer" position="top">
+                <label value="Drawer slides in from the top."/>
+                <button label="Close" onClick="dtop.close()"/>
+            </drawer>
+
+            <button label="Open Bottom" onClick="dbottom.open()"/>
+            <drawer id="dbottom" title="Bottom Drawer" position="bottom">
+                <label value="Drawer slides in from the bottom."/>
+                <button label="Close" onClick="dbottom.close()"/>
+            </drawer>
+        </div>
+    </div>
+
+    <div sclass="z-mb-6">
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Variants</div>
+        <div sclass="z-py-3 z-d-flex z-gap-4 z-flex-wrap">
+            <button label="No Mask" onClick="dnomask.open()"/>
+            <drawer id="dnomask" title="No Mask" mask="false">
+                <label value="Backdrop overlay is disabled."/>
+                <button label="Close" onClick="dnomask.close()"/>
+            </drawer>
+
+            <button label="Close Button" onClick="dnoclosable.open()"/>
+            <drawer id="dnoclosable" title="Close Button" closable="true">
+                <label value="The header has X button"/>
+            </drawer>
+        </div>
+    </div>
+
+</div>
+</zk>

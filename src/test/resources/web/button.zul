@@ -1,0 +1,169 @@
+<?page title="Button" contentType="text/html;charset=UTF-8"?>
+<zk xmlns:h="native">
+<div sclass="z-p-8">
+    <div sclass="z-border-bottom z-text-xl z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Button</div>
+
+    <div sclass="z-mb-6 z-d-grid z-grid-cols-auto z-overflow-x-auto z-col-gap-6 z-row-gap-2 z-align-start" style="--zk-cols:2; --zk-col-min:min-content">
+        <div sclass="z-grid-col-full z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">States</div>
+        <div sclass="z-d-contents">
+            <div/>
+            <div sclass="z-text-xs z-fw-semibold z-text-secondary">Default</div>
+            <div sclass="z-text-xs z-fw-semibold z-text-secondary">Disabled</div>
+        </div>
+        <div sclass="z-d-contents">
+            <div sclass="z-text-sm z-text-secondary">Text only</div>
+            <div><button label="Button"/></div>
+            <div><button label="Button" disabled="true"/></div>
+        </div>
+        <div sclass="z-d-contents">
+            <div sclass="z-text-sm z-text-secondary">With icon</div>
+            <div><button label="Button" iconSclass="z-icon-volume-2"/></div>
+            <div><button label="Button" iconSclass="z-icon-volume-2" disabled="true"/></div>
+        </div>
+        <div sclass="z-d-contents">
+            <div sclass="z-text-sm z-text-secondary">Icon only</div>
+            <div><button iconSclass="z-icon-settings"/></div>
+            <div><button iconSclass="z-icon-settings" disabled="true"/></div>
+        </div>
+        <div sclass="z-d-contents">
+            <div sclass="z-text-sm z-text-secondary">Vertical</div>
+            <div><button label="Button" orient="vertical" iconSclass="z-icon-settings"/></div>
+            <div><button label="Button" orient="vertical" iconSclass="z-icon-settings" disabled="true"/></div>
+        </div>
+        <div sclass="z-d-contents">
+            <div sclass="z-text-sm z-text-secondary">Long label</div>
+            <div><button label="Long Long Button"/></div>
+            <div><button label="Long Long Button" disabled="true"/></div>
+        </div>
+        <div sclass="z-d-contents">
+            <div sclass="z-text-sm z-text-secondary">Outlined</div>
+            <div><button label="Button" sclass="z-button-outlined"/></div>
+            <div><button label="Button" sclass="z-button-outlined" disabled="true"/></div>
+        </div>
+        <div sclass="z-d-contents">
+            <div sclass="z-text-sm z-text-secondary">Text</div>
+            <div><button label="Button" sclass="z-button-text"/></div>
+            <div><button label="Button" sclass="z-button-text" disabled="true"/></div>
+        </div>
+    </div>
+
+    <div sclass="z-mb-6 z-d-grid z-grid-cols-auto z-overflow-x-auto z-col-gap-6 z-row-gap-2 z-align-start" style="--zk-cols:2; --zk-col-min:min-content">
+        <div sclass="z-grid-col-full z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Colors</div>
+        <div sclass="z-d-contents">
+            <div/>
+            <div sclass="z-text-xs z-fw-semibold z-text-secondary">Default</div>
+            <div sclass="z-text-xs z-fw-semibold z-text-secondary">Disabled</div>
+        </div>
+        <div style="grid-column:1/-1" sclass="z-text-xs z-text-muted z-mt-1 z-mb-1">Contained</div>
+        <div sclass="z-d-contents">
+            <div sclass="z-text-sm z-text-secondary">Secondary</div>
+            <div><button label="Button" sclass="z-button-secondary"/></div>
+            <div><button label="Button" sclass="z-button-secondary" disabled="true"/></div>
+        </div>
+        <div sclass="z-d-contents">
+            <div sclass="z-text-sm z-text-secondary">Success</div>
+            <div><button label="Button" sclass="z-button-success"/></div>
+            <div><button label="Button" sclass="z-button-success" disabled="true"/></div>
+        </div>
+        <div sclass="z-d-contents">
+            <div sclass="z-text-sm z-text-secondary">Warning</div>
+            <div><button label="Button" sclass="z-button-warning"/></div>
+            <div><button label="Button" sclass="z-button-warning" disabled="true"/></div>
+        </div>
+        <div sclass="z-d-contents">
+            <div sclass="z-text-sm z-text-secondary">Error</div>
+            <div><button label="Button" sclass="z-button-error"/></div>
+            <div><button label="Button" sclass="z-button-error" disabled="true"/></div>
+        </div>
+        <div sclass="z-d-contents">
+            <div sclass="z-text-sm z-text-secondary">Info</div>
+            <div><button label="Button" sclass="z-button-info"/></div>
+            <div><button label="Button" sclass="z-button-info" disabled="true"/></div>
+        </div>
+        <div style="grid-column:1/-1" sclass="z-text-xs z-text-muted z-mt-3 z-mb-1">Outlined</div>
+        <div sclass="z-d-contents">
+            <div sclass="z-text-sm z-text-secondary">Secondary</div>
+            <div><button label="Button" sclass="z-button-outlined-secondary"/></div>
+            <div><button label="Button" sclass="z-button-outlined-secondary" disabled="true"/></div>
+        </div>
+        <div sclass="z-d-contents">
+            <div sclass="z-text-sm z-text-secondary">Success</div>
+            <div><button label="Button" sclass="z-button-outlined-success"/></div>
+            <div><button label="Button" sclass="z-button-outlined-success" disabled="true"/></div>
+        </div>
+        <div sclass="z-d-contents">
+            <div sclass="z-text-sm z-text-secondary">Warning</div>
+            <div><button label="Button" sclass="z-button-outlined-warning"/></div>
+            <div><button label="Button" sclass="z-button-outlined-warning" disabled="true"/></div>
+        </div>
+        <div sclass="z-d-contents">
+            <div sclass="z-text-sm z-text-secondary">Error</div>
+            <div><button label="Button" sclass="z-button-outlined-error"/></div>
+            <div><button label="Button" sclass="z-button-outlined-error" disabled="true"/></div>
+        </div>
+        <div sclass="z-d-contents">
+            <div sclass="z-text-sm z-text-secondary">Info</div>
+            <div><button label="Button" sclass="z-button-outlined-info"/></div>
+            <div><button label="Button" sclass="z-button-outlined-info" disabled="true"/></div>
+        </div>
+        <div style="grid-column:1/-1" sclass="z-text-xs z-text-muted z-mt-3 z-mb-1">Text</div>
+        <div sclass="z-d-contents">
+            <div sclass="z-text-sm z-text-secondary">Secondary</div>
+            <div><button label="Button" sclass="z-button-text-secondary"/></div>
+            <div><button label="Button" sclass="z-button-text-secondary" disabled="true"/></div>
+        </div>
+        <div sclass="z-d-contents">
+            <div sclass="z-text-sm z-text-secondary">Success</div>
+            <div><button label="Button" sclass="z-button-text-success"/></div>
+            <div><button label="Button" sclass="z-button-text-success" disabled="true"/></div>
+        </div>
+        <div sclass="z-d-contents">
+            <div sclass="z-text-sm z-text-secondary">Warning</div>
+            <div><button label="Button" sclass="z-button-text-warning"/></div>
+            <div><button label="Button" sclass="z-button-text-warning" disabled="true"/></div>
+        </div>
+        <div sclass="z-d-contents">
+            <div sclass="z-text-sm z-text-secondary">Error</div>
+            <div><button label="Button" sclass="z-button-text-error"/></div>
+            <div><button label="Button" sclass="z-button-text-error" disabled="true"/></div>
+        </div>
+        <div sclass="z-d-contents">
+            <div sclass="z-text-sm z-text-secondary">Info</div>
+            <div><button label="Button" sclass="z-button-text-info"/></div>
+            <div><button label="Button" sclass="z-button-text-info" disabled="true"/></div>
+        </div>
+    </div>
+
+    <div sclass="z-mb-6">
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Image + Reverse Direction</div>
+        <div sclass="z-d-flex z-align-start z-flex-wrap z-gap-6 z-py-3">
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <div sclass="z-text-xs z-text-secondary">Image (icon before label)</div>
+                <button label="Save" image="~./img/Centigrade-Widget-Icons/DisketteBlack-16x16.png"/>
+            </div>
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <div sclass="z-text-xs z-text-secondary">dir="reverse" (label first, image after)</div>
+                <button label="Save" image="~./img/Centigrade-Widget-Icons/DisketteBlack-16x16.png" dir="reverse"/>
+            </div>
+        </div>
+    </div>
+
+    <div sclass="z-mb-6">
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Sizes</div>
+        <div sclass="z-d-flex z-align-start z-flex-wrap z-gap-6 z-py-3">
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <div sclass="z-text-xs z-text-secondary">Small</div>
+                <button label="Button" sclass="z-button-sm"/>
+            </div>
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <div sclass="z-text-xs z-text-secondary">Default</div>
+                <button label="Button"/>
+            </div>
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <div sclass="z-text-xs z-text-secondary">Large</div>
+                <button label="Button" sclass="z-button-lg"/>
+            </div>
+        </div>
+    </div>
+</div>
+</zk>

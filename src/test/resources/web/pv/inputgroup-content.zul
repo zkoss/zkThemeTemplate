@@ -1,0 +1,61 @@
+<zk>
+<div sclass="z-mb-6">
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Examples</div>
+    <div sclass="z-d-flex z-flex-col z-align-start z-gap-4 z-py-3">
+        <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+            <div sclass="z-text-xs z-text-secondary">Prefix text</div>
+            <inputgroup>@<textbox/></inputgroup>
+        </div>
+        <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+            <div sclass="z-text-xs z-text-secondary">Suffix text</div>
+            <inputgroup><textbox placeholder="Recipient's username"/>@example.com</inputgroup>
+        </div>
+        <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+            <div sclass="z-text-xs z-text-secondary">Both sides</div>
+            <inputgroup>$<textbox/>.00</inputgroup>
+        </div>
+        <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+            <div sclass="z-text-xs z-text-secondary">With multiline</div>
+            <inputgroup>
+                With textarea
+                <textbox multiline="true" rows="3" cols="30"/>
+            </inputgroup>
+        </div>
+        <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+            <div sclass="z-text-xs z-text-secondary">Input + Button</div>
+            <inputgroup>
+                <textbox placeholder="Search"/>
+                <button label="Go" sclass="z-button-primary"/>
+            </inputgroup>
+        </div>
+    </div>
+</div>
+
+<div sclass="z-mb-6">
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Disabled State</div>
+    <div sclass="z-d-flex z-align-start z-flex-wrap z-gap-6 z-py-3">
+        <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+            <div sclass="z-text-xs z-text-secondary">Prefix + disabled textbox</div>
+            <inputgroup>@<textbox disabled="true" value="disabled@example.com"/></inputgroup>
+        </div>
+        <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+            <div sclass="z-text-xs z-text-secondary">Both sides + disabled textbox</div>
+            <inputgroup>$<textbox disabled="true" value="0"/>.00</inputgroup>
+        </div>
+    </div>
+</div>
+
+<div sclass="z-mb-6">
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Vertical Orientation</div>
+    <div sclass="z-d-flex z-align-start z-flex-wrap z-gap-6 z-py-3">
+        <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+            <div sclass="z-text-xs z-text-secondary">orient="vertical" (rounded top/bottom corners)</div>
+            <inputgroup orient="vertical">
+                Username
+                <textbox placeholder="Enter username"/>
+                @example.com
+            </inputgroup>
+        </div>
+    </div>
+</div>
+</zk>

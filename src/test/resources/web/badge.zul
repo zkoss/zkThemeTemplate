@@ -1,0 +1,61 @@
+<?page title="Badge" contentType="text/html;charset=UTF-8"?>
+<zk>
+<div sclass="z-p-8 z-d-flex z-flex-col z-gap-6">
+    <div sclass="z-border-bottom z-text-xl z-fw-medium z-text-on-surface z-pb-3">Badge</div>
+
+    <div>
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Count + dot on icons</div>
+        <!-- Font Awesome names, not Lucide: this theme paints icons as FA glyphs, so only a
+             name that exists here (envelope, bell, comment, square) renders at all.
+             font-family and font-weight are INLINE on purpose: norm.css gives .z-label the
+             base content font-family plus font-weight:normal, at the same specificity as
+             [class*="z-icon-"] but LATER in source order. So a label used as an icon host
+             loses the icon font to the text font (paints nothing) and loses weight 900,
+             which is what selects the SOLID face — at 400 the brands face wins the family
+             and any icon missing from the regular face turns into tofu. -->
+        <div sclass="z-d-flex z-gap-8 z-align-center" style="padding:8px 4px;">
+            <badge count="4"><label sclass="z-icon-envelope" style="font-family:FontAwesome;font-weight:900;font-size:26px;"/></badge>
+            <badge count="7" severity="danger"><label sclass="z-icon-bell" style="font-family:FontAwesome;font-weight:900;font-size:26px;"/></badge>
+            <badge dot="true" severity="danger"><label sclass="z-icon-comment" style="font-family:FontAwesome;font-weight:900;font-size:26px;"/></badge>
+        </div>
+    </div>
+
+    <div>
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Severities (standalone)</div>
+        <div sclass="z-d-flex z-gap-3 z-flex-wrap z-align-center">
+            <badge count="4" severity="info"/>
+            <badge count="4" severity="success"/>
+            <badge count="4" severity="warning"/>
+            <badge count="4" severity="danger"/>
+            <badge count="4" severity="secondary"/>
+        </div>
+    </div>
+
+    <div>
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Max overflow &amp; showZero</div>
+        <div sclass="z-d-flex z-gap-3 z-flex-wrap z-align-center">
+            <badge count="99"  severity="danger"/>
+            <badge count="120" max="99" severity="danger"/>
+            <badge count="0"   showZero="true" severity="secondary"/>
+        </div>
+    </div>
+
+    <div>
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Placement</div>
+        <div sclass="z-d-flex z-gap-8 z-align-center" style="padding:12px 8px;">
+            <badge count="3" placement="top_right"><label sclass="z-icon-square" style="font-family:FontAwesome;font-weight:900;font-size:32px;"/></badge>
+            <badge count="3" placement="top_left"><label sclass="z-icon-square" style="font-family:FontAwesome;font-weight:900;font-size:32px;"/></badge>
+            <badge count="3" placement="bottom_right"><label sclass="z-icon-square" style="font-family:FontAwesome;font-weight:900;font-size:32px;"/></badge>
+            <badge count="3" placement="bottom_left"><label sclass="z-icon-square" style="font-family:FontAwesome;font-weight:900;font-size:32px;"/></badge>
+        </div>
+    </div>
+
+    <div>
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Button host</div>
+        <div sclass="z-d-flex z-gap-8 z-align-center" style="padding:8px 4px;">
+            <badge count="4"  severity="danger"><button label="Notifications"/></badge>
+            <badge count="10" severity="info"><button label="Messages"/></badge>
+        </div>
+    </div>
+</div>
+</zk>

@@ -1,0 +1,89 @@
+<?page title="Paging" contentType="text/html;charset=UTF-8"?>
+<zk xmlns:h="native">
+<div sclass="z-p-8">
+    <div sclass="z-border-bottom z-text-xl z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Paging</div>
+
+    <div sclass="z-mb-6">
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Paging Variants</div>
+        <div sclass="z-d-flex z-align-start z-flex-wrap z-gap-6 z-py-3">
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <div sclass="z-text-xs z-text-secondary">Default mold (detailed)</div>
+                <paging totalSize="300" pageSize="5" activePage="15" detailed="true"/>
+            </div>
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <div sclass="z-text-xs z-text-secondary">OS mold (detailed)</div>
+                <paging totalSize="300" pageSize="5" activePage="15" detailed="true" mold="os"/>
+            </div>
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <div sclass="z-text-xs z-text-secondary">OS mold (compact)</div>
+                <paging totalSize="50" pageSize="5" mold="os" />
+            </div>
+        </div>
+    </div>
+
+    <div sclass="z-mb-6">
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Default Mold — Jump-to-Page Input Field (.z-paging-input)</div>
+        <div sclass="z-d-flex z-align-start z-flex-wrap z-gap-6 z-py-3">
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <div sclass="z-text-xs z-text-secondary">Default mold (shows page input + total)</div>
+                <paging totalSize="200" pageSize="10" activePage="4"/>
+            </div>
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <div sclass="z-text-xs z-text-secondary">Default mold — first page (prev/first disabled)</div>
+                <paging totalSize="200" pageSize="10" activePage="0"/>
+            </div>
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <div sclass="z-text-xs z-text-secondary">Default mold — last page (next/last disabled)</div>
+                <paging totalSize="200" pageSize="10" activePage="19"/>
+            </div>
+        </div>
+    </div>
+
+    <div sclass="z-mb-6">
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Pagination with Data Grid</div>
+        <div sclass="z-py-3">
+            <grid mold="default">
+                <columns>
+                    <column label="#"/>
+                    <column label="First Name"/>
+                    <column label="Last Name"/>
+                    <column label="Username"/>
+                </columns>
+                <rows>
+                    <row>
+                        <label value="1"/>
+                        <label value="Mark"/>
+                        <label value="Otto"/>
+                        <label value="@mdo"/>
+                    </row>
+                    <row>
+                        <label value="2"/>
+                        <label value="Jacob"/>
+                        <label value="Thornton"/>
+                        <label value="@fat"/>
+                    </row>
+                    <row>
+                        <label value="3"/>
+                        <label value="Larry"/>
+                        <label value="the Bird"/>
+                        <label value="@twitter"/>
+                    </row>
+                    <row>
+                        <label value="4"/>
+                        <label value="John"/>
+                        <label value="Smith"/>
+                        <label value="@jsmith"/>
+                    </row>
+                    <row>
+                        <label value="5"/>
+                        <label value="Jane"/>
+                        <label value="Doe"/>
+                        <label value="@jdoe"/>
+                    </row>
+                </rows>
+            </grid>
+            <paging totalSize="50" pageSize="5" mold="os" />
+        </div>
+    </div>
+</div>
+</zk>

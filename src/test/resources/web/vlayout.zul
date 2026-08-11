@@ -1,0 +1,71 @@
+<?page title="Vlayout" contentType="text/html;charset=UTF-8"?>
+<zk xmlns:h="native">
+<div sclass="z-p-8">
+    <div sclass="z-border-bottom z-text-xl z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Vlayout</div>
+
+    <div sclass="z-mb-6">
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Basic Vertical Layout</div>
+        <div sclass="z-d-flex z-align-start z-flex-wrap z-gap-6 z-py-3">
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <div sclass="z-text-xs z-text-secondary">Default spacing</div>
+                <vlayout>
+                    <button label="Button 1"/>
+                    <button label="Button 2"/>
+                    <button label="Button 3"/>
+                </vlayout>
+            </div>
+        </div>
+    </div>
+
+    <div sclass="z-mb-6">
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Spacing Variants</div>
+        <div sclass="z-d-flex z-align-start z-flex-wrap z-gap-6 z-py-3">
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <div sclass="z-text-xs z-text-secondary">spacing="0"</div>
+                <vlayout spacing="0">
+                    <button label="A"/>
+                    <button label="B"/>
+                    <button label="C"/>
+                </vlayout>
+            </div>
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <div sclass="z-text-xs z-text-secondary">spacing="16px"</div>
+                <vlayout spacing="16px">
+                    <button label="A"/>
+                    <button label="B"/>
+                    <button label="C"/>
+                </vlayout>
+            </div>
+        </div>
+    </div>
+
+    <div sclass="z-mb-6">
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Spacing Auto</div>
+        <div sclass="z-d-flex z-align-start z-flex-wrap z-gap-6 z-py-3">
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <div sclass="z-text-xs z-text-secondary">spacing="auto" (theme controls gap)</div>
+                <vlayout spacing="auto">
+                    <button label="A"/>
+                    <button label="B"/>
+                    <button label="C"/>
+                </vlayout>
+            </div>
+        </div>
+    </div>
+
+    <div sclass="z-mb-6">
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Mixed Children</div>
+        <div sclass="z-d-flex z-align-start z-flex-wrap z-gap-6 z-py-3">
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <div sclass="z-text-xs z-text-secondary">Label + Textbox + Button</div>
+                <vlayout>
+                    <label value="Label"/>
+                    <textbox value="Text"/>
+                    <button label="Submit"/>
+                </vlayout>
+            </div>
+        </div>
+    </div>
+
+</div>
+</zk>

@@ -1,0 +1,18 @@
+<zk>
+<!-- A 2D state matrix = label column + N aligned value columns. Everything comes
+     from the generic framework utilities: z-d-grid plus z-grid-cols-auto build the
+     "auto label column + N equal columns" track (count via the inline zk-cols var),
+     z-overflow-x-auto scrolls on narrow screens, and z-d-contents flattens each
+     row wrapper so its cells become direct grid children and align across rows.
+     The section title spans the whole grid via z-grid-col-full. No custom CSS. -->
+<div sclass="z-mb-6 z-d-grid z-grid-cols-auto z-overflow-x-auto z-col-gap-6 z-row-gap-2 z-align-start" style="--zk-cols:${arg.cols.size()}; --zk-col-min:min-content">
+    <div sclass="z-grid-col-full z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">${arg.title}</div>
+    <div sclass="z-d-contents">
+        <div/>
+        <forEach items="${arg.cols}" var="col">
+            <div sclass="z-text-xs z-fw-semibold z-text-secondary">${col}</div>
+        </forEach>
+    </div>
+    <apply template="${arg.rowsTemplate}"/>
+</div>
+</zk>

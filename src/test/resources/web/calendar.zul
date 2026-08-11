@@ -1,0 +1,72 @@
+<?page title="Calendar" contentType="text/html;charset=UTF-8"?>
+<zk xmlns:h="native">
+<zscript>
+    import java.util.Date;
+    import java.util.Calendar;
+    // Fixed past date so the screenshot baseline is deterministic: a past month is
+    // unambiguously "past" vs any real today, so the today-highlight never appears
+    // and the no-past/no-future greying is stable. Assign to every calendar via
+    // value="${fixedDate}". (See doc/test-architecture.md §5 calendar note.)
+    Calendar _c = Calendar.getInstance();
+    _c.set(2020, Calendar.MARCH, 15, 10, 30, 0);
+    Date fixedDate = _c.getTime();
+</zscript>
+<div sclass="z-p-8">
+    <div sclass="z-border-bottom z-text-xl z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Calendar</div>
+    <div sclass="z-mb-6">
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Variants</div>
+        <div sclass="z-d-flex z-align-start z-flex-wrap z-gap-6 z-py-3">
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <div sclass="z-text-xs z-text-secondary">Default</div>
+                <calendar value="${fixedDate}"/>
+            </div>
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <div sclass="z-text-xs z-text-secondary">Week of year</div>
+                <calendar weekOfYear="true" value="${fixedDate}"/>
+            </div>
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <div sclass="z-text-xs z-text-secondary">Today link</div>
+                <calendar showTodayLink="true" value="${fixedDate}"/>
+            </div>
+        </div>
+    </div>
+    <div sclass="z-mb-6">
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">With Datebox</div>
+        <div sclass="z-d-flex z-align-start z-flex-wrap z-gap-6 z-py-3">
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <div sclass="z-text-xs z-text-secondary">Calendar + datebox (GMT±8)</div>
+                <calendar value="${fixedDate}"/>
+                <datebox id="db" width="220px" format="yyyy/MM/dd a hh:mm:ss"
+                         displayedTimeZones="GMT+8,GMT-8"/>
+                <!-- Fixed instant (not new Date()) so the baseline is stable; the
+                     seconds in the format would otherwise drift every run. -->
+                <zscript>db.value = fixedDate;</zscript>
+            </div>
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <div sclass="z-text-xs z-text-secondary">Week of year</div>
+                <calendar weekOfYear="true" value="${fixedDate}"/>
+                <datebox weekOfYear="true"/>
+            </div>
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <div sclass="z-text-xs z-text-secondary">Today link</div>
+                <calendar showTodayLink="true" value="${fixedDate}"/>
+                <datebox showTodayLink="true" todayLinkLabel="Choose today"/>
+            </div>
+        </div>
+    </div>
+
+    <div sclass="z-mb-6">
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Constrained (Disabled Dates)</div>
+        <div sclass="z-d-flex z-align-start z-flex-wrap z-gap-6 z-py-3">
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <div sclass="z-text-xs z-text-secondary">constraint="no past" (past days greyed)</div>
+                <calendar constraint="no past" value="${fixedDate}"/>
+            </div>
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <div sclass="z-text-xs z-text-secondary">constraint="no future" (future days greyed)</div>
+                <calendar constraint="no future" value="${fixedDate}"/>
+            </div>
+        </div>
+    </div>
+</div>
+</zk>

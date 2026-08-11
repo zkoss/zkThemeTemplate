@@ -1,0 +1,51 @@
+<?page title="Avatar" contentType="text/html;charset=UTF-8"?>
+<zk>
+<div sclass="z-p-8 z-d-flex z-flex-col z-gap-6">
+    <div sclass="z-border-bottom z-text-xl z-fw-medium z-text-on-surface z-pb-3">Avatar</div>
+
+    <div>
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Sizes (initials)</div>
+        <div sclass="z-d-flex z-gap-6 z-align-end">
+            <avatar label="AB" size="small"/>
+            <avatar label="AB" size="medium"/>
+            <avatar label="AB" size="large"/>
+        </div>
+    </div>
+
+    <div>
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Shapes</div>
+        <div sclass="z-d-flex z-gap-6 z-align-center">
+            <avatar label="CD" size="medium" shape="circle"/>
+            <avatar label="CD" size="medium" shape="square"/>
+        </div>
+    </div>
+
+    <div>
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Colored initials</div>
+        <div sclass="z-d-flex z-gap-3 z-align-center">
+            <avatar label="HW" size="medium" style="background:var(--zk-color-primary);color:var(--zk-color-on-primary)"/>
+            <avatar label="JL" size="medium" style="background:var(--zk-color-secondary);color:var(--zk-color-on-secondary)"/>
+            <avatar label="SA" size="medium" style="background:var(--zk-color-status-success);color:var(--zk-color-on-status)"/>
+        </div>
+    </div>
+
+    <div>
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Image (with initials fallback on load error)</div>
+        <div sclass="z-d-flex z-gap-6 z-align-center">
+            <avatar image="~./img/item1.jpg" size="large"/>
+            <avatar image="~./img/does-not-exist.jpg" label="FB" size="large"/>
+        </div>
+    </div>
+
+    <div>
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Avatar Group</div>
+        <avatargroup size="medium">
+            <avatar label="HW" style="background:var(--zk-color-primary);color:var(--zk-color-on-primary)"/>
+            <avatar label="JL" style="background:var(--zk-color-secondary);color:var(--zk-color-on-secondary)"/>
+            <avatar label="MK"/>
+            <avatar image="~./img/item2.jpg"/>
+            <avatar label="+5"/>
+        </avatargroup>
+    </div>
+</div>
+</zk>

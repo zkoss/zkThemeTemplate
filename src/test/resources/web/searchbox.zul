@@ -1,0 +1,12 @@
+<?page title="Searchbox" contentType="text/html;charset=UTF-8"?>
+<zk xmlns:h="native">
+<zscript>
+ListModel searchModel = new ListModelArray(new String[]{
+    "North America", "South America", "Europe", "Asia", "Africa", "Oceania", "Antarctica"
+});
+</zscript>
+<div sclass="z-p-8">
+    <div sclass="z-border-bottom z-text-xl z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Searchbox</div>
+    <apply templateURI="~./pv/searchbox-content.zul"/>
+</div>
+</zk>

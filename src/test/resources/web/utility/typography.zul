@@ -1,0 +1,151 @@
+<?page title="Typography Utilities"?>
+<zk>
+<style src="~./usecase/usecase.css"/>
+<vlayout hflex="1" sclass="z-d-flex z-flex-col z-gap-4 z-p-4 z-bg-surface-low">
+
+    <label value="Typography Utilities" sclass="z-h2"/>
+
+    <!-- Heading Utilities -->
+    <div sclass="z-card">
+        <label value="Heading Utilities  (.z-h1 — .z-h7)" sclass="z-d-block z-text-base z-fw-medium z-text-on-surface z-mb-3"/>
+        <vlayout>
+            <div sclass="z-d-flex z-align-baseline z-gap-3">
+                <label value="Heading 1 — Display Large" sclass="z-h1"/>
+                <label value=".z-h1  2rem / 700" sclass="z-text-muted z-text-sm"/>
+            </div>
+            <div sclass="z-d-flex z-align-baseline z-gap-3">
+                <label value="Heading 2 — Display Medium" sclass="z-h2"/>
+                <label value=".z-h2  1.75rem / 700" sclass="z-text-muted z-text-sm"/>
+            </div>
+            <div sclass="z-d-flex z-align-baseline z-gap-3">
+                <label value="Heading 3 — Headline Large" sclass="z-h3"/>
+                <label value=".z-h3  1.5rem / 600" sclass="z-text-muted z-text-sm"/>
+            </div>
+            <div sclass="z-d-flex z-align-baseline z-gap-3">
+                <label value="Heading 4 — Headline Small" sclass="z-h4"/>
+                <label value=".z-h4  1.25rem / 600" sclass="z-text-muted z-text-sm"/>
+            </div>
+            <div sclass="z-d-flex z-align-baseline z-gap-3">
+                <label value="Heading 5 — Title Large" sclass="z-h5"/>
+                <label value=".z-h5  1.125rem / 600" sclass="z-text-muted z-text-sm"/>
+            </div>
+            <div sclass="z-d-flex z-align-baseline z-gap-3">
+                <label value="Heading 6 — Title Small" sclass="z-h6"/>
+                <label value=".z-h6  0.875rem / 600" sclass="z-text-muted z-text-sm"/>
+            </div>
+            <div sclass="z-d-flex z-align-baseline z-gap-3">
+                <label value="Heading 7 — Label Large" sclass="z-h7"/>
+                <label value=".z-h7  0.75rem / 500" sclass="z-text-muted z-text-sm"/>
+            </div>
+        </vlayout>
+    </div>
+
+    <!-- Font Size Scale -->
+    <div sclass="z-card">
+        <label value="Font Size Scale  (.z-text-xs … .z-text-7xl)" sclass="z-d-block z-text-base z-fw-medium z-text-on-surface z-mb-3"/>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px 24px">
+            <div sclass="z-d-flex z-align-baseline z-gap-2"><label value="Aa" sclass="z-text-xs"/><label value=".z-text-xs   11px" sclass="z-text-muted z-text-xs"/></div>
+            <div sclass="z-d-flex z-align-baseline z-gap-2"><label value="Aa" sclass="z-text-sm"/><label value=".z-text-sm   12px" sclass="z-text-muted z-text-xs"/></div>
+            <div sclass="z-d-flex z-align-baseline z-gap-2"><label value="Aa" sclass="z-text-md"/><label value=".z-text-md   13px" sclass="z-text-muted z-text-xs"/></div>
+            <div sclass="z-d-flex z-align-baseline z-gap-2"><label value="Aa" sclass="z-text-base"/><label value=".z-text-base 14px" sclass="z-text-muted z-text-xs"/></div>
+            <div sclass="z-d-flex z-align-baseline z-gap-2"><label value="Aa" sclass="z-text-lg"/><label value=".z-text-lg   16px" sclass="z-text-muted z-text-xs"/></div>
+            <div sclass="z-d-flex z-align-baseline z-gap-2"><label value="Aa" sclass="z-text-xl"/><label value=".z-text-xl   22px" sclass="z-text-muted z-text-xs"/></div>
+            <div sclass="z-d-flex z-align-baseline z-gap-2"><label value="Aa" sclass="z-text-2xl"/><label value=".z-text-2xl  24px" sclass="z-text-muted z-text-xs"/></div>
+            <div sclass="z-d-flex z-align-baseline z-gap-2"><label value="Aa" sclass="z-text-3xl"/><label value=".z-text-3xl  28px" sclass="z-text-muted z-text-xs"/></div>
+            <div sclass="z-d-flex z-align-baseline z-gap-2"><label value="Aa" sclass="z-text-4xl"/><label value=".z-text-4xl  32px" sclass="z-text-muted z-text-xs"/></div>
+            <div sclass="z-d-flex z-align-baseline z-gap-2"><label value="Aa" sclass="z-text-5xl"/><label value=".z-text-5xl  36px" sclass="z-text-muted z-text-xs"/></div>
+            <div sclass="z-d-flex z-align-baseline z-gap-2"><label value="Aa" sclass="z-text-6xl"/><label value=".z-text-6xl  45px" sclass="z-text-muted z-text-xs"/></div>
+            <div sclass="z-d-flex z-align-baseline z-gap-2"><label value="Aa" sclass="z-text-7xl"/><label value=".z-text-7xl  57px" sclass="z-text-muted z-text-xs"/></div>
+        </div>
+    </div>
+
+    <!-- Font Weight -->
+    <div sclass="z-card">
+        <label value="Font Weight  (.z-fw-*)" sclass="z-d-block z-text-base z-fw-medium z-text-on-surface z-mb-3"/>
+        <div sclass="z-d-flex z-gap-6 z-flex-wrap">
+            <div>
+                <label value="Light 300" sclass="z-fw-light z-text-xl z-text-on-surface z-d-block"/>
+                <label value=".z-fw-light" sclass="z-text-muted z-text-xs"/>
+            </div>
+            <div>
+                <label value="Regular 400" sclass="z-fw-regular z-text-xl z-text-on-surface z-d-block"/>
+                <label value=".z-fw-regular" sclass="z-text-muted z-text-xs"/>
+            </div>
+            <div>
+                <label value="Medium 500" sclass="z-fw-medium z-text-xl z-text-on-surface z-d-block"/>
+                <label value=".z-fw-medium" sclass="z-text-muted z-text-xs"/>
+            </div>
+            <div>
+                <label value="Semibold 600" sclass="z-fw-semibold z-text-xl z-text-on-surface z-d-block"/>
+                <label value=".z-fw-semibold" sclass="z-text-muted z-text-xs"/>
+            </div>
+            <div>
+                <label value="Bold 700" sclass="z-fw-bold z-text-xl z-text-on-surface z-d-block"/>
+                <label value=".z-fw-bold" sclass="z-text-muted z-text-xs"/>
+            </div>
+        </div>
+    </div>
+
+    <!-- Text Alignment -->
+    <div sclass="z-card">
+        <label value="Text Alignment  (.z-text-start / center / end)" sclass="z-d-block z-text-base z-fw-medium z-text-on-surface z-mb-3"/>
+        <vlayout>
+            <div sclass="z-border z-rounded-md z-p-3 z-text-start"><label value="Start aligned — .z-text-start"/></div>
+            <div sclass="z-border z-rounded-md z-p-3 z-text-center"><label value="Center aligned — .z-text-center"/></div>
+            <div sclass="z-border z-rounded-md z-p-3 z-text-end"><label value="End aligned — .z-text-end"/></div>
+        </vlayout>
+    </div>
+
+    <!-- Text Transform -->
+    <div sclass="z-card">
+        <label value="Text Transform  (.z-text-uppercase / lowercase / capitalize / none)" sclass="z-d-block z-text-base z-fw-medium z-text-on-surface z-mb-3"/>
+        <div sclass="z-d-flex z-gap-6 z-flex-wrap">
+            <div>
+                <label value="uppercase text" sclass="z-text-uppercase z-fw-medium z-d-block"/>
+                <label value=".z-text-uppercase" sclass="z-text-muted z-text-xs"/>
+            </div>
+            <div>
+                <label value="LOWERCASE TEXT" sclass="z-text-lowercase z-fw-medium z-d-block"/>
+                <label value=".z-text-lowercase" sclass="z-text-muted z-text-xs"/>
+            </div>
+            <div>
+                <label value="capitalize each word" sclass="z-text-capitalize z-fw-medium z-d-block"/>
+                <label value=".z-text-capitalize" sclass="z-text-muted z-text-xs"/>
+            </div>
+        </div>
+    </div>
+
+    <!-- Font Style & Line Height -->
+    <div sclass="z-card">
+        <label value="Font Style &amp; Line Height" sclass="z-d-block z-text-base z-fw-medium z-text-on-surface z-mb-3"/>
+        <div sclass="z-d-flex z-gap-6 z-flex-wrap">
+            <div>
+                <label value="Italic text sample" sclass="z-fst-italic z-text-lg z-d-block"/>
+                <label value=".z-fst-italic" sclass="z-text-muted z-text-xs"/>
+            </div>
+            <div style="max-width:260px">
+                <label value="Line height 1 — tight spacing in multiline text blocks used for headlines" sclass="z-lh-1 z-d-block z-bg-surface-variant z-p-2 z-rounded"/>
+                <label value=".z-lh-1" sclass="z-text-muted z-text-xs"/>
+            </div>
+            <div style="max-width:260px">
+                <label value="Line height base — comfortable reading for body text in paragraphs" sclass="z-lh-base z-d-block z-bg-surface-variant z-p-2 z-rounded"/>
+                <label value=".z-lh-base" sclass="z-text-muted z-text-xs"/>
+            </div>
+            <div style="max-width:260px">
+                <label value="Line height large — open and spacious for relaxed reading or UI prose" sclass="z-lh-lg z-d-block z-bg-surface-variant z-p-2 z-rounded"/>
+                <label value=".z-lh-lg" sclass="z-text-muted z-text-xs"/>
+            </div>
+        </div>
+    </div>
+
+    <!-- Truncation -->
+    <div sclass="z-card">
+        <label value="Text Truncation  (.z-text-truncate)" sclass="z-d-block z-text-base z-fw-medium z-text-on-surface z-mb-3"/>
+        <div sclass="z-text-truncate z-border z-rounded-md z-p-3" style="max-width:320px">
+            <label value="This is a very long text that will be truncated with an ellipsis at the end of the line when it overflows the container width"/>
+        </div>
+        <label value=".z-text-truncate — overflow:hidden; text-overflow:ellipsis; white-space:nowrap" sclass="z-text-muted z-text-xs z-mt-2"/>
+    </div>
+
+</vlayout>
+</zk>

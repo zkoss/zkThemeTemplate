@@ -1,0 +1,8 @@
+<?page title="Timepicker" contentType="text/html;charset=UTF-8"?>
+<zk xmlns:h="native">
+<zscript><![CDATA[java.util.Date sampleTime = new java.util.Date(0, 0, 1, 10, 30, 0);]]></zscript>
+<div sclass="z-p-8">
+    <div sclass="z-border-bottom z-text-xl z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Timepicker</div>
+    <apply templateURI="~./pv/timepicker-content.zul"/>
+</div>
+</zk>

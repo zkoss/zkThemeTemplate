@@ -1,0 +1,12 @@
+<?page title="Selectbox" contentType="text/html;charset=UTF-8"?>
+<zk xmlns:h="native">
+<zscript>
+String[] selectNames = {"Alice", "Bob", "Charlie", "David", "Eve"};
+ListModelList selectModel = new ListModelList(selectNames);
+    selectModel.addToSelection("Bob"); // pre-select "Bob" on load
+</zscript>
+<div sclass="z-p-8">
+    <div sclass="z-border-bottom z-text-xl z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Selectbox</div>
+    <apply templateURI="~./pv/selectbox-content.zul"/>
+</div>
+</zk>

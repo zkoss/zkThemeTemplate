@@ -1,0 +1,15 @@
+<?page title="Chosenbox" contentType="text/html;charset=UTF-8"?>
+<zk xmlns:h="native">
+<zscript><![CDATA[
+ListModelList chosenModel = new ListModelList(new String[]{
+    "Apple", "Banana", "Cherry", "Date", "Elderberry", "Fig", "Grape"
+});
+chosenModel.setMultiple(true);
+chosenModel.addToSelection(chosenModel.get(0));
+chosenModel.addToSelection(chosenModel.get(1));
+]]></zscript>
+<div sclass="z-p-8">
+    <div sclass="z-border-bottom z-text-xl z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Chosenbox</div>
+    <apply templateURI="~./pv/chosenbox-content.zul"/>
+</div>
+</zk>

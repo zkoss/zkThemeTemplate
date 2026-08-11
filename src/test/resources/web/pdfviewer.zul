@@ -1,0 +1,13 @@
+<?page title="PDF Viewer" contentType="text/html;charset=UTF-8"?>
+<zk xmlns:h="native">
+<div sclass="z-p-8">
+    <div sclass="z-border-bottom z-text-xl z-fw-medium z-text-on-surface z-mb-8 z-pb-3">PDF Viewer</div>
+    <div sclass="z-mb-6">
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Document Viewer</div>
+        <div sclass="z-py-3 z-d-flex z-flex-col z-gap-4">
+            <div sclass="z-text-xs z-text-secondary">Note: provide a valid PDF URL via src attribute.</div>
+            <pdfviewer src="~./link-annotation.pdf" width="100%" height="600px"/>
+        </div>
+    </div>
+</div>
+</zk>

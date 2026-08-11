@@ -1,0 +1,87 @@
+<?page title="Inputs" contentType="text/html;charset=UTF-8"?>
+<zk xmlns:h="native">
+<zscript><![CDATA[
+java.util.Date sampleDate = new java.util.Date(125, 0, 15);
+java.util.Date sampleTime = new java.util.Date(0, 0, 1, 10, 30, 0);
+String[] selectNames = {"Alice", "Bob", "Charlie", "David", "Eve"};
+ListModelList selectModel = new ListModelList(selectNames);
+ListModel searchModel = new ListModelArray(new String[]{
+    "North America", "South America", "Europe", "Asia", "Africa", "Oceania", "Antarctica"
+});
+ListModelList chosenModel = new ListModelList(new String[]{
+    "Apple", "Banana", "Cherry", "Date", "Elderberry", "Fig", "Grape"
+});
+chosenModel.setMultiple(true);
+chosenModel.addToSelection(chosenModel.get(0));
+chosenModel.addToSelection(chosenModel.get(1));
+DefaultTreeModel cascaderModel = new DefaultTreeModel(new DefaultTreeNode("ROOT",
+    Arrays.asList(new DefaultTreeNode[]{
+        new DefaultTreeNode("USA", Arrays.asList(new TreeNode[]{
+            new DefaultTreeNode("New York"), new DefaultTreeNode("Los Angeles")})),
+        new DefaultTreeNode("Japan", Arrays.asList(new TreeNode[]{
+            new DefaultTreeNode("Tokyo"), new DefaultTreeNode("Kyoto")})),
+        new DefaultTreeNode("New Zealand", Arrays.asList(new TreeNode[]{
+            new DefaultTreeNode("Auckland"), new DefaultTreeNode("Queenstown")}))}
+    )));
+]]></zscript>
+<div sclass="z-p-8">
+    <div sclass="z-border-bottom z-text-xl z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Inputs</div>
+
+    <div sclass="z-text-base z-fw-medium z-text-on-surface z-mt-6 z-mb-2">Textbox</div>
+    <apply templateURI="~./pv/textbox-content.zul"/>
+
+    <div sclass="z-text-base z-fw-medium z-text-on-surface z-mt-6 z-mb-2">Intbox</div>
+    <apply templateURI="~./pv/intbox-content.zul"/>
+
+    <div sclass="z-text-base z-fw-medium z-text-on-surface z-mt-6 z-mb-2">Longbox</div>
+    <apply templateURI="~./pv/longbox-content.zul"/>
+
+    <div sclass="z-text-base z-fw-medium z-text-on-surface z-mt-6 z-mb-2">Decimalbox</div>
+    <apply templateURI="~./pv/decimalbox-content.zul"/>
+
+    <div sclass="z-text-base z-fw-medium z-text-on-surface z-mt-6 z-mb-2">Doublebox</div>
+    <apply templateURI="~./pv/doublebox-content.zul"/>
+
+    <div sclass="z-text-base z-fw-medium z-text-on-surface z-mt-6 z-mb-2">Combobox</div>
+    <apply templateURI="~./pv/combobox-content.zul"/>
+
+    <div sclass="z-text-base z-fw-medium z-text-on-surface z-mt-6 z-mb-2">Datebox</div>
+    <apply templateURI="~./pv/datebox-content.zul"/>
+
+    <div sclass="z-text-base z-fw-medium z-text-on-surface z-mt-6 z-mb-2">Timebox</div>
+    <apply templateURI="~./pv/timebox-content.zul"/>
+
+    <div sclass="z-text-base z-fw-medium z-text-on-surface z-mt-6 z-mb-2">Timepicker</div>
+    <apply templateURI="~./pv/timepicker-content.zul"/>
+
+    <div sclass="z-text-base z-fw-medium z-text-on-surface z-mt-6 z-mb-2">Bandbox</div>
+    <apply templateURI="~./pv/bandbox-content.zul"/>
+
+    <div sclass="z-text-base z-fw-medium z-text-on-surface z-mt-6 z-mb-2">Spinner</div>
+    <apply templateURI="~./pv/spinner-content.zul"/>
+
+    <div sclass="z-text-base z-fw-medium z-text-on-surface z-mt-6 z-mb-2">Selectbox</div>
+    <apply templateURI="~./pv/selectbox-content.zul"/>
+
+    <div sclass="z-text-base z-fw-medium z-text-on-surface z-mt-6 z-mb-2">Searchbox</div>
+    <apply templateURI="~./pv/searchbox-content.zul"/>
+
+    <div sclass="z-text-base z-fw-medium z-text-on-surface z-mt-6 z-mb-2">Chosenbox</div>
+    <apply templateURI="~./pv/chosenbox-content.zul"/>
+
+    <div sclass="z-text-base z-fw-medium z-text-on-surface z-mt-6 z-mb-2">Cascader</div>
+    <apply templateURI="~./pv/cascader-content.zul"/>
+
+    <div sclass="z-text-base z-fw-medium z-text-on-surface z-mt-6 z-mb-2">Colorbox</div>
+    <apply templateURI="~./pv/colorbox-content.zul"/>
+
+    <div sclass="z-text-base z-fw-medium z-text-on-surface z-mt-6 z-mb-2">Slider</div>
+    <apply templateURI="~./pv/slider-content.zul"/>
+
+    <div sclass="z-text-base z-fw-medium z-text-on-surface z-mt-6 z-mb-2">Rating</div>
+    <apply templateURI="~./pv/rating-content.zul"/>
+
+    <div sclass="z-text-base z-fw-medium z-text-on-surface z-mt-6 z-mb-2">Input Group</div>
+    <apply templateURI="~./pv/inputgroup-content.zul"/>
+</div>
+</zk>

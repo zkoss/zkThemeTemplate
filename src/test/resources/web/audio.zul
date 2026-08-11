@@ -1,0 +1,21 @@
+<?page title="Audio" contentType="text/html;charset=UTF-8"?>
+<zk xmlns:h="native">
+<div sclass="z-p-8">
+    <div sclass="z-border-bottom z-text-xl z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Audio</div>
+    <div sclass="z-mb-6">
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Player</div>
+        <div sclass="z-py-3 z-d-flex z-flex-col z-gap-4">
+            <div sclass="z-text-xs z-text-secondary">Note: provide a valid audio URL via src attribute (e.g. an .mp3 or .wav file).</div>
+            <audio id="audio" src="music.wav" controls="true"/>
+        </div>
+    </div>
+    <div sclass="z-mb-6">
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Controls</div>
+        <div sclass="z-py-3 z-d-flex z-gap-4 z-flex-wrap">
+            <button label="Play" onClick="audio.play()"/>
+            <button label="Pause" onClick="audio.pause()"/>
+            <button label="Stop" onClick="audio.stop()"/>
+        </div>
+    </div>
+</div>
+</zk>

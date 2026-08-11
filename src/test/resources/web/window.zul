@@ -1,0 +1,127 @@
+<?page title="Window" contentType="text/html;charset=UTF-8"?>
+<zk xmlns:h="native">
+<div sclass="z-p-8">
+    <div sclass="z-border-bottom z-text-xl z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Window</div>
+
+    <div sclass="z-mb-8">
+        <div sclass="z-text-md z-fw-bold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-3">Window — State Gallery</div>
+
+        <div sclass="z-d-flex z-flex-wrap z-gap-6 z-align-start z-py-4 z-mb-2">
+            <div sclass="z-d-flex z-flex-col z-align-center z-gap-2">
+                <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-center z-text-secondary">Default</div>
+                <window title="Window" border="normal" width="200px">Content</window>
+            </div>
+            <div sclass="z-d-flex z-flex-col z-align-center z-gap-2">
+                <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-center z-text-secondary">No Border</div>
+                <window title="Window" border="none" width="200px">Content</window>
+            </div>
+        </div>
+    </div>
+
+    <div sclass="z-mb-6">
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Embedded</div>
+        <div sclass="z-d-flex z-align-start z-flex-wrap z-gap-6 z-py-3">
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <div sclass="z-text-xs z-text-secondary">Normal border, full controls</div>
+                <window title="With Title" border="normal"
+                    closable="true" sizable="true" maximizable="true" minimizable="true"
+                    width="300px" height="180px">
+                    Window Content
+                </window>
+            </div>
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <div sclass="z-text-xs z-text-secondary">No border, full controls</div>
+                <window title="With Title"
+                    closable="true" sizable="true" maximizable="true" minimizable="true"
+                    width="300px" height="180px">
+                    Window Content
+                </window>
+            </div>
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <div sclass="z-text-xs z-text-secondary">Normal border, no title</div>
+                <window border="normal" closable="true"
+                    width="300px" height="180px">
+                    Window Content
+                </window>
+            </div>
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <div sclass="z-text-xs z-text-secondary">No border, no title</div>
+                <window closable="true" width="300px" height="180px">
+                    Window Content
+                </window>
+            </div>
+        </div>
+    </div>
+
+    <div sclass="z-mb-6">
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Overlapped Mode</div>
+        <div sclass="z-d-flex z-align-start z-flex-wrap z-gap-6 z-py-3">
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <div sclass="z-text-xs z-text-secondary">Normal border, mode="overlapped"</div>
+                <window title="Overlapped" border="normal" mode="overlapped"
+                    closable="true" sizable="true" maximizable="true" minimizable="true"
+                    width="300px" height="180px" position="right, bottom">
+                    position="right, bottom"
+                </window>
+            </div>
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <div sclass="z-text-xs z-text-secondary">No border, mode="overlapped"</div>
+                <window title="Overlapped" mode="overlapped"
+                    closable="true" sizable="true" maximizable="true" minimizable="true"
+                    width="300px" height="180px" position="right, top">
+                    position="right, top"
+                </window>
+            </div>
+        </div>
+    </div>
+
+    <div sclass="z-mb-6">
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Popup and Modal</div>
+        <div sclass="z-d-flex z-align-start z-flex-wrap z-gap-6 z-py-3">
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <div sclass="z-text-xs z-text-secondary">Normal border, mode="popup"</div>
+                <window id="popup_normal" title="Window: Popup" border="normal" mode="popup"
+                    closable="true" sizable="true" maximizable="true" minimizable="true"
+                    width="300px" height="180px">
+                    Window Content
+                </window>
+                <button label="Show Popup" onClick="popup_normal.doPopup();"/>
+            </div>
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <div sclass="z-text-xs z-text-secondary">No border, mode="popup"</div>
+                <window id="popup_nb" title="Window: Popup" mode="popup"
+                    closable="true" sizable="true" maximizable="true" minimizable="true"
+                    width="300px" height="180px">
+                    mode="popup" , no border
+                </window>
+                <button label="Show Popup" onClick="popup_nb.doPopup();"/>
+            </div>
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <div sclass="z-text-xs z-text-secondary">Normal border, mode="modal"</div>
+                <window id="modal_normal" title="Window: Modal" border="normal" visible="false"
+                    closable="true" sizable="true" maximizable="true" minimizable="true"
+                    width="300px" height="180px">
+                    <vbox>
+                        <div>Window Content</div>
+                        <div><button label="Close" onClick="modal_normal.visible = false;"/></div>
+                    </vbox>
+                </window>
+                <button label="Show Modal" onClick="modal_normal.doModal();"/>
+            </div>
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <div sclass="z-text-xs z-text-secondary">No border, mode="modal"</div>
+                <window id="modal_nb" title="Window: Modal" visible="false"
+                    closable="true" sizable="true" maximizable="true" minimizable="true"
+                    width="300px" height="180px">
+                    <vlayout>
+                        <div>No border</div>
+                        <div><button label="Close" onClick="modal_nb.visible = false;"/></div>
+                    </vlayout>
+                </window>
+                <button label="Show Modal" onClick="modal_nb.doModal();"/>
+            </div>
+        </div>
+    </div>
+
+</div>
+</zk>

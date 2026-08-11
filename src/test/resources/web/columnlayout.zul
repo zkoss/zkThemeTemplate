@@ -1,0 +1,40 @@
+<?page title="Columnlayout" contentType="text/html;charset=UTF-8"?>
+<zk xmlns:h="native">
+<div sclass="z-p-8">
+    <div sclass="z-border-bottom z-text-xl z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Columnlayout</div>
+
+    <div sclass="z-mb-6">
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Three Column Layout</div>
+        <div sclass="z-py-3">
+            <columnlayout>
+                <columnchildren width="33%" style="padding: 5px">
+                    <panel height="100px" title="Column 1 — Row 1" closable="true" collapsible="true"
+                        border="normal" maximizable="true" style="margin-bottom:10px">
+                        <panelchildren>Panel Content</panelchildren>
+                    </panel>
+                    <panel height="100px" title="Column 1 — Row 2"
+                        border="normal" maximizable="true" style="margin-bottom:10px">
+                        <panelchildren>Panel Content</panelchildren>
+                    </panel>
+                    <panel height="100px" title="Column 1 — Row 3" border="normal" closable="true">
+                        <panelchildren>Panel Content</panelchildren>
+                    </panel>
+                </columnchildren>
+                <columnchildren width="33%" style="padding: 5px">
+                    <panel height="100px" title="Column 2 — Row 1" closable="true" collapsible="true"
+                        border="normal" maximizable="true" style="margin-bottom:10px">
+                        <panelchildren>Panel Content</panelchildren>
+                    </panel>
+                </columnchildren>
+                <columnchildren width="33%" style="padding: 5px">
+                    <panel height="100px" title="Column 3 — Row 1" closable="true" collapsible="true"
+                        border="normal" maximizable="true" style="margin-bottom:10px">
+                        <panelchildren>Panel Content</panelchildren>
+                    </panel>
+                </columnchildren>
+            </columnlayout>
+        </div>
+    </div>
+
+</div>
+</zk>

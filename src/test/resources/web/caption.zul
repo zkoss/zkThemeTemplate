@@ -1,0 +1,88 @@
+<?page title="Caption" contentType="text/html;charset=UTF-8"?>
+<zk xmlns:h="native">
+<div sclass="z-p-8">
+    <div sclass="z-border-bottom z-text-xl z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Caption</div>
+
+    <div sclass="z-mb-6">
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Caption in Window and Panel</div>
+        <div sclass="z-d-flex z-align-start z-flex-wrap z-gap-6 z-py-3">
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <div sclass="z-text-xs z-text-secondary">Window with caption</div>
+                <window width="380px" height="200px" border="normal">
+                    <caption label="Title" image="~./img/volumn.gif">
+                        Caption Content
+                        <button label="Button" />
+                    </caption>
+                    Window Content
+                </window>
+            </div>
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <div sclass="z-text-xs z-text-secondary">Panel with caption</div>
+                <panel width="380px" height="200px" border="normal">
+                    <caption label="Title" image="~./img/volumn.gif">
+                        Caption Content
+                        <button label="Button" />
+                    </caption>
+                    <panelchildren>
+                        Panel Content
+                    </panelchildren>
+                </panel>
+            </div>
+        </div>
+    </div>
+
+    <div sclass="z-mb-6">
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Caption Variants</div>
+        <div sclass="z-d-flex z-align-start z-flex-wrap z-gap-6 z-py-3">
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <div sclass="z-text-xs z-text-secondary">Label only</div>
+                <window width="260px" height="120px" border="normal">
+                    <caption label="Label Only"/>
+                    Window Content
+                </window>
+            </div>
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <div sclass="z-text-xs z-text-secondary">Image only</div>
+                <window width="260px" height="120px" border="normal">
+                    <caption image="~./img/volumn.gif"/>
+                    Window Content
+                </window>
+            </div>
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <div sclass="z-text-xs z-text-secondary">Label + image (existing)</div>
+                <window width="260px" height="120px" border="normal">
+                    <caption label="Title" image="~./img/volumn.gif"/>
+                    Window Content
+                </window>
+            </div>
+        </div>
+    </div>
+
+    <div sclass="z-mb-6">
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Caption in Groupbox</div>
+        <div sclass="z-d-flex z-align-start z-flex-wrap z-gap-6 z-py-3">
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <div sclass="z-text-xs z-text-secondary">Groupbox (default mold)</div>
+                <groupbox width="380px" height="200px">
+                    <caption label="Title" image="~./img/volumn.gif">
+                        Caption Content
+                        <button label="Button" />
+                    </caption>
+                    Groupbox Content
+                </groupbox>
+            </div>
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <div sclass="z-text-xs z-text-secondary">Groupbox (3d mold)</div>
+                <groupbox width="380px" height="200px" mold="3d">
+                    <caption label="Title" image="~./img/volumn.gif">
+                        Caption Content
+                        <button label="Button" />
+                    </caption>
+                    Groupbox Content
+                </groupbox>
+            </div>
+        </div>
+    </div>
+
+</div>
+</zk>

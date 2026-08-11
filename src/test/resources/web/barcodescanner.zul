@@ -1,0 +1,17 @@
+<?page title="Barcode Scanner" contentType="text/html;charset=UTF-8"?>
+<zk xmlns:h="native">
+<div sclass="z-p-8">
+    <div sclass="z-border-bottom z-text-xl z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Barcode Scanner</div>
+    <div sclass="z-mb-6">
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">QR Code Scanner</div>
+        <div sclass="z-py-3 z-d-flex z-flex-col z-gap-4">
+            <barcodescanner type="QR" width="400px" height="400px" continuous="false"
+                            onDetect="result.value = event.result"/>
+            <div sclass="z-d-flex z-align-center z-gap-3">
+                <div sclass="z-text-sm z-text-secondary">Scan result:</div>
+                <label id="result"/>
+            </div>
+        </div>
+    </div>
+</div>
+</zk>

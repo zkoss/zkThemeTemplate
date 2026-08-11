@@ -1,0 +1,70 @@
+<?page title="Checkbox" contentType="text/html;charset=UTF-8"?>
+<zk xmlns:h="native">
+<div sclass="z-p-8">
+    <div sclass="z-border-bottom z-text-xl z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Checkbox</div>
+
+    <div sclass="z-mb-6 z-d-grid z-grid-cols-auto z-overflow-x-auto z-col-gap-6 z-row-gap-2 z-align-start" style="--zk-cols:4; --zk-col-min:min-content">
+        <div sclass="z-grid-col-full z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">States</div>
+        <div sclass="z-d-contents">
+            <div/>
+            <div sclass="z-text-xs z-fw-semibold z-text-secondary">Default</div>
+            <div sclass="z-text-xs z-fw-semibold z-text-secondary">Checked</div>
+            <div sclass="z-text-xs z-fw-semibold z-text-secondary">Disabled</div>
+            <div sclass="z-text-xs z-fw-semibold z-text-secondary">Disabled + Checked</div>
+        </div>
+        <div sclass="z-d-contents">
+            <div sclass="z-text-sm z-text-secondary">No label</div>
+            <div><checkbox/></div>
+            <div><checkbox checked="true"/></div>
+            <div><checkbox disabled="true"/></div>
+            <div><checkbox disabled="true" checked="true"/></div>
+        </div>
+        <div sclass="z-d-contents">
+            <div sclass="z-text-sm z-text-secondary">With label</div>
+            <div><checkbox label="Checkbox"/></div>
+            <div><checkbox label="Checkbox" checked="true"/></div>
+            <div><checkbox label="Checkbox" disabled="true"/></div>
+            <div><checkbox label="Checkbox" disabled="true" checked="true"/></div>
+        </div>
+        <div sclass="z-d-contents">
+            <div sclass="z-text-sm z-text-secondary">Indeterminate</div>
+            <div><checkbox label="Checkbox" indeterminate="true"/></div>
+            <div/>
+            <div><checkbox label="Checkbox" indeterminate="true" disabled="true"/></div>
+            <div/>
+        </div>
+        <div sclass="z-d-contents">
+            <div sclass="z-text-sm z-text-secondary">Switch</div>
+            <div><checkbox mold="switch" label="Off"/></div>
+            <div><checkbox mold="switch" label="On" checked="true"/></div>
+            <div><checkbox mold="switch" label="Disabled" disabled="true"/></div>
+            <div><checkbox mold="switch" label="Dis+On" disabled="true" checked="true"/></div>
+        </div>
+        <div sclass="z-d-contents">
+            <div sclass="z-text-sm z-text-secondary">Toggle</div>
+            <div><checkbox mold="toggle" label="Off"/></div>
+            <div><checkbox mold="toggle" label="On" checked="true"/></div>
+            <div><checkbox mold="toggle" label="Disabled" disabled="true"/></div>
+            <div><checkbox mold="toggle" label="Dis+On" disabled="true" checked="true"/></div>
+        </div>
+    </div>
+
+    <div sclass="z-mb-6">
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Tristate Mold</div>
+        <div sclass="z-d-flex z-align-start z-flex-wrap z-gap-6 z-py-3">
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <div sclass="z-text-xs z-text-secondary">mold="tristate" (unchecked)</div>
+                <checkbox mold="tristate" label="Tristate"/>
+            </div>
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <div sclass="z-text-xs z-text-secondary">mold="tristate" checked</div>
+                <checkbox mold="tristate" label="Tristate" checked="true"/>
+            </div>
+            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
+                <div sclass="z-text-xs z-text-secondary">mold="tristate" indeterminate</div>
+                <checkbox mold="tristate" label="Tristate" indeterminate="true"/>
+            </div>
+        </div>
+    </div>
+</div>
+</zk>

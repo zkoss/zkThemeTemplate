@@ -2,8 +2,14 @@ package zk.example;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.zkoss.lang.Library;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+@Controller
 @SpringBootApplication
 public class ThemePreviewApp {
     public static void main(String[] args) {
@@ -16,5 +22,20 @@ public class ThemePreviewApp {
         Library.setProperty("org.zkoss.web.classWebResource.cache", "false");
         Library.setProperty("org.zkoss.util.label.cache", "false");
         SpringApplication.run(ThemePreviewApp.class, args);
+    }
+
+    /** serve ZUL pages; non-.zul requests return 404 to avoid intercepting static resources */
+    @GetMapping("/**")
+    public String zulPage(HttpServletRequest request, HttpServletResponse response) throws java.io.IOException {
+        String path = request.getServletPath();
+        if (!path.endsWith(".zul")) {
+            response.sendError(HttpServletResponse.SC_NOT_FOUND);
+            return null;
+        }
+        if (path.startsWith("/")) {
+            path = path.substring(1);
+        }
+        // Strip .zul extension — ZK view resolver appends it when resolving the view
+        return path.substring(0, path.length() - 4);
     }
 }
