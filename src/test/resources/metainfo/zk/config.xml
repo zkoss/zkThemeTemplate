@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Test-scope ZK config for the preview app. Compiles to target/test-classes, so it sits
+     alongside — not instead of — the theme's own src/main/resources/metainfo/zk/config.xml;
+     ZK reads every metainfo/zk/config.xml it finds on the class path.
+
+     Its only job is registering PreviewStylesInit, which attaches the preview-only utility
+     stylesheet to every desktop. Nothing here may ever move into src/main: that would put
+     the utilities into the built theme output, which is what the conversion's baseline diff
+     measures. See tasks/utility-css-vs-p7-ordering.md. -->
+<config>
+	<config-name>preview-app</config-name>
+	<depends>iceblue_css</depends>
+
+	<listener>
+		<listener-class>zk.example.PreviewStylesInit</listener-class>
+	</listener>
+</config>

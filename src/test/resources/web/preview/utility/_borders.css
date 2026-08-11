@@ -1,0 +1,27 @@
+/* Ported verbatim from Marble's zul/css/utility/ — same class names, same file split,
+ * so promoting this into the theme is a move, not a rewrite. See
+ * tasks/utility-css-vs-p7-ordering.md.
+ *
+ * ONE deliberate difference: the `@layer zk-utilities { }` wrapper is REMOVED. This tree
+ * ships no cascade layers, and an UNLAYERED rule beats every layered one — keeping the
+ * wrapper would make these utilities lose to the component CSS they are meant to override.
+ * Precedence here comes from source order instead: the sheet is appended after zk.wcs.
+ */
+/* MD3 Utility Classes — Border & Shape */
+
+
+.z-border         { border: 1px solid var(--zk-color-outline-variant); }
+.z-border-0       { border: none; }
+.z-border-top     { border-top: 1px solid var(--zk-color-outline-variant); }
+.z-border-bottom  { border-bottom: 1px solid var(--zk-color-outline-variant); }
+.z-border-start   { border-inline-start: 1px solid var(--zk-color-outline-variant); }
+.z-border-end     { border-inline-end: 1px solid var(--zk-color-outline-variant); }
+
+.z-rounded-none { border-radius: var(--zk-shape-corner-none); }
+.z-rounded-xs   { border-radius: var(--zk-shape-corner-extra-small); }
+.z-rounded      { border-radius: var(--zk-shape-corner-small); }
+.z-rounded-md   { border-radius: var(--zk-shape-corner-medium); }
+.z-rounded-lg   { border-radius: var(--zk-shape-corner-large); }
+.z-rounded-xl   { border-radius: var(--zk-shape-corner-extra-large); }
+.z-rounded-full { border-radius: var(--zk-shape-corner-full); }
+

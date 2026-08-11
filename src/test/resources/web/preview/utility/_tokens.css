@@ -1,0 +1,173 @@
+/* Bridge layer: the design-system tokens Marble's utility classes are written against,
+ * expressed in IceBlue's palette.
+ *
+ * WHY THIS FILE EXISTS
+ * --------------------
+ * The utility files next to this one are ported verbatim from Marble, so they reference
+ * Marble's token vocabulary (--zk-color-surface, --zk-spacing-4, --zk-shape-corner-*, ...).
+ * This theme declares 862 --zk-* custom properties, but they are almost all PER-COMPONENT
+ * (--zk-mesh-body-padding, --zk-borderlayout-header-font-size, ...). The design-system-level
+ * scale Marble assumes does not exist here: no spacing scale at all, 5 word-named font sizes,
+ * 3 radii, ~15 colour roles. So the vocabulary has to be defined before the utilities work.
+ *
+ * TWO KINDS OF DEFINITION, AND THE DIFFERENCE MATTERS
+ * ---------------------------------------------------
+ *  - COLOUR is mapped onto tokens this theme already owns, so the utilities inherit
+ *    IceBlue's identity rather than importing Marble's. Change --zk-color-primary and
+ *    everything derived from it follows.
+ *  - SCALES (spacing, shape, elevation, type, z-index) are ported from Marble as-is. They
+ *    are brand-neutral step ladders; inventing a second set of numbers would only guarantee
+ *    the two themes disagree.
+ *
+ * --zk-color-primary is deliberately ABSENT: this theme already declares it (#0093F9) and
+ * redefining it here would overwrite IceBlue's brand with Marble's.
+ *
+ * Three values are INVENTIONS, marked (*) below — this theme has no equivalent role. They
+ * are the first thing to review if this layer is ever promoted into the theme proper.
+ *
+ * See tasks/utility-css-vs-p7-ordering.md for why this lives under src/test and what has to
+ * happen before it can ship.
+ */
+
+:root {
+    /* ============================================
+       Colour — surfaces and text
+       Mapped onto this theme's own roles.
+       ============================================ */
+    --zk-color-surface: var(--zk-base-background-color);
+    --zk-color-surface-container-low: var(--zk-color-background1);
+    --zk-color-surface-container: var(--zk-color-grey-lighter);
+    --zk-color-surface-variant: var(--zk-color-grey-lighter);
+    --zk-color-on-surface: var(--zk-base-text-color);
+    /* --zk-text-color-light is this theme's secondary-text role (black @ 57%), which is
+       exactly what on-surface-variant is for. Do NOT use --zk-color-grey-dark here: at
+       #A8A8A8 on white it is ~2.3:1 and fails every text contrast bar. */
+    --zk-color-on-surface-variant: var(--zk-text-color-light);
+    --zk-color-outline-variant: var(--zk-base-border-color);
+    --zk-color-inverse-on-surface: var(--zk-color-background3);
+    --zk-color-disabled: var(--zk-text-color-lighter);
+
+    /* ============================================
+       Colour — primary
+       ============================================ */
+    --zk-color-on-primary: var(--zk-color-background3);
+    --zk-color-primary-container: var(--zk-color-primary-lighter);
+    --zk-color-on-primary-container: var(--zk-color-primary-dark);
+    --zk-color-primary-fill: var(--zk-color-primary);
+
+    /* ============================================
+       Colour — secondary
+       This theme has no "secondary" brand role, so secondary reads as NEUTRAL here (that is
+       also how the preview pages use it: a muted counterpart to primary, not a second hue).
+       ============================================ */
+    --zk-color-secondary-fill: var(--zk-text-color-light);
+    --zk-color-secondary-container: var(--zk-color-grey-lighter);
+    --zk-color-on-secondary: var(--zk-color-background3);
+    --zk-color-on-secondary-container: var(--zk-base-text-color);
+
+    /* ============================================
+       Colour — status
+       error/warning reuse the theme's accents; success has no counterpart here (*).
+       Containers and fills are DERIVED from the base hue, so overriding a base colour
+       carries through the whole family instead of needing four more edits.
+       ============================================ */
+    --zk-color-error: var(--zk-color-accent2);
+    --zk-color-warning: var(--zk-color-accent);
+    --zk-color-success: #2e9e5b; /* (*) no green in this theme's palette */
+    --zk-color-status-info: var(--zk-color-primary);
+    --zk-color-status-neutral: var(--zk-text-color-light);
+
+    --zk-color-error-container: hsl(from var(--zk-color-error) h s 93%);
+    --zk-color-warning-container: hsl(from var(--zk-color-warning) h s 90%);
+    --zk-color-success-container: hsl(from var(--zk-color-success) h s 92%);
+
+    /* *-fill is the variant that must stay legible under white text, so it is darkened to a
+       fixed lightness rather than used raw — #FFA516 with white on top is ~1.9:1. */
+    --zk-color-error-fill: hsl(from var(--zk-color-error) h s 45%);
+    --zk-color-warning-fill: hsl(from var(--zk-color-warning) h s 38%);
+    --zk-color-success-fill: hsl(from var(--zk-color-success) h s 33%);
+    --zk-color-status-info-fill: hsl(from var(--zk-color-status-info) h s 42%);
+
+    --zk-color-on-error: var(--zk-color-background3);
+    --zk-color-on-success: var(--zk-color-background3);
+    --zk-color-on-status: var(--zk-color-background3);
+    /* amber is a light hue: dark text on it, not white */
+    --zk-color-on-warning: var(--zk-base-text-color);
+    --zk-color-on-error-container: hsl(from var(--zk-color-error) h s 28%);
+    --zk-color-on-warning-container: hsl(from var(--zk-color-warning) h s 24%);
+    --zk-color-on-success-container: hsl(from var(--zk-color-success) h s 22%);
+
+    /* ============================================
+       Spacing — 4px baseline ladder (ported)
+       ============================================ */
+    --zk-spacing-0: 0px;
+    --zk-spacing-1: 4px;
+    --zk-spacing-2: 8px;
+    --zk-spacing-3: 12px;
+    --zk-spacing-4: 16px;
+    --zk-spacing-5: 20px;
+    --zk-spacing-6: 24px;
+    --zk-spacing-7: 28px;
+    --zk-spacing-8: 32px;
+    --zk-spacing-10: 40px;
+    --zk-spacing-12: 48px;
+    --zk-spacing-16: 64px;
+
+    /* ============================================
+       Shape (ported)
+       ============================================ */
+    --zk-shape-corner-none: 0px;
+    --zk-shape-corner-extra-small: 4px;
+    --zk-shape-corner-small: 8px;
+    --zk-shape-corner-medium: 12px;
+    --zk-shape-corner-large: 16px;
+    --zk-shape-corner-extra-large: 28px;
+    --zk-shape-corner-full: 9999px;
+    --zk-shape-card: 6px;
+
+    /* ============================================
+       Elevation (ported)
+       ============================================ */
+    --zk-elevation-0: none;
+    --zk-elevation-1: 0px 1px 3px 0px rgba(0, 0, 0, 0.12), 0px 1px 2px 0px rgba(0, 0, 0, 0.14);
+    --zk-elevation-2: 0px 2px 6px 0px rgba(0, 0, 0, 0.12), 0px 1px 2px 0px rgba(0, 0, 0, 0.14);
+    --zk-elevation-3: 0px 4px 12px 0px rgba(0, 0, 0, 0.12), 0px 2px 4px 0px rgba(0, 0, 0, 0.14);
+    --zk-elevation-card: 0 1px 3px rgba(0, 0, 0, 0.08);
+
+    /* ============================================
+       Type scale (ported), on THIS theme's font family
+       ============================================ */
+    --zk-typescale-font-family: var(--zk-base-content-font-family);
+    --zk-typescale-body-small-size: 12px;
+    --zk-typescale-body-medium-size: 13px;
+    --zk-typescale-label-small-size: 11px;
+    --zk-typescale-title-small-size: 14px;
+    --zk-typescale-title-medium-size: 16px;
+    --zk-typescale-title-large-size: 22px;
+    --zk-typescale-headline-small-size: 24px;
+    --zk-typescale-headline-medium-size: 28px;
+    --zk-typescale-headline-large-size: 32px;
+    --zk-typescale-display-small-size: 36px;
+    --zk-typescale-display-medium-size: 45px;
+    --zk-typescale-display-large-size: 57px;
+    --zk-typescale-tracking-tight: -0.25px;
+    --zk-typescale-tracking-tighter: -0.5px;
+
+    /* ============================================
+       Auto-fit grid minimums (ported) — consumed by .z-grid-fill*
+       ============================================ */
+    --zk-grid-min-xs: 96px;
+    --zk-grid-min-sm: 140px;
+    --zk-grid-min: 180px;
+    --zk-grid-min-lg: 240px;
+    --zk-grid-min-xl: 320px;
+
+    /* ============================================
+       Stacking (ported) — consumed by .z-index-*
+       ============================================ */
+    --zk-index-nav: 1000;
+    --zk-index-loading: 1450;
+    --zk-index-float-fallback: 1800;
+    --zk-index-loadingbar: 2000;
+    --zk-index-error: 9999999;
+}

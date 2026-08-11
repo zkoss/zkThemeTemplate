@@ -1,0 +1,17 @@
+/* Ported verbatim from Marble's zul/css/utility/ — same class names, same file split,
+ * so promoting this into the theme is a move, not a rewrite. See
+ * tasks/utility-css-vs-p7-ordering.md.
+ *
+ * ONE deliberate difference: the `@layer zk-utilities { }` wrapper is REMOVED. This tree
+ * ships no cascade layers, and an UNLAYERED rule beats every layered one — keeping the
+ * wrapper would make these utilities lose to the component CSS they are meant to override.
+ * Precedence here comes from source order instead: the sheet is appended after zk.wcs.
+ */
+/* MD3 Utility Classes — Elevation shadows */
+
+
+.z-elevation-0 { box-shadow: var(--zk-elevation-0); }
+.z-elevation-1 { box-shadow: var(--zk-elevation-1); }
+.z-elevation-2 { box-shadow: var(--zk-elevation-2); }
+.z-elevation-3 { box-shadow: var(--zk-elevation-3); }
+

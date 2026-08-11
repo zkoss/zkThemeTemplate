@@ -1,0 +1,20 @@
+/* Ported verbatim from Marble's zul/css/utility/ — same class names, same file split,
+ * so promoting this into the theme is a move, not a rewrite. See
+ * tasks/utility-css-vs-p7-ordering.md.
+ *
+ * ONE deliberate difference: the `@layer zk-utilities { }` wrapper is REMOVED. This tree
+ * ships no cascade layers, and an UNLAYERED rule beats every layered one — keeping the
+ * wrapper would make these utilities lose to the component CSS they are meant to override.
+ * Precedence here comes from source order instead: the sheet is appended after zk.wcs.
+ */
+/* MD3 Utility Classes — Component utilities (card, etc.) */
+
+
+.z-card {
+    background-color: var(--zk-color-surface);
+    border-radius: var(--zk-shape-card);
+    box-shadow: var(--zk-elevation-card);
+    padding: var(--zk-spacing-4);
+    overflow: hidden;
+}
+
