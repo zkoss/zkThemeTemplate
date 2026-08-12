@@ -1,0 +1,505 @@
+# L-4 —— compact profile 的 density 機制(評估 + 執行計畫)
+
+> 依 `.claude/skills/plan-spec/SKILL.md` 三層式架構:**L1** 一頁執行摘要 · **L2** 階段拆解 ·
+> **L3** 技術附錄(量測、口徑、比較、風險)。
+>
+> 本文件是 **L-4 的拍板材料**。L-4 是 P7 唯一還沒解除的 BLOCKED
+> (見 [iceblue-drop-less-progress.md L2.2](../doc/iceblue-drop-less-progress.md#l22-前置工作項與-blocked)),
+> 而 P8 的驗收 = P4 + P5 + P7 已核准 delta 總和 ⇒ **L-4 擋著整個計畫的最後兩個階段**。
+>
+> **本文件只評估與規劃,沒有動任何 CSS 來源檔。** D1–D5 一步都還沒開工。
+> 唯一已落地的改動是**版本升級**(`zk.version` → `11.0.0-jakarta.FL.20260811-Eval`、
+> artifact 與三個 version-uid → `11.0.0-Eval`),那是為了讓 `iceblue_c` oracle 與本樹同代
+> 才做的前置,**`check:gate` 前後數字完全相同**,見 [L3.5](#l35-change-log)。
+
+---
+
+## 目錄
+
+- **[L1 執行摘要](#l1-執行摘要)**
+- **[L2 階段拆解](#l2-階段拆解)** — [D1](#d1-桌面-token-層核心) · [D2](#d2-靜態設定zkxml) · [D3](#d3-java-api) · [D4](#d4-tablet-半風險最高) · [D5](#d5-收尾與遷移)
+- **[L3 技術附錄](#l3-技術附錄)** — [量測](#l31-量測數據與口徑) · [機制比較](#l32-機制比較zk-10-vs-本案) · [風險](#l33-風險與已知限制) · [未決](#l34-未決事項需要裁示)
+
+---
+
+## L1 執行摘要
+
+### 核心結論
+
+**建議採用**,而且證據比原本預期的強很多。三個量測決定了這個結論:
+
+1. **桌面 compact 的全部內容就是 333 個 `:root` token 值。** 拿 `iceblue_c 11.0.0` 對
+   **同一版**的 ZK 預設主題(`zul` + `zkmax` + `zkex` 11.0.0 的 `web/`)逐檔比:
+   **81 個可比的 `.css.dsp` 裡 79 個逐 byte 相同**,只有 `norm.css.dsp` 與
+   `zkmax/css/tablet.css.dsp` 不同;而 `norm.css.dsp` 的差異**完全關在第一個 `:root{}` 區塊裡**,
+   區塊以外 **29052 = 29052 字元逐 byte 相同**。
+   ⇒ ZK 為了改 333 個值,出貨了一個 **282792 B / 215 個檔**的 jar,其中 **97.5% 是逐 byte 複本**。
+
+2. **改成 runtime 覆寫只需要 350 個 token,約 14.4 KB / gzip 2.7 KB。** 不是 862 個 ——
+   只要重新宣告「值有變的 333 個」加上「透過 `var()` 相依於它們的 17 個」,其餘 **512 個可以安全省略**
+   (推導與凍結問題見 [L3.1](#l31-量測數據與口徑))。這一塊直接併進 `norm.css.dsp`,
+   走既有的單一 WCS,**不多一個 HTTP request**。
+
+3. **palette 與 density 可證明正交。** 掃 ZK 出貨的 **26 個 palette 檔、623 條 token 宣告**,
+   與 density 的 350 個 closure **重疊 0 條**。⇒ 兩個旋鈕不會互相打架,
+   也不需要為它們定優先序 —— 這同時降低了 P7 palette 那一半的風險。
+
+### 方案
+
+沿用 Marble 已驗證的 **`data-density` 屬性**,但**數值全部取自本主題的 `tokens/_compact.css`**
+(= ZK `iceblue_c` 的那 333 個值),不引入 Marble 的任何數字。
+
+| 需求 | 作法 |
+|---|---|
+| **靜態(zk.xml)** | library-property `org.zkoss.zul.theme.density` = `compact`;由 DSP 條件在**選擇器位置**加上 `:root,`,與既有的 `browserDefault` 同技法。**零 FOUC、零額外請求** |
+| **動態(Java API)** | `IceblueDensity.apply(Density)` 全站 / `IceblueDensity.apply(Component, Density)` 單一區域。**不需要 reload** |
+| **值的來源** | `tokens/_compact.css` 的 333 條,由產生器抽出,**不手抄** |
+
+### 里程碑
+
+| 階段 | 內容 | 閘門 | 相依 |
+|---|---|---|---|
+| **D1** | 桌面 token 層 —— 產生器 + 350 條覆寫塊併入 `norm.css` | **G-delta**(`norm.css.dsp` +350 條) | 無 |
+| **D2** | 靜態設定 —— library-property + DSP 選擇器條件 | G-delta(同 D1 的檔,+1 個 DSP 區塊) | D1 |
+| **D3** | Java API —— `IceblueDensity` | 不動 CSS,**G 不變** | D1 |
+| **D4** | tablet 半 —— 兩套規則同檔、compact 那套加屬性前綴 | **G-delta**(`tablet.css.dsp`,與 P7 的 tablet 轉換同一顆) | P7 的 tablet 轉 CSS |
+| **D5** | 收尾 —— 移除 build 期旋鈕、`readme.md`、遷移指南、關掉 S36 | G 不變 | D1–D4 |
+
+### 總體進度
+
+**0 / 5**。本文件產出後,D1–D3 **不等任何人**(D4 掛在 P7 的 tablet 轉換上)。
+
+### 一句話效益
+
+> 用 **14.4 KB** 換掉 **282.8 KB 的第二個 jar**,順便讓 compact 從「換 jar + 重新載入頁面、
+> 只能整站」變成「一個屬性、可以只套一塊畫面、不用 reload」,而且**結構上不可能再發生版本漂移**
+> —— 而漂移的成本已經看得到:`iceblue_c` **整條 10.4.0 線都沒有出貨**
+> (eval repo 從 `10.3.1-Eval` 直接跳到 `11.0.0.FL.20260812-Eval`),
+> 而同期 ZK core 有 `10.4.0-jakarta.FL.20260713-Eval`。第二份出貨物就是會落後,見 [L3.1(a)](#a-iceblue_c-1100-對同版預設主題逐檔比)。
+
+---
+
+## L2 階段拆解
+
+### D1 桌面 token 層(核心)
+
+| | |
+|---|---|
+| **目標** | 讓 `[data-density="compact"]` 在**任何範圍**都能把桌面主題切成 compact,值與 `iceblue_c` 相同 |
+| **輸入 → 輸出** | `tokens/_default.css` + `tokens/_compact.css` → `tokens/_density-compact.css`(產生物)→ 併入 `norm.css` 尾端 |
+| **驗收閘門** | **G-delta**:`norm.css.dsp` 恰好 **+350 條** declaration、**+1 個規則區塊**,其餘輸出檔 **0 差異** |
+| **前置** | 無 |
+
+**要做的事**
+
+1. **`scripts/gen-density-css.js`** —— 從兩個 token 檔推導,**產物不進 git 以外的手改路徑**
+   (與 `gen-fa-css.js`、`p4a-strip-prefixes.js` 同模式:可重跑、冪等、自帶斷言)。
+   閉包演算法見 [L3.1](#l31-量測數據與口徑)。
+2. **併入 `norm.css` 的最尾端** —— 位置是有意義的:`[data-density="compact"]` 的
+   specificity 是 `(0,1,0)`,與 `:root` **相同**,所以它必須**在來源順序上更後面**才會贏。
+   本主題沒有 cascade layer,順序就是唯一的裁判(這正是 preview utility 層踩過的同一條規則)。
+3. **`npm run check:density-css`** —— 四項斷言,任一不成立 exit 1:
+   - 產生的 token 名稱集合 **恰好等於**重算的 closure(數量 + 逐名);
+   - 每一條的值 **逐字等於** `tokens/_compact.css` 的對應值;
+   - closure 之外的 512 個 token **一條都沒有**被寫進去;
+   - 覆寫塊裡每一個 `var()` 指到的名字,**要嘛在 closure 裡、要嘛在兩個 profile 中同值**。
+4. **負向控制**(三個,做完要證明它們真的會 exit 1):
+   - 手動刪掉 closure 裡的一條 → 第 1 項斷言觸發;
+   - 手動把一條的值改成 `_default.css` 的值 → 第 2 項觸發;
+   - 手動塞一條 closure 外的 token → 第 3 項觸發。
+
+**驗收怎麼證明(這一階最重要的設計)**
+
+**`iceblue_c.jar` 是一個現成的 oracle。** 不要只比自己的輸出,要對 ZK 出貨的那一份比:
+
+- **靜態層**:把 `iceblue_c 11.0.0` 的 `norm.css.dsp` 的 `:root` 抽出來,與我們覆寫塊逐 token 比對。
+  **oracle 的版本必須與 `zk.version` 同代**,否則量到的是版本落差疊在 density 差異上
+  (這正是本文件第一版踩到的坑,見 [L3.5](#l35-change-log))。同代之下預期
+  **333 條同值、名稱集合完全一致(只在任一側 = 0)**,不得有第 334 條。
+- **執行層**:preview 語料在 `data-density="compact"` 下的 computed style,
+  必須等於同一頁在 `iceblue_c` 主題下的 computed style。
+  **比 computed style,不比 byte** —— 兩者的 CSS 文字本來就不同,byte 比對沒有意義。
+  跨主題跑同一組頁面的手法本專案已經有(視覺 A/B harness 的 classpath 組法)。
+
+> ⚠️ **不要拿視覺 A/B 的 `pages differing: 0` 當這一階的通過訊號。**
+> 那個 harness 比的是「同一個語料在兩次 build 下有沒有變」,而這一階**本來就要變**。
+> 它在這裡的正確用法是**反向**的:確認 `data-density` **沒設**的時候,畫面 **0 差異**
+> (證明覆寫塊不會外洩到預設狀態)。
+
+---
+
+### D2 靜態設定(zk.xml)
+
+| | |
+|---|---|
+| **目標** | 不寫任何 ZUL/Java,只在 `zk.xml` 設一個 property 就讓整站是 compact,且**沒有 FOUC** |
+| **輸入 → 輸出** | 同 D1 的檔,選擇器前面多一個 DSP 條件 |
+| **驗收閘門** | G-delta(同 D1 的檔);另加**三態實測** |
+| **前置** | D1 |
+
+**機制**
+
+```
+<c:if test="${'compact' eq c:property('org.zkoss.zul.theme.density')}">:root,</c:if>[data-density="compact"]{ … }
+```
+
+**為什麼是這個技法**:`.css.dsp` 本來就會經過 DSP 求值,而本主題**已經**在選擇器位置用同一招做
+`browserDefault`(`norm.css.dsp` 裡 90 個前綴)。所以這不是新發明的機制,是既有機制的第二個用例。
+
+**為什麼不用別的**:
+- 由 Java 在 render 時對 `<html>` 塞屬性 —— ZK 沒有給主題這個接縫,只能走 `Clients.evalJavaScript`,
+  那是**首次繪製之後**才執行 ⇒ FOUC。這正是 Marble 文件裡建議靜態情境不要用 Java API 的原因。
+- 另出一支 `:root{}` 版本的 sheet 由 `getThemeURIs()` 掛上 —— 內容重複一份 14.4 KB,而且多一個 request。
+
+**三態實測(缺一不可)**
+
+| property | 預期服務出來的 `norm.css.dsp` | 預期畫面 |
+|---|---|---|
+| 未設 | 選擇器是 `[data-density="compact"]` | 預設密度 |
+| `compact` | 選擇器是 `:root,[data-density="compact"]` | 整站 compact |
+| 亂值(`foo`) | 同「未設」 | 預設密度(**不得**當成 compact) |
+
+> `.css.dsp` 的回應**有快取**,而 library property 是行程層級的 ⇒ 三態要分別重啟量,
+> 不能在同一個行程裡改 property 再抓。這是 `ab-coverage.js` 已經踩過並寫下口徑的同一個坑。
+
+---
+
+### D3 Java API
+
+| | |
+|---|---|
+| **目標** | 從 Java 動態切換,全站或單一區域,**不需要 reload** |
+| **輸入 → 輸出** | 新檔 `src/main/java/org/zkoss/theme/iceblue11/IceblueDensity.java` |
+| **驗收閘門** | **不動任何 CSS ⇒ 閘門數字必須完全不變**(這本身就是一項斷言) |
+| **前置** | D1 |
+
+**形狀**(移植 `MarbleDensity` 的介面,不移植它的數值):
+
+```java
+public final class IceblueDensity {
+    public enum Density { DEFAULT("default"), COMPACT("compact"); … }
+    public static void apply(Density d);              // 全站:documentElement 上的屬性
+    public static void apply(Component scope, Density d);  // 區域:setClientDataAttribute("density", …)
+}
+```
+
+> **字彙已裁示為 `default` / `compact`**(2026-08-12),不是原建議的 `comfortable`。
+> 理由見 [L3.4 第 1 項](#l34-未決事項需要裁示)。`DEFAULT` 這個列舉值**不是**「沒設屬性」的同義詞 ——
+> 它是**顯式寫回預設密度**,唯一的用途是巢狀反向覆蓋(外層 compact、內層 `data-density="default"`)。
+
+- 全站那支走 `Clients.evalJavaScript`,因為 `<html>` 不是 ZK component。
+- 區域那支走 ZK 原生的 `Component#setClientDataAttribute`,**沒有 JavaScript 字串**。
+- Javadoc 必須寫明 **FOUC**:要固定預設值請用 D2 的 library-property,不要在頁面載入時呼叫 `apply()`。
+
+**驗收**:Playwright 實測 —— 切換前後量同一個元素的 computed height,
+必須**在同一個 desktop 生命週期內**改變(證明沒有 reload);
+以及巢狀情境(外層 compact、內層 `default`)兩層各自正確。
+
+> **命名**:類別放在主題套件 `org.zkoss.theme.iceblue11` 底下。
+> 「要不要升格進 ZK core(`org.zkoss.zul.theme`)成為跨主題的公開 API」是**產品面問題**,
+> 歸 P8,見 [L3.4](#l34-未決事項需要裁示)。
+
+---
+
+### D4 tablet 半(風險最高)
+
+| | |
+|---|---|
+| **目標** | 讓同一個 `data-density` 旋鈕也管平板層,**徹底消滅 S36 的分裂主題** |
+| **輸入 → 輸出** | `zkmax/less/tablet/{default,compact}/**` → 單一 `tablet.css`,compact 那套加屬性前綴 |
+| **驗收閘門** | **G-delta**,與 P7 的 tablet 轉換合併成同一段 delta |
+| **前置** | **P7 的 tablet 轉 CSS**(本階不能先做) |
+
+**為什麼這一階和 D1 不同性質 —— 這是本計畫最需要注意的一件事**
+
+桌面層的 compact **是純 token 值替換**;**tablet 層完全不是**。實測:
+
+| | default | compact |
+|---|---|---|
+| 規則區塊(純 CSS) | 260 | 217 |
+| declaration | 681 | 628 |
+| `var(--zk-` 出現次數 | **95** | **95** |
+| 只在這一側的選擇器 | **67** | **27** |
+| 共用但宣告不同 | **70** | ← |
+
+`var()` 用量兩邊**一模一樣**,差異全是字面值與規則的增減(例:`.z-column-content` 在 default 是
+`font-size:15px; padding:10px 12px`,在 compact **整條不存在**)。
+⇒ **token 覆寫對 tablet 一點作用都沒有**,必須把兩套規則都出貨、用屬性把 compact 那套圈起來。
+
+> ⚠️ **而且 compact 的平板規則不見得比較小。** `.z-colorpalette` 桌面 compact 是 260×226
+> (default 340×300),**平板 compact 卻是 586×460**,比平板 default 的 `304px` 寬將近一倍。
+> `tablet.css.dsp` 是**相對於各自桌面基準的觸控補償層**,不是一套更密的平板設計。
+> 完整證據與三個後果見 [L3.1(e-2)](#e-2-compact-的-tablet-規則不是比較小的-tabletd4-的真正形狀)。
+
+**因此多出一項在桌面層不存在的工作**:那 **67 條只在 default 的規則**,在 ZK 10 的 `iceblue_c`
+裡是**整條不存在**;改成屬性覆寫之後它們會**繼續生效**。所以 compact 區塊必須**逐條中和**它們
+(明確寫回非平板的值),否則 compact 下的平板畫面會與 `iceblue_c` 不一致。
+
+**驗收**:對 `iceblue_c.jar` 的 `tablet.css.dsp` 做 **mobile UA 的 computed-style oracle 比對**,
+逐一走過那 67 條所影響的選擇器。**不是抽驗,是全部 67 條** —— 這一階的通過條件就是這張清單全綠。
+
+> tablet 是 **EE-only、且只在 mobile UA 注入**。加上 compact 那套之後 `tablet.css.dsp`
+> 大約從 27638 B 成長到 ~53 KB,只有行動裝置付這個成本。
+> **區域級 density 對 tablet 沒有意義**(它是整站的觸控層),文件要明說不支援,不要假裝支援。
+
+---
+
+### D5 收尾與遷移
+
+| | |
+|---|---|
+| **目標** | 舊的 build 期旋鈕退場,一個機制取代兩個 |
+| **驗收閘門** | 不動輸出 ⇒ G 不變 |
+| **前置** | D1–D4 |
+
+1. **移除 build 期旋鈕**:`norm.css` 不再需要「把第一個 `@import` 指向 `tokens/_compact.css`」
+   這個用法;`_zkvariables.less` 的 `@themeProfile` 隨 P7 一併消失。
+   `tokens/_compact.css` **保留**,它從「可切換的來源」變成「產生器的輸入」。
+2. **這是對外的 breaking change**,必須進遷移指南:`readme.md:45` 的
+   〈switch to compact profile (since 9.5.0)〉整章改寫 —— 從「改 LESS 變數重編 jar」
+   變成「設一個 library-property」。
+3. **正式關閉 S36** —— 分裂主題(桌機 default + 平板 compact)在新機制下**結構上不可能發生**,
+   因為兩層讀的是同一個屬性。S36 當初裁示「接受到 P7 為止、不另外寫檢查」,
+   到這裡是它被兌現而不是被繞過。
+4. **更新進度文件**:L2.2 的 BLOCKED 表移除 P7 那一列;L1〈下一步〉第 5 項結案。
+
+---
+
+## L3 技術附錄
+
+### L3.1 量測數據與口徑
+
+**所有數字都是本輪實測,不是引用。** 量測日期 2026-08-12。
+
+> **口徑修正(重要)**:本文件第一版用 `iceblue_c 10.3.0.1` 當 oracle,對本專案 10.4 期的
+> `baseline/` 比 —— 那量到的是「版本落差 + density 差異」的疊加。已改用
+> **`iceblue_c 11.0.0.FL.20260812-Eval`**,並同時把 `zk.version` 升到
+> **`11.0.0-jakarta.FL.20260811-Eval`**,讓 oracle 與本樹同代。
+> `iceblue_c` **沒有任何 10.4.0 版本**(eval repo:`10.3.1-Eval` → `11.0.0.FL.20260812-Eval`),
+> 所以 10.4 期根本不存在同代 oracle,升版是唯一解。詳見 [L3.5](#l35-change-log)。
+
+> **oracle jar 在哪(D1 與 D4 的驗收都要用它)**:已 `install:install-file` 進本機 repo,座標
+> `org.zkoss.theme:iceblue_c:11.0.0.FL.20260812-Eval`,實體在
+> `~/.m2/repository/org/zkoss/theme/iceblue_c/11.0.0.FL.20260812-Eval/`(**282792 B**,與
+> [L3.1(a)](#a-iceblue_c-1100-對同版預設主題逐檔比) 記的大小一致 ⇒ 身分可驗)。
+> 它**原本只存在於某次 session 的暫存目錄**,而 `~/.m2` 沒有任何 11.x 的 `iceblue_c`;
+> 換一個 session 就會找不到,所以在這裡記下座標而不是路徑。
+
+
+
+#### (a) `iceblue_c 11.0.0` 對同版預設主題逐檔比
+
+**這是本計畫的關鍵量測:同一個 ZK 版本,唯一的變因就是 density。**
+
+| 項目 | 值 |
+|---|---|
+| jar 大小 / 檔數 / 解壓後 | **282792 B** / **215** 檔 / **901530 B** |
+| jar 內 `.css.dsp` | **85** |
+| 預設主題(`zul`+`zkmax`+`zkex` 11.0.0 的 `web/`)`.css.dsp` | **81** |
+| **可比檔中逐 byte 相同** | **79 / 81(97.5%)** |
+| **不同** | **2** —— `zul/css/norm.css.dsp`(72837 → 71923)、`zkmax/css/tablet.css.dsp`(27638 → 25359) |
+| 只在 `iceblue_c` | **4** —— `tbeditor` `goldenlayout` `cropper` `signature` 的**新路徑**副本;`iceblue_c` 新舊路徑都出貨,預設主題只出舊路徑。與 density 無關(`baseline/` 也是 85 = 81 + 這 4 個) |
+
+**版本落差有多大(說明第一版為什麼會誤判)**:同一批檔,`baseline/`(10.4 期)對 **ZK 11.0.0 預設主題**
+比 → **78 相同、3 不同**:`js/zkmax/grid/css/grid.css.dsp`(294 → 4449)、
+`js/zul/db/css/calendar.css.dsp`(5791 → 6486)、`zul/font/font-awesome.css.dsp`(175837 → 175801)。
+**這 3 個是上游 10.4→11.0 的演進,不是 density**;`norm.css.dsp` 反而**逐 byte 相同**
+(本樹的 token 層已經就是 ZK 11 的 token 層)。第一版把這類落差算進了 density 帳上。
+
+**先前那條「漂移已經發生」的結論作廢**:在同代之下,`iceblue_c` **一個元件 CSS 都不缺、
+一個 token 都不缺**(見 (b))。真正成立的觀察改成:`iceblue_c` **整條 10.4.0 線沒有出貨**,
+也就是第二份出貨物的釋出節奏會落後於預設主題。
+
+#### (b) `norm.css.dsp` 的差異形狀(同代)
+
+| 項目 | 值 |
+|---|---|
+| 預設主題 `:root` token 數 | **862** |
+| `iceblue_c` `:root` token 數 | **862** |
+| 只在預設 / 只在 `iceblue_c` | **0 / 0** |
+| `--zk-severity-*` 兩側各有 | **20 / 20** |
+| **值不同** | **333** |
+| `:root{}` 區塊**以外**的內容 | **逐 byte 相同(29052 = 29052 字元)** |
+
+**三重交叉驗證,`333` 在三個獨立來源下完全一致**:
+(i) `iceblue_c 10.3.0.1` 對 10.4 期 `baseline/`、
+(ii) `iceblue_c 11.0.0` 對 ZK 11.0.0 預設主題、
+(iii) 本專案自己的 `tokens/_default.css` vs `tokens/_compact.css`(862 / 862、名稱與順序相同)。
+版本換了、oracle 換了、來源換了,**333 沒有動** —— 這個數字可以當常數用。
+
+#### (c) 凍結問題與 closure(這一段決定了要出貨幾個 token)
+
+`var()` 的替換發生在**宣告它的那個元素**上,替換完就凍結後往下繼承。
+所以只覆寫「值有變的 333 個」是**不夠**的:任何**透過 `var()` 相依於它們**的 token,
+如果沒有被一起重新宣告,就會維持在 `:root` 上算好的**預設值**。
+
+| 項目 | 值 |
+|---|---|
+| token 總數 | **862** |
+| 預設值含 `var()` 的 | **472** |
+| 指到 token 集合**外**的 `var()` 參照 | **0**(集合是封閉的) |
+| 種子(值不同) | **333** |
+| **傳遞閉包(必須重新宣告)** | **350**(2 輪收斂) |
+| 可安全省略 | **512** |
+| 閉包中字面值 / `var()` 衍生 | **288 / 62** |
+
+**產出成本**
+
+| | 原始 | gzip |
+|---|---|---|
+| 覆寫塊(350 條) | **14412 B** | **2731 B** |
+| `norm.css.dsp` 現況 | 72837 B | 10297 B |
+| `norm.css.dsp` 加上覆寫塊 | 87249 B | 12837 B |
+| **淨增** | **+14412 B** | **+2540 B** |
+
+對照:出貨 862 條的話原始約 43782 B ⇒ closure 分析省掉約 **67%** 的體積。
+
+#### (d) palette × density 正交性
+
+掃 `zkcml/zkthemebuilder/palettes/*_css.less`:**27 個檔、623 條 `--zk-*` 宣告、108 個相異 token**,
+與 350 個 density closure **重疊 0 條**。
+⇒ 兩個旋鈕作用在互斥的 token 集合上,**不需要定義優先序**。
+產生器應把「重疊必須為 0」寫成一條斷言 —— 它同時是 P7 palette 那一半的保護欄。
+
+#### (e) tablet 的差異形狀
+
+| | default | compact |
+|---|---|---|
+| 規則區塊 | 274(含 14 個 DSP 區塊)/ **260**(純 CSS) | 227(含 10 個)/ **217** |
+| declaration | 695 / **681** | 638 / **628** |
+| 只在該側的選擇器 | **67** | **27** |
+| 共用選擇器 | **188** | **188** |
+| 共用但**宣告不同** | **70**(共用中的 37%) | ← |
+| `var(--zk-` | **95** | **95** |
+
+口徑:`zkmax/css/tablet.css.dsp`,`zk11` 預設主題(27638 B)vs `iceblue_c 11.0.0`(25359 B),同代。
+「選擇器」= **逗號未拆的選擇器字串**;若拆成單一選擇器則為 only-default **90** / only-compact **33** /
+共用 **248**(其中 70 條宣告不同、178 條完全相同)。
+與第一版(10.3.0.1 oracle)量到的**每一個數字都相同** —— tablet 這一層在 10.3→11.0 之間沒有動過。
+
+> **口徑補記**:第一版表中的 274 / 695 / 227 / 638 把 `browserDefault` 的 DSP 區塊
+> (`<c:if …>.z-page </c:if>`,default 14 個、compact 10 個)算成了 CSS 規則;剝掉之後是
+> 260 / 681 / 217 / 628。**67 與 27 不受影響**(那是 D4 驗收清單的長度,原數字正確)。
+> 共用數第一版寫 189,實測 **188** —— 差的那 1 個也是 DSP 區塊。**不動任何結論。**
+
+#### (e-2) compact 的 tablet 規則不是「比較小的 tablet」——D4 的真正形狀
+
+「compact 有沒有自己的 tablet 專屬規則」的答案是**有,而且方向與直覺相反**。
+那 27 條(拆開 33 條)是 default 的 `tablet.css.dsp` 裡**整條不存在**的,例如:
+
+```
+.z-calendar          {min-width:420px;padding:2px}       ← default tablet 沒有這條
+.z-combobox-input    {line-height:14px;height:32px;padding:4px 5px}
+.z-groupbox-header   {line-height:24px}
+```
+
+更關鍵的是共用選擇器裡那 **70 條宣告不同**的,**compact 的值經常比 default 大**:
+
+| 選擇器 | 桌面 default | 桌面 compact | **tablet default** | **tablet compact** |
+|---|---|---|---|---|
+| `.z-colorpalette` | 340×300 | **260×226** | `304px` × auto | **586×460** |
+| `.z-colorpalette-color` | 16×16 | **12×12** | 40×24 | **32×32** |
+
+桌面層 compact 確實比較小(340→260、16→12,正是那 333 個 token 值在做的事);
+**到了平板層,compact 反而把同一個元件放大到 default 的近兩倍寬**。
+
+**成因**:`tablet.css.dsp` 不是一套獨立的平板設計,它是**相對於各自桌面基準的補償層** ——
+目的是把觸控目標推到可點擊的尺寸。compact 的桌面基準比較小,所以補償層必須推得更用力。
+兩套 sheet 追的是**大致相同的最終渲染尺寸**,只是起點不同。
+
+**這對 D4 的三個直接後果**:
+
+1. **token 覆寫在這一層完全無效** —— 已知(`var()` 95=95,差異全在字面值),此處只是給出了機制上的原因。
+2. **驗收不能用「看起來有沒有變密」** —— 在平板上 compact 有些地方本來就比較寬。
+   唯一可用的判準是 D4 已經訂的「對 `iceblue_c` 的 tablet.css.dsp 做 computed-style oracle 逐條比對」。
+3. **文件用語要小心**:在平板層,`data-density="compact"` 選的是「**為 compact 桌面基準調校過的觸控層**」,
+   不是「更密的平板」。遷移指南(D5)不要把它寫成密度。
+
+#### (f) 主題的 token 化程度(說明為什麼桌面層這麼乾淨)
+
+`target/classes/web/iceblue11` 的 85 個 `.css.dsp`:`var(--zk-` 出現 **3296** 次,
+分佈在 **65** 個檔;字面 `NNpx` 出現 **2366** 次。
+那 2366 個字面值**在兩個 profile 下相同**(由 (b) 的「`:root` 以外逐 byte 相同」證明),
+所以它們不在 compact 的範圍內 —— **ZK 10 的 `iceblue_c` 也一樣不動它們**,這不是本案的縮水。
+
+---
+
+### L3.2 機制比較(ZK 10 vs 本案)
+
+| 面向 | **ZK 10:`iceblue_c` 獨立主題** | **本案:`data-density` 屬性** |
+|---|---|---|
+| 出貨物 | 第二個 jar,**282792 B / 215 檔 / 85 個 `.css.dsp`** | `norm.css.dsp` **+14412 B**(gzip +2540 B),**0 個新檔** |
+| 其中重複內容 | **79 / 81 逐 byte 相同**(97.5%,同代比) | 無 |
+| HTTP 請求 | 不變(換整個主題的 WCS) | **不變**(併進既有單一 WCS) |
+| 靜態設定 | `org.zkoss.theme.preferred` = `iceblue_c` | `org.zkoss.zul.theme.density` = `compact` |
+| 動態切換 | `Themes.setTheme()` 寫 cookie → **必須 `Executions.sendRedirect(null)` 重新載入整頁**(ZK 自己的 `zksandbox` / `zktest` 全部這樣寫) | 設一個屬性,**同一個 desktop 內生效,不 reload** |
+| 切換粒度 | **整站**(cookie 綁瀏覽器) | **整站 或 單一區域**,可巢狀、可反向覆蓋 |
+| 與 palette 組合 | **相乘**:N 個 palette × 2 個 density = 2N 份出貨物 | **正交**:palette 覆寫 sheet × density 屬性,重疊實測 0 |
+| 版本漂移風險 | 兩份必須人工保持同步 | 結構上不可能(單一來源產生) |
+| **內容是否已經漂移** | **否。** 同代比之下元件與 token 完全對齊(862/862、severity 20/20) | — |
+| **釋出節奏是否已經落後** | **是。** `iceblue_c` **整條 10.4.0 線沒有出貨**(`10.3.1-Eval` → `11.0.0.FL.20260812-Eval`),而同期 ZK core 有 `10.4.0`。要用 compact 就得跟著跳版 | 沒有第二個出貨物,不存在這個問題 |
+| 平板層 | 另一套規則,隨 jar 一起換 | 同一個屬性圈住(**D4**,需逐條中和 67 條) |
+| 對既有使用者 | 換 jar | **breaking**:`readme.md` 教的 build 期改法失效,需遷移指南(**D5**) |
+
+**兩個機制唯一各有勝負的地方**:ZK 10 的 cookie 會**跨 session 記住使用者選擇**(30 天),
+屬性不會。若產品需要「記住偏好」,那是**應用層**的責任(存使用者設定後在 render 時套用),
+不應該由主題承擔 —— 這也是 Marble 那份規格的立場:主題出**宣告式旋鈕**,怎麼設是應用的事。
+
+---
+
+### L3.3 風險與已知限制
+
+| # | 風險 | 嚴重度 | 處置 |
+|---|---|---|---|
+| 1 | **D4 的 67 條中和** —— 只在 default 的規則在屬性機制下不會消失,漏一條就是平板 compact 與 `iceblue_c` 不一致 | **高** | 驗收條件訂為「67 條全部逐條對 oracle 比對」,不接受抽驗 |
+| 2 | 每個使用者都多付 **14.4 KB / gzip 2.6 KB**,即使從不使用 compact | 中 | 已量化;若不可接受,退路是把覆寫塊拆成獨立 `.css.dsp` 由 `getThemeURIs()` 條件掛載 —— 代價是多一個 request,且 runtime 屬性切換會失效(只剩靜態)。**不建議** |
+| 3 | Java API 全站那支有 **FOUC** | 中 | 與 Marble 相同的既知限制;Javadoc + 文件明寫「固定預設值請用 D2」 |
+| 4 | DSP 標籤放在選擇器位置是既知的設計瑕疵 | 低 | 本主題**已經**這樣用(`browserDefault`,90 處),本案是第二個用例而非首例;P8 的產品面問題已收錄此議題 |
+| 5 | `.css.dsp` 有快取,三態測試若在同一行程內改 property 會量到舊內容 | 低 | 已寫進 D2 的口徑:三態分別重啟 |
+| 6 | 區域級 density 對 tablet 無意義 | 低 | 文件明說不支援,不假裝支援 |
+| 7 | `iceblue_c` 這個主題名在 ZK dist 仍然存在 | — | 產品面問題,見 L3.4 |
+
+---
+
+### L3.4 未決事項(需要裁示)
+
+> 第 1 項**已裁示**;其餘三項**不阻擋 D1–D3**,但 D5 收尾前必須有答案。
+
+1. ~~**屬性值的字彙**~~ **【已裁示 2026-08-12:`default` / `compact`】**
+   列舉為 `Density.DEFAULT("default")` / `Density.COMPACT("compact")`,與本主題 profile
+   (`tokens/_default.css` / `tokens/_compact.css`)、與 `iceblue_c` 出貨物的既有語彙一致。
+
+   <details><summary>原建議是 <code>comfortable</code>,以及它為什麼不成立</summary>
+
+   原建議的唯一理由是「與 Marble 用同一組字彙」。**這個理由撐不住**:Marble **尚未公開發行**
+   (CLAUDE.md 的專案狀態),所以兩邊要對齊的話,往哪個方向對齊的成本都是零 ——
+   `comfortable` 並不因為 Marble 先寫了就取得優先權。反過來,`default` 有兩個本方的理由:
+   (a) 本主題自己的兩個 profile 檔就叫 `_default` / `_compact`,ZK 出貨的第二個 jar 也叫
+   `iceblue_c`(= compact),既有語彙裡從來沒有出現過 `comfortable`;
+   (b) 屬性值要對應的是「**沒有加密的那一態**」,而那一態在本主題的名字就是 default。
+
+   **代價(要記著)**:採用 `default` 之後,Marble 的 `MarbleDensity.Density.COMFORTABLE("comfortable")`
+   就與本主題不同字彙。若 L3.4 第 2 項日後裁示把 API 升格進 ZK core 成為跨主題契約,
+   **兩者必須先統一**,而該由 Marble 改過來(它未發行,且本裁示已定調)。
+   這是**跨 worktree 的後續事項,本計畫不動 Marble 的任何檔案**。
+   </details>
+2. **Java API 放哪**:主題套件 `org.zkoss.theme.iceblue11`(本計畫的作法),
+   還是升格進 ZK core `org.zkoss.zul.theme` 成為跨主題 API?建議**先放主題**、P8 再談升格 ——
+   升格是產品決策,而且在只有一個實作者的時候定介面太早。
+3. **`iceblue_c` 這個獨立主題還要不要繼續出貨**?本案讓它變成純粹的重複,
+   但移除它會影響已經在 `zk.xml` 設 `preferred=iceblue_c` 的存量客戶。
+   建議:**保留但凍結**,並在遷移指南標示 deprecated。歸 P8。
+4. **`tokens/_compact.css` 的公開性**:它從「可切換的來源」變成「產生器的輸入」之後,
+   要不要仍然當作對外可覆寫的 API?與 P7 的 palette override sheet 是同一類問題,建議合併決定。
+
+---
+
+### L3.5 Change Log
+
+| 日期 | 變更 |
+|---|---|
+| 2026-08-12 | 建檔。全部量測為本輪實測(`iceblue_c.jar` 對 `baseline/` 逐檔比、token closure 推導、palette 正交性、tablet 結構差異、gzip 成本),尚未動任何來源檔,閘門未跑 |
+| 2026-08-12 | **口徑修正 + `zk.version` 升 11.0.0。** 建檔時的 oracle 是 `iceblue_c 10.3.0.1`,對 10.4 期的 `baseline/` 比 ⇒ 量到的是版本落差疊在 density 差異上。改用 `iceblue_c 11.0.0.FL.20260812-Eval` 對**同版**預設主題重量。**推翻**:「出貨中的 `iceblue_c` 少 8 個元件 CSS 與 20 個 severity token」是版本落差的假影,同代之下 **862/862、severity 20/20、缺 0 個元件**;L3.2 的〈漂移是否已經發生〉列改寫為〈釋出節奏是否已經落後〉。**未動搖**:333 / 350 / 512 closure、tablet 的 67+27 與 95=95、palette 重疊 0 —— 全部在新 oracle 下逐字重現。體積數字微調(14414→14412 B,gzip +2559→+2540 B)。連帶把 `zk.version` `10.4.0-jakarta.FL.20260713-Eval` → `11.0.0-jakarta.FL.20260811-Eval`,artifact 版本與三個 version-uid → `11.0.0-Eval`;**`check:gate` 前後數字完全相同**(313/313、P4a 60 deferred、P4b 9 檔/−14/+7),`visual:selftest` 116 頁 PASS |
+| 2026-08-12 | **裁示 L3.4 第 1 項:屬性字彙為 `default` / `compact`**(列舉 `Density.DEFAULT("default")`),推翻本文件原本建議的 `comfortable`。原建議的唯一依據是「與 Marble 對齊」,但 Marble 尚未公開發行 ⇒ 對齊方向的成本為零,該理由不成立;而 `default` 與本主題的 `_default.css` / `_compact.css` 及 `iceblue_c` 的既有語彙一致。**代價已記錄**:Marble 的 `COMFORTABLE("comfortable")` 自此與本主題不同字彙,若 L3.4 第 2 項日後裁示升格為跨主題 API,須由 Marble 改過來(跨 worktree 後續事項,本計畫不動 Marble 任何檔案)。連帶更新 D3 的介面草圖與巢狀驗收敘述 |
+| 2026-08-12 | **新增 L3.1(e-2):compact 的 tablet 規則不是「比較小的 tablet」。** 回答「compact 有沒有 tablet 專屬規則」時實測發現:除了 27 條只在 compact 的規則之外,共用選擇器裡有 **70 條宣告不同**,而且 **compact 的值經常比 default 大** —— `.z-colorpalette` 桌面 compact 260×226(default 340×300),平板 compact 卻是 **586×460**(平板 default 304px)。成因是 `tablet.css.dsp` 是**相對於各自桌面基準的觸控補償層**。**不動搖** D4 的作法與驗收(oracle 逐條比對本來就是唯一判準),但補上兩件事:驗收不得用「有沒有變密」當訊號、D5 遷移指南在平板層不要把它寫成密度。同時修正 (e) 的口徑:274/695/227/638 把 14 與 10 個 `browserDefault` DSP 區塊算成了 CSS 規則,純 CSS 是 260/681/217/628;共用數 189 → **188**。**67 與 27 未變**(D4 驗收清單長度正確) |
+| 2026-08-12 | **artifact 版本拿掉 `jakarta` 標記**(`11.0.0-jakarta-Eval` → `11.0.0-Eval`,含三個 version-uid)。裁示:主題沒有用到 Java EE API,只有一個版本,不需要區分 javax/jakarta —— 實測佐證 `src/main/java` 只有 2 個檔、**0 個 `javax.`/`jakarta.` import**,編出來的 class 兩邊通用。`zk.version` 的 `-jakarta` **保留**(那是 ZK core,真的有 servlet API 分歧)。另裁示:`10.4.0` 從未公開發行,依公司政策一律標 `11.0`。重跑 `check:gate` 與 `visual:selftest` 皆 PASS |

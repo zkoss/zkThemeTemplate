@@ -39,6 +39,7 @@
   - [L3-F 決策紀錄](iceblue-drop-less-plan-appendix.md#l3-f-決策紀錄) — L-2 / L-4 / L-5 / L-7 / L-8 與五次追加拍板
   - [L3-G Change Log](iceblue-drop-less-plan-appendix.md#l3-g-change-log--規範層的斷言變更) — 18 條規範層更正
   - [L3-H 進度記錄制度](iceblue-drop-less-plan-appendix.md#l3-h-進度記錄制度)
+- **[附:跨主題待辦裁示](#附跨主題待辦裁示不屬於本案任何階段)** — 由本案裁示產生、但要在別的 worktree 執行的事(**M-1** Marble 密度字彙對齊)
 
 ---
 
@@ -603,3 +604,51 @@ L3 各節是**原文保留**的,所以裡面的 `§0`、`§2.6`、`§P4` 這類�
 | `§5` 進度記錄 | **L3-H** |
 | `§6` 決策 | **L3-F** |
 | `§4.4` / `§8.1` / 「評估文 §6」 | **懸空** —— 指向一份從未進版控的評估文,見 **L3-G**〈未修的已知問題〉 |
+
+---
+
+## 附:跨主題待辦裁示(不屬於本案任何階段)
+
+> 記在本檔最後,是因為它**由本案的裁示產生、但要在另一個 worktree 執行**,
+> 不屬於 P0–P8 任何一階,也不進任何閘門。**本案不會動 Marble 的任何檔案。**
+
+### M-1 Marble 的 `Density.COMFORTABLE` 改名為 `DEFAULT`
+
+| | |
+|---|---|
+| **裁示** | **要改,但不是現在**(2026-08-12) |
+| **方向** | 由 **Marble 改成 `default`**,不是 iceblue11 改成 `comfortable` |
+| **執行地點** | `../zkThemeTemplate`(`master` 系),**不是本 worktree** |
+| **觸發時機** | 以下**任一**先發生:(a) [l4-density-mechanism.md L3.4 第 2 項](../tasks/l4-density-mechanism.md#l34-未決事項需要裁示)裁示把 density API 升格進 ZK core 成為跨主題契約;(b) Marble 首次公開發行前 |
+
+**起因**:L-4 裁示 iceblue11 的密度屬性字彙為 `default` / `compact`
+(`Density.DEFAULT("default")`),與 Marble 現行的 `COMFORTABLE("comfortable")` 分岔。
+
+**為什麼方向是 Marble 改**:`default` / `compact` 與 ZK 既有語彙一致 ——
+本主題的兩個 profile 檔就叫 `_default.css` / `_compact.css`,ZK 出貨的第二個 jar 叫 `iceblue_c`(= compact);
+**`comfortable` 在 ZK 的語彙裡從未出現過**,它是 Marble 從 MD3 借來的字。
+兩邊都尚未公開發行,對齊方向沒有相容性成本,所以由**語彙較外來的那一邊**改。
+
+**為什麼不是現在**:
+1. 兩主題目前各自獨立,**沒有共用 API**,分岔期間沒有任何實際影響;
+2. 現在改要跨分支動另一個主題的來源檔,而那些改動與本案的閘門(G-zero / G-delta)無關 ——
+   混進 P4–P8 的驗收窗口只會讓 `git log -S` 與閘門歸因變髒;
+3. 真正需要統一的時點是「升格為跨主題公開 API」,而那件事本身還沒拍板。
+
+**實測範圍(不是估的,2026-08-12 掃過 Marble 工作樹)**:
+
+| 要改 | 位置 | 量 |
+|---|---|---|
+| 列舉常數 + token 字串 | `src/main/java/org/zkoss/theme/marble/MarbleDensity.java:42` | 1 |
+| Javadoc 散文 | 同檔 `:32`、`:41`、`:77` | 3 |
+| 屬性缺席時的 fallback 字面值 | `src/test/resources/web/usecase/report-issue.js:27` | 1 |
+| 規格散文 | `doc/spec/data-dense-mode.md`(1)、`doc/spec/tablet-design-overview.md`(5)、`tasks/data-dense-mode.md`(1) | 7 |
+
+**兩件容易改錯的事,先寫下來**:
+
+- **CSS 一個字都不用改。** 實測 `data-density="comfortable"` 作為**選擇器**出現 **0 次** ——
+  Marble 的 CSS 只認 `[data-density="compact"]`,comfortable 態 = **屬性缺席**。
+  這也是為什麼這次改名的實際成本這麼小(先前口頭估的「規格與 `marble-compact.css` 都要一起改」是高估)。
+- **`--zk-touch-target-comfortable` 不可跟著改**(`zkmax/css/tablet/_tokens.css`)——
+  那是 MD3 觸控目標尺寸(48dp),與密度列舉**無關**,同名只是巧合。
+  `zul/css/tokens/_sizing.css` 裡的 `comfortable` 也全是散文,不是屬性值。
