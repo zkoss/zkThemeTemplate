@@ -33,6 +33,11 @@
  *   phase's diff at DECLARATION level, and only this one proves the whole tree is right at BYTE
  *   level — including the bytes neither shape gate looks at, like where a renamed property sits.
  *
+ *   D1 added a THIRD — the compact density block appended to `zul/css/norm.css.dsp`
+ *   (`density-delta.js`). Derived, not tabulated, and byte-level is the only place its two halves
+ *   meet: the generator proves the block is the right 350 declarations, and this proves the
+ *   builder puts exactly those bytes at exactly the end of exactly that file.
+ *
  * Exit 0 means zero semantic bytes differ anywhere. Exit 1 means a human is needed.
  */
 'use strict';
@@ -40,6 +45,7 @@ const fs = require('fs');
 const path = require('path');
 const p4a = require('./p4a-delta.js');
 const p4b = require('./p4b-delta.js');
+const density = require('./density-delta.js');
 
 const ROOT = path.resolve(__dirname, '..');
 const BASE = path.join(ROOT, 'baseline');
@@ -87,7 +93,10 @@ let deltaFilesB = 0;
 
 for (const rel of files) {
 	const adjusted = p4b.adjustedBaseline(rel);
-	const a = adjusted.text;
+	// D1's compact override block is the third approved delta; see density-delta.js. It is the
+	// ONLY layer that proves the block minifies the same alone as it does inside the whole of
+	// norm.css — the two shape gates compare declaration records and cannot see byte layout.
+	const a = density.applyDensity(rel, adjusted.text);
 	if (adjusted.removedP4a.length) {
 		delta += adjusted.removedP4a.length;
 		deltaFiles++;
@@ -125,11 +134,15 @@ p4b.assertApprovedSize({
 	removedP4a: delta, filesP4a: deltaFiles,
 	removedP4b: deltaB, addedP4b: addedB, filesP4b: deltaFilesB,
 }).forEach((why) => unexplained.push({ rel: 'p4a/p4b-delta.js', why }));
+const densityShape = density.measure();
+density.assertApprovedSize(densityShape).forEach((why) => unexplained.push({ rel: 'density-delta.js', why }));
 
 console.log(`files compared:            ${files.length}`);
 console.log(`P4a delta re-derived:      ${delta} declaration(s) in ${deltaFiles} file(s), ` +
 	`${[...p4a.DEFERRED].join(', ')} left alone`);
 console.log(`P4b delta from table:      ${deltaB} removed / ${addedB} added in ${deltaFilesB} file(s)`);
+console.log(`D1 density block:          ${densityShape.declarations} declaration(s) appended to ` +
+	`${density.DENSITY_FILE} (${densityShape.bytes} B)`);
 console.log(`byte-identical:            ${identical}/${files.length}`);
 console.log(`differing but explained:   ${differing.length}`);
 differing.forEach((f) => console.log(`    ${f}`));

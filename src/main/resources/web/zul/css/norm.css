@@ -13,11 +13,17 @@
  *   tokens/_iceblue.css   the palette, which overrides tokens, so it must come after them
  *   base/_reset.css       normalize.css + the browserDefault switch
  *   (this file)           ZK globals: error box, masks, loading, drag-drop, scrollbar
+ *   tokens/_density-      the compact override block, LAST — see the note at the bottom
+ *     compact.css
  *
  * PROFILE (was @themeProfile in _zkvariables.less): switch to the compact scale by pointing the
  * first import at tokens/_compact.css. Until P7 replaces both knobs with a runtime override
  * sheet, zkmax/less/tablet still selects its own profile through @themeProfile — so a compact
  * build has to set BOTH. readme.md documents the pair.
+ *
+ * That build-time knob is on its way out: the desktop half of it is now also available at
+ * RUNTIME through the override block at the bottom of this file, and D5 of
+ * tasks/l4-density-mechanism.md retires the build-time pair once P7 has converted tablet.
  */
 @import "tokens/_default.css";
 /*!ZK-TAGLIB-HEADER*/
@@ -742,3 +748,17 @@ span.z-upload input {
 	display: inline-block;
 	min-width: 1px;
 }
+
+/*
+ * DENSITY — last on purpose.
+ *
+ * The generated block is keyed on `[data-density="compact"]`, whose specificity (0,1,0) TIES with
+ * the `:root` the tokens are declared on. There is no cascade layer on this branch, so source
+ * order is the only tie-break: this has to come after tokens/_default.css AND after the palette,
+ * or the override loses to the thing it is overriding.
+ *
+ * It carries 350 of the 862 tokens — the 333 whose value differs between the two profiles, plus
+ * the 17 that read one of those through var() and would otherwise stay frozen at the :root value.
+ * See scripts/gen-density-css.js; the file is generated and must not be hand-edited.
+ */
+@import "tokens/_density-compact.css";

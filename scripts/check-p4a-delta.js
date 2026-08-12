@@ -47,6 +47,7 @@ const fs = require('fs');
 const path = require('path');
 const { parse, extractDsp, diffRecords } = require('./cssdiff.js');
 const p4b = require('./p4b-delta.js');
+const density = require('./density-delta.js');
 
 const REPO = path.resolve(__dirname, '..');
 const BASELINE = path.join(REPO, 'baseline');
@@ -140,12 +141,14 @@ function main(argv) {
 			violations.push(`${rel}: missing from candidate`);
 			continue;
 		}
-		// The baseline side gets P4b's approved edits applied FIRST, so what is left between the
-		// two sides is the P4a delta and nothing else. That is what lets all six assertions below
-		// stay exactly as strict as they were written — none of them had to be relaxed to make
-		// room for a second phase. The mirror gate `check-p4b-delta.js` neutralises P4a the same
-		// way, and `p4b-delta.js` asserts the two orders commute.
-		const A = load(p4b.baselinePlusP4b(rel));
+		// The baseline side gets P4b's approved edits — and D1's compact override block — applied
+		// FIRST, so what is left between the two sides is the P4a delta and nothing else. That is
+		// what lets all six assertions below stay exactly as strict as they were written; none of
+		// them had to be relaxed to make room for a later phase. The mirror gate
+		// `check-p4b-delta.js` neutralises P4a the same way, and `p4b-delta.js` asserts the two
+		// orders commute. D1 commutes with both trivially: it appends a block containing no
+		// vendor-prefixed declaration at all, and neither P4a nor P4b touches norm's tail.
+		const A = load(density.applyDensity(rel, p4b.baselinePlusP4b(rel)));
 		const B = load(fs.readFileSync(cFile, 'utf8'));
 
 		for (const r of A.records) if (WEBKIT.test(split(r).prop)) webkitBase++;

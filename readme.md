@@ -59,6 +59,39 @@ different toolchains at the moment. Set both, or the desktop theme and the table
 ```
 3. now the theme uses the compact profile.
 
+### compact at runtime, without rebuilding (desktop only, for now)
+
+The desktop half of the profile is also available as a **library property**, so a whole app can be
+compact without touching a source file or rebuilding the jar. In `zk.xml`:
+
+``` xml
+<library-property>
+    <name>org.zkoss.zul.theme.density</name>
+    <value>compact</value>
+</library-property>
+```
+
+Any other value, including leaving the property out, keeps the default density. Nothing else
+changes: the compact values ship in the same stylesheet either way, so this costs no extra request
+and cannot flash the default density before switching.
+
+To let a **user** flip density, or to make one region dense while the rest of the app is not, use
+[`IceblueDensity`](src/main/java/org/zkoss/theme/iceblue11/IceblueDensity.java) from an event
+listener or an MVVM command — no reload, and the rest of the page keeps its state:
+
+``` java
+IceblueDensity.apply(Density.COMPACT);                 // whole app
+IceblueDensity.apply(myGridPanel, Density.COMPACT);    // one region
+```
+
+Prefer the library property above for a fixed default: `apply(Density)` has to reach the document
+root through JavaScript, which runs after the first paint and can flash.
+
+**This does not cover the tablet stylesheet yet.** `zkmax`'s tablet layer is still selected by
+`@themeProfile` as described above, so an app that needs compact on touch devices must keep setting
+both. Once that stylesheet is converted, the two build-time knobs above go away and the property is
+the only switch — see `tasks/l4-density-mechanism.md`.
+
 ## Switch to a theme of [Theme Pack](https://www.zkoss.org/zkthemepackdemo/)
 The [theme pack](https://www.zkoss.org/zkthemepackdemo/) contains extra 23 themes, you can choose one theme that is closer to your target theme as a base theme and start to customize it. So that it can save some efforts for you.
 (**Notice**: you need to purchase ZK EE or theme pack to access the theme pack source code.)

@@ -79,6 +79,12 @@
  * DECLARATION records, so a renamed property landing in the wrong place, or minifier output that
  * differs only in byte layout, is invisible to them and caught only here.
  *
+ * D1 (the compact density block) is the third layer, appended by `density-delta.materializeInto`.
+ * It is derived like P4a's rather than tabulated like P4b's — it is exactly what `build-css.js`
+ * makes of the generated `tokens/_density-compact.css` — so what this step proves is that the
+ * block minifies identically alone and inside the whole of norm.css. Its CONTENT is guarded
+ * upstream by `gen-density-css.js --check`; see density-delta.js for the split.
+ *
  * USAGE
  *   node scripts/check-build-css.js [--keep]
  *
@@ -95,6 +101,7 @@ const path = require('path');
 const { execFileSync } = require('child_process');
 const p4a = require('./p4a-delta.js');
 const p4b = require('./p4b-delta.js');
+const density = require('./density-delta.js');
 
 const SOURCE = 'src/main/resources/web';
 const BASELINE = 'baseline';
@@ -214,22 +221,24 @@ function main(argv) {
 	const lessOut = path.join(tmp, 'lessout');
 	const cssSrc = path.join(tmp, 'cssrc');
 	const cssOut = path.join(tmp, 'cssout');
-	const expected = path.join(tmp, 'expected'); // `baseline/` + the approved P4a and P4b deltas
+	const expected = path.join(tmp, 'expected'); // `baseline/` + the approved P4a, P4b and D1 deltas
 
 	try {
 		// 0. The comparison target. Derived, not stored — see the header. Staged in the temp dir
 		//    so nothing outside `target/` is ever written, and so a failed run leaves no artefact
 		//    that a later run could mistake for the real baseline.
-		console.log('0/5  applying the approved P4a + P4b deltas to baseline/…');
+		console.log('0/5  applying the approved P4a + P4b + D1 deltas to baseline/…');
 		const d = p4b.materialize(expected);
-		const bad = p4b.assertApprovedSize(d);
+		const dd = density.materializeInto(expected);
+		const bad = [...p4b.assertApprovedSize(d), ...density.assertApprovedSize(dd)];
 		if (bad.length) {
-			console.error(`check-build-css: comparison target is not the approved P4a+P4b shape:`);
+			console.error(`check-build-css: comparison target is not the approved P4a+P4b+D1 shape:`);
 			for (const b of bad) console.error(`  ${b}`);
 			return 2;
 		}
 		console.log(`0/5  P4a: ${d.removedP4a} removed across ${d.filesP4a} file(s); ` +
 			`P4b: ${d.removedP4b} removed / ${d.addedP4b} added across ${d.filesP4b} file(s); ` +
+			`D1: ${dd.declarations} appended to ${density.DENSITY_FILE}; ` +
 			`${[...p4a.DEFERRED].join(', ')} left alone`);
 
 		// 1. Uncompressed, so the intermediate is the readable CSS that P3 adopts as source.
@@ -352,7 +361,7 @@ function main(argv) {
 			for (const rel of unclassified) console.log(`  ${rel}`);
 		}
 		if (code === 0) {
-			console.log('\nOK — build-css.js reproduces baseline/ + the approved P4a and P4b deltas from CSS sources.');
+			console.log('\nOK — build-css.js reproduces baseline/ + the approved P4a, P4b and D1 deltas from CSS sources.');
 		} else {
 			console.log('\nFAIL — build-css.js does NOT reproduce it. Stop; do not convert more files.');
 		}

@@ -7,10 +7,13 @@
 > (見 [iceblue-drop-less-progress.md L2.2](../doc/iceblue-drop-less-progress.md#l22-前置工作項與-blocked)),
 > 而 P8 的驗收 = P4 + P5 + P7 已核准 delta 總和 ⇒ **L-4 擋著整個計畫的最後兩個階段**。
 >
-> **本文件只評估與規劃,沒有動任何 CSS 來源檔。** D1–D5 一步都還沒開工。
-> 唯一已落地的改動是**版本升級**(`zk.version` → `11.0.0-jakarta.FL.20260811-Eval`、
+> ~~**本文件只評估與規劃,沒有動任何 CSS 來源檔。** D1–D5 一步都還沒開工。~~
+> **←2026-08-12:D1 / D2 / D3 已完工**(3 / 5),驗收證據見 [L3.5](#l35-d1d3-的驗收證據)。
+> D4 仍卡在 P7 的 tablet 轉換,D5 相依於 D4。本文件從「拍板材料」轉為「拍板材料 + 進度紀錄」。
+>
+> 另一個已落地的改動是**版本升級**(`zk.version` → `11.0.0-jakarta.FL.20260811-Eval`、
 > artifact 與三個 version-uid → `11.0.0-Eval`),那是為了讓 `iceblue_c` oracle 與本樹同代
-> 才做的前置,**`check:gate` 前後數字完全相同**,見 [L3.5](#l35-change-log)。
+> 才做的前置,**`check:gate` 前後數字完全相同**,見 [L3.6](#l36-change-log)。
 
 ---
 
@@ -18,7 +21,7 @@
 
 - **[L1 執行摘要](#l1-執行摘要)**
 - **[L2 階段拆解](#l2-階段拆解)** — [D1](#d1-桌面-token-層核心) · [D2](#d2-靜態設定zkxml) · [D3](#d3-java-api) · [D4](#d4-tablet-半風險最高) · [D5](#d5-收尾與遷移)
-- **[L3 技術附錄](#l3-技術附錄)** — [量測](#l31-量測數據與口徑) · [機制比較](#l32-機制比較zk-10-vs-本案) · [風險](#l33-風險與已知限制) · [未決](#l34-未決事項需要裁示)
+- **[L3 技術附錄](#l3-技術附錄)** — [量測](#l31-量測數據與口徑) · [機制比較](#l32-機制比較zk-10-vs-本案) · [風險](#l33-風險與已知限制) · [未決](#l34-未決事項需要裁示) · [驗收證據](#l35-d1d3-的驗收證據) · [Change Log](#l36-change-log)
 
 ---
 
@@ -57,17 +60,20 @@
 
 ### 里程碑
 
-| 階段 | 內容 | 閘門 | 相依 |
-|---|---|---|---|
-| **D1** | 桌面 token 層 —— 產生器 + 350 條覆寫塊併入 `norm.css` | **G-delta**(`norm.css.dsp` +350 條) | 無 |
-| **D2** | 靜態設定 —— library-property + DSP 選擇器條件 | G-delta(同 D1 的檔,+1 個 DSP 區塊) | D1 |
-| **D3** | Java API —— `IceblueDensity` | 不動 CSS,**G 不變** | D1 |
-| **D4** | tablet 半 —— 兩套規則同檔、compact 那套加屬性前綴 | **G-delta**(`tablet.css.dsp`,與 P7 的 tablet 轉換同一顆) | P7 的 tablet 轉 CSS |
-| **D5** | 收尾 —— 移除 build 期旋鈕、`readme.md`、遷移指南、關掉 S36 | G 不變 | D1–D4 |
+| 階段 | 內容 | 閘門 | 相依 | 狀態 |
+|---|---|---|---|---|
+| **D1** | 桌面 token 層 —— 產生器 + 350 條覆寫塊併入 `norm.css` | **G-delta**(`norm.css.dsp` +350 條) | 無 | **DONE** 2026-08-12 |
+| **D2** | 靜態設定 —— library-property + DSP 選擇器條件 | G-delta(同 D1 的檔,+1 個 DSP 區塊) | D1 | **DONE** 2026-08-12 |
+| **D3** | Java API —— `IceblueDensity` | 不動 CSS,**G 不變** | D1 | **DONE(巢狀那一條 OPEN)** 2026-08-12 |
+| **D4** | tablet 半 —— 兩套規則同檔、compact 那套加屬性前綴 | **G-delta**(`tablet.css.dsp`,與 P7 的 tablet 轉換同一顆) | P7 的 tablet 轉 CSS | **BLOCKED** —— P7 未完工 |
+| **D5** | 收尾 —— 移除 build 期旋鈕、`readme.md`、遷移指南、關掉 S36 | G 不變 | D1–D4 | **BLOCKED** —— 等 D4 |
 
 ### 總體進度
 
-**0 / 5**。本文件產出後,D1–D3 **不等任何人**(D4 掛在 P7 的 tablet 轉換上)。
+**3 / 5**(2026-08-12)。D1–D3 已完工並全部有實測證據(見 [L3.5](#l35-d1d3-的驗收證據));
+**D4 仍卡在 P7 的 tablet 轉換**,D5 相依於 D4。
+D3 唯一未結案的是巢狀反向覆蓋,那是缺一個 CSS 區塊而不是缺實作 ——
+見 [L3.1(g)](#g-巢狀反向覆蓋d3-的-densitydefault-目前是一張空頭支票) 與 [L3.4 第 5 項](#l34-未決事項需要裁示)。
 
 ### 一句話效益
 
@@ -114,7 +120,7 @@
 
 - **靜態層**:把 `iceblue_c 11.0.0` 的 `norm.css.dsp` 的 `:root` 抽出來,與我們覆寫塊逐 token 比對。
   **oracle 的版本必須與 `zk.version` 同代**,否則量到的是版本落差疊在 density 差異上
-  (這正是本文件第一版踩到的坑,見 [L3.5](#l35-change-log))。同代之下預期
+  (這正是本文件第一版踩到的坑,見 [L3.6](#l36-change-log))。同代之下預期
   **333 條同值、名稱集合完全一致(只在任一側 = 0)**,不得有第 334 條。
 - **執行層**:preview 語料在 `data-density="compact"` 下的 computed style,
   必須等於同一頁在 `iceblue_c` 主題下的 computed style。
@@ -186,6 +192,12 @@ public final class IceblueDensity {
 > **字彙已裁示為 `default` / `compact`**(2026-08-12),不是原建議的 `comfortable`。
 > 理由見 [L3.4 第 1 項](#l34-未決事項需要裁示)。`DEFAULT` 這個列舉值**不是**「沒設屬性」的同義詞 ——
 > 它是**顯式寫回預設密度**,唯一的用途是巢狀反向覆蓋(外層 compact、內層 `data-density="default"`)。
+>
+> ⚠️ **但巢狀反向覆蓋目前做不到**,因為出貨的樣式表只有 `[data-density="compact"]` 一個區塊。
+> `apply(Density.DEFAULT)`(全站)是對的;`apply(component, Density.DEFAULT)` 在 compact 祖先底下
+> **無效**。具體例子、CSS 上為什麼沒有別的辦法、補一個 `[data-density="default"]` 區塊的成本
+> (+15331 B / gzip +1887 B),以及 **Marble 同樣沒做**,見 [L3.1(g)](#g-巢狀反向覆蓋d3-的-densitydefault-目前是一張空頭支票)。
+> **待裁示 —— [L3.4 第 5 項](#l34-未決事項需要裁示)。**
 
 - 全站那支走 `Clients.evalJavaScript`,因為 `<html>` 不是 ZK component。
 - 區域那支走 ZK 原生的 `Component#setClientDataAttribute`,**沒有 JavaScript 字串**。
@@ -193,7 +205,8 @@ public final class IceblueDensity {
 
 **驗收**:Playwright 實測 —— 切換前後量同一個元素的 computed height,
 必須**在同一個 desktop 生命週期內**改變(證明沒有 reload);
-以及巢狀情境(外層 compact、內層 `default`)兩層各自正確。
+~~以及巢狀情境(外層 compact、內層 `default`)兩層各自正確~~
+**←巢狀那一條 OPEN,等 L3.4 第 5 項裁示**(現況會失敗,不是實作沒寫,是缺一個 CSS 區塊)。
 
 > **命名**:類別放在主題套件 `org.zkoss.theme.iceblue11` 底下。
 > 「要不要升格進 ZK core(`org.zkoss.zul.theme`)成為跨主題的公開 API」是**產品面問題**,
@@ -276,7 +289,7 @@ public final class IceblueDensity {
 > **`iceblue_c 11.0.0.FL.20260812-Eval`**,並同時把 `zk.version` 升到
 > **`11.0.0-jakarta.FL.20260811-Eval`**,讓 oracle 與本樹同代。
 > `iceblue_c` **沒有任何 10.4.0 版本**(eval repo:`10.3.1-Eval` → `11.0.0.FL.20260812-Eval`),
-> 所以 10.4 期根本不存在同代 oracle,升版是唯一解。詳見 [L3.5](#l35-change-log)。
+> 所以 10.4 期根本不存在同代 oracle,升版是唯一解。詳見 [L3.6](#l36-change-log)。
 
 > **oracle jar 在哪(D1 與 D4 的驗收都要用它)**:已 `install:install-file` 進本機 repo,座標
 > `org.zkoss.theme:iceblue_c:11.0.0.FL.20260812-Eval`,實體在
@@ -422,6 +435,71 @@ public final class IceblueDensity {
 那 2366 個字面值**在兩個 profile 下相同**(由 (b) 的「`:root` 以外逐 byte 相同」證明),
 所以它們不在 compact 的範圍內 —— **ZK 10 的 `iceblue_c` 也一樣不動它們**,這不是本案的縮水。
 
+#### (g) 巢狀反向覆蓋:D3 的 `Density.DEFAULT` 目前是一張空頭支票
+
+D3 寫著「`DEFAULT` 這個列舉值**不是**「沒設屬性」的同義詞 —— 它是**顯式寫回預設密度**,
+唯一的用途是巢狀反向覆蓋」。**D1 做完之後這件事不成立**,原因很簡單:
+出貨的樣式表只有 `[data-density="compact"]` 一個區塊,**沒有 `[data-density="default"]`**。
+
+**「巢狀反向覆蓋」是什麼意思(具體例子)**
+
+想像一個整站 compact 的後台,但其中一塊「設定表單」希望維持預設密度:
+
+```html
+<html data-density="compact">          <!-- 全站 compact -->
+  …
+  <div data-density="default">         <!-- 想讓這一塊回到預設 -->
+    <button class="z-button">儲存</button>   <!-- 期望:預設高度 -->
+  </div>
+  <button class="z-button">匯出</button>     <!-- 期望:compact 高度 -->
+</html>
+```
+
+對應到 Java 就是:
+
+```java
+IceblueDensity.apply(Density.COMPACT);              // <html>
+IceblueDensity.apply(settingsForm, Density.DEFAULT); // 那個 <div>
+```
+
+**今天實際會發生什麼**:`<div data-density="default">` **match 不到任何規則**,
+所以那 350 個 token 在這個 `<div>` 上**沒有被重新宣告**;它繼承 `<html>` 上算好的值,
+而 `<html>` 上算好的是 compact。⇒ **「儲存」按鈕仍然是 compact**,屬性形同沒寫。
+
+**為什麼「全站那一支」反而是好的**:`apply(Density.DEFAULT)` 把 `<html>` 的屬性設成
+`default` 時,`[data-density="compact"]` **選不到** `<html>`,於是 `:root` 自己的值生效
+—— 這條路徑是對的。所以現況精確地說是:
+`DEFAULT` **可以關掉全站 compact,但不能在巢狀範圍反向覆蓋**。
+
+**CSS 有沒有別的辦法?沒有。** `revert-layer` 是唯一形式上接近的工具,但它把該元素的階層
+往回捲之後,若沒有更低階層的宣告 match 到這個元素,屬性就落回**繼承值** ——
+也就是 compact 祖先的值,等於沒捲。而且本分支**沒有 cascade layer**(計畫書 §0 排除)。
+⇒ 要支援反向覆蓋,只能**再出貨一個 `[data-density="default"]` 區塊**,
+內容是同樣那 350 個 token 的 **default 值**。
+
+**成本(2026-08-12 實測)**
+
+| | raw | gzip |
+|---|---|---|
+| `norm.css.dsp`(D1+D2 後,只有 compact 區塊) | 84493 B | 12761 B |
+| 再加上 `[data-density="default"]` 區塊 | **99824 B** | **14648 B** |
+| **淨增** | **+15331 B** | **+1887 B** |
+
+default 區塊比 compact 區塊**大** (15331 vs 14414),因為 default profile 的值帶著
+`round(up, calc(var(--zk-base-font-size) * 1.25), 1px)` 這類運算式,而 compact 側多半是字面值。
+
+**Marble 有這個功能嗎?沒有,而且它的規格書寫了但沒做。**
+實測 Marble 全樹:`data-density` 只出現在 `zul/css/tokens/_sizing.css` 的
+**唯一一個** `[data-density="compact"]` 區塊,**沒有任何 `[data-density="comfortable"]` 選擇器**
+(`comfortable` 在 Marble 只以 `--zk-touch-target-comfortable` 出現,是平板觸控目標,無關)。
+但 `doc/spec/data-dense-mode.md` 明寫「it nests and a closer descendant can override it back to
+`comfortable`」,而 `MarbleDensity.Density.COMFORTABLE` 也存在。
+⇒ **Marble 的巢狀反向覆蓋同樣是空頭支票**,只是還沒有人測到。
+本專案不動 Marble 的檔案(L3.4 第 1 項已定調),但這件事應該回報給 Marble。
+
+> **這不影響 D1/D2 已完成的任何結論。** 350 條 closure、333 個種子、oracle 逐值相同、
+> 三態實測 —— 全部與這一項無關。受影響的只有 D3 驗收裡「巢狀情境兩層各自正確」那一條。
+
 ---
 
 ### L3.2 機制比較(ZK 10 vs 本案)
@@ -463,7 +541,8 @@ public final class IceblueDensity {
 
 ### L3.4 未決事項(需要裁示)
 
-> 第 1 項**已裁示**;其餘三項**不阻擋 D1–D3**,但 D5 收尾前必須有答案。
+> 第 1 項**已裁示**;第 2–4 項**不阻擋 D1–D3**,但 D5 收尾前必須有答案。
+> 第 5 項是 2026-08-12 做 D3 時才發現的,它**只擋 D3 的巢狀那一條驗收**,不擋其餘任何東西。
 
 1. ~~**屬性值的字彙**~~ **【已裁示 2026-08-12:`default` / `compact`】**
    列舉為 `Density.DEFAULT("default")` / `Density.COMPACT("compact")`,與本主題 profile
@@ -491,10 +570,109 @@ public final class IceblueDensity {
    建議:**保留但凍結**,並在遷移指南標示 deprecated。歸 P8。
 4. **`tokens/_compact.css` 的公開性**:它從「可切換的來源」變成「產生器的輸入」之後,
    要不要仍然當作對外可覆寫的 API?與 P7 的 palette override sheet 是同一類問題,建議合併決定。
+5. **要不要補 `[data-density="default"]` 區塊**(2026-08-12 新增,**擋著 D3 的巢狀驗收**)。
+   不補 ⇒ `Density.DEFAULT` 只能關掉全站 compact,不能在巢狀範圍反向覆蓋,
+   Javadoc 與 D5 遷移指南要明說不支援;補 ⇒ 每個使用者多付 **+15331 B / gzip +1887 B**
+   (風險表第 2 項的成本從 14.4 KB 變成 ~29.7 KB)。
+   完整說明、例子與 Marble 的現況見 [L3.1(g)](#g-巢狀反向覆蓋d3-的-densitydefault-目前是一張空頭支票)。
+   **不阻擋 D3 的其餘部分** —— `IceblueDensity` 的兩支 API 與全站切換都已可驗收。
 
 ---
 
-### L3.5 Change Log
+### L3.5 D1–D3 的驗收證據
+
+**全部為 2026-08-12 實測。** 每一項都是可重跑的指令,不是一次性的手工量測。
+
+#### 建置期閘門(`npm run check:gate` 等)
+
+| 檢查 | 結果 |
+|---|---|
+| `check:density-css`(新) | 333 seeds → **350** declarations(2 輪收斂)、512 省略 |
+| `check:p4a` | **728** 條移除、45 檔 —— **與 D1 之前完全相同**(六項斷言一條未放寬) |
+| `check:p4b` | 14 移除 / 7 新增 / 9 檔 —— 與 D1 之前完全相同 |
+| `check:bytes` | **UNEXPLAINED 0**;`norm.css.dsp` 尾端 **14498 B**(D2 的 DSP 條件佔 84 B) |
+| `check:build-css` | declarations **14478**(= 14128 + 350)、**files differing 0** |
+| `check:baseline` / `check:doc-refs` | 86 檔相符 / 130 條連結全在版控裡 |
+
+> **為什麼 `check:p4a` 需要 `density-delta.js`**:D1 是第三個已核准 delta,
+> 而 P4a 的斷言之一是「規則區塊數不變」。第一次跑 D1 之後它報
+> `rule-block count changed 258 -> 259` 並**跳過整個 `norm.css.dsp`**,728 掉成 **666**。
+> 處置是沿用 P4b 對 P4a 的既有技法(把別階的 delta 先套到 baseline 側),
+> **不是放寬斷言** —— 這一點在 `check-p4a-delta.js` 的檔頭已寫明。
+
+#### 對 `iceblue_c 11.0.0` oracle 的靜態比對(D1 驗收的靜態層)
+
+座標 `org.zkoss.theme:iceblue_c:11.0.0.FL.20260812-Eval`,實體 **282792 B**、
+`norm.css.dsp` **71923 B**、`tablet.css.dsp` **25359 B** —— 三個數字都與
+[L3.1(a)](#a-iceblue_c-1100-對同版預設主題逐檔比) 記的一致,身分可驗。
+
+| 項目 | 結果 |
+|---|---|
+| oracle `:root` / 我們 `:root` token 數 | **862 / 862** |
+| 只在任一側的名稱 | **0 / 0** |
+| oracle 與我們 `:root` **值不同**的 | **333** |
+| **我們覆寫塊的 350 條,值 ≠ oracle 的** | **0** |
+| oracle 有差異但**沒進我們覆寫塊**的 | **0** |
+| 我們覆寫塊裡 oracle 沒差異的 | **17**(= `var()` closure,正是預期的那 17 個) |
+
+口徑:值比對前套用 `check-bytes.js` 的五個封閉序列化類別(前導零、零長度單位、
+`;}`、空規則、空白),因為兩側分別由 `zklessc --compress` 與 CleanCSS level 0 產生。
+
+#### 視覺 A/B 的**反向**控制(證明覆寫塊不外洩)
+
+依 D1 的口徑,這裡要證明的是「沒設 `data-density` 時畫面 **0 差異**」:
+
+```
+A: d1-off (116 pages, 85 .css.dsp)   B: d1-on (116 pages, 85 .css.dsp)
+theme finger: DIFFERENT  10ece0d16ed85599 / 425f4b21a78ec483
+pages differing: 0      raster noise: 7 (全部 maxΔ 1,遠低於 ≤8 / ≤64px 的雜訊地板)
+```
+
+**theme finger DIFFERENT 是這一項成立的必要條件** —— 若兩側位元組相同,`0 差異`就是空轉。
+
+#### D2 三態實測(`npm run check:density-property`,三次獨立啟停)
+
+| `org.zkoss.zul.theme.density` | 服務出來的樣式表 | density 區塊 | `:root,` 前綴 |
+|---|---|---|---|
+| 未設 | 536718 B | 1 | **0** |
+| `compact` | 536724 B | 1 | **1** |
+| `foo`(亂值) | 536718 B | 1 | **0** |
+
+`compact` 與另外兩態差 **6 B**,正好是 `:root,`。
+亂值等同未設 ⇒ DSP 用的是 `eq` 而不是 `not empty`,zk.xml 打錯字不會整站變密。
+
+#### D3 執行期實測(`npm run check:density-runtime`,Playwright)
+
+語料 `/button.zul`,49 個 `.z-button`;`IceblueDensity` 送出的 JS 字串是**從 Java 原始碼解析出來**
+再執行的(避免探針測到自己寫死的字串)。
+
+| 步驟 | 量到 |
+|---|---|
+| [1] 預設 | `--zk-base-font-size=16px`,按鈕高 **38.0px** |
+| [1] `apply(COMPACT)` | `12px`,按鈕高 **24.0px**;切換前設的 sentinel **仍在** ⇒ **沒有 reload** |
+| [3] `apply(DEFAULT)` | 回到 `16px` / **38.0px**,**與初始逐值相同** |
+| [2] 區域 `div.z-div` | 區域內 `16px→12px`、高 `38.0→24.0`;**區域外 `16px→16px`、高 `38.0→38.0`(沒有外洩)** |
+| [4] library-property 於**載入時** | `12px` / **24.0px** —— **與 [1] 的執行期切換逐值相同** |
+
+[4] 是兩個機制的交叉驗證:D2 的靜態路徑與 D3 的執行期路徑落在**同一組數字**上。
+
+#### 負向控制(證明這些檢查看得見錯誤)
+
+| 注入的錯誤 | 觸發的斷言 |
+|---|---|
+| 刪掉 closure 裡的一條 | `--zk-base-font-size is in the closure but not emitted` |
+| 把一條的值改成 `_default.css` 的 | `--zk-font-size-large is "round(down, …)", _compact.css says "16px"` |
+| 塞一條 closure 外的 token | `--zk-base-border-radius is emitted but not in the closure` |
+| **把 closure 演算法截成只有種子(333)** | `--zk-container-body-text-size is omitted but reads --zk-font-size-medium, which the block re-declares` |
+
+> **最後一項是本階最重要的發現**:計畫書列的四項斷言,對一個被截成 333 條的覆寫塊
+> **全部通過**。四項檢查的是「塊內部自洽」(塊讀到的東西都有被重新宣告),
+> 但真正讓「512 條可以安全省略」成立的是**反方向**的性質:
+> **被省略的那 512 條,不能讀到塊有改的任何東西**。因此加了第 5 項斷言。
+
+---
+
+### L3.6 Change Log
 
 | 日期 | 變更 |
 |---|---|
@@ -503,3 +681,5 @@ public final class IceblueDensity {
 | 2026-08-12 | **裁示 L3.4 第 1 項:屬性字彙為 `default` / `compact`**(列舉 `Density.DEFAULT("default")`),推翻本文件原本建議的 `comfortable`。原建議的唯一依據是「與 Marble 對齊」,但 Marble 尚未公開發行 ⇒ 對齊方向的成本為零,該理由不成立;而 `default` 與本主題的 `_default.css` / `_compact.css` 及 `iceblue_c` 的既有語彙一致。**代價已記錄**:Marble 的 `COMFORTABLE("comfortable")` 自此與本主題不同字彙,若 L3.4 第 2 項日後裁示升格為跨主題 API,須由 Marble 改過來(跨 worktree 後續事項,本計畫不動 Marble 任何檔案)。連帶更新 D3 的介面草圖與巢狀驗收敘述 |
 | 2026-08-12 | **新增 L3.1(e-2):compact 的 tablet 規則不是「比較小的 tablet」。** 回答「compact 有沒有 tablet 專屬規則」時實測發現:除了 27 條只在 compact 的規則之外,共用選擇器裡有 **70 條宣告不同**,而且 **compact 的值經常比 default 大** —— `.z-colorpalette` 桌面 compact 260×226(default 340×300),平板 compact 卻是 **586×460**(平板 default 304px)。成因是 `tablet.css.dsp` 是**相對於各自桌面基準的觸控補償層**。**不動搖** D4 的作法與驗收(oracle 逐條比對本來就是唯一判準),但補上兩件事:驗收不得用「有沒有變密」當訊號、D5 遷移指南在平板層不要把它寫成密度。同時修正 (e) 的口徑:274/695/227/638 把 14 與 10 個 `browserDefault` DSP 區塊算成了 CSS 規則,純 CSS 是 260/681/217/628;共用數 189 → **188**。**67 與 27 未變**(D4 驗收清單長度正確) |
 | 2026-08-12 | **artifact 版本拿掉 `jakarta` 標記**(`11.0.0-jakarta-Eval` → `11.0.0-Eval`,含三個 version-uid)。裁示:主題沒有用到 Java EE API,只有一個版本,不需要區分 javax/jakarta —— 實測佐證 `src/main/java` 只有 2 個檔、**0 個 `javax.`/`jakarta.` import**,編出來的 class 兩邊通用。`zk.version` 的 `-jakarta` **保留**(那是 ZK core,真的有 servlet API 分歧)。另裁示:`10.4.0` 從未公開發行,依公司政策一律標 `11.0`。重跑 `check:gate` 與 `visual:selftest` 皆 PASS |
+| 2026-08-12 | **D1 / D2 / D3 完工(3 / 5)。** 新增 `scripts/gen-density-css.js`(產生 350 條覆寫塊)、`scripts/density-delta.js`(讓 P4a/P4b/byte 三個閘門把 D1 這第三個 delta 減掉)、`scripts/check-density-property.js`(D2 三態)、`scripts/check-density-runtime.js`(D3 Playwright)、`src/main/java/.../IceblueDensity.java`。全部驗收數字見 [L3.5](#l35-d1d3-的驗收證據)。**三個計畫書沒預料到的發現**:(1) `check:p4a` 有一條「規則區塊數不變」的斷言,D1 一加區塊就報 `258 -> 259` 並跳過整個 `norm.css.dsp`,728 掉成 **666** —— 用 P4b 既有的「把別階 delta 套到 baseline 側」技法解決,**沒有放寬任何斷言**;(2) 計畫書列的四項斷言,對一個**被截成 333 條**(只有種子、沒跑閉包)的覆寫塊**全部通過** —— 四項只檢查「塊內部自洽」,真正讓「512 條可安全省略」成立的是反方向的性質,因此加了第 5 項斷言,並以負向控制證明它會觸發;(3) `density-delta` 起初把 D2 那個 DSP 條件裡 `${…}` 的 `{` 當成第二個規則區塊,使 `check:bytes` 進 FAIL,已修正。體積實測 **14414 B**(D1)/ **14498 B**(含 D2 的 DSP 條件),與計畫書記的 14412 B 差 2 B,以實測為準 |
+| 2026-08-12 | **新增 L3.1(g) + L3.4 第 5 項:巢狀反向覆蓋做不到,`Density.DEFAULT` 目前是空頭支票。** 做 D3 時發現:出貨的樣式表只有 `[data-density="compact"]` 一個區塊,所以「外層 compact、內層 `data-density="default"`」的內層**match 不到任何規則**,直接繼承外層算好的 compact 值。全站那一支(把 `<html>` 的屬性設成 `default`,讓 compact 選擇器選不到)是**對的**,所以精確的說法是「可以關掉全站 compact,不能在巢狀範圍反向覆蓋」。CSS 沒有別的辦法(`revert-layer` 會落回繼承值,而且本分支無 cascade layer)。補一個 `[data-density="default"]` 區塊的成本實測 **+15331 B raw / +1887 B gzip**(比 compact 區塊大,因為 default 側的值帶 `round()`/`calc()`)。**另實測 Marble 完全一樣**:全樹只有一個 `[data-density="compact"]`,沒有任何 `comfortable` 選擇器,但 `doc/spec/data-dense-mode.md` 明寫可以反向覆蓋、`MarbleDensity.Density.COMFORTABLE` 也存在 ⇒ Marble 的同一功能同樣是空頭支票,應回報(本計畫不動 Marble 的檔案)。D3 的巢狀驗收條列改標 OPEN,其餘 D3 驗收全部通過 |

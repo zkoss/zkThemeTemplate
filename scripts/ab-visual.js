@@ -133,7 +133,13 @@ async function portFree() {
 	}
 }
 
-async function startApp() {
+/**
+ * `extraProps` — additional `-D` arguments for ONE run. Library properties are process-level and
+ * `.css.dsp` responses are cached per process, so a switch that changes the served stylesheet can
+ * only be measured by restarting with a different value. That is what check-density-property.js
+ * does with `org.zkoss.zul.theme.density`; the visual harness passes nothing and is unaffected.
+ */
+async function startApp(extraProps = []) {
 	if (!(await portFree())) {
 		die(`port ${PORT} is already in use — stop it first:\n  kill $(lsof -nP -iTCP:${PORT} -sTCP:LISTEN -t)`);
 	}
@@ -142,6 +148,7 @@ async function startApp() {
 		...pre,
 		'-Dspring.profiles.active=iceblue', // application.properties would otherwise force `dev`
 		'-Dorg.zkoss.theme.preferred=iceblue11',
+		...extraProps,
 		'-cp', marbleClasspath(),
 		APP_MAIN,
 	];

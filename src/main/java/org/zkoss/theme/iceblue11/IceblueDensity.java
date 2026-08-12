@@ -1,0 +1,128 @@
+/* IceblueDensity.java
+
+	Purpose:
+		Switch the theme's compact density at runtime, for the whole app or one region.
+	Description:
+
+	History:
+		Aug 12, 2026, Created by Claude
+
+Copyright (C) 2026 Potix Corporation. All Rights Reserved.
+
+{{IS_RIGHT
+	This program is distributed under LGPL Version 3.0 in the hope that
+	it will be useful, but WITHOUT ANY WARRANTY.
+}}IS_RIGHT
+*/
+package org.zkoss.theme.iceblue11;
+
+import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.util.Clients;
+
+/**
+ * Switches the theme between its default and compact density without the caller having to know
+ * the underlying DOM detail.
+ *
+ * <p>Density is a declarative knob: a {@code data-density} attribute that re-declares the 350
+ * size tokens the compact profile changes. Because those are the tokens every component reads,
+ * the attribute takes effect at <em>any</em> scope — the document root for the whole app, or one
+ * component's subtree for a single region — and it nests, so an inner scope can set
+ * {@link Density#DEFAULT} to opt back out of a compact ancestor.
+ *
+ * <p>Before ZK 11 this was a separate theme jar ({@code iceblue_c}) selected by
+ * {@code org.zkoss.theme.preferred}, so switching meant a cookie and a full page reload, and the
+ * granularity was the whole site. Neither is true here.
+ *
+ * <h3>Use the library property for a fixed default</h3>
+ *
+ * <p>For an app that is <em>always</em> compact, set the library property in {@code zk.xml}
+ * instead of calling this class:
+ *
+ * <pre>{@code
+ * <library-property>
+ *     <name>org.zkoss.zul.theme.density</name>
+ *     <value>compact</value>
+ * </library-property>
+ * }</pre>
+ *
+ * <p>That decision is made server-side while the stylesheet is rendered, so it costs nothing and
+ * cannot flash. {@link #apply(Density)} cannot match it: the document root is not a ZK component,
+ * so it has to go through {@link Clients#evalJavaScript(String)}, which runs <em>after</em> the
+ * first paint. Called on page load it produces a visible default&rarr;compact flash (FOUC). Use it
+ * for a user flipping a preference, not for a fixed default.
+ *
+ * <h3>Not the tablet layer</h3>
+ *
+ * <p>{@code zkmax}'s tablet stylesheet is a touch-compensation layer for the whole app, injected
+ * only on a mobile user agent, and it is not token-driven — so region-scoped density has no
+ * meaning there. {@link #apply(Component, Density)} affects the desktop tokens only.
+ *
+ * @since 11.0.0
+ */
+public final class IceblueDensity {
+
+	/** The attribute name, without the {@code data-} prefix ZK adds for components. */
+	private static final String ATTRIBUTE = "density";
+
+	private IceblueDensity() {
+	}
+
+	/**
+	 * The density a scope is rendered at. The token is what lands in the DOM as
+	 * {@code data-density}, and it is the same vocabulary as the theme's two profile files
+	 * ({@code tokens/_default.css}, {@code tokens/_compact.css}) and the library property.
+	 */
+	public enum Density {
+		/**
+		 * The theme's default density — the {@code :root} token values.
+		 *
+		 * <p>This is <em>not</em> a synonym for "no attribute": it writes the default density back
+		 * explicitly, which is what makes a region opt out of a compact ancestor.
+		 */
+		DEFAULT("default"),
+		/** Compact density — the values ZK used to ship as the separate {@code iceblue_c} theme. */
+		COMPACT("compact");
+
+		private final String token;
+
+		Density(String token) {
+			this.token = token;
+		}
+
+		/** The {@code data-density} attribute value for this density. */
+		public String token() {
+			return token;
+		}
+	}
+
+	/**
+	 * Applies the density to the whole application, by setting {@code data-density} on the
+	 * document root ({@code <html>}). Body-appended popups — menus, modal windows, notifications —
+	 * are covered too, since they inherit from the root.
+	 *
+	 * <p>Must run within an active ZK execution (an event listener or an MVVM command) so the
+	 * client update can be sent. See the class javadoc for why this is the wrong tool for a fixed
+	 * default.
+	 *
+	 * @param density the density to apply; never {@code null}.
+	 */
+	public static void apply(Density density) {
+		Clients.evalJavaScript(
+				"document.documentElement.setAttribute('data-" + ATTRIBUTE + "','" + density.token() + "')");
+	}
+
+	/**
+	 * Applies the density to a single component subtree, by setting {@code data-density} on that
+	 * component's DOM element. Use it to make one region — a data-dense grid, a sidebar — compact
+	 * while the rest of the app stays at the default density.
+	 *
+	 * <p>Uses ZK's native {@link Component#setClientDataAttribute(String, String)}, so no
+	 * JavaScript string is involved and the subtree re-renders when the value changes.
+	 *
+	 * @param scope   the component whose subtree should adopt the density.
+	 * @param density the density to apply; never {@code null}.
+	 */
+	public static void apply(Component scope, Density density) {
+		scope.setClientDataAttribute(ATTRIBUTE, density.token());
+	}
+}

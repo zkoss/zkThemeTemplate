@@ -146,6 +146,13 @@ const NO_HEADER = new Set([
  *                   this: `html` / `body` / `main` must not be scoped when embedded, they must
  *                   be ABSENT, and CSS has no "does not exist" operator. Only a server-side
  *                   conditional can delete a rule. See doc/browserdefault-masking.md.
+ *   `.ZKDENSITY `   `org.zkoss.zul.theme.density` in SELECTOR position (L-4 D2): when the property
+ *                   is `compact`, `:root,` is prepended to the compact override block's selector
+ *                   so the whole app starts compact — with no FOUC and no extra request, because
+ *                   the decision is made server-side while the one stylesheet is rendered. Any
+ *                   other value, including an unset property, leaves the block keyed on the
+ *                   attribute alone. The trailing space is the descendant combinator that makes
+ *                   the placeholder ordinary CSS; the DSP that replaces it supplies its own comma.
  *
  * Order matters: the prefix tag ENDS with `</c:if>`, so restoring it before the block-close would
  * be fine, but masking in the other direction (conversion side) must do the prefix first.
@@ -154,11 +161,15 @@ const TAGLIB_MARKER = '/*!ZK-TAGLIB-HEADER*/';
 /** The only source allowed to carry placeholders. See assertPlaceholdersAllowed(). */
 const PLACEHOLDER_SOURCE = 'zul/css/norm.css';
 const BROWSER_DEFAULT = "c:property('org.zkoss.zul.theme.browserDefault')";
+const DENSITY = "c:property('org.zkoss.zul.theme.density')";
 const PLACEHOLDERS = [
 	[TAGLIB_MARKER, HEADER],
 	['.ZKBD ', `<c:if test="\${not empty ${BROWSER_DEFAULT}}">\${".z-page "}</c:if>`],
 	['/*!ZKBD-OFF-START*/', `<c:if test="\${empty ${BROWSER_DEFAULT}}">`],
 	['/*!ZKBD-OFF-END*/', '</c:if>'],
+	// Equality, not `not empty`: an unrecognised value must behave like an unset one rather than
+	// like `compact`, so a typo in zk.xml cannot silently switch the whole app's density.
+	['.ZKDENSITY ', `<c:if test="\${'compact' eq ${DENSITY}}">:root,</c:if>`],
 ];
 
 // level 0 = pure re-serialization: collapse whitespace, rewrite nothing. See "WHY LEVEL 0"
