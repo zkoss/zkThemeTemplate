@@ -34,7 +34,7 @@ along with the LESS compiler itself. Nothing needs to be installed by hand.
 ## build jar file
 `mvn clean package`
 
-It will compile `.less` files and package the source into jar. The jar file will be at `target/iceblue_css-${project.version}.jar` (the unversioned `iceblue_css.jar` name only exists inside the `bin` zip)
+It will compile `.less` files and package the source into jar. The jar file will be at `target/iceblue11-${project.version}.jar` (the unversioned `iceblue11.jar` name only exists inside the `bin` zip)
 
 # How to Customize a Theme
 This project contains the default theme (`iceblue`) .less files. 
@@ -99,9 +99,9 @@ in a separate console:
 `npm run zklessc-dev`
 
 
-# How to use `iceblue_css.jar`:
+# How to use `iceblue11.jar`:
 
-1. Put `iceblue_css.jar` in `WEB-INF/lib`, then `iceblue_css.jar`
+1. Put `iceblue11.jar` in `WEB-INF/lib`, then `iceblue11.jar`
     will become your default theme if there is no other theme.
 
 2. Now you can also dynamically switch between different themes by
@@ -111,14 +111,14 @@ in a separate console:
         <!-- in WEB-INF/zk.xml -->
         <library-property> 
             <name>org.zkoss.theme.preferred</name>
-            <value>iceblue_css</value>
+            <value>iceblue11</value>
         </library-property> 
      ```
 
 
   - Use cookie to switch theme, add a cookie
     ```
-    zktheme=iceblue_css
+    zktheme=iceblue11
     ```
 It does not require a server restart, but user has to refresh the browser.
 

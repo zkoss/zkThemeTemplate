@@ -50,7 +50,7 @@ const p4b = require('./p4b-delta.js');
 
 const REPO = path.resolve(__dirname, '..');
 const BASELINE = path.join(REPO, 'baseline');
-const CANDIDATE = path.join(REPO, 'target/classes/web/iceblue_css');
+const CANDIDATE = path.join(REPO, 'target/classes/web/iceblue11');
 
 /** L-2 option C: these four go, `-webkit-` stays. */
 const STRIP_PREFIX = /^-(?:moz|ms|o|khtml)-/;

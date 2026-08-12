@@ -46,7 +46,7 @@ const MARBLE_TEST_CLASSES = path.join(MARBLE_HOME, 'target/test-classes');
 const APP_MAIN = 'zk.example.iceblue.ThemePreviewIceblueApp';
 const APP_CLASS_FILE = path.join(MARBLE_TEST_CLASSES, 'zk/example/iceblue/ThemePreviewIceblueApp.class');
 
-const THEME_DIR = path.join(REPO, 'target/classes/web/iceblue_css');
+const THEME_DIR = path.join(REPO, 'target/classes/web/iceblue11');
 const THEME_CLASSES = path.join(REPO, 'target/classes');
 const WORK = path.join(REPO, 'target/ab-visual');
 const SHOTS = path.join(WORK, 'shots');
@@ -141,7 +141,7 @@ async function startApp() {
 	const args = [
 		...pre,
 		'-Dspring.profiles.active=iceblue', // application.properties would otherwise force `dev`
-		'-Dorg.zkoss.theme.preferred=iceblue_css',
+		'-Dorg.zkoss.theme.preferred=iceblue11',
 		'-cp', marbleClasspath(),
 		APP_MAIN,
 	];
@@ -171,12 +171,12 @@ async function guardProbe() {
 	const res = await fetch(`${BASE_URL}/button.zul`);
 	if (!res.ok) die(`guard probe: GET /button.zul returned ${res.status}`);
 	const html = await res.text();
-	if (!html.includes('_zkiju-iceblue_css')) {
-		die(`guard probe: served page does not reference the iceblue_css theme — the theme jar was not loaded`);
+	if (!html.includes('_zkiju-iceblue11')) {
+		die(`guard probe: served page does not reference the iceblue11 theme — the theme jar was not loaded`);
 	}
 	const marble = (html.match(/marble/g) || []).length;
 	if (marble !== 0) die(`guard probe: served page references "marble" ${marble}x — Marble's theme provider is active`);
-	console.log(`guard probe:     ok (_zkiju-iceblue_css present, marble refs 0)`);
+	console.log(`guard probe:     ok (_zkiju-iceblue11 present, marble refs 0)`);
 }
 
 /* ------------------------------------------------------------------ capture */

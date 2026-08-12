@@ -43,13 +43,13 @@ IceBlue 沒有的 `z-*` utility class,版面會塌。塌掉的版面在 A/B 兩�
 ```
 Marble worktree(../zkThemeTemplate,分支 new_theme)         本 worktree(iceblue)
   target/test-classes/                                        target/classes/
-    web/**/*.zul        ← 123 個頁面(語料,不搬進本分支)        web/iceblue_css/**  ← 85 個 .css.dsp
+    web/**/*.zul        ← 123 個頁面(語料,不搬進本分支)        web/iceblue11/**  ← 85 個 .css.dsp
     zk/example/*.class  ← 頁面用到的 composer / VM              metainfo/zk/config.xml
-    zk/example/iceblue/ThemePreviewIceblueApp.class              org/zkoss/theme/iceblue_css/*.class
+    zk/example/iceblue/ThemePreviewIceblueApp.class              org/zkoss/theme/iceblue11/*.class
                     │                                                    │
                     └────────────── 同一個 JVM classpath ────────────────┘
                                           │
-                       java -Dorg.zkoss.theme.preferred=iceblue_css
+                       java -Dorg.zkoss.theme.preferred=iceblue11
                                           │
                                    127.0.0.1:8081
                                           │
@@ -62,9 +62,9 @@ Marble worktree(../zkThemeTemplate,分支 new_theme)         本 worktree(iceblu
 
 | 事實 | 為什麼載入得動 |
 |---|---|
-| `ThemePreviewIceblueApp` **故意不設** preferred theme(原本用來抓 ZK 內建 iceblue 的基準) | ZK `Library.getProperty` 在自己的 map 找不到時**會退回 `System.getProperty`**(`zcommon/…/lang/Library.java:77`)⇒ 命令列 `-Dorg.zkoss.theme.preferred=iceblue_css` 就能選到本模板的 theme,**Marble worktree 一個檔都不用改** |
-| 本模板的 theme 是靠 `metainfo/zk/config.xml` 的 `<listener>` 註冊 | 只要 `target/classes` 在 classpath 上,`IceblueCssThemeWebAppInit` 就會跑、theme `iceblue_css` 就註冊好 |
-| ZK 沒有內建 `web/iceblue_css/` 目錄(`zul-*.jar` 裡是**未加前綴**的 `web/zul/css/`) | 不存在「ZK 自己的複本遮蔽我們的」這種問題 —— 服務到的一定是本模板編出來的 |
+| `ThemePreviewIceblueApp` **故意不設** preferred theme(原本用來抓 ZK 內建 iceblue 的基準) | ZK `Library.getProperty` 在自己的 map 找不到時**會退回 `System.getProperty`**(`zcommon/…/lang/Library.java:77`)⇒ 命令列 `-Dorg.zkoss.theme.preferred=iceblue11` 就能選到本模板的 theme,**Marble worktree 一個檔都不用改** |
+| 本模板的 theme 是靠 `metainfo/zk/config.xml` 的 `<listener>` 註冊 | 只要 `target/classes` 在 classpath 上,`Iceblue11ThemeWebAppInit` 就會跑、theme `iceblue11` 就註冊好 |
+| ZK 沒有內建 `web/iceblue11/` 目錄(`zul-*.jar` 裡是**未加前綴**的 `web/zul/css/`) | 不存在「ZK 自己的複本遮蔽我們的」這種問題 —— 服務到的一定是本模板編出來的 |
 
 ### 2.1 為什麼要**排除** Marble 的 `target/classes`
 
@@ -87,7 +87,7 @@ config.setCustomThemeProvider(true);      // 鎖住,後面誰都換不掉
 
 app 起來之後、截圖之前,先抓 `/button.zul` 並斷言:
 
-- `_zkiju-iceblue_css` 出現 ⇒ 服務中的彙整 CSS 來自本模板的 theme
+- `_zkiju-iceblue11` 出現 ⇒ 服務中的彙整 CSS 來自本模板的 theme
 - `marble` 出現 **0 次** ⇒ Marble 的 provider 沒有介入
 
 任何一條不成立就**中止**,不截圖。理由:一個「主題其實沒載到」的 harness 會給出
@@ -100,7 +100,7 @@ app 起來之後、截圖之前,先抓 `/button.zul` 並斷言:
 
 ### 2.3 指紋:讓 A/B 不會空轉
 
-`capture` 會把當下 `target/classes/web/iceblue_css` 全部 `.css.dsp` 的
+`capture` 會把當下 `target/classes/web/iceblue11` 全部 `.css.dsp` 的
 `(相對路徑, sha256)` 排序後再 hash 一次,寫進 `<label>/manifest.json`。
 `diff` 同時報**兩件事**:
 

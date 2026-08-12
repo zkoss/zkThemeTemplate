@@ -46,7 +46,7 @@ const p4b = require('./p4b-delta.js');
 
 const REPO = path.resolve(__dirname, '..');
 const BASELINE = path.join(REPO, 'baseline');
-const CANDIDATE = path.join(REPO, 'target/classes/web/iceblue_css');
+const CANDIDATE = path.join(REPO, 'target/classes/web/iceblue11');
 
 const WEBKIT = /^-webkit-/;
 const CARVE_OUT = new Set(['-moz-osx-font-smoothing']);

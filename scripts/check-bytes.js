@@ -43,7 +43,7 @@ const p4b = require('./p4b-delta.js');
 
 const ROOT = path.resolve(__dirname, '..');
 const BASE = path.join(ROOT, 'baseline');
-const BUILT = path.join(ROOT, 'target/classes/web/iceblue_css');
+const BUILT = path.join(ROOT, 'target/classes/web/iceblue11');
 
 function walk(dir, base = dir, out = []) {
 	for (const e of fs.readdirSync(dir, { withFileTypes: true })) {

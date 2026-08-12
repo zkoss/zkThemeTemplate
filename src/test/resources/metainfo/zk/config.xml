@@ -10,7 +10,7 @@
      measures. See tasks/utility-css-vs-p7-ordering.md. -->
 <config>
 	<config-name>preview-app</config-name>
-	<depends>iceblue_css</depends>
+	<depends>iceblue11</depends>
 
 	<listener>
 		<listener-class>zk.example.PreviewStylesInit</listener-class>

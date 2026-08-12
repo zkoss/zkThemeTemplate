@@ -61,7 +61,7 @@ const { NO_HEADER } = require('./build-css.js');
 
 const SOURCE = 'src/main/resources/web';
 const BASELINE = 'baseline';
-const TARGET = 'target/classes/web/iceblue_css';
+const TARGET = 'target/classes/web/iceblue11';
 
 /** These three stay in LESS: norm is P5, font-awesome is P6, tablet is P7. */
 const HOLDOUTS = new Set([

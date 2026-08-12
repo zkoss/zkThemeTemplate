@@ -48,7 +48,7 @@
  *   is literally `StandardTheme.DEFAULT_NAME`, and `ServletFns.resolveThemeURL` skips the
  *   `~./` → `~./<theme>/` rewrite for the default theme, so a theme named `iceblue` never gets its
  *   own directory requested: ZK serves its own jar copy and these files become dead output, on a
- *   page that looks perfectly normal. That is why the theme is `iceblue_css`. See S21/S23 in
+ *   page that looks perfectly normal. That is why the theme is `iceblue11`. See S21/S23 in
  *   doc/iceblue-drop-less-progress-appendix.md.
  *
  *   node scripts/baseline-ab.js status        which side is installed, and is the baseline intact
@@ -67,7 +67,7 @@ const path = require('path');
 
 const ROOT = path.resolve(__dirname, '..');
 const BASE = path.join(ROOT, 'baseline');
-const OUT = path.join(ROOT, 'target/classes/web/iceblue_css');
+const OUT = path.join(ROOT, 'target/classes/web/iceblue11');
 const MANIFEST = path.join(ROOT, 'doc/baseline-manifest.sha256');
 const MARKER = path.join(OUT, '.ab-side');
 const SRC = 'src/main/resources/web';

@@ -153,7 +153,7 @@ build 時 `.ZKBD ` → `<c:if …>${".z-page "}</c:if>`,`/*!ZKBD-OFF-*/` → `<c
 
 build 產出 `norm.css.dsp` 與 `norm-embed.css.dsp`;主題自備 ThemeProvider,覆寫
 `beforeWidgetCSS`,在 `browserDefault` 為真時把 `~./zul/css/norm.css.dsp` 改寫成
-`~./iceblue_css/zul/css/norm-embed.css.dsp`。
+`~./iceblue11/zul/css/norm-embed.css.dsp`。
 
 * **這是 Marble 的變體,但不多一個 request** —— 因為換的是聚合槽位裡的**名字**,不是往外掛檔案。
 * **好處**:輸出的 CSS **完全沒有 DSP**(未來若要拿掉 DSP 層,這條路已經走完一半)。

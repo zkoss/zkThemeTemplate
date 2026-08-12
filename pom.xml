@@ -2,23 +2,41 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.zkoss.theme</groupId>
-	<artifactId>iceblue_css</artifactId>
-	<!-- Tracks the ZK version this theme targets, per the iceblue_c convention. Deliberately NOT
-		 `10.4.0-jakarta.FL.20260713-Eval`: the FL date describes the *dependency* (zk.version below)
-		 and is a moving target, whereas this string identifies the artifact. Must stay in lockstep
-		 with the three version-uid siblings (config.xml, lang-addon.xml, Version.java) — those only
-		 have to agree with each other, so nothing detects a drift. -->
-	<version>10.4.0-jakarta-Eval</version>
+	<!-- Load-bearing beyond Maven coordinates: the theme output lands in
+		 `web/${project.artifactId}` (see zktheme.theme.outputDirectory below), and ZK resolves
+		 theme resources at `~./<THEME_NAME>/`, so this string MUST equal the THEME_NAME
+		 registered in Iceblue11ThemeWebAppInit or the built CSS is never requested.
+		 It also must not be `iceblue` — that is StandardTheme.DEFAULT_NAME, for which
+		 ServletFns.resolveThemeURL skips the `~./` → `~./<theme>/` rewrite entirely (S21). -->
+	<artifactId>iceblue11</artifactId>
+	<!-- Tracks the ZK version this theme targets, per the iceblue_c convention. Two things are
+		 deliberately absent from this string:
+
+		 - the FL date (`11.0.0-jakarta.FL.20260811-Eval`) — that describes the *dependency*
+		   (zk.version below) and is a moving target, whereas this string identifies the artifact;
+		 - the `jakarta` marker — the theme is CSS resources plus two classes that import nothing
+		   outside `org.zkoss.*` (verified: 0 `javax.`/`jakarta.` imports under src/main/java), so
+		   unlike ZK core there is no javax/jakarta split to express. One artifact serves both.
+
+		 11.0.0 rather than 10.4.0 is company policy: 10.4.0 was never publicly released.
+
+		 Must stay in lockstep with the three version-uid siblings (config.xml, lang-addon.xml,
+		 Version.java) — those only have to agree with each other, so nothing detects a drift. -->
+	<version>11.0.0-Eval</version>
 	<properties>
 		<maven.compiler.source>11</maven.compiler.source>
 		<maven.compiler.target>11</maven.compiler.target>
-		<!-- 10.4.0 FL, jakarta variant. The `-jakarta.FL.<date>-Eval` shape is load-bearing: the
+		<!-- 11.0.0 FL, jakarta variant. The `-jakarta.FL.<date>-Eval` shape is load-bearing: the
 			 `X.FL.<date>-Eval` builds ship javax, and the Spring Boot 3.x preview app dies on those
 			 with NoClassDefFoundError javax/servlet/*. Bumped from 10.2.1 because 10.2.1's
 			 StandardThemeProvider does not theme-rewrite `~./zul/font/`, so the theme's own
 			 font-awesome.css.dsp (P6's whole deliverable, 28% of the tree) could never be served
-			 and the visual A/B could never see it. See S24. -->
-		<zk.version>10.4.0-jakarta.FL.20260713-Eval</zk.version>
+			 and the visual A/B could never see it. See S24.
+			 Bumped again from 10.4.0 to 11.0.0 so the shipped `iceblue_c` oracle and this tree are
+			 the same generation: `iceblue_c` has no 10.4.0 release at all (the eval repo jumps
+			 10.3.1 → 11.0.0), so every compact measurement taken against 10.3.0.1 was reading a
+			 version gap on top of the density delta. See tasks/l4-density-mechanism.md L3.1. -->
+		<zk.version>11.0.0-jakarta.FL.20260811-Eval</zk.version>
 		<zkspringboot.version>3.2.6</zkspringboot.version>
 		<springboot.version>3.2.6</springboot.version>
 		<maven.build.timestamp.format>yyyy-MM-dd</maven.build.timestamp.format>
@@ -28,11 +46,11 @@
 		<zktheme.theme.outputDirectory>${project.build.outputDirectory}/web/${project.artifactId}</zktheme.theme.outputDirectory>
 	</properties>
 	<packaging>jar</packaging>
-	<name>iceblue_css</name>
+	<name>iceblue11</name>
 	<scm>
 		<url>https://mavensync.zkoss.org/maven2</url>
 	</scm>
-	<description>Iceblue CSS</description>
+	<description>Iceblue 11</description>
 	<licenses>
 		<license>
 			<name>GNU LESSER GENERAL PUBLIC LICENSE, Version 3</name>

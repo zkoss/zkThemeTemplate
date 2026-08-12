@@ -24,7 +24,7 @@
 ### 2.1 為什麼 B 一定要排在 P8 之後(這是唯一的硬約束)
 
 轉換案的驗收工具是 `scripts/cssdiff.js`,它把 `baseline/` 與新建出來的
-`target/classes/web/iceblue_css` **逐條宣告、依序**比對。整個案子的說法不是
+`target/classes/web/iceblue11` **逐條宣告、依序**比對。整個案子的說法不是
 「它還能編譯」,而是「瀏覽器收到的 CSS 等價」。各階段的判準只有兩種:
 
 * **G-zero** —— 0 條差異;
@@ -41,7 +41,7 @@
 
 ### 2.2 為什麼 A 是安全的(而且已經實測過)
 
-`npm run check:cssdiff` 比的是 `baseline/` 對 `target/classes/web/iceblue_css`。
+`npm run check:cssdiff` 比的是 `baseline/` 對 `target/classes/web/iceblue11`。
 **test 資源編到 `target/test-classes`,永遠不在比對範圍內。**
 
 這不是推論 —— 本次搬遷已經是一次實驗:一口氣加了 **382 個 test 檔**(149 個 zul、
@@ -88,7 +88,7 @@ A 的價值是**人眼複審**(125 張截圖現在版面是塌的),不是機器�
 
 **先講不能放哪裡:`src/main/resources/web/` 底下一律不行。** pom 的
 `zktheme.web.resources` 就是這個目錄,`zklessc` 與 `build-css.js` 都以它為來源,
-產物落在 `target/classes/web/iceblue_css/` —— **正好是 `cssdiff` 拿去跟 `baseline/` 比的那棵樹**。
+產物落在 `target/classes/web/iceblue11/` —— **正好是 `cssdiff` 拿去跟 `baseline/` 比的那棵樹**。
 放進去就等於做成了 B,閘門立刻紅。
 
 **要放的是兩個新檔,都在 `src/test/` 底下:**
@@ -198,7 +198,7 @@ A 階段先把這層 scale 寫在 preview sheet 的 `:root` 裡,等於**免費�
 
 ### L3.2 「缺」的定義與已知偽陽性
 
-判定方式:把 `target/classes/web/iceblue_css` 底下所有 `.css` / `.dsp` 串起來,
+判定方式:把 `target/classes/web/iceblue11` 底下所有 `.css` / `.dsp` 串起來,
 抓出所有 `.z-xxx` 形式的 class 選擇器,再拿頁面用到的集合去減。
 
 已知會混進來的偽陽性:`z-button*`(20 個)有一部分是 `component-theming.zul` 在示範

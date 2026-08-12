@@ -320,7 +320,7 @@ flowchart TD
 
    > **圖本身還沒重畫,而且它的數字在 P5 之前就已經舊了** —— 圖上寫 75 entry / 77 輸出 /
    > `target/classes/web/iceblue`,實際是 **1 個 `.less` entry / 85 輸出 /
-   > `target/classes/web/iceblue_css`**(ZK 10.4 補齊與改名帶來的,不是 P5)。重畫時一次改齊,
+   > `target/classes/web/iceblue11`**(ZK 10.4 補齊與**兩次**改名帶來的,不是 P5)。重畫時一次改齊,
    > 不要只改 P5 那一格。
 
 

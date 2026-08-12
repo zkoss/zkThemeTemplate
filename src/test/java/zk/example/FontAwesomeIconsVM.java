@@ -35,7 +35,7 @@ import java.util.regex.Pattern;
 public class FontAwesomeIconsVM {
 
     /** This theme's compiled Font Awesome sheet, as a classpath resource under target/classes. */
-    private static final String THEME_FA_CSS = "web/iceblue_css/zul/font/font-awesome.css.dsp";
+    private static final String THEME_FA_CSS = "web/iceblue11/zul/font/font-awesome.css.dsp";
 
     private static final Pattern RULE = Pattern.compile("([^{}]+)\\{([^{}]*)\\}");
     private static final Pattern GLYPH_DECL = Pattern.compile("^content:\"\\\\[0-9a-f]+\"$");

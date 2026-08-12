@@ -21,7 +21,7 @@
 `forEach` + `template` approach.
 
 **Names read from the theme's own build output.** `FontAwesomeIconsVM` parses
-`web/iceblue_css/zul/font/font-awesome.css.dsp` off the classpath and sorts every
+`web/iceblue11/zul/font/font-awesome.css.dsp` off the classpath and sorts every
 `.z-icon-*` rule into the three categories. If a conversion phase drops or renames an icon
 rule, the catalog reflects it on the next build instead of listing names that no longer render.
 
