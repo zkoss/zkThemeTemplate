@@ -14,6 +14,7 @@
     "check:var-table": "node scripts/gen-var-table.js --check",
     "check:less-conventions": "node scripts/check-less-conventions.js",
     "check:build-css": "node scripts/check-build-css.js",
+    "check:doc-refs": "node scripts/check-doc-refs.js",
     "check:bytes": "node scripts/check-bytes.js",
     "less2css": "node scripts/less2css.js",
     "gen:fa-css": "node scripts/gen-fa-css.js",

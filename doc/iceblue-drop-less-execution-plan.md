@@ -15,7 +15,8 @@
 > [iceblue-drop-less-plan-appendix.md](iceblue-drop-less-plan-appendix.md);
 > 執行一個階段只需要本檔,附錄按〈[L3 技術附錄](#l3-技術附錄獨立檔)〉的「何時要看」欄按需開啟。
 
-**相關文件**:[css-preprocessor-industry-direction.md](css-preprocessor-industry-direction.md)(業界方向佐證)·
+**相關文件**:[task-doc-tracking-policy.md](task-doc-tracking-policy.md)(工作文件的版控政策 + `check:doc-refs`)·
+[css-preprocessor-industry-direction.md](css-preprocessor-industry-direction.md)(業界方向佐證)·
 [migration/less-var-to-token.md](migration/less-var-to-token.md) · [migration/mixin-to-css.md](migration/mixin-to-css.md)(P8 的兩張規則表)
 
 ---
