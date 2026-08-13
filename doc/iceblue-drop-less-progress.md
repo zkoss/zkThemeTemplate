@@ -162,7 +162,7 @@
    失敗),兩者都不改輸出 ⇒ ~~**待決定要不要納入本分支**。~~
    ~~**←2026-08-05 裁示:本輪不做,歸入 P7 的待辦**(計畫書 §P7 已收錄為交付項與驗收條件)。~~
    **←2026-08-13 再裁示:不補,結案。** `@themePalette` 整個移出本案(**C19 / M-2**,獨立計畫
-   [tasks/theme-pack-palette-mechanism.md](../tasks/theme-pack-palette-mechanism.md)),
+   `tasks/theme-pack-palette-mechanism.md`),
    所以 P7 不再有「override sheet 要表達得出 palette 覆蓋」那條驗收 —— 它跟著 palette 走了。
    而那條 import 只存在於 `.less`,**P8 讓 `.less` 歸零** ⇒ 缺口自動消失,
    補它等於為一個要被刪掉的檔案寫一行再刪掉。**殘留風險**(P8 之前照 `readme.md` 設
@@ -251,7 +251,7 @@
 | ↳ **P5 的第 4 層獨立驗證** | **DONE** | 覆核者須自己重推每一個數字,不得引用 commit message | **PASS-WITH-FINDINGS** —— **C1–C9 九條全部 CONFIRMED**,其中 C4 用**比自我複核更強**的方法:覆核者不信任專案第 4 類序列化那個「全空白剝除」的實作,自寫只剝標點相鄰空白的正規化器,在它底下兩份 `norm.css.dsp` **逐 byte 相同(72646 = 72646)**,並手眼看過全部 45 個差異片段。**找到 1 個真缺口並已修(`364f8ec`)**:佔位符的**還原方向沒有守衛**,`content:".ZKBD "` 會把 DSP 注進帶引號的值、exit 0 零警告。**更正 S37 一句**(「逐項相同」實為 10/12)。**獨立證明了 compact 旋鈕的等價性,也證明了 S36 的分裂主題真的會發生且無檢查看得到。** 報告 [l4-verify-p5-norm.md](l4-verify-p5-norm.md)(紀錄 **#49**) | 2026-08-06 |
 | ↳ **P5 的視覺 A/B** | **DONE** | 兩側指紋須不同,且頁面差異須為 0 | **116 頁比對、pages differing: 0**,而 **theme 指紋 DIFFERENT**(`75f538af22468640` / `5c570ab19195cdc2`)—— 所以這個 0 **不是空轉**,是「20 個序列化差異區塊在 116 頁裡照不出畫面變化」的端對端確認。跑之前先 `visual:selftest` 得 0 / 0 證明 harness 當下決定性;雜訊 4 頁全在噪音下限內。**採信範圍照 S33**:語料非針對 85 個輸出檔設計,稀有元件會漏接 ⇒ 這是「看不到差異」不是「沒有差異」(紀錄 **#50**) | 2026-08-06 |
 | **P6 Font Awesome** | **DONE** | G-zero | **4545** 條零差異;產生器輸出與被刪掉的 `.less` 經 `less.render()` **逐 byte 相同**(獨立複核:**3611** 個選擇器 0 增 0 減);codepoint 抽驗 + 「加一個 icon」往返實測;`build-css` 74 → **75** 檔 | 2026-08-04 |
-| P7 `tablet` + profile API | BLOCKED | G-delta | ~~**多一個交付項**:補 `_zkcssvariables.less` 缺的 palette import + `colors/_iceblue_css.less`(S29);驗收多一條 —— runtime override sheet 必須表達得出 palette 覆蓋,且要有一次**非 iceblue** palette 的實測~~ **←2026-08-13 兩項都移除(C19 / M-2)**:`@themePalette` 移出本案,本階只剩 `tablet` + `@themeProfile`(密度軸)。**S29 改判不補**,隨 P8 的 `.less` 歸零消失。palette 的獨立計畫 [tasks/theme-pack-palette-mechanism.md](../tasks/theme-pack-palette-mechanism.md) | — |
+| P7 `tablet` + profile API | BLOCKED | G-delta | ~~**多一個交付項**:補 `_zkcssvariables.less` 缺的 palette import + `colors/_iceblue_css.less`(S29);驗收多一條 —— runtime override sheet 必須表達得出 palette 覆蓋,且要有一次**非 iceblue** palette 的實測~~ **←2026-08-13 兩項都移除(C19 / M-2)**:`@themePalette` 移出本案,本階只剩 `tablet` + `@themeProfile`(密度軸)。**S29 改判不補**,隨 P8 的 `.less` 歸零消失。palette 的獨立計畫 `tasks/theme-pack-palette-mechanism.md`(不進本 repo 版控,見 **M-2**) | — |
 | **規則表產生器**(P8 前置,**有期限**) | **DONE** | 自帶斷言 | **846** 列 / **834** 語法 1:1 / **830** 行為 1:1 / **16** 例外;**30** mixin 名稱 / **38** 定義列 | 2026-07-30 |
 | P8 收尾 | TODO | G-zero | 須等於 P4 + P5 + P7 已核准 delta 總和 | — |
 

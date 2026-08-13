@@ -481,7 +481,7 @@ DSP 層與 Font Awesome 的生成內容都還在,零 build step 兌現不了(L3-
 > 必須獨立規劃、獨立排程 —— 這正是 L3-F 的 **B4**(「23 套付費佈景是產品排程,不是工程排程」)
 > 一直沒解決的那一點,現在用「切出去」而不是「排進來」解決。
 >
-> 獨立計畫:**[tasks/theme-pack-palette-mechanism.md](../tasks/theme-pack-palette-mechanism.md)**
+> 獨立計畫:**`tasks/theme-pack-palette-mechanism.md`**(**刻意不進本 repo 的版控**,見 M-2)
 > —— 它**不是** P0–P8 的任何一階,不進 `check:gate`,也不會動本 worktree 的任何來源檔。
 >
 > **本階(以及整個本案)因此少一件事、不多一件事**:`@themeProfile` 是**密度**軸,仍在本階;
@@ -681,7 +681,8 @@ L3 各節是**原文保留**的,所以裡面的 `§0`、`§2.6`、`§P4` 這類�
 | **裁示** | **移出,而且是現在**(2026-08-13,user 裁示) |
 | **理由** | **產品邊界** —— palette 就是付費商品 Theme Pack 的內容,所以它的機制、Java API 與出貨物**都不屬於本模板專案**,必須獨立規劃、獨立排程 |
 | **執行地點** | Theme Pack 後繼產品(**不是**本 worktree、**也不是** Marble) |
-| **獨立計畫** | [tasks/theme-pack-palette-mechanism.md](../tasks/theme-pack-palette-mechanism.md) —— **不是** P0–P8 任何一階,不進 `check:gate` |
+| **獨立計畫** | `tasks/theme-pack-palette-mechanism.md` —— **不是** P0–P8 任何一階,不進 `check:gate` |
+| **為什麼那份計畫不進本 repo 的版控** | **它不是本 repo 的檔** —— 交付物屬於 Theme Pack 後繼產品,計畫要隨產品搬到那邊的 repo。依 [task-doc-tracking-policy.md](task-doc-tracking-policy.md),這種檔在本 repo 只能用**引註**(行內 code)提及,不能用 markdown 連結 —— 所以本檔與附錄、進度文件裡的 7 處全部是引註。**代價要知道**:`check:doc-refs` 不會替它守著,本 repo 裡沒有任何東西保證那份計畫還在;產品那邊建好 repo 之後,這裡的引註要換成該 repo 的位址 |
 
 **本案因此的變動,全部是「少做」**:
 
