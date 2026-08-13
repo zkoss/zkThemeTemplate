@@ -160,11 +160,15 @@
    對現狀**零影響**(iceblue 那份是空的),但**換 palette 就靜默失效**,而 `readme.md:50` 正是教
    使用者設 `@themePalette` 的那一行。修法是補 import + 補檔,**必須成對**(單獨補 import 會建置
    失敗),兩者都不改輸出 ⇒ ~~**待決定要不要納入本分支**。~~
-   **←2026-08-05 裁示:本輪不做,歸入 P7 的待辦**(計畫書 §P7 已收錄為交付項與驗收條件)。
-   理由不只是「同一個機制」:P7 要把 `@themePalette` 的**編譯期插值**整個換成 runtime
-   `--zk-*` override sheet,`_@{themePalette}_css` 這條 import 路徑到那時可能已經不存在
-   ⇒ **現在補等於補一個即將被換掉的東西**。P7 的驗收因此多一條:override sheet 必須表達得出
-   palette 覆蓋,且要有一次**非 iceblue** palette 的實測 —— 現況下這條路徑從來沒被走過。
+   ~~**←2026-08-05 裁示:本輪不做,歸入 P7 的待辦**(計畫書 §P7 已收錄為交付項與驗收條件)。~~
+   **←2026-08-13 再裁示:不補,結案。** `@themePalette` 整個移出本案(**C19 / M-2**,獨立計畫
+   [tasks/theme-pack-palette-mechanism.md](../tasks/theme-pack-palette-mechanism.md)),
+   所以 P7 不再有「override sheet 要表達得出 palette 覆蓋」那條驗收 —— 它跟著 palette 走了。
+   而那條 import 只存在於 `.less`,**P8 讓 `.less` 歸零** ⇒ 缺口自動消失,
+   補它等於為一個要被刪掉的檔案寫一行再刪掉。**殘留風險**(P8 之前照 `readme.md` 設
+   `@themePalette` 的人拿不到覆蓋)**的處置是文件**:`readme.md` 那一行本來就要在 P8 的
+   migration guide 換成「載入 override sheet」,把殘留寫在那裡。若日後仍要補,成本是
+   補 import + 補 34 B 的檔(**必須成對**),兩者都不改輸出 ⇒ **G-zero,不擋任何階段**。
 4. ~~**L-2** 瀏覽器支援聲明 —— 解鎖 P4a / P4b。~~ **←2026-08-07 已拍板(選項 C),P4 可開工。**
 5. **L-4 的 density 那一半** —— 解鎖 P7(colour 那一半已由 L-7 解除)。
    **←2026-08-12:計畫書已產出** [tasks/l4-density-mechanism.md](../tasks/l4-density-mechanism.md)
@@ -188,7 +192,8 @@
 > ~~**不等任何人的工作已經做完了。**~~ **←2026-08-05 補齊收工後不再成立:上面 5 項裡有 ~~3 項~~
 > ~~2 項~~ ~~1 項~~ 0 項不等任何人**(~~只剩第 1 項的頁面與 playwright~~ **←已完成**;
 > ~~第 2 項重跑第 4 層驗證~~ **←已完成**;
-> ~~第 3 項只差一個要不要做的決定~~ **←已裁示歸 P7,不再是可以現在開工的項目**)。
+> ~~第 3 項只差一個要不要做的決定~~ **←已裁示歸 P7,不再是可以現在開工的項目**;
+> **2026-08-13 再裁示:第 3 項(S29)直接結案不補**,隨 P8 的 `.less` 歸零消失 —— 見該項)。
 > ~~**⇒ 這句話又成立了,而且比原本更窄**:唯一不等任何人的實作就是第 1 項,它同時解鎖 P4 / P5 / P7。~~
 > **←2026-08-05 傍晚:第 1 項也收工了(#44)⇒ 原句第三次成立,而且這次是完整成立**:
 > **五項全部不是「可以現在自己動手」的實作**。P4a / P4b 等 **L-2**、P7 等 **L-4 的 density 那一半**,
@@ -246,7 +251,7 @@
 | ↳ **P5 的第 4 層獨立驗證** | **DONE** | 覆核者須自己重推每一個數字,不得引用 commit message | **PASS-WITH-FINDINGS** —— **C1–C9 九條全部 CONFIRMED**,其中 C4 用**比自我複核更強**的方法:覆核者不信任專案第 4 類序列化那個「全空白剝除」的實作,自寫只剝標點相鄰空白的正規化器,在它底下兩份 `norm.css.dsp` **逐 byte 相同(72646 = 72646)**,並手眼看過全部 45 個差異片段。**找到 1 個真缺口並已修(`364f8ec`)**:佔位符的**還原方向沒有守衛**,`content:".ZKBD "` 會把 DSP 注進帶引號的值、exit 0 零警告。**更正 S37 一句**(「逐項相同」實為 10/12)。**獨立證明了 compact 旋鈕的等價性,也證明了 S36 的分裂主題真的會發生且無檢查看得到。** 報告 [l4-verify-p5-norm.md](l4-verify-p5-norm.md)(紀錄 **#49**) | 2026-08-06 |
 | ↳ **P5 的視覺 A/B** | **DONE** | 兩側指紋須不同,且頁面差異須為 0 | **116 頁比對、pages differing: 0**,而 **theme 指紋 DIFFERENT**(`75f538af22468640` / `5c570ab19195cdc2`)—— 所以這個 0 **不是空轉**,是「20 個序列化差異區塊在 116 頁裡照不出畫面變化」的端對端確認。跑之前先 `visual:selftest` 得 0 / 0 證明 harness 當下決定性;雜訊 4 頁全在噪音下限內。**採信範圍照 S33**:語料非針對 85 個輸出檔設計,稀有元件會漏接 ⇒ 這是「看不到差異」不是「沒有差異」(紀錄 **#50**) | 2026-08-06 |
 | **P6 Font Awesome** | **DONE** | G-zero | **4545** 條零差異;產生器輸出與被刪掉的 `.less` 經 `less.render()` **逐 byte 相同**(獨立複核:**3611** 個選擇器 0 增 0 減);codepoint 抽驗 + 「加一個 icon」往返實測;`build-css` 74 → **75** 檔 | 2026-08-04 |
-| P7 `tablet` + profile API | BLOCKED | G-delta | **多一個交付項**:補 `_zkcssvariables.less` 缺的 `@import "colors/_@{themePalette}_css";` + `colors/_iceblue_css.less`(**見 S29**,2026-08-05 裁示歸入本階);驗收多一條 —— runtime override sheet 必須表達得出 palette 覆蓋,且要有一次**非 iceblue** palette 的實測 | — |
+| P7 `tablet` + profile API | BLOCKED | G-delta | ~~**多一個交付項**:補 `_zkcssvariables.less` 缺的 palette import + `colors/_iceblue_css.less`(S29);驗收多一條 —— runtime override sheet 必須表達得出 palette 覆蓋,且要有一次**非 iceblue** palette 的實測~~ **←2026-08-13 兩項都移除(C19 / M-2)**:`@themePalette` 移出本案,本階只剩 `tablet` + `@themeProfile`(密度軸)。**S29 改判不補**,隨 P8 的 `.less` 歸零消失。palette 的獨立計畫 [tasks/theme-pack-palette-mechanism.md](../tasks/theme-pack-palette-mechanism.md) | — |
 | **規則表產生器**(P8 前置,**有期限**) | **DONE** | 自帶斷言 | **846** 列 / **834** 語法 1:1 / **830** 行為 1:1 / **16** 例外;**30** mixin 名稱 / **38** 定義列 | 2026-07-30 |
 | P8 收尾 | TODO | G-zero | 須等於 P4 + P5 + P7 已核准 delta 總和 | — |
 

@@ -28,7 +28,7 @@
   - [L2.0 術語表](#l20-術語表--這些名詞不可混用) — **看不懂任何數字之前先看這裡**
   - [L2.1 範圍](#l21-範圍) — 做什麼 / 不做什麼
   - [L2.2 驗收閘門制度](#l22-驗收閘門制度) — G-zero / G-delta · 四層人工複核 · 步階與批次 · commit 粒度
-  - [L2.3 各階段規範](#l23-各階段規範) — [P0](#p0--建立工作區與基準) · [P1](#p1--把-less-釘到-481s0--s1) · [P2](#p2--雙來源-build) · [P3](#p3--元件轉換-74-檔工作量主體) · [P4a](#p4a--vendor-prefix-純移除a-群) · [P4b](#p4b--vendor-prefix-逐條判斷c-群) · [P5](#p5--normcsstokens--reset--全域) · [P6](#p6--font-awesome-產生器) · [P7](#p7--tablet--themeprofile--themepalette) · [P8](#p8--收尾)
+  - [L2.3 各階段規範](#l23-各階段規範) — [P0](#p0--建立工作區與基準) · [P1](#p1--把-less-釘到-481s0--s1) · [P2](#p2--雙來源-build) · [P3](#p3--元件轉換-74-檔工作量主體) · [P4a](#p4a--vendor-prefix-純移除a-群) · [P4b](#p4b--vendor-prefix-逐條判斷c-群) · [P5](#p5--normcsstokens--reset--全域) · [P6](#p6--font-awesome-產生器) · [P7](#p7--tablet--themeprofile) · [P8](#p8--收尾)
   - [L2.4 前置工作項](#l24-前置工作項不是階段不產生-theme-輸出) — 不是階段,不產生 theme 輸出
   - [L2.5 執行機制](#l25-執行機制)
 - **[L3 技術附錄](#l3-技術附錄獨立檔)** — 索引與〈何時要看〉在本檔;**內容在 [iceblue-drop-less-plan-appendix.md](iceblue-drop-less-plan-appendix.md)**
@@ -40,7 +40,7 @@
   - [L3-F 決策紀錄](iceblue-drop-less-plan-appendix.md#l3-f-決策紀錄) — L-2 / L-4 / L-5 / L-7 / L-8 與五次追加拍板
   - [L3-G Change Log](iceblue-drop-less-plan-appendix.md#l3-g-change-log--規範層的斷言變更) — 18 條規範層更正
   - [L3-H 進度記錄制度](iceblue-drop-less-plan-appendix.md#l3-h-進度記錄制度)
-- **[附:跨主題待辦裁示](#附跨主題待辦裁示不屬於本案任何階段)** — 由本案裁示產生、但要在別的 worktree 執行的事(**M-1** Marble 密度字彙對齊)
+- **[附:跨主題待辦裁示](#附跨主題待辦裁示不屬於本案任何階段)** — 由本案裁示產生、但要在別的地方執行的事(**M-1** Marble 密度字彙對齊 · **M-2** `@themePalette` 移出本案)
 
 ---
 
@@ -466,15 +466,31 @@ DSP 層與 Font Awesome 的生成內容都還在,零 build step 兌現不了(L3-
 > FA 沒有這個出路,它是 ~700 組 name→codepoint 對應,**清單本身就是資料**。
 > **不要日後把「迴圈」整體誤記成「產生器問題」。**
 
-#### P7 —— `tablet` + `@themeProfile` / `@themePalette`
+#### P7 —— `tablet` + `@themeProfile`
 
 | | |
 |---|---|
 | **目標** | 轉換 `tablet.less`(輸出端 **681** 條);把 LESS 獨有的 import path 插值(`@import "profiles/_@{themeProfile}"`)改成 **runtime `--zk-*` override sheet** —— 兩個 profile 只是同一組 842 個 token 的不同數值 |
-| **輸入 → 輸出** | `tablet.less` + `profiles/` + `palettes/` → `.css` + runtime override sheet |
+| **輸入 → 輸出** | `tablet.less` + `profiles/` → `.css` + runtime override sheet |
 | **驗收閘門** | **G-delta** —— 這是刻意的**對外 API 變更**(「改 LESS 變數重編 jar」→「載入 override sheet」),必須寫進 migration guide |
 | **前置** | **L-4 的 density 那一半**(colour 那一半已由 L-7 解除)。視覺 A/B 價值中等,但 tablet 需要 mobile UA 的 Playwright 專案 |
 | **commit 粒度** | 1–2 顆,與 migration guide 的對應條目成對進版 |
+
+> **`@themePalette` 已於 2026-08-13 移出本階、移出本案**(user 裁示)。理由是**產品邊界**:
+> palette 就是付費商品 Theme Pack 的內容,所以它的機制、API 與出貨物**都不屬於本模板專案**,
+> 必須獨立規劃、獨立排程 —— 這正是 L3-F 的 **B4**(「23 套付費佈景是產品排程,不是工程排程」)
+> 一直沒解決的那一點,現在用「切出去」而不是「排進來」解決。
+>
+> 獨立計畫:**[tasks/theme-pack-palette-mechanism.md](../tasks/theme-pack-palette-mechanism.md)**
+> —— 它**不是** P0–P8 的任何一階,不進 `check:gate`,也不會動本 worktree 的任何來源檔。
+>
+> **本階(以及整個本案)因此少一件事、不多一件事**:`@themeProfile` 是**密度**軸,仍在本階;
+> `@themePalette` 是**顏色**軸,走了。兩者共用「runtime override sheet」這個形狀,
+> 但**不共用交付物** —— 不要因為形狀像就把它搬回來。
+>
+> **本案為 palette 要留下的東西是「零」**,這一點是量出來的:palette 的內容全部是
+> `:root{--zk-*}` 覆寫(623 條 / 108 個名稱),而本主題已經出貨 **862** 個可覆寫的 `--zk-*`
+> ⇒ 付費側只要在主題之後載入自己的 sheet 就成立,**不需要本專案提供任何 hook**。
 
 > `tablet/compact/_combo.less` 的兩個 `each()` **與 P3 的 `combo` 完全同形狀**,
 > 歸在同一個拍板項 **L-8** 底下處理。**不要在 P7 重新爭論一次。**
@@ -486,24 +502,25 @@ DSP 層與 Font Awesome 的生成內容都還在,零 build step 兌現不了(L3-
 > P8 的 G-zero 核帳是 P4 + P5 + P7 三段相加,這 60 條必須落在 P7 那一段,不能兩邊都不算。
 > 驗收方式與 P4a 相同:移除後每一條在同一個 rule 裡都要有無前綴同伴,`-webkit-` 不動。
 
-> **P7 順手要補的既有缺口**(**S29**,見
-> [進度文件附錄 L3-I](iceblue-drop-less-progress-appendix.md#l3-i-change-log--狀態層的敘述更正);
-> 2026-08-05 裁示歸入本階):本主題的
+> ~~**P7 順手要補的既有缺口**(**S29**)~~ **←2026-08-13 改判:不補,隨 P8 消失。**
+> 缺口本身的事實不變(見
+> [進度文件附錄 L3-I](iceblue-drop-less-progress-appendix.md#l3-i-change-log--狀態層的敘述更正)):
 > `zul/less/_zkcssvariables.less` 少了 `@import "colors/_@{themePalette}_css";`,連帶
-> `zul/less/colors/` 底下沒有 `_iceblue_css.less`(ZK 10.4 兩者都有)。
+> `zul/less/colors/` 底下沒有 `_iceblue_css.less`(ZK 10.4 兩者都有);對 `iceblue` 零影響
+> (ZK 那份只有 34 B 註解),但換成別的 palette 會**靜默失效**。
 >
-> - **對 `iceblue` 零影響、閘門看不到** —— ZK 那份 `_iceblue_css.less` 只有 34 B 的註解
->   (預設 palette 沒有東西要覆蓋),所以缺這一行**不改變任何輸出**。
-> - **但它是真缺口** —— 換成別的 palette 就靜默失效:`palettes/_amber_css.less` 是
->   **1114 B 的 `:root { --zk-* }` 覆蓋**,在本主題的 chain 裡會被無聲丟掉。而 `readme.md:50`
->   正是教使用者設 `@themePalette` 的那一行。
-> - **修法必須成對**:補 import **且**補檔 —— 只補 import 會找不到檔、建置直接失敗。
-> - **為什麼歸 P7**:P7 本來就要把 `@themeProfile` / `@themePalette` 的**編譯期插值**換成
->   runtime `--zk-*` override sheet(L-7 拍板)。這個缺口屬於**同一個機制**,而且
->   在 P7 之後 `_@{themePalette}_css` 這條 import 路徑本身可能就不存在了 ⇒
->   **不要在 P7 之前單獨補**,否則補的是一個即將被換掉的東西。
-> - **P7 的驗收要多一條**:runtime override sheet 必須能表達 palette 覆蓋,
->   且要有一個**非 iceblue** palette 的實測(現況下這個路徑從來沒有被走過)。
+> **改判的理由是「修的對象即將不存在」,而且現在比 2026-08-05 更確定**:
+>
+> - `@themePalette` 已移出本案(見上一則),所以本案**不會**再有「override sheet 要表達得出
+>   palette 覆蓋」這條驗收 —— 那條驗收跟著 palette 一起走了。
+> - 那條 import 只存在於 `.less`,而 **P8 讓 `.less` 歸零** ⇒ 缺口在 P8 自動消失,
+>   補它等於**為一個要被刪掉的檔案寫一行,再刪掉**。
+> - **殘留風險要寫下來,不要只說「不修」**:在 P8 之前,任何照 `readme.md` 設 `@themePalette`
+>   的人拿不到 palette 的 `--zk-*` 覆蓋。**處置是文件而不是程式** ——
+>   `readme.md` 教 `@themePalette` 的那一行本來就要在 P8 的 migration guide 一併換掉
+>   (換成「載入 override sheet」),把這個殘留寫在那裡。
+> - 若日後仍決定補:成本是**補 import + 補 34 B 的檔,必須成對**(只補 import 會找不到檔、
+>   建置直接失敗),兩者都不改輸出 ⇒ **G-zero**,任何時點都做得,不擋任何階段。
 
 > **P7 順手要收的第二個缺口**(**S36**,2026-08-06 裁示接受到本階為止):**P5 之後 compact
 > profile 暫時要設兩處** —— `zul/css/norm.css` 的第一行 `@import`(桌機)與
@@ -610,8 +627,9 @@ L3 各節是**原文保留**的,所以裡面的 `§0`、`§2.6`、`§P4` 這類�
 
 ## 附:跨主題待辦裁示(不屬於本案任何階段)
 
-> 記在本檔最後,是因為它**由本案的裁示產生、但要在另一個 worktree 執行**,
-> 不屬於 P0–P8 任何一階,也不進任何閘門。**本案不會動 Marble 的任何檔案。**
+> 記在本檔最後,是因為這些事**由本案的裁示產生、但要在本 worktree 之外執行**,
+> 不屬於 P0–P8 任何一階,也不進任何閘門。
+> **本案不會動 Marble 的任何檔案(M-1),也不會實作 palette 的任何一行(M-2)。**
 
 ### M-1 Marble 的 `Density.COMFORTABLE` 改名為 `DEFAULT`
 
@@ -653,3 +671,37 @@ L3 各節是**原文保留**的,所以裡面的 `§0`、`§2.6`、`§P4` 這類�
 - **`--zk-touch-target-comfortable` 不可跟著改**(`zkmax/css/tablet/_tokens.css`)——
   那是 MD3 觸控目標尺寸(48dp),與密度列舉**無關**,同名只是巧合。
   `zul/css/tokens/_sizing.css` 裡的 `comfortable` 也全是散文,不是屬性值。
+
+---
+
+### M-2 `@themePalette` 的機制與 API 移出本案
+
+| | |
+|---|---|
+| **裁示** | **移出,而且是現在**(2026-08-13,user 裁示) |
+| **理由** | **產品邊界** —— palette 就是付費商品 Theme Pack 的內容,所以它的機制、Java API 與出貨物**都不屬於本模板專案**,必須獨立規劃、獨立排程 |
+| **執行地點** | Theme Pack 後繼產品(**不是**本 worktree、**也不是** Marble) |
+| **獨立計畫** | [tasks/theme-pack-palette-mechanism.md](../tasks/theme-pack-palette-mechanism.md) —— **不是** P0–P8 任何一階,不進 `check:gate` |
+
+**本案因此的變動,全部是「少做」**:
+
+| 項目 | 原本 | 現在 |
+|---|---|---|
+| §P7 標題與交付項 | `tablet` + `@themeProfile` / **`@themePalette`** | `tablet` + `@themeProfile` |
+| §P7 的 palette 驗收條(「override sheet 要表達得出 palette 覆蓋 + 一次非 iceblue 實測」) | 交付項 | **移除**(跟著 palette 走) |
+| **S29**(`_zkcssvariables.less` 缺 palette import) | P7 交付項 | **不補**,隨 P8 的 `.less` 歸零消失;殘留風險寫進 migration guide |
+| L3-F 的 **B4**(「23 套付費佈景是產品排程」) | 未解決、本案最可能被外力延遲的一點 | **解除** —— 用「切出去」而不是「排進來」 |
+
+**本案為 palette 要留下的東西是「零」,這是量出來的**:palette 的內容全部是 `:root{--zk-*}`
+覆寫(**623 條 / 108 個 token 名稱**,ZK 出貨的 26 個非空 palette),而本主題已經出貨
+**862** 個可覆寫的 `--zk-*` ⇒ 付費側只要在主題之後載入自己的 sheet 就成立,
+**本專案不需要提供任何 hook、任何 Java API、任何 DSP 條件**。
+
+**兩件容易改錯的事,先寫下來**:
+
+- **`@themeProfile` 沒有跟著走。** 它是**密度**軸(L-4),仍在 P7 / D4 / D5。
+  兩軸共用「runtime override sheet」這個**形狀**,但**不共用交付物** ——
+  不要因為形狀像就把 palette 搬回來,也不要因為 palette 走了就以為 density 也走了。
+- **`colors/_iceblue.less` 與 `_header.less:7` 的 `@import "colors/_@{themePalette}"` 仍在樹上**,
+  由 **P8** 隨其他 LESS partial 一起刪。**本裁示不是「現在動手刪 palette 相關來源檔」** ——
+  現在刪會製造一個不屬於任何已核准 delta 的差異。

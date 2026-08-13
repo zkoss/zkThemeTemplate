@@ -105,7 +105,7 @@ LESS 會重新解析 CSS 值,所以每個新語法都是潛在的靜默改寫點
 | **B1** | **「純 CSS」不是字面真實 —— DSP 層還在** | 輸出仍是 `.css.dsp`,帶著 LESS 完全無關的 ZK DSP 層(輸出端實測,見下方展開)→ **不管有沒有 LESS,都還是要一個 build step** | ❌ **不會被解決**。只會從「外部 preprocessor + 第二語言」降成「一支 in-repo 腳本做字串組裝」 |
 | **B2** | **迴圈沒有原生替代品** | **3 個階段各有迴圈**(前提 #22),不是只有 FA:**P6** —— `font-awesome.css.dsp` **4545 條**(全樹最大),由 `each()` + 遞迴 mixin 產生;**P3** —— `combo.less:4` 對 6 個元件名跑 `each()`(輸出端 586 條);**P7** —— `tablet/compact/_combo.less:27,36`。原生 CSS 沒有迴圈,規格路線圖上也沒有 | ❌ **永久成立**,但**只有 FA 需要產生器**。L-5 已拍板保留 FA → P6 寫 `gen-fa-css.js`:我們不是移除產生器,是把它從 LESS 換成 JS。combo 那兩處只是把名稱扇開到選擇器前綴,**原生選擇器清單就表達得出來** —— 但併起來會破 G-zero,所以走 **L-8**(見 §P3〈`combo` 的迴圈〉) |
 | **B3** | **客戶的 fork-merge 路徑會斷一次** | `readme.md:20` 教客戶 fork + merge upstream。153 檔改副檔名 + 內容 → 每個 fork 全面衝突 | 🟡 **緩解,未消除**。P3 一檔一顆 commit(§2.5)把衝突侷限在客戶真正改過的檔案;兩張遷移表已產出並提交 |
-| **B4** | **23 套付費佈景是產品排程,不是工程排程** | L-7 拍板了**方向**(palette → runtime `--zk-*` sheet),沒拍板**誰做、何時做、綁 ZK 11 哪個里程碑**。Theme Pack 是付費商品,有客戶合約 | ❌ **未解決。本案最可能被外力延遲的一點** |
+| **B4** | **23 套付費佈景是產品排程,不是工程排程** | L-7 拍板了**方向**(palette → runtime `--zk-*` sheet),沒拍板**誰做、何時做、綁 ZK 11 哪個里程碑**。Theme Pack 是付費商品,有客戶合約 | ~~❌ **未解決。本案最可能被外力延遲的一點**~~ **←2026-08-13 解除(C19)**:用**切出去**而不是排進來 —— palette 移出本案,獨立計畫 [tasks/theme-pack-palette-mechanism.md](../tasks/theme-pack-palette-mechanism.md) + **M-2**。本案為此要留下的東西是**零**(palette 全是 `:root{--zk-*}` 覆寫,本主題已出貨 862 個可覆寫 token)⇒ **產品排程不再能延遲本案** |
 | **B5** | **靜默腐蝕是「搬家」不是「消失」**(直接反駁 A3) | CleanCSS 5.3.3 摧毀 `@scope` 與裸 `@layer` 時**只發 warning**;把選擇器位置的 DSP tag 改寫成 `${}".z-page "` 時 **0 errors 0 warnings** | 🟡 **部分**。差別在:minifier 是我們自己呼叫、可換、可加守衛(`build-css.js:129` 的 `HOSTILE_CONSTRUCTS` 已在做);LESS 是整條語言前端,守不住 |
 | **B6** | **與 ZK core 的 `.less` 同步會斷** | 66 個共用檔中 **52 個**目前與 ZK core 位元組相同,轉換後全部分歧 | 🟡 **多半可解,但仍是推論**。ZK core **今天並沒有編譯它們**(`zk-parent/pom.xml` 的 `compile-less` 在休眠的 `<pluginManagement>` 裡),且 Marble 將成 ZK 11 預設 → 複本很可能是死的。**建議在 ZK 11 定案前跟 core RD 確認一次** |
 | **B7** | **沒有立即的功能痛點** | IceBlue 今天正常出貨。痛點是**前瞻性**的(modern CSS、Theme Pack runtime 切換),不是現在的。排程吃緊時「它能動」是延後的正當理由 | 🟡 **雙向成立**。反過來:正因為現在沒壞,才是動它的最佳時機 —— 等到有痛點時窗口已關 |
@@ -1303,6 +1303,12 @@ declaration diff 看不出這件事,computed-style A/B 與截圖 A/B 在這裡�
 
 #### P7 — `tablet.less` + `@themeProfile` / `@themePalette`
 
+> **標題與內文是原文保留。`@themePalette` 已於 2026-08-13 移出本案(C19 / M-2)** ——
+> 本節凡提到 palette 的敘述都改到獨立計畫
+> [tasks/theme-pack-palette-mechanism.md](../tasks/theme-pack-palette-mechanism.md);
+> 本階現在只有 `tablet` + `@themeProfile`(密度軸)。規範版一律看
+> [執行計畫 §P7](iceblue-drop-less-execution-plan.md#p7--tablet--themeprofile)。
+
 `tablet.less`(輸出端 **681** 條)依 profile 分成 `tablet/default/` 與 `tablet/compact/` 兩套,
 並且用了 LESS 的 **import path 插值**(`@import "profiles/_@{themeProfile}"`)——
 這是 LESS 獨有能力,純 CSS 沒有對應物,但也不需要:兩個 profile 只是同一組 842 個
@@ -1583,7 +1589,7 @@ LESS 時代它們由 mixin 自動展開、維護成本為 0;純 CSS 之後**每�
 |---|---|
 | **P1 —— LESS 版本 pin** | **已完成,不再是可選項。** 用 npm `overrides` 把 `zkless-engine` 的 `less` 釘到 **4.8.1**,閘門 `files differing: 0`(77 檔 / 14323 條)。實測 3.13.1 會在 exit 0 的情況下把 `grid-column:1 / -1`→`-1`、`aspect-ratio:16 / 9`→`1.77777778`、`minmax(min(var(--x,180px),100%),1fr)`→`minmax(100%,1fr)`、`oklch(from red min(l,.54) c h)`→`oklch(from red .54 c h)` 全部靜默改寫,4.8.1 四項全對。**Theme Pack 要走「CSS 變數 + 新 CSS 語法」,這個 pin 從護欄升級成前提。** 副作用:LESS 4 的 `exports` 擋掉 `require('less/package.json')`,`scripts/baseline.js:43` 已改用 `require('less').version` |
 | **L-7 —— Theme Pack 23 個付費佈景** | **方向已定,不再是整個轉換案的 release blocker。** palette 改成 runtime `--zk-*` custom property sheet,不再是編譯期 `palettes/*.less`,所以沒有「編譯期換 palette」需要保留 |
-| **P7 的 palette 那一半** | **解除 BLOCKED。** `@import "colors/_@{themePalette}"`(`_header.less:7`)改成 runtime override sheet —— 就是本文 §P7 原本已經提的做法(「改成 runtime override sheet 即可」),L-7 的決定確認了它 |
+| **P7 的 palette 那一半** | **解除 BLOCKED。** `@import "colors/_@{themePalette}"`(`_header.less:7`)改成 runtime override sheet —— 就是本文 §P7 原本已經提的做法(「改成 runtime override sheet 即可」),L-7 的決定確認了它。**←2026-08-13:這一半整個移出本案(C19 / M-2)**,方向不變、承辦者變 —— 由 Theme Pack 後繼產品實作,`_header.less:7` 那行 import 隨 **P8** 與其他 LESS partial 一起刪,不另外處理 |
 | **L-4 —— compact profile** | **仍未定,不要順勢假設。** `@themeProfile` 是**密度**軸,不是**顏色**軸,L-7 沒有涵蓋它。建議方案:沿用 Marble 已驗證的 `data-density="compact"` 屬性 + control-height ladder(`doc/spec/data-dense-mode.md`),但要單獨拍板 |
 | **拿掉 zkless-engine 本身** | **不另立專案,併入 P2/P8。** 實測它沒有註冊任何自訂 LESS function / plugin / visitor,語法層面的貢獻只有 `src/index.js:31` 那一行 `~./`→`/` 字串取代;其餘全是建置流程(目錄走訪、`_` partial 跳過、`/less/`→`/css/`、watch + live reload)。獨立做等於把 P2/P8 要寫的東西寫兩次 |
 | **`~./` 保留,不改寫** | 93 處 `@import "~./"` **維持原狀**。改寫會讓 **34 個目前與 ZK core 位元組相同的檔案**產生分歧(66 個共用檔中有 52 個相同),換來的只是「可用裸 lessc 編譯」——而實際上永遠是透過 builder 編。改以 `scripts/check-less-conventions.js` 守住「`~./` 只能出現在 entry 檔」這個從 2013 年就存在、卻從未寫下來的不變條件 |
@@ -1648,7 +1654,7 @@ P3 **必須**加 `{step:0|1|2|3|4}`;**`P6` 已收工,連同它的任務指令一
 ### L3-G Change Log —— 規範層的斷言變更
 
 <details>
-<summary><b>18 條規範層更正</b> —— 前提數字 9 條 · 判準與方法學 9 條。舊敘述原文保留,不刪除</summary>
+<summary><b>19 條規範層更正</b> —— 前提數字 9 條 · 判準與方法學 10 條。舊敘述原文保留,不刪除</summary>
 
 **這一節存在的理由,就是讓 L1/L2 可以只寫當前結論。**
 規則是:**假設被推翻就直接改 L1/L2 的結論,變更過程記在這裡** ——
@@ -1689,6 +1695,7 @@ P3 **必須**加 `{step:0|1|2|3|4}`;**`P6` 已收工,連同它的任務指令一
 | C16 | 2026-07-31 | P2 的閘門「證明輸出完全等於 baseline」 | **那句話沒錯,但它證明的東西是零** —— 0 個 `.css` 輸入,新程式碼一行都沒跑 | 把 `minify()` 改成 `return ''`(每個產生的檔都空)實測:`check:cssdiff` 仍 exit 0。**「沒有輸入時差異 0 是免費的」從論述變成實測** |
 | C17 | 2026-07-31 | P3 的最小單位是 `{batch:1}` = **20 檔** | **步階制 `1 → 4 → 15 → 43 → 11`**,`{batch:1}` 改成**拒絕並說明** | 20 檔對「先做最小的、確認完再放大」還是太大。**規格寫了工具做不到的事,實務上就是那條規格被無聲忽略** |
 | C18 | 2026-07-31 | P3 產物用 LESS 預設的 **2 空格**縮排 | **tab**,與 repo 一致(`tabIndent()`) | 步 0 只有 1 檔時拍板。`build-css.js` 會把縮排壓掉,**輸出不受影響**;73 檔之後再改就是一次橫跨全樹的空白 commit |
+| C19 | 2026-08-13 | **`@themePalette` 是 P7 的一半**(L-7 拍板的 runtime `--zk-*` override sheet),連帶 **S29** 是 P7 的交付項、P7 驗收多一條「override sheet 要表達得出 palette 覆蓋 + 一次非 iceblue 實測」 | **全部移出本案。** §P7 = `tablet` + `@themeProfile`;S29 改判**不補**(隨 P8 的 `.less` 歸零消失);palette 的機制、Java API、出貨物獨立成 **M-2** 與 [tasks/theme-pack-palette-mechanism.md](../tasks/theme-pack-palette-mechanism.md) | **user 裁示(2026-08-13),依據是產品邊界而不是工程量**:palette 就是付費商品 Theme Pack 的內容。**連帶解除 L3-A 的 B4**(見該列的 ← 註)。**本案為此要留下的東西是零**,而且是量出來的:palette 全部是 `:root{--zk-*}` 覆寫(**623 條 / 108 個名稱** / 26 個非空 palette),而本主題已出貨 **862** 個可覆寫 `--zk-*` ⇒ 付費側在主題之後載入自己的 sheet 即成立,不需要本專案提供 hook。**同一輪還裁示移除 `apply(Component, Palette)`**(區域級 palette),見獨立計畫的 Change Log |
 
 #### 未修的已知問題
 
