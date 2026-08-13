@@ -64,7 +64,7 @@
 |---|---|---|---|---|
 | **D1** | 桌面 token 層 —— 產生器 + 350 條覆寫塊併入 `norm.css` | **G-delta**(`norm.css.dsp` +350 條) | 無 | **DONE** 2026-08-12 |
 | **D2** | 靜態設定 —— library-property + DSP 選擇器條件 | G-delta(同 D1 的檔,+1 個 DSP 區塊) | D1 | **DONE** 2026-08-12 |
-| **D3** | Java API —— `IceblueDensity` | 不動 CSS,**G 不變** | D1 | **DONE(巢狀那一條 OPEN)** 2026-08-12 |
+| **D3** | Java API —— `IceblueDensity` | 不動 CSS,**G 不變** | D1 | **DONE** 2026-08-12 |
 | **D4** | tablet 半 —— 兩套規則同檔、compact 那套加屬性前綴 | **G-delta**(`tablet.css.dsp`,與 P7 的 tablet 轉換同一顆) | P7 的 tablet 轉 CSS | **BLOCKED** —— P7 未完工 |
 | **D5** | 收尾 —— 移除 build 期旋鈕、`readme.md`、遷移指南、關掉 S36 | G 不變 | D1–D4 | **BLOCKED** —— 等 D4 |
 
@@ -72,8 +72,8 @@
 
 **3 / 5**(2026-08-12)。D1–D3 已完工並全部有實測證據(見 [L3.5](#l35-d1d3-的驗收證據));
 **D4 仍卡在 P7 的 tablet 轉換**,D5 相依於 D4。
-D3 唯一未結案的是巢狀反向覆蓋,那是缺一個 CSS 區塊而不是缺實作 ——
-見 [L3.1(g)](#g-巢狀反向覆蓋d3-的-densitydefault-目前是一張空頭支票) 與 [L3.4 第 5 項](#l34-未決事項需要裁示)。
+D3 沒有未結案項目 —— 巢狀反向覆蓋已於 **2026-08-13 裁示不支援**
+(見 [L3.1(g)](#g-巢狀反向覆蓋不支援已裁示) 與 [L3.4 第 5 項](#l34-未決事項需要裁示))。
 
 ### 一句話效益
 
@@ -190,14 +190,16 @@ public final class IceblueDensity {
 ```
 
 > **字彙已裁示為 `default` / `compact`**(2026-08-12),不是原建議的 `comfortable`。
-> 理由見 [L3.4 第 1 項](#l34-未決事項需要裁示)。`DEFAULT` 這個列舉值**不是**「沒設屬性」的同義詞 ——
-> 它是**顯式寫回預設密度**,唯一的用途是巢狀反向覆蓋(外層 compact、內層 `data-density="default"`)。
+> 理由見 [L3.4 第 1 項](#l34-未決事項需要裁示)。
 >
-> ⚠️ **但巢狀反向覆蓋目前做不到**,因為出貨的樣式表只有 `[data-density="compact"]` 一個區塊。
-> `apply(Density.DEFAULT)`(全站)是對的;`apply(component, Density.DEFAULT)` 在 compact 祖先底下
-> **無效**。具體例子、CSS 上為什麼沒有別的辦法、補一個 `[data-density="default"]` 區塊的成本
-> (+15331 B / gzip +1887 B),以及 **Marble 同樣沒做**,見 [L3.1(g)](#g-巢狀反向覆蓋d3-的-densitydefault-目前是一張空頭支票)。
-> **待裁示 —— [L3.4 第 5 項](#l34-未決事項需要裁示)。**
+> ~~`DEFAULT` 這個列舉值**不是**「沒設屬性」的同義詞 —— 它是**顯式寫回預設密度**,
+> 唯一的用途是巢狀反向覆蓋(外層 compact、內層 `data-density="default"`)。~~
+> **←2026-08-13 裁示:巢狀反向覆蓋不支援**([L3.4 第 5 項](#l34-未決事項需要裁示))。
+> `DEFAULT` 剩下**兩個**真實用途,都不需要第二個 CSS 區塊:
+> (a) `apply(Density.DEFAULT)` **關掉全站 compact** —— 屬性一換,compact 選擇器就選不到 `<html>`;
+> (b) `apply(component, Density.DEFAULT)` **收回同一個區域先前的 `COMPACT`** —— 前提是沒有
+> compact 祖先。**在 compact 祖先底下對子區域設 `default` 是 no-op**,理由與量測見
+> [L3.1(g)](#g-巢狀反向覆蓋不支援已裁示)。
 
 - 全站那支走 `Clients.evalJavaScript`,因為 `<html>` 不是 ZK component。
 - 區域那支走 ZK 原生的 `Component#setClientDataAttribute`,**沒有 JavaScript 字串**。
@@ -206,7 +208,8 @@ public final class IceblueDensity {
 **驗收**:Playwright 實測 —— 切換前後量同一個元素的 computed height,
 必須**在同一個 desktop 生命週期內**改變(證明沒有 reload);
 ~~以及巢狀情境(外層 compact、內層 `default`)兩層各自正確~~
-**←巢狀那一條 OPEN,等 L3.4 第 5 項裁示**(現況會失敗,不是實作沒寫,是缺一個 CSS 區塊)。
+**←2026-08-13 裁示不支援,本條刪除**。改為驗收 `DEFAULT` 僅存的兩個用途:
+全站關閉、以及**同一個區域的 `COMPACT` → `DEFAULT` 收回**(無 compact 祖先時)。
 
 > **命名**:類別放在主題套件 `org.zkoss.theme.iceblue11` 底下。
 > 「要不要升格進 ZK core(`org.zkoss.zul.theme`)成為跨主題的公開 API」是**產品面問題**,
@@ -435,9 +438,13 @@ public final class IceblueDensity {
 那 2366 個字面值**在兩個 profile 下相同**(由 (b) 的「`:root` 以外逐 byte 相同」證明),
 所以它們不在 compact 的範圍內 —— **ZK 10 的 `iceblue_c` 也一樣不動它們**,這不是本案的縮水。
 
-#### (g) 巢狀反向覆蓋:D3 的 `Density.DEFAULT` 目前是一張空頭支票
+#### (g) 巢狀反向覆蓋:不支援(已裁示)
 
-D3 寫著「`DEFAULT` 這個列舉值**不是**「沒設屬性」的同義詞 —— 它是**顯式寫回預設密度**,
+> **裁示(2026-08-13):不補 `[data-density="default"]` 區塊,巢狀反向覆蓋列為不支援。**
+> 本節保留全部推導與量測,因為它是這條裁示的依據,也是日後有人問「為什麼不做」時的答案。
+> API 與文件的處置見本節末〈裁示之後的處置〉。
+
+計畫書原本寫著「`DEFAULT` 這個列舉值**不是**「沒設屬性」的同義詞 —— 它是**顯式寫回預設密度**,
 唯一的用途是巢狀反向覆蓋」。**D1 做完之後這件事不成立**,原因很簡單:
 出貨的樣式表只有 `[data-density="compact"]` 一個區塊,**沒有 `[data-density="default"]`**。
 
@@ -500,6 +507,25 @@ default 區塊比 compact 區塊**大** (15331 vs 14414),因為 default profile 
 > **這不影響 D1/D2 已完成的任何結論。** 350 條 closure、333 個種子、oracle 逐值相同、
 > 三態實測 —— 全部與這一項無關。受影響的只有 D3 驗收裡「巢狀情境兩層各自正確」那一條。
 
+**裁示之後的處置(2026-08-13)**
+
+不補區塊,所以要確保這個限制**是被寫下來的、而且不會有人以為它會動**:
+
+1. **`Density.DEFAULT` 保留,但語意縮小成兩件它真的做得到的事**:
+   (a) `apply(Density.DEFAULT)` —— **關掉全站 compact**;
+   (b) `apply(component, Density.DEFAULT)` —— **收回同一個區域先前設過的 `COMPACT`**。
+   (b) 常被誤以為等於巢狀反向覆蓋,其實不是:它有效的前提是**沒有 compact 祖先**。
+   有 compact 祖先時它是 **no-op**。
+2. **不讓 `apply(component, DEFAULT)` 丟例外。** 它在 (b) 的情境下是正確且有用的呼叫,
+   丟例外會把一個合法用法擋掉,而真正該擋的情境(有沒有 compact 祖先)
+   **只有客戶端知道**,伺服器端的 Java 無從判斷。⇒ 用文件處理,不用執行期檢查。
+3. **`IceblueDensity` 的 Javadoc、`readme.md`、D5 的遷移指南都要明說不支援** ——
+   計畫書原本承諾過這個能力,沒寫下來的話,讀舊版計畫書的人會以為它還在。
+4. **`check-density-runtime.js` 增加一項正向驗收**:
+   同一個區域 `COMPACT` → `DEFAULT` 必須逐值回到預設(見 [L3.5](#l35-d1d3-的驗收證據) 的 [5])。
+   這一項守的是「(b) 真的有效」,而不是「(b) 在 compact 祖先下也有效」。
+5. **風險表第 2 項的成本維持 14.4 KB**,沒有變成 ~29.7 KB。這是本裁示買到的東西。
+
 ---
 
 ### L3.2 機制比較(ZK 10 vs 本案)
@@ -511,7 +537,7 @@ default 區塊比 compact 區塊**大** (15331 vs 14414),因為 default profile 
 | HTTP 請求 | 不變(換整個主題的 WCS) | **不變**(併進既有單一 WCS) |
 | 靜態設定 | `org.zkoss.theme.preferred` = `iceblue_c` | `org.zkoss.zul.theme.density` = `compact` |
 | 動態切換 | `Themes.setTheme()` 寫 cookie → **必須 `Executions.sendRedirect(null)` 重新載入整頁**(ZK 自己的 `zksandbox` / `zktest` 全部這樣寫) | 設一個屬性,**同一個 desktop 內生效,不 reload** |
-| 切換粒度 | **整站**(cookie 綁瀏覽器) | **整站 或 單一區域**,可巢狀、可反向覆蓋 |
+| 切換粒度 | **整站**(cookie 綁瀏覽器) | **整站 或 單一區域**(可巢狀加密;**反向覆蓋不支援**,見 [L3.1(g)](#g-巢狀反向覆蓋不支援已裁示)) |
 | 與 palette 組合 | **相乘**:N 個 palette × 2 個 density = 2N 份出貨物 | **正交**:palette 覆寫 sheet × density 屬性,重疊實測 0 |
 | 版本漂移風險 | 兩份必須人工保持同步 | 結構上不可能(單一來源產生) |
 | **內容是否已經漂移** | **否。** 同代比之下元件與 token 完全對齊(862/862、severity 20/20) | — |
@@ -541,8 +567,7 @@ default 區塊比 compact 區塊**大** (15331 vs 14414),因為 default profile 
 
 ### L3.4 未決事項(需要裁示)
 
-> 第 1 項**已裁示**;第 2–4 項**不阻擋 D1–D3**,但 D5 收尾前必須有答案。
-> 第 5 項是 2026-08-12 做 D3 時才發現的,它**只擋 D3 的巢狀那一條驗收**,不擋其餘任何東西。
+> 第 1、5 項**已裁示**;第 2–4 項**不阻擋 D1–D3**,但 D5 收尾前必須有答案。
 
 1. ~~**屬性值的字彙**~~ **【已裁示 2026-08-12:`default` / `compact`】**
    列舉為 `Density.DEFAULT("default")` / `Density.COMPACT("compact")`,與本主題 profile
@@ -570,12 +595,13 @@ default 區塊比 compact 區塊**大** (15331 vs 14414),因為 default profile 
    建議:**保留但凍結**,並在遷移指南標示 deprecated。歸 P8。
 4. **`tokens/_compact.css` 的公開性**:它從「可切換的來源」變成「產生器的輸入」之後,
    要不要仍然當作對外可覆寫的 API?與 P7 的 palette override sheet 是同一類問題,建議合併決定。
-5. **要不要補 `[data-density="default"]` 區塊**(2026-08-12 新增,**擋著 D3 的巢狀驗收**)。
-   不補 ⇒ `Density.DEFAULT` 只能關掉全站 compact,不能在巢狀範圍反向覆蓋,
-   Javadoc 與 D5 遷移指南要明說不支援;補 ⇒ 每個使用者多付 **+15331 B / gzip +1887 B**
-   (風險表第 2 項的成本從 14.4 KB 變成 ~29.7 KB)。
-   完整說明、例子與 Marble 的現況見 [L3.1(g)](#g-巢狀反向覆蓋d3-的-densitydefault-目前是一張空頭支票)。
-   **不阻擋 D3 的其餘部分** —— `IceblueDensity` 的兩支 API 與全站切換都已可驗收。
+5. ~~**要不要補 `[data-density="default"]` 區塊**~~ **【已裁示 2026-08-13:不補,巢狀反向覆蓋列為不支援】**
+   每個使用者多付 **+15331 B / gzip +1887 B**(風險表第 2 項從 14.4 KB 變成 ~29.7 KB)
+   換一個**沒有已知需求**的能力,不划算 —— 而且要注意這個能力**從來沒有存在過**:
+   它是計畫書寫下的意圖,不是既有行為,所以不支援不是功能倒退。
+   `DEFAULT` 剩下的兩個用途(全站關閉、同區域收回 `COMPACT`)**不需要**第二個區塊。
+   完整推導、例子、成本量測與 Marble 的現況見 [L3.1(g)](#g-巢狀反向覆蓋不支援已裁示),
+   裁示之後的四項處置在同一節末尾。
 
 ---
 
@@ -652,9 +678,12 @@ pages differing: 0      raster noise: 7 (全部 maxΔ 1,遠低於 ≤8 / ≤64px
 | [1] `apply(COMPACT)` | `12px`,按鈕高 **24.0px**;切換前設的 sentinel **仍在** ⇒ **沒有 reload** |
 | [3] `apply(DEFAULT)` | 回到 `16px` / **38.0px**,**與初始逐值相同** |
 | [2] 區域 `div.z-div` | 區域內 `16px→12px`、高 `38.0→24.0`;**區域外 `16px→16px`、高 `38.0→38.0`(沒有外洩)** |
+| [5] 同區域收回 | 對同一個區域再設 `default`:`12px→16px`、高 `24.0→38.0`,**逐值回到 [2] 之前** |
 | [4] library-property 於**載入時** | `12px` / **24.0px** —— **與 [1] 的執行期切換逐值相同** |
 
 [4] 是兩個機制的交叉驗證:D2 的靜態路徑與 D3 的執行期路徑落在**同一組數字**上。
+[5] 守的是 `DEFAULT` 在區域層**唯一有效**的用途(收回同一區域先前的 `COMPACT`);
+**沒有**驗收「compact 祖先底下的 default 區域」,那已裁示不支援,見 [L3.1(g)](#g-巢狀反向覆蓋不支援已裁示)。
 
 #### 負向控制(證明這些檢查看得見錯誤)
 
@@ -683,3 +712,4 @@ pages differing: 0      raster noise: 7 (全部 maxΔ 1,遠低於 ≤8 / ≤64px
 | 2026-08-12 | **artifact 版本拿掉 `jakarta` 標記**(`11.0.0-jakarta-Eval` → `11.0.0-Eval`,含三個 version-uid)。裁示:主題沒有用到 Java EE API,只有一個版本,不需要區分 javax/jakarta —— 實測佐證 `src/main/java` 只有 2 個檔、**0 個 `javax.`/`jakarta.` import**,編出來的 class 兩邊通用。`zk.version` 的 `-jakarta` **保留**(那是 ZK core,真的有 servlet API 分歧)。另裁示:`10.4.0` 從未公開發行,依公司政策一律標 `11.0`。重跑 `check:gate` 與 `visual:selftest` 皆 PASS |
 | 2026-08-12 | **D1 / D2 / D3 完工(3 / 5)。** 新增 `scripts/gen-density-css.js`(產生 350 條覆寫塊)、`scripts/density-delta.js`(讓 P4a/P4b/byte 三個閘門把 D1 這第三個 delta 減掉)、`scripts/check-density-property.js`(D2 三態)、`scripts/check-density-runtime.js`(D3 Playwright)、`src/main/java/.../IceblueDensity.java`。全部驗收數字見 [L3.5](#l35-d1d3-的驗收證據)。**三個計畫書沒預料到的發現**:(1) `check:p4a` 有一條「規則區塊數不變」的斷言,D1 一加區塊就報 `258 -> 259` 並跳過整個 `norm.css.dsp`,728 掉成 **666** —— 用 P4b 既有的「把別階 delta 套到 baseline 側」技法解決,**沒有放寬任何斷言**;(2) 計畫書列的四項斷言,對一個**被截成 333 條**(只有種子、沒跑閉包)的覆寫塊**全部通過** —— 四項只檢查「塊內部自洽」,真正讓「512 條可安全省略」成立的是反方向的性質,因此加了第 5 項斷言,並以負向控制證明它會觸發;(3) `density-delta` 起初把 D2 那個 DSP 條件裡 `${…}` 的 `{` 當成第二個規則區塊,使 `check:bytes` 進 FAIL,已修正。體積實測 **14414 B**(D1)/ **14498 B**(含 D2 的 DSP 條件),與計畫書記的 14412 B 差 2 B,以實測為準 |
 | 2026-08-12 | **新增 L3.1(g) + L3.4 第 5 項:巢狀反向覆蓋做不到,`Density.DEFAULT` 目前是空頭支票。** 做 D3 時發現:出貨的樣式表只有 `[data-density="compact"]` 一個區塊,所以「外層 compact、內層 `data-density="default"`」的內層**match 不到任何規則**,直接繼承外層算好的 compact 值。全站那一支(把 `<html>` 的屬性設成 `default`,讓 compact 選擇器選不到)是**對的**,所以精確的說法是「可以關掉全站 compact,不能在巢狀範圍反向覆蓋」。CSS 沒有別的辦法(`revert-layer` 會落回繼承值,而且本分支無 cascade layer)。補一個 `[data-density="default"]` 區塊的成本實測 **+15331 B raw / +1887 B gzip**(比 compact 區塊大,因為 default 側的值帶 `round()`/`calc()`)。**另實測 Marble 完全一樣**:全樹只有一個 `[data-density="compact"]`,沒有任何 `comfortable` 選擇器,但 `doc/spec/data-dense-mode.md` 明寫可以反向覆蓋、`MarbleDensity.Density.COMFORTABLE` 也存在 ⇒ Marble 的同一功能同樣是空頭支票,應回報(本計畫不動 Marble 的檔案)。D3 的巢狀驗收條列改標 OPEN,其餘 D3 驗收全部通過 |
+| 2026-08-13 | **裁示 L3.4 第 5 項:不補 `[data-density="default"]` 區塊,巢狀反向覆蓋列為不支援。** 理由:+15331 B raw / +1887 B gzip(風險表第 2 項 14.4 KB → ~29.7 KB)換一個**沒有已知需求**的能力;而且這個能力**從來沒有存在過** —— 它是計畫書寫下的意圖而非既有行為,所以不支援不是功能倒退。`Density.DEFAULT` **保留**,語意縮小成它真的做得到的兩件事:(a) 關掉全站 compact、(b) 收回**同一個區域**先前設過的 `COMPACT`。**不讓 `apply(component, DEFAULT)` 丟例外** —— (b) 是合法呼叫,而「有沒有 compact 祖先」是客戶端狀態,伺服器端 Java 無從判斷,所以用文件處理而非執行期檢查。連帶:`IceblueDensity` 的 class javadoc 新增〈Compact nests; opting back out of it does not〉一節並建議「讓全站維持預設、只標記要變密的區域」,`Density.DEFAULT` 與 `apply(Component, Density)` 的 javadoc 改寫;`readme.md` 明寫不支援;`check-density-runtime.js` **新增第 [5] 項正向驗收**(同區域 `COMPACT` → `DEFAULT` 必須逐值還原,實測 `12px→16px` / `24.0→38.0` PASS),並在檔頭寫明**不驗收**不支援的那一半。D3 的巢狀驗收條列刪除,D3 狀態從「DONE(巢狀那一條 OPEN)」轉為 **DONE** |

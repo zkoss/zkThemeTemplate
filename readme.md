@@ -87,6 +87,13 @@ IceblueDensity.apply(myGridPanel, Density.COMPACT);    // one region
 Prefer the library property above for a fixed default: `apply(Density)` has to reach the document
 root through JavaScript, which runs after the first paint and can flash.
 
+Compact nests, but **opting back out of it does not**: a region inside a compact ancestor cannot be
+returned to the default density, because the theme ships only a `[data-density="compact"]` rule and
+an inner `data-density="default"` matches nothing. So leave the app at the default density and mark
+the regions that should be dense, rather than making the app compact and carving exceptions out of
+it. `Density.DEFAULT` still turns compact off app-wide, and still takes back a `COMPACT` applied to
+that same region.
+
 **This does not cover the tablet stylesheet yet.** `zkmax`'s tablet layer is still selected by
 `@themeProfile` as described above, so an app that needs compact on touch devices must keep setting
 both. Once that stylesheet is converted, the two build-time knobs above go away and the property is

@@ -5,7 +5,8 @@
 
 ## 一、 執行總覽 (Executive Summary)
 
-* **當前狀態:** **完成帶建議 (PASS-WITH-FINDINGS)** —— D1 / D2 / D3 三階完工並驗收,**3 / 5**;
+* **當前狀態:** **完成 (PASS)** —— D1 / D2 / D3 三階完工並驗收,**3 / 5**,
+  唯一的 finding(巢狀反向覆蓋)已於 **2026-08-13 裁示不支援**並落實到程式碼與文件;
   D4 / D5 **BLOCKED**(相依於 P7 的 tablet 轉 CSS,本輪不可能開工)。
 * **核心結論:** 桌面 compact 已經從「第二個 282.8 KB 的 jar + 換主題重載頁面」變成
   **`norm.css.dsp` 尾端的一個 350 條 token 覆寫塊 + 一個屬性**,可靜態(library-property)、
@@ -98,7 +99,19 @@
 
 ## 四、 ⚠️ 待決策與裁示事項 (Decisions Required)
 
-### 議題一:要不要補 `[data-density="default"]` 區塊(擋著 D3 的巢狀驗收)
+### ~~議題一~~ 【已裁示 2026-08-13:不補,巢狀反向覆蓋列為不支援】
+
+**裁示結果**:採選項 B。`norm.css.dsp` 維持 14.4 KB 的成本;`Density.DEFAULT` 保留,
+語意縮小成 (a) 關掉全站 compact、(b) 收回同一區域先前的 `COMPACT`。
+`apply(component, DEFAULT)` **不丟例外**(見下)。連帶處置:
+`IceblueDensity` javadoc 新增一節並建議「讓全站維持預設、只標記要變密的區域」、
+`readme.md` 明寫不支援、`check-density-runtime.js` 新增第 [5] 項正向驗收
+(同區域 `COMPACT` → `DEFAULT` 逐值還原,實測 `12px→16px` / `24.0→38.0` **PASS**)。
+**D3 因此沒有未結案項目。** 以下保留裁示當時的材料。
+
+<details><summary>原議題與選項</summary>
+
+#### 要不要補 `[data-density="default"]` 區塊
 
 * **背景狀況:** 計畫書 D3 寫著 `Density.DEFAULT` 的「唯一用途是巢狀反向覆蓋」,
   但 D1 只出貨 `[data-density="compact"]` 一個區塊 ⇒
@@ -106,7 +119,7 @@
   直接繼承外層算好的 compact 值。
   **全站那一支是對的**(把 `<html>` 屬性設成 `default`,compact 選擇器就選不到)。
   CSS 沒有別的辦法(`revert-layer` 會落回繼承值,且本分支無 cascade layer)。
-  完整例子見 [L3.1(g)](l4-density-mechanism.md#g-巢狀反向覆蓋d3-的-densitydefault-目前是一張空頭支票)。
+  完整例子見 [L3.1(g)](l4-density-mechanism.md#g-巢狀反向覆蓋不支援已裁示)。
 * **影響與風險:** 不處理 ⇒ `apply(component, Density.DEFAULT)` 是個**靜默的 no-op**,
   API 存在但不做事,使用者只能從畫面猜。
 * **方案選項:**
@@ -121,6 +134,12 @@
 > `doc/spec/data-dense-mode.md` 明寫「a closer descendant can override it back to `comfortable`」,
 > 且 `MarbleDensity.Density.COMFORTABLE` 存在。⇒ **Marble 的同一功能同樣是空頭支票。**
 > 本輪**沒有動 Marble 的任何檔案**(L3.4 第 1 項已定調),建議另開一項回報。
+>
+> **←裁示之後這件事的性質變了**:本主題已明確列為不支援並寫進 javadoc 與 readme,
+> 所以要回報給 Marble 的不再是「你也有這個洞」,而是
+> **「規格書承諾了 CSS 沒實作的行為,兩邊要嘛一起補、要嘛一起改成不支援」**。
+
+</details>
 
 ### 議題二:P7 的 BLOCKED 是否正式解除
 
@@ -138,7 +157,7 @@
 
 ## 五、 未完成與下一步工作 (Outstanding Tasks & Next Steps)
 
-* [ ] **裁示議題一** ── *目的:決定 `Density.DEFAULT` 的語意,D3 才能真正結案。*
+* [x] ~~**裁示議題一**~~ ── **2026-08-13 已裁示:不支援巢狀反向覆蓋**,D3 結案。
 * [ ] **裁示議題二** ── *目的:解開 P7,否則 D4 / D5 沒有起點。*
 * [ ] **D4 tablet 半**(等 P7 完工)── *目的:讓同一個屬性也管平板層,消滅 S36 的分裂主題。*
       **這一階仍是全案風險最高的**:67 條「只在 default」的規則必須**逐條中和**,

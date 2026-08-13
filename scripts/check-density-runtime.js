@@ -39,13 +39,17 @@
  * rebuilt the way the Java builds it. If the Java stops matching, this fails loudly rather than
  * silently testing nothing.
  *
- * NOT COVERED: NESTED REVERSE OVERRIDE
- * ------------------------------------
- * `apply(component, Density.DEFAULT)` under a compact ancestor cannot work today — the theme
- * ships no `[data-density="default"]` block, so the attribute matches nothing and the element
- * inherits the ancestor's compact values. That is a missing CSS block, not a missing test; it is
- * L3.4 item 5 in tasks/l4-density-mechanism.md, and step 3 above deliberately tests the ROOT
- * case, which does work. Marble has the same gap.
+ * NESTED REVERSE OVERRIDE IS UNSUPPORTED, BY RULING
+ * -------------------------------------------------
+ * `apply(component, Density.DEFAULT)` under a compact ancestor does nothing — the theme ships no
+ * `[data-density="default"]` block, so the attribute matches nothing and the element inherits the
+ * ancestor's compact values. Shipping that block was measured at +15 KB for every user and ruled
+ * against on 2026-08-13 (L3.4 item 5 in tasks/l4-density-mechanism.md).
+ *
+ * So this does NOT test it. What it does test is the two things DEFAULT genuinely does: turn
+ * compact off at the root (step 3), and take back a COMPACT applied to the same region (step 5).
+ * Step 5 exists because that is the case most likely to be mistaken for the unsupported one, and
+ * the case that would silently break if the region path ever stopped writing the attribute.
  *
  * USAGE
  *   node scripts/check-density-runtime.js [--page <path>]   default: /button.zul
@@ -180,7 +184,7 @@ async function main(argv) {
 			if (!same(before, back)) violations.push('[3] apply(DEFAULT) did not restore the original metrics exactly');
 
 			/* ---------- [2] one region ---------- */
-			const region = await p.evaluate(({ token, sel, attribute, compact }) => {
+			const region = await p.evaluate(({ token, sel, attribute, compact, dflt }) => {
 				const els = [...document.querySelectorAll(sel)];
 				// An ancestor of the FIRST match that does not contain the LAST one, so the page
 				// really has an inside and an outside. Without that the test proves nothing.
@@ -198,9 +202,21 @@ async function main(argv) {
 				const before = readBoth();
 				scope.setAttribute(`data-${attribute}`, compact); // what setClientDataAttribute renders
 				const after = readBoth();
+				// [5] take-back: DEFAULT on the SAME region, with no compact ancestor. This is the
+				//     supported half of DEFAULT at region scope; the unsupported half (a default
+				//     region under a compact ancestor) is not tested — see the header.
+				scope.setAttribute(`data-${attribute}`, dflt);
+				const takenBack = readBoth();
 				scope.removeAttribute(`data-${attribute}`);
-				return { ok: true, scope: scope.tagName.toLowerCase() + '.' + (scope.className || '(no class)'), before, after };
-			}, { token: PROBE_TOKEN, sel: SEL, attribute: api.attribute, compact: api.tokens.COMPACT });
+				return {
+					ok: true,
+					scope: scope.tagName.toLowerCase() + '.' + (scope.className || '(no class)'),
+					before, after, takenBack,
+				};
+			}, {
+				token: PROBE_TOKEN, sel: SEL, attribute: api.attribute,
+				compact: api.tokens.COMPACT, dflt: api.tokens.DEFAULT,
+			});
 
 			if (!region.ok) {
 				violations.push(`[2] ${page} has no container holding a strict subset of ${SEL} — pick another --page`);
@@ -210,12 +226,18 @@ async function main(argv) {
 					`h ${region.before.inside.toFixed(1)} -> ${region.after.inside.toFixed(1)}`);
 				console.log(`[2]   outside:   ${region.before.outsideToken} -> ${region.after.outsideToken}  ` +
 					`h ${region.before.outside.toFixed(1)} -> ${region.after.outside.toFixed(1)}`);
+				console.log(`[5]   take-back: ${region.after.insideToken} -> ${region.takenBack.insideToken}  ` +
+					`h ${region.after.inside.toFixed(1)} -> ${region.takenBack.inside.toFixed(1)}`);
 				if (region.after.insideToken === region.before.insideToken) {
 					violations.push('[2] the region did not go compact');
 				}
 				if (region.after.outsideToken !== region.before.outsideToken ||
 					region.after.outside !== region.before.outside) {
 					violations.push('[2] a control OUTSIDE the region changed — the scope leaked');
+				}
+				if (region.takenBack.insideToken !== region.before.insideToken ||
+					region.takenBack.inside !== region.before.inside) {
+					violations.push('[5] DEFAULT did not take back the region\'s own COMPACT');
 				}
 			}
 

@@ -26,12 +26,25 @@ import org.zkoss.zk.ui.util.Clients;
  * <p>Density is a declarative knob: a {@code data-density} attribute that re-declares the 350
  * size tokens the compact profile changes. Because those are the tokens every component reads,
  * the attribute takes effect at <em>any</em> scope — the document root for the whole app, or one
- * component's subtree for a single region — and it nests, so an inner scope can set
- * {@link Density#DEFAULT} to opt back out of a compact ancestor.
+ * component's subtree for a single region.
  *
  * <p>Before ZK 11 this was a separate theme jar ({@code iceblue_c}) selected by
  * {@code org.zkoss.theme.preferred}, so switching meant a cookie and a full page reload, and the
  * granularity was the whole site. Neither is true here.
+ *
+ * <h3>Compact nests; opting back out of it does not</h3>
+ *
+ * <p>Compact can be applied at any depth, and a compact region inside a compact app is simply
+ * compact. What is <b>not supported</b> is the reverse: a region inside a compact ancestor cannot
+ * be returned to the default density. The theme ships one rule block,
+ * {@code [data-density="compact"]}; there is no {@code [data-density="default"]} block for an
+ * inner scope to match, so such a region inherits the ancestor's compact values and the call is a
+ * no-op. Shipping the second block was measured at +15 KB for every user and ruled against
+ * (see {@code tasks/l4-density-mechanism.md} L3.1(g)).
+ *
+ * <p>So structure the page the other way round: leave the app at the default density and mark the
+ * regions that should be dense, rather than making the app compact and carving exceptions out
+ * of it.
  *
  * <h3>Use the library property for a fixed default</h3>
  *
@@ -76,8 +89,9 @@ public final class IceblueDensity {
 		/**
 		 * The theme's default density — the {@code :root} token values.
 		 *
-		 * <p>This is <em>not</em> a synonym for "no attribute": it writes the default density back
-		 * explicitly, which is what makes a region opt out of a compact ancestor.
+		 * <p>Two things it does: turn compact off for the whole app, and take back a
+		 * {@link #COMPACT} previously applied to the same region. It does <em>not</em> return a
+		 * region to the default density underneath a compact ancestor — see the class javadoc.
 		 */
 		DEFAULT("default"),
 		/** Compact density — the values ZK used to ship as the separate {@code iceblue_c} theme. */
@@ -118,6 +132,12 @@ public final class IceblueDensity {
 	 *
 	 * <p>Uses ZK's native {@link Component#setClientDataAttribute(String, String)}, so no
 	 * JavaScript string is involved and the subtree re-renders when the value changes.
+	 *
+	 * <p>Passing {@link Density#DEFAULT} takes back a {@link Density#COMPACT} applied earlier to
+	 * this same component. It does <b>not</b> carve a default-density region out of a compact
+	 * ancestor — that is unsupported and silently does nothing (see the class javadoc). No
+	 * exception is thrown, because whether an ancestor is compact is client-side state this method
+	 * cannot see, and the take-back case is a legitimate call.
 	 *
 	 * @param scope   the component whose subtree should adopt the density.
 	 * @param density the density to apply; never {@code null}.
