@@ -35,10 +35,12 @@ body {
     border-right: 1px solid var(--zk-color-outline-variant);
 }
 
-/* The sidebar "Compact density" switch drives the theme's own data-dense mode via
-   UseCaseVM.toggleCompactMode → MarbleDensity.apply(...), which sets data-density on
-   <html>. The [data-density="compact"] rule itself ships in the theme
-   (tokens/_sizing.css), so there is nothing density-related to define here. */
+/* The sidebar "Compact density" switch drives the theme's own compact mode via
+   UseCaseVM.toggleCompactMode → IceblueDensity.apply(...), which sets data-density on
+   <html>. The [data-density="compact"] rule itself ships in the theme (generated into
+   zul/css/norm.css by scripts/gen-density-css.js), so there is nothing density-related
+   to define here — and nothing here may hard-code a size, or the switch would visibly
+   skip the sidebar. See tasks/l4-density-mechanism.md. */
 
 /* ============================================
    Brand Presets showcase (usecase/brand-switcher.zul)

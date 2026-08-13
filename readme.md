@@ -132,6 +132,16 @@ We suggest you customize a theme by overriding existing variables instead of mod
 * open a simple preview page in a browser: http://localhost:8080
 * add your own pages containing the components to preview under `/preview/web`
 
+### component browser
+
+http://localhost:8080/usecase/index.zul is a sidebar shell over the same pages, grouped by kind,
+with a **Compact density** switch in the sidebar that calls `IceblueDensity.apply(...)` — so the
+switch demonstrates the shipped API rather than a demo-only class.
+
+Every page is deep-linkable: append the page path minus `.zul`, e.g.
+`…/usecase/index.zul#button` or `…/usecase/index.zul#utility/colors`. Browser back and forward
+work, so a review comment can point at an exact page and density.
+
 
 ## continuous compile/watch less files
 in a separate console:
