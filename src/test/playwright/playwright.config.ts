@@ -47,5 +47,28 @@ export default defineConfig({
       name: 'ab-capture',
       testMatch: /ab-capture\.spec\.ts/,
     },
+    {
+      // The desktop project can never see zkmax/css/tablet.css.dsp: ZK links it but leaves it
+      // `disabled`, and only flips it on when `zk.mobile` is true (zk/index.ts — the server
+      // sets zk.mobile from the request UA; TabletThemeURIHandler injects the link at all).
+      // visual-ab-harness.md §6.1 measured exactly that: HTTP 200, 26145 B, never painted.
+      // So a desktop-only A/B reports a GUARANTEED zero for that file, which is not evidence.
+      //
+      // Geometry and UA are Marble's tablet project verbatim (zkThemeTemplate's
+      // playwright.config.ts) rather than a fresh guess, so shots taken here are comparable
+      // with the ones Marble already reviews. hasTouch/isMobile make the emulation faithful
+      // enough that ZK's touch code paths run too, which is what the tablet layer compensates.
+      name: 'ab-capture-mobile',
+      testMatch: /ab-capture\.spec\.ts/,
+      use: {
+        viewport: { width: 834, height: 1112 },
+        userAgent:
+          'Mozilla/5.0 (iPad; CPU OS 16_0 like Mac OS X) ' +
+          'AppleWebKit/605.1.15 (KHTML, like Gecko) ' +
+          'Version/16.0 Mobile/15E148 Safari/604.1',
+        hasTouch: true,
+        isMobile: true,
+      },
+    },
   ],
 });

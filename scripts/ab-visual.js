@@ -188,10 +188,12 @@ async function guardProbe() {
 
 /* ------------------------------------------------------------------ capture */
 
-function runPlaywright(outDir) {
+const PROJECTS = ['ab-capture', 'ab-capture-mobile'];
+
+function runPlaywright(outDir, project) {
 	execFileSync(
 		'npx',
-		['playwright', 'test', '--config', 'src/test/playwright/playwright.config.ts'],
+		['playwright', 'test', '--config', 'src/test/playwright/playwright.config.ts', '--project', project],
 		{
 			cwd: REPO,
 			stdio: 'inherit',
@@ -200,8 +202,9 @@ function runPlaywright(outDir) {
 	);
 }
 
-async function capture(label) {
+async function capture(label, project = PROJECTS[0]) {
 	if (!label || !/^[A-Za-z0-9._-]+$/.test(label)) die(`capture needs a label matching [A-Za-z0-9._-]+`);
+	if (!PROJECTS.includes(project)) die(`unknown project "${project}" — one of: ${PROJECTS.join(', ')}`);
 	if (!fs.existsSync(MARBLE_WEB)) die(`no page corpus at ${MARBLE_WEB} — is MARBLE_HOME correct?`);
 
 	const theme = themeFingerprint();
@@ -211,6 +214,7 @@ async function capture(label) {
 
 	console.log('');
 	console.log(`label:           ${label}`);
+	console.log(`project:         ${project}`);
 	console.log(`corpus:          ${MARBLE_WEB}`);
 	console.log(`theme output:    ${theme.files} .css.dsp`);
 	console.log(`theme finger:    ${theme.fingerprint.slice(0, 16)}`);
@@ -220,7 +224,7 @@ async function capture(label) {
 	try {
 		await guardProbe();
 		try {
-			runPlaywright(outDir);
+			runPlaywright(outDir, project);
 		} catch {
 			// A failing page yields no PNG, which `diff` reports as `missing`. Keep going so
 			// the rest of the corpus is still captured, but do not pretend the run was clean.
@@ -233,6 +237,10 @@ async function capture(label) {
 	const shots = fs.readdirSync(outDir).filter(f => f.endsWith('.png')).sort();
 	const manifest = {
 		label,
+		// Part of the comparison contract for the same reason the playwright version is:
+		// desktop and mobile shots are different geometry AND a different stylesheet set
+		// (the tablet layer is disabled on desktop), so pairing them would be meaningless.
+		project,
 		capturedAt: new Date().toISOString(),
 		corpus: MARBLE_WEB,
 		theme,
@@ -295,6 +303,12 @@ ${differing.map(row).join('\n')}
 function diff(labelA, labelB) {
 	const a = readManifest(labelA);
 	const b = readManifest(labelB);
+	// A hard error, not a warning like the renderer check below: desktop and mobile differ in
+	// viewport AND in which stylesheets are live, so EVERY page would differ and the count
+	// would carry no information at all. Captures made before `project` existed are desktop.
+	const pa = a.project ?? PROJECTS[0];
+	const pb = b.project ?? PROJECTS[0];
+	if (pa !== pb) die(`cannot compare across projects — ${labelA} is "${pa}", ${labelB} is "${pb}"`);
 	const mapA = new Map(a.pages.map(p => [p.page, p]));
 	const mapB = new Map(b.pages.map(p => [p.page, p]));
 	const all = [...new Set([...mapA.keys(), ...mapB.keys()])].sort();
@@ -323,6 +337,7 @@ function diff(labelA, labelB) {
 		console.log(`WARNING:         renderer differs (@playwright/test ${a.playwright} vs ${b.playwright}).`);
 		console.log(`                 Pixel differences below may be the browser, not the theme. Re-capture both sides.`);
 	}
+	console.log(`project:         ${pa}`);
 	console.log(`A:               ${labelA}  (${a.pages.length} pages, ${a.theme.files} .css.dsp)`);
 	console.log(`B:               ${labelB}  (${b.pages.length} pages, ${b.theme.files} .css.dsp)`);
 	console.log(`theme finger:    ${sameTheme ? 'SAME' : 'DIFFERENT'}  ${a.theme.fingerprint.slice(0, 16)} / ${b.theme.fingerprint.slice(0, 16)}`);
@@ -359,13 +374,18 @@ function diff(labelA, labelB) {
 
 /* ------------------------------------------------------------------ selftest */
 
-async function selftest() {
+async function selftest(project = PROJECTS[0]) {
 	// L2.4: prove the harness against the SAME build twice before trusting it across builds.
-	console.log(`selftest: capturing the same build twice — expecting "pages differing: 0"`);
-	const a = await capture('selftest-a');
-	const b = await capture('selftest-b');
+	// Per-project, because determinism does not transfer: every fix in §5 was measured at
+	// 1280x900, and a different viewport re-opens the layout/settling questions they closed.
+	if (!PROJECTS.includes(project)) die(`unknown project "${project}" — one of: ${PROJECTS.join(', ')}`);
+	const suffix = project === PROJECTS[0] ? '' : `-${project.replace(/^ab-capture-/, '')}`;
+	const [la, lb] = [`selftest${suffix}-a`, `selftest${suffix}-b`];
+	console.log(`selftest: capturing the same build twice (${project}) — expecting "pages differing: 0"`);
+	const a = await capture(la, project);
+	const b = await capture(lb, project);
 	if (a || b) console.log(`\nselftest: at least one capture pass had a failing page (see above)`);
-	const rc = diff('selftest-a', 'selftest-b');
+	const rc = diff(la, lb);
 	console.log('');
 	console.log(rc === 0 ? `selftest: PASS` : `selftest: FAIL — the harness is not deterministic yet`);
 	return rc;
@@ -376,16 +396,20 @@ async function selftest() {
 async function main(argv) {
 	const [cmd, ...rest] = argv;
 	switch (cmd) {
-		case 'capture': return capture(rest[0]);
+		case 'capture': return capture(rest[0], rest[1]);
 		case 'diff':
 			if (rest.length !== 2) die(`usage: ab-visual diff <labelA> <labelB>`);
 			return diff(rest[0], rest[1]);
-		case 'selftest': return selftest();
+		case 'selftest': return selftest(rest[0]);
 		default:
 			console.error(`usage:
-  node scripts/ab-visual.js capture <label>       capture the current build under <label>
-  node scripts/ab-visual.js diff <labelA> <labelB>   compare two captures
-  node scripts/ab-visual.js selftest              capture the same build twice, expect 0 differing
+  node scripts/ab-visual.js capture <label> [project]   capture the current build under <label>
+  node scripts/ab-visual.js diff <labelA> <labelB>      compare two captures (same project only)
+  node scripts/ab-visual.js selftest [project]          capture the same build twice, expect 0 differing
+
+projects:
+  ab-capture          Desktop Chrome 1280x900 (default)
+  ab-capture-mobile   iPad Air 834x1112, mobile UA — the only way the tablet layer is live
 
 env:
   MARBLE_HOME   path to the Marble worktree that owns the page corpus
