@@ -61,7 +61,17 @@ const STRIP_PREFIX = /^-(?:moz|ms|o|khtml)-/;
 const CARVE_OUT = new Set(['-moz-osx-font-smoothing']);
 /** P4a deliberately skipped the P7 holdout; its 60 eligible declarations move to P7. */
 const DEFERRED = new Set(['zkmax/css/tablet.css.dsp']);
-const EXPECTED_REMOVALS = 728;
+/**
+ * 728 until the ZK 11 sync (2026-08-13), then 731.
+ *
+ * The docstring above says a disagreement between the two declarations must not be reconciled
+ * by editing one to match the other. That is not what happened here, and the distinction is the
+ * whole point of the tripwire: BOTH sides moved to 731 on their own, from `baseline/` gaining
+ * upstream's `.z-cell-range-*` block in calendar (see baseline/.built-from). That block carries
+ * one `.borderRadius()` expansion, whose `-moz-`/`-o-`/`-ms-` arms are exactly 3 newly eligible
+ * removals. File count is unchanged at 45 because calendar.css.dsp was already in the set.
+ */
+const EXPECTED_REMOVALS = 731;
 const EXPECTED_FILES = 45;
 
 /**

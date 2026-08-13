@@ -214,3 +214,28 @@
 .z-datebox-popup .z-calendar ~ .z-datebox-timezone {
 	margin: 0 5px 5px;
 }
+/* Range highlight.
+ *
+ * Daterangebox styles live in zkcml/zkmax (EE) — see
+ * js/zkmax/db/css/daterangebox.css. The `.z-cell-range-*` rules below
+ * remain in CE because Calendar's public setRangeHighlight() API uses
+ * them; daterangebox just consumes them. */
+.z-calendar-cell.z-cell-range-begin,
+.z-calendar-cell.z-cell-range-end {
+	background: var(--zk-calendar-selected-background-color);
+	color: var(--zk-calendar-selected-color);
+	-webkit-border-radius: var(--zk-base-border-radius);
+	border-radius: var(--zk-base-border-radius);
+}
+.z-calendar-cell.z-cell-range-mid {
+	background: var(--zk-color-primary-lighter);
+	border-radius: 0;
+}
+.z-calendar-cell.z-cell-range-preview-mid {
+	background: var(--zk-color-primary-lighter);
+	opacity: 0.6;
+}
+.z-calendar-cell.z-cell-range-preview-end {
+	outline: 1px dashed var(--zk-color-primary);
+	outline-offset: -1px;
+}

@@ -119,11 +119,16 @@ const HEADER =
 	'<%@ taglib uri="http://www.zkoss.org/dsp/zk/core" prefix="z" %>' +
 	'<%@ taglib uri="http://www.zkoss.org/dsp/web/theme" prefix="t" %>';
 
-/** Output paths that must NOT get the header (plan premise #9, re-verified against baseline/). */
+/** Output paths that must NOT get the header (plan premise #9, re-verified against baseline/).
+ *
+ * This set is DERIVED, not chosen: a file carries the header iff its LESS pulled in
+ * `~./zul/less/_header.less`. So it moves when upstream's imports move — `js/zkmax/grid` left
+ * this set on 2026-08-13, because the ZK 11 sync added that import at the top of grid.less
+ * (see baseline/.built-from). Re-checked against the 11.0.0 jar: listbox and tree still carry
+ * no header there, grid now does. */
 const NO_HEADER = new Set([
 	'js/zkmax/sel/css/listbox.css.dsp',
 	'js/zkmax/sel/css/tree.css.dsp',
-	'js/zkmax/grid/css/grid.css.dsp',
 ]);
 
 /**

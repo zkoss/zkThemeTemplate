@@ -16,3 +16,210 @@
 	position: sticky;
 	z-index: 1;
 }
+
+/* ── Responsive stacking mode (ZK-5409) ──────────────────────────────────
+ *
+ * PURE CSS TRANSFORMATION. JS only toggles the `.z-grid--stacking` class
+ * and sets `--zk-resp-cols`. Everything else — turning the <table> into a
+ * card grid — happens here.
+ *
+ * Why this works without DOM cloning:
+ *  - We re-display table elements (table/thead/tbody/tr/td) as block/grid/flex
+ *  - Column labels are injected via `td::before { content: attr(data-label) }`
+ *    where `data-label` is stamped on each <td> by `Grid._markStackingCells`
+ *  - Live widgets remain in their original <td>, so click / type / setValue all work
+ *  - Customer CSS targeting `.z-row / .z-cell / tr / td` still applies — we
+ *    don't replace the DOM, only its visual layout
+ */
+
+/* Allow vertical scroll on fixed-height stacking grids (override
+ * `overflow: hidden` from .z-grid). */
+.z-grid--stacking {
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+
+/* Hide table-mode chrome that has no card-layout meaning.
+ * Auxhead is inside .z-grid-header so it follows automatically.
+ *
+ * `.z-frozen` uses descendant scope (no `>`): the frozen sub-node lives
+ * at a varying depth inside the grid's DOM, so a tight child combinator
+ * silently fails to match. Known trade-off: a nested non-stacking grid
+ * inside one of this grid's cards also has its own `.z-frozen` hidden
+ * while the outer is stacking. Acceptable because nested grids in cards
+ * are rare and the alternative (broken graceful-fallback for the common
+ * case) is observable in every responsive grid that declares <frozen>. */
+.z-grid--stacking > .z-grid-header,
+.z-grid--stacking .z-frozen {
+	display: none;
+}
+
+/* `sizedByContent="true"` and similar table-mode features set explicit
+ * pixel widths on the inner table / colgroup that overflow the
+ * container in stacking mode, producing a stray horizontal scrollbar.
+ * Force the body + footer to stay inside the card layout. */
+.z-grid--stacking > .z-grid-body,
+.z-grid--stacking > .z-grid-footer {
+	overflow-x: hidden;
+	max-width: 100%;
+}
+.z-grid--stacking > .z-grid-body > table,
+.z-grid--stacking > .z-grid-footer > table {
+	width: 100% !important;
+	min-width: 0;
+	table-layout: auto;
+}
+
+/* Turn table layout into block flow. <tbody> becomes a CSS Grid so the
+ * rows lay out as N-cards-per-row, controlled by --zk-resp-cols. */
+.z-grid--stacking .z-grid-body > table,
+.z-grid--stacking .z-grid-body > table > thead {
+	display: block;
+}
+/* Hide the inner column header row (its labels are surfaced via
+ * per-cell `data-label` instead). */
+.z-grid--stacking .z-grid-body > table > thead > tr {
+	display: none;
+}
+.z-grid--stacking .z-grid-body > table > tbody:not(.z-grid-emptybody) {
+	display: grid;
+	grid-template-columns: repeat(var(--zk-resp-cols, 1), 1fr);
+	gap: 8px;
+	padding: 8px;
+	box-sizing: border-box;
+}
+/* Each <tr> becomes a card. */
+.z-grid--stacking .z-grid-body > table > tbody:not(.z-grid-emptybody) > tr {
+	display: flex;
+	flex-direction: column;
+	border: 1px solid var(--zk-base-border-color);
+	border-radius: 4px;
+	background: var(--zk-mesh-background-color);
+	overflow: hidden;
+}
+/* Each <td> becomes a key-value entry, with the column label injected
+ * from `data-label`. Separator between entries is rendered as a TOP
+ * border on every visible cell that follows another visible cell —
+ * using a sibling selector that skips `.z-cell-hide-stacking` (which
+ * is `display:none` but still present in the DOM). This avoids a
+ * stray bottom border on the last visible cell when the last column
+ * is hidden via `responsiveVisible="false"`. */
+.z-grid--stacking .z-grid-body > table > tbody:not(.z-grid-emptybody) > tr > td {
+	display: block;
+	padding: var(--zk-mesh-body-padding);
+	border-top: none;
+	border-bottom: none;
+}
+.z-grid--stacking .z-grid-body > table > tbody:not(.z-grid-emptybody) > tr > td:not(.z-cell-hide-stacking) ~ td:not(.z-cell-hide-stacking) {
+	border-top: 1px solid var(--zk-mesh-content-border-color);
+}
+/* `data-label` is stamped by Grid.ts `_markStackingCells`. Empty
+ * labels (`data-label=""`) and missing attribute → no ::before. */
+.z-grid--stacking .z-grid-body > table > tbody:not(.z-grid-emptybody) > tr > td[data-label]:not([data-label=""])::before {
+	content: attr(data-label);
+	display: block;
+	margin-bottom: 2px;
+	font-family: var(--zk-base-content-font-family);
+	font-size: var(--zk-font-size-small);
+	font-weight: 600;
+	font-style: normal;
+	color: var(--zk-text-color-light);
+}
+/* Per-column hide: <column responsiveVisible="false">. */
+.z-grid--stacking .z-grid-body > table > tbody:not(.z-grid-emptybody) > tr > td.z-cell-hide-stacking {
+	display: none;
+}
+/* Same hide token applies to groupfoot cells. */
+.z-grid--stacking .z-grid-body > table > tbody:not(.z-grid-emptybody) > tr.z-groupfoot > td.z-cell-hide-stacking {
+	display: none;
+}
+/* Group / Groupfoot span all columns of the cards-per-row grid.
+ * Explicit start/end rather than the `grid-column: 1 / -1` shorthand:
+ * that shorthand is what zkless-engine's LESS 3.13.1 silently miscompiled
+ * to `-1` (see doc/ — the reason P0 diffs declarations, not exit codes).
+ * Kept split here so this file stays declaration-equivalent to the jar. */
+.z-grid--stacking .z-grid-body > table > tbody:not(.z-grid-emptybody) > tr.z-group,
+.z-grid--stacking .z-grid-body > table > tbody:not(.z-grid-emptybody) > tr.z-groupfoot {
+	grid-column-start: 1;
+	grid-column-end: -1;
+}
+/* `<group>` headers span all columns and carry their own label
+ * (the group name) — no per-cell data-label treatment.
+ * Groupfoot cells DO get data-label so users can tell which column
+ * each total belongs to (stamped by `Grid._markStackingCells`). */
+.z-grid--stacking .z-grid-body > table > tbody:not(.z-grid-emptybody) > tr.z-group > td::before {
+	content: none;
+}
+/* Groupfoot card styling. */
+.z-grid--stacking .z-grid-body > table > tbody:not(.z-grid-emptybody) > tr.z-groupfoot {
+	background: var(--zk-mesh-group-footer-background-color);
+}
+/* Odd-row stripe in cards. */
+.z-grid--stacking .z-grid-body > table > tbody:not(.z-grid-emptybody) > tr.z-grid-odd {
+	background: var(--zk-mesh-stripe-background-color);
+}
+/* Empty-body placeholder ("No data available") — span the full
+ * container as a single block, otherwise the inner <td> collapses
+ * to the message's content width inside the `display: block` table. */
+.z-grid--stacking .z-grid-body > table > tbody.z-grid-emptybody,
+.z-grid--stacking .z-grid-body > table > tbody.z-grid-emptybody > tr,
+.z-grid--stacking .z-grid-body > table > tbody.z-grid-emptybody > tr > td {
+	display: block;
+	width: 100%;
+}
+/* Nested grid hover safety. CSS `:hover` cascades to every ancestor,
+ * so hovering an inner card lights up the outer card too. Suppress
+ * the outer card's hover background whenever any descendant `.z-row`
+ * is being hovered — only the deepest card highlights. */
+.z-grid--stacking .z-grid-body .z-row:has(.z-row:hover) > .z-cell,
+.z-grid--stacking .z-grid-body .z-row:has(.z-row:hover) > .z-row-inner {
+	background: inherit;
+}
+
+/* Footer: keep visible as a full-width card below the row grid.
+ * Render the original <table>-based footer as a card. */
+.z-grid--stacking > .z-grid-footer > table,
+.z-grid--stacking > .z-grid-footer > table > tbody:not(.z-grid-emptybody) {
+	display: block;
+}
+.z-grid--stacking > .z-grid-footer > table > tbody:not(.z-grid-emptybody) > tr {
+	display: flex;
+	flex-direction: column;
+	margin: 0 8px 8px;
+	border: 1px solid var(--zk-base-border-color);
+	border-radius: 4px;
+	background: var(--zk-mesh-foot-background-color);
+	overflow: hidden;
+}
+/* Same separator-as-top-border trick as the body section: visible
+ * cells that follow another visible cell get a top border. This is
+ * robust against the last column being hidden via `responsiveVisible`. */
+.z-grid--stacking > .z-grid-footer > table > tbody:not(.z-grid-emptybody) > tr > td {
+	display: block;
+	padding: var(--zk-mesh-body-padding);
+	border-bottom: none;
+}
+.z-grid--stacking > .z-grid-footer > table > tbody:not(.z-grid-emptybody) > tr > td:not(.z-cell-hide-stacking):not(:empty) ~ td:not(.z-cell-hide-stacking):not(:empty) {
+	border-top: 1px solid var(--zk-mesh-content-border-color);
+}
+/* Hide empty footer cells (no text content). Two paths:
+ *   - native `:empty` for cells with truly no children
+ *   - `z-cell-hide-stacking` stamped by `Grid._markStackingCells` when
+ *     `<td>` wraps an inner div whose text is whitespace-only OR the
+ *     corresponding column has `responsiveVisible="false"` */
+.z-grid--stacking > .z-grid-footer > table > tbody:not(.z-grid-emptybody) > tr > td:empty,
+.z-grid--stacking > .z-grid-footer > table > tbody:not(.z-grid-emptybody) > tr > td.z-cell-hide-stacking {
+	display: none;
+}
+/* Show the column label above each footer value so users can tell
+ * which column each total belongs to. */
+.z-grid--stacking > .z-grid-footer > table > tbody:not(.z-grid-emptybody) > tr > td[data-label]:not([data-label=""])::before {
+	content: attr(data-label);
+	display: block;
+	margin-bottom: 2px;
+	font-family: var(--zk-base-content-font-family);
+	font-size: var(--zk-font-size-small);
+	font-weight: 600;
+	font-style: normal;
+	color: var(--zk-text-color-light);
+}

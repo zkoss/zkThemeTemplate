@@ -22,9 +22,26 @@
 # just as it is for the other 77. NOTE: at the moment of import baseline and candidate come
 # from the SAME compile, so cssdiff's "0 differing" is true by construction and proves
 # nothing for them; the real comparison starts when they are converted to CSS.
+# 
+# backfill for ZK 11 parity (2026-08-13) — see tasks/zk11-jar-baseline-visual-ab.md
+# Upstream (origin/master) moved 6 commits past the fork commit above. Measured against
+# zk 11.0.0-jakarta.FL.20260811-Eval's own jars, exactly 3 outputs had drifted:
+#   js/zkmax/grid/css/grid.css.dsp   +.z-grid--stacking responsive card reflow (ZK-5409)
+#   js/zul/db/css/calendar.css.dsp   +.z-cell-range-* (Calendar.setRangeHighlight)
+#   zul/font/font-awesome.css.dsp    -.fas/.fass/.far/.fab bare aliases (upstream REMOVED)
+# All three are now the jar's bytes verbatim, extracted by scripts/jar-baseline.js.
+# 
+# Why the jar rather than a local zklessc run: the jar is built by ZK's own pipeline, so it
+# is an INDEPENDENT witness to the toolchain this branch is retiring. It earns that role by
+# measurement, not assertion — 78 of its 81 outputs were ALREADY byte-identical to this
+# baseline before the backfill, and those 3 were the entire difference. The two toolchains
+# agreeing on 78/78 of the untouched files is what licenses trusting it on the other 3.
+# Same caveat as 2026-08-05 applies to those 3: their baseline and the ZK 11 jar are now the
+# same bytes by construction, so `cssdiff jar baseline` reporting 0 proves nothing for them;
+# what it does prove is that no OTHER file drifted.
 #
 # files: 86
-e6e044f96093a510d3f3ae1b1fd7cf4f6d20d61de506f2711084483ef71ffea7  baseline/.built-from
+13669fb35230996e158a5973a8dbdb57ee5e25e4103d67ff59ff3ec763e1c63c  baseline/.built-from
 1c905b7f0438d19ca2d8c763211e58266783eecb7dfff022298537c1e9bc8b17  baseline/js/zkex/grid/css/grid.css.dsp
 4766e8dcb502071e5361d7dacced8591d8d4b86cc8ba31a58af75872758cf24e  baseline/js/zkex/inp/css/colorbox.css.dsp
 cb17b1c7626655c3cade3190623a13049cbd91c21a958c798026f826cbc37e04  baseline/js/zkex/layout/css/columnlayout.css.dsp
@@ -37,7 +54,7 @@ df54c745629840587a65f0effe87b1c89944364bf54d309af36873188d06dc94  baseline/js/zk
 75ad20b0a6814599eaff9adf701eb4f358e1e4d0d79b95d0022c6c67fa6fd65f  baseline/js/zkmax/cropper/css/cropper.css.dsp
 e0d2b851d6f1e18999389b907aff330f12379d7831558ed946e7db938b557239  baseline/js/zkmax/db/css/daterangebox.css.dsp
 0eb95a1bc5baead1a496da587942c271c1e8e67bab298de53b87ab6b8d14581f  baseline/js/zkmax/goldenlayout/css/goldenlayout.css.dsp
-fe2b076577031707b17d22d005f3d5a58bbaa42492a4ca1e898a4a9b4b8fbfd6  baseline/js/zkmax/grid/css/grid.css.dsp
+b1510b8780df8f9f0599fa764ff5efaf2cec96db22e705e17a0088bae57fe0c8  baseline/js/zkmax/grid/css/grid.css.dsp
 56a50a7e2f4c69794d06a605064a585dd77c5f2c6593bfe6561720cf43216966  baseline/js/zkmax/inp/css/cascader.css.dsp
 d57849606e636002c66fa3d8cddc9a1c4ecac01ef260a7307aca16f06534c087  baseline/js/zkmax/inp/css/chosenbox.css.dsp
 15835bf8297ceb7fe49f453903fe82d659c2156e095364378d20b7723c0027bf  baseline/js/zkmax/inp/css/searchbox.css.dsp
@@ -69,7 +86,7 @@ cb9779b68d4f3a177dc26417424311e458e8fc09e91a2eb44a579d524b2e8c9b  baseline/js/zk
 fcbab738192e65f7d9ca90bbf4aaf5590ac23785236929afb48ed6c2c5a6a4b4  baseline/js/zkmax/wgt/css/stepbar.css.dsp
 f222c02212f97b1955e029c78311c58e77c697a8743a9b24874b6995b902411c  baseline/js/zul/box/css/box.css.dsp
 ecd0440774ecb1353486c7006983144d183f015b6968aa26b702edb7dd295c81  baseline/js/zul/box/css/layout.css.dsp
-f835225bfcf3e07dad04453c07be9c3a7ad635137c3e9a3990739f1d6c715ff1  baseline/js/zul/db/css/calendar.css.dsp
+631a3818ddc7c4642f9f6d97b69329f21e553f1c4f17ee1b71fe9145dcd4dbc8  baseline/js/zul/db/css/calendar.css.dsp
 2c4d140253536f17940707182aa3ce73373058ba1485d097f7ec033bf38746df  baseline/js/zul/grid/css/grid.css.dsp
 83b7587b693a471cb1905f852cf3f9194388d83741d3799c65c6d8978e4dd55c  baseline/js/zul/inp/css/combo.css.dsp
 8a2cb6f35f2ea5d9ab85d74f7039d6ad83ec932364757e94f6402e9c3e07a4ca  baseline/js/zul/inp/css/input.css.dsp
@@ -109,4 +126,4 @@ e53ab34982f000e1aeacf400285977fc27aacc00afd27a4ac39faf67b37b63e3  baseline/js/zu
 433e1f4b013e745abc527b7ab55ef877a2d50537206afca35317f9a8e37f815d  baseline/zkmax/css/tablet.css.dsp
 2912cca69ab86de2939307c02da6ac44b54f3b3a2616f5d3c65f7072612530ee  baseline/zul/css/footer.css.dsp
 3975e6515e71bbfb7c645a2b9b5bcd06b22ecf7dda28d9a2f72c0021655a0a33  baseline/zul/css/norm.css.dsp
-9e4bd5c59052e1a0accaab2b92b3e83e04d6f7447d60cd1b5bdad074401c3bc3  baseline/zul/font/font-awesome.css.dsp
+c47b6dec999aaa00d9cd8bee0755db49776ddc7c5dc8cae7a676a5bee1b870b0  baseline/zul/font/font-awesome.css.dsp

@@ -70,14 +70,13 @@
   font-family: var(--z-icon-style-family, 'FontAwesome');
   font-weight: var(--z-icon-style, 900);
 }
+/* The bare Font Awesome aliases (.fas/.fass/.far/.fab) were REMOVED upstream
+ * in zul/less/font/_core.less after this branch forked; kept in step here so
+ * the theme does not silently claim class names ZK 11 no longer styles. */
 [class*="z-icon"],
-.fas,
 .z-icon-solid,
-.fass,
 .z-icon-sharp,
-.far,
 .z-icon-regular,
-.fab,
 .z-icon-brands {
   display: inline-block;
   font: normal normal normal 14px/1 FontAwesome;
@@ -86,12 +85,9 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-.fas,
 .z-icon-classic,
 .z-icon-solid,
-.far,
 .z-icon-regular,
-.fab,
 .z-icon-brands {
   font-family: FontAwesome;
 }
