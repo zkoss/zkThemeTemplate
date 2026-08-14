@@ -181,6 +181,10 @@ DSP 層與 Font Awesome 的生成內容都還在,零 build step 兌現不了(L3-
 > 不是 —— cssdiff 問「candidate 是否**等於** baseline」,而正確答案是「不等於」,
 > 於是它**因構造而 exit 1**(P4a 之後 45 檔 / 728 條;**P4b 之後實測 48 檔 / 749 筆記錄**
 > = 728 移除 + 14 移除 + 7 新增;48 = 45 + 9 − 6 檔重疊)。
+> **←以上是 P4b 收工當時的值。現值(2026-08-14)是 48 檔 / 1104 筆** = 745 移除
+> (P4a **731** + P4b 14)+ 359 新增(P4b 7 + **D1 350 + D2 的 2 條 DSP 條件**)——
+> 兩次漂移:ZK 11 同步讓 P4a 728 → 731,以及 D1/D2 成為**第三個**已核准 delta(**S56**)。
+> **檔數 48 不變**,因為 D1/D2 只動 `norm.css.dsp`,它本來就在集合內。
 > 判準改由 `check:p4a` **與 `check:p4b`** 回答「差異是否**恰好等於**已核准的 delta」——
 > 兩支各自把對方的 delta 從 baseline 側抵銷掉,所以合起來剛好把整份 diff 認領完,沒有灰色地帶。
 >
@@ -347,7 +351,10 @@ DSP 層與 Font Awesome 的生成內容都還在,零 build step 兌現不了(L3-
 > **`tablet` 的 60 條刻意不在本階。** `zkmax/css/tablet.css.dsp` 仍由 `zklessc` 從
 > `tablet.less` 編出來(P7 holdout),它的前綴是 mixin 展開的產物,不是來源檔裡的字面文字 ——
 > 要在本階移除就得改 `_zkmixins.less` 的定義,而那正是本節下面明文否決過的變體。
-> 因此 **P4a = 788 − 60 = 728**,那 60 條(`border-radius` 24 / `box-shadow` 12 /
+> 因此 **P4a = 788 − 60 = 728**(**←拍板當時的母體。ZK 11 同步後 A 群母體 945 → 948、
+> 上限 788 → 791,故 P4a = 791 − 60 = 731;唯一變動的屬性是 `border-radius` 378 → 381,
+> 檔數維持 45。理由寫在 `scripts/p4a-delta.js:64-73` 的常數旁邊,見 S56**),
+> 那 60 條(`border-radius` 24 / `box-shadow` 12 /
 > `box-orient` 12 / `box-flex` 9 / `background-size` 3)**隨 P7 一起處理**,
 > 並計入 P7 的 delta。`check-p4a-delta.js` 用 `DEFERRED` 明文擋住 tablet 在本階被動到。
 
@@ -357,7 +364,7 @@ DSP 層與 Font Awesome 的生成內容都還在,零 build step 兌現不了(L3-
 > 「差異是否**恰好等於**已核准的 delta?」同理 `check:bytes`(第 2 層)與
 > `check:build-css`(第 1 層)在本階之後會轉紅,**這是結構必然,不是缺陷**;
 > ~~兩者尚無 delta-aware 版本,列為待處理(**S41**)。~~
-> **←2026-08-07 同日補上(S41 裁示選項 A,S44 結案)。** 那 728 條是 `baseline/` 的
+> **←2026-08-07 同日補上(S41 裁示選項 A,S44 結案)。** 那 728 條(**現為 731,S56**)是 `baseline/` 的
 > **純函數**(四個條件全部讀得出來),所以 `scripts/p4a-delta.js` 重新推導出來,
 > 兩支複核改與**調整後的基準**比對:`baseline/` 不動、無 manifest、無快照。
 > **P7 的第二段 delta 沿用同一個機制**:在 `p4a-delta.js` 解除 `DEFERRED` 並更新
@@ -473,7 +480,7 @@ DSP 層與 Font Awesome 的生成內容都還在,零 build step 兌現不了(L3-
 | **目標** | 轉換 `tablet.less`(輸出端 **681** 條);把 LESS 獨有的 import path 插值(`@import "profiles/_@{themeProfile}"`)改成 **runtime `--zk-*` override sheet** —— 兩個 profile 只是同一組 842 個 token 的不同數值 |
 | **輸入 → 輸出** | `tablet.less` + `profiles/` → `.css` + runtime override sheet |
 | **驗收閘門** | **G-delta** —— 這是刻意的**對外 API 變更**(「改 LESS 變數重編 jar」→「載入 override sheet」),必須寫進 migration guide |
-| **前置** | **L-4 的 density 那一半**(colour 那一半已由 L-7 解除)。視覺 A/B 價值中等,但 tablet 需要 mobile UA 的 Playwright 專案 |
+| **前置** | ~~**L-4 的 density 那一半**(colour 那一半已由 L-7 解除)。視覺 A/B 價值中等,但 tablet 需要 mobile UA 的 Playwright 專案~~ **←2026-08-14 兩項全部解除,本階無剩餘前置**:(a) **L-4 已拍板採用**(`data-density` runtime 覆寫取代 build 期換 jar,`iceblue_c` 不再出貨;決策紀錄 L3-F);(b) **mobile UA 的 Playwright 專案已存在並實測過** —— `sync-mobile` / `jar-mobile` 兩個 project,桌面與 mobile 皆 **0 頁差異**且兩側 fingerprint DIFFERENT(⇒ 非空轉),見 `tasks/zk11-jar-baseline-visual-ab.md` |
 | **commit 粒度** | 1–2 顆,與 migration guide 的對應條目成對進版 |
 
 > **`@themePalette` 已於 2026-08-13 移出本階、移出本案**(user 裁示)。理由是**產品邊界**:

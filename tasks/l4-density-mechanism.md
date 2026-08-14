@@ -3,9 +3,13 @@
 > 依 `.claude/skills/plan-spec/SKILL.md` 三層式架構:**L1** 一頁執行摘要 · **L2** 階段拆解 ·
 > **L3** 技術附錄(量測、口徑、比較、風險)。
 >
-> 本文件是 **L-4 的拍板材料**。L-4 是 P7 唯一還沒解除的 BLOCKED
-> (見 [iceblue-drop-less-progress.md L2.2](../doc/iceblue-drop-less-progress.md#l22-前置工作項與-blocked)),
-> 而 P8 的驗收 = P4 + P5 + P7 已核准 delta 總和 ⇒ **L-4 擋著整個計畫的最後兩個階段**。
+> 本文件原是 **L-4 的拍板材料**。~~L-4 是 P7 唯一還沒解除的 BLOCKED~~
+> **←2026-08-14:L-4 已拍板採用,P7 的 BLOCKED 解除**
+> (見 [iceblue-drop-less-progress.md L2.2](../doc/iceblue-drop-less-progress.md#l22-前置工作項與-blocked)
+> 的〈已解除的 BLOCKED〉與計畫書附錄 L3-F)。
+> **本文件自此是執行計畫與進度紀錄,不再是待裁材料** —— L3.4 五項子未決已於 2026-08-13 全數結案,
+> 整體採納於 2026-08-14 拍板。**裁示同時確認的兩件對外事實**:`iceblue_c` 未來不出貨;
+> 「改 LESS 變數重編 jar」→「設 library-property」是 breaking change,由 **D5** 寫進 migration guide。
 >
 > ~~**本文件只評估與規劃,沒有動任何 CSS 來源檔。** D1–D5 一步都還沒開工。~~
 > **←2026-08-12:D1 / D2 / D3 已完工**(3 / 5),驗收證據見 [L3.5](#l35-d1d3-的驗收證據)。
@@ -65,8 +69,8 @@
 | **D1** | 桌面 token 層 —— 產生器 + 350 條覆寫塊併入 `norm.css` | **G-delta**(`norm.css.dsp` +350 條) | 無 | **DONE** 2026-08-12 |
 | **D2** | 靜態設定 —— library-property + DSP 選擇器條件 | G-delta(同 D1 的檔,+1 個 DSP 區塊) | D1 | **DONE** 2026-08-12 |
 | **D3** | Java API —— `IceblueDensity` | 不動 CSS,**G 不變** | D1 | **DONE** 2026-08-12 |
-| **D4** | tablet 半 —— 兩套規則同檔、compact 那套加屬性前綴 | **G-delta**(`tablet.css.dsp`,與 P7 的 tablet 轉換同一顆) | P7 的 tablet 轉 CSS | **BLOCKED** —— P7 未完工 |
-| **D5** | 收尾 —— 移除 build 期旋鈕、`readme.md`、遷移指南、關掉 S36 | G 不變 | D1–D4 | **BLOCKED** —— 等 D4 |
+| **D4** | tablet 半 —— 兩套規則同檔、compact 那套加屬性前綴 | **G-delta**(`tablet.css.dsp`,與 P7 的 tablet 轉換同一顆) | P7 的 tablet 轉 CSS | **TODO** —— 等 P7 **完工**(**←2026-08-14 起 P7 本身已不被決策擋著**) |
+| **D5** | 收尾 —— 移除 build 期旋鈕、`readme.md`、遷移指南、關掉 S36 | G 不變 | D1–D4 | **TODO** —— 等 D4 |
 
 ### 總體進度
 
@@ -731,3 +735,4 @@ pages differing: 0      raster noise: 7 (全部 maxΔ 1,遠低於 ≤8 / ≤64px
 | 2026-08-12 | **新增 L3.1(g) + L3.4 第 5 項:巢狀反向覆蓋做不到,`Density.DEFAULT` 目前是空頭支票。** 做 D3 時發現:出貨的樣式表只有 `[data-density="compact"]` 一個區塊,所以「外層 compact、內層 `data-density="default"`」的內層**match 不到任何規則**,直接繼承外層算好的 compact 值。全站那一支(把 `<html>` 的屬性設成 `default`,讓 compact 選擇器選不到)是**對的**,所以精確的說法是「可以關掉全站 compact,不能在巢狀範圍反向覆蓋」。CSS 沒有別的辦法(`revert-layer` 會落回繼承值,而且本分支無 cascade layer)。補一個 `[data-density="default"]` 區塊的成本實測 **+15331 B raw / +1887 B gzip**(比 compact 區塊大,因為 default 側的值帶 `round()`/`calc()`)。**另實測 Marble 完全一樣**:全樹只有一個 `[data-density="compact"]`,沒有任何 `comfortable` 選擇器,但 `doc/spec/data-dense-mode.md` 明寫可以反向覆蓋、`MarbleDensity.Density.COMFORTABLE` 也存在 ⇒ Marble 的同一功能同樣是空頭支票,應回報(本計畫不動 Marble 的檔案)。D3 的巢狀驗收條列改標 OPEN,其餘 D3 驗收全部通過 |
 | 2026-08-13 | **裁示 L3.4 第 5 項:不補 `[data-density="default"]` 區塊,巢狀反向覆蓋列為不支援。** 理由:+15331 B raw / +1887 B gzip(風險表第 2 項 14.4 KB → ~29.7 KB)換一個**沒有已知需求**的能力;而且這個能力**從來沒有存在過** —— 它是計畫書寫下的意圖而非既有行為,所以不支援不是功能倒退。`Density.DEFAULT` **保留**,語意縮小成它真的做得到的兩件事:(a) 關掉全站 compact、(b) 收回**同一個區域**先前設過的 `COMPACT`。**不讓 `apply(component, DEFAULT)` 丟例外** —— (b) 是合法呼叫,而「有沒有 compact 祖先」是客戶端狀態,伺服器端 Java 無從判斷,所以用文件處理而非執行期檢查。連帶:`IceblueDensity` 的 class javadoc 新增〈Compact nests; opting back out of it does not〉一節並建議「讓全站維持預設、只標記要變密的區域」,`Density.DEFAULT` 與 `apply(Component, Density)` 的 javadoc 改寫;`readme.md` 明寫不支援;`check-density-runtime.js` **新增第 [5] 項正向驗收**(同區域 `COMPACT` → `DEFAULT` 必須逐值還原,實測 `12px→16px` / `24.0→38.0` PASS),並在檔頭寫明**不驗收**不支援的那一半。D3 的巢狀驗收條列刪除,D3 狀態從「DONE(巢狀那一條 OPEN)」轉為 **DONE** |
 | 2026-08-13 | **裁示 L3.4 第 2、3、4 項 —— L3.4 五項自此全部結案。** ①**第 2 項:Java API 放主題套件 `org.zkoss.theme.iceblue11`,不升格 ZK core**,與原建議一致 ⇒ **零實作工作**(`IceblueDensity` D3 完工時就在那裡);連帶把 **M-1** 的觸發條件 (a)「density API 升格為跨主題契約」在本案內排除,M-1 只剩 (b)「Marble 首次公開發行前」。②**第 3 項:`iceblue_c` 未來不出貨,推翻原建議的「保留但凍結、標 deprecated」。** 依據是本文件已量到的重複度(97.5% 逐 byte 複本)與釋出落後(整條 10.4.0 線未出貨);**本 repo 不改任何來源檔** —— `iceblue_c` 是另一個出貨物,本模板從未產生它,交付物只有 P8 migration guide 的一段:`preferred=iceblue_c` 的存量客戶改用 `preferred=iceblue11` + `org.zkoss.zul.theme.density=compact`。③**第 4 項:`tokens/_compact.css` 維持公開可覆寫。** 原建議「與 palette 合併決定」因 palette 同日移出本案(M-2)而失效,故獨立裁示;**公開有兩個面且都成立**,D5 要分開寫進 migration guide —— 建置期(fork 改 `_compact.css` 後**必須重跑 `npm run gen:density-css`**,否則 `check:density-css` 在 `check:gate` 裡 exit 1;jar 只出 `.css.dsp`,P5 實測 85/0)與執行期(那 350 條在 `norm.css.dsp` 的 `[data-density="compact"]` 區塊,後載入的 sheet 蓋得掉,構造與 M-2 對 palette 的結論相同,**不需要任何 hook**)。**三項都不動 CSS 來源檔,閘門未跑也不需要跑** |
+| 2026-08-14 | **L-4 整體拍板:採用。P7 的 BLOCKED 解除,本案自此沒有任何階段被決策擋著。** 裁示內容:採用 `data-density` 屬性 + 350 條 runtime token 覆寫,取代 build 期 `@themeProfile` 換 jar;`iceblue_c` 未來不出貨。**這不是「決定要不要相信提案」,而是把已經量出來的事實寫成裁示** —— D1–D3 早已完工,對 `iceblue_c 11.0.0` oracle 逐 token 比對 **350 條值全同、缺 0 條**,視覺 A/B 反向控制 0 頁差異,L3.4 五項子未決亦於 2026-08-13 全數結案;缺的只是正式的狀態變更,而狀態變更是決策。**同時確認的兩件對外事實**:(a) 這是 **breaking change**(「改 LESS 變數重編 jar」→「設 library-property `org.zkoss.zul.theme.density=compact`」),存量 `preferred=iceblue_c` 客戶要遷移,交付物是 **D5** 的 migration guide;(b) **承接的風險是 D4 而不是 D1–D3** —— tablet 不是 token 值替換(`var()` 用量兩側 95 = 95),67 條只在 default 側的規則必須逐條中和,驗收是那 67 條**全部**對 oracle 做 mobile UA computed-style 比對全綠。**本次裁示不動任何 CSS 來源檔,閘門未跑也不需要跑**;文件更動見進度文件〈已解除的 BLOCKED〉、計畫書 §P7〈前置〉與附錄 L3-F,狀態層記為 **S57** |
