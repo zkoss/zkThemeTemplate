@@ -567,7 +567,8 @@ default 區塊比 compact 區塊**大** (15331 vs 14414),因為 default profile 
 
 ### L3.4 未決事項(需要裁示)
 
-> 第 1、5 項**已裁示**;第 2–4 項**不阻擋 D1–D3**,但 D5 收尾前必須有答案。
+> **五項全部已裁示**(第 1 項 2026-08-12;第 2、3、4、5 項 2026-08-13)。
+> 本節自此只是紀錄,不再有待答項。
 
 1. ~~**屬性值的字彙**~~ **【已裁示 2026-08-12:`default` / `compact`】**
    列舉為 `Density.DEFAULT("default")` / `Density.COMPACT("compact")`,與本主題 profile
@@ -587,14 +588,30 @@ default 區塊比 compact 區塊**大** (15331 vs 14414),因為 default profile 
    **兩者必須先統一**,而該由 Marble 改過來(它未發行,且本裁示已定調)。
    這是**跨 worktree 的後續事項,本計畫不動 Marble 的任何檔案**。
    </details>
-2. **Java API 放哪**:主題套件 `org.zkoss.theme.iceblue11`(本計畫的作法),
-   還是升格進 ZK core `org.zkoss.zul.theme` 成為跨主題 API?建議**先放主題**、P8 再談升格 ——
-   升格是產品決策,而且在只有一個實作者的時候定介面太早。
-3. **`iceblue_c` 這個獨立主題還要不要繼續出貨**?本案讓它變成純粹的重複,
-   但移除它會影響已經在 `zk.xml` 設 `preferred=iceblue_c` 的存量客戶。
-   建議:**保留但凍結**,並在遷移指南標示 deprecated。歸 P8。
-4. **`tokens/_compact.css` 的公開性**:它從「可切換的來源」變成「產生器的輸入」之後,
-   要不要仍然當作對外可覆寫的 API?與 P7 的 palette override sheet 是同一類問題,建議合併決定。
+2. ~~**Java API 放哪**~~ **【已裁示 2026-08-13:放主題套件 `org.zkoss.theme.iceblue11`】**
+   **不升格進 ZK core `org.zkoss.zul.theme`。** 與本文件原本的建議一致,現況即為裁示結果 ——
+   `IceblueDensity` 已經在該套件底下(D3 完工)⇒ **這條裁示不產生任何實作工作**。
+   理由:升格是產品決策,而且在只有一個實作者的時候定介面太早。
+   **連帶效果**:M-1(Marble 的 `COMFORTABLE` → `DEFAULT` 改名)的觸發條件 (a)
+   「density API 升格進 ZK core」**在本案內不會發生**,所以 M-1 只剩觸發條件 (b)
+   「Marble 首次公開發行前」—— 見[執行計畫 M-1](../doc/iceblue-drop-less-execution-plan.md#m-1-marble-的-densitycomfortable-改名為-default)。
+3. ~~**`iceblue_c` 這個獨立主題還要不要繼續出貨**~~ **【已裁示 2026-08-13:未來不出貨】**
+   **推翻本文件原本的建議(「保留但凍結、標 deprecated」)** —— 直接不再出貨。
+   本案讓它變成純粹的重複(**97.5% 是逐 byte 複本**,見 [L3.1(a)](#a-iceblue_c-1100-對同版預設主題逐檔比)),
+   而重複出貨物**結構上就是會落後**(`iceblue_c` 整條 10.4.0 線都沒有出過)。
+   **存量客戶的處置歸 P8 的 migration guide**:在 `zk.xml` 設 `preferred=iceblue_c` 的人,
+   要改成 `preferred=iceblue11` + library-property `org.zkoss.zul.theme.density=compact`。
+   **本 repo 不需要為此改任何來源檔** —— `iceblue_c` 是另一個出貨物,
+   本模板從來沒有產生過它;這條裁示的交付物只有 migration guide 的一段文字。
+4. ~~**`tokens/_compact.css` 的公開性**~~ **【已裁示 2026-08-13:公開,維持對外可覆寫】**
+   原本建議「與 P7 的 palette override sheet 合併決定」,但 **palette 已於同日移出本案**
+   (M-2)⇒ 本項獨立裁示。**公開**在本機制下有兩個面,兩個都成立,**D5 的 migration guide 要分開寫**:
+   - **建置期(fork)**:`tokens/_compact.css` 仍是那 333 個值的正本。改它之後**必須重跑
+     `npm run gen:density-css`**,否則 `npm run check:density-css` 會 exit 1(它已在 `check:gate` 裡)。
+     注意 jar 只出 `.css.dsp`、**不出原始 `.css`**(P5 實測 85 / 0),所以這一面只對改來源的 fork 成立。
+   - **執行期(不改來源)**:那 350 條落在 `norm.css.dsp` 的 `[data-density="compact"]` 區塊裡,
+     在主題之後載入自己的 sheet 就蓋得掉 —— 與 M-2 對 palette 的結論同一個構造,
+     **本專案不需要為此提供任何 hook**。
 5. ~~**要不要補 `[data-density="default"]` 區塊**~~ **【已裁示 2026-08-13:不補,巢狀反向覆蓋列為不支援】**
    每個使用者多付 **+15331 B / gzip +1887 B**(風險表第 2 項從 14.4 KB 變成 ~29.7 KB)
    換一個**沒有已知需求**的能力,不划算 —— 而且要注意這個能力**從來沒有存在過**:
@@ -713,3 +730,4 @@ pages differing: 0      raster noise: 7 (全部 maxΔ 1,遠低於 ≤8 / ≤64px
 | 2026-08-12 | **D1 / D2 / D3 完工(3 / 5)。** 新增 `scripts/gen-density-css.js`(產生 350 條覆寫塊)、`scripts/density-delta.js`(讓 P4a/P4b/byte 三個閘門把 D1 這第三個 delta 減掉)、`scripts/check-density-property.js`(D2 三態)、`scripts/check-density-runtime.js`(D3 Playwright)、`src/main/java/.../IceblueDensity.java`。全部驗收數字見 [L3.5](#l35-d1d3-的驗收證據)。**三個計畫書沒預料到的發現**:(1) `check:p4a` 有一條「規則區塊數不變」的斷言,D1 一加區塊就報 `258 -> 259` 並跳過整個 `norm.css.dsp`,728 掉成 **666** —— 用 P4b 既有的「把別階 delta 套到 baseline 側」技法解決,**沒有放寬任何斷言**;(2) 計畫書列的四項斷言,對一個**被截成 333 條**(只有種子、沒跑閉包)的覆寫塊**全部通過** —— 四項只檢查「塊內部自洽」,真正讓「512 條可安全省略」成立的是反方向的性質,因此加了第 5 項斷言,並以負向控制證明它會觸發;(3) `density-delta` 起初把 D2 那個 DSP 條件裡 `${…}` 的 `{` 當成第二個規則區塊,使 `check:bytes` 進 FAIL,已修正。體積實測 **14414 B**(D1)/ **14498 B**(含 D2 的 DSP 條件),與計畫書記的 14412 B 差 2 B,以實測為準 |
 | 2026-08-12 | **新增 L3.1(g) + L3.4 第 5 項:巢狀反向覆蓋做不到,`Density.DEFAULT` 目前是空頭支票。** 做 D3 時發現:出貨的樣式表只有 `[data-density="compact"]` 一個區塊,所以「外層 compact、內層 `data-density="default"`」的內層**match 不到任何規則**,直接繼承外層算好的 compact 值。全站那一支(把 `<html>` 的屬性設成 `default`,讓 compact 選擇器選不到)是**對的**,所以精確的說法是「可以關掉全站 compact,不能在巢狀範圍反向覆蓋」。CSS 沒有別的辦法(`revert-layer` 會落回繼承值,而且本分支無 cascade layer)。補一個 `[data-density="default"]` 區塊的成本實測 **+15331 B raw / +1887 B gzip**(比 compact 區塊大,因為 default 側的值帶 `round()`/`calc()`)。**另實測 Marble 完全一樣**:全樹只有一個 `[data-density="compact"]`,沒有任何 `comfortable` 選擇器,但 `doc/spec/data-dense-mode.md` 明寫可以反向覆蓋、`MarbleDensity.Density.COMFORTABLE` 也存在 ⇒ Marble 的同一功能同樣是空頭支票,應回報(本計畫不動 Marble 的檔案)。D3 的巢狀驗收條列改標 OPEN,其餘 D3 驗收全部通過 |
 | 2026-08-13 | **裁示 L3.4 第 5 項:不補 `[data-density="default"]` 區塊,巢狀反向覆蓋列為不支援。** 理由:+15331 B raw / +1887 B gzip(風險表第 2 項 14.4 KB → ~29.7 KB)換一個**沒有已知需求**的能力;而且這個能力**從來沒有存在過** —— 它是計畫書寫下的意圖而非既有行為,所以不支援不是功能倒退。`Density.DEFAULT` **保留**,語意縮小成它真的做得到的兩件事:(a) 關掉全站 compact、(b) 收回**同一個區域**先前設過的 `COMPACT`。**不讓 `apply(component, DEFAULT)` 丟例外** —— (b) 是合法呼叫,而「有沒有 compact 祖先」是客戶端狀態,伺服器端 Java 無從判斷,所以用文件處理而非執行期檢查。連帶:`IceblueDensity` 的 class javadoc 新增〈Compact nests; opting back out of it does not〉一節並建議「讓全站維持預設、只標記要變密的區域」,`Density.DEFAULT` 與 `apply(Component, Density)` 的 javadoc 改寫;`readme.md` 明寫不支援;`check-density-runtime.js` **新增第 [5] 項正向驗收**(同區域 `COMPACT` → `DEFAULT` 必須逐值還原,實測 `12px→16px` / `24.0→38.0` PASS),並在檔頭寫明**不驗收**不支援的那一半。D3 的巢狀驗收條列刪除,D3 狀態從「DONE(巢狀那一條 OPEN)」轉為 **DONE** |
+| 2026-08-13 | **裁示 L3.4 第 2、3、4 項 —— L3.4 五項自此全部結案。** ①**第 2 項:Java API 放主題套件 `org.zkoss.theme.iceblue11`,不升格 ZK core**,與原建議一致 ⇒ **零實作工作**(`IceblueDensity` D3 完工時就在那裡);連帶把 **M-1** 的觸發條件 (a)「density API 升格為跨主題契約」在本案內排除,M-1 只剩 (b)「Marble 首次公開發行前」。②**第 3 項:`iceblue_c` 未來不出貨,推翻原建議的「保留但凍結、標 deprecated」。** 依據是本文件已量到的重複度(97.5% 逐 byte 複本)與釋出落後(整條 10.4.0 線未出貨);**本 repo 不改任何來源檔** —— `iceblue_c` 是另一個出貨物,本模板從未產生它,交付物只有 P8 migration guide 的一段:`preferred=iceblue_c` 的存量客戶改用 `preferred=iceblue11` + `org.zkoss.zul.theme.density=compact`。③**第 4 項:`tokens/_compact.css` 維持公開可覆寫。** 原建議「與 palette 合併決定」因 palette 同日移出本案(M-2)而失效,故獨立裁示;**公開有兩個面且都成立**,D5 要分開寫進 migration guide —— 建置期(fork 改 `_compact.css` 後**必須重跑 `npm run gen:density-css`**,否則 `check:density-css` 在 `check:gate` 裡 exit 1;jar 只出 `.css.dsp`,P5 實測 85/0)與執行期(那 350 條在 `norm.css.dsp` 的 `[data-density="compact"]` 區塊,後載入的 sheet 蓋得掉,構造與 M-2 對 palette 的結論相同,**不需要任何 hook**)。**三項都不動 CSS 來源檔,閘門未跑也不需要跑** |

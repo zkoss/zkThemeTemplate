@@ -71,10 +71,10 @@ DSP 層與 Font Awesome 的生成內容都還在,零 build step 兌現不了(L3-
 
 | 量法 | 數字 | 定義 |
 |---|---|---|
-| **里程碑進度** | **2 / 5 = 40%** | M1、M2 完成 |
+| **里程碑進度** | **3 / 5 = 60%** | M1、M2、M3 完成 |
 | **輸出檔脫離 LESS** | **84 / 85 = 99%** | 核心命題已零差異證明完畢;剩 **1** 個**刻意**保留的 holdout(`tablet`/P7)。~~74 / 77~~ 是 P3 收工時的數字,ZK 10.4 補齊把分母帶到 85、P5 與 P6 把分子帶到 84 |
 
-兩個數字都要看:里程碑還剩三個,但**承重的命題已經證明完畢** —— 剩下的階段都是有意識的取捨
+兩個數字都要看:里程碑還剩兩個(M4 的 P7、M5),但**承重的命題已經證明完畢** —— 剩下的階段都是有意識的取捨
 (前綴政策、reset 機制、profile API),不是「還不知道做不做得到」。
 逐階段、逐閘門的權威狀態在進度文件 L1 / L2。
 
@@ -638,7 +638,7 @@ L3 各節是**原文保留**的,所以裡面的 `§0`、`§2.6`、`§P4` 這類�
 | **裁示** | **要改,但不是現在**(2026-08-12) |
 | **方向** | 由 **Marble 改成 `default`**,不是 iceblue11 改成 `comfortable` |
 | **執行地點** | `../zkThemeTemplate`(`master` 系),**不是本 worktree** |
-| **觸發時機** | 以下**任一**先發生:(a) [l4-density-mechanism.md L3.4 第 2 項](../tasks/l4-density-mechanism.md#l34-未決事項需要裁示)裁示把 density API 升格進 ZK core 成為跨主題契約;(b) Marble 首次公開發行前 |
+| **觸發時機** | ~~以下**任一**先發生:(a) [l4-density-mechanism.md L3.4 第 2 項](../tasks/l4-density-mechanism.md#l34-未決事項需要裁示)裁示把 density API 升格進 ZK core 成為跨主題契約;(b) Marble 首次公開發行前~~ **←2026-08-13:(a) 已裁示不升格**(API 留在 `org.zkoss.theme.iceblue11`)⇒ **只剩 (b) Marble 首次公開發行前**。日後若另案重提升格,(a) 才會復活 |
 
 **起因**:L-4 裁示 iceblue11 的密度屬性字彙為 `default` / `compact`
 (`Density.DEFAULT("default")`),與 Marble 現行的 `COMFORTABLE("comfortable")` 分岔。
