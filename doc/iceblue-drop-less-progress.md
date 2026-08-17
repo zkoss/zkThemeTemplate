@@ -34,7 +34,7 @@
   - [L3-F P3 逐檔複核包](iceblue-drop-less-progress-appendix.md#l3-f-p3-批次的檔案清單每一步可以自己檢查什麼步-0-4-的逐檔複核包) — [步 0](iceblue-drop-less-progress-appendix.md#步-0-的複核包2026-07-31) · [步 1](iceblue-drop-less-progress-appendix.md#步-1-的複核包2026-08-034-檔) · [步 2](iceblue-drop-less-progress-appendix.md#步-2-的複核包2026-08-0315-檔--批-1-收工-2020) · [步 3](iceblue-drop-less-progress-appendix.md#步-3-的複核包2026-08-0343-檔--批-2-收工-6374) · [步 4](iceblue-drop-less-progress-appendix.md#步-4-的複核包2026-08-0311-檔--批-3-收工p3-收工-7474)
   - [L3-G P3 收工複審](iceblue-drop-less-progress-appendix.md#l3-g-p3-收工複審74-檔獨立-fan-out2026-08-04計畫書-l3-c-26-第-4-層首次執行) — 74 檔獨立 fan-out
   - [L3-H 執行機制:workflow](iceblue-drop-less-progress-appendix.md#l3-h-執行機制workflow)
-  - [L3-I Change Log](iceblue-drop-less-progress-appendix.md#l3-i-change-log--狀態層的敘述更正) — 61 條狀態層更正
+  - [L3-I Change Log](iceblue-drop-less-progress-appendix.md#l3-i-change-log--狀態層的敘述更正) — 63 條狀態層更正
 
 ---
 
@@ -44,11 +44,17 @@
 
 ### 現況
 
+**本案於 2026-08-17 收工。P8 之後,LESS 真的不在了** —— 來源樹 `.less` = **0**、
+`zkless-engine` 不在依賴裡、pom 沒有 `compile-less` execution,而 **85 個輸出一條宣告都沒變**
+(最終核帳零殘留,紀錄 **#63**)。對外交付物:
+[migration/less-to-css.md](migration/less-to-css.md) 與 [migration/density.md](migration/density.md)。
+
 **核心命題已經證明完畢** —— IceBlue 的 **82 個元件輸出不需要 LESS,而且是零差異證明的**。
 **P7 第一段收工後(2026-08-17)**來源端是 **85 `.css` entry + 6 `.css` partial + 0 `.less` entry = 85 輸出 ✓**;
 **holdout 歸零**,`build-css.js` 覆蓋 **85 檔**,`zklessc` 本次建置 `compiled 0 file(s)`。
 (~~P5 收工後:84 entry + 5 partial + 1 `.less`,覆蓋 84,`zklessc` 剩 1 檔~~)
-**這不等於「LESS 已經移除」** —— 樹裡還有 30 個 `_` 開頭的 partial 與 `zkless-engine` 依賴,那是 P8。
+~~**這不等於「LESS 已經移除」** —— 樹裡還有 30 個 `_` 開頭的 partial 與 `zkless-engine` 依賴,那是 P8。~~
+**←2026-08-17 P8 收工後這句話不再適用**;它在此之前的每一天都成立,所以留著而不刪。
 
 > **2026-08-07 P4a 收工後,通過訊號換人了。** 全樹閘門從 `files differing: 0` 變成
 > **45 檔 / 728 條差異**,而那**正是對的** —— 這是全計畫第一個 G-delta 階段。判準改為
@@ -103,15 +109,16 @@
 | **M2** 元件轉換 82 檔(P3) | **DONE** | 74/74 轉完,逐檔閘門全 0、無一次失敗;**0 檔無法解釋**。2026-08-05 追加 ZK 10.4 補齊的 8 檔,同樣逐檔閘門全 0(S26) |
 | **M3** vendor prefix 政策(P4a · P4b) | **DONE** | **L-2 已於 2026-08-07 拍板(選項 C:`-webkit-` 全數保留)**。**P4a DONE(同日)** —— ~~728~~ **現為 731**(ZK 11 同步,S56)條 / 45 檔純移除,G-delta 由 `check:p4a` 六項斷言收下,`-webkit-` ~~313~~ **現為 314** 條與 B 群 44 條原封不動;**P4b DONE(2026-08-10)** —— 實際 **14** 條(第 15 條在 P7 holdout),移除 14 / 新增 7 / 9 檔,由 `check:p4b` 八項斷言收下 |
 | **M4** 三個 holdout(P5 · P6 · P7) | **DONE**(~~P7 第一段 2026-08-17;第二段 D4 未做~~ **←同日兩段皆收工**) | **P6 DONE** —— FA 的 `each()` 迴圈換成 `gen-fa-css.js`;**P5 DONE(2026-08-06)** —— `norm` 轉純 CSS,`browserDefault` 用 build 期遮罩而**不是** `@scope`,閘門由 G-delta 收在 **G-zero**;P7 等 **L-4** 的 density 那一半 |
-| **M5** 收尾與遷移指南(P8) | TODO | 兩張規則表已產出,期限風險已解除 |
+| **M5** 收尾與遷移指南(P8) | **DONE** | **`.less` 歸零、`zkless-engine` 移除、最終核帳零殘留**(紀錄 **#63**)。兩張規則表**凍結**而不是重跑(**C27**);`build-css.js` **沒有**長 `.less` 分支(**C26**) |
 
 ### 總體進度
 
 | 量法 | 數字 |
 |---|---|
-| **里程碑進度** | ~~3 / 5 = 60%~~ **4 / 5 = 80%**(M1、M2、M3、**M4**;2026-08-17)|
+| **里程碑進度** | ~~3 / 5 = 60%~~ ~~4 / 5 = 80%~~ **5 / 5 = 100%**(M1–M5 全部完成;2026-08-17)|
 | **輸出檔脫離 LESS** | ~~84 / 85 = 99%~~ **85 / 85 = 100%**(2026-08-17,P7 第一段) |
-| **來源樹剩餘 `.less`** | ~~30~~ **4**(D4 刪掉 `zkmax/less/` 整棵;剩 `zul/less/` 的 4 個 partial)|
+| **來源樹剩餘 `.less`** | ~~30~~ ~~4~~ **0**(2026-08-17,P8 刪掉 `zul/less/` 整棵)⇒ **「LESS 已經移除」這句話從本日起才成立**,在此之前它一直是錯的 |
+| **`zkless-engine` 依賴** | **移除**(2026-08-17,P8)—— `npm install` 後 `node_modules` 少 41 個套件、`.bin` 只剩 `lessc`;`less` 4.8.1 改為直接 devDependency(`less2css.js` 這支 fork 工具要用)|
 | **density 線(L-4 的 D1–D6)** | **全部收工(2026-08-17)** —— D1/D2 → D4 → D6 → D5;**D3 已於 D6 刪除**(執行期 Java API 隨 C25 退場)。對外文件 [migration/density.md](migration/density.md) |
 
 ### 下一步(依「不等任何人」排序)
@@ -225,6 +232,10 @@
 > **←2026-08-14:那個裁示做了(L-4 採用)⇒ 這句話第五次翻面,而且這次是往回翻:
 > 「可以自己動手的實作」不再是零,是 `P7`。** 本案自此**沒有任何階段被決策擋著** ——
 > 剩下的 P7 → D4 → D5 → P8 全部是工作。
+> **←2026-08-17(當日最後一次更新):`P8` 也收工了 ⇒ 那條鏈是空的,本案結束。**
+> P8 順手清掉兩筆欠帳(`baseline/` 退回 gitignore = **S47** 退場;`check:var-table` /
+> `check:mixin-table` 兩支過期儀器退場 = **S14 + S37** 結案,方式是**凍結表格**而不是重新校準,
+> 見 **C27**),並留下**兩項未做、已記錄**:`--watch`(見下方〈P8 留下的兩項待裁示〉)與 **S31**。
 > **←2026-08-17:P7 兩段、D4、D6(C25 的規格收斂)與 D5 全部收工 ⇒ 那條鏈只剩 `P8`。**
 > D5 的對外交付物是 [migration/density.md](migration/density.md),**S36 以 S62 正式結案**。
 > L2.4 清理待辦第 1–4、6 項已於 2026-08-04 收工(紀錄 #32、#33),
@@ -271,7 +282,7 @@
 | **P6 Font Awesome** | **DONE** | G-zero | **4545** 條零差異;產生器輸出與被刪掉的 `.less` 經 `less.render()` **逐 byte 相同**(獨立複核:**3611** 個選擇器 0 增 0 減);codepoint 抽驗 + 「加一個 icon」往返實測;`build-css` 74 → **75** 檔 | 2026-08-04 |
 | P7 `tablet` + profile API | **DONE(2026-08-17,兩段)** | ~~G-delta~~ **兩段:轉換 G-zero + D4 G-delta**(**←2026-08-14,C20**) | ~~**多一個交付項**:補 `_zkcssvariables.less` 缺的 palette import + `colors/_iceblue_css.less`(S29);驗收多一條 —— runtime override sheet 必須表達得出 palette 覆蓋,且要有一次**非 iceblue** palette 的實測~~ **←2026-08-13 兩項都移除(C19 / M-2)**:`@themePalette` 移出本案,本階只剩 `tablet` + `@themeProfile`(密度軸)。**S29 改判不補**,隨 P8 的 `.less` 歸零消失。palette 的獨立計畫 `tasks/theme-pack-palette-mechanism.md`(不進本 repo 版控,見 **M-2**)。**←2026-08-14 再減一次(C20,第一期範圍封閉)**:P4a 移交的 **A1** 60 條前綴與 P4b 移交的 **A2** 1 條孤兒 `-moz-appearance` **都不移除,只記錄** ⇒ 轉換那一段變成 **G-zero**(與 P3 的 74 檔同形);`tablet/compact/_combo.less` 走 **L-8 的 A 案**逐字轉。**←2026-08-17 第一段收工**(commit `2f348677`,紀錄 **#60**):681 條、`files differing: 0`,全樹差異維持 48 檔 / 1104 筆 ⇒ 沒有貢獻任何宣告差異;`check:build-css` 覆蓋率到 **85/85 真實來源、passthrough 0**,`zklessc` `compiled 0 file(s)`。~~`tablet.css.dsp` 應**逐 byte 不變**~~ **←同日更正,S58**:正確標準是 `cssdiff` 0 + 位元組差異全落在封閉的序列化類別內(全樹只有 23/85 逐 byte 相同,`norm.css.dsp` 也不在其中)。~~**本階剩下的唯一 G-delta 是 D4** —— 67 條逐條中和,驗收是全部對 `iceblue_c 11.0.0` 做 mobile UA computed-style 比對全綠~~ **←2026-08-17 第二段收工,機制與驗收同日更正(C23)**(commit `238a3604`,紀錄 **#61**):改為「兩張完整的表各包一個 `<c:if>`,由 library-property 二選一」,**中和一條都不做** —— 那 67 條的**單位是錯的**,真正的漏面是 **187 條宣告 / 113 個選擇器**(**S60**),而 CSS 沒有「不存在」運算子(P5 對 `browserDefault` 已有同一結論)。驗收改為**三態全量比對**:`unset`/`foo` 對 `baseline/` **895 = 895**、`compact` 對出貨 jar **869 = 869**,三者 0 缺 0 多 0 異,另跑 `ne`/`eq` 對調的負向控制(exit 1,交叉檢查點名「served the compact sheet」)。delta 形狀 **1 檔 / 0 移除 / 618 新增**。**代價**:執行期 `data-density` 屬性不驅動平板層,只有 library-property 驅動(已寫進 Javadoc)| — |
 | **規則表產生器**(P8 前置,**有期限**) | **DONE** | 自帶斷言 | **846** 列 / **834** 語法 1:1 / **830** 行為 1:1 / **16** 例外;**30** mixin 名稱 / **38** 定義列 | 2026-07-30 |
-| P8 收尾 | TODO | G-zero | 須等於 ~~P4 + P5 + P7~~ **`P4a + P4b + D1/D2 + D4`** 已核准 delta 總和(**←2026-08-14 更正,C21**:原式漏 D1/D2 的 **+352**、卻列了貢獻 **0** 的 P5) | — |
+| P8 收尾 | **DONE** | G-zero | 須等於 ~~P4 + P5 + P7~~ **`P4a + P4b + D1/D2 + D4`** 已核准 delta 總和(**←2026-08-14 更正,C21**:原式漏 D1/D2 的 **+352**、卻列了貢獻 **0** 的 P5)。**核帳逐段對上、零殘留**:全樹原始讀數 **85 檔 / 14941 條 / 49 檔 / 1756 筆** = 移除 **745**(P4a 731 + P4b 14)+ 新增 **1011**(P4b 7 + D1/D2 352 + D4 652),其中 D4 那段 628 vs 618 的差是 `cssdiff` 不剝 EL 造成的 10 條幻影宣告(`tablet-delta.js:112` 早有記錄),**不是真宣告**。三支複核在 `zkless-engine` 真的不存在的情況下同時綠燈;`mvn clean package` 出來的 jar **85 `.css.dsp` / 0 原始來源**;兩支三態 density 閘門全綠。**兩處規格更正**:`build-css.js` **沒有**長 `.less` 分支(**C26** —— entry `.less` 在 P7 已歸零,寫了就是沒有輸入的程式碼路徑);兩張規則表**凍結**而非重跑(**C27** —— 重跑會刪掉所有行為 caveat,缺的 20 列以手工附錄補在遷移指南)。**兩項退場**:`baseline/` 回到 `.gitignore`(**S47**)、`check:less-conventions` 離開閘門(0 個 `.less` = 沒有量測對象)。交付物 [migration/less-to-css.md](migration/less-to-css.md);紀錄 **#63** | 2026-08-17 |
 | **D1/D2** ~~`data-density` runtime 覆寫層~~ **←機制於 2026-08-17 被 C25 收斂,見下面的 D6 那一列** | **DONE** | G-delta | **`0 移除 / 352 新增`、1 檔**(`zul/css/norm.css.dsp`)= 帶 `data-density` 的宣告 **350** + DSP `<c:if>` 開關 **2**。**純附加**,不刪任何既有宣告 ⇒ 未設 `data-density` 時瀏覽器收到的 CSS 與 baseline 逐條相同。逐 token 對 `iceblue_c 11.0.0` oracle **350 條值全同、缺 0 條**;第 1、2 層由 `scripts/density-delta.js` 抵銷,機制與 `p4a-delta.js` / `p4b-delta.js` 同形。**閘門紀錄 #59 是 2026-08-14 補記的** —— 完工當時漏記,而 §P8 指名 L3-A 為核帳來源(**C21**);詳細驗收證據在 `tasks/l4-density-mechanism.md` L3.5。**←2026-08-17(D6 / C25)**:`[data-density]` 這個屬性鍵**已經不存在**,同一塊 350 條宣告改鍵在 `:root` 並整段包進 `<c:if>` ⇒ **已核准 delta 的形狀不變(1 檔 / 0 移除 / 350 新增)**,`P4a + P4b + D1/D2 + D4` 的加總不受影響;D3 的 Java API 同日刪除。量測見閘門紀錄 **#62** | 2026-08-12(紀錄補於 2026-08-14) |
 | **D4** compact 平板層 | **DONE** | G-delta | **併在 P7 那一列**(它是 P7 的第二段,commit `238a3604`,閘門紀錄 **#61**)—— 本列只為了讓照 `D#` 找的人找得到 | 2026-08-17 |
 | **D6** density 收斂成單一 library-property(C25) | **DONE** | G-zero(對已核准 delta) | commit `1efde772`。桌機側的三個入口(library-property / `[data-density]` 屬性 / Java API)收成**一個**;`IceblueDensity.java`、`check-density-runtime.js` 與預覽側邊欄的即時切換一併刪除。**已核准 delta 形狀不變**(1 檔 / 0 移除 / 350 新增);全樹原始讀數 **1754 → 1756 筆、49 檔不變**,多的 **2 筆全是 DSP 指令**,350 條宣告是**同數改鍵**(`[data-density="compact"]` → `:root`),淨增 0。閘門紀錄 **#62**(同日補記) | 2026-08-17 |
@@ -402,8 +413,22 @@ P6 因此從 BLOCKED 轉 TODO。但它**相依於 P2** —— 產生出來的 `.
 > 清理的 delta 混進零差異階段。**
 
 
+### P8 留下的兩項待裁示(2026-08-17)
+
+P8 收工時**沒有做**這兩項,理由都是「不在計畫書列出的交手清單裡」,而不是漏掉:
+
+| # | 事項 | 現況與代價 |
+|---|---|---|
+| 1 | **`build-css.js` 要不要長 `--watch`** | `zkless-engine` 同時提供 watch 與 live reload,而它的 watcher `ignoreNonLessFiles` **只看 `.less`** ⇒ **P3 每轉一個檔就少監看一個檔,P7 之後 `npm run zklessc-dev` 已經完全看不到任何來源** —— 這是 P3–P7 造成、P8 才揭出的既有回歸,不是 P8 弄壞的。計畫書〈`build-css.js` 要接手什麼〉那張表**沒有列 watch**,所以本階不做,`readme.md` 改成實話(「沒有檔案監看,改完跑 `npm run build:css`」)。**做的成本**:`fs.watch(dir,{recursive:true})` 約 25 行,不需要新依賴,但 Linux 的 recursive 要 Node 20+(readme 目前寫 Node ≥ 10.16);要連 live reload 一起就得再加 socket.io 之類的依賴。**不做的代價**:主題開發者每次改 CSS 要手動跑一次(< 1 秒,預覽程式不必重啟) |
+| 2 | **S31 版號四處一致性腳本** | 2026-08-05 第 4 層建議「排 P8」的項目。四處版號目前**一致**(當時實測),但沒有任何腳本守著。不做的理由與上一項相同:不在交手清單裡,而且它與 LESS 無關 —— 它是發行前的檢查,不是本案的收尾動作 |
+
 ### L2.5 交給 P8 的產品面問題(2026-08-03,3 項,不阻擋 P4-P7)
 
+> **狀態(2026-08-17,P8 收工)**:三項**全部以「記錄進遷移指南」結案,一行 CSS 都沒動** ——
+> 第 1 項(`#footer()` hook)照 P3 的處置維持刪除並寫明替代作法;第 2、3 項(4 對重複來源、
+> 兩份 `tbeditor` 版本)**不刪**,因為刪掉輸出是相容性決定而非工程決定,寫進
+> [migration/less-to-css.md](migration/less-to-css.md)〈Known residuals〉那張表的 `S18` 一列。
+> **理由是第一期範圍封閉(C20)**:刪 4 個死輸出會把輸出檔數從 85 降到 81,那是 G-delta。
 
 這三項**不是**工程未決,是 P3 途中撿到、但決定權不在本計畫的問題。集中在這裡,免得散在各步的
 複核包裡被漏掉。**它們都不阻擋 P4–P7。**
@@ -431,7 +456,7 @@ L1/L2 只寫當前狀態;**要複核那些狀態是怎麼得出來的,去那裡�
 | 節 | 內容 | 何時要看 |
 |---|---|---|
 | **[階段與 commit 對照](iceblue-drop-less-progress-appendix.md#階段與-commit-對照)** | 每一階對應哪些 commit | 要回溯某一階實際改了什麼 |
-| **[L3-A](iceblue-drop-less-progress-appendix.md#l3-a-閘門紀錄附加式不覆寫)** | **閘門紀錄 ~~58~~ 62 列**(附加式,**不覆寫**) | P8 核帳、以及要確認某個數字是哪一次跑出來的 |
+| **[L3-A](iceblue-drop-less-progress-appendix.md#l3-a-閘門紀錄附加式不覆寫)** | **閘門紀錄 ~~58~~ ~~62~~ 63 列**(附加式,**不覆寫**) | P8 核帳、以及要確認某個數字是哪一次跑出來的 |
 | **[L3-B](iceblue-drop-less-progress-appendix.md#l3-b-tier-1p1--s0--s1)** | Tier 1:P1 = S0 + S1 的實作與論證 | 要動 LESS 版本 pin 或 `check-less-conventions.js` 時 |
 | **[L3-C](iceblue-drop-less-progress-appendix.md#l3-c-p2-儀器證明)** | P2 儀器證明(六步)+ 為什麼是 CleanCSS level 0 + 第三種靜默摧毀構造 | 要改 `build-css.js` 或 minifier 設定時 |
 | **[L3-D](iceblue-drop-less-progress-appendix.md#l3-d-p0-交付物基準的不可變性突變測試)** | P0 交付物、基準的不可變性、突變測試、重建基準的方法 | 基準出問題時 |

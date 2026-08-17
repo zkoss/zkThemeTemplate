@@ -17,8 +17,9 @@
 
 **相關文件**:[task-doc-tracking-policy.md](task-doc-tracking-policy.md)(工作文件的版控政策 + `check:doc-refs`)·
 [css-preprocessor-industry-direction.md](css-preprocessor-industry-direction.md)(業界方向佐證)·
-[migration/less-var-to-token.md](migration/less-var-to-token.md) · [migration/mixin-to-css.md](migration/mixin-to-css.md)(P8 的兩張規則表)·
-[migration/density.md](migration/density.md)(D5 的 density 遷移指南,**手寫**,不是產生的)
+[migration/less-var-to-token.md](migration/less-var-to-token.md) · [migration/mixin-to-css.md](migration/mixin-to-css.md)(P8 的兩張規則表,**已凍結**,見 C27)·
+[migration/density.md](migration/density.md)(D5 的 density 遷移指南,**手寫**,不是產生的)·
+[migration/less-to-css.md](migration/less-to-css.md)(**P8 的對外遷移指南**,手寫 —— 逃生門、前綴政策、CAVEAT-1/2/3、第一期 won't-do 清單、fork 工具箱)
 
 ---
 
@@ -39,7 +40,7 @@
   - [L3-D 各階段的技術細節與論證](iceblue-drop-less-plan-appendix.md#l3-d-各階段的技術細節與論證p0-p8) — P0-P8
   - [L3-E 風險](iceblue-drop-less-plan-appendix.md#l3-e-風險)
   - [L3-F 決策紀錄](iceblue-drop-less-plan-appendix.md#l3-f-決策紀錄) — L-2 / L-4 / L-5 / L-7 / L-8 與五次追加拍板
-  - [L3-G Change Log](iceblue-drop-less-plan-appendix.md#l3-g-change-log--規範層的斷言變更) — **25** 條規範層更正
+  - [L3-G Change Log](iceblue-drop-less-plan-appendix.md#l3-g-change-log--規範層的斷言變更) — **27** 條規範層更正
   - [L3-H 進度記錄制度](iceblue-drop-less-plan-appendix.md#l3-h-進度記錄制度)
 - **[附:跨主題待辦裁示](#附跨主題待辦裁示不屬於本案任何階段)** — 由本案裁示產生、但要在別的地方執行的事(**M-1** Marble 密度字彙對齊 · **M-2** `@themePalette` 移出本案)
 
@@ -66,19 +67,22 @@ DSP 層與 Font Awesome 的生成內容都還在,零 build step 兌現不了(L3-
 | **M2** 元件轉換(工作量主體) | P3 —— 74 個元件檔 `.less` → `.css` | **DONE** |
 | **M3** vendor prefix 政策 | P4a 純移除 · P4b 逐條判斷 | **DONE**(P4a 2026-08-07 · P4b 2026-08-10) |
 | **M4** 三個 holdout | P5 `norm` · P6 Font Awesome · P7 `tablet` | **DONE** —— P6、P5(2026-08-06,收在 G-zero)、**P7 兩段皆收工(2026-08-17)**:第一段轉換 G-zero(紀錄 #60)、~~尚餘第二段 **D4**~~ **←同日完成**,第二段 D4 收在 G-delta(1 檔 / 0 移除 / 618 新增,紀錄 **#61**,commit `238a3604`)|
-| **M5** 收尾與遷移指南 | P8 | TODO |
+| **M5** 收尾與遷移指南 | P8 | **DONE**(2026-08-17)—— `.less` 歸零、`zkless-engine` 移除、最終核帳零殘留(紀錄 **#63**);兩處規格更正 **C26**(不寫 `.less` 分支)與 **C27**(規則表凍結不重跑)|
 
 ### 總體進度
 
 | 量法 | 數字 | 定義 |
 |---|---|---|
-| **里程碑進度** | ~~3 / 5 = 60%~~ **4 / 5 = 80%**(2026-08-17) | M1、M2、M3、**M4** 完成 |
-| **輸出檔脫離 LESS** | ~~84 / 85 = 99%~~ **85 / 85 = 100%**(2026-08-17,P7 第一段) | **核心命題證明完畢,holdout 歸零**:`zklessc` 本次建置 `compiled 0 file(s)`,85 個輸出全部由真實 `.css` 來源經 `build-css.js` 產生(`check:build-css` 讀數 `85 converted (real source), 0 reconstructed from LESS`、`passthrough: 0`)。~~74 / 77~~ 是 P3 收工時的數字,ZK 10.4 補齊把分母帶到 85、P5 與 P6 把分子帶到 84、P7 第一段帶到 85。**注意這不等於「LESS 已經移除」** —— 樹裡還有 ~~30~~ **4**(D4 刪掉 `zkmax/less/` 整棵之後)個 `_` 開頭的 partial 與 `zkless-engine` 依賴,那是 P8 |
+| **里程碑進度** | ~~3 / 5 = 60%~~ ~~4 / 5 = 80%~~ **5 / 5 = 100%**(2026-08-17) | M1–M5 全部完成;本案結束 |
+| **輸出檔脫離 LESS** | ~~84 / 85 = 99%~~ **85 / 85 = 100%**(2026-08-17,P7 第一段) | **核心命題證明完畢,holdout 歸零**:`zklessc` 本次建置 `compiled 0 file(s)`,85 個輸出全部由真實 `.css` 來源經 `build-css.js` 產生(`check:build-css` 讀數 `85 converted (real source), 0 reconstructed from LESS`、`passthrough: 0`)。~~74 / 77~~ 是 P3 收工時的數字,ZK 10.4 補齊把分母帶到 85、P5 與 P6 把分子帶到 84、P7 第一段帶到 85。~~**注意這不等於「LESS 已經移除」** —— 樹裡還有 30 → **4** 個 `_` 開頭的 partial 與 `zkless-engine` 依賴,那是 P8~~ **←2026-08-17 P8 收工後,「LESS 已經移除」第一次成立**:來源樹 `.less` = **0**、`zkless-engine` 不在依賴裡、pom 沒有 `compile-less` execution,而 85 個輸出一條宣告都沒變(紀錄 **#63**)|
 
-兩個數字都要看:~~里程碑還剩兩個(M4 的 P7、M5)~~ **←2026-08-17 起只剩 M5**,而**承重的命題早已證明完畢** ——
-剩下的階段都是有意識的取捨(前綴政策、reset 機制、profile API),不是「還不知道做不做得到」。
-**⚠️ 別把 M4 收工讀成「LESS 沒了」**:`zul/less/` 還有 4 個 `_` 開頭的 partial 與 `zkless-engine` 相依,那是 **P8**。
-逐階段、逐閘門的權威狀態在進度文件 L1 / L2。
+兩個數字都要看:~~里程碑還剩兩個(M4 的 P7、M5)~~ ~~2026-08-17 起只剩 M5~~
+**←同日 M5 也收工,本案結束**,而**承重的命題早在 M4 就證明完畢** ——
+後面的階段都是有意識的取捨(前綴政策、reset 機制、profile API),不是「還不知道做不做得到」。
+~~**⚠️ 別把 M4 收工讀成「LESS 沒了」**:`zul/less/` 還有 4 個 `_` 開頭的 partial 與 `zkless-engine` 相依,那是 **P8**。~~
+**←這條警告到 P8 為止都成立;現在 `zul/less/` 整棵不存在,`zkless-engine` 也不在依賴裡。**
+逐階段、逐閘門的權威狀態在進度文件 L1 / L2;P8 交付的對外文件是
+[migration/less-to-css.md](migration/less-to-css.md)。
 
 ### 三條貫穿全案的判準
 
@@ -618,30 +622,46 @@ DSP 層與 Font Awesome 的生成內容都還在,零 build step 兌現不了(L3-
 
 #### P8 —— 收尾
 
+**DONE(2026-08-17)。** 執行計畫 [tasks/p8-finish-drop-less.md](../tasks/p8-finish-drop-less.md);
+交付的對外文件 [migration/less-to-css.md](migration/less-to-css.md);閘門紀錄 **#63**。
+
 | | |
 |---|---|
-| **目標** | 刪除 LESS partial、移除 `zkless-engine` 依賴與 pom 的 `zklessc` execution、`build-css.js` 長出 `.less` 分支接手引擎的工作、更新 readme、寫 migration guide |
+| **目標** | 刪除 LESS partial、移除 `zkless-engine` 依賴與 pom 的 `zklessc` execution、~~`build-css.js` 長出 `.less` 分支接手引擎的工作~~(**←不做,C26**:entry `.less` 在 P7 已歸零,那個分支的輸入集合是空的 —— 寫了它就是一段永遠不會被執行的程式碼,正是 L2.0〈儀器證明〉整節在防的東西)、更新 readme、寫 migration guide |
 | **輸入 → 輸出** | 3 個 holdout + LESS partial → 全樹純 CSS 來源 + migration guide |
-| **驗收閘門** | **G-zero** —— 全樹最終輸出 vs P0 baseline,差異必須**完全等於 ~~P4 + P5 + P7 三階段~~ `P4a + P4b + D1/D2 + D4` 四段已核准的 delta 總和,不多不少**(**←2026-08-14 更正,C21**;原式漏掉 D1/D2 的 **+352**,卻點名了貢獻 **0** 的 P5)。核帳資料來自進度文件 L3-A〈閘門紀錄〉,所以那份紀錄**不能事後補、不能改寫既有列**;D1/D2 那一列已於同日補記為 **#59** |
+| **驗收閘門** | **G-zero** —— 全樹最終輸出 vs P0 baseline,差異必須**完全等於 ~~P4 + P5 + P7 三階段~~ `P4a + P4b + D1/D2 + D4` 四段已核准的 delta 總和,不多不少**(**←2026-08-14 更正,C21**;原式漏掉 D1/D2 的 **+352**,卻點名了貢獻 **0** 的 P5)。核帳資料來自進度文件 L3-A〈閘門紀錄〉,所以那份紀錄**不能事後補、不能改寫既有列**;D1/D2 那一列已於同日補記為 **#59**。**←2026-08-17 實測收下,零殘留**:全樹原始讀數 **85 檔 / 14941 條 / 49 檔差異 / 1756 筆** = 移除 **745**(P4a 731 + P4b 14)+ 新增 **1011**(P4b 7 + D1/D2 352 + D4 652),`745 + 1011 = 1756 ✓`、檔數 `45 ∪ 9 ∪ {tablet} = 49 ✓`。**唯一需要解釋的一格是 D4 的 652**:其中 24 筆是 D4 引入的 `<c:if>` DSP 指令,剩下 628 條宣告比 `tablet-delta.js` 自報的 618 多 10 —— 差額是該腳本 `:112` 早已記錄的**幻影宣告**(`${".z-page "}` 這種 EL 留下的字面 `{}`,`cssdiff` 不剝 EL 所以看得到,delta 腳本剝掉所以看不到),**不是 10 條真宣告** |
 | **前置** | 兩張規則表必須在刪檔**之前**產生(**有期限,已完成**);工具要能在客戶自己的 fork 上跑 |
 | **必做的退場動作** | **把 `baseline/` 移回 `.gitignore`(S47)。** 它在 2026-08-10 被**暫時**改為追蹤,理由是 S45 —— 不進版控就沒辦法用 `git status` 證明第 4 層沒動它。本階核帳完成、`baseline/` 不再是活躍的比對對象之後,恢復忽略,`doc/baseline-manifest.sha256` 繼續負責釘位元組。退場條件與理由寫在 `.gitignore` 該段註解裡 |
-| **順手要收的既有欠帳** | **S14 + S37,2026-08-06 裁示留到本階一次處理。** `gen-var-table.js --check` 目前 exit 1,而且是**兩件事疊在一起**:①`EXPECTED` 停在 ZK 10.4 補齊之前(846/842,實測 866/862);②liveness **只掃 `.less` 樹**,所以每轉一個檔就有更多變數名字失去最後一個引用點(P5 這次 773 → 837)——**到本階會收斂成「全部都死」,而那正是正確答案**。連帶 `doc/migration/less-var-to-token.{md,json}` 現在指向已刪路徑,**不能靠現在重跑產生器解決**(會把 ①② 的漂移一起烘進文件)。**本階 `.less` 歸零之後,重定 `EXPECTED` + 重跑產生器 + 更新路徑是一次到位的** |
+| **順手要收的既有欠帳** | **S14 + S37,2026-08-06 裁示留到本階一次處理。** ~~**本階 `.less` 歸零之後,重定 `EXPECTED` + 重跑產生器 + 更新路徑是一次到位的**~~ **←2026-08-17 實測推翻,改為「凍結兩張表 + 兩支 `check:*` 退場」(C27)**:重跑會**刪掉表裡最有價值的東西** —— 資料 URI caveat 3 → 0、CAVEAT-3 的編譯期函式 1 → 0、list-fn 4 → 0、死名 42 → 863,因為這些 caveat 的證據是「消費站點」,而站點所在的檔案早就是 `.css`(`extract()` 那一類更是在編譯期就被求值,**恢復不了**)。判準是**遷移表描述的是客戶要離開的那棵樹**,拿現在的樹重跑是量錯對象。缺口實測只有 **20 列**(ZK 10.4 補齊帶進來的 `@severity*`,全部乾淨 1:1),以**機械抽出的手工附錄**補在 migration guide;另有 2 列(`@iphone`/`@android`)描述已刪的 `zkmax/less/`,表裡本來就標為死值。原本記的「①`EXPECTED` 停在補齊之前(846/842,實測 866/862)」數字也對不上:實測是 **864 列 / 862 token**,而且 `varFiles` 期望 2 實測 1(D4 刪了第二個檔)|
 | **commit 粒度** | — |
 
-> **`build-css.js` 接手 `zklessc` 的三個地雷**:(1) `.less` 路徑**不可以**前置 taglib header
+> ~~**`build-css.js` 接手 `zklessc` 的三個地雷**:(1) `.less` 路徑**不可以**前置 taglib header
 > —— LESS 會自己吐,加了會變兩份;(2) `.less` 路徑**不可以**套 `HOSTILE_CONSTRUCTS` 守衛
 > —— `norm` 與 `tablet` 本來就合法地帶著選擇器位置的 DSP tag,會被誤殺;(3) `~./` 改寫
-> **必須**維持 entry-buffer-only,否則會無聲地合法化 S1 守衛存在的目的。
+> **必須**維持 entry-buffer-only,否則會無聲地合法化 S1 守衛存在的目的。~~
+> **←2026-08-17 三條一併作廢(C26):那個分支沒有被寫,所以三個地雷描述的是不存在的程式碼。**
+> 這一段在還有 3 個 holdout 的時候是對的;是 P5 / P6 / P7 把 holdout 清成 0 讓前提消失。
+> **原文保留**,因為 fork 若把 LESS vendor 回去、要自己接上編譯步驟,這三條仍然是真的忠告 ——
+> 已轉寫進 migration guide 的〈Escape hatch〉。
+>
+> **同一次清掉的既有死碼**:`check-build-css.js` 開頭那兩步 LESS 重建(編譯全樹 → 剝 taglib
+> header → 餵給 builder)同樣沒有輸入了,一併刪除;並補一條**非空轉**的斷言取代它
+> (輸出檔數必須等於 entry 來源檔數)。另外 `check:less-conventions` 離開閘門 ——
+> 0 個 `.less` 表示它**沒有量測對象**,留在閘門裡就是一個結構上不可能失敗的綠燈,
+> 正是 S48 記過的那種「一支永遠不會紅的檢查」。腳本本身留給 fork,並在無 `.less` 時說明自己為何無事可做。
 >
 > **migration guide 必須寫明逃生門**:客戶可以把被刪掉的 partial vendor 進自己的 fork,繼續用 LESS。
 > **「升級到 ZK 11」和「跟著棄用 LESS」是兩個可以分開的決定。**
+> **←已交付**:[migration/less-to-css.md](migration/less-to-css.md)〈Escape hatch〉——
+> 含從 git 還原 partial 的指令、`package.json` 與 pom 要加回哪幾行、
+> **必須把 LESS pin 在 4.x 的警告**(3.13.1 會靜默改壞現代 CSS 值且 exit 0),以及三項代價。
 
 ### L2.4 前置工作項(不是階段,不產生 theme 輸出)
 
 | 工作項 | 是誰的前置 | 內容 | 狀態 |
 |---|---|---|---|
 | **視覺 A/B harness** | P4 / P5 / P7 | **重用 Marble 既有的 preview 頁面與 Playwright,不搬語料進本分支**。只需讓 preview app 能載入本模板編出的 theme jar;A/B 兩邊是**同一分支的兩次 build**。**先拿同一個 build 截兩次確認 diff 為零**,才可以拿它比對不同 build | **DONE**(2026-08-05)—— 語料 **116 頁**、自我驗證 **0 差異**、反向控制 **36 頁**。規格 [visual-ab-harness.md](visual-ab-harness.md) |
-| **規則表產生器** | P8(**有期限** —— 來源檔會被刪) | `scripts/gen-var-table.js` + `scripts/gen-mixin-table.js`,各自自帶斷言、輸出跨次執行 byte-identical、可在客戶 fork 上重跑 | **DONE** |
+| **規則表產生器** | P8(**有期限** —— 來源檔會被刪) | `scripts/gen-var-table.js` + `scripts/gen-mixin-table.js`,各自自帶斷言、輸出跨次執行 byte-identical、可在客戶 fork 上重跑 | **DONE**;**P8 之後兩張表凍結、兩支 `check:*` 退場(C27)**,產生器本身留給 fork(來源不存在時會明確說明,不丟 stack)|
 
 > **harness 的訊號品質限制要記住**:157/158 個 preview 頁面用到 IceBlue 沒有的 `z-*` utility
 > class,塌掉的版面可能遮住 P4/P5 改到的 border / shadow / spacing。

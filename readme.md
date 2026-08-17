@@ -1,13 +1,16 @@
 # ZK Theme Template
-[ZK](https://github.com/zkoss/zk) is a highly productive open source Java framework for building amazing enterprise web and mobile applications. The **ZK Theme Template** provides a base theme that developers can extend to create custom ZK themes. It comes with continuous/incremental compile and live-reload features to minimize the turn-around time when developing a theme. 
+[ZK](https://github.com/zkoss/zk) is a highly productive open source Java framework for building amazing enterprise web and mobile applications. The **ZK Theme Template** provides a base theme that developers can extend to create custom ZK themes.
 
 If you just want to adjust the look of specific components rather than all of them, please read [ZK Style Customization Guide](https://www.zkoss.org/wiki/ZK_Style_Customization_Guide).
 
-We assume you're already familiar with [Less](http://lesscss.org/).
+**The sources are plain CSS. There is no Less.** Every value a theme exposes is a
+[CSS custom property](https://docs.zkoss.org/zk_style_customization_guide/css_variables) —
+this theme declares 862 of them — so customizing is overriding a property, and there is exactly
+one way to do it. Upgrading from a version that used Less variables:
+[migration/less-to-css.md](doc/migration/less-to-css.md).
 
-Please note that with the introduction of [CSS Variables](https://docs.zkoss.org/zk_style_customization_guide/css_variables), you may not need to create a custom theme for simple customizations. If still adopting this approach of creating a theme jar, you need to be aware that CSS variables will not take effect if you override the corresponding LESS variables.
-For example, overriding @colorPrimary will cause the CSS variable --zk-color-primary to be overridden as well.
-The same applies when specifying @themePalette, as it overrides the theme-related variables defined in the theme file.
+Note that with CSS custom properties you may not need a custom theme jar at all for simple
+customizations: load your own stylesheet after the theme and override the properties there.
 
 # Build Steps
 ## Building prerequisites
@@ -24,9 +27,7 @@ fork this repository to another git repository, so this will make it easier to m
 
 `./init.sh`
 
-* install the build dependencies. This pulls in
-[zkless-engine](https://github.com/zkoss/zkless-engine) — the LESS build runner for ZK themes —
-along with the LESS compiler itself. Nothing needs to be installed by hand.
+* install the build dependencies. Nothing needs to be installed by hand.
 
 `npm install`
   
@@ -34,13 +35,19 @@ along with the LESS compiler itself. Nothing needs to be installed by hand.
 ## build jar file
 `mvn clean package`
 
-It will compile `.less` files and package the source into jar. The jar file will be at `target/iceblue11-${project.version}.jar` (the unversioned `iceblue11.jar` name only exists inside the `bin` zip)
+It compiles every `.css` source into the `*.css.dsp` stylesheets ZK serves (`scripts/build-css.js`,
+bound to `process-resources`) and packages them into the jar. The jar file will be at
+`target/iceblue11-${project.version}.jar` (the unversioned `iceblue11.jar` name only exists inside
+the `bin` zip). Raw `.css` sources are deliberately excluded from the jar — only the compiled
+`.css.dsp` ships.
+
+To compile the stylesheets without Maven: `npm run build:css`.
 
 # How to Customize a Theme
-This project contains the default theme (`iceblue`) .less files. 
+This project contains the default theme (`iceblue11`) as plain `.css` files.
 The suggested steps:
 1. Switch to a theme as a base theme
-2. Add a new `.less` file to override the existing variables.
+2. Override the custom properties you want to change (see [Override custom properties](#override-custom-properties)).
 
 ## switch to compact density (since 9.5.0)
 
@@ -82,27 +89,39 @@ Upgrading from `@themeProfile` or from the `iceblue_c` jar: [migration/density.m
 The [theme pack](https://www.zkoss.org/zkthemepackdemo/) contains extra 23 themes, you can choose one theme that is closer to your target theme as a base theme and start to customize it. So that it can save some efforts for you.
 (**Notice**: you need to purchase ZK EE or theme pack to access the theme pack source code.)
 
-1. Download Theme Pack source jar at [the premium repository](https://maven.zkoss.org/repo/zk/ee/org/zkoss/themepack/): [THEME_NAME]-[VERSION]-sources.jar
-2. Get theme color palette less at `source.jar/palettes/*.less`
-2. Copy the theme less to `zkThemeTemplate/src/main/resources/web/zul/less/colors`. <br/>
-For example, `montana.less`
-3. prepend `_` at the file name <br/>
-For example, `_montana.less`
-4. Specify the theme name at `src/main/resources/web/zul/less/_zkvariables.less`
-```less
-@themePalette:                 "montana";
-```
+**The `@themePalette` variable is gone.** A palette is a set of custom-property values, so a
+palette is now just a stylesheet that overrides them — you load it after the theme instead of
+compiling it into the jar. See
+[migration/less-to-css.md § Palette](doc/migration/less-to-css.md#palette-themepalette-is-gone)
+for what to do with a palette you already have.
 
-## Add New .less
-We suggest you customize a theme by overriding existing variables instead of modifying the variable value directly. So that you can easily merge the future changes from the original repository and easily differentiate the customized style and default styles. The steps are:
-1. create a new `.less` file and add those variables you want to override.
-2. import the new `.less` file in `_header.less` at the bottom to override the previous one like:
-```less
-@import "_zkvariables.less"; // variables needed for ZK
-@import "_zkmixins.less";
+## Override custom properties
+Customize by overriding properties rather than editing the values in place — that way your
+customization is a small file of its own, and merging future changes from the original repository
+stays easy.
 
-@import "_mytheme.less" // your new theme variables
+Two ways, and the first needs no build at all:
+
+1. **No theme jar** — load your own stylesheet after the theme and override there:
+```css
+:root {
+    --zk-color-primary: #6750a4;
+    --zk-base-font-size: 15px;
+}
 ```
+2. **In this theme** — add a `.css` file next to the token files and `@import` it from
+`src/main/resources/web/zul/css/norm.css`, after the existing imports so it wins:
+```css
+@import "tokens/_default.css";
+@import "tokens/_iceblue.css";
+@import "base/_reset.css";
+@import "tokens/_mytheme.css";   /* your overrides */
+```
+Both take effect at runtime, and both compose: a later override never makes an earlier one
+unreachable. (Overriding a *Less variable* used to erase the custom property from the compiled
+output, which silently broke any downstream override — one of the reasons Less is gone. The full
+list of behavioural differences is in
+[migration/less-to-css.md](doc/migration/less-to-css.md).)
 
 
 ## preview custom theme
@@ -127,10 +146,18 @@ application uses, so what you review is what ships:
 There is no in-page density toggle, because there is no runtime switch to expose.
 
 
-## continuous compile/watch less files
-in a separate console:
+## recompile after editing a stylesheet
+In a separate console:
 
-`npm run zklessc-dev`
+`npm run build:css`
+
+It rebuilds all 85 stylesheets in well under a second, and the preview app picks them up on the
+next request without a restart (`ThemePreviewApp` sets `org.zkoss.zk.WCS.cache=false`), so a
+hard-reload in the browser is enough.
+
+**There is no file watcher.** The old `npm run zklessc-dev` watched `.less` files only, so it had
+already stopped seeing this theme's sources file by file as they were converted to `.css`; it was
+removed with the Less toolchain rather than left in place watching nothing.
 
 
 # How to use `iceblue11.jar`:
@@ -159,14 +186,24 @@ It does not require a server restart, but user has to refresh the browser.
 Please refer to [ZK Developer's Reference/Theming and Styling/Switching Themes](https://www.zkoss.org/wiki/ZK_Developer%27s_Reference/Theming_and_Styling/Switching_Themes).
 
 # Use cases
+Every value below is a custom property declared in
+`src/main/resources/web/zul/css/tokens/_default.css`. Override it the way
+[Override custom properties](#override-custom-properties) describes — don't edit it in place.
+
 ## Change primary color
-`src/main/resources/web/zul/less/_zkvariables.less` > `@colorPrimary`
+`--zk-color-primary` (and `--zk-color-primary-dark` / `-light` / `-lighter` if you want the whole ramp)
 
 ## Change base font
-`src/main/resources/web/zul/less/_zkvariables.less` > `@baseFontSize`, `@baseTitleFontFamily`, `@baseContentFontFamily`
+`--zk-base-font-size`, `--zk-base-title-font-family`, `--zk-base-content-font-family`
 
 ## Change margin and padding
-Different components have different margin and padding, search "margin" and "padding" among all `.less` files.
+Different components have different margin and padding. Grep the token file for the component name
+(e.g. `--zk-container-padding`, `--zk-mesh-body-padding`); if no token covers what you need, the
+component's own rules are in `src/main/resources/web/js/**/css/*.css`.
+
+## Look up the old Less variable name
+Every `@variable` this theme used to expose, and the property that replaced it:
+[migration/less-var-to-token.md](doc/migration/less-var-to-token.md).
 
 
 # Customize Previous Themes

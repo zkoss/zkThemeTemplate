@@ -63,4 +63,53 @@
 
 ## L3 驗收證據
 
-(執行時填;閘門紀錄以附加方式寫進進度附錄 L3-A。)
+**收工 2026-08-17。** 閘門紀錄 **#63**(進度附錄 L3-A);規範層更正 **C26 / C27**(計畫附錄 L3-G);
+狀態層 **S63**(進度附錄 L3-I)。四顆 commit:
+
+| commit | 內容 |
+|---|---|
+| `20ed1191` | 刪 `zul/less/` 整棵 + 移除 `zkless-engine`(pom / `package.json` / 五支腳本)|
+| `d95dc9eb` | `baseline/` 退回 `.gitignore`(**S47** 退場)|
+| `4175c5f7` | `readme.md` 改寫 + `doc/migration/less-to-css.md` |
+| `4523bd5e` | 進度 / 計畫文件寫回 |
+
+### 最終核帳(對**未調整**的 `baseline/`)
+
+| | 值 |
+|---|---|
+| 全樹原始讀數 | **85 檔 / 14941 條 / 49 檔差異 / 1756 筆** |
+| 移除 | **745** = P4a **731** + P4b **14** |
+| 新增 | **1011** = P4b **7**(norm 3 / slider 2 / pdfviewer 2)+ D1/D2 **352**(350 宣告 + 2 DSP)+ D4 **652**(628 宣告 + 24 DSP)|
+| 加總 | 745 + 1011 = **1756 ✓**;檔數 45 ∪ 9 ∪ {tablet} = **49 ✓** |
+| 唯一需要解釋的一格 | D4 的 628 比 `tablet-delta.js` 自報的 618 多 **10** —— `tablet-delta.js:112` **早已記錄**:`${".z-page "}` 這種 EL 留下字面 `{}`,算成 10 個幻影規則區塊 / 10 條幻影宣告。`cssdiff` 不剝 EL 所以看到 628,delta 腳本剝掉所以是 618 ⇒ **不是 10 條真宣告** |
+
+### 三支複核(在 `zkless-engine` 真的不在 `node_modules` 的情況下跑)
+
+| 檢查 | 結果 |
+|---|---|
+| `check:gate` | **exit 0** —— P4a 731 / P4b 14 移除 7 新增 / `-webkit-` 341 = 341 |
+| `check:bytes` | **UNEXPLAINED 0** |
+| `check:build-css` | **files differing 0**;85 檔全部來自真來源;passthrough **0**;byte-identical **23/85**,其餘 62 檔全落在封閉序列化類別內 |
+| `check:density-property` / `check:tablet-density` | 兩支三態閘門**全綠**(會真的起預覽程式 ⇒ 同時證明 Maven 路徑在沒有 `compile-less` 之下可用)|
+| `check:doc-refs` / `check:fa-css` / `check:density-css` | 全 **exit 0** |
+| `mvn clean package` | **exit 0**;jar 內 **85 `.css.dsp` / 0 原始 `.css` 或 `.less`** |
+| 依賴 | `npm install` → `removed 41 packages`;`node_modules` 內 `zkless` 目錄 **0**、`.bin` 只剩 `lessc`;`less` = **4.8.1** |
+| 來源樹 | `find src -name '*.less'` = **0** |
+| 基準 | `git ls-files baseline/` = **0**,磁碟上仍 **86** 檔,`check:baseline` **86/86 OK** |
+
+### 三支退場工具的行為(不是丟 stack,也不是假綠燈)
+
+| 指令 | 行為 |
+|---|---|
+| `gen-var-table.js --check` | **exit 2**,說明表已凍結、指向 `--src <fork>` |
+| `gen-mixin-table.js --check` | **exit 2**,同上 |
+| `check-less-conventions.js` | **exit 0**,但明說「本樹沒有 `.less`,沒有量測對象」——**規則不是被違反,是不適用** |
+
+### 未做,已記錄(不是漏掉)
+
+1. **`build-css.js --watch`** —— 不在計畫書的交手清單裡。成本約 25 行(`fs.watch` recursive,無新依賴),
+   但 Linux 需 Node 20+ 而 readme 承諾 ≥ 10.16;要連 live reload 得再加依賴。
+   **這個能力其實從 P3 起就一個檔一個檔壞掉了**(引擎 watcher 只看 `.less`),P8 只是揭出它。
+2. **S31** 版號一致性腳本 —— 同樣不在交手清單裡,且與 LESS 無關。
+
+兩項都寫進進度文件〈P8 留下的兩項待裁示〉。
