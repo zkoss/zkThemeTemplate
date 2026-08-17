@@ -48,7 +48,7 @@
 
 const fs = require('fs');
 const path = require('path');
-const { minify, PLACEHOLDER_SOURCE } = require('./build-css.js');
+const { minify } = require('./build-css.js');
 
 const ROOT = path.resolve(__dirname, '..');
 const SOURCE = path.join(ROOT, 'src/main/resources/web');
@@ -69,11 +69,15 @@ let cached = null;
  * The block exactly as `build-css.js` emits it — minified, with build placeholders already
  * substituted for their DSP (which is how the D2 library-property conditional gets into the
  * selector).
+ *
+ * Minified under `norm.css`'s name rather than its own: the block is a partial that `norm.css`
+ * @imports, so in the real build it reaches `minify()` already inlined, as part of that file.
+ * The name is also what lets its `.ZKDENSITY ` placeholder past build-css.js's allow-list.
  */
 function densityBlock() {
 	if (cached === null) {
 		const css = fs.readFileSync(path.join(SOURCE, BLOCK_SOURCE), 'utf8');
-		cached = minify(css, PLACEHOLDER_SOURCE);
+		cached = minify(css, 'zul/css/norm.css');
 	}
 	return cached;
 }

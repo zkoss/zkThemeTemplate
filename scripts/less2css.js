@@ -54,21 +54,32 @@
 
 const fs = require('fs');
 const path = require('path');
+const os = require('os');
 const { execFileSync } = require('child_process');
 const less = require('less');
 const { classify } = require('./check-build-css.js');
-const { NO_HEADER } = require('./build-css.js');
+const { NO_HEADER, PLACEHOLDERS, TAGLIB_MARKER } = require('./build-css.js');
+const p4b = require('./p4b-delta.js');
+const density = require('./density-delta.js');
 
 const SOURCE = 'src/main/resources/web';
 const BASELINE = 'baseline';
 const TARGET = 'target/classes/web/iceblue11';
 
-/** These three stay in LESS: norm is P5, font-awesome is P6, tablet is P7. */
+/**
+ * The holdouts P3 was not allowed to touch. `zkmax/css/tablet.css.dsp` left this set in P7, which
+ * is what this script converts it with; the other two never come back through here, because P5 and
+ * P6 replaced them with something a generic converter cannot produce (a hand-composed `norm.css`
+ * that positions its own taglib header, and a generator). Their `.less` is gone, so a run against
+ * either stops at the "no such source" check below rather than here.
+ */
 const HOLDOUTS = new Set([
 	'zul/css/norm.css.dsp',
 	'zul/font/font-awesome.css.dsp',
-	'zkmax/css/tablet.css.dsp',
 ]);
+
+/** Which stage a conversion belongs to. P3 did the 74 component files; P7 did the last holdout. */
+const STAGE = new Map([['zkmax/css/tablet.css.dsp', 'P7']]);
 
 /**
  * Rewrite `//` line comments to `/* *\/` so LESS carries them into the output — LESS treats `//`
@@ -158,6 +169,30 @@ function stripHeader(css) {
 }
 
 /**
+ * DSP tags in SELECTOR position -> the build-safe placeholders `build-css.js` substitutes back
+ * after minification. The inverse of its `restorePlaceholders()`, sharing the same table so the
+ * two directions cannot drift.
+ *
+ * Only `tablet.less` needs this (14 `browserDefault` switches), and only because CleanCSS
+ * silently corrupts such a tag: it rewrites `${".z-page "}` to `${}".z-page "` at 0 errors and
+ * 0 warnings. So the converted SOURCE must not contain the tag at all — see build-css.js's
+ * third hostile construct, which was found on this very file.
+ *
+ * The taglib row is skipped: stripHeader() already removed the header, and this file's header
+ * belongs at offset 0, which build-css.js prepends on the generic path. Otherwise the order is
+ * the table's own, longest-first — the `.ZKBD ` prefix ENDS with `</c:if>`, so masking the
+ * block-close row first would eat half of it.
+ */
+function maskDsp(css) {
+	let out = css;
+	for (const [placeholder, dsp] of PLACEHOLDERS) {
+		if (placeholder === TAGLIB_MARKER) continue;
+		out = out.split(dsp).join(placeholder);
+	}
+	return out;
+}
+
+/**
  * Re-indent to tabs: LESS emits 2 spaces per nesting level, every `.less` source in this repo is
  * tab-indented. `build-css.js` collapses indentation, so THE OUTPUT IS UNAFFECTED — this is only
  * about the 74 new files a human now has to maintain reading like the rest of the tree. Doing it
@@ -222,12 +257,35 @@ function run(cmd, args, label) {
 	}
 }
 
+/**
+ * `baseline/` + every approved delta, staged in a temp dir — the tree the build is SUPPOSED to
+ * reproduce today. Raw `baseline/` stopped being that on 2026-08-07, when P4a deleted 731 dead
+ * vendor-prefix declarations on purpose; D1 later appended 350 more to `norm.css.dsp`.
+ *
+ * Every one of the 74 P3 conversions ran before that, so this script's gate had never needed it
+ * and asked raw `baseline/` for a 0 it could no longer return: P7 got `files differing: 48` —
+ * the whole tree's approved delta, with nothing whatsoever to do with the file being converted.
+ * Re-deriving the target is the same fix `check-bytes.js` and `check-build-css.js` already use,
+ * and it keeps the criterion at a literal 0 rather than "0 plus whatever we agreed to before".
+ */
+function stageExpected() {
+	const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'less2css-'));
+	const d = p4b.materialize(dir);
+	const dd = density.materializeInto(dir);
+	const bad = [...p4b.assertApprovedSize(d), ...density.assertApprovedSize(dd)];
+	if (bad.length) {
+		fs.rmSync(dir, { recursive: true, force: true });
+		throw new Error(`comparison target is not the approved P4a+P4b+D1 shape:\n  ${bad.join('\n  ')}`);
+	}
+	return { dir, note: `P4a ${d.removedP4a}− / P4b ${d.removedP4b}−${d.addedP4b}+ / D1 ${dd.declarations}+` };
+}
+
 /** `  ok  <rel>  (N decl)` / `files differing: N` out of one `cssdiff --list` run. */
-function gate(outRel) {
+function gate(outRel, expectedDir) {
 	let text;
 	let failed = false;
 	try {
-		text = run('node', ['scripts/cssdiff.js', BASELINE, TARGET, '--list'], 'cssdiff');
+		text = run('node', ['scripts/cssdiff.js', expectedDir, TARGET, '--list'], 'cssdiff');
 	} catch (e) {
 		text = e.message;
 		failed = true;
@@ -309,12 +367,24 @@ function main(argv) {
 	function finish(compiled) {
 		// 3. Strip the taglib header. build-css.js hard-fails on a source that still carries one,
 		//    so a miss here surfaces at build time rather than silently double-emitting.
-		//    Then re-indent to tabs — cosmetic for the new source, invisible in the output.
-		const body = tabIndent(stripHeader(compiled));
+		//    Then mask any DSP tag left in selector position, and re-indent to tabs — the
+		//    indentation is cosmetic for the new source, invisible in the output.
+		const stripped = stripHeader(compiled);
+		const body = tabIndent(maskDsp(stripped));
 		if (/<%/.test(body)) {
 			console.error(`less2css: ${lessRel} has a DSP directive that is not part of the leading header — needs a decision, not a script.`);
 			return 1;
 		}
+		// A tag the placeholder table does not know about would still reach CleanCSS, which
+		// corrupts it at 0 errors and 0 warnings. build-css.js refuses it too, but say so HERE,
+		// where the source that produced it is still named.
+		const strayDsp = body.match(/<\/?[a-zA-Z][\w-]*:[\w-]+/g);
+		if (strayDsp) {
+			console.error(`less2css: ${lessRel} compiles to DSP tag(s) that have no build-safe placeholder: ${[...new Set(strayDsp)].join(', ')}`);
+			console.error('  Add the mapping to PLACEHOLDERS in build-css.js — the minifier must never see a DSP tag.');
+			return 1;
+		}
+		const dspBlocks = (stripped.match(/<c:if/g) || []).length;
 
 		// 4 + 5. Write the new source, remove the old one. Both, or the two toolchains would
 		//        compile to the same .css.dsp and whichever ran last would silently win —
@@ -336,15 +406,23 @@ function main(argv) {
 			console.error(`\nNOT COMMITTED. To undo: rm ${cssAbs} && git restore ${lessAbs}`);
 			return 1;
 		}
-		const g = gate(outRel);
+		let expected;
+		try {
+			expected = stageExpected();
+		} catch (e) {
+			console.error(`\nless2css: ${e.message}`);
+			console.error(`\nNOT COMMITTED. To undo: rm ${cssAbs} && git restore ${lessAbs}`);
+			return 1;
+		}
+		const g = gate(outRel, expected.dir);
 
 		// Byte-identity is the review lens (plan §2.6 layer 1): it needs none of cssdiff's six
 		// normalizations, so it is a stronger and independently checkable signal. When it differs,
 		// the difference must fall inside the CLOSED list of 5 serialization classes — anything
 		// else is for a human, not a footnote.
-		const baseAbs = path.join(BASELINE, outRel);
+		const baseAbs = path.join(expected.dir, outRel);
 		const builtAbs = path.join(TARGET, outRel);
-		let bytes = 'baseline missing';
+		let bytes = 'expected missing';
 		let unclassified = false;
 		if (fs.existsSync(baseAbs) && fs.existsSync(builtAbs)) {
 			const A = fs.readFileSync(baseAbs, 'utf8');
@@ -359,6 +437,9 @@ function main(argv) {
 				}
 			}
 		}
+		// Nothing below reads it, and leaving a second copy of the theme in /tmp after every run
+		// is exactly the kind of artefact a later run could mistake for the real baseline.
+		fs.rmSync(expected.dir, { recursive: true, force: true });
 
 		const lessLines = lessSrc.split('\n').length;
 		const cssLines = body.split('\n').length;
@@ -372,8 +453,11 @@ function main(argv) {
 		console.log(`  declarations      ${g.declarations}`);
 		console.log(`  source -> css     ${lessRel} (${lessLines} lines)  ->  ${cssRel} (${cssLines} lines)`);
 		console.log(`  expansion         ${(cssLines / lessLines).toFixed(1)}x`);
-		console.log(`  bytes vs baseline ${bytes}`);
-		console.log(`  gate              files differing: ${g.differing}`);
+		console.log(`  bytes vs expected ${bytes}`);
+		console.log(`  gate              files differing: ${g.differing}  (vs baseline/ + ${expected.note})`);
+		if (dspBlocks) {
+			console.log(`  DSP masked        ${dspBlocks} <c:if> switch(es) -> build-safe placeholders, restored after minification`);
+		}
 		if (empty.total) {
 			const shape = [
 				empty.bare ? `${empty.bare} empty` : '',
@@ -393,7 +477,7 @@ function main(argv) {
 		// Message generated here rather than by hand, so all ~74 commits carry the same four
 		// facts in the same order and a reviewer can scan the log instead of reading each diff.
 		const msg = [
-			`P3(drop-less): convert ${stem} to plain CSS`,
+			`${STAGE.get(outRel) || 'P3'}(drop-less): convert ${stem} to plain CSS`,
 			'',
 			`${lessRel} -> ${cssRel}`,
 			'',
@@ -406,8 +490,8 @@ function main(argv) {
 				: `this file and injects the taglib header.`,
 			'',
 			`declarations:       ${g.declarations} (output side)`,
-			`gate:               files differing: 0`,
-			`bytes vs baseline:  ${bytes}`,
+			`gate:               files differing: 0  (vs baseline/ + ${expected.note})`,
+			`bytes vs expected:  ${bytes}`,
 			`lines:              ${lessLines} .less -> ${cssLines} .css`,
 		].join('\n');
 

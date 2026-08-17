@@ -39,18 +39,21 @@
  * not weaker: for a converted file the shipped build runs this exact input through this exact
  * builder. The report keeps the two counts separate so that shift stays visible.
  *
- * ONE FILE CANNOT GO THROUGH THIS PATH, AND THAT IS NOT A BUG
- * ----------------------------------------------------------
- * `zkmax/css/tablet.css.dsp` — carries `<c:if>` DSP tags in SELECTOR position, which
- *                            `build-css.js` deliberately hard-fails on (CleanCSS rewrites them
- *                            with 0 errors and 0 warnings). P7 owns this file.
- * It is copied from `baseline/` unchanged so the diff covers the whole theme, and it is reported
- * as passthrough so the coverage number is never read as the full output count.
+ * EVERY OUTPUT NOW GOES THROUGH THIS PATH  (PASSTHROUGH is empty since P7)
+ * ------------------------------------------------------------------------
+ * Two files used to sit out, and both were fixed by removing the obstacle rather than the file:
  *
- * `zul/css/norm.css.dsp` used to sit here too — its taglib header is at byte 43785, not offset 0
- * (premise #18), so stripping and re-prepending would have MOVED it. P5 removed the obstacle
- * rather than the file: `norm.css` positions its own header with a marker, and its browserDefault
- * DSP is carried as build-safe placeholders. It is covered now, from a real source.
+ * `zul/css/norm.css.dsp` — its taglib header is at byte 43785, not offset 0 (premise #18), so
+ *                          stripping and re-prepending would have MOVED it. P5 gave `norm.css` a
+ *                          marker that positions its own header.
+ * `zkmax/css/tablet.css.dsp` — carries `<c:if>` DSP tags in SELECTOR position, which
+ *                          `build-css.js` deliberately hard-fails on (CleanCSS rewrites them with
+ *                          0 errors and 0 warnings). P7 converted it with those 14 switches
+ *                          written as the same build-safe placeholders P5 introduced.
+ *
+ * The mechanism stays: an output that genuinely cannot round-trip must be COPIED (so the diff
+ * still covers the whole theme) and NAMED (so the coverage number is never read as the full
+ * output count). It just has nothing to carry today.
  *
  * BYTE-IDENTITY IS REPORTED TOO
  * -----------------------------
@@ -106,10 +109,8 @@ const density = require('./density-delta.js');
 const SOURCE = 'src/main/resources/web';
 const BASELINE = 'baseline';
 
-/** Outputs that legitimately cannot round-trip through the CSS path. See header. */
-const PASSTHROUGH = new Map([
-	['zkmax/css/tablet.css.dsp', 'DSP tags in selector position — P7 owns it'],
-]);
+/** Outputs that legitimately cannot round-trip through the CSS path. Empty since P7 — see header. */
+const PASSTHROUGH = new Map();
 
 /** `<%@ taglib … %>` and friends. `${…}` EL is NOT matched: it belongs inside url() values. */
 const DSP_DIRECTIVE = /<%[\s\S]*?%>/g;
@@ -195,6 +196,16 @@ function walkCssSources(dir, base = dir, acc = []) {
 	return acc;
 }
 
+/** Is there still a `.less` zklessc would compile? Entry = basename not `_`-prefixed. */
+function hasLessEntry(dir) {
+	for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+		if (entry.isDirectory()) {
+			if (hasLessEntry(path.join(dir, entry.name))) return true;
+		} else if (entry.name.endsWith('.less') && !entry.name.startsWith('_')) return true;
+	}
+	return false;
+}
+
 function run(cmd, args, label) {
 	try {
 		execFileSync(cmd, args, { stdio: ['ignore', 'pipe', 'pipe'] });
@@ -246,9 +257,15 @@ function main(argv) {
 		console.log('1/5  compiling LESS tree (uncompressed)…');
 		run('npx', ['zklessc', '-s', SOURCE, '-o', lessOut], 'zklessc');
 
-		const outputs = walk(lessOut).sort();
-		if (!outputs.length) {
-			console.error('check-build-css: zklessc produced no output.');
+		// With no entry `.less` left, zklessc does not create the output directory at all, so the
+		// walk has to tolerate its absence rather than read it as an IO error.
+		const outputs = fs.existsSync(lessOut) ? walk(lessOut).sort() : [];
+		// Silence from a compiler that still has work is a failure; silence from one with nothing
+		// left to compile is the end state this whole project is walking towards. P7 converted the
+		// last entry `.less`, so from here the tree holds only `_`-prefixed partials — which
+		// zklessc never compiles on their own — and step 2b supplies the whole candidate tree.
+		if (!outputs.length && hasLessEntry(SOURCE)) {
+			console.error('check-build-css: zklessc produced no output, but the source tree still has an entry .less.');
 			return 2;
 		}
 

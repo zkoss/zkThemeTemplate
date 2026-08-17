@@ -163,8 +163,14 @@ const NO_HEADER = new Set([
  * be fine, but masking in the other direction (conversion side) must do the prefix first.
  */
 const TAGLIB_MARKER = '/*!ZK-TAGLIB-HEADER*/';
-/** The only source allowed to carry placeholders. See assertPlaceholdersAllowed(). */
-const PLACEHOLDER_SOURCE = 'zul/css/norm.css';
+/**
+ * The only sources allowed to carry placeholders. See assertPlaceholdersAllowed().
+ *
+ * `norm.css` needs all five (P5). `tablet.css` needs `.ZKBD ` alone (P7): the browserDefault
+ * switch appears 14 times in selector position there, and it is the ONLY thing that kept that
+ * file out of this path — see the header's third hostile construct, which was found on it.
+ */
+const PLACEHOLDER_SOURCES = new Set(['zul/css/norm.css', 'zkmax/css/tablet.css']);
 const BROWSER_DEFAULT = "c:property('org.zkoss.zul.theme.browserDefault')";
 const DENSITY = "c:property('org.zkoss.zul.theme.density')";
 const PLACEHOLDERS = [
@@ -338,11 +344,11 @@ function resolveImports(sourceDir, rel, stack = []) {
 function assertPlaceholdersAllowed(css, rel) {
 	const found = PLACEHOLDERS.map(([p]) => p).filter((p) => css.includes(p));
 	if (!found.length) return;
-	if (rel !== PLACEHOLDER_SOURCE) {
+	if (!PLACEHOLDER_SOURCES.has(rel)) {
 		throw new Error(
 			`${rel}: contains build placeholder(s) ${found.join(', ')}, which are substituted for ` +
-			`DSP after minification — only ${PLACEHOLDER_SOURCE} may carry them. If this is ` +
-			`literal CSS content and not a placeholder, spell it some other way.`);
+			`DSP after minification — only ${[...PLACEHOLDER_SOURCES].join(' and ')} may carry them. ` +
+			`If this is literal CSS content and not a placeholder, spell it some other way.`);
 	}
 	const markers = css.split(TAGLIB_MARKER).length - 1;
 	if (markers > 1) {
@@ -503,7 +509,7 @@ function main(argv) {
 if (require.main === module) process.exit(main(process.argv.slice(2)));
 
 module.exports = {
-	HEADER, NO_HEADER, TAGLIB_MARKER, PLACEHOLDERS, PLACEHOLDER_SOURCE,
+	HEADER, NO_HEADER, TAGLIB_MARKER, PLACEHOLDERS, PLACEHOLDER_SOURCES,
 	minify, assertMinifierSafe, assertPlaceholdersAllowed, stripComments, tidyMediaPreludes,
 	resolveImports, restorePlaceholders,
 };

@@ -38,7 +38,7 @@
   - [L3-D 各階段的技術細節與論證](iceblue-drop-less-plan-appendix.md#l3-d-各階段的技術細節與論證p0-p8) — P0-P8
   - [L3-E 風險](iceblue-drop-less-plan-appendix.md#l3-e-風險)
   - [L3-F 決策紀錄](iceblue-drop-less-plan-appendix.md#l3-f-決策紀錄) — L-2 / L-4 / L-5 / L-7 / L-8 與五次追加拍板
-  - [L3-G Change Log](iceblue-drop-less-plan-appendix.md#l3-g-change-log--規範層的斷言變更) — **21** 條規範層更正
+  - [L3-G Change Log](iceblue-drop-less-plan-appendix.md#l3-g-change-log--規範層的斷言變更) — **22** 條規範層更正
   - [L3-H 進度記錄制度](iceblue-drop-less-plan-appendix.md#l3-h-進度記錄制度)
 - **[附:跨主題待辦裁示](#附跨主題待辦裁示不屬於本案任何階段)** — 由本案裁示產生、但要在別的地方執行的事(**M-1** Marble 密度字彙對齊 · **M-2** `@themePalette` 移出本案)
 
@@ -64,7 +64,7 @@ DSP 層與 Font Awesome 的生成內容都還在,零 build step 兌現不了(L3-
 | **M1** 基礎建設與閘門 | P0 基準 · P1 LESS 4.8.1 pin · P2 雙來源 build | **DONE** |
 | **M2** 元件轉換(工作量主體) | P3 —— 74 個元件檔 `.less` → `.css` | **DONE** |
 | **M3** vendor prefix 政策 | P4a 純移除 · P4b 逐條判斷 | **DONE**(P4a 2026-08-07 · P4b 2026-08-10) |
-| **M4** 三個 holdout | P5 `norm` · P6 Font Awesome · P7 `tablet` | **P6、P5 已收工(P5 於 2026-08-06,收在 G-zero)**;P7 待前置 |
+| **M4** 三個 holdout | P5 `norm` · P6 Font Awesome · P7 `tablet` | **三個全部收工** —— P6、P5(2026-08-06,收在 G-zero)、**P7 第一段(2026-08-17,G-zero,紀錄 #60)**。P7 尚餘第二段 **D4**(compact 平板層,真正的 G-delta) |
 | **M5** 收尾與遷移指南 | P8 | TODO |
 
 ### 總體進度
@@ -72,7 +72,7 @@ DSP 層與 Font Awesome 的生成內容都還在,零 build step 兌現不了(L3-
 | 量法 | 數字 | 定義 |
 |---|---|---|
 | **里程碑進度** | **3 / 5 = 60%** | M1、M2、M3 完成 |
-| **輸出檔脫離 LESS** | **84 / 85 = 99%** | 核心命題已零差異證明完畢;剩 **1** 個**刻意**保留的 holdout(`tablet`/P7)。~~74 / 77~~ 是 P3 收工時的數字,ZK 10.4 補齊把分母帶到 85、P5 與 P6 把分子帶到 84 |
+| **輸出檔脫離 LESS** | ~~84 / 85 = 99%~~ **85 / 85 = 100%**(2026-08-17,P7 第一段) | **核心命題證明完畢,holdout 歸零**:`zklessc` 本次建置 `compiled 0 file(s)`,85 個輸出全部由真實 `.css` 來源經 `build-css.js` 產生(`check:build-css` 讀數 `85 converted (real source), 0 reconstructed from LESS`、`passthrough: 0`)。~~74 / 77~~ 是 P3 收工時的數字,ZK 10.4 補齊把分母帶到 85、P5 與 P6 把分子帶到 84、P7 第一段帶到 85。**注意這不等於「LESS 已經移除」** —— 樹裡還有 30 個 `_` 開頭的 partial 與 `zkless-engine` 依賴,那是 P8 |
 
 兩個數字都要看:里程碑還剩兩個(M4 的 P7、M5),但**承重的命題已經證明完畢** —— 剩下的階段都是有意識的取捨
 (前綴政策、reset 機制、profile API),不是「還不知道做不做得到」。
@@ -101,7 +101,7 @@ DSP 層與 Font Awesome 的生成內容都還在,零 build step 兌現不了(L3-
 | **元件檔 = 74** | P3 的轉換標的(77 − 3 個 holdout) | — |
 | **builder 覆蓋檔數 = 75** | `check:build-css` 真正經過 `build-css.js` 的檔(77 − `norm` − `tablet`,那兩檔是 passthrough、**不是證據**)。**2026-08-06 起是 84**:P5 讓 `norm` 從 passthrough 轉為真來源實測,只剩 `tablet` 一個 passthrough | — |
 | **來源檔數** | P0 時 **153** 個 `.less` = **77 個進入點 + 76 個 `_*.less` partial**。partial 靠 `@import` 被內聯進進入點,**從來就沒有自己的輸出**;所以 1:1 的對象是進入點,不是總檔數。P3 收工後進入點是 **74 `.css` + 3 `.less` = 77** | 「153 個來源只剩 77 個輸出,少掉的去哪了」 —— **沒有少**,問錯了對象 |
-| **holdout** | 刻意留在 LESS、不歸 P3 管的進入點。**P3 收工時是 3 檔**:`norm`(P5)、`font-awesome`(P6)、`tablet`(P7);**P6 收工後是 2 檔**(`norm`、`tablet`);**P5 收工後(2026-08-06)是 1 檔**(`tablet`)。**這是會隨階段遞減的數字,不是不變量** —— 引用時要標明是哪個時點 | 把 `3` 當常數;`元件檔 = 74` 那一列用的是 **P3 時點**的 3,那一列不會變 |
+| **holdout** | 刻意留在 LESS、不歸 P3 管的進入點。**P3 收工時是 3 檔**:`norm`(P5)、`font-awesome`(P6)、`tablet`(P7);**P6 收工後是 2 檔**(`norm`、`tablet`);**P5 收工後(2026-08-06)是 1 檔**(`tablet`);**P7 第一段收工後(2026-08-17)是 0 檔**。**這是會隨階段遞減的數字,不是不變量** —— 引用時要標明是哪個時點 | 把 `3` 當常數;`元件檔 = 74` 那一列用的是 **P3 時點**的 3,那一列不會變 |
 | **批次(批 1–3)** | **閘門與複審的分界**,以輸出端條數劃分 | 步階 |
 | **步階(步 0–4)** | **一次做多少、什麼時候停** | 批次 |
 | **第 1 層** | 位元組層複核。**對 P3 的定義是「逐 byte 相同 _or_ 差異落在 5 類封閉清單內」** | 「嚴格逐 byte 相同」那個窄義 —— 它只對 LESS→LESS 成立,**不要外推到 P3** |
@@ -132,9 +132,10 @@ DSP 層與 Font Awesome 的生成內容都還在,零 build step 兌現不了(L3-
 > 2026-07-31 把它自動化成 `npm run check:build-css` 才補起來。
 > **⇒ 一次性的儀器證明只夠當「開工前的證據」,不能當「持續的守衛」;要守衛就得落地成腳本。**
 
-> **上表的示例數字停在 P3 時點,定義本身不變。** 現況(2026-08-06):輸出端條數 **14863**、
-> 輸出檔數 **85**、builder 覆蓋 **84**、holdout **1**。分母是 ZK 10.4 補齊帶動的(+8 檔),
-> 分子是 P6 與 P5。權威值一律看進度文件 L1 / L2,不要引用本表的數字當現況。
+> **上表的示例數字停在 P3 時點,定義本身不變。** 現況(2026-08-17):輸出檔數 **85**、
+> builder 覆蓋 **85**、holdout **0**(~~2026-08-06:輸出端條數 14863、覆蓋 84、holdout 1~~)。
+> 分母是 ZK 10.4 補齊帶動的(+8 檔),分子最後由 P7 第一段補滿。
+> 權威值一律看進度文件 L1 / L2,不要引用本表的數字當現況。
 
 ### L2.1 範圍
 
@@ -523,7 +524,7 @@ DSP 層與 Font Awesome 的生成內容都還在,零 build step 兌現不了(L3-
 |---|---|
 | **目標** | 轉換 `tablet.less`(輸出端 **681** 條);把 LESS 獨有的 import path 插值(`@import "profiles/_@{themeProfile}"`)改成 **runtime `--zk-*` override sheet** —— 兩個 profile 只是同一組 842 個 token 的不同數值 |
 | **輸入 → 輸出** | `tablet.less` + `profiles/` → `.css` + runtime override sheet |
-| **驗收閘門** | ~~G-delta(單一段)~~ **←2026-08-14 拆成兩段**(第一期範圍封閉的結果)。**① `tablet.less` → `.css` 的轉換本身 = G-zero**:A1 的 60 條與 A2 的 1 條都不移除 ⇒ `tablet.css.dsp` 應**逐 byte 不變**,與 P3 已做過 74 次的驗收完全同形。**② D4(compact 平板層)= G-delta**:這才是刻意的**對外 API 變更**(「改 LESS 變數重編 jar」→「設 library-property」),必須寫進 migration guide。**兩段分開報,不要合成一個數字** —— 合起來報的話,轉換出錯會被 D4 的 delta 蓋掉,而那正是本案一路在防的訊號污染 |
+| **驗收閘門** | ~~G-delta(單一段)~~ **←2026-08-14 拆成兩段**(第一期範圍封閉的結果)。**① `tablet.less` → `.css` 的轉換本身 = G-zero**:A1 的 60 條與 A2 的 1 條都不移除 ⇒ ~~`tablet.css.dsp` 應**逐 byte 不變**~~ **←2026-08-17 更正,S58**:正確的標準是 P3 已做過 74 次的那個 —— **`cssdiff` 逐條 0**,位元組差異必須全部落在 `classify()` 那份**封閉**的序列化類別清單內(`UNEXPLAINED: 0`)。「逐 byte 不變」要求 CleanCSS 與 LESS 的序列化器逐字元一致,而它們本來就不一致(全樹只有 23/85 逐 byte 相同,**P5 自己的 `norm.css.dsp` 也不在其中**)⇒ 照字面驗收會把一次正確的轉檔判成失敗。**已於 2026-08-17 收在這個標準下**(紀錄 **#60**,commit `2f348677`)。**② D4(compact 平板層)= G-delta**:這才是刻意的**對外 API 變更**(「改 LESS 變數重編 jar」→「設 library-property」),必須寫進 migration guide。**兩段分開報,不要合成一個數字** —— 合起來報的話,轉換出錯會被 D4 的 delta 蓋掉,而那正是本案一路在防的訊號污染 |
 | **前置** | ~~**L-4 的 density 那一半**(colour 那一半已由 L-7 解除)。視覺 A/B 價值中等,但 tablet 需要 mobile UA 的 Playwright 專案~~ **←2026-08-14 兩項全部解除,本階無剩餘前置**:(a) **L-4 已拍板採用**(`data-density` runtime 覆寫取代 build 期換 jar,`iceblue_c` 不再出貨;決策紀錄 L3-F);(b) **mobile UA 的 Playwright 專案已存在並實測過** —— `sync-mobile` / `jar-mobile` 兩個 project,桌面與 mobile 皆 **0 頁差異**且兩側 fingerprint DIFFERENT(⇒ 非空轉),見 `tasks/zk11-jar-baseline-visual-ab.md` |
 | **commit 粒度** | 1–2 顆,與 migration guide 的對應條目成對進版 |
 
