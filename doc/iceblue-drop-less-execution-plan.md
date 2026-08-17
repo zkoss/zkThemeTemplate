@@ -17,7 +17,8 @@
 
 **相關文件**:[task-doc-tracking-policy.md](task-doc-tracking-policy.md)(工作文件的版控政策 + `check:doc-refs`)·
 [css-preprocessor-industry-direction.md](css-preprocessor-industry-direction.md)(業界方向佐證)·
-[migration/less-var-to-token.md](migration/less-var-to-token.md) · [migration/mixin-to-css.md](migration/mixin-to-css.md)(P8 的兩張規則表)
+[migration/less-var-to-token.md](migration/less-var-to-token.md) · [migration/mixin-to-css.md](migration/mixin-to-css.md)(P8 的兩張規則表)·
+[migration/density.md](migration/density.md)(D5 的 density 遷移指南,**手寫**,不是產生的)
 
 ---
 
@@ -595,10 +596,14 @@ DSP 層與 Font Awesome 的生成內容都還在,零 build step 兌現不了(L3-
 > - 若日後仍決定補:成本是**補 import + 補 34 B 的檔,必須成對**(只補 import 會找不到檔、
 >   建置直接失敗),兩者都不改輸出 ⇒ **G-zero**,任何時點都做得,不擋任何階段。
 
-> ~~**P7 順手要收的第二個缺口**(**S36**)~~ **←2026-08-17 事實層面已消滅,文件層面留給 D5。**
+> ~~**P7 順手要收的第二個缺口**(**S36**)~~ **←2026-08-17 已結案(S62),事實與文件兩面都收乾淨。**
 > D4 之後 compact 只剩**一個**旋鈕(library-property),桌機與平板讀的是同一個 property ⇒
 > 「桌機 default + 平板 compact」的分裂主題**在結構上不可能再發生**。
-> `readme.md` 那兩處寫法仍要改寫,那是 **D5** 的交付項,S36 在那裡正式關閉。原文保留於下:
+> ~~`readme.md` 那兩處寫法仍要改寫,那是 **D5** 的交付項,S36 在那裡正式關閉。~~
+> **←D5 已交付**:`readme.md` 的 density 章與預覽章都已改寫,對外遷移指南是
+> [migration/density.md](migration/density.md),S36 的正式結案列是進度附錄的 **S62**。
+> 當初「沒有任何檢查看得到」的那個缺口,現在有 `check:density-property` 與
+> `check:tablet-density` 兩支三態閘門看著。原文保留於下:
 >
 > **P7 順手要收的第二個缺口**(**S36**,2026-08-06 裁示接受到本階為止):**P5 之後 compact
 > profile 暫時要設兩處** —— `zul/css/norm.css` 的第一行 `@import`(桌機)與

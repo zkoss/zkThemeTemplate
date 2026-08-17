@@ -58,8 +58,8 @@
 
 | 需求 | 作法 |
 |---|---|
-| **靜態(zk.xml)** | library-property `org.zkoss.zul.theme.density` = `compact`;由 DSP 條件在**選擇器位置**加上 `:root,`,與既有的 `browserDefault` 同技法。**零 FOUC、零額外請求** |
-| **動態(Java API)** | `IceblueDensity.apply(Density)` 全站 / `IceblueDensity.apply(Component, Density)` 單一區域。**不需要 reload** |
+| **靜態(zk.xml)** | library-property `org.zkoss.zul.theme.density` = `compact`;~~由 DSP 條件在**選擇器位置**加上 `:root,`~~ **←C25 改為整段包在 `<c:if>` 裡、鍵在 `:root`**,與既有的 `browserDefault` 同技法。**零 FOUC、零額外請求**,而且**預設密度收不到那 350 條** |
+| ~~**動態(Java API)**~~ **不出貨** | ~~`IceblueDensity.apply(Density)` 全站 / `IceblueDensity.apply(Component, Density)` 單一區域。**不需要 reload**~~ **←2026-08-17 裁示刪除(C25)** —— 兩層都只支援 library-property,與前一版規格相當 |
 | **值的來源** | `tokens/_compact.css` 的 333 條,由產生器抽出,**不手抄** |
 
 ### 里程碑
@@ -70,21 +70,26 @@
 | **D2** | 靜態設定 —— library-property + DSP 選擇器條件 | G-delta(同 D1 的檔,+1 個 DSP 區塊) | D1 | **DONE** 2026-08-12 |
 | ~~**D3**~~ **不出貨** | ~~Java API —— 全站/區域,執行期切換~~ **←2026-08-17 裁示刪除(C25)** | — | — | **REMOVED** —— `IceblueDensity.java` 與 `check-density-runtime.js` 已刪。density 只由 library-property 切換,桌面與平板皆然;理由與成本見 [d6-property-only-density.md](d6-property-only-density.md) |
 | **D4** | tablet 半 —— 兩套規則同檔,~~compact 那套加屬性前綴~~ **←各包一個 `<c:if>`,由 library-property 二選一(C23)** | **G-delta**(`tablet.css.dsp`,1 檔 / 0 移除 / 618 新增) | P7 的 tablet 轉 CSS | **DONE(2026-08-17)** —— commit `238a3604`,紀錄 **#61**;執行細節見 [d4-tablet-density.md](d4-tablet-density.md) |
-| **D5** | 收尾 —— 移除 build 期旋鈕、`readme.md`、遷移指南(**含 C24 / C25 的「只有 property」規格**)、關掉 S36 | G 不變 | D1–D4 | **部分完成(2026-08-17)** —— D6 已順手兌現 `readme.md` 改寫與 `norm.css` 檔頭;**剩下**:`zul/less/_zkvariables.less` 的 `@themeProfile`(已無人讀,隨 P8 消失)、遷移指南本身、S36 的正式關閉 |
+| **D5** | 收尾 —— 移除 build 期旋鈕、`readme.md`、遷移指南(**含 C24 / C25 的「只有 property」規格**)、關掉 S36 | G 不變 | D1–D4 | ~~**部分完成(2026-08-17)**~~ **←同日補齊,DONE** —— D6 兌現 `readme.md` density 章與 `norm.css` 檔頭;本輪交付[migration/density.md](../doc/migration/density.md)(手寫,對外)、改掉 `readme.md` 預覽章殘留的 `IceblueDensity.apply(...)`、以 **S62** 正式關閉 S36。**唯一殘留**:`_zkvariables.less` 的 `@themeProfile` 字面(已無 CSS 讀它,唯一讀者是本來就紅的 `gen-var-table.js`)⇒ 隨 **P8** 的 `.less` 歸零消失 |
 
 ### 總體進度
 
-~~**3 / 5**(2026-08-12)~~ ~~**4 / 5**(2026-08-17)~~ **D3 已於同日裁示刪除(C25),本計畫的階段數變成 4 個,已完成 3 個**。
+~~**3 / 5**(2026-08-12)~~ ~~**4 / 5**(2026-08-17)~~ ~~**D3 已於同日裁示刪除(C25),本計畫的階段數變成 4 個,已完成 3 個**。~~
+**←2026-08-17 D5 收工:4 / 4,本計畫結案。**
 D1、D2、D4 完工並有實測證據(見 [L3.5](#l35-d1d3-的驗收證據);其中 D3 那一段的證據隨 D3 一起作廢,保留為紀錄);
 ~~**D4 仍卡在 P7 的 tablet 轉換**~~ **←D4 已於 2026-08-17 完工**(機制與驗收與本文原訂的不同,見 [D4](#d4-tablet-半風險最高) 與 C23),
-只剩 **D5**。
+~~只剩 **D5**。~~ **←D5 同日完工,對外交付物是 [migration/density.md](../doc/migration/density.md);
+本計畫沒有留下任何未結案項目,只有一項字面殘留隨 P8 消失(見 D5 那一列)。**
 D3 沒有未結案項目 —— 巢狀反向覆蓋已於 **2026-08-13 裁示不支援**
 (見 [L3.1(g)](#g-巢狀反向覆蓋不支援已裁示) 與 [L3.4 第 5 項](#l34-未決事項需要裁示))。
 
 ### 一句話效益
 
-> 用 **14.4 KB** 換掉 **282.8 KB 的第二個 jar**,順便讓 compact 從「換 jar + 重新載入頁面、
-> 只能整站」變成「一個屬性、可以只套一塊畫面、不用 reload」,而且**結構上不可能再發生版本漂移**
+> 用 **14.4 KB** 換掉 **282.8 KB 的第二個 jar**,~~順便讓 compact 從「換 jar + 重新載入頁面、
+> 只能整站」變成「一個屬性、可以只套一塊畫面、不用 reload」~~
+> **←2026-08-17 更正(C25):執行期切換與區域級 density 都不出貨,兩層都只認 library-property。
+> 正確的講法是「把換 jar 換成設一個屬性」—— 前一版也沒有執行期切換,所以這是同等能力、成本大降,
+> 而且預設密度的 app 連那 14.4 KB 都收不到**,而且**結構上不可能再發生版本漂移**
 > —— 而漂移的成本已經看得到:`iceblue_c` **整條 10.4.0 線都沒有出貨**
 > (eval repo 從 `10.3.1-Eval` 直接跳到 `11.0.0.FL.20260812-Eval`),
 > 而同期 ZK core 有 `10.4.0-jakarta.FL.20260713-Eval`。第二份出貨物就是會落後,見 [L3.1(a)](#a-iceblue_c-1100-對同版預設主題逐檔比)。
@@ -752,3 +757,4 @@ pages differing: 0      raster noise: 7 (全部 maxΔ 1,遠低於 ≤8 / ≤64px
 | 2026-08-17 | **D4 完工,但機制與驗收都不是本文原訂的那一套(裁示 C23)。** 原訂「compact 加 `[data-density="compact"]` 前綴 + 67 條逐條中和」,實際採用「兩張完整的表各包一個 `<c:if>`,由 library-property 二選一,中和一條都不做」。**推翻的依據是量出來的兩件事**:① **那份 67 條清單的單位是錯的** —— 決定會不會漏的是 **(單一選擇器, 屬性)** 對而不是選擇器字串,逗號群組會把漏的藏起來(`.z-a,.z-b{x}` 對 `.z-a{x}` 算「共用」卻漏掉 `.z-b`);逐對重量得 default **895** / compact **869** / 兩側都有 **708**,⇒ **只在 default 的是 187 條宣告、113 個選擇器**,是被點名那份的近 3 倍,而沒被點名的部分**沒有任何東西看得見**。② **CSS 沒有「不存在」運算子** —— 那 187 條在 compact 下要的是不存在而不是被蓋掉,這正是 P5 處理 `browserDefault` 得到的結論。**同時發現 compact 那張表可以從本 repo 逐條重建**:編譯輸出對出貨中的 `iceblue_c 11.0.0` 是 **606 = 606 條宣告、缺 0 多 0 值異 0**,⇒ 驗收得以從「67 條瀏覽器比對」升級為**三態全量比對**(`unset`/`foo` 對 `baseline/` **895 = 895**、`compact` 對 jar **869 = 869**),並附 `ne`/`eq` 對調的負向控制。**付出的代價寫在明處**:執行期 `data-density` 屬性不驅動平板層(只有 library-property),`IceblueDensity` 的 Javadoc 已改寫;這一格今天本來就是壞的(D1–D3 之後 `apply(COMPACT)` 已經是桌面 compact + 平板 default),日後要補是純附加。**順帶更正 L3.1(e) 的口徑**(260/681/217/628 → **246/667/207/618**,差額是 DSP 區塊的 `${…}` 自帶的 `{}`,見 S61)。commit `238a3604`,閘門紀錄 **#61**,執行細節 [d4-tablet-density.md](d4-tablet-density.md) |
 | 2026-08-17 | **規格裁示:平板層只支援 library-property 切換,Java API 不驅動它,且不列入待辦(C24)。** D4 收工時把這件事寫成「代價」與「日後純附加的待辦」,本裁示把它升格為**規格**。**理由是前一版本來就只有這個規格** —— `@themeProfile` 時代切 compact 要改 LESS 變數、重編 jar、換 jar,平板層從來沒有過任何執行期切換 ⇒ 本版是**同等能力、便宜非常多的機制**(一個 property 取代第二個出貨 jar),不是能力損失。唯一新增的不對稱是**桌面層多拿了**執行期切換,不是平板層少了一格。**連帶效果**:那 187 條寫回(含 60 條只能實測寫死的)全部不必做 —— 它們只在「要讓執行期屬性也驅動平板層」時才存在。評估過的三個作法與實測數字保留在 `tasks/d4-tablet-density.md` L2.3 與 `tasks/d4-tablet-runtime-explainer.html`,**留作日後若規格真的改變時的成本估算,不是路線圖**。**本裁示不動任何 CSS 或 Java 邏輯**(現行實作已經就是這個規格),閘門不需要重跑;`IceblueDensity` Javadoc 已改寫為規格語氣,**D5 的 migration guide 要正面寫這條規格** |
 | 2026-08-17 | **規格再收斂:桌面層也只支援 library-property,D3 刪除(C25)。** 承接同日的 C24。**理由同源** —— 前一版兩層都沒有動態切換(`@themeProfile` 要改變數、重編 jar、換 jar),所以本版是**同等能力、一個 property 取代第二個出貨 jar**;未來再考慮動態切換。**連 CSS 的 `[data-density]` 掛勾也拿掉,不只是刪 API** —— D4 之後平板層只認 property,桌面層若還留著屬性掛勾,任何人設了它在行動裝置上就會得到「桌面 compact + 平板 default」,那正是 **S36**。留半套 = 留一個已知的錯誤狀態。**實作**:`gen-density-css.js` 的 `SELECTOR` 由 `.ZKDENSITY [data-density="compact"]` 改為 `:root`,整段包進 D4 的 `<c:if>`;`build-css.js` 移除 `.ZKDENSITY ` placeholder;`check-density-property.js` 三態判準改為「區塊在不在」;刪 `IceblueDensity.java`、`check-density-runtime.js` 與預覽程式側邊欄的即時開關。**delta 形狀不變**(1 檔 / 0 移除 / 350 新增)⇒ P8 核帳公式不受影響;**額外效益**是預設密度的 app 不再收到那 14473 B(gzip 2403 B)。**代價**:預覽程式審查 compact 要以 `-Dorg.zkoss.zul.theme.density=compact` 重啟(與客戶真實作法一致)。閘門全綠並跑了負向控制;執行計畫與驗收見 [d6-property-only-density.md](d6-property-only-density.md) |
+| 2026-08-17 | **D5 完工,本計畫結案(4 / 4)。** 交付三件:①**對外遷移指南** [migration/density.md](../doc/migration/density.md) —— 手寫(不是產生的),四種「你以前怎麼做」各給一列對照,C24 / C25 的「兩層都只有 property、沒有執行期切換」寫成正面的一節而不是注意事項,並把當初那個坑寫進〈The trap this replaced〉;`tokens/_compact.css` 的可覆寫性**分建置期與執行期兩節**寫(2026-08-13 裁示要求)。②**`readme.md` 預覽章的殘留**:它還在教「側邊欄的 Compact density 開關會呼叫 `IceblueDensity.apply(...)`」,而那個類別與那個開關都在 D6 刪了 —— 改成「用 `mvn -Dorg.zkoss.zul.theme.density=compact test exec:java@preview-app` 重啟」,並**實測驗證過那條指令真的會讓 compact 區塊出現在服務出去的 `zk.wcs` 裡**(exec:java 跑在 Maven 的 JVM 裡,`-D` 因此進得去)。③**S36 正式關閉**,結案列是進度附錄的 **S62**;S36 那一列不改寫(附加式紀律)。**本輪不動任何 CSS 或 Java**,閘門只是重跑取數:`check:density-property` 三態(526988 / 541383 / 526988 B,compact 區塊 0 / 1 / 0)與 `check:tablet-density` 三態(26207 / 24308 / 26207 B,895 = 895 對 `baseline/`、869 = 869 對 `iceblue_c 11.0.0` jar)皆 exit 0。**殘留一項**:`_zkvariables.less` 的 `@themeProfile` 字面仍在,已無 CSS 讀它,唯一讀者是本來就因 S14 / S37 紅著的 `gen-var-table.js` ⇒ 留給 **P8** |

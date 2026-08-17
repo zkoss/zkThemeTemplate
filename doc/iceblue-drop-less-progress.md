@@ -112,6 +112,7 @@
 | **里程碑進度** | ~~3 / 5 = 60%~~ **4 / 5 = 80%**(M1、M2、M3、**M4**;2026-08-17)|
 | **輸出檔脫離 LESS** | ~~84 / 85 = 99%~~ **85 / 85 = 100%**(2026-08-17,P7 第一段) |
 | **來源樹剩餘 `.less`** | ~~30~~ **4**(D4 刪掉 `zkmax/less/` 整棵;剩 `zul/less/` 的 4 個 partial)|
+| **density 線(L-4 的 D1–D6)** | **全部收工(2026-08-17)** —— D1/D2 → D4 → D6 → D5;**D3 已於 D6 刪除**(執行期 Java API 隨 C25 退場)。對外文件 [migration/density.md](migration/density.md) |
 
 ### 下一步(依「不等任何人」排序)
 
@@ -196,6 +197,10 @@
    **←2026-08-14:L-4 整體拍板採用,本項結案。** 裁示內容與依據見
    〈[已解除的 BLOCKED](#已解除的-blocked)〉的 P7 那一列與計畫書附錄 L3-F。
    ⇒ **P7 轉 TODO**,D4 / D5 的前置從「L-4 拍板」改為「P7 完工」。
+   **←2026-08-17:本項的「機制」敘述已被兩次裁示取代,上面那句不改寫。** `data-density` 屬性
+   (D1)與 Java API(D3)都已刪除,桌機與平板兩層都只讀 **library-property
+   `org.zkoss.zul.theme.density`**(D4/**C23** + D6/**C25**)。**D4 / D5 / D6 全部收工**
+   ⇒ 本項與整條 density 線結案,對外文件是 [migration/density.md](migration/density.md)。
 
 > ~~**不等任何人的工作已經做完了。**~~ **←2026-08-05 補齊收工後不再成立:上面 5 項裡有 ~~3 項~~
 > ~~2 項~~ ~~1 項~~ 0 項不等任何人**(~~只剩第 1 項的頁面與 playwright~~ **←已完成**;
@@ -220,6 +225,8 @@
 > **←2026-08-14:那個裁示做了(L-4 採用)⇒ 這句話第五次翻面,而且這次是往回翻:
 > 「可以自己動手的實作」不再是零,是 `P7`。** 本案自此**沒有任何階段被決策擋著** ——
 > 剩下的 P7 → D4 → D5 → P8 全部是工作。
+> **←2026-08-17:P7 兩段、D4、D6(C25 的規格收斂)與 D5 全部收工 ⇒ 那條鏈只剩 `P8`。**
+> D5 的對外交付物是 [migration/density.md](migration/density.md),**S36 以 S62 正式結案**。
 > L2.4 清理待辦第 1–4、6 項已於 2026-08-04 收工(紀錄 #32、#33),
 > 剩下的 L2.4 兩項是**別人的決定或還沒建的工具**,不是可以直接開工的實作。要繼續推進,
 > ~~第 1 項是唯一自己動手就能解的 —— 而且它同時解鎖三個階段。~~
@@ -265,7 +272,10 @@
 | P7 `tablet` + profile API | **DONE(2026-08-17,兩段)** | ~~G-delta~~ **兩段:轉換 G-zero + D4 G-delta**(**←2026-08-14,C20**) | ~~**多一個交付項**:補 `_zkcssvariables.less` 缺的 palette import + `colors/_iceblue_css.less`(S29);驗收多一條 —— runtime override sheet 必須表達得出 palette 覆蓋,且要有一次**非 iceblue** palette 的實測~~ **←2026-08-13 兩項都移除(C19 / M-2)**:`@themePalette` 移出本案,本階只剩 `tablet` + `@themeProfile`(密度軸)。**S29 改判不補**,隨 P8 的 `.less` 歸零消失。palette 的獨立計畫 `tasks/theme-pack-palette-mechanism.md`(不進本 repo 版控,見 **M-2**)。**←2026-08-14 再減一次(C20,第一期範圍封閉)**:P4a 移交的 **A1** 60 條前綴與 P4b 移交的 **A2** 1 條孤兒 `-moz-appearance` **都不移除,只記錄** ⇒ 轉換那一段變成 **G-zero**(與 P3 的 74 檔同形);`tablet/compact/_combo.less` 走 **L-8 的 A 案**逐字轉。**←2026-08-17 第一段收工**(commit `2f348677`,紀錄 **#60**):681 條、`files differing: 0`,全樹差異維持 48 檔 / 1104 筆 ⇒ 沒有貢獻任何宣告差異;`check:build-css` 覆蓋率到 **85/85 真實來源、passthrough 0**,`zklessc` `compiled 0 file(s)`。~~`tablet.css.dsp` 應**逐 byte 不變**~~ **←同日更正,S58**:正確標準是 `cssdiff` 0 + 位元組差異全落在封閉的序列化類別內(全樹只有 23/85 逐 byte 相同,`norm.css.dsp` 也不在其中)。~~**本階剩下的唯一 G-delta 是 D4** —— 67 條逐條中和,驗收是全部對 `iceblue_c 11.0.0` 做 mobile UA computed-style 比對全綠~~ **←2026-08-17 第二段收工,機制與驗收同日更正(C23)**(commit `238a3604`,紀錄 **#61**):改為「兩張完整的表各包一個 `<c:if>`,由 library-property 二選一」,**中和一條都不做** —— 那 67 條的**單位是錯的**,真正的漏面是 **187 條宣告 / 113 個選擇器**(**S60**),而 CSS 沒有「不存在」運算子(P5 對 `browserDefault` 已有同一結論)。驗收改為**三態全量比對**:`unset`/`foo` 對 `baseline/` **895 = 895**、`compact` 對出貨 jar **869 = 869**,三者 0 缺 0 多 0 異,另跑 `ne`/`eq` 對調的負向控制(exit 1,交叉檢查點名「served the compact sheet」)。delta 形狀 **1 檔 / 0 移除 / 618 新增**。**代價**:執行期 `data-density` 屬性不驅動平板層,只有 library-property 驅動(已寫進 Javadoc)| — |
 | **規則表產生器**(P8 前置,**有期限**) | **DONE** | 自帶斷言 | **846** 列 / **834** 語法 1:1 / **830** 行為 1:1 / **16** 例外;**30** mixin 名稱 / **38** 定義列 | 2026-07-30 |
 | P8 收尾 | TODO | G-zero | 須等於 ~~P4 + P5 + P7~~ **`P4a + P4b + D1/D2 + D4`** 已核准 delta 總和(**←2026-08-14 更正,C21**:原式漏 D1/D2 的 **+352**、卻列了貢獻 **0** 的 P5) | — |
-| **D1/D2** `data-density` runtime 覆寫層 | **DONE** | G-delta | **`0 移除 / 352 新增`、1 檔**(`zul/css/norm.css.dsp`)= 帶 `data-density` 的宣告 **350** + DSP `<c:if>` 開關 **2**。**純附加**,不刪任何既有宣告 ⇒ 未設 `data-density` 時瀏覽器收到的 CSS 與 baseline 逐條相同。逐 token 對 `iceblue_c 11.0.0` oracle **350 條值全同、缺 0 條**;第 1、2 層由 `scripts/density-delta.js` 抵銷,機制與 `p4a-delta.js` / `p4b-delta.js` 同形。**閘門紀錄 #59 是 2026-08-14 補記的** —— 完工當時漏記,而 §P8 指名 L3-A 為核帳來源(**C21**);詳細驗收證據在 `tasks/l4-density-mechanism.md` L3.5 | 2026-08-12(紀錄補於 2026-08-14) |
+| **D1/D2** ~~`data-density` runtime 覆寫層~~ **←機制於 2026-08-17 被 C25 收斂,見下面的 D6 那一列** | **DONE** | G-delta | **`0 移除 / 352 新增`、1 檔**(`zul/css/norm.css.dsp`)= 帶 `data-density` 的宣告 **350** + DSP `<c:if>` 開關 **2**。**純附加**,不刪任何既有宣告 ⇒ 未設 `data-density` 時瀏覽器收到的 CSS 與 baseline 逐條相同。逐 token 對 `iceblue_c 11.0.0` oracle **350 條值全同、缺 0 條**;第 1、2 層由 `scripts/density-delta.js` 抵銷,機制與 `p4a-delta.js` / `p4b-delta.js` 同形。**閘門紀錄 #59 是 2026-08-14 補記的** —— 完工當時漏記,而 §P8 指名 L3-A 為核帳來源(**C21**);詳細驗收證據在 `tasks/l4-density-mechanism.md` L3.5。**←2026-08-17(D6 / C25)**:`[data-density]` 這個屬性鍵**已經不存在**,同一塊 350 條宣告改鍵在 `:root` 並整段包進 `<c:if>` ⇒ **已核准 delta 的形狀不變(1 檔 / 0 移除 / 350 新增)**,`P4a + P4b + D1/D2 + D4` 的加總不受影響;D3 的 Java API 同日刪除。量測見閘門紀錄 **#62** | 2026-08-12(紀錄補於 2026-08-14) |
+| **D4** compact 平板層 | **DONE** | G-delta | **併在 P7 那一列**(它是 P7 的第二段,commit `238a3604`,閘門紀錄 **#61**)—— 本列只為了讓照 `D#` 找的人找得到 | 2026-08-17 |
+| **D6** density 收斂成單一 library-property(C25) | **DONE** | G-zero(對已核准 delta) | commit `1efde772`。桌機側的三個入口(library-property / `[data-density]` 屬性 / Java API)收成**一個**;`IceblueDensity.java`、`check-density-runtime.js` 與預覽側邊欄的即時切換一併刪除。**已核准 delta 形狀不變**(1 檔 / 0 移除 / 350 新增);全樹原始讀數 **1754 → 1756 筆、49 檔不變**,多的 **2 筆全是 DSP 指令**,350 條宣告是**同數改鍵**(`[data-density="compact"]` → `:root`),淨增 0。閘門紀錄 **#62**(同日補記) | 2026-08-17 |
+| **D5** density 遷移指南 + S36 結案 | **DONE** | 無(不動 CSS / Java) | commit `86b04918`。對外交付物 [migration/density.md](migration/density.md)(**手寫**,不是產生的);`readme.md` 補上連結,並修掉 D6 留下的殘留 —— 預覽章還在教已刪除的 `IceblueDensity.apply(...)` 側邊欄開關,改成「重啟時帶 `-Dorg.zkoss.zul.theme.density=compact`」並**實測驗證過**。**S36 以 S62 結案,S36 那一列不改寫**。指南引用的數字全部當日重量:桌機三態 **526988 / 541383 / 526988 B**、compact 區塊 **0 / 1 / 0**;平板三態 **26207 / 24308 / 26207 B**、**895 = 895** 對 `baseline/`、**869 = 869** 對出貨 jar。另**查證而非轉抄**兩項對外說法,其中一項改口徑:桌機 compact 區塊對出貨 jar 是 **0 缺 / 349 逐字元相同 / 1 條同長度不同寫法**(`16px 0px` vs `16px 0`),不是「350 條全同」 | 2026-08-17 |
 
 
 ### L2.2 前置工作項與 BLOCKED
@@ -301,7 +311,7 @@
 
 | 階段 | 原本卡在 | 決定 | 日期 |
 |---|---|---|---|
-| **P7** | **L-4** —— compact profile 的替代機制未定(colour 那一半已由 L-7 解除,density 那一半仍未定) | **拍板採用**:`data-density` 屬性 + 350 條 runtime token 覆寫取代 build 期換 jar,**`iceblue_c` 未來不出貨**。**依據是實測不是提案** —— D1–D3 已完工,對 `iceblue_c 11.0.0` oracle 逐 token 比對 **350 條值全同、缺 0 條**,視覺 A/B 反向控制 0 頁差異;L-4 的五項子未決已於 2026-08-13 全數結案。**這是對外 breaking change**(「改 LESS 變數重編 jar」→「設 library-property」),由 **D5** 寫進 migration guide。⇒ **P7 轉 TODO,D4 / D5 的前置改為「P7 完工」而不是「L-4 拍板」** | **2026-08-14** |
+| **P7** | **L-4** —— compact profile 的替代機制未定(colour 那一半已由 L-7 解除,density 那一半仍未定) | **拍板採用**:`data-density` 屬性 + 350 條 runtime token 覆寫取代 build 期換 jar,**`iceblue_c` 未來不出貨**。**依據是實測不是提案** —— D1–D3 已完工,對 `iceblue_c 11.0.0` oracle 逐 token 比對 **350 條值全同、缺 0 條**,視覺 A/B 反向控制 0 頁差異;L-4 的五項子未決已於 2026-08-13 全數結案。**這是對外 breaking change**(「改 LESS 變數重編 jar」→「設 library-property」),由 **D5** 寫進 migration guide。⇒ **P7 轉 TODO,D4 / D5 的前置改為「P7 完工」而不是「L-4 拍板」**。**←2026-08-17 機制二次收斂(C24 + C25),本列不改寫**:`data-density` 屬性與 Java API 都**已經不存在**,桌機與平板兩層都只讀同一個 library-property `org.zkoss.zul.theme.density`。本列記的是 2026-08-14 當下的裁示內容;**現行機制以 [migration/density.md](migration/density.md) 為準** | **2026-08-14** |
 | P6 | L-5 —— ZK 11 的 icon 方向(FA / Lucide) | **Font Awesome 保留**。走計畫書 §P6 的「若 FA 保留」分支:寫 `scripts/gen-fa-css.js`,G-zero 4545 條。**不是**刪除 + 空 stub 分支 | 2026-07-30 |
 | P1 | 計畫書 §P1 判定此階段**可選**,要不要留這個 pin 尚未拍板 | **做,而且不再是可選的。** L-7 拍板 Theme Pack 走「runtime `--zk-*` sheet + 新 CSS 語法」,而 3.13.1 靜默改壞的四種語法**正好落在那個語法區** → pin 從「過渡期護欄」升級成「下一步的前提」。已實作並過閘,見下方〈Tier 1〉 | 2026-07-30 決定 / 2026-07-31 實作 |
 | P7(palette 半) | L-7 —— 23 套付費佈景以 `palettes/*.less` 出貨 | **palette 改成 runtime `--zk-*` override sheet**,沒有「編譯期換 palette」需要保留 → 整個轉換案不再被 Theme Pack 擋住。**density 那一半(L-4)仍未定** | 2026-07-30 |
@@ -421,7 +431,7 @@ L1/L2 只寫當前狀態;**要複核那些狀態是怎麼得出來的,去那裡�
 | 節 | 內容 | 何時要看 |
 |---|---|---|
 | **[階段與 commit 對照](iceblue-drop-less-progress-appendix.md#階段與-commit-對照)** | 每一階對應哪些 commit | 要回溯某一階實際改了什麼 |
-| **[L3-A](iceblue-drop-less-progress-appendix.md#l3-a-閘門紀錄附加式不覆寫)** | **閘門紀錄 58 列**(附加式,**不覆寫**) | P8 核帳、以及要確認某個數字是哪一次跑出來的 |
+| **[L3-A](iceblue-drop-less-progress-appendix.md#l3-a-閘門紀錄附加式不覆寫)** | **閘門紀錄 ~~58~~ 62 列**(附加式,**不覆寫**) | P8 核帳、以及要確認某個數字是哪一次跑出來的 |
 | **[L3-B](iceblue-drop-less-progress-appendix.md#l3-b-tier-1p1--s0--s1)** | Tier 1:P1 = S0 + S1 的實作與論證 | 要動 LESS 版本 pin 或 `check-less-conventions.js` 時 |
 | **[L3-C](iceblue-drop-less-progress-appendix.md#l3-c-p2-儀器證明)** | P2 儀器證明(六步)+ 為什麼是 CleanCSS level 0 + 第三種靜默摧毀構造 | 要改 `build-css.js` 或 minifier 設定時 |
 | **[L3-D](iceblue-drop-less-progress-appendix.md#l3-d-p0-交付物基準的不可變性突變測試)** | P0 交付物、基準的不可變性、突變測試、重建基準的方法 | 基準出問題時 |

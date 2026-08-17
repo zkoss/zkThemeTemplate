@@ -76,6 +76,8 @@ the previous version had no runtime switch either — it required editing a vari
 — so this is the same capability delivered by one property instead of a second shipped jar.
 Dynamic switching may be reconsidered later; see `tasks/l4-density-mechanism.md`.
 
+Upgrading from `@themeProfile` or from the `iceblue_c` jar: [migration/density.md](doc/migration/density.md).
+
 ## Switch to a theme of [Theme Pack](https://www.zkoss.org/zkthemepackdemo/)
 The [theme pack](https://www.zkoss.org/zkthemepackdemo/) contains extra 23 themes, you can choose one theme that is closer to your target theme as a base theme and start to customize it. So that it can save some efforts for you.
 (**Notice**: you need to purchase ZK EE or theme pack to access the theme pack source code.)
@@ -111,13 +113,18 @@ We suggest you customize a theme by overriding existing variables instead of mod
 
 ### component browser
 
-http://localhost:8080/usecase/index.zul is a sidebar shell over the same pages, grouped by kind,
-with a **Compact density** switch in the sidebar that calls `IceblueDensity.apply(...)` — so the
-switch demonstrates the shipped API rather than a demo-only class.
+http://localhost:8080/usecase/index.zul is a sidebar shell over the same pages, grouped by kind.
 
 Every page is deep-linkable: append the page path minus `.zul`, e.g.
 `…/usecase/index.zul#button` or `…/usecase/index.zul#utility/colors`. Browser back and forward
-work, so a review comment can point at an exact page and density.
+work, so a review comment can point at an exact page.
+
+To review compact density, restart the preview app with the property set — the same switch a real
+application uses, so what you review is what ships:
+
+`mvn -Dorg.zkoss.zul.theme.density=compact test exec:java@preview-app`
+
+There is no in-page density toggle, because there is no runtime switch to expose.
 
 
 ## continuous compile/watch less files
