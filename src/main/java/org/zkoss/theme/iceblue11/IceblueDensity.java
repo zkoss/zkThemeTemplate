@@ -64,20 +64,28 @@ import org.zkoss.zk.ui.util.Clients;
  * first paint. Called on page load it produces a visible default&rarr;compact flash (FOUC). Use it
  * for a user flipping a preference, not for a fixed default.
  *
- * <h3>Not the tablet layer</h3>
+ * <h3>The tablet layer is library-property only — by specification</h3>
  *
- * <p>{@code zkmax}'s tablet stylesheet is a touch-compensation layer for the whole app, injected
- * only on a mobile user agent, and it is not token-driven: measured across the two profiles,
- * {@code var(--zk-} appears 95 times on each side, so overriding tokens moves nothing there.
- * The tablet sheet therefore ships BOTH densities and the server picks one while rendering it —
- * which means the touch layer follows <strong>the library property only</strong>.
+ * <p><strong>Neither method on this class affects {@code zkmax}'s tablet stylesheet.</strong> That
+ * is the specification, not a limitation waiting to be lifted: the touch layer's density is set by
+ * the {@code org.zkoss.zul.theme.density} library property and by nothing else. On a mobile device,
+ * set the property in {@code zk.xml}; calling {@link #apply(Density)} there would leave the desktop
+ * tokens compact and the touch layer at its default sizes.
  *
- * <p>Neither method on this class reaches it. {@link #apply(Component, Density)} never could:
- * region-scoped density has no meaning for a whole-site compensation layer. {@link
- * #apply(Density)} does not either, because it changes an attribute in the DOM and the tablet
- * sheet's choice was already made server-side. On a mobile device, set
- * {@code org.zkoss.zul.theme.density} in {@code zk.xml} — a runtime call there would leave the
- * desktop tokens compact and the touch layer at its default sizes.
+ * <p>Why it works that way. The tablet sheet is a touch-compensation layer for the whole app,
+ * injected only on a mobile user agent, and it is not token-driven: measured across the two
+ * profiles, {@code var(--zk-} appears 95 times on each side, so overriding token values moves
+ * nothing there. The sheet therefore ships BOTH densities and the server picks one while rendering
+ * it — a decision made before first paint, which an attribute set afterwards cannot revisit.
+ *
+ * <p>This is not a capability the theme used to have. Before this version the tablet layer was
+ * switched by editing a LESS variable and rebuilding the jar, so it had no runtime switch of any
+ * kind, whole-app or otherwise. What changed is that the same result now costs one library
+ * property instead of a second shipped artifact. The desktop half gaining a runtime switch is an
+ * addition on that side, not a gap on this one.
+ *
+ * <p>{@link #apply(Component, Density)} could never have reached it in any design: region-scoped
+ * density has no meaning for a whole-site compensation layer.
  *
  * @since 11.0.0
  */

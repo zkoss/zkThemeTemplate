@@ -1,0 +1,1558 @@
+<title>平板層為什麼跟不上</title>
+<style>
+:root {
+	--paper:        #f4f8fa;
+	--surface:      #ffffff;
+	--surface-sunk: #e9f0f4;
+	--ink:          #101a21;
+	--ink-soft:     #47606f;
+	--ink-faint:    #7b93a1;
+	--rule:         #ccdce5;
+	--rule-soft:    #e0eaf0;
+	--accent:       #14638f;
+	--accent-soft:  #e2eff7;
+	--stall:        #9a6410;
+	--stall-soft:   #faf0dc;
+	--bad:          #97283c;
+	--bad-soft:     #fbe8eb;
+	--good:         #1d6b4f;
+
+	--mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, "Cascadia Mono", Consolas, monospace;
+	--sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue",
+	        "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+
+	--measure: 34rem;
+	--wide: 62rem;
+}
+@media (prefers-color-scheme: dark) {
+	:root:not([data-theme="light"]) {
+		--paper:        #0b1116;
+		--surface:      #121c23;
+		--surface-sunk: #0f181e;
+		--ink:          #dde9f0;
+		--ink-soft:     #9db3c0;
+		--ink-faint:    #6d8593;
+		--rule:         #27363f;
+		--rule-soft:    #1c2830;
+		--accent:       #5aa9d8;
+		--accent-soft:  #14252f;
+		--stall:        #d9a24a;
+		--stall-soft:   #241d0f;
+		--bad:          #e5788b;
+		--bad-soft:     #2a1419;
+		--good:         #6cc39f;
+	}
+}
+:root[data-theme="dark"] {
+	--paper:        #0b1116;
+	--surface:      #121c23;
+	--surface-sunk: #0f181e;
+	--ink:          #dde9f0;
+	--ink-soft:     #9db3c0;
+	--ink-faint:    #6d8593;
+	--rule:         #27363f;
+	--rule-soft:    #1c2830;
+	--accent:       #5aa9d8;
+	--accent-soft:  #14252f;
+	--stall:        #d9a24a;
+	--stall-soft:   #241d0f;
+	--bad:          #e5788b;
+	--bad-soft:     #2a1419;
+	--good:         #6cc39f;
+}
+
+* { box-sizing: border-box; }
+
+body {
+	margin: 0;
+	background: var(--paper);
+	color: var(--ink);
+	font-family: var(--sans);
+	font-size: 16px;
+	line-height: 1.75;
+	-webkit-text-size-adjust: 100%;
+}
+
+.page {
+	max-width: var(--wide);
+	margin: 0 auto;
+	padding: 0 1.5rem 6rem;
+	display: flex;
+	flex-direction: column;
+	gap: 3.5rem;
+}
+
+/* ---------- masthead ---------- */
+
+.masthead {
+	padding: 4rem 0 0;
+	display: flex;
+	flex-direction: column;
+	gap: 1.25rem;
+	max-width: var(--measure);
+}
+.kicker {
+	font-family: var(--mono);
+	font-size: .7rem;
+	letter-spacing: .16em;
+	text-transform: uppercase;
+	color: var(--accent);
+}
+h1 {
+	margin: 0;
+	font-size: clamp(2rem, 5vw, 2.9rem);
+	line-height: 1.15;
+	letter-spacing: -.02em;
+	font-weight: 700;
+	text-wrap: balance;
+}
+.standfirst {
+	margin: 0;
+	font-size: 1.1rem;
+	color: var(--ink-soft);
+	text-wrap: pretty;
+}
+
+/* ---------- sections ---------- */
+
+section {
+	display: flex;
+	flex-direction: column;
+	gap: 1.25rem;
+}
+.label {
+	font-family: var(--mono);
+	font-size: .7rem;
+	letter-spacing: .16em;
+	text-transform: uppercase;
+	color: var(--ink-faint);
+	border-top: 2px solid var(--ink);
+	padding-top: .5rem;
+	align-self: flex-start;
+}
+h2 {
+	margin: 0;
+	font-size: clamp(1.35rem, 3vw, 1.7rem);
+	line-height: 1.3;
+	letter-spacing: -.01em;
+	font-weight: 650;
+	max-width: var(--measure);
+	text-wrap: balance;
+}
+h3 {
+	margin: 1rem 0 0;
+	font-size: 1.02rem;
+	font-weight: 650;
+	letter-spacing: .01em;
+}
+p, ul, ol { margin: 0; max-width: var(--measure); }
+ul, ol { padding-left: 1.2rem; display: flex; flex-direction: column; gap: .4rem; }
+li::marker { color: var(--ink-faint); }
+strong { font-weight: 650; }
+code {
+	font-family: var(--mono);
+	font-size: .86em;
+	background: var(--surface-sunk);
+	border-radius: 3px;
+	padding: .1em .35em;
+	word-break: break-word;
+}
+
+/* ---------- figures ---------- */
+
+figure {
+	margin: 0;
+	display: flex;
+	flex-direction: column;
+	gap: .75rem;
+}
+figcaption {
+	font-size: .84rem;
+	color: var(--ink-faint);
+	max-width: var(--measure);
+}
+.frame {
+	background: var(--surface);
+	border: 1px solid var(--rule);
+	border-radius: 6px;
+	padding: 1.5rem;
+	overflow-x: auto;
+}
+
+/* ---------- lifecycle timeline ---------- */
+
+.life {
+	display: grid;
+	grid-template-columns: repeat(4, minmax(180px, 1fr));
+	gap: 0;
+	min-width: 760px;
+}
+.beat {
+	border-left: 2px solid var(--rule);
+	padding: 0 1.1rem 0 1rem;
+	display: flex;
+	flex-direction: column;
+	gap: .5rem;
+}
+.beat:first-child { border-left-color: var(--ink); }
+.beat-time {
+	font-family: var(--mono);
+	font-size: .68rem;
+	letter-spacing: .1em;
+	text-transform: uppercase;
+	color: var(--ink-faint);
+}
+.beat-what { font-weight: 650; font-size: .95rem; line-height: 1.4; }
+.beat-note { font-size: .84rem; color: var(--ink-soft); line-height: 1.55; }
+.switch {
+	margin-top: .35rem;
+	border-radius: 5px;
+	padding: .6rem .7rem;
+	font-size: .82rem;
+	line-height: 1.5;
+}
+.switch b { display: block; font-size: .78rem; letter-spacing: .04em; margin-bottom: .15rem; }
+.switch-ok   { background: var(--accent-soft); color: var(--accent); border: 1px solid color-mix(in oklab, var(--accent) 30%, transparent); }
+.switch-late { background: var(--stall-soft); color: var(--stall); border: 1px solid color-mix(in oklab, var(--stall) 30%, transparent); }
+
+/* ---------- real-size palette comparison ---------- */
+
+.palettes {
+	display: flex;
+	gap: 2rem;
+	align-items: flex-start;
+	min-width: max-content;
+}
+.palette-col { display: flex; flex-direction: column; gap: .6rem; }
+.palette-tag {
+	font-family: var(--mono);
+	font-size: .72rem;
+	letter-spacing: .08em;
+	text-transform: uppercase;
+	color: var(--ink-faint);
+}
+.palette-tag em { font-style: normal; color: var(--ink); font-weight: 650; }
+.palette {
+	border: 1px solid var(--rule);
+	border-radius: 4px;
+	background: var(--surface-sunk);
+	display: flex;
+	flex-wrap: wrap;
+	align-content: flex-start;
+}
+.palette.is-default { width: 304px; padding: 4px; }
+.palette.is-compact { width: 586px; height: 240px; padding: 0; }
+.sw { background: var(--accent); opacity: .78; border-radius: 1px; }
+.is-default .sw { width: 40px; height: 24px; margin: 4px; }
+.is-compact .sw { width: 32px; height: 32px; margin: 0; }
+.sw:nth-child(3n)   { opacity: .5; }
+.sw:nth-child(5n)   { opacity: .95; }
+.sw:nth-child(7n)   { opacity: .32; }
+.palette-dim {
+	font-family: var(--mono);
+	font-size: .75rem;
+	color: var(--ink-soft);
+	font-variant-numeric: tabular-nums;
+}
+
+/* ---------- tables ---------- */
+
+table {
+	border-collapse: collapse;
+	width: 100%;
+	min-width: 560px;
+	font-size: .88rem;
+}
+caption {
+	text-align: left;
+	font-size: .84rem;
+	color: var(--ink-faint);
+	padding-bottom: .6rem;
+}
+th, td {
+	text-align: left;
+	padding: .6rem .8rem;
+	border-bottom: 1px solid var(--rule-soft);
+	vertical-align: top;
+	line-height: 1.5;
+}
+thead th {
+	font-family: var(--mono);
+	font-size: .7rem;
+	letter-spacing: .09em;
+	text-transform: uppercase;
+	color: var(--ink-faint);
+	border-bottom: 1px solid var(--rule);
+	font-weight: 500;
+	white-space: nowrap;
+}
+tbody tr:last-child td { border-bottom: none; }
+td.num, th.num { font-variant-numeric: tabular-nums; white-space: nowrap; }
+td.mono, th.mono { font-family: var(--mono); font-size: .8rem; }
+
+.pill {
+	display: inline-block;
+	font-family: var(--mono);
+	font-size: .7rem;
+	letter-spacing: .05em;
+	padding: .12em .5em;
+	border-radius: 3px;
+	white-space: nowrap;
+}
+.pill-ok   { background: var(--accent-soft); color: var(--accent); }
+.pill-half { background: var(--stall-soft);  color: var(--stall); }
+.pill-bad  { background: var(--bad-soft);    color: var(--bad); }
+
+/* ---------- selector / specificity blocks ---------- */
+
+.sel-stack { display: flex; flex-direction: column; gap: 1rem; min-width: 520px; }
+.sel-row {
+	display: grid;
+	grid-template-columns: 1fr auto;
+	gap: 1rem;
+	align-items: center;
+	padding: .8rem 1rem;
+	border-radius: 5px;
+	background: var(--surface-sunk);
+	border-left: 3px solid var(--rule);
+}
+.sel-row.wins  { border-left-color: var(--accent); }
+.sel-row.loses { border-left-color: var(--rule); opacity: .72; }
+.sel-row.flips { border-left-color: var(--bad); background: var(--bad-soft); }
+.sel-code { font-family: var(--mono); font-size: .82rem; line-height: 1.6; word-break: break-all; }
+.sel-code .add { background: color-mix(in oklab, var(--bad) 18%, transparent); border-radius: 2px; padding: .05em .2em; }
+.sel-meta {
+	font-family: var(--mono);
+	font-size: .74rem;
+	color: var(--ink-soft);
+	text-align: right;
+	font-variant-numeric: tabular-nums;
+	white-space: nowrap;
+}
+
+/* ---------- link stack ---------- */
+
+.linkstack { display: flex; flex-direction: column; gap: .9rem; min-width: 540px; }
+.linkline {
+	display: grid;
+	grid-template-columns: 1.7rem 1fr;
+	gap: .9rem;
+	align-items: start;
+}
+.linkord {
+	font-family: var(--mono);
+	font-size: .72rem;
+	color: var(--ink-faint);
+	padding-top: .55rem;
+	font-variant-numeric: tabular-nums;
+}
+.linkbody {
+	background: var(--surface-sunk);
+	border-radius: 5px;
+	padding: .7rem .9rem;
+	border-left: 3px solid var(--rule);
+	display: flex;
+	flex-direction: column;
+	gap: .35rem;
+}
+.linkbody.last { border-left-color: var(--accent); }
+.linkbody code { background: none; padding: 0; font-size: .78rem; line-height: 1.6; word-break: break-all; }
+.linkbody .why { font-size: .82rem; color: var(--ink-soft); line-height: 1.55; }
+.tok-attr { color: var(--bad); font-weight: 650; }
+
+/* ---------- specificity bars ---------- */
+
+.bars { display: flex; flex-direction: column; gap: .3rem; min-width: 420px; }
+.bar {
+	display: grid;
+	grid-template-columns: 4.5rem 1fr 3rem;
+	gap: .75rem;
+	align-items: center;
+	font-family: var(--mono);
+	font-size: .76rem;
+	font-variant-numeric: tabular-nums;
+}
+.bar-k { color: var(--ink-soft); }
+.bar-track { height: 14px; background: var(--surface-sunk); border-radius: 2px; overflow: hidden; }
+.bar-fill { height: 100%; background: var(--rule); border-radius: 2px; }
+.bar.headline .bar-k { color: var(--ink); font-weight: 650; }
+.bar.headline .bar-fill { background: var(--accent); }
+.bar-n { color: var(--ink-soft); text-align: right; }
+
+/* ---------- split ---------- */
+
+.split { display: flex; flex-direction: column; gap: .5rem; min-width: 420px; }
+.split-bar { display: flex; height: 34px; border-radius: 4px; overflow: hidden; }
+.split-seg {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-family: var(--mono);
+	font-size: .76rem;
+	font-variant-numeric: tabular-nums;
+	color: var(--surface);
+}
+.split-a { background: var(--accent); }
+.split-b { background: var(--ink-faint); }
+.split-legend { display: flex; gap: 1.5rem; flex-wrap: wrap; font-size: .83rem; color: var(--ink-soft); }
+.split-legend span { display: flex; align-items: center; gap: .45rem; }
+.dot { width: 10px; height: 10px; border-radius: 2px; flex: none; }
+
+/* ---------- callout ---------- */
+
+.callout {
+	border-left: 3px solid var(--accent);
+	background: var(--accent-soft);
+	padding: 1.1rem 1.3rem;
+	border-radius: 0 5px 5px 0;
+	display: flex;
+	flex-direction: column;
+	gap: .5rem;
+	max-width: var(--measure);
+}
+.callout.warn { border-left-color: var(--stall); background: var(--stall-soft); }
+.callout p { max-width: none; font-size: .95rem; }
+.callout .callout-head {
+	font-family: var(--mono);
+	font-size: .7rem;
+	letter-spacing: .12em;
+	text-transform: uppercase;
+	color: var(--accent);
+}
+.callout.warn .callout-head { color: var(--stall); }
+
+/* ---------- verdict ---------- */
+
+.verdict {
+	border: 1px solid var(--rule);
+	border-radius: 6px;
+	background: var(--surface);
+	padding: 1.75rem;
+	display: grid;
+	gap: 1.5rem;
+	grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+.verdict-item { display: flex; flex-direction: column; gap: .4rem; }
+.verdict-k {
+	font-family: var(--mono);
+	font-size: .7rem;
+	letter-spacing: .1em;
+	text-transform: uppercase;
+	color: var(--ink-faint);
+}
+.verdict-v { font-size: 1.55rem; font-weight: 700; letter-spacing: -.01em; font-variant-numeric: tabular-nums; }
+.verdict-n { font-size: .84rem; color: var(--ink-soft); line-height: 1.55; }
+
+footer {
+	border-top: 1px solid var(--rule);
+	padding-top: 1.25rem;
+	font-size: .82rem;
+	color: var(--ink-faint);
+	max-width: var(--measure);
+	display: flex;
+	flex-direction: column;
+	gap: .3rem;
+}
+footer code { background: none; padding: 0; }
+
+@media (max-width: 640px) {
+	.masthead { padding-top: 2.5rem; }
+	.frame { padding: 1rem; }
+	.page { gap: 2.75rem; }
+}
+</style>
+
+<div class="page">
+
+<header class="masthead">
+	<div class="kicker">IceBlue · L-4 D4 · 2026-08-17</div>
+	<h1>平板層為什麼跟不上</h1>
+	<p class="standfirst">
+		在 <code>zk.xml</code> 設 compact，桌面與平板都會變。用 Java API 在執行期切 compact，
+		只有桌面會變。<strong>2026-08-17 已裁示：這是規格</strong> —— 平板層只認設定值，
+		因為前一版連建置期以外的切換都沒有。這份文件說明那是什麼情況、平板層本來怎麼蓋過桌面層，
+		以及四個「把它補起來」的作法各自要付什麼代價（保留備查，不是路線圖）。
+	</p>
+</header>
+
+<!-- ============================================================ -->
+<section>
+	<div class="label">現象</div>
+	<h2>同一個 iPad、同一個 compact，兩種設法給你兩種畫面</h2>
+
+	<p>
+		假設你的系統右上角有一個「舒適 / 緊湊」切換鈕，使用者拿 iPad 開啟，然後按下「緊湊」。
+		桌面那一層立刻反應：欄位變窄、字變小、列高縮短，而且不用重新整理頁面。
+		但<strong>觸控那一層完全沒動</strong> —— 按鈕、選單、日曆格、調色盤全部維持原來的尺寸。
+	</p>
+
+	<p>
+		最好認的例子是調色盤。下面兩個框是<strong>真實尺寸</strong>，直接照樣式表裡的數字畫出來的：
+	</p>
+
+	<figure>
+		<div class="frame">
+			<div class="palettes">
+				<div class="palette-col">
+					<div class="palette-tag">現在拿到的 —— <em>平板 default</em></div>
+					<div class="palette is-default">
+						<i class="sw"></i><i class="sw"></i><i class="sw"></i><i class="sw"></i><i class="sw"></i><i class="sw"></i>
+						<i class="sw"></i><i class="sw"></i><i class="sw"></i><i class="sw"></i><i class="sw"></i><i class="sw"></i>
+						<i class="sw"></i><i class="sw"></i><i class="sw"></i><i class="sw"></i><i class="sw"></i><i class="sw"></i>
+						<i class="sw"></i><i class="sw"></i><i class="sw"></i><i class="sw"></i><i class="sw"></i><i class="sw"></i>
+					</div>
+					<div class="palette-dim">面板 304 × auto　色塊 40 × 24　間距 4</div>
+				</div>
+				<div class="palette-col">
+					<div class="palette-tag">應該拿到的 —— <em>平板 compact</em></div>
+					<div class="palette is-compact">
+						<i class="sw"></i><i class="sw"></i><i class="sw"></i><i class="sw"></i><i class="sw"></i><i class="sw"></i><i class="sw"></i><i class="sw"></i><i class="sw"></i><i class="sw"></i><i class="sw"></i><i class="sw"></i><i class="sw"></i><i class="sw"></i><i class="sw"></i><i class="sw"></i><i class="sw"></i><i class="sw"></i>
+						<i class="sw"></i><i class="sw"></i><i class="sw"></i><i class="sw"></i><i class="sw"></i><i class="sw"></i><i class="sw"></i><i class="sw"></i><i class="sw"></i><i class="sw"></i><i class="sw"></i><i class="sw"></i><i class="sw"></i><i class="sw"></i><i class="sw"></i><i class="sw"></i><i class="sw"></i><i class="sw"></i>
+						<i class="sw"></i><i class="sw"></i><i class="sw"></i><i class="sw"></i><i class="sw"></i><i class="sw"></i><i class="sw"></i><i class="sw"></i><i class="sw"></i><i class="sw"></i><i class="sw"></i><i class="sw"></i><i class="sw"></i><i class="sw"></i><i class="sw"></i><i class="sw"></i><i class="sw"></i><i class="sw"></i>
+						<i class="sw"></i><i class="sw"></i><i class="sw"></i><i class="sw"></i><i class="sw"></i><i class="sw"></i><i class="sw"></i><i class="sw"></i><i class="sw"></i><i class="sw"></i><i class="sw"></i><i class="sw"></i><i class="sw"></i><i class="sw"></i><i class="sw"></i><i class="sw"></i><i class="sw"></i><i class="sw"></i>
+					</div>
+					<div class="palette-dim">面板 586 × 460　色塊 32 × 32　間距 0</div>
+				</div>
+			</div>
+		</div>
+		<figcaption>
+			兩個框都是照 <code>tablet.css</code> 與 <code>_tablet-compact.css</code> 裡的 <code>.z-colorpalette</code> /
+			<code>.z-colorpalette-color</code> 實際數值畫的，未經縮放。窄螢幕請左右捲動。
+		</figcaption>
+	</figure>
+
+	<div class="callout warn">
+		<div class="callout-head">這裡有個反直覺的地方</div>
+		<p>
+			平板的 compact <strong>比較大</strong>，不是比較小。因為觸控層是「相對於各自桌面基準的補償層」——
+			桌面 compact 的底比較小，補償就得推得更用力，才能把觸控目標推回手指點得到的大小。
+			兩張表追的是<strong>大致相同的最終渲染尺寸</strong>，只是起點不同。
+		</p>
+		<p>
+			所以「桌面 compact + 平板 default」不是「小一點的畫面」，是<strong>兩層對不上</strong>：
+			底變小了，補償層還照原來的底在補。
+		</p>
+	</div>
+
+	<figure>
+		<div class="frame">
+			<table>
+				<caption>幾個具體差在哪（皆為樣式表裡的實際宣告）</caption>
+				<thead>
+					<tr>
+						<th>元件</th>
+						<th class="mono">平板 default</th>
+						<th class="mono">平板 compact</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>調色盤面板</td>
+						<td class="mono num">width 304px · height auto</td>
+						<td class="mono num">width 586px · height 460px</td>
+					</tr>
+					<tr>
+						<td>調色盤色塊</td>
+						<td class="mono num">40 × 24 · margin 4px</td>
+						<td class="mono num">32 × 32 · margin 0</td>
+					</tr>
+					<tr>
+						<td>版面區塊標題</td>
+						<td class="mono num">font-size 17px</td>
+						<td class="mono num">font-size 14px · height 32px</td>
+					</tr>
+					<tr>
+						<td>Chosenbox 標籤</td>
+						<td class="mono num">font-size 15px</td>
+						<td class="mono num">font-size 12px · padding 3px 20px 3px 4px</td>
+					</tr>
+					<tr>
+						<td>日曆格子</td>
+						<td class="mono num">36 × 36 · font-size 14px</td>
+						<td class="mono num">font-size 14px<br><span style="color:var(--ink-faint)">（不宣告寬高，交還給桌面層）</span></td>
+					</tr>
+					<tr>
+						<td>調色盤圖示</td>
+						<td class="mono num">padding 4px 10px · left 12px</td>
+						<td class="mono num">32 × 32 · padding 0 · left 4px</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</figure>
+</section>
+
+<!-- ============================================================ -->
+<section>
+	<div class="label">原因</div>
+	<h2>樣式表在頁面畫出來之前就選好了，屬性是之後才到的</h2>
+
+	<p>
+		兩個開關發生在頁面生命週期的不同時刻，這就是全部的原因。
+	</p>
+
+	<figure>
+		<div class="frame">
+			<div class="life">
+				<div class="beat">
+					<div class="beat-time">① 請求</div>
+					<div class="beat-what">瀏覽器要頁面</div>
+					<div class="beat-note">伺服器開始組裝 HTML 與樣式表清單。</div>
+				</div>
+				<div class="beat">
+					<div class="beat-time">② 產生樣式表</div>
+					<div class="beat-what">伺服器決定平板層送哪一張</div>
+					<div class="beat-note">
+						<code>tablet.css.dsp</code> 裡面同時放著 default 與 compact 兩張完整的表，
+						伺服器讀設定值，只送出其中一張。
+					</div>
+					<div class="switch switch-ok">
+						<b>開關 1 · zk.xml 設定值</b>
+						在這裡生效。整站固定、沒有閃爍、不多一次連線。
+					</div>
+				</div>
+				<div class="beat">
+					<div class="beat-time">③ 首次繪製</div>
+					<div class="beat-what">畫面出現</div>
+					<div class="beat-note">平板層的內容此刻已經定案，之後不會再重新取得。</div>
+				</div>
+				<div class="beat">
+					<div class="beat-time">④ 使用者操作</div>
+					<div class="beat-what">按下切換鈕</div>
+					<div class="beat-note">
+						Java API 在 <code>&lt;html&gt;</code> 上設 <code>data-density="compact"</code>。
+						桌面層立刻反應，因為它的尺寸全部走 CSS 變數。
+					</div>
+					<div class="switch switch-late">
+						<b>開關 2 · Java API</b>
+						太晚了。平板那張表在第 ② 步就送出去了，而它<strong>不看這個屬性</strong>。
+					</div>
+				</div>
+			</div>
+		</div>
+		<figcaption>窄螢幕請左右捲動。</figcaption>
+	</figure>
+
+	<h3>為什麼平板層不能像桌面層一樣「換變數就好」</h3>
+	<p>
+		桌面層的 compact 是<strong>純換值</strong>：350 個 CSS 變數換一組數字，
+		瀏覽器當場重算，不用換樣式表。平板層做不到同一件事，這是量出來的：
+	</p>
+	<ul>
+		<li><code>var(--zk-</code> 在平板 default 出現 <strong>95</strong> 次，在平板 compact 也是 <strong>95</strong> 次 —— 兩邊<strong>一模一樣</strong>。</li>
+		<li>也就是說，變數<strong>一點差異都沒承載</strong>；差異全在寫死的 px 數字與規則的增減上。</li>
+		<li>更關鍵的是，有 <strong>187 條宣告只存在於 default 那一側</strong>（例如 <code>.z-column-content</code> 的
+			<code>font-size: 15px; padding: 10px 12px</code>，compact 側整條不存在）。它們在 compact 下要的是
+			<strong>不存在</strong>，而不是「被換成別的值」。</li>
+	</ul>
+	<p>
+		CSS 沒有「讓這條規則不存在」這種寫法。要讓一段規則消失，只能由伺服器在送出之前把它刪掉 ——
+		這正是現在的作法，也是為什麼它只能在第 ② 步決定。
+	</p>
+</section>
+
+<!-- ============================================================ -->
+<section>
+	<div class="label">現況</div>
+	<h2>四種組合，現在各自拿到什麼</h2>
+
+	<figure>
+		<div class="frame">
+			<table>
+				<thead>
+					<tr>
+						<th>怎麼設</th>
+						<th>桌面層</th>
+						<th>平板觸控層</th>
+						<th>結果</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>都不設</td>
+						<td>default</td>
+						<td>default</td>
+						<td><span class="pill pill-ok">一致</span></td>
+					</tr>
+					<tr>
+						<td><code>zk.xml</code> 設 <code>compact</code></td>
+						<td>compact</td>
+						<td>compact</td>
+						<td><span class="pill pill-ok">一致</span></td>
+					</tr>
+					<tr>
+						<td>執行期 <code>apply(COMPACT)</code></td>
+						<td>compact</td>
+						<td>default</td>
+						<td><span class="pill pill-half">對不上</span></td>
+					</tr>
+					<tr>
+						<td>單一區域 <code>apply(元件, COMPACT)</code></td>
+						<td>該區域 compact</td>
+						<td>default</td>
+						<td><span class="pill pill-half">對不上（本來就明文不支援）</span></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</figure>
+
+	<div class="callout">
+		<div class="callout-head">重要的前提</div>
+		<p>
+			第三列<strong>今天本來就是這樣</strong>。桌面那一半（D1–D3）完工之後，
+			<code>apply(COMPACT)</code> 就已經是「桌面 compact + 平板 default」了。
+			這次的改動<strong>修好了第二列</strong>（以前連 <code>zk.xml</code> 那條路都要換一個 jar 重新編譯），
+			<strong>沒有把任何一列弄壞</strong>。
+		</p>
+		<p>
+			也就是說：現在討論的不是「新製造出來的缺口」，而是「要不要順便把一個既有缺口一起補掉」。
+		</p>
+	</div>
+</section>
+
+<!-- ============================================================ -->
+<section>
+	<div class="label">機制</div>
+	<h2>平板層本來是怎麼蓋過桌面層的？不是靠特異性，是靠排在最後面</h2>
+
+	<div class="callout">
+		<div class="callout-head">量測來源</div>
+		<p>
+			這一節的數字全部取自 <code>baseline/</code> —— P0 保存下來的<strong>原始建置輸出</strong>，
+			也就是 ZK 用原本的 <code>.less</code> 編出來、未經本案任何改動的那 85 個 <code>.css.dsp</code>。
+			不是用轉換後的來源量的。（平板那一檔本來就特別乾淨：P4a 的 60 條與 P4b 的 1 條前綴移除
+			<strong>都對它延後、一條沒動</strong>。）
+		</p>
+	</div>
+
+	<h3>一、它是第二個 <code>&lt;link&gt;</code>，而且預設是關的</h3>
+
+	<figure>
+		<div class="frame">
+			<div class="linkstack">
+				<div class="linkline">
+					<div class="linkord">先</div>
+					<div class="linkbody">
+						<code>&lt;link rel="stylesheet" href="…/_zkiju-iceblue11/zul/css/zk.wcs"/&gt;</code>
+						<div class="why">84 張桌面樣式表全部打包成這一個回應。</div>
+					</div>
+				</div>
+				<div class="linkline">
+					<div class="linkord">後</div>
+					<div class="linkbody last">
+						<code>&lt;link rel="stylesheet" href="…/iceblue11/zkmax/css/tablet.css.dsp" <span class="tok-attr">disabled</span>/&gt;</code>
+						<div class="why">
+							平板層單獨一個 link，<strong>排在後面</strong>。注意那個
+							<code>disabled</code> —— 這個 link 連在桌機上都會送出來，
+							由瀏覽器端的 <code>zk.tabletUIEnabled = !!zk.mobile</code> 決定要不要打開。
+							所以「只在行動裝置生效」是<strong>瀏覽器端的開關</strong>，不是伺服器不送。
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<figcaption>實際從預覽程式服務出來的 HTML 抓的，未經編輯。</figcaption>
+	</figure>
+
+	<h3>二、它的選擇器刻意寫得跟桌面層一樣簡單</h3>
+
+	<p>
+		平板層 359 個單一選擇器的特異性分佈 —— 一半是<strong>光禿禿的單一 class</strong>，
+		就是 <code>.z-column-content</code> 這種形狀，跟桌面層那條同名規則<strong>完全同級</strong>：
+	</p>
+
+	<figure>
+		<div class="frame">
+			<div class="bars">
+				<div class="bar headline">
+					<div class="bar-k">0,1,0</div>
+					<div class="bar-track"><div class="bar-fill" style="width:100%"></div></div>
+					<div class="bar-n">179</div>
+				</div>
+				<div class="bar">
+					<div class="bar-k">0,2,0</div>
+					<div class="bar-track"><div class="bar-fill" style="width:42%"></div></div>
+					<div class="bar-n">75</div>
+				</div>
+				<div class="bar">
+					<div class="bar-k">0,3,0</div>
+					<div class="bar-track"><div class="bar-fill" style="width:19%"></div></div>
+					<div class="bar-n">34</div>
+				</div>
+				<div class="bar">
+					<div class="bar-k">0,1,1</div>
+					<div class="bar-track"><div class="bar-fill" style="width:14.5%"></div></div>
+					<div class="bar-n">26</div>
+				</div>
+				<div class="bar">
+					<div class="bar-k">0,2,1</div>
+					<div class="bar-track"><div class="bar-fill" style="width:11.7%"></div></div>
+					<div class="bar-n">21</div>
+				</div>
+				<div class="bar">
+					<div class="bar-k">其他</div>
+					<div class="bar-track"><div class="bar-fill" style="width:13.4%"></div></div>
+					<div class="bar-n">24</div>
+				</div>
+			</div>
+		</div>
+		<figcaption>
+			<code>(a,b,c)</code> 是 CSS 特異性：a = id 數、b = class／屬性／偽類數、c = 標籤名／偽元素數。
+			原始 LESS 也看得到這個意圖 —— <code>tablet/default/_grid.less</code> 開頭就是
+			<code>.z-column-content, .z-row-content, … { font-size: 15px; padding: 10px 12px }</code>，
+			沒有任何祖先前綴。
+		</figcaption>
+	</figure>
+
+	<h3>三、同級 → 比誰寫在後面 → 平板層贏</h3>
+
+	<p>
+		CSS 的勝負規則是：先比特異性，一樣才比誰在後面。平板層把自己寫成和桌面層同級，
+		再靠載入順序拿下。895 條宣告的實際情形：
+	</p>
+
+	<figure>
+		<div class="frame">
+			<div class="split">
+				<div class="split-bar">
+					<div class="split-seg split-a" style="width:49.1%">439</div>
+					<div class="split-seg split-b" style="width:50.9%">456</div>
+				</div>
+				<div class="split-legend">
+					<span><i class="dot" style="background:var(--accent)"></i>正面對決 —— 桌面層有一條<strong>選擇器一模一樣</strong>的規則宣告同一個屬性，平板層純靠排在後面贏</span>
+					<span><i class="dot" style="background:var(--ink-faint)"></i>沒有對手 —— 桌面層在那個選擇器上沒宣告那個屬性，直接生效</span>
+				</div>
+			</div>
+		</div>
+		<figcaption>
+			359 個單一選擇器裡，有 268 個在桌面樣式表裡找得到<strong>字面完全相同</strong>的選擇器。
+			這不是巧合，是照著蓋的。
+		</figcaption>
+	</figure>
+
+	<h3>那 28 個 <code>!important</code> 呢？</h3>
+	<p>
+		平板層確實有 28 個 <code>!important</code>（桌面 84 張表合計 220 個），
+		但它們<strong>全部集中在 spinner／timebox 的 disabled 狀態</strong>，
+		用途是壓過<strong>同一張表裡</strong>的 <code>:hover</code> ／ <code>:active</code>。
+		平板層蓋桌面層，一次 <code>!important</code> 都沒用到。
+	</p>
+
+	<div class="callout warn">
+		<div class="callout-head">這個設計的另一面 —— 也就是選項 B 會痛的原因</div>
+		<p>
+			因為它只贏「平手」，所以<strong>只要桌面層那條規則的選擇器比較長，平板層就輸</strong>。
+			全樹有 <strong>42 處</strong>是這種情形，例如
+			<code>.z-window-content</code>（平板，0,1,0）輸給
+			<code>.z-messagebox-window .z-window-content</code>（桌面，0,2,0）。
+		</p>
+		<p>
+			<strong>這不是缺陷，是刻意的。</strong> 桌面層那些較長的選擇器描述的是「特殊情境」——
+			訊息框裡的視窗、autopaging 的資料列、accordion 的分頁。平板層只想調「一般情況」的觸控尺寸，
+			沒有理由連特殊情境一起蓋掉。它把自己寫成同級，就是在說「我只贏平手」。
+		</p>
+		<p>
+			選項 B 加前綴，等於把每一條平板規則從 0,1,0 升到 0,2,1 ——
+			<strong>它就不再只贏平手，也開始贏那些特殊情境</strong>。下一節那 16 條就是這麼來的。
+		</p>
+	</div>
+</section>
+
+<!-- ============================================================ -->
+<section>
+	<div class="label">選項 B</div>
+	<h2>補的方法：讓每一條平板規則都先問一句「現在是不是 compact」</h2>
+
+	<p>
+		作法本身很單純 —— 把兩張表都留在瀏覽器裡，各自加一個<strong>前綴</strong>，
+		由 <code>&lt;html&gt;</code> 上有沒有那個屬性來決定哪一張生效：
+	</p>
+
+	<figure>
+		<div class="frame">
+			<div class="sel-stack">
+				<div class="sel-row wins">
+					<div class="sel-code">
+						<span class="add">html:not([data-density="compact"])</span> .z-column-content { font-size: 15px }
+					</div>
+					<div class="sel-meta">default 那張<br>沒有屬性時生效</div>
+				</div>
+				<div class="sel-row wins">
+					<div class="sel-code">
+						<span class="add">html[data-density="compact"]</span> .z-column-content { font-size: 13px }
+					</div>
+					<div class="sel-meta">compact 那張<br>有屬性時生效</div>
+				</div>
+			</div>
+		</div>
+		<figcaption>
+			屬性由 Java API 在執行期塞上去，瀏覽器當場重算 —— 所以切換鈕就會連平板層一起切。
+			代價不在這個想法，在它的<strong>副作用</strong>。
+		</figcaption>
+	</figure>
+</section>
+
+<!-- ============================================================ -->
+<section>
+	<div class="label">代價</div>
+	<h2>加了前綴，這條規則就開始贏過它本來輸的對手</h2>
+
+	<p>
+		CSS 決定「同一個屬性誰說了算」的規則是：<strong>先比特異性</strong>（選擇器裡有幾個 class、幾個標籤名），
+		特異性一樣才比<strong>誰寫在後面</strong>。
+	</p>
+	<p>
+		平板層今天是靠「寫在最後面」贏的 —— 它的特異性和桌面層一樣低，只是載入順序在後。
+		一旦加上 <code>html:not([data-density="compact"])</code>，它的特異性就多了一個 class 和一個標籤名，
+		於是<strong>連本來贏不了的桌面規則也一起贏了</strong>。
+	</p>
+
+	<h3>一個具體例子：所有訊息框的內距都會變</h3>
+
+	<figure>
+		<div class="frame">
+			<div class="sel-stack">
+				<div class="sel-row loses">
+					<div class="sel-code">.z-window-content { padding: 0 8px 8px }</div>
+					<div class="sel-meta">平板層 · 特異性 0,1,0<br>今天輸給下面那條</div>
+				</div>
+				<div class="sel-row wins">
+					<div class="sel-code">.z-messagebox-window .z-window-content { padding: var(--zk-messagebox-window-content-padding) }</div>
+					<div class="sel-meta">桌面 window.css · 特異性 0,2,0<br><strong>今天贏</strong></div>
+				</div>
+				<div class="sel-row flips">
+					<div class="sel-code"><span class="add">html:not([data-density="compact"])</span> .z-window-content { padding: 0 8px 8px }</div>
+					<div class="sel-meta">加前綴之後 · 特異性 0,2,1<br><strong>反過來贏了</strong></div>
+				</div>
+			</div>
+		</div>
+		<figcaption>
+			結果：平板上每一個訊息框的內距都從 <code>var(--zk-messagebox-window-content-padding)</code>
+			變成 <code>0 8px 8px</code> —— 而使用者<strong>根本沒有開 compact</strong>。
+			這是發生在「都不設」那一列的畫面改變。
+		</figcaption>
+	</figure>
+
+	<h3>這種案例有幾個？量過了：16 個</h3>
+
+	<p>
+		掃過全部 84 張桌面樣式表，找出「今天靠較高特異性贏過平板規則、加了前綴之後會被反超、
+		而且兩邊的值真的不一樣」的組合。<strong>同一份分析在 <code>baseline/</code>（原始建置輸出）與目前的來源樹上各跑一次，結果完全相同：42 處對決、24 處平板層已用同長度選擇器重述、2 處兩邊同值、<strong>16 處會真的改變畫面</strong>。</strong>
+	</p>
+
+	<figure>
+		<div class="frame">
+			<table>
+				<caption>加前綴後會實際改變畫面的 16 個組合（皆發生在非 compact 的預設路徑）</caption>
+				<thead>
+					<tr>
+						<th>來源檔</th>
+						<th>今天贏的（桌面）</th>
+						<th>會被反超成</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr><td class="mono">wnd/window.css</td><td class="mono">.z-messagebox-window .z-window-content</td><td class="mono">padding → 0 8px 8px</td></tr>
+					<tr><td class="mono">wnd/window.css</td><td class="mono">.z-window-noborder.z-window-noheader &gt; .z-window-content</td><td class="mono">padding 0 → 0 8px 8px</td></tr>
+					<tr><td class="mono">wnd/panel.css</td><td class="mono">.z-panel-move-ghost .z-panel-body</td><td class="mono">padding 0 → 12px 16px</td></tr>
+					<tr><td class="mono">wgt/popup.css</td><td class="mono">.z-notification-pointer ~ .z-notification-content</td><td class="mono">min-height → 0；padding → 32px 8px 32px 44px</td></tr>
+					<tr><td class="mono">wgt/popup.css</td><td class="mono">.z-notification-right ~ .z-notification-close</td><td class="mono">right 16px → 4px</td></tr>
+					<tr><td class="mono">wgt/popup.css</td><td class="mono">.z-notification-up ~ .z-notification-close</td><td class="mono">top 16px → 4px</td></tr>
+					<tr><td class="mono">wgt/caption.css</td><td class="mono">.z-caption .z-a</td><td class="mono">font-size → 15px</td></tr>
+					<tr><td class="mono">tab/tabbox.css</td><td class="mono">.z-tabbox-accordion &gt; .z-tabpanels &gt; .z-tabpanel</td><td class="mono">padding 0 → 12px 16px</td></tr>
+					<tr><td class="mono">grid/grid.css</td><td class="mono">.z-grid-autopaging .z-row-content</td><td class="mono">padding → 10px 12px</td></tr>
+					<tr><td class="mono">grid/grid.css</td><td class="mono">.z-grid-autopaging .z-group-content</td><td class="mono">padding → 10px 12px</td></tr>
+					<tr><td class="mono">grid/grid.css</td><td class="mono">.z-grid-autopaging .z-groupfoot-content</td><td class="mono">padding → 8px 12px</td></tr>
+					<tr><td class="mono">sel/listbox.css</td><td class="mono">.z-listbox-autopaging .z-listcell-content</td><td class="mono">padding → 10px 12px</td></tr>
+					<tr><td class="mono">sel/tree.css</td><td class="mono">.z-tree-autopaging .z-treecell-content</td><td class="mono">padding → 10px 12px</td></tr>
+					<tr><td class="mono">mesh/paging.css</td><td class="mono">.z-paging .z-paging-icon</td><td class="mono">font-size → 22px</td></tr>
+					<tr><td class="mono">zkmax/daterangebox.css</td><td class="mono">.z-daterangebox-popup-times .z-timebox</td><td class="mono">font-size → 15px</td></tr>
+					<tr><td class="mono">zkmax/portallayout.css</td><td class="mono">.z-portalchildren-frame &gt; … .z-panel-header</td><td class="mono">font-size → 17px</td></tr>
+				</tbody>
+			</table>
+		</div>
+		<figcaption>
+			另有 24 個組合平板層已經用同樣長度的選擇器重述過（不受影響），2 個組合兩邊的值剛好相同（換誰贏都一樣）。
+			量測方式：桌面選擇器的最後一段與平板選擇器相同、且更長（⇒ 特異性更高），並宣告同一個屬性。
+		</figcaption>
+	</figure>
+
+	<h3>還有一個更硬的選項 A，已經排除</h3>
+	<p>
+		用 <code>:where()</code> 包住前綴可以讓特異性維持不變，上面 16 條就全部消失。
+		但 <code>:where()</code> 等於把主題的瀏覽器下限拉到 2020 年的 Safari 14 ——
+		而 <strong>L-2 拍板的是「本主題不收窄 ZK 本體的瀏覽器支援範圍」</strong>。
+		更麻煩的是失效方式：舊瀏覽器看不懂這個語法時，是<strong>整條規則被丟掉</strong>，
+		不是慢慢降級 —— 舊 iOS 會整層觸控補償直接消失。
+	</p>
+</section>
+
+<!-- ============================================================ -->
+<section>
+	<div class="label">選項 C</div>
+	<h2>選項 C：預設那張表一個字都不動，只有 compact 那張加前綴</h2>
+
+	<p>
+		上一節的痛點是「動到了所有人都在的預設路徑」。那就別動它 ——
+		default 規則維持原樣、繼續靠排在後面蓋桌面層；只給 <strong>compact</strong> 那張表加前綴，
+		讓它靠<strong>更高的特異性</strong>反過來蓋 default 那張。
+	</p>
+
+	<figure>
+		<div class="frame">
+			<div class="sel-stack">
+				<div class="sel-row loses">
+					<div class="sel-code">.z-column-content { font-size: 15px }</div>
+					<div class="sel-meta">平板 default · 0,1,0<br>原封不動</div>
+				</div>
+				<div class="sel-row wins">
+					<div class="sel-code"><span class="add">html[data-density="compact"]</span> .z-column-content { font-size: 13px }</div>
+					<div class="sel-meta">平板 compact · 0,2,1<br>特異性更高 → 蓋過上面那條</div>
+				</div>
+			</div>
+		</div>
+		<figcaption>
+			特異性算式成立，而且<strong>那 16 條預設路徑的回歸完全消失</strong> ——
+			預設路徑的位元組一個都沒變。這是三個方案裡唯一同時做到「支援執行期切換」與
+			「預設路徑零風險」的走法。剩下兩件事要處理。
+		</figcaption>
+	</figure>
+
+	<h3>剩下一：那 187 條漏還在</h3>
+
+	<p>
+		只有 default 側有、compact 側沒有的 187 條宣告，在 compact 下<strong>沒有東西去蓋它們</strong>，
+		會繼續生效 —— 而 <code>iceblue_c</code> 沒有它們。要補，就得把「規則不存在時該有的值」寫進 compact 區塊。
+		量了一下這件事有多可行：
+	</p>
+
+	<figure>
+		<div class="frame">
+			<table>
+				<caption>187 條漏，各自能不能找到「該寫回什麼」</caption>
+				<thead>
+					<tr><th>情形</th><th class="num">條數</th><th>寫回的難度</th></tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>桌面層在<strong>同一個選擇器</strong>上宣告了同一個屬性，剛好一次<br>
+							<span style="color:var(--ink-faint)">↳ 其中值是乾淨的 <code>var(--zk-*)</code></span></td>
+						<td class="num">126<br><span style="color:var(--ink-faint)">99</span></td>
+						<td>抄過來就好<br><span style="color:var(--ink-faint)">最好的一群 —— 寫 <code>var(--zk-*)</code>，token 改了會自己跟上，不會過期</span></td>
+					</tr>
+					<tr>
+						<td>桌面層在那個選擇器上宣告超過一次</td>
+						<td class="num">1</td>
+						<td>要判斷哪一條贏</td>
+					</tr>
+					<tr>
+						<td><strong>桌面層根本沒有那個「選擇器 + 屬性」</strong></td>
+						<td class="num">60</td>
+						<td><span class="pill pill-bad">沒有來源可抄</span></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<figcaption>
+			量測對象：<code>baseline/</code> 的 84 張桌面表，對平板 default 的 895 條與
+			<code>iceblue_c</code> compact 的 869 條逐對比。
+		</figcaption>
+	</figure>
+
+	<div class="callout warn">
+		<div class="callout-head">那 60 條是真正的難處</div>
+		<p>
+			桌面層在那個選擇器上<strong>從來沒宣告過那個屬性</strong>，代表「規則不存在時的值」
+			不是抄來的，是<strong>瀏覽器算出來的</strong> —— 來自更短的選擇器、繼承、表格佈局，
+			或者就是屬性的初始值。實際例子：
+		</p>
+		<ul style="max-width:none">
+			<li><code>.z-calendar-cell { width: 36px }</code> —— 桌面層沒有這個寬度，真實寬度是表格佈局算的</li>
+			<li><code>.ZKBD input[type=checkbox] { width: 24px }</code> —— 不設就是瀏覽器原生尺寸</li>
+			<li><code>.z-apply-loading-indicator { min-width: 148px }</code> —— 不設就是 <code>auto</code></li>
+		</ul>
+		<p>
+			這 60 條只能靠瀏覽器實測抓出當下的值再<strong>寫死</strong>。寫死就會漂移，
+			而且沒有任何自動化盯著它。這就是「CSS 沒有『這條規則不存在』運算子」的具體長相 ——
+			你想要的是「<code>width</code> 回到本來就沒有的狀態」，而那沒有寫法。
+		</p>
+	</div>
+
+	<h3>剩下二：特異性膨脹沒有消失，是換了一側 —— 13 條</h3>
+
+	<p>
+		前綴把 compact 規則抬到 <code>0,2,1</code>。但在 <code>iceblue_c</code> 裡，
+		同一條 compact 規則是光禿禿的 <code>0,1,0</code>，本來會<strong>輸給</strong>桌面層較長的選擇器。
+		加了前綴就反過來贏 —— 這 13 處會實際改變畫面：
+	</p>
+
+	<figure>
+		<div class="frame">
+			<table>
+				<caption>compact 側因為前綴而翻盤的 13 處（只影響 compact 使用者）</caption>
+				<thead>
+					<tr><th>iceblue_c 裡今天贏的（桌面）</th><th>加前綴後會被蓋成</th></tr>
+				</thead>
+				<tbody>
+					<tr><td class="mono">.z-combobox-inplace .z-combobox-input</td><td class="mono">padding: 4px 5px</td></tr>
+					<tr><td class="mono">.z-bandbox-inplace .z-bandbox-input</td><td class="mono">padding: 4px 5px</td></tr>
+					<tr><td class="mono">.z-datebox-inplace .z-datebox-input</td><td class="mono">padding: 4px 5px</td></tr>
+					<tr><td class="mono">.z-timebox-inplace .z-timebox-input</td><td class="mono">padding: 4px 5px</td></tr>
+					<tr><td class="mono">.z-spinner-inplace .z-spinner-input</td><td class="mono">padding: 4px 5px</td></tr>
+					<tr><td class="mono">.z-doublespinner-inplace .z-doublespinner-input</td><td class="mono">padding: 4px 5px</td></tr>
+					<tr><td class="mono">.z-timepicker-inplace .z-timepicker-input</td><td class="mono">padding: 4px 5px</td></tr>
+					<tr><td class="mono">.z-tree-autopaging .z-treecell-content</td><td class="mono">padding: 4px 5px；line-height: 22px</td></tr>
+					<tr><td class="mono">.z-groupbox &gt; .z-groupbox-header</td><td class="mono">line-height: 24px</td></tr>
+					<tr><td class="mono">.z-paging .z-paging-icon</td><td class="mono">font-size: 22px</td></tr>
+					<tr><td class="mono">.z-portalchildren-frame &gt; … .z-panel-header</td><td class="mono">font-size: 14px</td></tr>
+					<tr><td class="mono">.z-notification-pointer ~ .z-notification-content</td><td class="mono">min-height: 0</td></tr>
+				</tbody>
+			</table>
+		</div>
+		<figcaption>
+			「inplace」那一族佔了 7 條 —— 那是輸入元件在非編輯狀態下收起邊框的模式，
+			它的內距會被 compact 的觸控內距蓋掉。
+		</figcaption>
+	</figure>
+
+	<h3>到這裡的總帳（選項 D 還會再改寫一次）</h3>
+
+	<figure>
+		<div class="frame">
+			<table>
+				<thead>
+					<tr>
+						<th></th>
+						<th>現行<br><span style="font-weight:400;text-transform:none;letter-spacing:0">伺服器端二選一</span></th>
+						<th>選項 B<br><span style="font-weight:400;text-transform:none;letter-spacing:0">兩側都加前綴</span></th>
+						<th>選項 C<br><span style="font-weight:400;text-transform:none;letter-spacing:0">只有 compact 加前綴</span></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>預設路徑（今天所有人）的回歸</td>
+						<td class="num"><span class="pill pill-ok">0</span></td>
+						<td class="num"><span class="pill pill-bad">16</span></td>
+						<td class="num"><span class="pill pill-ok">0</span></td>
+					</tr>
+					<tr>
+						<td>compact 側特異性翻盤</td>
+						<td class="num"><span class="pill pill-ok">0</span></td>
+						<td class="num"><span class="pill pill-ok">0</span></td>
+						<td class="num"><span class="pill pill-half">13</span></td>
+					</tr>
+					<tr>
+						<td>要人工寫回的宣告</td>
+						<td class="num"><span class="pill pill-ok">0</span></td>
+						<td class="num"><span class="pill pill-bad">187</span></td>
+						<td class="num"><span class="pill pill-bad">187</span></td>
+					</tr>
+					<tr>
+						<td><span style="color:var(--ink-faint)">↳ 其中沒有來源可抄、只能實測寫死</span></td>
+						<td class="num">—</td>
+						<td class="num"><span style="color:var(--ink-faint)">60</span></td>
+						<td class="num"><span style="color:var(--ink-faint)">60</span></td>
+					</tr>
+					<tr>
+						<td>對 <code>iceblue_c</code> 逐條相同</td>
+						<td><span class="pill pill-ok">已證明 869 = 869</span></td>
+						<td><span class="pill pill-bad">要逐條驗</span></td>
+						<td><span class="pill pill-bad">要逐條驗</span></td>
+					</tr>
+					<tr>
+						<td>執行期切換帶動平板層</td>
+						<td><span class="pill pill-half">不支援</span></td>
+						<td><span class="pill pill-ok">支援</span></td>
+						<td><span class="pill pill-ok">支援</span></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</figure>
+
+	<div class="callout">
+		<div class="callout-head">兩者不互斥 —— 值得考慮的混合走法</div>
+		<p>
+			現行作法與選項 C 可以<strong>疊在一起</strong>，各管一條路：
+		</p>
+		<ul style="max-width:none">
+			<li><strong><code>zk.xml</code> 設定值</strong> → 伺服器只送 compact 那張表，
+				<strong>逐條等於 <code>iceblue_c</code></strong>，這個保證已經證明過，不會動搖。</li>
+			<li><strong>執行期切換</strong> → 送 default 那張表<em>加上</em>前綴過的 compact 表，
+				是「盡力而為」的近似 —— 而且可以先補掉最好處理的 126 條（其中 99 條寫 <code>var(--zk-*)</code>，不會漂移），
+				把差距壓到剩那 60 條。</li>
+		</ul>
+		<p>
+			代價：行動裝置在<strong>沒設定值</strong>時要收兩張表（約 53 KB，只有行動裝置付），
+			而且文件要誠實寫明<strong>兩條路的保證等級不一樣</strong> ——
+			要和 <code>iceblue_c</code> 完全一致就用設定值，執行期切換是近似。
+		</p>
+	</div>
+</section>
+
+<!-- ============================================================ -->
+<section>
+	<div class="label">選項 D</div>
+	<h2>選項 D：不動選擇器，改用 CSS 變數在同一份 DSP 裡切換</h2>
+
+	<p>
+		前面三個方案都在動<strong>選擇器</strong>，所以都要付特異性的帳。
+		如果改成動<strong>值</strong>呢？兩張表的差異拆成三類，變數對每一類的能耐完全不同：
+	</p>
+
+	<figure>
+		<div class="frame">
+			<table>
+				<caption>兩張表 895 / 869 條宣告的差異結構，以及變數能不能處理</caption>
+				<thead>
+					<tr><th>差異類型</th><th class="num">條數</th><th>變數辦得到嗎</th></tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>兩邊都有、<strong>值不同</strong></td>
+						<td class="num">75</td>
+						<td><span class="pill pill-ok">完全辦得到</span> 純換值，就是桌面層 D1 在做的事</td>
+					</tr>
+					<tr>
+						<td>兩邊都有、值相同</td>
+						<td class="num">633</td>
+						<td><span class="pill pill-ok">不用處理</span></td>
+					</tr>
+					<tr>
+						<td><strong>只有 default 有</strong>（compact 下必須消失）</td>
+						<td class="num">187</td>
+						<td><span class="pill pill-half">辦不到「消失」，但辦得到別的</span></td>
+					</tr>
+					<tr>
+						<td><strong>只有 compact 有</strong>（compact 下必須出現）</td>
+						<td class="num">161</td>
+						<td><span class="pill pill-bad">辦不到</span> 必須是新規則</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</figure>
+
+	<h3>天花板在哪：變數的「關掉」是 <code>unset</code>，不是「不存在」</h3>
+
+	<p>
+		把一個 <code>var()</code> 弄成解析不出來，該宣告會變成
+		<strong>IACVT</strong>（invalid at computed-value time），
+		那個屬性計算成 <code>unset</code> —— 也就是<strong>繼承值或初始值</strong>。
+		而「規則不存在」時，值是由層疊裡<strong>下一條規則</strong>供應的。
+		這兩件事只有在「沒有下一條規則」時才相同。
+	</p>
+
+	<figure>
+		<div class="frame">
+			<div class="sel-stack">
+				<div class="sel-row">
+					<div class="sel-code">/* 桌面 grid.css */<br>.z-column-content { font-size: var(--zk-font-size-medium); padding: var(--zk-mesh-body-padding) }</div>
+					<div class="sel-meta">層疊裡的<br>下一條</div>
+				</div>
+				<div class="sel-row loses">
+					<div class="sel-code">/* 平板 default */<br>.z-column-content { font-size: 15px; padding: 10px 12px }</div>
+					<div class="sel-meta">要在 compact<br>下消失的</div>
+				</div>
+				<div class="sel-row wins">
+					<div class="sel-code">/* iceblue_c compact：<strong>整條不存在</strong> */<br>→ 元素拿到 <strong>var(--zk-font-size-medium)</strong>（compact 的 token 值）</div>
+					<div class="sel-meta">正確答案</div>
+				</div>
+				<div class="sel-row flips">
+					<div class="sel-code">/* 用變數關掉 */<br>.z-column-content { font-size: var(--tb-fs) }　→ IACVT<br>→ 元素拿到 <strong>繼承自父元素的字級</strong></div>
+					<div class="sel-meta">錯的<br>桌面那條也一起沒了</div>
+				</div>
+			</div>
+		</div>
+		<figcaption>
+			這就是為什麼「CSS 沒有『這條規則不存在』運算子」——
+			變數能把值換掉、能讓宣告失效，但無法讓它<strong>退出層疊</strong>把位子讓給下一條。
+		</figcaption>
+	</figure>
+
+	<h3>但變數有一個很好的變體：把下一條的值寫進 fallback</h3>
+
+	<p>
+		不要讓它失效，而是讓它<strong>掉進 fallback</strong>。
+		<code>--tb-col-fs: initial</code> 會讓 <code>var()</code> 走第二個參數：
+	</p>
+
+	<figure>
+		<div class="frame">
+			<div class="sel-stack">
+				<div class="sel-row wins">
+					<div class="sel-code">.z-column-content { font-size: var(--tb-col-fs, <strong>var(--zk-font-size-medium)</strong>) }</div>
+					<div class="sel-meta">平板規則<br>選擇器一個字沒動</div>
+				</div>
+				<div class="sel-row wins">
+					<div class="sel-code">:root { --tb-col-fs: 15px }<br>html[data-density="compact"] { --tb-col-fs: initial }</div>
+					<div class="sel-meta">開關本身<br>只有一個地方</div>
+				</div>
+			</div>
+		</div>
+		<figcaption>
+			fallback 寫的是<strong>同一個 token</strong>，所以桌面層改 token 時它會自己跟上，<strong>不會過期</strong> ——
+			這是「實測寫死」做不到的。
+		</figcaption>
+	</figure>
+
+	<figure>
+		<div class="frame">
+			<table>
+				<caption>187 條用 fallback 寫回的可行度（與選項 C 同一份分析）</caption>
+				<thead><tr><th>情形</th><th class="num">條數</th><th>fallback 寫什麼</th></tr></thead>
+				<tbody>
+					<tr>
+						<td>桌面層在同選擇器宣告過，值是乾淨的 <code>var(--zk-*)</code></td>
+						<td class="num">99</td>
+						<td><span class="pill pill-ok">同一個 token，永不漂移</span></td>
+					</tr>
+					<tr>
+						<td>桌面層在同選擇器宣告過，值是字面量</td>
+						<td class="num">27</td>
+						<td>抄字面量，會漂移但抄得到</td>
+					</tr>
+					<tr>
+						<td>桌面層宣告超過一次</td>
+						<td class="num">1</td>
+						<td>要判斷哪一條贏</td>
+					</tr>
+					<tr>
+						<td>桌面層在同選擇器沒宣告過</td>
+						<td class="num">60</td>
+						<td><code>unset</code> 很可能就是對的 —— 但要驗，因為可能有<strong>更短的選擇器</strong>或瀏覽器預設樣式在供值</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</figure>
+
+	<div class="callout">
+		<div class="callout-head">選項 D 的真正價值：它不省掉推導，但省掉特異性</div>
+		<p>
+			那 187 條該寫什麼值，D 和 C 是<strong>同一份工作</strong>，D 只是換個寫法（fallback 而不是新規則）。
+			但因為它<strong>一個選擇器都沒動</strong>，選項 C 那 13 條 compact 側翻盤裡，
+			<strong>有 4 條直接消失</strong>（<code>.z-panel-header</code>、<code>.z-paging-icon</code>、
+			<code>.z-treecell-content</code> 的 padding、<code>.z-notification-content</code> ——
+			這 4 條兩邊都有，換值就解決）。
+		</p>
+		<p>
+			剩下 <strong>9 條</strong>是 compact 專屬的<strong>新規則</strong>，變數變不出來，只能加規則、只能帶前綴 ——
+			其中 7 條是 <code>-inplace</code> 輸入元件那一族的 <code>padding</code>。
+		</p>
+	</div>
+
+	<h3>順帶一提：那個「不存在」運算子其實存在，叫 <code>revert-layer</code></h3>
+
+	<p>
+		如果主題有 cascade layer，就有一行解決 187 條的寫法 ——
+		<code>revert-layer</code> 的語意<strong>正是</strong>「當這條規則不存在，把值退回上一層」：
+	</p>
+
+	<figure>
+		<div class="frame">
+			<div class="sel-stack">
+				<div class="sel-row wins">
+					<div class="sel-code">@layer desktop, tablet;<br><br>@layer tablet {<br>&nbsp;&nbsp;.z-column-content { font-size: 15px }<br>&nbsp;&nbsp;html[data-density="compact"] .z-column-content { font-size: <strong>revert-layer</strong> }<br>}</div>
+					<div class="sel-meta">187 條<br>一條一行<br>零推導、零漂移</div>
+				</div>
+			</div>
+		</div>
+	</figure>
+
+	<div class="callout warn">
+		<div class="callout-head">但它的代價是三個，而且都不小</div>
+		<ul style="max-width:none">
+			<li>
+				<strong>要對整個主題導入 <code>@layer</code>，不能只給平板層加。</strong>
+				未分層的樣式優先權<strong>高於</strong>已分層的 —— 只分平板層的話，
+				84 張未分層的桌面表會反過來蓋掉整個平板層，全毀。
+				而計畫書 §L2.1 明確把 <code>@layer</code> 列為範圍外：
+				「會改變 cascade 行為 → 無法用零差異驗證。獨立議題，獨立分支。」
+			</li>
+			<li>
+				<strong>對既有客戶是 cascade 語意變更。</strong>
+				客戶自己寫的未分層 CSS 會贏過所有主題 CSS。多數時候是好事，但那是行為改變，要進遷移指南。
+			</li>
+			<li>
+				<strong>瀏覽器下限 Safari 15.4（2022-03）</strong>，比 <code>:where()</code> 的
+				Safari 14（2020-09）還<strong>高</strong>，而且失效方式更慘：
+				不認得 <code>@layer</code> 的瀏覽器會丟掉<strong>整個區塊</strong> = 整份主題消失。
+				（另：CleanCSS 5.3.3 會破壞裸的 <code>@layer a, b;</code> 陳述式，本專案已記錄，Marble 有現成的 workaround。）
+			</li>
+		</ul>
+	</div>
+
+	<h3>四個方案的總帳</h3>
+
+	<figure>
+		<div class="frame">
+			<table>
+				<thead>
+					<tr>
+						<th></th>
+						<th>現行<br><span style="font-weight:400;text-transform:none;letter-spacing:0">伺服器二選一</span></th>
+						<th>B<br><span style="font-weight:400;text-transform:none;letter-spacing:0">兩側加前綴</span></th>
+						<th>C<br><span style="font-weight:400;text-transform:none;letter-spacing:0">只有 compact 加前綴</span></th>
+						<th>D<br><span style="font-weight:400;text-transform:none;letter-spacing:0">變數 + fallback</span></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>預設路徑回歸</td>
+						<td class="num"><span class="pill pill-ok">0</span></td>
+						<td class="num"><span class="pill pill-bad">16</span></td>
+						<td class="num"><span class="pill pill-ok">0</span></td>
+						<td class="num"><span class="pill pill-ok">0</span></td>
+					</tr>
+					<tr>
+						<td>compact 側特異性翻盤</td>
+						<td class="num"><span class="pill pill-ok">0</span></td>
+						<td class="num"><span class="pill pill-ok">0</span></td>
+						<td class="num"><span class="pill pill-half">13</span></td>
+						<td class="num"><span class="pill pill-half">9</span></td>
+					</tr>
+					<tr>
+						<td>要人工推導的宣告</td>
+						<td class="num"><span class="pill pill-ok">0</span></td>
+						<td class="num"><span class="pill pill-bad">187</span></td>
+						<td class="num"><span class="pill pill-bad">187</span></td>
+						<td class="num"><span class="pill pill-bad">187</span></td>
+					</tr>
+					<tr>
+						<td><span style="color:var(--ink-faint)">↳ 其中不會漂移的</span></td>
+						<td class="num">—</td>
+						<td class="num"><span style="color:var(--ink-faint)">0</span></td>
+						<td class="num"><span style="color:var(--ink-faint)">0</span></td>
+						<td class="num"><span style="color:var(--good);font-weight:650">99</span></td>
+					</tr>
+					<tr>
+						<td>動到選擇器</td>
+						<td><span class="pill pill-ok">否</span></td>
+						<td>是（兩側）</td>
+						<td>是（compact）</td>
+						<td><span class="pill pill-ok">否</span>（161 條新規則除外）</td>
+					</tr>
+					<tr>
+						<td>執行期切換帶動平板層</td>
+						<td><span class="pill pill-half">不支援</span></td>
+						<td><span class="pill pill-ok">支援</span></td>
+						<td><span class="pill pill-ok">支援</span></td>
+						<td><span class="pill pill-ok">支援</span></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<figcaption>
+			<code>@layer</code> + <code>revert-layer</code> 那一版沒有列進來 ——
+			它會把「要人工推導的宣告」壓到 <strong>0</strong>，是唯一真正乾淨的解，
+			但它的成本不在這張表裡，而是「整個主題改用 cascade layer」這件事本身。
+		</figcaption>
+	</figure>
+
+	<div class="callout">
+		<div class="callout-head">建議：D 併進 C，不是取代</div>
+		<p>
+			兩者處理的是不同類型的差異，合起來最省：
+		</p>
+		<ul style="max-width:none">
+			<li><strong>187 條只有 default 有的</strong> → 用 D 的 fallback 變數。不動選擇器，99 條寫 token 不會漂移。</li>
+			<li><strong>75 條兩邊都有值不同的</strong> → 用 D 的純變數換值。免費。</li>
+			<li><strong>161 條只有 compact 有的</strong> → 只能是新規則，用 C 的 <code>html[data-density="compact"]</code> 前綴。翻盤剩 9 條。</li>
+		</ul>
+		<p>
+			如果日後主題真的走向 <code>@layer</code>（那是獨立議題），那 187 條可以一次全部換成
+			<code>revert-layer</code>，把推導工作歸零。<strong>先做 C+D 不會擋住那條路</strong> ——
+			屆時是刪掉 fallback、換成一個關鍵字。
+		</p>
+	</div>
+</section>
+
+<!-- ============================================================ -->
+<section>
+	<div class="label">裁示</div>
+	<h2>已定案：平板層只支援設定值切換</h2>
+
+	<div class="callout">
+		<div class="callout-head">2026-08-17 裁示 · C24</div>
+		<p>
+			<strong>平板觸控層的密度只由 <code>zk.xml</code> 的 <code>org.zkoss.zul.theme.density</code> 決定。</strong>
+			<code>IceblueDensity.apply()</code> 的兩支方法都不驅動它 ——
+			這是<strong>規格</strong>，不是待補的缺口，選項 B / C / D 留作紀錄，不是路線圖。
+		</p>
+		<p>
+			<strong>決定性的理由是：前一版本來就只有這個規格。</strong>
+			<code>@themeProfile</code> 時代要切 compact，作法是「改 LESS 變數 → 重編 jar → 換 jar」——
+			平板層<strong>從來沒有過任何執行期切換</strong>，連整站的都沒有。
+		</p>
+	</div>
+
+	<figure>
+		<div class="frame">
+			<table>
+				<caption>對平板層而言，本版與前一版的差別</caption>
+				<thead><tr><th></th><th>前一版（<code>@themeProfile</code>）</th><th>本版</th></tr></thead>
+				<tbody>
+					<tr><td>怎麼切 compact</td><td>改 LESS 變數、重編並更換 jar</td><td><span class="pill pill-ok">設一個 library-property</span></td></tr>
+					<tr><td>執行期切換</td><td>沒有</td><td>沒有（規格如此）</td></tr>
+					<tr><td>出貨物</td><td>兩個 jar</td><td><span class="pill pill-ok">一個</span></td></tr>
+				</tbody>
+			</table>
+		</div>
+		<figcaption>
+			所以這不是能力損失，是<strong>同等能力用便宜非常多的機制交付</strong>，並順手砍掉第二個出貨物。
+			唯一新增的不對稱是<strong>桌面層多拿了</strong>執行期切換（D1–D3）——
+			前一版兩層都沒有，所以那是桌面層的加分，不是平板層的缺口。
+		</figcaption>
+	</figure>
+
+	<h3>這條裁示讓一整批工作消失</h3>
+
+	<figure>
+		<div class="verdict">
+			<div class="verdict-item">
+				<div class="verdict-k">補起來要付</div>
+				<div class="verdict-v">16 條</div>
+				<div class="verdict-n">在「沒有人開 compact」的預設路徑上，畫面會改變的規則數。要宣告安全只能靠瀏覽器逐條實測。</div>
+			</div>
+			<div class="verdict-item">
+				<div class="verdict-k">補起來換到</div>
+				<div class="verdict-v">1 格</div>
+				<div class="verdict-n">「EE + 行動裝置 + 執行期切換密度」這一格。區域級切換即使補了也仍然不支援（是另一條裁示）。</div>
+			</div>
+			<div class="verdict-item">
+				<div class="verdict-k">裁示後要做的</div>
+				<div class="verdict-v">0</div>
+				<div class="verdict-n">現行實作已經就是這條規格。程式碼零改動、閘門不必重跑，只有文件與遷移指南的措辭。</div>
+			</div>
+		</div>
+	</figure>
+
+	<p>
+		前面 B / C / D 三節評估的那 <strong>187 條寫回</strong>——
+		包含 <strong>60 條沒有來源可抄、只能實測寫死</strong>的——
+		全部<strong>不必做</strong>。它們只在「要讓執行期屬性也驅動平板層」這個前提下才存在。
+		那三節與它們的實測數字保留在本頁，是為了讓日後若規格真的改變時不必重算，
+		<strong>不是待辦清單</strong>。
+	</p>
+
+	<div class="callout">
+		<div class="callout-head">已經落實的地方</div>
+		<ul style="max-width:none">
+			<li><strong>程式碼零改動</strong> —— 目前的實作本來就是這個規格，閘門數字不變，也不需要重跑。</li>
+			<li><code>IceblueDensity</code> 的 Javadoc 已改寫成規格語氣，並寫明「前一版也沒有」，
+				讓看 API 的人在那一端就知道，而不是在 iPad 上發現畫面怪怪的才回頭查。</li>
+			<li><strong>D5 的 migration guide 要正面寫這條規格</strong>，不要當成注意事項 ——
+				存量 <code>preferred=iceblue_c</code> 的客戶原本就是換 jar，改設 property 之後行為等價、成本大降；
+				會期待執行期切換的只有讀了 Java API 文件的新客戶。</li>
+		</ul>
+	</div>
+</section>
+
+<footer>
+	<div>量測日期 2026-08-17，全部取自本 repo 的來源檔與出貨中的 <code>iceblue_c 11.0.0</code> jar。</div>
+	<div>相關文件：<code>tasks/d4-tablet-density.md</code>（執行計畫）· <code>tasks/l4-density-mechanism.md</code>（機制評估）· 裁示 C23 / <strong>C24</strong> · 閘門紀錄 #61</div>
+</footer>
+
+</div>
