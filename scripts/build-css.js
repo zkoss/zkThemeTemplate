@@ -151,19 +151,18 @@ const NO_HEADER = new Set([
  *                   this: `html` / `body` / `main` must not be scoped when embedded, they must
  *                   be ABSENT, and CSS has no "does not exist" operator. Only a server-side
  *                   conditional can delete a rule. See doc/browserdefault-masking.md.
- *   `.ZKDENSITY `   `org.zkoss.zul.theme.density` in SELECTOR position (L-4 D2): when the property
- *                   is `compact`, `:root,` is prepended to the compact override block's selector
- *                   so the whole app starts compact — with no FOUC and no extra request, because
- *                   the decision is made server-side while the one stylesheet is rendered. Any
- *                   other value, including an unset property, leaves the block keyed on the
- *                   attribute alone. The trailing space is the descendant combinator that makes
- *                   the placeholder ordinary CSS; the DSP that replaces it supplies its own comma.
- *   ZKDENSITY-*     the SAME property in BLOCK position (L-4 D4), and for the same reason
- *                   ZKBD-OFF-* exists: `tablet.css` carries two COMPLETE sheets, and the one that
- *                   does not apply must be ABSENT, not overridden. 187 of the default sheet's 895
- *                   declarations have no counterpart in the compact sheet, so overriding cannot
- *                   express "compact" — only deleting the block can. `ne` / `eq` are a matched
- *                   pair so an unrecognised value behaves like an unset one, exactly as D2's does.
+ *   ZKDENSITY-*     `org.zkoss.zul.theme.density` in BLOCK position (L-4 D4/D6), and for the same
+ *                   reason ZKBD-OFF-* exists: what does not apply must be ABSENT, not overridden.
+ *                   `tablet.css` carries two COMPLETE sheets and 187 of the default sheet's 895
+ *                   declarations have no counterpart in the compact one, so overriding cannot
+ *                   express "compact" — only deleting the block can. D6 (C25) then put the DESKTOP
+ *                   override block behind the same pair, because a `[data-density]` hook on one
+ *                   half and not the other is a live path to the split theme S36 names. `ne` / `eq`
+ *                   are a matched pair so an unrecognised value behaves like an unset one.
+ *
+ *                   A `.ZKDENSITY ` placeholder used to exist for the selector-position form of
+ *                   the same switch (`:root,` prepended to a `[data-density="compact"]` block).
+ *                   D6 removed it with the attribute: there is nothing left to key on.
  *
  * Order matters: the prefix tag ENDS with `</c:if>`, so restoring it before the block-close would
  * be fine, but masking in the other direction (conversion side) must do the prefix first.
@@ -187,7 +186,6 @@ const PLACEHOLDERS = [
 	['/*!ZKBD-OFF-END*/', '</c:if>'],
 	// Equality, not `not empty`: an unrecognised value must behave like an unset one rather than
 	// like `compact`, so a typo in zk.xml cannot silently switch the whole app's density.
-	['.ZKDENSITY ', `<c:if test="\${'compact' eq ${DENSITY}}">:root,</c:if>`],
 	['/*!ZKDENSITY-DEFAULT-START*/', `<c:if test="\${'compact' ne ${DENSITY}}">`],
 	['/*!ZKDENSITY-DEFAULT-END*/', '</c:if>'],
 	['/*!ZKDENSITY-COMPACT-START*/', `<c:if test="\${'compact' eq ${DENSITY}}">`],

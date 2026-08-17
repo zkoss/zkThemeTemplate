@@ -38,7 +38,7 @@
   - [L3-D 各階段的技術細節與論證](iceblue-drop-less-plan-appendix.md#l3-d-各階段的技術細節與論證p0-p8) — P0-P8
   - [L3-E 風險](iceblue-drop-less-plan-appendix.md#l3-e-風險)
   - [L3-F 決策紀錄](iceblue-drop-less-plan-appendix.md#l3-f-決策紀錄) — L-2 / L-4 / L-5 / L-7 / L-8 與五次追加拍板
-  - [L3-G Change Log](iceblue-drop-less-plan-appendix.md#l3-g-change-log--規範層的斷言變更) — **24** 條規範層更正
+  - [L3-G Change Log](iceblue-drop-less-plan-appendix.md#l3-g-change-log--規範層的斷言變更) — **25** 條規範層更正
   - [L3-H 進度記錄制度](iceblue-drop-less-plan-appendix.md#l3-h-進度記錄制度)
 - **[附:跨主題待辦裁示](#附跨主題待辦裁示不屬於本案任何階段)** — 由本案裁示產生、但要在別的地方執行的事(**M-1** Marble 密度字彙對齊 · **M-2** `@themePalette` 移出本案)
 

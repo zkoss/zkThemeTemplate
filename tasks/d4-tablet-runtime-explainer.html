@@ -468,12 +468,32 @@ footer code { background: none; padding: 0; }
 	<div class="kicker">IceBlue · L-4 D4 · 2026-08-17</div>
 	<h1>平板層為什麼跟不上</h1>
 	<p class="standfirst">
-		在 <code>zk.xml</code> 設 compact，桌面與平板都會變。用 Java API 在執行期切 compact，
-		只有桌面會變。<strong>2026-08-17 已裁示：這是規格</strong> —— 平板層只認設定值，
-		因為前一版連建置期以外的切換都沒有。這份文件說明那是什麼情況、平板層本來怎麼蓋過桌面層，
-		以及四個「把它補起來」的作法各自要付什麼代價（保留備查，不是路線圖）。
+		平板觸控層的密度只能由 <code>zk.xml</code> 的設定值決定，不能在執行期切換。
+		這份文件說明為什麼 —— 平板層本來怎麼蓋過桌面層、為什麼它不吃 CSS 變數，
+		以及四個「讓它也能執行期切換」的作法各自要付什麼代價。
 	</p>
 </header>
+
+<div class="callout warn" style="max-width:none">
+	<div class="callout-head">同日後續裁示 · C25 —— 本頁描述的不對稱已經不存在</div>
+	<p>
+		本頁原本的主題是「桌面層能執行期切換、平板層不能」。<strong>2026-08-17 稍後裁示把桌面層也收斂成只支援設定值切換</strong>
+		（刪除 <code>IceblueDensity</code> 與 <code>[data-density]</code> 屬性），
+		所以現在<strong>兩層一致：density 只由 <code>org.zkoss.zul.theme.density</code> 決定</strong>。
+	</p>
+	<p>
+		本頁沒有改寫，因為它的內容仍然成立而且正是那條裁示的依據：
+		<strong>〈機制〉一節</strong>解釋平板層怎麼靠載入順序蓋過桌面層，
+		<strong>〈選項 B / C / D〉三節</strong>是「讓執行期切換也帶動平板層」的完整成本估算。
+		差別只在<strong>那些作法現在一個都不做</strong> —— 保留是為了日後若規格改變時不必重算。
+		底下凡是說「桌面會變、平板不會」的地方，請讀成「<strong>裁示前的狀態</strong>」。
+	</p>
+	<p>
+		為什麼連 CSS 的屬性掛勾也拿掉、不是只刪 API：平板層只認設定值之後，
+		桌面層若還留著 <code>[data-density="compact"]</code>，任何人設了它就會在行動裝置上得到
+		<strong>桌面 compact + 平板 default</strong> —— 那正是本頁一路在講的分裂主題。<strong>留半套 = 留一個已知的錯誤狀態。</strong>
+	</p>
+</div>
 
 <!-- ============================================================ -->
 <section>

@@ -4,11 +4,17 @@
  *
  * WHAT D2 CLAIMS, AND WHY IT NEEDS A RUNNING SERVER
  * -------------------------------------------------
- * D1 puts the compact override block behind `[data-density="compact"]`. D2 makes it possible to
- * turn that on for the WHOLE APP from `zk.xml`, with no ZUL and no Java, by having the theme's
- * own stylesheet decide server-side whether to prepend `:root,` to that selector:
+ * D1 puts the 350 compact token overrides in one block at the tail of `norm.css.dsp`. D2 makes it
+ * possible to turn that on for the WHOLE APP from `zk.xml`, with no ZUL and no Java, by having the
+ * theme's own stylesheet decide server-side whether the block is emitted at all:
  *
- *     <c:if test="${'compact' eq c:property('org.zkoss.zul.theme.density')}">:root,</c:if>
+ *     <c:if test="${'compact' eq c:property('org.zkoss.zul.theme.density')}"> :root { … } </c:if>
+ *
+ * D6 (C25) is why it reads that way rather than as a selector swap. The block used to be keyed on
+ * `[data-density="compact"]` with `:root,` prepended when the property was set; the attribute went
+ * away with the runtime Java API, because a `[data-density]` hook on the desktop half while the
+ * tablet half is property-only is a live path to the split theme S36 names. One consequence is
+ * worth stating: a default-density app now receives none of those 14473 bytes.
  *
  * Nothing offline can check that. The construct is a DSP tag in SELECTOR position, evaluated by
  * ZK's XEL when the `.css.dsp` is interpreted, and the question "does this EL evaluate the way we
@@ -25,9 +31,9 @@
  * (Same caliber trap `ab-coverage.js` documents for its probe.)
  *
  * THE THREE STATES
- *   unset      selector is `[data-density="compact"]`         attribute-only, default density
- *   compact    selector is `:root,[data-density="compact"]`   whole app compact
- *   foo        selector is `[data-density="compact"]`         MUST behave like unset
+ *   unset      no compact block in the served CSS      default density
+ *   compact    exactly one, keyed on `:root`           whole app compact
+ *   foo        no compact block                        MUST behave like unset
  *
  * The third is the negative control and the reason this file exists rather than a one-line grep.
  *
@@ -42,13 +48,14 @@
 const { BASE_URL, startApp, guardProbe } = require('./ab-visual');
 
 const PROPERTY = 'org.zkoss.zul.theme.density';
-const ATTR_SELECTOR = '[data-density="compact"]{';
-const ROOT_SELECTOR = `:root,${ATTR_SELECTOR}`;
+
+/** A declaration that is in the compact override block and nowhere else in the served CSS. */
+const MARKER = '--zk-base-font-size:12px';
 
 const STATES = [
-	{ name: 'unset', props: [], compactWholeApp: false },
-	{ name: 'compact', props: [`-D${PROPERTY}=compact`], compactWholeApp: true },
-	{ name: 'foo (unrecognised)', props: [`-D${PROPERTY}=foo`], compactWholeApp: false },
+	{ name: 'unset', props: [], compact: false },
+	{ name: 'compact', props: [`-D${PROPERTY}=compact`], compact: true },
+	{ name: 'foo (unrecognised)', props: [`-D${PROPERTY}=foo`], compact: false },
 ];
 
 /**
@@ -73,9 +80,11 @@ async function measure(state) {
 	try {
 		await guardProbe();
 		const { url, text } = await fetchThemeCss();
-		const attrOnly = text.split(ATTR_SELECTOR).length - 1;
-		const withRoot = text.split(ROOT_SELECTOR).length - 1;
-		return { url, bytes: text.length, blocks: attrOnly, withRoot };
+		// The block has no selector of its own to count any more — it is a plain `:root{}`, and
+		// `:root{` also opens the profile's own token block. So the presence test is a declaration
+		// that only the compact block can carry, and the count doubles as the "served twice?" check.
+		const blocks = text.split(MARKER).length - 1;
+		return { url, bytes: text.length, blocks };
 	} finally {
 		app.kill('SIGTERM');
 		// The next state must bind the same port; SIGTERM is asynchronous.
@@ -96,19 +105,13 @@ async function main() {
 		}
 		console.log(`stylesheet:      ${m.url}`);
 		console.log(`bytes:           ${m.bytes}`);
-		console.log(`density blocks:  ${m.blocks}`);
-		console.log(`prefixed :root,: ${m.withRoot}`);
+		console.log(`compact block:   ${m.blocks ? `present (\u00d7${m.blocks})` : 'absent'}`);
 
-		// Exactly one density block, whatever the state: the DSP conditional changes the selector,
-		// it does not duplicate the rule. A second one would mean the block got served twice.
-		if (m.blocks !== 1) {
-			violations.push(`${state.name}: ${m.blocks} density block(s) in the served CSS, expected 1`);
-		}
-		const expected = state.compactWholeApp ? 1 : 0;
-		if (m.withRoot !== expected) {
-			violations.push(
-				`${state.name}: selector is ${m.withRoot ? '`:root,[data-density="compact"]`' : '`[data-density="compact"]`'}, ` +
-				`expected ${expected ? 'the `:root,` prefix' : 'no `:root,` prefix'}`);
+		// Since D6 the conditional decides whether the block EXISTS, not what its selector is.
+		// Exactly one when compact, exactly none otherwise — two would mean it got served twice.
+		const expected = state.compact ? 1 : 0;
+		if (m.blocks !== expected) {
+			violations.push(`${state.name}: compact override block appears ${m.blocks} time(s), expected ${expected}`);
 		}
 	}
 
@@ -117,8 +120,8 @@ async function main() {
 		for (const v of violations) console.error(`  ${v}`);
 		return 1;
 	}
-	console.log(`\nOK — unset and an unrecognised value both serve the attribute-only selector; ` +
-		`only \`compact\` prepends \`:root,\`.`);
+	console.log(`\nOK — unset and an unrecognised value both serve no compact block at all; ` +
+		`only \`compact\` receives it, keyed on \`:root\`.`);
 	return 0;
 }
 

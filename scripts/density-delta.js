@@ -5,9 +5,14 @@
  * WHY THIS EXISTS
  * ---------------
  * D1 (tasks/l4-density-mechanism.md) appends ONE rule block to ONE output file: the compact
- * override block at the tail of `zul/css/norm.css.dsp`. That is a third approved delta on top of
- * P4a's 731 removals and P4b's 14 judged edits, and every checker that compares the built tree
- * against `baseline/` has to know about it — otherwise each one reports the approved change as a
+ * override block at the tail of `zul/css/norm.css.dsp`. Since D6 (C25) that block sits inside a
+ * server-side conditional on the density library property and is keyed on a plain `:root` — the
+ * `[data-density="compact"]` attribute went away with the runtime API, so a default-density app
+ * receives none of it. The delta's SHAPE is unchanged by that (still one block, still 350
+ * declarations, still one file), which is why every assertion below survived the rewrite.
+ *
+ * That block is a third approved delta on top of P4a's 731 removals and P4b's 14 judged edits,
+ * and every checker that compares the built tree against `baseline/` has to know about it — otherwise each one reports the approved change as a
  * regression.
  *
  * The house answer to that is already established (see the "WHY THE BASELINE SIDE IS NOT RAW
@@ -67,12 +72,11 @@ let cached = null;
 
 /**
  * The block exactly as `build-css.js` emits it — minified, with build placeholders already
- * substituted for their DSP (which is how the D2 library-property conditional gets into the
- * selector).
+ * substituted for their DSP (which is how the library-property conditional gets around it).
  *
  * Minified under `norm.css`'s name rather than its own: the block is a partial that `norm.css`
  * @imports, so in the real build it reaches `minify()` already inlined, as part of that file.
- * The name is also what lets its `.ZKDENSITY ` placeholder past build-css.js's allow-list.
+ * The name is also what lets its ZKDENSITY-COMPACT markers past build-css.js's allow-list.
  */
 function densityBlock() {
 	if (cached === null) {
@@ -100,10 +104,12 @@ function materializeInto(destDir) {
 /**
  * Declaration and rule-block counts of the derived block.
  *
- * The DSP tags come off first, and not for tidiness: D2's conditional is
+ * The DSP tags come off first, and not for tidiness: the conditional is
  * `<c:if test="${'compact' eq …}">`, whose EL expression contains a literal `{` and `}`. Counting
  * braces over the raw text read that as a second rule block and put the whole tree's byte check
- * into FAIL — a false alarm that looks exactly like a real one.
+ * into FAIL — a false alarm that looks exactly like a real one. Since D6 there are two such tags
+ * (open and close) rather than one, and neither carries a `${"..."}` string, so the same strip
+ * still leaves exactly the CSS — see tablet-delta.js for the case where it does not.
  *
  * `<[^>]*>` is safe here because the only tags this block can carry come from build-css.js's
  * PLACEHOLDERS table, and none of their EL contains a `>`.

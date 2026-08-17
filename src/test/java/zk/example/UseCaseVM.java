@@ -4,7 +4,6 @@ import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
-import org.zkoss.theme.iceblue11.IceblueDensity;
 import org.zkoss.zk.ui.Executions;
 
 import java.util.HashMap;
@@ -13,8 +12,12 @@ import java.util.Map;
 /**
  * View model for {@code usecase/index.zul}, the component browser.
  *
- * <p>Two jobs: keep the sidebar and the content pane agreed on which page is showing, and drive
- * the theme's density switch.
+ * <p>One job: keep the sidebar and the content pane agreed on which page is showing.
+ *
+ * <p>It used to have a second — a live density switch — which went away with D6/C25: density is
+ * now set only by the {@code org.zkoss.zul.theme.density} library property, so reviewing compact
+ * means restarting the preview app with {@code -Dorg.zkoss.zul.theme.density=compact}. That is
+ * also exactly what an application does, so the review path and the shipped path are the same.
  *
  * <p><b>Deep links.</b> The desktop bookmark IS the page, minus {@code ~./} and {@code .zul}, so
  * {@code usecase/index.zul#button} opens the button page and browser back/forward work. That
@@ -86,7 +89,6 @@ public class UseCaseVM {
 
     private String currentPage = DEFAULT_PAGE;
     private String openNavLabel = DEFAULT_NAV;
-    private boolean compactMode = false;
 
     /** A bookmark reaches this from the URL fragment, so it is untrusted input that ends up in a
         {@code templateURI}. Only the shape the navigate command produces is accepted. */
@@ -116,26 +118,6 @@ public class UseCaseVM {
 
     public String getOpenNavLabel() {
         return openNavLabel;
-    }
-
-    public boolean isCompactMode() {
-        return compactMode;
-    }
-
-    /**
-     * Whole-app density, through the theme's own {@link IceblueDensity} helper rather than a
-     * demo-only class — so what a reviewer sees switching here is exactly what an application
-     * gets from the shipped API (tasks/l4-density-mechanism.md D3).
-     *
-     * <p>Whole-app and not region-scoped for a reason beyond convenience: the sidebar itself has
-     * to change with it. A region-scoped call would leave the sidebar at the default density
-     * while the content pane went compact, which reads as a bug rather than a demonstration.
-     */
-    @Command
-    @NotifyChange("compactMode")
-    public void toggleCompactMode(@BindingParam("on") boolean on) {
-        this.compactMode = on;
-        IceblueDensity.apply(on ? IceblueDensity.Density.COMPACT : IceblueDensity.Density.DEFAULT);
     }
 
     @Command

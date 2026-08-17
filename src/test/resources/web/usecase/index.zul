@@ -12,10 +12,10 @@
       - no commit stamp and no "Report this page" button — neither the stamping script nor the
         issue tracker they depend on exists on this branch.
 
-    The density switch drives the theme's own knob through IceblueDensity.apply(...), so what a
-    reviewer sees here is the shipped mechanism (tasks/l4-density-mechanism.md D3), not a
-    demo-only class. It is the whole-app form, which is why it sits with the brand rather than
-    inside the content pane.
+    There is no density switch here any more: since D6/C25 density is set only by the
+    org.zkoss.zul.theme.density library property, so reviewing compact means restarting with
+    -Dorg.zkoss.zul.theme.density=compact. The review path is then identical to what an
+    application does, which is the point.
 -->
 <borderlayout height="100vh" viewModel="@id('vm') @init('zk.example.UseCaseVM')"
     onBookmarkChange="@command('handleBookmarkChange', bookmark=event.bookmark)">
@@ -24,11 +24,6 @@
         <div sclass="z-p-2">
             <div sclass="sidebar-brand z-d-flex z-align-baseline z-gap-2">
                 <label value="Iceblue 11"/>
-            </div>
-            <div sclass="z-d-flex z-align-center z-gap-2 z-px-2 z-py-2 z-mb-2 z-border-bottom">
-                <label value="Compact density" sclass="z-text-sm z-flex-1"/>
-                <checkbox mold="switch" checked="@load(vm.compactMode)"
-                          onCheck="@command('toggleCompactMode', on=self.checked)"/>
             </div>
             <navbar orient="vertical">
                 <nav label="Overview" open="@load(vm.openNavLabel eq 'Overview')">

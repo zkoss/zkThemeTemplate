@@ -42,27 +42,10 @@ The suggested steps:
 1. Switch to a theme as a base theme
 2. Add a new `.less` file to override the existing variables.
 
-## switch to compact profile (since 9.5.0)
-The profile is selected in **two** places, because the two stylesheets that read it are built by
-different toolchains at the moment. Set both, or the desktop theme and the tablet theme disagree.
+## switch to compact density (since 9.5.0)
 
-1. Open [`src/main/resources/web/zul/css/norm.css`](src/main/resources/web/zul/css/norm.css) and
-   point the first import at the compact token file:
-``` css
-@import "tokens/_compact.css";
-```
-2. Open [`src/main/resources/web/zul/less/_zkvariables.less`](src/main/resources/web/zul/less/_zkvariables.less)
-   and modify `@themeProfile` to `compact` — this one still drives `zkmax`'s tablet stylesheet:
-``` less
-@themeProfile:                 "compact";
-@themePalette:                 "iceblue";
-```
-3. now the theme uses the compact profile.
-
-### compact at runtime, without rebuilding (desktop only, for now)
-
-The desktop half of the profile is also available as a **library property**, so a whole app can be
-compact without touching a source file or rebuilding the jar. In `zk.xml`:
+Set **one library property** in `zk.xml`. That is the whole mechanism, and it covers the desktop
+stylesheet and `zkmax`'s tablet stylesheet alike:
 
 ``` xml
 <library-property>
@@ -71,33 +54,27 @@ compact without touching a source file or rebuilding the jar. In `zk.xml`:
 </library-property>
 ```
 
-Any other value, including leaving the property out, keeps the default density. Nothing else
-changes: the compact values ship in the same stylesheet either way, so this costs no extra request
-and cannot flash the default density before switching.
+Any other value, including leaving the property out, keeps the default density — a typo cannot
+silently switch an app. The decision is made server-side while the stylesheet is rendered, so
+compact costs no extra request and cannot flash the default density first. A default-density app
+does not receive the compact rules at all.
 
-To let a **user** flip density, or to make one region dense while the rest of the app is not, use
-[`IceblueDensity`](src/main/java/org/zkoss/theme/iceblue11/IceblueDensity.java) from an event
-listener or an MVVM command — no reload, and the rest of the page keeps its state:
+**This replaces the build-time switch.** Earlier versions selected the profile by editing
+`@themeProfile` and rebuilding the jar, and shipped a second artifact (`iceblue_c`) for it. Both
+are gone: the property does the same job without a rebuild, and there is one jar. If you are
+migrating from `org.zkoss.theme.preferred=iceblue_c`, use `iceblue11` plus the property above.
 
-``` java
-IceblueDensity.apply(Density.COMPACT);                 // whole app
-IceblueDensity.apply(myGridPanel, Density.COMPACT);    // one region
-```
+> **Do not switch density by editing the sources.** Pointing `zul/css/norm.css`'s first `@import`
+> at `tokens/_compact.css` still "works" for the desktop stylesheet, but the tablet stylesheet
+> does not read it — the result is a compact desktop with a default-density touch layer on mobile,
+> which is the exact split the property exists to prevent. `tokens/_compact.css` is now an input to
+> `scripts/gen-density-css.js`, not a switch; if you fork and edit it, re-run
+> `npm run gen:density-css` or `npm run check:gate` will fail.
 
-Prefer the library property above for a fixed default: `apply(Density)` has to reach the document
-root through JavaScript, which runs after the first paint and can flash.
-
-Compact nests, but **opting back out of it does not**: a region inside a compact ancestor cannot be
-returned to the default density, because the theme ships only a `[data-density="compact"]` rule and
-an inner `data-density="default"` matches nothing. So leave the app at the default density and mark
-the regions that should be dense, rather than making the app compact and carving exceptions out of
-it. `Density.DEFAULT` still turns compact off app-wide, and still takes back a `COMPACT` applied to
-that same region.
-
-**This does not cover the tablet stylesheet yet.** `zkmax`'s tablet layer is still selected by
-`@themeProfile` as described above, so an app that needs compact on touch devices must keep setting
-both. Once that stylesheet is converted, the two build-time knobs above go away and the property is
-the only switch — see `tasks/l4-density-mechanism.md`.
+**Density is not switchable at runtime in this version.** There is no Java API for it, by design:
+the previous version had no runtime switch either — it required editing a variable and rebuilding
+— so this is the same capability delivered by one property instead of a second shipped jar.
+Dynamic switching may be reconsidered later; see `tasks/l4-density-mechanism.md`.
 
 ## Switch to a theme of [Theme Pack](https://www.zkoss.org/zkthemepackdemo/)
 The [theme pack](https://www.zkoss.org/zkthemepackdemo/) contains extra 23 themes, you can choose one theme that is closer to your target theme as a base theme and start to customize it. So that it can save some efforts for you.

@@ -9,8 +9,13 @@
  *
  * Inlined into zul/css/norm.css LAST — this selector ties with :root on specificity, so
  * source order is what makes it win. See the generator for the full rationale.
+ *
+ * The whole block sits inside a server-side conditional on the density library property
+ * (D6/C25): a default-density app never receives it. That is also why the selector is a
+ * plain :root — there is no attribute to key on any more.
  */
-.ZKDENSITY [data-density="compact"] {
+/*!ZKDENSITY-COMPACT-START*/
+:root {
 	--zk-base-font-size: 12px;
 	--zk-base-line-height: var(--zk-base-font-size);
 	--zk-font-size-x-large: 18px;
@@ -362,3 +367,4 @@
 	--zk-cropper-toolbar-button-font-size: var(--zk-font-size-medium);
 	--zk-cropper-toolbar-button-padding: 5px 11px;
 }
+/*!ZKDENSITY-COMPACT-END*/

@@ -16,14 +16,16 @@
  *   tokens/_density-      the compact override block, LAST — see the note at the bottom
  *     compact.css
  *
- * PROFILE (was @themeProfile in _zkvariables.less): switch to the compact scale by pointing the
- * first import at tokens/_compact.css. Until P7 replaces both knobs with a runtime override
- * sheet, zkmax/less/tablet still selects its own profile through @themeProfile — so a compact
- * build has to set BOTH. readme.md documents the pair.
+ * DENSITY: do NOT switch it here. The one switch is the library property
+ * org.zkoss.zul.theme.density, read server-side by the conditional around the compact override
+ * block at the bottom of this file (D6/C25) — and by the same conditional in
+ * zkmax/css/tablet.css, which is the point: one property drives both stylesheets.
  *
- * That build-time knob is on its way out: the desktop half of it is now also available at
- * RUNTIME through the override block at the bottom of this file, and D5 of
- * tasks/l4-density-mechanism.md retires the build-time pair once P7 has converted tablet.
+ * Pointing the first import below at tokens/_compact.css would still "work" for THIS sheet and
+ * is exactly the trap the property replaced: the tablet sheet cannot read it, so the result is a
+ * compact desktop with a default-density touch layer on mobile. That is S36, and it is why the
+ * build-time pair (@themeProfile + this import) was retired rather than kept as a shortcut.
+ * tokens/_compact.css is now an INPUT to scripts/gen-density-css.js, not a switch.
  */
 @import "tokens/_default.css";
 /*!ZK-TAGLIB-HEADER*/

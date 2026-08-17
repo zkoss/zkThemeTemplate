@@ -75,20 +75,34 @@ const PALETTE = 'zul/css/tokens/_iceblue.css';
 const OUTPUT = 'zul/css/tokens/_density-compact.css';
 
 /**
- * The selector the override block is keyed on.
+ * The selector the override block is keyed on, and the conditional that decides whether the block
+ * is emitted at all.
  *
- * `[data-density="compact"]` has specificity (0,1,0), the SAME as `:root`. There is no cascade
- * layer on this branch, so source order is the only tie-break — which is why norm.css inlines
- * this file LAST, after the tokens AND after the palette.
+ * `:root` — plain, no attribute. D6 (C25) made the library property
+ * `org.zkoss.zul.theme.density` the ONLY way to switch density, desktop and tablet alike, so
+ * there is no attribute for anything to set. The block ties with the profile's own `:root` on
+ * specificity and there is no cascade layer on this branch, so source order is the only tie-break
+ * — which is why norm.css inlines this file LAST, after the tokens AND after the palette.
  *
- * `.ZKDENSITY ` is build-css.js's placeholder for the D2 library-property conditional
- * (`org.zkoss.zul.theme.density`), which prepends `:root,` server-side when the property is set
- * to `compact` — that is the whole-app switch, decided while the stylesheet is rendered, so there
- * is no FOUC and no second request. It is written as a placeholder rather than as DSP because
- * CleanCSS silently corrupts DSP tags in selector position; build-css.js's PLACEHOLDERS table is
- * the only place that knows the DSP spelling.
+ * WHY THE ATTRIBUTE WENT AWAY RATHER THAN JUST THE JAVA API
+ * --------------------------------------------------------
+ * D4 made the tablet touch layer property-only, because 187 of its 895 declarations have no
+ * compact counterpart and CSS cannot express "this rule does not exist". Leaving a working
+ * `[data-density="compact"]` hook on the DESKTOP half would therefore have left a live path to
+ * exactly one state: compact desktop + default tablet — which is S36, the split theme D4 was
+ * chartered to kill. Half the mechanism is worse than none, so both halves now use the same one.
+ *
+ * ZKDENSITY-COMPACT-* are build-css.js's placeholders for that conditional — the same pair D4
+ * wraps the compact tablet sheet in. Written as placeholders rather than as DSP because CleanCSS
+ * silently corrupts DSP tags; build-css.js's PLACEHOLDERS table is the only place that knows the
+ * DSP spelling. `eq`, not `not empty`: an unrecognised value must behave like an unset one.
+ *
+ * The block therefore costs a DEFAULT-density app nothing at all — 14498 B that used to ship to
+ * every page and could never match now ship only when someone asked for compact.
  */
-const SELECTOR = '.ZKDENSITY [data-density="compact"]';
+const SELECTOR = ':root';
+const BLOCK_OPEN = '/*!ZKDENSITY-COMPACT-START*/';
+const BLOCK_CLOSE = '/*!ZKDENSITY-COMPACT-END*/';
 
 /**
  * The measured census, recorded so a change to it has to be deliberate.
@@ -201,11 +215,17 @@ function render(compact, emitted) {
 		' *',
 		' * Inlined into zul/css/norm.css LAST — this selector ties with :root on specificity, so',
 		' * source order is what makes it win. See the generator for the full rationale.',
+		' *',
+		' * The whole block sits inside a server-side conditional on the density library property',
+		' * (D6/C25): a default-density app never receives it. That is also why the selector is a',
+		' * plain :root — there is no attribute to key on any more.',
 		' */',
+		BLOCK_OPEN,
 		`${SELECTOR} {`,
 	];
 	for (const name of emitted) lines.push(`\t${name}: ${compact.get(name)};`);
 	lines.push('}');
+	lines.push(BLOCK_CLOSE);
 	return lines.join('\n') + '\n';
 }
 
