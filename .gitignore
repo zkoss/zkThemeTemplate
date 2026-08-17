@@ -11,16 +11,18 @@ test-results/
 # drop-LESS conversion: gate reports.
 *-gate.json
 
-# `baseline/` USED TO BE IGNORED HERE. It is now TRACKED, deliberately and TEMPORARILY,
-# for the duration of the drop-LESS conversion — untrack it again at P8 (see S47).
+# drop-LESS conversion: the reference build. IGNORED AGAIN SINCE P8 — this is the retirement
+# of S47, which the execution plan scheduled here.
 #
-# WHY: every 4th-layer verification round is required to prove it did not touch `baseline/`,
-# and the proof it was told to use is `git status --porcelain`. While the directory was
-# ignored, that command could not go red no matter what happened to the reference build —
-# the single most important invariant in the plan was being reported green by a check
-# structurally incapable of failing (found 2026-08-07, recorded as S45).
-# `doc/baseline-manifest.sha256` pins the bytes, but nothing made a WRITE visible at a glance.
-# Tracking it makes any write show up in `git status` and `git diff` immediately.
+# It was tracked between 2026-08-10 and P8, deliberately and temporarily. The reason was S45:
+# every 4th-layer verification round has to prove it did not touch `baseline/`, and the proof it
+# was told to use is `git status --porcelain` — which, while the directory was ignored, could not
+# go red no matter what happened to the reference build. Tracking made any write loud.
 #
-# COST: ~832 KB / 86 files of build output in history, and `npm run baseline` now produces a
-# working-tree diff instead of nothing. That is the point — it should be loud.
+# WHY IT IS SAFE TO IGNORE AGAIN: with the conversion finished there are no more verification
+# rounds to keep honest, and the byte-level pin never depended on git in the first place —
+# `doc/baseline-manifest.sha256` (86 sha256 lines, checked by `npm run check:baseline`, and
+# verifiable without this repo's scripts via `shasum -a 256 -c`) is what actually pins it.
+# `npm run baseline` rebuilds it with `npx --yes zkless-engine@1.1.13`, so a rebuild does not
+# need the dependency P8 removed.
+baseline/

@@ -1,1 +1,0 @@
-.z-tree.z-sticky-header{overflow:visible}.z-tree.z-sticky-header .z-tree-header{position:sticky;top:0;z-index:1}.z-treecol.z-frozen-sticky,.z-treerow .z-treecell.z-frozen-sticky{position:sticky;z-index:1}
