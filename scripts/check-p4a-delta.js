@@ -7,7 +7,7 @@
  * P4a is the first phase whose output is deliberately NOT equal to the baseline, so
  * `files differing: 0` stops being the pass condition. G-delta's rule is "every difference
  * must correspond to an approved change, and nothing else may appear". That is a claim about
- * the SHAPE of the diff, and shape is exactly what a human reading 728 records will not
+ * the SHAPE of the diff, and shape is exactly what a human reading 731 records will not
  * reliably check.
  *
  * WHAT IT ASSERTS
@@ -58,7 +58,12 @@ const STRIP_PREFIX = /^-(?:moz|ms|o|khtml)-/;
 const CARVE_OUT = new Set(['-moz-osx-font-smoothing']);
 const WEBKIT = /^-webkit-/;
 
-/** P4a is deliberately deferred for the P7 holdout, which zklessc still compiles. */
+/**
+ * P4a is deliberately deferred for the P7 holdout, which zklessc still compiles.
+ *
+ * These 60 are phase-1 won't-do since 2026-08-14 (recorded, not removed — plan appendix C20),
+ * so this assertion is permanent for phase 1, not a temporary hold until P7.
+ */
 const DEFERRED = new Set(['zkmax/css/tablet.css.dsp']);
 const DEFERRED_COUNT = 60;
 
@@ -231,6 +236,8 @@ function main(argv) {
 	if (webkitBase !== webkitCand) {
 		violations.push(`-webkit- count changed: ${webkitBase} -> ${webkitCand} (L-2 option C keeps all of them)`);
 	}
+	// Wording kept as-is on purpose: gate output is compared verbatim across runs (record #58
+	// diffed two full `check:gate` transcripts). "to P7" now reads as phase-1 won't-do (C20).
 	console.log(`deferred to P7:        ${DEFERRED_COUNT} (${[...DEFERRED].join(', ')})`);
 
 	if (expect !== null && removed !== expect) {

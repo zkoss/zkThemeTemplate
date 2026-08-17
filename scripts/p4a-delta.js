@@ -5,7 +5,7 @@
  * WHY THIS EXISTS
  * ---------------
  * Review layers 1 and 2 (`check:bytes`, `check:build-css`) both ask "does the built tree equal
- * `baseline/`?". From P4a onward the honest answer is no, and it is supposed to be no: 728
+ * `baseline/`?". From P4a onward the honest answer is no, and it is supposed to be no: 731
  * dead vendor-prefix declarations are gone on purpose. Left as-is, both checks go permanently
  * red and stop carrying information — which is worse than useless, because the next person
  * reads a red gate as "known-broken, ignore" and then cannot tell a real regression from the
@@ -18,7 +18,7 @@
  *     the SAME rule block also declares the unprefixed property,          and
  *     it is not in the P7 holdout `zkmax/css/tablet.css.dsp`.
  *
- * All four conditions are readable off `baseline/` alone. So instead of recording the 728
+ * All four conditions are readable off `baseline/` alone. So instead of recording the 731
  * removals in a manifest (which would go stale, and which nothing would then be checking), the
  * checks re-derive them and compare the built tree against the ADJUSTED baseline. `baseline/`
  * itself is never touched — it stays the immutable pre-conversion truth.
@@ -31,9 +31,9 @@
  * exactly the output delta the rule predicts — byte for byte, which is more than `cssdiff` can
  * say. A single extra or missing removal anywhere shows up as an unexplained byte difference.
  *
- * WHY 728 IS DECLARED TWICE
- * -------------------------
- * `EXPECTED_REMOVALS` here, and `--expect 728` on `check:p4a` in package.json. Be precise about
+ * WHY THE REMOVAL COUNT IS DECLARED TWICE
+ * ---------------------------------------
+ * `EXPECTED_REMOVALS` here, and `--expect 731` on `check:p4a` in package.json. Be precise about
  * what that buys: the constant is ASSERTED twice, not DERIVED twice. What is independent is the
  * two counts it is checked against — this one re-derives from `baseline/`, that one counts
  * records in a `cssdiff` of the built tree. So the pair is a tripwire against the RULE being
@@ -59,7 +59,15 @@ const BASELINE = path.join(ROOT, 'baseline');
 const STRIP_PREFIX = /^-(?:moz|ms|o|khtml)-/;
 /** Never standardized, so nothing takes over from it — B-group carve-out. */
 const CARVE_OUT = new Set(['-moz-osx-font-smoothing']);
-/** P4a deliberately skipped the P7 holdout; its 60 eligible declarations move to P7. */
+/**
+ * P4a deliberately skipped the P7 holdout, which zklessc still compiles.
+ *
+ * Its 60 eligible declarations were originally slated to move to P7. As of 2026-08-14 they are
+ * phase-1 won't-do (recorded, not removed) — see plan appendix C20. This set therefore stays in
+ * place permanently for phase 1 rather than being lifted when P7 lands, and EXPECTED_REMOVALS
+ * stays at 731. If a later phase ever does remove them, delete this set and re-derive the count;
+ * the two review layers follow automatically.
+ */
 const DEFERRED = new Set(['zkmax/css/tablet.css.dsp']);
 /**
  * 728 until the ZK 11 sync (2026-08-13), then 731.

@@ -105,6 +105,17 @@ P4b 唯一需要判斷的事,是每一條該**純移除**還是**成對替換**�
 > `touch-action: none;`,並把本表 #4/#5 的 action 從 `remove` 改成
 > `rename → touch-action`;閘門數字隨之變成 14 移除 / **9** 新增。
 > 但那要走**它自己的 G-delta 核准**,不要回頭改這一階的帳。
+>
+> **✅ 議題已於 2026-08-14 開單:[ZK-6147](https://zkoss.atlassian.net/browse/ZK-6147)**
+> (`ZK` / Bug / Affects **11.0.0**)。單上把兩條路都寫明(補 `touch-action: none` restores intent
+> 但**是觸控裝置上的行為變更**;純移除則維持現狀),由 cropper 負責人裁。
+> **本階的帳不受影響** —— 無論那邊怎麼決定,P4b 仍是 14 移除 / 7 新增。
+> 開單時順帶查到的兩件事:(a) 產品端來源是
+> `zkmax/src/main/resources/web/js/zkmax/cropper/less/cropper.less:106`,
+> **`zkthemebuilder/template` 還有兩份**,所以每個從樣板長出來的主題都繼承同一條死宣告;
+> (b) 這條**不是無害的殘骸** —— `Cropper.ts:491-494` 用 `onZMouseDown` 綁拖曳起點,
+> 而 `zk/domtouch.ts:89-91` 把 `zmousedown`/`zmousemove` 映到 `touchstart`/`touchmove`,
+> **該元素確實吃得到觸控事件**。
 
 ### 3.3 `-ms-flex-align: center` ×1 —— 純移除,標準宣告本來就在
 

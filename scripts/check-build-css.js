@@ -61,7 +61,7 @@
  *
  * FROM P4a ON, THE TARGET IS THE ADJUSTED BASELINE (S41, option A)
  * ---------------------------------------------------------------
- * P4a deleted 728 dead vendor-prefix declarations from the CSS sources on purpose, so the built
+ * P4a deleted 731 dead vendor-prefix declarations from the CSS sources on purpose, so the built
  * tree no longer reproduces `baseline/` and never will again. Asked unchanged, this check would
  * be permanently red — which is worse than uninformative, because a red gate that is "known
  * broken" can no longer report a real regression.

@@ -18,7 +18,7 @@
  * a real defect. This bit twice during P3; do not reorder.
  *
  * FROM P4a ON, THE COMPARISON TARGET IS THE ADJUSTED BASELINE (S41, option A)
- *   P4a removed 728 dead vendor-prefix declarations on purpose, so "equals `baseline/`" stopped
+ *   P4a removed 731 dead vendor-prefix declarations on purpose, so "equals `baseline/`" stopped
  *   being the right question — asked unchanged, this check would be permanently red and would
  *   stop distinguishing a regression from the approved delta. `p4a-delta.js` RE-DERIVES that
  *   delta from `baseline/` (it is a pure function of it — no manifest, no snapshot) and this

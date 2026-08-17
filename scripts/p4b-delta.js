@@ -6,7 +6,7 @@
  * ------------------------------------------------
  * P4a's delta is a PURE FUNCTION of `baseline/`: a declaration was removed iff it carried a
  * stripped prefix and the same block also declared the unprefixed property. Nothing had to be
- * decided, so nothing had to be recorded — `p4a-delta.js` re-derives all 728 from the baseline.
+ * decided, so nothing had to be recorded — `p4a-delta.js` re-derives all 731 from the baseline.
  *
  * P4b is the opposite by construction. Its population is exactly the ORPHANS — prefixed
  * declarations with NO unprefixed twin in the block — so there is no rule that says what should

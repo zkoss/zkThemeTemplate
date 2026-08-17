@@ -6,7 +6,7 @@
  * ---------------
  * D1 (tasks/l4-density-mechanism.md) appends ONE rule block to ONE output file: the compact
  * override block at the tail of `zul/css/norm.css.dsp`. That is a third approved delta on top of
- * P4a's 728 removals and P4b's 14 judged edits, and every checker that compares the built tree
+ * P4a's 731 removals and P4b's 14 judged edits, and every checker that compares the built tree
  * against `baseline/` has to know about it — otherwise each one reports the approved change as a
  * regression.
  *

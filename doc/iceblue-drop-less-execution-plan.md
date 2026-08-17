@@ -26,7 +26,7 @@
 - **[L1 執行摘要](#l1-執行摘要)** — 核心目標 · 五大里程碑 · 總體進度 · 三條判準
 - **[L2 階段規範](#l2-階段規範)**
   - [L2.0 術語表](#l20-術語表--這些名詞不可混用) — **看不懂任何數字之前先看這裡**
-  - [L2.1 範圍](#l21-範圍) — 做什麼 / 不做什麼
+  - [L2.1 範圍](#l21-範圍) — 做什麼 / 不做什麼 · **[第一期的 CSS 變更範圍(已封閉)](#第一期的-css-變更範圍2026-08-14-拍板已封閉)**
   - [L2.2 驗收閘門制度](#l22-驗收閘門制度) — G-zero / G-delta · 四層人工複核 · 步階與批次 · commit 粒度
   - [L2.3 各階段規範](#l23-各階段規範) — [P0](#p0--建立工作區與基準) · [P1](#p1--把-less-釘到-481s0--s1) · [P2](#p2--雙來源-build) · [P3](#p3--元件轉換-74-檔工作量主體) · [P4a](#p4a--vendor-prefix-純移除a-群) · [P4b](#p4b--vendor-prefix-逐條判斷c-群) · [P5](#p5--normcsstokens--reset--全域) · [P6](#p6--font-awesome-產生器) · [P7](#p7--tablet--themeprofile) · [P8](#p8--收尾)
   - [L2.4 前置工作項](#l24-前置工作項不是階段不產生-theme-輸出) — 不是階段,不產生 theme 輸出
@@ -38,7 +38,7 @@
   - [L3-D 各階段的技術細節與論證](iceblue-drop-less-plan-appendix.md#l3-d-各階段的技術細節與論證p0-p8) — P0-P8
   - [L3-E 風險](iceblue-drop-less-plan-appendix.md#l3-e-風險)
   - [L3-F 決策紀錄](iceblue-drop-less-plan-appendix.md#l3-f-決策紀錄) — L-2 / L-4 / L-5 / L-7 / L-8 與五次追加拍板
-  - [L3-G Change Log](iceblue-drop-less-plan-appendix.md#l3-g-change-log--規範層的斷言變更) — 18 條規範層更正
+  - [L3-G Change Log](iceblue-drop-less-plan-appendix.md#l3-g-change-log--規範層的斷言變更) — **21** 條規範層更正
   - [L3-H 進度記錄制度](iceblue-drop-less-plan-appendix.md#l3-h-進度記錄制度)
 - **[附:跨主題待辦裁示](#附跨主題待辦裁示不屬於本案任何階段)** — 由本案裁示產生、但要在別的地方執行的事(**M-1** Marble 密度字彙對齊 · **M-2** `@themePalette` 移出本案)
 
@@ -153,6 +153,39 @@ DSP 層與 Font Awesome 的生成內容都還在,零 build step 兌現不了(L3-
 
 其他現代化留給後續分支,各自帶自己的驗證。
 
+#### 第一期的 CSS 變更範圍(2026-08-14 拍板,**已封閉**)
+
+> **提案原文(user)**:「P4 如果是要移除 CSS 部分,我建議先都不做,只記錄下來。因為我們目前
+> 第一期的目標,是先確定 CSS 內容能夠正確從 LESS 被轉換。其他的變動都儘量減少,等下一階段
+> 或未來再做。」
+
+**裁示**:
+
+1. **採用** —— 尚未動手的移除一律「只記錄,不做」。
+2. **keep-vs-revert 選 A** —— **已經移除了就維持,其他的就不要再改了**。
+   P4a / P4b **不回退**,且第一期**不再新增任何移除**。
+3. **承重項不受影響** —— D1 / D2 / D4 與 `@themeProfile` 退場仍在第一期。
+
+**⇒ 第一期的 CSS 變更範圍自此封閉:`P4a + P4b`(已完工)`+ D1/D2`(已完工)`+ D4`(隨 P7)。**
+**除此之外不再有任何一條宣告被增刪。** 這條線同時就是 §P8 的核帳公式(**C21**)。
+
+**為什麼要先劃「承重 vs 選配」這條線** —— 「其他的變動都儘量減少」若被外推到 D1/D2/D4,
+第一期就交付不出可用的 compact,而那是 L-4 已經拍板的**對外承諾**:
+
+| 類別 | 內容 | 能不能延後 |
+|---|---|---|
+| **承重**(不做就脫不了 LESS) | **D1 / D2**(`data-density` runtime 覆寫)、**D4**(tablet 密度層)、P7 的 `@themeProfile` 退場 | **不能** —— `@themeProfile` 是 LESS 變數,P8 讓 `.less` 歸零之後那個旋鈕就不存在了;L-4 已拍板 `iceblue_c` 不再出貨,替代機制必須同期到位 |
+| **選配清理**(不做也能脫離 LESS) | **P4a / P4b**(已完工,保留)、**A1 / A2**(tablet 60 + 1 孤兒)、**B1–B3**(~114 處)、**C1 / C2** | **能** —— 這就是本裁示延後的那一類 |
+
+**保留 P4a / P4b 的理由**(而不是為了敘述漂亮而回退):提案要保護的命題是「**轉換正確性**」,
+而 P4a / P4b **不在那個命題上** —— 它們的差異是**獨立記帳、逐條可推導、有專屬閘門**的,
+不會污染「LESS → CSS 轉換是否正確」的訊號。回退換來的是**敘述更漂亮,不是證據更強**,
+而代價很實在:動 48 檔的高風險 revert,且 P4b 那 7 條改名是**經證明行為中性**的修正
+(Firefox 今天確實吃 `-moz-appearance`)。
+
+**延後項的落點**:A1 / A2 / A3 見 §P7;B1–B3 見 §P4b;C1 / C2 見進度文件 L2.4 第 5、7 項。
+**全部要寫進 P8 的 migration guide** —— 「不做」和「沒人記得」的差別就在有沒有寫進交付物。
+
 ### L2.2 驗收閘門制度
 
 #### 兩種閘門,不要混用
@@ -195,7 +228,8 @@ DSP 層與 Font Awesome 的生成內容都還在,零 build step 兌現不了(L3-
 > | **`npm run check:gate`** | **判準**。要回答「現在過了沒」就跑這支 | **0 才算過** |
 > | `npm run check:cssdiff` | **儀器**。要看原始差異長什麼樣(核帳、debug)才跑這支 | **1,而且是對的** |
 >
-> 為什麼不讓 cssdiff 自己收斂:P8 的 G-zero 核帳要把 P4 + P5 + P7 的 delta 加總對帳,
+> 為什麼不讓 cssdiff 自己收斂:P8 的 G-zero 核帳要把 ~~P4 + P5 + P7~~
+> **`P4a + P4b + D1/D2 + D4`(←2026-08-14 更正,C21)** 的 delta 加總對帳,
 > 那時需要的是**未經判斷的原始差異**。把判準塞進儀器就取不到它了。
 >
 > 第 1、2 層複核(`check:bytes`、`check:build-css`)刻意**不在** `check:gate` 裡 ——
@@ -355,8 +389,10 @@ DSP 層與 Font Awesome 的生成內容都還在,零 build step 兌現不了(L3-
 > 上限 788 → 791,故 P4a = 791 − 60 = 731;唯一變動的屬性是 `border-radius` 378 → 381,
 > 檔數維持 45。理由寫在 `scripts/p4a-delta.js:64-73` 的常數旁邊,見 S56**),
 > 那 60 條(`border-radius` 24 / `box-shadow` 12 /
-> `box-orient` 12 / `box-flex` 9 / `background-size` 3)**隨 P7 一起處理**,
-> 並計入 P7 的 delta。`check-p4a-delta.js` 用 `DEFERRED` 明文擋住 tablet 在本階被動到。
+> `box-orient` 12 / `box-flex` 9 / `background-size` 3)~~**隨 P7 一起處理**,並計入 P7 的 delta~~
+> **←2026-08-14 改判:第一期不做,只記錄(A1,見 L2.1〈第一期的 CSS 變更範圍〉)。**
+> `check-p4a-delta.js` 的 `DEFERRED` **不解除**,語意從「暫緩到 P7」改成「第一期不做」;
+> `EXPECTED_REMOVALS` 維持 **731** —— **腳本一行都不必改,只改註解的措辭**。
 
 > **本階起,`cssdiff` 的 exit code 不再是通過訊號。** 它問「candidate 是否**等於**
 > baseline」,而 G-delta 的正確答案就是「不等於」。判準改為 `npm run check:p4a`
@@ -367,8 +403,11 @@ DSP 層與 Font Awesome 的生成內容都還在,零 build step 兌現不了(L3-
 > **←2026-08-07 同日補上(S41 裁示選項 A,S44 結案)。** 那 728 條(**現為 731,S56**)是 `baseline/` 的
 > **純函數**(四個條件全部讀得出來),所以 `scripts/p4a-delta.js` 重新推導出來,
 > 兩支複核改與**調整後的基準**比對:`baseline/` 不動、無 manifest、無快照。
-> **P7 的第二段 delta 沿用同一個機制**:在 `p4a-delta.js` 解除 `DEFERRED` 並更新
-> `EXPECTED_REMOVALS`,兩支複核自動跟上,不需要再改一次。
+> ~~**P7 的第二段 delta 沿用同一個機制**:在 `p4a-delta.js` 解除 `DEFERRED` 並更新
+> `EXPECTED_REMOVALS`,兩支複核自動跟上,不需要再改一次。~~
+> **←2026-08-14 作廢:P7 不再有「第二段前綴 delta」**(A1 改為第一期不做)。
+> 機制本身沒有白做 —— **D1/D2 正在用同一套技法**(`scripts/density-delta.js`),
+> 只是少一個使用者,不是少一個機制。
 
 #### P4b —— vendor prefix 逐條判斷(C 群)
 
@@ -384,8 +423,9 @@ DSP 層與 Font Awesome 的生成內容都還在,零 build step 兌現不了(L3-
 
 > **實測 14 條,不是 15 條。** 那 15 條的第 15 條(`-moz-appearance: none`)落在
 > **P7 holdout `zkmax/css/tablet.css.dsp`** —— 和 P4a 讓掉的 60 條同一個理由:它仍由
-> `zklessc` 從 `tablet.less` 編出來。**P4b = 15 − 1 = 14**,那 1 條計入 P7 的 delta。
-> 原本寫「15 條」時沒有把 holdout 拆出來。
+> `zklessc` 從 `tablet.less` 編出來。**P4b = 15 − 1 = 14**,~~那 1 條計入 P7 的 delta~~
+> **←2026-08-14 改判:那 1 條第一期不做,只記錄(A2)**。原本寫「15 條」時沒有把 holdout 拆出來。
+> `check:p4b` 的 `deferred to P7: 1 orphan` 一樣**不解除**,只改措辭為「第一期不做」。
 
 > **判準是「選讓現代瀏覽器行為不變的那一邊」,而且雙向都會用到。**
 > `-moz-appearance` / `-moz-user-select` 今天 Firefox **確實吃**,純移除會退化 ⇒ **改名成標準屬性**;
@@ -413,6 +453,10 @@ DSP 層與 Font Awesome 的生成內容都還在,零 build step 兌現不了(L3-
 > ② 前綴在**值**上的 `display: -ms-flexbox` / `-webkit-box` / `-moz-box` / `-ms-inline-flexbox` **13 條**;
 > ③ 前綴 **pseudo selector** 約 **79 處**(`::-moz-placeholder`、`:-ms-input-placeholder`、`::-ms-check` …)。
 > 動它們會讓本階的 diff 超出已核准的 14 條,違反 G-delta,所以**明確不做**。
+>
+> **←2026-08-14 補上歸屬。** 這三類原本「明確不做」但沒有階段可歸,懸在計畫外面。
+> 現在歸為 **第一期 won't-do(B1 / B2 / B3,共約 114 處)**,由 P8 的 migration guide
+> 明列為已知殘留 —— **「不做」和「沒人記得」是兩回事,差別就在有沒有寫進交付物。**
 
 > **B 群 44 條不是死前綴,是唯一寫法** —— `-webkit-font-smoothing` 16、
 > `-moz-osx-font-smoothing` 16、`-webkit-touch-callout` 6、`-webkit-tap-highlight-color` 4、
@@ -479,7 +523,7 @@ DSP 層與 Font Awesome 的生成內容都還在,零 build step 兌現不了(L3-
 |---|---|
 | **目標** | 轉換 `tablet.less`(輸出端 **681** 條);把 LESS 獨有的 import path 插值(`@import "profiles/_@{themeProfile}"`)改成 **runtime `--zk-*` override sheet** —— 兩個 profile 只是同一組 842 個 token 的不同數值 |
 | **輸入 → 輸出** | `tablet.less` + `profiles/` → `.css` + runtime override sheet |
-| **驗收閘門** | **G-delta** —— 這是刻意的**對外 API 變更**(「改 LESS 變數重編 jar」→「載入 override sheet」),必須寫進 migration guide |
+| **驗收閘門** | ~~G-delta(單一段)~~ **←2026-08-14 拆成兩段**(第一期範圍封閉的結果)。**① `tablet.less` → `.css` 的轉換本身 = G-zero**:A1 的 60 條與 A2 的 1 條都不移除 ⇒ `tablet.css.dsp` 應**逐 byte 不變**,與 P3 已做過 74 次的驗收完全同形。**② D4(compact 平板層)= G-delta**:這才是刻意的**對外 API 變更**(「改 LESS 變數重編 jar」→「設 library-property」),必須寫進 migration guide。**兩段分開報,不要合成一個數字** —— 合起來報的話,轉換出錯會被 D4 的 delta 蓋掉,而那正是本案一路在防的訊號污染 |
 | **前置** | ~~**L-4 的 density 那一半**(colour 那一半已由 L-7 解除)。視覺 A/B 價值中等,但 tablet 需要 mobile UA 的 Playwright 專案~~ **←2026-08-14 兩項全部解除,本階無剩餘前置**:(a) **L-4 已拍板採用**(`data-density` runtime 覆寫取代 build 期換 jar,`iceblue_c` 不再出貨;決策紀錄 L3-F);(b) **mobile UA 的 Playwright 專案已存在並實測過** —— `sync-mobile` / `jar-mobile` 兩個 project,桌面與 mobile 皆 **0 頁差異**且兩側 fingerprint DIFFERENT(⇒ 非空轉),見 `tasks/zk11-jar-baseline-visual-ab.md` |
 | **commit 粒度** | 1–2 顆,與 migration guide 的對應條目成對進版 |
 
@@ -501,13 +545,33 @@ DSP 層與 Font Awesome 的生成內容都還在,零 build step 兌現不了(L3-
 
 > `tablet/compact/_combo.less` 的兩個 `each()` **與 P3 的 `combo` 完全同形狀**,
 > 歸在同一個拍板項 **L-8** 底下處理。**不要在 P7 重新爭論一次。**
+>
+> **←2026-08-14 定案走 L-8 的 A 案(逐字轉),不走 B 案。** L-8 原本是「先 A 後 B」,
+> 而 B 案(`combo` 586 → 191)是**來源可讀性重構**、不是脫離 LESS 的必要條件 ⇒
+> 依第一期範圍封閉的裁示延後(**C1**)。連帶效果是**一個排程問題自己消失了** ——
+> 原本要決定「C1 要不要與 P7 同批」,現在 P7 只做 A 案,和 P3 對 `combo` 的做法一致。
 
-> **P4a 移交過來的 60 條前綴(2026-08-07)。** L-2 選項 C 的移除範圍裡,`tablet.css.dsp`
-> 佔 **60** 條(`border-radius` 24 / `box-shadow` 12 / `box-orient` 12 / `box-flex` 9 /
-> `background-size` 3),因為本階之前它仍由 `zklessc` 從 mixin 展開,不是來源檔裡的字面文字。
-> **本階轉成 `.css` 之後要一併移除**,並計入 P7 的 delta ——
-> P8 的 G-zero 核帳是 P4 + P5 + P7 三段相加,這 60 條必須落在 P7 那一段,不能兩邊都不算。
-> 驗收方式與 P4a 相同:移除後每一條在同一個 rule 裡都要有無前綴同伴,`-webkit-` 不動。
+> ~~**P4a 移交過來的 60 條前綴(2026-08-07)。**~~ **←2026-08-14 改判:第一期不移除,只記錄。**
+> L-2 選項 C 的移除範圍裡,`tablet.css.dsp` 佔 **60** 條(`border-radius` 24 / `box-shadow` 12 /
+> `box-orient` 12 / `box-flex` 9 / `background-size` 3),再加 P4b 讓掉的 **1** 條孤兒
+> `-moz-appearance` = **61**,正好把 P4b 收工時「可移除前綴 803 → 61」那筆帳結平。
+>
+> **它們現在的歸屬是「第一期 won't-do,已記錄」**,和 B1–B3 同一類,寫進 P8 的 migration guide。
+> ~~P8 的 G-zero 核帳是 P4 + P5 + P7 三段相加,這 60 條必須落在 P7 那一段,不能兩邊都不算。~~
+> **←公式已更正為 `P4a + P4b + D1/D2 + D4`(C21)。** 兩邊都不算**現在是正確的**:
+> 這 61 條既不在 P4 那一段(當時 holdout),也不在 P7 那一段(本階不做)——
+> 它們**根本不進 delta**,因為它們一條都沒被動過,`tablet.css.dsp` 逐 byte 不變。
+>
+> **日後若要做,成本已經算過**:驗收方式與 P4a 相同(移除後每一條在同一個 rule 裡都要有
+> 無前綴同伴、`-webkit-` 不動),在 `p4a-delta.js` 解除 `DEFERRED` 即可,機制是現成的。
+>
+> **A3(S52 的特異性打平)一併記在這裡,但它不是延後,是既成狀態。** 實測:`.z-focus-a` 在
+> `zul/css/norm.css:539`,競爭者 `${".z-page "}*{-webkit-user-select:none}` 來自
+> `zkmax/less/tablet/default/_norm.less:7` ⇒ **兩者在不同的輸出檔**,勝負由 `norm.css.dsp`
+> 與 `tablet.css.dsp` 的**載入順序**決定,不是單檔內的來源順序。本階既然是 G-zero 純轉換,
+> **tablet 輸出逐 byte 不變 ⇒ 載入順序不動 ⇒ 這個打平維持現狀** ——
+> 它在 P4b 收工當下就已經出貨,**不是 P7 會製造的新風險**。
+> ⚠️ **這是 A、B、C 三類殘留裡唯一沒有任何自動化盯著的一項**,只靠本段文字。
 
 > ~~**P7 順手要補的既有缺口**(**S29**)~~ **←2026-08-13 改判:不補,隨 P8 消失。**
 > 缺口本身的事實不變(見
@@ -546,7 +610,7 @@ DSP 層與 Font Awesome 的生成內容都還在,零 build step 兌現不了(L3-
 |---|---|
 | **目標** | 刪除 LESS partial、移除 `zkless-engine` 依賴與 pom 的 `zklessc` execution、`build-css.js` 長出 `.less` 分支接手引擎的工作、更新 readme、寫 migration guide |
 | **輸入 → 輸出** | 3 個 holdout + LESS partial → 全樹純 CSS 來源 + migration guide |
-| **驗收閘門** | **G-zero** —— 全樹最終輸出 vs P0 baseline,差異必須**完全等於 P4 + P5 + P7 三階段已核准的 delta 總和,不多不少**。核帳資料來自進度文件 L3-A〈閘門紀錄〉,所以那份紀錄**不能事後補、不能改寫既有列** |
+| **驗收閘門** | **G-zero** —— 全樹最終輸出 vs P0 baseline,差異必須**完全等於 ~~P4 + P5 + P7 三階段~~ `P4a + P4b + D1/D2 + D4` 四段已核准的 delta 總和,不多不少**(**←2026-08-14 更正,C21**;原式漏掉 D1/D2 的 **+352**,卻點名了貢獻 **0** 的 P5)。核帳資料來自進度文件 L3-A〈閘門紀錄〉,所以那份紀錄**不能事後補、不能改寫既有列**;D1/D2 那一列已於同日補記為 **#59** |
 | **前置** | 兩張規則表必須在刪檔**之前**產生(**有期限,已完成**);工具要能在客戶自己的 fork 上跑 |
 | **必做的退場動作** | **把 `baseline/` 移回 `.gitignore`(S47)。** 它在 2026-08-10 被**暫時**改為追蹤,理由是 S45 —— 不進版控就沒辦法用 `git status` 證明第 4 層沒動它。本階核帳完成、`baseline/` 不再是活躍的比對對象之後,恢復忽略,`doc/baseline-manifest.sha256` 繼續負責釘位元組。退場條件與理由寫在 `.gitignore` 該段註解裡 |
 | **順手要收的既有欠帳** | **S14 + S37,2026-08-06 裁示留到本階一次處理。** `gen-var-table.js --check` 目前 exit 1,而且是**兩件事疊在一起**:①`EXPECTED` 停在 ZK 10.4 補齊之前(846/842,實測 866/862);②liveness **只掃 `.less` 樹**,所以每轉一個檔就有更多變數名字失去最後一個引用點(P5 這次 773 → 837)——**到本階會收斂成「全部都死」,而那正是正確答案**。連帶 `doc/migration/less-var-to-token.{md,json}` 現在指向已刪路徑,**不能靠現在重跑產生器解決**(會把 ①② 的漂移一起烘進文件)。**本階 `.less` 歸零之後,重定 `EXPECTED` + 重跑產生器 + 更新路徑是一次到位的** |

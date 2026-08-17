@@ -51,6 +51,11 @@ const CANDIDATE = path.join(REPO, 'target/classes/web/iceblue11');
 
 const WEBKIT = /^-webkit-/;
 const CARVE_OUT = new Set(['-moz-osx-font-smoothing']);
+/**
+ * The P7 holdout. Its 1 orphan `-moz-appearance` was slated to move to P7; as of 2026-08-14 it
+ * is phase-1 won't-do (recorded, not removed — plan appendix C20), so this is permanent for
+ * phase 1. The printed label still says "to P7" on purpose; see check-p4a-delta.js.
+ */
 const DEFERRED = new Set(['zkmax/css/tablet.css.dsp']);
 
 function walk(dir, base = dir, acc = []) {
