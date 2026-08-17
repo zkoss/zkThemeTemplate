@@ -478,7 +478,13 @@ function build(srcRoot) {
 		.filter((p) => path.basename(p) === '_zkvariables.less')
 		.sort();
 	if (varFiles.length === 0) {
-		throw new Error(`no _zkvariables.less found under ${srcRoot} — nothing to map (already deleted?)`);
+		// P8 deleted them from THIS tree, on purpose — see the note in the header. The generator
+		// survives for forks that kept LESS (same paths), which is who the table is for.
+		throw new Error(
+			`no _zkvariables.less under ${srcRoot} — P8 of the drop-LESS conversion deleted it.\n` +
+			'  The generated table is FROZEN at the last tree that had it: doc/migration/less-var-to-token.md.\n' +
+			'  It stays valid because it describes the tree you migrate FROM, not this one.\n' +
+			'  Run this with --src pointing at a fork that still has LESS to regenerate for that fork.');
 	}
 
 	const { refs, tokenRefs } = scanReferences(lessFiles, srcRoot);

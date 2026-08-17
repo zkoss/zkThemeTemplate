@@ -850,6 +850,20 @@ function md(defs, tally, reachable, assertions) {
 function main() {
 	const dryRun = process.argv.includes('--check') || process.argv.includes('--dry-run');
 
+	// P8 deleted the source from THIS tree, on purpose. The generator survives because a fork that
+	// kept LESS still has the file at the same path, and this table is exactly what such a fork
+	// needs to leave LESS behind. Say that, rather than reporting an ENOENT the reader has to
+	// interpret — the committed table is not stale, its source is simply gone.
+	if (!fs.existsSync(MIXINS_FILE)) {
+		console.error(`gen-mixin-table: ${MIXINS_REL} does not exist.`);
+		console.error('');
+		console.error('P8 of the drop-LESS conversion deleted it. The generated table is FROZEN at the');
+		console.error('last tree that had it — see doc/migration/mixin-to-css.md, which stays valid because');
+		console.error('it describes the tree you migrate FROM, not this one.');
+		console.error('');
+		console.error('Run this in a fork that still has LESS (same path) and it regenerates for that fork.');
+		return 2;
+	}
 	const text = fs.readFileSync(MIXINS_FILE, 'utf8');
 	const defs = parseDefinitions(text);
 	const names = [...new Set(defs.map((d) => d.name))];

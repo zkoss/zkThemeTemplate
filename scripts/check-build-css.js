@@ -4,10 +4,12 @@
  *
  * WHY THIS EXISTS
  * ---------------
- * `npm run check:cssdiff` cannot see `build-css.js` at all until P3 has converted files.
- * With 0 `.css` in the source tree the builder processes nothing, so the gate compares
- * zklessc's output against the baseline and reports `files differing: 0` — a pass that says
- * nothing whatsoever about the new code path.
+ * When it was written, `npm run check:cssdiff` could not see `build-css.js` at all: with 0 `.css`
+ * in the source tree the builder processed nothing, so the gate compared zklessc's output against
+ * the baseline and reported `files differing: 0` — a pass that said nothing whatsoever about the
+ * new code path. (Since P8 the gate does exercise the builder, because it is the only compiler
+ * left. This check is still not redundant: it is the only thing that compares BYTES, and it
+ * compares them for every file at once rather than for the one being converted.)
  *
  * That is not a hypothetical. Measured 2026-07-31: with `minify()` replaced by `return ''`
  * — i.e. every generated file empty — `npm run check:cssdiff` still printed
@@ -18,26 +20,26 @@
  * HAND-RUN EXPERIMENT IN A SCRATCHPAD, and the two files it round-tripped were reverted
  * afterwards. Nothing in the repo re-runs it. This script is that experiment, made repeatable.
  *
- * WHAT IT DOES  (the same five steps, automated, plus the P4a derivation)
- * ----------------------------------------------------------------------
- *   0. re-derive the P4a delta from `baseline/`      -> the adjusted comparison target
- *   1. compile the LESS tree UNCOMPRESSED           -> readable `.css.dsp`
- *   2. strip the taglib directives from each output  -> a plausible P3 `.css` source
- *      2b. copy the sources P3 has ALREADY converted -> the real thing, not a reconstruction
- *   3. feed all of them to `build-css.js`            -> `.css.dsp` via the NEW path
- *   4. copy the two holdouts from the adjusted tree  -> so the comparison covers all 85
- *   5. `cssdiff <adjusted> <tmp>`                    -> must be 0
+ * WHAT IT DOES  (three steps, plus the approved-delta derivation)
+ * --------------------------------------------------------------
+ *   0. re-derive the approved deltas from `baseline/` -> the adjusted comparison target
+ *   1. stage every real `.css` source                 -> the input the shipped build uses
+ *   2. feed all of them to `build-css.js`             -> `.css.dsp` via the path under test
+ *   3. `cssdiff <adjusted> <tmp>`                     -> must be 0
  *
- * Step 2 is what makes this a real test rather than a tautology: the input to `build-css.js`
- * is the same shape P3 will produce (expanded CSS, no header), and the expected output is
- * `baseline/`, which was produced by a DIFFERENT toolchain. Agreement is therefore evidence.
+ * WHY IT IS NOT A TAUTOLOGY: the expected output is `baseline/`, which a DIFFERENT toolchain
+ * (`zklessc --compress`, LESS 4.8.1) produced from the UNCONVERTED sources. Agreement between
+ * two independent toolchains over the same declarations is evidence; a builder compared against
+ * its own output would not be.
  *
- * Step 2b exists because a converted file has no `.less` left for step 1 to reconstruct: without
- * it the file is simply absent from the candidate tree, which `cssdiff` reports as a difference
- * with zero diff records — this check would go red purely because P3 made progress, one file per
- * conversion. As coverage shifts from reconstructed to real sources, the evidence gets stronger,
- * not weaker: for a converted file the shipped build runs this exact input through this exact
- * builder. The report keeps the two counts separate so that shift stays visible.
+ * P8 REMOVED THE RECONSTRUCTION HALF, AND THAT MADE IT STRONGER
+ * ------------------------------------------------------------
+ * Until P8 this check opened by compiling the LESS tree uncompressed and stripping its taglib
+ * headers, to synthesize a plausible `.css` source for every file P3 had not converted yet. Those
+ * inputs were only the right SHAPE. Every output now has a real source that the shipped build
+ * reads verbatim, so the reconstruction had no input left and was deleted with the compiler.
+ * The report used to split "converted (real source)" from "reconstructed from LESS" to keep that
+ * shift visible; the split is gone because the second number reached 0.
  *
  * EVERY OUTPUT NOW GOES THROUGH THIS PATH  (PASSTHROUGH is empty since P7)
  * ------------------------------------------------------------------------
@@ -117,9 +119,6 @@ const BASELINE = 'baseline';
 
 /** Outputs that legitimately cannot round-trip through the CSS path. Empty since P7 — see header. */
 const PASSTHROUGH = new Map();
-
-/** `<%@ taglib … %>` and friends. `${…}` EL is NOT matched: it belongs inside url() values. */
-const DSP_DIRECTIVE = /<%[\s\S]*?%>/g;
 
 /**
  * The four ways `zklessc --compress` and CleanCSS level 0 serialize the SAME declarations
@@ -202,16 +201,6 @@ function walkCssSources(dir, base = dir, acc = []) {
 	return acc;
 }
 
-/** Is there still a `.less` zklessc would compile? Entry = basename not `_`-prefixed. */
-function hasLessEntry(dir) {
-	for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
-		if (entry.isDirectory()) {
-			if (hasLessEntry(path.join(dir, entry.name))) return true;
-		} else if (entry.name.endsWith('.less') && !entry.name.startsWith('_')) return true;
-	}
-	return false;
-}
-
 function run(cmd, args, label) {
 	try {
 		execFileSync(cmd, args, { stdio: ['ignore', 'pipe', 'pipe'] });
@@ -235,7 +224,6 @@ function main(argv) {
 	}
 
 	const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'check-build-css-'));
-	const lessOut = path.join(tmp, 'lessout');
 	const cssSrc = path.join(tmp, 'cssrc');
 	const cssOut = path.join(tmp, 'cssout');
 	const expected = path.join(tmp, 'expected'); // `baseline/` + the approved P4a, P4b, D1, D4 deltas
@@ -244,7 +232,7 @@ function main(argv) {
 		// 0. The comparison target. Derived, not stored — see the header. Staged in the temp dir
 		//    so nothing outside `target/` is ever written, and so a failed run leaves no artefact
 		//    that a later run could mistake for the real baseline.
-		console.log('0/5  applying the approved P4a + P4b + D1 + D4 deltas to baseline/…');
+		console.log('0/3  applying the approved P4a + P4b + D1 + D4 deltas to baseline/…');
 		const d = p4b.materialize(expected);
 		const dd = density.materializeInto(expected);
 		const dt = tablet.materializeInto(expected);
@@ -254,49 +242,20 @@ function main(argv) {
 			for (const b of bad) console.error(`  ${b}`);
 			return 2;
 		}
-		console.log(`0/5  P4a: ${d.removedP4a} removed across ${d.filesP4a} file(s); ` +
+		console.log(`0/3  P4a: ${d.removedP4a} removed across ${d.filesP4a} file(s); ` +
 			`P4b: ${d.removedP4b} removed / ${d.addedP4b} added across ${d.filesP4b} file(s); ` +
 			`D1: ${dd.declarations} appended to ${density.DENSITY_FILE}; ` +
 			`D4: ${dt.declarations} wrapped into ${tablet.TABLET_FILE}; ` +
 			`${[...p4a.DEFERRED].join(', ')} left alone`);
 
-		// 1. Uncompressed, so the intermediate is the readable CSS that P3 adopts as source.
-		//    Premise #3: --compress on/off is declaration-equivalent, so this loses no fidelity.
-		console.log('1/5  compiling LESS tree (uncompressed)…');
-		run('npx', ['zklessc', '-s', SOURCE, '-o', lessOut], 'zklessc');
-
-		// With no entry `.less` left, zklessc does not create the output directory at all, so the
-		// walk has to tolerate its absence rather than read it as an IO error.
-		const outputs = fs.existsSync(lessOut) ? walk(lessOut).sort() : [];
-		// Silence from a compiler that still has work is a failure; silence from one with nothing
-		// left to compile is the end state this whole project is walking towards. P7 converted the
-		// last entry `.less`, so from here the tree holds only `_`-prefixed partials — which
-		// zklessc never compiles on their own — and step 2b supplies the whole candidate tree.
-		if (!outputs.length && hasLessEntry(SOURCE)) {
-			console.error('check-build-css: zklessc produced no output, but the source tree still has an entry .less.');
-			return 2;
-		}
-
-		// 2. Strip the taglib directives — build-css.js injects them itself, and its
-		//    HOSTILE_CONSTRUCTS guard hard-fails on a source that still carries one.
-		console.log(`2/5  stripping taglib headers from ${outputs.length} output(s)…`);
+		// 1. Stage the real sources. There is nothing else left to stage: P8 deleted the last
+		//    `.less`, so the LESS-reconstruction step this check used to open with (compile the
+		//    tree uncompressed, strip its taglib headers, feed the result to build-css.js) has no
+		//    input and was removed with the compiler. Every output now comes from a source the
+		//    shipped build uses verbatim, which is the STRONGER of the two evidence kinds this
+		//    check ever reported — see the header's step-2b note.
+		console.log('1/3  staging the real .css sources…');
 		let staged = 0;
-		for (const rel of outputs) {
-			if (PASSTHROUGH.has(rel)) continue;
-			const body = fs.readFileSync(path.join(lessOut, rel), 'utf8').replace(DSP_DIRECTIVE, '');
-			const dest = path.join(cssSrc, rel.replace(/\.dsp$/, '')); // x.css.dsp -> x.css
-			fs.mkdirSync(path.dirname(dest), { recursive: true });
-			fs.writeFileSync(dest, body);
-			staged++;
-		}
-
-		// 2b. Every file P3 has already converted has no `.less` left, so step 1 cannot
-		//     reconstruct it and it would be MISSING from the candidate tree — reported as a
-		//     difference with 0 diff records, i.e. this check going red on its own progress
-		//     (measured 2026-08-03 after step 1: `files differing: 5`, `diff records: 0`).
-		//     Stage the REAL sources instead. That is not a workaround but better evidence:
-		//     for these files the shipped build genuinely runs build-css.js over exactly this
-		//     input, where the reconstructed ones are only the right SHAPE of input.
 		const real = walkCssSources(SOURCE).sort();
 		for (const rel of real) {
 			const dest = path.join(cssSrc, rel);
@@ -308,15 +267,15 @@ function main(argv) {
 		const entries = real.filter((rel) => !path.basename(rel).startsWith('_'));
 		if (real.length) {
 			const partials = real.length - entries.length;
-			console.log(`2/5  + ${entries.length} already-converted source(s) copied verbatim` +
+			console.log(`1/3  ${entries.length} entry source(s) copied verbatim` +
 				`${partials ? `, plus ${partials} partial(s) they @import` : ''}`);
 		}
 
-		// 3. The path under test.
-		console.log(`3/5  running build-css.js over ${staged} .css source(s)…`);
+		// 2. The path under test.
+		console.log(`2/3  running build-css.js over ${staged} .css source(s)…`);
 		run('node', ['scripts/build-css.js', '-s', cssSrc, '-o', cssOut], 'build-css.js');
 
-		// 4. Holdouts copied verbatim so the diff covers the whole theme rather than a subset.
+		// 2b. Holdouts copied verbatim so the diff covers the whole theme rather than a subset.
 		//    A missing file reads as "builder lost a file", which would be the wrong diagnosis.
 		for (const [rel, why] of PASSTHROUGH) {
 			const from = path.join(expected, rel);
@@ -324,10 +283,10 @@ function main(argv) {
 			const to = path.join(cssOut, rel);
 			fs.mkdirSync(path.dirname(to), { recursive: true });
 			fs.copyFileSync(from, to);
-			console.log(`4/5  passthrough (NOT covered): ${rel} — ${why}`);
+			console.log(`2/3  passthrough (NOT covered): ${rel} — ${why}`);
 		}
 
-		// 5. Byte-identity first: it needs no normalization, so it is the stronger claim.
+		// 3. Byte-identity first: it needs no normalization, so it is the stronger claim.
 		//    Reported for the covered files only — the passthroughs are copies and would
 		//    inflate the rate to a meaningless 100%.
 		const covered = walk(cssOut).filter((rel) => !PASSTHROUGH.has(rel)).sort();
@@ -350,7 +309,7 @@ function main(argv) {
 			else for (const n of used) classHits.set(n, (classHits.get(n) || 0) + 1);
 		}
 
-		console.log('5/5  declaration-level diff against the adjusted baseline…\n');
+		console.log('3/3  declaration-level diff against the adjusted baseline…\n');
 		let code = 0;
 		try {
 			const out = execFileSync('node', ['scripts/cssdiff.js', expected, cssOut], {
@@ -364,9 +323,12 @@ function main(argv) {
 		}
 
 		console.log('');
-		console.log(`through build-css.js: ${covered.length} file(s)`);
-		if (entries.length) {
-			console.log(`  of which:          ${entries.length} converted (real source), ${covered.length - entries.length} reconstructed from LESS`);
+		console.log(`through build-css.js: ${covered.length} file(s), all from a real .css source`);
+		// Named rather than implied: a reader who remembers the old two-line split should see that
+		// the reconstruction is gone because it reached zero, not because it stopped being reported.
+		if (covered.length !== entries.length) {
+			console.log(`⚠ ${covered.length} output(s) but ${entries.length} entry source(s) — these must be equal since P8.`);
+			code = 1;
 		}
 		console.log(`passthrough:         ${PASSTHROUGH.size} file(s) (not evidence)`);
 		console.log(`byte-identical:      ${covered.length - byteDiff.length}/${covered.length}`);

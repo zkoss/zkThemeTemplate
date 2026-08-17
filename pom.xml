@@ -135,11 +135,13 @@
 					<exclude>web/**</exclude>
 				</excludes>
 			</resource>
-			<!-- copy non-stylesheet resources into theme folder,
-					less files are handled by zklessc and css files by
-					scripts/build-css.js in the plugin below (both emit *.css.dsp).
-					Without the *.css exclude, a converted source would be copied
-					verbatim alongside its own generated .css.dsp. -->
+			<!-- copy non-stylesheet resources into theme folder; stylesheets are compiled by
+					scripts/build-css.js in the plugin below, which emits *.css.dsp.
+					Without the *.css exclude, a source would be copied verbatim alongside
+					its own generated .css.dsp.
+					The *.less exclude is kept although this theme has no LESS left (P8): a fork
+					that vendors the deleted partials back in would otherwise ship raw .less
+					inside the jar. -->
 			<resource>
 				<directory>${zktheme.web.resources}</directory>
 				<excludes>
@@ -155,27 +157,10 @@
 				<artifactId>exec-maven-plugin</artifactId>
 				<version>1.6.0</version>
 				<executions>
-					<execution>
-						<id>compile-less</id>
-						<phase>process-resources</phase>
-						<goals>
-							<goal>exec</goal>
-						</goals>
-						<configuration>
-							<executable>npx</executable>
-							<arguments>
-								<argument>zklessc</argument>
-								<argument>--source</argument>
-								<argument>${zktheme.web.resources}</argument>
-								<argument>--output</argument>
-								<argument>${zktheme.theme.outputDirectory}</argument>
-								<argument>--compress</argument>
-							</arguments>
-						</configuration>
-					</execution>
-					<!-- Dual-source build: zklessc above handles *.less, this handles *.css.
-						 Same phase, declared second, so it runs after zklessc. A no-op while
-						 the tree has no *.css sources. See scripts/build-css.js. -->
+					<!-- The only stylesheet compiler. The `compile-less` execution that used to
+						 run `npx zklessc` in this same phase was removed at P8, together with the
+						 zkless-engine dependency: the source tree has no *.less left, so it
+						 compiled 0 files. See scripts/build-css.js and doc/migration/less-to-css.md. -->
 					<execution>
 						<id>compile-css</id>
 						<phase>process-resources</phase>

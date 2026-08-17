@@ -20,6 +20,9 @@ const fs = require('fs');
 const OUT = 'baseline';
 const force = process.argv.includes('--force');
 
+/** The engine version that produced `baseline/`. Fetched on demand — see the exec call below. */
+const ENGINE = '1.1.13';
+
 if (fs.existsSync(OUT) && !force) {
 	const stamp = fs.existsSync(`${OUT}/.built-from`) ? fs.readFileSync(`${OUT}/.built-from`, 'utf8').trim() : '(no stamp)';
 	console.error(`refusing to overwrite the existing baseline.\n\n${stamp}\n`);
@@ -36,7 +39,12 @@ if (lessFiles === '0') {
 }
 
 fs.rmSync(OUT, { recursive: true, force: true });
-execFileSync('npx', ['zklessc', '-s', 'src/main/resources/web', '-o', `${OUT}/`, '--compress'], { stdio: 'inherit' });
+// `--yes zkless-engine@ENGINE` and not a bare `zklessc`: P8 removed the dependency, so there is
+// no local binary to find. Rebuilding the historical baseline must not depend on the toolchain
+// this conversion retired — otherwise the defence against a polluted baseline (plan §4) has no
+// route back. The version is the one that built `baseline/`, pinned here rather than resolved,
+// because "whatever npm gives you today" is not a reproducible reference build.
+execFileSync('npx', ['--yes', `zkless-engine@${ENGINE}`, '-s', 'src/main/resources/web', '-o', `${OUT}/`, '--compress'], { stdio: 'inherit' });
 
 const commit = execFileSync('git', ['rev-parse', 'HEAD']).toString().trim();
 const dirty = execFileSync('git', ['status', '--porcelain', 'src/main/resources/web']).toString().trim();
@@ -44,12 +52,11 @@ const dirty = execFileSync('git', ['status', '--porcelain', 'src/main/resources/
 // ./package.json, so that form throws ERR_PACKAGE_PATH_NOT_EXPORTED. `less.version` is an
 // array ([4,8,1]) in both 3.x and 4.x.
 const less = execFileSync('node', ['-e', "const v=require('less').version;process.stdout.write(Array.isArray(v)?v.join('.'):String(v))"]).toString().trim();
-const engine = execFileSync('node', ['-e', "process.stdout.write(require('zkless-engine/package.json').version)"]).toString().trim();
 
 const stamp = [
 	`commit:        ${commit}`,
 	`src dirty:     ${dirty ? 'YES — baseline may not match any commit' : 'no'}`,
-	`zkless-engine: ${engine}`,
+	`zkless-engine: ${ENGINE} (fetched by npx; no longer a dependency since P8)`,
 	`less:          ${less}`,
 	`.less sources: ${lessFiles}`,
 ].join('\n');

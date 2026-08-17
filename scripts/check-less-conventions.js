@@ -93,7 +93,20 @@ function main(argv) {
 		return 1;
 	}
 
-	const partials = walk(sourceDir, sourceDir).filter(rel => path.basename(rel).startsWith('_'));
+	const lessFiles = walk(sourceDir, sourceDir);
+	// A check with nothing to check must SAY so. P8 removed the last `.less` from this theme, so
+	// here the honest report is "no subject", not a green tick — the plan's own doctrine (L2.0,
+	// "儀器證明") is that a pass over an empty input set is free and proves nothing. Exit 0 all
+	// the same: the rule is not violated, it is inapplicable. This script stays for forks that
+	// kept LESS — point `--source` at one and it does its real job.
+	if (!lessFiles.length) {
+		console.log(`check-less-conventions: no .less under ${sourceDir} — nothing to check.`);
+		console.log('  This theme has been LESS-free since P8; see doc/migration/less-to-css.md.');
+		console.log('  For a fork that kept LESS: check-less-conventions.js --source <that tree>');
+		return 0;
+	}
+
+	const partials = lessFiles.filter(rel => path.basename(rel).startsWith('_'));
 	const bad = [];
 	for (const rel of partials) {
 		for (const v of violationsIn(sourceDir, rel)) bad.push({ rel, ...v });

@@ -415,7 +415,9 @@ function cmdInstall(side) {
 	} else {
 		fs.rmSync(MARKER, { force: true });
 		const lessCount = walk(path.join(ROOT, SRC), false).filter((f) => f.endsWith('.less')).length;
-		if (lessCount) execFileSync('npx', ['zklessc', '-s', SRC, '-o', path.relative(ROOT, OUT), '--compress'], { cwd: ROOT, stdio: 'inherit' });
+		// `--yes zkless-engine@1.1.13`, not a bare `zklessc`: P8 removed the dependency, so there is
+		// no local binary. Only a tree that vendored LESS back can reach this branch at all.
+		if (lessCount) execFileSync('npx', ['--yes', 'zkless-engine@1.1.13', '-s', SRC, '-o', path.relative(ROOT, OUT), '--compress'], { cwd: ROOT, stdio: 'inherit' });
 		else console.log('no .less sources left — skipping zklessc (P8 end state)');
 		execFileSync('node', ['scripts/build-css.js', '-s', SRC, '-o', path.relative(ROOT, OUT)], { cwd: ROOT, stdio: 'inherit' });
 		console.log(`\nside B installed into ${rel(OUT)} — ${inspectSide().text}`);
