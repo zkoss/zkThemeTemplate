@@ -36,7 +36,9 @@
     "visual:diff": "node scripts/ab-visual.js diff",
     "visual:coverage": "node scripts/ab-coverage.js",
     "check:density-property": "node scripts/check-density-property.js",
-    "check:density-runtime": "node scripts/check-density-runtime.js"
+    "check:density-runtime": "node scripts/check-density-runtime.js",
+    "check:tablet-density": "node scripts/check-tablet-density.js",
+    "tablet:delta": "node scripts/tablet-delta.js"
   },
   "devDependencies": {
     "@playwright/test": "1.62.1",

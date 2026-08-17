@@ -67,8 +67,17 @@ import org.zkoss.zk.ui.util.Clients;
  * <h3>Not the tablet layer</h3>
  *
  * <p>{@code zkmax}'s tablet stylesheet is a touch-compensation layer for the whole app, injected
- * only on a mobile user agent, and it is not token-driven — so region-scoped density has no
- * meaning there. {@link #apply(Component, Density)} affects the desktop tokens only.
+ * only on a mobile user agent, and it is not token-driven: measured across the two profiles,
+ * {@code var(--zk-} appears 95 times on each side, so overriding tokens moves nothing there.
+ * The tablet sheet therefore ships BOTH densities and the server picks one while rendering it —
+ * which means the touch layer follows <strong>the library property only</strong>.
+ *
+ * <p>Neither method on this class reaches it. {@link #apply(Component, Density)} never could:
+ * region-scoped density has no meaning for a whole-site compensation layer. {@link
+ * #apply(Density)} does not either, because it changes an attribute in the DOM and the tablet
+ * sheet's choice was already made server-side. On a mobile device, set
+ * {@code org.zkoss.zul.theme.density} in {@code zk.xml} — a runtime call there would leave the
+ * desktop tokens compact and the touch layer at its default sizes.
  *
  * @since 11.0.0
  */

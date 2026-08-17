@@ -44,6 +44,7 @@ const path = require('path');
 const { parse, extractDsp, diffRecords } = require('./cssdiff.js');
 const p4b = require('./p4b-delta.js');
 const density = require('./density-delta.js');
+const tablet = require('./tablet-delta.js');
 
 const REPO = path.resolve(__dirname, '..');
 const BASELINE = path.join(REPO, 'baseline');
@@ -112,7 +113,7 @@ function main(argv) {
 		}
 		// P4a — and D1's compact override block — neutralised on the baseline side. See the header,
 		// and density-delta.js for why the third delta gets the same treatment as the second.
-		const A = load(density.applyDensity(rel, p4b.baselinePlusP4a(rel)));
+		const A = load(tablet.applyTablet(rel, density.applyDensity(rel, p4b.baselinePlusP4a(rel))));
 		const B = load(fs.readFileSync(cFile, 'utf8'));
 
 		for (const r of A.records) if (WEBKIT.test(split(r).prop)) webkitBase++;

@@ -1,31 +1,3 @@
-/*
- * tablet.css — the touch layer, EE-only and injected only on a mobile UA.
- *
- * It carries TWO COMPLETE SHEETS, not a sheet plus overrides, and `build-css.js` wraps each in a
- * server-side conditional on `org.zkoss.zul.theme.density` (L-4 D4). Exactly one of them reaches
- * the browser, so what is served in either density is the same size it has always been.
- *
- * WHY TWO WHOLE SHEETS AND NOT AN OVERRIDE BLOCK
- * ----------------------------------------------
- * The desktop half of density (D1) is a pure token-value swap: 350 `--zk-*` overrides keyed on
- * `[data-density="compact"]`. This half is not. Measured on the two profiles: `var(--zk-` appears
- * 95 times on each side, so tokens carry NONE of the difference — it is all literal values and,
- * decisively, 187 of the default sheet's 895 (selector, property) declarations have no compact
- * counterpart at all. A rule that must not apply cannot be overridden into absence; CSS has no
- * "does not exist" operator, which is the same finding `browserDefault` produced in P5. Only a
- * server-side conditional can delete a rule, so that is what this file uses.
- *
- * The compact sheet is `_tablet-compact.css`, imported at the bottom inside its own conditional.
- * It is not a variant this project authored: it is what `iceblue_c` has always shipped, and the
- * two agree declaration for declaration (606 = 606, verified against iceblue_c 11.0.0).
- *
- * CONSEQUENCE, DOCUMENTED RATHER THAN PAPERED OVER: the `data-density` ATTRIBUTE does not drive
- * this layer — only the library property does. Region-level density was already ruled unsupported
- * for the touch layer (it is a whole-site compensation layer); this makes the runtime whole-app
- * API property-only here too. See tasks/d4-tablet-density.md L2.3 for the two rejected ways of
- * keeping it, and why both charged the default path for a case almost nobody is in.
- */
-/*!ZKDENSITY-DEFAULT-START*/
 .ZKBD *,
 .ZKBD *:before,
 .ZKBD *:after {
@@ -52,31 +24,6 @@
 	outline: none;
 	-webkit-user-select: text;
 }
-/* Checkbox and Radio */
-.ZKBD input[type=checkbox],
-.ZKBD input[type=radio] {
-	width: 24px;
-	height: 24px;
-}
-.ZKBD input[type=checkbox] {
-	font-size: 22px;
-	line-height: 22px;
-}
-.ZKBD input[type=radio]:before {
-	width: 16px;
-	height: 16px;
-}
-.z-label,
-.z-loading,
-.z-apply-loading-indicator,
-.z-a,
-.z-temp .z-loading,
-.z-temp .z-loading-indicator {
-	font-size: 15px;
-}
-.z-apply-loading-indicator {
-	min-width: 148px;
-}
 .z-radio,
 .z-checkbox {
 	display: inline-block;
@@ -84,7 +31,6 @@
 }
 .z-radio-content,
 .z-checkbox-content {
-	font-size: 15px;
 	cursor: pointer;
 }
 .z-radiogroup-vertical .z-radio {
@@ -119,12 +65,6 @@
 .z-error .button > .z-icon-times {
 	/* override */
 	font-size: 22px;
-}
-.z-biglistbox-header-content {
-	font-size: 15px;
-}
-.z-biglistbox-body td {
-	font-size: 15px;
 }
 .z-biglistbox-outer {
 	margin: 0 22px 22px 0;
@@ -323,7 +263,9 @@
 .z-west-header,
 .z-center-header,
 .z-east-header {
-	font-size: 17px;
+	font-size: 14px;
+	line-height: 20px;
+	height: 32px;
 }
 .z-borderlayout-icon {
 	font-size: 22px;
@@ -331,23 +273,24 @@
 /* Splitter */
 /* There is no need to override in this theme. */
 .z-button {
-	font-size: 15px;
+	line-height: 14px;
 }
-.z-calendar-text {
-	font-size: 16px;
+.z-button img {
+	width: auto;
+	height: auto;
+}
+.z-calendar {
+	min-width: 420px;
+	padding: 2px;
 }
 .z-calendar-icon {
 	font-size: 20px;
 }
 .z-calendar th {
 	font-size: 14px;
-	width: 36px;
-	height: 40px;
 }
 .z-calendar-cell {
 	font-size: 14px;
-	width: 36px;
-	height: 36px;
 }
 .z-calendar-cell:hover {
 	color: initial;
@@ -356,9 +299,6 @@
 .z-calendar-selected:hover {
 	color: var(--zk-calendar-selected-hover-color);
 	background: var(--zk-calendar-selected-hover-background-color);
-}
-.z-calendar-header:first-child {
-	line-height: 38px;
 }
 .z-calendar-decade .z-calendar-cell,
 .z-calendar-month .z-calendar-cell,
@@ -496,45 +436,68 @@
 li.z-calendar-wheel-list-selected {
 	opacity: 1;
 }
+.z-chosenbox {
+	min-height: 32px;
+}
+.z-chosenbox-item {
+	margin: 1px;
+}
 .z-chosenbox-item-content {
-	font-size: 15px;
+	font-size: 12px;
+	padding: 3px 20px 3px 4px;
+	line-height: 18px;
+	margin-right: 0;
 }
 .z-chosenbox-button {
-	font-size: 20px;
+	font-size: 14px;
+	line-height: normal;
+	text-align: center;
+	top: 3px;
 }
 .z-chosenbox-option,
 .z-chosenbox-empty {
 	padding: 8px;
 	font-size: 15px;
 }
+.z-chosenbox-disabled .z-chosenbox-item-content {
+	padding-right: 3px;
+}
 /* Colorbox */
 .z-colorbox {
 	height: 34px;
 }
-.z-colorpalette {
+.z-menu-popup .z-colorpalette {
 	padding: 4px;
-	width: 304px;
-	height: auto;
+}
+.z-colorpalette {
+	width: 586px;
+	height: 460px;
+	padding: 0;
 }
 .z-colorpalette-newcolor {
-	width: 34px;
+	width: 50px;
 	height: 34px;
+	right: 116px;
 }
 .z-colorpalette-input {
 	width: 96px;
 	height: 34px;
 }
 .z-colorpalette-color {
-	width: 40px;
-	height: 24px;
-	margin: 4px;
+	width: 32px;
+	height: 32px;
+	margin: 0px;
 }
 .z-colorpalette-body {
 	max-height: 416px;
 	overflow: auto;
+	padding-top: 2px;
 }
 .z-colorpicker {
 	padding: 4px;
+}
+.z-colorpicker-main {
+	top: 34px;
 }
 .z-colorbox-popup {
 	padding: 4px;
@@ -550,17 +513,18 @@ li.z-calendar-wheel-list-selected {
 .z-colorbox-pickericon,
 .z-menu-pickericon {
 	font-size: 24px;
-	padding: 4px 10px;
+	width: 32px;
+	height: 32px;
+	line-height: 32px;
+	padding: 0;
+	text-align: center;
+	left: 4px;
+	top: 5px;
 }
 .z-colorbox-paletteicon,
 .z-menu-paletteicon {
-	left: 12px;
-	top: 12px;
-}
-.z-colorbox-pickericon,
-.z-menu-pickericon {
-	left: 64px;
-	top: 12px;
+	left: 40px;
+	top: 5px;
 }
 .z-palette-button .z-colorbox-paletteicon,
 .z-picker-button .z-colorbox-pickericon {
@@ -575,14 +539,67 @@ li.z-calendar-wheel-list-selected {
 .z-spinner,
 .z-doublespinner,
 .z-timepicker {
-	font-size: 15px;
+	min-height: 32px;
+}
+.z-combobox-input,
+.z-bandbox-input,
+.z-datebox-input,
+.z-timebox-input,
+.z-spinner-input,
+.z-doublespinner-input,
+.z-timepicker-input {
+	line-height: 14px;
+	height: 32px;
+	padding: 4px 5px;
+}
+.z-combobox-button,
+.z-bandbox-button,
+.z-datebox-button,
+.z-timebox-button,
+.z-spinner-button,
+.z-doublespinner-button,
+.z-timepicker-button {
+	font-size: 20px;
+	min-width: 34px;
+	height: 32px;
+	max-height: 32px;
+	padding: 5px 6px;
+	text-align: center;
+	line-height: 14px;
+}
+.z-combobox-input:not(.z-combobox-input-full) {
+	padding-right: 39px;
+}
+.z-bandbox-input:not(.z-bandbox-input-full) {
+	padding-right: 39px;
+}
+.z-datebox-input:not(.z-datebox-input-full) {
+	padding-right: 39px;
+}
+.z-timebox-input:not(.z-timebox-input-full) {
+	padding-right: 39px;
+}
+.z-timepicker-input:not(.z-timepicker-input-full) {
+	padding-right: 39px;
+}
+.z-spinner-input:not(.z-spinner-input-full) {
+	padding-right: 69px;
+}
+.z-spinner-button > a {
+	line-height: 32px;
+}
+.z-doublespinner-input:not(.z-doublespinner-input-full) {
+	padding-right: 69px;
+}
+.z-doublespinner-button > a {
+	line-height: 32px;
+}
+.z-timebox-button > a > i,
+.z-spinner-button > a > i,
+.z-doublespinner-button > a > i {
+	transform: none;
 }
 /* mobile-specific */
-.z-timebox-button {
-	width: 40px;
-	font-size: 22px;
-	padding: 5px 8px 0;
-}
 .z-timebox-button:hover {
 	border-color: var(--zk-combo-button-hover-border-color);
 	background: var(--zk-combo-button-hover-background-color);
@@ -597,10 +614,6 @@ li.z-calendar-wheel-list-selected {
 	color: var(--zk-combo-button-active-icon-color);
 	border-color: var(--zk-combo-button-active-border-color);
 	background-color: var(--zk-combo-button-active-background-color);
-}
-.z-spinner-input:not(.z-spinner-input-full),
-.z-doublespinner-input:not(.z-doublespinner-input-full) {
-	padding-right: 73px;
 }
 .z-spinner-button,
 .z-doublespinner-button {
@@ -618,10 +631,10 @@ li.z-calendar-wheel-list-selected {
 .z-doublespinner-button > a {
 	font-size: 22px;
 	width: 32px;
-	height: 34px;
+	height: 32px;
 	padding: 2px 4px;
 	border: 1px solid var(--zk-input-border-color);
-	line-height: 34px;
+	line-height: 30px;
 	position: static;
 	float: right;
 }
@@ -687,6 +700,10 @@ li.z-calendar-wheel-list-selected {
 	background: var(--zk-input-disable-background-color) !important;
 	cursor: default !important;
 	background: 0 !important;
+}
+.z-timepicker-button {
+	line-height: 32px;
+	padding: 3px 0;
 }
 .z-combobox-popup,
 .z-timepicker-popup {
@@ -844,69 +861,14 @@ li.z-calendar-wheel-list-selected {
 li.z-timebox-wheel-list-selected {
 	opacity: 1;
 }
-.z-combobutton-icon {
-	font-size: 20px;
-}
-.z-combobutton-icon.z-icon-caret-down {
-	margin-top: -10px;
-	left: 9px;
-}
-.z-combobutton-text {
-	font-size: 15px;
-}
-.z-column-content,
-.z-row-content,
-.z-group-content,
-.z-groupfoot-content,
-.z-footer-content {
-	font-size: 15px;
-	padding: 10px 12px;
-}
-.z-auxheader-content {
-	font-size: 15px;
-	padding: 8px 12px;
-}
-.z-grid-body .z-grid-emptybody td {
-	font-size: 15px;
-	padding: 10px 12px;
-}
+/* There is no need to override in this theme. */
 .z-columns-menupopup .z-column-content {
-	padding-right: 38px;
+	padding-right: 24px;
 }
 .z-column-button {
-	width: 38px;
-	height: 38px;
-	line-height: 38px;
-	font-size: 22px;
+	width: 24px;
+	height: 32px;
 	display: block;
-}
-/* Detail */
-.z-detail {
-	width: 22px;
-	height: 22px;
-}
-.z-detail-icon {
-	font-size: 22px;
-}
-.z-detail-open .z-detail-icon {
-	line-height: 22px;
-}
-.z-detail-content:before {
-	margin: 0 0 10px 12px;
-}
-/* Grouping */
-.z-group-inner .z-group-content,
-.z-group-inner .z-cell {
-	padding: 8px 12px;
-}
-.z-group-icon {
-	width: 22px;
-	height: 22px;
-	font-size: 22px;
-	line-height: 22px;
-}
-.z-groupfoot-content {
-	padding: 8px 12px;
 }
 .z-groupbox-content,
 .z-groupbox-content > .z-label {
@@ -916,51 +878,62 @@ li.z-timebox-wheel-list-selected {
 .z-groupbox-3d .z-groupbox-title-content {
 	font-size: 17px;
 }
+.z-groupbox-3d > .z-groupbox-header {
+	padding: 3px 4px;
+}
 .z-groupbox-3d > .z-groupbox-header .z-caption,
 .z-groupbox-3d > .z-groupbox-header .z-groupbox-title {
 	padding: 10px 16px;
+	display: inline-block;
+	width: 100%;
+	margin: 0;
+	line-height: 24px;
+	background: 0;
+	top: 0;
+	position: relative;
+	cursor: pointer;
 }
 .z-groupbox-notitle .z-groupbox-content {
 	padding: 12px 16px;
 }
+.z-groupbox-header,
+.z-groupbox-3d .z-groupbox-header {
+	line-height: 24px;
+}
+.z-groupbox-3d > .z-groupbox-header .z-caption-content {
+	padding: 4px 0 4px 0;
+	line-height: 16px;
+}
 .z-groupbox-3d > .z-groupbox-content {
-	padding: 12px 16px;
-}
-.z-listheader-content,
-.z-listcell-content,
-.z-listgroup-content,
-.z-listgroupfoot-content,
-.z-listfooter-content {
-	font-size: 15px;
-	padding: 10px 12px;
-}
-.z-listbox-body .z-listbox-emptybody td {
-	font-size: 15px;
-	padding: 10px 12px;
+	padding: 5px;
 }
 .z-listhead-menupopup .z-listheader-content {
-	padding-right: 38px;
+	padding-right: 24px;
 }
 .z-listheader-button {
-	width: 38px;
-	height: 38px;
-	line-height: 38px;
-	font-size: 22px;
+	width: 24px;
+	height: 32px;
+	line-height: 32px;
+	font-size: 16px;
 	display: block;
 }
 /* Grouping */
 .z-listgroup-inner .z-listcell-content,
 .z-listgroup-inner .z-listgroup-content {
-	padding: 8px 12px;
+	padding: 3px 5px;
 }
 .z-listgroup-icon {
-	width: 22px;
-	height: 22px;
+	width: 24px;
+	height: 24px;
+	font-size: 22px;
+	line-height: 22px;
+}
+.z-listgroup-selected .z-listgroup-checkable .z-listgroup-icon {
 	font-size: 22px;
 	line-height: 22px;
 }
 .z-listgroupfoot .z-listcell-content {
-	padding: 8px 12px;
+	padding: 4px 5px;
 }
 /* checkbox */
 .z-listheader-checkable,
@@ -980,7 +953,7 @@ li.z-timebox-wheel-list-selected {
 .z-intbox,
 .z-longbox,
 .z-doublebox {
-	font-size: 15px;
+	height: 32px;
 }
 .z-errorbox {
 	cursor: move;
@@ -1002,102 +975,45 @@ li.z-timebox-wheel-list-selected {
 .z-errorbox-close {
 	font-size: 22px;
 }
-.z-menu-text,
-.z-menuitem-text {
-	font-size: 17px;
-}
-.z-menu-image,
-.z-menuitem-image {
-	min-height: 24px;
-	min-width: 24px;
-}
-.z-menupopup .z-menu-image,
-.z-menupopup .z-menuitem-image {
-	min-height: 24px;
-	min-width: 24px;
-}
-.z-menupopup [class^="z-icon"] {
-	font-size: 24px;
-	min-width: 24px;
-}
-.z-menupopup .z-menuitem-icon {
-	font-size: 24px;
-	top: 10px;
-}
-.z-menu-icon {
-	font-size: 22px;
-}
-.z-menu-content,
-.z-menuitem-content {
-	padding: 4px 12px;
-	min-height: 34px;
-}
-.z-menu-content:before,
-.z-menuitem-content:before {
-	/* text-only menu centering trick */
-	content: "";
-	min-height: 24px;
-	/* same as .z-menu-image */
-	display: inline-block;
-	vertical-align: middle;
-}
-.z-menu-content {
-	padding-right: 34px;
-}
-.z-menubar-icon {
-	font-size: 24px;
-	margin-top: -14px;
+.z-menu-clickable .z-menu-separator {
+	right: 26px;
 }
 /* Native scrollable */
 .z-menubar {
 	overflow: auto;
 }
-.z-menubar-horizontal > ul {
-	overflow: visible;
-	white-space: nowrap;
-}
-.z-menubar-horizontal li,
-.z-menubar-horizontal .z-menuseparator {
-	float: none;
-	display: inline-block;
-}
-.z-menubar-vertical {
-	max-width: 36%;
-}
-.z-menubar-vertical li {
-	margin: 4px 2px;
-}
 .z-paging {
-	height: 38px;
+	height: 40px;
 	padding: 4px 12px 3px;
 }
 .z-paging-icon {
 	font-size: 22px;
 }
 .z-paging-button {
-	min-width: 30px;
-	height: 30px;
-	line-height: 30px;
+	min-width: 32px;
+	height: 32px;
+	line-height: 24px;
 	-webkit-border-radius: var(--zk-base-border-radius);
 	-moz-border-radius: var(--zk-base-border-radius);
 	-o-border-radius: var(--zk-base-border-radius);
 	-ms-border-radius: var(--zk-base-border-radius);
 	border-radius: var(--zk-base-border-radius);
-	font-size: 22px;
-	padding: 0;
+	font-size: 18px;
+	padding: 4px 3px;
 	margin: 0;
 }
 .z-paging-text {
-	font-size: 15px;
+	font-size: 14px;
 	margin-right: 2px;
 }
 .z-paging-info {
-	font-size: 15px;
+	font-size: 14px;
 	top: 0;
 }
 .z-paging-input {
-	height: 31px;
+	height: 32px;
 	margin-left: 2px;
+	font-size: 14px;
 }
 .z-paging-os ul > li {
 	margin-left: 2px;
@@ -1111,16 +1027,17 @@ li.z-timebox-wheel-list-selected {
 }
 .z-paging-os .z-paging-button {
 	padding: 0 8px;
-	font-size: 15px;
+	font-size: 14px;
 	height: 30px;
 	min-width: 30px;
 }
 .z-panel-header {
-	font-size: 17px;
+	font-size: 14px;
+	line-height: 30px;
 }
-.z-panel-body {
-	font-size: 15px;
-	padding: 12px 16px;
+.z-panel-icon {
+	line-height: 30px;
+	height: auto;
 }
 .z-panel-maximize,
 .z-panel-minimize,
@@ -1131,33 +1048,14 @@ li.z-timebox-wheel-list-selected {
 .z-popup-content {
 	font-size: 15px;
 }
-.z-notification-icon.z-icon-times-circle,
-.z-notification-icon.z-icon-exclamation-circle,
-.z-notification-icon.z-icon-info-circle {
-	width: 32px;
-	height: 32px;
-	line-height: 32px;
-	font-size: 32px;
-	left: 8px;
-}
 .z-notification-content {
 	min-height: 0;
-	padding: 32px 8px 32px 44px;
 	font-size: 15px;
 }
 .z-notification-close {
 	width: 22px;
 	height: 22px;
 	font-size: 22px;
-	top: 4px;
-	right: 4px;
-}
-.z-notification-left + .z-notification-icon {
-	left: 16px;
-	/* 8px arrow */
-}
-.z-notification-pointer ~ .z-notification-content {
-	padding: 8px 28px 8px 44px;
 }
 .z-slider-button {
 	width: 22px;
@@ -1169,21 +1067,9 @@ li.z-timebox-wheel-list-selected {
 .z-slider-horizontal .z-slider-button {
 	top: -9px;
 }
-.z-tab {
-	font-size: 17px;
-}
-.z-tabbox-icon {
-	font-size: 24px;
-}
-.z-tab-button {
-	font-size: 20px;
-}
 .z-tab-image {
-	width: 24px;
-	height: 24px;
-}
-.z-tabpanel {
-	padding: 12px 16px;
+	width: 16px;
+	height: 16px;
 }
 /* Vertical */
 .z-tabbox-left > .z-tabs .z-tab .z-tab-content > .z-tab-text > .z-tab-image {
@@ -1192,31 +1078,15 @@ li.z-timebox-wheel-list-selected {
 .z-tabbox-right > .z-tabs .z-tab .z-tab-content > .z-tab-text > .z-tab-image {
 	margin-right: 4px;
 }
-/* Accordion */
-.z-tabbox-accordion .z-tabpanel > .z-tabpanel-content {
-	padding: 12px 16px;
-}
-.z-toolbarbutton-content {
-	font-size: 17px;
-	height: 32px;
-}
-.z-toolbarbutton-content > img,
-.z-toolbarbutton-content > i {
-	width: 24px;
-	height: 24px;
-	font-size: 24px;
-}
-.z-toolbar-content .z-label {
-	font-size: 17px;
-}
+/* There is no need to override in this theme. */
 .z-tree-icon,
 .z-tree-line {
-	width: 12px;
-	height: 12px;
-	line-height: 12px;
+	width: 24px;
+	height: 24px;
+	line-height: 24px;
 }
 .z-tree-icon {
-	font-size: 22px;
+	font-size: 20px;
 }
 .z-treecell-text {
 	margin-left: 4px;
@@ -1224,8 +1094,11 @@ li.z-timebox-wheel-list-selected {
 .z-treecol-content,
 .z-treecell-content,
 .z-treefooter-content {
-	font-size: 15px;
-	padding: 10px 12px;
+	font-size: 12px;
+	padding: 4px 5px;
+}
+.z-treecell-content {
+	line-height: 22px;
 }
 .z-tree-body .z-tree-emptybody td {
 	font-size: 15px;
@@ -1243,15 +1116,13 @@ li.z-timebox-wheel-list-selected {
 	height: 16px;
 }
 .z-window-header {
-	font-size: 17px;
-}
-.z-window-content {
-	font-size: 15px;
-	padding: 0 8px 8px;
+	font-size: 14px;
+	line-height: 32px;
 }
 .z-window-icon {
 	width: 30px;
 	height: 30px;
+	line-height: 30px;
 }
 .z-window-maximize,
 .z-window-minimize,
@@ -1271,64 +1142,11 @@ li.z-timebox-wheel-list-selected {
 .z-messagebox .z-label {
 	font-size: 15px;
 }
-.z-caption {
-	font-size: 17px;
-}
-.z-caption-image {
-	width: 24px;
-	height: 24px;
-}
-.z-caption .z-button {
-	font-size: 17px;
-}
-.z-navbar-vertical {
-	max-width: 36%;
-}
-.z-navbar-horizontal {
-	overflow-x: auto;
-	position: static;
-}
+/* There is no need to override in this theme. */
 .z-nav-content,
 .z-navitem-content {
 	padding: 4px 8px;
-	height: 32px;
-}
-.z-nav-text,
-.z-navitem-text {
-	font-size: 17px;
-}
-.z-nav-text-popup,
-.z-navitem-text-popup {
-	padding: 0 12px;
 }
 .z-nav-info {
 	font-size: 11px;
 }
-.z-nav-image,
-.z-navitem-image {
-	max-width: 24px;
-	max-height: 24px;
-}
-/* sub menu */
-.z-navbar > ul ul .z-nav-image,
-.z-navbar > ul ul .z-navitem-image {
-	max-width: 22px;
-	max-height: 22px;
-}
-.z-navbar > ul ul .z-nav-text,
-.z-navbar > ul ul .z-navitem-text {
-	font-size: 15px;
-}
-.z-nav-popup .z-nav-image,
-.z-nav-popup .z-navitem-image {
-	max-width: 22px;
-	max-height: 22px;
-}
-.z-nav-popup .z-nav-text,
-.z-nav-popup .z-navitem-text {
-	font-size: 15px;
-}
-/*!ZKDENSITY-DEFAULT-END*/
-/*!ZKDENSITY-COMPACT-START*/
-@import "_tablet-compact.css";
-/*!ZKDENSITY-COMPACT-END*/

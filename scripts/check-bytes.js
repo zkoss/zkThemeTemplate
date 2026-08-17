@@ -46,6 +46,7 @@ const path = require('path');
 const p4a = require('./p4a-delta.js');
 const p4b = require('./p4b-delta.js');
 const density = require('./density-delta.js');
+const tablet = require('./tablet-delta.js');
 
 const ROOT = path.resolve(__dirname, '..');
 const BASE = path.join(ROOT, 'baseline');
@@ -96,7 +97,10 @@ for (const rel of files) {
 	// D1's compact override block is the third approved delta; see density-delta.js. It is the
 	// ONLY layer that proves the block minifies the same alone as it does inside the whole of
 	// norm.css — the two shape gates compare declaration records and cannot see byte layout.
-	const a = density.applyDensity(rel, adjusted.text);
+	// D4's compact tablet sheet is the fourth; see tablet-delta.js. Same property as D1's block —
+	// this is the only layer that proves the sheet minifies the same alone as it does inside the
+	// whole of tablet.css, because the shape gates compare records and cannot see byte layout.
+	const a = tablet.applyTablet(rel, density.applyDensity(rel, adjusted.text));
 	if (adjusted.removedP4a.length) {
 		delta += adjusted.removedP4a.length;
 		deltaFiles++;
@@ -136,6 +140,8 @@ p4b.assertApprovedSize({
 }).forEach((why) => unexplained.push({ rel: 'p4a/p4b-delta.js', why }));
 const densityShape = density.measure();
 density.assertApprovedSize(densityShape).forEach((why) => unexplained.push({ rel: 'density-delta.js', why }));
+const tabletShape = tablet.measure();
+tablet.assertApprovedSize(tabletShape).forEach((why) => unexplained.push({ rel: 'tablet-delta.js', why }));
 
 console.log(`files compared:            ${files.length}`);
 console.log(`P4a delta re-derived:      ${delta} declaration(s) in ${deltaFiles} file(s), ` +
@@ -143,6 +149,8 @@ console.log(`P4a delta re-derived:      ${delta} declaration(s) in ${deltaFiles}
 console.log(`P4b delta from table:      ${deltaB} removed / ${addedB} added in ${deltaFilesB} file(s)`);
 console.log(`D1 density block:          ${densityShape.declarations} declaration(s) appended to ` +
 	`${density.DENSITY_FILE} (${densityShape.bytes} B)`);
+console.log(`D4 compact tablet sheet:   ${tabletShape.declarations} declaration(s) in ${tabletShape.blocks} rule ` +
+	`block(s), wrapped into ${tablet.TABLET_FILE} (${tabletShape.bytes} B)`);
 console.log(`byte-identical:            ${identical}/${files.length}`);
 console.log(`differing but explained:   ${differing.length}`);
 differing.forEach((f) => console.log(`    ${f}`));

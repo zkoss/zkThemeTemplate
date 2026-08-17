@@ -158,6 +158,12 @@ const NO_HEADER = new Set([
  *                   other value, including an unset property, leaves the block keyed on the
  *                   attribute alone. The trailing space is the descendant combinator that makes
  *                   the placeholder ordinary CSS; the DSP that replaces it supplies its own comma.
+ *   ZKDENSITY-*     the SAME property in BLOCK position (L-4 D4), and for the same reason
+ *                   ZKBD-OFF-* exists: `tablet.css` carries two COMPLETE sheets, and the one that
+ *                   does not apply must be ABSENT, not overridden. 187 of the default sheet's 895
+ *                   declarations have no counterpart in the compact sheet, so overriding cannot
+ *                   express "compact" — only deleting the block can. `ne` / `eq` are a matched
+ *                   pair so an unrecognised value behaves like an unset one, exactly as D2's does.
  *
  * Order matters: the prefix tag ENDS with `</c:if>`, so restoring it before the block-close would
  * be fine, but masking in the other direction (conversion side) must do the prefix first.
@@ -166,9 +172,10 @@ const TAGLIB_MARKER = '/*!ZK-TAGLIB-HEADER*/';
 /**
  * The only sources allowed to carry placeholders. See assertPlaceholdersAllowed().
  *
- * `norm.css` needs all five (P5). `tablet.css` needs `.ZKBD ` alone (P7): the browserDefault
- * switch appears 14 times in selector position there, and it is the ONLY thing that kept that
- * file out of this path — see the header's third hostile construct, which was found on it.
+ * `norm.css` needs five (P5). `tablet.css` needed `.ZKBD ` alone (P7): the browserDefault switch
+ * appears 14 times in selector position there, and it is the ONLY thing that kept that file out
+ * of this path — see the header's third hostile construct, which was found on it. D4 added the
+ * two ZKDENSITY block markers to it as well.
  */
 const PLACEHOLDER_SOURCES = new Set(['zul/css/norm.css', 'zkmax/css/tablet.css']);
 const BROWSER_DEFAULT = "c:property('org.zkoss.zul.theme.browserDefault')";
@@ -181,6 +188,10 @@ const PLACEHOLDERS = [
 	// Equality, not `not empty`: an unrecognised value must behave like an unset one rather than
 	// like `compact`, so a typo in zk.xml cannot silently switch the whole app's density.
 	['.ZKDENSITY ', `<c:if test="\${'compact' eq ${DENSITY}}">:root,</c:if>`],
+	['/*!ZKDENSITY-DEFAULT-START*/', `<c:if test="\${'compact' ne ${DENSITY}}">`],
+	['/*!ZKDENSITY-DEFAULT-END*/', '</c:if>'],
+	['/*!ZKDENSITY-COMPACT-START*/', `<c:if test="\${'compact' eq ${DENSITY}}">`],
+	['/*!ZKDENSITY-COMPACT-END*/', '</c:if>'],
 ];
 
 // level 0 = pure re-serialization: collapse whitespace, rewrite nothing. See "WHY LEVEL 0"

@@ -48,6 +48,7 @@ const path = require('path');
 const { parse, extractDsp, diffRecords } = require('./cssdiff.js');
 const p4b = require('./p4b-delta.js');
 const density = require('./density-delta.js');
+const tablet = require('./tablet-delta.js');
 
 const REPO = path.resolve(__dirname, '..');
 const BASELINE = path.join(REPO, 'baseline');
@@ -153,7 +154,11 @@ function main(argv) {
 		// `check-p4b-delta.js` neutralises P4a the same way, and `p4b-delta.js` asserts the two
 		// orders commute. D1 commutes with both trivially: it appends a block containing no
 		// vendor-prefixed declaration at all, and neither P4a nor P4b touches norm's tail.
-		const A = load(density.applyDensity(rel, p4b.baselinePlusP4b(rel)));
+		// D4 does NOT commute trivially — the compact sheet it appends carries 314 `-webkit-`
+		// declarations of its own — but it commutes for the reason that matters here: P4a's
+		// tablet removals are DEFERRED (all 60 of them), so P4a touches nothing in this file,
+		// and D4 wraps the baseline body without moving a byte of it.
+		const A = load(tablet.applyTablet(rel, density.applyDensity(rel, p4b.baselinePlusP4b(rel))));
 		const B = load(fs.readFileSync(cFile, 'utf8'));
 
 		for (const r of A.records) if (WEBKIT.test(split(r).prop)) webkitBase++;

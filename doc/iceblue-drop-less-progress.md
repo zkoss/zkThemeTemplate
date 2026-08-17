@@ -26,7 +26,7 @@
   - [L2.5 交給 P8 的產品面問題](#l25-交給-p8-的產品面問題2026-08-033-項不阻擋-p4-p7) — 3 項
 - **[L3 技術附錄](#l3-技術附錄獨立檔)** — 索引在本檔;**內容在 [iceblue-drop-less-progress-appendix.md](iceblue-drop-less-progress-appendix.md)**
   - [階段與 commit 對照](iceblue-drop-less-progress-appendix.md#階段與-commit-對照)
-  - [L3-A 閘門紀錄](iceblue-drop-less-progress-appendix.md#l3-a-閘門紀錄附加式不覆寫) — 58 列,附加式不覆寫
+  - [L3-A 閘門紀錄](iceblue-drop-less-progress-appendix.md#l3-a-閘門紀錄附加式不覆寫) — 61 列,附加式不覆寫
   - [L3-B Tier 1](iceblue-drop-less-progress-appendix.md#l3-b-tier-1p1--s0--s1) — P1 = S0 + S1
   - [L3-C P2 儀器證明](iceblue-drop-less-progress-appendix.md#l3-c-p2-儀器證明)
   - [L3-D P0 交付物、基準、突變測試](iceblue-drop-less-progress-appendix.md#l3-d-p0-交付物基準的不可變性突變測試)
@@ -34,7 +34,7 @@
   - [L3-F P3 逐檔複核包](iceblue-drop-less-progress-appendix.md#l3-f-p3-批次的檔案清單每一步可以自己檢查什麼步-0-4-的逐檔複核包) — [步 0](iceblue-drop-less-progress-appendix.md#步-0-的複核包2026-07-31) · [步 1](iceblue-drop-less-progress-appendix.md#步-1-的複核包2026-08-034-檔) · [步 2](iceblue-drop-less-progress-appendix.md#步-2-的複核包2026-08-0315-檔--批-1-收工-2020) · [步 3](iceblue-drop-less-progress-appendix.md#步-3-的複核包2026-08-0343-檔--批-2-收工-6374) · [步 4](iceblue-drop-less-progress-appendix.md#步-4-的複核包2026-08-0311-檔--批-3-收工p3-收工-7474)
   - [L3-G P3 收工複審](iceblue-drop-less-progress-appendix.md#l3-g-p3-收工複審74-檔獨立-fan-out2026-08-04計畫書-l3-c-26-第-4-層首次執行) — 74 檔獨立 fan-out
   - [L3-H 執行機制:workflow](iceblue-drop-less-progress-appendix.md#l3-h-執行機制workflow)
-  - [L3-I Change Log](iceblue-drop-less-progress-appendix.md#l3-i-change-log--狀態層的敘述更正) — 57 條狀態層更正
+  - [L3-I Change Log](iceblue-drop-less-progress-appendix.md#l3-i-change-log--狀態層的敘述更正) — 61 條狀態層更正
 
 ---
 
@@ -102,15 +102,16 @@
 | **M1** 基礎建設與閘門(P0 · P1 · P2) | **DONE** | 基準不可變、LESS 釘到 4.8.1、來源樹可同時容納 `.less` 與 `.css` |
 | **M2** 元件轉換 82 檔(P3) | **DONE** | 74/74 轉完,逐檔閘門全 0、無一次失敗;**0 檔無法解釋**。2026-08-05 追加 ZK 10.4 補齊的 8 檔,同樣逐檔閘門全 0(S26) |
 | **M3** vendor prefix 政策(P4a · P4b) | **DONE** | **L-2 已於 2026-08-07 拍板(選項 C:`-webkit-` 全數保留)**。**P4a DONE(同日)** —— ~~728~~ **現為 731**(ZK 11 同步,S56)條 / 45 檔純移除,G-delta 由 `check:p4a` 六項斷言收下,`-webkit-` ~~313~~ **現為 314** 條與 B 群 44 條原封不動;**P4b DONE(2026-08-10)** —— 實際 **14** 條(第 15 條在 P7 holdout),移除 14 / 新增 7 / 9 檔,由 `check:p4b` 八項斷言收下 |
-| **M4** 三個 holdout(P5 · P6 · P7) | **3 / 3 DONE**(P7 第一段 2026-08-17;第二段 D4 未做) | **P6 DONE** —— FA 的 `each()` 迴圈換成 `gen-fa-css.js`;**P5 DONE(2026-08-06)** —— `norm` 轉純 CSS,`browserDefault` 用 build 期遮罩而**不是** `@scope`,閘門由 G-delta 收在 **G-zero**;P7 等 **L-4** 的 density 那一半 |
+| **M4** 三個 holdout(P5 · P6 · P7) | **DONE**(~~P7 第一段 2026-08-17;第二段 D4 未做~~ **←同日兩段皆收工**) | **P6 DONE** —— FA 的 `each()` 迴圈換成 `gen-fa-css.js`;**P5 DONE(2026-08-06)** —— `norm` 轉純 CSS,`browserDefault` 用 build 期遮罩而**不是** `@scope`,閘門由 G-delta 收在 **G-zero**;P7 等 **L-4** 的 density 那一半 |
 | **M5** 收尾與遷移指南(P8) | TODO | 兩張規則表已產出,期限風險已解除 |
 
 ### 總體進度
 
 | 量法 | 數字 |
 |---|---|
-| **里程碑進度** | **3 / 5 = 60%**(M1、M2、M3) |
+| **里程碑進度** | ~~3 / 5 = 60%~~ **4 / 5 = 80%**(M1、M2、M3、**M4**;2026-08-17)|
 | **輸出檔脫離 LESS** | ~~84 / 85 = 99%~~ **85 / 85 = 100%**(2026-08-17,P7 第一段) |
+| **來源樹剩餘 `.less`** | ~~30~~ **4**(D4 刪掉 `zkmax/less/` 整棵;剩 `zul/less/` 的 4 個 partial)|
 
 ### 下一步(依「不等任何人」排序)
 
@@ -261,7 +262,7 @@
 | ↳ **P5 的第 4 層獨立驗證** | **DONE** | 覆核者須自己重推每一個數字,不得引用 commit message | **PASS-WITH-FINDINGS** —— **C1–C9 九條全部 CONFIRMED**,其中 C4 用**比自我複核更強**的方法:覆核者不信任專案第 4 類序列化那個「全空白剝除」的實作,自寫只剝標點相鄰空白的正規化器,在它底下兩份 `norm.css.dsp` **逐 byte 相同(72646 = 72646)**,並手眼看過全部 45 個差異片段。**找到 1 個真缺口並已修(`364f8ec`)**:佔位符的**還原方向沒有守衛**,`content:".ZKBD "` 會把 DSP 注進帶引號的值、exit 0 零警告。**更正 S37 一句**(「逐項相同」實為 10/12)。**獨立證明了 compact 旋鈕的等價性,也證明了 S36 的分裂主題真的會發生且無檢查看得到。** 報告 [l4-verify-p5-norm.md](l4-verify-p5-norm.md)(紀錄 **#49**) | 2026-08-06 |
 | ↳ **P5 的視覺 A/B** | **DONE** | 兩側指紋須不同,且頁面差異須為 0 | **116 頁比對、pages differing: 0**,而 **theme 指紋 DIFFERENT**(`75f538af22468640` / `5c570ab19195cdc2`)—— 所以這個 0 **不是空轉**,是「20 個序列化差異區塊在 116 頁裡照不出畫面變化」的端對端確認。跑之前先 `visual:selftest` 得 0 / 0 證明 harness 當下決定性;雜訊 4 頁全在噪音下限內。**採信範圍照 S33**:語料非針對 85 個輸出檔設計,稀有元件會漏接 ⇒ 這是「看不到差異」不是「沒有差異」(紀錄 **#50**) | 2026-08-06 |
 | **P6 Font Awesome** | **DONE** | G-zero | **4545** 條零差異;產生器輸出與被刪掉的 `.less` 經 `less.render()` **逐 byte 相同**(獨立複核:**3611** 個選擇器 0 增 0 減);codepoint 抽驗 + 「加一個 icon」往返實測;`build-css` 74 → **75** 檔 | 2026-08-04 |
-| P7 `tablet` + profile API | **第一段 DONE(2026-08-17)/ 第二段 D4 TODO** | ~~G-delta~~ **兩段:轉換 G-zero + D4 G-delta**(**←2026-08-14,C20**) | ~~**多一個交付項**:補 `_zkcssvariables.less` 缺的 palette import + `colors/_iceblue_css.less`(S29);驗收多一條 —— runtime override sheet 必須表達得出 palette 覆蓋,且要有一次**非 iceblue** palette 的實測~~ **←2026-08-13 兩項都移除(C19 / M-2)**:`@themePalette` 移出本案,本階只剩 `tablet` + `@themeProfile`(密度軸)。**S29 改判不補**,隨 P8 的 `.less` 歸零消失。palette 的獨立計畫 `tasks/theme-pack-palette-mechanism.md`(不進本 repo 版控,見 **M-2**)。**←2026-08-14 再減一次(C20,第一期範圍封閉)**:P4a 移交的 **A1** 60 條前綴與 P4b 移交的 **A2** 1 條孤兒 `-moz-appearance` **都不移除,只記錄** ⇒ 轉換那一段變成 **G-zero**(與 P3 的 74 檔同形);`tablet/compact/_combo.less` 走 **L-8 的 A 案**逐字轉。**←2026-08-17 第一段收工**(commit `2f348677`,紀錄 **#60**):681 條、`files differing: 0`,全樹差異維持 48 檔 / 1104 筆 ⇒ 沒有貢獻任何宣告差異;`check:build-css` 覆蓋率到 **85/85 真實來源、passthrough 0**,`zklessc` `compiled 0 file(s)`。~~`tablet.css.dsp` 應**逐 byte 不變**~~ **←同日更正,S58**:正確標準是 `cssdiff` 0 + 位元組差異全落在封閉的序列化類別內(全樹只有 23/85 逐 byte 相同,`norm.css.dsp` 也不在其中)。**本階剩下的唯一 G-delta 是 D4** —— 也就是本階的真正風險:**67 條逐條中和**,驗收是**全部**對 `iceblue_c 11.0.0` 做 mobile UA computed-style 比對全綠,**不接受抽驗** | — |
+| P7 `tablet` + profile API | **DONE(2026-08-17,兩段)** | ~~G-delta~~ **兩段:轉換 G-zero + D4 G-delta**(**←2026-08-14,C20**) | ~~**多一個交付項**:補 `_zkcssvariables.less` 缺的 palette import + `colors/_iceblue_css.less`(S29);驗收多一條 —— runtime override sheet 必須表達得出 palette 覆蓋,且要有一次**非 iceblue** palette 的實測~~ **←2026-08-13 兩項都移除(C19 / M-2)**:`@themePalette` 移出本案,本階只剩 `tablet` + `@themeProfile`(密度軸)。**S29 改判不補**,隨 P8 的 `.less` 歸零消失。palette 的獨立計畫 `tasks/theme-pack-palette-mechanism.md`(不進本 repo 版控,見 **M-2**)。**←2026-08-14 再減一次(C20,第一期範圍封閉)**:P4a 移交的 **A1** 60 條前綴與 P4b 移交的 **A2** 1 條孤兒 `-moz-appearance` **都不移除,只記錄** ⇒ 轉換那一段變成 **G-zero**(與 P3 的 74 檔同形);`tablet/compact/_combo.less` 走 **L-8 的 A 案**逐字轉。**←2026-08-17 第一段收工**(commit `2f348677`,紀錄 **#60**):681 條、`files differing: 0`,全樹差異維持 48 檔 / 1104 筆 ⇒ 沒有貢獻任何宣告差異;`check:build-css` 覆蓋率到 **85/85 真實來源、passthrough 0**,`zklessc` `compiled 0 file(s)`。~~`tablet.css.dsp` 應**逐 byte 不變**~~ **←同日更正,S58**:正確標準是 `cssdiff` 0 + 位元組差異全落在封閉的序列化類別內(全樹只有 23/85 逐 byte 相同,`norm.css.dsp` 也不在其中)。~~**本階剩下的唯一 G-delta 是 D4** —— 67 條逐條中和,驗收是全部對 `iceblue_c 11.0.0` 做 mobile UA computed-style 比對全綠~~ **←2026-08-17 第二段收工,機制與驗收同日更正(C23)**(commit `238a3604`,紀錄 **#61**):改為「兩張完整的表各包一個 `<c:if>`,由 library-property 二選一」,**中和一條都不做** —— 那 67 條的**單位是錯的**,真正的漏面是 **187 條宣告 / 113 個選擇器**(**S60**),而 CSS 沒有「不存在」運算子(P5 對 `browserDefault` 已有同一結論)。驗收改為**三態全量比對**:`unset`/`foo` 對 `baseline/` **895 = 895**、`compact` 對出貨 jar **869 = 869**,三者 0 缺 0 多 0 異,另跑 `ne`/`eq` 對調的負向控制(exit 1,交叉檢查點名「served the compact sheet」)。delta 形狀 **1 檔 / 0 移除 / 618 新增**。**代價**:執行期 `data-density` 屬性不驅動平板層,只有 library-property 驅動(已寫進 Javadoc)| — |
 | **規則表產生器**(P8 前置,**有期限**) | **DONE** | 自帶斷言 | **846** 列 / **834** 語法 1:1 / **830** 行為 1:1 / **16** 例外;**30** mixin 名稱 / **38** 定義列 | 2026-07-30 |
 | P8 收尾 | TODO | G-zero | 須等於 ~~P4 + P5 + P7~~ **`P4a + P4b + D1/D2 + D4`** 已核准 delta 總和(**←2026-08-14 更正,C21**:原式漏 D1/D2 的 **+352**、卻列了貢獻 **0** 的 P5) | — |
 | **D1/D2** `data-density` runtime 覆寫層 | **DONE** | G-delta | **`0 移除 / 352 新增`、1 檔**(`zul/css/norm.css.dsp`)= 帶 `data-density` 的宣告 **350** + DSP `<c:if>` 開關 **2**。**純附加**,不刪任何既有宣告 ⇒ 未設 `data-density` 時瀏覽器收到的 CSS 與 baseline 逐條相同。逐 token 對 `iceblue_c 11.0.0` oracle **350 條值全同、缺 0 條**;第 1、2 層由 `scripts/density-delta.js` 抵銷,機制與 `p4a-delta.js` / `p4b-delta.js` 同形。**閘門紀錄 #59 是 2026-08-14 補記的** —— 完工當時漏記,而 §P8 指名 L3-A 為核帳來源(**C21**);詳細驗收證據在 `tasks/l4-density-mechanism.md` L3.5 | 2026-08-12(紀錄補於 2026-08-14) |
