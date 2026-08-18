@@ -24,6 +24,7 @@
   - [L2.3 P3 批次與步階](#l23-p3-批次與步階已收工-7474) — 已收工 74/74
   - [L2.4 P3 來源清理待辦](#l24-p3-來源清理待辦7-項排在-p3-全部轉完之後) — 7 項,**1–4、6 已收工**,剩 5、7 等 P4
   - [L2.5 交給 P8 的產品面問題](#l25-交給-p8-的產品面問題2026-08-033-項不阻擋-p4-p7) — 3 項
+  - [L2.6 結案後的殘留索引](#l26-結案後的殘留索引2026-08-18) — **「還剩什麼」看這裡**:6 列,只有 1 列還要裁示
 - **[L3 技術附錄](#l3-技術附錄獨立檔)** — 索引在本檔;**內容在 [iceblue-drop-less-progress-appendix.md](iceblue-drop-less-progress-appendix.md)**
   - [階段與 commit 對照](iceblue-drop-less-progress-appendix.md#階段與-commit-對照)
   - [L3-A 閘門紀錄](iceblue-drop-less-progress-appendix.md#l3-a-閘門紀錄附加式不覆寫) — 61 列,附加式不覆寫
@@ -289,7 +290,7 @@
 | ↳ **P5 的視覺 A/B** | **DONE** | 兩側指紋須不同,且頁面差異須為 0 | **116 頁比對、pages differing: 0**,而 **theme 指紋 DIFFERENT**(`75f538af22468640` / `5c570ab19195cdc2`)—— 所以這個 0 **不是空轉**,是「20 個序列化差異區塊在 116 頁裡照不出畫面變化」的端對端確認。跑之前先 `visual:selftest` 得 0 / 0 證明 harness 當下決定性;雜訊 4 頁全在噪音下限內。**採信範圍照 S33**:語料非針對 85 個輸出檔設計,稀有元件會漏接 ⇒ 這是「看不到差異」不是「沒有差異」(紀錄 **#50**) | 2026-08-06 |
 | **P6 Font Awesome** | **DONE** | G-zero | **4545** 條零差異;產生器輸出與被刪掉的 `.less` 經 `less.render()` **逐 byte 相同**(獨立複核:**3611** 個選擇器 0 增 0 減);codepoint 抽驗 + 「加一個 icon」往返實測;`build-css` 74 → **75** 檔 | 2026-08-04 |
 | P7 `tablet` + profile API | **DONE(2026-08-17,兩段)** | ~~G-delta~~ **兩段:轉換 G-zero + D4 G-delta**(**←2026-08-14,C20**) | ~~**多一個交付項**:補 `_zkcssvariables.less` 缺的 palette import + `colors/_iceblue_css.less`(S29);驗收多一條 —— runtime override sheet 必須表達得出 palette 覆蓋,且要有一次**非 iceblue** palette 的實測~~ **←2026-08-13 兩項都移除(C19 / M-2)**:`@themePalette` 移出本案,本階只剩 `tablet` + `@themeProfile`(密度軸)。**S29 改判不補**,隨 P8 的 `.less` 歸零消失。palette 的獨立計畫 `tasks/theme-pack-palette-mechanism.md`(不進本 repo 版控,見 **M-2**)。**←2026-08-14 再減一次(C20,第一期範圍封閉)**:P4a 移交的 **A1** 60 條前綴與 P4b 移交的 **A2** 1 條孤兒 `-moz-appearance` **都不移除,只記錄** ⇒ 轉換那一段變成 **G-zero**(與 P3 的 74 檔同形);`tablet/compact/_combo.less` 走 **L-8 的 A 案**逐字轉。**←2026-08-17 第一段收工**(commit `2f348677`,紀錄 **#60**):681 條、`files differing: 0`,全樹差異維持 48 檔 / 1104 筆 ⇒ 沒有貢獻任何宣告差異;`check:build-css` 覆蓋率到 **85/85 真實來源、passthrough 0**,`zklessc` `compiled 0 file(s)`。~~`tablet.css.dsp` 應**逐 byte 不變**~~ **←同日更正,S58**:正確標準是 `cssdiff` 0 + 位元組差異全落在封閉的序列化類別內(全樹只有 23/85 逐 byte 相同,`norm.css.dsp` 也不在其中)。~~**本階剩下的唯一 G-delta 是 D4** —— 67 條逐條中和,驗收是全部對 `iceblue_c 11.0.0` 做 mobile UA computed-style 比對全綠~~ **←2026-08-17 第二段收工,機制與驗收同日更正(C23)**(commit `238a3604`,紀錄 **#61**):改為「兩張完整的表各包一個 `<c:if>`,由 library-property 二選一」,**中和一條都不做** —— 那 67 條的**單位是錯的**,真正的漏面是 **187 條宣告 / 113 個選擇器**(**S60**),而 CSS 沒有「不存在」運算子(P5 對 `browserDefault` 已有同一結論)。驗收改為**三態全量比對**:`unset`/`foo` 對 `baseline/` **895 = 895**、`compact` 對出貨 jar **869 = 869**,三者 0 缺 0 多 0 異,另跑 `ne`/`eq` 對調的負向控制(exit 1,交叉檢查點名「served the compact sheet」)。delta 形狀 **1 檔 / 0 移除 / 618 新增**。**代價**:執行期 `data-density` 屬性不驅動平板層,只有 library-property 驅動(已寫進 Javadoc)| — |
-| **規則表產生器**(P8 前置,**有期限**) | **DONE** | 自帶斷言 | **846** 列 / **834** 語法 1:1 / **830** 行為 1:1 / **16** 例外;**30** mixin 名稱 / **38** 定義列 | 2026-07-30 |
+| **規則表產生器**(P8 前置,**有期限**) | **DONE** | 自帶斷言 | ~~**846** 列~~ **866**(2026-08-18 補完 ZK 10.4 的 20 列後**凍結**)/ **834** 語法 1:1 / **830** 行為 1:1 / **16** 例外;**30** mixin 名稱 / **38** 定義列。**⚠ 846 / 834 / 830 / 16 是 2026-07-30 產生器跑出來的讀數**,凍結時只補列數與 token 數,其餘四項刻意不動(拿現在的樹重跑會量錯對象,C27)| 2026-07-30 / 凍結 2026-08-18 |
 | P8 收尾 | **DONE** | G-zero | 須等於 ~~P4 + P5 + P7~~ **`P4a + P4b + D1/D2 + D4`** 已核准 delta 總和(**←2026-08-14 更正,C21**:原式漏 D1/D2 的 **+352**、卻列了貢獻 **0** 的 P5)。**核帳逐段對上、零殘留**:全樹原始讀數 **85 檔 / 14941 條 / 49 檔 / 1756 筆** = 移除 **745**(P4a 731 + P4b 14)+ 新增 **1011**(P4b 7 + D1/D2 352 + D4 652),其中 D4 那段 628 vs 618 的差是 `cssdiff` 不剝 EL 造成的 10 條幻影宣告(`tablet-delta.js:112` 早有記錄),**不是真宣告**。三支複核在 `zkless-engine` 真的不存在的情況下同時綠燈;`mvn clean package` 出來的 jar **85 `.css.dsp` / 0 原始來源**;兩支三態 density 閘門全綠。**兩處規格更正**:`build-css.js` **沒有**長 `.less` 分支(**C26** —— entry `.less` 在 P7 已歸零,寫了就是沒有輸入的程式碼路徑);兩張規則表**凍結**而非重跑(**C27** —— 重跑會刪掉所有行為 caveat,缺的 20 列以手工附錄補在遷移指南)。**兩項退場**:`baseline/` 回到 `.gitignore`(**S47**)、`check:less-conventions` 離開閘門(0 個 `.less` = 沒有量測對象)。交付物 [migration/less-to-css.md](migration/less-to-css.md);紀錄 **#63** | 2026-08-17 |
 | **D1/D2** ~~`data-density` runtime 覆寫層~~ **←機制於 2026-08-17 被 C25 收斂,見下面的 D6 那一列** | **DONE** | G-delta | **`0 移除 / 352 新增`、1 檔**(`zul/css/norm.css.dsp`)= 帶 `data-density` 的宣告 **350** + DSP `<c:if>` 開關 **2**。**純附加**,不刪任何既有宣告 ⇒ 未設 `data-density` 時瀏覽器收到的 CSS 與 baseline 逐條相同。逐 token 對 `iceblue_c 11.0.0` oracle **350 條值全同、缺 0 條**;第 1、2 層由 `scripts/density-delta.js` 抵銷,機制與 `p4a-delta.js` / `p4b-delta.js` 同形。**閘門紀錄 #59 是 2026-08-14 補記的** —— 完工當時漏記,而 §P8 指名 L3-A 為核帳來源(**C21**);詳細驗收證據在 `tasks/l4-density-mechanism.md` L3.5。**←2026-08-17(D6 / C25)**:`[data-density]` 這個屬性鍵**已經不存在**,同一塊 350 條宣告改鍵在 `:root` 並整段包進 `<c:if>` ⇒ **已核准 delta 的形狀不變(1 檔 / 0 移除 / 350 新增)**,`P4a + P4b + D1/D2 + D4` 的加總不受影響;D3 的 Java API 同日刪除。量測見閘門紀錄 **#62** | 2026-08-12(紀錄補於 2026-08-14) |
 | **D4** compact 平板層 | **DONE** | G-delta | **併在 P7 那一列**(它是 P7 的第二段,commit `238a3604`,閘門紀錄 **#61**)—— 本列只為了讓照 `D#` 找的人找得到 | 2026-08-17 |
@@ -585,6 +586,27 @@ P8 收工時**沒有做**這兩項,理由都是「不在計畫書列出的交手
 | 1 | **別的主題會不會填 `#footer() { .append-style() {} }` 這個 hook?** | 照刪(`footer` 步 2)。它是空的,`append-style` 全 repo 只出現在這一個檔 | 純 CSS 表達不出 LESS namespace hook。IceBlue 自己沒用到,但這是**對外的擴充點**,別的主題或客戶 fork 可能有填 |
 | 2 | ~~**`goldenlayout` / `cropper` / `signature` 三對來源要不要收斂成一份?**~~ → **四對(加 `tbeditor`)的舊路徑要不要直接刪掉?** | 不收斂,逐檔各自轉(前三對每對兩檔逐 byte 相同,md5 一致) | ~~純**去重**問題:內容相同,但**兩個輸出路徑都必須繼續存在**(元件會各自去要),所以收斂需要建置期複製或 import 機制~~ **←這個理由是錯的,見 S18。** 實測 `lang-addon.xml`:每個 `css-uri` 只有**一個** `widget-package` 會要,一律是**新路徑**(`zkmax.goldenlayout` / `.cropper` / `.signature` / `.tbeditor`);**4 個舊路徑輸出從來沒有人要**。所以不需要建置期複製,問題變成「刪掉 4 個死檔要不要走 G-delta」(**77 → 73** 輸出檔)。**上游也該報** —— 產品端 `zkmax/src` 只留新路徑,同時帶新舊兩份的是 `zkthemebuilder/template`,每個從樣板長出來的主題都繼承 |
 | 3 | **兩份 `tbeditor` 版本落後,要不要對齊?** | 不動,兩個版本各自轉(375 / 380 條) | **與第 2 項不同,這不是去重** —— `js/zkmax/inp` 是上游 Trumbowyg **v2.7.2**、`js/zkmax/tbeditor` 是 **v2.31**,Potix 的改法也不同(v2.31 那份多了整組 `.z-tbeditor-editor-box` 與 flex 版面)。~~合併等於**挑一個版本**並可能改變其中一個元件的外觀~~ **←實測後這不是選擇,見 S18**:`<widget-package>zkmax.tbeditor</widget-package>` 只要新路徑,**v2.7.2 那份是死輸出**,所以「對齊」的答案就是第 2 項的答案(刪掉舊路徑),**不會改變任何元件的外觀**。仍留在 P8 的理由只剩相容性:舊 `widget-package` 可能還被更舊的 ZK 版本或客戶手寫的 `<?link?>` 指到 |
+
+
+### L2.6 結案後的殘留索引(2026-08-18)
+
+> **本案 P0–P8 與 D1–D7 全部 DONE**,四支檢查當日實測全綠
+> (`check:gate` / `check:bytes` / `check:build-css` / `check:doc-refs`,`UNEXPLAINED 0`)。
+> 這一節**不新增任何狀態**,只把散在四個地方的殘留項收成一張索引 ——
+> 原本要看四處(P8 兩項待裁示、第一期封閉的延後清單、L2.5、計畫書的 M-1/M-2)才數得完,
+> 「還剩什麼」因此答不快。**權威敘述仍在各自落點,這裡只有指路。**
+
+| # | 項目 | 類別 | 落點 |
+|---|---|---|---|
+| 1 | **S31 版號四處一致性腳本** | **待裁示** —— 本案唯一還在等人決定的一項。四處版號目前一致(2026-08-05 實測),但沒有腳本守著;與 LESS 無關,是發行前檢查 | 本檔〈P8 留下的兩項待裁示〉第 2 項 |
+| 2 | **A1 / A2 / A3 · B1–B3 · C1 / C2** | **已裁示延後**(第一期範圍封閉,**C20**)—— 全是來源清理,不是脫離 LESS 的必要條件。**A3 是這批裡唯一沒有自動檢查守著的**(`.z-focus-a` 對 `.z-page *` 的 specificity 平手,由載入順序決定) | [migration/less-to-css.md](migration/less-to-css.md)〈Known residuals〉 |
+| 3 | **S18 的 4 個死輸出**(舊 `widget-package` 路徑,刪掉會讓輸出 85 → 81) | **已裁示延後** —— 刪輸出是相容性決定而非工程決定,且是 G-delta | 同上,`S18` 那一列;本檔 L2.5 第 2、3 項 |
+| 4 | **M-1 Marble 的 `Density.COMFORTABLE` → `DEFAULT`** | **跨主題,不在本 worktree** —— 觸發時機已收斂成單一條件:**Marble 首次公開發行前** | 計畫書〈附:跨主題待辦裁示〉M-1 |
+| 5 | **M-2 `@themePalette` 的機制與 API** | **移出本案** —— 屬於 Theme Pack 後繼產品。計畫檔 `tasks/theme-pack-palette-mechanism.md` **刻意不進本 repo 版控** ⇒ **`check:doc-refs` 守不到它**,本 repo 沒有任何東西保證那份計畫還在 | 計畫書 M-2 |
+| 6 | ~~凍結表右欄的腐化沒人守~~ | **已結案(2026-08-18)** —— `check:migration-tokens` 進 gate,列在這裡是為了說明第 1–5 項之外**沒有**別的無人看守項 | 本檔〈補上單向 `check:migration-tokens` 並納入 gate〉 |
+
+**第 1 項與第 2–5 項的差別要分清楚**:只有第 1 項還需要一個決定;第 2–5 項**都已經有裁示**,
+它們留著是因為裁示的內容就是「這一期不做」或「不在這裡做」,不是因為沒人處理。
 
 
 ---
