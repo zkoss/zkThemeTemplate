@@ -292,6 +292,12 @@ trusting it:
 | `node scripts/check-less-conventions.js --source <tree>` | enforces the one non-standard rule in ZK's Less: `@import "~./…"` works in entry files only |
 | `node scripts/gen-var-table.js --src <tree> --fork` | regenerates the variable table for *your* variable set (`--fork` reports drift from upstream instead of failing) |
 | `node scripts/gen-mixin-table.js` | same for mixins (expects the stock path `src/main/resources/web/zul/less/_zkmixins.less`) |
+| `node scripts/check-migration-tokens.js --src <tree>` | asserts every token the frozen variable table names is still declared by that tree's default profile |
 
 `gen-var-table.js` and `gen-mixin-table.js` exit 2 in this repository, on purpose: their input is
 gone. The message tells you so rather than reporting a green tick.
+
+`check-migration-tokens.js` is the one piece of that retired checking that still works here, and
+it runs in `check:gate`. It asks only whether the tokens the table names still exist — never
+whether every token is named, because a token added after the conversion has no Less ancestor
+and nothing to migrate from. If you keep your own variable table, point it at your tree.

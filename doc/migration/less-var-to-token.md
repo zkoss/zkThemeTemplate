@@ -11,6 +11,9 @@ variable can appear in this repository, so no new row can ever be needed. The ri
 tokens that are still live and still edited, so **renaming or deleting a `--zk-*` token is the one
 change that must be reflected here**. Adding a token does not: a token with no LESS ancestor has
 nothing to migrate from. Measured 2026-08-18: **0** of the 862 tokens named below have disappeared.
+`npm run check:migration-tokens` asserts exactly this, and runs in `check:gate` — so a rename that
+orphans a row here fails the build instead of going unnoticed, which is how the 20 `@severity*`
+rows came to be missing for twelve days.
 
 **Hand edits since the freeze:** the 20 `@severity*` rows (2026-08-18) — see `addendum` in
 [`less-var-to-token.json`](less-var-to-token.json).
