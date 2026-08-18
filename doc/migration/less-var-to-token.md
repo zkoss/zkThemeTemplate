@@ -1,8 +1,19 @@
 # LESS variable → CSS custom property (migration table)
 
-**Generated — do not hand-edit.** Regenerate with `npm run gen:var-table`
-(`node scripts/gen-var-table.js`). Output is deterministic: no timestamps, so any diff here
-means the source tree moved.
+**Frozen at P8 — generated once, hand-maintained from here.** `npm run gen:var-table` was
+retired with the LESS tree it measured: re-running it against this repository would report 863
+variables as unreferenced and would silently lose the caveat evidence, because the consumption
+sites it reads are `.css` now. Regenerate only against a fork that still has `.less`
+(`--src <fork>/src/main/resources/web --fork`).
+
+**What can still make this table wrong.** The left column is closed for good — no new `.less`
+variable can appear in this repository, so no new row can ever be needed. The right column names
+tokens that are still live and still edited, so **renaming or deleting a `--zk-*` token is the one
+change that must be reflected here**. Adding a token does not: a token with no LESS ancestor has
+nothing to migrate from. Measured 2026-08-18: **0** of the 862 tokens named below have disappeared.
+
+**Hand edits since the freeze:** the 20 `@severity*` rows (2026-08-18) — see `addendum` in
+[`less-var-to-token.json`](less-var-to-token.json).
 
 This table is the upgrade artifact for anyone who customized this theme the way
 `readme.md:69` recommends — **by overriding LESS variables**. For the overwhelming
@@ -21,15 +32,15 @@ to ZK 11 and dropping LESS are separable decisions.**
 
 | | count |
 |---|---|
-| variable declarations mapped | **846** |
-| … clean 1:1 `@name → var(--zk-token)` | 834 |
+| variable declarations mapped | **866** |
+| … clean 1:1 `@name → var(--zk-token)` | 854 |
 | … one variable → several tokens | 4 |
 | … config strings (not tokens) | 2 |
 | … image/asset paths (not tokens) | 4 |
 | … media-query strings (not tokens) | 2 |
 | … plain literals (fork-only category) | 0 |
-| distinct `--zk-*` tokens on the right-hand side | **842** |
-| tokens declared by a profile | 842 |
+| distinct `--zk-*` tokens on the right-hand side | **862** |
+| tokens declared by a profile | 862 |
 | mapped tokens that no profile declares | 0 |
 | profile tokens that no variable maps to | 0 |
 
@@ -43,7 +54,7 @@ to ZK 11 and dropping LESS are separable decisions.**
 Source files (there are **two**, which is easy to miss):
 
 - `src/main/resources/web/zkmax/less/_zkvariables.less` — 2 declaration(s)
-- `src/main/resources/web/zul/less/_zkvariables.less` — 844 declaration(s)
+- `src/main/resources/web/zul/less/_zkvariables.less` — 864 declaration(s)
 
 Both are deleted by phase P8 of the drop-LESS conversion. That is why this file exists.
 
@@ -62,12 +73,12 @@ zul/less/profiles/_default.less
 So "override the variable" and "override the token" are edits to different files with
 different reach. Profiles found:
 
-- `src/main/resources/web/zul/less/profiles/_compact.less` — 842 `--zk-*` declarations
-- `src/main/resources/web/zul/less/profiles/_default.less` — 842 `--zk-*` declarations
+- `src/main/resources/web/zul/less/profiles/_compact.less` — 862 `--zk-*` declarations
+- `src/main/resources/web/zul/less/profiles/_default.less` — 862 `--zk-*` declarations
 
 ## Exceptions
 
-12 of 846 declarations do not even *look* like a 1:1 rename —
+12 of 866 declarations do not even *look* like a 1:1 rename —
 their value is not a single token. These are the easy exceptions: the table shape shows them.
 
 A further **4** rows *are* a single token and look perfectly clean, but behave
@@ -260,12 +271,12 @@ it is dead" is cheaper to read than "I could not find it".)
 | `@dragAllowBorderColor` | `--zk-drag-allow-border-color` | `zul/less/_zkvariables.less:439` |
 | `@dragDisAllowBorderColor` | `--zk-drag-disallow-border-color` | `zul/less/_zkvariables.less:442` |
 | `@pagingInputPadding` | `--zk-paging-input-padding` | `zul/less/_zkvariables.less:515` |
-| `@navSeparatorColor` | `--zk-nav-separator-color` | `zul/less/_zkvariables.less:658` |
-| `@chosenboxInputPadding` | `--zk-chosenbox-input-padding` | `zul/less/_zkvariables.less:700` |
-| `@ratingDisabled` | `--zk-rating-disabled` | `zul/less/_zkvariables.less:742` |
-| `@ratingDisabledSelected` | `--zk-rating-disabled-selected` | `zul/less/_zkvariables.less:743` |
-| `@stepCompleteColor` | `--zk-step-complete-color` | `zul/less/_zkvariables.less:927` |
-| `@cascaderIconColor` | `--zk-cascader-icon-color` | `zul/less/_zkvariables.less:984` |
+| `@navSeparatorColor` | `--zk-nav-separator-color` | `zul/less/_zkvariables.less:682` |
+| `@chosenboxInputPadding` | `--zk-chosenbox-input-padding` | `zul/less/_zkvariables.less:724` |
+| `@ratingDisabled` | `--zk-rating-disabled` | `zul/less/_zkvariables.less:766` |
+| `@ratingDisabledSelected` | `--zk-rating-disabled-selected` | `zul/less/_zkvariables.less:767` |
+| `@stepCompleteColor` | `--zk-step-complete-color` | `zul/less/_zkvariables.less:951` |
+| `@cascaderIconColor` | `--zk-cascader-icon-color` | `zul/less/_zkvariables.less:1008` |
 
 Liveness is measured over the `.less` tree only, and `_zkvariables.less` itself is
 excluded from the token count (its whole job is forwarding, so counting it would make
@@ -964,6 +975,37 @@ times the variable is referenced across the `.less` tree (`0` = dead, see CAVEAT
 | `@notificationPointerContentPadding` | `--zk-notification-pointer-content-padding` | token | rename | 1 |
 | `@notificationCloseFontSize` | `--zk-notification-close-font-size` | token | rename | 2 |
 | `@notificationCloseIconSize` | `--zk-notification-close-icon-size` | token | rename | 2 |
+#### severity (shared status palette — used by Badge/Chip/Confirmpopup, Ant Design)
+
+> Spliced in by hand on 2026-08-18, after the freeze — see `addendum` in the JSON. These 20
+> declarations reached the theme on 2026-08-05, five days after this table was generated, and
+> nothing caught the gap because `check:var-table` was never a `check:gate` step. Rows are the
+> real generator's output for the one commit where both these declarations and their LESS
+> consumers existed; the `refs` below match the `var(--zk-severity-*)` counts in the shipped
+> CSS exactly, per token.
+
+| LESS variable | CSS custom property | category | verdict | refs |
+|---|---|---|---|---|
+| `@severityInfoColor` | `--zk-severity-info-color` | token | rename | 2 |
+| `@severitySuccessColor` | `--zk-severity-success-color` | token | rename | 2 |
+| `@severityWarningColor` | `--zk-severity-warning-color` | token | rename | 2 |
+| `@severityDangerColor` | `--zk-severity-danger-color` | token | rename | 3 |
+| `@severitySecondaryColor` | `--zk-severity-secondary-color` | token | rename | 2 |
+| `@severityInfoBg` | `--zk-severity-info-bg` | token | rename | 2 |
+| `@severitySuccessBg` | `--zk-severity-success-bg` | token | rename | 1 |
+| `@severityWarningBg` | `--zk-severity-warning-bg` | token | rename | 1 |
+| `@severityDangerBg` | `--zk-severity-danger-bg` | token | rename | 1 |
+| `@severitySecondaryBg` | `--zk-severity-secondary-bg` | token | rename | 1 |
+| `@severityInfoBorder` | `--zk-severity-info-border` | token | rename | 2 |
+| `@severitySuccessBorder` | `--zk-severity-success-border` | token | rename | 1 |
+| `@severityWarningBorder` | `--zk-severity-warning-border` | token | rename | 1 |
+| `@severityDangerBorder` | `--zk-severity-danger-border` | token | rename | 1 |
+| `@severitySecondaryBorder` | `--zk-severity-secondary-border` | token | rename | 1 |
+| `@severityInfoText` | `--zk-severity-info-text` | token | rename | 2 |
+| `@severitySuccessText` | `--zk-severity-success-text` | token | rename | 1 |
+| `@severityWarningText` | `--zk-severity-warning-text` | token | rename | 1 |
+| `@severityDangerText` | `--zk-severity-danger-text` | token | rename | 1 |
+| `@severitySecondaryText` | `--zk-severity-secondary-text` | token | rename | 1 |
 #### progressmeter
 
 | LESS variable | CSS custom property | category | verdict | refs |

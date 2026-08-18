@@ -69,12 +69,18 @@ Two consequences worth knowing:
 - **Two rows describe files this theme no longer has**: `@iphone` and `@android`, from
   `zkmax/less/_zkvariables.less`. They were media-query strings, never referenced anywhere, and the
   table already marks them dead. Harmless.
-- **Twenty rows are missing**, listed next.
+- **Twenty rows were missing** until 2026-08-18; they are in the table now, and repeated
+  below with their default values because the table does not carry values.
 
-### The 20 rows added after the table was generated
+### The 20 severity rows, with their default values
 
-ZK 10.4 added a severity palette to this theme after the table was produced. All 20 are clean 1:1
-renames; the values are the `iceblue11` defaults from `zul/css/tokens/_default.css`.
+ZK 10.4 added a severity palette to this theme on 2026-08-05, five days after the table was
+generated, and nothing regenerated it — `check:var-table` was never a gate step. **The rows are
+now in the table itself** (section *severity*), so this is no longer a gap; the list is kept here
+because it carries the default value of each token, which the table does not.
+
+All 20 are clean 1:1 renames. Values are the `iceblue11` defaults from
+`zul/css/tokens/_default.css`, re-verified against it on 2026-08-18 — 20 of 20 still match.
 
 | Less variable | custom property | default |
 |---|---|---|
@@ -99,9 +105,11 @@ renames; the values are the `iceblue11` defaults from `zul/css/tokens/_default.c
 | `@severityDangerText` | `--zk-severity-danger-text` | `#cf1322` |
 | `@severitySecondaryText` | `--zk-severity-secondary-text` | `#595959` |
 
-Derived mechanically from `_zkvariables.less` + `tokens/_default.css` before those files were
-deleted, not typed by hand. 846 + 20 − 2 = **864**, which is the declaration count the last
-`_zkvariables.less` had.
+Derived mechanically, not typed by hand. The table now holds **866** rows = 864 from the last
+`zul/less/_zkvariables.less` + 2 from `zkmax`, and the 20 rows carry the reference counts the real
+generator measured at the one commit where these declarations and their LESS consumers
+(`badge.less`, `chip.less`, `confirmpopup.less`) both existed — counts that match the
+`var(--zk-severity-*)` consumers in the shipped CSS exactly, per token.
 
 ## Three behavioural differences the rename does not cover
 

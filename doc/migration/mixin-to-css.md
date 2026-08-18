@@ -1,7 +1,10 @@
 # LESS mixin → CSS
 
-**Generated file — do not edit by hand.** Regenerate with `npm run gen:mixin-table`
-(`scripts/gen-mixin-table.js`).
+**Frozen at P8 — generated once, hand-maintained from here.** `npm run gen:mixin-table`
+was retired with the LESS tree it measured; it can still run against a fork that has `.less`
+(`--src <fork>/src/main/resources/web`). Unlike the variable table this one has no live right-hand
+side to rot: it maps mixins to plain CSS declarations, not to tokens, so nothing in this repository
+can invalidate it.
 
 Source: `src/main/resources/web/zul/less/_zkmixins.less` — **this file is deleted** when the theme drops LESS
 ([execution plan §P8](../iceblue-drop-less-execution-plan.md)). This table is the record of
