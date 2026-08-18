@@ -242,6 +242,8 @@
 > P8 順手清掉兩筆欠帳(`baseline/` 退回 gitignore = **S47** 退場;`check:var-table` /
 > `check:mixin-table` 兩支過期儀器退場 = **S14 + S37** 結案,方式是**凍結表格**而不是重新校準,
 > 見 **C27**),並留下**兩項未做、已記錄**:`--watch`(見下方〈P8 留下的兩項待裁示〉)與 **S31**。
+> **←2026-08-18:`--watch` 已裁示為選項 C 並實作完成**(`npm run watch` + SSE 自動刷新,0 新依賴,
+> 主題輸出未動);見〈議題一裁示〉。**S31 仍待裁示。**
 > **←2026-08-17:P7 兩段、D4、D6(C25 的規格收斂)與 D5 全部收工 ⇒ 那條鏈只剩 `P8`。**
 > D5 的對外交付物是 [migration/density.md](migration/density.md),**S36 以 S62 正式結案**。
 > L2.4 清理待辦第 1–4、6 項已於 2026-08-04 收工(紀錄 #32、#33),
@@ -422,12 +424,52 @@ P6 因此從 BLOCKED 轉 TODO。但它**相依於 P2** —— 產生出來的 `.
 
 ### P8 留下的兩項待裁示(2026-08-17)
 
+> **第 1 項已於 2026-08-18 裁示並實作完成 —— 選項 C(重編 + 瀏覽器自動刷新都補)。**
+> 見下方〈議題一裁示:補回檔案監看與自動刷新〉。第 2 項(**S31**)仍待裁示。
+
 P8 收工時**沒有做**這兩項,理由都是「不在計畫書列出的交手清單裡」,而不是漏掉:
 
 | # | 事項 | 現況與代價 |
 |---|---|---|
 | 1 | **`build-css.js` 要不要長 `--watch`** | `zkless-engine` 同時提供 watch 與 live reload,而它的 watcher `ignoreNonLessFiles` **只看 `.less`** ⇒ **P3 每轉一個檔就少監看一個檔,P7 之後 `npm run zklessc-dev` 已經完全看不到任何來源** —— 這是 P3–P7 造成、P8 才揭出的既有回歸,不是 P8 弄壞的。計畫書〈`build-css.js` 要接手什麼〉那張表**沒有列 watch**,所以本階不做,`readme.md` 改成實話(「沒有檔案監看,改完跑 `npm run build:css`」)。**做的成本**:`fs.watch(dir,{recursive:true})` 約 25 行,不需要新依賴,但 Linux 的 recursive 要 Node 20+(readme 目前寫 Node ≥ 10.16);要連 live reload 一起就得再加 socket.io 之類的依賴。**不做的代價**:主題開發者每次改 CSS 要手動跑一次(< 1 秒,預覽程式不必重啟) |
 | 2 | **S31 版號四處一致性腳本** | 2026-08-05 第 4 層建議「排 P8」的項目。四處版號目前**一致**(當時實測),但沒有任何腳本守著。不做的理由與上一項相同:不在交手清單裡,而且它與 LESS 無關 —— 它是發行前的檢查,不是本案的收尾動作 |
+
+### 議題一裁示:補回檔案監看與自動刷新(2026-08-18,選項 C)
+
+使用者選 **C —— 重編與瀏覽器自動刷新都補**。實作完成,**主題輸出一個位元組都沒動**
+(`check:gate` / `check:bytes` / `check:build-css` / `check:doc-refs` 四支全綠,
+`UNEXPLAINED 0`;本次只碰 `scripts/`、`src/test/`、`readme.md`、`package.json`)。
+
+**兩項報價過高的成本,實測都不必付:**
+
+| 報價時說 | 實測 | 結果 |
+|---|---|---|
+| 「要重新引入 socket.io 之類的依賴」 | 自動刷新只需要單向 server→browser 通知,`EventSource`(SSE)+ Node 內建 `http` 就夠 | **0 依賴** |
+| 「Linux 遞迴監看需 Node 20+,readme 的 ≥ 10.16 得跟著改」 | 那是 `fs.watch({recursive:true})` 的限制。改用「每 400ms 重列一次檔案清單」(本樹 ~470 檔,一次 tick 就是 470 個 `stat()`)即可,跨平台行為一致 | **Node 門檻不動,0 依賴** |
+
+原本想用的 `chokidar` 實測**不能用**:5.0 要求 Node ≥ 20.19,4.x 起又拿掉了 glob 比對,
+只有停止演進的 3.x 支援舊 Node ⇒ 引它等於釘死在維護分支上。**整個功能最後 0 新依賴。**
+
+**設計上必須自己決定的一件事:注入時機。** 自動刷新要在頁面裡放一支客戶端腳本,而本樹有
+125 個預覽頁,逐頁加是錯的(姊妹專案 Marble 只有 2 頁才加得起)。改用
+`UiLifeCycle.afterPageAttached`(`zk.example.LiveReloadInit`,**test scope**,與
+`PreviewStylesInit` 同一份 `metainfo/zk/config.xml`),一處註冊、每頁生效。
+但**不能無條件注入** —— 視覺 A/B 與 Playwright 起的是同一個預覽程式,那時 watcher 沒開,
+每頁都會多一個連不上的請求 ⇒ 以 library property `org.zkoss.zul.theme.liveReload` 當開關,
+**預設關閉**,本樹沒有任何腳本會設它,現有自動化因此行為零變化。
+
+| 驗收條件 | 實測 |
+|---|---|
+| 主題輸出未動 | `check:bytes` **UNEXPLAINED 0**;`check:gate` / `check:build-css` / `check:doc-refs` 全 **exit 0** |
+| 改主題 `.css` 會重編並通知 | `touch zul/css/norm.css` → `compiled 85 file(s)` → SSE 收到 `event: reload-css` |
+| 改預覽 `.zul` 會複製並通知 | `touch button.zul` → 複製進 `target/test-classes/web/` → SSE 收到 `event: reload-page` |
+| 屬性沒設 ⇒ 真的沒注入 | 頁面內 `zul.utl.Script` **0**、`50001` **0** |
+| 屬性設了 ⇒ 真的有注入 | 頁面內 `['zul.utl.Script','dQIO0',{src:'http:\/\/localhost:50001\/zk\-live\-reload.js'}…]`,**1** 處 |
+| 埠被占用時不去殺別人 | 第二個 watcher 明確報錯後 `exit 1`,第一個仍在;而且**在綁到埠之前不會開始編譯**(否則 `process.exit` 可能砍在寫檔中途,留下截斷的輸出) |
+| readme 寫的 `--port` 真的能用 | `npm run watch -- --port 50002` 起得來,客戶端腳本內嵌的埠跟著變 |
+
+預設埠 **50001**,比 Marble 的 50000 大一,兩個主題樹可以同時監看。
+執行計畫:`tasks/p8-followup-live-reload.md`。
 
 ### L2.5 交給 P8 的產品面問題(2026-08-03,3 項,不阻擋 P4-P7)
 

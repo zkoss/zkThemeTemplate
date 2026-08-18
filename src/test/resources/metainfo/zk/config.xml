@@ -4,15 +4,21 @@
      alongside — not instead of — the theme's own src/main/resources/metainfo/zk/config.xml;
      ZK reads every metainfo/zk/config.xml it finds on the class path.
 
-     Its only job is registering PreviewStylesInit, which attaches the preview-only utility
-     stylesheet to every desktop. Nothing here may ever move into src/main: that would put
-     the utilities into the built theme output, which is what the conversion's baseline diff
-     measures. See tasks/utility-css-vs-p7-ordering.md. -->
+     It registers two development-only listeners. Nothing here may ever move into src/main:
+     that would put the utilities into the built theme output, which is what the conversion's
+     baseline diff measures. See tasks/utility-css-vs-p7-ordering.md. -->
 <config>
 	<config-name>preview-app</config-name>
 	<depends>iceblue11</depends>
 
+	<!-- Attaches the preview-only utility stylesheet to every desktop. -->
 	<listener>
 		<listener-class>zk.example.PreviewStylesInit</listener-class>
+	</listener>
+
+	<!-- Injects the `npm run watch` live-reload client. Does nothing unless the library
+	     property org.zkoss.zul.theme.liveReload is set, which no script in this tree sets. -->
+	<listener>
+		<listener-class>zk.example.LiveReloadInit</listener-class>
 	</listener>
 </config>

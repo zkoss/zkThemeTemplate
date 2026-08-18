@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "build:css": "node scripts/build-css.js -s src/main/resources/web -o target/classes/web/iceblue11",
+    "watch": "node scripts/watch-css.js",
     "baseline": "node scripts/baseline.js",
     "gen:baseline-manifest": "node scripts/baseline-ab.js manifest",
     "check:baseline": "node scripts/baseline-ab.js check",

@@ -171,9 +171,30 @@ It rebuilds all 85 stylesheets in well under a second, and the preview app picks
 next request without a restart (`ThemePreviewApp` sets `org.zkoss.zk.WCS.cache=false`), so a
 hard-reload in the browser is enough.
 
-**There is no file watcher.** The old `npm run zklessc-dev` watched `.less` files only, so it had
-already stopped seeing this theme's sources file by file as they were converted to `.css`; it was
-removed with the Less toolchain rather than left in place watching nothing.
+## rebuild on save, and update the browser for you
+
+`npm run watch`
+
+Leave it running in its own console. It rebuilds the theme whenever a `.css` under
+`src/main/resources/web` changes, and copies preview-page edits under `src/test/resources/web`
+(`.zul`, `.css`, `.js`, images) into `target/test-classes` where the running app reads them.
+
+To have the browser follow along, start the preview app with live reload enabled:
+
+`mvn test exec:java@preview-app -Dorg.zkoss.zul.theme.liveReload=true`
+
+Stylesheet changes are swapped in without a page reload, so whatever you had open — a dropdown,
+a selected row, a scroll position — survives the edit. Everything else reloads the page.
+
+Live reload is **off unless you ask for it**, because the visual A/B harness and the Playwright
+suites start this same preview app and must not be talking to a development watcher. The watcher
+listens on port 50001; if that clashes with something else, run `npm run watch -- --port 50002`
+and start the app with `-Dorg.zkoss.zul.theme.liveReload=50002`.
+
+Neither the watcher nor the reload channel adds a dependency — the watcher restates the file list
+every 400ms, and the browser is notified over Server-Sent Events using Node's own `http` module.
+The `npm run zklessc-dev` this replaces needed the whole Less toolchain to do the same job, and
+watched `.less` files only, so it had gone blind as this theme's sources were converted to `.css`.
 
 
 # How to use `iceblue11.jar`:
