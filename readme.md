@@ -30,7 +30,31 @@ fork this repository to another git repository, so this will make it easier to m
 * install the build dependencies. Nothing needs to be installed by hand.
 
 `npm install`
-  
+
+### changing the version afterwards
+
+`init.sh` asks for a version and writes it into the four places that declare one. It does that
+**once**, when you initialize the project. To change it later:
+
+`npm run set:version -- 11.0.1-Eval`
+
+That rewrites all four at once — `pom.xml`, `metainfo/zk/config.xml`, `metainfo/zk/lang-addon.xml`
+and `Version.java` — and re-reads them afterwards to confirm they agree. The four are not copies of
+one value; each has its own job, which is why they are separate declarations and why they still have
+to say the same thing:
+
+| Where | What it is for |
+|---|---|
+| `pom.xml` `<version>` | names the jar, the `bin` zip and the OSGi `Bundle-Version` |
+| `config.xml` `<version-uid>` | ZK compares it with `Version.UID` while loading |
+| `lang-addon.xml` `<version-uid>` | same comparison, for the language addon |
+| `Version.java` `UID` | the value both XML files are compared against |
+
+**Editing one by hand is the mistake to avoid**, because ZK's own reaction to a mismatch is quiet:
+it skips the whole file and logs one `INFO` line. A `config.xml` that disagrees with `Version.java`
+therefore drops the listener that registers the theme — the application keeps serving pages with
+HTTP 200 and no error, just without your theme applied. `npm run check:version` asserts the four
+agree, and it is part of `npm run check:gate`.
 
 ## build jar file
 `mvn clean package`
