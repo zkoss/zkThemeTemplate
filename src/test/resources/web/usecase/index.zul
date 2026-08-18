@@ -12,10 +12,12 @@
       - no commit stamp and no "Report this page" button — neither the stamping script nor the
         issue tracker they depend on exists on this branch.
 
-    There is no density switch here any more: since D6/C25 density is set only by the
-    org.zkoss.zul.theme.density library property, so reviewing compact means restarting with
-    -Dorg.zkoss.zul.theme.density=compact. The review path is then identical to what an
-    application does, which is the point.
+    Density is not a control in this sidebar chrome, because it is not a per-user preference: the
+    org.zkoss.zul.theme.density library property is JVM-global (C25 — one knob, and only that one).
+    Reviewing compact is what the "Density Switch" page under Overview is for; it sets that same
+    property and reloads, which since C28 is a supported way to change it. Starting the app with
+    -Dorg.zkoss.zul.theme.density=compact still works too. See
+    doc/density-runtime-switch-verification.md.
 -->
 <borderlayout height="100vh" viewModel="@id('vm') @init('zk.example.UseCaseVM')"
     onBookmarkChange="@command('handleBookmarkChange', bookmark=event.bookmark)">
@@ -29,6 +31,7 @@
                 <nav label="Overview" open="@load(vm.openNavLabel eq 'Overview')">
                     <navitem label="Overview"             selected="@load(vm.currentPage eq '~./overview.zul')" onClick="@command('navigate', page='~./overview.zul')"/>
                     <navitem label="Component Theming"    selected="@load(vm.currentPage eq '~./component-theming.zul')" onClick="@command('navigate', page='~./component-theming.zul')"/>
+                    <navitem label="Density Switch"       selected="@load(vm.currentPage eq '~./density-probe.zul')" onClick="@command('navigate', page='~./density-probe.zul')"/>
                 </nav>
                 <nav label="Inputs" open="@load(vm.openNavLabel eq 'Inputs')">
                     <navitem label="Bandbox"              selected="@load(vm.currentPage eq '~./bandbox.zul')" onClick="@command('navigate', page='~./bandbox.zul')"/>

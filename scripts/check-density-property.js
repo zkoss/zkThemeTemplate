@@ -37,6 +37,23 @@
  *
  * The third is the negative control and the reason this file exists rather than a one-line grep.
  *
+ * AND THE CACHE KEY, WHICH IS PART OF THE SAME CLAIM
+ * -------------------------------------------------
+ * Serving the right bytes is only half of "the property switches the density". The other half is
+ * that a browser which already has the stylesheet is asked again — and it is asked again only if
+ * the URL differs. It did not, until `Iceblue11ThemeProvider` put the density into the injected
+ * fragment; before that, both densities shared one URL carrying `max-age=31536000`, and a warm
+ * cache kept painting the old density through both a navigation and a reload (measured, see
+ * doc/density-runtime-switch-verification.md).
+ *
+ * So each state also asserts its WCS URL, with the same three-state logic as the block itself:
+ *   unset / foo   the same URL as each other   (same stylesheet ⇒ sharing a cache entry is CORRECT)
+ *   compact       a different URL from both    (different stylesheet ⇒ must not share one)
+ *
+ * The `foo` row carries its weight twice here: a fragment built from the raw property value rather
+ * than from an `eq compact` test would give an unrecognised value its own cache key, quietly
+ * fragmenting the cache for every typo.
+ *
  * USAGE
  *   node scripts/check-density-property.js
  *
@@ -92,8 +109,17 @@ async function measure(state) {
 	}
 }
 
+/**
+ * The stylesheet URL minus the session id, which ZK rewrites into the href on a session's first
+ * request only — so comparing raw hrefs across states would compare session ids, not cache keys.
+ */
+function cacheKey(url) {
+	return url.replace(/;jsessionid=[^?/]*/i, '');
+}
+
 async function main() {
 	const violations = [];
+	const keys = {};
 	for (const state of STATES) {
 		console.log(`\n=== ${PROPERTY} = ${state.name} ===`);
 		let m;
@@ -103,7 +129,9 @@ async function main() {
 			console.error(`check-density-property: ${e.message}`);
 			return 2;
 		}
+		keys[state.name] = cacheKey(m.url);
 		console.log(`stylesheet:      ${m.url}`);
+		console.log(`cache key:       ${keys[state.name]}`);
 		console.log(`bytes:           ${m.bytes}`);
 		console.log(`compact block:   ${m.blocks ? `present (\u00d7${m.blocks})` : 'absent'}`);
 
@@ -115,6 +143,18 @@ async function main() {
 		}
 	}
 
+	// The cache key, checked across states rather than within one — two states serving different
+	// bytes under one URL is the defect Iceblue11ThemeProvider exists to prevent.
+	const unset = keys['unset'], compact = keys['compact'], foo = keys['foo (unrecognised)'];
+	if (compact === unset) {
+		violations.push(`compact shares its cache key with unset (${compact}) — a browser holding ` +
+			`the default stylesheet will never refetch, so the property cannot reach it`);
+	}
+	if (foo !== unset) {
+		violations.push(`an unrecognised value got its own cache key (${foo} vs ${unset}) — it ` +
+			`serves the same bytes as unset, so it must share the entry`);
+	}
+
 	if (violations.length) {
 		console.error('\n!!! violation(s):');
 		for (const v of violations) console.error(`  ${v}`);
@@ -122,6 +162,8 @@ async function main() {
 	}
 	console.log(`\nOK — unset and an unrecognised value both serve no compact block at all; ` +
 		`only \`compact\` receives it, keyed on \`:root\`.`);
+	console.log(`OK — and \`compact\` is served under its own cache key while unset and the ` +
+		`unrecognised value share one, so changing the property reaches a warm browser cache.`);
 	return 0;
 }
 

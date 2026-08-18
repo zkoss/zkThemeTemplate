@@ -18,6 +18,7 @@ package org.zkoss.theme.iceblue11;
 
 import org.zkoss.zk.ui.WebApp;
 import org.zkoss.zk.ui.WebApps;
+import org.zkoss.zk.ui.util.Configuration;
 import org.zkoss.zk.ui.util.WebAppInit;
 import org.zkoss.zkmax.theme.ResponsiveThemeRegistry;
 import org.zkoss.zul.theme.Themes;
@@ -40,5 +41,17 @@ public class Iceblue11ThemeWebAppInit implements WebAppInit {
 		if ("EE".equals(edition)) {
 			Themes.register(ResponsiveThemeRegistry.TABLET_PREFIX + THEME_NAME, THEME_DISPLAY, THEME_PRIORITY);
 		}
+
+		// Iceblue11ThemeProvider puts the density into the WCS URL, so that changing
+		// org.zkoss.zul.theme.density actually reaches a browser that already has the stylesheet.
+		// Without it both densities share one URL carrying max-age=31536000 — see that class.
+		//
+		// Wired here rather than through <theme-provider-class> in metainfo/zk/zk.xml because of
+		// ZK-1671: a provider declared in a jar's zk.xml can be silently replaced by
+		// StandardThemeProvider depending on jar load order, and a silent revert here means the
+		// cache key quietly loses the density again. setCustomThemeProvider(true) locks it.
+		Configuration config = webapp.getConfiguration();
+		config.setThemeProvider(new Iceblue11ThemeProvider());
+		config.setCustomThemeProvider(true);
 	}
 }

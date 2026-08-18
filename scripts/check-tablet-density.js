@@ -40,6 +40,22 @@
  *   compact    the compact sheet, and only it
  *   foo        MUST behave like unset — an unrecognised value cannot silently switch density
  *
+ * AND THE CACHE KEY, WHICH IS HALF OF "THE PROPERTY SWITCHES THE DENSITY"
+ * ----------------------------------------------------------------------
+ * Serving the right sheet is not enough. A browser that already holds this sheet has to be asked
+ * again, and it is asked again only if the URL differs — the response carries
+ * `Cache-Control: public, max-age=31536000`. The desktop bundle got its density into the URL via
+ * `Aide.injectURI` (see `Iceblue11ThemeProvider`); this sheet could not use that mechanism at all,
+ * because `DspExtendlet`'s loader has no `_zkiju-` stripping and an injected path here 404s. It
+ * carries a query string instead.
+ *
+ * So each state also asserts its tablet URL, with the same three-state logic as the sheet itself:
+ *   unset / foo   the same URL as each other   (same sheet ⇒ sharing a cache entry is CORRECT)
+ *   compact       a different URL from both    (different sheet ⇒ must not share one)
+ *
+ * The `foo` row earns its keep twice: a cache buster built from the raw property value rather than
+ * from a `compact`-or-not decision would give every typo its own cache entry.
+ *
  * USAGE
  *   node scripts/check-tablet-density.js
  *
@@ -170,8 +186,17 @@ function report(label, r, violations, state) {
 	for (const k of r.differing.slice(0, 8)) console.error(`    DIFFERS ${k}`);
 }
 
+/**
+ * The stylesheet URL minus the session id, which ZK rewrites into the href on a session's first
+ * request only — comparing raw hrefs across states would compare session ids, not cache keys.
+ */
+function cacheKey(url) {
+	return url.replace(/;jsessionid=[^?]*/i, '');
+}
+
 async function main() {
 	const violations = [];
+	const keys = {};
 	const baseline = fs.readFileSync(BASELINE, 'utf8');
 	const oracle = oracleSheet();
 	if (!oracle) {
@@ -187,7 +212,9 @@ async function main() {
 			console.error(`check-tablet-density: ${e.message}`);
 			return 2;
 		}
+		keys[state.name] = cacheKey(m.url);
 		console.log(`stylesheet:  ${m.url}`);
+		console.log(`cache key:   ${keys[state.name]}`);
 		console.log(`bytes:       ${m.text.length}`);
 
 		if (state.expect === 'default') {
@@ -209,6 +236,18 @@ async function main() {
 		}
 	}
 
+	// The cache key, checked ACROSS states: two states serving different sheets under one URL is
+	// the defect that makes a property change invisible to a browser that already has the sheet.
+	const unset = keys['unset'], compact = keys['compact'], foo = keys['foo (unrecognised)'];
+	if (compact === unset) {
+		violations.push(`compact shares its cache key with unset (${compact}) — a tablet holding ` +
+			`the default sheet will never refetch, so the property cannot reach it`);
+	}
+	if (foo !== unset) {
+		violations.push(`an unrecognised value got its own cache key (${foo} vs ${unset}) — it ` +
+			`serves the same sheet as unset, so it must share the entry`);
+	}
+
 	if (violations.length) {
 		console.error('\n!!! violation(s):');
 		for (const v of violations) console.error(`  ${v}`);
@@ -216,6 +255,8 @@ async function main() {
 	}
 	console.log('\nOK — unset and an unrecognised value both serve the default sheet; ' +
 		'`compact` serves the compact sheet, declaration for declaration against the shipped jar.');
+	console.log('OK — and `compact` is served under its own cache key while unset and the ' +
+		'unrecognised value share one, so changing the property reaches a warm tablet cache.');
 	return 0;
 }
 

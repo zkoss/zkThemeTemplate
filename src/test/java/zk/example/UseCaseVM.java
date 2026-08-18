@@ -52,7 +52,7 @@ public class UseCaseVM {
 
     static {
         put("Overview",
-                "overview", "component-theming");
+                "overview", "component-theming", "density-probe");
         put("Inputs",
                 "bandbox", "button", "calendar", "cascader", "checkbox", "chosenbox", "colorbox",
                 "combobox", "combobutton", "datebox", "daterangebox", "decimalbox", "doublebox",

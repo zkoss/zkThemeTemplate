@@ -40,9 +40,15 @@
 
 ## L1 執行摘要
 
-**最後更新**:2026-08-13
+**最後更新**:2026-08-18
 
 ### 現況
+
+> **2026-08-18 追加一階(D7 / C28),本節其餘內容不改寫。** density 的規格擴充為
+> **`org.zkoss.zul.theme.density` 可以在執行期改,reload 之後生效,桌面與平板兩層皆然**;
+> 旋鈕仍然只有一個(C25 不變)。追加的原因是一個**現行缺陷**而不是新需求:兩種密度過去共用同一個
+> stylesheet URL 而該回應帶 `max-age=31536000`,所以連 C25 原本教的「改 `zk.xml` + 重啟」對回訪
+> 使用者都不保證生效。交付 `Iceblue11ThemeProvider`,**CSS 一個位元組都沒動**。閘門紀錄 **#64**。
 
 **本案於 2026-08-17 收工。P8 之後,LESS 真的不在了** —— 來源樹 `.less` = **0**、
 `zkless-engine` 不在依賴裡、pom 沒有 `compile-less` execution,而 **85 個輸出一條宣告都沒變**
@@ -119,7 +125,7 @@
 | **輸出檔脫離 LESS** | ~~84 / 85 = 99%~~ **85 / 85 = 100%**(2026-08-17,P7 第一段) |
 | **來源樹剩餘 `.less`** | ~~30~~ ~~4~~ **0**(2026-08-17,P8 刪掉 `zul/less/` 整棵)⇒ **「LESS 已經移除」這句話從本日起才成立**,在此之前它一直是錯的 |
 | **`zkless-engine` 依賴** | **移除**(2026-08-17,P8)—— `npm install` 後 `node_modules` 少 41 個套件、`.bin` 只剩 `lessc`;`less` 4.8.1 改為直接 devDependency(`less2css.js` 這支 fork 工具要用)|
-| **density 線(L-4 的 D1–D6)** | **全部收工(2026-08-17)** —— D1/D2 → D4 → D6 → D5;**D3 已於 D6 刪除**(執行期 Java API 隨 C25 退場)。對外文件 [migration/density.md](migration/density.md) |
+| **density 線(L-4 的 D1–D7)** | **全部收工(D1–D6 於 2026-08-17,D7 於 2026-08-18)** —— D1/D2 → D4 → D6 → D5 → **D7**;**D3 已於 D6 刪除**(執行期 Java API 隨 C25 退場,且 **D7 之後也不需要它** —— 設 property 再 reload 就是執行期切換)。**規格於 D7/C28 擴充:property 可在執行期改,reload 生效,桌面與平板皆然**;旋鈕仍然只有一個。對外文件 [migration/density.md](migration/density.md) |
 
 ### 下一步(依「不等任何人」排序)
 
@@ -287,6 +293,7 @@
 | **D4** compact 平板層 | **DONE** | G-delta | **併在 P7 那一列**(它是 P7 的第二段,commit `238a3604`,閘門紀錄 **#61**)—— 本列只為了讓照 `D#` 找的人找得到 | 2026-08-17 |
 | **D6** density 收斂成單一 library-property(C25) | **DONE** | G-zero(對已核准 delta) | commit `1efde772`。桌機側的三個入口(library-property / `[data-density]` 屬性 / Java API)收成**一個**;`IceblueDensity.java`、`check-density-runtime.js` 與預覽側邊欄的即時切換一併刪除。**已核准 delta 形狀不變**(1 檔 / 0 移除 / 350 新增);全樹原始讀數 **1754 → 1756 筆、49 檔不變**,多的 **2 筆全是 DSP 指令**,350 條宣告是**同數改鍵**(`[data-density="compact"]` → `:root`),淨增 0。閘門紀錄 **#62**(同日補記) | 2026-08-17 |
 | **D5** density 遷移指南 + S36 結案 | **DONE** | 無(不動 CSS / Java) | commit `86b04918`。對外交付物 [migration/density.md](migration/density.md)(**手寫**,不是產生的);`readme.md` 補上連結,並修掉 D6 留下的殘留 —— 預覽章還在教已刪除的 `IceblueDensity.apply(...)` 側邊欄開關,改成「重啟時帶 `-Dorg.zkoss.zul.theme.density=compact`」並**實測驗證過**。**S36 以 S62 結案,S36 那一列不改寫**。指南引用的數字全部當日重量:桌機三態 **526988 / 541383 / 526988 B**、compact 區塊 **0 / 1 / 0**;平板三態 **26207 / 24308 / 26207 B**、**895 = 895** 對 `baseline/`、**869 = 869** 對出貨 jar。另**查證而非轉抄**兩項對外說法,其中一項改口徑:桌機 compact 區塊對出貨 jar 是 **0 缺 / 349 逐字元相同 / 1 條同長度不同寫法**(`16px 0px` vs `16px 0`),不是「350 條全同」 | 2026-08-17 |
+| **D7** density 進入 cache key + 執行期切換規格化(C28) | **DONE** | G-zero(對已核准 delta)+ 兩支閘門各加一條跨狀態 cache-key 斷言 | **CSS 零改動** —— 桌面三態 **526988 / 541383 / 526988 B**、平板三態 **26207 / 24308 / 26207 B**,與 D4/D6 收工時逐字元相同;新增的只有 URL:桌面 `_zkiju-iceblue11-compact`(`Aide.injectURI`)、平板 `?density=compact`(query string,因 `DspExtendlet` 無 `_zkiju-` 剝除)。**預設密度的 URL 未變。** TDD:兩支閘門先 RED(兩態同鍵)再 GREEN,各有負向控制。瀏覽器級:出貨快取設定下,桌面正常導覽與 reload 皆拿到新密度、平板以 iPad UA 26207 → 24308 且 `cached == fresh`。**攔下一個靜默破壞**:provider 若 `extends` zul 那一節而非委派,會掉主題的 zkex/zkmax 元件 CSS(+10646 B,`check:bytes` 看不到)。閘門紀錄 **#64**;對外文件 [migration/density.md](migration/density.md)〈Switching density at runtime〉 | 2026-08-18 |
 
 
 ### L2.2 前置工作項與 BLOCKED

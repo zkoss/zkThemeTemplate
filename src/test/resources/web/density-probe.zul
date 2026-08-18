@@ -1,0 +1,118 @@
+<?page title="Density Switch" contentType="text/html;charset=UTF-8"?>
+<!--
+    Demonstrates the runtime density switch (C28): org.zkoss.zul.theme.density is still the one
+    knob, but it may be changed while the app runs and a reload picks it up. This page sets it with
+    Library.setProperty() and reloads with Execution.sendRedirect(null).
+
+    It is also the density review page — flip it to compare the two densities on any component.
+    Both stylesheets are covered: the desktop WCS bundle keys its density in an injected path
+    segment, zkmax's tablet sheet in a query string. Background in
+    doc/density-runtime-switch-verification.md.
+-->
+<!--
+    ca = ZK's client-attribute namespace. The measured cells are ZK <label>s rather than native
+    spans so they inherit .z-label typography and line up with the expected column; ca:data-token
+    is how the script below learns which token each one is for.
+-->
+<zk xmlns:h="native" xmlns:ca="client/attribute">
+<div sclass="z-p-8" viewModel="@id('vm') @init('zk.example.DensityProbeVM')">
+    <div sclass="z-border-bottom z-text-xl z-fw-medium z-text-on-surface z-mb-2 z-pb-3">Density Switch</div>
+    <div sclass="z-text-sm z-text-secondary z-mb-6">
+        Flips <h:code>org.zkoss.zul.theme.density</h:code> with <h:code>Library.setProperty()</h:code>,
+        then reloads via <h:code>Execution.sendRedirect(null)</h:code>. The property is the one
+        density knob; it may be changed while the app runs and a reload picks it up.
+    </div>
+
+    <!-- The switch -->
+    <div sclass="z-card z-p-4 z-mb-6">
+        <div sclass="z-d-flex z-align-center z-gap-4">
+            <checkbox mold="switch" label="Compact density"
+                      checked="@load(vm.compact)"
+                      onCheck="@command('setCompact', on=self.checked)"/>
+            <div sclass="z-text-sm z-text-secondary">
+                Toggling reloads the whole page. If the numbers below change, the switch worked.
+            </div>
+        </div>
+    </div>
+
+    <!-- Evidence -->
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Evidence</div>
+
+    <div sclass="z-card z-p-4 z-mb-6">
+        <div sclass="z-d-flex z-gap-6 z-flex-wrap">
+            <div>
+                <div sclass="z-text-xs z-fw-semibold z-text-secondary">Property (server)</div>
+                <label value="@load(vm.densityProperty)" sclass="z-text-lg z-fw-medium"/>
+            </div>
+            <div>
+                <div sclass="z-text-xs z-fw-semibold z-text-secondary">Mode the server serves</div>
+                <label value="@load(vm.modeLabel)" sclass="z-text-lg z-fw-medium"/>
+            </div>
+        </div>
+    </div>
+
+    <!--
+        Server expectation next to browser measurement. The measured column is the one that
+        matters: it is read off document.documentElement, so it can only be right if the compact
+        token block actually travelled inside the WCS response.
+    -->
+    <div sclass="z-d-grid z-grid-cols-3 z-col-gap-6 z-row-gap-2 z-mb-6">
+        <div sclass="z-text-xs z-fw-semibold z-text-secondary">Token</div>
+        <div sclass="z-text-xs z-fw-semibold z-text-secondary">Expected (server)</div>
+        <div sclass="z-text-xs z-fw-semibold z-text-secondary">Measured (browser)</div>
+
+        <label value="--zk-base-font-size" sclass="z-text-sm"/>
+        <label value="@load(vm.expectedBaseFontSize)" sclass="z-text-sm z-fw-medium"/>
+        <label sclass="probe-measured z-text-sm z-fw-medium" value="…" ca:data-token="--zk-base-font-size"/>
+
+        <label value="--zk-input-height" sclass="z-text-sm"/>
+        <label value="@load(vm.expectedInputHeight)" sclass="z-text-sm z-fw-medium"/>
+        <label sclass="probe-measured z-text-sm z-fw-medium" value="…" ca:data-token="--zk-input-height"/>
+
+        <label value="--zk-mesh-body-padding" sclass="z-text-sm"/>
+        <label value="@load(vm.expectedMeshBodyPadding)" sclass="z-text-sm z-fw-medium"/>
+        <label sclass="probe-measured z-text-sm z-fw-medium" value="…" ca:data-token="--zk-mesh-body-padding"/>
+
+        <label value="--zk-checkbox-switch-height" sclass="z-text-sm"/>
+        <label value="@load(vm.expectedCheckboxSwitchHeight)" sclass="z-text-sm z-fw-medium"/>
+        <label sclass="probe-measured z-text-sm z-fw-medium" value="…" ca:data-token="--zk-checkbox-switch-height"/>
+    </div>
+
+    <!-- Widgets, so the change is visible and not only numeric -->
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Affected widgets</div>
+
+    <div sclass="z-d-flex z-align-center z-gap-3 z-mb-4">
+        <textbox value="Textbox"/>
+        <button label="Button"/>
+        <combobox value="Combobox"/>
+    </div>
+
+    <grid width="520px">
+        <columns>
+            <column label="Region"/>
+            <column label="Orders"/>
+            <column label="Revenue"/>
+        </columns>
+        <rows>
+            <row><label value="North"/><label value="1,284"/><label value="412,900"/></row>
+            <row><label value="South"/><label value="978"/><label value="301,450"/></row>
+            <row><label value="East"/><label value="1,510"/><label value="588,120"/></row>
+        </rows>
+    </grid>
+</div>
+
+<!-- No type attribute: org.zkoss.zul.Script has no setType, and ZK fails the page on it. -->
+<script><![CDATA[
+// Reads the tokens off the document root — the client-side ground truth. If these track the
+// server's expectation, the compact block reached the browser without a restart.
+zk.afterMount(function () {
+    var root = getComputedStyle(document.documentElement),
+        cells = document.querySelectorAll('.probe-measured');
+    for (var i = 0; i < cells.length; i++) {
+        var name = cells[i].getAttribute('data-token'),
+            value = root.getPropertyValue(name).trim();
+        cells[i].textContent = value || '(not set)';
+    }
+});
+]]></script>
+</zk>

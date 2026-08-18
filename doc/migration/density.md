@@ -9,7 +9,8 @@ server while the stylesheet is rendered**. That single switch drives the desktop
 `zkmax`'s tablet touch layer together. Everything it replaces — a second shipped jar, a LESS
 variable, a rebuild — is gone.
 
-Every number quoted below was measured on this tree on 2026-08-17, by
+Every number and URL quoted below was measured on this tree — the byte counts and declaration
+comparisons on 2026-08-17, the per-density stylesheet URLs on 2026-08-18 — by
 `npm run check:density-property` and `npm run check:tablet-density` (both are gates, so they are
 re-measured on every change rather than transcribed) and by a direct comparison against the
 `org.zkoss.theme:iceblue_c:11.0.0.FL.20260812-Eval` jar.
@@ -35,7 +36,7 @@ typo in `zk.xml` cannot silently switch an application to compact.
 | ship `iceblue_c.jar` and set `org.zkoss.theme.preferred=iceblue_c` | ship `iceblue11.jar`, set `org.zkoss.theme.preferred=iceblue11`, add the property above. `iceblue_c` is retired: this theme plus the property is what replaces it |
 | edit `@themeProfile: "compact"` in `zul/less/_zkvariables.less` and rebuild the theme jar | delete that edit. The property replaces it; `@themeProfile` no longer selects anything |
 | point `zul/css/norm.css`'s first `@import` at `tokens/_compact.css` (only possible between the LESS removal and this release) | delete that edit. It changes the desktop sheet but **not** the tablet sheet — see [The trap this replaced](#the-trap-this-replaced) |
-| read a pre-release note about a Java API (`IceblueDensity.apply(...)`) | there is no such class. It was built, then withdrawn before release — see [Density does not switch at runtime](#density-does-not-switch-at-runtime) |
+| read a pre-release note about a Java API (`IceblueDensity.apply(...)`) | there is no such class. It was built, then withdrawn before release. You do not need it: set the property and reload — see [Switching density at runtime](#switching-density-at-runtime) |
 
 The first two rows are the ones that describe applications people actually ship; rows three and
 four only exist in the window between this theme dropping LESS and this release. For row one the
@@ -81,28 +82,50 @@ Both compact halves are checked against external references rather than against 
 In other words, compact is not a re-interpretation of `iceblue_c` — it is the same stylesheet,
 selected differently.
 
-## Density does not switch at runtime
+## Switching density at runtime
 
-**There is no API to change density while an application is running, on either layer, and this is
-the specification rather than an unfinished edge.**
+**The property may be changed while the application is running; reload the page and the browser
+gets the other density. Both layers, desktop and tablet.**
 
-The reason is worth stating plainly, because "one property" can read like a reduction: **the
-previous version had no runtime switch either.** Changing density meant editing a LESS variable,
-rebuilding the theme jar, and swapping the jar in `WEB-INF/lib`. Against that baseline, a
-library property is the same capability delivered for a fraction of the cost. Nothing that used
-to work has stopped working.
+```java
+Library.setProperty("org.zkoss.zul.theme.density", "compact"); // or any other value for default
+Executions.sendRedirect(null);                                 // reload this page
+```
+
+There is still **no theme API for density** — no `IceblueDensity.apply(...)`, no `data-density`
+attribute. The property is the one knob; what the above shows is that the knob is live, not that
+there is a second one. A reload is required because the decision is made server-side while the
+stylesheet is rendered, which is also what buys you no extra request and no
+default-density flash.
+
+Each density is served under **its own stylesheet URL**, which is what makes the reload effective:
+
+| Stylesheet | default density | `compact` |
+|---|---|---|
+| desktop bundle | `…/_zkiju-iceblue11/zul/css/zk.wcs` | `…/_zkiju-iceblue11-compact/zul/css/zk.wcs` |
+| tablet sheet | `…/iceblue11/zkmax/css/tablet.css.dsp` | `…/iceblue11/zkmax/css/tablet.css.dsp?density=compact` |
+
+Without that, nothing would appear to happen: these responses carry
+`Cache-Control: public, max-age=31536000`, so a browser that already held the other density would
+go on using it — through a navigation *and* through a reload. An unrecognised value shares the
+default density's URLs, so a typo cannot fragment the cache either.
 
 Consequences to plan around:
 
-- **Density is a per-application setting.** You cannot mark one dialog or one region compact
-  while the rest of the page stays default.
-- **You cannot mark a subtree back to default** inside a compact application.
+- **Density is a per-application setting, not a per-user one.** `Library` is JVM-global: changing
+  the property changes the density for every session, not just the one that asked.
+- **It is in-memory.** A restart reverts to whatever `zk.xml` or `-D` says; persist your own choice
+  if you need it to survive one.
+- **You cannot mark one dialog or region compact** while the rest of the page stays default, and
+  you cannot mark a subtree back to default inside a compact application.
 - **The tablet layer follows the same property and nothing else.** This matters more than it
   sounds: it is the reason a compact desktop can no longer be paired with a default-density touch
   layer.
 
-Runtime switching may be reconsidered in a later version. If it returns it will be additive — an
-application that sets only the property today will keep working unchanged.
+> **Earlier pre-release notes said the opposite** — that density could not change at runtime and
+> that this was the specification. That was true of the mechanism as first shipped in this
+> development line, and it is no longer true. The capability was added rather than removed, so an
+> application that only sets the property in `zk.xml` keeps working unchanged.
 
 ## The trap this replaced
 

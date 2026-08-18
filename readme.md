@@ -66,6 +66,17 @@ silently switch an app. The decision is made server-side while the stylesheet is
 compact costs no extra request and cannot flash the default density first. A default-density app
 does not receive the compact rules at all.
 
+**The property may also be changed while the app is running.** Set it with
+`Library.setProperty("org.zkoss.zul.theme.density", "compact")` and reload the page — for example
+with `Executions.sendRedirect(null)` — and the browser gets the other density. No restart, and no
+second knob: it is the same property either way. Each density is served under its own stylesheet
+URL, so a browser that already holds one is asked again rather than serving what it has.
+
+Two things to know before building a feature on it. `Library` is JVM-global, so changing the
+property changes the density for **every** session, not just the one that asked; and it is
+in-memory, so a restart reverts to whatever `zk.xml` or `-D` says. Per-user density is a different
+feature and would need a different mechanism.
+
 **This replaces the build-time switch.** Earlier versions selected the profile by editing
 `@themeProfile` and rebuilding the jar, and shipped a second artifact (`iceblue_c`) for it. Both
 are gone: the property does the same job without a rebuild, and there is one jar. If you are
@@ -78,10 +89,10 @@ migrating from `org.zkoss.theme.preferred=iceblue_c`, use `iceblue11` plus the p
 > `scripts/gen-density-css.js`, not a switch; if you fork and edit it, re-run
 > `npm run gen:density-css` or `npm run check:gate` will fail.
 
-**Density is not switchable at runtime in this version.** There is no Java API for it, by design:
-the previous version had no runtime switch either — it required editing a variable and rebuilding
-— so this is the same capability delivered by one property instead of a second shipped jar.
-Dynamic switching may be reconsidered later; see `tasks/l4-density-mechanism.md`.
+**There is no Java API for density, and that is deliberate** — no `IceblueDensity.apply(...)`, no
+`data-density` attribute. One knob, used the same way whether you set it at startup or while the
+app runs. A second, desktop-only knob is exactly how you end up with a compact desktop and a
+default-density touch layer, which is what the box above warns about.
 
 Upgrading from `@themeProfile` or from the `iceblue_c` jar: [migration/density.md](doc/migration/density.md).
 
@@ -138,12 +149,17 @@ Every page is deep-linkable: append the page path minus `.zul`, e.g.
 `…/usecase/index.zul#button` or `…/usecase/index.zul#utility/colors`. Browser back and forward
 work, so a review comment can point at an exact page.
 
-To review compact density, restart the preview app with the property set — the same switch a real
-application uses, so what you review is what ships:
+To review compact density, open **Overview → Density Switch** and flip the switch. It sets the same
+property a real application sets and reloads the page, so what you review is what ships. The page
+also prints the tokens it expects next to the ones the browser actually computed, which is how a
+density regression announces itself.
+
+Starting the app with the property set works too, and is what a customer's deployment looks like:
 
 `mvn -Dorg.zkoss.zul.theme.density=compact test exec:java@preview-app`
 
-There is no in-page density toggle, because there is no runtime switch to expose.
+The sidebar chrome itself has no toggle — density is a property, not a per-user preference, and a
+control in the chrome would imply otherwise. See `doc/density-runtime-switch-verification.md`.
 
 
 ## recompile after editing a stylesheet
