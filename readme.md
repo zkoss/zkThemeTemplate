@@ -67,6 +67,64 @@ the `bin` zip). Raw `.css` sources are deliberately excluded from the jar — on
 
 To compile the stylesheets without Maven: `npm run build:css`.
 
+## from `.css` to `.css.dsp`
+
+A `.css.dsp` is a stylesheet ZK serves through its DSP interpreter, so it may contain three things
+plain CSS cannot: the taglib directives at the top, `<c:if>` tags that decide server-side whether a
+rule is emitted at all, and `${c:encodeThemeURL(...)}` expressions inside `url()`. **None of the
+first two is authored in the sources.** They are put in by `scripts/build-css.js`, in its last step,
+*after* minification:
+
+```mermaid
+flowchart TD
+    subgraph SRC["src/main/resources/web/ — plain CSS, no DSP tags, no taglib header"]
+        ENTRY["85 entry stylesheets<br/>x.css"]
+        PART["7 _partial.css<br/>@import'ed, never emitted on their own"]
+        MARK["build-safe placeholders<br/>.ZKBD / ZKBD-OFF / ZKDENSITY / ZK-TAGLIB-HEADER<br/>ordinary CSS that stands in for DSP<br/>(only norm.css and tablet.css carry them)"]
+        ASSET["assets: img, font, *.js"]
+    end
+
+    MVN["mvn process-resources<br/>(or npm run build:css)"]
+
+    subgraph BUILD["scripts/build-css.js — one entry stylesheet at a time"]
+        S1["1. resolve @import<br/>partials inlined in place"]
+        S2["2. strip comments, then refuse to continue<br/>if the CSS carries anything the minifier corrupts"]
+        S3["3. minify — CleanCSS level 0<br/>collapses whitespace, rewrites nothing"]
+        S4["4. ADD THE DSP<br/>placeholders to c:if tags, taglib header prepended"]
+    end
+
+    COPY["maven resource copy<br/>excludes **/*.css — sources never ship"]
+    OUT["target/classes/web/iceblue11/**/x.css.dsp<br/>85 files + assets"]
+    JAR["mvn package -> iceblue11.jar"]
+    ZK["ZK at request time: evaluates the DSP<br/>-> plain CSS to the browser"]
+
+    PART -. "@import" .-> ENTRY
+    MARK -. "written into" .-> ENTRY
+    ENTRY --> MVN --> S1 --> S2 --> S3 --> S4 --> OUT
+    ASSET --> COPY --> OUT
+    OUT --> JAR --> ZK
+```
+
+Step 4 is the whole answer to "where does the DSP come from", and its position is deliberate:
+CleanCSS 5.3.3 rewrites a DSP tag sitting in selector position — hoisting the string out of the EL
+expression — and reports **zero errors and zero warnings** while doing it. So the sources spell those
+constructs as ordinary CSS placeholders that the minifier has no opinion about (and that an editor
+and a linter can still read), and only the table in `build-css.js` knows the DSP spelling. Step 2
+fails the build if a real DSP tag, a taglib header, or an unresolved `@import` ever reaches step 3.
+
+| in the source | in the `.css.dsp` | added when |
+|---|---|---|
+| nothing | the three taglib directives | step 4 — prepended, except for the two `NO_HEADER` outputs; `norm.css` places its own with a `ZK-TAGLIB-HEADER` marker, because that header sits 43 KB into the file, on the tokens/reset seam |
+| `.ZKBD ` prefix, `ZKBD-OFF` block markers | `<c:if>` on `org.zkoss.zul.theme.browserDefault` | step 4 |
+| `ZKDENSITY` block markers | `<c:if>` on `org.zkoss.zul.theme.density` | step 4 |
+| `${c:encodeThemeURL("~./…")}` inside `url()` | unchanged | never — this one *is* authored, and passes through because the minifier runs with `rebase:false` |
+
+Historically the header was not added by anything: `zklessc` emitted it inline wherever a `.less`
+imported `~./zul/less/_header.less`, which is why one output still carries it mid-file. When the Less
+lane was removed the header became an explicit build step, and the `<c:if>` tags became the
+placeholder table — see [doc/iceblue-drop-less-execution-plan.md](doc/iceblue-drop-less-execution-plan.md).
+
+
 # How to Customize a Theme
 This project contains the default theme (`iceblue11`) as plain `.css` files.
 The suggested steps:
