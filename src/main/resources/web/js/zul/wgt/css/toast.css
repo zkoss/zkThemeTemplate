@@ -17,7 +17,7 @@
 
 /* ─── Content box ───────────────────────────────────────────────────────── */
 /* padding-left reserves room for the absolute-positioned `.z-toast-icon`
-   (sibling at left:16px width:20px) plus the 4px accent stripe at left:0;
+   (sibling at left:16px width:20px);
    padding-right reserves room for the absolute-positioned close button
    (sibling at right:12px width:20px). */
 .z-toast-content {
@@ -45,17 +45,9 @@
     line-height: 1.5;
 }
 
-/* Left accent stripe */
-.z-toast-content::before {
-    content: '';
-    display: block;
-    width: 4px;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    background-color: var(--zk-color-status-info);
-}
+/* No left accent stripe: MD3 snackbars carry severity with the leading icon plus
+   the container tint, not a leading colour bar. Severity cues live in the type
+   variants below (icon colour + tinted fill). */
 
 /* ─── Icon (absolute-positioned, mirrors notification pattern) ──────────── */
 .z-toast-icon {
@@ -107,25 +99,27 @@
     background-color: var(--zk-toast-bg);
     color: var(--zk-toast-fg);
 }
-.z-toast-info .z-toast-content::before            { background-color: var(--zk-toast-accent); }
 
 /* warning */
-.z-toast-warning .z-toast-icon                    { color: var(--zk-color-status-warning); }
-.z-toast-warning .z-toast-close > .z-toast-icon   { color: var(--zk-color-on-warning-container); }
+/* on-*-container, not status-*: with the accent stripe gone the icon is the
+   primary severity cue, and the bright status tone sat at 1.6:1 against its own
+   container tint — below the 3:1 WCAG 1.4.11 floor for non-text UI.
+   The message text and close glyph stay neutral (on-surface, as notification
+   does) so the icon is the only chromatic mark and actually reads as the cue. */
+.z-toast-warning .z-toast-icon                    { color: var(--zk-color-on-warning-container); }
+.z-toast-warning .z-toast-close > .z-toast-icon   { color: var(--zk-color-on-surface); }
 .z-toast-warning .z-toast-content {
     background-color: var(--zk-color-warning-container);
-    color: var(--zk-color-on-warning-container);
+    color: var(--zk-color-on-surface);
 }
-.z-toast-warning .z-toast-content::before         { background-color: var(--zk-color-status-warning); }
 
 /* error */
-.z-toast-error .z-toast-icon                      { color: var(--zk-color-status-error); }
-.z-toast-error .z-toast-close > .z-toast-icon     { color: var(--zk-color-on-error-container); }
+.z-toast-error .z-toast-icon                      { color: var(--zk-color-on-error-container); }
+.z-toast-error .z-toast-close > .z-toast-icon     { color: var(--zk-color-on-surface); }
 .z-toast-error .z-toast-content {
     background-color: var(--zk-color-error-container);
-    color: var(--zk-color-on-error-container);
+    color: var(--zk-color-on-surface);
 }
-.z-toast-error .z-toast-content::before           { background-color: var(--zk-color-status-error); }
 
 /* ─── Position container ─────────────────────────────────────────────────── */
 .z-toast-position-wrapper {

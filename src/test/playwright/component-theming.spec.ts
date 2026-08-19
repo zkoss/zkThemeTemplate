@@ -771,12 +771,15 @@ test.describe('Component Theme Variables', () => {
 
   // ── notification: floating alert card (Clients.showNotification()). Only
   // the untyped/default state reads these knobs — the info/warning/error type
-  // variants pin their own bg/fg/accent via higher-specificity compound
+  // variants pin their own bg/fg via higher-specificity compound
   // selectors (same treatment as button/progressmeter's color variants), so a
   // typed notification is unaffected by an override. Unlike messagebox/popup,
   // the demo markup is a plain static div (not a JS-reparented widget), so
-  // region scoping works normally here. ──────────────────────────────────────
-  test('notification — regional bg/fg/radius/accent override, sibling untouched', async ({ page }) => {
+  // region scoping works normally here.
+  // No accent knob: the left accent stripe was removed for MD3 fidelity, and an
+  // untyped notification renders no icon glyph (ZK picks the glyph class from its
+  // type map), so there is nothing left for an accent color to paint. ─────────
+  test('notification — regional bg/fg/radius override, sibling untouched', async ({ page }) => {
     const def = page.locator('.z-notification').first().locator('.z-notification-content').first();
     const scoped = page
       .locator('div[style*="--zk-notification-bg"] .z-notification')
@@ -784,28 +787,26 @@ test.describe('Component Theme Variables', () => {
       .locator('.z-notification-content')
       .first();
 
-    // Scoped card picks up every knob (bg + fg + radius + accent stripe).
+    // Scoped card picks up every knob (bg + fg + radius).
     expect(await bgOf(scoped)).toBe('rgb(238, 242, 255)'); // #eef2ff
     expect(await colorOf(scoped)).toBe('rgb(26, 26, 46)'); // #1a1a2e
     expect(await radiusOf(scoped)).toBe('0px');
-    expect(await pseudoBgOf(scoped, '::before')).toBe(SCOPED_PURPLE);
 
     // Sibling default is untouched — the override lives on the scoped box and
     // is inherited only by its subtree, never leaking up to the default row.
     expect(await bgOf(def)).not.toBe('rgb(238, 242, 255)');
     expect(await colorOf(def)).not.toBe('rgb(26, 26, 46)');
     expect(await radiusOf(def)).toBe(STOCK_RADIUS); // stock --zk-shape-corner-extra-small
-    expect(await pseudoBgOf(def, '::before')).not.toBe(SCOPED_PURPLE);
   });
 
   test('notification — whole-app :root override wins (loaded after norm.css.dsp)', async ({ page }) => {
     const defContent = page.locator('.z-notification').first().locator('.z-notification-content').first();
-    expect(await pseudoBgOf(defContent, '::before')).not.toBe(SCOPED_PURPLE); // baseline before override
+    expect(await bgOf(defContent)).not.toBe('rgb(103, 80, 164)'); // baseline before override
 
     // An adopter's :root override, injected after the theme bundle, must win the
     // cascade and reach every untyped notification instance, including the default one.
-    await page.addStyleTag({ content: ':root{--zk-notification-accent:#6750a4}' });
-    expect(await pseudoBgOf(defContent, '::before')).toBe(SCOPED_PURPLE);
+    await page.addStyleTag({ content: ':root{--zk-notification-bg:#6750a4}' });
+    expect(await bgOf(defContent)).toBe('rgb(103, 80, 164)');
   });
 
   // ── toast: MD3 snackbar (zkmax). Every toast always carries a type variant
@@ -821,29 +822,38 @@ test.describe('Component Theme Variables', () => {
       .first()
       .locator('.z-toast-content')
       .first();
+    // --zk-toast-accent colors the LEADING icon (a direct child of .z-toast).
+    // The close button's icon is pinned to --zk-color-on-surface by a separate
+    // rule, so `> .z-toast-icon` is what the knob actually reaches.
+    const defIcon = page.locator('.z-toast').first().locator('> .z-toast-icon').first();
+    const scopedIcon = page
+      .locator('div[style*="--zk-toast-bg"] .z-toast')
+      .first()
+      .locator('> .z-toast-icon')
+      .first();
 
-    // Scoped toast picks up every knob (bg + fg + radius + accent stripe).
+    // Scoped toast picks up every knob (bg + fg + radius + accent icon).
     expect(await bgOf(scoped)).toBe('rgb(238, 242, 255)'); // #eef2ff
     expect(await colorOf(scoped)).toBe('rgb(26, 26, 46)'); // #1a1a2e
     expect(await radiusOf(scoped)).toBe('0px');
-    expect(await pseudoBgOf(scoped, '::before')).toBe(SCOPED_PURPLE);
+    expect(await colorOf(scopedIcon)).toBe(SCOPED_PURPLE);
 
     // Sibling default is untouched — the override lives on the scoped box and
     // is inherited only by its subtree, never leaking up to the default row.
     expect(await bgOf(def)).not.toBe('rgb(238, 242, 255)');
     expect(await colorOf(def)).not.toBe('rgb(26, 26, 46)');
     expect(await radiusOf(def)).toBe(STOCK_RADIUS); // stock --zk-shape-corner-extra-small
-    expect(await pseudoBgOf(def, '::before')).not.toBe(SCOPED_PURPLE);
+    expect(await colorOf(defIcon)).not.toBe(SCOPED_PURPLE);
   });
 
   test('toast — whole-app :root override wins (loaded after norm.css.dsp)', async ({ page }) => {
-    const defContent = page.locator('.z-toast').first().locator('.z-toast-content').first();
-    expect(await pseudoBgOf(defContent, '::before')).not.toBe(SCOPED_PURPLE); // baseline before override
+    const defIcon = page.locator('.z-toast').first().locator('> .z-toast-icon').first();
+    expect(await colorOf(defIcon)).not.toBe(SCOPED_PURPLE); // baseline before override
 
     // An adopter's :root override, injected after the theme bundle, must win the
     // cascade and reach every info-type toast instance, including the default one.
     await page.addStyleTag({ content: ':root{--zk-toast-accent:#6750a4}' });
-    expect(await pseudoBgOf(defContent, '::before')).toBe(SCOPED_PURPLE);
+    expect(await colorOf(defIcon)).toBe(SCOPED_PURPLE);
   });
 
   // ── a (anchor/link): text-only (no bg/border/radius). Resting AND hover

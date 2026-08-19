@@ -40,17 +40,9 @@
     line-height: 1.5;
 }
 
-/* Left accent stripe */
-.z-notification-content::before {
-    content: '';
-    display: block;
-    width: 4px;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    background-color: var(--zk-notification-accent);
-}
+/* No left accent stripe: MD3 alerts/snackbars carry severity with the leading
+   icon plus the container tint, not a leading colour bar. Severity cues live in
+   the type variants below (icon colour + tinted fill). */
 
 /* ─── Icon (absolute inside the content area) ──────────────────────────── */
 .z-notification-icon {
@@ -138,33 +130,33 @@
     background-color: color-mix(in srgb, var(--zk-color-status-info) 12%, var(--zk-color-surface));
     color: var(--zk-color-on-surface);
 }
-.z-notification-info .z-notification-content::before { background-color: var(--zk-color-status-info); }
 .z-notification-info .z-notification-left  { border-right-color:  var(--zk-color-status-info); }
 .z-notification-info .z-notification-right { border-left-color:   var(--zk-color-surface-container-highest); }
 .z-notification-info .z-notification-up    { border-bottom-color: var(--zk-color-surface-container-highest); }
 .z-notification-info .z-notification-down  { border-top-color:    var(--zk-color-surface-container-highest); }
 
 /* warning */
-.z-notification-warning .z-notification-icon          { color: var(--zk-color-status-warning); }
+/* on-*-container, not status-*: with the accent stripe gone the icon is the
+   primary severity cue, and the bright status tone sat at 1.9:1 against its own
+   container tint — below the 3:1 WCAG 1.4.11 floor for non-text UI. */
+.z-notification-warning .z-notification-icon          { color: var(--zk-color-on-warning-container); }
 .z-notification-warning .z-notification-close > .z-notification-icon { color: var(--zk-color-on-surface); }
 .z-notification-warning .z-notification-content {
     background-color: color-mix(in srgb, var(--zk-color-warning) 12%, var(--zk-color-surface));
     color: var(--zk-color-on-surface);
 }
-.z-notification-warning .z-notification-content::before { background-color: var(--zk-color-status-warning); }
 .z-notification-warning .z-notification-left  { border-right-color:  var(--zk-color-status-warning); }
 .z-notification-warning .z-notification-right { border-left-color:   color-mix(in srgb, var(--zk-color-warning) 12%, transparent); }
 .z-notification-warning .z-notification-up    { border-bottom-color: color-mix(in srgb, var(--zk-color-warning) 12%, transparent); }
 .z-notification-warning .z-notification-down  { border-top-color:    color-mix(in srgb, var(--zk-color-warning) 12%, transparent); }
 
 /* error */
-.z-notification-error .z-notification-icon          { color: var(--zk-color-status-error); }
+.z-notification-error .z-notification-icon          { color: var(--zk-color-on-error-container); }
 .z-notification-error .z-notification-close > .z-notification-icon { color: var(--zk-color-on-surface); }
 .z-notification-error .z-notification-content {
     background-color: color-mix(in srgb, var(--zk-color-error) 12%, var(--zk-color-surface));
     color: var(--zk-color-on-surface);
 }
-.z-notification-error .z-notification-content::before { background-color: var(--zk-color-status-error); }
 .z-notification-error .z-notification-left  { border-right-color:  var(--zk-color-status-error); }
 .z-notification-error .z-notification-right { border-left-color:   color-mix(in srgb, var(--zk-color-error) 12%, transparent); }
 .z-notification-error .z-notification-up    { border-bottom-color: color-mix(in srgb, var(--zk-color-error) 12%, transparent); }

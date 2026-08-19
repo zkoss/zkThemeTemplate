@@ -617,7 +617,7 @@
     </div>
     <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Notification (regional override)</div>
     <div sclass="z-hstack z-mb-8 z-align-center z-p-4 z-bg-surface-variant z-rounded"
-         style="--zk-notification-bg:#eef2ff; --zk-notification-fg:#1a1a2e; --zk-notification-radius:0px; --zk-notification-accent:#6750a4">
+         style="--zk-notification-bg:#eef2ff; --zk-notification-fg:#1a1a2e; --zk-notification-radius:0px">
         <h:div class="z-notification" style="position:relative">
             <h:div class="z-notification-content">Scoped notification message</h:div>
         </h:div>

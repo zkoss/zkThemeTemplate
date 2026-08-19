@@ -961,12 +961,14 @@ works normally.
 ### Notification — shipped (untyped/default card only)
 
 Floating alert card created by `Clients.showNotification()` (`.z-notification` wrapper +
-`.z-notification-content` card + a left accent stripe on `::before`). Only the **untyped**
+`.z-notification-content` card). Only the **untyped**
 (`type=null`) default card reads these knobs: `--zk-notification-bg` / `-fg` / `-radius` color
-the content card's fill, text, and corners; `--zk-notification-accent` colors the left accent
-stripe — the defining visual for the untyped/default state (default is
-`var(--zk-color-status-info)`, the same value the untyped card rendered before). The
-`.z-notification-info/-warning/-error` type variants pin their own bg/fg/accent via
+the content card's fill, text, and corners. There is **no accent knob**: the left accent stripe
+was removed for MD3 fidelity (alerts carry severity with the leading icon plus the container
+tint, not a leading color bar), and an untyped notification renders no icon glyph at all — ZK
+picks the glyph class from its type map, so with no type there is nothing for an accent color to
+paint. The
+`.z-notification-info/-warning/-error` type variants pin their own bg/fg via
 higher-specificity compound selectors (e.g. `.z-notification-info .z-notification-content`) —
 the same color-**variant** convention as button/progressmeter — so these knobs affect only an
 untyped notification; a typed notification's semantic color is unaffected by an override
@@ -982,7 +984,6 @@ unaffected by these knobs either way.
 | `--zk-notification-bg` | `var(--zk-color-surface-container-highest)` | untyped card fill |
 | `--zk-notification-fg` | `var(--zk-color-on-surface)` | untyped card text |
 | `--zk-notification-radius` | `var(--zk-shape-corner-extra-small)` | untyped card corners |
-| `--zk-notification-accent` | `var(--zk-color-status-info)` | untyped card's left accent stripe |
 
 ### Toast — shipped (info-default variant only)
 
@@ -990,9 +991,11 @@ Floating MD3 snackbar created by `Toast.show()` (`.z-toast` wrapper + `.z-toast-
 icon + optional close button). Unlike notification, `Toast.show()` always defaults a `null` type
 to `"info"`, so there is no untyped/bare card to route through — these knobs drive the **info
 (default)** variant: `--zk-toast-bg` / `-fg` color `.z-toast-info .z-toast-content`'s fill and
-text; `--zk-toast-accent` colors both the icon and the left accent stripe (`::before`) — the
-defining visual, the same "one knob, several roles" precedent as notification's
-`--zk-notification-accent`. `--zk-toast-radius` is shared by **every** toast (declared on the base
+text; `--zk-toast-accent` colors the icon. (It also colored a left accent stripe until that was
+removed for MD3 fidelity. Unlike notification, whose accent knob was retired with the stripe, this
+one survives: `Toast.show()` always defaults a `null` type to `"info"`, so a toast always carries a
+type and therefore always renders an icon glyph for the knob to paint.)
+`--zk-toast-radius` is shared by **every** toast (declared on the base
 `.z-toast-content` rule, not per-type). The `.z-toast-warning` / `-error` type variants pin their
 own bg/fg/accent via higher-specificity compound selectors (same color-variant convention as
 notification/button/progressmeter), so they are unaffected by an override (CTV-7). The
@@ -1005,7 +1008,7 @@ notification's close icon). Elevation (`box-shadow`) stays on its base token, no
 | `--zk-toast-bg` | `var(--zk-color-surface-container-highest)` | info (default) toast card fill |
 | `--zk-toast-fg` | `var(--zk-color-on-surface)` | info (default) toast card text |
 | `--zk-toast-radius` | `var(--zk-shape-corner-extra-small)` | every toast's card corners |
-| `--zk-toast-accent` | `var(--zk-color-status-info)` | info (default) toast's icon + left accent stripe |
+| `--zk-toast-accent` | `var(--zk-color-status-info)` | info (default) toast's leading icon |
 
 ### A (anchor) — shipped
 

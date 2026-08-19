@@ -579,10 +579,12 @@
        info/warning/error type variants (.z-notification-info/-warning/-error)
        pin their own bg/fg/accent via higher-specificity compound selectors
        (same treatment as button/progressmeter's color variants), so only an
-       untyped notification responds to these knobs. --zk-notification-accent
-       colors the left accent stripe (::before) — the defining visual for the
-       untyped/default state; it stays --zk-color-status-info by default,
-       same as the stock (untyped) rendering. Elevation (box-shadow) stays on
+       untyped notification responds to these knobs. There is no accent knob:
+       the left accent stripe was removed (MD3 alerts carry severity with the
+       leading icon + container tint, not a leading color bar), and an untyped
+       notification renders no icon glyph at all — ZK picks the glyph class from
+       its type map, so with no type there is nothing left for an accent color to
+       paint. Elevation (box-shadow) stays on
        its base token, not knob-driven — a deliberate curation choice to keep
        the surface small (same convention as calendar/slider's minor
        sub-features); height/width stay in tokens/_sizing.css (size
@@ -592,7 +594,6 @@
     --zk-notification-bg:     var(--zk-color-surface-container-highest);
     --zk-notification-fg:     var(--zk-color-on-surface);
     --zk-notification-radius: var(--zk-shape-corner-extra-small);
-    --zk-notification-accent: var(--zk-color-status-info);
 
     /* ── Toast — MD3 snackbar (zkmax) ─────────────────────────────────────
        Every toast always carries a type variant (Toast.show() defaults a
@@ -600,9 +601,11 @@
        fill to route through — these knobs drive the INFO (default) variant;
        warning/error pin their own bg/fg/accent via higher-specificity rules
        (same treatment as notification's type variants), so a typed toast is
-       unaffected by an override. --zk-toast-accent colors both the icon and
-       the left accent stripe (::before) — the defining visual, same "one
-       knob, several roles" precedent as notification's --zk-notification-accent.
+       unaffected by an override. --zk-toast-accent colors the icon. (It also
+       colored a left accent stripe until that was removed for MD3 fidelity;
+       unlike notification the knob survives, because Toast.show() defaults a
+       null type to "info", so a toast always carries a type and therefore
+       always renders an icon glyph for the knob to paint.)
        --zk-toast-radius is shared by EVERY toast (declared on the base
        .z-toast-content rule, not per-type). The close-icon color per type
        stays on its own token, not knob-driven (same convention as
