@@ -45,7 +45,7 @@ export default defineConfig({
   projects: [
     {
       name: 'ab-capture',
-      testMatch: /ab-capture\.spec\.ts/,
+      testMatch: /ab-(capture|popup)\.spec\.ts/,
     },
     {
       // The desktop project can never see zkmax/css/tablet.css.dsp: ZK links it but leaves it
@@ -59,7 +59,7 @@ export default defineConfig({
       // with the ones Marble already reviews. hasTouch/isMobile make the emulation faithful
       // enough that ZK's touch code paths run too, which is what the tablet layer compensates.
       name: 'ab-capture-mobile',
-      testMatch: /ab-capture\.spec\.ts/,
+      testMatch: /ab-(capture|popup)\.spec\.ts/,
       use: {
         viewport: { width: 834, height: 1112 },
         userAgent:

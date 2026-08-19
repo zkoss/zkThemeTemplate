@@ -1,0 +1,75 @@
+<?page title="Column Menu" contentType="text/html;charset=UTF-8"?>
+<!--
+    Corpus page added FOR the visual A/B harness (doc/visual-ab-harness.md §7.4).
+
+    It exists because `menupopup` was set nowhere in the corpus, which left four surfaces
+    with no element to match: the head modifier that reserves room for the caret
+    (.z-columns-menupopup / .z-listhead-menupopup / .z-treecols-menupopup), the caret
+    button itself (.z-column-button and siblings), and the auto-built column menu panel.
+
+    Deliberately pure ZUML with static content and no composer: the A/B run serves this
+    directory as a classpath root of its own, holding these pages and nothing else, so
+    there are no classes here to `use`. See scripts/ab-visual.js (extraCorpus).
+
+    mold/attribute support is per zkdoc: `menupopup="auto"` on columns and listhead, with
+    columnshide/columnsgroup governing which items the auto menu offers. Treecols is NOT in that
+    list — `org.zkoss.zul.Treecols` has no setMenupopup and the page 500s if you try, which agrees
+    with the theme CSS: it has .z-columns-menupopup and .z-listhead-menupopup and no treecols
+    equivalent. So a tree adds nothing here and is deliberately absent.
+-->
+<zk xmlns:h="native">
+<div sclass="z-p-8">
+    <div sclass="z-border-bottom z-text-xl z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Column Menu</div>
+
+    <div sclass="z-mb-6">
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Grid — columns menupopup="auto"</div>
+        <div sclass="z-py-3">
+            <grid id="gridAuto" width="420px">
+                <columns id="colsAuto" menupopup="auto" sizable="true">
+                    <column label="Name" sort="auto" width="180px"/>
+                    <column label="Region" sort="auto" width="120px"/>
+                    <column label="Score" sort="auto" align="right"/>
+                </columns>
+                <rows>
+                    <row><label value="Ada Lovelace"/><label value="North"/><label value="91"/></row>
+                    <row><label value="Grace Hopper"/><label value="South"/><label value="88"/></row>
+                    <row><label value="Alan Turing"/><label value="East"/><label value="95"/></row>
+                </rows>
+            </grid>
+        </div>
+    </div>
+
+    <div sclass="z-mb-6">
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Grid — sort only, no group or hide items</div>
+        <div sclass="z-py-3">
+            <grid width="420px">
+                <columns id="colsSortOnly" menupopup="auto" columnshide="false" columnsgroup="false">
+                    <column label="Item" sort="auto" width="240px"/>
+                    <column label="Qty" sort="auto" align="right"/>
+                </columns>
+                <rows>
+                    <row><label value="Hex bolt M6"/><label value="240"/></row>
+                    <row><label value="Washer 12mm"/><label value="1180"/></row>
+                </rows>
+            </grid>
+        </div>
+    </div>
+
+    <div sclass="z-mb-6">
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Listbox — listhead menupopup="auto"</div>
+        <div sclass="z-py-3">
+            <listbox id="listAuto" width="420px" rows="4">
+                <listhead id="lheadAuto" menupopup="auto" sizable="true">
+                    <listheader label="Ticket" sort="auto" width="180px"/>
+                    <listheader label="Owner" sort="auto" width="120px"/>
+                    <listheader label="Age" sort="auto" align="right"/>
+                </listhead>
+                <listitem><listcell label="Printer offline"/><listcell label="Chen"/><listcell label="3d"/></listitem>
+                <listitem><listcell label="VPN drops"/><listcell label="Osei"/><listcell label="1d"/></listitem>
+                <listitem><listcell label="Slow export"/><listcell label="Novak"/><listcell label="7d"/></listitem>
+            </listbox>
+        </div>
+    </div>
+
+</div>
+</zk>

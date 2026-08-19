@@ -52,7 +52,24 @@ const WORK = path.join(REPO, 'target/ab-visual');
 const SHOTS = path.join(WORK, 'shots');
 const CP_CACHE = path.join(WORK, 'marble-cp.txt');
 
-const PORT = 8081; // hardcoded in ThemePreviewIceblueApp.main
+// Corpus pages that belong to THIS branch because the harness needs them and Marble does not:
+// see doc/visual-ab-harness.md §7.4. They are staged into a classpath root of their own rather
+// than by putting this worktree's own src/test/resources on the classpath, and that is the whole
+// point of the copy: this worktree carries a DRIFTED near-copy of Marble's corpus (150 pages vs
+// 158, ~149 names in common), so exposing it as a root would let ZK resolve `~./button.zul` from
+// either tree. First-match-wins would make that silent — the served corpus could change without
+// any page count moving, which is the §2.2 failure mode again. A root holding only these pages
+// cannot collide with anything.
+const EXTRA_SRC = path.join(REPO, 'src/test/resources/web/abpopup');
+const EXTRA_ROOT = path.join(WORK, 'corpus');
+const EXTRA_WEB = path.join(EXTRA_ROOT, 'web');
+
+// 8081 is ThemePreviewIceblueApp's own default (app.setDefaultProperties in its main). It is a
+// Spring Boot DEFAULT, which ranks below system properties, so `-Dserver.port` overrides it —
+// measured, and that is what AB_PORT passes. The override exists because 8081 is a popular port:
+// a stray dev server from an unrelated project is enough to make the whole harness unrunnable,
+// and killing someone else's process is not the harness's call to make.
+const PORT = Number(process.env.AB_PORT || 8081);
 const BASE_URL = `http://127.0.0.1:${PORT}`;
 
 const sleep = ms => new Promise(r => setTimeout(r, ms));
@@ -107,11 +124,29 @@ function marbleClasspath() {
 		});
 	}
 	const deps = fs.readFileSync(CP_CACHE, 'utf8').trim();
-	const cp = [MARBLE_TEST_CLASSES, deps, THEME_CLASSES].join(path.delimiter);
+	const cp = [MARBLE_TEST_CLASSES, stageExtraCorpus(), deps, THEME_CLASSES].join(path.delimiter);
 	if (cp.includes(path.join(MARBLE_HOME, 'target/classes'))) {
 		die(`Marble's target/classes leaked onto the classpath — MarbleThemeProvider would drop font-awesome.css.dsp`);
 	}
 	return cp;
+}
+
+/**
+ * Stage this branch's own corpus pages into their own classpath root and return it.
+ *
+ * Copied rather than referenced so the root contains ONLY these pages — see the note on
+ * EXTRA_SRC. Staged fresh every run because these pages are edited by hand and a stale copy
+ * would be served silently.
+ */
+function stageExtraCorpus() {
+	const pages = fs.existsSync(EXTRA_SRC) ? fs.readdirSync(EXTRA_SRC).filter(f => f.endsWith('.zul')) : [];
+	if (!pages.length) die(`no .zul under ${path.relative(REPO, EXTRA_SRC)} — the extra corpus root would be empty`);
+	const dest = path.join(EXTRA_WEB, 'abpopup');
+	fs.rmSync(EXTRA_ROOT, { recursive: true, force: true });
+	fs.mkdirSync(dest, { recursive: true });
+	for (const f of pages) fs.copyFileSync(path.join(EXTRA_SRC, f), path.join(dest, f));
+	console.log(`extra corpus:    ${pages.length} page(s) from ${path.relative(REPO, EXTRA_SRC)}`);
+	return EXTRA_ROOT;
 }
 
 function javaCommand() {
@@ -141,13 +176,18 @@ async function portFree() {
  */
 async function startApp(extraProps = []) {
 	if (!(await portFree())) {
-		die(`port ${PORT} is already in use — stop it first:\n  kill $(lsof -nP -iTCP:${PORT} -sTCP:LISTEN -t)`);
+		die(
+			`port ${PORT} is already in use — stop it first:\n` +
+			`  kill $(lsof -nP -iTCP:${PORT} -sTCP:LISTEN -t)\n` +
+			`or pick another port for this run:\n  AB_PORT=8099 <the same command>`
+		);
 	}
 	const { cmd, pre } = javaCommand();
 	const args = [
 		...pre,
 		'-Dspring.profiles.active=iceblue', // application.properties would otherwise force `dev`
 		'-Dorg.zkoss.theme.preferred=iceblue11',
+		`-Dserver.port=${PORT}`,
 		...extraProps,
 		'-cp', marbleClasspath(),
 		APP_MAIN,
@@ -197,7 +237,13 @@ function runPlaywright(outDir, project) {
 		{
 			cwd: REPO,
 			stdio: 'inherit',
-			env: { ...process.env, AB_MARBLE_WEB: MARBLE_WEB, AB_OUT: outDir, AB_BASE_URL: BASE_URL },
+			env: {
+				...process.env,
+				AB_MARBLE_WEB: MARBLE_WEB,
+				AB_EXTRA_WEB: EXTRA_WEB,
+				AB_OUT: outDir,
+				AB_BASE_URL: BASE_URL,
+			},
 		}
 	);
 }

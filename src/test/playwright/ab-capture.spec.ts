@@ -6,11 +6,18 @@ const { compare, classify, describe } = require('../../../scripts/png-compare.js
 // Capture pass of the visual A/B harness — see doc/visual-ab-harness.md.
 //
 // The page corpus is Marble's, discovered by SCANNING its compiled test resources at
-// collection time. Nothing is copied into this branch: L2.4 says reuse Marble's preview
-// pages and Playwright, do not move the corpus in. A page Marble adds is covered on the
-// next run with no edit here.
+// collection time: L2.4 says reuse Marble's preview pages and Playwright rather than moving the
+// corpus in, so a page Marble adds is covered on the next run with no edit here.
+//
+// The one addition to that rule is `abpopup/`, staged by scripts/ab-visual.js from THIS branch's
+// src/test/resources/web/abpopup. Those pages exist only to give the harness a surface Marble has
+// no reason to carry (a mesh head with `menupopup` set — doc/visual-ab-harness.md §7.4). They are
+// staged as a classpath root of their own precisely so they cannot shadow a Marble page: this
+// worktree also holds a drifted near-copy of the whole corpus, and exposing THAT as a root would
+// silently change which tree 149 shared page names resolve from.
 
 const MARBLE_WEB = requireEnv('AB_MARBLE_WEB'); // <marble>/target/test-classes/web
+const EXTRA_WEB = requireEnv('AB_EXTRA_WEB');   // target/ab-visual/corpus/web — this branch's own pages
 const OUT = requireEnv('AB_OUT');               // target/ab-visual/shots/<label>
 
 function requireEnv(name: string): string {
@@ -83,7 +90,17 @@ function discover(): string[] {
           .filter(f => f.endsWith('.zul'))
           .map(f => prefix + f.slice(0, -'.zul'.length))
       : [];
-  return [...zuls(MARBLE_WEB), ...zuls(path.join(MARBLE_WEB, 'usecase'), 'usecase/')]
+  // The corpus is Marble's, plus the few pages that exist only for this harness because Marble
+  // has no reason to carry them (doc/visual-ab-harness.md §7.4). They are staged into a separate
+  // classpath root by scripts/ab-visual.js, so they cannot shadow a Marble page of the same name.
+  // They are captured AT REST here as well as opened in ab-popup.spec.ts, because part of what
+  // they add is at-rest-only: `menupopup="auto"` puts .z-columns-menupopup on the head element
+  // and a caret button in every header without anything being opened.
+  return [
+    ...zuls(MARBLE_WEB),
+    ...zuls(path.join(MARBLE_WEB, 'usecase'), 'usecase/'),
+    ...zuls(path.join(EXTRA_WEB, 'abpopup'), 'abpopup/'),
+  ]
     .filter(name => !SKIP.has(name))
     .sort();
 }

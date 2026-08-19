@@ -380,3 +380,153 @@ S28 的教訓是「臨時探針會產出看起來合理的假數字」(當時量
 **還有一個不用信任程式碼的算術核對**:未注入時服務出來的 `zk.wcs` 是 **551581 B**,
 注入後 **553901 B**,差 **2320 B**;每個標記 29 B ⇒ **2320 / 29 = 80**,
 與「80 個檔到彙整檔」逐一相符。負向控制那一輪是 553872 B(少一個標記)。
+
+## 7. Pop-up:互動才會出現的那一層(2026-08-19 補上)
+
+> **狀態**:已實作、兩個 project 的 selftest 都收斂到 **0**、反向控制有牙齒、
+> 對 `baseline/`(原本的 IceBlue)的 A/B 已跑完。
+> 檔案:`src/test/playwright/ab-popup.spec.ts`;`playwright.config.ts` 兩個 project 的
+> `testMatch` 放寬為 `/ab-(capture|popup)\.spec\.ts/`。
+
+### 7.1 §1「結構上看不到」原本漏了一整類
+
+§1 的表格只列了三個因硬體/解碼被 SKIP 的檔。實際上還有一整類看不到的東西,
+而且跟 SKIP 無關:**`ab-capture` 全程沒有任何一次 click / hover / 鍵盤 / widget API 呼叫**。
+§5.1 第 7 輪其實已經寫出這件事(「截圖不觸發 hover」),但當時只當成 hover 的個案。
+
+Pop-up 是同一個盲點更嚴重的一塊:**hover 至少是既有元素換樣式,pop-up 面板在關閉時
+根本不在 DOM 裡**。對 `baseline/` 實際數出來,受影響的選擇器出現次數約 **180**:
+
+| 選擇器族 | baseline 出現次數 |
+|---|---|
+| `.z-nav-popup` / `-open` / `.z-nav-text-popup` / `.z-navitem-text-popup` | 28 / 9 / 5 / 5 |
+| `.z-menupopup*` / `.z-menu-content-popup` / `.z-menu-popup` | 25 / 2 / 1 |
+| `.z-tbeditor-dropdown` / `-open-dropdown` | 18 / 8 |
+| `.z-daterangebox-popup*`(panels/today/linked/times/footer/clear/cancel) | ≈25 |
+| `.z-datebox-popup` / `.z-datebox-open` | 6 / 1 |
+| `.z-combobox-popup` / `-bandbox-` / `-timebox-` / `-timepicker-` | 3 / 2 / 2 / 2 |
+| `.z-chosenbox-popup*` / `-cascader-` / `-searchbox-` / `-colorbox-` / `-colorpalette-` | 各 2 |
+| `.z-popup` / `.z-popup-content` / `.z-toolbar-popup*` / `.z-slider-popup` / `.z-drawer-open` | 1 / 2 / ≈3 / 1 / 5 |
+
+**這跟 §6 的覆蓋率是兩個不同的問題,不要混。** §6 問「`.css.dsp` **有沒有被服務**」(80/85);
+這一節問「**服務進來的規則有沒有任何元素去命中**」。一個檔可以 100% 被服務,
+裡面卻有三分之一的選擇器從來沒碰到任何元素。
+
+### 7.2 三個被迫與 `ab-capture` 不同的地方
+
+| # | 差異 | 為什麼非這樣不可 |
+|---|---|---|
+| 1 | `NO_MOTION` 在**開啟之前**注入 | pop-up 開啟本身帶 transition;沿用「載入後才注入」會讓連續兩張永遠停在動畫中途 |
+| 2 | 有 widget API 就**不要用 click** | click 會把游標留在觸發點,ZK 對游標底下的 item 加 `-hover`/`-seld`。主題一改動使面板位移幾個像素 ⇒ **被 hover 的 item 換人** ⇒ 報出一個與被改規則無關的巨大差異。沒有 API 的才 click,並在開啟後把游標停到 0,0 |
+| 3 | 截圖**裁切到面板自己的 bbox + 24px**,不用 `fullPage` | 面板 detach 到 `<body>` 且絕對定位,開在下緣會把 document 撐高 ⇒ 整頁位移(§4 的 fullPage 過度敏感,但這裡是**必然**發生);而且 §5.1 已量到小面積改動攤在整頁裡會被噪音吞掉。**代價**:裁切框跟著面板跑,所以「只讓面板位移」的改動這裡照不出來 —— 定位靠的是 anchor 幾何,那個在 at-rest 截圖裡 |
+
+還有一個**自帶的空轉閘門**:每個場景都要指名「**我要讓哪個選擇器被畫出來**」,
+而且**必須恰好一個元素可見**。少了這條,一個觸發器悄悄失效的場景會拍到一張
+「看起來很正常的、後面那一頁」的圖 —— 就是 §2.2 那種「什麼都沒量到卻回報一致」。
+
+### 7.3 建立過程的實測發現(這一節才是給下一個人看的)
+
+**五個問題,沒有一個是推理出來的,全部是跑出來被打臉才發現的。**
+
+| # | 現象 | 根因 | 處置 |
+|---|---|---|---|
+| 1 | 第一次跑,28 個場景 **8 個失敗**,全部是「面板一直 hidden」 | `locator(sel).first()` **抓到隱藏的那一個**:很多頁面**每個 widget 都預先渲染一個隱藏面板**(`timepicker.zul` 有 **15** 個 `.z-timepicker-popup`,colorbox 5 個),`.first()` 是 DOM 順序,不是可見的那個 —— 於是它耗完 15s 等一個永遠不會顯示的元素,而真正開起來的面板就在旁邊 | 改成**數可見的個數必須等於 1**,而且**等待條件與裁切框用同一個函式**(`popupClip`)⇒ 拍到的那一格畫面,可證明就是滿足等待的那一格 |
+| 2 | `combobox-description` 場景報 `no widget for .z-combobox #11 — 11 candidate(s)` | 用 DOM index 選實例。頁面上讀起來是第 12 個,但**disabled 的兩個先被濾掉**,後面每個 index 都位移了 | 改成**用它「是什麼」來選**:`where: '!!(w.firstChild && w.firstChild._description)'`。這種條件在語料被改順序之後仍然成立 |
+| 3 | mobile 的 `nav-collapsed-popup` 完全開不起來(`.z-nav-popup` 0 in DOM) | `setOpen(true)` 在收合的 Nav 上是**就地展開**、不產生面板;**hover** 在桌機可以、在 touch 模擬下不行(ZK 由 UA 判定 `zk.mobile=1`,把 hover affordance 關掉);**click 兩邊都可以** | 統一改成 click。**但 click 開起來的面板在桌機仍然是「游標維持」的** —— 把游標停走之後它撐過了 `waitForPopup`、然後在拍攝中途關掉(`pop-up went away mid-capture`,兩趟都一樣)⇒ 需要 `holdCursor`,並記下為什麼安全:游標停在 x≈40 的側邊欄項目上,面板從 x=78 才開始 |
+| 4 | mobile selftest 抓到 `popup__toolbar-overflow-popup` **4406px / maxΔ 145**(同一份 build 兩次) | 「觸發點在面板外」**不是每個幾何都成立**:mobile 幾何下 overflow 面板**開在 ellipsis 按鈕正上方**,面板裡有一顆按鈕被 hover ⇒ 一趟有淡藍底(122,200,255)、一趟是白底(255,255,255) | 觸發**之後**把游標停到 0,0(`drag` 例外 —— 它的鈕還按著,移動會拖到滑塊) |
+| 5| 加了「觸發後停游標」之後,mobile selftest 換成 `popup__popup-basic` **13230px / 71.5%** | ZK 的 `<popup>` 是**開在游標位置**的,而且**很晚才讀游標** ⇒ 我自己的「停游標」跟它的定位在賽跑:面板多數落在 **0,0**、偶爾落在按鈕上。5 次量測:游標停走 = 4 次 (0,0) + 1 次 (69,57);**游標維持 = 5/5 穩定**(桌機 69,57 / mobile 66,54) | `popup-basic` 也標 `holdCursor`。**Confirmpopup 不需要** —— 它是對著 target 定位而不是游標,停游標下 0 差異 |
+
+**第 3、4、5 項是同一個教訓的三種形狀**:游標位置是這一層的**主要**噪音來源,
+而「該停還是該留」**沒有通則**,每個 pop-up 家族都得量。所以 `holdCursor` 的值是
+**那次量測本身**,不是一個布林旗標 —— 一個沒有理由的例外,跟忘記處理無法區分。
+
+### 7.4 照不到的(全部量過,不是猜的)
+
+| 表面 | 為什麼 |
+|---|---|
+| `.z-selectbox` 展開的清單 | `zul.wgt.Selectbox` 渲染成原生 `<select>`,展開清單由**作業系統**畫,不在 DOM 裡,主題也管不到 ⇒ **不是漏測,是不存在的表面** |
+| `.z-timebox-popup .z-timebox-wheel-body` | `zul.db.Timebox` 在桌機 client **沒有** open/setOpen,按鈕是上下 spinner;wheel 屬於 tablet mold。共用的 `.z-{combobox,bandbox,datebox,timebox}-popup` 主規則已由另外三個兄弟覆蓋 |
+| `.z-goldenlayout-dropdown` | 7 個 `.lm_tabdropdown` 全是 `display:none` —— 只有 stack header 溢出才顯示,語料在兩種幾何下都不會溢出 |
+| `.z-treecols-menupopup` | **不存在**:`org.zkoss.zul.Treecols` 沒有 `setMenupopup`(硬寫上去頁面會 500),主題 CSS 也沒有 treecols 版本 —— 只有 columns 與 listhead。**不是缺口** |
+| `.z-portallayout-popup*` | 小螢幕才有的 affordance,兩種幾何下 `portallayout.zul` 都不產生 |
+| `.z-tbeditor-dropdown`(**只有 mobile**) | touch 模擬下**打不開**:按鈕在(35×35 @138,37)、可點,但 click / tap / dblclick / 原始 mouse down-up **四種都讓兩個面板停在 `display:none`**。這個選單由 Trumbowyg 自己驅動 ⇒ 是編輯器函式庫關掉的,不是主題。桌機 project 已完整覆蓋 |
+
+**三個「其實早就被 at-rest 照到」的,寫下來免得重複做白工**(這是實測結果,不是假設):
+
+- `.z-confirmpopup-*`:`confirmpopup.zul` 用 `h:div` 畫了 **19 個靜態樣板、9 個可見** ⇒ 這 ≈40 個選擇器從來不在缺口裡。只有**真的 widget**(箭頭與 placement 是算出來的)另外拍一張。
+- `.z-coachmark-open` / `-mask`:`coachmark.zul` 載入時就留一個開著的。
+- `.z-toolbar-overflowpopup` / `-on`:這個 class 在 **toolbar 元素本身**,不在面板上。
+
+### 7.5 驗證數字
+
+順序照 §5.3 訂的前置條件走:**先 selftest 收斂到 0,才可以讀該 project 的 A/B。**
+
+| 步驟 | 結果 |
+|---|---|
+| 場景數 | **30**(桌機 30,mobile 29 + 1 個具名 skip) |
+| `visual:selftest`(桌機) | **147 頁比對、differing 0**;噪音 4 頁,**全部是 at-rest 頁,pop-up 一張都沒進噪音名單** |
+| `visual:selftest ab-capture-mobile` | **146 頁比對、differing 0**、missing 0 |
+| **反向控制** | 對建置產物注入一行 `.z-combobox-popup{border-radius:12px;border-color:#e00}` → **3 頁差異,全部是 pop-up 場景**(1338/1424/1360 px,**3.4–4.4%** 的畫面,maxΔ 249–255),**原本的 116 頁 at-rest 一頁都沒動**。還原後 `combo.css.dsp` 與注入前 **byte 相同** |
+| A/B vs `baseline/`(桌機) | 指紋 `df92b09541854f7d` → `7a447b74c81a24a0`(**72/85 檔 byte 不同**),**147 頁 differing 0** |
+| A/B vs `baseline/`(mobile) | **146 頁 differing 0**、missing 0 |
+
+**反向控制那一列是這一節唯一重要的數字**:同一個改動,新場景看到 **4.36% 的畫面**,
+舊的 116 頁看到 **0**。這就是「新增的訊號是新的、不是既有訊號的重複」的直接證據 ——
+也順便反證了「pop-up 選擇器在 at-rest 頁面上其實有被命中」這個可能的反駁。
+
+**第一次跑 mobile 的 A/B 時,baseline 側曾報 4 個 pop-up 場景有差異(maxΔ 255)。那是假的**:
+同一趟有 **8 頁 MISSING**,原因是 preview app 中途死掉(5 頁 `ERR_CONNECTION_REFUSED`
+/ `ERR_EMPTY_RESPONSE`、`columnlayout` 逾時 60s)。重跑之後 143 頁 0 差異。
+`diff` 的「**有 MISSING 就先修,下面的數字不要讀**」這條規則在這裡直接救了一次誤判 ——
+如果當時照著那 4 筆去追主題,會白追。
+
+### 7.6 附帶修掉的:`AB_PORT`
+
+`ab-visual.js` 原本把 8081 寫死,port 被佔住就整個 harness 不能跑。
+8081 是很熱門的 port(這次是**另一個專案**的 dev server 佔著),而
+「把別人的 process 殺掉」不該是 harness 的決定。
+
+`ThemePreviewIceblueApp.main` 是用 `app.setDefaultProperties` 設 8081 的,
+那是 Spring Boot 的 **default**,**位階低於系統屬性** ⇒ `-Dserver.port` 蓋得過去(已實測)。
+所以 `AB_PORT=8099 npm run visual:selftest` 這樣就能換 port,**Marble worktree 一個檔都不用改**。
+
+### 7.7 本分支自己的語料頁:`abpopup/`(2026-08-19 追加)
+
+§7.4 原本把 column menu 列為「照不到」,理由是「要加一頁語料,而語料屬於 Marble worktree」。
+**那個理由是錯的** —— 本 worktree 有自己的 `src/test/resources/web/`,加在這裡就好,
+不必動 Marble。已補上 `src/test/resources/web/abpopup/column-menu.zul`。
+
+**這頁一次補齊兩層,而且大部分收穫在 at-rest 那一層** —— 因為
+`.z-columns-menupopup` / `.z-listhead-menupopup` **不是面板的 class,是「表頭上的修飾 class」**
+(`ColumnMenuWidget.domClass_()`:`_menupopup != 'none'` 時加上 `$s('menupopup')`),
+用途是把每個 `.z-column-content` 的 `padding-right` 撐開來讓出插入符的位置。
+`menupopup` 一設好它就在,**不需要開任何東西**:
+
+| 新覆蓋到的 | 何時出現 | 由誰拍 |
+|---|---|---|
+| `.z-columns-menupopup`(×2)、`.z-listhead-menupopup`(×1) | at rest | `ab-capture`(新頁自動納入) |
+| `.z-column-button`、`.z-listheader-button`(各 5 個 CSS 出現次數) | at rest 在 DOM 裡(`display:none`,hover 才顯示) | 同上 |
+| 自動建出來的 column menu 面板(sort / group / 欄位可見性 + `.z-menuseparator` + 勾選 menuitem) | 要開 | `ab-popup` 的 `grid-column-menu` / `listbox-column-menu` |
+
+**兩個實作上的坑:**
+
+1. **插入符在 hover 之前是 `display:none`**(實測 at rest 0×0、hover 後 34×48),
+   所以直接 click 會耗完 timeout 等一個隱藏元素。新增 `reveal` 觸發類型
+   (先 hover 表頭、再 click 插入符)。開起來的幾何 **3/3 完全一致**,兩個 project 都是,
+   停不停游標都一樣穩。
+2. **面板文字是 `Unknown message code: 271125xx`**。這是**既有現象、不是這頁造成的** ——
+   `msgzul.GRID_ASC` 在**stock 的 `grid-header.zul` 與 `menubar.zul` 上讀到一樣的值**。
+   對 A/B 無害(兩側完全相同),寫在這裡只是為了避免有人把這頁當成壞掉的頁去修。
+
+### 7.8 為什麼不是把本 worktree 的 `src/test/resources` 直接放上 classpath
+
+**因為本 worktree 帶著一份「漂移過的」語料複本**:150 頁 vs Marble 的 158 頁,
+**約 149 個檔名相同**(本分支多 `density-probe.zul`,少 `icons-lucide.zul` 與 8 個 usecase 頁)。
+`ClassLoader.getResource` 是 **first-match-wins**,所以把它當成 classpath root 一放上去,
+`~./button.zul` 從哪一棵樹解析就變成「看 classpath 順序」—— 而且**沒有任何數字會動**:
+頁數一樣、名稱一樣,只有內容悄悄換人。那正是 §2.2 那種「什麼都沒量到卻回報一致」。
+
+所以 `ab-visual.js` 的 `stageExtraCorpus()` 把 `src/test/resources/web/abpopup/` **複製**到
+`target/ab-visual/corpus/web/abpopup/`,只把**這個只含新頁的目錄**當 classpath root。
+**碰撞在結構上不可能發生**,不必依賴 classpath 順序。每次 run 都重新複製 ——
+這些頁是手改的,一份過期的複本會被靜靜地服務出去。
