@@ -23,10 +23,13 @@
     width: 288px;
     min-height: var(--zk-notification-height);
     /* center the message vertically: min-height (48px default) exceeds a single line's
-       natural height (~43.5px incl. padding), so block layout would top-align
-       the text and leave bottom slack, misaligning it with the centered icon */
-    display: flex;
-    align-items: center;
+       natural height (~43.5px incl. padding), so plain block layout would top-align
+       the text and leave bottom slack, misaligning it with the centered icon.
+       Block-level align-content, not flex: a flex container wraps each contiguous
+       inline run of an HTML message in an anonymous block item, which strips the
+       spaces around inline markup ("do <span>HTML</span>." -> "doHTML."). */
+    display: block;
+    align-content: center;
     padding: var(--zk-spacing-3) var(--zk-spacing-4) var(--zk-spacing-3) 52px;
     position: relative;
     overflow: hidden;

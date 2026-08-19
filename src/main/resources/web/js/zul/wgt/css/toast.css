@@ -26,10 +26,13 @@
     font-weight: var(--zk-typescale-body-medium-weight);
     width: 320px;
     min-height: var(--zk-notification-height);
-    /* center vertically: min-height exceeds a single line + padding, so block
-       layout top-aligns the text away from the centered icon (mirrors notification) */
-    display: flex;
-    align-items: center;
+    /* center vertically: min-height exceeds a single line + padding, so plain block
+       layout top-aligns the text away from the centered icon (mirrors notification).
+       Block-level align-content, not flex: a flex container wraps each contiguous
+       inline run of an HTML message in an anonymous block item, which strips the
+       spaces around inline markup ("with <b>bold</b> content" -> "withboldcontent"). */
+    display: block;
+    align-content: center;
     padding: 12px 48px;
     border-radius: var(--zk-toast-radius);
     box-shadow: var(--zk-elevation-3);
