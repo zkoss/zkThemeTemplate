@@ -185,3 +185,34 @@ pop-up 的 PNG 就是同一個 `AB_OUT` 目錄裡多出來的檔案,自動參與
 **仍然照不到的**:`.z-goldenlayout-dropdown`(要 stack header 溢出)、
 `.z-portallayout-popup*`(小螢幕 affordance)、mobile 的 `.z-tbeditor-dropdown`(Trumbowyg 自己關掉)、
 原生 `<select>` 展開清單(作業系統畫的)。
+
+---
+
+## 8. 追加:三個「照不到」的表面(2026-08-19,選項 B)
+
+使用者裁示選項 B —— 補語料頁去照到剩下三個表面。**結果三個各有不同結局,兩個不是加頁能解的。**
+
+| 表面 | 結局 |
+|---|---|
+| `.z-goldenlayout-dropdown` | ✅ **加頁解決**。新增 `abpopup/tab-overflow.zul`:一個 360px 的窄 stack + 五個長標題 tab,逼 header 溢出。門檻是從 jar 裡的 `goldenlayout.src.js` 讀出來的(`availableWidth = header - controls - 10`),不是試出來的。點開後 3/3 完全一致 |
+| `.z-portallayout-popup*` | ❌ **加頁不可能 —— 是死 CSS**。`portallayout-popup` 在整個 zkmax-10.4.0 裡只出現在 `portallayout.css.dsp` **自己**;`Portallayout.ts` / `Portalchildren.ts` 裡「popup」**0 次**。沒有程式會建這些元素 ⇒ **刪除候選**,轉給 drop-LESS 專案處理 |
+| `.z-tbeditor-dropdown`(mobile) | ❌ **加頁無意義**。根因:`trumbowyg.js` 把按鈕綁在 **`mousedown`** 且全檔**沒有 touch 處理**,模擬觸控到不了。可以用合成 mousedown 硬開,但**沒有意義** —— `tablet.css.dsp` 裡 tbeditor 規則 **0 條**,mobile 那張會跟桌機一模一樣。維持 skip,但理由從「打不開」升級為「打開了也沒有新資訊」 |
+
+**額外做的一件事(超出選項 B,但不做就沒有可信的 mobile 閘門):** mobile selftest 連續兩趟
+在 `breadcrumb` 拿到同一個簽章 `4px maxΔ 13 box 4,39,4,42` —— 那是 §5.2 早就解剖過的
+**雙穩態文字抗鋸齒**,與本次工作無關(`breadcrumb` 不在我改的任何檔案裡)。
+照 §5.3 建議 #2 實作了 `KNOWN_UNSTABLE`:**精確簽章比對**(diffPixels + maxΔ + 四個 box 座標 + project + 頁名),
+並做了負向控制(把 4 改成 5 → 立刻回報成真差異)。**這是收窄而不是放寬**:在它之前
+那一頁在 mobile 上是擲硬幣(第三趟又自己變回 0)。
+
+### 收工數字
+
+| 項目 | 值 |
+|---|---|
+| 場景數 | **31**(桌機 31,mobile 30 + 1 具名 skip) |
+| selftest 桌機 / mobile | **149 頁 differing 0** / **148 頁 differing 0** |
+| A/B vs `baseline/` 桌機 / mobile | **149 頁 differing 0** / **148 頁 differing 0**,0 missing,指紋兩側不同 |
+| 語料頁 | `abpopup/column-menu.zul`、`abpopup/tab-overflow.zul` |
+
+**仍未做**:§5.3 建議 #3(根因)—— 保留 UA/viewport/`hasTouch`、只關掉 `isMobile` 再跑 selftest,
+若 breadcrumb 收斂就能把 `KNOWN_UNSTABLE` 整條刪掉。成本只有兩趟 capture。

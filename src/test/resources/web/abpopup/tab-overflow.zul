@@ -1,0 +1,39 @@
+<?page title="Tab Overflow" contentType="text/html;charset=UTF-8"?>
+<!--
+    Corpus page added FOR the visual A/B harness (doc/visual-ab-harness.md §7.4).
+
+    It exists to reach .z-goldenlayout-dropdown, which nothing else can: GoldenLayout only
+    shows its tab dropdown when a stack header runs out of room. From the shipped
+    goldenlayout.src.js (lm.controls.Header._updateTabSizes):
+
+        availableWidth = header.outerWidth() - controlsContainer.outerWidth() - 10
+
+    tabs past that width are moved into `ul.z-goldenlayout-dropdown.lm_tabdropdown_list` and
+    the `.lm_tabdropdown` button is un-hidden. So the page needs ONE stack, deliberately narrow,
+    with more long-titled tabs than can fit — every panel shares area "A" to keep them in a
+    single stack.
+
+    Pure ZUML with static content and no composer, like the other page in this directory: the
+    A/B run serves this directory as a classpath root of its own, with no classes in it.
+-->
+<zk xmlns:h="native">
+<div sclass="z-p-8">
+    <div sclass="z-border-bottom z-text-xl z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Tab Overflow</div>
+
+    <div sclass="z-mb-6">
+        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Goldenlayout — one narrow stack, more tabs than fit</div>
+        <div sclass="z-py-3">
+            <goldenlayout width="360px" height="260px" orient="vertical">
+                <attribute name="areas">
+                    A
+                </attribute>
+                <goldenpanel area="A" title="Requirements Register">Requirements register</goldenpanel>
+                <goldenpanel area="A" title="Implementation Notes">Implementation notes</goldenpanel>
+                <goldenpanel area="A" title="Verification Evidence">Verification evidence</goldenpanel>
+                <goldenpanel area="A" title="Deployment Checklist">Deployment checklist</goldenpanel>
+                <goldenpanel area="A" title="Retrospective Actions">Retrospective actions</goldenpanel>
+            </goldenlayout>
+        </div>
+    </div>
+</div>
+</zk>

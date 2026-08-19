@@ -346,6 +346,52 @@ ${differing.map(row).join('\n')}
 	return out;
 }
 
+/**
+ * Pages the selftest has PROVEN it cannot capture deterministically, each recorded with the
+ * EXACT signature of the difference — doc/visual-ab-harness.md §5.3 recommendation #2.
+ *
+ * This is deliberately NOT a threshold change. §5.1 measured a real, painted change at 44px /
+ * 52px, i.e. INSIDE the noise floor, so raising the floor to swallow this page would also
+ * swallow real findings; and §5.2 measured that maxDelta is a bad discriminator for shifted
+ * text antialiasing anyway, because a displaced glyph edge jumps straight to the ink's full
+ * amplitude. The discriminator that actually separates the two is REPRODUCIBILITY, which the
+ * selftest already measures. So an entry here matches only when diffPixels, maxDelta and all
+ * four box coordinates are identical; anything else about the page counts as a real difference.
+ *
+ * Entries are still printed on every run. The floor decides the verdict, never what the
+ * reviewer gets to see.
+ */
+const KNOWN_UNSTABLE = [
+	{
+		project: 'ab-capture-mobile',
+		page: 'breadcrumb',
+		diffPixels: 4, maxDelta: 13, box: [4, 39, 4, 42],
+		// §5.2 took this one apart pixel by pixel: it is the outermost antialiasing column of the
+		// capital T in "Trail with 3 link items…", the same faint grey ink painted at y=41-42 in
+		// one capture and y=39-40 in the other, with the glyph's own strokes identical. It is
+		// bistable rather than noisy — repeated captures land on one of exactly two states, and
+		// the grouping does not follow the theme bytes (two captures of the SAME fingerprint fell
+		// in different states, while captures of DIFFERENT fingerprints matched pixel for pixel),
+		// which is what rules out CSS as the cause. §5.3 predicted it would surface here and it
+		// did: two consecutive mobile selftests, identical signature both times.
+		why: 'bistable text-antialiasing placement under isMobile viewport scaling — see §5.2',
+	},
+];
+
+/** Exact-signature match only — see KNOWN_UNSTABLE. */
+function knownUnstable(project, page, m) {
+	return KNOWN_UNSTABLE.find(
+		k =>
+			k.project === project &&
+			k.page === page &&
+			k.diffPixels === m.diffPixels &&
+			k.maxDelta === m.maxDelta &&
+			Array.isArray(m.box) &&
+			m.box.length === k.box.length &&
+			k.box.every((v, i) => v === m.box[i])
+	);
+}
+
 function diff(labelA, labelB) {
 	const a = readManifest(labelA);
 	const b = readManifest(labelB);
@@ -359,7 +405,9 @@ function diff(labelA, labelB) {
 	const mapB = new Map(b.pages.map(p => [p.page, p]));
 	const all = [...new Set([...mapA.keys(), ...mapB.keys()])].sort();
 
+	const project = pa; // `pa` is shadowed below by the per-page record
 	const differing = [];
+	const unstable = [];
 	const noise = [];
 	const missing = [];
 	for (const name of all) {
@@ -374,7 +422,10 @@ function diff(labelA, labelB) {
 			fs.readFileSync(path.join(SHOTS, labelA, `${name}.png`)),
 			fs.readFileSync(path.join(SHOTS, labelB, `${name}.png`))
 		);
-		(classify(m) === 'differs' ? differing : noise).push({ name, detail: describe(m) });
+		const entry = { name, detail: describe(m) };
+		if (classify(m) !== 'differs') noise.push(entry);
+		else if (knownUnstable(project, name, m)) unstable.push(entry);
+		else differing.push(entry);
 	}
 
 	const sameTheme = a.theme.fingerprint === b.theme.fingerprint;
@@ -390,8 +441,10 @@ function diff(labelA, labelB) {
 	console.log(`pages compared:  ${all.length}`);
 	console.log(`pages differing: ${differing.length}`);
 	console.log(`raster noise:    ${noise.length}   (below the measured floor: ≤${require('./png-compare').NOISE.maxPixels}px and maxΔ ≤${require('./png-compare').NOISE.maxDelta} — see scripts/png-compare.js)`);
+	if (unstable.length) console.log(`known unstable:  ${unstable.length}   (exact-signature match — see KNOWN_UNSTABLE in scripts/ab-visual.js)`);
 	if (missing.length) console.log(`pages missing:   ${missing.length}`);
 	for (const d of differing) console.log(`  differs  ${d.name.padEnd(26)} ${d.detail}`);
+	for (const d of unstable) console.log(`  unstable ${d.name.padEnd(26)} ${d.detail}  (known, not counted)`);
 	for (const d of noise) console.log(`  noise    ${d.name.padEnd(26)} ${d.detail}`);
 	for (const m of missing) console.log(`  MISSING  ${m}`);
 

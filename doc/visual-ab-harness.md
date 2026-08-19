@@ -315,7 +315,7 @@ verdict:         HARNESS IS FLAKY — same theme bytes, different pixels. Fix th
 | # | 作法 | 成本 | 性質 |
 |---|---|---|---|
 | 1 | **新增任何 project 後,先跑 `selftest <project>` 並收斂到 0**,才可以讀該 project 的 A/B | 兩趟 capture | **前置條件**,不是選項。零新程式碼 |
-| 2 | selftest 收不掉的頁面,登記成**已知不穩定**(頁名 + 精確簽章 `diffPixels/maxΔ/box`)。`diff` 只在簽章**完全吻合**時歸為 `unstable (known)`,照樣印出來但不計入 differing;**簽章一有偏差就算真的** | 小改 `diff` + 一個受版控的清單 | **精確比對**,不是放寬閾值。不影響其他頁面 |
+| 2 | selftest 收不掉的頁面,登記成**已知不穩定**(頁名 + 精確簽章 `diffPixels/maxΔ/box`)。`diff` 只在簽章**完全吻合**時歸為 `unstable (known)`,照樣印出來但不計入 differing;**簽章一有偏差就算真的** | 小改 `diff` + 一個受版控的清單 | **精確比對**,不是放寬閾值。不影響其他頁面 —— **已於 2026-08-19 實作,見 §7.10**(含負向控制) |
 | 3 | 追根因:桌機 6 組配對 maxΔ 最高只有 **3**,mobile 卻有 **6** 與 **13**。差別在 `isMobile: true` 開啟 Chromium 的 meta-viewport 縮放 ⇒ 版面落在非整數座標 ⇒ 字形光柵原點在兩個 subpixel bin 間跳。**可測**:保留 UA / viewport / `hasTouch`,只關掉 `isMobile` 再跑 selftest。ZK 的 tablet layer 是看**伺服器端 UA**(`zk.mobile`),不是看 `isMobile`,所以關掉不會失去 P7 覆蓋 | 兩趟 capture 驗證 | 若成立就**根除**,不必登記 |
 
 第 2 項的附帶好處:一旦噪音改由「不可重現」認定,**下限就可以往下收**,
@@ -446,10 +446,9 @@ Pop-up 是同一個盲點更嚴重的一塊:**hover 至少是既有元素換樣�
 |---|---|
 | `.z-selectbox` 展開的清單 | `zul.wgt.Selectbox` 渲染成原生 `<select>`,展開清單由**作業系統**畫,不在 DOM 裡,主題也管不到 ⇒ **不是漏測,是不存在的表面** |
 | `.z-timebox-popup .z-timebox-wheel-body` | `zul.db.Timebox` 在桌機 client **沒有** open/setOpen,按鈕是上下 spinner;wheel 屬於 tablet mold。共用的 `.z-{combobox,bandbox,datebox,timebox}-popup` 主規則已由另外三個兄弟覆蓋 |
-| `.z-goldenlayout-dropdown` | 7 個 `.lm_tabdropdown` 全是 `display:none` —— 只有 stack header 溢出才顯示,語料在兩種幾何下都不會溢出 |
 | `.z-treecols-menupopup` | **不存在**:`org.zkoss.zul.Treecols` 沒有 `setMenupopup`(硬寫上去頁面會 500),主題 CSS 也沒有 treecols 版本 —— 只有 columns 與 listhead。**不是缺口** |
-| `.z-portallayout-popup*` | 小螢幕才有的 affordance,兩種幾何下 `portallayout.zul` 都不產生 |
-| `.z-tbeditor-dropdown`(**只有 mobile**) | touch 模擬下**打不開**:按鈕在(35×35 @138,37)、可點,但 click / tap / dblclick / 原始 mouse down-up **四種都讓兩個面板停在 `display:none`**。這個選單由 Trumbowyg 自己驅動 ⇒ 是編輯器函式庫關掉的,不是主題。桌機 project 已完整覆蓋 |
+| `.z-portallayout-popup*` | **死 CSS,不是語料缺口**:`portallayout-popup` 這個字串在整個 zkmax-10.4.0 裡只出現在**一個檔** —— `zkmax/layout/css/portallayout.css.dsp` 自己。`Portallayout.ts` 與 `Portalchildren.ts` 裡「popup」出現 **0 次**,`Portalchildren` 只會生 counter-on / frame / header-move。**沒有任何程式會建出這些元素**,所以沒有任何頁面照得到 ⇒ 這是**刪除候選**,不是要去追的缺口 |
+| `.z-tbeditor-dropdown`(**只有 mobile**) | touch 模擬下**打不開**:按鈕在(35×35 @138,37)、可點,但 click / tap / dblclick / 原始 mouse down-up **四種都讓兩個面板停在 `display:none`**。根因在編輯器函式庫,不在主題:`trumbowyg.js` 把按鈕綁在 **`mousedown`**(`mousedown: function(){ … execCmd("dropdown") }`),而整份檔案**沒有任何 touch 處理**,所以模擬的觸控序列根本到不了那個 handler。**用合成 mousedown 硬開的做法被否決,理由不是難而是沒意義**:`zkmax/css/tablet.css.dsp` 裡 tbeditor 規則 **0 條**,mobile 那張會跟桌機那張完全一樣 —— 這個 widget 沒有 tablet 層樣式可差 |
 
 **三個「其實早就被 at-rest 照到」的,寫下來免得重複做白工**(這是實測結果,不是假設):
 
@@ -463,12 +462,12 @@ Pop-up 是同一個盲點更嚴重的一塊:**hover 至少是既有元素換樣�
 
 | 步驟 | 結果 |
 |---|---|
-| 場景數 | **30**(桌機 30,mobile 29 + 1 個具名 skip) |
-| `visual:selftest`(桌機) | **147 頁比對、differing 0**;噪音 4 頁,**全部是 at-rest 頁,pop-up 一張都沒進噪音名單** |
-| `visual:selftest ab-capture-mobile` | **146 頁比對、differing 0**、missing 0 |
+| 場景數 | **31**(桌機 31,mobile 30 + 1 個具名 skip) |
+| `visual:selftest`(桌機) | **149 頁比對、differing 0**;噪音只出現在 at-rest 頁 |
+| `visual:selftest ab-capture-mobile` | **148 頁比對、differing 0**、missing 0 |
 | **反向控制** | 對建置產物注入一行 `.z-combobox-popup{border-radius:12px;border-color:#e00}` → **3 頁差異,全部是 pop-up 場景**(1338/1424/1360 px,**3.4–4.4%** 的畫面,maxΔ 249–255),**原本的 116 頁 at-rest 一頁都沒動**。還原後 `combo.css.dsp` 與注入前 **byte 相同** |
-| A/B vs `baseline/`(桌機) | 指紋 `df92b09541854f7d` → `7a447b74c81a24a0`(**72/85 檔 byte 不同**),**147 頁 differing 0** |
-| A/B vs `baseline/`(mobile) | **146 頁 differing 0**、missing 0 |
+| A/B vs `baseline/`(桌機) | 指紋 `df92b09541854f7d` → `7a447b74c81a24a0`(**72/85 檔 byte 不同**),**149 頁 differing 0** |
+| A/B vs `baseline/`(mobile) | **148 頁 differing 0**、missing 0 |
 
 **反向控制那一列是這一節唯一重要的數字**:同一個改動,新場景看到 **4.36% 的畫面**,
 舊的 116 頁看到 **0**。這就是「新增的訊號是新的、不是既有訊號的重複」的直接證據 ——
@@ -490,7 +489,7 @@ Pop-up 是同一個盲點更嚴重的一塊:**hover 至少是既有元素換樣�
 那是 Spring Boot 的 **default**,**位階低於系統屬性** ⇒ `-Dserver.port` 蓋得過去(已實測)。
 所以 `AB_PORT=8099 npm run visual:selftest` 這樣就能換 port,**Marble worktree 一個檔都不用改**。
 
-### 7.7 本分支自己的語料頁:`abpopup/`(2026-08-19 追加)
+### 7.7 本分支自己的語料頁:`abpopup/`(2026-08-19 追加,共 2 頁)
 
 §7.4 原本把 column menu 列為「照不到」,理由是「要加一頁語料,而語料屬於 Marble worktree」。
 **那個理由是錯的** —— 本 worktree 有自己的 `src/test/resources/web/`,加在這裡就好,
@@ -530,3 +529,38 @@ Pop-up 是同一個盲點更嚴重的一塊:**hover 至少是既有元素換樣�
 `target/ab-visual/corpus/web/abpopup/`,只把**這個只含新頁的目錄**當 classpath root。
 **碰撞在結構上不可能發生**,不必依賴 classpath 順序。每次 run 都重新複製 ——
 這些頁是手改的,一份過期的複本會被靜靜地服務出去。
+
+### 7.9 `abpopup/tab-overflow.zul`:goldenlayout 的 tab dropdown
+
+§7.4 原本把它列為照不到,理由是「語料在兩種幾何下都不會溢出」—— 那是**語料的性質,不是元件的性質**,
+所以補一頁就解決了。從 jar 裡的 `goldenlayout.src.js`(`lm.controls.Header._updateTabSizes`)讀到門檻:
+
+```js
+availableWidth = header.outerWidth() - controlsContainer.outerWidth() - 10   // _tabControlOffset
+```
+
+超出的 tab 會被搬進 `ul.z-goldenlayout-dropdown.lm_tabdropdown_list`,並把 `.lm_tabdropdown`
+按鈕 un-hide。所以新頁就是**一個刻意做窄的 stack(360px)+ 五個長標題 tab**,全部同一個 area,
+逼它溢出。實測:按鈕 `display:block`(22px),點開後面板 **3/3 完全一致**(226×148)。
+
+### 7.10 `KNOWN_UNSTABLE`:§5.3 建議 #2 的實作
+
+§5.3 說 `breadcrumb` 應該在跑 A/B **之前**就被歸類成 harness 噪音,並開出三條路。
+這次它真的來了 —— 連續兩趟 mobile selftest 都拿到**同一個簽章** `4px maxΔ 13 box 4,39,4,42`,
+於是把**建議 #2** 實作出來:`scripts/ab-visual.js` 的 `KNOWN_UNSTABLE`。
+
+| | |
+|---|---|
+| **比對法** | `diffPixels`、`maxDelta`、**四個 box 座標全部**都要相同,且限定 project 與頁名。差一點就算真的 |
+| **為什麼不是調閾值** | §5.1 量到一個**真的會畫出來**的改動只有 44px / 52px、**落在噪音下限之內** ⇒ 把下限放寬到能吞掉這一頁,也會吞掉真發現。§5.2 又量到 `maxDelta` 對「位移的抗鋸齒」本來就是差的判別器(墨一位移就直接跳到滿振幅)。真正能分開兩者的是**可重現性**,而那正是 selftest 在量的 |
+| **負向控制**(必須做) | 把記錄的 `diffPixels` 從 4 改成 5 → 該頁立刻回到 `pages differing: 1`、verdict 變回 `HARNESS IS FLAKY`;改回來又變成 `known unstable: 1`。⇒ 這個機制**只**吸收登記過的那一個狀態 |
+| **仍然會印出來** | 每一趟都印 `unstable <page> … (known, not counted)`。下限只決定 verdict,不決定覆核者看得到什麼 |
+
+**這個機制是收窄、不是放寬**:在它之前,`breadcrumb` 這一頁在 mobile 上是**擲硬幣** ——
+同一份 build 兩趟,有時 0 差異、有時 1 差異(這次第三趟又自己變回 0,再次印證雙穩態)。
+之前 §5.2 那次「兩張圖肉眼看不出差別」的追查,就是這個硬幣造成的。
+
+**仍未做的是建議 #3(根因)**:桌機所有配對 maxΔ 最高只有 3,mobile 有 6 與 13,差別在
+`isMobile: true` 開啟的 meta-viewport 縮放。可測而且成本只有兩趟 capture:保留 UA / viewport /
+`hasTouch`,只關掉 `isMobile` 再跑 selftest。ZK 的 tablet layer 看的是**伺服器端 UA**(`zk.mobile`),
+不是 `isMobile`,所以關掉不會失去 P7 覆蓋。若成立就能把這筆登記整條刪掉。

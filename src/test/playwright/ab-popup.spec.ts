@@ -215,8 +215,12 @@ const SCENARIOS: Scenario[] = [
       'ab-capture-mobile':
         'the dropdown cannot be opened under touch emulation: the button is present and hittable ' +
         '(35x35 at 138,37) but click, tap, dblclick and raw mouse down/up all leave both panels ' +
-        'display:none. Trumbowyg drives this menu itself, so it is the editor library that ' +
-        'suppresses it, not the theme — and .z-tbeditor-* is fully covered by the desktop project',
+        'display:none. The cause is in the editor library, not the theme — trumbowyg.js binds the ' +
+        'button on MOUSEDOWN (`mousedown: function(){ … execCmd("dropdown") }`) and contains no ' +
+        'touch handling at all, so an emulated touch sequence never reaches it. Forcing it with a ' +
+        'synthetic mousedown was rejected as pointless rather than hard: zkmax/css/tablet.css.dsp ' +
+        'contains ZERO tbeditor rules, so a mobile shot would duplicate the desktop one — there is ' +
+        'no tablet-layer styling for this widget to differ in',
     } },
 
   // ---- mesh column menus ---------------------------------------------------------------
@@ -237,6 +241,14 @@ const SCENARIOS: Scenario[] = [
   { id: 'listbox-column-menu', page: 'abpopup/column-menu', expect: '.z-menupopup',
     trigger: { via: 'reveal', hover: '.z-listheader', click: '.z-listheader-button' } },
 
+  // ---- goldenlayout tab dropdown -------------------------------------------------------
+  // Also needs a corpus page of its own (abpopup/tab-overflow.zul): GoldenLayout un-hides the
+  // dropdown ONLY when a stack header runs out of room, which the stock goldenlayout.zul never
+  // does — all 7 of its .lm_tabdropdown stay display:none. The page forces it with one narrow
+  // stack and five long tab titles; see its comment for the width arithmetic it is playing to.
+  { id: 'goldenlayout-tab-dropdown', page: 'abpopup/tab-overflow', expect: '.z-goldenlayout-dropdown',
+    trigger: { via: 'click', sel: '.lm_tabdropdown' } },
+
   // ---- transient-while-interacting -----------------------------------------------------
   // .z-slider-popup is the value bubble; it exists only between mousedown and mouseup, so the
   // shot is taken with the button still held.
@@ -250,9 +262,8 @@ const SCENARIOS: Scenario[] = [
 const UNREACHABLE = new Map<string, string>([
   ['.z-selectbox (open list)', 'zul.wgt.Selectbox renders a native <select>; the expanded list is drawn by the OS, is not in the DOM, and no theme rule can reach it. Not a gap — not a surface'],
   ['.z-timebox-popup .z-timebox-wheel-body', 'zul.db.Timebox exposes no open/setOpen on the desktop client and its button is an up/down spinner. The wheel body belongs to the tablet mold; the shared .z-{combobox,bandbox,datebox,timebox}-popup rule is already covered by the three siblings above'],
-  ['.z-goldenlayout-dropdown', 'all 7 .lm_tabdropdown are display:none — GoldenLayout only shows the tab dropdown when a stack header overflows, which does not happen at 1280x900 with the corpus layout'],
   ['.z-treecols-menupopup', 'does not exist: org.zkoss.zul.Treecols has no setMenupopup (the page 500s if you set it), and the theme CSS has no treecols equivalent either — only columns and listhead. Not a gap'],
-  ['.z-portallayout-popup*', 'the portal nav pop-up is a small-screen affordance; not produced by portallayout.zul at either project geometry'],
+  ['.z-portallayout-popup*', 'DEAD CSS, not a corpus gap: `portallayout-popup` appears in exactly one file in zkmax-10.4.0 — zkmax/layout/css/portallayout.css.dsp itself. Portallayout.ts and Portalchildren.ts contain the string "popup" zero times, and Portalchildren only ever builds counter-on/frame/header-move. No page can render it because no code creates it, so it is a deletion candidate rather than something to chase'],
   ['.z-confirmpopup-* (static classes)', 'ALREADY COVERED at rest: confirmpopup.zul renders 19 static mock-ups, 9 of them visible, so these selectors were never part of the gap. Only the real widget is captured above'],
   ['.z-coachmark-open / -mask', 'ALREADY COVERED at rest: coachmark.zul leaves one coachmark open on load'],
   ['.z-toolbar-overflowpopup / -on', 'ALREADY COVERED at rest: the class sits on the toolbar element itself, not on the panel'],
