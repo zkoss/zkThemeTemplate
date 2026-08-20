@@ -447,7 +447,7 @@ Pop-up 是同一個盲點更嚴重的一塊:**hover 至少是既有元素換樣�
 | `.z-selectbox` 展開的清單 | `zul.wgt.Selectbox` 渲染成原生 `<select>`,展開清單由**作業系統**畫,不在 DOM 裡,主題也管不到 ⇒ **不是漏測,是不存在的表面** |
 | `.z-timebox-popup .z-timebox-wheel-body` | `zul.db.Timebox` 在桌機 client **沒有** open/setOpen,按鈕是上下 spinner;wheel 屬於 tablet mold。共用的 `.z-{combobox,bandbox,datebox,timebox}-popup` 主規則已由另外三個兄弟覆蓋 |
 | `.z-treecols-menupopup` | **不存在**:`org.zkoss.zul.Treecols` 沒有 `setMenupopup`(硬寫上去頁面會 500),主題 CSS 也沒有 treecols 版本 —— 只有 columns 與 listhead。**不是缺口** |
-| `.z-portallayout-popup*` | **死 CSS,不是語料缺口**:`portallayout-popup` 這個字串在整個 zkmax-10.4.0 裡只出現在**一個檔** —— `zkmax/layout/css/portallayout.css.dsp` 自己。`Portallayout.ts` 與 `Portalchildren.ts` 裡「popup」出現 **0 次**,`Portalchildren` 只會生 counter-on / frame / header-move。**沒有任何程式會建出這些元素**,所以沒有任何頁面照得到 ⇒ 這是**刪除候選**,不是要去追的缺口 |
+| `.z-portallayout-popup*` | **找不到產生它的程式,但先不要刪 —— 未結案**。量到的:(a) `portallayout-popup` 這個字串在 zkmax-10.4.0 裡只出現在 `portallayout.css.dsp` 自己;(b) **瀏覽器實際收到**的 `zkmax/layout/index.js`(180038 B)裡,「popup」這個字**出現 0 次**(不分大小寫)—— 對照組:`zkmax/inp/index.js` 同樣測法可以抓到 `$s('popup')`,所以「執行期才組出 class」這條路也被排除了;(c) 本機 `~/.m2` 內**從 5.0 到 11.0 全部 200+ 個 zkmax 版本**,`layout/*.{js,ts}` 都沒有 popup。**但**使用者回報:focus 在 portal 裡的 Panel 上按**空白鍵**會跳出一個 pop-up。我照著試(programmatic focus `.z-panel-head` + Space、Tab 巡覽 + Space)**重現不出來**,`Portallayout.ts` / `Portalchildren.ts` 也沒有任何 `doKeyDown` / `keyCode`。⇒ 結論是「**我還沒找到那個 pop-up 是誰**」,不是「它不存在」。在確認之前**不刪**,見 §7.11 |
 | `.z-tbeditor-dropdown`(**只有 mobile**) | touch 模擬下**打不開**:按鈕在(35×35 @138,37)、可點,但 click / tap / dblclick / 原始 mouse down-up **四種都讓兩個面板停在 `display:none`**。根因在編輯器函式庫,不在主題:`trumbowyg.js` 把按鈕綁在 **`mousedown`**(`mousedown: function(){ … execCmd("dropdown") }`),而整份檔案**沒有任何 touch 處理**,所以模擬的觸控序列根本到不了那個 handler。**用合成 mousedown 硬開的做法被否決,理由不是難而是沒意義**:`zkmax/css/tablet.css.dsp` 裡 tbeditor 規則 **0 條**,mobile 那張會跟桌機那張完全一樣 —— 這個 widget 沒有 tablet 層樣式可差 |
 
 **三個「其實早就被 at-rest 照到」的,寫下來免得重複做白工**(這是實測結果,不是假設):
@@ -560,7 +560,50 @@ availableWidth = header.outerWidth() - controlsContainer.outerWidth() - 10   // 
 同一份 build 兩趟,有時 0 差異、有時 1 差異(這次第三趟又自己變回 0,再次印證雙穩態)。
 之前 §5.2 那次「兩張圖肉眼看不出差別」的追查,就是這個硬幣造成的。
 
-**仍未做的是建議 #3(根因)**:桌機所有配對 maxΔ 最高只有 3,mobile 有 6 與 13,差別在
-`isMobile: true` 開啟的 meta-viewport 縮放。可測而且成本只有兩趟 capture:保留 UA / viewport /
-`hasTouch`,只關掉 `isMobile` 再跑 selftest。ZK 的 tablet layer 看的是**伺服器端 UA**(`zk.mobile`),
-不是 `isMobile`,所以關掉不會失去 P7 覆蓋。若成立就能把這筆登記整條刪掉。
+**建議 #3(根因)的前提已經被實測推翻,不要照原文去做。** §5.3 猜的是
+「`isMobile: true` 開啟 meta-viewport 縮放 ⇒ 版面落在非整數座標 ⇒ 字形光柵原點在兩個
+subpixel bin 之間跳」。在 `breadcrumb.zul` 上量三種設定:
+
+| 設定 | devicePixelRatio | visualViewport.scale | 那段文字的 box | 有小數? | `zk.mobile` |
+|---|---|---|---|---|---|
+| 桌機 1280×900 | 1 | 1 | top 38 / left 5 / h 38 | 否 | false |
+| mobile `isMobile: true` | 1 | 1 | top 36 / left 5 / h 37 | **否** | **1** |
+| mobile `isMobile: false` | 1 | 1 | top 36 / left 5 / h 37 | **否** | **1** |
+
+⇒ **沒有縮放(scale 都是 1)、也沒有小數座標**,而且開不開 `isMobile` 版面**完全一樣**。
+所以關掉 `isMobile` 大概不會改變任何事,那個實驗照原樣做只會浪費兩趟 capture。
+(順帶證實了 §5.3 的另一句:`zk.mobile` 兩種設定下都是 `1`,它看的確實是**伺服器端 UA**,
+所以真要關 `isMobile` 也不會失去 tablet layer 覆蓋。)
+
+剩下的嫌疑犯只能是**整數 box 之內的字形光柵化**(文字排版用的是小數 advance),
+而不是 box 幾何。要再往下追得換工具(例如比對兩個狀態的 glyph raster),
+成本遠高於 §7.10 那條登記,所以先維持登記。
+
+### 7.11 未結案:`.z-portallayout-popup*` 到底是誰畫的
+
+**現況**:量測說「ZK 10.4 的 layout 套件不可能產生它」,使用者的實機觀察說「按空白鍵會跳出來」。
+兩邊都不該被忽略,所以這條**留著不刪**,並記下已經排除了什麼,免得下一個人重跑同樣的三件事。
+
+**已排除**(每一項都有對照組或完整列舉):
+
+| # | 做法 | 結果 |
+|---|---|---|
+| 1 | 在 zkmax-10.4.0 jar 內,對所有 `.js/.ts/.dsp/.wpd/.xml` 逐檔找字串 `portallayout-popup` / `popup-nav` | 只命中 `portallayout.css.dsp` **自己**;zul / zk / zkex 三個 jar 全部 0 |
+| 2 | 抓**瀏覽器實際收到**的 `zkau/web/js/zkmax/layout/index.js`(180038 B),找 token `popup`(不分大小寫) | **0 次**。**對照組**:同樣測法對 `zkmax/inp/index.js` 會抓到 `$s('popup')` ⇒ 「執行期用 `$s('popup')` 組出 `z-portallayout-popup`」這條路**也**被排除,不是測法看不到 |
+| 3 | `~/.m2` 內所有 zkmax 版本(5.0 → 11.0,200+ 個)的 `layout/*.{js,ts}` | 沒有一個含 popup |
+| 4 | 實機重現:`portallayout.zul` 上 programmatic focus `.z-panel-head` 後按 Space;另外 Tab 巡覽 25 次、每次按 Space,監看所有 `position:absolute/fixed` 的可見元素 | 沒有任何新的浮動元素;`Portallayout.ts` / `Portalchildren.ts` 也沒有 `doKeyDown` / `keyCode`,拖曳是純滑鼠的 `_initDrag` |
+
+**還沒排除的**:那個 pop-up 可能**根本不是** `.z-portallayout-popup` —— 例如是 `.z-popup`、某個
+`menupopup`、或 Panel 自己的東西,只是位置看起來像。要定案只差一步:**在它跳出來的當下**,
+在 devtools console 執行
+
+```js
+[...document.querySelectorAll('body *')]
+  .filter(e => { const c = getComputedStyle(e), r = e.getBoundingClientRect();
+    return (c.position === 'absolute' || c.position === 'fixed')
+        && c.display !== 'none' && c.visibility !== 'hidden' && r.width > 2 && r.height > 2; })
+  .map(e => e.className + '  ' + Math.round(e.getBoundingClientRect().width) + 'x' + Math.round(e.getBoundingClientRect().height));
+```
+
+把印出來的 class 名貼回來,就知道要不要為它補一個場景、或者那四條規則是不是該改名。
+另外也要問清楚:**哪一頁、哪一個 ZK 版本/產品**(這份 harness 跑的是 10.4.0-jakarta.FL.20260713)。
