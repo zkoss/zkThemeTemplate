@@ -447,7 +447,7 @@ Pop-up 是同一個盲點更嚴重的一塊:**hover 至少是既有元素換樣�
 | `.z-selectbox` 展開的清單 | `zul.wgt.Selectbox` 渲染成原生 `<select>`,展開清單由**作業系統**畫,不在 DOM 裡,主題也管不到 ⇒ **不是漏測,是不存在的表面** |
 | `.z-timebox-popup .z-timebox-wheel-body` | `zul.db.Timebox` 在桌機 client **沒有** open/setOpen,按鈕是上下 spinner;wheel 屬於 tablet mold。共用的 `.z-{combobox,bandbox,datebox,timebox}-popup` 主規則已由另外三個兄弟覆蓋 |
 | `.z-treecols-menupopup` | **不存在**:`org.zkoss.zul.Treecols` 沒有 `setMenupopup`(硬寫上去頁面會 500),主題 CSS 也沒有 treecols 版本 —— 只有 columns 與 listhead。**不是缺口** |
-| `.z-portallayout-popup*` | **找不到產生它的程式,但先不要刪 —— 未結案**。量到的:(a) `portallayout-popup` 這個字串在 zkmax-10.4.0 裡只出現在 `portallayout.css.dsp` 自己;(b) **瀏覽器實際收到**的 `zkmax/layout/index.js`(180038 B)裡,「popup」這個字**出現 0 次**(不分大小寫)—— 對照組:`zkmax/inp/index.js` 同樣測法可以抓到 `$s('popup')`,所以「執行期才組出 class」這條路也被排除了;(c) 本機 `~/.m2` 內**從 5.0 到 11.0 全部 200+ 個 zkmax 版本**,`layout/*.{js,ts}` 都沒有 popup。**但**使用者回報:focus 在 portal 裡的 Panel 上按**空白鍵**會跳出一個 pop-up。我照著試(programmatic focus `.z-panel-head` + Space、Tab 巡覽 + Space)**重現不出來**,`Portallayout.ts` / `Portalchildren.ts` 也沒有任何 `doKeyDown` / `keyCode`。⇒ 結論是「**我還沒找到那個 pop-up 是誰**」,不是「它不存在」。在確認之前**不刪**,見 §7.11 |
+| `.z-portallayout-popup*` | **已結案:是 `za11y`(無障礙 addon jar)畫的,規則是活的、不可刪** —— 見 §7.11。先前「zkmax 裡找不到」的三項量測都對,只是全部量錯 jar:程式在 `za11y/…/zkmax/layout-a11y.ts`(commit `1f96cbf4a`,**ZK-4598**,2020-05-27),`doKeyDown_` 的 `case ' '` 在目標是 `zul.wnd.Panel` 時`_openPopup()`,畫出一份「把這個面板搬到哪一欄」的鍵盤清單。**照不到的真正原因是 preview app 的 pom 沒有 `za11y` 相依**(`zkmax` 不會把它拉進來),不是難以觸發;加一個相依即可覆蓋 |
 | `.z-tbeditor-dropdown`(**只有 mobile**) | touch 模擬下**打不開**:按鈕在(35×35 @138,37)、可點,但 click / tap / dblclick / 原始 mouse down-up **四種都讓兩個面板停在 `display:none`**。根因在編輯器函式庫,不在主題:`trumbowyg.js` 把按鈕綁在 **`mousedown`**(`mousedown: function(){ … execCmd("dropdown") }`),而整份檔案**沒有任何 touch 處理**,所以模擬的觸控序列根本到不了那個 handler。**用合成 mousedown 硬開的做法被否決,理由不是難而是沒意義**:`zkmax/css/tablet.css.dsp` 裡 tbeditor 規則 **0 條**,mobile 那張會跟桌機那張完全一樣 —— 這個 widget 沒有 tablet 層樣式可差 |
 
 **三個「其實早就被 at-rest 照到」的,寫下來免得重複做白工**(這是實測結果,不是假設):
@@ -611,31 +611,57 @@ y=42  A: 251* 255  255  255  140    0
 **字沒有動,只有它左邊那一欄極淡的邊緣墨在兩組列之間跳**。這一點現在是第一手確認過的,
 而「為什麼只有邊緣那一欄會跳」仍然沒有解釋 —— 但既然它不是主題造成的,追下去的價值很低。
 
-### 7.11 未結案:`.z-portallayout-popup*` 到底是誰畫的
+### 7.11 已結案:`.z-portallayout-popup*` 是 **za11y**(無障礙模組)畫的
 
-**現況**:量測說「ZK 10.4 的 layout 套件不可能產生它」,使用者的實機觀察說「按空白鍵會跳出來」。
-兩邊都不該被忽略,所以這條**留著不刪**,並記下已經排除了什麼,免得下一個人重跑同樣的三件事。
+**結論:那四條規則是活的,不可以刪。** 畫它的程式**不在 zkmax**,而在
+**`za11y`** —— 一個獨立的 language addon jar(`org.zkoss.zk:za11y`,`<depends>zkmax</depends>`)。
+所以 §7.4 與本節先前「找不到產生它的程式」的每一項量測**都是對的,只是全部量錯了 jar**:
+搜遍 zkmax 不會有,因為它從來不在 zkmax 裡。
 
-**已排除**(每一項都有對照組或完整列舉):
+**原始出處**(zkcml git,`/Users/hawk/Documents/workspace/ZK10/zkcml`):
 
-| # | 做法 | 結果 |
-|---|---|---|
-| 1 | 在 zkmax-10.4.0 jar 內,對所有 `.js/.ts/.dsp/.wpd/.xml` 逐檔找字串 `portallayout-popup` / `popup-nav` | 只命中 `portallayout.css.dsp` **自己**;zul / zk / zkex 三個 jar 全部 0 |
-| 2 | 抓**瀏覽器實際收到**的 `zkau/web/js/zkmax/layout/index.js`(180038 B),找 token `popup`(不分大小寫) | **0 次**。**對照組**:同樣測法對 `zkmax/inp/index.js` 會抓到 `$s('popup')` ⇒ 「執行期用 `$s('popup')` 組出 `z-portallayout-popup`」這條路**也**被排除,不是測法看不到 |
-| 3 | `~/.m2` 內所有 zkmax 版本(5.0 → 11.0,200+ 個)的 `layout/*.{js,ts}` | 沒有一個含 popup |
-| 4 | 實機重現:`portallayout.zul` 上 programmatic focus `.z-panel-head` 後按 Space;另外 Tab 巡覽 25 次、每次按 Space,監看所有 `position:absolute/fixed` 的可見元素 | 沒有任何新的浮動元素;`Portallayout.ts` / `Portalchildren.ts` 也沒有 `doKeyDown` / `keyCode`,拖曳是純滑鼠的 `_initDrag` |
+| 項目 | 內容 |
+|---|---|
+| commit | `1f96cbf4a` — *refine ZK-4598*,leonlee,**2020-05-27** |
+| 程式 | `za11y/src/…/web/js/za11y/zkmax/layout-a11y.js`(現為 `.ts`)+ 同 commit 新增的 `zkmax/…/less/portallayout.less` 那 37 行 |
+| 全歷史唯一 | `git log --all -S "portallayout-popup"` 在整個 zkcml 只命中**這一個** commit |
 
-**還沒排除的**:那個 pop-up 可能**根本不是** `.z-portallayout-popup` —— 例如是 `.z-popup`、某個
-`menupopup`、或 Panel 自己的東西,只是位置看起來像。要定案只差一步:**在它跳出來的當下**,
-在 devtools console 執行
+**它做什麼**:給 Portallayout 補上鍵盤搬移面板的無障礙操作。`_redrawpp()` 額外畫出
+`<div id="…-pp" class="z-portallayout-popup"><ul class="z-portallayout-popup-content">`,
+每個 portalchildren 一個 `<li class="z-portallayout-popup-nav" tabindex="-1">`;
+`doKeyDown_` 的 `case ' ':` 在目標是 `zul.wnd.Panel` 時呼叫 `_openPopup()`
+(掛上 `-open`、`setFloating_`、`makeVParent`、`position(panel, 'after_start')`),
+↑↓ 走 nav、**Enter** 執行 `_panelMove` 把面板搬到選到的欄、Esc/Tab 關閉。
+**與使用者的實機觀察完全一致**(focus 在 portal 裡的 Panel → 空白鍵 → 跳出一個清單)。
 
-```js
-[...document.querySelectorAll('body *')]
-  .filter(e => { const c = getComputedStyle(e), r = e.getBoundingClientRect();
-    return (c.position === 'absolute' || c.position === 'fixed')
-        && c.display !== 'none' && c.visibility !== 'hidden' && r.width > 2 && r.height > 2; })
-  .map(e => e.className + '  ' + Math.round(e.getBoundingClientRect().width) + 'x' + Math.round(e.getBoundingClientRect().height));
-```
+**為什麼 §7.4 的三項量測都「乾淨」卻不是誤測**:class 名是執行期用
+`this.$s('popup')` 組出來的,**字面字串 `portallayout-popup` 在任何 jar 裡都不存在**;
+而 `$s('popup')` / `$s('popup-nav')` / `$s('popup-content')` / `$s('popup-open')`
+確實存在 —— 在 **`za11y/index.js`**,不在 `zkmax/layout/index.js`。
+第 2 項那個對照組(`zkmax/inp` 抓得到 `$s('popup')`)證明的是測法有效,不是套件選對了。
 
-把印出來的 class 名貼回來,就知道要不要為它補一個場景、或者那四條規則是不是該改名。
-另外也要問清楚:**哪一頁、哪一個 ZK 版本/產品**(這份 harness 跑的是 10.4.0-jakarta.FL.20260713)。
+**為什麼 10.3 跳得出來、ZK 11 跳不出來**:程式碼**沒有被刪**,ZK 11 照樣有 ——
+
+| 檢查 | 結果 |
+|---|---|
+| zkcml HEAD(2026-06)`za11y/src/main/…/zkmax/layout-a11y.ts` | 有,`popup` 出現 30 次,`case ' ': if (isPanel) this._openPopup(...)` 還在 |
+| `za11y-11.0.0.FL.20260812-Eval.jar`(javax) | `index.js` 內 `_openPopup` 有,四個 `$s("popup*")` 片段齊全 |
+| `za11y-11.0.0-jakarta.FL.20260811-Eval.jar` | 同上 —— **而且這正是本主題 `zk.version` 的座標** |
+| 本專案 `pom.xml` | **`za11y` 出現 0 次** |
+
+⇒ 差別不在版本,在**classpath**:`zkmax` **不會**把 `za11y` 拉進來(它的 pom 只有
+`zkex`/`zul`/gson…),za11y 是要自己加的選配 jar。10.3 那邊的測試環境有掛,
+ZK 11 那邊沒掛,所以同一個按鍵在一邊有反應、一邊沒有。
+
+**對 harness 的意義**:這個表面**目前照不到**,而且不是因為難以觸發,是因為
+**preview app 沒有載入畫它的模組**。要覆蓋只要在 pom 加一個相依
+(jakarta 座標已確認可解析、jar 已下載到本機),之後就能用 §7.2 的一般作法補場景:
+focus `.z-panel` → `press(' ')` → 等 `.z-portallayout-popup-open` 唯一可見。
+
+**順帶做的完整性檢查**:把 za11y bundle 裡所有 `$s("…")` 片段列出來比對後,
+`popup` / `popup-content` / `popup-nav` / `popup-open` / `popup-close` 是**唯一**一組
+「只有 za11y 會產生、而主題有樣式」的 class;其餘(`selected`、`icon`、`item`、`active`…)
+都是它沿用既有 widget 的 class,不構成新表面。所以**掛上 za11y 只需要補這一個場景**。
+
+*(附註:這題原本想用 CaseFoundry 查,但該 MCP server 呼叫 1800s 無回應而中止;
+最後是用本機 zkcml 的 git 歷史定案的。Jira issue key 是 **ZK-4598**,要看原始討論可從它查。)*
