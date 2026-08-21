@@ -447,8 +447,11 @@ Pop-up 是同一個盲點更嚴重的一塊:**hover 至少是既有元素換樣�
 | `.z-selectbox` 展開的清單 | `zul.wgt.Selectbox` 渲染成原生 `<select>`,展開清單由**作業系統**畫,不在 DOM 裡,主題也管不到 ⇒ **不是漏測,是不存在的表面** |
 | `.z-timebox-popup .z-timebox-wheel-body` | `zul.db.Timebox` 在桌機 client **沒有** open/setOpen,按鈕是上下 spinner;wheel 屬於 tablet mold。共用的 `.z-{combobox,bandbox,datebox,timebox}-popup` 主規則已由另外三個兄弟覆蓋 |
 | `.z-treecols-menupopup` | **不存在**:`org.zkoss.zul.Treecols` 沒有 `setMenupopup`(硬寫上去頁面會 500),主題 CSS 也沒有 treecols 版本 —— 只有 columns 與 listhead。**不是缺口** |
-| `.z-portallayout-popup*` | **已結案:是 `za11y`(無障礙 addon jar)畫的,規則是活的、不可刪** —— 見 §7.11。先前「zkmax 裡找不到」的三項量測都對,只是全部量錯 jar:程式在 `za11y/…/zkmax/layout-a11y.ts`(commit `1f96cbf4a`,**ZK-4598**,2020-05-27),`doKeyDown_` 的 `case ' '` 在目標是 `zul.wnd.Panel` 時`_openPopup()`,畫出一份「把這個面板搬到哪一欄」的鍵盤清單。**照不到的真正原因是 preview app 的 pom 沒有 `za11y` 相依**(`zkmax` 不會把它拉進來),不是難以觸發;加一個相依即可覆蓋 |
 | `.z-tbeditor-dropdown`(**只有 mobile**) | touch 模擬下**打不開**:按鈕在(35×35 @138,37)、可點,但 click / tap / dblclick / 原始 mouse down-up **四種都讓兩個面板停在 `display:none`**。根因在編輯器函式庫,不在主題:`trumbowyg.js` 把按鈕綁在 **`mousedown`**(`mousedown: function(){ … execCmd("dropdown") }`),而整份檔案**沒有任何 touch 處理**,所以模擬的觸控序列根本到不了那個 handler。**用合成 mousedown 硬開的做法被否決,理由不是難而是沒意義**:`zkmax/css/tablet.css.dsp` 裡 tbeditor 規則 **0 條**,mobile 那張會跟桌機那張完全一樣 —— 這個 widget 沒有 tablet 層樣式可差 |
+
+> **`.z-portallayout-popup*` 已從這張表畢業(2026-08-21)**:它曾以「dead CSS、刪除候選」列在這裡,
+> 那是錯的。它由選配的 `za11y` addon 畫,加上一個 pom 相依之後就照得到了,現在是一個真的場景
+> (`popup:portallayout-a11y-popup`)。**照不到的原因是模組沒載入,不是表面不存在** —— 全部經過見 §7.11。
 
 **三個「其實早就被 at-rest 照到」的,寫下來免得重複做白工**(這是實測結果,不是假設):
 
@@ -462,7 +465,7 @@ Pop-up 是同一個盲點更嚴重的一塊:**hover 至少是既有元素換樣�
 
 | 步驟 | 結果 |
 |---|---|
-| 場景數 | **31**(桌機 31,mobile 30 + 1 個具名 skip) |
+| 場景數 | **32**(桌機 32,mobile 31 + 1 個具名 skip)。第 32 個是 2026-08-21 補的 `portallayout-a11y-popup`,見 §7.11;它在桌機與 mobile 都通過,並且**跨 3 個獨立的 app+瀏覽器 process 拍出 byte 完全相同的 PNG**(sha256 單一值) |
 | `visual:selftest`(桌機) | **149 頁比對、differing 0**;噪音只出現在 at-rest 頁 |
 | `visual:selftest ab-capture-mobile` | **148 頁比對、differing 0**、missing 0 |
 | **反向控制** | 對建置產物注入一行 `.z-combobox-popup{border-radius:12px;border-color:#e00}` → **3 頁差異,全部是 pop-up 場景**(1338/1424/1360 px,**3.4–4.4%** 的畫面,maxΔ 249–255),**原本的 116 頁 at-rest 一頁都沒動**。還原後 `combo.css.dsp` 與注入前 **byte 相同** |
@@ -611,7 +614,7 @@ y=42  A: 251* 255  255  255  140    0
 **字沒有動,只有它左邊那一欄極淡的邊緣墨在兩組列之間跳**。這一點現在是第一手確認過的,
 而「為什麼只有邊緣那一欄會跳」仍然沒有解釋 —— 但既然它不是主題造成的,追下去的價值很低。
 
-### 7.11 已結案:`.z-portallayout-popup*` 是 **za11y**(無障礙模組)畫的
+### 7.11 已結案並已覆蓋:`.z-portallayout-popup*` 是 **za11y**(無障礙模組)畫的
 
 **結論:那四條規則是活的,不可以刪。** 畫它的程式**不在 zkmax**,而在
 **`za11y`** —— 一個獨立的 language addon jar(`org.zkoss.zk:za11y`,`<depends>zkmax</depends>`)。
@@ -647,16 +650,30 @@ y=42  A: 251* 255  255  255  140    0
 | zkcml HEAD(2026-06)`za11y/src/main/…/zkmax/layout-a11y.ts` | 有,`popup` 出現 30 次,`case ' ': if (isPanel) this._openPopup(...)` 還在 |
 | `za11y-11.0.0.FL.20260812-Eval.jar`(javax) | `index.js` 內 `_openPopup` 有,四個 `$s("popup*")` 片段齊全 |
 | `za11y-11.0.0-jakarta.FL.20260811-Eval.jar` | 同上 —— **而且這正是本主題 `zk.version` 的座標** |
-| 本專案 `pom.xml` | **`za11y` 出現 0 次** |
+| 本專案 `pom.xml` | 當時 **`za11y` 出現 0 次** —— 這就是唯一的原因(2026-08-21 已補上,見下) |
 
 ⇒ 差別不在版本,在**classpath**:`zkmax` **不會**把 `za11y` 拉進來(它的 pom 只有
 `zkex`/`zul`/gson…),za11y 是要自己加的選配 jar。10.3 那邊的測試環境有掛,
 ZK 11 那邊沒掛,所以同一個按鍵在一邊有反應、一邊沒有。
 
-**對 harness 的意義**:這個表面**目前照不到**,而且不是因為難以觸發,是因為
-**preview app 沒有載入畫它的模組**。要覆蓋只要在 pom 加一個相依
-(jakarta 座標已確認可解析、jar 已下載到本機),之後就能用 §7.2 的一般作法補場景:
-focus `.z-panel` → `press(' ')` → 等 `.z-portallayout-popup-open` 唯一可見。
+**已實作(2026-08-21)** —— 這個表面現在照得到了:
+
+| 動作 | 內容 |
+|---|---|
+| 相依 | `org.zkoss.zk:za11y`,`test` scope,**兩份 pom 都加**。**載得動 harness 的是 Marble 那一份**:`scripts/ab-visual.js` 的 `marbleClasspath()` 是用 `MARBLE_HOME` 的 pom 去 `dependency:build-classpath` 的,本 worktree 的 pom 只服務它自己的 `preview-app`。只改本地那份會**完全沒有效果**(踩過) |
+| 觸發方式 | 新增 `via: 'key'` 一種 trigger(focus 元素 → 送一個按鍵)。**不是圖方便**:`_openPopup(childpanel)` 吃的是一個 **widget** 參數,跨不過 `page.evaluate` 的序列化邊界,所以 `via: 'widget'` 這條路本來就走不通;而按鍵正是這個功能存在的目的 |
+| 場景 | `popup:portallayout-a11y-popup` — `portallayout.zul`,`.z-portallayout .z-panel` → `press(' ')` → `.z-portallayout-popup-open` 唯一可見 |
+| 語料 | **不用新增頁面**,Marble 既有的 `portallayout.zul` 就夠 |
+
+**實機量到的**(不是推論):za11y 會給每個 panel 補上 `tabindex="0"`;頁面上有 **3 個**
+portallayout,但空白鍵只會讓**被 focus 的那一個**開,所以「唯一可見」這個閘門天然成立;
+清單裡是**一欄一個 `<li>`,不是一個面板一個** —— `_redrawpp` 走的是 portallayout 自己的
+children,因為它問的問題是「搬到哪一欄」。**一張圖就蓋掉 portallayout.css 全部五條規則**:
+`_openPopup` 最後一行是 `this.$n('ppcave').firstChild.focus()`,所以 `-popup-nav:focus`
+與 `-popup`、`-popup-content`、`-popup-nav`、`-popup-open` 在同一格畫面裡都是活的。
+
+**驗證**:桌機 32 場景全過、mobile 31 過 + 1 個既有具名 skip;新場景**跨 3 個獨立
+app+瀏覽器 process 拍出 byte 相同的 PNG**(91×110,2026 bytes,sha256 單一值)。
 
 **順帶做的完整性檢查**:把 za11y bundle 裡所有 `$s("…")` 片段列出來比對後,
 `popup` / `popup-content` / `popup-nav` / `popup-open` / `popup-close` 是**唯一**一組
@@ -665,3 +682,39 @@ focus `.z-panel` → `press(' ')` → 等 `.z-portallayout-popup-open` 唯一可
 
 *(附註:這題原本想用 CaseFoundry 查,但該 MCP server 呼叫 1800s 無回應而中止;
 最後是用本機 zkcml 的 git 歷史定案的。Jira issue key 是 **ZK-4598**,要看原始討論可從它查。)*
+
+### 7.12 實作 §7.11 時撞到的:**主題沒建置時,harness 會安靜地回報「全部一樣」**
+
+這一節不是 pop-up 的事,是 harness 本身的可信度問題,**發現的方式是意外**,所以更值得寫下來。
+
+**現象**:在本 worktree 目前的狀態下,harness 指向的主題產物**根本不存在** ——
+`target/classes/web/iceblue11/**/*.css.dsp` 有 **0 個檔**(當時 `target/classes/web/` 底下
+只有一份陳舊的 `marble/`,而且是純 `.css` 不是 `.css.dsp`)。於是**每一頁都在完全沒有主題 CSS
+的狀態下被拍下來**。實測到的數字:`document.styleSheets` 只有 1 張(`zk.wcs`)而且
+**解析出 0 條規則**;`body` 的 computed `font-family` 是 **`Times`**、`margin` 8px(瀏覽器預設);
+`.z-panel` 背景透明、`.z-portallayout` 是 `position: static`。
+
+**而它照樣「通過」**:`guardProbe()` 檢查的是回傳的 HTML 有沒有提到 `_zkiju-iceblue11`、
+有沒有提到 `marble` —— 這兩件事在**一頁完全沒有樣式**的情況下**也都成立**,因為主題*名字*
+來自註冊的 Java 類別,跟「CSS 檔存不存在」無關。`themeFingerprint()` 確實會數檔案數,
+但 `capture()` 只把它**印出來**,沒有任何地方拿它當斷言。所以在那個狀態下跑一趟完整 A/B,
+會得到 **「0 頁差異」** —— 這正是 §2.2 說的那個失敗模式(**量不到東西的 harness 會回報一致**),
+只是從另一個門進來的:§2.2 講的是語料/選擇器層,這裡是**整個主題產物層**。
+
+**真正抓到它的不是閘門,是眼睛**:新場景拍出來的圖不對(一條透明的橫帶,`<li>` 還帶著
+瀏覽器預設的圓點,「1」「2」浮在後面編輯器的圖示上)。換成一個沒人會逐張看的表面,
+這一趟就會安靜地過去。
+
+**當下的處理**:`mvn -f <iceblue>/pom.xml process-resources` → 85 個 `.css.dsp`,
+同一個場景就拍出正常的 91×110 pop-up 了。
+
+**建議(尚未實作,留給裁示)**:把「主題有沒有真的送出樣式」變成會**大聲失敗**的斷言,
+兩條都很便宜,任一條都能擋住這次:
+
+1. `guardProbe()` 追加一項:把頁面連的那張 stylesheet 抓下來,要求**規則數 > 0**
+   (注意 `zk.wcs` **第二次抓會是空的**,所以要用瀏覽器端的 `document.styleSheets`
+   讀 `cssRules.length`,或在頁面載入時攔 response,不能事後 re-fetch —— 這點踩過);
+2. `capture()` 把 `themeFingerprint().files === 0` 從「印出來」改成「直接 die」。
+
+**這跟「產物有點舊」是不同性質的風險**:舊產物頂多讓差異變小,而這是**一條樣式都沒有**,
+而主題側目前唯一的閘門是**比對名字**,名字在兩種情況下都是對的。

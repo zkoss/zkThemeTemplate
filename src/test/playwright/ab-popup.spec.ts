@@ -79,7 +79,16 @@ type Trigger =
    */
   | { via: 'reveal'; hover: string; click: string; index?: number }
   /** Press and hold: the Slider value bubble only exists while the knob is being dragged. */
-  | { via: 'drag'; sel: string; dx: number };
+  | { via: 'drag'; sel: string; dx: number }
+  /**
+   * Focus an element, then press a key. Needed for exactly one surface, and not as a shortcut:
+   * the za11y Portallayout list is opened from `doKeyDown_` and has no public open API at all.
+   * `_openPopup(childpanel)` takes a WIDGET argument, so it could not be driven through
+   * `via: 'widget'` either — args cross `page.evaluate`'s serialisation boundary and a widget
+   * does not. Pressing the key is also what the feature is FOR, so this is the faithful trigger
+   * rather than a workaround.
+   */
+  | { via: 'key'; sel: string; key: string; index?: number };
 
 type Scenario = {
   /** Output file is popup__<id>.png. */
@@ -254,6 +263,31 @@ const SCENARIOS: Scenario[] = [
   // shot is taken with the button still held.
   { id: 'slider-drag-popup', page: 'slider', expect: '.z-slider-popup',
     trigger: { via: 'drag', sel: '.z-slider-button', dx: 40 } },
+
+  // ---- za11y: portallayout "move this panel to which column" list ----------------------
+  // This scenario exists because the surface was in UNREACHABLE as "DEAD CSS ... a deletion
+  // candidate", and that was WRONG. `.z-portallayout-popup*` is drawn by `org.zkoss.zk:za11y`,
+  // an OPTIONAL accessibility addon. The three searches that concluded "no code creates this"
+  // were each exhaustive and each looked in zkmax, where this code has never lived; because the
+  // class name is composed at runtime by `$s('popup')`, grepping any jar for the literal
+  // `portallayout-popup` returns zero whether the producer is on the classpath or not, so only
+  // the choice of BUNDLE separated a true zero from a false one.
+  //
+  // Producer: za11y's `web/js/za11y/zkmax/layout-a11y.ts` (zkcml commit 1f96cbf4a, "refine
+  // ZK-4598", 2020-05-27), which gives Portallayout a keyboard "move this panel to which column"
+  // list. zkmax does NOT depend on za11y (the `<depends>` runs one way), so it is absent unless a
+  // pom asks for it — Marble's now does, in test scope, because THIS harness takes its runtime
+  // classpath from Marble's pom (scripts/ab-visual.js marbleClasspath()).
+  //
+  // Measured on the running app, not inferred: za11y puts `tabindex="0"` on every panel; Space
+  // over a focused `zul.wnd.Panel` opens exactly ONE visible pop-up even though the page has three
+  // portallayouts; and the list holds one `<li>` per COLUMN rather than per panel, because
+  // `_redrawpp` iterates the portallayout's own children — the question it asks is which column to
+  // move to. One shot covers all five rules in portallayout.css: `_openPopup` ends with
+  // `this.$n('ppcave').firstChild.focus()`, so `-popup-nav:focus` is live in the same frame as
+  // `-popup`, `-popup-content`, `-popup-nav` and `-popup-open`.
+  { id: 'portallayout-a11y-popup', page: 'portallayout', expect: '.z-portallayout-popup-open',
+    trigger: { via: 'key', sel: '.z-portallayout .z-panel', key: ' ' } },
 ];
 
 // Pop-up surfaces that exist in the theme CSS but CANNOT be reached from this corpus. Kept in
@@ -263,7 +297,6 @@ const UNREACHABLE = new Map<string, string>([
   ['.z-selectbox (open list)', 'zul.wgt.Selectbox renders a native <select>; the expanded list is drawn by the OS, is not in the DOM, and no theme rule can reach it. Not a gap — not a surface'],
   ['.z-timebox-popup .z-timebox-wheel-body', 'zul.db.Timebox exposes no open/setOpen on the desktop client and its button is an up/down spinner. The wheel body belongs to the tablet mold; the shared .z-{combobox,bandbox,datebox,timebox}-popup rule is already covered by the three siblings above'],
   ['.z-treecols-menupopup', 'does not exist: org.zkoss.zul.Treecols has no setMenupopup (the page 500s if you set it), and the theme CSS has no treecols equivalent either — only columns and listhead. Not a gap'],
-  ['.z-portallayout-popup*', 'DEAD CSS, not a corpus gap: `portallayout-popup` appears in exactly one file in zkmax-10.4.0 — zkmax/layout/css/portallayout.css.dsp itself. Portallayout.ts and Portalchildren.ts contain the string "popup" zero times, and Portalchildren only ever builds counter-on/frame/header-move. No page can render it because no code creates it, so it is a deletion candidate rather than something to chase'],
   ['.z-confirmpopup-* (static classes)', 'ALREADY COVERED at rest: confirmpopup.zul renders 19 static mock-ups, 9 of them visible, so these selectors were never part of the gap. Only the real widget is captured above'],
   ['.z-coachmark-open / -mask', 'ALREADY COVERED at rest: coachmark.zul leaves one coachmark open on load'],
   ['.z-toolbar-overflowpopup / -on', 'ALREADY COVERED at rest: the class sits on the toolbar element itself, not on the panel'],
@@ -309,6 +342,12 @@ async function trigger(page: Page, s: Scenario) {
   }
   const loc = page.locator(t.sel).nth((t as { index?: number }).index ?? 0);
   if (t.via === 'click') return loc.click();
+  if (t.via === 'key') {
+    // focus() rather than click(): the pop-up is anchored to the focused panel, and a click
+    // would also leave the cursor on it — note 2's whole point.
+    await loc.focus();
+    return page.keyboard.press(t.key);
+  }
   // drag: hold the knob down so the value bubble stays up while the shot is taken
   const box = await loc.boundingBox();
   if (!box) throw new Error(`trigger failed: ${t.sel} has no box`);
