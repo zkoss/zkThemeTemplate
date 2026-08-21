@@ -560,24 +560,56 @@ availableWidth = header.outerWidth() - controlsContainer.outerWidth() - 10   // 
 同一份 build 兩趟,有時 0 差異、有時 1 差異(這次第三趟又自己變回 0,再次印證雙穩態)。
 之前 §5.2 那次「兩張圖肉眼看不出差別」的追查,就是這個硬幣造成的。
 
-**建議 #3(根因)的前提已經被實測推翻,不要照原文去做。** §5.3 猜的是
-「`isMobile: true` 開啟 meta-viewport 縮放 ⇒ 版面落在非整數座標 ⇒ 字形光柵原點在兩個
-subpixel bin 之間跳」。在 `breadcrumb.zul` 上量三種設定:
+**建議 #3(根因)已經做完了,結論是:`isMobile` 不是原因,而且這件事不是主題能修的。**
 
-| 設定 | devicePixelRatio | visualViewport.scale | 那段文字的 box | 有小數? | `zk.mobile` |
-|---|---|---|---|---|---|
-| 桌機 1280×900 | 1 | 1 | top 38 / left 5 / h 38 | 否 | false |
-| mobile `isMobile: true` | 1 | 1 | top 36 / left 5 / h 37 | **否** | **1** |
-| mobile `isMobile: false` | 1 | 1 | top 36 / left 5 / h 37 | **否** | **1** |
+先照原文做:保留 UA / viewport / `hasTouch`,只關掉 `isMobile`。**沒有用** ——
+兩種設定都出現 **2 個狀態**,而且**是同樣的兩個 hash**。順帶推翻了原文猜的機制:
+`devicePixelRatio` 與 `visualViewport.scale` 在桌機 / `isMobile:true` / `isMobile:false`
+三種設定下**都是 1**,那段文字的 box 三種都落在整數上,關不關 `isMobile` 版面完全一樣。
+(但原文另一句是對的:`zk.mobile` 兩種設定都是 `1`,它看的是伺服器端 UA,所以關掉不會失去 tablet 覆蓋。)
 
-⇒ **沒有縮放(scale 都是 1)、也沒有小數座標**,而且開不開 `isMobile` 版面**完全一樣**。
-所以關掉 `isMobile` 大概不會改變任何事,那個實驗照原樣做只會浪費兩趟 capture。
-(順帶證實了 §5.3 的另一句:`zk.mobile` 兩種設定下都是 `1`,它看的確實是**伺服器端 UA**,
-所以真要關 `isMobile` 也不會失去 tablet layer 覆蓋。)
+**既然關不掉,就改成逐項隔離。** 判別法不是看單一次結果(那是擲硬幣),而是
+**每個設定各開 8~10 個獨立的 browser process,數出現幾種不同的 PNG** ——
+雙穩態是跨 process 的,同一個 process 內是穩定的(§5 #3)。
 
-剩下的嫌疑犯只能是**整數 box 之內的字形光柵化**(文字排版用的是小數 advance),
-而不是 box 幾何。要再往下追得換工具(例如比對兩個狀態的 glyph raster),
-成本遠高於 §7.10 那條登記,所以先維持登記。
+| 設定 | 出現的狀態數 |
+|---|---|
+| 1280×900,桌機 UA | **1** |
+| 834×1112,桌機 UA,無 touch | **1** |
+| 834×1112,桌機 UA + `hasTouch` | **1** |
+| 834×1112,**mobile UA**,無 touch、無 `isMobile` | **2** |
+| 1280×900,**mobile UA** + touch | **2** |
+| 834×1112,mobile UA + touch + `isMobile` 開/關 | **2 / 2**(同樣的兩個 hash) |
+| mobile UA,把 **tablet 樣式表整張 disable**(字級回到 16px) | **2** |
+| mobile UA,強制 `font-size:16px` | **2** |
+| mobile UA,強制 `line-height:18px` | **2** |
+
+**唯一的觸發條件是 mobile 的 User-Agent 字串本身**,而且是**伺服器端**的效果:
+viewport 無關、touch 模擬無關、`isMobile` 無關、**tablet CSS 無關**、字級與行高都無關。
+mobile UA 之下還剩下的差異是 ZK 自己的 mobile 路徑(元素數 99 → 100、載入 touch JS、`zk.mobile=1`)。
+
+⇒ **這不是主題的 bug,也不是改一條 CSS 能修的。** §7.10 那筆登記就是正確答案,
+建議 #3 至此**結案**:不要再花兩趟 capture 去關 `isMobile`。
+
+**順便更正上一版對機制的說法(那是我猜錯的)。** 現在可以逐像素重現兩個狀態並直接比對:
+差異**就是 4 個像素,全部落在 x=4 這一欄**,而那一欄緊貼在 `Trail` 的大寫 **T** 左邊。
+
+```
+      x=  4    5    6    7    8    9
+y=39  A: 255*   0    0    0    0    0     ← T 的上橫槓(實心黑)
+      B: 243*   0    0    0    0    0
+y=40  A: 255* 168  168  168   90    0
+      B: 251* 168  168  168   90    0
+y=41  A: 242* 255  255  255  140    0     ← 只剩豎筆
+      B: 255* 255  255  255  140    0
+y=42  A: 251* 255  255  255  140    0
+      B: 255* 255  255  255  140    0
+```
+
+**T 自己(x≥5)兩個狀態逐 byte 相同。** 所以我上一版說的「baseline 被 round 到不同的整數列」
+**是錯的** —— 若 baseline 移動了,橫槓與豎筆也會跟著移動。實際情形正是 §5.2 原本描述的那樣:
+**字沒有動,只有它左邊那一欄極淡的邊緣墨在兩組列之間跳**。這一點現在是第一手確認過的,
+而「為什麼只有邊緣那一欄會跳」仍然沒有解釋 —— 但既然它不是主題造成的,追下去的價值很低。
 
 ### 7.11 未結案:`.z-portallayout-popup*` 到底是誰畫的
 
