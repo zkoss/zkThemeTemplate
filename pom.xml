@@ -83,6 +83,25 @@
 			<optional>true</optional>
 		</dependency>
 		<!-- test dependencies for preview app -->
+		<!-- za11y draws `.z-portallayout-popup*` and nothing else does. It is an optional
+		     language addon (`<depends>zkmax</depends>`, one-way), so zkmax does NOT pull it in and
+		     those four rules in js/zkmax/layout/css/portallayout.css are otherwise unreachable by
+		     any interaction — a visual harness then reports a guaranteed zero for them, which is an
+		     absent module rather than evidence. Producer: `web/js/za11y/zkmax/layout-a11y.ts`
+		     (zkcml commit 1f96cbf4a, "refine ZK-4598", 2020-05-27) — Portallayout gains a keyboard
+		     "move this panel to which column" list, opened from `doKeyDown_` on Space over a
+		     `zul.wnd.Panel`.
+		     LOAD-BEARING FOR THE ICEBLUE WORKTREE: its visual A/B harness builds the preview app's
+		     runtime classpath from THIS pom (scripts/ab-visual.js marbleClasspath()), so removing
+		     this line silently un-covers that surface over there as well as here.
+		     `test` scope: the published theme artifact must not tell consumers it needs the a11y
+		     addon. -->
+		<dependency>
+			<groupId>org.zkoss.zk</groupId>
+			<artifactId>za11y</artifactId>
+			<version>${zk.version}</version>
+			<scope>test</scope>
+		</dependency>
 		<dependency>
 			<groupId>org.zkoss.zkspringboot</groupId>
 			<artifactId>zkspringboot-autoconfig</artifactId>
