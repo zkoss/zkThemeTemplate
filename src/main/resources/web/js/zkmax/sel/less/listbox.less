@@ -1,3 +1,5 @@
+@import "~./zul/less/_header.less";
+
 //sticky-header
 .z-listbox.z-sticky-header {
 	overflow: visible;
@@ -13,4 +15,260 @@
 .z-listgroup-inner.z-frozen-sticky {
 	position: sticky;
 	z-index: 1;
+}
+
+// Responsive stacking mode: JS toggles .z-listbox--stacking + sets --zk-resp-cols; transform is pure CSS.
+.z-listbox--stacking {
+	// Allow vertical scroll on fixed-height stacking listboxes.
+	overflow-y: auto;
+	overflow-x: hidden;
+
+	// Hide table-mode chrome with no card meaning (column header, frozen sub-node).
+	> .z-listbox-header,
+	.z-frozen {
+		display: none;
+	}
+
+	// Keep body + footer inside the card layout (reset table-mode pixel widths).
+	> .z-listbox-body,
+	> .z-listbox-footer {
+		overflow-x: hidden;
+		max-width: 100%;
+	}
+	> .z-listbox-body > table,
+	> .z-listbox-footer > table {
+		width: 100% !important;
+		min-width: 0;
+		table-layout: auto;
+	}
+
+	// <tbody> becomes a CSS Grid of N cards per row (--zk-resp-cols).
+	> .z-listbox-body {
+		// No <thead> to hide here — the column header is a separate .z-listbox-header div.
+		> table {
+			display: block;
+		}
+		> table > tbody:not(.z-listbox-emptybody) {
+			display: grid;
+			grid-template-columns: repeat(var(--zk-resp-cols, 1), 1fr);
+			gap: 8px;
+			padding: 8px;
+			box-sizing: border-box;
+		}
+		// Each <tr> (listitem) becomes a card.
+		> table > tbody:not(.z-listbox-emptybody) > tr {
+			display: flex;
+			flex-direction: column;
+			border: 1px solid @baseBorderColor;
+			border-radius: 4px;
+			background: @meshBackgroundColor;
+			overflow: hidden;
+		}
+		// Each <td> (listcell) becomes a key-value entry.
+		> table > tbody:not(.z-listbox-emptybody) > tr > td {
+			display: block;
+			padding: @meshBodyPadding;
+			border-top: none;
+			border-bottom: none;
+		}
+		// Cell separator: top border between consecutive visible cells (skips hidden ones).
+		> table > tbody:not(.z-listbox-emptybody) > tr
+				> td:not(.z-cell-hide-stacking)
+				~ td:not(.z-cell-hide-stacking) {
+			border-top: 1px solid @meshContentBorderColor;
+		}
+		// `data-label` is stamped by listbox-responsive.ts _markStackingCells.
+		> table > tbody:not(.z-listbox-emptybody) > tr > td[data-label]:not([data-label=""])::before {
+			content: attr(data-label);
+			display: block;
+			margin-bottom: 2px;
+			.fontStyle(@baseContentFontFamily, @fontSizeSmall, 600, @textColorLight);
+		}
+		// A listcell keeps its table-mode inner content padding; in a stacked card
+		// the <td> already supplies the body padding, so reset the inner wrapper —
+		// otherwise the value sits indented right of and below its own label.
+		> table > tbody:not(.z-listbox-emptybody) > tr.z-listitem > td > .z-listcell-content {
+			padding: 0;
+		}
+		// Per-column hide: <listheader responsiveVisible="false">.
+		> table > tbody:not(.z-listbox-emptybody) > tr > td.z-cell-hide-stacking,
+		> table > tbody:not(.z-listbox-emptybody) > tr.z-listgroupfoot > td.z-cell-hide-stacking {
+			display: none;
+		}
+		// A responsive-hidden column that hosts the selection checkbox is kept
+		// (z-cell-cm-only) so the checkbox survives, but its data must still be
+		// suppressed. The value is a bare text node, so collapse the content with
+		// font-size:0 and restore the checkbox's own icon size so it still renders.
+		> table > tbody:not(.z-listbox-emptybody) > tr > td.z-cell-cm-only > .z-listcell-content {
+			font-size: 0;
+		}
+		> table > tbody:not(.z-listbox-emptybody) > tr > td.z-cell-cm-only > .z-listcell-content > .z-listitem-checkable {
+			font-size: @checkedIconSize;
+		}
+		> table > tbody:not(.z-listbox-emptybody) > tr > td.z-cell-cm-only > .z-listcell-content > :not(.z-listitem-checkable) {
+			display: none;
+		}
+		// When the checkbox column is responsive-hidden, lay the card out as a
+		// [checkbox gutter | content] grid so the fields auto-indent beside the
+		// checkbox instead of it occupying a lonely row. Only cards that actually
+		// keep a checkbox cell (:has) switch to grid; others stay flex-column.
+		// Shared gutter geometry (must match the z-cell-cm-lead card below so the
+		// two checkmark layouts look identical): 8px checkbox inset + 28px gutter
+		// column → content column at 36px, an ~8px gap after the checkbox.
+		> table > tbody:not(.z-listbox-emptybody) > tr.z-listitem:has(> td.z-cell-cm-only) {
+			display: grid;
+			grid-template-columns: 28px 1fr;
+		}
+		// The gutter cell must span every field row and stretch to fill column 1:
+		// a one-line-tall checkbox beside a taller content column would leave an
+		// empty col-1 strip, and since hover/focus paint per cell that strip shows
+		// the card background through (stray focus line / white hover gap).
+		> table > tbody:not(.z-listbox-emptybody) > tr.z-listitem:has(> td.z-cell-cm-only) > td.z-cell-cm-only {
+			grid-column: 1;
+			// The row grid has no explicit rows, so `grid-row-end: -1` would
+			// resolve back to line 1 (span 1); over-span instead — the unused
+			// implicit rows are zero-height.
+			grid-row-start: 1;
+			grid-row-end: span 99;
+			align-self: stretch;
+			padding-left: 8px;
+			padding-right: 0;
+			// Pin the checkbox to the shared (8px, 12px) gutter origin in every
+			// density profile — must match the cm-lead card's absolute anchor.
+			padding-top: 12px;
+		}
+		> table > tbody:not(.z-listbox-emptybody) > tr.z-listitem:has(> td.z-cell-cm-only) > td:not(.z-cell-cm-only) {
+			grid-column: 2;
+			padding-left: 8px;
+		}
+		// No divider between the checkbox gutter and the first field. A
+		// responsive-hidden column can sit in between, so match the first cell that
+		// is still shown rather than the DOM-adjacent one, and restore the
+		// separator from the second shown cell on.
+		> table > tbody:not(.z-listbox-emptybody) > tr.z-listitem
+				> td.z-cell-cm-only ~ td:not(.z-cell-hide-stacking) {
+			border-top: none;
+		}
+		> table > tbody:not(.z-listbox-emptybody) > tr.z-listitem
+				> td.z-cell-cm-only ~ td:not(.z-cell-hide-stacking)
+				~ td:not(.z-cell-hide-stacking) {
+			border-top: 1px solid @meshContentBorderColor;
+		}
+		// Normal (visible) checkbox column: the checkmark rides inside the first
+		// visible cell next to its value (z-cell-cm-lead), with no separate gutter
+		// cell to reuse. Pad the cell past the gutter and absolutely anchor the
+		// checkbox at the shared (8px, 12px) gutter origin — the same hardcoded
+		// spot the cm-only cell pins its checkbox to — so both checkmark layouts
+		// present the checkbox identically while the caption and any cell content
+		// (text, images, child components) keep normal flow. The td (not the
+		// content box) is the containing block, so the content's table-mode
+		// overflow:hidden cannot clip it. The checkmark markup emits a leading
+		// `&nbsp;` before the value (an inline separator now made redundant) —
+		// cancel it on the content box — but only where it is actually emitted
+		// (z-cell-cm-sep); a cell holding no value has no separator to cancel.
+		> table > tbody:not(.z-listbox-emptybody) > tr.z-listitem:has(> td.z-cell-cm-lead) > td.z-cell-cm-lead {
+			position: relative;
+			padding-left: 36px;
+		}
+		> table > tbody:not(.z-listbox-emptybody) > tr.z-listitem:has(> td.z-cell-cm-lead) > td.z-cell-cm-lead.z-cell-cm-sep > .z-listcell-content {
+			text-indent: -0.35em;
+		}
+		> table > tbody:not(.z-listbox-emptybody) > tr.z-listitem:has(> td.z-cell-cm-lead) > td.z-cell-cm-lead > .z-listcell-content > .z-listitem-checkable {
+			position: absolute;
+			left: 8px;
+			top: 12px;
+			text-indent: 0;
+		}
+		// The card's other cells keep normal flow and just indent so their label
+		// and value line up with the checkbox cell's content column (body pad + gutter).
+		> table > tbody:not(.z-listbox-emptybody) > tr.z-listitem:has(> td.z-cell-cm-lead) > td.z-listcell:not(.z-cell-cm-lead) {
+			padding-left: 36px;
+		}
+		// Group / Groupfoot span all columns of the cards-per-row grid.
+		// Explicit start/end — LESS would compile `1 / -1` as division.
+		> table > tbody:not(.z-listbox-emptybody) > tr.z-listgroup,
+		> table > tbody:not(.z-listbox-emptybody) > tr.z-listgroupfoot {
+			grid-column-start: 1;
+			grid-column-end: -1;
+		}
+		// Group header carries its own label — no per-cell data-label.
+		> table > tbody:not(.z-listbox-emptybody) > tr.z-listgroup > td::before {
+			content: none;
+		}
+		// Groupfoot card styling.
+		> table > tbody:not(.z-listbox-emptybody) > tr.z-listgroupfoot {
+			background: @meshGroupFooterBackgroundColor;
+		}
+		// Odd-row stripe in cards.
+		> table > tbody:not(.z-listbox-emptybody) > tr.z-listbox-odd {
+			background: @meshStripeBackgroundColor;
+		}
+		// Selected-item highlight; declared after the stripe rule so selection wins.
+		> table > tbody:not(.z-listbox-emptybody) > tr.z-listitem-selected {
+			border-color: @selectedBackgroundColor;
+			background: @selectedBackgroundColor;
+			color: @selectedColor;
+		}
+		// Invert data-label captions too, else they stay light-grey on the selected card.
+		> table > tbody:not(.z-listbox-emptybody) > tr.z-listitem-selected > td[data-label]::before {
+			color: @selectedColor;
+		}
+		// Focus ring on the card (outline, not inset box-shadow: opaque cells would occlude it);
+		// per-cell shadows cleared below.
+		> table > tbody:not(.z-listbox-emptybody) > tr.z-listitem-focus {
+			outline: 2px solid @meshCellFocusBoxShadowColor;
+			outline-offset: -2px;
+		}
+		> table > tbody:not(.z-listbox-emptybody) > tr.z-listitem-focus > .z-listcell {
+			box-shadow: none;
+		}
+		// Nested-listbox hover: only the deepest card lights up, not ancestors.
+		.z-listitem:has(.z-listitem:hover) > .z-listcell {
+			background: inherit;
+		}
+		// Empty-body placeholder ("No data") — span the full container.
+		> table > tbody.z-listbox-emptybody,
+		> table > tbody.z-listbox-emptybody > tr,
+		> table > tbody.z-listbox-emptybody > tr > td {
+			display: block;
+			width: 100%;
+		}
+	}
+
+	// Footer: keep visible as a full-width card below the item grid.
+	> .z-listbox-footer {
+		> table,
+		> table > tbody:not(.z-listbox-emptybody) {
+			display: block;
+		}
+		> table > tbody:not(.z-listbox-emptybody) > tr {
+			display: flex;
+			flex-direction: column;
+			margin: 0 8px 8px;
+			border: 1px solid @baseBorderColor;
+			border-radius: 4px;
+			background: @meshFootBackgroundColor;
+			overflow: hidden;
+		}
+		> table > tbody:not(.z-listbox-emptybody) > tr > td {
+			display: block;
+			padding: @meshBodyPadding;
+			border-bottom: none;
+		}
+		> table > tbody:not(.z-listbox-emptybody) > tr
+				> td:not(.z-cell-hide-stacking):not(:empty)
+				~ td:not(.z-cell-hide-stacking):not(:empty) {
+			border-top: 1px solid @meshContentBorderColor;
+		}
+		> table > tbody:not(.z-listbox-emptybody) > tr > td:empty,
+		> table > tbody:not(.z-listbox-emptybody) > tr > td.z-cell-hide-stacking {
+			display: none;
+		}
+		> table > tbody:not(.z-listbox-emptybody) > tr > td[data-label]:not([data-label=""])::before {
+			content: attr(data-label);
+			display: block;
+			margin-bottom: 2px;
+			.fontStyle(@baseContentFontFamily, @fontSizeSmall, 600, @textColorLight);
+		}
+	}
 }

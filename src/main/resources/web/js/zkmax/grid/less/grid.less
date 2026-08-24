@@ -9,16 +9,6 @@
 		z-index: 1;
 	}
 }
-//frozen-sticky
-.z-column.z-frozen-sticky,
-.z-row .z-row-inner.z-frozen-sticky,
-.z-row .z-cell.z-frozen-sticky,
-.z-group-inner.z-frozen-sticky,
-.z-detail-outer.z-frozen-sticky {
-	position: sticky;
-	z-index: 1;
-}
-
 // ── Responsive stacking mode (ZK-5409) ──────────────────────────────────
 //
 // PURE CSS TRANSFORMATION. JS only toggles the `.z-grid--stacking` class
@@ -71,7 +61,9 @@
 
 	// Turn table layout into block flow. <tbody> becomes a CSS Grid so the
 	// rows lay out as N-cards-per-row, controlled by --zk-resp-cols.
-	.z-grid-body {
+	// Child-scoped: a nested non-stacking grid inside a card has the same
+	// `.z-grid-body > table > tbody` shape and must keep its table rendering.
+	> .z-grid-body {
 		> table,
 		> table > thead {
 			display: block;
