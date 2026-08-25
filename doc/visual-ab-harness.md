@@ -466,8 +466,8 @@ Pop-up 是同一個盲點更嚴重的一塊:**hover 至少是既有元素換樣�
 | 步驟 | 結果 |
 |---|---|
 | 場景數 | **32**(桌機 32,mobile 31 + 1 個具名 skip)。第 32 個是 2026-08-21 補的 `portallayout-a11y-popup`,見 §7.11;它在桌機與 mobile 都通過,並且**跨 3 個獨立的 app+瀏覽器 process 拍出 byte 完全相同的 PNG**(sha256 單一值) |
-| `visual:selftest`(桌機) | **149 頁比對、differing 0**;噪音只出現在 at-rest 頁 |
-| `visual:selftest ab-capture-mobile` | **148 頁比對、differing 0**、missing 0 |
+| `visual:selftest`(桌機) | **150 頁比對、differing 0**(頁數 149 → 150 是 §7.11 新增的場景)。⚠️ **`avatar` 是間歇性的**:兩趟裡有一趟報 75px / maxΔ 10 / box 105,284,135,319,另一趟 0。這是 `ab-capture.spec.ts` 自己註解過的那個 race(`avatar.zul` 故意指一張不存在的圖去展示 label fallback,「fallback 畫了沒」在兩趟之間會不同),**與 §7.11／§7.12 的改動無關**(那是 at-rest 頁,改動碰不到它)。照 §5.3 的方法論,單一趟是擲硬幣、不足以定性 —— 要嘛把等待條件收緊,要嘛跑 8–10 個獨立行程數出相異 PNG 數後登記進 `KNOWN_UNSTABLE`。**目前兩者都還沒做** |
+| `visual:selftest ab-capture-mobile` | **149 頁比對、differing 0**、missing 0(2026-08-25 重跑;148 → 149 同上) |
 | **反向控制** | 對建置產物注入一行 `.z-combobox-popup{border-radius:12px;border-color:#e00}` → **3 頁差異,全部是 pop-up 場景**(1338/1424/1360 px,**3.4–4.4%** 的畫面,maxΔ 249–255),**原本的 116 頁 at-rest 一頁都沒動**。還原後 `combo.css.dsp` 與注入前 **byte 相同** |
 | A/B vs `baseline/`(桌機) | 指紋 `df92b09541854f7d` → `7a447b74c81a24a0`(**72/85 檔 byte 不同**),**149 頁 differing 0** |
 | A/B vs `baseline/`(mobile) | **148 頁 differing 0**、missing 0 |
@@ -694,12 +694,23 @@ app+瀏覽器 process 拍出 byte 相同的 PNG**(91×110,2026 bytes,sha256 單�
 **解析出 0 條規則**;`body` 的 computed `font-family` 是 **`Times`**、`margin` 8px(瀏覽器預設);
 `.z-panel` 背景透明、`.z-portallayout` 是 `position: static`。
 
-**而它照樣「通過」**:`guardProbe()` 檢查的是回傳的 HTML 有沒有提到 `_zkiju-iceblue11`、
-有沒有提到 `marble` —— 這兩件事在**一頁完全沒有樣式**的情況下**也都成立**,因為主題*名字*
-來自註冊的 Java 類別,跟「CSS 檔存不存在」無關。`themeFingerprint()` 確實會數檔案數,
-但 `capture()` 只把它**印出來**,沒有任何地方拿它當斷言。所以在那個狀態下跑一趟完整 A/B,
-會得到 **「0 頁差異」** —— 這正是 §2.2 說的那個失敗模式(**量不到東西的 harness 會回報一致**),
-只是從另一個門進來的:§2.2 講的是語料/選擇器層,這裡是**整個主題產物層**。
+**訂正(2026-08-25):上面這段最初寫成「跑一趟完整 A/B 會得到 0 頁差異」,那是誇大的。**
+`themeFingerprint()` 開頭本來就有 `if (!fs.existsSync(THEME_DIR)) die(...)`,而我遇到的狀態
+正是 `web/iceblue11` **整個目錄不存在** —— 所以真正的 `capture()` **會當場死掉**,不會安靜通過。
+我當時之所以拍出一堆沒有樣式的圖,是因為那支臨時探針只呼叫了 `startApp()` + `guardProbe()`,
+**把 `themeFingerprint()` 整個跳過了**。誇大的來源是我拿探針的行為去描述 `capture()` 的行為。
+
+**真正存在的洞有兩個,都比原本寫的窄,但都是真的**:
+
+1. **目錄存在、裡面 0 個 `.css.dsp`** —— `existsSync` 過關,`walk()` 回傳空陣列,
+   `capture()` 只把 `theme output: 0 .css.dsp` **印出來**就繼續跑。`mvn clean`、
+   建置中途失敗、輸出路徑改名,都會產生這個狀態。
+2. **`guardProbe()` 只比對名字** —— 它檢查 HTML 有沒有 `_zkiju-iceblue11`、有沒有 `marble`,
+   這兩件事在**一頁完全沒有樣式**時**也都成立**,因為主題*名字*來自註冊的 Java 類別,
+   跟 CSS 檔存不存在無關。所以「有送出檔案、但送出來的是空的」這一類完全沒人看守。
+
+第 1 項是 §2.2 那個失敗模式(**量不到東西的 harness 會回報一致**)在**主題產物層**的版本;
+第 2 項則是「名字對 ≠ 樣式到了」。兩個現在都補上了斷言,見下。
 
 **真正抓到它的不是閘門,是眼睛**:新場景拍出來的圖不對(一條透明的橫帶,`<li>` 還帶著
 瀏覽器預設的圓點,「1」「2」浮在後面編輯器的圖示上)。換成一個沒人會逐張看的表面,
@@ -708,13 +719,24 @@ app+瀏覽器 process 拍出 byte 相同的 PNG**(91×110,2026 bytes,sha256 單�
 **當下的處理**:`mvn -f <iceblue>/pom.xml process-resources` → 85 個 `.css.dsp`,
 同一個場景就拍出正常的 91×110 pop-up 了。
 
-**建議(尚未實作,留給裁示)**:把「主題有沒有真的送出樣式」變成會**大聲失敗**的斷言,
-兩條都很便宜,任一條都能擋住這次:
+**已實作(2026-08-25)** —— 兩道斷言都補上,而且都經過**反向控制**驗證會真的觸發:
 
-1. `guardProbe()` 追加一項:把頁面連的那張 stylesheet 抓下來,要求**規則數 > 0**
-   (注意 `zk.wcs` **第二次抓會是空的**,所以要用瀏覽器端的 `document.styleSheets`
-   讀 `cssRules.length`,或在頁面載入時攔 response,不能事後 re-fetch —— 這點踩過);
-2. `capture()` 把 `themeFingerprint().files === 0` 從「印出來」改成「直接 die」。
+| 閘門 | 位置 | 條件 | 反向控制 |
+|---|---|---|---|
+| 1 | `themeFingerprint()` | `.css.dsp` 檔數 **0** → die | 把 `web/iceblue11` 換成空目錄 → 如期死在建置訊息上 |
+| 2 | `guardProbe()` | 頁面解析出的 **CSS 規則數 0** → die;**`--zk-*` 宣告數 0** → die | 目錄裡只放一個假的 `dummy.css.dsp`(讓閘門 1 過關)→ 如期死在「1 張 stylesheet、0 條規則」 |
 
-**這跟「產物有點舊」是不同性質的風險**:舊產物頂多讓差異變小,而這是**一條樣式都沒有**,
-而主題側目前唯一的閘門是**比對名字**,名字在兩種情況下都是對的。
+**閘門 2 為什麼一定要開瀏覽器**(兩個都是踩過才知道的):ZK 的 stylesheet `<link>` 是
+**JS 注入**的,伺服器回的 HTML 裡**一個 href 都沒有**(實測 0 筆),所以沒有東西可以事後抓;
+而 `zk.wcs` **第二次請求會是空的**,拿它來判斷內容等於什麼都沒量。**只能在頁面裡讀
+`document.styleSheets` 的 `cssRules`。**
+
+**為什麼兩個門檻都是 `> 0` 而不是設一個下限**:要守的失誤是**二元的**(樣式有送到 / 沒送到)。
+設下限會**暗示這也能抓到局部建置**,而它抓不到 —— 局部建置是**指紋**的職責,`diff` 本來就會
+跨 label 比對指紋。所以門檻維持 `> 0`,但把**數字印在 ok 那一行**,人眼還是看得到崩塌:
+健康的一次是 `5876 rules, 895 --zk-* decls`,一旦掉到幾十條就算通過也很顯眼。
+
+**順手修掉的 orphan**:`die()` 是 `process.exit(1)`,**不會跑 `capture()` 的 `finally`**,
+所以任何在 app 起來之後才失敗的閘門(包含新加的閘門 2)都會**把 preview app 留在背景**,
+下一趟就死在「port 已被占用」、指著一個使用者根本沒開的行程。`startApp()` 裡加一行
+`process.on('exit', …)` 把它收掉,涵蓋閘門失敗、throw、Ctrl-C 所有出口。

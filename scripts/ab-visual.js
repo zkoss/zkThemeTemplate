@@ -96,6 +96,20 @@ function walk(dir, ext, out = [], base = dir) {
 function themeFingerprint() {
 	if (!fs.existsSync(THEME_DIR)) die(`no theme output at ${THEME_DIR} — run \`npm run build:css\` first`);
 	const files = walk(THEME_DIR, '.css.dsp').sort();
+	// An EMPTY theme directory is the case the existsSync above does not cover, and it is not
+	// hypothetical: on 2026-08-21 this tree held a stale `web/marble/` of plain `.css` and no
+	// `web/iceblue11` at all, so every page rendered with NO theme CSS (§7.12). The directory
+	// existing while holding zero `.css.dsp` is the same fault one step later — a `mvn clean`,
+	// a half-finished build, or an output-path rename all produce it. Reported the count only,
+	// and `capture()` merely PRINTED that count, so a run in that state would have gone on to
+	// compare 149 pairs of unstyled screenshots and called them identical.
+	if (!files.length) {
+		die(
+			`theme output at ${THEME_DIR} contains 0 .css.dsp files — the theme would be NAMED but\n` +
+			`serve no CSS, and every page would be captured unstyled. Build it first:\n` +
+			`  withjdk.sh 17 mvn -q -f ${path.join(REPO, 'pom.xml')} process-resources`
+		);
+	}
 	const lines = files.map(rel => `${rel} ${sha256(fs.readFileSync(path.join(THEME_DIR, rel)))}`);
 	return { files: files.length, fingerprint: sha256(lines.join('\n')) };
 }
@@ -197,6 +211,14 @@ async function startApp(extraProps = []) {
 	const log = fs.openSync(logPath, 'w');
 	const child = spawn(cmd, args, { stdio: ['ignore', log, log] });
 	child.on('error', err => die(`failed to start the preview app: ${err.message}`));
+	// `die()` calls process.exit(), which does NOT run capture()'s `finally` — so any guard that
+	// fails after the app has started used to ORPHAN it, and the next run then died on
+	// "port already in use" pointing at a process the user never started. Killing on `exit`
+	// covers every path out of the script (guard failure, throw, Ctrl-C) with one line, and is
+	// idempotent with the explicit kill in capture()'s finally.
+	process.on('exit', () => {
+		try { child.kill('SIGTERM'); } catch { /* already gone */ }
+	});
 
 	const deadline = Date.now() + 120_000;
 	while (Date.now() < deadline) {
@@ -223,7 +245,67 @@ async function guardProbe() {
 	}
 	const marble = (html.match(/marble/g) || []).length;
 	if (marble !== 0) die(`guard probe: served page references "marble" ${marble}x — Marble's theme provider is active`);
-	console.log(`guard probe:     ok (_zkiju-iceblue11 present, marble refs 0)`);
+
+	// Everything above proves the theme is REGISTERED, not that it SERVES anything. A page whose
+	// stylesheet is empty passes every one of those checks, because the theme NAME comes from the
+	// registered Java class and has nothing to do with whether a CSS file exists. Measured on
+	// 2026-08-21 (§7.12): with the theme output absent, `button.zul` returned ONE stylesheet that
+	// parsed to ZERO rules, `body` computed to Times at 8px margin — and the only thing that
+	// noticed was a human looking at a PNG. So assert the CSS arrived.
+	//
+	// This needs a real browser, twice over: ZK injects the stylesheet <link> from JS, so the
+	// served HTML has no href to fetch (measured: 0 matches), and `zk.wcs` comes back EMPTY on a
+	// SECOND request — re-fetching it to judge its content measures nothing at all. Reading
+	// `document.styleSheets` in the page is the only honest measurement available.
+	//
+	// Both thresholds are `> 0` on purpose rather than a floor. The fault being guarded is binary
+	// — the theme is served or it is not — and a floor would imply this also detects a PARTIAL
+	// build, which it does NOT. The theme fingerprint is what covers that, and `diff` already
+	// compares it across labels. The counts are printed so a human still sees a collapse (a
+	// healthy run measured 5876 rules / 895 token declarations).
+	const { chromium } = require('@playwright/test');
+	const browser = await chromium.launch();
+	let css;
+	try {
+		const page = await browser.newPage();
+		await page.goto(`${BASE_URL}/button.zul`, { waitUntil: 'domcontentloaded' });
+		await page.waitForFunction(() => {
+			const zk = window.zk;
+			return !!zk && !zk.loading;
+		});
+		css = await page.evaluate(() => {
+			let rules = 0, tokens = 0;
+			for (const sheet of Array.from(document.styleSheets)) {
+				try {
+					for (const rule of Array.from(sheet.cssRules)) {
+						rules++;
+						tokens += ((rule.cssText || '').match(/--zk-[a-z0-9-]+\s*:/g) || []).length;
+					}
+				} catch {
+					// an unreadable sheet is not evidence either way; the totals below still decide
+				}
+			}
+			return { sheets: document.styleSheets.length, rules, tokens };
+		});
+	} finally {
+		await browser.close();
+	}
+	if (!css.rules) {
+		die(
+			`guard probe: the page parsed ${css.sheets} stylesheet(s) to ZERO CSS rules — the theme is\n` +
+			`named but serves no styles, so every capture would be an unstyled page and the A/B would\n` +
+			`report agreement it never measured. Build the theme:\n` +
+			`  withjdk.sh 17 mvn -q -f ${path.join(REPO, 'pom.xml')} process-resources`
+		);
+	}
+	if (!css.tokens) {
+		die(
+			`guard probe: ${css.rules} CSS rule(s) served but not one \`--zk-*\` declaration — the token\n` +
+			`layer (zul/css/norm.css.dsp) did not arrive, so every component rule would resolve its\n` +
+			`colours and spacing against undefined variables.`
+		);
+	}
+	console.log(`guard probe:     ok (_zkiju-iceblue11 present, marble refs 0, ${css.rules} rules, ${css.tokens} --zk-* decls)`);
 }
 
 /* ------------------------------------------------------------------ capture */
