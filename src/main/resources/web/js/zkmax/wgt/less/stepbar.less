@@ -1,7 +1,7 @@
 @import "~./zul/less/_header.less";
 
 .z-stepbar {
-	background: @colorBackground3;
+	background: @colorBackgroundBase;
 	overflow: hidden;
 	padding: @stepbarPadding;
 	display: flex;
@@ -59,7 +59,7 @@
 	}
 
 	&-title {
-		background-color: @colorBackground3;
+		background-color: @colorBackgroundBase;
 		line-height: @stepSize;
 		font-size: @stepFontSize;
 		vertical-align: top;
@@ -84,19 +84,19 @@
 	}
 
 	&bar:not(&bar-linear) & .z-icon-check:hover {
-		color: @textColorDefault3;
+		color: @textColorInverse;
 		background-color: @stepHoverColor;
 		border-color: @stepHoverColor;
 	}
 
 	&bar:not(&bar-linear) & .z-icon-check:active {
-		color: @textColorDefault3;
+		color: @textColorInverse;
 		background-color: @stepClickColor;
 		border-color: @stepClickColor;
 	}
 
 	.z-icon-check {
-		color: @textColorDefault3;
+		color: @textColorInverse;
 		background-color: @stepActiveColor;
 		border-color: @stepActiveColor;
 		border-radius: 50%;
@@ -104,7 +104,7 @@
 	}
 
 	&-error &-icon {
-		color: @textColorDefault3;
+		color: @textColorInverse;
 		background-color: @stepErrorColor;
 		border-radius: 50%;
 		font-size: @stepIconErrorSize;

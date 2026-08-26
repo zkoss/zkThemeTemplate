@@ -6,7 +6,7 @@
 	white-space: nowrap;
 
 	&-input {
-		.fontStyle(@baseContentFontFamily, @inputTextSize, normal, @inputColor);
+		.fontStyle(@baseContentFontFamily, @inputFontSize, normal, @inputColor);
 		width: 100%;
 		height: @timepickerHeight;
 		border: 1px solid @inputBorderColor;
@@ -86,8 +86,8 @@
 
 	&-disabled &-input,
 	&-disabled &-button {
-		color: @inputDisableColor !important;
-		background: @inputDisableBackgroundColor !important;
+		color: @inputDisabledColor !important;
+		background: @inputDisabledBackgroundColor !important;
 		cursor: default !important;
 	}
 	&-disabled &-button:hover {

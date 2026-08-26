@@ -29,10 +29,10 @@
 .z-portalchildren {
 	&-counter {
 		display: none;
-		border-radius: @portalchildrenCounterRadius;
+		border-radius: @portalchildrenCounterBorderRadius;
 		padding: 0 @portalchildrenCounterPadding;
 		margin-right: @portalchildrenCounterPadding;
-		background: @portalchildrenCounterBackground;
+		background: @portalchildrenCounterBackgroundColor;
 		font-size: 14px;
 		font-weight: 700;
 
@@ -42,7 +42,7 @@
 	}
 	&-frame {
 		border: 1px solid @portalchildrenFrameBorderColor;
-		border-radius: @portalchildrenFrameRadius;
+		border-radius: @portalchildrenFrameBorderRadius;
 		background: @portalchildrenFrameBackgroundColor;
 		overflow: hidden;
 		padding: @portalchildrenFramePadding;
@@ -68,7 +68,7 @@
 				&-header {
 					color: @portalchildrenFramePanelHeaderTextColor;
 					padding: @portalchildrenFramePanelHeaderPadding;
-					font-size: @portalchildrenFramePanelHeaderTextSize;
+					font-size: @portalchildrenFramePanelHeaderFontSize;
 				}
 				&-drag-button {
 					display: block;
@@ -97,7 +97,7 @@
 	}
 	&-title {
 		display: none;
-		.fontStyle(@portalchildrenFrameTitleFontFamily, @portalchildrenFrameTitleFontSize, normal, @portalchildrenFrameTitleFontColor);
+		.fontStyle(@portalchildrenFrameTitleFontFamily, @portalchildrenFrameTitleFontSize, normal, @portalchildrenFrameTitleColor);
 		border: 0;
 		overflow: hidden;
 		padding-bottom: @portalchildrenFramePadding;

@@ -1,0 +1,85 @@
+@import "~./zul/less/_header.less";
+
+// App authors can override each value via the --zk-skeleton-* custom property;
+// the fallbacks reuse the theme's own tokens (@colorGreyLighter, @baseBorderRadius)
+// so the placeholder follows the active theme / dark mode instead of a hardcoded
+// grey. Duration/text-radius/min-opacity are not theme-colour concerns and keep
+// plain literal fallbacks.
+@zSkeletonBackground: var(--zk-skeleton-background, @colorGreyLighter);
+@zSkeletonDuration:   var(--zk-skeleton-duration, 1.5s);
+@zSkeletonRadius:     var(--zk-skeleton-radius, @baseBorderRadius);
+@zSkeletonTextRadius: var(--zk-skeleton-text-radius, 2px);
+@zSkeletonMinOpacity: var(--zk-skeleton-min-opacity, 0.4);
+
+@keyframes z-skeleton-pulse {
+	0%, 100% { opacity: 1; }
+	50%      { opacity: @zSkeletonMinOpacity; }
+}
+
+// The grey, pulsing placeholder fill shared by the in-place ::after overlay (for
+// ordinary elements) and the JS-laid overlay div (for replaced elements).
+.z-skeleton-fill() {
+	background: @zSkeletonBackground;
+	animation: z-skeleton-pulse @zSkeletonDuration ease-in-out infinite;
+}
+.z-skeleton-shape() {
+	&.z-skeleton-rect   { border-radius: @zSkeletonRadius; }
+	&.z-skeleton-circle { border-radius: 50%; }
+	&.z-skeleton-text   { border-radius: @zSkeletonTextRadius; }
+}
+
+.z-skeleton-active {
+	position: relative;
+	overflow: hidden;
+	.z-skeleton-fill();
+
+	// Hide descendant elements (grid cells, a button's icon, ...). A `*` selector
+	// matches elements only, so on its own it cannot reach the element's OWN
+	// direct text node (Label renders <span>text</span>, Button <button>label</button>)
+	// — the ::after overlay below masks those.
+	* {
+		visibility: hidden !important;
+	}
+
+	// Opaque overlay painted by the element itself: the pseudo element renders
+	// above the element's text node and children, so the grey block fully masks
+	// them. content must be '' (an empty box that paints), not none.
+	&::after {
+		content: '' !important;
+		position: absolute;
+		inset: 0;
+		background: @zSkeletonBackground;
+	}
+	&::before {
+		content: none !important;
+	}
+
+	.z-skeleton-shape();
+}
+
+// Replaced/void roots (Image's bare <img>, Iframe's <iframe>, a plain Textbox's
+// <input>, canvas/video/object/embed) render no ::after and hold no descendants,
+// and their painted content (bitmap, sub-document, input value) cannot be hidden
+// by CSS portably — the `content` replacement trick only works in Blink/WebKit,
+// not Gecko. So the skeleton module lays this real overlay element over the root and
+// sizes/positions it from JS; here we only paint the grey shape over it.
+.z-skeleton-overlay {
+	.z-skeleton-fill();
+	.z-skeleton-shape();
+}
+
+// The overlay sits ABOVE the replaced root as a separate element, so when the
+// pulse animation lowers its opacity the root's own painted content (bitmap,
+// sub-document, input value) would bleed through. Hide that content: the skeleton module
+// adds this class to every root it overlays. visibility:hidden keeps the box in
+// layout (the overlay stays aligned) and is honored in every browser — unlike the
+// `content` replacement trick, which Gecko ignores.
+.z-skeleton-masked {
+	visibility: hidden !important;
+}
+
+// WCAG 2.3.3 / Success Criterion 2.2.2: respect users who request reduced motion.
+@media (prefers-reduced-motion: reduce) {
+	.z-skeleton-active,
+	.z-skeleton-overlay { animation: none; }
+}

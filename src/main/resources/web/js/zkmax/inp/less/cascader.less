@@ -25,8 +25,8 @@
 	}
 
 	&-disabled {
-		color: @cascaderDisableColor !important;
-		background-color: @cascaderDisableBackgroundColor !important;
+		color: @cascaderDisabledColor !important;
+		background-color: @cascaderDisabledBackgroundColor !important;
 		cursor: default !important;
 		&:focus, &:hover {
 			border-color: @cascaderBorderColor;
@@ -110,7 +110,7 @@
 	&-cave {
 		margin: 0;
 		padding: @cascaderPopupCavePadding;
-		border-left: 1px solid @cascaderSeparatorColor;
+		border-left: 1px solid @cascaderSeparatorBorderColor;
 		max-height: 350px;
 		overflow: auto;
 		display: inline-block;
