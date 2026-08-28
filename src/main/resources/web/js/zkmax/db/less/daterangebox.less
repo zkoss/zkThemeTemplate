@@ -82,8 +82,26 @@ Copyright (C) 2026 Potix Corporation. All Rights Reserved.
 		box-shadow: 0 0 0 2px @colorPrimaryLighter;
 	}
 
+	// @invalidBorderColor, like `zul/inp/less/input.less`. Not @errorboxBorderColor:
+	// that is the bubble's own border, transparent in every shipped profile.
 	&-invalid {
-		border-color: @errorboxBorderColor;
+		border-color: @invalidBorderColor;
+	}
+
+	// Read-only reads as read-only, the way `.z-datebox-readonly` does
+	// (zul/inp/less/combo.less): same tokens, and the pointer cursor because a
+	// click still opens the picker — the value changes there, not by typing.
+	&-readonly {
+		background: @inputReadonlyBackgroundColor;
+
+		.z-daterangebox-input {
+			color: @inputReadonlyColor;
+			background: transparent;
+			cursor: pointer;
+		}
+		.z-daterangebox-button {
+			color: @inputReadonlyColor;
+		}
 	}
 
 	// Distinct visual for disabled — clearly differs from the writable
@@ -121,14 +139,24 @@ Copyright (C) 2026 Potix Corporation. All Rights Reserved.
 
 	// Suppress per-Calendar internal _value selection. Range visuals are
 	// driven solely by z-cell-range-* classes managed by DaterangePopup.
-	.z-calendar-cell.z-calendar-selected:not(.z-cell-range-begin):not(.z-cell-range-end):not(.z-cell-range-mid) {
+	// Every range role that paints a background of its own must be excluded, or
+	// this rule outranks it and blanks the band across the anchor cell.
+	// `preview-end` paints only an outline, so it stays un-excluded.
+	.z-calendar-cell.z-calendar-selected:not(.z-cell-range-begin):not(.z-cell-range-end):not(.z-cell-range-mid):not(.z-cell-range-preview-mid) {
 		background: transparent;
 		color: @calendarCellColor;
+
+		// This rule also outranks the plain cell's :hover, so restate it — the
+		// anchor has to answer the pointer like any other day.
+		&:hover {
+			background: @calendarCellHoverBackgroundColor;
+		}
 	}
-	// When the panel anchor date (selected) falls inside the range mid-band,
-	// the selected text color would bleed through — override it to the normal
-	// cell color so the range-mid background reads correctly.
-	.z-calendar-cell.z-calendar-selected.z-cell-range-mid {
+	// When the panel anchor date (selected) falls inside a range or preview
+	// mid-band, the selected text color would bleed through — override it to the
+	// normal cell color so the band background reads correctly.
+	.z-calendar-cell.z-calendar-selected.z-cell-range-mid,
+	.z-calendar-cell.z-calendar-selected.z-cell-range-preview-mid {
 		color: @calendarCellColor;
 	}
 
