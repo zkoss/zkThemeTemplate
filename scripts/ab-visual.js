@@ -458,6 +458,39 @@ const KNOWN_UNSTABLE = [
 		// did: two consecutive mobile selftests, identical signature both times.
 		why: 'bistable text-antialiasing placement under isMobile viewport scaling — see §5.2',
 	},
+	{
+		project: 'ab-capture',
+		page: 'avatar',
+		diffPixels: 75, maxDelta: 10, box: [105, 284, 135, 319],
+		// Characterised 2026-08-25 before being registered, because one observation cannot tell a
+		// flake from a regression (§7.13). The region is the CIRCULAR CLIP EDGE of the one
+		// image-backed avatar in the overlapping avatargroup — `img/item2.jpg`, intrinsic 98x122,
+		// scaled into a 40x40 circle that the "+5" chip overlaps from the right. In the common
+		// state the image covers the circle; in the rare one a grey crescent of the chip behind it
+		// shows through along the arc. maxDelta 10 is arc antialiasing, not a moved element.
+		//
+		// TRISTABLE, and the frequencies are measured, not guessed: 30 independent browser
+		// processes through the real capture path yielded 3 states — common (26/30, and 8/8 in
+		// full selftest runs), a near-twin at 12px/maxΔ3 which is BELOW the floor and never
+		// reported, and this one. Each process is internally stable, which is why `shootStable`
+		// converges and then disagrees with the next process.
+		//
+		// That is also why the wait was NOT tightened: the page already awaits `images complete`
+		// + `fonts.ready` + two stable frames 250ms apart, and the state is a per-process
+		// CONSTANT — there is no later frame to wait for. Waiting longer cannot change it.
+		//
+		// Registered on the same standard as breadcrumb: the signature appeared IDENTICAL in two
+		// separate selftest failures (75px / maxΔ 10 / box 105,284,135,319 both times), which is
+		// what makes an exact-match entry meaningful rather than a guess.
+		//
+		// KNOWN GAP, deliberately not pre-registered: pairing the BELOW-FLOOR state against this
+		// one computes to 87px / maxΔ 10 / box 105,284,140,319 — a second signature this entry
+		// does NOT cover. It has never actually surfaced in a selftest, and inventing an entry for
+		// an unobserved difference is exactly the guesswork this registry design refuses. If a run
+		// ever reports those numbers for `avatar`, add a second entry; the preserved PNG pair under
+		// target/ab-visual/selftest-evidence/ is what makes that diagnosable.
+		why: 'tristable circular-clip antialiasing on the image avatar in an overlapping avatargroup — see §7.13',
+	},
 ];
 
 /** Exact-signature match only — see KNOWN_UNSTABLE. */
@@ -474,7 +507,13 @@ function knownUnstable(project, page, m) {
 	);
 }
 
-function diff(labelA, labelB) {
+/**
+ * `report` is an optional out-parameter: pass an object and it comes back filled with the
+ * per-page classification. Callers that do not pass one are completely unaffected — this exists
+ * so `selftest` can preserve the differing PNGs before the next run destroys them, without
+ * changing the exit-code contract that `main` depends on.
+ */
+function diff(labelA, labelB, report) {
 	const a = readManifest(labelA);
 	const b = readManifest(labelB);
 	// A hard error, not a warning like the renderer check below: desktop and mobile differ in
@@ -509,6 +548,10 @@ function diff(labelA, labelB) {
 		else if (knownUnstable(project, name, m)) unstable.push(entry);
 		else differing.push(entry);
 	}
+
+	// Populated BEFORE any of the verdict returns below, so a caller gets the classification
+	// whichever exit this function takes.
+	if (report) Object.assign(report, { project, labelA, labelB, differing, unstable, noise, missing });
 
 	const sameTheme = a.theme.fingerprint === b.theme.fingerprint;
 	console.log('');
@@ -555,6 +598,37 @@ function diff(labelA, labelB) {
 
 /* ------------------------------------------------------------------ selftest */
 
+/**
+ * Copy the differing PNG pair out of the two label dirs when a selftest FAILS.
+ *
+ * Without this the evidence is DESTROYED by the next run: selftest always writes the same two
+ * labels (`selftest-a` / `selftest-b`), and `capture()` starts by `rm -rf`-ing its output dir.
+ * That is not hypothetical — on 2026-08-25 `avatar` failed once at 75px / maxΔ 10 /
+ * box 105,284,135,319, and the very next selftest overwrote both PNGs before anyone had looked at
+ * them. 30 isolated captures and 4 further full selftests never reproduced it, so the one usable
+ * artefact was gone (§7.5).
+ *
+ * A flake nobody can diff is a flake nobody can fix OR register. `KNOWN_UNSTABLE` matches on the
+ * exact diffPixels/maxDelta/box, so inventing an entry from a single lost observation would be
+ * guesswork that ALSO silently suppresses a real regression landing on those numbers. Keeping the
+ * pair costs two files per differing page and is the difference between "diagnosable next time"
+ * and "unreproducible forever".
+ */
+function preserveEvidence(differing, labelA, labelB) {
+	const stamp = new Date().toISOString().replace(/[:.]/g, '-');
+	const dest = path.join(WORK, 'selftest-evidence', stamp);
+	fs.mkdirSync(dest, { recursive: true });
+	for (const { name } of differing) {
+		const flat = name.replace(/\//g, '__');
+		for (const [label, side] of [[labelA, 'a'], [labelB, 'b']]) {
+			const src = path.join(SHOTS, label, `${flat}.png`);
+			if (fs.existsSync(src)) fs.copyFileSync(src, path.join(dest, `${flat}-${side}.png`));
+		}
+	}
+	console.log(`evidence kept:   ${path.relative(REPO, dest)}  (${differing.length} page(s), a/b pairs)`);
+	console.log(`                 the next selftest overwrites ${labelA}/${labelB} — diff these instead.`);
+}
+
 async function selftest(project = PROJECTS[0]) {
 	// L2.4: prove the harness against the SAME build twice before trusting it across builds.
 	// Per-project, because determinism does not transfer: every fix in §5 was measured at
@@ -566,7 +640,11 @@ async function selftest(project = PROJECTS[0]) {
 	const a = await capture(la, project);
 	const b = await capture(lb, project);
 	if (a || b) console.log(`\nselftest: at least one capture pass had a failing page (see above)`);
-	const rc = diff(la, lb);
+	const report = {};
+	const rc = diff(la, lb, report);
+	if (rc !== 0 && report.differing && report.differing.length) {
+		preserveEvidence(report.differing, la, lb);
+	}
 	console.log('');
 	console.log(rc === 0 ? `selftest: PASS` : `selftest: FAIL — the harness is not deterministic yet`);
 	return rc;
@@ -606,4 +684,8 @@ if (require.main === module) {
 // Shared with scripts/ab-coverage.js — the coverage probe needs the same app, the same
 // classpath guard (note 2) and the same theme fingerprint, and duplicating them would let
 // the two harnesses drift apart.
-module.exports = { REPO, WORK, THEME_DIR, BASE_URL, walk, sha256, die, startApp, guardProbe, themeFingerprint };
+// `diff` and `preserveEvidence` are exported as a TEST SEAM: a real selftest failure cannot be
+// summoned on demand (that is the whole problem with the flake they exist for), so the only way
+// to prove the preservation path works is to drive these two directly against two capture
+// labels that do differ.
+module.exports = { REPO, WORK, SHOTS, THEME_DIR, BASE_URL, walk, sha256, die, startApp, guardProbe, themeFingerprint, diff, preserveEvidence };
