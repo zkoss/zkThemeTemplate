@@ -129,6 +129,10 @@ Located in `doc/` directory:
 | [usecase-driven-iteration.md](doc/usecase-driven-iteration.md) | Use-case driven iteration workflow (OBSERVE→AUDIT→FIX→VERIFY) |
 | [preview-deployment.md](doc/preview-deployment.md) | Packaging the preview app as a WAR (`scripts/build-preview-war.sh`) and deploying it to a shared Tomcat for design review (`scripts/deploy-preview.sh`); javax vs jakarta flavour |
 | [design-review-feedback.md](doc/design-review-feedback.md) | Designer feedback loop — private `hawkchen/marble-issue` tracker + the "Report this page" deep-link button in the preview sidebar (auto-captures page/URL/viewport/density/browser) |
+| [zk11-less-dsp-deprecation-evaluation.md](doc/zk11-less-dsp-deprecation-evaluation.md) | ZK 11 theme architecture — retiring LESS + DSP for pure CSS (decided 2026-09-03: Option 1, D1–D6 = option A) |
+| [conditional-css-without-preprocessor.md](doc/conditional-css-without-preprocessor.md) | How the ecosystem does conditional CSS without a preprocessor — the five techniques that replace `.css.dsp` |
+| [icon-library-evaluation-criteria.md](doc/icon-library-evaluation-criteria.md) | Evaluation framework + scored comparison for third-party icon libraries, from a redistributing framework vendor’s position |
+| [daterangebox-focus-ux-review.md](doc/daterangebox-focus-ux-review.md) | DateRangeBox click/focus interaction model reviewed against Datebox |
 | [preview-page-descriptions.md](doc/preview-page-descriptions.md) | ZUL page descriptions for 8 use-case enterprise scenarios |
 | [zk-edition-components.md](doc/zk-edition-components.md) | Components by ZK edition (CE/PE/EE) |
 | [window-design-rules.md](doc/spec/window-design-rules.md) | Window mode↔elevation mapping; `border` must not drive shadow |
