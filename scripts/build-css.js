@@ -2,7 +2,7 @@
 
 const fs = require('fs');
 const path = require('path');
-const CleanCSS = require('clean-css');
+const { transform: lightningTransform } = require('lightningcss');
 
 const webDir = path.join(__dirname, '..', 'src/main/resources/web');
 const themeDir = path.join(__dirname, '..', 'target/classes/web/marble');
@@ -14,34 +14,83 @@ const DSP_CORE_TAGLIB = '<%@ taglib uri="http://www.zkoss.org/dsp/web/core" pref
 // Dev builds (watch / build:css:dev) stay unminified so hot-swapped CSS is
 // readable in DevTools; the packaged build (build:css) is minified.
 const isDev = process.argv.includes('--dev');
-// level 1 = strip comments + whitespace + safe per-rule optimizations only
-// (no structural merging/reordering → no cascade risk). rebase:false leaves
-// data-URI url("data:image/svg+xml,...") values untouched.
-const cleanCss = new CleanCSS({ level: 1, rebase: false });
+// Minifier: Lightning CSS, not CleanCSS. CleanCSS 5.3.3 does not understand the modern
+// syntax this theme is built on and fails SILENTLY — it reports the damage in
+// `output.warnings`, never in `output.errors`, so an errors-only check ships broken CSS at
+// exit 0. Measured on this source tree (2026-09-03):
+//   - a bare `@layer a, b;` order statement EMPTIES the whole output;
+//   - `@scope (...) { … }` loses the rules inside it;
+//   - `::picker(select)` / `appearance: base-select` rules are dropped with
+//     "Invalid property name … Ignoring." (3 live warnings before this swap).
+// Lightning CSS parses all of them correctly, which removes the two workarounds this
+// function used to carry. Bootstrap 6 replaced clean-css for the same reason — see
+// ../zkThemeTemplate-iceblue/doc/css-preprocessor-industry-direction.md §11 D1.
+//
+// No `targets` is set on purpose: this theme is modern-browsers-only, so nothing should be
+// downlevelled. Adding targets would start rewriting output and is a separate decision.
+
+// DSP EL (`${c:encodeURL("~./marble/font/x.woff2")}`) is not valid CSS. CleanCSS merely
+// tolerated it; Lightning CSS's parser rejects the file outright ("Unexpected end of
+// input"). Mask each expression with an inert identifier before parsing and restore it
+// afterwards. Two sites today, both inside url() in tokens/_fonts.css.
+const DSP_EL_RE = /\$\{[^}]*\}/g;
+const DSP_EL_MASK_RE = /ZKDSPEL(\d+)ZZ/g;
+
+// A number carrying 7+ significant digits is silently ROUNDED TO 6 when it sits inside a
+// custom property. Real properties are parsed as typed values and keep full precision
+// (`z-index:9999999` survives); a custom property is an untyped token stream, and Lightning
+// CSS re-formats the numeric tokens in it through an f32 with 6 significant digits.
+// Measured on 1.33.0, no warning of any kind:
+//   --x:9999999   -> 10000000      --x:2147483647 -> 2147480000
+//   --x:1000001   -> 1000000       --x:0.123456789 -> .123457
+// This bit `--zk-index-error: 9999999` (the fatal-JS-error stacking value, deliberately
+// copied from ZK core's own theme CSS — see doc/zindex-audit.md), which shipped as
+// 10000000 and broke the zindex project's computed-style assertion.
+// Mask those tokens with an inert identifier — legal anywhere in a custom property's token
+// stream — and restore them verbatim afterwards, exactly as the DSP EL above is handled.
+const CUSTOM_PROP_DECL_RE = /(--[\w-]+\s*:)([^;}]*)/g;
+const NUM_TOKEN_RE = /\d*\.?\d+(?:[eE][+-]?\d+)?/g;
+const LONG_NUM_MASK_RE = /ZKNUM(\d+)ZZ/g;
+const MAX_SAFE_SIG_DIGITS = 6;
+
+function maskLongNumbers(css, store) {
+    return css.replace(CUSTOM_PROP_DECL_RE, (_, head, value) =>
+        head + value.replace(NUM_TOKEN_RE, (num) => {
+            const digits = num.replace(/\D/g, '').replace(/^0+/, '');
+            if (digits.length <= MAX_SAFE_SIG_DIGITS) return num;
+            return `ZKNUM${store.push(num) - 1}ZZ`;
+        }));
+}
 
 function minifyCss(css) {
     if (isDev || !css) return css;
-    // CleanCSS 5.3.3 has a bug: a bare layer-order statement `@layer a, b;`
-    // (the statement form, no block) is dropped TOGETHER with the single CSS
-    // rule that immediately follows it. In _reset.css that following rule is the
-    // universal `*{box-sizing:border-box}` reset, so the packaged build shipped
-    // without it → headers computed as content-box and min-height stacked on
-    // padding (window 88px, panel 80px, groupbox 73px). Extract the bare @layer
-    // statements before minifying, then re-prepend them so neither the statement
-    // nor its following rule is lost. (Block form `@layer x{…}` is unaffected.)
-    // See tasks/header-height-boxsizing-fix.md and doc/skill-gaps.md.
-    const layerStmts = css.match(/@layer\s+[\w-]+(?:\s*,\s*[\w-]+)*\s*;/g) || [];
-    const body = layerStmts.length ? css.replace(/@layer\s+[\w-]+(?:\s*,\s*[\w-]+)*\s*;/g, '') : css;
-    const output = cleanCss.minify(body);
-    if (output.errors.length) {
+    const els = [];
+    const nums = [];
+    const masked = maskLongNumbers(
+        css.replace(DSP_EL_RE, (m) => `ZKDSPEL${els.push(m) - 1}ZZ`),
+        nums,
+    );
+    let code;
+    try {
+        const res = lightningTransform({
+            filename: 'theme.css',
+            code: Buffer.from(masked),
+            minify: true,
+        });
+        // Surface warnings. CleanCSS's silent-warning behaviour is exactly what this swap
+        // was meant to end, so never let one pass unprinted.
+        for (const w of res.warnings || []) {
+            console.warn(`  ⚠ minify warning: ${w.message || w}`);
+        }
+        code = res.code.toString();
+    } catch (e) {
         // Never break the build / empty a file on a minifier hiccup.
-        console.warn(`  ⚠ minify failed, writing raw CSS: ${output.errors.join('; ')}`);
+        console.warn(`  ⚠ minify failed, writing raw CSS: ${e.message}`);
         return css;
     }
-    if (!layerStmts.length) return output.styles;
-    // A bare `@layer <names>;` statement may legally precede other rules; prepend
-    // it at the very top so neither it nor its immediately-following rule is lost.
-    return layerStmts.join('') + output.styles;
+    return code
+        .replace(LONG_NUM_MASK_RE, (_, i) => nums[Number(i)])
+        .replace(DSP_EL_MASK_RE, (_, i) => els[Number(i)]);
 }
 
 // Guard: component/base CSS self-declares its cascade layer IN SOURCE (readability +
@@ -517,7 +566,8 @@ function writeDsp(relativePath, content) {
 }
 
 // Write content verbatim (no minify pass). Used for CSS the build has already minified and
-// then wrapped in an at-rule CleanCSS can't parse (e.g. @scope) — see toEmbedReset.
+// then wrapped in an at-rule, or that carries a non-CSS DSP directive — see toEmbedReset
+// and the norm.css.dsp taglib prepend.
 function writeRaw(relativePath, content) {
     const fullPath = path.join(themeDir, relativePath);
     fs.mkdirSync(path.dirname(fullPath), { recursive: true });
@@ -581,14 +631,25 @@ const PAGE_FRAME_RE = /\/\* page-frame:start[\s\S]*?page-frame:end \*\//;
 // lifted above @scope so it still declares layer order first; the reset rules already carry
 // their own `@layer zk-base { … }` block in source, so we just scope it (no @layer added here).
 //
-// CRITICAL ordering: CleanCSS (level 1) does not understand @scope — it drops the first
-// nested rule and hoists the rest OUT of the block. So we minify first (CleanCSS handles the
-// @layer zk-base block fine), then wrap the result in @scope. CleanCSS never sees @scope.
+// Ordering: minify the inner body first, then wrap the result in @scope. Lightning CSS
+// parses @scope correctly (CleanCSS did not — it dropped the first nested rule and hoisted
+// the rest out of the block), so this order is no longer forced by the minifier. It is kept
+// because it keeps the emitted wrapper byte-identical to what shipped before the swap.
+//
+// The order statement is read from SOURCE and removed before minifying — never fished back
+// out of the minified output. A minifier may legally rewrite a bare `@layer` statement:
+// Lightning CSS emits the layer *blocks* in declared order and leaves the names that are
+// still empty behind as a trailing placeholder statement, so the first statement in its
+// output is `@layer zk-components,zk-utilities;`. Lifting THAT above @scope would leave
+// zk-base to be created last (inside @scope) and invert the whole cascade — the reset would
+// outrank every component and utility rule. Only the browserDefault=true path is served
+// this file, so the inversion is invisible in the default build.
 function toEmbedReset(src) {
     const noFrame = src.replace(PAGE_FRAME_RE, '');
-    const minified = minifyCss(noFrame); // bare order stmt guarded + the @layer zk-base{…} block minified
-    const layerStmt = (minified.match(LAYER_STMT_RE) || [''])[0];
-    const body = minified.replace(LAYER_STMT_RE, '').trim(); // = "@layer zk-base{…}" from source
+    const layerStmt = (noFrame.match(LAYER_STMT_RE) || [''])[0];
+    // Body = "@layer zk-base{…}" only; with no bare statement in the input the minifier has
+    // no layer names to reorder or re-emit.
+    const body = minifyCss(noFrame.replace(LAYER_STMT_RE, '')).trim();
     const open = isDev ? `${layerStmt}\n@scope (.z-page) {\n` : `${layerStmt}@scope (.z-page){`;
     return `${open}${body}${isDev ? '\n}\n' : '}'}`;
 }
@@ -629,7 +690,7 @@ function build() {
     // norm.css.dsp uses ${c:encodeURL(...)} in _fonts.css's @font-face (self-hosted
     // Inter). The DSP `c` taglib must be declared at the top of the file or the parser
     // throws "Function 'c:encodeURL' not found" and drops the rule — same directive ZK's
-    // own font-awesome.css.dsp carries. Prepend it AFTER minify so CleanCSS never sees
+    // own font-awesome.css.dsp carries. Prepend it AFTER minify so the minifier never sees
     // the non-CSS <%@ ... %> directive. Written raw for the same reason.
     writeRaw('zul/css/norm.css.dsp', DSP_CORE_TAGLIB + minifyCss(normCSS));
     console.log(`  zul/css/norm.css.dsp (${lucideIcons.length} Lucide icons)`);
