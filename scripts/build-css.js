@@ -64,6 +64,14 @@
  * the string OUT of the EL expression, and reports **0 errors and 0 warnings** at level 0.
  * So the warnings check alone does NOT cover this class; the guard below does.
  *
+ * A FOURTH was found the same way, and it is the reason position matters as much as syntax: an EL
+ * expression OUTSIDE url(). `width:${c:property('w')}` comes back as `width:{$c:property('w')};`
+ * — `$` and `{` swapped, a block where a value belongs — at **0 errors and 0 warnings**, while the
+ * identical `${...}` inside `url()` is untouched (12 sources rely on that). So the guard for it
+ * runs against the url()-blanked text; see blankUrlBodies(). Nothing in the tree writes EL outside
+ * url() today, which is why this was a latent hole rather than a bug: the DSP-tag rules above both
+ * require an angle bracket, and an EL expression has none.
+ *
  * P5 needed exactly that construct in `norm.css`, and took the guard's own advice rather than
  * weakening it: the SOURCE carries build-safe placeholders (a `.ZKBD` class, `ZKBD-OFF` marker
  * comments) that are ordinary CSS the minifier has no opinion about, and PLACEHOLDERS below
@@ -219,6 +227,27 @@ const HOSTILE_CONSTRUCTS = [
 		fix: 'substitute the tags for placeholders before minifying and restore them afterwards',
 	},
 	{
+		// `${...}` is legitimate INSIDE url() — 12 sources embed `${c:encodeThemeURL(...)}` there
+		// and level 0 + rebase:false leaves those bodies untouched. Everywhere ELSE CleanCSS reads
+		// `${` as the start of a block: `width:${c:property('w')}` comes back as
+		// `width:{$c:property('w')};` — `$` and `{` SWAPPED, a block where a value belongs — with
+		// 0 errors AND 0 warnings, so neither the errors nor the warnings check sees it. The two
+		// angle-bracket rules above cannot cover this: an EL expression has no tag to match.
+		//
+		// DELIBERATELY BROADER THAN THE CORRUPTION: measured, `content:"${...}"` — EL inside a
+		// quoted value — survives level 0 byte-identical, and this rule rejects it anyway. Both
+		// other positions ARE corrupted (value: `$`/`{` swapped; selector: the descendant space
+		// after `${...}` is dropped), and narrowing the rule to spare the one safe position would
+		// mean parsing string context to decide. The `<%` rule above is already stricter than the
+		// minifier for the same kind of reason. If a source ever needs EL in a quoted value, give
+		// it a placeholder rather than weakening this.
+		name: 'EL expression outside url()',
+		re: /\$\{/,
+		outsideUrl: true,
+		how: 'it swaps `${` for `{$` and appends a `;`, turning a declaration value into a block, with 0 errors AND 0 warnings',
+		fix: 'keep EL inside url(), or give it a placeholder in PLACEHOLDERS so the minifier only ever sees ordinary CSS',
+	},
+	{
 		name: 'taglib header already present in the source',
 		re: /<%/,
 		how: 'this script prepends the header itself, so the output would carry it twice',
@@ -234,9 +263,49 @@ const HOSTILE_CONSTRUCTS = [
 	},
 ];
 
+/**
+ * `url( ... )` -> `url()`, paren-balanced and quote-aware, so a check can ask what the CSS looks
+ * like OUTSIDE url() bodies. That distinction is not cosmetic: the same `${...}` is correct inside
+ * url() and silently corrupted anywhere else, and no plain regex can tell the two positions apart.
+ *
+ * An unterminated `url(` is left ALONE rather than blanked to end-of-file — that input is malformed
+ * either way, and swallowing the remainder would HIDE a hostile construct sitting after it.
+ */
+function blankUrlBodies(css) {
+	let out = '';
+	let i = 0;
+	const re = /\burl\(/gi;
+	let m;
+	while ((m = re.exec(css))) {
+		let j = m.index + m[0].length;
+		let depth = 1;
+		while (j < css.length && depth > 0) {
+			const c = css[j];
+			if (c === '"' || c === "'") {
+				j++;
+				while (j < css.length && css[j] !== c) {
+					if (css[j] === '\\') j++;
+					j++;
+				}
+			} else if (c === '(') depth++;
+			else if (c === ')') depth--;
+			j++;
+		}
+		if (depth > 0) break; // unterminated: leave the rest verbatim
+		out += `${css.slice(i, m.index)}url()`;
+		i = j;
+		re.lastIndex = j;
+	}
+	return out + css.slice(i);
+}
+
 function assertMinifierSafe(css, rel) {
+	// `outsideUrl` entries are tested against the url()-blanked text. Derived once, lazily, so a
+	// tree with no such entry pays nothing.
+	let withoutUrls = null;
 	for (const c of HOSTILE_CONSTRUCTS) {
-		if (c.re.test(css)) {
+		const subject = c.outsideUrl ? (withoutUrls ??= blankUrlBodies(css)) : css;
+		if (c.re.test(subject)) {
 			throw new Error(
 				`${rel}: contains ${c.name}, which CleanCSS 5.3.3 silently corrupts — ` +
 				`${c.how}. Do not relax this check — ${c.fix}.`);
@@ -520,5 +589,6 @@ if (require.main === module) process.exit(main(process.argv.slice(2)));
 module.exports = {
 	HEADER, NO_HEADER, TAGLIB_MARKER, PLACEHOLDERS, PLACEHOLDER_SOURCES,
 	minify, assertMinifierSafe, assertPlaceholdersAllowed, stripComments, tidyMediaPreludes,
+	blankUrlBodies,
 	resolveImports, restorePlaceholders,
 };
