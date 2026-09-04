@@ -90,9 +90,14 @@ LESS 3.13.1 在 **exit 0** 的情況下改壞這四種(P1 實測):
 | `oklch(from red min(l,.54) c h)` | `oklch(from red .54 c h)` |
 
 P1 已把版本釘到 **4.8.1**,四項全對。**但這只解決了實例,沒有解決類別** ——
-LESS 會重新解析 CSS 值,所以每個新語法都是潛在的靜默改寫點;而 LESS 已進**維護模式**
-(4.2 於 2025-11,無實質新功能)。ZK 11 想用的 `oklch()` 相對顏色、`color-mix()`、`@layer`
-正好就是最容易踩雷的區域。
+LESS 會重新解析 CSS 值,所以每個新語法都是潛在的靜默改寫點。ZK 11 想用的 `oklch()`
+相對顏色、`color-mix()`、`@layer` 正好就是最容易踩雷的區域。
+
+> **更正(C29,2026-09-03)。**此處原本還寫著「LESS 已進**維護模式**(4.2 於 2025-11,
+> 無實質新功能)」,**該敘述已證偽**:LESS 2026 年至 9/3 有 81 個 commit,並在 2026-08-13
+> 發布 `5.0.0-alpha.1`(編譯器重寫)。**論據改為「LESS 已無旗艦使用者」**(Bootstrap v4
+> 換走、Ant Design v5 移除),該句仍成立。**「會重新解析 CSS 值」這個真正的技術理由不受影響**,
+> 本節結論不變。見 [css-preprocessor-industry-direction.md §3](css-preprocessor-industry-direction.md#3-對-2026-07-舊版的更正)。
 
 ⚠️ **這條有直接的反面意見,見 B5** —— minifier 有同一類問題,所以這是「風險搬家」而非「風險消失」。
 
@@ -149,7 +154,7 @@ Ant Design 花了 v4→v6 三個大版本走到這裡,推動力和我們一模�
 
 **最誠實的反對是 B1 + B2 合起來:我們不會得到「零 build step」。**
 真實結果是「LESS + zkless-engine + 第二語言」→「一支 in-repo JS 腳本 + 純 CSS」。
-差別是真的(少一種語言、少一個維護模式的外部依賴、少一層會重新解析 CSS 值的前端),
+差別是真的(少一種語言、少一個外部依賴、少一層會重新解析 CSS 值的前端),
 但**如果對外賣點講成「移除建置工具」,那個賣點會兌現不了** —— DSP 層(222 個 taglib
 directive、107 處選擇器位置的 `<c:if>`、44 處 EL)與 Font Awesome 的 4545 條生成內容都還在。
 
@@ -1707,6 +1712,7 @@ P3 **必須**加 `{step:0|1|2|3|4}`;**`P6` 已收工,連同它的任務指令一
 | C27 | 2026-08-17 | **§P8「本階 `.less` 歸零之後,重定 `EXPECTED` + 重跑產生器 + 更新路徑是一次到位的」**(S14 + S37 的處置) | **不重跑,兩張表凍結;兩支 `check:*` 依「儀器過期」退場而不是重新校準。** 缺的 20 列改用**手工附錄**補在 `doc/migration/less-to-css.md` | **實測推翻「一次到位」:重跑會讓客戶拿到的表變差。** `gen-var-table.js --check` 現在的量測是資料 URI caveat **3 → 0**、編譯期函式 caveat(CAVEAT-3)**1 → 0**、list-fn **4 → 0**、`@import`-path **2 → 1**、死名 **42 → 863**;`gen-mixin-table.js` 的呼叫站點 **245 → 0**。原因是**這些 caveat 的證據是「消費站點」,而消費站點所在的檔案早就變成 `.css` 了** —— 其中 `extract()` 那一類在編譯期就被求值掉,**恢復不了**。**判準是「遷移表描述的是客戶要離開的那棵樹」**:那棵樹在本 repo 不存在了,拿現在的樹重跑是量錯對象。**凍結的代價量過,而且恰好可推導**:committed 表 **846** 列 = zul 844 + zkmax 2;現在樹上 **864** 宣告;**表裡有樹上沒有 2 條**(`@iphone`/`@android`,D4 刪掉 `zkmax/less/`,表裡本來就標為死值);**樹上有表裡沒有 20 條**,全部是 ZK 10.4 補齊(S26)帶進來的 `@severity*`、**全部是乾淨 1:1**。那 20 列由 `_zkvariables.less` + `tokens/_default.css` **機械抽出**(不是手打)寫進遷移指南,並在指南裡說明凍結的理由。**兩支產生器保留**(fork 的 `.less` 樹路徑一樣,`--fork` 會把漂移降級為報告),但來源不存在時改成**明確說明**而不是丟 ENOENT / stack;`package.json` 的 `check:var-table` / `check:mixin-table` 移除 —— **一支永遠紅的檢查比沒有檢查更糟**,它會讓真正的紅燈失去意義(S48 已經記過同一條道理)。**順帶結掉 `gen-mixin-table.js` 逼人做的那個裁示**(24/32 還是 30/38):不必做了,因為它問的是「要不要為了讓斷言過而改文件」,而斷言本身已經退場;計畫書 L2.0 的「30 名稱 / 38 定義列」維持不變 |
 
 | C28 | 2026-08-18 | **C24 + C25:density 只能以設定值切換,執行期切換「不在本版規格內」** —— 桌面層與平板層都只認 library-property,且該 property 隱含要在啟動前設好 | **目標規格改為:`org.zkoss.zul.theme.density` 可以在執行期改,reload 之後生效,桌面與平板兩層皆然。** 旋鈕仍然只有一個 —— **C25 的「唯一方式」不變**,沒有 `data-density`、沒有 `IceblueDensity.apply()`,S36 的活路仍然封著;改變的只是那個旋鈕不必在啟動前轉好 | **user 裁示(2026-08-18)。** 觸發點是 user 指出「不把 density 放進快取鍵,`Library.setProperty()` + `sendRedirect()` 根本切不過去」—— 追測證實,並且發現**射程比執行期切換更大**:兩份以不同密度開機的 app 送出**內容不同**的樣式表卻共用**同一個** cache key(stamp 皆 `df097106`,不含 library property)⇒ 連 C25 現行的「改 `zk.xml` + 重啟」對回訪使用者都不保證生效。**這是現行規格的缺陷,不是新功能的前置條件。** 交付:`Iceblue11ThemeProvider`(委派型,**不是**繼承 —— 見下)把 density 併進兩張表的 URL;桌面走 `Aide.injectURI`(`_zkiju-iceblue11-compact`),**平板走 query string**(`tablet.css.dsp?density=compact`),因為 `DspExtendlet` 的 loader 沒有 `_zkiju-` 剝除、注入過的路徑會 404,且該 href 到達時已被解析到主題、`injectURI` 只改寫 `~./` 開頭的 URI。**TDD**:兩支閘門先各加一條跨狀態 cache-key 斷言並確認 **RED**(桌面 537634↔526988 同鍵、平板 26207↔24308 同鍵),再實作到 GREEN,兩支都跑了負向控制(`if (true) return …` ⇒ exit 1 且指名 compact 共用鍵)。**瀏覽器級驗證**:出貨快取設定下暖機兩次(讓裸 URL 進快取)→ 翻 property → 正常導覽與 reload **兩者都拿到新密度**(修復前兩者都 stale);平板側以 iPad UA 實測 `disabled:false`、26207 → 24308、`cached == fresh`。**一個差點出貨的靜默破壞**:第一版寫成 `extends org.zkoss.zul.theme.StandardThemeProvider`,而 ZK 的 provider 是 edition 鏈(`zkmax` → `zkex` → `zul`,`javap` 可證),只有 zkmax 那節改寫 `~./js/zkex/` 與 `~./js/zkmax/`;繼承最底層再 `setCustomThemeProvider(true)` 會讓 `ConfigParser.java:570` 跳過 zkmax 的宣告 ⇒ 主題的 zkex/zkmax 元件 CSS 換成 jar 裡未套主題的版本,bundle 差 **10646 B**、`.z-colorbox` 長回 `-moz-`/`-o-`。**`check:bytes` 是綠的**(它比磁碟輸出,不是服務出來的 bundle),抓到它的是 `check:density-property` 印的 `bytes:`。改為**委派 + 延遲解析**(`WebAppInit` 跑在各 jar 的 `zk.xml` 之前,註冊當下讀不到 zkmax 的 provider)。**預設密度的 URL 與位元數皆逐字元未變**(526988 / 541383 / 26207 / 24308),所以既有 app 的快取不會被無故失效。對外交付物:[migration/density.md](migration/density.md) 的〈Switching density at runtime〉整節改寫(原〈Density does not switch at runtime〉),並明文寫出它推翻了先前的說法。完整推導 `doc/density-runtime-switch-verification.md` |
+| C29 | 2026-09-03 | **「LESS 已進入維護模式」** 被當成離開 LESS 的論據之一(本檔兩處:相容性節與 B1+B2 節) | **該敘述證偽,論據撤回。**實查:LESS 2022–2024 每年僅 9–11 個 commit,但 **2026 年至 9/3 已 81 個**,且 2026-08-13 發布 `5.0.0-alpha.1`(編譯器重寫)、2026-09-02 發 4.9.1 + 5.0.0-alpha.2。改用仍然成立的「**LESS 已無旗艦使用者**」(Bootstrap v4 換走、Ant Design v5 移除) | **不影響任何已完成的階段。**本案的決定性理由是內部實測(變數層 838/844 直通、兩套衝突的 theming API、LESS 3 靜默改壞),從來不是「LESS 已死」。同一輪還更正了 Bootstrap 6 與原生 mixin 時程兩項外部敘述 —— 全部記在 [css-preprocessor-industry-direction.md §3](css-preprocessor-industry-direction.md#3-對-2026-07-舊版的更正) |
 
 #### 未修的已知問題
 
