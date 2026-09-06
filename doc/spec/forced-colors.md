@@ -74,6 +74,7 @@ residual set of cases remained where information was genuinely lost but the repa
 | 4 | Calendar selected day lost when embedded | portallayout | **No change needed** — the standalone selected-day guard uses an *unscoped* selector and portallayout embeds an identical `<calendar/>` DOM, so it was already covered (verified) | 2a |
 | 5 | Checked toolbarbutton looks unchecked | toolbar | **`border: 2px solid Highlight`** — border-presence is the non-colour checked affordance (unchecked buttons have none) | 3a |
 | 6 | Slider thumbs read inconsistently (rings/dots/carets) | slider, rangeslider, multislider | **Solid `CanvasText` disc** + `::before` halo transparent — all three variants render identically | 4a |
+| 8 | Keyboard focus ring on a **selected** item disappears (2026-09-04) | navbar (fixed); at risk: tree, paging, accordion tabbox, searchbox, organigram | **`outline-color: HighlightText`** on the selected+focused item — the selection fill and `--zk-focus-ring` both remap to `Highlight`, so the ring painted Highlight-on-Highlight (measured RGB delta 78; 687 after). Same pairing the label text already uses. Only navbar measured + fixed; the other selected-tint families in 2a are unswept | 2a focus |
 | 7 | Decorative filled blocks lose their fill | dnd demo boxes, rowlayout column bars | **By design, no change** — preview/demo constructs (not theme chrome) built from `z-bg-*` utilities, each with a surviving text label; stripping a decorative `background-color` is the spec-intended behaviour. A border would be over-broad (every utility use) or alter normal-mode appearance | — |
 
 The **"colour vs high-contrast" tension** in case 3 is resolved by the spec itself: colour
@@ -178,6 +179,17 @@ covered), so a component already listed for another bucket (e.g. combobox, dateb
 tree, paging) will **not** be re-flagged for a masked icon — those were covered by
 inspection, not by the linter. Only fully-new files (rating, colorbox, messagebox)
 were flagged and added.
+
+**Selected + focused is its own bucket (added 2026-09-04).** The audit's four buckets each look
+at one pattern in isolation, so a guard that is individually correct — a `Highlight` selection
+fill (2a) and a `Highlight` focus ring — can still cancel out when both apply to the same
+element. Block **2a focus** fixes that for navbar. The check is not a pattern the linter can
+see: it needs the *combination* driven in a browser (select the item, then focus it by keyboard)
+and the ring's colour compared against the fill's, by RGB triplet — the two differed only in
+alpha (0.8 vs 0.78), so a string comparison passes on an invisible ring. Guarded by
+`forced-colors.spec.ts` › "focus ring on a SELECTED navbar item stays visible". The other five
+selected-tint families in block 2a have **not** been measured for this; see `doc/skill-gaps.md`
+2026-09-04.
 
 ## Verify
 

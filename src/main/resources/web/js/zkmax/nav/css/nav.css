@@ -91,6 +91,22 @@
     opacity: var(--zk-state-pressed-opacity);
 }
 
+/* Keyboard focus — INSET ring (negative offset), the same mechanism as
+ * `.z-treerow`. A nav link is full-bleed: it is exactly as wide as the list that
+ * holds it, so an outset ring has nowhere to go. In a submenu it is cut by the
+ * cave `.z-nav > ul { overflow: hidden }` below (measured: ring overshot the
+ * cave's clip rect by 2px on every side); at top level it would instead bleed
+ * past the navbar surface, and in `.z-nav-popup` past the popup's clip. Drawing
+ * the ring inside the item's own rounded box avoids all three. Both content
+ * links need it: za11y gives the navbar a roving tabindex, so arrow keys land
+ * :focus-visible on group headers (`.z-nav-content`) as well as leaf items.
+ * See doc/contracts/navbar.md c8-c10 and the skill's reference/focus-ring-clipping.md. */
+.z-nav-content:focus-visible,
+.z-navitem-content:focus-visible {
+    outline: var(--zk-focus-ring);
+    outline-offset: -2px;
+}
+
 /* ─── Icons ──────────────────────────────────────────────────────────────── */
 .z-nav-content i,
 .z-navitem-content i,

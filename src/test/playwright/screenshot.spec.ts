@@ -899,6 +899,100 @@ test.describe('navbar', () => {
       `selected item must have no ::after accent bar: content=${m.afterContent} width=${m.afterWidth}px`,
     ).toBe(false);
   });
+
+  // Keyboard focus on a nav/navitem link must be the THEME ring drawn INSIDE the
+  // item's box. Two failure modes this guards, both observed 2026-09-04:
+  //   1. No `:focus-visible` rule at all → the browser's own ring (Chrome:
+  //      `outline-style: auto`, 1px, rgb(0,95,204), offset +1px) stands in for it,
+  //      so the navbar's focus affordance is off-palette and off-spec.
+  //   2. An OUTSET ring (positive offset) on a full-bleed item is clipped: the
+  //      submenu cave `.z-nav > ul` is exactly as wide as the item it holds and
+  //      carries `overflow: hidden` — and jQuery's slideUp/slideDown (Nav.ts)
+  //      re-applies `overflow: hidden` inline while the group animates, so no
+  //      theme CSS can opt out of the clip. Hence `outline-offset <= 0`.
+  // Repro is the designer's: expand "Get Started" → click "Step One" → press Space
+  // (the mouse click focuses the <a>; the keypress promotes it to :focus-visible).
+  // See doc/skill-gaps.md 2026-09-04 and doc/contracts/navbar.md c8–c10.
+  test('submenu item keyboard focus ring is the theme inset ring and is not clipped', async ({ page }) => {
+    const navbar = page.locator('.z-navbar-vertical').first();
+    await navbar
+      .locator('.z-nav > .z-nav-content')
+      .filter({ hasText: 'Get Started' })
+      .first()
+      .click();
+
+    const stepOne = navbar.locator('.z-navitem-content').filter({ hasText: 'Step One' }).first();
+    await stepOne.waitFor({ state: 'visible' });
+    await stepOne.click();
+    await page.keyboard.press(' ');
+
+    const m = await page.evaluate(() => {
+      const el = document.activeElement as HTMLElement | null;
+      if (!el) return null;
+      const cs = getComputedStyle(el);
+      const width = parseFloat(cs.outlineWidth) || 0;
+      const offset = parseFloat(cs.outlineOffset) || 0;
+      const r = el.getBoundingClientRect();
+      // Outer edge of the painted ring. A negative offset pulls it inward.
+      const ring = {
+        top: r.top - offset - width,
+        left: r.left - offset - width,
+        right: r.right + offset + width,
+        bottom: r.bottom + offset + width,
+      };
+      // Nearest ancestor whose overflow actually cuts that ring.
+      let clipper: { cls: string; overflow: string; short: number } | null = null;
+      for (let p = el.parentElement; p && p !== document.documentElement; p = p.parentElement) {
+        const pcs = getComputedStyle(p);
+        if (pcs.overflowX === 'visible' && pcs.overflowY === 'visible') continue;
+        const pr = p.getBoundingClientRect();
+        const short = Math.max(
+          pr.left - ring.left,
+          ring.right - pr.right,
+          pr.top - ring.top,
+          ring.bottom - pr.bottom,
+        );
+        if (short > 0.5) {
+          // ZK's submenu cave <ul> carries no class, so name it by tag +
+          // owning .z-nav to keep the failure message actionable.
+          const own = typeof p.className === 'string' ? p.className : '';
+          const host = p.parentElement && typeof p.parentElement.className === 'string'
+            ? p.parentElement.className
+            : '';
+          clipper = {
+            cls: own ? `${p.tagName}.${own}` : `${p.tagName} (unclassed, inside .${host})`,
+            overflow: `${pcs.overflowX}/${pcs.overflowY}`,
+            short: Math.round(short * 100) / 100,
+          };
+          break;
+        }
+      }
+      return {
+        cls: el.className,
+        focusVisible: el.matches(':focus-visible'),
+        outlineStyle: cs.outlineStyle,
+        width,
+        offset,
+        color: cs.outlineColor,
+        clipper,
+      };
+    });
+
+    expect(m, 'a navitem link must hold focus after the click').not.toBeNull();
+    expect(m!.cls, 'focus must land on the navitem link').toContain('z-navitem-content');
+    expect(m!.focusVisible, 'Space after the click must promote focus to :focus-visible').toBe(true);
+    // The theme ring, not the browser's `outline-style: auto` default.
+    expect.soft(m!.outlineStyle, `expected the theme ring, got outline-style: ${m!.outlineStyle}`).toBe('solid');
+    expect.soft(m!.width, 'ring is 2px (--zk-focus-ring)').toBe(2);
+    expect.soft(m!.color, 'ring is --zk-color-primary').toBe('rgb(55, 111, 208)');
+    // Inset, so the cave's overflow:hidden can never cut it.
+    expect.soft(m!.offset, `ring must be inset; outline-offset was ${m!.offset}px`).toBeLessThanOrEqual(0);
+    expect(
+      m!.clipper,
+      `focus ring is clipped by ${m!.clipper?.cls} (overflow ${m!.clipper?.overflow}) — ` +
+        `ring overshoots its clip rect by ${m!.clipper?.short}px`,
+    ).toBeNull();
+  });
 });
 
 // -------------------------------------------------------

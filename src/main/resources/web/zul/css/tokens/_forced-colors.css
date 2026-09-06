@@ -186,6 +186,16 @@
         color: HighlightText;
     }
 
+    /* (2a focus) A selected item is filled with Highlight, and --zk-focus-ring is
+       Highlight too → the keyboard focus ring on the SELECTED item paints
+       Highlight-on-Highlight and disappears. Re-point it to HighlightText, the
+       same pairing the label already uses. Only navbar is covered here; the other
+       selected-tint families are queued in doc/skill-gaps.md 2026-09-04. */
+    .z-navitem-selected > .z-navitem-content:focus-visible,
+    .z-navitem.z-navitem-selected > .z-navitem-content:focus-visible {
+        outline-color: HighlightText;
+    }
+
     /* (2a backplate) forced-colors paints a Canvas backplate behind inline text; on a
        Highlight fill the near-white label reads white-on-white. Opt the label text out
        so HighlightText paints straight onto the fill. */

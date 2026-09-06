@@ -222,6 +222,38 @@ test.describe('forced-colors (Windows High-Contrast) a11y guards', () => {
     await expect(arrow).toHaveCSS('forced-color-adjust', 'none');
   });
 
+  test('focus ring on a SELECTED navbar item stays visible (Highlight-on-Highlight)', async ({ page }) => {
+    await page.goto('/navbar.zul', { waitUntil: 'domcontentloaded' });
+    await page.waitForSelector('.z-navbar-vertical', { timeout: 10000 });
+    const navbar = page.locator('.z-navbar-vertical').first();
+    await navbar.locator('.z-nav > .z-nav-content').filter({ hasText: 'Get Started' }).first().click();
+    const stepOne = navbar.locator('.z-navitem-content').filter({ hasText: 'Step One' }).first();
+    await stepOne.waitFor({ state: 'visible', timeout: 5000 });
+    await stepOne.click();       // selects it → Highlight fill
+    await page.keyboard.press(' '); // promotes focus to :focus-visible
+
+    // In WHCM a selected item is filled with Highlight AND --zk-focus-ring is
+    // Highlight, so without the (2a focus) guard the ring paints
+    // Highlight-on-Highlight and vanishes. String inequality is not enough — the
+    // two only differed in alpha (0.8 vs 0.78) — so compare the RGB triplets.
+    const m = await page.evaluate(() => {
+      const el = document.activeElement as HTMLElement;
+      const cs = getComputedStyle(el);
+      const rgb = (s: string) => (s.match(/[\d.]+/g) ?? []).slice(0, 3).map(Number);
+      return { cls: el.className, style: cs.outlineStyle, width: cs.outlineWidth,
+               ring: rgb(cs.outlineColor), fill: rgb(cs.backgroundColor) };
+    });
+    expect(m.cls, 'focus must be on the selected navitem link').toContain('z-navitem-content');
+    expect(m.style, 'the ring must survive as a real outline').toBe('solid');
+    expect(m.width).toBe('2px');
+    const delta = m.ring.reduce((a, c, i) => a + Math.abs(c - (m.fill[i] ?? 0)), 0);
+    expect(
+      delta,
+      `ring ${JSON.stringify(m.ring)} vs selection fill ${JSON.stringify(m.fill)} — ` +
+        'the focus ring is invisible on the selected item',
+    ).toBeGreaterThan(200);   // measured: 78 without the guard, 687 with it
+  });
+
   test('datebox timezone selector keeps its top gap from the calendar (spacing is a margin, mode-independent)', async ({ page }) => {
     await page.goto('/datebox.zul', { waitUntil: 'domcontentloaded' });
     await page.waitForSelector('.z-datebox-button', { timeout: 10000 });

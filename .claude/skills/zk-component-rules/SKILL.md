@@ -58,6 +58,7 @@ Both `zk-spec-author` (when authoring) and `zk-theme-evaluator` (when verifying)
 | `reference/buttonVisible-attribute.md` | Which input components support `buttonVisible="false"` and where ZK puts the resulting class |
 | `reference/focus-vs-focus-within.md` | Composite controls require `:focus-within`; CDP measurement caveat |
 | `reference/focus-affordance-no-layout-shift.md` | A focus ring must not resize the field. Composite inputs (timepicker/datebox/timebox/bandbox/spinner) must use an inset box-shadow ring, NOT `border-width:1px→2px` (which grows the box via min-height-pinned children); single inputs (textbox) may use 2px border + padding compensation; combobox is the borderless-root exception |
+| `reference/focus-ring-clipping.md` | `outline` paints OUTSIDE the border box, so a full-bleed focusable (nav link, `<tr>` row, popup item) whose ancestor clips overflow gets its ring cut — use a negative `outline-offset`, or an inset box-shadow on a child that has a paint area. Includes the at-risk DOM shapes and how to assert ring geometry (a colour-only assertion passes on a ring nobody can see; a MISSING `:focus-visible` rule also looks like a wrong one, since the UA draws its own outward ring)
 | `reference/edition-availability.md` | Which components require PE / EE licensing and where they live (zkex.jar / zkmax.jar) |
 | `reference/css-file-bundling.md` | Shared `.css.dsp` outputs (e.g. `combo.css.dsp` covers 5 components) and delivery quirks (splitter merged into box, files missing from lang-addon.xml) |
 | `reference/zul-template-patterns.md` | `<apply templateURI>` shadow scoping, content-partial pattern, template name scoping |
@@ -95,6 +96,7 @@ Load only the file for the component you are working on.
 | `components/data-components.md` | grid + listbox + tree (z-*-odd preferred over nth-child, shared row-based structure) |
 | `components/groupbox.md` | groupbox (content area is `.z-groupbox-content`) |
 | `components/menubar.md` | menubar (`<ul><li>` wrapper structure) |
+| `components/navbar.md` | navbar + nav + navitem + navseparator (EE) — unclassed submenu cave (`.z-nav > ul` only), content is the `<a role=menuitem>` not the `<li>`, TWO content classes (`.z-nav-content` + `.z-navitem-content`) that always need the same rules, `[disabled]` attribute with no `-disabled` class, `za11y` roving tabindex (one Tab stop, arrow keys inside) so Tab-walking never reaches a group header, cave visibility driven by jQuery INLINE display |
 | `components/organigram.md` | organigram (EE) — recursive `.z-orgchildren > .z-orgitem > .z-orgnode`, pseudo-element connector bus, `-close` not `-open`, `-non-selectable`, novel T2 |
 | `components/portallayout.md` | portallayout + portalchildren (EE) — transparent multi-column drag-drop shell, `.z-portalchildren-frame` titled column, counter badge, ghost/placeholder drag classes |
 | `components/panel.md` | panel (content wrapper is `.z-panelchildren`) |
