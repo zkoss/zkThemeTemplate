@@ -65,3 +65,40 @@ present as the same bug. `outline-style: solid` distinguishes a theme ring from 
 
 Keyboard focus also has to be *reachable* to be observed. A mouse click gives `:focus` but not
 `:focus-visible`; press a key afterwards (or arrive by keyboard) before measuring.
+
+## Scanning for it across a whole theme
+
+Reachability is what stops the per-component check from generalising: scripted Tab-walking does not
+reach every widget's focus (a navbar under `za11y` takes one Tab for the whole component and moves
+with arrow keys), and a click-then-keypress has to be written per widget.
+
+The way around it is to stop driving input and **force the pseudo-class** through the DevTools
+protocol, which every Chromium automation tool can reach:
+
+```js
+const cdp = await context.newCDPSession(page);
+await cdp.send('DOM.enable');
+await cdp.send('CSS.enable');
+const { root } = await cdp.send('DOM.getDocument', { depth: -1 });
+const { nodeId } = await cdp.send('DOM.querySelector', { nodeId: root.nodeId, selector });
+await cdp.send('CSS.forcePseudoState', { nodeId, forcedPseudoClasses: ['focus-visible'] });
+// …every computed value read now is the real focused one…
+await cdp.send('CSS.forcePseudoState', { nodeId, forcedPseudoClasses: [] });
+```
+
+Pair it with the population the theme itself defines: walk `document.styleSheets`, collect every
+selector carrying a `:focus-visible` rule that draws an outline, strip the pseudo-class, and that
+selector list *is* the set of elements to check. Two traps in that walk:
+
+- A plain `CSSStyleRule` also exposes `.cssRules` in current Chrome (CSS Nesting), so "has
+  `cssRules`" does **not** mean "is a grouping at-rule". Test the rule for a `selectorText` and
+  recurse independently, or a theme wrapped in `@layer` yields zero rules.
+- `@import`ed sheets hang off `.styleSheet`, not `.cssRules`.
+
+When judging whether a ring is *visible* rather than merely present — a focus colour and a selection
+fill can collapse to the same system colour under `forced-colors` — compare the ring against what is
+painted **where the ring lands**, not against the element's own background: an inset ring covers the
+element's fill (or a child's, since a selected table row fills its cells and not the `<tr>`), while
+an outset ring covers whatever is outside the element. Hit-testing the middle of the ring band with
+`document.elementFromPoint` answers this without having to reason about it; the outline itself is
+not hit-tested, so the call returns exactly what the ring is drawn on top of.

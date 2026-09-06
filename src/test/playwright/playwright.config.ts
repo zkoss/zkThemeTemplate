@@ -83,6 +83,15 @@ export default defineConfig({
       use: { ...devices['Desktop Chrome'] },
     },
     {
+      // Keyboard focus rings: scans every preview page, forces :focus-visible
+      // through CDP and checks the ring's GEOMETRY against its clipping
+      // ancestors. Breadth guard for the navbar clip (doc/skill-gaps.md
+      // 2026-09-04, decision D13). See focus-ring-scan.spec.ts.
+      name: 'focus-scan',
+      testMatch: /focus-ring-scan\.spec\.ts/,
+      use: { ...devices['Desktop Chrome'] },
+    },
+    {
       // Windows High-Contrast a11y regression for tokens/_forced-colors.css.
       // NOTE: the emulation is applied IN the spec via page.emulateMedia(
       // { forcedColors:'active' }) — the context-option form below does not take
