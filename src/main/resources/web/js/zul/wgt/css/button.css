@@ -146,8 +146,10 @@
    4.81:1 / 5.46:1 / 4.94:1. The `.z-bg-*` utilities already route this way.
    primary / success / error keep the raw seed — they already pass, and switching
    them would shift a shipped color with nothing asking for it (error would move
-   #d32f2f → #c92226). Same treatment is still owed to the outlined/text WARNING
-   variants below, which put #ed6c02 on white at 3.11:1. */
+   #d32f2f → #c92226). The outlined/text WARNING variants below are fine now: the
+   warning SEED was darkened to #bd3f00 (5.42:1 on white) rather than given a
+   separate tone, so --zk-color-warning-fill resolves to the same color and the
+   solid variant is unchanged. */
 .z-button-secondary.z-button { background-color: var(--zk-color-secondary-fill); color: #fff; }
 .z-button-success.z-button   { background-color: var(--zk-color-success, #2e7d32); color: #fff; }
 .z-button-warning.z-button   { background-color: var(--zk-color-warning-fill); color: #fff; }
@@ -190,13 +192,13 @@
 
 .z-button-outlined-secondary.z-button { background-color: transparent; color: var(--zk-color-secondary); border: 1px solid var(--zk-color-secondary); }
 .z-button-outlined-success.z-button   { background-color: transparent; color: var(--zk-color-success, #2e7d32); border: 1px solid var(--zk-color-success, #2e7d32); }
-.z-button-outlined-warning.z-button   { background-color: transparent; color: var(--zk-color-warning, #ed6c02); border: 1px solid var(--zk-color-warning, #ed6c02); }
+.z-button-outlined-warning.z-button   { background-color: transparent; color: var(--zk-color-warning); border: 1px solid var(--zk-color-warning); }
 .z-button-outlined-error.z-button     { background-color: transparent; color: var(--zk-color-error, #d32f2f); border: 1px solid var(--zk-color-error, #d32f2f); }
 .z-button-outlined-info.z-button      { background-color: transparent; color: var(--zk-color-status-info); border: 1px solid var(--zk-color-status-info); }
 
 .z-button-outlined-secondary.z-button::before { background-color: var(--zk-color-secondary); }
 .z-button-outlined-success.z-button::before   { background-color: var(--zk-color-success, #2e7d32); }
-.z-button-outlined-warning.z-button::before   { background-color: var(--zk-color-warning, #ed6c02); }
+.z-button-outlined-warning.z-button::before   { background-color: var(--zk-color-warning); }
 .z-button-outlined-error.z-button::before     { background-color: var(--zk-color-error, #d32f2f); }
 .z-button-outlined-info.z-button::before      { background-color: var(--zk-color-status-info); }
 
@@ -223,13 +225,13 @@
 
 .z-button-text-secondary.z-button { background-color: transparent; color: var(--zk-color-secondary); border: none; }
 .z-button-text-success.z-button   { background-color: transparent; color: var(--zk-color-success, #2e7d32); border: none; }
-.z-button-text-warning.z-button   { background-color: transparent; color: var(--zk-color-warning, #ed6c02); border: none; }
+.z-button-text-warning.z-button   { background-color: transparent; color: var(--zk-color-warning); border: none; }
 .z-button-text-error.z-button     { background-color: transparent; color: var(--zk-color-error, #d32f2f); border: none; }
 .z-button-text-info.z-button      { background-color: transparent; color: var(--zk-color-status-info); border: none; }
 
 .z-button-text-secondary.z-button::before { background-color: var(--zk-color-secondary); }
 .z-button-text-success.z-button::before   { background-color: var(--zk-color-success, #2e7d32); }
-.z-button-text-warning.z-button::before   { background-color: var(--zk-color-warning, #ed6c02); }
+.z-button-text-warning.z-button::before   { background-color: var(--zk-color-warning); }
 .z-button-text-error.z-button::before     { background-color: var(--zk-color-error, #d32f2f); }
 .z-button-text-info.z-button::before      { background-color: var(--zk-color-status-info); }
 

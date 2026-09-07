@@ -82,11 +82,21 @@
     --zk-color-on-error-container: oklch(from var(--zk-color-error) 0.375 calc(c * 0.77) h); /* ≈ #7f0000 */
 
     /* Warning (non-standard MD3, needed for badges) — seed */
-    /* main — filled controls; status-warning is the lighter accent */
-    --zk-color-warning: #ed6c02;
+    /* main — filled controls AND text/outline; status-warning is the lighter accent.
+       #bd3f00, not the previous #ed6c02: the seed is used as TEXT (.z-text-warning,
+       the outlined/text button variants, .z-messagebox-exclamation, the warning
+       chip's label) and #ed6c02 measured 3.11:1 on white — 2.74:1 on the warning
+       chip's own tint — against a 4.5:1 floor. #bd3f00 is exactly the value the
+       `-fill` cap already produced, so the solid Warning surfaces do not move
+       (#bd3f00 -> #bc3e00, imperceptible) and warning now has ONE colour instead of
+       a bright text tone and a dark fill tone. Every path clears its floor: text on
+       white 5.42:1, chip label on its tint 4.78:1, container pair 6.85:1. The seed
+       darkening does NOT drag the containers down — both are tone-pinned (L 0.92 /
+       L 0.42 absolute), so only their chroma tracks the seed. */
+    --zk-color-warning: #bd3f00;
     --zk-color-on-warning: #ffffff;
-    --zk-color-warning-container: oklch(from var(--zk-color-warning) 0.92 calc(c * 0.38) h);    /* ≈ #ffe0b2 (seed-hue: renders a touch more orange) */
-    --zk-color-on-warning-container: oklch(from var(--zk-color-warning) 0.42 calc(c * 0.59) h); /* ≈ #7a3900 */
+    --zk-color-warning-container: oklch(from var(--zk-color-warning) 0.92 calc(c * 0.38) h);    /* ≈ #ffd7c5 */
+    --zk-color-on-warning-container: oklch(from var(--zk-color-warning) 0.42 calc(c * 0.59) h); /* ≈ #7a361e */
 
     /* Success (seed) — completes the semantic role set (primary/secondary/error/
        warning/success). main #2e7d32 = filled/text controls; status-success

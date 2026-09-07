@@ -40,7 +40,7 @@ Use this as the rulebook when styling a component the MUI reference does not cov
 | Brand container | `≈#d6e4ff` | `--zk-color-primary-container` (derived from the seed via `oklch(from …)`) |
 | Secondary | `≈#586f95` | `--zk-color-secondary` (derived from the primary seed — primary's hue at 41% chroma, `L 0.54`) |
 | Error | `#d32f2f` | `--zk-color-error` (full role quartet) |
-| Warning | `#ed6c02` | `--zk-color-warning` (full role quartet) |
+| Warning | `#bd3f00` | `--zk-color-warning` (full role quartet — one tone for text *and* fill; `#ed6c02` failed 4.5:1 as text) |
 | Success | `#2e7d32` | `--zk-color-success` (full role quartet — container ≈ `#c8e6c9`) |
 | Success (badge accent) | `#4caf50` | `--zk-color-status-success` |
 | Info | `#007fab` | `--zk-color-status-info` |

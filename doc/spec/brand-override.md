@@ -143,8 +143,8 @@ quite right for your brand, **pin it directly** — no special variable is requi
 | `--zk-color-on-secondary-container` | secondary | `L 0.235`, `c × 0.48` | `#00251a` (now ≈ `#151e2d`) |
 | `--zk-color-error-container` | error | `L 0.89`, `c × 0.28` | `#ffcdd2` |
 | `--zk-color-on-error-container` | error | `L 0.375`, `c × 0.77` | `#7f0000` |
-| `--zk-color-warning-container` | warning | `L 0.92`, `c × 0.38` | `#ffe0b2` |
-| `--zk-color-on-warning-container` | warning | `L 0.42`, `c × 0.59` | `#7a3900` |
+| `--zk-color-warning-container` | warning | `L 0.92`, `c × 0.38` | `#ffe0b2` (now ≈ `#ffd7c5`) |
+| `--zk-color-on-warning-container` | warning | `L 0.42`, `c × 0.59` | `#7a3900` (now ≈ `#7a361e`) |
 | `--zk-color-inverse-primary` | primary | `L 0.81`, `c × 0.58` | `#9ec3ff` |
 
 `L` was set to each legacy hex's measured OKLab lightness and the chroma scale `k` to
@@ -152,6 +152,12 @@ its measured chroma level, so the **default** palette reproduces the previous lo
 within a small, verified ΔE. The `warning-container` shifts most visibly — it renders a
 touch more orange than the legacy `#ffe0b2` because the recipe keeps the *seed's* hue
 (brand-coherent) rather than the legacy container's yellower hand-picked hue.
+
+Two seeds have since moved away from their legacy hex on purpose (marble-issue#2 and its
+follow-up), so the "reproduces the previous look" claim no longer covers them:
+`secondary` is now derived from primary rather than being a teal literal, and `warning`
+was darkened from `#ed6c02` to `#bd3f00` because the seed is used as text and `#ed6c02`
+measured 3.11:1 on white. Their containers still derive by the same tone-pinned recipe.
 
 **Browser support:** relative-color `oklch(from …)` is available in Chrome 119+,
 Safari 16.4+, and Firefox 128+ — within Marble's modern-browser support window.
