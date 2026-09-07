@@ -268,7 +268,9 @@
        --zk-badge-bg per-variant and keep their semantic color. --zk-badge-fg and
        --zk-badge-radius have no per-severity override, so they apply to every badge.
        Dot-mode radius stays 50% in badge.css (shape mode, not a themeable knob). */
-    --zk-badge-bg:     var(--zk-color-status-info);
+    /* -fill, not the raw seed: --zk-badge-fg is white and badge text is 12px, so
+       it needs the AA 4.5:1 floor — the raw seed gave 3.86:1 (marble-issue#2). */
+    --zk-badge-bg:     var(--zk-color-status-info-fill);
     --zk-badge-fg:     var(--zk-color-on-status);
     --zk-badge-radius: 10px;
 

@@ -9,10 +9,18 @@ cascade from that single value.
 
 ## How it works
 
-Each semantic **role** (primary, secondary, error, warning) is a *seed*. Its two
+Each semantic **role** (primary, error, warning, success) is a *seed*. Its two
 partners — the light `*-container` fill and the dark `on-*-container` foreground —
 are **derived from the seed via `oklch(from …)` relative color** rather than
-hand-picked, so a new seed re-tints them automatically. This is defined once in
+hand-picked, so a new seed re-tints them automatically.
+
+`secondary` is the exception: it is **not** a seed. MD3 builds secondary out of the
+source color (same hue, lower chroma), so Marble derives it from `--zk-color-primary`
+and its container pair then derives from *that* — a two-level relative color, which
+browsers resolve through `var()` (verified in Chrome). One consequence worth knowing:
+overriding primary alone re-tints secondary too, which is the point — a literal
+secondary would leave a blue-grey accent beside a crimson primary under
+`data-brand="rose"`. This is defined once in
 [_colors.css](../../src/main/resources/web/zul/css/tokens/_colors.css):
 
 ```css
@@ -51,12 +59,14 @@ too:
 ```
 
 For a fuller rebrand, override the other seeds as well; each re-derives its own
-container pair the same way:
+container pair the same way. Declaring `--zk-color-secondary` is how you **opt out**
+of deriving it from primary — useful when the brand really does have a second,
+independent accent:
 
 ```css
 :root {
     --zk-color-primary:   #6a1b9a;   /* brand purple */
-    --zk-color-secondary: #00897b;   /* accent */
+    --zk-color-secondary: #00897b;   /* opts out of the primary-derived default */
     --zk-color-error:     #c62828;
     --zk-color-warning:   #ef6c00;
 }
@@ -128,8 +138,9 @@ quite right for your brand, **pin it directly** — no special variable is requi
 |---|---|---|---|
 | `--zk-color-primary-container` | primary | `L 0.92`, `c × 0.25` | `#d6e4ff` |
 | `--zk-color-on-primary-container` | primary | `L 0.23`, `c × 0.45` | `#001c3d` |
-| `--zk-color-secondary-container` | secondary | `L 0.87`, `c × 0.48` | `#b2dfdb` |
-| `--zk-color-on-secondary-container` | secondary | `L 0.235`, `c × 0.48` | `#00251a` |
+| `--zk-color-secondary` | **primary** | `L 0.54`, `c × 0.41` | `#4db6ac` (was a literal teal seed) |
+| `--zk-color-secondary-container` | secondary | `L 0.87`, `c × 0.48` | `#b2dfdb` (now ≈ `#c8d5ea`) |
+| `--zk-color-on-secondary-container` | secondary | `L 0.235`, `c × 0.48` | `#00251a` (now ≈ `#151e2d`) |
 | `--zk-color-error-container` | error | `L 0.89`, `c × 0.28` | `#ffcdd2` |
 | `--zk-color-on-error-container` | error | `L 0.375`, `c × 0.77` | `#7f0000` |
 | `--zk-color-warning-container` | warning | `L 0.92`, `c × 0.38` | `#ffe0b2` |

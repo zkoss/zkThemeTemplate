@@ -139,12 +139,20 @@
 }
 
 /* ─── Contained — color variants ─────────────────────────────────────── */
-/* (default .z-button = primary filled; these add semantic color variants) */
-.z-button-secondary.z-button { background-color: var(--zk-color-secondary, #4db6ac); color: #fff; }
+/* (default .z-button = primary filled; these add semantic color variants)
+   secondary / warning / info fill from the L-capped `-fill` token, not the raw
+   seed: white on the raw seed measured 2.44:1 / 3.11:1 / 3.86:1, all below the
+   WCAG AA 4.5:1 floor for the label, while the capped fill clears it at
+   4.81:1 / 5.46:1 / 4.94:1. The `.z-bg-*` utilities already route this way.
+   primary / success / error keep the raw seed — they already pass, and switching
+   them would shift a shipped color with nothing asking for it (error would move
+   #d32f2f → #c92226). Same treatment is still owed to the outlined/text WARNING
+   variants below, which put #ed6c02 on white at 3.11:1. */
+.z-button-secondary.z-button { background-color: var(--zk-color-secondary-fill); color: #fff; }
 .z-button-success.z-button   { background-color: var(--zk-color-success, #2e7d32); color: #fff; }
-.z-button-warning.z-button   { background-color: var(--zk-color-warning, #ed6c02); color: #fff; }
+.z-button-warning.z-button   { background-color: var(--zk-color-warning-fill); color: #fff; }
 .z-button-error.z-button     { background-color: var(--zk-color-error, #d32f2f); color: #fff; }
-.z-button-info.z-button      { background-color: var(--zk-color-status-info, #0288d1); color: #fff; }
+.z-button-info.z-button      { background-color: var(--zk-color-status-info-fill); color: #fff; }
 .z-button-light.z-button     { background-color: var(--zk-color-light, #f5f5f5); color: var(--zk-color-on-light, #333); border: 1px solid var(--zk-color-light-outline, #e0e0e0); }
 .z-button-dark.z-button      { background-color: var(--zk-color-dark, #212121); color: var(--zk-color-on-dark, #fff); }
 
@@ -180,17 +188,17 @@
 }
 .z-button-outlined.z-button::before { background-color: var(--zk-color-primary); }
 
-.z-button-outlined-secondary.z-button { background-color: transparent; color: var(--zk-color-secondary, #4db6ac); border: 1px solid var(--zk-color-secondary, #4db6ac); }
+.z-button-outlined-secondary.z-button { background-color: transparent; color: var(--zk-color-secondary); border: 1px solid var(--zk-color-secondary); }
 .z-button-outlined-success.z-button   { background-color: transparent; color: var(--zk-color-success, #2e7d32); border: 1px solid var(--zk-color-success, #2e7d32); }
 .z-button-outlined-warning.z-button   { background-color: transparent; color: var(--zk-color-warning, #ed6c02); border: 1px solid var(--zk-color-warning, #ed6c02); }
 .z-button-outlined-error.z-button     { background-color: transparent; color: var(--zk-color-error, #d32f2f); border: 1px solid var(--zk-color-error, #d32f2f); }
-.z-button-outlined-info.z-button      { background-color: transparent; color: var(--zk-color-status-info, #0288d1); border: 1px solid var(--zk-color-status-info, #0288d1); }
+.z-button-outlined-info.z-button      { background-color: transparent; color: var(--zk-color-status-info); border: 1px solid var(--zk-color-status-info); }
 
-.z-button-outlined-secondary.z-button::before { background-color: var(--zk-color-secondary, #4db6ac); }
+.z-button-outlined-secondary.z-button::before { background-color: var(--zk-color-secondary); }
 .z-button-outlined-success.z-button::before   { background-color: var(--zk-color-success, #2e7d32); }
 .z-button-outlined-warning.z-button::before   { background-color: var(--zk-color-warning, #ed6c02); }
 .z-button-outlined-error.z-button::before     { background-color: var(--zk-color-error, #d32f2f); }
-.z-button-outlined-info.z-button::before      { background-color: var(--zk-color-status-info, #0288d1); }
+.z-button-outlined-info.z-button::before      { background-color: var(--zk-color-status-info); }
 
 /* Disabled overrides for outlined color variants (spec 0,3,0 > 0,2,0 variant rules) */
 .z-button-outlined-secondary.z-button[disabled],
@@ -213,17 +221,17 @@
 }
 .z-button-text.z-button::before { background-color: var(--zk-color-primary); }
 
-.z-button-text-secondary.z-button { background-color: transparent; color: var(--zk-color-secondary, #4db6ac); border: none; }
+.z-button-text-secondary.z-button { background-color: transparent; color: var(--zk-color-secondary); border: none; }
 .z-button-text-success.z-button   { background-color: transparent; color: var(--zk-color-success, #2e7d32); border: none; }
 .z-button-text-warning.z-button   { background-color: transparent; color: var(--zk-color-warning, #ed6c02); border: none; }
 .z-button-text-error.z-button     { background-color: transparent; color: var(--zk-color-error, #d32f2f); border: none; }
-.z-button-text-info.z-button      { background-color: transparent; color: var(--zk-color-status-info, #0288d1); border: none; }
+.z-button-text-info.z-button      { background-color: transparent; color: var(--zk-color-status-info); border: none; }
 
-.z-button-text-secondary.z-button::before { background-color: var(--zk-color-secondary, #4db6ac); }
+.z-button-text-secondary.z-button::before { background-color: var(--zk-color-secondary); }
 .z-button-text-success.z-button::before   { background-color: var(--zk-color-success, #2e7d32); }
 .z-button-text-warning.z-button::before   { background-color: var(--zk-color-warning, #ed6c02); }
 .z-button-text-error.z-button::before     { background-color: var(--zk-color-error, #d32f2f); }
-.z-button-text-info.z-button::before      { background-color: var(--zk-color-status-info, #0288d1); }
+.z-button-text-info.z-button::before      { background-color: var(--zk-color-status-info); }
 
 /* Disabled overrides for text color variants (spec 0,3,0 > 0,2,0 variant rules) */
 .z-button-text-secondary.z-button[disabled],
@@ -264,11 +272,11 @@
 
 /* Color variants for icon button */
 .z-button-icon.z-button-primary.z-button   { color: var(--zk-color-primary); }
-.z-button-icon.z-button-secondary.z-button { color: var(--zk-color-secondary, #4db6ac); background-color: transparent; }
+.z-button-icon.z-button-secondary.z-button { color: var(--zk-color-secondary); background-color: transparent; }
 .z-button-icon.z-button-error.z-button     { color: var(--zk-color-error, #d32f2f); background-color: transparent; }
 
 .z-button-icon.z-button-primary.z-button::before   { background-color: var(--zk-color-primary); }
-.z-button-icon.z-button-secondary.z-button::before { background-color: var(--zk-color-secondary, #4db6ac); }
+.z-button-icon.z-button-secondary.z-button::before { background-color: var(--zk-color-secondary); }
 .z-button-icon.z-button-error.z-button::before     { background-color: var(--zk-color-error, #d32f2f); }
 
 /* ─── FAB (Floating Action Button) ───────────────────────────────────── */

@@ -16,8 +16,11 @@
      * FEATURE: Brand-color override recipe (oklch absolute tone) — 2026-07-03,
      *          upgraded to oklch(from …) relative color 2026-07-07.
      *
-     * The four semantic ROLES below (primary / secondary / error / warning) are
-     * SEEDS. Their `*-container` (light tint) and `on-*-container` (dark tint)
+     * The semantic ROLES below (primary / error / warning / success) are SEEDS.
+     * `secondary` is NOT a seed — MD3 derives it from the same source color as
+     * primary (same hue, reduced chroma), so it is derived here too; see its own
+     * comment below. Every seed's `*-container` (light tint) and
+     * `on-*-container` (dark tint)
      * partners are DERIVED from the seed via oklch(from <seed> L c h) instead of
      * hand-picked hex, so overriding ONE seed at :root re-derives a coherent
      * palette — containers, overlays (already currentColor/color-mix of the seed),
@@ -57,11 +60,20 @@
     --zk-color-primary-container: oklch(from var(--zk-color-primary) 0.92 calc(c * 0.25) h);    /* ≈ #d6e4ff */
     --zk-color-on-primary-container: oklch(from var(--zk-color-primary) 0.23 calc(c * 0.45) h); /* ≈ #001c3d */
 
-    /* Secondary — teal accent (seed) */
-    --zk-color-secondary: #4db6ac;
+    /* Secondary — DERIVED from primary, not a seed (marble-issue#2).
+       MD3 builds secondary out of the source color: same hue, lower chroma. The
+       previous #4db6ac teal sat 74° away in hue and read as a second, unrelated
+       brand. L is pinned to 0.54 — the same lightness the `-fill` cap enforces —
+       so white-on-secondary clears WCAG AA (5.07:1) for ANY brand seed, and the
+       secondary-vs-primary relationship survives a brand override: with a literal,
+       data-brand="rose" would leave a blue-grey secondary beside a crimson primary,
+       which is the complaint that was filed. c × 0.41 reproduces the tonal step
+       the designer asked for (#5a6f96); it resolves to #586f95 on the default seed.
+       Override --zk-color-secondary directly to opt out. */
+    --zk-color-secondary: oklch(from var(--zk-color-primary) 0.54 calc(c * 0.41) h);  /* ≈ #586f95 */
     --zk-color-on-secondary: #ffffff;
-    --zk-color-secondary-container: oklch(from var(--zk-color-secondary) 0.87 calc(c * 0.48) h);    /* ≈ #b2dfdb */
-    --zk-color-on-secondary-container: oklch(from var(--zk-color-secondary) 0.235 calc(c * 0.48) h); /* ≈ #00251a */
+    --zk-color-secondary-container: oklch(from var(--zk-color-secondary) 0.87 calc(c * 0.48) h);    /* ≈ #c9d5ea */
+    --zk-color-on-secondary-container: oklch(from var(--zk-color-secondary) 0.235 calc(c * 0.48) h); /* ≈ #151e2d */
 
     /* Error (seed) */
     --zk-color-error: #d32f2f;
@@ -141,7 +153,12 @@
     --zk-color-status-success: #4caf50;
     --zk-color-status-warning: #ff9800;
     --zk-color-status-error:   #ef5350;
-    --zk-color-status-info:    #0288d1;
+    /* info: hue 231, not 243 (marble-issue#2) — the old #0288d1 sat 17° from the
+       primary hue and was hard to tell apart from it. L 0.56 keeps every path this
+       token feeds above its floor: white on the solid 4.54:1, the token as text on
+       a white surface 4.54:1, and the notification icon on its own 12% tint 3.88:1
+       (WCAG 1.4.11 wants 3:1 for non-text). Do not lighten it. */
+    --zk-color-status-info:    #007fab;
     --zk-color-status-neutral: #9e9e9e;
     --zk-color-on-status:      #ffffff;
 

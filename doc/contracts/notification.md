@@ -27,7 +27,7 @@ zk-version: 10.2.1-jakarta
 | c3 | `.z-notification-content` | border-radius | 4px |
 | c4 | `.z-notification-content` | box-shadow | level-2 |
 | c5 | `.z-notification-content` | font-size | 13–14px |
-| c6 | `.z-notification-info .z-notification-content` | background | **opaque** info tint, `color-mix(#0288d1 12%, surface)` — alpha must be 1 (floating overlay must not let content bleed through) |
+| c6 | `.z-notification-info .z-notification-content` | background | **opaque** info tint, `color-mix(#007fab 12%, surface)` — alpha must be 1 (floating overlay must not let content bleed through) |
 | c8 | `.z-notification-warning .z-notification-content` | background | **opaque** warning tint, `color-mix(#ed6c02 12%, surface)` — alpha must be 1 |
 | c9 | `.z-notification-error .z-notification-content` | background | **opaque** error tint, `color-mix(#d32f2f 12%, surface)` — alpha must be 1 |
 | c10 | `.z-notification-icon` | size | 20–24px, matching status colour; left edge clears the 4px stripe |
