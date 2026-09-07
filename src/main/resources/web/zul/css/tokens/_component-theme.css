@@ -268,10 +268,27 @@
        --zk-badge-bg per-variant and keep their semantic color. --zk-badge-fg and
        --zk-badge-radius have no per-severity override, so they apply to every badge.
        Dot-mode radius stays 50% in badge.css (shape mode, not a themeable knob). */
-    /* -fill, not the raw seed: --zk-badge-fg is white and badge text is 12px, so
-       it needs the AA 4.5:1 floor — the raw seed gave 3.86:1 (marble-issue#2). */
-    --zk-badge-bg:     var(--zk-color-status-info-fill);
-    --zk-badge-fg:     var(--zk-color-on-status);
+    /* Every badge fill is a BRIGHT accent, so the label is DARK, not white.
+       MD3's contract is the tonal pair — a light tone carries a dark on-colour;
+       white on a light tone is the one combination MD3 never produces. With white
+       text four of the five severities missed the AA 4.5:1 floor that 12px text
+       needs (success 2.78, warning 2.16, danger 3.49, secondary 2.68); with the
+       dark label every one clears it by a wide margin (6.64 / 8.37 / 5.43 / 6.84),
+       and no background moved. The same --zk-color-on-surface tone already labels
+       the warning/error toast on its tinted container, so this is an established
+       pattern here, not a new one.
+
+       The four non-default severities read the already-bright
+       --zk-color-status-{success,warning,error,neutral} in badge.css. The default
+       (info) needs a bright counterpart derived here, because
+       --zk-color-status-info is deliberately DARK — it is mostly a text/icon token
+       (.z-text-info, the notification and confirmpopup icons, --zk-toast-accent),
+       and marble-issue#2 darkened it to 4.54:1 on white. L 0.70 sits with the four
+       siblings (0.65-0.77) and c * 1.3 restores the chroma parity that darkening
+       cost it — the only chroma scale in this file that goes UP, for that reason.
+       Dark label on it: 7.17:1. */
+    --zk-badge-bg:     oklch(from var(--zk-color-status-info) 0.70 calc(c * 1.3) h);  /* ≈ #00ade9 */
+    --zk-badge-fg:     var(--zk-color-on-surface);
     --zk-badge-radius: 10px;
 
     /* ── Chip (native, ZK-6097) — base default hoisted here so a :root/region

@@ -45,7 +45,7 @@ Use this as the rulebook when styling a component the MUI reference does not cov
 | Success (badge accent) | `#4caf50` | `--zk-color-status-success` |
 | Info | `#007fab` | `--zk-color-status-info` |
 | Neutral | `#9e9e9e` | `--zk-color-status-neutral` |
-| On-status (badge text) | `#ffffff` | `--zk-color-on-status` |
+| On-status (text on a capped status fill) | `#ffffff` | `--zk-color-on-status` — used by `.z-bg-info`; badges carry a dark label instead (`--zk-badge-fg`), because their fills are bright tones |
 
 The five semantic **roles** (primary / secondary / success / warning / error) each carry
 the full quartet (`<role>` / `on-<role>` / `<role>-container` / `on-<role>-container`) plus

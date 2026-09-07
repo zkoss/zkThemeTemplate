@@ -583,8 +583,8 @@ radius (`50%`) is a shape concern and stays hardcoded, not a knob.
 
 | Knob | Default | Scope |
 |------|---------|-------|
-| `--zk-badge-bg` | `var(--zk-color-status-info)` | default (info) badge only; non-default severities pin their own |
-| `--zk-badge-fg` | `var(--zk-color-on-status)` | every badge |
+| `--zk-badge-bg` | `oklch(from var(--zk-color-status-info) 0.70 calc(c * 1.3) h)` (≈ `#00ade9`) | default (info) badge only; non-default severities pin their own. A *bright* tone derived from the (deliberately dark) info token, so it sits with the four bright `status-*` siblings |
+| `--zk-badge-fg` | `var(--zk-color-on-surface)` | every badge. Dark, not white: every badge fill is a bright tone, and MD3 pairs a light tone with a dark on-colour |
 | `--zk-badge-radius` | `10px` | every badge (count/pill; dot stays `50%`) |
 
 ### Rating — shipped
