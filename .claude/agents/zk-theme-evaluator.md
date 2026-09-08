@@ -46,7 +46,20 @@ Grep `doc/contracts/<component>.md` for `contract-approved: true`. If the line i
 
 #### 0b. js-source-hash drift detection
 
-If the contract's frontmatter declares `js-source-hash:` (and `js-source-files:`), recompute the sha256 of the concatenated JS source files and compare against the stored hash. If they differ, REFUSE: write status `BLOCKED` to `tasks/eval-reports/<component>.md` with the message `BLOCKED: js-source drift — re-run zk-spec-author <component>`, and append a one-line entry tagged `js-drift` to `doc/skill-gaps.md` (format: `| <date> | <component> | js-source drift detected | hash mismatch — re-run spec-author | js-drift | doc/contracts/<component>.md |`). STOP.
+If the contract's frontmatter declares `js-source-hash:` (and `js-source-files:`), recompute the hash and compare against the stored value:
+
+```bash
+scripts/js-source-hash.sh <each js-source-files entry, in the contract's order>
+```
+
+**Hash the jars on the classpath — never the ZK source checkout.** The script does this for you; do not hand-roll a `cat … | shasum` over `$ZK_SRC`. The checkout at `/Users/hawk/Documents/workspace/ZK10/zk/zul` is a live git working copy that routinely runs ahead of the release `pom.xml` pins, so hashing it reports drift for any widget touched upstream since the pinned build — even though the widget the theme is actually styling has not changed at all. That is a false-positive generator, and it cost a full Gate-1 pass on codeeditor (2026-09-08): 0b blocked on a `theme`→`colorScheme` rename that exists only in the checkout, while the shipped jar still exported `setTheme`. See `doc/skill-gaps.md` (2026-09-08).
+
+Act on the script's exit code:
+
+- **0 and the hash matches** → proceed.
+- **0 and the hash differs** → genuine drift. REFUSE: write status `BLOCKED` to `tasks/eval-reports/<component>.md` with the message `BLOCKED: js-source drift — re-run zk-spec-author <component>`, and append a one-line entry tagged `js-drift` to `doc/skill-gaps.md` (format: `| <date> | <component> | js-source drift detected | hash mismatch — re-run spec-author | js-drift | doc/contracts/<component>.md |`). STOP.
+- **2 (cannot verify — no ZK jars for the pinned version on this machine)** → TOLERATE. Note it in the report's pre-flight section and proceed to measure. An unverifiable environment is not evidence of drift.
+- **1 (a declared file is in none of the jars)** → the contract's `js-source-files:` list is wrong, not the widget. BLOCK with that distinction stated explicitly, and route to `zk-spec-author` to fix the file list.
 
 If the contract declares no `js-source-hash:` field, skip 0b silently and proceed.
 

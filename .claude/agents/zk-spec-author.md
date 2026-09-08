@@ -74,18 +74,19 @@ You receive a single argument: `<comp>` (e.g. `stepbar`). Required reads, in pri
 Read inputs 1–8 above. Note: ZK source path, sibling identity, presence/absence of MUI analog, edition (CE/PE/EE — grep the JS source for `zkex` / `zkmax` package or check `reference/edition-availability.md`).
 
 ### 2. Compute `js-source-hash`
-The contract's frontmatter must record the SHA-256 of the JS source file you read. This anchors the contract to a specific ZK version so the loop can detect "ZK upgraded — re-author needed".
+The contract's frontmatter must record the SHA-256 of the widget's JS, so the loop can detect "ZK upgraded — re-author needed".
+
+**Hash the jars on the classpath, NOT the source checkout you read the code from.** Use the shared resolver, which is the same one the evaluator's gate 0b runs — if the two disagree on what to hash, every contract you write blocks on a phantom drift:
 
 ```bash
-shasum -a 256 /Users/hawk/Documents/workspace/ZK10/zk/zul/src/main/resources/web/js/zul/<path>/<Comp>.ts
+scripts/js-source-hash.sh zul/<path>/<Comp>.ts [more files...]
 ```
 
-If multiple files contribute to the component (e.g. `Stepbar.ts` + `Step.ts`), concatenate them sorted and hash once:
-```bash
-cat <files-sorted> | shasum -a 256
-```
+Arguments are paths relative to `web/js/`, exactly as they will appear in the contract's `js-source-files:` list; they are concatenated **in the order given**, so record them in that same order and the hash stays reproducible.
 
-Record the file list in the contract so the hash is reproducible.
+Read the source from `$ZK_SRC` by all means — it is the readable copy. Just never hash it: it is a live git working copy and drifts ahead of the release `pom.xml` pins, which is precisely the false positive that blocked codeeditor's Gate 1 on 2026-09-08 (see `doc/skill-gaps.md`).
+
+If the resolver exits **2**, no ZK jars for the pinned version are present — record no hash rather than a hash of the wrong thing, and say so in the contract.
 
 ### 3. Sibling-selection heuristic
 
