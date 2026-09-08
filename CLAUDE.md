@@ -201,6 +201,7 @@ src/main/resources/web/
 │   └── marble.css            # Global entry styles
 └── js/zul/                   # Component CSS (auto-scanned → *.css.dsp 1:1)
     ├── box/css/
+    ├── code/css/             # codeeditor (ZK 11.0.0+, CodeMirror 6)
     ├── db/css/
     ├── grid/css/
     ├── inp/css/              # combobox/datebox/timebox/spinner/bandbox → combo.css.dsp

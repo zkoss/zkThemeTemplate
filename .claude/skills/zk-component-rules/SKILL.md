@@ -88,6 +88,7 @@ Load only the file for the component you are working on.
 | `components/checkbox.md` | checkbox + 3 molds (checkbox, switch, toggle) — mold-prefixed state classes |
 | `components/cascader.md` | cascader (EE) — hierarchical tree-picker, read-only trigger + side-by-side cave columns, `.z-cascader-label` / `.z-cascader-placeholder` (not `-input`), `.z-cascader-disabled` class, popup detached to body |
 | `components/chosenbox.md` | chosenbox (chip class = `.z-chosenbox-item`, EE-only) |
+| `components/codeeditor.md` | codeeditor (CE, new in ZK 11.0.0) — T3 CodeMirror 6 wrapper; ZK's own mold renders only the root + an empty `.z-codeeditor-cave` mount point, everything below (`.cm-editor`/`.cm-scroller`/`.cm-gutters`/`.cm-content`) is CodeMirror's own DOM injected async inside `zk.afterMount`; no readonly class exists (editable compartment only); `lineNumbers=false` removes the gutter subtree outright, not display:none; CodeMirror's own base theme is injected UNLAYERED at runtime so a handful of named anchor classes need `!important` to restyle, while per-token syntax spans and `.ͼ*` hash classes are off-limits (inline-styled/generated, not a stable selector) |
 | `components/colorbox.md` | colorbox (current swatch + button + popup w/ picker+palette, geometry-locked sprites, EE-only) |
 | `components/combobox.md` | combobox (split-border, comboitem variants) |
 | `components/combobutton.md` | combobutton (pointer-events: auto required for popup click) |

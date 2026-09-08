@@ -48,6 +48,9 @@ The path ZK *requests* a `.css.dsp` from is **not** decided by the theme's Java.
 - `js/zul/layout/css/html.css.dsp`
 - `js/zul/layout/css/layout.css.dsp`
 
+### Code
+- `js/zul/code/css/codeeditor.css.dsp` — new in ZK 11.0.0 (CodeMirror 6 source editor, CE)
+
 ### Date / Calendar
 - `js/zul/db/css/calendar.css.dsp`
 

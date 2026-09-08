@@ -108,7 +108,12 @@
         outline-offset: -1px;
     }
 
-    /* (1b-cont) Same treatment for other box-shadow focus rings. */
+    /* (1b-cont) Same treatment for other box-shadow focus rings.
+       .z-codeeditor is the same shape as a text input here: its ring is an inset
+       box-shadow plus a same-color border, and CodeMirror's own dotted focus
+       outline is suppressed by the component CSS — so without this the editor
+       would have no focus affordance at all in High Contrast. */
+    .z-codeeditor:focus-within,
     .z-timepicker:focus-within,
     .z-searchbox-search:focus,
     .z-selectbox:focus,

@@ -1596,6 +1596,70 @@ popup/messagebox/confirmpopup.
 | `--zk-carousel-label-bg` | `var(--zk-color-scrim)` | caption chip backdrop |
 | `--zk-carousel-label-fg` | `var(--zk-color-inverse-on-surface)` | caption text |
 
+### Codeeditor — shipped
+
+CodeMirror 6 source editor (CE, `@since` ZK 11.0.0, `zul/code/css/codeeditor.css`) —
+`.z-codeeditor` root + `.z-codeeditor-cave` mount point + CodeMirror's own `.cm-editor` /
+`.cm-scroller` / `.cm-gutters` / `.cm-content` subtree. Fourteen knobs, and they come in **two
+families that must not be homogenized**.
+
+Nine are Marble's own and follow the ordinary field convention (`-bg`, `-fg`, `-radius`,
+`-border-color[-hover|-focus]`, plus `-gutter-bg`/`-gutter-fg`/`-gutter-border-color`): the root
+is the outlined text field's chrome, so a codeeditor sits beside a textbox without looking
+imported, and the focus ring is the inset-box-shadow Mechanism A (the root has no padding to
+compensate a 1px→2px border with, so growing the border would shove the whole editor viewport).
+
+Three keep names **ZK core authored** — `--zk-codeeditor-background`, `--zk-codeeditor-color`,
+`--zk-codeeditor-gutter-color`. Those are a documented public API (the componentreference page
+tells app authors to set them per element, e.g. `style="--zk-codeeditor-background:#0b1021"`), so
+the spelling is fixed and deliberately does not become `-bg`/`-fg`. ZK core also documents
+`--zk-codeeditor-active-line` and ten `--zk-codeeditor-token-*` syntax colors; **neither is
+declared here**. The CE extension set never enables `highlightActiveLine`, so `.cm-activeLine` is
+never emitted and an `-active-line` default would be an orphan token; the ten token colors live in
+the widget JS with VS Code Dark+ literals as `var()` fallbacks, so a default here would duplicate
+a ZK core value with no CSS consumer (the orphan-token rule counts only component CSS as a
+consumer).
+
+The dark surface default is a **literal near-black, not `--zk-color-inverse-surface`** — the one
+knob group in this file that deliberately refuses a theme token. The ten syntax colors are not
+theme-derived, so the surface has to keep them legible; measured 2026-09-08, all twelve
+foregrounds clear WCAG AA on `#1e1e1e` (worst 4.52:1) while five fail on `#2d3748`
+(keyword/tag 4.07, comment 3.60, meta 3.39, gutter 3.25). Same "contrast cannot key off theme
+tokens here" carve-out as the carousel overlay chrome. Disabled opacity stays on
+`--zk-state-disabled-opacity`, not a knob (button/input convention). Codeeditor renders in place
+with no client-side reparenting, so region scoping (CTV-3) works normally.
+
+| Knob | Default | Scope |
+|------|---------|-------|
+| `--zk-codeeditor-bg` | `var(--zk-color-surface)` | light surface fill |
+| `--zk-codeeditor-fg` | `var(--zk-color-on-surface)` | light text + caret |
+| `--zk-codeeditor-radius` | `var(--zk-shape-input)` | root frame corners |
+| `--zk-codeeditor-border-color` | `var(--zk-color-outline)` | resting frame |
+| `--zk-codeeditor-border-color-hover` | `var(--zk-color-on-surface)` | hover frame |
+| `--zk-codeeditor-border-color-focus` | `var(--zk-color-primary)` | focus frame + inset ring |
+| `--zk-codeeditor-gutter-bg` | `var(--zk-color-surface-container-low)` | light gutter fill |
+| `--zk-codeeditor-gutter-fg` | `var(--zk-color-on-surface-variant)` | light line numbers |
+| `--zk-codeeditor-gutter-border-color` | `var(--zk-color-outline-variant)` | light gutter divider |
+| `--zk-codeeditor-background` | `#1e1e1e` | dark surface fill (root + editor + gutter) — ZK-core name |
+| `--zk-codeeditor-color` | `#d4d4d4` | dark text + caret — ZK-core name |
+| `--zk-codeeditor-gutter-color` | `#858585` | dark line numbers — ZK-core name |
+| `--zk-codeeditor-dark-border-color` | `rgba(255, 255, 255, 0.23)` | dark-surface resting frame |
+| `--zk-codeeditor-dark-border-color-hover` | `rgba(255, 255, 255, 0.6)` | dark-surface hover frame |
+
+The dark surface needs its **own** border pair rather than reusing
+`--zk-codeeditor-border-color[-hover]`: those are black-alpha, and composited over the opaque
+`#1e1e1e` fill they collapse onto the fill itself — measured rest `rgb(23,23,23)`, hover
+`rgb(4,4,4)`, a **1.14:1** change, i.e. dark mode shipped with no visible hover affordance at all
+(caught by MD3 Gate 2, 2026-09-08). The component's *outline* was never at risk — the fill alone
+is 16.67:1 against the page — it was the state *change* that was invisible, which is precisely the
+kind of defect a "do the two states differ?" assertion cannot catch, because they did differ,
+numerically. The light-alpha pair mirrors the light surface and clears the 3:1 UI-state bar
+(`rgb(82,82,82)` → `rgb(165,165,165)`, **3.17:1**) without becoming a white halo around a black
+box. Focus needs no dark variant — primary blue already clears 3.45:1 on the near-black fill — but
+the dark rules must **re-assert** it after the dark hover rule, since the shared
+`:focus-within` rule sits earlier in the file at equal specificity. **Generalizable:** any
+component with a per-widget dark-surface modifier inherits this trap.
+
 ## Recipe — adding a component
 
 Validated by the button pilot; repeat per component (then update the
@@ -1641,7 +1705,10 @@ Validated by the button pilot; repeat per component (then update the
   exception — inherits Popup's own makeVParent() reparenting on open), breadcrumb (borderless
   inline text chrome — no bg/border/radius knob; renders in place, so region scoping works),
   carousel (full-bleed media frame — scrim/inverse-on-surface overlay voices, arrow size
-  density-bound, indicator 24px WCAG floor; renders in place, so region scoping works).
+  density-bound, indicator 24px WCAG floor; renders in place, so region scoping works),
+  codeeditor (see entry for the two-family naming split — nine Marble knobs plus three
+  ZK-core-authored dark-surface names — the literal near-black dark default, and the
+  deliberately-undeclared `-active-line` and ten `-token-*` hooks).
 - **Not exposed** (by design): purely structural/layout components (box, div, cell, separator,
   layouts) and content atoms (label, image) have no meaningful appearance knob — this excludes
   the anchor/link, which **is** exposed despite its similarly minimal text-only vocabulary (see

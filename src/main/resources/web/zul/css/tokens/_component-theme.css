@@ -1200,4 +1200,52 @@
     --zk-carousel-indicator-active-bg: var(--zk-color-inverse-on-surface);
     --zk-carousel-label-bg:            var(--zk-color-scrim);
     --zk-carousel-label-fg:            var(--zk-color-inverse-on-surface);
+
+    /* ── Codeeditor — CodeMirror 6 source editor (CE, @since ZK 11.0.0) ───
+       TWO families of knobs, and the split is deliberate.
+
+       (a) The LIGHT chrome below is Marble's own, named like every other field
+       (-bg/-fg/-radius/-border-color…), and reuses the outlined-text-field roles so
+       a codeeditor sits next to a textbox without looking imported.
+
+       (b) The DARK surface keeps the four names ZK CORE authored —
+       --zk-codeeditor-background / -color / -gutter-color / -active-line. Those are
+       a documented public API (the componentreference page tells app authors to set
+       them per element, e.g. style="--zk-codeeditor-background:#0b1021"), so the
+       spelling is fixed and must not be normalized to Marble's -bg/-fg convention.
+       -active-line is NOT declared: the CE extension set never emits .cm-activeLine,
+       so a default here would be an orphan token (see css/codeeditor.css).
+
+       WHY THE DARK SURFACE IS A LITERAL NEAR-BLACK, NOT --zk-color-inverse-surface:
+       the ten syntax colors (--zk-codeeditor-token-*) live in the widget JS as VS
+       Code Dark+ literals and are NOT theme-derived, so the surface has to keep them
+       legible. Measured WCAG contrast of the shipped palette (2026-09-08):
+         · on #1e1e1e            → all 12 foregrounds pass AA (worst 4.52:1, gutter)
+         · on #2d3748 (inverse-surface) → 5 of 12 fail AA (keyword/tag 4.07, comment
+           3.60, meta 3.39, gutter 3.25)
+       So the code surface stays a neutral near-black and does not follow the brand —
+       the same "contrast can't key off theme tokens here" carve-out the carousel
+       overlay chrome documents above. */
+    --zk-codeeditor-bg:                  var(--zk-color-surface);
+    --zk-codeeditor-fg:                  var(--zk-color-on-surface);
+    --zk-codeeditor-radius:              var(--zk-shape-input);
+    --zk-codeeditor-border-color:        var(--zk-color-outline);
+    --zk-codeeditor-border-color-hover:  var(--zk-color-on-surface);
+    --zk-codeeditor-border-color-focus:  var(--zk-color-primary);
+    --zk-codeeditor-gutter-bg:           var(--zk-color-surface-container-low);
+    --zk-codeeditor-gutter-fg:           var(--zk-color-on-surface-variant);
+    --zk-codeeditor-gutter-border-color: var(--zk-color-outline-variant);
+    /* dark surface — ZK-core-authored names, exact spelling required */
+    --zk-codeeditor-background:          #1e1e1e;
+    --zk-codeeditor-color:               #d4d4d4;
+    --zk-codeeditor-gutter-color:        #858585;
+    /* dark surface frame — light alphas, NOT the shared black-alpha border knobs.
+       Composited over the opaque #1e1e1e fill the black-alpha pair collapses onto
+       the fill (rest rgb(23,23,23), hover rgb(4,4,4) — a 1.14:1 change), so dark
+       mode had no visible hover state; these mirror the light surface instead and
+       clear the 3:1 UI-state bar (rgb(82,82,82) -> rgb(165,165,165), 3.17:1).
+       Focus reuses --zk-codeeditor-border-color-focus: primary blue already clears
+       3.45:1 against the near-black fill, so it needs no dark variant. */
+    --zk-codeeditor-dark-border-color:       rgba(255, 255, 255, 0.23);
+    --zk-codeeditor-dark-border-color-hover: rgba(255, 255, 255, 0.6);
 }

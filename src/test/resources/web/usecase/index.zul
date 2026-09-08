@@ -40,6 +40,7 @@
                     <navitem label="Cascader"         selected="@load(vm.currentPage eq '~./cascader.zul')" onClick="@command('navigate', page='~./cascader.zul')" />
                     <navitem label="Checkbox"         selected="@load(vm.currentPage eq '~./checkbox.zul')" onClick="@command('navigate', page='~./checkbox.zul')" />
                     <navitem label="Chosenbox"        selected="@load(vm.currentPage eq '~./chosenbox.zul')" onClick="@command('navigate', page='~./chosenbox.zul')" />
+                    <navitem label="Codeeditor"       selected="@load(vm.currentPage eq '~./codeeditor.zul')" onClick="@command('navigate', page='~./codeeditor.zul')" />
                     <navitem label="Colorbox"         selected="@load(vm.currentPage eq '~./colorbox.zul')" onClick="@command('navigate', page='~./colorbox.zul')" />
                     <navitem label="Combobox"         selected="@load(vm.currentPage eq '~./combobox.zul')" onClick="@command('navigate', page='~./combobox.zul')" />
                     <navitem label="Combobutton"      selected="@load(vm.currentPage eq '~./combobutton.zul')" onClick="@command('navigate', page='~./combobutton.zul')" />
