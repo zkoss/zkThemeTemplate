@@ -188,6 +188,35 @@
 							<executable>${project.basedir}/scripts/check-icon-coverage.sh</executable>
 						</configuration>
 					</execution>
+					<execution>
+						<!-- Gate: every `<css-uri>` ZK declares must exist in the built theme.
+						     A ZK upgrade that adds a component (ZK 11 added `codeeditor`) otherwise
+						     ships a silent 404 that only shows up as an unstyled widget in a browser.
+						     Runs after compile-css (generate-resources) so it checks real output.
+
+						     Exit codes are load-bearing, which is why `successCodes` is not the
+						     default: 1 = a css-uri ZK requests is genuinely missing -> FAIL the
+						     build; 2 = this machine cannot verify (no ZK source at ZK_HOME, or no
+						     theme build dir) -> tolerated, so a checkout without the ZK source
+						     tree beside it still builds. Point it elsewhere with -DZK_HOME=... via
+						     the environment if your ZK source lives outside the default path. -->
+						<id>check-css-dsp</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<configuration>
+							<executable>npm</executable>
+							<arguments>
+								<argument>run</argument>
+								<argument>check:css-dsp</argument>
+							</arguments>
+							<successCodes>
+								<successCode>0</successCode>
+								<successCode>2</successCode>
+							</successCodes>
+						</configuration>
+					</execution>
 					<execution> <!-- stamp HEAD commit date+hash for the use-case sidebar build marker -->
 						<id>stamp-commit</id>
 						<phase>process-test-resources</phase>
