@@ -7,7 +7,7 @@
 	<properties>
 		<maven.compiler.source>17</maven.compiler.source>
 		<maven.compiler.target>17</maven.compiler.target>
-		<zk.version>10.4.0-jakarta.FL.20260713</zk.version>
+		<zk.version>11.0.0-jakarta.FL.20260904</zk.version>
 		<zkspringboot.version>3.2.6</zkspringboot.version>
 		<springboot.version>3.2.6</springboot.version>
 		<maven.build.timestamp.format>yyyy-MM-dd</maven.build.timestamp.format>
