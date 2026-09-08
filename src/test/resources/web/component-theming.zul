@@ -1252,5 +1252,28 @@
             </carouselitem>
         </carousel>
     </div>
+
+    <!-- Codeeditor (native, CE @since ZK 11.0.0, zul/code/css/codeeditor.css): the
+         outlined-text-field chrome wrapped around a CodeMirror 6 viewport; see
+         doc/contracts/codeeditor.md. Fifteen knobs in two families — Marble's own
+         light chrome (-bg/-fg/-radius/-border-color[-hover|-focus] + the gutter
+         triad + the dark focus ring), and four keeping ZK core's authored spelling
+         for the dark surface (-background/-color/-gutter-color). The probe below
+         uses -bg and -border-color rather than the focus ring, so no interaction is
+         needed to read the override. Renders in place (no client-side reparenting),
+         so region scoping works normally. -->
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Codeeditor (default)</div>
+    <div sclass="z-mb-6">
+        <codeeditor language="java" width="240px" height="90px">
+            <attribute name="value"><![CDATA[int a = 1;]]></attribute>
+        </codeeditor>
+    </div>
+    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-mb-3">Codeeditor (regional override)</div>
+    <div sclass="z-hstack z-mb-8 z-p-4 z-bg-surface-variant z-rounded"
+         style="--zk-codeeditor-bg:#6750a4; --zk-codeeditor-border-color:#6750a4; --zk-codeeditor-gutter-bg:#6750a4">
+        <codeeditor language="java" width="240px" height="90px">
+            <attribute name="value"><![CDATA[int a = 1;]]></attribute>
+        </codeeditor>
+    </div>
 </div>
 </zk>

@@ -1680,4 +1680,42 @@ test.describe('Component Theme Variables', () => {
     await page.addStyleTag({ content: ':root{--zk-carousel-arrow-bg:#6750a4}' });
     expect(await bgOf(defArrow)).toBe(SCOPED_PURPLE);
   });
+
+  // ── Codeeditor (CE @since ZK 11.0.0) ───────────────────────────────────────
+  // Fifteen knobs; these probe one from each of the two families that must not be
+  // homogenized — `--zk-codeeditor-bg`/`-border-color` (Marble's own chrome names)
+  // and `-gutter-bg`. The gutter is the interesting one: CodeMirror paints
+  // `.cm-gutters` from its OWN unlayered runtime StyleModule, so the theme only
+  // reaches it through an `!important` rule; if that rule were ever dropped the
+  // knob would silently stop working while the root kept honouring its override.
+  // Deliberately NOT probed here: the focus ring, which needs an interaction and is
+  // already covered — in painted pixels — by `screenshot.spec.ts › codeeditor`.
+  // CodeMirror mounts asynchronously, so wait for `.cm-editor` before reading.
+  // ───────────────────────────────────────────────────────────────────────────
+  test('codeeditor — regional bg/border/gutter override, sibling untouched', async ({ page }) => {
+    await page.waitForSelector('.z-codeeditor .cm-editor');
+    const def = page.locator('.z-codeeditor').first();
+    const scoped = page.locator('div[style*="--zk-codeeditor-bg"] .z-codeeditor').first();
+
+    expect(await bgOf(scoped)).toBe(SCOPED_PURPLE);
+    expect(await borderColorOf(scoped)).toBe(SCOPED_PURPLE);
+    expect(await bgOf(scoped.locator('.cm-gutters').first())).toBe(SCOPED_PURPLE);
+
+    // The sibling default editor must be untouched — the override lives on the
+    // scoped box and is inherited only by its subtree.
+    expect(await bgOf(def)).not.toBe(SCOPED_PURPLE);
+    expect(await borderColorOf(def)).not.toBe(SCOPED_PURPLE);
+    expect(await bgOf(def.locator('.cm-gutters').first())).not.toBe(SCOPED_PURPLE);
+  });
+
+  test('codeeditor — whole-app :root override wins (loaded after norm.css.dsp)', async ({ page }) => {
+    await page.waitForSelector('.z-codeeditor .cm-editor');
+    const def = page.locator('.z-codeeditor').first();
+    expect(await bgOf(def)).not.toBe(SCOPED_PURPLE); // baseline before override
+
+    await page.addStyleTag({ content: ':root{--zk-codeeditor-bg:#6750a4;--zk-codeeditor-gutter-bg:#6750a4}' });
+    expect(await bgOf(def)).toBe(SCOPED_PURPLE);
+    // Reaches through CodeMirror's unlayered gutter rule too, not just the root.
+    expect(await bgOf(def.locator('.cm-gutters').first())).toBe(SCOPED_PURPLE);
+  });
 });
