@@ -75,7 +75,7 @@
     --zk-motion-easing-standard: cubic-bezier(0.4, 0, 0.2, 1);
 
     /* ── Component Theme Variables — codeeditor ──
-       Nine Marble-authored (bg/fg/radius/border-color family + gutter triad) +
+       Ten Marble-authored (bg/fg/radius/border-color family + gutter triad + dark focus) +
        three ZK-core-authored dark-surface names (fixed spelling, public API) —
        see doc/contracts/codeeditor.md's Cross-cutting §Component Theme Variables. */
     --zk-codeeditor-bg:                  var(--zk-color-surface);
@@ -91,6 +91,7 @@
        (not theme-derived) — see Design Contract's WCAG-against-fixed-syntax-palette reasoning */
     --zk-codeeditor-dark-border-color:       rgba(255, 255, 255, 0.23);
     --zk-codeeditor-dark-border-color-hover: rgba(255, 255, 255, 0.6);
+    --zk-codeeditor-dark-border-color-focus: oklch(from var(--zk-color-primary) 0.8 c h); /* ≈ #80bdff */
     --zk-codeeditor-background:          #1e1e1e;
     --zk-codeeditor-color:               #d4d4d4;
     --zk-codeeditor-gutter-color:        #858585;
@@ -158,27 +159,46 @@ h1 { font-size: 22px; font-weight: var(--zk-font-weight-semibold); margin: 0 0 v
     overflow: hidden;                                  /* c5 */
     display: inline-block;
     width: 320px;
+    position: relative;                                            /* anchors the ::after ring overlay */
     border: 1px solid var(--zk-codeeditor-border-color);           /* c1 */
     border-radius: var(--zk-codeeditor-radius);                    /* c2 */
     background-color: var(--zk-codeeditor-bg);                     /* c3 */
     color: var(--zk-codeeditor-fg);                                /* c4 */
     vertical-align: top;
-    transition: border-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard),
-                box-shadow var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);  /* c6 */
+    transition: border-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);  /* c6 */
 }
 /* c7: hover */
 .z-codeeditor:hover,
 .z-codeeditor.mock-hover { border-color: var(--zk-codeeditor-border-color-hover); }
-/* c8–c10: focus-within — Mechanism A, border stays 1px, ring is an INSET box-shadow */
+/* c9b: the ring overlay is always present (transparent at rest) and paints ABOVE CodeMirror's
+   DOM. It cannot be an inset box-shadow on the root: that paints below the children, and the
+   payload is flush against the border and opaque (.cm-gutters always, .cm-editor on the dark
+   surface), so a root-drawn ring measured 1px on the gutter edge and vanished entirely in dark
+   mode. The overlay makes the ring uniform by construction — c32. */
+.z-codeeditor::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    box-shadow: inset 0 0 0 1px transparent;
+    pointer-events: none;
+    transition: box-shadow var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
+}
+/* c8–c10: focus-within — Mechanism A (overlay variant), border stays 1px */
 .z-codeeditor:focus-within,
 .z-codeeditor.mock-focus {
     border-color: var(--zk-codeeditor-border-color-focus);         /* c8 */
     border-width: 1px;                                             /* c10 — must NOT become 2px */
+}
+.z-codeeditor:focus-within::after,
+.z-codeeditor.mock-focus::after {
     box-shadow: inset 0 0 0 1px var(--zk-codeeditor-border-color-focus); /* c9 */
 }
 /* c20–c21: disabled */
-.z-codeeditor-disabled { opacity: var(--zk-state-disabled-opacity); }
-.z-codeeditor-disabled .cm-editor { pointer-events: none; }
+.z-codeeditor-disabled {
+    opacity: var(--zk-state-disabled-opacity);
+    pointer-events: none;   /* c21 — on the ROOT, or the dead control still answers :hover */
+}
 
 /* c12: cave + .cm-editor fill the root */
 .z-codeeditor-cave, .cm-editor { height: 100%; }
@@ -245,7 +265,11 @@ h1 { font-size: 22px; font-weight: var(--zk-font-weight-semibold); margin: 0 0 v
    focus rule must come AFTER the hover rule so focus wins when both apply. */
 .z-codeeditor-dark { border-color: var(--zk-codeeditor-dark-border-color); }        /* c28 */
 .z-codeeditor-dark.mock-hover { border-color: var(--zk-codeeditor-dark-border-color-hover); } /* c29, c30 */
-.z-codeeditor-dark.mock-focus { border-color: var(--zk-codeeditor-border-color-focus); }      /* c31 */
+.z-codeeditor-dark.mock-focus { border-color: var(--zk-codeeditor-dark-border-color-focus); } /* c31 */
+/* c31b/c33: the dark surface takes MD3's dark-scheme primary (tone 80). The light knob measured
+   only 3.45:1 on the #1e1e1e fill; this is 8.45:1. */
+.z-codeeditor-dark:focus-within::after,
+.z-codeeditor-dark.mock-focus::after { box-shadow: inset 0 0 0 1px var(--zk-codeeditor-dark-border-color-focus); }
 .z-codeeditor-dark .cm-editor { color: var(--zk-codeeditor-color); }/* c23 */
 .z-codeeditor-dark .cm-gutters {
     background-color: var(--zk-codeeditor-background);              /* c24 — flush with surface, not a lighter slab */

@@ -43,28 +43,58 @@
 
 /* ─── Root frame — the outlined text-field chrome, shared with .z-textbox ── */
 .z-codeeditor {
+    position: relative;              /* anchors the ::after focus-ring overlay below */
     box-sizing: border-box;
     overflow: hidden;
     border: 1px solid var(--zk-codeeditor-border-color);
     border-radius: var(--zk-codeeditor-radius);
     background-color: var(--zk-codeeditor-bg);
     color: var(--zk-codeeditor-fg);
-    transition:
-        border-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard),
-        box-shadow var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
+    transition: border-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
 }
 
 .z-codeeditor:hover {
     border-color: var(--zk-codeeditor-border-color-hover);
 }
 
-/* Focus ring as an INSET box-shadow, not a border-width increase (Mechanism A,
-   the daterangebox/timepicker precedent — see reference/focus-affordance-no-layout-shift.md).
-   The root has no padding to compensate with, so growing the border 1px→2px would
-   shove the whole CodeMirror viewport 1px on every focus. `:focus-within` is enough
-   here: this component has no detached popup that focus can escape to. */
+/* Focus ring: border stays 1px in every state and the 2nd pixel is drawn as a ring
+   on this always-present overlay (Mechanism A, overlay variant — the timepicker
+   precedent, see reference/focus-affordance-no-layout-shift.md). Two reasons, and
+   the second is the one specific to this component:
+
+   1. No layout shift. The root has no padding to compensate with, so growing the
+      border 1px→2px would shove the whole CodeMirror viewport 1px on every focus.
+
+   2. The ring must not be painted UNDER the payload. An inset box-shadow on the root
+      paints on the root's own background layer, below every child — and CodeMirror's
+      DOM sits flush against the border (zero padding) with opaque backgrounds:
+      `.cm-gutters` always, and the entire `.cm-editor` on the dark surface. Measured
+      2026-09-08 with the ring on the root: the light editor rendered 2px on three
+      sides and 1px along the gutter, and the dark editor lost the ring on ALL four
+      sides, leaving only the bare border. The overlay is a single element above both
+      children, so the ring is uniform BY CONSTRUCTION rather than by luck.
+
+   Note this stayed invisible to computed-style checking: `getComputedStyle(root)`
+   reported `inset 0 0 0 1px primary` in exactly the broken state. The guards in
+   screenshot.spec.ts › codeeditor measure painted pixels for that reason.
+
+   `:focus-within` is enough here — this component has no detached popup that focus
+   can escape to. */
+.z-codeeditor::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    box-shadow: inset 0 0 0 1px transparent;   /* present but invisible at rest */
+    pointer-events: none;                      /* never intercept clicks or selection */
+    transition: box-shadow var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
+}
+
 .z-codeeditor:focus-within {
     border-color: var(--zk-codeeditor-border-color-focus);
+}
+
+.z-codeeditor:focus-within::after {
     box-shadow: inset 0 0 0 1px var(--zk-codeeditor-border-color-focus);
 }
 
@@ -136,10 +166,17 @@
 /* Re-assert focus for the dark surface. The shared `.z-codeeditor:focus-within`
    rule sits EARLIER in this file and carries the same specificity as the dark
    hover rule above, so without this a hovered-and-focused dark editor would keep
-   the hover border instead of the focus one. Primary blue clears 3.45:1 against
-   the near-black fill, so the focus color itself needs no dark variant. */
+   the hover border instead of the focus one.
+   The dark surface takes its OWN focus color: MD3 carries primary at tone 80 on a
+   dark scheme, and the light knob (#376fd0) measured only 3.45:1 against the
+   near-black fill — over the 3:1 floor but reported unreadable in design review.
+   The dark knob is the same hue at tone 80, 8.45:1. See tokens/_component-theme.css. */
 .z-codeeditor-dark:focus-within {
-    border-color: var(--zk-codeeditor-border-color-focus);
+    border-color: var(--zk-codeeditor-dark-border-color-focus);
+}
+
+.z-codeeditor-dark:focus-within::after {
+    box-shadow: inset 0 0 0 1px var(--zk-codeeditor-dark-border-color-focus);
 }
 
 .z-codeeditor-dark .cm-editor {

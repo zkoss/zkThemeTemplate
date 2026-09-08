@@ -1600,14 +1600,16 @@ popup/messagebox/confirmpopup.
 
 CodeMirror 6 source editor (CE, `@since` ZK 11.0.0, `zul/code/css/codeeditor.css`) —
 `.z-codeeditor` root + `.z-codeeditor-cave` mount point + CodeMirror's own `.cm-editor` /
-`.cm-scroller` / `.cm-gutters` / `.cm-content` subtree. Fourteen knobs, and they come in **two
+`.cm-scroller` / `.cm-gutters` / `.cm-content` subtree. Fifteen knobs, and they come in **two
 families that must not be homogenized**.
 
 Nine are Marble's own and follow the ordinary field convention (`-bg`, `-fg`, `-radius`,
 `-border-color[-hover|-focus]`, plus `-gutter-bg`/`-gutter-fg`/`-gutter-border-color`): the root
 is the outlined text field's chrome, so a codeeditor sits beside a textbox without looking
-imported, and the focus ring is the inset-box-shadow Mechanism A (the root has no padding to
-compensate a 1px→2px border with, so growing the border would shove the whole editor viewport).
+imported, and the focus ring is Mechanism A's **overlay** variant — the root has no padding to
+compensate a 1px→2px border with, so growing the border would shove the whole editor viewport, and
+the ring has to sit on an `::after` overlay rather than an inset box-shadow on the root because
+CodeMirror's DOM is flush against the border and paints opaque (see `codeeditor.css`).
 
 Three keep names **ZK core authored** — `--zk-codeeditor-background`, `--zk-codeeditor-color`,
 `--zk-codeeditor-gutter-color`. Those are a documented public API (the componentreference page
@@ -1645,6 +1647,7 @@ with no client-side reparenting, so region scoping (CTV-3) works normally.
 | `--zk-codeeditor-gutter-color` | `#858585` | dark line numbers — ZK-core name |
 | `--zk-codeeditor-dark-border-color` | `rgba(255, 255, 255, 0.23)` | dark-surface resting frame |
 | `--zk-codeeditor-dark-border-color-hover` | `rgba(255, 255, 255, 0.6)` | dark-surface hover frame |
+| `--zk-codeeditor-dark-border-color-focus` | `oklch(from var(--zk-color-primary) 0.8 c h)` ≈ `#80bdff` | dark-surface focus ring — MD3 puts primary at **tone 80** on a dark scheme; the light knob measured only 3.45:1 on the `#1e1e1e` fill and was reported unreadable in design review (2026-09-08). Derived by absolute OKLCH lightness off the seed so a brand override stays hue-consistent; 8.45:1 |
 
 The dark surface needs its **own** border pair rather than reusing
 `--zk-codeeditor-border-color[-hover]`: those are black-alpha, and composited over the opaque

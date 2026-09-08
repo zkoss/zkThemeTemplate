@@ -1976,6 +1976,140 @@ test.describe('colorbox', () => {
 });
 
 // =======================================================
+// Codeeditor
+// =======================================================
+// The focus ring is measured in PAINTED PIXELS, not computed style, and that is the
+// whole point of these two guards. Codeeditor's payload below `.z-codeeditor-cave` is
+// CodeMirror's own DOM, it paints opaque backgrounds (the gutter always; the entire
+// editor on the dark surface), and the root has zero padding — so a ring drawn as an
+// inset box-shadow on the ROOT is painted under those children and is partly or wholly
+// invisible. `getComputedStyle(root).boxShadow` still reports `inset 0 0 0 1px primary`
+// in exactly that broken state, so only pixels can tell the two apart.
+// See reference/focus-affordance-no-layout-shift.md ("an opaque child background
+// occludes a root inset ring") — the remedy is the ::after overlay, as on timepicker.
+test.describe('codeeditor', () => {
+  type RingScan = {
+    sides: { top: number; right: number; bottom: number; left: number };
+    ring: [number, number, number];
+    fill: [number, number, number];
+  };
+
+  // Screenshot the element, then decode it back inside the page on a canvas (no image
+  // library needed) and walk inward from the midpoint of each edge counting how many
+  // consecutive pixels still match the ring colour. That run-length IS the visible ring
+  // thickness on that side. Midpoints only — the corners are rounded.
+  async function scanRing(page: Page, sel: string): Promise<RingScan> {
+    const loc = page.locator(sel).first();
+    await loc.scrollIntoViewIfNeeded();
+    const png = (await loc.screenshot()).toString('base64');
+    return await page.evaluate(async (b64) => {
+      const img = new Image();
+      await new Promise((res, rej) => { img.onload = res; img.onerror = rej; img.src = 'data:image/png;base64,' + b64; });
+      const cv = document.createElement('canvas');
+      cv.width = img.naturalWidth; cv.height = img.naturalHeight;
+      const ctx = cv.getContext('2d', { willReadFrequently: true })!;
+      ctx.drawImage(img, 0, 0);
+      const W = cv.width, H = cv.height;
+      const at = (x: number, y: number): [number, number, number] => {
+        const d = ctx.getImageData(x, y, 1, 1).data;
+        return [d[0], d[1], d[2]];
+      };
+      const dist = (a: number[], b: number[]) =>
+        Math.max(Math.abs(a[0] - b[0]), Math.abs(a[1] - b[1]), Math.abs(a[2] - b[2]));
+      const mx = Math.floor(W / 2), my = Math.floor(H / 2);
+      const ring = at(mx, 0);                       // outermost pixel on a straight edge
+      // Modal interior colour, sampled off a grid so a glyph or a syntax-coloured
+      // token can't be mistaken for the surface fill.
+      const tally = new Map<string, { n: number; c: [number, number, number] }>();
+      for (let x = 8; x < W - 8; x += 7) {
+        for (let y = 8; y < H - 8; y += 7) {
+          const c = at(x, y), k = c.join(',');
+          const e = tally.get(k) ?? { n: 0, c };
+          e.n++; tally.set(k, e);
+        }
+      }
+      const fill = [...tally.values()].sort((a, b) => b.n - a.n)[0].c;
+      const run = (x0: number, y0: number, dx: number, dy: number) => {
+        let n = 0;
+        for (let i = 0; i < 10; i++) {
+          if (dist(at(x0 + dx * i, y0 + dy * i), ring) > 40) break;
+          n++;
+        }
+        return n;
+      };
+      return {
+        sides: {
+          top: run(mx, 0, 0, 1),
+          bottom: run(mx, H - 1, 0, -1),
+          left: run(0, my, 1, 0),
+          right: run(W - 1, my, -1, 0),
+        },
+        ring, fill,
+      };
+    }, png);
+  }
+
+  const contrast = (a: number[], b: number[]) => {
+    const lum = (c: number[]) => {
+      const f = (v: number) => { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); };
+      return 0.2126 * f(c[0]) + 0.7152 * f(c[1]) + 0.0722 * f(c[2]);
+    };
+    const [hi, lo] = [lum(a), lum(b)].sort((m, n) => n - m);
+    return (hi + 0.05) / (lo + 0.05);
+  };
+
+  async function openFocused(page: Page, sel: string) {
+    await page.goto('/codeeditor.zul');
+    await page.waitForSelector('.z-codeeditor .cm-editor', { timeout: 15000 });
+    await page.evaluate(() => document.fonts.ready);
+    // The root's transition does not reach ::after, so kill both with a stylesheet.
+    await page.addStyleTag({
+      content: '*,*::before,*::after{transition:none!important;animation:none!important}',
+    });
+    await page.evaluate((s) => {
+      const root = document.querySelector(s)!;
+      (root.querySelector('.cm-content') as HTMLElement).focus();
+    }, sel);
+  }
+
+  // RED before the fix: the gutter paints over the inset pixel on the left, so the ring
+  // measures 1px there against 2px on the other three sides — the reported asymmetry.
+  test('focus ring is uniform on all four sides (gutter must not eat it)', async ({ page }) => {
+    const sel = '.z-codeeditor:not(.z-codeeditor-dark):not(.z-codeeditor-disabled)';
+    await openFocused(page, sel);
+    const s = await scanRing(page, sel);
+    const { top, right, bottom, left } = s.sides;
+    expect(top, 'ring must be 2px (1px border + 1px overlay)').toBe(2);
+    expect(
+      [right, bottom, left],
+      `all four sides must match the top edge — measured ${JSON.stringify(s.sides)}`,
+    ).toEqual([top, top, top]);
+  });
+
+  // RED before the fix twice over: the dark editor paints an opaque background on
+  // .cm-editor, so ALL FOUR sides are occluded and the ring collapses to the bare 1px
+  // border; and that border is --zk-color-primary #376fd0, only 3.45:1 on the #1e1e1e
+  // fill. MD3 puts a lighter primary tone on a dark surface.
+  test('dark surface focus ring is uniform and legible against the fill', async ({ page }) => {
+    const sel = '.z-codeeditor-dark';
+    await openFocused(page, sel);
+    const s = await scanRing(page, sel);
+    const { top, right, bottom, left } = s.sides;
+    expect(top, 'dark ring must be 2px (1px border + 1px overlay)').toBe(2);
+    expect(
+      [right, bottom, left],
+      `all four sides must match the top edge — measured ${JSON.stringify(s.sides)}`,
+    ).toEqual([top, top, top]);
+    const ratio = contrast(s.ring, s.fill);
+    expect(
+      ratio,
+      `ring rgb(${s.ring}) on fill rgb(${s.fill}) = ${ratio.toFixed(2)}:1 — a dark-surface ` +
+      `ring must clear 4.5:1, well above the 3:1 UI-component floor`,
+    ).toBeGreaterThanOrEqual(4.5);
+  });
+});
+
+// =======================================================
 // `!important` removal guards
 // These assert the computed value that a now-deleted `!important` used to force
 // is still produced by the plain cascade on ZK 10.3.0.1. Each was proven

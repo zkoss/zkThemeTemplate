@@ -63,6 +63,26 @@ always carries the opaque `surface-container` readonly tint while the button is 
 ring looked thicker around the button. The transparent-input siblings (datebox/timebox/bandbox/spinner)
 are unaffected and stay on the plain root inset ring above.
 
+It bit **codeeditor** far harder (caught 2026-09-08, designer report). Whenever a widget's payload is a
+**third-party editor/viewer mounted into a cave** — CodeMirror here, and by the same shape tbeditor's
+Trumbowyg or pdfviewer's PDF.js — the payload brings its own opaque backgrounds and the cave gives the
+root no padding to keep them off the border. Treat the overlay as **mandatory** for that class of
+component rather than deciding case by case:
+
+- light surface: `.cm-gutters` is opaque and flush left → the ring measured **1px on the gutter edge,
+  2px on the other three**, which is exactly what the designer reported;
+- dark surface: our own `.z-codeeditor-dark .cm-editor` rule paints the whole viewport opaque → the ring
+  was occluded on **all four** sides and collapsed to the bare border.
+
+**A computed-style check cannot see any of this.** `getComputedStyle(root).boxShadow` reports
+`inset 0 0 0 1px <primary>` whether the ring is painted or buried, so an evaluator reading the root's
+box-shadow passes a fully broken ring. Assert **painted pixels** instead: screenshot the element, walk
+inward from the midpoint of each edge, and count consecutive ring-coloured pixels — that run-length is
+the visible thickness. Reference implementation: `screenshot.spec.ts › codeeditor` (decodes the shot on
+a canvas inside the page, so it needs no image library).
+
+**Overlay variant applies to:** timepicker, codeeditor.
+
 When a composite input has an opaque child background, draw the ring on an **always-present `::after`
 overlay** that paints *above* the children instead:
 

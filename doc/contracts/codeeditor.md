@@ -101,7 +101,31 @@ family (datebox/timebox/spinner/bandbox/timepicker) already uses, but for an unr
 reason — their constraint is min-height-pinned children fighting a shrinking content box; codeeditor
 has no padding to shrink from at all. CodeMirror's own default `outline: 1px dotted` on `.cm-focused`
 is suppressed (`outline: none !important` — one of the nine irreducible `!important`s, since that
-outline is unlayered) so only the root's own ring reads, avoiding a double ring one pixel apart.
+outline is unlayered) so only the theme's own ring reads, avoiding a double ring one pixel apart.
+
+**The ring is drawn on an `::after` overlay, not on the root — and for this component that is
+mandatory, not stylistic** (designer report 2026-09-08). An inset `box-shadow` paints on the
+element's own background layer, *below* every child. Because the root has zero padding, CodeMirror's
+DOM sits flush against the border, and it paints opaque: `.cm-gutters` always, and the whole
+`.cm-editor` on the dark surface. With the ring on the root it was therefore painted *under* the
+payload — measured `1/2/2/2` px (left/top/right/bottom) on the light surface, where the gutter ate
+the left pixel, and `1/1/1/1` on the dark surface, where the ring vanished entirely and only the
+bare border survived. The overlay (`position: absolute; inset: 0; pointer-events: none`, anchored by
+`position: relative` on the root and rounded-clipped by its `overflow: hidden`) is a single element
+above both children, so the ring is uniform **by construction**. This is the same overlay variant
+timepicker uses, and it generalises to any widget whose payload is a third-party editor mounted into
+a cave. Note that this defect was invisible to computed-style checking — `getComputedStyle(root)`
+reported `inset 0 0 0 1px primary` in both broken states — which is why c32 is specified in painted
+pixels.
+
+**The dark surface takes its own focus colour (c31/c33).** It previously reused the light knob on the
+argument that primary `#376fd0` already clears `3.45:1` against the `#1e1e1e` fill. That is true
+against WCAG 1.4.11's 3:1 UI-component floor and it was still reported unreadable in design review —
+MD3 does not put the light-scheme primary on a dark surface at all; the dark scheme carries primary
+at **tone 80**. `--zk-codeeditor-dark-border-color-focus` derives that tone by absolute OKLCH
+lightness off the same seed the palette's containers use, so a brand override
+(`doc/spec/brand-override.md`) stays hue-consistent instead of pinning a literal blue. Measured
+`8.45:1`.
 
 **The gutter reuses DESIGN.md §10's auxhead "faint tonal band" convention**, not a new decision:
 `--zk-codeeditor-gutter-bg` defaults to `--zk-color-surface-container-low`, the exact token §10
@@ -194,7 +218,8 @@ glyph-row rule does not apply to this component — this is a deliberate absence
 | c6 | `.z-codeeditor` | transition | `border-color, box-shadow` on `var(--zk-motion-duration-standard) var(--zk-motion-easing-standard)` | DESIGN.md §9 |
 | c7 | `.z-codeeditor:hover` | border-color | `var(--zk-codeeditor-border-color-hover)` → `var(--zk-color-on-surface)` | DESIGN.md §11 ("Input hover") |
 | c8 | `.z-codeeditor:focus-within` | border-color | `var(--zk-codeeditor-border-color-focus)` → `var(--zk-color-primary)` — measured `rgb(55, 111, 208)` | DESIGN.md §11 ("Input focus" — color only; see c10 for the width departure) |
-| c9 | `.z-codeeditor:focus-within` | box-shadow | `inset 0 0 0 1px var(--zk-codeeditor-border-color-focus)` | `reference/focus-affordance-no-layout-shift.md` — Mechanism A; see Design Contract |
+| c9 | `.z-codeeditor:focus-within::after` | box-shadow | `inset 0 0 0 1px var(--zk-codeeditor-border-color-focus)` — and the ROOT's own `box-shadow` must stay `none` | `reference/focus-affordance-no-layout-shift.md` — Mechanism A, **overlay variant**. A ring on the root paints below CodeMirror's opaque children and is eaten (see c32); the overlay paints above them |
+| c9b | `.z-codeeditor::after` | position / inset / pointer-events | `absolute` / `0px` on all four / `none` — present at rest with a `transparent` ring so the ring can transition | overlay must never intercept clicks or text selection in the editor |
 | c10 | `.z-codeeditor:focus-within` | border-width | `1px` (must **NOT** become `2px`) | `reference/focus-affordance-no-layout-shift.md` — the deliberate departure from DESIGN.md §11's literal mechanism |
 | c11 | `.z-codeeditor .cm-editor.cm-focused` | outline | `none` (`!important`) | overrides CodeMirror's own unlayered `outline: 1px dotted` default — one of the nine irreducible `!important`s, `important-inventory.md` |
 | c12 | `.z-codeeditor-cave`, `.z-codeeditor .cm-editor` | height | `100%` | structural (composition invariant) — not a design token |
@@ -216,7 +241,10 @@ glyph-row rule does not apply to this component — this is a deliberate absence
 | c28 | `.z-codeeditor-dark` | border-color | `var(--zk-codeeditor-dark-border-color)` → `rgba(255, 255, 255, 0.23)`, composited `rgb(82, 82, 82)` | dark surface needs a LIGHT-alpha frame: the shared black-alpha c2 collapses onto the `#1e1e1e` fill (`rgb(23,23,23)`) — see c30 |
 | c29 | `.z-codeeditor-dark:hover` | border-color | `var(--zk-codeeditor-dark-border-color-hover)` → `rgba(255, 255, 255, 0.6)`, composited `rgb(165, 165, 165)` | DESIGN.md §11 ("Input hover"), dark surface |
 | c30 | `.z-codeeditor-dark:hover` vs `.z-codeeditor-dark` | border-color contrast | **≥ 3:1** — measured `3.17:1` (was `1.14:1` before the fix) | WCAG 2.1 SC 1.4.11 (UI state change). The component OUTLINE was never at risk (the dark fill alone is 16.67:1 against the page); it was the state CHANGE that was invisible |
-| c31 | `.z-codeeditor-dark:focus-within` | border-color | `var(--zk-codeeditor-border-color-focus)` — measured `rgb(55, 111, 208)`, 3.45:1 against the dark fill | must be RE-ASSERTED in the dark block: the shared `:focus-within` rule sits earlier in the file at equal specificity, so without it a hovered-and-focused dark editor would keep the hover border |
+| c31 | `.z-codeeditor-dark:focus-within` | border-color | `var(--zk-codeeditor-dark-border-color-focus)` → `oklch(from var(--zk-color-primary) 0.8 c h)`, measured `#80bdff` | must be RE-ASSERTED in the dark block: the shared `:focus-within` rule sits earlier in the file at equal specificity, so without it a hovered-and-focused dark editor would keep the hover border. The dark surface takes MD3's dark-scheme primary **tone 80**, not the light-scheme primary — see c33 |
+| c31b | `.z-codeeditor-dark:focus-within::after` | box-shadow | `inset 0 0 0 1px var(--zk-codeeditor-dark-border-color-focus)` | the overlay ring must switch to the dark knob too, or the 2nd pixel stays light-scheme primary |
+| c32 | `.z-codeeditor:focus-within`, `.z-codeeditor-dark:focus-within` | **painted** ring thickness | `2px` on all four edges, measured in pixels at each edge midpoint — the four values must be equal | designer report 2026-09-08. Before the overlay fix: light `1/2/2/2` (the opaque `.cm-gutters` ate the left inset pixel), dark `1/1/1/1` (the opaque `.cm-editor` ate all four). **A computed-style check cannot see this** — the root reported `inset 0 0 0 1px primary` in both broken states, so this row must be verified from pixels |
+| c33 | `.z-codeeditor-dark:focus-within` painted ring vs the dark fill | contrast | **≥ 4.5:1** — measured `8.45:1` (`#80bdff` on `#1e1e1e`); was `3.45:1` | MD3 puts primary at tone 80 on a dark scheme. The bar is deliberately set above WCAG 1.4.11's 3:1 UI floor: the old value cleared 3:1 arithmetically and was still reported unreadable in design review |
 
 ## State matrix
 
@@ -224,14 +252,15 @@ glyph-row rule does not apply to this component — this is a deliberate absence
 |-------|----------|---------------------|
 | default (light, resting) | `.z-codeeditor` | c1–c6, M1, M2, M3 |
 | hover | `.z-codeeditor:hover` | c7 |
-| focus-within | `.z-codeeditor:focus-within` | c8, c9, c10, c11, M6 |
+| focus-within | `.z-codeeditor:focus-within` | c8, c9, c9b, c10, c11, c32, M6 |
 | disabled | `.z-codeeditor-disabled` | c20, c21, M7 |
 | readonly | `.z-codeeditor` with the `readonly` attribute set | **no distinct row** — renders identically to default; see Design Contract's "Readonly renders identically to enabled" |
 | gutter (lineNumbers=true, default) | `.z-codeeditor .cm-gutters` | c16, c17, c18, M-gutter-visible |
 | gutter absent (lineNumbers=false) | `.z-codeeditor:not(:has(.cm-gutters))` | structural — confirms the subtree is absent, not merely hidden |
 | dark surface, resting | `.z-codeeditor-dark` | c22, c23, c24, c25, c26, c28, M5 |
 | dark surface, hover | `.z-codeeditor-dark:hover` | c29, c30 |
-| dark surface, focus + hover | `.z-codeeditor-dark:focus-within:hover` | c31 — focus must win over hover |
+| dark surface, focus + hover | `.z-codeeditor-dark:focus-within:hover` | c31, c31b — focus must win over hover |
+| dark surface, focus | `.z-codeeditor-dark:focus-within` | c31, c31b, c32, c33 |
 | disabled, hover | `.z-codeeditor-disabled:hover` | c21 — border-color must NOT change from c1 |
 | explicit height set | `.z-codeeditor[style*="height"] .z-codeeditor-cave` | M4 |
 | caret (light) | `.z-codeeditor .cm-cursor` | c19 |
@@ -247,8 +276,9 @@ ctv-knobs: --zk-codeeditor-bg, --zk-codeeditor-fg, --zk-codeeditor-radius,
   --zk-codeeditor-background, --zk-codeeditor-color, --zk-codeeditor-gutter-color,
   --zk-codeeditor-dark-border-color, --zk-codeeditor-dark-border-color-hover
 ctv-probe: { knob: --zk-codeeditor-radius, property: border-radius, value: 2px }
+  --zk-codeeditor-dark-border-color-focus,
 
-Fourteen knobs in **two families that must not be homogenized** — already ported into
+Fifteen knobs in **two families that must not be homogenized** — already ported into
 `component-theme-variables.md`'s "Codeeditor — shipped" entry (this table is a verbatim
 restatement, not a new proposal; bookkeeping item 2 of the cross-cutting checklist is already
 satisfied for this component). Nine are Marble's own, following the ordinary field convention

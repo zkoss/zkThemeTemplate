@@ -1244,8 +1244,17 @@
        the fill (rest rgb(23,23,23), hover rgb(4,4,4) — a 1.14:1 change), so dark
        mode had no visible hover state; these mirror the light surface instead and
        clear the 3:1 UI-state bar (rgb(82,82,82) -> rgb(165,165,165), 3.17:1).
-       Focus reuses --zk-codeeditor-border-color-focus: primary blue already clears
-       3.45:1 against the near-black fill, so it needs no dark variant. */
+
+       FOCUS NEEDS ITS OWN DARK TONE. It used to reuse the light knob on the reasoning
+       that primary #376fd0 "already clears 3.45:1" against the near-black fill — true
+       against the 3:1 UI-component floor, but MD3 does not put the light-scheme primary
+       on a dark surface at all: the dark scheme carries primary at tone 80. Designer
+       review 2026-09-08 reported the ring as unreadable, and 3.45:1 for a 2px line on
+       near-black is exactly the marginal case the tone rule exists to prevent. Derived
+       by ABSOLUTE OKLCH lightness off the same seed as the palette's containers, so a
+       brand override (doc/spec/brand-override.md) stays hue-consistent instead of
+       hard-coding a blue. Measured against the #1e1e1e fill: 8.45:1 (was 3.45:1). */
     --zk-codeeditor-dark-border-color:       rgba(255, 255, 255, 0.23);
     --zk-codeeditor-dark-border-color-hover: rgba(255, 255, 255, 0.6);
+    --zk-codeeditor-dark-border-color-focus: oklch(from var(--zk-color-primary) 0.8 c h); /* ≈ #80bdff */
 }

@@ -83,9 +83,23 @@ that callback runs.
 - **Root has zero padding between its border and the cave.** The cave — and everything
   CodeMirror injects below it — fills the root's content box edge-to-edge. Growing the root's
   border-width on any state (e.g. a naive focus treatment) shifts the entire CodeMirror viewport
-  by that many pixels with nothing to absorb it, unlike a padded single-line input. Use an inset
-  box-shadow ring (Mechanism A), never a border-width increase, for any emphasis state — see
-  `reference/focus-affordance-no-layout-shift.md`.
+  by that many pixels with nothing to absorb it, unlike a padded single-line input. Never use a
+  border-width increase for an emphasis state — see `reference/focus-affordance-no-layout-shift.md`.
+- **An emphasis ring MUST be drawn on an `::after` overlay, not as an inset box-shadow on the
+  root.** This is the same zero-padding fact as above, seen from the paint side, and it is the
+  trap this component walks into: an inset box-shadow paints below the element's children, and
+  CodeMirror's DOM is both flush against the border and opaque. `.cm-gutters` carries an opaque
+  fill in every theme, so a root-drawn ring is eaten on the gutter edge; if the theme also paints
+  `.cm-editor` opaque for a dark surface, the ring disappears on **all four** sides. Measured
+  2026-09-08 (designer report): light 1px/2px/2px/2px (left/top/right/bottom), dark 1px all round.
+  Use the overlay recipe — root `position: relative` + `overflow: hidden`, ring on
+  `.z-codeeditor::after` with `pointer-events: none` — so the ring paints above the payload and is
+  uniform by construction. Generalises to any widget whose payload is a third-party editor mounted
+  into a cave (tbeditor/Trumbowyg, pdfviewer/PDF.js).
+- **Ring correctness cannot be checked from computed style.** `getComputedStyle(root).boxShadow`
+  returns the ring declaration whether or not anything paints over it, so a theme with a fully
+  buried ring passes a computed-value assertion. Verify emphasis rings on this component by
+  measuring painted pixels (`screenshot.spec.ts › codeeditor` is the reference implementation).
 - **Both `.z-codeeditor-cave` and CodeMirror's own `.cm-editor` must resolve to `height: 100%`**
   for the editor to fill an author-set root height. If either falls back to `auto` while the root
   has a fixed height, the visible editor collapses to zero rows while the outer border still
