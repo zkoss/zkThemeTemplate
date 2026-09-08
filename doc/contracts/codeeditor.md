@@ -208,6 +208,14 @@ glyph-row rule does not apply to this component — this is a deliberate absence
 
 ## Expected values
 
+> **Retired: c19, c27 (2026-09-08).** They asserted `border-left-color` on
+> `.cm-cursor` / `.cm-dropCursor`, which the CE build never renders — those nodes come from
+> CodeMirror's `drawSelection` extension and `_baseExtensions()` does not include it. The rules
+> were dead code and are gone. The ids are **not reused**. The caret that actually paints is the
+> browser's native one (`caret-color` on `.cm-content`, UA default: pure black on light, pure white
+> on dark, rather than the theme foregrounds) — a knowingly accepted deviation, D7 option B. Found
+> by the first real Gate-1 pass; see `tasks/eval-reports/codeeditor.md`.
+
 | id | selector | property | expected (token preferred) | source |
 |----|----------|----------|----------------------------|--------|
 | c1 | `.z-codeeditor` | border | `1px solid var(--zk-codeeditor-border-color)` → `var(--zk-color-outline)` — measured `rgba(0, 0, 0, 0.23)` | DESIGN.md §11 ("Component default (outline)") |
@@ -229,7 +237,6 @@ glyph-row rule does not apply to this component — this is a deliberate absence
 | c16 | `.z-codeeditor .cm-gutters` | background-color | `var(--zk-codeeditor-gutter-bg)` → `var(--zk-color-surface-container-low)` — measured `rgb(247, 249, 252)` (`!important`) | DESIGN.md §10 (auxhead "faint tonal band" precedent — see Design Contract); overrides CodeMirror's unlayered default, `important-inventory.md` |
 | c17 | `.z-codeeditor .cm-gutters` | color | `var(--zk-codeeditor-gutter-fg)` → `var(--zk-color-on-surface-variant)` — measured `rgba(0, 0, 0, 0.6)` (`!important`) | DESIGN.md §2 |
 | c18 | `.z-codeeditor .cm-gutters` | border-right-color | `var(--zk-codeeditor-gutter-border-color)` → `var(--zk-color-outline-variant)` — measured `rgba(0, 0, 0, 0.12)` (`!important`) | DESIGN.md §11 ("Dividers / row separators") |
-| c19 | `.z-codeeditor .cm-cursor`, `.z-codeeditor .cm-dropCursor` | border-left-color | `var(--zk-codeeditor-fg)` (no `!important` — nothing competes) | same role as c4 |
 | c20 | `.z-codeeditor-disabled` | opacity | `var(--zk-state-disabled-opacity)` (0.38) | DESIGN.md §8 |
 | c21 | `.z-codeeditor-disabled` | pointer-events | `none` (on the **root**, not just `.cm-editor`) | structural/behavioral — inerts the frame so a disabled editor stops answering `:hover` with a border change (MD3 Gate 2, 2026-09-08); also blocks select-and-copy, which is exactly what separates `disabled` from `readonly` |
 | c22 | `.z-codeeditor-dark`, `.z-codeeditor-dark .cm-editor` | background-color | `var(--zk-codeeditor-background)` — literal `#1e1e1e`, measured `rgb(30, 30, 30)` | deliberate literal, NOT theme-derived — see Design Contract; recorded in `component-theme-variables.md`'s Codeeditor entry |
@@ -237,7 +244,6 @@ glyph-row rule does not apply to this component — this is a deliberate absence
 | c24 | `.z-codeeditor-dark .cm-gutters` | background-color | `var(--zk-codeeditor-background)` (same literal as c22, `!important`) | Design Contract — gutter kept flush with the dark surface, not CodeMirror's lighter-slab default; `important-inventory.md` |
 | c25 | `.z-codeeditor-dark .cm-gutters` | color | `var(--zk-codeeditor-gutter-color)` — literal `#858585`, measured `rgb(133, 133, 133)` (`!important`) | same rationale as c22; `important-inventory.md` |
 | c26 | `.z-codeeditor-dark .cm-gutters` | border-right-color | `transparent` (`!important`) | Design Contract — dark gutter separates by number color alone, not a divider line; `important-inventory.md` |
-| c27 | `.z-codeeditor-dark .cm-cursor`, `.z-codeeditor-dark .cm-dropCursor` | border-left-color | `var(--zk-codeeditor-color)` | same role as c19, dark surface |
 | c28 | `.z-codeeditor-dark` | border-color | `var(--zk-codeeditor-dark-border-color)` → `rgba(255, 255, 255, 0.23)`, composited `rgb(82, 82, 82)` | dark surface needs a LIGHT-alpha frame: the shared black-alpha c2 collapses onto the `#1e1e1e` fill (`rgb(23,23,23)`) — see c30 |
 | c29 | `.z-codeeditor-dark:hover` | border-color | `var(--zk-codeeditor-dark-border-color-hover)` → `rgba(255, 255, 255, 0.6)`, composited `rgb(165, 165, 165)` | DESIGN.md §11 ("Input hover"), dark surface |
 | c30 | `.z-codeeditor-dark:hover` vs `.z-codeeditor-dark` | border-color contrast | **≥ 3:1** — measured `3.17:1` (was `1.14:1` before the fix) | WCAG 2.1 SC 1.4.11 (UI state change). The component OUTLINE was never at risk (the dark fill alone is 16.67:1 against the page); it was the state CHANGE that was invisible |
@@ -263,8 +269,6 @@ glyph-row rule does not apply to this component — this is a deliberate absence
 | dark surface, focus | `.z-codeeditor-dark:focus-within` | c31, c31b, c32, c33 |
 | disabled, hover | `.z-codeeditor-disabled:hover` | c21 — border-color must NOT change from c1 |
 | explicit height set | `.z-codeeditor[style*="height"] .z-codeeditor-cave` | M4 |
-| caret (light) | `.z-codeeditor .cm-cursor` | c19 |
-| caret (dark) | `.z-codeeditor-dark .cm-cursor` | c27 |
 
 ## Cross-cutting features
 
@@ -272,11 +276,11 @@ glyph-row rule does not apply to this component — this is a deliberate absence
 ctv: shipped
 ctv-knobs: --zk-codeeditor-bg, --zk-codeeditor-fg, --zk-codeeditor-radius,
   --zk-codeeditor-border-color, --zk-codeeditor-border-color-hover, --zk-codeeditor-border-color-focus,
+  --zk-codeeditor-dark-border-color-focus,
   --zk-codeeditor-gutter-bg, --zk-codeeditor-gutter-fg, --zk-codeeditor-gutter-border-color,
   --zk-codeeditor-background, --zk-codeeditor-color, --zk-codeeditor-gutter-color,
   --zk-codeeditor-dark-border-color, --zk-codeeditor-dark-border-color-hover
 ctv-probe: { knob: --zk-codeeditor-radius, property: border-radius, value: 2px }
-  --zk-codeeditor-dark-border-color-focus,
 
 Fifteen knobs in **two families that must not be homogenized** — already ported into
 `component-theme-variables.md`'s "Codeeditor — shipped" entry (this table is a verbatim

@@ -13,7 +13,7 @@
   Class names in the markup match the DOM tree in
   .claude/skills/zk-component-rules/components/codeeditor.md exactly: `.z-codeeditor` root,
   `.z-codeeditor-cave` mount point, and CodeMirror's own anchor classes below it
-  (`.cm-editor`/`.cm-scroller`/`.cm-gutters`/`.cm-content`/`.cm-cursor`) — this mockup hand-authors
+  (`.cm-editor`/`.cm-scroller`/`.cm-gutters`/`.cm-content`) — this mockup hand-authors
   a plausible static CodeMirror-shaped subtree so the chrome + gutter + dark-surface rules can be
   seen without a live editor instance.
 
@@ -243,13 +243,18 @@ h1 { font-size: 22px; font-weight: var(--zk-font-weight-semibold); margin: 0 0 v
 }
 .cm-content .code-line { display: block; }
 
-/* c19: caret (mockup-only static caret glyph — a real caret blinks; shown here as a static bar) */
+/* Caret: mockup-only static glyph (a real caret blinks). NOT theme-controlled and no longer a
+   contract row — c19/c27 were retired 2026-09-08. `.cm-cursor` is created by CodeMirror's
+   `drawSelection` extension, which the CE build does not load, so what paints is the BROWSER's
+   native caret: `caret-color` falls back to the UA default, pure black on light and pure white
+   on dark, NOT the theme foregrounds. The colours below are hard-coded to match that reality —
+   do not retoken them to --zk-codeeditor-fg/-color, which is what the removed rules tried. */
 .mock-caret {
     display: inline-block;
     width: 1px;
     height: 1em;
     vertical-align: text-bottom;
-    background-color: var(--zk-codeeditor-fg);                      /* c19 */
+    background-color: #000;                       /* UA default caret, not a theme token */
     margin-left: -1px;
 }
 
@@ -276,7 +281,7 @@ h1 { font-size: 22px; font-weight: var(--zk-font-weight-semibold); margin: 0 0 v
     color: var(--zk-codeeditor-gutter-color);                       /* c25 */
     border-right-color: transparent;                                /* c26 */
 }
-.z-codeeditor-dark .mock-caret { background-color: var(--zk-codeeditor-color); } /* c27 */
+.z-codeeditor-dark .mock-caret { background-color: #fff; } /* UA default caret, not a theme token */
 
 /* Mockup-only helpers (not part of the component contract) */
 .no-gutter-note { font-style: italic; }

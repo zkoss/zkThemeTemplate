@@ -125,8 +125,18 @@ that callback runs.
   per-token class to select. The only sanctioned styling surface for token colors is a fixed set
   of ten ZK-core-named custom properties the widget JS itself reads (see the theme contract for
   the exact spellings) — set those, do not try to target generated spans by class.
-- The caret (`.cm-cursor`) and drop-cursor (`.cm-dropCursor`) are CodeMirror-owned,
-  absolutely-positioned elements colored via `border-left-color`, not `background-color`/`color`.
+- **`.cm-cursor` / `.cm-dropCursor` are NOT rendered by the CE build, so a theme cannot colour the
+  caret through them.** They are created by CodeMirror's `drawSelection` extension, and
+  `_baseExtensions()` does not include it — same fixed-extension-set fact as `.cm-activeLine`
+  above. Verified 2026-09-08 against the shipped jar and against a live focused editor (0 such
+  nodes). A rule for them is dead CSS; Marble shipped exactly that for a while and it was removed
+  once the first real Gate-1 pass measured it. What paints instead is the **browser's native
+  caret**, governed by `caret-color` on `.cm-content` — and `caret-color` does NOT inherit from
+  `color`, so it falls back to the UA default (measured: pure `rgb(0,0,0)` on a light surface,
+  pure `rgb(255,255,255)` on dark) regardless of what the surrounding text colour is. Any theme
+  that wants a palette-matched caret must set `caret-color` explicitly; Marble knowingly does not
+  (2026-09-08 decision). If `drawSelection` ever enters the extension set the nodes reappear and
+  are coloured via `border-left-color`, not `background-color`/`color`.
 - An author-supplied `aria-label`/`aria-labelledby` on the ZK root is read once at mount time and
   **additionally** applied onto CodeMirror's own `contentDOM` via `EditorView.contentAttributes` —
   the attribute is not removed from the root, but a screen reader interacting with the actual
@@ -178,7 +188,8 @@ that callback runs.
   min-height-pinned children, codeeditor's is zero root padding.
 - **The editor viewport / gutter / caret subtree is CodeMirror's own semi-opaque payload**: a
   handful of top-level anchor classes are a legitimate, intended styling surface
-  (`.cm-editor`, `.cm-scroller`, `.cm-gutters`, `.cm-cursor`/`.cm-dropCursor`), but the internal
+  (`.cm-editor`, `.cm-scroller`, `.cm-gutters` — but NOT `.cm-cursor`/`.cm-dropCursor`, which the
+  CE build never renders, see Composition invariants), but the internal
   generated structure (per-token highlight spans, and CodeMirror's own `.ͼ*` hash classes used
   for its StyleModule rules) is not a stable selector surface and must not be targeted directly —
   the same "reach into named anchor classes, leave internals alone" posture goldenlayout's

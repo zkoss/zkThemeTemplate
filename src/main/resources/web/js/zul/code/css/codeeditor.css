@@ -32,6 +32,15 @@
      extension in via `_extraExtensions`.
    · selection — Marble styles no `::selection` anywhere, so the editor keeps the
      browser/CodeMirror default like every other input.
+   · the caret — `.cm-cursor` / `.cm-dropCursor` are created by CodeMirror's
+     `drawSelection` extension, and the CE build's `_baseExtensions()` does not
+     include it (verified in the shipped jar, and 0 such nodes in a live focused
+     editor, 2026-09-08). Rules for them were dead code and have been removed.
+     What actually paints is the BROWSER's native caret, governed by `caret-color`
+     on `.cm-content`; it resolves to the UA default (pure black on light, pure
+     white on dark) rather than the theme foregrounds, and that is an accepted
+     deviation, not an oversight — decided 2026-09-08 (D7 option B). If it is ever
+     revisited, the fix is `caret-color` on `.cm-content`, NOT a `.cm-cursor` rule.
    · the dark syntax palette (`--zk-codeeditor-token-*`) — those ten colors live in
      the widget JS with VS Code Dark+ literals as `var()` fallbacks, so re-declaring
      them here would duplicate ZK core values with no consumer in CSS. See the
@@ -134,12 +143,6 @@
     border-right-color: var(--zk-codeeditor-gutter-border-color) !important;
 }
 
-/* ─── Caret ──────────────────────────────────────────────────────────────── */
-.z-codeeditor .cm-cursor,
-.z-codeeditor .cm-dropCursor {
-    border-left-color: var(--zk-codeeditor-fg);
-}
-
 /* ─── Dark surface (theme="dark") ────────────────────────────────────────── */
 /* The root repaints too, not just .cm-editor: the root owns the rounded corners,
    so leaving it on the light fill would show four pale wedges around the editor.
@@ -191,11 +194,6 @@
     background-color: var(--zk-codeeditor-background) !important;
     color: var(--zk-codeeditor-gutter-color) !important;
     border-right-color: transparent !important;
-}
-
-.z-codeeditor-dark .cm-cursor,
-.z-codeeditor-dark .cm-dropCursor {
-    border-left-color: var(--zk-codeeditor-color);
 }
 
 /* ─── Disabled ───────────────────────────────────────────────────────────── */
