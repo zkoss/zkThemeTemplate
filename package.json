@@ -7,6 +7,7 @@
     "build:css:dev": "node scripts/build-css.js --dev",
     "check:css-dsp": "node scripts/check-css-dsp.js",
     "check:forced-colors": "node scripts/check-forced-colors.js",
+    "check:doc-links": "node scripts/check-doc-links.js",
     "test:focus-scan": "playwright test --config src/test/playwright/playwright.config.ts --project=focus-scan",
     "test:hit-target": "playwright test --config src/test/playwright/playwright.config.ts --project=hit-target",
     "test:forced-colors": "playwright test --config src/test/playwright/playwright.config.ts --project=forced-colors",
