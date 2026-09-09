@@ -1,8 +1,8 @@
 # Marble → zk Repository Migration Plan
 
-**Status:** P0 nearly complete, P3 begun. D14–D18 ruled; **D19 open** (blocks P4 only); **D20
-resolved in practice**. Nothing in P0 is blocked — the IceBlue-side work that used to sit here is
-now out of scope (see the scope note).
+**Status:** **P0 complete.** P3 under way (the skill is authored; it still has to be copied into
+`zk`). D14–D18 ruled; **D19 open** (blocks P4 only); **D20 resolved in practice**. The IceBlue-side
+work that used to sit in P0 is out of scope (see the scope note).
 **Written:** 2026-09-08 · **Last revised:** 2026-09-09 · **Decision series:** D13–
 
 **Technical appendix:** [marble-to-zk-migration-appendix.md](marble-to-zk-migration-appendix.md) —
@@ -66,17 +66,19 @@ this one.
 
 | # | Phase | Milestone | Owner | Progress |
 |---|-------|-----------|-------|----------|
-| **P0** | Consolidate & Freeze | This workspace holds only what is worth moving | Source | **≈85%** |
+| **P0** | Consolidate & Freeze | This workspace holds only what is worth moving | Source | **100%** |
 | **P1** | Build Integration | Marble CSS builds from inside `zk`; LESS retired | Target | 0% |
 | **P2** | Verification Environment | Preview pages and harness run inside `zk` | Target | 0% |
-| **P3** | Knowledge Encapsulation | One skill answers every maintenance question | Source authors, Target commits | **≈30%** |
+| **P3** | Knowledge Encapsulation | One skill answers every maintenance question | Source authors, Target commits | **≈40%** |
 | **P4** | Cutover & Archive | This workspace goes read-only; Jess work resumes in `zk` | Split by repository | 0% |
 
 ### Overall progress
 
-**≈12%**, weighting P1 and P2 as the bulk of the engineering. Two things have actually landed: the
-asset triage produced a reviewed per-asset manifest, and the maintenance knowledge became a
-committed skill in this repository — which also put it under version control for the first time.
+**≈15%**, weighting P1 and P2 as the bulk of the engineering. P0 is done: the asset triage produced
+a reviewed manifest, the live documents are tracked, the archive set is disposed of, and the
+session's memory is split — 48 files folded into the `marble-theme` skill (now 11 files) and the
+18 that cannot travel written up for the target session to re-establish. All of that is under
+version control for the first time.
 
 ### Where the risk actually is
 
@@ -142,10 +144,14 @@ Work items:
       migration, and in `zk`. The freeze had been recorded only in session memory, so a reader of
       the triage board would not have known; the board now carries the notice at the top and
       points back to P4, where resuming the work is the last item.
-- [ ] **Execute the manifest's memory split.** Of 66 files, roughly 49 fold into the skill's
-      reference pages, and **17 cannot be moved at all** — working style, shell quirks and machine
-      facts are user preferences and environment truths, so they must be **re-established as the
-      target session's own memory**, never written into a repository skill.
+- [x] **Execute the manifest's memory split.** Done 2026-09-09. Of 66 files, **48 folded into the
+      skill** — two new reference pages (`layers.md`, `zul-authoring.md`), substantial additions to
+      `verification.md` and `tokens.md`, and the ZK version coordinates and MUI reference in
+      `SKILL.md`. **18 cannot travel** — the user's working preferences, this machine's quirks and
+      the project's commercial context — and are written up in
+      [session-memory-transfer.md](session-memory-transfer.md) for the target session to
+      re-establish as its own memory. The remainder are migration state that the plan now carries,
+      or migration-time knowledge already in the appendix.
 
 ### P1 — Build Integration
 
@@ -303,10 +309,12 @@ Work items:
       this repository. The memory index's own section headings already partitioned the knowledge
       along almost exactly these reference files, which is what made this a re-homing exercise
       rather than an authoring one (appendix §A.8).
-- [ ] **Fold in what the skill itself still declares missing:** cascade-layer mechanics in depth,
-      the ZUL authoring rules, the remaining visual-regression gotchas, and the ZK version
-      coordinates. Until then the specification index remains normative.
+- [x] **Fold in what the skill itself declared missing** — cascade-layer mechanics, the ZUL
+      authoring rules, the visual-regression gotchas, the ZK version coordinates. Done with the P0
+      memory split. What the skill still names as unmerged is the two tooling skills below.
 - [ ] **Copy the skill into `zk` and commit it there.** Step 2 of the two-step sequence in §4.
+- [ ] **Merge the two tooling skills** — `css-theme-audit` and `important-reduction` — into
+      `marble-theme`, as classified in appendix §A.7.
 - [ ] Move the 26 specifications (normative) and the 94 component contracts with their 19 mockups.
       The contracts are the harness's expected values; without them the harness has nothing to
       compare against.

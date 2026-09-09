@@ -232,20 +232,25 @@ in the skills — it was in memory and in `doc/spec/`. That is precisely the gap
 The memory index's section headings already partition the 66 files along the lines the skill needs,
 which is what made P3 step 1 a re-homing exercise rather than an authoring one:
 
+Executed 2026-09-09. Final destinations:
+
 | Memory index section | Destination |
 |---|---|
-| CSS Architecture | `reference/css-dsp.md`, `reference/pitfalls.md` |
-| Tokens & Naming | `reference/tokens.md`, `reference/iceblue-parity.md` |
-| ZUL Authoring | still to be folded in (P3 remainder) |
-| Visual Regression / Screenshots | `reference/verification.md` |
-| Tablet / Responsive | `reference/density.md` + `doc/spec/` equivalents |
-| ZK Version / Components | `zk-component-rules` (theme-independent) or `zk`'s `CLAUDE.md` |
-| **Shell Quirks, Environment** | **Machine-local — do not migrate.** Re-establish as the Target session's own memory |
-| **Working Style** | **Personal — do not migrate.** Same treatment |
-| Active Workstream | Migration state; ends with P4 |
+| CSS Architecture | `reference/layers.md` (new), `reference/css-dsp.md`, `reference/pitfalls.md` |
+| Tokens & Naming | `reference/tokens.md` (+4 sections), `reference/iceblue-parity.md` |
+| ZUL Authoring | `reference/zul-authoring.md` (new — all seven memories) |
+| Visual Regression / Screenshots | `reference/verification.md` (+7 sections) |
+| Tablet / Responsive | `reference/verification.md` (the client-side gate), `reference/zul-authoring.md` (the phantom scrollbar) |
+| ZK Version / Components | `SKILL.md` (version coordinates, MUI reference); ZK product facts → transfer document |
+| **Working Style** | 6 → `session-memory-transfer.md` §A; 2 already in `pitfalls.md` (§4, §10) |
+| **Shell Quirks** | 4 → transfer §B; the probe-cleanup rule → `verification.md`; `tasks/`-gitignored ends with the migration |
+| **Environment** | 2 → transfer §B; the IceBlue app launch → `verification.md` |
+| Active Workstream | Release capacity, the LESS/DSP decision, the Jess freeze, Theme Pack → transfer §C; migration state ends with P4; the IceBlue worktree is out of scope |
 
-**17 of the 66 cannot travel at all** — 9 working style, 6 shell quirks, 2 environment. They
-describe the user and the machine, not the theme.
+**Measured, not estimated: 48 folded into the skill, 18 in the transfer document.** The earlier
+"17" counted section headings; the by-file pass moved one working-style entry (the harness
+pattern) into the transfer set and two others (behaviour-preserving moves, ZKDoc ground truth)
+turned out to be engineering lessons already in `pitfalls.md`.
 
 ## A.9 Ruled decisions D14–D18
 
@@ -338,6 +343,21 @@ Found while migrating; none blocks the plan, all would mislead a reader.
 | Earlier revisions of this plan | `npm run check:version` guards version drift | No such script exists (§A.4) |
 
 ## A.11 Change log
+
+- **2026-09-09 — P0 closed: the memory split executed, file by file.** 66 memories read and
+  dispositioned individually rather than by section heading. **48 folded into `marble-theme`**,
+  which grew from 9 to 11 files (76 → 104 KB): `reference/layers.md` and
+  `reference/zul-authoring.md` are new; `verification.md` gained the client-side tablet gate, the
+  Playwright-not-Selenium ruling, the flaky-gallery list, the cross-theme A/B determinism floor,
+  the pop-up capture lessons, the probe-cleanup rule and the theme-done criterion; `tokens.md`
+  gained font-weight, the orphan-consumer rule, `z-` prefix scope and roles-not-duplication;
+  `SKILL.md` gained the jakarta version-coordinate trap and the MUI reference, and its "still to be
+  folded in" section is gone. **18 cannot travel** and are written up in
+  `session-memory-transfer.md` for the target session. Two corrections made on the way: the
+  skill's citation of `component-theming-api.md` pointed at a file that does not exist (the spec
+  is `component-theme-variables.md`), and the memory's own claim that utilities live in
+  `base/_utilities.css` was stale — they are `utility/*.css`. §A.8 now records the measured
+  mapping. P0 is at 100%, P3 at ≈40%, overall ≈15%.
 
 - **2026-09-09 — the IceBlue side left the plan.** Ruled out of scope by the user: cutting the
   `iceblue` branch, the `zkthemebuilder` submodule and its `--remote` flag, and the Theme Pack

@@ -46,7 +46,7 @@ zero-reference but correct ladder member, kept under the scale-completeness rule
 
 Marble exposes `--zk-<component>-*` properties so an adopter can restyle one component without
 overriding a global token that would ripple everywhere. 18 component families declare them;
-the normative spec is `doc/spec/component-theming-api.md` and `component-theming.spec.ts` covers
+the normative spec is `doc/spec/component-theme-variables.md` and `component-theming.spec.ts` covers
 it with 19 tests.
 
 **Call them "Component Theming Variables", and use "knob" as the informal shorthand.** They were
@@ -124,3 +124,39 @@ ZK's `zk/drag.ts:654` overrides it to 88800 during the drag.
 - `reference/brand-override.md` — how one seed cascades into a palette
 - `reference/density.md` — the control-height ladder and the semantic alias layer
 - `reference/iceblue-parity.md` — why IceBlue's 842 `--zk-*` names are a different vocabulary
+
+## There are no `--zk-font-weight-*` tokens
+
+Font weight is expressed two ways, and only two: typescale-bundled weights in
+`tokens/_typography.css` (`--zk-typescale-title-medium-weight: 500`; the maximum defined is 500),
+and literal values through the `.z-fw-*` utilities (`light` 300, `regular` 400, `medium` 500,
+`semibold` 600, `bold` 700). Write `font-weight: 500` or the typescale weight token. A contract
+once cited `--zk-font-weight-medium` and the evaluator flagged the theme for a missing token; it
+was a contract authoring error, not a gap. Do not create the family to make such a contract pass.
+
+## What counts as a token consumer
+
+When deciding whether a `--zk-*` token is an orphan, **"referenced" means referenced by component
+CSS under `src/main/resources/web/`.** A hit from a preview or demo ZUL — especially an inline
+`style="…var(--zk-token)…"` — is **not** a consumer; it is theme debt. Fix the ZUL to use a
+built-in utility, then delete the token. Self-contained `:root` snapshots inside
+`doc/contracts/*.html` are independent copies and do not block deletion either. Graduated scales
+(elevation 0–5, shape corners, spacing, typescale, motion) are kept complete regardless of
+reference count — see "scale completeness" above.
+
+## The `z-` prefix is for framework component variants only
+
+`z-` on a class name signals a **framework-shipped component variant or state** applied via
+`sclass` — `z-badge-success`, `z-avatar-sm`. Page-level helpers (layout, demo scaffolding) do not
+take it, whichever file they happen to live in. When auditing for naming violations, flag only
+classes that act as a variant, skin or state of a ZK component; leave page-level utilities alone.
+
+## Same value in several places is not duplication when the roles differ
+
+The theme version lives in `pom.xml`, `config.xml`, `package.json` and `Version.java`. They are
+not four copies: each declaration has its own job (artifact naming, ZK's startup comparison, the
+value both XMLs are compared against), and collapsing them would delete independent declarations,
+not redundancy. **State each occurrence's role before proposing to dedupe.** When the occurrences
+are not interchangeable, the right shape is *one writer plus one guard* — a single command that
+sets all of them and a check that they agree — not *one source of truth*. That guard does not
+exist yet (`reference/css-dsp.md`, last section).

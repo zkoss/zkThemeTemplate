@@ -80,19 +80,45 @@ does not outlive the call. Details and the Playwright projects: `reference/verif
 
 | File | Read it when |
 |---|---|
-| `reference/tokens.md` | Adding, renaming or auditing a token; component-level theming variables; the z-index scale |
+| `reference/tokens.md` | Adding, renaming or auditing a token; component-level theming variables; the z-index scale; what counts as a consumer |
+| `reference/layers.md` | Anything touching `@layer`, the reset, the icon stub, or a surviving `!important` |
+| `reference/zul-authoring.md` | Writing or fixing a preview page; a page that 404s or 500s; text that will not take a font; a flex row that stacks |
 | `reference/brand-override.md` | A customer wants to rebrand by overriding one seed colour |
 | `reference/density.md` | Compact / data-dense mode; anything about control heights |
 | `reference/css-dsp.md` | Adding or renaming a CSS file; a component renders unstyled; a stylesheet 404s |
-| `reference/verification.md` | Running the preview app, the Playwright suite, or screenshot baselines |
+| `reference/verification.md` | Running the preview app, the Playwright suite, or screenshot baselines; the tablet gate; A/B against another theme |
 | `reference/pitfalls.md` | **Read this before any non-trivial change.** Eleven mistakes already made once |
 | `reference/bug-filing.md` | The defect is ZK's, not the theme's, and needs a Jira ticket |
 | `reference/iceblue-parity.md` | Questions about IceBlue, the `--zk-*` public API break, or Theme Pack palettes |
 
-## Still to be folded in
+## ZK version coordinates
 
-This skill was assembled from the project's working notes. The following knowledge still lives
-in session memory and in `doc/spec/`, and belongs here: cascade-layer mechanics in depth, ZUL
-authoring rules (utility classes, `hflex`/`vflex` overriding CSS `flex-direction`, `.z-label`
-defeating container typography), the visual-regression harness gotchas, and the ZK version
-coordinates. Until then, `doc/spec/index.md` is the normative index.
+ZK's FL/Eval builds publish **two servlet flavours under distinct version strings** in the eval
+repository, and `dependency:resolve` succeeding does **not** tell you which one you got:
+
+- javax (legacy): `11.0.0.FL.<date>-Eval`
+- jakarta: `11.0.0-jakarta.FL.<date>-Eval` — `-jakarta` sits **before** `.FL`, not at the end
+
+The preview app is Spring Boot 3 and needs the **jakarta** flavour; the wrong one fails at
+startup with `Failed to introspect … ZkAutoConfiguration: javax/servlet/…`. `pom.xml`'s
+`<zk.version>` is currently `11.0.0-jakarta.FL.20260904` — the `pom.xml` is authoritative, and the
+root `CLAUDE.md` still names an older version. List candidates with
+`curl -s https://mavensync.zkoss.org/eval/org/zkoss/zk/zk/maven-metadata.xml | grep '<version>11'`;
+check a resolved jar's flavour with
+`unzip -p <zk.jar> 'org/zkoss/zk/ui/http/*.class' | strings | grep -c javax/servlet`.
+
+## External reference: MUI's CSS
+
+Marble's visual values follow MUI. Before implementing or refining any component's CSS, read the
+matching MUI stylesheet for exact padding, font sizes, state-layer colours and transitions:
+`/Users/hawk/Documents/workspace/THEME/material-ui-7.3.1/static-css-output/` — the `INDEX.md`
+there holds the ZK → MUI file lookup (Button → `Inputs/Button.css`, Grid/Listbox →
+`DataDisplay/Table.css`, Window dialog → `Feedback/Dialog.css`, Tabbox → `Navigation/Tabs.css`,
+and so on). This path is machine-local; after migration, re-home or re-fetch the extract.
+
+## Related skills not yet merged
+
+`css-theme-audit` (hygiene audit) and `important-reduction` (the `!important` removal method) are
+still separate skills in this repository. Both are Marble tooling and belong under this skill;
+merging them is a P3 item in the migration plan. `doc/spec/index.md` remains the normative index
+for the specifications this skill summarises.
