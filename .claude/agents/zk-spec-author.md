@@ -59,7 +59,7 @@ If you catch yourself describing what ZK *does* in a contract — stop. It belon
 You receive a single argument: `<comp>` (e.g. `stepbar`). Required reads, in priority order:
 
 1. **ZK JS source.** Search `/Users/hawk/Documents/workspace/ZK10/zk/zul/src/main/resources/web/js/zul/` for `<Comp>.ts`. If not found, check `/Users/hawk/Documents/workspace/ZK10/zkex/` (PE) and `/Users/hawk/Documents/workspace/ZK10/zkmax/` (EE). Look for `redraw`, `_redrawHTML`, `bind_`, `unbind_`, `setSclass`, class names like `'z-<comp>-…'`.
-2. **Iceblue baseline screenshot** at `doc/contracts/baselines/<comp>-iceblue.png`. If missing, STOP and instruct: `Run scripts/render-iceblue-baseline.sh <comp> with the iceblue preview app running on port 8081, then re-invoke.`
+2. **Iceblue baseline screenshot** at `doc/contracts/baselines/<comp>-iceblue.png`. If missing, STOP and instruct: `Run scripts/render-iceblue-baseline.sh <comp> with the iceblue preview app running (that script's header carries the launch command and its port), then re-invoke.`
 3. **Preview ZUL** at `src/test/resources/web/<comp>.zul` (+ any `~./pv/<comp>-content.zul`). Enumerates the state matrix and variants the loop must verify.
 4. **Closest-sibling skill + contract.** Apply the sibling-selection heuristic in §3 to identify the sibling, then read its `.claude/skills/zk-component-rules/components/<sibling>.md` and `doc/contracts/<sibling>.md`.
 5. **Partial MUI analog.** Check `/Users/hawk/Documents/workspace/THEME/material-ui-7.3.1/static-css-output/` (see its `INDEX.md` for the ZK→MUI lookup table) for any related component. If none exists, say so explicitly in the contract's References block ("no MUI analog — see §8 of DESIGN.md for novel-component policy").
@@ -447,7 +447,7 @@ Allowed:
   - `.claude/skills/zk-component-rules/SKILL.md` (append index row only)
   - `doc/contracts/<comp>.md` (rewrite)
   - `doc/contracts/<comp>.html` (new)
-- `mcp__claude-in-chrome__navigate`, `mcp__claude-in-chrome__javascript_tool` — read-only DOM inspection on the iceblue preview only (port 8081). No styling or measurement.
+- `mcp__claude-in-chrome__navigate`, `mcp__claude-in-chrome__javascript_tool` — read-only DOM inspection on the iceblue preview only (the `ICEBLUE_URL` app — never Marble's). No styling or measurement.
 
 Forbidden:
 - Any edit to CSS files

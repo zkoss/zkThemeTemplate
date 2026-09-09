@@ -85,7 +85,7 @@ In a separate terminal, start the CSS watcher:
 npm run watch
 ```
 
-Open the preview in a browser: http://localhost:8080
+Open the preview in a browser: http://localhost:8081
 
 ### Hot Reload
 
@@ -94,7 +94,7 @@ When `npm run watch` is running alongside the preview app:
 - After a successful rebuild, the browser reloads only the changed CSS — no full page refresh required.
 - A live-reload server runs on port 50000 to push notifications to the browser.
 
-Visit component pages with the `.zul` extension, e.g. http://localhost:8080/button.zul
+Visit component pages with the `.zul` extension, e.g. http://localhost:8081/button.zul
 
 
 

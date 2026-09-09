@@ -33,7 +33,7 @@ public class ThemePreviewIceblueApp {
 
         SpringApplication app = new SpringApplication(ThemePreviewIceblueApp.class);
         Properties props = new Properties();
-        props.setProperty("server.port", "8081");
+        props.setProperty("server.port", "8082");
         props.setProperty("spring.profiles.active", "iceblue");
         app.setDefaultProperties(props);
         app.run(args);

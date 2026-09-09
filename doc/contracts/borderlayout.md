@@ -20,7 +20,7 @@ closest-sibling: none — novel composite pattern
 
 - MUI CSS: no direct analog — closest reference is `Navigation/Drawer.css` (sidebar surface + 1px outline-variant divider pattern) and `Layout/Container.css` (surface background). See §8 of DESIGN.md for novel-component policy.
 - DESIGN.md sections: §2 (surfaces), §3 (color), §5 (spacing), §7 (motion)
-- Iceblue baseline: doc/contracts/baselines/borderlayout-iceblue.png (**MISSING** — run `scripts/render-iceblue-baseline.sh borderlayout` with iceblue preview on port 8081 before evaluator runs)
+- Iceblue baseline: doc/contracts/baselines/borderlayout-iceblue.png (**MISSING** — run `scripts/render-iceblue-baseline.sh borderlayout` with the iceblue preview app running before evaluator runs)
 - HTML contract: doc/contracts/borderlayout.html
 
 ## Design Contract

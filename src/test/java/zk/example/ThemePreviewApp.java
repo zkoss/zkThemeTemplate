@@ -13,6 +13,7 @@ import org.zkoss.lang.Library;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.Properties;
 
 @SpringBootApplication
 @Controller
@@ -26,7 +27,15 @@ public class ThemePreviewApp {
         Library.setProperty("org.zkoss.zk.WCS.cache", "false");
         Library.setProperty("org.zkoss.web.classWebResource.cache", "false");
         Library.setProperty("org.zkoss.util.label.cache", "false");
-        SpringApplication.run(ThemePreviewApp.class, args);
+
+        // Port lives here (not in application.properties) so each preview app declares
+        // its own; setDefaultProperties is the lowest-precedence source, so
+        // -Dserver.port=... still overrides it.
+        SpringApplication app = new SpringApplication(ThemePreviewApp.class);
+        Properties props = new Properties();
+        props.setProperty("server.port", "8081");
+        app.setDefaultProperties(props);
+        app.run(args);
     }
 
     /** serve static CSS files from usecase demo directory */

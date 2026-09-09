@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Captures iceblue (default ZK theme) baseline screenshots for seed components.
 #
-# Prerequisites: iceblue preview server must be running on port 8081:
+# Prerequisites: iceblue preview server must be running on port 8082:
 #   withjdk.sh 17 mvn test exec:java@preview-app-iceblue
 #
 # Usage:
@@ -16,7 +16,7 @@ SEED=(stepbar signature tbeditor organigram pdfviewer)
 COMPONENTS=("${@:-${SEED[@]}}")
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="$(dirname "$SCRIPT_DIR")"
-BASE_URL="${ICEBLUE_URL:-http://localhost:8081}"
+BASE_URL="${ICEBLUE_URL:-http://localhost:8082}"
 OUTPUT_DIR="$PROJECT_ROOT/doc/contracts/baselines"
 
 echo "Base URL: $BASE_URL"
