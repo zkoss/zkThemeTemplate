@@ -7,7 +7,7 @@ If we drop LESS/SASS and refuse to add another preprocessor, what do modern UI f
 techniques, each matched to *when the condition becomes known*. Only the last one is a build step,
 and it is written in a real language (JS/TS), not in a CSS dialect.
 
-Companion docs: [tasks/drop-less-pure-css-evaluation.md](../tasks/drop-less-pure-css-evaluation.md)
+Companion docs: [doc/drop-less-pure-css-evaluation.md](../doc/drop-less-pure-css-evaluation.md)
 (the LESS-removal feasibility study), [doc/spec/reset-scoping.md](spec/reset-scoping.md)
 (the one ZK conditional that genuinely needed a design decision).
 

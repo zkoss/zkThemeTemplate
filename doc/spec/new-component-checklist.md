@@ -112,7 +112,7 @@ The orchestrator (sole writer of status/tracker docs) first confirms:
 
 ## Known limits / follow-ups (not yet implemented)
 
-Work steps for these items live in [`../../tasks/harness-followups.md`](../../tasks/harness-followups.md).
+Work steps for these items live in [`../../doc/harness-followups.md`](../../doc/harness-followups.md).
 
 - No automated **brand-flip** regression project (override `--zk-color-primary` at
   `:root`, assert key surfaces recolor) — `x-brand-decl` guards the declaration level only.

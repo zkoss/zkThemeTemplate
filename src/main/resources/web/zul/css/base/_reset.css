@@ -31,8 +31,7 @@ html {
     height: 100%;
     /* No font-size override here: keep the browser default (16px) as the rem base, like MUI /
        Bootstrap / Tailwind. Content text is set explicitly by body/.z-page via px tokens, so
-       this only anchors rem — and the theme's rem values are authored as x/16. See
-       tasks/remove-root-font-size-impact.md. */
+       this only anchors rem — and the theme's rem values are authored as x/16. */
     -webkit-text-size-adjust: 100%;
 }
 

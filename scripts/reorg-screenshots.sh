@@ -2,7 +2,7 @@
 #
 # One-shot migration: collapse Playwright's per-test screenshot baseline folders
 # into one-folder-per-preview-page. Pairs with the spec/config refactor that
-# makes Playwright WRITE to these new paths (see tasks/reorg-screenshots.md).
+# makes Playwright WRITE to these new paths (see doc/reorg-screenshots.md).
 #
 # Rules (checked in order) — each source folder holds exactly one image:
 #   1. gallery-<comp>/<comp>.png        -> <comp>/gallery.png   (auto-scan galleries)

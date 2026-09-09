@@ -63,7 +63,7 @@ export default defineConfig({
       // Interaction guard: an interactive knob must be reachable at its own
       // centre (elementFromPoint), not merely rendered. Catches a sibling
       // overlay swallowing the pointer — invisible to every style-based check.
-      // See hit-target.spec.ts and tasks/multislider-knob-hit-target-analysis.md.
+      // See hit-target.spec.ts and doc/multislider-knob-hit-target-analysis.md.
       name: 'hit-target',
       testMatch: /hit-target\.spec\.ts/,
       use: { ...devices['Desktop Chrome'] },

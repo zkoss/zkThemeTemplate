@@ -143,7 +143,7 @@ moment it's added — the silent-gap problem is closed.
    *manual eval artifacts* are the GIFs/SVG/JSON/ad-hoc PNGs (`page.gif`, `popup-open.gif`,
    `fixed-*.png`, `eval-results*.json`) written by the `zk-theme-evaluator` agent for
    `cascader`, `coachmark`, `goldenlayout`, `linelayout`, `portallayout`, `slider`,
-   `splitter`, `stepbar` — **linked from `tasks/eval-reports/*.md`, `tasks/design-reviews/*.md`,
+   `splitter`, `stepbar` — **linked from `doc/harness/eval-reports/*.md`, `doc/harness/design-reviews/*.md`,
    and `doc/skill-gaps.md`**. These are referenced evidence, **not** test baselines, and
    must not be pruned.
 

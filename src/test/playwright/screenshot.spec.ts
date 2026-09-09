@@ -1240,7 +1240,7 @@ test.describe('pv-cols-fill', () => {
 // window 56+32→88px, panel 48+32→80px, groupbox 48+24→73px. This guards both
 // the precise cause (box-sizing must be border-box) and the visible symptom
 // (header height must stay within the intended band, not the content-box blow-up).
-// See tasks/header-height-boxsizing-fix.md and doc/skill-gaps.md.
+// See doc/skill-gaps.md.
 // -------------------------------------------------------
 test.describe('container-header-height', () => {
   const cases = [
@@ -1507,7 +1507,7 @@ test.describe('tooltip', () => {
     expect(m.bg, '.z-popup-tooltip background must be the dark tooltip fill').toBe('rgba(97, 97, 97, 0.92)');
     expect(m.color, '.z-popup-tooltip text must be white').toBe('rgb(255, 255, 255)');
     // 0.6875rem against the browser-default 16px root (the `html{font-size:14px}` override was
-    // removed — see tasks/remove-root-font-size-impact.md). Guards the intended /16 size.
+    // removed). Guards the intended /16 size.
     expect(m.fontSize, '.z-popup-tooltip text is 0.6875rem = 11px at the 16px root').toBe('11px');
   });
 });
@@ -1835,7 +1835,7 @@ test.describe('inputgroup', () => {
   // The single-input focus rule in input.css bumps a textbox's border 1px→2px
   // (Mechanism B). Inside a group that thickening leaks onto the child while its
   // addon/button neighbours stay 1px, so the focused segment puffs proud of them
-  // and the group "looks bigger" (tasks/prompt.md). The fix keeps grouped children
+  // and the group "looks bigger". The fix keeps grouped children
   // at a constant 1px border in every state — the group's :focus-within outline
   // owns the affordance. Guard: a focused grouped input's border-width == its rest
   // border-width (and the group's bbox is unchanged), per
@@ -2114,7 +2114,7 @@ test.describe('codeeditor', () => {
 // These assert the computed value that a now-deleted `!important` used to force
 // is still produced by the plain cascade on ZK 10.3.0.1. Each was proven
 // render-neutral before the keyword was removed (see doc/spec/important-inventory.md
-// + tasks/important-decisions.md). If a future ZK/@layer change lets a lower rule
+// + doc/important-decisions.md). If a future ZK/@layer change lets a lower rule
 // win again, these fail — the signal to restore the override.
 // =======================================================
 test.describe('important-removal-guards', () => {

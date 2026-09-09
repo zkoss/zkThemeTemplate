@@ -162,7 +162,7 @@ focus, cascader/chosenbox/goldenlayout/organigram/nav, etc.) was folded into the
 lists via the process above. `npm run check:forced-colors -- --strict` now **exits 0** —
 every component CSS with a fragile pattern is represented in the guard. This coverage was
 produced with a Planner–Generator–Evaluator loop and verified by an independent
-computed-style probe across all four buckets (see `tasks/gap-5-tail-pge.md`). New
+computed-style probe across all four buckets (see `doc/gap-5-tail-pge.md`). New
 components should keep it at strict-zero using the checklist above.
 
 **Masked-icon fill (pattern 5, added after the initial pass).** A field report —

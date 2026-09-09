@@ -332,7 +332,7 @@
  * shadow, no radius, transparent bg). The :not() guard below makes sure
  * this rule doesn't bleed into the popup case and force authors to override
  * three properties twice.
- * See MD3 selection / picker guidance and tasks/design-review-2026-05-29.md §2a. */
+ * See MD3 selection / picker guidance. */
 .z-calendar:not(.z-datebox-popup .z-calendar) {
     background: var(--zk-calendar-bg);
     border: 1px solid var(--zk-calendar-border-color);

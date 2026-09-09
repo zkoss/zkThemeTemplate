@@ -5,7 +5,7 @@ Regenerate this file when the target ZK version changes. Sources are under
 `/Users/hawk/Documents/workspace/ZK10/zk/` (tag 10.2.1-jakarta).
 
 This file is the **spec layer** of the three-layer framework-class compliance check
-(see `tasks/framework-class-verification-procedure.md`). It generalises and supersedes
+that ships with this skill. It generalises and supersedes
 `css-flex-classes.md` for the flex family; cross-links to `zk-core-emitted-selectors.md`
 for bundling rules.
 

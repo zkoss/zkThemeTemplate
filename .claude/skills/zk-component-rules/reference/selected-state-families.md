@@ -10,9 +10,8 @@ This rule was added 2026-05-29 after a cross-component audit found:
 - `searchbox` used `secondary-container` while `combobox`/`tree`/`menu` used
   `primary-container` for the same kind of "highlighted dropdown row"
 
-See `doc/skill-gaps.md` (2026-05-29 row) for the gap log, and
-`tasks/design-review-2026-05-29.md` §4 for the cross-component audit table
-and rationale.
+See `doc/skill-gaps.md` (2026-05-29 row) for the gap log, the cross-component
+audit table and the rationale.
 
 ## The three families
 

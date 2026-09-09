@@ -68,8 +68,7 @@ test.describe('reset scoping — org.zkoss.zul.theme.browserDefault', () => {
 
   test('root keeps the browser-default font-size (the 14px override was removed)', async ({ page }) => {
     // _reset.css no longer sets `html { font-size }`, so the root stays at the browser default
-    // (16px) — the rem base the theme's rem values are authored against. See
-    // tasks/remove-root-font-size-impact.md.
+    // (16px) — the rem base the theme's rem values are authored against.
     await page.goto(PAGE, { waitUntil: 'domcontentloaded' });
     expect(await page.evaluate(() => getComputedStyle(document.documentElement).fontSize)).toBe('16px');
   });

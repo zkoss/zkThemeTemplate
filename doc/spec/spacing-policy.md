@@ -1,6 +1,6 @@
 # Marble Spacing Policy (opt-in, zero default margins)
 
-> Revised 2026-06-05 (user ruling, `tasks/eval-rhythm-vs-optin-spacing.md`): the previous
+> Revised 2026-06-05 (user ruling): the previous
 > "default vertical rhythm" rule (`_rhythm.css`, auto `margin-block-end` on container
 > widgets) has been **removed**. This page records the current policy and why.
 
@@ -33,7 +33,6 @@
    一眼看懂(元件貼在一起)。rhythm 壞掉的症狀(JS 算出 `calc(100% - 12px)`
    的不對稱破洞)反而只有讀過 ZK 原始碼才能 debug。
 
-詳細評估:`tasks/eval-rhythm-vs-optin-spacing.md`。
 ZK 事實(margin subtraction)記錄在 skill:
 `.claude/skills/zk-component-rules/reference/css-flex-classes.md`。
 
