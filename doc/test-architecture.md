@@ -54,6 +54,10 @@ npm run screenshot:test
 # 3. Re-baseline after an intentional visual change
 npm run screenshot:update                              # playwright --update-snapshots
 
+# NOT for a change you expect to be pixel-equivalent (a token extraction, an
+# equal-value swap): there, a diff is a BUG in the change, not a stale baseline.
+# Investigate it — never accept it with screenshot:update.
+
 # Target one project / one component
 npx playwright test --config src/test/playwright/playwright.config.ts --project=chromium
 npx playwright test --config src/test/playwright/playwright.config.ts -g "button"

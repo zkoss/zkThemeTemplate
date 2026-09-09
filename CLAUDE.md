@@ -123,6 +123,7 @@ Located in `doc/` directory:
 | File | Description |
 |------|-------------|
 | [spec/index.md](doc/spec/index.md) | **Spec index** — normative theme specifications (the docs below marked *spec* live under `doc/spec/`) |
+| [documentation-conventions.md](doc/documentation-conventions.md) | **Where a document lives** — `doc/spec` vs `doc/` vs `doc/harness/` vs the gitignored `tasks/`, and the one rule (`npm run check:doc-links`, enforced by the build) that keeps a tracked file from depending on an untracked one |
 | [component-dom-structures.md](doc/component-dom-structures.md) | DOM structure of each ZK component |
 | [zk-source-reference.md](doc/zk-source-reference.md) | How to navigate ZK source code |
 | [css-dsp-file-structure.md](doc/spec/css-dsp-file-structure.md) | All required *.css.dsp output files for the theme |
@@ -163,6 +164,20 @@ Located in `doc/` directory:
 7. **Verify**: `withjdk.sh 17 mvn test exec:java@preview-app`, then screenshot use-case pages
 
 ## Project Rules
+
+### Writing a Document: Pick Its Home Before You Write It
+
+One question decides it: **will anything outside this document need it after the work lands?**
+
+- **Yes** → `doc/` (analysis, evaluation, audit, backlog, design review), `doc/spec/` (normative
+  rule), or `doc/harness/` (machine-written verification state — do not hand-edit).
+- **No** → `tasks/`, which is gitignored scratch you can delete freely.
+
+The hard rule, enforced by `npm run check:doc-links` in the Maven build: **if a tracked file
+references a path, that path must be tracked.** A plan or handoff written for another session to
+pick up is by definition not scratch — it belongs in `doc/`. See
+[documentation-conventions.md](doc/documentation-conventions.md) for why, and for what to do when
+the checker reports a dangling reference.
 
 ### Styling ZUL Pages: Prefer Built-in Utility Classes
 When writing or editing a ZUL page (especially under `src/test/resources/web/`), use the project's built-in utility classes from `src/main/resources/web/zul/css/utility/*.css` (the `z-*` family: `z-d-flex`, `z-p-3`, `z-gap-4`, `z-bg-surface-variant`, `z-rounded`, `z-vstack`, `z-hstack`, `z-text-sm`, `z-fw-medium`, etc.) instead of inventing page-local CSS classes inside an inline `<style>` block.

@@ -217,6 +217,33 @@
 							</successCodes>
 						</configuration>
 					</execution>
+					<execution>
+						<!-- A file that is in git must not depend on a file that is not. `tasks/` is
+						     gitignored scratch, so a tracked document linking into it is a link that can
+						     vanish with no diff, no history and no way back - which is exactly how twelve
+						     references had already gone dead by 2026-09-09. See
+						     doc/documentation-conventions.md.
+
+						     Exit codes are load-bearing: 1 = a tracked file depends on an untracked or
+						     missing path -> FAIL the build; 2 = cannot verify (not a git checkout, or git
+						     unavailable) -> tolerated, so an exported source tree still builds. -->
+						<id>check-doc-links</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<configuration>
+							<executable>npm</executable>
+							<arguments>
+								<argument>run</argument>
+								<argument>check:doc-links</argument>
+							</arguments>
+							<successCodes>
+								<successCode>0</successCode>
+								<successCode>2</successCode>
+							</successCodes>
+						</configuration>
+					</execution>
 					<execution> <!-- stamp HEAD commit date+hash for the use-case sidebar build marker -->
 						<id>stamp-commit</id>
 						<phase>process-test-resources</phase>
