@@ -1,7 +1,8 @@
 # Marble → zk Repository Migration Plan
 
-**Status:** P0 in progress, P3 begun. D14–D18 ruled; **D19 open** (blocks P4 only); **D20 resolved
-in practice**. Three P0 items await the user's authorisation — two in the target session, one here.
+**Status:** P0 nearly complete, P3 begun. D14–D18 ruled; **D19 open** (blocks P4 only); **D20
+resolved in practice**. Nothing in P0 is blocked — the IceBlue-side work that used to sit here is
+now out of scope (see the scope note).
 **Written:** 2026-09-08 · **Last revised:** 2026-09-09 · **Decision series:** D13–
 
 **Technical appendix:** [marble-to-zk-migration-appendix.md](marble-to-zk-migration-appendix.md) —
@@ -52,11 +53,20 @@ and the rule that keeps that honest is the organising principle of the whole mig
 
 Getting this the wrong way round is what would reopen the two-repository problem.
 
+**Out of scope — the IceBlue side.** Everything to do with preserving, branching or building
+IceBlue is **owned by a separate workstream and deliberately absent from this plan**: cutting the
+`iceblue` branch, the Theme Pack palettes, and the `zkthemebuilder` submodule and its build script.
+The measurements this project made on them are kept in the appendix for whoever picks that work up,
+but no work item here depends on doing them — with one exception, recorded honestly: **P4's
+promotion onto template `master` needs the `iceblue` branch to exist first**, or the LESS content
+that branch is meant to preserve is lost. That is a dependency on another workstream, not a task in
+this one.
+
 ### Phases
 
 | # | Phase | Milestone | Owner | Progress |
 |---|-------|-----------|-------|----------|
-| **P0** | Consolidate & Freeze | This workspace holds only what is worth moving | Source (2 items Target) | **≈70%** |
+| **P0** | Consolidate & Freeze | This workspace holds only what is worth moving | Source | **≈85%** |
 | **P1** | Build Integration | Marble CSS builds from inside `zk`; LESS retired | Target | 0% |
 | **P2** | Verification Environment | Preview pages and harness run inside `zk` | Target | 0% |
 | **P3** | Knowledge Encapsulation | One skill answers every maintenance question | Source authors, Target commits | **≈30%** |
@@ -88,10 +98,11 @@ records why that was wrong.
 
 | Blocked item | Owner | Blocked on |
 |---|---|---|
-| The two P0 writes into `zkcml` (drop `--remote`, record the submodule branch) | Target | **The user, authorising in the target session.** A relayed approval is not authorisation (§4) |
-| Cutting the `iceblue` branch here | Source | **The user, authorising in this session** — it is an irreversible branch operation on a public repository |
-| P4's promotion onto template `master` | Source | **D19** — still open |
+| P4's promotion onto template `master` | Source | **D19** — still open, and it now also needs the `iceblue` branch, which the other workstream owns |
 | Nothing else | — | — |
+
+**P0 is no longer blocked on anything.** Its three authorisation-gated items were the IceBlue-side
+ones, and they have left this plan.
 
 ---
 
@@ -106,7 +117,7 @@ used a different number, appendix §A.2 says which was measuring what.
 
 | | |
 |---|---|
-| **Owner** | **Source**, except two writes into `zkcml` |
+| **Owner** | **Source** — undivided; every write lands in this repository |
 | **Input** | 91 `tasks/` files, 488 `doc/` files, 66 memory files, 7 skills, 5 subagents |
 | **Output** | A reviewed per-asset manifest; only live assets left on disk here |
 | **Gate** | Nothing left unclassified, and no live document left in untracked scratch |
@@ -131,23 +142,6 @@ Work items:
       migration, and in `zk`. The freeze had been recorded only in session memory, so a reader of
       the triage board would not have known; the board now carries the notice at the top and
       points back to P4, where resuming the work is the last item.
-- [ ] **Drop `--remote` from the theme-builder's build script. Do this first — it is
-      order-independent and immediately protective.** `--remote` tracks the submodule's *default*
-      branch, so the moment template `master` becomes Marble, the Theme Pack's 27
-      IceBlue-vocabulary palettes would be generated from Marble CSS — **silently**, because those
-      palettes reference 110 IceBlue token names of which 1 exists in Marble, and CSS ignores
-      unknown custom properties. The submodule is pinned to a LESS-era commit and submodules
-      resolve by SHA, so removing `--remote` leaves a working, deterministic pipeline **today**,
-      without waiting for the `iceblue` branch. This is the one break that fires *outside* the
-      branch, for whoever runs the script. **Write scope: Target.**
-- [ ] **Cut the `iceblue` branch on `zkThemeTemplate` from `master`** — and from `master`
-      *specifically*. **This is a correctness precondition, not a preference:** the Marble branch
-      is a divergent rewrite that has already deleted every LESS file, so it is **not** a superset
-      of `master`. Cutting `iceblue` from it would produce a branch with no LESS content and lose
-      that content permanently. Evidence in appendix §A.3.
-- [ ] **Then point the submodule at `iceblue`**, once the branch exists, so a future re-pin has a
-      documented source. Order: drop `--remote` → cut `iceblue` → record the branch.
-      **Write scope: Target.**
 - [ ] **Execute the manifest's memory split.** Of 66 files, roughly 49 fold into the skill's
       reference pages, and **17 cannot be moved at all** — working style, shell quirks and machine
       facts are user preferences and environment truths, so they must be **re-established as the
@@ -345,9 +339,10 @@ Work items:
 - [ ] Close the 6 measured component coverage gaps: codeeditor, scrollview, video, skeleton,
       sliderbuttons.
 - [ ] Port the tablet layer onto Marble's runtime density model.
-- [ ] **Execute D17:** promote Marble onto template `master`, the `iceblue` branch having been cut
-      in P0. **Not a fast-forward** — the two branches have divergent histories, so the promotion
-      mechanism is **D19**, still open.
+- [ ] **Execute D17:** promote Marble onto template `master`. **Two preconditions:** the
+      `iceblue` branch must already exist — that is the other workstream's task, not ours — and
+      the promotion mechanism is **D19**, still open. **Not a fast-forward**: the two branches have
+      divergent histories.
 - [ ] **Write the D18 sync script**, hosted in `zk` beside the release tooling: it reads core's
       Marble CSS and writes template `master`. Run a version check on the *synced result*, not only
       on core — a version drift between the coordinated locations silently un-themes an
@@ -370,8 +365,9 @@ CSS; the theme branch holds no LESS and 132 theme stylesheets. So "promote onto 
 fast-forward — it is a history-level decision about a repository customers fork.
 
 **Impact.** This is the branch customers will clone and whose history they will read. It matters
-only at P4, and the `iceblue` branch cut in P0 preserves the LESS content under every option — so
-this blocks nothing now.
+only at P4, so it blocks nothing now. Note that the LESS content is preserved under every option
+**only if the `iceblue` branch has been cut first**, and that is owned by the IceBlue workstream
+rather than by this plan.
 
 **Scope: `zkThemeTemplate` only.** In `zk` and `zkcml` the Marble branch sits on the *same commit*
 as its own `master`, so there is no divergence there and the eventual merge is a plain
@@ -420,11 +416,11 @@ replaces polling.
 | **Target** | `ZK10/zk` | **P1, P2** | Every write into `zk` / `zkcml`: the build work, the preview module, `zktest` triage |
 
 **The rule that decides every case: ownership follows the repository being written to, not the
-phase.** Only P1 is owned outright; the other four are split:
+phase.** P0 and P1 are owned outright; the other three are split:
 
 | Phase | Owner | The split, where there is one |
 |---|---|---|
-| **P0** Consolidate & Freeze | **Source**, two items Target | The triage, the manifest, the memory split and the `iceblue` branch cut are all writes to *this* repository. The two exceptions are writes to `zkcml`: dropping `--remote` from the theme-builder's build script and recording the submodule branch. |
+| **P0** Consolidate & Freeze | **Source** | Undivided. The triage, the manifest and the memory split are all writes to *this* repository. It previously carried two `zkcml` writes for the theme-builder submodule; those are out of scope now. |
 | **P1** Build Integration | **Target** | Undivided — every artifact lands in `zk` or `zkcml`. Source answers questions about the CSS builder and writes nothing. |
 | **P2** Verification Environment | **Target**, Source supplies | Target stands up the preview module and re-points the harness. Source carries the 199 baselines, the 159 pages and the harness's failure modes across — they exist only here. |
 | **P2 gate** — the zero-tolerance comparison (D16) | **Target runs it** | It needs both halves: the baselines (Source) and the migrated build (Target). The baselines must already be in `zk`, so this is a Target run on carried-across inputs, not a joint operation. |

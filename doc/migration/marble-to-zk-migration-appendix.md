@@ -65,24 +65,40 @@ untracked and requiring a `git add` before the move. It is tracked
 | `new_theme` (Marble, current HEAD) | 0 | **133** repo-wide / **132** theme sources |
 
 `new_theme` is a *divergent rewrite* that has already deleted every LESS file — it is **not** a
-superset of `master`. This is why `iceblue` must be cut from `master`.
-
-**The theme-builder landmine:**
-
-- `zkcml/zkthemebuilder/build.sh:59` runs `git submodule update --init --remote`.
-- `zkcml/.gitmodules` points `zkthemebuilder/template` at the `zkThemeTemplate` repository and
-  carries only `path` and `url` — no `branch` key.
-- The submodule is pinned at **`7e2f5b8f`** (tag v10.3.1), which is **not an ancestor of either
-  `master` or `new_theme`** but *is* LESS-era. Submodules resolve by SHA, so dropping `--remote`
-  leaves a working, deterministic, LESS-fed pipeline immediately.
-- The 27 Theme Pack palettes are pure `:root{--zk-*}` CSS (722 lines) referencing **110 IceBlue
-  token names of which exactly 1 exists in Marble**. CSS ignores unknown custom properties, so they
-  would compile, deploy and no-op.
+superset of `master`. **Consequence for the other workstream:** `iceblue` must be cut from
+`master`, never from `new_theme`, or the 153 LESS files are lost permanently. See §A.3b.
 
 **Why `tasks/` had no version-control fallback:** `.gitignore:35` is a bare `tasks`, ignoring the
 directory wholesale — **0 of 91 files tracked**, including this plan, the manifest, all six Jess
 documents and the lessons file. By contrast `doc/` was 486 of 488 tracked and the Playwright
 harness 15 of 15, which is why MOVE stood for those and STAGED COPY was needed for the 12.
+
+## A.3b IceBlue-side findings — measured here, owned elsewhere
+
+**Not part of this migration.** These were measured while planning it, and the plan's work items
+for them were withdrawn 2026-09-09 as out of scope. They are kept because they are live hazards
+that someone will need, and re-deriving them costs real time. Nothing in the plan depends on acting
+on them, with the single exception noted in §1's scope note (P4 needs the `iceblue` branch to
+exist).
+
+**The branch cut, if it happens:** cut `iceblue` from **`master`**, not from `new_theme` — see the
+precondition table in §A.3. This is a correctness constraint, not a preference.
+
+**The theme-builder landmine, still live:**
+
+- `zkcml/zkthemebuilder/build.sh:59` runs `git submodule update --init --remote`. `--remote` tracks
+  the submodule's **default branch**.
+- `zkcml/.gitmodules` points `zkthemebuilder/template` at the `zkThemeTemplate` repository and
+  carries only `path` and `url` — no `branch` key.
+- The submodule is pinned at **`7e2f5b8f`** (tag v10.3.1), which is **not an ancestor of either
+  `master` or `new_theme`** but *is* LESS-era. Submodules resolve by SHA, so dropping `--remote`
+  leaves a working, deterministic, LESS-fed pipeline immediately, without waiting for any branch to
+  exist.
+- **What fires if nothing is done:** the moment template `master` becomes Marble, a `./build.sh -u`
+  feeds a pure-CSS tree into a Maven + zklessc pipeline. The 27 Theme Pack palettes are pure
+  `:root{--zk-*}` CSS (722 lines) referencing **110 IceBlue token names of which exactly 1 exists
+  in Marble**. CSS ignores unknown custom properties, so they compile, deploy and **no-op
+  silently** — later, and for someone else.
 
 ## A.4 P1 evidence — why no existing Gradle task can carry Marble
 
@@ -281,8 +297,9 @@ branch carries the IceBlue content. Customers fork the repository to customise M
 
 **Two consequences:**
 
-1. **The theme-builder landmine stops being optional cleanup** and becomes a direct consequence of
-   this ruling: the submodule must be retargeted at `iceblue` *and* have `--remote` dropped (§A.3).
+1. **The theme-builder landmine is a direct consequence of this ruling** — the submodule must be
+   retargeted at `iceblue` *and* have `--remote` dropped. **Withdrawn from this plan's scope
+   2026-09-09**; the finding is preserved in §A.3b for the workstream that owns it.
 2. **The goal statement needed restating, not weakening.** This workspace stops being where Marble
    is maintained, but survives as a published product artifact — which raised D18.
 </details>
@@ -321,6 +338,19 @@ Found while migrating; none blocks the plan, all would mislead a reader.
 | Earlier revisions of this plan | `npm run check:version` guards version drift | No such script exists (§A.4) |
 
 ## A.11 Change log
+
+- **2026-09-09 — the IceBlue side left the plan.** Ruled out of scope by the user: cutting the
+  `iceblue` branch, the `zkthemebuilder` submodule and its `--remote` flag, and the Theme Pack
+  palettes. All three were P0 work items and all three are gone from it. **P0 shed every one of its
+  blocked items in the process** — those three were exactly the ones awaiting authorisation, so P0
+  is now unblocked and down to a single open task, the memory split. Ownership simplified with it:
+  P0 had been the one phase split across both sessions for a non-obvious reason (two writes into
+  `zkcml`), and it is now Source-only, so §4 records two phases owned outright rather than one. The
+  measurements were **not** deleted — they moved to §A.3b, because the theme-builder break is still
+  live for whoever owns it and re-deriving it costs real time. One honest dependency survives and
+  is stated in §1's scope note: **P4's promotion onto template `master` still needs the `iceblue`
+  branch to exist**, or the LESS content it is meant to preserve is lost. That is now a dependency
+  on another workstream rather than a task in this one.
 
 - **2026-09-09 — the appendix split out of the plan, and the last of the move's fallout cleared.**
   Restructuring into three tiers had made the single file *longer* (754 → 854 lines), which defeats
