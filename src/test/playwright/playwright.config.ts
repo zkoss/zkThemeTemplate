@@ -60,6 +60,15 @@ export default defineConfig({
       use: { ...devices['Desktop Chrome'] },
     },
     {
+      // Interaction guard: an interactive knob must be reachable at its own
+      // centre (elementFromPoint), not merely rendered. Catches a sibling
+      // overlay swallowing the pointer — invisible to every style-based check.
+      // See hit-target.spec.ts and tasks/multislider-knob-hit-target-analysis.md.
+      name: 'hit-target',
+      testMatch: /hit-target\.spec\.ts/,
+      use: { ...devices['Desktop Chrome'] },
+    },
+    {
       // Responsive display utilities: viewport @media (.z-d-*-{bp}) + container
       // queries (.z-container / .z-cq-*). See responsive-utilities.spec.ts.
       name: 'responsive',

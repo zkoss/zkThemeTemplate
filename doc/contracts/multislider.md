@@ -3,7 +3,7 @@ tier: T2
 category: input
 shared-css-file: src/main/resources/web/js/zkmax/slider/css/multislider.css
 siblings: []
-preview: http://localhost:8080/multislider.zul
+preview: http://localhost:8081/multislider.zul
 
 ## References
 - MUI CSS: Slider.css

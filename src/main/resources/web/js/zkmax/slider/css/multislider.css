@@ -110,6 +110,24 @@
         transform   var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
 }
 
+/* Every <sliderbuttons> child renders its OWN `.z-sliderbuttons`, and the rule
+   above stretches each one across the full rail. With no z-index anywhere they
+   resolve by DOM order, so the LAST range's container paints over every earlier
+   range's thumbs and swallows the pointer at their centres — 2(N-1) of 2N thumbs
+   unreachable for N ranges (a single-range multislider is unaffected, which is
+   why this hid). Lifting the thumb out of the auto/DOM-order group fixes every
+   range at once: neither `.z-multislider` nor `.z-sliderbuttons` establishes a
+   stacking context (both are positioned with z-index:auto), so all containers
+   and thumbs compete in one context.
+   Scoped under `.z-multislider` for the collision reason documented in
+   rangeslider.css: the `.z-sliderbuttons-*` names are shared with zkex's
+   rangeslider, and the rules in this file are otherwise unscoped.
+   `-area` deliberately gets NO z-index — thumbs at 2 already outrank every
+   area, so a rule there would have no observable effect. */
+.z-multislider .z-sliderbuttons-button {
+    z-index: 2;
+}
+
 /* State-layer ring (hover / focus) */
 .z-sliderbuttons-button::before {
     content: '';

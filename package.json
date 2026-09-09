@@ -8,6 +8,7 @@
     "check:css-dsp": "node scripts/check-css-dsp.js",
     "check:forced-colors": "node scripts/check-forced-colors.js",
     "test:focus-scan": "playwright test --config src/test/playwright/playwright.config.ts --project=focus-scan",
+    "test:hit-target": "playwright test --config src/test/playwright/playwright.config.ts --project=hit-target",
     "test:forced-colors": "playwright test --config src/test/playwright/playwright.config.ts --project=forced-colors",
     "capture:forced-colors": "playwright test --config src/test/playwright/playwright.config.ts --project=forced-colors-gallery",
     "review:forced-colors": "node scripts/build-forced-colors-review.js",
