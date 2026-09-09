@@ -7,15 +7,26 @@ default. No blockers.
 
 ---
 
+## ⚠️ FROZEN pending the zk migration
+
+**Do not start a Jess issue.** The 50 in-scope issues are solved **after** Marble moves into
+the `zk` repository, and in `zk` — not here. A fix applied in this workspace now would have to
+be re-applied on the other side, against a different build and a different CSS location.
+
+Frozen 2026-09-09 by the migration ruling; see
+[../migration/marble-to-zk-migration-plan.md](../migration/marble-to-zk-migration-plan.md),
+where resuming this work is the last item of P4. The 6 already-fixed issues are unaffected and
+still awaiting the designer to close them.
+
 ## Status board
 
-**Last updated 2026-09-07.** 6 of 82 done.
+**Last updated 2026-09-09.** 6 of 82 done. **Work frozen — see above.**
 
 | State | Issues | Count |
 |---|---|---|
 | Fixed, commented, awaiting the designer to close | #2, #76, #77, #79, #80, #81 | 6 |
 | Classified, in scope, not yet started | P1 (46) + DECIDE (4) | 50 |
-| Classified, deferred out of scope | see `tasks/jess-review-deferred.md` | 26 |
+| Classified, deferred out of scope | see [jess-review-deferred.md](jess-review-deferred.md) | 26 |
 
 **Resume here:** the verified P1 quick wins (#41 #43 #52 #65 #67) — all located to an exact
 line. Then the grid cluster #34-#39 (six issues, one file).
@@ -40,13 +51,14 @@ line. Then the grid cluster #34-#39 (six issues, one file).
   moves four shipped colours: darken the `status-*` accents, give badges their own capped
   fills, or switch `--zk-badge-fg` to a dark foreground per severity.
 
-Proposal + all measurements for #2: `tasks/jess-review-issue-2-proposal.md`.
+Proposal + all measurements for #2: [jess-review-issue-2-proposal.md](jess-review-issue-2-proposal.md).
 
 
 ### Re-deriving this board (the tracker is the source of truth)
 
-This file is under `tasks/`, which is **gitignored** — it survives on this machine
-but not a clean clone, and nobody else sees it. So never trust it over the tracker.
+This file is tracked under `doc/jess-review/`, so it survives a clean clone — but it
+is still a **snapshot**, refreshed by hand, and it goes stale between updates. So never
+trust it over the tracker.
 An issue carrying a `# Root cause` comment is one we have fixed:
 
 ```bash
@@ -79,7 +91,7 @@ extra lanes exist because 16 issues fit neither — see below; folding them into
 | BLOCKED — ZK core | 12 | no — file as ZK issues | ZK's own JS/Java; not a theme commit |
 
 **Current scope (2026-08-19): P1 + DECIDE = 51 issues.** The other 26 are listed in
-`tasks/jess-review-deferred.md`.
+[jess-review-deferred.md](jess-review-deferred.md).
 
 Confidence marks: **✔** verified against source this pass · **?** classification
 still needs a source check when it comes up.
@@ -123,7 +135,7 @@ Grouped by file so one sitting can clear a cluster.
 ### P3 and BLOCKED — moved out of scope
 
 The 14 preview-page defects and the 12 ZK-core issues now live in
-**`tasks/jess-review-deferred.md`**, with the evidence gathered so far and what each
+**[jess-review-deferred.md](jess-review-deferred.md)**, with the evidence gathered so far and what each
 one still needs. They stay open in the tracker; they are simply not in the current
 working scope.
 

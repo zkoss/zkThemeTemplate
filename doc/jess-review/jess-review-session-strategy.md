@@ -1,7 +1,7 @@
 # Working the P1 backlog — session strategy
 
 Answers the question "one long session with repeated /compact, or a fresh session per
-issue?" for the 51 in-scope Jess-review issues (`tasks/jess-review-triage.md`).
+issue?" for the 51 in-scope Jess-review issues ([jess-review-triage.md](jess-review-triage.md)).
 
 **Recommendation: one session per CLUSTER of issues, not per issue, and at most one
 compaction per session.**
@@ -38,16 +38,17 @@ are already in context.
 
 - The preview app on :8080 and the CSS watch on :50000 are machine-level, not session-level.
   Do not restart them.
-- `tasks/jess-review-triage.md` carries the status board, the 7-step fix process and the
+- [jess-review-triage.md](jess-review-triage.md) carries the status board, the 7-step fix process and the
   verdict vocabulary.
-- `tasks/jess-review-deferred.md` carries the 26 out-of-scope issues.
+- [jess-review-deferred.md](jess-review-deferred.md) carries the 26 out-of-scope issues.
 - The `hawkchen/marble-issue` tracker is the source of truth for open/closed.
 
-## One gap to be aware of
+## The machine-local gap — closed 2026-09-09
 
-`tasks/` is gitignored, so the board is **local to this machine only**. If the work ever has
-to be picked up on another machine or by another person, the board has to move out of
-`tasks/` (or the state has to live in the tracker). Fine as long as it stays here.
+This section used to warn that the board lived in a gitignored directory and was therefore
+**local to this machine only**. That gap is closed: the board and the other Jess documents
+moved into `doc/jess-review/` and are tracked, so the work can now be picked up from a clean
+clone or by another person. The tracker remains the source of truth for issue state.
 
 ## Concurrency warning (observed 2026-09-04)
 

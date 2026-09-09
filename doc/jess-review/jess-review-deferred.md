@@ -1,6 +1,6 @@
 # Jess design review — deferred list
 
-Split out of `tasks/jess-review-triage.md` on 2026-08-19. **26 of the 77 open
+Split out of [jess-review-triage.md](jess-review-triage.md) on 2026-08-19. **26 of the 77 open
 issues.** Hawk's current scope is P1 (component defects) plus the DECIDE lane;
 everything on this page is deliberately out of that scope.
 

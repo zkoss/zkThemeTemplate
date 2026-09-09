@@ -61,7 +61,7 @@ is vacuous** — 0 of 91 files are tracked, so there is no history for them to s
 `tasks/` files classified ARCHIVE would simply sit on disk in a workspace whose entire purpose is to
 become unnecessary. That is not archiving; it is deferral.
 
-This is raised as **D20** in `tasks/marble-to-zk-migration-plan.md`. Until it is ruled, do not
+This is raised as **D20** in [marble-to-zk-migration-plan.md](marble-to-zk-migration-plan.md). Until it is ruled, do not
 delete or relocate any `tasks/` ARCHIVE file.
 
 Seven dispositions, one of which is not a file operation at all:
@@ -249,10 +249,10 @@ The screenshot split was quoted correctly: **199** compared baselines and **100*
 ### 4.2 The largest files, for the DROP/condense decision
 
 ```
-564 KB  tasks/ZK Material Theme Colors.html      DROP (generated colour dump)
-324 KB  tasks/img/d26-option-c-dark-label.png    DROP
-290 KB  tasks/img/d26-badge-severity-options.png DROP
-240 KB  tasks/grid-livegrouping-…/comparison.png DROP
+564 KB  ZK Material Theme Colors.html      DROP (generated colour dump)
+324 KB  img/d26-option-c-dark-label.png    DROP
+290 KB  img/d26-badge-severity-options.png DROP
+240 KB  grid-livegrouping-…/comparison.png DROP
 119 KB  doc/harness/work-status.md                     MOVE, but condense first
 ```
 
@@ -298,7 +298,7 @@ carries, and the ZK version coordinates. Those live in session memory and are P3
 
 ### 4.5 Corrections this pass produced
 
-- **`tasks/work-status.md` was a stale duplicate.** The harness's live file is
+- **The `tasks/` copy of `work-status.md` was a stale duplicate.** The harness's live file is
   `doc/harness/work-status.md` (120 KB, **git-tracked**), which is what the four subagent
   definitions reference. The earlier classification of the `tasks/` copy as "the harness's live
   status file — condense before moving" was wrong; deleting it lost nothing. The same holds for

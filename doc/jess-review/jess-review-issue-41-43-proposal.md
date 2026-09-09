@@ -35,7 +35,7 @@ Reproduced by clicking the row labelled "Default Row" on `listbox.zul`: it gains
 ("Selected Row") goes white, and the first cell gets
 `rgb(55,111,208) 3px 0 0 0 inset`. That is pixel-for-pixel her screenshot —
 including the confusing part, that the highlighted row is the one labelled
-"Default Row". Repro image: `tasks/img/j41-repro.png`.
+"Default Row". The repro image was dropped with the other working-note binaries and not retained.
 
 **So the bar is the focus indicator, not selection decoration.** The tree's
 equivalent at `tree.css:167-171` is the same affordance drawn differently:
@@ -142,7 +142,7 @@ not be done:
 
 ## Open question for the user
 
-The ring width is **D15 in `tasks/navbar-focus-ring-clip-report.md`** (2px → 3px,
+The ring width is **D15 of the navbar focus-ring investigation** (archived with the pre-migration working notes) (2px → 3px,
 owned by session `zkthemetemplate-79`, still awaiting their user). This proposal
 deliberately uses `var(--zk-focus-ring)` and changes no width, so it composes
 with either outcome of D15. But applying an inward ring to listitem is named in

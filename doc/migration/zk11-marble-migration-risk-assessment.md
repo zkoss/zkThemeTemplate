@@ -2,7 +2,7 @@
 
 **Date:** 2026-09-04
 **Scope:** forking `zkoss/zk` + `zkoss/zkcml` master, replacing the built-in iceblue LESS theme with Marble's pure CSS, migrating the preview ZUL pages, and running the existing test suites.
-**Execution plan:** `tasks/marble-to-zk-migration-plan.md` — this document stays authoritative for the *risk profile* and the CSS-conversion order; the plan extends the scope from "convert the CSS" to "make the `zkThemeTemplate` workspace unnecessary" (knowledge, skills, preview pages, harness) and holds D14–D17.
+**Execution plan:** [marble-to-zk-migration-plan.md](marble-to-zk-migration-plan.md) — this document stays authoritative for the *risk profile* and the CSS-conversion order; the plan extends the scope from "convert the CSS" to "make the `zkThemeTemplate` workspace unnecessary" (knowledge, skills, preview pages, harness) and holds D14–D17.
 **Method:** measured directly against the working copies at `/Users/hawk/Documents/workspace/ZK10/zk` and `.../zkcml`. Every number below is counted, not estimated.
 
 ---
