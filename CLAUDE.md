@@ -62,7 +62,7 @@ npm run watch
 
 ### Preview and Development
 ```bash
-# Run preview application on localhost:8080
+# Run preview application on ${PREVIEW_URL}
 # This also starts npm run watch (live-reload on port 50000) automatically via process-resources phase
 withjdk.sh 17 mvn test exec:java@preview-app
 ```
@@ -78,33 +78,50 @@ The live-reload client script is injected via `preview.zul` and the UseCase SPA 
 
 ## Preview Pages
 
+### Preview server address — `${PREVIEW_URL}`
+
+**`${PREVIEW_URL}` = `http://127.0.0.1:8081`**
+
+Every document, contract, skill and agent instruction in this repo refers to the preview server by
+this *name* rather than restating its address. Substitute the value when you read it. In a shell,
+either `export PREVIEW_URL=http://127.0.0.1:8081` first or paste the address directly — the same way
+you already substitute the other placeholders in those snippets (`<comp>`, `{ver}`).
+
+Use `127.0.0.1`, **not** `localhost`: Chrome resolves `localhost` to IPv6 `::1` while the preview app
+binds IPv4 only, producing a false `ERR_CONNECTION_REFUSED`.
+
+The address itself is stated in exactly four places — the line above, `ThemePreviewApp.java` (binds
+the port), `src/test/playwright/playwright.config.ts` (machine default, overridable with the
+`PREVIEW_URL` environment variable) and `readme.md` (human getting-started). A port move edits those
+four files and nothing else; see [preview-url-indirection.md](doc/preview-url-indirection.md) for why.
+
 ### URL Patterns
 ```
-http://localhost:8080/{component-name}.zul
+${PREVIEW_URL}/{component-name}.zul
 ```
 `.zul` extension is required. The catch-all is restricted to `*.zul` only to avoid intercepting static resources.
 
 ### Common Component Pages
 | Component | URL |
 |-----------|-----|
-| Overview | http://localhost:8080/preview.zul |
-| Checkbox | http://localhost:8080/checkbox.zul |
-| Button | http://localhost:8080/button.zul |
-| Listbox | http://localhost:8080/listbox.zul |
-| Grid | http://localhost:8080/grid.zul |
-| Tabbox | http://localhost:8080/tabbox.zul |
-| Combobox | http://localhost:8080/combobox.zul |
-| Datebox | http://localhost:8080/datebox.zul |
-| Tree | http://localhost:8080/tree.zul |
-| Panel | http://localhost:8080/panel.zul |
-| Window | http://localhost:8080/window.zul |
+| Overview | ${PREVIEW_URL}/preview.zul |
+| Checkbox | ${PREVIEW_URL}/checkbox.zul |
+| Button | ${PREVIEW_URL}/button.zul |
+| Listbox | ${PREVIEW_URL}/listbox.zul |
+| Grid | ${PREVIEW_URL}/grid.zul |
+| Tabbox | ${PREVIEW_URL}/tabbox.zul |
+| Combobox | ${PREVIEW_URL}/combobox.zul |
+| Datebox | ${PREVIEW_URL}/datebox.zul |
+| Tree | ${PREVIEW_URL}/tree.zul |
+| Panel | ${PREVIEW_URL}/panel.zul |
+| Window | ${PREVIEW_URL}/window.zul |
 
 Preview ZUL files are located at `src/test/resources/web/*.zul`.
 
 ### UseCase SPA (Component Browser)
 The UseCase SPA supports hash-based deep linking — append `#<bookmark>` to jump directly to any sidebar page:
 ```
-http://localhost:8080/usecase/index.zul#<bookmark>
+${PREVIEW_URL}/usecase/index.zul#<bookmark>
 ```
 
 Bookmark keys are the target ZUL's path relative to the web root (`src/test/resources/web/`), minus the `.zul` extension. Two shapes:
@@ -113,7 +130,7 @@ Bookmark keys are the target ZUL's path relative to the web root (`src/test/reso
 
 The `<navitem>` entries in `usecase/index.zul` are the source of truth for the current set of pages — consult them (or the `.zul` filenames on disk) rather than a hard-coded list here, since the sidebar changes over time.
 
-Example: `http://localhost:8080/usecase/index.zul#usecase/ops-dashboard`
+Example: `${PREVIEW_URL}/usecase/index.zul#usecase/ops-dashboard`
 
 **VM**: `UseCaseVM.java` — `@Init` restores bookmark, `navigate` command sets bookmark, `handleBookmarkChange` command responds to browser back/forward. Reconstruction: `"~./" + bookmark + ".zul"`.
 
@@ -124,6 +141,7 @@ Located in `doc/` directory:
 |------|-------------|
 | [spec/index.md](doc/spec/index.md) | **Spec index** — normative theme specifications (the docs below marked *spec* live under `doc/spec/`) |
 | [documentation-conventions.md](doc/documentation-conventions.md) | **Where a document lives** — `doc/spec` vs `doc/` vs `doc/harness/` vs the gitignored `tasks/`, and the one rule (`npm run check:doc-links`, enforced by the build) that keeps a tracked file from depending on an untracked one |
+| [preview-url-indirection.md](doc/preview-url-indirection.md) | **Why docs never spell out the preview server's address** — the `${PREVIEW_URL}` convention, the four files that may state a literal, and the port-move procedure |
 | [component-dom-structures.md](doc/component-dom-structures.md) | DOM structure of each ZK component |
 | [zk-source-reference.md](doc/zk-source-reference.md) | How to navigate ZK source code |
 | [css-dsp-file-structure.md](doc/spec/css-dsp-file-structure.md) | All required *.css.dsp output files for the theme |

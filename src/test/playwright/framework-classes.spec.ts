@@ -5,7 +5,7 @@ import { test, expect } from '@playwright/test';
 // most appear only during an active drag, so we assert the CSS CONTRACT by injecting the exact
 // runtime markup (from zk/widget.ts) and reading computed styles — deterministic, no flaky drag.
 //
-// Requires the preview app on http://localhost:8080 (withjdk.sh 17 mvn test exec:java@preview-app).
+// Requires the preview app on ${PREVIEW_URL} (withjdk.sh 17 mvn test exec:java@preview-app).
 
 const DND = '/dnd.zul';
 const GRID = '/grid.zul'; // frozen-columns example lives here, not in dnd.zul

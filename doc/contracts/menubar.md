@@ -1,7 +1,7 @@
 # Component: menubar (theme design)
 tier: T1
 category: navigation
-preview: http://localhost:8080/menubar.zul
+preview: ${PREVIEW_URL}/menubar.zul
 rules: see .claude/skills/zk-component-rules/components/menubar.md
 contract-approved: false
 zk-version: 10.2.1-jakarta

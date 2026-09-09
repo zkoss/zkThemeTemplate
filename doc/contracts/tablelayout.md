@@ -1,7 +1,7 @@
 # Component: tablelayout (theme design)
 tier: T1
 category: layout
-preview: http://localhost:8080/tablelayout.zul
+preview: ${PREVIEW_URL}/tablelayout.zul
 rules: see .claude/skills/zk-component-rules/components/tablelayout.md
 contract-approved: true
 zk-version: 10.2.1-jakarta

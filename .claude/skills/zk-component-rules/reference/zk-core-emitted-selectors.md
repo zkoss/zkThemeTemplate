@@ -33,7 +33,7 @@ If a selector listed in this file (or any future ZK-core-emitted selector) needs
 
 ## How to verify
 
-`curl -s http://localhost:8080/zkau/web/<ver>/_zkiju-<theme>/zul/css/zk.wcs | grep '\\.z-loading\\b'` — if zero hits, the bundle is missing the rule even when the `.css.dsp` file exists on disk.
+`curl -s ${PREVIEW_URL}/zkau/web/<ver>/_zkiju-<theme>/zul/css/zk.wcs | grep '\\.z-loading\\b'` — if zero hits, the bundle is missing the rule even when the `.css.dsp` file exists on disk.
 
 ## Showbusy DOM the rules must support
 

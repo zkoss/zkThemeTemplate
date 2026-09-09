@@ -14,7 +14,7 @@
  * Usage:
  *   node probe.js <url> '<selector>' 'prop1,prop2,...' [waitSelector]
  * Example:
- *   node probe.js http://localhost:8080/progressmeter.zul \
+ *   node probe.js ${PREVIEW_URL}/progressmeter.zul \
  *     '.z-progressmeter-image' 'display,width,height'
  *
  * For BEHAVIORAL cases (open→dismiss a popup, collapse a panel, toggle a view,

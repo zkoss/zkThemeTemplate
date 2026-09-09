@@ -1,7 +1,7 @@
 # Component: listbox (theme design)
 tier: T1
 category: selection
-preview: http://localhost:8080/listbox.zul
+preview: ${PREVIEW_URL}/listbox.zul
 rules: see .claude/skills/zk-component-rules/components/data-components.md
 shared-css-file: src/main/resources/web/js/zul/sel/css/listbox.css
 contract-approved: true

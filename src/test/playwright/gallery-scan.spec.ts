@@ -13,7 +13,7 @@ import * as path from 'path';
 // state matrices (hover/focus/active) and computed-style guards stay in
 // screenshot.spec.ts; this spec is the breadth layer, that one is the depth layer.
 //
-// Requires the preview app on http://localhost:8080
+// Requires the preview app on ${PREVIEW_URL}
 //   withjdk.sh 17 mvn test exec:java@preview-app
 
 const WEB_DIR = path.resolve(__dirname, '../resources/web');

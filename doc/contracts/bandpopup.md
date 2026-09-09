@@ -5,7 +5,7 @@ shared-css-file: src/main/resources/web/js/zul/wnd/css/bandpopup.css
 siblings: []
 closest-sibling: menupopup
 decomposition: card surface (background + radius + elevation) — same as menu popup container, no inner padding
-preview: http://localhost:8080/bandbox.zul   (open bandbox popup)
+preview: ${PREVIEW_URL}/bandbox.zul   (open bandbox popup)
 
 ## References
 - DESIGN.md sections: §5, §6

@@ -3,7 +3,7 @@ tier: T2
 category: container
 shared-css-file: src/main/resources/web/js/zkmax/wgt/css/drawer.css
 siblings: []
-preview: http://localhost:8080/drawer.zul
+preview: ${PREVIEW_URL}/drawer.zul
 
 ## References
 - MUI CSS: Drawer.css

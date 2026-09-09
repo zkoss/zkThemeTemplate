@@ -67,7 +67,7 @@ For any popup that ZK detaches to `<body>`:
 
 ## Verification (live DOM, confirmed 2026-05-14)
 
-For chosenbox at `http://localhost:8080/chosenbox.zul`:
+For chosenbox at `${PREVIEW_URL}/chosenbox.zul`:
 
 - `document.querySelector('.z-chosenbox').getBoundingClientRect().width` → 200
 - `document.querySelector('.z-chosenbox-popup').parentElement.tagName` → `"BODY"`

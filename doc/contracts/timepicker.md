@@ -1,7 +1,7 @@
 # Component: timepicker (theme design)
 tier: T1
 category: input
-preview: http://localhost:8080/timepicker.zul
+preview: ${PREVIEW_URL}/timepicker.zul
 rules: see .claude/skills/zk-component-rules/components/timepicker.md
 contract-approved: true  # user-approved 2026-06-08 (GATE2 contract-audit PASS critical=0; 3 suggested findings forwarded to Generator as impl notes). 2026-06-08 popup realigned to combobox dropdown per user request (position/z-index/margin/shape-menu/elevation-dropdown/no-border) — fixed bottom-left mispositioning. 2026-06-08 focus ring changed from border-width:2px to inset box-shadow (c5/c5b/c5c, M5 — no layout shift) + root overflow:hidden (c18, M6 — clip always-readonly opaque input to rounded corners), per two user-reported bugs. 2026-06-09 focus ring moved from a root inset shadow to an always-present `::after` overlay (c5 re-pointed to `::after`, new c5d root box-shadow:none) — the opaque always-readonly input occluded the root inset ring on the input side, making the ring look thicker around the transparent button (user-reported). 2026-07-03 readonly de-emphasis removed (user-authorized) — `.z-timepicker-readonly` now reads as an ACTIVE outlined field (c15/c15b: transparent input + `cursor:pointer`), matching the readonly combobox/datebox/bandbox, after **ZK-6122** established the constructor no longer forces readonly (the "always-readonly" premise behind c15/c18/c5/c5d/M6 is obsolete). The input is now transparent in every state, so `overflow:hidden` + the `::after` overlay now serve only the focus ring.
 zk-version: 10.2.1-jakarta

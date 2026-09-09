@@ -3,7 +3,7 @@ tier: T1
 category: input
 shared-css-file: src/main/resources/web/js/zul/inp/css/input.css
 siblings: [textbox, intbox, decimalbox, doublebox, longbox, textarea]
-preview: http://localhost:8080/textbox.zul   (passwordbox section on textbox preview)
+preview: ${PREVIEW_URL}/textbox.zul   (passwordbox section on textbox preview)
 
 ## References
 Same as textbox. Passwordbox uses `<input type="password" class="z-passwordbox">`.

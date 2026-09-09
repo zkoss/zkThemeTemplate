@@ -3,7 +3,7 @@ tier: T3
 category: media
 shared-css-file: src/main/resources/web/js/zul/wgt/css/button.css
 siblings: [button]
-preview: http://localhost:8080/fileupload.zul
+preview: ${PREVIEW_URL}/fileupload.zul
 
 ## Notes
 fileupload renders as a styled button — no dedicated CSS.dsp found in ZK source. Uses button.css styling.

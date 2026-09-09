@@ -1,7 +1,7 @@
 # Component: groupbox (theme design)
 tier: T2
 category: container
-preview: http://localhost:8080/groupbox.zul
+preview: ${PREVIEW_URL}/groupbox.zul
 rules: see .claude/skills/zk-component-rules/components/groupbox.md
 contract-approved: false
 zk-version: 10.2.1-jakarta

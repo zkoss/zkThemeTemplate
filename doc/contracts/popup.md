@@ -3,7 +3,7 @@ tier: T1
 category: container
 shared-css-file: src/main/resources/web/js/zul/wgt/css/popup.css
 siblings: []
-preview: http://localhost:8080/popup.zul
+preview: ${PREVIEW_URL}/popup.zul
 
 ## References
 - MUI CSS: Popover.css

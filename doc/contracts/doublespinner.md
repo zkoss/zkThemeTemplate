@@ -3,7 +3,7 @@ tier: T1
 category: input
 shared-css-file: src/main/resources/web/js/zul/inp/css/spinner.css
 siblings: [spinner]
-preview: http://localhost:8080/spinner.zul   (doublespinner section if present)
+preview: ${PREVIEW_URL}/spinner.zul   (doublespinner section if present)
 
 ## References
 Same as spinner.

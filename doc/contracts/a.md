@@ -3,7 +3,7 @@ tier: T1
 category: navigation
 shared-css-file: src/main/resources/web/js/zul/wgt/css/a.css
 siblings: []
-preview: http://localhost:8080/a.zul
+preview: ${PREVIEW_URL}/a.zul
 
 ## References
 - MUI CSS: Link.css

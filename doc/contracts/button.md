@@ -1,7 +1,7 @@
 # Component: button (theme design)
 tier: T1
 category: button
-preview: http://localhost:8080/button.zul
+preview: ${PREVIEW_URL}/button.zul
 rules: see .claude/skills/zk-component-rules/components/button.md
 contract-approved: false
 zk-version: 10.2.1-jakarta

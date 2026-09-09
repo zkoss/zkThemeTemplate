@@ -33,7 +33,7 @@ import * as path from 'path';
 // of these families, so the pass adds the class rather than driving a real
 // selection — the cascade it produces is identical, which is what is under test.
 //
-// Requires the preview app on http://localhost:8080
+// Requires the preview app on ${PREVIEW_URL}
 //   withjdk.sh 17 mvn test exec:java@preview-app
 // Run: npm run test:focus-scan
 

@@ -22,7 +22,13 @@ export default defineConfig({
   // scripts/build-forced-colors-review.js).
   snapshotPathTemplate: '{snapshotDir}/{arg}{ext}',
   use: {
-    baseURL: 'http://localhost:8080',
+    // The ONE machine-side definition of the preview server address. Every doc,
+    // contract and agent instruction refers to it by name as ${PREVIEW_URL}
+    // (defined in CLAUDE.md) rather than restating the address — a port move
+    // used to mean editing 118 files. Override for a non-default port with
+    // `PREVIEW_URL=http://127.0.0.1:9090 npx playwright test`.
+    // The port itself is bound in src/test/java/zk/example/ThemePreviewApp.java.
+    baseURL: process.env.PREVIEW_URL ?? 'http://localhost:8081',
     ...devices['Desktop Chrome'],
   },
   projects: [

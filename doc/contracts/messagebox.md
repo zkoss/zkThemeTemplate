@@ -3,7 +3,7 @@ tier: T1
 category: feedback
 shared-css-file: src/main/resources/web/js/zul/wnd/css/messagebox.css
 siblings: []
-preview: http://localhost:8080/messagebox.zul
+preview: ${PREVIEW_URL}/messagebox.zul
 
 ## References
 - MUI CSS: Dialog.css / Alert.css

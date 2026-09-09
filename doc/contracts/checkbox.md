@@ -1,7 +1,7 @@
 # Component: checkbox (theme design)
 tier: T1
 category: selection
-preview: http://localhost:8080/checkbox.zul
+preview: ${PREVIEW_URL}/checkbox.zul
 rules: see .claude/skills/zk-component-rules/components/checkbox.md
 contract-approved: false
 zk-version: 10.2.1-jakarta

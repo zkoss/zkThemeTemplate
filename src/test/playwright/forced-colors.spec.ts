@@ -17,7 +17,7 @@ import { test, expect } from '@playwright/test';
 // tokens/_forced-colors.css (bundled into norm.css.dsp) has regressed — rebuild
 // with `npm run build:css` and re-check that file.
 //
-// Requires the preview app on http://localhost:8080
+// Requires the preview app on ${PREVIEW_URL}
 //   withjdk.sh 17 mvn test exec:java@preview-app
 // Run: npm run test:forced-colors   (or: playwright test --project=forced-colors)
 

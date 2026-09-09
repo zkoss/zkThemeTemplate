@@ -3,7 +3,7 @@ tier: T1
 category: layout
 shared-css-file: src/main/resources/web/js/zul/wgt/css/imagemap.css
 siblings: []
-preview: http://localhost:8080/imagemap.zul
+preview: ${PREVIEW_URL}/imagemap.zul
 
 ## References
 - DESIGN.md sections: §2

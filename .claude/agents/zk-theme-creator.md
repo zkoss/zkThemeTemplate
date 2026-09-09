@@ -175,7 +175,7 @@ Always use the established token system:
 
 5. **Build and verify**: After making CSS changes, remind the user to run `npm run build:css` or ensure `npm run watch` is running.
 
-6. **Preview verification**: Direct the user to the appropriate preview page (e.g., `http://localhost:8080/{component}`) to verify changes visually. Never suggest visiting `/preview` as it's too large for verification tools.
+6. **Preview verification**: Direct the user to the appropriate preview page (e.g., `${PREVIEW_URL}/{component}`) to verify changes visually. Never suggest visiting `/preview` as it's too large for verification tools.
 
 7. **JDK requirement**: When suggesting to run the preview app, always use: `setjdk 17 && mvn test exec:java@preview-app`
 

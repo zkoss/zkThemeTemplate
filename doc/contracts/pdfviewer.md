@@ -1,7 +1,7 @@
 # Component: pdfviewer (theme design)
 tier: T3
 category: media
-preview: http://localhost:8080/pdfviewer.zul
+preview: ${PREVIEW_URL}/pdfviewer.zul
 rules: see .claude/skills/zk-component-rules/components/pdfviewer.md
 contract-approved: true
 zk-version: 10.2.1-jakarta

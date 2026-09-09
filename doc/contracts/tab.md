@@ -3,7 +3,7 @@ tier: T1
 category: navigation
 shared-css-file: src/main/resources/web/js/zul/tab/css/tabbox.css
 siblings: [tabbox, tabpanel]
-preview: http://localhost:8080/tabbox.zul
+preview: ${PREVIEW_URL}/tabbox.zul
 
 ## References
 See tabbox contract.

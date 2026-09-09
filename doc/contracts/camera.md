@@ -3,7 +3,7 @@ tier: T2
 category: media
 shared-css-file: src/main/resources/web/js/zkmax/med/css/camera.css
 siblings: []
-preview: http://localhost:8080/camera.zul
+preview: ${PREVIEW_URL}/camera.zul
 
 ## References
 - DESIGN.md sections: §2, §3

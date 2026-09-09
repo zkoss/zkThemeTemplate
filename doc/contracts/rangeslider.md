@@ -3,7 +3,7 @@ tier: T2
 category: input
 shared-css-file: src/main/resources/web/js/zkex/slider/css/rangeslider.css
 siblings: []
-preview: http://localhost:8080/rangeslider.zul
+preview: ${PREVIEW_URL}/rangeslider.zul
 
 ## References
 - MUI CSS: Slider.css

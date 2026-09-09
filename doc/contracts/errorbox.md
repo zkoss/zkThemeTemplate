@@ -5,7 +5,7 @@ shared-css-file: src/main/resources/web/js/zul/wgt/css/errorbox.css
 siblings: []
 closest-sibling: notification
 decomposition: tooltip surface (small floating callout with pointer caret) + error variant of notification (red bg + white text)
-preview: trigger validation in any input preview that uses Constraint (e.g., http://localhost:8080/textbox.zul)
+preview: trigger validation in any input preview that uses Constraint (e.g., ${PREVIEW_URL}/textbox.zul)
 
 ## References
 - DESIGN.md sections: §3, §6, §7

@@ -1,7 +1,7 @@
 # Component: image
 tier: T3
 category: image
-preview: http://localhost:8080/camera.zul
+preview: ${PREVIEW_URL}/camera.zul
 zk-version: 10.2.1-jakarta
 
 ## References

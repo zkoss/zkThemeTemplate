@@ -97,7 +97,7 @@ currently produces — that's the invariant the Evaluator asserts.
 ### 3 — Launch the app (the runtime oracle)
 
 ```bash
-withjdk.sh 17 mvn test exec:java@preview-app     # http://localhost:8080
+withjdk.sh 17 mvn test exec:java@preview-app     # ${PREVIEW_URL}
 ```
 
 The *running app* is the oracle for "what inline style does ZK actually set" and "does the
@@ -111,7 +111,7 @@ For each remove candidate:
 1. **Measure HEAD** (keyword present) with the probe:
    ```bash
    node .claude/skills/important-reduction/scripts/probe.js \
-     http://localhost:8080/<page>.zul '<selector>' 'display,width,…'
+     ${PREVIEW_URL}/<page>.zul '<selector>' 'display,width,…'
    ```
    Note the inline `style` in the output — if ZK set the property inline, it's category B → keep.
 2. **Generator**: delete just the `!important` (keep the declaration), `npm run build:css`.

@@ -3,7 +3,7 @@ tier: T2
 category: media
 shared-css-file: src/main/resources/web/js/zkmax/wgt/css/dropupload.css
 siblings: []
-preview: http://localhost:8080/dropupload.zul
+preview: ${PREVIEW_URL}/dropupload.zul
 
 ## References
 - DESIGN.md sections: §2, §3, §11

@@ -3,7 +3,7 @@ tier: T2
 category: data
 shared-css-file: src/main/resources/web/js/zkmax/big/css/biglistbox.css
 siblings: []
-preview: http://localhost:8080/biglistbox.zul
+preview: ${PREVIEW_URL}/biglistbox.zul
 
 ## References
 - MUI CSS: DataDisplay/Table.css (closest analog)

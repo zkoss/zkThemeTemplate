@@ -156,7 +156,7 @@ node -e '
 const { chromium } = require("./node_modules/@playwright/test");
 (async () => {
   const b = await chromium.launch(), p = await b.newPage();
-  await p.goto("http://127.0.0.1:8080/multislider.zul", { waitUntil: "domcontentloaded" });
+  await p.goto("${PREVIEW_URL}/multislider.zul", { waitUntil: "domcontentloaded" });
   await p.waitForSelector(".z-sliderbuttons-button");
   const probe = () => p.evaluate(() => [...document.querySelector(".z-multislider")
     .querySelectorAll(".z-sliderbuttons-button")].map((el) => {
@@ -184,11 +184,12 @@ Chromium 1400×1200) so you know exactly what to expect before you look.
 withjdk.sh 17 mvn test exec:java@preview-app
 ```
 
-Open **http://127.0.0.1:8081/multislider.zul**
+Open **${PREVIEW_URL}/multislider.zul**
 
 > Port note: the preview app binds **8081**, set in
 > [ThemePreviewApp.java:36](../src/test/java/zk/example/ThemePreviewApp.java#L36), not 8080.
-> `CLAUDE.md`'s "localhost:8080" table is stale (iceblue moved to 8082 in the same change).
+> (Resolved 2026-09-09: `CLAUDE.md`'s table no longer restates the address — it refers to
+> `${PREVIEW_URL}`. Iceblue moved to 8082 in the same change.)
 > Use `127.0.0.1`, not `localhost`.
 
 ## The target: the top "Horizontal / 3 ranges" slider

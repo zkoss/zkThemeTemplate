@@ -1,7 +1,7 @@
 # Component: progressmeter (theme design)
 tier: T1
 category: feedback
-preview: http://localhost:8080/progressmeter.zul
+preview: ${PREVIEW_URL}/progressmeter.zul
 rules: see .claude/skills/zk-component-rules/components/progressmeter.md
 contract-approved: false
 zk-version: 10.2.1-jakarta

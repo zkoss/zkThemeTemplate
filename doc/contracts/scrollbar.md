@@ -1,7 +1,7 @@
 # Component: scrollbar
 tier: T2
 category: scrollbar
-preview: http://localhost:8080/scrollbar.zul
+preview: ${PREVIEW_URL}/scrollbar.zul
 zk-version: 10.2.1-jakarta
 
 ## References

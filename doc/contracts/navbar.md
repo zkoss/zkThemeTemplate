@@ -3,7 +3,7 @@ tier: T1
 category: navigation
 shared-css-file: src/main/resources/web/js/zkmax/nav/css/nav.css
 siblings: [anchornav]
-preview: http://localhost:8080/navbar.zul
+preview: ${PREVIEW_URL}/navbar.zul
 
 ## References
 - MUI CSS: Drawer.css, List.css

@@ -1,7 +1,7 @@
 # Component: splitlayout (theme design)
 tier: T1
 category: layout
-preview: http://localhost:8080/splitlayout.zul
+preview: ${PREVIEW_URL}/splitlayout.zul
 rules: see .claude/skills/zk-component-rules/components/splitlayout.md
 contract-approved: true
 zk-version: 10.2.1-jakarta

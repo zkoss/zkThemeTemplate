@@ -1,7 +1,7 @@
 # Component: combobutton (theme design)
 tier: T2
 category: button
-preview: http://localhost:8080/combobutton.zul
+preview: ${PREVIEW_URL}/combobutton.zul
 rules: see .claude/skills/zk-component-rules/components/combobutton.md
 contract-approved: false
 zk-version: 10.2.1-jakarta

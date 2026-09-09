@@ -1,7 +1,7 @@
 # Component: confirmpopup (theme design)
 tier: T2
 category: feedback
-preview: http://localhost:8080/confirmpopup.zul
+preview: ${PREVIEW_URL}/confirmpopup.zul
 rules: see .claude/skills/zk-component-rules/components/confirmpopup.md
 contract-approved: true
 zk-version: 10.4.0-jakarta

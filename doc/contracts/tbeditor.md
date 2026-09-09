@@ -1,7 +1,7 @@
 # Component: tbeditor (theme design)
 tier: T3
 category: input
-preview: http://localhost:8080/tbeditor.zul
+preview: ${PREVIEW_URL}/tbeditor.zul
 rules: see .claude/skills/zk-component-rules/components/tbeditor.md
 contract-approved: true
 zk-version: 10.2.1-jakarta

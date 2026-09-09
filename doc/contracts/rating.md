@@ -1,7 +1,7 @@
 # Component: rating (theme design)
 tier: T1
 category: input
-preview: http://localhost:8080/rating.zul
+preview: ${PREVIEW_URL}/rating.zul
 rules: see .claude/skills/zk-component-rules/components/rating.md
 contract-approved: false
 zk-version: 10.2.1-jakarta

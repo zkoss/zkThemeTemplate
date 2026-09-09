@@ -1,7 +1,7 @@
 # Component: linelayout (theme design)
 tier: T2
 category: layout
-preview: http://localhost:8080/linelayout.zul
+preview: ${PREVIEW_URL}/linelayout.zul
 rules: see .claude/skills/zk-component-rules/components/linelayout.md
 contract-approved: true
 zk-version: 10.2.1-jakarta

@@ -1,7 +1,7 @@
 # Component: daterangebox (theme design)
 tier: T2
 category: input
-preview: http://localhost:8080/daterangebox.zul
+preview: ${PREVIEW_URL}/daterangebox.zul
 rules: see .claude/skills/zk-component-rules/components/daterangebox.md
 contract-approved: true
 zk-version: 10.4.0-jakarta

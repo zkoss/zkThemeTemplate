@@ -3,7 +3,7 @@ tier: T2
 category: media
 shared-css-file: src/main/resources/web/js/zkmax/barscanner/css/barcodescanner.css
 siblings: []
-preview: http://localhost:8080/barcodescanner.zul
+preview: ${PREVIEW_URL}/barcodescanner.zul
 
 ## References
 - DESIGN.md sections: §2, §3

@@ -18,7 +18,7 @@ import { test, expect } from '@playwright/test';
 //   2. BOTH built variants are correct — the embed variant is exactly what the provider swaps
 //      in when the flag is true (its content is the other half of the property's contract).
 //
-// Requires the preview app on http://localhost:8080
+// Requires the preview app on ${PREVIEW_URL}
 //   withjdk.sh 17 mvn test exec:java@preview-app
 
 const PAGE = '/button.zul';

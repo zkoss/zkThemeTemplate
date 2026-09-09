@@ -3,7 +3,7 @@ tier: T1
 category: input
 shared-css-file: src/main/resources/web/js/zul/inp/css/input.css
 siblings: [textbox, decimalbox, doublebox, longbox, textarea, passwordbox]
-preview: http://localhost:8080/intbox.zul
+preview: ${PREVIEW_URL}/intbox.zul
 
 ## References
 - See textbox contract for full check list; intbox shares all base rules

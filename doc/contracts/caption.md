@@ -3,7 +3,7 @@ tier: T1
 category: container
 shared-css-file: src/main/resources/web/js/zul/wgt/css/caption.css
 siblings: []
-preview: http://localhost:8080/caption.zul
+preview: ${PREVIEW_URL}/caption.zul
 
 ## References
 - DESIGN.md sections: §2, §3, §7

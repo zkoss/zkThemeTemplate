@@ -3,7 +3,7 @@ tier: T1
 category: input
 shared-css-file: src/main/resources/web/js/zul/inp/css/input.css
 siblings: [textbox, intbox, decimalbox, longbox, textarea, passwordbox]
-preview: http://localhost:8080/doublebox.zul
+preview: ${PREVIEW_URL}/doublebox.zul
 
 ## References
 Same as intbox.

@@ -1,7 +1,7 @@
 # Component: panel (theme design)
 tier: T1
 category: container
-preview: http://localhost:8080/panel.zul
+preview: ${PREVIEW_URL}/panel.zul
 rules: see .claude/skills/zk-component-rules/components/panel.md
 contract-approved: false
 zk-version: 10.2.1-jakarta

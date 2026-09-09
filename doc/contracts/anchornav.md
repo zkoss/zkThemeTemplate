@@ -3,7 +3,7 @@ tier: T2
 category: navigation
 shared-css-file: src/main/resources/web/js/zkmax/nav/css/anchornav.css
 siblings: [navbar]
-preview: http://localhost:8080/anchornav.zul
+preview: ${PREVIEW_URL}/anchornav.zul
 
 ## References
 - DESIGN.md sections: §2, §3, §7, §9

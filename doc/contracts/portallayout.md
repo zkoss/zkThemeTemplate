@@ -1,7 +1,7 @@
 # Component: portallayout (theme design)
 tier: T1
 category: layout
-preview: http://localhost:8080/portallayout.zul
+preview: ${PREVIEW_URL}/portallayout.zul
 rules: see .claude/skills/zk-component-rules/components/portallayout.md
 contract-approved: true
 zk-version: 10.2.1-jakarta

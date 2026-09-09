@@ -1,7 +1,7 @@
 # Component: cropper (theme design)
 tier: T3
 category: media
-preview: http://localhost:8080/cropper.zul
+preview: ${PREVIEW_URL}/cropper.zul
 rules: see .claude/skills/zk-component-rules/components/cropper.md
 contract-approved: true  # user-approved 2026-06-04 (contract-audit GATE2: PASS, critical=0); ## Visual outcome + ## Outcome assertions added 2026-06-05 per user feedback (recipe-agnostic rows describing stock ZK/Jcrop anatomy — no theme-value change; outcome-pass pending next evaluator run); toolbar MD3 floating-toolbar redesign (c4 revised, c5 replaced, c7–c12 new, M5 revised) + dead-space M7 added 2026-06-05 per user feedback round 2 (prompt2 v2) — re-eval pending
 zk-version: 10.2.1-jakarta

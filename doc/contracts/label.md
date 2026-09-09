@@ -1,7 +1,7 @@
 # Component: label
 tier: T3
 category: label
-preview: http://localhost:8080/label.zul
+preview: ${PREVIEW_URL}/label.zul
 zk-version: 10.2.1-jakarta
 
 ## References

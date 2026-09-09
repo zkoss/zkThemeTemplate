@@ -3,7 +3,7 @@
 本文說明 Marble 的列印樣式：一組 opt-in 的列印可見性 utility，加上一套自動觸發的列印 reset。
 目標客群（ERP / CRM）天天列印報表、發票、清單，因此這是 Tier 1 的企業級落差之一。
 
-> 互動教學頁：<http://localhost:8080/utility/print.zul>（原始檔 `src/test/resources/web/utility/print.zul`）。
+> 互動教學頁：<${PREVIEW_URL}/utility/print.zul>（原始檔 `src/test/resources/web/utility/print.zul`）。
 > 所有效果**只在瀏覽器「列印預覽」（Ctrl-P / Cmd-P）下可見**。
 > 實作：`src/main/resources/web/zul/css/utility/_print.css`；回歸測試：`src/test/playwright/print-utilities.spec.ts`（`print` 專案）。
 

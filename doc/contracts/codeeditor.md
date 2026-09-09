@@ -3,7 +3,7 @@ tier: T3
 category: input
 shared-css-file: src/main/resources/web/js/zul/code/css/codeeditor.css
 siblings: []
-preview: http://localhost:8080/codeeditor.zul
+preview: ${PREVIEW_URL}/codeeditor.zul
 rules: see .claude/skills/zk-component-rules/components/codeeditor.md
 contract-approved: true
 zk-version: 11.0.0-jakarta.FL.20260904
@@ -71,7 +71,7 @@ mockup-rationale: see mockup-needed above — condition (1), no ZKDoc image, for
   widget can ever exist, on any machine, at any time. `doc/contracts/baselines/codeeditor-iceblue.png`
   is therefore not applicable and should not be searched for — the skill's §4 "reconcile JS source
   against live iceblue render" step was answered instead directly against the live ZK 11 Marble
-  preview (`127.0.0.1:8080/codeeditor.zul`) plus the shipped mold source, which already agree (see
+  preview (`${PREVIEW_URL}/codeeditor.zul`) plus the shipped mold source, which already agree (see
   the authoring summary's "structural surprises" — there were none).
 - HTML contract: doc/contracts/codeeditor.html.
 

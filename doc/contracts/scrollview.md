@@ -3,7 +3,7 @@ tier: T2
 category: layout
 shared-css-file: src/main/resources/web/js/zkmax/layout/css/scrollview.css
 siblings: []
-preview: http://localhost:8080/scrollview.zul
+preview: ${PREVIEW_URL}/scrollview.zul
 
 ## References
 - DESIGN.md sections: §2

@@ -1,7 +1,7 @@
 # Component: carousel (theme design)
 tier: T2
 category: media
-preview: http://localhost:8080/carousel.zul
+preview: ${PREVIEW_URL}/carousel.zul
 rules: see .claude/skills/zk-component-rules/components/carousel.md
 contract-approved: true
 zk-version: 10.4.0-jakarta
@@ -57,7 +57,7 @@ mockup-needed: Y — no ZKDoc canonical image exists for carousel (`ZK_component
   `DOC/zkbooks/componentreference/src/main/webapp/essential/carousel.zul`.
 - Iceblue baseline: doc/contracts/baselines/carousel-iceblue.png — **NOT captured this
   pass**. The `preview-app-iceblue` profile was not running (confirmed:
-  `curl 127.0.0.1:8081/carousel.zul` returned no response) and no `carousel.zul` preview
+  `curl ${PREVIEW_URL}/carousel.zul` returned no response) and no `carousel.zul` preview
   page exists yet in either the Marble or iceblue app to render — there is nothing to
   screenshot yet regardless of the profile. See "Structural surprises" in the authoring
   summary for the follow-up needed before this file can be produced.

@@ -124,7 +124,7 @@ Sibling analysis for <comp>:
 
 JS source describes the *initial* DOM. ZK's client-side runtime may mutate it (e.g. inject inline width on popups, add `.z-…-content` wrappers on first render, detach popups to `<body>`). The skill entry must describe the *post-render* DOM the CSS will see.
 
-Open the iceblue baseline screenshot. If the screenshot does not answer the structural question (e.g. you can't tell from a PNG whether the popup is detached), you may *read-only* navigate Chrome via `mcp__claude-in-chrome__navigate` to `http://localhost:8081/<comp>.zul` and inspect via `mcp__claude-in-chrome__javascript_tool`. Read-only operations allowed:
+Open the iceblue baseline screenshot. If the screenshot does not answer the structural question (e.g. you can't tell from a PNG whether the popup is detached), you may *read-only* navigate Chrome via `mcp__claude-in-chrome__navigate` to `${PREVIEW_URL}/<comp>.zul` and inspect via `mcp__claude-in-chrome__javascript_tool`. Read-only operations allowed:
 - `document.querySelector(...)` to confirm class names
 - `document.body.contains(popup)` to confirm detachment
 - `el.parentElement` walks
@@ -199,7 +199,7 @@ Rewrite `doc/contracts/<comp>.md` (or create if missing). Strict format:
 # Component: <comp> (theme design)
 tier: T1 | T2 | T3
 category: <feedback | input | layout | container | navigation | data | …>
-preview: http://localhost:8080/<comp>.zul
+preview: ${PREVIEW_URL}/<comp>.zul
 rules: see .claude/skills/zk-component-rules/components/<comp>.md
 contract-approved: false
 zk-version: 10.2.1-jakarta

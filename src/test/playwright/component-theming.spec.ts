@@ -8,7 +8,7 @@ import { test, expect, type Locator } from '@playwright/test';
 //   2. a WHOLE-APP override (:root, injected after norm.css.dsp) wins the cascade;
 //   3. ZERO REGRESSION — an un-overridden button renders stock Marble values;
 //   4. disabled treatment is preserved inside an overridden region.
-// Requires the preview app on http://localhost:8080
+// Requires the preview app on ${PREVIEW_URL}
 //   withjdk.sh 17 mvn test exec:java@preview-app
 
 const PAGE = '/component-theming.zul';

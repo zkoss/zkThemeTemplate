@@ -1,7 +1,7 @@
 # Component: anchorlayout (theme design)
 tier: T1
 category: layout
-preview: http://localhost:8080/anchorlayout.zul
+preview: ${PREVIEW_URL}/anchorlayout.zul
 rules: see .claude/skills/zk-component-rules/components/anchorlayout.md
 contract-approved: true
 zk-version: 10.2.1-jakarta

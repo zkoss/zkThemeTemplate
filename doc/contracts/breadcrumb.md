@@ -1,7 +1,7 @@
 # Component: breadcrumb (theme design)
 tier: T1
 category: navigation
-preview: http://localhost:8080/breadcrumb.zul
+preview: ${PREVIEW_URL}/breadcrumb.zul
 rules: see .claude/skills/zk-component-rules/components/breadcrumb.md
 contract-approved: true
 zk-version: 10.4.0-jakarta
@@ -29,7 +29,7 @@ mockup-needed: Y — no ZKDoc canonical image exists for breadcrumb (component i
   `/Users/hawk/Documents/workspace/DOC/zkdoc/zk_component_ref/`.
 - Iceblue baseline: doc/contracts/baselines/breadcrumb-iceblue.png — **NOT captured this
   pass**. The `preview-app-iceblue` profile was not running (confirmed: `curl` to
-  `127.0.0.1:8081/breadcrumb.zul` returned no response) and no `breadcrumb.zul` preview
+  `${PREVIEW_URL}/breadcrumb.zul` returned no response) and no `breadcrumb.zul` preview
   page exists yet in either app to render. See "Structural surprises" in the authoring
   summary for the follow-up needed before this file can be produced.
 - HTML contract: doc/contracts/breadcrumb.html.

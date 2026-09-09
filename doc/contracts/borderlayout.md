@@ -1,7 +1,7 @@
 # Component: borderlayout (theme design)
 tier: T1
 category: layout
-preview: http://localhost:8080/borderlayout.zul
+preview: ${PREVIEW_URL}/borderlayout.zul
 rules: see .claude/skills/zk-component-rules/components/borderlayout.md
 contract-approved: true
 zk-version: 10.2.1-jakarta

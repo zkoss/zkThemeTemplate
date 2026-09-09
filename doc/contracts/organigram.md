@@ -1,7 +1,7 @@
 # Component: organigram (theme design)
 tier: T2
 category: data
-preview: http://localhost:8080/organigram.zul
+preview: ${PREVIEW_URL}/organigram.zul
 rules: see .claude/skills/zk-component-rules/components/organigram.md
 contract-approved: true
 zk-version: 10.2.1-jakarta

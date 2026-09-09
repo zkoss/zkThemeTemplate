@@ -1,7 +1,7 @@
 # Component: colorbox (theme design)
 tier: T2
 category: input
-preview: http://localhost:8080/colorbox.zul
+preview: ${PREVIEW_URL}/colorbox.zul
 rules: see .claude/skills/zk-component-rules/components/colorbox.md
 contract-approved: false
 zk-version: 10.2.1-jakarta

@@ -9,7 +9,7 @@ import { test, expect } from '@playwright/test';
 // (`preview.zul` is intentionally excluded — it's a human-only SPA listing page
 // whose live-reload script keeps the network busy so `networkidle` never settles.)
 //
-// Requires the preview app running on http://localhost:8080
+// Requires the preview app running on ${PREVIEW_URL}
 //   withjdk.sh 17 mvn test exec:java@preview-app
 
 const PAGES = [

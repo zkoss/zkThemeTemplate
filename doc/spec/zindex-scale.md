@@ -3,7 +3,7 @@
 本文說明 Marble 的 z-index 疊層尺度:一組 `--zk-index-*` token、對應的 `.z-index-*` utility,以及——**最重要的**
 ——ZK runtime 如何在背後動態決定浮層順序,因此哪些 z-index 值真正「說了算」、哪些只是 fallback。
 
-> 互動教學頁:<http://localhost:8080/utility/zindex.zul>(原始檔 `src/test/resources/web/utility/zindex.zul`)。
+> 互動教學頁:<${PREVIEW_URL}/utility/zindex.zul>(原始檔 `src/test/resources/web/utility/zindex.zul`)。
 > 定義:`src/main/resources/web/zul/css/tokens/_zindex.css`;utility:`utility/_layout.css`;回歸測試:`src/test/playwright/zindex-scale.spec.ts`(`zindex` 專案)。
 > 稽核全紀錄(每個現有 z-index 的歸類):[`../zindex-audit.md`](../zindex-audit.md)。
 

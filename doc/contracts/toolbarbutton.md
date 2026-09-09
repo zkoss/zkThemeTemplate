@@ -5,7 +5,7 @@ shared-css-file: src/main/resources/web/js/zul/wgt/css/toolbarbutton.css
 siblings: []
 closest-sibling: button
 decomposition: flat button (no resting elevation, transparent background, state-layer on hover) — the icon-button variant of button in toolbar context
-preview: http://localhost:8080/toolbar.zul   (toolbarbuttons live inside toolbar)
+preview: ${PREVIEW_URL}/toolbar.zul   (toolbarbuttons live inside toolbar)
 
 ## References
 - DESIGN.md sections: §3, §7, §11

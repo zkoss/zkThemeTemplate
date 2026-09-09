@@ -5,7 +5,7 @@ shared-css-file: src/main/resources/web/js/zul/wgt/css/inputgroup.css
 siblings: []
 closest-sibling: textbox
 decomposition: textbox (centre input) + prefix/suffix adornments (text or icon)
-preview: http://localhost:8080/inputgroup.zul
+preview: ${PREVIEW_URL}/inputgroup.zul
 
 ## References
 - DESIGN.md sections: §1, §5, §7, §11

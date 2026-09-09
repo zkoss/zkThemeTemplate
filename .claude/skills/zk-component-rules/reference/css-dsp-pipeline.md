@@ -42,7 +42,7 @@ A clear symptom: a component that used to be styled by the theme suddenly render
 Quick probe to confirm a `.css.dsp` is actually loaded into the page:
 
 ```bash
-curl -s "http://localhost:8080/zkau/web/{ver}/_zkiju-zk-material/zul/css/zk.wcs?_t=$(date +%s%N)" \
+curl -s "${PREVIEW_URL}/zkau/web/{ver}/_zkiju-zk-material/zul/css/zk.wcs?_t=$(date +%s%N)" \
   | grep -c "z-{component}"
 ```
 

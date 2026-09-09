@@ -1,7 +1,7 @@
 # Component: tree (theme design)
 tier: T1
 category: selection
-preview: http://localhost:8080/tree.zul
+preview: ${PREVIEW_URL}/tree.zul
 rules: see .claude/skills/zk-component-rules/components/data-components.md
 shared-css-file: src/main/resources/web/js/zul/sel/css/tree.css
 contract-approved: true

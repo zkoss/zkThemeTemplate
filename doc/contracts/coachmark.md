@@ -1,7 +1,7 @@
 # Component: coachmark (theme design)
 tier: T2
 category: feedback
-preview: http://localhost:8080/coachmark.zul
+preview: ${PREVIEW_URL}/coachmark.zul
 rules: see .claude/skills/zk-component-rules/components/coachmark.md
 contract-approved: true  # close-affordance redesign approved 2026-07-15 (neutral surface approved earlier same day)
 zk-version: 10.2.1-jakarta

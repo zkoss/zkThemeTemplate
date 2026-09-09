@@ -3,7 +3,7 @@ tier: T1
 category: input
 shared-css-file: src/main/resources/web/js/zul/inp/css/input.css
 siblings: [intbox, decimalbox, doublebox, longbox, textarea, passwordbox]
-preview: http://localhost:8080/textbox.zul
+preview: ${PREVIEW_URL}/textbox.zul
 
 ## References
 - MUI CSS: /Users/hawk/Documents/workspace/THEME/material-ui-7.3.1/static-css-output/Inputs/OutlinedInput.css

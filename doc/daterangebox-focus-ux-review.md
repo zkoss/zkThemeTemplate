@@ -10,7 +10,7 @@ expressed through the wrong mechanism. Recommendation: align the focus policy wi
 
 ## 1. Evidence (measured on the live preview app)
 
-Instrumented `focusin`/`focusout`/`mousedown` on `http://127.0.0.1:8080/daterangebox.zul` and
+Instrumented `focusin`/`focusout`/`mousedown` on `${PREVIEW_URL}/daterangebox.zul` and
 `/datebox.zul`, then drove real mouse/keyboard input.
 
 ### DateRangeBox — one click on the begin input

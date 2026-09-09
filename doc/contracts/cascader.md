@@ -1,7 +1,7 @@
 # Component: cascader (theme design)
 tier: T1
 category: selection
-preview: http://localhost:8080/cascader.zul
+preview: ${PREVIEW_URL}/cascader.zul
 rules: see .claude/skills/zk-component-rules/components/cascader.md
 contract-approved: true
 zk-version: 10.2.1-jakarta

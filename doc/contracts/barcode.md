@@ -3,7 +3,7 @@ tier: T3
 category: media
 shared-css-file: src/main/resources/web/js/zkex/barcode/css/barcode.css
 siblings: []
-preview: http://localhost:8080/barcode.zul
+preview: ${PREVIEW_URL}/barcode.zul
 
 ## Notes
 No barcode.css.dsp found in ZK source. Barcode renders as SVG/canvas inside a wrapper div.

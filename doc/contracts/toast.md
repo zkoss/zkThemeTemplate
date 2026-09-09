@@ -1,7 +1,7 @@
 # Component: toast (theme design)
 tier: T1
 category: feedback
-preview: http://localhost:8080/notification.zul   (toast variant — confirm preview includes toast section)
+preview: ${PREVIEW_URL}/notification.zul   (toast variant — confirm preview includes toast section)
 rules: see .claude/skills/zk-component-rules/components/toast-notification.md
 contract-approved: false
 zk-version: 10.2.1-jakarta

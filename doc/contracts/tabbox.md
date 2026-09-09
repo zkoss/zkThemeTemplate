@@ -1,7 +1,7 @@
 # Component: tabbox (theme design)
 tier: T1
 category: navigation
-preview: http://localhost:8080/tabbox.zul
+preview: ${PREVIEW_URL}/tabbox.zul
 rules: see .claude/skills/zk-component-rules/components/tabbox.md
 contract-approved: true
 zk-version: 10.2.1-jakarta

@@ -1,7 +1,7 @@
 # Component: calendar (theme design)
 tier: T1
 category: media
-preview: http://localhost:8080/calendar.zul   (also: datebox popup)
+preview: ${PREVIEW_URL}/calendar.zul   (also: datebox popup)
 rules: see .claude/skills/zk-component-rules/components/calendar.md
 contract-approved: false
 zk-version: 10.2.1-jakarta

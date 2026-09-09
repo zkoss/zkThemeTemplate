@@ -3,7 +3,7 @@ tier: T1
 category: selection
 shared-css-file: src/main/resources/web/js/zul/wgt/css/checkbox.css
 siblings: [checkbox, radio]
-preview: http://localhost:8080/radiogroup.zul
+preview: ${PREVIEW_URL}/radiogroup.zul
 
 ## References
 - MUI CSS: Radio.css, RadioGroup.css

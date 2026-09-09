@@ -1,7 +1,7 @@
 # Component: slider (theme design)
 tier: T1
 category: input
-preview: http://localhost:8080/slider.zul
+preview: ${PREVIEW_URL}/slider.zul
 rules: see .claude/skills/zk-component-rules/components/slider.md
 contract-approved: true  # user-approved 2026-06-04 (D1–D5 deviations accepted; N1/N2 audit suggestions applied as c8b/c8c/c10a)
 zk-version: 10.2.1-jakarta

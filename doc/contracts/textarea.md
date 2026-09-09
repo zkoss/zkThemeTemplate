@@ -3,7 +3,7 @@ tier: T1
 category: input
 shared-css-file: src/main/resources/web/js/zul/inp/css/input.css
 siblings: [textbox, intbox, decimalbox, doublebox, longbox, passwordbox]
-preview: http://localhost:8080/textbox.zul   (textarea section on the textbox preview)
+preview: ${PREVIEW_URL}/textbox.zul   (textarea section on the textbox preview)
 
 ## References
 Same as textbox; textarea is the multi-line variant of textbox (uses `<textarea class="z-textbox">`).

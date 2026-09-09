@@ -92,7 +92,7 @@ The skill tells you **what selector to query and how to trigger the state**. The
 4. **Attribute-state sweep (input components only).** Before finalising the failing-set, for any component whose contract lists an attribute-driven state (`inplace`, `buttonVisible-false`, etc.) you MUST measure that state's selector on the live page. A missing CSS rule produces no console error and no test failure — the only signal is `getComputedStyle` returning the wrong value. Do not infer pass from "the rule should exist if a sibling has it" — siblings in the same `.css.dsp` do NOT share source files (see `reference/css-file-bundling.md` → "Bundling ≠ source file sharing"). Measure each component's selector independently.
 
 ### 2. Verify preview app is reachable
-- `curl -sI http://127.0.0.1:8080/<component>.zul` (or the URL given in the contract, with `localhost` rewritten to `127.0.0.1`).
+- `curl -sI ${PREVIEW_URL}/<component>.zul` (or the path given in the contract's `preview:` field, which carries no host — resolve `${PREVIEW_URL}` per CLAUDE.md).
 - If the server is not running, write status `EVALUATING_BLOCKED` to `doc/harness/eval-reports/<component>.md` with the reason and STOP. The orchestrator must start the preview app before you can proceed.
 
 ### 2.5. T3-specific check restrictions (only for tier=T3)
@@ -138,7 +138,7 @@ Lookup priority for both scopes: `doc/spec/icon-index.md` is the canonical refer
 
 ### 3. Open Chrome and navigate
 
-Navigate to the preview URL (use `mcp__claude-in-chrome__navigate`; reuse tab when possible). **Always navigate to `http://127.0.0.1:8080/…`, never `localhost`** — Chrome resolves `localhost` to IPv6 `::1` while the preview app binds IPv4 only, yielding a false `ERR_CONNECTION_REFUSED`. Wait for the page to settle (no pending network requests).
+Navigate to the preview URL (use `mcp__claude-in-chrome__navigate`; reuse tab when possible). **Resolve `${PREVIEW_URL}` exactly as CLAUDE.md defines it — an IP, never `localhost`** — Chrome resolves `localhost` to IPv6 `::1` while the preview app binds IPv4 only, yielding a false `ERR_CONNECTION_REFUSED`. That is why the definition uses an IP; do not "helpfully" substitute `localhost`. Wait for the page to settle (no pending network requests).
 
 **When measuring transition-carrying properties** (border-color, box-shadow on focus/hover), disable CSS transitions on the element first — `getComputedStyle` otherwise returns the transition's start frame (false "no focus ring"); see the Transition-freeze trap below.
 
@@ -231,7 +231,7 @@ Use `mcp__claude-in-chrome__gif_creator` with whole-document viewport. If `gif_c
 
 ```bash
 npx playwright screenshot --browser=chromium --viewport-size=1280,2400 --full-page \
-  --wait-for-timeout=3000 "http://127.0.0.1:8080/<component>.zul" \
+  --wait-for-timeout=3000 "${PREVIEW_URL}/<component>.zul" \
   doc/screenshots/<component>-gallery.png    # matrix pages; use -page.png for layout/T3 (Branch B)
 ```
 

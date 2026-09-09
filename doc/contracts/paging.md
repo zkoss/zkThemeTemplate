@@ -3,7 +3,7 @@ tier: T1
 category: data
 shared-css-file: src/main/resources/web/js/zul/mesh/css/paging.css
 siblings: []
-preview: http://localhost:8080/paging.zul   (paging widget is also embedded in grid/listbox/tree previews)
+preview: ${PREVIEW_URL}/paging.zul   (paging widget is also embedded in grid/listbox/tree previews)
 
 ## References
 - MUI CSS: Pagination.css

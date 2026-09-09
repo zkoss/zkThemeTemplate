@@ -1,7 +1,7 @@
 # Component: splitter (theme design)
 tier: T2
 category: layout
-preview: http://localhost:8080/splitter.zul   (or any borderlayout-with-splitter page)
+preview: ${PREVIEW_URL}/splitter.zul   (or any borderlayout-with-splitter page)
 rules: see .claude/skills/zk-component-rules/components/splitter.md
 contract-approved: true
 zk-version: 10.2.1-jakarta

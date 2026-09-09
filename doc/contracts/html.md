@@ -1,7 +1,7 @@
 # Component: html
 tier: T3
 category: html
-preview: http://localhost:8080/html.zul
+preview: ${PREVIEW_URL}/html.zul
 zk-version: 10.2.1-jakarta
 
 ## References

@@ -3,7 +3,7 @@ tier: T1
 category: navigation
 shared-css-file: src/main/resources/web/js/zul/menu/css/menu.css
 siblings: [menubar, menupopup]
-preview: http://localhost:8080/menubar.zul
+preview: ${PREVIEW_URL}/menubar.zul
 
 ## References
 Same as menubar.

@@ -1,7 +1,7 @@
 # Component: stepbar (theme design)
 tier: T3
 category: feedback
-preview: http://localhost:8080/stepbar.zul
+preview: ${PREVIEW_URL}/stepbar.zul
 rules: see .claude/skills/zk-component-rules/components/stepbar.md
 contract-approved: true
 zk-version: 10.2.1-jakarta

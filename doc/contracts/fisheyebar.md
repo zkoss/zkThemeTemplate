@@ -3,7 +3,7 @@ tier: T2
 category: navigation
 shared-css-file: src/main/resources/web/js/zkex/menu/css/fisheye.css
 siblings: []
-preview: http://localhost:8080/fisheyebar.zul
+preview: ${PREVIEW_URL}/fisheyebar.zul
 
 ## References
 - DESIGN.md sections: §2, §3, §9

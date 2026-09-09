@@ -1,7 +1,7 @@
 # Component: window (theme design)
 tier: T1
 category: container
-preview: http://localhost:8080/window.zul
+preview: ${PREVIEW_URL}/window.zul
 rules: see .claude/skills/zk-component-rules/components/window.md
 contract-approved: false
 zk-version: 10.2.1-jakarta

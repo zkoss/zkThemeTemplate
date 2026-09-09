@@ -22,7 +22,7 @@ import * as path from 'path';
 // button/checkbox/listbox/datebox/window/etc. are the MOST forced-colors-
 // sensitive components and there is no duplicate-baseline concern here.
 //
-// Requires the preview app on http://localhost:8080
+// Requires the preview app on ${PREVIEW_URL}
 //   withjdk.sh 17 mvn test exec:java@preview-app
 // Run: npm run capture:forced-colors
 

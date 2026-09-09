@@ -42,7 +42,7 @@ Before the first dispatch in any session:
 
 1. Verify preview app is reachable:
    ```bash
-   curl -sI http://localhost:8080/textbox.zul | head -1
+   curl -sI ${PREVIEW_URL}/textbox.zul | head -1
    ```
    Expect `HTTP/1.1 200`. If not, ask the user to start it:
    ```bash

@@ -1,7 +1,7 @@
 # Component: grid (theme design)
 tier: T1
 category: data
-preview: http://localhost:8080/grid.zul
+preview: ${PREVIEW_URL}/grid.zul
 rules: see .claude/skills/zk-component-rules/components/data-components.md
 shared-css-file: src/main/resources/web/js/zul/grid/css/grid.css
 contract-approved: true

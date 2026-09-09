@@ -1,7 +1,7 @@
 # Component: goldenlayout (theme design)
 tier: T3
 category: layout
-preview: http://localhost:8080/goldenlayout.zul
+preview: ${PREVIEW_URL}/goldenlayout.zul
 rules: see .claude/skills/zk-component-rules/components/goldenlayout.md
 contract-approved: true
 zk-version: 10.2.1-jakarta

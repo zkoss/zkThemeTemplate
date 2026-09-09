@@ -20,7 +20,7 @@ component "looks right"; Layer A is the *code* that keeps it from silently regre
 ## 2. The Playwright suite — 6 projects
 
 Config: [src/test/playwright/playwright.config.ts](../src/test/playwright/playwright.config.ts).
-`baseURL: http://localhost:8080` (the preview app must be running), `snapshotDir:
+`baseURL: ${PREVIEW_URL}` (the preview app must be running), `snapshotDir:
 doc/screenshots`, snapshot path `{arg}{ext}` — **the `{arg}` carries the whole
 `<page>/<file>` path**, so baselines are grouped **one folder per preview page**
 (`doc/screenshots/button/gallery.png`, `.../button/default-hover.png`, `.../button/tablet.png`).
@@ -46,7 +46,7 @@ the tablet shot is just `tablet.png` inside the same page folder as the desktop 
 
 ```bash
 # 1. Start the preview app (prerequisite for every project) — needs JDK 17
-withjdk.sh 17 mvn test exec:java@preview-app          # serves http://localhost:8080
+withjdk.sh 17 mvn test exec:java@preview-app          # serves ${PREVIEW_URL}
 
 # 2. Run the whole suite (all 5 projects)
 npm run screenshot:test
@@ -73,7 +73,7 @@ npm run audit:css    # orphan tokens, hardcoded colors, duplicate rules (css-the
 **Iceblue reference comparison** (compare Marble against stock ZK to find coverage gaps):
 
 ```bash
-withjdk.sh 17 mvn test exec:java@preview-app-iceblue -Dspring.profiles.active=iceblue  # :8081
+withjdk.sh 17 mvn test exec:java@preview-app-iceblue -Dspring.profiles.active=iceblue  # :8082
 ./scripts/render-iceblue-baseline.sh <component...>    # → doc/contracts/baselines/<comp>-iceblue.png
 ./scripts/audit-css-coverage.sh                        # .z-* class coverage gap vs iceblue
 ```
