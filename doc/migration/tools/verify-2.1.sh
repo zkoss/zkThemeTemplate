@@ -3,13 +3,15 @@
 # (execution plan §2 P2, row 2.1; harness rules 1–3).
 #
 # Usage:  bash doc/migration/tools/verify-2.1.sh static      file-level checks, no server (~1 min: one Gradle configure)
-#         bash doc/migration/tools/verify-2.1.sh live        starts the module's gretty server, probes one page, stops it
+#         bash doc/migration/tools/verify-2.1.sh live        starts the module's gretty server (appRun, background), probes
+#                                                          one page, stops it; every wait is bounded (START_TIMEOUT, default 300 s)
 #
 # Each check prints its own "stage:" marker; the first failing check names itself and exits 1.
 # Dry-run contract (rule 2): on a tree without zkpreview/, `static` fails at the first marker
 # ("zkpreview layout") and `live` fails at "zkpreview wrapper present"; every environment check passes.
 # The script never deletes anything, never escalates, and writes only Gradle's own outputs plus temp
-# files from mktemp. The server it starts is stopped on every exit path (trap).
+# files from mktemp. The server it starts is stopped on every exit path (trap); the only process it ever
+# kills is a gretty runner for this very module left listening by an earlier failed appStart (F50).
 set -u
 ZK=/Users/hawk/Documents/workspace/ZK10/zk
 TPL=/Users/hawk/Documents/workspace/zkThemeTemplate
@@ -53,6 +55,8 @@ static)
   test -z "$bad" || { echo "$bad"; fail "build.gradle still carries zksandbox-only dependencies"; }
   /usr/bin/grep -q "$PORT" "$B" || fail "build.gradle does not default httpPort to $PORT"
   ok "build.gradle: war + gretty 3.1.1, ZK modules by \${version}, zksandbox extras stripped, port $PORT"
+  /usr/bin/grep -q "exclude group: 'org.zkoss.zk', module: 'zkwebfragment'" "$B" || fail "build.gradle lacks zktest's zkwebfragment exclusion (F50: its web-fragment.xml double-maps /zkau/* and *.zul)"
+  ok "build.gradle: zkwebfragment excluded as in zktest"
 
   S="$MOD/src/main/java/org/zkoss/zkpreview/http/ZKPreviewServlet.java"
   T=zktest/src/main/java/org/zkoss/zktest/http/ZKTestServlet.java
@@ -90,25 +94,48 @@ live)
   test -x "$TOOLS/page-probe.js" -o -f "$TOOLS/page-probe.js" || fail "environment: page-probe.js missing"
   ok "environment: curl, lsof, page-probe.js"
   test -x "$MOD/gradlew" || fail "zkpreview wrapper present"
+  cd "$MOD" || fail "cd $MOD"
+  # ours() — pid of a listener on $PORT that is this module's own gretty runner (a JVM left by a failed
+  # appStart keeps Jetty listening): a gretty Runner JVM whose working directory is this module — its
+  # command line never names the module, so the cwd is the identifying fact. Nothing for a free port or a foreign process.
+  ours() { for p in $(/usr/sbin/lsof -nP -t -iTCP:"$PORT" -sTCP:LISTEN 2>/dev/null); do
+             ps -ww -o command= -p "$p" | /usr/bin/grep -q 'org.akhikhl.gretty.Runner' \
+               && test "$(/usr/sbin/lsof -a -p "$p" -d cwd -Fn 2>/dev/null | sed -n 's/^n//p')" = "$MOD" && echo "$p"; done; }
+  # stop() — close appRun's stdin (graceful), else ask gretty (bounded to 30 s: appStop talks to the runner's
+  # status port and can hang), else kill whatever runner of this module is still listening. Never a foreign process.
+  stop() { exec 3>&- 2>/dev/null                       # EOF on appRun's stdin = "any key": graceful stop
+           for _ in $(seq 1 30); do [ -n "${RUNPID:-}" ] && kill -0 "$RUNPID" 2>/dev/null || break; sleep 1; done
+           if [ -n "$(ours)" ]; then                    # still up: ask gretty (bounded), then kill our own runner
+             ( ./gradlew appStop --console=plain -q >/dev/null 2>&1 ) & sp=$!
+             for _ in $(seq 1 30); do kill -0 "$sp" 2>/dev/null || break; sleep 1; done
+             kill "$sp" 2>/dev/null; sleep 2
+             for p in $(ours); do echo "   stopping zkpreview gretty runner pid $p"; kill "$p"; done
+           fi
+           [ -n "${RUNPID:-}" ] && kill "$RUNPID" 2>/dev/null; true; }
+  if [ -n "$(ours)" ]; then echo "   port $PORT held by this module's own earlier runner — stopping it first"; stop; sleep 3; fi
   busy=$(/usr/sbin/lsof -nP -iTCP:"$PORT" -sTCP:LISTEN 2>/dev/null | tail -n +2)
-  test -z "$busy" || { echo "$busy"; fail "port $PORT already listening before start (run ./gradlew appStop in zkpreview)"; }
+  test -z "$busy" || { echo "$busy"; fail "port $PORT held by a foreign process before start (export PREVIEW_PORT=<free port>)"; }
   ok "port $PORT free before start"
 
-  cd "$MOD" || fail "cd $MOD"
-  stop() { ./gradlew appStop --console=plain -q >/dev/null 2>&1; }
+  # appRun in the background, readiness by HTTP. Not appStart: with gretty 3.1.1 under Gradle 8.10 the
+  # appStart client never returns after Jetty's ready banner (2.1 run 2, F51), so every wait here is bounded.
+  # appRun waits for "any key" on stdin and treats EOF as that key, so a background appRun with no stdin
+  # stops the instant it starts. Feed it a FIFO whose write end this script holds open (fd 3); closing
+  # fd 3 in stop() is the graceful shutdown.
   trap stop EXIT
-  L=$(mktemp)
-  ./gradlew appStart -PhttpPort="$PORT" --console=plain -q > "$L" 2>&1 || { tail -n 40 "$L"; fail "gretty appStart"; }
-  ok "gretty appStart returned"
-
+  L=$(mktemp); F=$(mktemp -u); mkfifo "$F" || fail "mkfifo"
+  ./gradlew appRun -PhttpPort="$PORT" --console=plain -q < "$F" > "$L" 2>&1 &
+  RUNPID=$!
+  exec 3>"$F"; rm -f "$F"
   code=000
-  for _ in $(seq 1 60); do
+  for _ in $(seq 1 "${START_TIMEOUT:-300}"); do
+    kill -0 "$RUNPID" 2>/dev/null || { tail -n 40 "$L"; fail "gretty appRun exited before serving (log above)"; }
     code=$(curl -s -o /dev/null -w '%{http_code}' "$URL" || true)
     test "$code" = 200 && break
     sleep 1
   done
-  test "$code" = 200 || fail "GET $URL → HTTP $code after 60 s"
-  ok "GET smoke.zul → HTTP 200"
+  test "$code" = 200 || { tail -n 40 "$L"; fail "GET $URL → HTTP $code after ${START_TIMEOUT:-300} s (appRun log above)"; }
+  ok "gretty appRun serving; GET smoke.zul → HTTP 200"
 
   H=$(mktemp); curl -s "$URL" > "$H"
   hrefs=$(/usr/bin/grep -oE '<link[^>]*rel="stylesheet"[^>]*>' "$H" | /usr/bin/grep -oE 'href="[^"]+"' | sed 's/href="//;s/"$//')
@@ -136,7 +163,7 @@ live)
     sleep 1
   done
   test -z "$(/usr/sbin/lsof -nP -iTCP:"$PORT" -sTCP:LISTEN 2>/dev/null | tail -n +2)" || fail "port $PORT still listening after appStop"
-  ok "gretty appStop; port $PORT free again"
+  ok "server stopped; port $PORT free again"
   echo "2.1 live ok" ;;
 
 *) echo "unknown mode: $MODE (static | live)"; exit 2 ;;

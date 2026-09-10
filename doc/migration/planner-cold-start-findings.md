@@ -595,3 +595,38 @@ every URL ZK emits; the second request in the same context does not. Fixed: the 
 accept `;`, `?` or end-of-string after the file name. Rule for every P2 URL assertion: match the path
 segment, never the end of the href. Had this shipped, the 2.1 Evaluator would have returned a FAIL that
 was the Planner's, exactly the P1 pattern the retrospective counted six times.
+
+### F50 — `zk` drags `zkwebfragment` in; a hand-written `web.xml` must exclude it (2.1 run 1 FAIL)
+Run 1 of item 2.1 (`wf_14ee2332-eed`) produced every file the brief asked for and passed `static`, but
+gretty's `appStart` refused to start: `Multiple servlets map to path /zkau/*` — the module's explicit
+`auEngine` against `DHtmlUpdateServlet` from `zkwebfragment-11.0.0-SNAPSHOT.jar!/META-INF/web-fragment.xml`.
+`zk/build.gradle:16` declares `api project(':zkwebfragment')`, so every consumer of `zk` inherits the
+Servlet 3.0 fragment, which also maps `*.zul` to `DHtmlLayoutServlet`. zktest lives with it through
+`zktest/build.gradle:56-59`: `configurations.all { exclude group: 'org.zkoss.zk', module: 'zkwebfragment' }`.
+The brief copied zktest's `settings.gradle` and `web.xml` but not that exclusion — a Planner omission,
+the seventh first-run FAIL of the migration caused by the brief or the verifier rather than the Generator.
+Two consequences: (1) the brief and `verify-2.1.sh static` now carry the exclusion; (2) the failed
+`appStart` left its Jetty JVM listening on 8085 (gretty's `appStop` could not reach it), so the
+Evaluator's `live` failed at the pre-start port check — a second FAIL that said nothing about the
+artefacts. `verify-2.1.sh live` now recognises the module's own leftover runner (a
+`org.akhikhl.gretty.Runner` JVM whose working directory is `zkpreview/` — its command line never names
+the module) and stops it before starting; a foreign listener still fails the gate.
+
+### F51 — gretty 3.1.1 under Gradle 8.10: `appStart` never returns; background `appRun` needs a live stdin
+Run 2 of item 2.1 (`wf_89e58cc5-2bb`): the Generator fixed the two run-1 gaps and `static` passed, but
+`./gradlew appStart -PhttpPort=8085 --console=plain -q` printed Jetty's ready banner, served
+`smoke.zul` with HTTP 200 — and the Gradle client process never returned (0 % CPU, twice: once after a
+16-minute cold composite build, once warm in under a minute). `verify-2.1.sh live` therefore hung until
+the Evaluator's 600 s Bash timeout; the Evaluator then improvised a background run with a `sleep` poll,
+which this environment blocks, and stalled on the resulting permission prompt until the run was stopped.
+Two fixes, both proven by a Planner dry-run on the Generator's tree (8 s warm, `2.1 live ok`):
+(1) the script starts `appRun` in the background and detects readiness itself by polling the page URL,
+every wait bounded (`START_TIMEOUT`, default 300 s); (2) `appRun` reads "any key" from stdin and treats
+EOF as that key, so a background `appRun` with no stdin stops the instant it starts — the script feeds
+it a FIFO whose write end it holds on fd 3, and closing fd 3 is the graceful shutdown (fallback: bounded
+`appStop`, then kill only a `gretty.Runner` whose cwd is `zkpreview/`). The Evaluator brief now says:
+never background, never poll, never sleep; a command still running at the timeout is a FAIL with cause
+"timeout". Environment facts for 2.2/2.3: the served page lists `reset.css`, `zk.wcs`,
+`zkmax/css/tablet.css.dsp` and `zkex/wgt/css/skeleton.css.dsp` in that order; the in-page count is 670
+`--zk-*` declarations — the same number the template's ZK 10 preview serves, so the Marble variable set
+crossed the migration intact.
