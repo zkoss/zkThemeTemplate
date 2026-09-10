@@ -584,3 +584,14 @@ Atlantic, `10.0.1.1-Eval`) on the classpath, each registering a theme. Under Mar
 registered, so which theme zktest actually serves is decided by the priority fallback — a P2 concern
 for item 2.9 and any Marble-verifying run of zktest, and a chat decision (D47) on pinning the preferred
 theme — **ruled D47-a: `marble`** (plan D41).
+
+### F49 — ZK appends `;jsessionid=…` to stylesheet hrefs on a cookie-less first response
+Found by dry-running [tools/page-probe.js](tools/page-probe.js) against the template's live preview on
+port 8081 (harness rule 2): every `document.styleSheets` href read
+`…/zul/css/reset.css;jsessionid=<id>`, so a regex ending in `\.css(\?|$)` matched nothing and the probe
+reported `resetIndex −1, wcsIndex −1` on a healthy Marble page (670 `--zk-*` declarations). A headless
+browser's first request carries no cookie, so the servlet container URL-rewrites the session id into
+every URL ZK emits; the second request in the same context does not. Fixed: the probe's two patterns
+accept `;`, `?` or end-of-string after the file name. Rule for every P2 URL assertion: match the path
+segment, never the end of the href. Had this shipped, the 2.1 Evaluator would have returned a FAIL that
+was the Planner's, exactly the P1 pattern the retrospective counted six times.
