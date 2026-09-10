@@ -552,3 +552,21 @@ under the very Node override written for it. So the zk/CLAUDE.md checklist line 
 aspirational, and the gate now runs what CI runs (stage 2 rewritten). **Open (chat D36):** whether the
 ported scripts should be made lint-clean — add `scripts/*.js` to the `gulpfile.js` Node override and
 fix the residual rule hits in a small item — or stay outside lint like `gulpfile.js` does today.
+
+### F46 — Third verification defect of the day: a diff grep that counted context lines
+1.6b's clause `git diff -- package.json | grep -c codemirror` was meant to prove npm's re-sort had
+been undone; it counted the three `@codemirror/*` *context* lines that follow the devDependencies
+edits and failed a correct tree (the Generator's own diff showed the intended 9 changed lines and no
+dependency churn). Fixed by filtering to `^[-+] ` first. The pattern behind F32, F42 and F46 is the
+same: a clause dispatched without a dry run against the nearest existing state. Rule recorded in the
+`zk` session's lessons file (untracked there); the gate script's per-check markers exist for the same reason.
+
+### F47 — `npm run lint -- .` mutates files: `zk/preferNativeClass` writes its rewrite without `--fix`
+The Planner's first gate dry-run (F45) left five files modified that no item touched —
+`zksandbox/src/main/webapp/macros/category.js` and `zktest/src/main/webapp/web/js/wgt4714/test0{1..4}/Test0*.js`
+— each rewritten from `zk.$extends(...)` to `@zk.WrapClass … export class`, with mtimes matching the
+lint run to the second. ESLint only applies fixes under `--fix`; `eslint-plugin-zk/src/rules/preferNativeClass.ts`
+imports `spawnSync` from `child_process` and hands the file to a codemod, which is what wrote it.
+Reverted with `git checkout --`. Two consequences: never run the repository-wide lint on a
+tree you intend to commit from (the gate no longer does), and the rule's side effect is a defect to
+report to the plugin's owner outside this migration.

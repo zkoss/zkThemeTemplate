@@ -1,6 +1,6 @@
 # Marble → zk Migration — Execution Plan (Planner · Generator · Evaluator)
 
-**Status:** **D21 and D22 ruled 2026-09-10.** **3.1, 3.2, 3.3, 3.15, 3.16 PASSED** (verdicts in [gates/](gates/)); **P3 paused — D24: P1 runs next**, the `zk`-side P3 items resume after the P1 and P2 gates. **P1: all 14 items PASSED** (1.0, 1.0b, 1.1, 1.2, 1.3a, 1.3b, 1.3b2, 1.3c, 1.4, 1.5, 1.5b, 1.6, 1.7, 1.8 — verdicts in [gates/](gates/)); **P1 gate pending** (procedure proposed below, awaiting approval). `zk`/`zkcml` commits carry **ZK-6112** (D23). Rows 3.1 / 3.2 / 3.4 / 3.9 amended, 3.15 / 3.16 / 3.18 added per [planner-cold-start-findings.md](planner-cold-start-findings.md) F1. · **Written:** 2026-09-09 · **Revised:** 2026-09-10
+**Status:** **D21 and D22 ruled 2026-09-10.** **3.1, 3.2, 3.3, 3.15, 3.16 PASSED** (verdicts in [gates/](gates/)); **P3 paused — D24: P1 runs next**, the `zk`-side P3 items resume after the P1 and P2 gates. **P1: all 14 items PASSED** (1.0, 1.0b, 1.1, 1.2, 1.3a, 1.3b, 1.3b2, 1.3c, 1.4, 1.5, 1.5b, 1.6, 1.7, 1.8 — verdicts in [gates/](gates/)); **P1 complete: 16 / 16 items PASSED, P1 gate PASSED (Opus, [gates/P1.md](gates/P1.md)); all eight P1 commits landed (D35: `zk` 5b064f36 · 0f20115d · 9fa54e66 · 1c5a2685 · 37c41853; `zkcml` b100ddb3 · e3600a94 · 31f08cdc); external-evaluator note appended (E1–E4; D44 / D45 owed). Next: P2.** `zk`/`zkcml` commits carry **ZK-6112** (D23). Rows 3.1 / 3.2 / 3.4 / 3.9 amended, 3.15 / 3.16 / 3.18 added per [planner-cold-start-findings.md](planner-cold-start-findings.md) F1. · **Written:** 2026-09-09 · **Revised:** 2026-09-10
 **Governs:** [marble-to-zk-migration-plan.md](marble-to-zk-migration-plan.md) — that document says
 *what* and *why*; this one says *how each item is run, by whom, at what size, and how it is proven*.
 
@@ -80,8 +80,8 @@ run early.
 
 | Phase | Items in plan | Items after sizing | Splits | Writes land in |
 |---|---|---|---|---|
-| P1 | 5 | **14** | LESS deletion and the Gradle task each split per repository; 1.0 / 1.0b (deps) added, 1.3 split into 1.3a / 1.3b / 1.3b2 / 1.3c (F26, F30, F31); 1.5b folds the reset into the base provider (D29, F39) | `zk` / `zkcml` |
-| P2 | 6 | **9** | the zero-tolerance comparison split by baseline family (99 / 70 / 30) | `zk` |
+| P1 | 5 | **16** | LESS deletion and the Gradle task each split per repository; 1.0 / 1.0b (deps) added, 1.3 split into 1.3a / 1.3b / 1.3b2 / 1.3c (F26, F30, F31); 1.5b folds the reset into the base provider (D29, F39); 1.6b orphan removal (D33), 1.9 script lint (D31) | `zk` / `zkcml` |
+| P2 | 6 | **10** | the zero-tolerance comparison split by baseline family (99 / 70 / 30); 2.9 test case for the provider change (D32, F35) | `zk` |
 | P3 | 6 | **16** | agent re-pointing split per agent (5); contracts split in two (47 + 47); 3.15–3.16 added for the two skills §A.7 rules MOVE (F13); 3.18 for the uncovered `doc/` paths (F17) | `zk`; three items (3.1–3.3) in the template repo via the added directory |
 | P4 | 8 | **15+** | coverage gaps one per component (6); icon fallout per class family; Jess resumed as its own series | `zk`; 4.6–4.7 in the template repo |
 
@@ -111,9 +111,11 @@ and nothing else. ✂ marks an item that was split from the plan's original.
 | 1.6 ✂ | `git rm` the **67** `zul` LESS files (F23); remove `compileLess` **and** `compileCSS` (F25) from `zk/build.gradle`; drop the `font-awesome.css.dsp` line from `zul/css/zk.wcs` (F24); remove the orphaned `zkless-engine` dependency and gulp `build:minify-css` (F37) — **same commit range as 1.1 + 1.3** | paths + 17 | Sonnet | Sonnet | `git ls-files 'zul/**/*.less'` = 0; the removed names absent from `build.gradle`, `zk.wcs`, `package.json`, `gulpfile.js`; `./gradlew :zul:processResources` green and writes exactly 46 `.css.dsp` (basename uniqueness was checked and holds for `zul`, but is not an invariant — F42; stale outputs are the P1 gate's `clean` build's concern, F43) |
 | 1.7 ✂ | `git rm` the 85 + **8** `zkmax`/`zkex` LESS files (F23) and remove `compileLess` + `compileCSS` from `zkcml/build.gradle` — same commit range as 1.2 + 1.4 | paths + 31 | Sonnet | Sonnet | same checks over `zkcml`: LESS = 0, names absent, `:zkmax:processResources :zkex:processResources` green writing 33 + 7 (the basename-uniqueness clause was dropped after a false FAIL — F42) |
 | 1.8 | Add `checkMarbleCss` Gradle tasks (both build files) running the ported `check-css-dsp.js --module <module>`, wired into `check`; `-PmarbleCssThemeDir` overrides the dir (F38) | ~8 | Sonnet | Sonnet | negative control without deletion: the task passes on codegen and **fails** on a temp copy missing one registered `.css.dsp` |
-| **P1 gate** | Composite `zk` + `zkcml` build green from `clean`; the jars carry exactly the Marble CSS set and no LESS | — | — | **Opus** + external | `bash doc/migration/tools/gate-p1.sh <n>` for n = 1…6, one Bash call each, in order (procedure below — **proposed, awaiting approval**); verdict `gates/P1.md`; external-evaluator note appended |
+| 1.6b | Delete the 13 orphaned icon-font binaries under `zul/less/font/` (F36) and the three orphaned devDependencies `cssnano`, `gulp-postcss`, `postcss` (F37); restore `package.json`'s dependency order after npm's re-sort — same commit range as 1.6 (D33) | paths + 1 | Sonnet | Sonnet | `git ls-files` over `zul/…/zul/less` = 0 and the directory is gone; the three names absent from `package.json` and `node_modules`; the `package.json` diff against HEAD is exactly the intended 9 lines with no `@codemirror` churn |
+| 1.9 | Make the two ported scripts lint-clean (F45, D31): a `scripts/*.js` override in `.eslintrc.js` modelled on the `gulpfile.js` one; fix the residual rule hits in the scripts without changing behaviour | ~3 | Sonnet | Sonnet | `npm run lint -- scripts/build-css.js scripts/check-css-dsp.js` exit 0; a fresh `--module zul` build is byte-identical to codegen (46 files); the checker still reports `MISSING : 0` |
+| **P1 gate** | Composite `zk` + `zkcml` build green from `clean`; the jars carry exactly the Marble CSS set and no LESS | — | — | **Opus** + external | `bash doc/migration/tools/gate-p1.sh <n>` for n = 1…6, one Bash call each, in order (procedure below — **approved 2026-09-10, chat D35-A**); verdict `gates/P1.md`; external-evaluator note appended |
 
-#### P1 gate — procedure (proposed 2026-09-10, awaiting the user's approval)
+#### P1 gate — procedure (approved 2026-09-10, chat D35-A)
 
 The gate is the first *judgement* gate, so it follows the standing rules: an **Opus** Evaluator runs
 the verification and writes the verdict; the verdict file is then handed to the `zkThemeTemplate`
@@ -147,7 +149,7 @@ so there is nothing to port. It is a P4 item beside the D18 sync script, where i
 
 | # | Item | WS | Gen | Eval | Verify |
 |---|---|---|---|---|---|
-| 2.1 | Stand up the preview module: independent root build + `includeBuild`, `zktest`-style `dependencySubstitution`, the 64-line container skeleton, the 31-line servlet **verbatim** | ~6 + skeletons | Sonnet | **Opus** | one hand-written ZUL returns HTTP 200 **and** in-page `document.styleSheets` shows > 0 `--zk-*` declarations (the theme-not-served guard from the skill) |
+| 2.1 | Stand up the preview module: independent root build + `includeBuild`, `zktest`-style `dependencySubstitution`, the 64-line container skeleton, the 31-line servlet **verbatim** | ~6 + skeletons | Sonnet | **Opus** | one hand-written ZUL returns HTTP 200 **and** in-page `document.styleSheets` shows > 0 `--zk-*` declarations (the theme-not-served guard from the skill) **and** a served stylesheet whose href ends in `reset.css` or `reset-embed.css` precedes the `zk.wcs` one (E1/E3 of the external P1 note) |
 | 2.2 | Move the 159 preview / use-case ZULs + the SPA host into the module (path move) | paths | Sonnet | Sonnet | Playwright `smoke` project: every page 200 with a composed body |
 | 2.3 | Move the Playwright harness (323 KB of specs, **moved not read**) and re-point `baseURL` | config only | Sonnet | Sonnet | `--project=smoke` green against the new host; `PREVIEW_URL` default updated in exactly the files the indirection doc names |
 | 2.4 | Drop `zksandbox`'s `iceblue_c` theme-jar pin | < 1 | Sonnet | Sonnet | `zksandbox` builds; `grep -c iceblue_c zksandbox/build.gradle` = 0 |
@@ -155,6 +157,7 @@ so there is nothing to port. It is a P4 item beside the D18 sync script, where i
 | 2.6 ✂ | Zero-tolerance comparison — **gallery family, 99 baselines** | output-heavy | Sonnet | **Opus** | a diff ledger file: one line per baseline, `IDENTICAL` or a named cause; **zero unexplained rows** |
 | 2.7 ✂ | Zero-tolerance — **state family, 70** (hover / focus / active) | output-heavy | Sonnet | **Opus** | same ledger shape |
 | 2.8 ✂ | Zero-tolerance — **tablet family, 30** (mobile UA project) | output-heavy | Sonnet | **Opus** | same; tablet's two known 2 % opt-ins must be *explained*, not absorbed |
+| 2.9 | Test case for the ZK 11 provider change (D32, F35): `B110_ZK_6112Test` + `B110-ZK-6112.zul` registered in `config.properties`, asserting that the reset `<link>` precedes `zk.wcs` and that `org.zkoss.zul.theme.browserDefault=true` serves `reset-embed.css` | ~4 | Sonnet | Sonnet | `cd zktest && ./gradlew test --tests "org.zkoss.zktest.zats.test2.B110_ZK_6112Test" -PmaxParallelForks=1 --console=plain --no-daemon` green |
 | **P2 gate** | The three ledgers together cover 199 rows with every difference explained; normal tolerances restored afterwards | — | — | **Opus** | ledger row count = 199; unexplained = 0; verdict file |
 
 The comparison is split by family because the evidence *returned* is the problem, not the input:
@@ -289,6 +292,62 @@ silently loses Marble's reset stylesheet, and the EE chain has to read
 gets its own. `MarbleThemeProvider` is deleted; `zul/zk.xml` and the zkex provider return to their
 committed text. Cost accepted: the "standard" provider now carries theme-reset behaviour for every
 theme — which is what standard means once the default theme needs one. Item 1.5b.
+
+### D30 — P1 gate procedure — **RULED 2026-09-10 (chat D35-A): as proposed**
+
+Six-stage `tools/gate-p1.sh`, Opus Evaluator, verdict `gates/P1.md`, then the verdict file goes to
+the `zkThemeTemplate` session as external Evaluator (judges, never approves). No `gradle build`
+(P4 owns the test rebaseline) and no runtime check (P2 owns 2.1).
+
+### D31 — The ported scripts and lint — **RULED 2026-09-10 (chat D36-A): make them lint-clean**
+
+A `scripts/*.js` override in `.eslintrc.js` modelled on the existing `gulpfile.js` one, plus fixes for
+the residual rule hits, behaviour unchanged. Item 1.9. (`gulpfile.js` itself stays as it is.)
+
+### D32 — Test case for the provider change — **RULED 2026-09-10 (chat D37-A): zktest, in P2**
+
+zk requires a test per feature and `zul` has no `src/test`; the convention is a `zktest` WebDriver
+test. Item 2.9, because it needs the P2 execution environment.
+
+### D33 — Orphaned icon fonts and devDependencies — **RULED 2026-09-10 (chat D38-A, D39-A): remove in P1**
+
+The 13 Font Awesome / ZK85Icons binaries under `zul/less/font/` (F36) and `cssnano`, `gulp-postcss`,
+`postcss` (F37) go in item 1.6b, in the same commit range as 1.6.
+
+### D34 — Commit grouping for P1 — **RULED 2026-09-10 (chat D40-A); superseded the same day by D35**
+
+`zk`: two commits — build integration (build files, scripts, 87 CSS sources, provider / theme-name
+changes, LESS deletions, `.gitignore` hunk) and the `zk-component-rules` skill (3.15). `zkcml`: one.
+Excluded as other people's work: `zk` `lang-addon.xsd`, `logs/`, `tasks/`, the `graphify-out` line;
+`zkcml` `.gitignore`, `lib/spel2js/package-lock.json`, `zk85themebuilder/`. Commits happen only when
+the user says so.
+
+### D35 — Commit grouping for P1, revised — **RULED 2026-09-10 (chat D41): one commit per logically related change**
+
+`zk`: ① devDependencies + `scripts/` + 87 CSS sources + `compileMarbleCss` (1.0 / 1.0b / 1.3 / 1.1);
+② reset folded into `StandardThemeProvider`, `DEFAULT_NAME` → marble, `dom.ts`, `MarbleBrand` /
+`MarbleDensity` (1.5 / 1.5b); ③ 67 LESS + 13 font binaries deleted, `compileLess` / `compileCSS` /
+`zkless-engine` / gulp `minify-css` / the `zk.wcs` line / three devDependencies removed (1.6 / 1.6b);
+④ `checkMarbleCss` wired into `check`, the `scripts/*.js` lint override (1.8 / 1.9); ⑤ `.gitignore`
+policy + the `zk-component-rules` skill (D25 / 3.15). `zkcml`: (a) 45 CSS sources + `compileMarbleCss`
+(1.4 / 1.2); (b) 93 LESS deleted + the two tasks removed (1.7). Every message carries `ZK-6112:`;
+① ② immediately, the rest after the gate verdict; explicit paths, `git diff --cached --name-only`
+before each commit; other people's files stay out. Intermediate blobs for files that span groups
+(`build.gradle`, `package.json`, `package-lock.json`) are reconstructed so each commit is internally
+consistent; the ESLint auto-fixes to the two scripts ride in ① because their pre-fix state no longer
+exists (gate 1.9 note). Whether the eventual PR to `master` is squashed is a separate decision.
+
+**Landed 2026-09-10:** `zk` ① `5b064f3619` · ② `0f20115d37` · ③ `9fa54e6617` · ④ `1c5a26858a` · ⑤ `37c41853dc`; `zkcml` (a) `b100ddb39` · (b) `e3600a94b` · (c) `31f08cdcd` — (c) added by the Planner for zkcml's `checkMarbleCss` (item 1.8), which the ruling did not assign, mirroring ④. ① and ② were first committed with a `build.gradle` blob that `git hash-object` had normalised to LF (a 569/551 whole-file diff); both were redone before anything else landed, with `--no-filters`, so ① shows the 18 added lines only.
+
+#### Follow-ups recorded by the P1 gate (Opus notes, [gates/P1.md](gates/P1.md))
+
+- `compileMarbleCss` re-runs on every build (`outputs.upToDateWhen { false }`) — revisit for incremental inputs/outputs (P4 backlog).
+- The two repositories guard the task with different configuration-time probes — unify into one shape.
+- zk/CLAUDE.md's checklist line `npm run lint -- .` is not what CI runs and cannot pass (F45); it also mutates files through `zk/preferNativeClass` (F47) — correct the line in the P3 CLAUDE.md item.
+- Release-note items: default theme name, Font Awesome removal and Lucide replacement, LESS retirement — breaks `zklessc`-built themes, concretely `zkcml/zkthemebuilder/palettes` (54 tracked `.less`, the IceBlue asset) and the untracked `zk85themebuilder/` — the silent-reset regression for providers that override `getThemeURIs` without `super`, the exact pins.
+- **6** EE `<css-uri>` targets ship as empty stubs (zkmax 4, zkex 2 — the checker's end state; the builder's "19 + 4 empty stubs" line counts stubs *written* before real CSS overrides them, E1) — P4 coverage items; "MISSING : 0" is presence, not styling. Reword the builder's log line to "written (may be overridden)".
+- `zul/font/font-awesome.css.dsp` is still emitted as a stub that nothing requests and that the checker excludes from both counts (46 = 42 + 3 + 1); drop it or record why it stays, and refresh `check-css-dsp.js`'s header line 17 (E3 — chat D45).
+- Commits ① / ② and (a) carry both CSS pipelines (E2): squash before the PR or name the range in the PR description — chat D44.
 
 ### First run — the pilot (item 3.1)
 
