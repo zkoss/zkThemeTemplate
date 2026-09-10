@@ -487,6 +487,14 @@ The 1.5 Evaluator dropped the leading `cd` from two of three commands ("the shel
 there"). Harmless here, but a paraphrased command is no longer *the row's* command. The
 multi-command brief now says "type each one verbatim, including its leading cd".
 
+**Addendum (1.5 re-verification, same day):** with "type each one verbatim, including its leading
+`cd`" in the brief, the Opus Evaluator still dropped the `cd` on two of three commands ("the shell
+was already there") and ran command 1 three times — disclosed, harmless here, but a rule that is
+followed only when convenient is not a control. **Structural fix from the P1 gate on:** the
+verification lives in a tracked script (`tools/gate-p1.sh`), the Evaluator's command is
+`bash <file> <stage>`, and each check prints its own marker (F42), so there is nothing to retype and
+nothing to misattribute.
+
 ### F41 — `npm run lint` is broken on this machine, independent of the migration
 `npm run lint -- <dir>` exits 2 for `zul/` and `zk/` alike with an ESLint configuration error on the
 `zk/noMixedHtml` rule options. `eslint-plugin-zk/dist` (gitignored) was last built 2024-09-26; its
@@ -499,3 +507,48 @@ plugin (`classes.dependsOn buildESLintPlugin`), but a standalone `npm run lint` 
 `dist/` predates the plugin's source changes fails at configuration time. Worth a line in `zk`'s
 CLAUDE.md pre-commit recipe ("run `./gradlew buildESLintPlugin` first if lint reports a config
 error"). Lint removed from 1.5's row; it belongs to the gate.
+
+### F42 — "No duplicate `.css.dsp` basenames" is not an invariant; it failed 1.7 for a legitimate file pair
+The Planner added a `uniq -d` basename check to 1.6 / 1.7 as a proxy for "no LESS-built output survived
+beside a Marble output". It passed on `zul` by luck and failed 1.7 on `zkmax`: `goldenlayout.css.dsp`
+legitimately exists twice — the real widget CSS under `js/zkmax/goldenlayout/css/` (widget-package
+`zkmax.goldenlayout`, `<css-uri>css/goldenlayout.css.dsp</css-uri>` in `lang-addon.xml`) and a
+deliberate 0-byte stub under `js/zkmax/layout/css/` from `build-css.js`'s `stubPaths`. Basenames are
+not unique across ZK widget packages, so the clause proves nothing. The Generator's work was correct:
+LESS = 0, tasks removed, `:zkmax:processResources` exit 0, exactly 33 outputs newer than the marker
+(re-run by the Planner read-only). Clause dropped from 1.7's command; 1.6's verdict stands (the clause
+happened to be true there). The Evaluator also mis-attributed the failing `&&` stage — two silent
+`test`s in a row are indistinguishable from the output alone; future chains should echo a marker
+between stages that produce no output.
+
+### F43 — Stale pre-Marble artefacts linger in `codegen/`; only `clean` removes them
+`processResources` never deletes what an earlier pipeline wrote. Today `zul/codegen/…/zul/css/ext.css.dsp`
+(2023-12-22) and `zkex/codegen/…/js/zkex/wgt/css/skeleton.css.dsp` (built 14:59 by the LESS task before
+1.7) sit beside the Marble outputs; neither is in the builder's output set. `codegen/` is gitignored, so
+commits are unaffected, and `zk/build.gradle`'s `clean.doFirst { delete "$projectDir/codegen/" }` removes
+them on a clean build — which is why the P1 gate must build from `clean`, and why a "codegen set equals
+the builder's set" check belongs to the gate, not to 1.6 / 1.7 (where it would false-fail on these).
+
+### F44 — Workflow resume replays a *positional* prefix, not matching prompts; Generators must be idempotent
+Resuming `wf_abfefc3a-44e` with `args.items = ["1.7", "1.8", "1.5b"]` re-ran 1.7's Generator even though its
+brief was byte-identical to the cached run — the cache replays the longest unchanged prefix of agent
+calls in order, and the first call now differed (the earlier run began with 1.5). No harm came of it
+because the brief's first step was a precondition (`test … = 93` before `git rm`) and the Generator,
+finding the work already done, verified instead of redoing it. **Rule:** every Generator brief starts
+with a precondition that fails closed when the work is already there, and a resume that changes the
+item order is treated as a full re-run for planning purposes (Gradle contention, budget). Where a
+Generator must not run twice (destructive steps), run it in its own workflow launch.
+
+### F45 — `npm run lint -- .` is not what CI runs, and cannot pass on any checkout
+The P1 gate dry-run failed its first stage 2 on `npm run lint -- .` with 9 422 errors. Buckets: 244
+files under the IDE output directories `*/bin/` (gitignored, machine-local), 22 in `zktest/src`, 50 in
+`eslint-plugin-zk/{src,dist,tests}`, 2 in `zksandbox/src` — none of them touched by the migration —
+plus 60-odd hits in the two ported `scripts/*.js` (Node globals `require`/`process`/`__dirname`/
+`Buffer` undefined under the browser-oriented config, `one-var`, `no-console`, `zk/noNull`). CI
+(`zk-build.yml`) runs `./gradlew clean build`, whose lint is the per-module `jscheck` task
+(`npm run lint -- <module>/src/main/resources/web/js`) plus `tscheck` (`npm run type-check`); it
+never lints `scripts/`, `zktest`, the plugin or `bin/`. The repository's own `gulpfile.js` has 99 errors
+under the very Node override written for it. So the zk/CLAUDE.md checklist line `npm run lint -- .` is
+aspirational, and the gate now runs what CI runs (stage 2 rewritten). **Open (chat D36):** whether the
+ported scripts should be made lint-clean — add `scripts/*.js` to the `gulpfile.js` Node override and
+fix the residual rule hits in a small item — or stay outside lint like `gulpfile.js` does today.

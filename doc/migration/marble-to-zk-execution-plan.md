@@ -1,6 +1,6 @@
 # Marble → zk Migration — Execution Plan (Planner · Generator · Evaluator)
 
-**Status:** **D21 and D22 ruled 2026-09-10.** **3.1, 3.2, 3.3, 3.15, 3.16 PASSED** (verdicts in [gates/](gates/)); **P3 paused — D24: P1 runs next**, the `zk`-side P3 items resume after the P1 and P2 gates. **P1: 1.0 / 1.0b / 1.1 / 1.2 / 1.3a / 1.3b / 1.3b2 / 1.3c / 1.4 PASSED**; 1.5's reset placement re-ruled as D29 → item 1.5b; 1.6–1.8 in flight. `zk`/`zkcml` commits carry **ZK-6112** (D23). Rows 3.1 / 3.2 / 3.4 / 3.9 amended, 3.15 / 3.16 / 3.18 added per [planner-cold-start-findings.md](planner-cold-start-findings.md) F1. · **Written:** 2026-09-09 · **Revised:** 2026-09-10
+**Status:** **D21 and D22 ruled 2026-09-10.** **3.1, 3.2, 3.3, 3.15, 3.16 PASSED** (verdicts in [gates/](gates/)); **P3 paused — D24: P1 runs next**, the `zk`-side P3 items resume after the P1 and P2 gates. **P1: all 14 items PASSED** (1.0, 1.0b, 1.1, 1.2, 1.3a, 1.3b, 1.3b2, 1.3c, 1.4, 1.5, 1.5b, 1.6, 1.7, 1.8 — verdicts in [gates/](gates/)); **P1 gate pending** (procedure proposed below, awaiting approval). `zk`/`zkcml` commits carry **ZK-6112** (D23). Rows 3.1 / 3.2 / 3.4 / 3.9 amended, 3.15 / 3.16 / 3.18 added per [planner-cold-start-findings.md](planner-cold-start-findings.md) F1. · **Written:** 2026-09-09 · **Revised:** 2026-09-10
 **Governs:** [marble-to-zk-migration-plan.md](marble-to-zk-migration-plan.md) — that document says
 *what* and *why*; this one says *how each item is run, by whom, at what size, and how it is proven*.
 
@@ -108,10 +108,37 @@ and nothing else. ✂ marks an item that was split from the plan's original.
 | 1.4 ✂ | Copy 40 sources → `zkcml/zkmax/src/main/resources/web/…` (27 `js/zkmax/**/css` + 13 `zkmax/css/tablet/`), 5 → `zkcml/zkex/…` | paths | Sonnet | Sonnet | 40 / 5 files present and `cmp`-identical; `build-css.js --module zkmax` → 33, `--module zkex` → 7 outputs (F28) |
 | 1.5 | Author the **core-registration** variant per D26 / D28: `org.zkoss.zul.theme.MarbleThemeProvider extends StandardThemeProvider` (reset insertion, `browserDefault` switch kept), `zul/zk.xml` → it, zkex's provider re-based on it, `MarbleBrand`/`MarbleDensity` in `org.zkoss.zul.theme`, `StandardTheme.DEFAULT_NAME/DISPLAY` → marble/Marble, `dom.ts` synced; jar plumbing not carried | ~25 | Sonnet | **Opus** | `zul` compiles + `checkstyleMain` clean; `zkex`/`zkmax` compile; static wiring present; a fresh CE build's `norm.css.dsp` has `--zk-color-primary` and the output has no `marble/` (F34 — runtime proof in 2.1; `npm run lint` belongs to the P1 gate, F41) |
 | 1.5b | Fold the reset insertion into `StandardThemeProvider.getThemeURIs` itself per D29 (supersedes D26's subclass): delete `MarbleThemeProvider`, return `zul/zk.xml` and zkex's provider to their committed text, document `org.zkoss.zul.theme.browserDefault` on the base class; the three ported-script comments that name the deleted class follow | ~6 | Sonnet | **Opus** | `MarbleThemeProvider.java` absent; `zul/zk.xml` and zkex's `StandardThemeProvider.java` show **no diff** against HEAD; the base class names both reset files and the property; `grep MarbleThemeProvider` over `zul/src`, `scripts/`, `zkex/src`, `zkmax/src` = 0; `zul` compiles + `checkstyleMain` clean; `zkex`/`zkmax` compile |
-| 1.6 ✂ | `git rm` the **67** `zul` LESS files (F23); remove `compileLess` **and** `compileCSS` (F25) from `zk/build.gradle`; drop the `font-awesome.css.dsp` line from `zul/css/zk.wcs` (F24); remove the orphaned `zkless-engine` dependency and gulp `build:minify-css` (F37) — **same commit range as 1.1 + 1.3** | paths + 17 | Sonnet | Sonnet | `git ls-files 'zul/**/*.less'` = 0; the removed names absent from `build.gradle`, `zk.wcs`, `package.json`, `gulpfile.js`; `./gradlew :zul:processResources` green and writes exactly 46 `.css.dsp`; codegen holds **no duplicate** `.css.dsp` basenames |
-| 1.7 ✂ | `git rm` the 85 + **8** `zkmax`/`zkex` LESS files (F23) and remove `compileLess` + `compileCSS` from `zkcml/build.gradle` — same commit range as 1.2 + 1.4 | paths + 31 | Sonnet | Sonnet | same checks over `zkcml`: LESS = 0, names absent, `:zkmax:processResources :zkex:processResources` green writing 33 + 7, no duplicate basenames |
+| 1.6 ✂ | `git rm` the **67** `zul` LESS files (F23); remove `compileLess` **and** `compileCSS` (F25) from `zk/build.gradle`; drop the `font-awesome.css.dsp` line from `zul/css/zk.wcs` (F24); remove the orphaned `zkless-engine` dependency and gulp `build:minify-css` (F37) — **same commit range as 1.1 + 1.3** | paths + 17 | Sonnet | Sonnet | `git ls-files 'zul/**/*.less'` = 0; the removed names absent from `build.gradle`, `zk.wcs`, `package.json`, `gulpfile.js`; `./gradlew :zul:processResources` green and writes exactly 46 `.css.dsp` (basename uniqueness was checked and holds for `zul`, but is not an invariant — F42; stale outputs are the P1 gate's `clean` build's concern, F43) |
+| 1.7 ✂ | `git rm` the 85 + **8** `zkmax`/`zkex` LESS files (F23) and remove `compileLess` + `compileCSS` from `zkcml/build.gradle` — same commit range as 1.2 + 1.4 | paths + 31 | Sonnet | Sonnet | same checks over `zkcml`: LESS = 0, names absent, `:zkmax:processResources :zkex:processResources` green writing 33 + 7 (the basename-uniqueness clause was dropped after a false FAIL — F42) |
 | 1.8 | Add `checkMarbleCss` Gradle tasks (both build files) running the ported `check-css-dsp.js --module <module>`, wired into `check`; `-PmarbleCssThemeDir` overrides the dir (F38) | ~8 | Sonnet | Sonnet | negative control without deletion: the task passes on codegen and **fails** on a temp copy missing one registered `.css.dsp` |
-| **P1 gate** | Composite `zk` + `zkcml` build green; jar contains the expected `.css.dsp` set | — | — | **Opus** | `gradle build` exit 0; `unzip -l` of the jars lists all 86 + the two WCS-served files; verdict file written |
+| **P1 gate** | Composite `zk` + `zkcml` build green from `clean`; the jars carry exactly the Marble CSS set and no LESS | — | — | **Opus** + external | `bash doc/migration/tools/gate-p1.sh <n>` for n = 1…6, one Bash call each, in order (procedure below — **proposed, awaiting approval**); verdict `gates/P1.md`; external-evaluator note appended |
+
+#### P1 gate — procedure (proposed 2026-09-10, awaiting the user's approval)
+
+The gate is the first *judgement* gate, so it follows the standing rules: an **Opus** Evaluator runs
+the verification and writes the verdict; the verdict file is then handed to the `zkThemeTemplate`
+session (found through `ListAgents`) as the **external Evaluator**, whose note is appended to the
+verdict — it judges, it does not approve; the commit still waits for the user.
+
+The verification is a tracked script, [tools/gate-p1.sh](tools/gate-p1.sh), because the Evaluators
+paraphrased inline commands twice (F40, F42). Its six stages are run in order, one Bash call each
+(600 s ceiling), and each prints `STAGE n OK` or `STAGE n FAIL at: <check>`:
+
+| Stage | Repo | What it proves |
+|---|---|---|
+| 1 | `zk` | `gradle clean` (deletes every `codegen/`, F43) then `:zul:assemble` — the whole CE chain builds without LESS |
+| 2 | `zk` | the static checks CI's `gradle clean build` runs: `checkstyleMain`, per-module eslint (`jscheck`) and `npm run type-check` (`tscheck`) — not `npm run lint -- .`, which fails on any checkout (F45) |
+| 3 | `zk` | `zul-<version>.jar` holds **46** `.css.dsp`, `reset.css` + `reset-embed.css`, the 2 Inter woff2 files, **no** `.less`, no `marble/` segment; reports how many Font Awesome binaries ride along (F36) |
+| 4 | `zkcml` | `gradle clean` then `:zkex:assemble :zkmax:assemble` |
+| 5 | `zkcml` | `checkstyleMain` clean; `zkex` jar **7** and `zkmax` jar **33** `.css.dsp`, no `.less` |
+| 6 | both | the 1.8 `checkMarbleCss` tasks pass on the fresh codegen (`MISSING : 0` ×3) |
+
+Not in this gate, by design: `gradle build` (runs `zktest`; P4 owns the front-end test rebaseline)
+and any runtime rendering check (P2 owns 2.1). The Planner dry-runs the script once before dispatch
+and records the stage timings in the verdict, so a 600 s ceiling breach is a Planner defect, not a
+Generator one. **Dry-run 2026-09-10 (final P1 tree, all six stages green):** 204 s · 64 s · < 1 s ·
+33 s · 9 s · 2 s — the first stage-2 attempt failed on `npm run lint -- .` and was rewritten to what CI
+runs (F45).
 
 The version-drift checker the plan notes as missing is **not** in P1: it does not exist here either,
 so there is nothing to port. It is a P4 item beside the D18 sync script, where it is needed.
