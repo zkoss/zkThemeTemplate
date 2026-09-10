@@ -667,3 +667,16 @@ forbids `playwright install`. (2) The Servlet 2.4 API the module compiles agains
 `ServletRequest.getServletContext()`; the filter takes the context from `FilterConfig`. Environment: `npm install`
 6 s; `verify-2.3.sh live` 1 m 47 s warm. `verify-2.1.sh` and `verify-2.2.sh` now read the context path from
 `build.gradle` and were re-run green on the context-root tree before it was cleaned away.
+
+### F54 — Item 2.3 landed first run; no CI check looks at the new footprint
+Run `wf_87ac621a-dc8`: Generator + Evaluator 5 m 13 s, the Evaluator's `--project=smoke` 115 passed in 1.6 m (the
+Planner's throw-away had taken 100 s). Landed as `60f4895c4f` — 22 paths, 6 497 insertions, almost all of them the
+copied specs and `package-lock.json`. Before committing, the Planner ran what CI runs: `./gradlew checkstyleMain`
+passes, but checkstyle is applied to `zk` and `zul` only, so `PreviewPathFilter` is compiled (by `./gradlew build`
+and by gretty) and never style-checked; CI's `jscheck` lints each module's `src/main/resources/web/js` only, so
+`zkpreview/src/test/playwright` sits outside every ESLint and tsconfig project — `npx eslint` on it reports 15
+"file was not found in any of the provided project(s)" parse errors, the same class of error that already keeps the
+root `npm run lint -- .` from passing (the CLAUDE.md lint line, P3 follow-up). `zkpreview` is not in the root
+`package.json` `workspaces`, so its `package.json` is a self-contained package that root `npm ci` ignores. The
+module `.gitignore` hides Playwright's own `test-results/` and `playwright-report/`; `git status --porcelain --
+zkpreview` is empty after the commit.
