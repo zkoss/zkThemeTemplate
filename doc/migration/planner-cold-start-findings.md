@@ -652,3 +652,18 @@ environment facts: `./gradlew :zksandbox:war --dry-run` from the root composite 
 progress running work" while the real task runs in 21 s (the verify uses the real task); and two Gradle
 builds in one checkout must not overlap, so the workflow serialises items that share the `'gradle'` lock and
 every footprint check is scoped to its own item's paths.
+
+### F53 — Item 2.3 throw-away: the harness runs untouched at the context root; a caret pulled the wrong Playwright
+The template's 14 specs all navigate with a leading slash (`page.goto('/button.zul')`); Playwright resolves that
+against the origin, so a `baseURL` carrying the module's `/zkpreview/web/` prefix sends every spec to a 404. The
+Planner's throw-away (rule 2) put the module at the context root (gretty `contextPath = '/'`) with a 30-line
+javax `Filter` that forwards `/<page>.zul` to `/web/<page>.zul` when the page exists — `~./` resolution (D44) is
+untouched, `/smoke.zul` and unknown pages are left alone, and a query string survives the forward. The copied
+harness then reported **115 passed in 100 s** with the specs byte-identical apart from three `WEB_DIR` lines and
+the config's default `baseURL`, also on the default `http://localhost:8085`. Two traps: (1) `"@playwright/test":
+"^1.59.1"` resolved to 1.63.0, whose Chromium (headless shell 1243) is not installed here — every test died with
+"Executable doesn't exist"; the module pins `1.59.1` exactly, the template's installed version, and the brief
+forbids `playwright install`. (2) The Servlet 2.4 API the module compiles against has no
+`ServletRequest.getServletContext()`; the filter takes the context from `FilterConfig`. Environment: `npm install`
+6 s; `verify-2.3.sh live` 1 m 47 s warm. `verify-2.1.sh` and `verify-2.2.sh` now read the context path from
+`build.gradle` and were re-run green on the context-root tree before it was cleaned away.

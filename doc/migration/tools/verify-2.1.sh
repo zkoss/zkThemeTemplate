@@ -18,7 +18,9 @@ TPL=/Users/hawk/Documents/workspace/zkThemeTemplate
 TOOLS="$TPL/doc/migration/tools"
 MOD="$ZK/zkpreview"
 PORT=${PREVIEW_PORT:-8085}
-URL="http://127.0.0.1:$PORT/zkpreview/smoke.zul"
+# context path from build.gradle: '/zkpreview' until item 2.3, '/' afterwards (plan D47) — the script follows it
+CTX=$(sed -n "s/^\tcontextPath = '\([^']*\)'.*/\1/p" "$MOD/build.gradle"); CTX=${CTX%/}
+URL="http://127.0.0.1:$PORT$CTX/smoke.zul"
 MODE=${1:?mode required: static | live}
 fail() { echo "2.1 $MODE FAIL at: $1"; exit 1; }
 ok()   { echo "stage: $1"; }

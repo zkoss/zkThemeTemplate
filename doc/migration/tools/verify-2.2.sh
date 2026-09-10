@@ -12,7 +12,7 @@
 # template's `zk.example` helper classes are copied with the two Marble imports re-pointed and `ZulListVM`
 # listing the webapp directory; `zuti` and `za11y` join the classpath (the template's preview app has both —
 # `<apply>` and `<forEach>` are zuti shadow elements). Pages are addressed as
-# http://127.0.0.1:8085/zkpreview/web/<page>.zul.
+# http://127.0.0.1:8085<context path>/web/<page>.zul.
 #
 # Each check prints its own "stage:" marker; the first failing check names itself and exits 1.
 # Dry-run contract (rule 2): on the tree as item 2.1 left it, `static` fails at "page tree present" and `live`
@@ -29,7 +29,9 @@ DST="$MOD/src/main/webapp/web"
 JSRC="$TPL/src/test/java/zk/example"
 JDST="$MOD/src/main/java/zk/example"
 PORT=${PREVIEW_PORT:-8085}
-BASE="http://127.0.0.1:$PORT/zkpreview/web/"
+# context path from build.gradle: '/zkpreview' until item 2.3, '/' afterwards (plan D47) — the script follows it
+CTX=$(sed -n "s/^\tcontextPath = '\([^']*\)'.*/\1/p" "$MOD/build.gradle"); CTX=${CTX%/}
+BASE="http://127.0.0.1:$PORT$CTX/web/"
 MODE=${1:?mode required: static | live}
 fail() { echo "2.2 $MODE FAIL at: $1"; exit 1; }
 ok()   { echo "stage: $1"; }
@@ -143,7 +145,7 @@ live)
   test "$h1" -ge 100 || fail "preview.zul lists only $h1 pages (ZulListVM must see the webapp's /web directory)"
   ok "SPA host preview.zul lists $h1 pages"
   # A ~./ include and a class-web-resource asset resolve into the webapp directory (resource.dir=/web).
-  code=$(curl -s -o /dev/null -w '%{http_code}' "http://127.0.0.1:$PORT/zkpreview/zkau/web/img/ZK-Logo.gif"); test "$code" = 200 || fail "~./img/ZK-Logo.gif via /zkau/web → HTTP $code"
+  code=$(curl -s -o /dev/null -w '%{http_code}' "http://127.0.0.1:$PORT$CTX/zkau/web/img/ZK-Logo.gif"); test "$code" = 200 || fail "~./img/ZK-Logo.gif via /zkau/web → HTTP $code"
   code=$(curl -s -o /dev/null -w '%{http_code}' "${BASE}intbox.zul"); test "$code" = 200 || fail "intbox.zul (applies ~./pv/matrix.zul) → HTTP $code"
   ok "~./ resolution: /zkau/web/img/ZK-Logo.gif 200, intbox.zul with its pv/matrix.zul template 200"
 
