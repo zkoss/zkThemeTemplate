@@ -1,6 +1,6 @@
 # Planner cold-start findings
 
-**Status:** open — pilot 3.1 PASSED, see §Pilot outcome · **Written:** 2026-09-10 by the Planner session rooted in `ZK10/zk`
+**Status:** open — 3.1, 3.2, 3.3, 3.15, 3.16 PASSED; P3 paused for P1 (D24) · **Written:** 2026-09-10 by the Planner session rooted in `ZK10/zk`
 **Purpose:** the execution plan (§1, "Where it runs") makes the new Planner session the migration's
 own cold-start drill run early. This file records what the four migration documents and the skill
 left the Planner unable to answer, or answered wrongly, before any item ran. A gap here is a
@@ -132,3 +132,158 @@ under a stricter mode.
   `doc/migration/**`".
 - Baseline the verification's environment-dependent parts (here `check:doc-links` clean,
   `node_modules` present) *before* dispatch, or a FAIL cannot be attributed.
+
+---
+
+## Gaps found before item 3.2 (measured 2026-09-10 after the pilot)
+
+### F11 — 3.2's size and its verification both need restating
+- **Count.** The plan says 63 distinct repo-relative path strings across skill + agents + spec.
+  Measured with the same token rule `check-doc-links.js` uses: **80** file paths, **119** including
+  directory references (`doc/spec/`, `tasks/gen-reports/`, …), which the map must also carry.
+- **Twelve sources are already dangling here** and would fail "every source path in the map exists
+  here" as written: `doc/forced-colors-review.html`, `doc/mira-reports/` (+ `framework-gaps.md`),
+  `doc/spec-author-pipeline-plan.md`, `src/main/resources/web/css/` (+ `tokens/`),
+  `src/main/resources/web/marble/`, `tasks/gen-reports/` (cited by **three** agents, not the plan's
+  two: `zk-spec-author`, `zk-theme-evaluator`, `zk-theme-generator`), and four skill-relative
+  `scripts/<name>` mentions in the pages the pilot created, which resolve against the repo root
+  instead of the skill — the Planner's own wording in the 3.1 brief; a one-line fix per page.
+- **`check:doc-links` is weaker than the plan assumes.** Its resolver reports MISSING only for
+  `tasks/` paths (`existsSync(...) || top === 'tasks'`), and its token needs a file extension, so
+  dangling references outside `tasks/` and every directory reference pass silently. "doc-links
+  clean" therefore proves *no untracked targets*, not *no dead links*.
+- **Most zk destinations do not exist yet.** Absent today in `zk`: `zul/src/main/resources/web/zul/css/tokens`,
+  every `js/zul/<pkg>/css/` (0 dirs; 12 `less/` dirs), `zul/codegen/web`, `doc/`, `.claude/agents`,
+  `scripts`; in `zkcml`: `zkmax/src/main/resources/web/zkmax/css`. They are created by P1, P2 and
+  the later P3 items. So "every target path is a real zk layout location" cannot be a filesystem
+  check before P1.
+
+**Ruling F11.** The map gains a `disposition` column — `MAP` (source exists, target ruled), `STALE`
+(source missing here; the referencing file is the fix), `OUTPUT` (a build-output path, mapped to
+the generated tree), `DROP` (replaced by a P2 decision, e.g. the Spring Boot host). 3.2's single
+verification becomes: every `MAP` row's source exists here **and** every `MAP`/`OUTPUT` target
+begins with a prefix from the ruled destination table (F12). Existence in `zk` stays where the plan
+already checks it — items 3.5, 3.6 and 3.10–3.14.
+
+### F12 — Destination families no document names (needs the user's ruling)
+
+| Source family here | Rows | Proposed `zk` destination | Basis |
+|---|---|---|---|
+| `src/main/resources/web/zul/css/**` | 9 | `zul/src/main/resources/web/zul/css/**` | P1 landing split, 1.3 |
+| `src/main/resources/web/js/zul/<pkg>/css/**` | 1 | `zul/src/main/resources/web/js/zul/<pkg>/css/**` | 1.3 |
+| `src/main/resources/web/js/zkmax/**`, `web/zkmax/css/tablet/` | 3 | `../zkcml/zkmax/src/main/resources/web/…` (same tail) | 1.4 |
+| `src/main/resources/web/js/zkex/**` | 0 seen | `../zkcml/zkex/src/main/resources/web/…` | 1.4 |
+| `scripts/*.js`, `scripts/*.sh` | 9 | **`scripts/…` at the `zk` root (identity)** — proposed; `zk` has no `scripts/`, its `bin/` holds legacy release shell tools, and its node tooling (`gulpfile.js`, `package.json`) already sits at the root | not in any document |
+| `doc/spec/**`, `doc/contracts/**`, `doc/harness/**`, `doc/*.md` | 40 | **`doc/…` at the `zk` root (identity)** — proposed; keeps every intra-doc relative link valid and makes 3.6's check true without rewrites; `zk` has no `doc/` (`zkdoc/` is release notes) | 3.6 implies it, never states it |
+| `src/test/resources/web/**/*.zul`, SPA host | 11 | **`zkpreview/src/main/webapp/…`** — proposed module name `zkpreview`, an independent root build beside `zksandbox` / `zktest` per the P2 recipe | P2 names no module |
+| `src/test/playwright/**` | 8 | `zkpreview/src/test/playwright/…` | same |
+| `src/test/java/zk/example/**` (Spring Boot host) | 4 | `DROP` — replaced by the 31-line servlet | P2 recipe |
+| `target/classes/web/marble/**` | 3 | `OUTPUT` → `zul/codegen/web/**` (no `marble/` segment); EE → `../zkcml/zkmax/codegen/web/**` | 1.3 |
+| `target/test-classes/web/` | 1 | `OUTPUT` → `zkpreview` build output | — |
+| `src/main/resources/metainfo/zk/config.xml` (theme-jar registration) | 2 | `STALE` after 1.5 — the core variant registers differently | 1.5 |
+| `.claude/agents/**`, `.claude/skills/**` | 19 | identity under `zk/.claude/` | P3 |
+| `tasks/gen-reports/` | 1 | fix target for 3.10–3.14 — proposed `doc/harness/gen-reports/` | plan says "two-line fix", names no target |
+
+### F13 — Two skills the plan says move to `zk` have no item
+Appendix §A.7 rules `zk-component-rules` (97 files, real directory) and `zul-writer` MOVE to `zk`,
+and the P3 target shape draws them there, but no numbered item does it. `zul-writer` is a
+`skills-lock.json`-managed symlink into `.agents/skills/` installed from `zkoss-demo/agent-skill`;
+in `zk` it should be **installed** the same way, not copied. Proposed: **3.15** copy
+`zk-component-rules` (verify `diff -r` empty, 97 files) and **3.16** install `zul-writer` in `zk`
+(verify the symlink resolves and `SKILL.md` parses). `show-me` is already a symlink in `zk`.
+
+### F14 — 3.3's draft location was unspecified
+Ruled: `doc/migration/drafts/zk-claude-md-pointer.md`, untracked until the user approves it; item
+3.9's check "file diff equals the approved draft" compares against that file.
+
+---
+
+## Rulings received 2026-09-10 (chat D8 / D9 / D10)
+
+- **F12 ruled as proposed (D8-A):** `scripts/` → `scripts/` (identity), `doc/…` → `doc/…` (identity),
+  preview module = `zkpreview/` (`src/main/webapp/` for pages, `src/test/playwright/` for the harness,
+  Spring Boot host dropped). The families are encoded once, in
+  [tools/check-path-map.js](tools/check-path-map.js) `RULES`, which is Planner-authored so the 3.2
+  Generator cannot grade its own map. Measured row set: **101** literal path strings (the earlier 119
+  counted the parent directory of every file path as well; the checker's directory rule now requires
+  the string to end at the slash).
+- **F13 ruled (D9-A):** items 3.15 (copy `zk-component-rules`) and 3.16 (install `zul-writer`) added
+  to the execution plan; P3 is 15 sized items.
+- **F14 / 3.3 draft approved as written (D10-A):** `drafts/zk-claude-md-pointer.md`, 9 lines, is the
+  reference for item 3.9's byte-identical check. Any later edit to it re-opens gate 3.3.
+- **Open follow-up, not yet an item:** the STALE rows the map will list inside the *skill* and
+  *spec* originals (skill-relative `scripts/<name>` mentions; `src/main/resources/web/css/`,
+  `web/marble/`, `doc/mira-reports/`, `doc/spec-author-pipeline-plan.md`, `doc/forced-colors-review.html`)
+  are dead links in this repository today. Fixing them is not "rewriting the originals for zk"; it
+  is repairing the originals. Proposed as item 3.17 once the map shows the exact list.
+
+---
+
+## Gaps found before the P3 `zk`-side items (measured 2026-09-10 after 3.2)
+
+### F15 — "Move" in P3 is a copy until P4 (ruling)
+Items 3.6–3.8 and 3.10–3.14 say "move". Deleting the originals here now would break the skill and
+the specifications this repository still serves until P4 marks it read-only. **Ruling:** every P3
+"move" is a copy into `zk`; the template originals stay untouched; deletion (or freezing) of the
+originals is a P4 step beside "this workspace goes read-only".
+
+### F16 — `zk` commits need a Jira id
+`zk`'s `CLAUDE.md` requires `ZK-XXXX: short description`. No document records the tracker issue for
+the Marble migration. The first `zk` commit cannot be written without it — the user supplies the id.
+
+### F17 — Root-level `doc/*.md`, `doc/harness/`, `doc/screenshots/` have no item
+The map's `doc/` identity family holds 15 `doc/spec` rows, 9 `doc/contracts` rows — and **6 live
+root docs** (`component-theme-variables-progress.md`, `gap-5-tail-pge.md`, `important-decisions.md`,
+`orchestrator-playbook.md`, `skill-gaps.md`, `verification-harness-decisions.md`), **4 `doc/harness/`**
+and **2 `doc/screenshots/`** rows that no item copies. `doc/spec/index.md` itself links to
+`../component-theme-variables-progress.md` and `../contracts/`, so 3.6's "index.md links all resolve
+in zk" cannot pass with `doc/spec` alone. Proposed: widen 3.6 to "copy `doc/spec` plus every other
+`doc/` path the map lists outside `doc/contracts`" and run it after 3.8, or add 3.18 for the
+twelve extra paths.
+
+### F18 — P3's `zk`-existence checks presuppose P1 and P2
+3.5 ("every rewritten path exists in zk"), 3.10–3.14 ("every cited path exists in zk") and 3.7–3.8
+("the harness's contract loader finds them") check locations that only P1 (`zul/src/main/resources/web/zul/css/tokens/`,
+`js/zul/<pkg>/css/`, `scripts/build-css.js`), P2 (`zkpreview/`, the Playwright loader) or a build
+(`zul/codegen/web/`) create. The plan wrote P3 assuming phase order P1 → P2 → P3; the kickoff started
+with P3 because its first items were template-side and risk-free. Which items can run now without
+weakening their verification:
+
+| Runs now, verification intact | Depends on P1 / P2 for its existence check |
+|---|---|
+| 3.4 copy skill · 3.15 copy `zk-component-rules` · 3.16 install `zul-writer` · 3.9 land the pointer (after 3.4) · 3.6 + F17 docs (links resolve within `doc/`) · 3.7 / 3.8 **counts only** | 3.5 (CSS + `scripts/` families) · 3.10–3.14 (agents cite CSS, output and preview paths) · 3.7 / 3.8 "loader finds them" |
+
+Options are put to the user as chat decision D11.
+
+### F19 — `zk` gitignores `.claude/`, `.agents/` and `skills-lock.json` wholesale
+`zk/.gitignore` lines 37, 38 and 42. Only `.claude/rules/*.md` (3 files) are tracked, force-added at
+some point. Consequences, measured after 3.15 / 3.16 landed:
+- `zk/.claude/skills/zk-component-rules/` (97 files) and, once 3.4 runs, `marble-theme/` are
+  **not committable** as the tree stands; `git status` does not even show them. The P3 goal — the
+  skill *in* `zk`, visible to a fresh clone — is unreachable without a `.gitignore` change or
+  `git add -f` on every commit.
+- `zul-writer` and `show-me` are per-machine installs by design (`.agents/` + ignored lock); a fresh
+  clone will not have them unless the install command is documented. 3.16's deliverable is therefore
+  "installed here + the command recorded", not tracked files.
+- `zk/.gitignore` already carries someone else's uncommitted hunk (`+graphify-out`); any Planner
+  edit to it must be committed as its own hunk (`git apply --cached` of a crafted patch), never by
+  staging the whole file.
+Put to the user as chat decision D13.
+
+### F20 — `zk-component-rules` is not path-independent
+Appendix §A.7 calls it theme-independent, which is true of its *content*; but 23 of its 97 files cite
+template-relative paths (`src/main/resources/web/…`, `src/test/…`). In `zk` those resolve to nothing.
+The copy landed byte-identical (3.15 as ruled); the rewrite belongs to a 3.5-shaped item over this
+skill using the same map families — proposed **3.19**, gated like 3.5 (grep for source prefixes = 0).
+The map itself (3.2) did not scan this skill; its row set would need extending or a second map file.
+
+---
+
+## Rulings received 2026-09-10 (chat D11 / D12, Jira)
+
+- **D11-B:** P1 runs before the remaining `zk`-side P3 items (execution plan D24). F18's table says
+  which items were affected.
+- **D12-B:** item 3.18 added for the twelve uncovered `doc/` paths (F17); 3.6 now runs after 3.8 and 3.18.
+- **Jira:** ZK-6112 for every `zk` / `zkcml` commit (execution plan D23; closes F16).
+- **Still open before P3 resumes:** F19 (`zk` ignores `.claude/`), F20 / proposed 3.19
+  (`zk-component-rules` path rewrite), proposed 3.17 (repair the 11 dead links in the template originals).

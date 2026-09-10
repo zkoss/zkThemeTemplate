@@ -1,6 +1,6 @@
 # Marble → zk Migration — Execution Plan (Planner · Generator · Evaluator)
 
-**Status:** **D21 and D22 ruled 2026-09-10.** **Pilot (item 3.1) PASSED** — [gates/3.1.md](gates/3.1.md); rows 3.1 / 3.4 amended per [planner-cold-start-findings.md](planner-cold-start-findings.md) F1. · **Written:** 2026-09-09 · **Revised:** 2026-09-10
+**Status:** **D21 and D22 ruled 2026-09-10.** **3.1, 3.2, 3.3, 3.15, 3.16 PASSED** (verdicts in [gates/](gates/)); **P3 paused — D24: P1 runs next**, the `zk`-side P3 items resume after the P1 and P2 gates. `zk`/`zkcml` commits carry **ZK-6112** (D23). Rows 3.1 / 3.2 / 3.4 / 3.9 amended, 3.15 / 3.16 / 3.18 added per [planner-cold-start-findings.md](planner-cold-start-findings.md) F1. · **Written:** 2026-09-09 · **Revised:** 2026-09-10
 **Governs:** [marble-to-zk-migration-plan.md](marble-to-zk-migration-plan.md) — that document says
 *what* and *why*; this one says *how each item is run, by whom, at what size, and how it is proven*.
 
@@ -82,7 +82,7 @@ run early.
 |---|---|---|---|---|
 | P1 | 5 | **8** | LESS deletion and the Gradle task each split per repository | `zk` / `zkcml` |
 | P2 | 6 | **9** | the zero-tolerance comparison split by baseline family (99 / 70 / 30) | `zk` |
-| P3 | 6 | **13** | agent re-pointing split per agent (5); contracts split in two (47 + 47) | `zk`; three items (3.1–3.3) in the template repo via the added directory |
+| P3 | 6 | **16** | agent re-pointing split per agent (5); contracts split in two (47 + 47); 3.15–3.16 added for the two skills §A.7 rules MOVE (F13); 3.18 for the uncovered `doc/` paths (F17) | `zk`; three items (3.1–3.3) in the template repo via the added directory |
 | P4 | 8 | **15+** | coverage gaps one per component (6); icon fallout per class family; Jess resumed as its own series | `zk`; 4.6–4.7 in the template repo |
 
 ---
@@ -133,15 +133,18 @@ different Playwright project, so the split follows an existing seam.
 | # | Item | WS | Gen | Eval | Verify | Repo |
 |---|---|---|---|---|---|---|
 | 3.1 | **Merge `css-theme-audit` + `important-reduction` into `marble-theme`** (2 `SKILL.md` = 22 KB read; 4 scripts = 29 KB **moved by `git mv`, not read**; see `planner-cold-start-findings.md` F1) | ~70 | Sonnet | Sonnet | `cd /Users/hawk/Documents/workspace/zkThemeTemplate && S=.claude/skills/marble-theme/scripts && T=$(mktemp -d) && bash $S/audit-css.sh --out $T/audit.md >/dev/null && test -s $T/audit.md && node $S/check-default-display.js --out $T/dd.md >/dev/null && test -s $T/dd.md && node $S/count-important.js | tail -1 && (node $S/probe.js >/dev/null 2>&1; test $? -eq 2) && npm run check:doc-links && test ! -e .claude/skills/css-theme-audit && test ! -e .claude/skills/important-reduction && test "$(find .claude/skills/marble-theme -type f ! -name .DS_Store | wc -l | tr -d ' ')" = 17` — all four scripts run from the new location, `check:doc-links` clean, both old skill dirs gone, skill file count **17** | template |
-| 3.2 | Build the **path-rewrite map**: the 63 distinct repo-relative path strings → their `zk` equivalents, as a checked-in table | grep output | Sonnet | Sonnet | every *source* path in the map exists here; every *target* path is a real `zk` layout location per P1's landing split | template |
+| 3.2 | Build the **path-rewrite map**: every distinct repo-relative path string in the skill, the 5 agents and `doc/spec` (**101** measured 2026-09-10 by `doc/migration/tools/check-path-map.js --list`; the plan's 63 was a lower bound) → the checked-in table `doc/migration/path-rewrite-map.md`, one row per string with a disposition (MAP / OUTPUT / STALE / DROP / DEFER) and, for MAP rows, the `zk` target by mechanical prefix substitution per the ruled destination families (`planner-cold-start-findings.md` F12, user ruling 2026-09-10) | ~8 read + ~15 written | Sonnet | Sonnet | `cd /Users/hawk/Documents/workspace/zkThemeTemplate && node doc/migration/tools/check-path-map.js` exits 0 — every found string mapped, no extra rows, every MAP target mechanical, STALE sources absent, DEFER rows name their item. Existence in `zk` is checked where the plan already checks it: 3.5, 3.6, 3.10–3.14 (F11) | template |
 | 3.3 | Draft the pointer paragraph for `zk`'s `CLAUDE.md` (its current one is 1 KB) | 17 | Sonnet | Sonnet | ≤ 15 lines; names the skill; no duplicated content | template (draft), landed by 3.9 |
 | 3.4 | Copy `marble-theme` into `zk/.claude/skills/` and commit | ~130 (copy, moved not read) | Sonnet | Sonnet | `diff -r` between the two trees is empty; **17** files present (F1) | Target |
 | 3.5 | Apply the path-rewrite map to the copied skill | map + 82 | Sonnet | Sonnet | `grep` for every *source* prefix in the copy = 0; every rewritten path exists in `zk` (the existence loop already used today) | Target |
-| 3.6 | Move `doc/spec/` — 26 files, 365 KB, **moved not read**; then apply the map | map + index | Sonnet | Sonnet | `doc/spec/index.md` links all resolve in `zk`; 26 files present | Target |
+| 3.6 | Copy `doc/spec/` — 26 files, 365 KB, **copied by path, not read** (F15: every P3 "move" is a copy until P4); then apply the map. Run after 3.8 and 3.18 | map + index | Sonnet | Sonnet | `doc/spec/index.md` links all resolve in `zk`; 26 files present | Target |
 | 3.7 ✂ | Move `doc/contracts/` **first half** (47 `.md` + their mockups) | paths | Sonnet | Sonnet | count; the harness's contract loader finds them | Target |
 | 3.8 ✂ | Move `doc/contracts/` **second half** (47 + remaining mockups + `baselines/`) | paths | Sonnet | Sonnet | total 94 + 19; loader finds all | Target |
-| 3.9 | Land the `CLAUDE.md` pointer in `zk` | 1 + draft | Sonnet | Sonnet | file diff equals the approved draft | Target |
+| 3.9 | Land the `CLAUDE.md` pointer in `zk` — the approved draft is `doc/migration/drafts/zk-claude-md-pointer.md` (9 lines; verdict `gates/3.3.md`; approved by the user 2026-09-10) | 1 + draft | Sonnet | Sonnet | the section appended to `zk/CLAUDE.md` is byte-identical to the approved draft | Target |
 | 3.10–3.14 ✂ | Move and re-point **one subagent each** (5 items; 132 KB total, 16–40 KB each) — fix the two stale `tasks/gen-reports/` references on the way | ≤ 40 each | Sonnet | Sonnet | per agent: `grep -c 'tasks/'` = 0; every cited path exists in `zk`; agent frontmatter still parses | Target |
+| 3.15 | Copy `zk-component-rules` (97 files, theme-independent; appendix §A.7 rules MOVE) into `zk/.claude/skills/` — added 2026-09-10 (F13) | 97 files copied by path | Sonnet | Sonnet | `diff -r` between the two trees is empty; `find -type f \| wc -l` = 97 in `zk` | Target |
+| 3.16 | Install `zul-writer` in `zk` the way this repository has it — through the skills tool from `zkoss-demo/agent-skill`, recorded in `zk`'s skills lock; **never copy the symlink target** — added 2026-09-10 (F13) | < 1 | Sonnet | Sonnet | `zk/.claude/skills/zul-writer/SKILL.md` resolves through the symlink and its frontmatter parses; the lock file in `zk` has a `zul-writer` entry | Target |
+| 3.18 | Copy the twelve `doc/` paths the map lists outside `doc/spec` and `doc/contracts` — 6 root `doc/*.md`, `doc/harness/` (4), `doc/screenshots/` (2) — into `zk/doc/` (F17; ruled 2026-09-10, chat D12-B). Run before 3.6 so `doc/spec/index.md`'s four outward links resolve | paths | Sonnet | Sonnet | each of the 12 paths exists in `zk/doc/` and `cmp` against the original is silent | Target |
 | **P3 gate** | **Cold-start drill**: a session launched in `zk` with no prior context is given one real theme task and completes it using only the skill | — | fresh session | **Opus** (a different fresh session judges the transcript) | the task's own verification passes **and** the transcript shows zero reads outside `zk` | Target |
 
 Item 3.5's rewrite is done on the *copy*, never on this repository's original — the original must keep
@@ -195,6 +198,20 @@ plan's §4 deliberately gives every `zk` write to the other session.
 gates (P1 build, P2 ledgers, P3 cold-start, P4 triage) and 4.4 / 4.5, Sonnet 5 elsewhere; Planner =
 this session. The sizing does not depend on the answer — that is the point of budgeting by working
 set — but the workflow script names the models, so it needs the ruling.
+
+### D23 — Tracker issue for every `zk` / `zkcml` commit — **RULED 2026-09-10: ZK-6112**
+
+`zk`'s commit convention requires `ZK-XXXX: short description`; no document recorded the issue
+(finding F16). The user supplied <https://zkoss.atlassian.net/browse/ZK-6112>. Template-repository
+commits keep that repository's conventional-commit style.
+
+### D24 — Phase order after the pilot — **RULED 2026-09-10: P1 before the `zk`-side P3 items**
+
+The kickoff started with P3 because 3.1–3.3 are template-side and risk-free. Finding F18 showed
+that 3.5, 3.7–3.8 and 3.10–3.14 verify against locations only P1 and P2 create. Of the options put
+to the user (run now with a deferred-existence ledger / P1 first / only the dependency-free items),
+**P1 first** was chosen. 3.15 and 3.16 had already run, dependency-free; the rest of P3 resumes after
+the P1 and P2 gates. Open before P3 resumes: the `.gitignore` policy for `zk/.claude/` (F19).
 
 ### First run — the pilot (item 3.1)
 
