@@ -630,3 +630,25 @@ never background, never poll, never sleep; a command still running at the timeou
 `zkmax/css/tablet.css.dsp` and `zkex/wgt/css/skeleton.css.dsp` in that order; the in-page count is 670
 `--zk-*` declarations — the same number the template's ZK 10 preview serves, so the Marble variable set
 crossed the migration intact.
+
+### F52 — Item 2.2 throw-away run: class web resources, shadow elements, one API drift
+Rule 2, upgraded after 2.1, asks for the server to be started by hand on a populated tree before dispatch.
+The Planner copied the 379 files into a throw-away `zkpreview/src/main/webapp/web/` and learned four things
+no static dry-run could show. (1) The pages reference each other and their assets as class web resources
+(`~./…`, 87 pages) because the template's Spring Boot preview serves everything from the class path; a copy
+into a webapp root serves the direct URL and nothing the page links to. `org.zkoss.web.util.resource.dir`
+(documented in zktest's own `zk.xml`) makes `ClassWebResource` look in a webapp directory first — and the
+directory is always prefixed (`/web`), which fixes the URL shape `…/zkpreview/web/<page>.zul` (plan D44).
+(2) `<apply>`, `<forEach>` and `<choose>` are zuti shadow elements: without `zuti` on the classpath four
+pages answer 500 with "Component definition not found: apply". The template preview app has `zuti` and
+`za11y` (test scope) on its classpath, so both join `build.gradle`. (3) `ZulListVM` lists the pages by
+`getClassLoader().getResource("web")`, which in the module is a ZK jar's directory; it now reads
+`WebApps.getCurrent().getRealPath("/web")`. (4) `codeeditor.zul` answers 500 because `f6429e7f8b` (fix
+ZK-6086) renamed Codeeditor's `theme` property to `colorScheme` after the build the template pins (plan D46).
+Result: 136 / 137 pages green in 29 s with four browser workers; `preview.zul` lists 114 pages, exactly as the
+template's does; `pv/cascader-content.zul` answers 500 when loaded directly on both hosts (a fragment, not
+a page — `pv/` is excluded from navigation and exercised through the 20 pages that apply it). Two more
+environment facts: `./gradlew :zksandbox:war --dry-run` from the root composite fails with "Unable to make
+progress running work" while the real task runs in 21 s (the verify uses the real task); and two Gradle
+builds in one checkout must not overlap, so the workflow serialises items that share the `'gradle'` lock and
+every footprint check is scoped to its own item's paths.
