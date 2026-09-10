@@ -368,3 +368,134 @@ reset line. Edit it once, in 1.6, in the same commit range as the LESS deletion.
   side also depends on and cannot change. **D32-A** → D27. **D33-A** → D28.
 - Template batch 3 approved: F22 fixes to the map and checker, the `gates/` exclusion in
   `check-doc-links`, findings F21–F27.
+
+### F28 — The per-module output counts the plan gives for 1.1 / 1.2 are wrong
+Running the template's own build (`npm run build:css`, 2026-09-10) and grouping the 86 `.css.dsp`
+by destination module:
+
+| Module | Outputs | Of which |
+|---|---|---|
+| `zul` (CE) | **46** | 43 under `js/zul/**/css/` + `zul/css/norm.css.dsp`, `zul/css/footer.css.dsp`, `zul/font/font-awesome.css.dsp` (empty stub) |
+| `zkmax` (EE) | **33** | 32 under `js/zkmax/**/css/` + `zkmax/css/tablet.css.dsp` |
+| `zkex` (PE) | **7** | `js/zkex/**/css/` |
+
+The plan's row 1.1 expects "exactly 86" from `:zul:compileMarbleCss` — 86 is the all-module total;
+row 1.2 expects "40 + 5" — it is 33 + 7. Rows amended. The FA stub stays in P1 (it keeps
+`zk.wcs`'s request from 404-ing until 1.6 removes that line); P4's icon item may drop it.
+
+Cross-module note: `norm.css.dsp` (CE) bundles `toast.css` and `captcha.css`, whose *components* are
+`zkmax` — but Marble keeps those two files under `js/zul/wgt/css/`, so the CE build never reads the
+`zkcml` tree. The `--module` split is clean.
+
+### F29 — `zk`'s node is the system node
+`zk/build.gradle` applies `com.github.node-gradle.node` 7.0.1 without a `node {}` block, so
+`download` defaults to false and Gradle uses the system Node (v22.16.0). `lightningcss`'s native
+binary for this platform installs normally. (`zkcml/gradle.properties` still says
+`nodeVersion=15.12.0`; unused unless `download` is turned on.)
+
+---
+
+## Gaps found by the first P1 batch (2026-09-10)
+
+### F30 — The builder vendors the Inter web font; the port spec (F26) omitted it
+`build-css.js` copies `inter-latin-wght-normal.woff2`, `inter-latin-ext-wght-normal.woff2` and the
+OFL licence from `@fontsource-variable/inter` (installed 5.2.8 in the template) into `font/` of the
+output. F26 listed lightningcss and lucide-static only, so the 1.3b Generator — correctly reading
+the spec — dropped `copyFonts`. Without the fonts every page falls back to the system font: exactly
+the "uniform vertical drift on every page" the plan warns the P2 comparison will show first.
+**Ruling:** 1.0b adds `@fontsource-variable/inter@5.2.8`; 1.3b2 restores `copyFonts` in the port,
+writing to `zul/font/` under the module output root (`--module zul` only), beside the FA stub.
+
+### F31 — `_fonts.css` hardcodes `~./marble/font/…`
+Four occurrences (two `url()` and two comments) in `zul/css/tokens/_fonts.css`. In core the theme
+has no `marble/` segment (plan P1, item 1.5's check), so `zk`'s copy must read `~./zul/font/…`.
+This is the one CE source whose copy is *not* byte-identical to the template — by design, and the
+only such file. **Item 1.3c**, run before 1.3b2 so the built `norm.css.dsp` carries no `marble`.
+Grep over the 87 sources found no other `marble/` string.
+
+### F32 — Second verification-decoration defect in one day
+Gate 1.0 (`require('x/package.json')`) and gate 1.3b (`tail -3 | grep`) both failed correct work
+because the Planner's command asserted more than the row's claim, or asserted it fragilely. Rule in
+`zk/tasks/lessons.md`: the Evaluator command is the row's primitive claim, dry-run on the actual
+tree before dispatch whenever the tree exists. Both were corrected and re-verified with fresh
+Evaluators; the Generator results were reused from cache, never re-attempted.
+
+### F33 — Evaluator commands must be permission-neutral
+Gate 1.1's first Evaluator call returned exit −1: the harness asked for permission because the
+command began with `rm -rf` (clearing old LESS output so a count would be clean), and a subagent
+cannot answer a prompt, so the call was denied before any shell ran. A denial is not a verdict —
+the gate file records it as such — but it costs a round trip and can masquerade as FAIL.
+**Rule:** verification commands never delete, never `sudo`, never touch anything outside temp dirs
+and the build's own output; when old output would pollute a count, use a timestamp marker and
+`find -newer`, or build into `--out $(mktemp -d)`. Added to `zk/tasks/lessons.md`.
+
+### F34 — Item 1.5's "page served from zk" check needs a live server; restated
+The plan's 1.5 verify ("a page served from `zk` returns CSS containing `--zk-color-primary` and no
+`marble/` segment") is a runtime claim; the only servers in `zk` are `zksandbox`/`zktest` under
+gretty, which the P2 preview module (2.1) is built to replace and whose 2.1 check is exactly this
+claim. **Ruling:** 1.5 verifies what can be proven without a server — `zul`/`zweb` compile and
+`checkstyleMain` pass, `zkex`/`zkmax` compile against the new base class, the static wiring
+(`zk.xml`, `StandardTheme`, `dom.ts`, the zkex `extends`) is in place, and a fresh CE build's
+`norm.css.dsp` contains `--zk-color-primary` with no `marble/` string anywhere in the output. The
+Opus Evaluator also reads the new provider class and records a non-binding design note. The runtime
+proof lands in 2.1 and in the P1 gate's jar inspection.
+
+### F35 — `zk` requires a test case per feature; `zul` has no `src/test`
+`zk/CLAUDE.md`: "Every bug fix and new feature MUST include a test case", in `zktest` (`B<ver>_ZK-6112…`).
+`zul` has no unit-test tree, and the theme's behavioural proof is P2's Playwright harness. Proposed:
+one `zktest` page + `WebDriverTestCase` under ZK-6112 asserting the reset stylesheet precedes
+`zk.wcs` and a `--zk-*` token is computed on `body` — authored in P4 beside the icon fallout, or now
+as item 1.9 if the user prefers the convention honoured before the first `zk` commit.
+
+### F36 — Icon-font binaries become orphans when the LESS goes
+`zul/src/main/resources/web/zul/less/font/` holds 15 Font Awesome LESS partials **and** 14 non-LESS
+files: `ZK85Icons.{eot,svg,ttf,woff}` and the FA `fa-*.{ttf,woff2}` / `brands.svg` binaries. Nothing
+outside the LESS references them (`git grep ZK85Icons` hits only the files themselves). Item 1.6
+deletes LESS only, as the plan says; the 14 binaries stay as dead weight in the jar until the user
+rules (P4's icon item is the natural home). Also affected downstream: `zktest` pages
+`B110-ZK-6024`, `B86-ZK-4120`, `F100-ZK-5119-1` reference `font-awesome.css.dsp` / `z-icon-font-awesome`
+— P4's baseline will show them.
+
+### F37 — Tooling orphaned by 1.6 / 1.7
+Removing `compileLess` orphans the `zkless-engine` devDependency (only `zklessc` used it; both repos
+call `zk/node_modules/.bin/zklessc`); removing `compileCSS` orphans gulp's `build:minify-css` task and
+its `gulp-postcss` require. 1.6 removes the dependency, the task and the require. Whether `cssnano`,
+`postcss` and `gulp-postcss` devDependencies (now unused) are dropped from `package.json` is left as
+a follow-up — a package-level change worth its own line in the commit.
+
+### F38 — 1.8's negative control without deleting anything
+The plan's check ("temporarily remove one registered `.css.dsp` → task fails; restore → passes")
+would need `rm` inside the Evaluator (F33). Ruling: the Gradle task accepts
+`-PmarbleCssThemeDir=<dir>` and passes it as `--theme-dir`; the Evaluator builds into a temp dir,
+`rsync`s it minus one file into a second temp dir, and proves the task fails on that dir and passes
+on the real codegen. No deletion, same claim.
+
+### F39 — The Opus gate on 1.5 surfaced a consequence of D26-B worth a ruling
+With the reset insertion in a *subclass* (`MarbleThemeProvider`), any existing custom provider that
+`extends StandardThemeProvider` — the pattern ZK documents for customers — keeps compiling but no
+longer receives Marble's reset stylesheet, silently. The zkex/zkmax chain had to be re-based for the
+same reason, producing the odd `StandardThemeProvider extends …MarbleThemeProvider`. The alternative
+is to put the insertion **into `StandardThemeProvider.getThemeURIs` itself**: no new class, no
+re-basing, custom providers inherit the reset, and the `browserDefault` switch is honoured exactly the
+same way; `~./zul/css/reset.css` goes through `resolveThemeURL`, so a jar theme (IceBlue) that ships
+its own `reset.css` gets its own. Cost: `StandardThemeProvider` gains theme-reset behaviour for every
+theme, which is arguably what "standard" should mean once the default theme needs a reset. Chat D34.
+**Ruled 2026-09-10:** chat D34-A → plan D29; implemented as item 1.5b (Opus-evaluated, like 1.5).
+
+### F40 — Evaluators paraphrase commands unless told not to
+The 1.5 Evaluator dropped the leading `cd` from two of three commands ("the shell already starts
+there"). Harmless here, but a paraphrased command is no longer *the row's* command. The
+multi-command brief now says "type each one verbatim, including its leading cd".
+
+### F41 — `npm run lint` is broken on this machine, independent of the migration
+`npm run lint -- <dir>` exits 2 for `zul/` and `zk/` alike with an ESLint configuration error on the
+`zk/noMixedHtml` rule options. `eslint-plugin-zk/dist` (gitignored) was last built 2024-09-26; its
+`src/` changed 2026-07-15. ESLint 9.39.4 and every plugin version are identical before and after item
+1.0's `npm install`, so the install did not cause it. `zk/CLAUDE.md` makes `npm run lint -- .` a
+pre-commit requirement, so the P1 gate could not pass until the plugin was rebuilt. **Resolved:**
+`./gradlew buildESLintPlugin` (8 s, regenerates only the ignored `dist/`) — afterwards `npm run lint`
+exits 0 for `dom.ts` and for the whole `zul/` tree. Root cause: a normal Gradle build refreshes the
+plugin (`classes.dependsOn buildESLintPlugin`), but a standalone `npm run lint` on a machine whose
+`dist/` predates the plugin's source changes fails at configuration time. Worth a line in `zk`'s
+CLAUDE.md pre-commit recipe ("run `./gradlew buildESLintPlugin` first if lint reports a config
+error"). Lint removed from 1.5's row; it belongs to the gate.

@@ -1,6 +1,6 @@
 # Marble → zk Migration — Execution Plan (Planner · Generator · Evaluator)
 
-**Status:** **D21 and D22 ruled 2026-09-10.** **3.1, 3.2, 3.3, 3.15, 3.16 PASSED** (verdicts in [gates/](gates/)); **P3 paused — D24: P1 runs next**, the `zk`-side P3 items resume after the P1 and P2 gates. `zk`/`zkcml` commits carry **ZK-6112** (D23). Rows 3.1 / 3.2 / 3.4 / 3.9 amended, 3.15 / 3.16 / 3.18 added per [planner-cold-start-findings.md](planner-cold-start-findings.md) F1. · **Written:** 2026-09-09 · **Revised:** 2026-09-10
+**Status:** **D21 and D22 ruled 2026-09-10.** **3.1, 3.2, 3.3, 3.15, 3.16 PASSED** (verdicts in [gates/](gates/)); **P3 paused — D24: P1 runs next**, the `zk`-side P3 items resume after the P1 and P2 gates. **P1: 1.0 / 1.0b / 1.1 / 1.2 / 1.3a / 1.3b / 1.3b2 / 1.3c / 1.4 PASSED**; 1.5's reset placement re-ruled as D29 → item 1.5b; 1.6–1.8 in flight. `zk`/`zkcml` commits carry **ZK-6112** (D23). Rows 3.1 / 3.2 / 3.4 / 3.9 amended, 3.15 / 3.16 / 3.18 added per [planner-cold-start-findings.md](planner-cold-start-findings.md) F1. · **Written:** 2026-09-09 · **Revised:** 2026-09-10
 **Governs:** [marble-to-zk-migration-plan.md](marble-to-zk-migration-plan.md) — that document says
 *what* and *why*; this one says *how each item is run, by whom, at what size, and how it is proven*.
 
@@ -80,7 +80,7 @@ run early.
 
 | Phase | Items in plan | Items after sizing | Splits | Writes land in |
 |---|---|---|---|---|
-| P1 | 5 | **8** | LESS deletion and the Gradle task each split per repository | `zk` / `zkcml` |
+| P1 | 5 | **14** | LESS deletion and the Gradle task each split per repository; 1.0 / 1.0b (deps) added, 1.3 split into 1.3a / 1.3b / 1.3b2 / 1.3c (F26, F30, F31); 1.5b folds the reset into the base provider (D29, F39) | `zk` / `zkcml` |
 | P2 | 6 | **9** | the zero-tolerance comparison split by baseline family (99 / 70 / 30) | `zk` |
 | P3 | 6 | **16** | agent re-pointing split per agent (5); contracts split in two (47 + 47); 3.15–3.16 added for the two skills §A.7 rules MOVE (F13); 3.18 for the uncovered `doc/` paths (F17) | `zk`; three items (3.1–3.3) in the template repo via the added directory |
 | P4 | 8 | **15+** | coverage gaps one per component (6); icon fallout per class family; Jess resumed as its own series | `zk`; 4.6–4.7 in the template repo |
@@ -97,14 +97,20 @@ and nothing else. ✂ marks an item that was split from the plan's original.
 
 | # | Item | WS | Gen | Eval | Verify |
 |---|---|---|---|---|---|
-| 1.1 | Add a `compileMarbleCss` Gradle task in `zk/build.gradle` that shells out to the ported `build-css.js`; leave `compileLess` in place for now | 55 | Sonnet | Sonnet | `gradle :zul:compileMarbleCss` exits 0 and the codegen tree holds **exactly 86** `.css.dsp` (`find … -name '*.css.dsp' \| wc -l`) |
-| 1.2 ✂ | Same task in `zkcml/build.gradle` (the duplicate definition) | 69 | Sonnet | Sonnet | zkmax + zkex codegen holds the 40 + 5 expected outputs; count by module |
-| 1.3 | Relocate the 87 CE sources to `zul/src/main/resources/web/zul/**` with no `marble/` segment; update the path constants in `build-css.js` | 40 + paths | Sonnet | Sonnet | `check-css-dsp.js` against the real `lang.xml` reports `MISSING: 0`; `git ls-files` count = 87 |
-| 1.4 ✂ | Relocate 40 → `zkmax`, 5 → `zkex` | paths | Sonnet | Sonnet | same checker over `lang-addon.xml` ×2: `MISSING: 0`; counts 40 / 5 |
-| 1.5 | Author the **core-registration** variant of the 5 Java classes (not a copy — see plan) | 13 + zk theme-provider sources | Sonnet | **Opus** | composite build compiles; a page served from `zk` returns CSS containing `--zk-color-primary` (token layer arrived) and **no** `marble/` path segment |
-| 1.6 ✂ | Delete the 66 `zul` LESS files and remove `compileLess` from `zk/build.gradle` — **same commit range as 1.1 + 1.3** | paths + 17 | Sonnet | Sonnet | `git ls-files 'zul/**/*.less'` = 0; build green; codegen holds **no duplicate** `.css.dsp` basenames |
-| 1.7 ✂ | Delete the 85 + 7 `zkmax`/`zkex` LESS files and remove `compileLess` from `zkcml/build.gradle` — same commit range as 1.2 + 1.4 | paths + 31 | Sonnet | Sonnet | same three checks over `zkcml` |
-| 1.8 | Port `check-css-dsp.js` as a Gradle verification task that **fails the build** | 11 + 17 | Sonnet | Sonnet | negative control: temporarily remove one registered `.css.dsp` → task fails; restore → passes |
+| 1.1 | Add a `compileMarbleCss` Gradle task in `zk/build.gradle` that shells out to the ported `build-css.js --module zul`; leave `compileLess` in place for now (F25: it and `compileCSS` go in 1.6) | ~10 | Sonnet | Sonnet | `./gradlew :zul:compileMarbleCss` exits 0 and the CE codegen tree holds **exactly 46** `.css.dsp` (F28; 86 is the all-module total) |
+| 1.2 ✂ | Same task in `zkcml/build.gradle` (the duplicate definition), calling the script in `zk` with `--module zkmax` / `--module zkex` | ~10 | Sonnet | Sonnet | `zkmax` codegen holds **33** and `zkex` **7** `.css.dsp` (F28) |
+| 1.0 | Add `lightningcss` and `lucide-static` to `zk`'s `devDependencies`, pinned to the template's installed versions so the minifier is byte-identical (D27, F21) | < 1 | Sonnet | Sonnet | `node -e "require('lightningcss')"` succeeds from `zk`, `node_modules/lucide-static/icons` exists, both names in `package.json` |
+| 1.0b ✂ | Add `@fontsource-variable/inter` (5.2.8, the template's installed version) — the Inter woff2 files the builder vendors (F30) | < 1 | Sonnet | Sonnet | `node_modules/@fontsource-variable/inter/files/inter-latin-wght-normal.woff2` exists; the pinned entry is in `package.json` |
+| 1.3a ✂ | Copy the 87 CE sources by path: `src/main/resources/web/{zul/css,js/zul}/**/*.css` → `zul/src/main/resources/web/…` (same tail; the template already has no `marble/` segment) | paths | Sonnet | Sonnet | 87 files present and `cmp`-identical to the originals |
+| 1.3c ✂ | In `zk`'s copy of `zul/css/tokens/_fonts.css`, rewrite the four `~./marble/font/` strings to `~./zul/font/` (F31) — the only CE source that intentionally differs from the template | < 1 | Sonnet | Sonnet | `grep -rl 'marble/'` over the 87 copied sources = 0; exactly one of the 87 differs from its original and it is `_fonts.css` |
+| 1.3b ✂ | Port `build-css.js` and `check-css-dsp.js` into `zk/scripts/` per F26: `--module zul\|zkmax\|zkex`, `--out` override, output `<module>/codegen/resources/web/`, lang files read per module, side outputs behind `--emit-docs`, no hardcoded `/Users/…` | 50 read + ~50 written | Sonnet | Sonnet | `node scripts/build-css.js --module zul --out $T` emits **46** `.css.dsp`; `node scripts/check-css-dsp.js --module zul --theme-dir $T` prints `MISSING : 0` (grep the whole output, F32) |
+| 1.3b2 ✂ | Restore `copyFonts` in the ported builder: the three Inter files from `@fontsource-variable/inter` land in `zul/font/` under the `--module zul` output root (F30) | ~5 | Sonnet | Sonnet | after a build to `$T`: 46 `.css.dsp`, `MISSING : 0`, the three files under `$T/zul/font/`, and `grep -rl marble $T` is empty |
+| 1.4 ✂ | Copy 40 sources → `zkcml/zkmax/src/main/resources/web/…` (27 `js/zkmax/**/css` + 13 `zkmax/css/tablet/`), 5 → `zkcml/zkex/…` | paths | Sonnet | Sonnet | 40 / 5 files present and `cmp`-identical; `build-css.js --module zkmax` → 33, `--module zkex` → 7 outputs (F28) |
+| 1.5 | Author the **core-registration** variant per D26 / D28: `org.zkoss.zul.theme.MarbleThemeProvider extends StandardThemeProvider` (reset insertion, `browserDefault` switch kept), `zul/zk.xml` → it, zkex's provider re-based on it, `MarbleBrand`/`MarbleDensity` in `org.zkoss.zul.theme`, `StandardTheme.DEFAULT_NAME/DISPLAY` → marble/Marble, `dom.ts` synced; jar plumbing not carried | ~25 | Sonnet | **Opus** | `zul` compiles + `checkstyleMain` clean; `zkex`/`zkmax` compile; static wiring present; a fresh CE build's `norm.css.dsp` has `--zk-color-primary` and the output has no `marble/` (F34 — runtime proof in 2.1; `npm run lint` belongs to the P1 gate, F41) |
+| 1.5b | Fold the reset insertion into `StandardThemeProvider.getThemeURIs` itself per D29 (supersedes D26's subclass): delete `MarbleThemeProvider`, return `zul/zk.xml` and zkex's provider to their committed text, document `org.zkoss.zul.theme.browserDefault` on the base class; the three ported-script comments that name the deleted class follow | ~6 | Sonnet | **Opus** | `MarbleThemeProvider.java` absent; `zul/zk.xml` and zkex's `StandardThemeProvider.java` show **no diff** against HEAD; the base class names both reset files and the property; `grep MarbleThemeProvider` over `zul/src`, `scripts/`, `zkex/src`, `zkmax/src` = 0; `zul` compiles + `checkstyleMain` clean; `zkex`/`zkmax` compile |
+| 1.6 ✂ | `git rm` the **67** `zul` LESS files (F23); remove `compileLess` **and** `compileCSS` (F25) from `zk/build.gradle`; drop the `font-awesome.css.dsp` line from `zul/css/zk.wcs` (F24); remove the orphaned `zkless-engine` dependency and gulp `build:minify-css` (F37) — **same commit range as 1.1 + 1.3** | paths + 17 | Sonnet | Sonnet | `git ls-files 'zul/**/*.less'` = 0; the removed names absent from `build.gradle`, `zk.wcs`, `package.json`, `gulpfile.js`; `./gradlew :zul:processResources` green and writes exactly 46 `.css.dsp`; codegen holds **no duplicate** `.css.dsp` basenames |
+| 1.7 ✂ | `git rm` the 85 + **8** `zkmax`/`zkex` LESS files (F23) and remove `compileLess` + `compileCSS` from `zkcml/build.gradle` — same commit range as 1.2 + 1.4 | paths + 31 | Sonnet | Sonnet | same checks over `zkcml`: LESS = 0, names absent, `:zkmax:processResources :zkex:processResources` green writing 33 + 7, no duplicate basenames |
+| 1.8 | Add `checkMarbleCss` Gradle tasks (both build files) running the ported `check-css-dsp.js --module <module>`, wired into `check`; `-PmarbleCssThemeDir` overrides the dir (F38) | ~8 | Sonnet | Sonnet | negative control without deletion: the task passes on codegen and **fails** on a temp copy missing one registered `.css.dsp` |
 | **P1 gate** | Composite `zk` + `zkcml` build green; jar contains the expected `.css.dsp` set | — | — | **Opus** | `gradle build` exit 0; `unzip -l` of the jars lists all 86 + the two WCS-served files; verdict file written |
 
 The version-drift checker the plan notes as missing is **not** in P1: it does not exist here either,
@@ -232,6 +238,8 @@ So the reset insertion lives in a small provider subclass in `zul` extending `St
 chain is re-based on it so EE receives the reset as well. `MarbleBrand` / `MarbleDensity` move to
 `org.zkoss.zul.theme` with their names unchanged.
 
+**Superseded 2026-09-10 by D29** for *where* the insertion lives; the `browserDefault` requirement in bold above stands.
+
 ### D27 — Build dependencies in `zk` — **RULED 2026-09-10 (chat D32-A)**
 
 `lightningcss` and `lucide-static` are added to `zk`'s `devDependencies` (F21). The builder stays
@@ -241,6 +249,19 @@ Lightning-based, as this plan's D14 decided; `zkcml`'s task calls the script in 
 
 `StandardTheme.DEFAULT_NAME` (`zweb`) becomes `"marble"`, and `zul/.../dom.ts:18` is synced. The
 only `zkcml` use (`ResponsiveThemeRegistry:50`) keeps its meaning. Belongs to item 1.5.
+
+### D29 — Where the reset insertion lives — **RULED 2026-09-10 (chat D34-A): in `StandardThemeProvider` itself**
+
+The Opus gate on 1.5 (F39) showed the cost of D26's subclass: every customer provider that
+`extends StandardThemeProvider` — the pattern ZK documents — keeps compiling after the upgrade but
+silently loses Marble's reset stylesheet, and the EE chain has to read
+`StandardThemeProvider extends …MarbleThemeProvider`. So the insertion moves into
+`StandardThemeProvider.getThemeURIs`: the reset goes immediately before the `zk.wcs` entry,
+`org.zkoss.zul.theme.browserDefault` is honoured exactly as before (D26's requirement stands), and
+`~./zul/css/reset.css` is resolved through `resolveThemeURL`, so a jar theme that ships its own reset
+gets its own. `MarbleThemeProvider` is deleted; `zul/zk.xml` and the zkex provider return to their
+committed text. Cost accepted: the "standard" provider now carries theme-reset behaviour for every
+theme — which is what standard means once the default theme needs one. Item 1.5b.
 
 ### First run — the pilot (item 3.1)
 
