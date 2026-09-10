@@ -30,13 +30,13 @@ case "$STAGE" in
 3) # zk — what the zul jar carries
    cd "$ZK" || fail cd
    J="zul/build/libs/zul-$V.jar"; test -f "$J" || fail "missing $J"
-   n=$(count "$J" '\.css\.dsp$');                         test "$n" = 46 || fail "css.dsp entries $n != 46"
+   n=$(count "$J" '\.css\.dsp$');                         test "$n" = 45 || fail "css.dsp entries $n != 45"
    n=$(count "$J" '^web/zul/css/reset(-embed)?\.css$');   test "$n" = 2  || fail "reset stylesheets $n != 2"
    n=$(count "$J" '^web/zul/font/.*\.woff2$');            test "$n" = 2  || fail "Inter woff2 files $n != 2"
    n=$(count "$J" '\.less$');                             test "$n" = 0  || fail "$n .less entries in the jar"
    n=$(count "$J" '(^|/)marble/');                        test "$n" = 0  || fail "$n entries under a marble/ segment"
    n=$(count "$J" '^web/zul/less/font/');                 echo "note: $n icon-font binaries (Font Awesome / ZK85Icons) ride along under web/zul/less/font/ — F36 decides"
-   echo "STAGE 3 OK: zul jar holds 46 css.dsp, both resets, Inter fonts, no LESS, no marble/" ;;
+   echo "STAGE 3 OK: zul jar holds 45 css.dsp, both resets, Inter fonts, no LESS, no marble/" ;;
 4) # zkcml — clean, then assemble zkex and zkmax
    cd "$ZKCML" || fail cd
    ./gradlew clean --console=plain -q || fail "gradle clean"

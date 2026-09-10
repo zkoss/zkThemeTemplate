@@ -1,6 +1,6 @@
 # Marble → zk Migration — Execution Plan (Planner · Generator · Evaluator)
 
-**Status:** **D21 and D22 ruled 2026-09-10.** **3.1, 3.2, 3.3, 3.15, 3.16 PASSED** (verdicts in [gates/](gates/)); **P3 paused — D24: P1 runs next**, the `zk`-side P3 items resume after the P1 and P2 gates. **P1: all 14 items PASSED** (1.0, 1.0b, 1.1, 1.2, 1.3a, 1.3b, 1.3b2, 1.3c, 1.4, 1.5, 1.5b, 1.6, 1.7, 1.8 — verdicts in [gates/](gates/)); **P1 complete: 16 / 16 items PASSED, P1 gate PASSED (Opus, [gates/P1.md](gates/P1.md)); all eight P1 commits landed (D35: `zk` 5b064f36 · 0f20115d · 9fa54e66 · 1c5a2685 · 37c41853; `zkcml` b100ddb3 · e3600a94 · 31f08cdc); external-evaluator note appended (E1–E4; D44 / D45 owed). Next: P2.** `zk`/`zkcml` commits carry **ZK-6112** (D23). Rows 3.1 / 3.2 / 3.4 / 3.9 amended, 3.15 / 3.16 / 3.18 added per [planner-cold-start-findings.md](planner-cold-start-findings.md) F1. · **Written:** 2026-09-09 · **Revised:** 2026-09-10
+**Status:** **D21 and D22 ruled 2026-09-10.** **3.1, 3.2, 3.3, 3.15, 3.16 PASSED** (verdicts in [gates/](gates/)); **P3 paused — D24: P1 runs next**, the `zk`-side P3 items resume after the P1 and P2 gates. **P1 complete: 17 / 17 items PASSED (1.10 added after the gate), P1 gate PASSED (Opus, [gates/P1.md](gates/P1.md)); P1 landed as two `zk` commits and one `zkcml` commit after the D38 squash (`zk` 2100200284 · 771c410038; `zkcml` eea2b6428); chat D42–D45 ruled (D36–D39); 1.10 landed as `f4dfea2d0e`. P2 opened: 2.0 PASSED and landed as `5cfc315c9d` (IceBlue-only tests tagged and skipped; zktest prefers marble — D40/D41). Next: pre-flight script, then 2.1.** `zk`/`zkcml` commits carry **ZK-6112** (D23). Rows 3.1 / 3.2 / 3.4 / 3.9 amended, 3.15 / 3.16 / 3.18 added per [planner-cold-start-findings.md](planner-cold-start-findings.md) F1. · **Written:** 2026-09-09 · **Revised:** 2026-09-10
 **Governs:** [marble-to-zk-migration-plan.md](marble-to-zk-migration-plan.md) — that document says
 *what* and *why*; this one says *how each item is run, by whom, at what size, and how it is proven*.
 
@@ -113,7 +113,8 @@ and nothing else. ✂ marks an item that was split from the plan's original.
 | 1.8 | Add `checkMarbleCss` Gradle tasks (both build files) running the ported `check-css-dsp.js --module <module>`, wired into `check`; `-PmarbleCssThemeDir` overrides the dir (F38) | ~8 | Sonnet | Sonnet | negative control without deletion: the task passes on codegen and **fails** on a temp copy missing one registered `.css.dsp` |
 | 1.6b | Delete the 13 orphaned icon-font binaries under `zul/less/font/` (F36) and the three orphaned devDependencies `cssnano`, `gulp-postcss`, `postcss` (F37); restore `package.json`'s dependency order after npm's re-sort — same commit range as 1.6 (D33) | paths + 1 | Sonnet | Sonnet | `git ls-files` over `zul/…/zul/less` = 0 and the directory is gone; the three names absent from `package.json` and `node_modules`; the `package.json` diff against HEAD is exactly the intended 9 lines with no `@codemirror` churn |
 | 1.9 | Make the two ported scripts lint-clean (F45, D31): a `scripts/*.js` override in `.eslintrc.js` modelled on the `gulpfile.js` one; fix the residual rule hits in the scripts without changing behaviour | ~3 | Sonnet | Sonnet | `npm run lint -- scripts/build-css.js scripts/check-css-dsp.js` exit 0; a fresh `--module zul` build is byte-identical to codegen (46 files); the checker still reports `MISSING : 0` |
-| **P1 gate** | Composite `zk` + `zkcml` build green from `clean`; the jars carry exactly the Marble CSS set and no LESS | — | — | **Opus** + external | `bash doc/migration/tools/gate-p1.sh <n>` for n = 1…6, one Bash call each, in order (procedure below — **approved 2026-09-10, chat D35-A**); verdict `gates/P1.md`; external-evaluator note appended |
+| 1.10 | Drop the `zul/font/font-awesome.css.dsp` stub (E3, D39): remove it from `stubPaths` in `build-css.js`, remove the checker's two exclusions of it and refresh the header lines that still describe it as a global bundle; the two zktest pages that link the path by hand (ZK-6024, ZK-4120) are IceBlue-context manual pages and stay untouched | ~2 | Sonnet | Sonnet | no non-comment line of either script names `font-awesome`; both scripts lint clean; a fresh `--module zul` build to a temp dir holds **45** `.css.dsp` and no `zul/font/font-awesome.css.dsp`, the checker reports `MISSING : 0` and `extra in build : 3`; `:zul:clean :zul:assemble` gives a jar with 45 `.css.dsp`, no `font-awesome` entry and both resets (**PASSED**, [gates/1.10.md](gates/1.10.md)) |
+| **P1 gate** | Composite `zk` + `zkcml` build green from `clean`; the jars carry exactly the Marble CSS set and no LESS | — | — | **Opus** + external | `bash doc/migration/tools/gate-p1.sh <n>` for n = 1…6, one Bash call each, in order (procedure below — **approved 2026-09-10, chat D35-A**); verdict `gates/P1.md`; external-evaluator note appended; stage 3 expects 45 since 1.10 (was 46 when judged) |
 
 #### P1 gate — procedure (approved 2026-09-10, chat D35-A)
 
@@ -149,6 +150,7 @@ so there is nothing to port. It is a P4 item beside the D18 sync script, where i
 
 | # | Item | WS | Gen | Eval | Verify |
 |---|---|---|---|---|---|
+| 2.0 | **IceBlue-only tests are tagged and skipped, never deleted** (user instruction 2026-09-10; F48): `@Tag("IceBlueOnly")` on `B86_ZK_4102Test` (class — the 32 px IceBlue slider width) and on `F96_ZK_4783Test.testIceblue()` (method — the 480 px IceBlue messagebox; its four theme-pack methods stay live); `zktest/build.gradle` excludes the tag in `test` and `testGroupForkJVMTestOnly` and adds `testIceBlueOnly` to run them; project rule `.claude/rules/iceblue-tests.md`; one line in `.github/copilot-instructions.md`'s run-tests section. The other 13 tests whose pages mention `iceblue` assert theme-independent behaviour and stay untagged | ~6 | Sonnet | Sonnet | static: tag named 5× in `build.gradle`, task present, class tag on 4102, method tag on `testIceblue` only, exactly two test files carry it, rule file with frontmatter, doc line; behaviour: `./gradlew test --tests B86_ZK_4102Test` → "No tests found for given includes"; `./gradlew testIceBlueOnly --tests B86_ZK_4102Test` starts it; `./gradlew test --tests F96_ZK_4783Test` starts four methods and never `testIceblue` (**PASSED**, [gates/2.0.md](gates/2.0.md)); Planner post-edit per D41: `zk.xml` preferred theme `iceblue` → `marble` |
 | 2.1 | Stand up the preview module: independent root build + `includeBuild`, `zktest`-style `dependencySubstitution`, the 64-line container skeleton, the 31-line servlet **verbatim** | ~6 + skeletons | Sonnet | **Opus** | one hand-written ZUL returns HTTP 200 **and** in-page `document.styleSheets` shows > 0 `--zk-*` declarations (the theme-not-served guard from the skill) **and** a served stylesheet whose href ends in `reset.css` or `reset-embed.css` precedes the `zk.wcs` one (E1/E3 of the external P1 note) |
 | 2.2 | Move the 159 preview / use-case ZULs + the SPA host into the module (path move) | paths | Sonnet | Sonnet | Playwright `smoke` project: every page 200 with a composed body |
 | 2.3 | Move the Playwright harness (323 KB of specs, **moved not read**) and re-point `baseURL` | config only | Sonnet | Sonnet | `--project=smoke` green against the new host; `PREVIEW_URL` default updated in exactly the files the indirection doc names |
@@ -339,6 +341,8 @@ exists (gate 1.9 note). Whether the eventual PR to `master` is squashed is a sep
 
 **Landed 2026-09-10:** `zk` ① `5b064f3619` · ② `0f20115d37` · ③ `9fa54e6617` · ④ `1c5a26858a` · ⑤ `37c41853dc`; `zkcml` (a) `b100ddb39` · (b) `e3600a94b` · (c) `31f08cdcd` — (c) added by the Planner for zkcml's `checkMarbleCss` (item 1.8), which the ruling did not assign, mirroring ④. ① and ② were first committed with a `build.gradle` blob that `git hash-object` had normalised to LF (a 569/551 whole-file diff); both were redone before anything else landed, with `--no-filters`, so ① shows the 18 added lines only.
 
+**Squashed 2026-09-10 (D38):** `zk` ①–④ → `2100200284` "ZK-6112: replace the LESS theme pipeline with the Marble CSS sources" (180 files), ⑤ re-parented as `771c410038`; `zkcml` (a)–(c) → `eea2b6428`. Trees byte-identical to the judged trees; nothing had been pushed; the granular commits stay on a local `marble-p1-granular` branch in each repo until deleted.
+
 #### Follow-ups recorded by the P1 gate (Opus notes, [gates/P1.md](gates/P1.md))
 
 - `compileMarbleCss` re-runs on every build (`outputs.upToDateWhen { false }`) — revisit for incremental inputs/outputs (P4 backlog).
@@ -346,8 +350,32 @@ exists (gate 1.9 note). Whether the eventual PR to `master` is squashed is a sep
 - zk/CLAUDE.md's checklist line `npm run lint -- .` is not what CI runs and cannot pass (F45); it also mutates files through `zk/preferNativeClass` (F47) — correct the line in the P3 CLAUDE.md item.
 - Release-note items: default theme name, Font Awesome removal and Lucide replacement, LESS retirement — breaks `zklessc`-built themes, concretely `zkcml/zkthemebuilder/palettes` (54 tracked `.less`, the IceBlue asset) and the untracked `zk85themebuilder/` — the silent-reset regression for providers that override `getThemeURIs` without `super`, the exact pins.
 - **6** EE `<css-uri>` targets ship as empty stubs (zkmax 4, zkex 2 — the checker's end state; the builder's "19 + 4 empty stubs" line counts stubs *written* before real CSS overrides them, E1) — P4 coverage items; "MISSING : 0" is presence, not styling. Reword the builder's log line to "written (may be overridden)".
-- `zul/font/font-awesome.css.dsp` is still emitted as a stub that nothing requests and that the checker excludes from both counts (46 = 42 + 3 + 1); drop it or record why it stays, and refresh `check-css-dsp.js`'s header line 17 (E3 — chat D45).
-- Commits ① / ② and (a) carry both CSS pipelines (E2): squash before the PR or name the range in the PR description — chat D44.
+- `zul/font/font-awesome.css.dsp` is still emitted as a stub that nothing requests and that the checker excludes from both counts (46 = 42 + 3 + 1); — **ruled D39: dropped** (item 1.10; header refreshed; stage 3 now expects 45).
+- Commits ① / ② and (a) carry both CSS pipelines (E2): — **ruled D38: squashed** (see D35's squash note).
+
+### D36 — Commit ① carries the lint-fixed scripts; `zkcml` (c) exists — **RULED 2026-09-10 (chat D42-a): accepted as landed**
+
+No history edit for either. The `eslint --fix` pass in 1.9 removed the pre-fix state of the two scripts, and (c) mirrors ④ for `zkcml`'s `checkMarbleCss`. Both are now inside the D38 squash anyway.
+
+### D37 — F47: the `zk/preferNativeClass` write side effect — **RULED 2026-09-10 (chat D43-A): file a Jira, draft first**
+
+Draft written for the user's review at `zk/tasks/jira-draft-preferNativeClass-writes-files.md` (untracked, outside this migration's commits). The defect was reproduced on one clean file: `npx eslint <file>` without `--fix` rewrote it — into TypeScript syntax — and was reverted. Filing waits for the user.
+
+### D38 — E2: commits carrying both CSS pipelines — **RULED 2026-09-10 (chat D44-A): squash before the PR**
+
+`zk` ①–④ became one commit and ⑤ was re-parented; `zkcml` (a)–(c) became one commit — with `git commit-tree` + `git update-ref`, so the working trees (which hold other people's files) were never touched and the HEAD trees are byte-identical to what the P1 gate judged. Recorded in [gates/P1.md](gates/P1.md) "Amendments". The PR-time squash question is thereby closed for P1.
+
+### D39 — E3: the `zul/font/font-awesome.css.dsp` stub — **RULED 2026-09-10 (chat D45): delete**
+
+The Planner had recommended keep-and-document; the user overruled: only IceBlue requests that path, so Marble carries no placeholder. Item 1.10 (PASSED) removed it from `stubPaths` and from the checker's exclusions; `tools/gate-p1.sh` stage 3 expects 45. Lesson recorded in the `zk` session's lessons file.
+
+### D40 — Scope of the IceBlue-only tag — **RULED 2026-09-10 (chat D46-a): only the two IceBlue-calibrated tests**
+
+`B86_ZK_4102Test` (class) and `F96_ZK_4783Test.testIceblue()` (method). The other 13 tests whose pages mention `iceblue` stay untagged so they keep catching Marble regressions (item 2.0, [gates/2.0.md](gates/2.0.md)).
+
+### D41 — zktest's preferred theme — **RULED 2026-09-10 (chat D47-a): `marble`**
+
+`zktest/src/main/webapp/WEB-INF/zk.xml` line 712 `org.zkoss.theme.preferred` → `marble` (was `iceblue`, which ZK 11 no longer registers, so the choice had fallen to the priority order among the four ZK 10 theme-pack jars — F48). Planner edit after 2.0's verdict, static check only; the runtime proof that zktest pages serve Marble belongs to 2.9. Lands with the 2.0 commit.
 
 ### First run — the pilot (item 3.1)
 
@@ -382,6 +410,19 @@ reference pages by *name* (the subagent loads them itself, so they count toward 
 which is why the 100 KB budget leaves room for the 82 KB skill).
 
 ---
+
+### Harness changes for P2 (from the P1 retrospective, 2026-09-10)
+
+Measured over every P1 workflow run: agents used ~101 min (Generators 71, passing Evaluators 24, failing Evaluators 6) inside a ~5 h harness wall clock. Six first-run FAILs, **all six caused by the Planner's verification command or the environment, none by the Generator's work** — see [p1-retrospective.md](p1-retrospective.md). P2 therefore runs with these rules:
+
+1. **Every verify is a tracked script** under `tools/verify-<item>.sh` with per-stage markers; the Evaluator's only command is `bash <script>`. No inline one-liners.
+2. **The Planner dry-runs the script before dispatch** on the pre-Generator tree: environment stages must pass; work-dependent stages must fail with exactly the expected marker. A script that cannot be dry-run is rewritten until it can.
+3. **Banned assertion shapes:** `tail -N | grep`, diff greps without `^[-+] `, `require('<pkg>/package.json')`, invariants not proven on the tree, exact counts of things the item does not own, any deletion, any repository-wide lint.
+4. **Independent items run in parallel**; a FAIL stops only the items that declare a dependency on it (`deps` in the script), not the chain.
+5. **Tiny items are batched**: one Generator, one multi-stage script, one gate file.
+6. **One commit per passing item, immediately**, explicit paths; squash decisions belong to the PR, not to the harness.
+7. **Phase pre-flight script** (`tools/preflight-p2.sh`) before the first item: Chrome, zktest composite build warm, Playwright, ports, permission-neutral commands.
+8. **Gate files are generated from the journal** by `tools/gate-from-journal.py`; the Planner adds notes only.
 
 ## 5. Appendix — measurements behind the sizing (2026-09-09)
 

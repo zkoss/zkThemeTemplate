@@ -570,3 +570,17 @@ imports `spawnSync` from `child_process` and hands the file to a codemod, which 
 Reverted with `git checkout --`. Two consequences: never run the repository-wide lint on a
 tree you intend to commit from (the gate no longer does), and the rule's side effect is a defect to
 report to the plugin's owner outside this migration.
+
+### F48 — zktest is IceBlue-configured in three places, only one of which is a test
+While scoping the user's 2026-09-10 instruction to skip IceBlue-related tests: (1) 30 `test2/*.zul`
+pages mention `iceblue`, but only 15 have a Java test, and of those only **two** assert IceBlue-specific
+values (`B86_ZK_4102Test`, slider 32 px; `F96_ZK_4783Test.testIceblue()`, messagebox 480 px) — the
+other 13 mention it in an unused theme switcher, a label or a comment and assert theme-independent
+relations. Tagging is therefore per test and, for 4783, per method. (2) `zktest/src/main/webapp/WEB-INF/zk.xml:712`
+sets `org.zkoss.theme.preferred` to `iceblue`; `ThemeFns.getCurrentTheme` honours it only if a theme of
+that name is registered, and otherwise falls through to the highest-priority registered theme.
+(3) `zktest/build.gradle:69-72` puts four ZK 10 theme-pack jars (Breeze, Silvertail, Sapphire,
+Atlantic, `10.0.1.1-Eval`) on the classpath, each registering a theme. Under Marble, `iceblue` is not
+registered, so which theme zktest actually serves is decided by the priority fallback — a P2 concern
+for item 2.9 and any Marble-verifying run of zktest, and a chat decision (D47) on pinning the preferred
+theme — **ruled D47-a: `marble`** (plan D41).
