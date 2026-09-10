@@ -43,7 +43,7 @@
         <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Surface</div>
         <div sclass="z-d-flex z-flex-wrap z-gap-6">
             <div sclass="z-vstack z-gap-2">
-                <div sclass="z-text-sm z-text-secondary">theme="light" (default)</div>
+                <div sclass="z-text-sm z-text-secondary">colorScheme="light" (default)</div>
                 <codeeditor language="json" width="360px" height="150px">
                     <attribute name="value"><![CDATA[{
 	"upstream": "order-api-v3",
@@ -54,8 +54,8 @@
                 </codeeditor>
             </div>
             <div sclass="z-vstack z-gap-2">
-                <div sclass="z-text-sm z-text-secondary">theme="dark"</div>
-                <codeeditor language="json" theme="dark" width="360px" height="150px">
+                <div sclass="z-text-sm z-text-secondary">colorScheme="dark"</div>
+                <codeeditor language="json" colorScheme="dark" width="360px" height="150px">
                     <attribute name="value"><![CDATA[{
 	"upstream": "order-api-v3",
 	"timeoutMs": 2000,
@@ -97,7 +97,7 @@ GROUP BY customer_id]]></attribute>
         <div sclass="z-d-flex z-flex-wrap z-gap-6">
             <div sclass="z-vstack z-gap-2">
                 <div sclass="z-text-sm z-text-secondary">javascript</div>
-                <codeeditor language="javascript" theme="dark" width="360px" height="120px">
+                <codeeditor language="javascript" colorScheme="dark" width="360px" height="120px">
                     <attribute name="value"><![CDATA[/* dark palette: keyword, string, comment, number */
 const limit = 25;
 function pick(rows) {
@@ -136,7 +136,7 @@ function pick(rows) {
             </div>
             <div sclass="z-vstack z-gap-2">
                 <div sclass="z-text-sm z-text-secondary">dark surface repainted</div>
-                <codeeditor language="javascript" theme="dark" width="360px" height="120px"
+                <codeeditor language="javascript" colorScheme="dark" width="360px" height="120px"
                         style="--zk-codeeditor-background:#0b1021; --zk-codeeditor-color:#c0caf5; --zk-codeeditor-gutter-color:#3b4261; --zk-codeeditor-token-keyword:#bb9af7; --zk-codeeditor-token-string:#9ece6a; --zk-codeeditor-token-number:#ff9e64; --zk-codeeditor-token-comment:#565f89">
                     <attribute name="value"><![CDATA[// repainted by seven custom properties
 const retries = 3;
