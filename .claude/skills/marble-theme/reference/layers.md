@@ -68,7 +68,7 @@ above `zk-base`, so the layer order made them redundant. The remaining ~33 are i
 beat **inline styles ZK's JS sets at runtime**, same-layer author conflicts, `prefers-reduced-
 motion`, and add-on internals. A layer never outranks an inline style. Re-verify each survivor
 empirically on any ZK upgrade; never trust a version-pinned comment (`reference/pitfalls.md` §11).
-The repeatable method is the `important-reduction` skill.
+The repeatable method is `reference/important-reduction.md`.
 
 ## `browserDefault`: one reset source, two shipped files
 

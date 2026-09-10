@@ -1,20 +1,10 @@
----
-name: important-reduction
-description: >-
-  Safely eliminate `!important` declarations from a ZK Framework theme's CSS by
-  proving each removal is render-neutral against the live app, and record the
-  survivors with evidence so nobody re-investigates them. Use this whenever the
-  user wants to remove, reduce, eliminate, clean up, audit, or "get rid of" the
-  `!important` in the theme CSS; asks which `!important` are actually needed vs
-  redundant; suspects an `!important` is a misjudgment or cargo-culted; is doing
-  a ZK version upgrade and wants to re-check `!important` workarounds; or adopts
-  this template for a new theme and asks "how do I run the !important reduction
-  I did before" — even if they never say "important" in those exact words. This
-  is the self-contained, repeatable method (Planner → Generator → Evaluator,
-  procedure + worked example below).
----
-
 # `!important` reduction
+
+This page was merged from the former `important-reduction` skill on 2026-09-10 and is Step 4 of maintaining Marble hygiene.
+
+Use this page when the work is to remove, reduce, eliminate, clean up, audit, or "get rid of"
+the `!important` in the theme CSS; to figure out which `!important` are actually needed vs
+redundant; or when doing a ZK version upgrade and wanting to re-check `!important` workarounds.
 
 Removing `!important` is easy; removing it *without silently changing how the theme
 looks* is the hard part. The whole method exists to make every removal provable and
@@ -65,7 +55,7 @@ candidates. The Planner is you (or a `Plan`/`Explore` agent) producing the decis
 Raw grep over-counts (it sees `!important` inside comments). Use the bundled script:
 
 ```bash
-node .claude/skills/important-reduction/scripts/count-important.js
+node .claude/skills/marble-theme/scripts/count-important.js
 ```
 
 It prints per-file counts, a real-declaration total, and every declaration line. This
@@ -110,7 +100,7 @@ For each remove candidate:
 
 1. **Measure HEAD** (keyword present) with the probe:
    ```bash
-   node .claude/skills/important-reduction/scripts/probe.js \
+   node .claude/skills/marble-theme/scripts/probe.js \
      ${PREVIEW_URL}/<page>.zul '<selector>' 'display,width,…'
    ```
    Note the inline `style` in the output — if ZK set the property inline, it's category B → keep.
@@ -166,6 +156,8 @@ competing inline style and the layered/high-specificity rule already wins, so co
 were identical without the keyword. Removed, each with a computed-style guard.
 
 ## Bundled scripts
+
+Both scripts live in this skill's `scripts/` directory.
 
 - `scripts/count-important.js` — comment-aware inventory (step 1).
 - `scripts/probe.js` — computed-style + inline-style A/B probe (step 4). Run from the repo

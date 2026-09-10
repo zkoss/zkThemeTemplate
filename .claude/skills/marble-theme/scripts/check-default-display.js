@@ -6,7 +6,7 @@
  * Example: `.z-span { display: inline }` is a no-op — ZK's span widget renders a
  * native <span>, which is already `display: inline`, so the rule does nothing.
  *
- * This is check 5 (§G) of the css-theme-audit skill. It is ADVISORY and
+ * This is check 5 (§G) of the marble-theme skill's CSS audit (reference/css-audit.md). It is ADVISORY and
  * READ-ONLY: it never edits CSS and always exits 0. It lists CANDIDATES; a human
  * (Step 2 of the skill) decides what is safe to delete.
  *
@@ -43,7 +43,7 @@ const fs = require('fs');
 const path = require('path');
 
 const SCRIPT_DIR = __dirname;
-// .claude/skills/css-theme-audit/scripts -> project root is four levels up.
+// .claude/skills/marble-theme/scripts -> project root is four levels up.
 const PROJECT_ROOT = path.resolve(SCRIPT_DIR, '../../../..');
 
 let COMPONENT_ROOT = path.join(PROJECT_ROOT, 'src/main/resources/web/js/zul');
@@ -284,7 +284,7 @@ emit('');
 emit('### G2. Restates default — VERIFY before removing (`block`/`inline-block` on a same-default element)');
 emit('');
 emit('> May be a defensive anchor vs ZK runtime `.z-flex` class toggling or `@layer` cascade.');
-emit('> Prove render-neutral on the live app before deleting (see important-reduction `probe.js`).');
+emit('> Prove render-neutral on the live app before deleting (see reference/important-reduction.md and scripts/probe.js).');
 emit('');
 if (verify.length) {
   for (const x of verify) emit(`- \`${rel(x.file)}:${x.line}\`  \`.z-${x.name} { display: ${x.value} }\` → <${x.tag}> default is \`${x.def}\``);

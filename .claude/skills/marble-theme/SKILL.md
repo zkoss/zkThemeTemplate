@@ -10,7 +10,9 @@ description: >-
   ZK bug found while theming; or asking how Marble's vocabulary relates to the older IceBlue
   theme. Also use it when someone asks "how does this theme get built", "where does this CSS
   end up", "which port is the preview app on", or "why is there an `!important` here" — even if
-  they never say "Marble".
+  they never say "Marble". Also covers auditing CSS hygiene — orphan tokens, hardcoded colours,
+  duplicate shadows, or redundant `display` declarations — and removing, reducing or justifying
+  an `!important`.
 ---
 
 # Maintaining Marble
@@ -90,6 +92,8 @@ does not outlive the call. Details and the Playwright projects: `reference/verif
 | `reference/pitfalls.md` | **Read this before any non-trivial change.** Eleven mistakes already made once |
 | `reference/bug-filing.md` | The defect is ZK's, not the theme's, and needs a Jira ticket |
 | `reference/iceblue-parity.md` | Questions about IceBlue, the `--zk-*` public API break, or Theme Pack palettes |
+| `reference/css-audit.md` | Auditing CSS hygiene — orphan tokens, hardcoded colours, repeated shadows, `display` declarations that restate a default; what `npm run audit:css` reports and how to triage it |
+| `reference/important-reduction.md` | Removing, reducing or justifying an `!important`; the count and probe scripts; the render-neutral proof bar |
 
 ## ZK version coordinates
 
@@ -116,9 +120,13 @@ there holds the ZK → MUI file lookup (Button → `Inputs/Button.css`, Grid/Lis
 `DataDisplay/Table.css`, Window dialog → `Feedback/Dialog.css`, Tabbox → `Navigation/Tabs.css`,
 and so on). This path is machine-local; after migration, re-home or re-fetch the extract.
 
-## Related skills not yet merged
+## Scripts
 
-`css-theme-audit` (hygiene audit) and `important-reduction` (the `!important` removal method) are
-still separate skills in this repository. Both are Marble tooling and belong under this skill;
-merging them is a P3 item in the migration plan. `doc/spec/index.md` remains the normative index
-for the specifications this skill summarises.
+This skill's tooling lives in `scripts/`.
+
+- `scripts/audit-css.sh` — mechanical hygiene pass; `npm run audit:css`.
+- `scripts/check-default-display.js` — check 5 of the audit; resolves root tags from ZK molds.
+- `scripts/count-important.js` — comment-aware `!important` inventory.
+- `scripts/probe.js` — computed-style A/B probe against the running preview app.
+
+`doc/spec/index.md` remains the normative index for the specifications this skill summarises.

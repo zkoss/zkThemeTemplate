@@ -1,6 +1,6 @@
 # CSS Cleanup — 逐項執行清單
 
-> 來源:2026-06-15 的一次性 CSS hygiene 審計「待核可後續工項」(該報告已結案並移除;審計方法見 `css-theme-audit` skill)。
+> 來源:2026-06-15 的一次性 CSS hygiene 審計「待核可後續工項」(該報告已結案並移除;審計方法見 `marble-theme` skill 的 `reference/css-audit.md`)。
 > 節奏:**一次一項**;動工前先給舉例 → 你核可 → 實作 → 驗證 → 各自獨立 commit。
 > 排序原則:**先低風險、可機械驗證,後需視覺回歸的重構**(非報告字母序)。
 

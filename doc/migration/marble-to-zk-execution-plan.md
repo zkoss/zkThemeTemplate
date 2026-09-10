@@ -1,6 +1,6 @@
 # Marble → zk Migration — Execution Plan (Planner · Generator · Evaluator)
 
-**Status:** **D21 and D22 ruled 2026-09-10.** Ready for the pilot run (item 3.1) from the new Planner session. · **Written:** 2026-09-09 · **Revised:** 2026-09-10
+**Status:** **D21 and D22 ruled 2026-09-10.** **Pilot (item 3.1) PASSED** — [gates/3.1.md](gates/3.1.md); rows 3.1 / 3.4 amended per [planner-cold-start-findings.md](planner-cold-start-findings.md) F1. · **Written:** 2026-09-09 · **Revised:** 2026-09-10
 **Governs:** [marble-to-zk-migration-plan.md](marble-to-zk-migration-plan.md) — that document says
 *what* and *why*; this one says *how each item is run, by whom, at what size, and how it is proven*.
 
@@ -132,10 +132,10 @@ different Playwright project, so the split follows an existing seam.
 
 | # | Item | WS | Gen | Eval | Verify | Repo |
 |---|---|---|---|---|---|---|
-| 3.1 | **Merge `css-theme-audit` + `important-reduction` into `marble-theme`** (21 KB in, ~82 KB skill context) | ~100 | Sonnet | Sonnet | both scripts run from the new location; `check:doc-links` clean; the two old skill dirs gone; skill file count 13 | template |
+| 3.1 | **Merge `css-theme-audit` + `important-reduction` into `marble-theme`** (2 `SKILL.md` = 22 KB read; 4 scripts = 29 KB **moved by `git mv`, not read**; see `planner-cold-start-findings.md` F1) | ~70 | Sonnet | Sonnet | `cd /Users/hawk/Documents/workspace/zkThemeTemplate && S=.claude/skills/marble-theme/scripts && T=$(mktemp -d) && bash $S/audit-css.sh --out $T/audit.md >/dev/null && test -s $T/audit.md && node $S/check-default-display.js --out $T/dd.md >/dev/null && test -s $T/dd.md && node $S/count-important.js | tail -1 && (node $S/probe.js >/dev/null 2>&1; test $? -eq 2) && npm run check:doc-links && test ! -e .claude/skills/css-theme-audit && test ! -e .claude/skills/important-reduction && test "$(find .claude/skills/marble-theme -type f ! -name .DS_Store | wc -l | tr -d ' ')" = 17` — all four scripts run from the new location, `check:doc-links` clean, both old skill dirs gone, skill file count **17** | template |
 | 3.2 | Build the **path-rewrite map**: the 63 distinct repo-relative path strings → their `zk` equivalents, as a checked-in table | grep output | Sonnet | Sonnet | every *source* path in the map exists here; every *target* path is a real `zk` layout location per P1's landing split | template |
 | 3.3 | Draft the pointer paragraph for `zk`'s `CLAUDE.md` (its current one is 1 KB) | 17 | Sonnet | Sonnet | ≤ 15 lines; names the skill; no duplicated content | template (draft), landed by 3.9 |
-| 3.4 | Copy `marble-theme` into `zk/.claude/skills/` and commit | 82 (copy) | Sonnet | Sonnet | `diff -r` between the two trees is empty; 13 files present | Target |
+| 3.4 | Copy `marble-theme` into `zk/.claude/skills/` and commit | ~130 (copy, moved not read) | Sonnet | Sonnet | `diff -r` between the two trees is empty; **17** files present (F1) | Target |
 | 3.5 | Apply the path-rewrite map to the copied skill | map + 82 | Sonnet | Sonnet | `grep` for every *source* prefix in the copy = 0; every rewritten path exists in `zk` (the existence loop already used today) | Target |
 | 3.6 | Move `doc/spec/` — 26 files, 365 KB, **moved not read**; then apply the map | map + index | Sonnet | Sonnet | `doc/spec/index.md` links all resolve in `zk`; 26 files present | Target |
 | 3.7 ✂ | Move `doc/contracts/` **first half** (47 `.md` + their mockups) | paths | Sonnet | Sonnet | count; the harness's contract loader finds them | Target |
@@ -242,7 +242,7 @@ which is why the 100 KB budget leaves room for the 82 KB skill).
 | 13 Playwright specs + config | 323 KB | **moved by path**; only `playwright.config.ts` is edited |
 | 159 ZULs / 199 PNGs | 9.2 / 11 MB | moved by path |
 | `marble-theme` skill | 82 KB, 11 files | the largest thing a Generator *reads*; the budget is set around it |
-| `css-theme-audit` + `important-reduction` | 12 + 9 KB | 3.1 |
+| `css-theme-audit` + `important-reduction` | 37 + 14 KB (of which `SKILL.md` 12 + 10; the four scripts are moved, not read) | 3.1 |
 | 5 subagent definitions | 132 KB total, 16–40 KB each | the reason 3.10–3.14 are five items |
 | `doc/spec/` | 365 KB, 26 files | moved by path; only `index.md` is read |
 | `doc/contracts/` `.md` | 555 KB, 94 files | moved by path in two halves so the count check stays legible |

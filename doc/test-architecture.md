@@ -67,7 +67,7 @@ Adjacent CSS-quality gates (not Playwright, but part of the same verification ha
 
 ```bash
 npm run lint:css     # stylelint over src/main/resources/web/**/*.css
-npm run audit:css    # orphan tokens, hardcoded colors, duplicate rules (css-theme-audit skill)
+npm run audit:css    # orphan tokens, hardcoded colors, duplicate rules (marble-theme skill, reference/css-audit.md)
 ```
 
 **Iceblue reference comparison** (compare Marble against stock ZK to find coverage gaps):

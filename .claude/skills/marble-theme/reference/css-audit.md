@@ -1,22 +1,13 @@
----
-name: css-theme-audit
-description: >-
-  Audit a ZK Framework theme's CSS for hygiene issues — duplicate/redundant
-  declarations, orphan (zero-reference) design tokens, hardcoded color/spacing
-  values that bypass tokens, repeated literal box-shadows, and declarations that
-  restate an element's browser-default display (e.g. `.z-span { display: inline }`)
-  — and write the findings up as a structured report. Use this whenever the user wants to
-  review, audit, clean up, lint, or check the quality/hygiene of theme CSS,
-  tokens, or utility classes; before tagging a theme release; or when adopting
-  this template to build a NEW theme and they ask "how do I run the same checks
-  I did before" — even if they never say the word "audit". This skill is the
-  self-contained, repeatable method (procedure + worked example below).
----
+# CSS theme audit
 
-# CSS Theme Audit
+This page was merged from the former `css-theme-audit` skill on 2026-09-10 and is Step 4 of maintaining Marble hygiene.
+
+Use this page when the work is to review, audit, clean up, lint, or check the quality/hygiene of
+theme CSS, tokens, or utility classes; before tagging a release; or when adopting this template to
+build a new theme and asking "how do I run the same checks I did before".
 
 A repeatable procedure for auditing a ZK theme's CSS the way `marble` was first
-audited on 2026-06-15. This skill is self-contained: the **method** (how to
+audited on 2026-06-15. This page is self-contained: the **method** (how to
 produce an audit for any theme) plus an inline **worked example** (what good
 output looks like — the A–F structure in Step 4, with the concrete `marble`
 findings cited throughout: the goldenlayout 3-warning split, the
@@ -61,9 +52,9 @@ script has no other theme-specific assumptions.
 ## Step 1 — Mechanical pass (automated)
 
 ```bash
-bash .claude/skills/css-theme-audit/scripts/audit-css.sh --out doc/css-audit-<theme>.md
+bash .claude/skills/marble-theme/scripts/audit-css.sh --out doc/css-audit-<theme>.md
 # or just print to the terminal:
-bash .claude/skills/css-theme-audit/scripts/audit-css.sh
+bash .claude/skills/marble-theme/scripts/audit-css.sh
 ```
 
 It emits an A–F report skeleton with these checks filled in:
@@ -174,10 +165,11 @@ covers widgets whose mold declares no tag (e.g. `div.js`).
   block` on a `<div>`-rooted container (`.z-grid`, `.z-listbox`, `.z-tree`) restates
   the default, but the value can be a **defensive anchor**: ZK toggles framework
   display classes at runtime (the `.z-flex` family) and the `@layer` cascade can
-  reorder who wins. Prove render-neutral on the live app before deleting — reuse the
-  `important-reduction` skill's `scripts/probe.js` ("remove → build → measure
-  computed style"); if the computed `display` is unchanged with the line gone, it was
-  redundant. `.z-cell { display: table-cell }` on a `<td>` is the same shape.
+  reorder who wins. Prove render-neutral on the live app before deleting — reuse
+  `scripts/probe.js` from `reference/important-reduction.md` ("remove → build →
+  measure computed style"); if the computed `display` is unchanged with the line
+  gone, it was redundant. `.z-cell { display: table-cell }` on a `<td>` is the same
+  shape.
 - **§G3 replaced/form elements are skipped, not findings.** `<img>`, `<input>`,
   `<button>`, `<select>`… have UA-specific defaults and are always styled
   deliberately — e.g. `.z-image img { display: block }` is an intentional

@@ -312,8 +312,9 @@ Work items:
       authoring rules, the visual-regression gotchas, the ZK version coordinates. Done with the P0
       memory split. What the skill still names as unmerged is the two tooling skills below.
 - [ ] **Copy the skill into `zk` and commit it there.** Step 2 of the two-step sequence in §4.
-- [ ] **Merge the two tooling skills** — `css-theme-audit` and `important-reduction` — into
-      `marble-theme`, as classified in appendix §A.7.
+- [x] **Merge the two tooling skills** — `css-theme-audit` and `important-reduction` — into
+      `marble-theme`, as classified in appendix §A.7. Done 2026-09-10 (item 3.1, verdict
+      [gates/3.1.md](gates/3.1.md)); the skill now holds 17 files — 12 reference pages and 4 scripts.
 - [ ] Move the 26 specifications (normative) and the 94 component contracts with their 19 mockups.
       The contracts are the harness's expected values; without them the harness has nothing to
       compare against.
