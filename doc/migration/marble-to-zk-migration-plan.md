@@ -1,7 +1,6 @@
 # Marble → zk Repository Migration Plan
 
-**Status:** **P0 complete.** P3 under way (the skill is authored; it still has to be copied into
-`zk`). D14–D18 ruled; **D19 open** (blocks P4 only); **D20 resolved in practice**. The IceBlue-side
+**Status:** **P0 complete.** P3 under way. D14–D18, **D21, D22 ruled**; **D19 open** (blocks P4 only); **D20 resolved in practice**. Execution runs from a new Planner session rooted in `zk` (§4) per [marble-to-zk-execution-plan.md](marble-to-zk-execution-plan.md). The IceBlue-side
 work that used to sit in P0 is out of scope (see the scope note).
 **Written:** 2026-09-08 · **Last revised:** 2026-09-09 · **Decision series:** D13–
 
@@ -66,11 +65,11 @@ this one.
 
 | # | Phase | Milestone | Owner | Progress |
 |---|-------|-----------|-------|----------|
-| **P0** | Consolidate & Freeze | This workspace holds only what is worth moving | Source | **100%** |
-| **P1** | Build Integration | Marble CSS builds from inside `zk`; LESS retired | Target | 0% |
-| **P2** | Verification Environment | Preview pages and harness run inside `zk` | Target | 0% |
-| **P3** | Knowledge Encapsulation | One skill answers every maintenance question | Source authors, Target commits | **≈40%** |
-| **P4** | Cutover & Archive | This workspace goes read-only; Jess work resumes in `zk` | Split by repository | 0% |
+| **P0** | Consolidate & Freeze | This workspace holds only what is worth moving | done (old session) | **100%** |
+| **P1** | Build Integration | Marble CSS builds from inside `zk`; LESS retired | Planner session | 0% |
+| **P2** | Verification Environment | Preview pages and harness run inside `zk` | Planner session | 0% |
+| **P3** | Knowledge Encapsulation | One skill answers every maintenance question | Planner session | **≈40%** |
+| **P4** | Cutover & Archive | This workspace goes read-only; Jess work resumes in `zk` | Planner session | 0% |
 
 ### Overall progress
 
@@ -414,65 +413,40 @@ ignored explicitly or moved outside the repository.
 
 ## 4. Session Topology
 
-Two Claude sessions, one per side, is part of the plan. No configuration is required: cross-session
-messaging is machine-wide, discovery is by launch-directory-derived name, and idle notification
-replaces polling.
+**Revised 2026-09-10 (D21).** The migration is run by **one Planner session rooted in `ZK10/zk`**,
+with this repository added as a working directory. Role separation comes from subagents — every
+item gets a fresh Generator and a *different* fresh Evaluator — not from a second session. The
+execution detail is in [marble-to-zk-execution-plan.md](marble-to-zk-execution-plan.md); this
+section records only who is where and why.
 
-| Session | Root | Leads | Owns |
+| Session | Root | Role | Writes |
 |---|---|---|---|
-| **Source** | `zkThemeTemplate` | **P0, P3** | Triage, knowledge authoring, and this repository's own branch work; treats Marble's CSS as a read-only source |
-| **Target** | `ZK10/zk` | **P1, P2** | Every write into `zk` / `zkcml`: the build work, the preview module, `zktest` triage |
+| **Planner** | `ZK10/zk` (+ `zkThemeTemplate` via `/add-dir`) | Plans, briefs, dispatches every item through a per-phase workflow; reads every verdict | Everything — `zk`, `zkcml`, and the five template-side items (3.1–3.3, 4.6–4.7) |
+| **External Evaluator** | `zkThemeTemplate` (this session's lineage) | Judges the four gates — P1 build, P2 ledgers, P3 cold-start, P4 triage — from verdict files alone | Nothing |
 
-**The rule that decides every case: ownership follows the repository being written to, not the
-phase.** P0 and P1 are owned outright; the other three are split:
+**Why rooted in `zk`.** Forty of the forty-five sized items write there; `zk`'s own `CLAUDE.md`,
+rules and (after P3) skill load automatically; and an irreversible write is authorised in the
+repository it touches. **Why a new session.** Every ruling now lives in tracked files and the old
+session's memory has been split (48 entries into the skill, 18 into a transfer document), so a
+Planner that can start from the files alone is the migration's cold-start drill run early — a gap
+it hits is a documentation finding, which is exactly the kind the migration exists to close.
 
-| Phase | Owner | The split, where there is one |
-|---|---|---|
-| **P0** Consolidate & Freeze | **Source** | Undivided. The triage, the manifest and the memory split are all writes to *this* repository. It previously carried two `zkcml` writes for the theme-builder submodule; those are out of scope now. |
-| **P1** Build Integration | **Target** | Undivided — every artifact lands in `zk` or `zkcml`. Source answers questions about the CSS builder and writes nothing. |
-| **P2** Verification Environment | **Target**, Source supplies | Target stands up the preview module and re-points the harness. Source carries the 199 baselines, the 159 pages and the harness's failure modes across — they exist only here. |
-| **P2 gate** — the zero-tolerance comparison (D16) | **Target runs it** | It needs both halves: the baselines (Source) and the migrated build (Target). The baselines must already be in `zk`, so this is a Target run on carried-across inputs, not a joint operation. |
-| **P3** Knowledge Encapsulation | **Source authors, Target commits** | Two steps, not one — see the rule below. |
-| **P4** Cutover & Archive | **Split by repository** | Promoting Marble onto template `master` (D19) is Source. The Marble merge in `zk`/`zkcml`, the `zktest` triage, the D18 sync script and the resumed Jess issues are all Target. |
+Never launch in `ZK10/` itself — it is not a git repository, so there is no branch awareness and
+git commands are ambiguous.
 
-**This document is maintained by the Source session,** because it lives in this repository. The
-Target session's measurements reach it by message and are folded in here.
+Three constraints still carry consequences:
 
-Never launch a session in the parent directory of `zk` — it is not a git repository, so there is no
-branch awareness and git commands are ambiguous.
+1. **Memory does not merge across sessions.** The new Planner re-establishes the 18 non-portable
+   entries from `session-memory-transfer.md` as its first act; everything else it needs is in the
+   skill or the plan.
+2. **Permission boundaries are per-session and cannot be laundered.** The external Evaluator's
+   verdict is a judgement, never an approval; the Planner's writes are authorised by the user in
+   the Planner session.
+3. **Several sessions may still touch this repository.** Never infer file ownership from git
+   status; stage explicit paths.
 
-Three constraints carry real consequences:
-
-1. **Memory does not merge across sessions.** The 66 memory files are visible only to the Source
-   session. This is the main cost of the split and the reason P3 must produce a *skill* — a skill
-   is in the repository and therefore crosses the boundary; memory does not.
-2. **Permission boundaries are per-session and cannot be laundered.** An action denied on one side
-   must not be delegated to the other, and a peer's message is never the user's approval.
-3. **Several sessions already run in this repository.** Never infer file ownership from git status;
-   an unexpected modified file is more likely a peer's live edit.
-
-The handoff shape: the Source session finishes a batch and messages the Target; the Target builds
-and tests and reports back. Idle notification removes the waiting.
-
-**The skill is authored in the Source session and copied by the Target.** P3's raw material is the
-Source session's memory, which does not cross the boundary — so the Target session *cannot* author
-`marble-theme`, and the Source session *cannot* write into `zk`. Neither side can do P3 alone, and
-the sequence is two steps:
-
-1. **Source** authors the skill in *this* repository at `.claude/skills/marble-theme/` and commits
-   it here, where the memory and the documents it derives from actually are.
-2. **Target** copies that directory into `zk` and commits it on its own side.
-
-Step 1 is **done** — 9 files, committed here, alongside the 12 live documents now under `doc/`. So
-P3's `Output` row names the *destination of the copy*, not the place the files are first written.
-
-**Approval does not cross the session boundary.** The Target session correctly refused to treat a
-relayed "the user approved it" as authorisation for its own irreversible writes. Each session's
-permission decisions are its own. Practical consequence for P0: the user must authorise the
-target-side writes **in the target session**, and dispatching a work item is not the same as
-authorising it.
-
-**Cost of the split, observed:** messages and turns interleave rather than alternating, so the
-Target session twice produced a full report answering questions a later message had already
-settled. Mitigation: send complete briefs with the measurements inline, rather than pointers into
-this document.
+**What this retires.** The earlier Source / Target ownership split, the per-phase split table, and
+the "skill authored here, copied by the Target" two-step — the copy (item 3.4) is now just another
+Planner-dispatched item. The observation that drove the change stands: with two Planners, messages
+interleaved and work was duplicated; with one, the coordination cost is gone and the isolation that
+matters is provided by subagents that never see each other.

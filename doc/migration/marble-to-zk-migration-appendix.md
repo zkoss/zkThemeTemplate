@@ -344,6 +344,15 @@ Found while migrating; none blocks the plan, all would mislead a reader.
 
 ## A.11 Change log
 
+- **2026-09-10 — D21 and D22 ruled; the execution plan and the topology change.** The user asked
+  every open item to be sized against a context budget, given a verification, and run through a
+  Planner → Generator → Evaluator pattern. The execution plan sizes 45+ items by **measured working
+  set** (≤ 100 KB per agent run) rather than by a model's window. D21: one **new** Planner session
+  rooted in `zk` with the template repo added as a working directory; the old session becomes an
+  external Evaluator for the four judgement gates. D22: Sonnet 5 generators, Opus 5 evaluators on
+  the judgement gates. §4 of the plan was rewritten; the Source / Target ownership split is retired.
+  The kickoff prompt for the new session is §6 of the execution plan.
+
 - **2026-09-09 — P0 closed: the memory split executed, file by file.** 66 memories read and
   dispositioned individually rather than by section heading. **48 folded into `marble-theme`**,
   which grew from 9 to 11 files (76 → 104 KB): `reference/layers.md` and
