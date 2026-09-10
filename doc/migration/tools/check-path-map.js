@@ -52,7 +52,7 @@ const RULES = [
   { kind: 'MAP', from: 'scripts/', to: 'scripts/' },
   { kind: 'MAP', from: 'doc/', to: 'doc/' },
   { kind: 'MAP', from: '.claude/', to: '.claude/' },
-  { kind: 'OUTPUT', from: 'target/classes/web/marble/', to: ['zul/codegen/web/', '../zkcml/zkmax/codegen/web/', '../zkcml/zkex/codegen/web/'] },
+  { kind: 'OUTPUT', from: 'target/classes/web/marble/', to: ['zul/codegen/resources/web/', '../zkcml/zkmax/codegen/resources/web/', '../zkcml/zkex/codegen/resources/web/'] },  // zk/build.gradle:51 `codegen = 'codegen/resources'` (F22)
   { kind: 'OUTPUT', from: 'target/test-classes/web/', to: ['zkpreview/'] },
   { kind: 'STALE', from: 'tasks/' },                                             // nothing under tasks/ is tracked
 ];

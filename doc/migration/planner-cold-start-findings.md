@@ -268,7 +268,7 @@ some point. Consequences, measured after 3.15 / 3.16 landed:
 - `zk/.gitignore` already carries someone else's uncommitted hunk (`+graphify-out`); any Planner
   edit to it must be committed as its own hunk (`git apply --cached` of a crafted patch), never by
   staging the whole file.
-Put to the user as chat decision D13.
+Put to the user as chat decision D30 (the chat series jumps from D12 to D30 so it never collides with the plan's own D13–D24).
 
 ### F20 — `zk-component-rules` is not path-independent
 Appendix §A.7 calls it theme-independent, which is true of its *content*; but 23 of its 97 files cite
@@ -287,3 +287,84 @@ The map itself (3.2) did not scan this skill; its row set would need extending o
 - **Jira:** ZK-6112 for every `zk` / `zkcml` commit (execution plan D23; closes F16).
 - **Still open before P3 resumes:** F19 (`zk` ignores `.claude/`), F20 / proposed 3.19
   (`zk-component-rules` path rewrite), proposed 3.17 (repair the 11 dead links in the template originals).
+
+---
+
+## Gaps found while sizing P1 (measured 2026-09-10, after D24 chose P1 next)
+
+### F21 — The builder needs two npm packages `zk` does not have
+`scripts/build-css.js` requires **`lightningcss`** (its minifier — the two silent-corruption
+workarounds the plan's D14 elected to keep are Lightning-specific) and reads icons from
+**`node_modules/lucide-static/icons`** for the icon stubs. `zk`'s `package.json` has neither
+(`cssnano`, `postcss`, `csso` are present). Keeping the builder therefore means adding both as
+`devDependencies` in `zk` — `lightningcss` ships a native binary per platform, which the CI runners
+must be able to install. `zkcml`'s task can call the script in `zk` (`$zkDir/scripts/build-css.js`);
+Node resolves `require` from the script's own location, so only `zk` needs the packages.
+Put to the user as chat D32.
+
+### F22 — `zk`'s generated tree is `codegen/resources/web/`, not `codegen/web/`
+`zk/build.gradle:51` `def codegen = 'codegen/resources'`. The map's three OUTPUT rows and the
+checker's OUTPUT rule said `zul/codegen/web/`; both corrected, checker re-run PASS (uncommitted).
+
+### F23 — Data corrections against the plan's counts
+`zul` LESS files: **67** (plan 66); `zkex` LESS: **8** (plan 7); `zkmax` 85 confirmed. Among the 67
+are `zul/font/font-awesome.less` and the `ZK85Icons` font files' stylesheet — deleting them removes
+`~./zul/font/font-awesome.css.dsp`, which `zul/css/zk.wcs` still lists (F24). Lang-file `<css-uri>`
+counts 86 / 35 / 8 confirmed. None of this changes P1's shape.
+
+### F24 — Item 1.5 ("core-registration variant") has no design
+The plan says "author a second variant of the 5 Java classes, not a copy" and stops there. What the
+theme-jar variant does, and what each part becomes when Marble is core's default:
+
+| Jar variant does | In core | Needs a ruling? |
+|---|---|---|
+| `MarbleThemeProvider.beforeWidgetCSS` rewrites `~./zul/`, `~./js/zul|zkmax|zkex/` through `resolveThemeURL` (the theme-prefix rewrite) | **Drop** — `StandardThemeProvider` already calls `resolveThemeURL`, which is the identity for the default theme | no (plan already says delete it) |
+| Returns `null` for `~./zul/font/font-awesome.css.dsp` | **Remove the line from `zul/css/zk.wcs`** — its LESS source is deleted by 1.6 anyway; P4's icon-fallout item owns the consequences | no |
+| Inserts `reset.css` / `reset-embed.css` before `zk.wcs`, switched by library property `org.zkoss.zul.theme.browserDefault` | either **(a)** a `<stylesheet href="~./zul/css/reset.css.dsp"/>` line in `zk.wcs` (no Java, loses the switch) or **(b)** the switch kept in a small core provider | **D31** |
+| `MarbleThemeWebAppInit`: `Themes.register("marble", …, JAR)`, EE → `tablet:marble`; `setThemeProvider`, `setCustomThemeProvider(true)` | **Drop** — the default theme is registered by `StandardTheme()`; `zul/zk.xml` already names the default provider; zkmax's provider chain (`zkex` → `zkmax`) handles `tablet:` for the default theme; `tablet.css.dsp` is P4 item 4.4 | no |
+| `StandardTheme.DEFAULT_NAME = "iceblue"` (`zweb`, public constant; used by `ServletFns`, `ThemeFns`, zkmax `ResponsiveThemeRegistry`) and `dom.ts:18 tname = 'iceblue'` | the default theme's *name* — `"marble"`, or keep `"iceblue"` as an opaque id for the default? Once IceBlue ships as a jar, `Themes.setTheme(exec, "iceblue")` must mean the jar | **D33** |
+| `MarbleBrand`, `MarbleDensity` — public runtime APIs (`apply(Brand)`, `apply(Component, Density)`) | must live somewhere in `zul` with a ZK-11 public name and package | **D31** |
+| `Version.java`, `config.xml`, `lang-addon.xml`, `zk.xml` (theme-jar plumbing) | **Drop** — `zul` has its own; the version is `zk`'s | no |
+
+The verification for 1.5 stays as the plan wrote it (page served from `zk` returns CSS with
+`--zk-color-primary`, no `marble/` segment), and the Opus Evaluator judges it.
+
+### F25 — `compileCSS` stops being a no-op the moment 1.3 lands
+`compileCSS` fires when `web/$project.name/css` exists and runs gulp `build:minify-css` over it;
+today that directory holds only `zk.wcs`. After 1.3 it holds 25 `_`-prefixed token/base/utility
+partials, which gulp would **copy verbatim into `codegen/…/zul/css/`** (they are not `.css.dsp`, so
+"copy" not minify) and ship in the jar. Harmless but wrong. **Ruling:** 1.6 / 1.7 remove
+`compileCSS` alongside `compileLess` (Marble's task is the only CSS task), and 1.1's Gradle task
+declares `outputs.dir` on the codegen `web/` tree so Gradle's up-to-date check works.
+
+### F26 — What the `build-css.js` port must change (spec for 1.3b)
+Today: one `webDir` (`src/main/resources/web`), one `themeDir` (`target/classes/web/marble`), all
+three modules scanned from one tree, and two side outputs written into the template repo
+(`doc/spec/icon-index.md`, `src/test/resources/web/icons-lucide.zul`). In `zk`:
+- roots per module — CE `zul/src/main/resources/web`, EE `../zkcml/zkmax/src/main/resources/web`,
+  PE `../zkcml/zkex/src/main/resources/web`; outputs `<module>/codegen/resources/web/`; selected by
+  `--module zul|zkmax|zkex` (the Gradle task in each repo passes its own);
+- the orphan guard and the `CSS_URI_BACKED` list read the **real** lang files by module;
+- the side outputs go behind `--emit-docs` (off by default) and target `doc/spec/` and `zkpreview/`
+  once those exist (P3 / P2);
+- `lucide-static` resolved from `zk/node_modules`;
+- `check-css-dsp.js`: `ZK_HOME` derived from its own location (`zk/scripts/../..`), theme dir per
+  module, no hardcoded `/Users/…` path.
+Working set: 39 KB read + ≈40 KB written ≈ 80 KB — inside budget only because the CSS sources are
+copied by path in a separate item. So **1.3 is split**: 1.3a relocate the 87 CE sources (paths only);
+1.3b port the two scripts. 1.1 then only touches `zk/build.gradle` (+ `package.json` for F21).
+
+### F27 — `zul/css/zk.wcs` is the one file both pipelines and both themes touch
+It lists `font-awesome.css.dsp` (goes away, F23/F24) and `norm.css.dsp` (Marble builds it — the
+tokens + base + utility + no-`css-uri` components bundle). If D31 chooses (a) it also gains the
+reset line. Edit it once, in 1.6, in the same commit range as the LESS deletion.
+
+---
+
+## Rulings received 2026-09-10 (chat D30–D33)
+
+- **D30-A** → execution plan D25 (`.gitignore` policy). **D31-B** → D26: keep the
+  `org.zkoss.zul.theme.browserDefault` switch — the user states it is a specification the IceBlue
+  side also depends on and cannot change. **D32-A** → D27. **D33-A** → D28.
+- Template batch 3 approved: F22 fixes to the map and checker, the `gates/` exclusion in
+  `check-doc-links`, findings F21–F27.

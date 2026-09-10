@@ -77,10 +77,15 @@ function resolveRef(raw, fromFile) {
     return null;
 }
 
+// Gate verdict files quote, verbatim, commands that were run in OTHER repositories (zk, zkcml);
+// their `.claude/...` tokens are not references into this repository. Skip them.
+const EXCLUDED = /^doc\/migration\/gates\//;
+
 const untracked = new Map();   // target -> Set of referencing files
 const missing = new Map();
 
 for (const file of tracked) {
+    if (EXCLUDED.test(file)) continue;
     if (!SCANNABLE.test(file)) continue;
     let text;
     try {

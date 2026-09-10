@@ -123,7 +123,7 @@ rewrite the skill, the agents and `doc/spec` for the `zk` repository.
 | `src/test/resources/web/utility/print.zul` | MAP | `zkpreview/src/main/webapp/utility/print.zul` | print-styles.md |
 | `src/test/resources/web/utility/responsive.zul` | MAP | `zkpreview/src/main/webapp/utility/responsive.zul` | responsive-design.md |
 | `src/test/resources/web/utility/zindex.zul` | MAP | `zkpreview/src/main/webapp/utility/zindex.zul` | zindex-scale.md |
-| `target/classes/web/marble/` | OUTPUT | `zul/codegen/web/` | SKILL.md, css-dsp-file-structure.md |
-| `target/classes/web/marble/zul/css/norm.css.dsp` | OUTPUT | `zul/codegen/web/zul/css/norm.css.dsp` | forced-colors.md |
+| `target/classes/web/marble/` | OUTPUT | `zul/codegen/resources/web/` | SKILL.md, css-dsp-file-structure.md |
+| `target/classes/web/marble/zul/css/norm.css.dsp` | OUTPUT | `zul/codegen/resources/web/zul/css/norm.css.dsp` | forced-colors.md |
 | `target/test-classes/web/` | OUTPUT | `zkpreview/build/webapp/` | zul-authoring.md |
 | `tasks/gen-reports/` | STALE | — | zk-spec-author.md, zk-theme-evaluator.md, zk-theme-generator.md — deleted in P0; the three agents that cite it are re-pointed to doc/harness/gen-reports/ by 3.10–3.14 |

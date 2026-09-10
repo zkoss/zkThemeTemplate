@@ -213,6 +213,35 @@ to the user (run now with a deferred-existence ledger / P1 first / only the depe
 **P1 first** was chosen. 3.15 and 3.16 had already run, dependency-free; the rest of P3 resumes after
 the P1 and P2 gates. Open before P3 resumes: the `.gitignore` policy for `zk/.claude/` (F19).
 
+### D25 — `zk/.gitignore` and the skill tree — **RULED 2026-09-10 (chat D30-A)**
+
+`zk` ignores `.claude/` wholesale (F19). Ruled: `.claude/` → `.claude/*` with `!.claude/rules/`,
+`!.claude/skills/`, `!.claude/agents/`, and explicit ignores for the two third-party symlinks
+`.claude/skills/show-me` and `.claude/skills/zul-writer` (they point into the ignored `.agents/`).
+The Planner's hunk is staged on its own, never the whole file, because `.gitignore` carries another
+session's uncommitted line.
+
+### D26 — Item 1.5, the core design — **RULED 2026-09-10 (chat D31-B)**
+
+Per F24's table: the theme-prefix rewrite is dropped; `font-awesome.css.dsp` leaves `zul/css/zk.wcs`;
+`Themes.register`, `Version`, `config.xml`, `lang-addon.xml`, `zk.xml` plumbing are not carried.
+**The `org.zkoss.zul.theme.browserDefault` library-property switch (reset.css vs reset-embed.css)
+is a specification that cannot change and must keep working — the IceBlue side relies on it too.**
+So the reset insertion lives in a small provider subclass in `zul` extending `StandardThemeProvider`
+(overriding only `getThemeURIs`), `zul/zk.xml` points at it, and the `zkex` → `zkmax` provider
+chain is re-based on it so EE receives the reset as well. `MarbleBrand` / `MarbleDensity` move to
+`org.zkoss.zul.theme` with their names unchanged.
+
+### D27 — Build dependencies in `zk` — **RULED 2026-09-10 (chat D32-A)**
+
+`lightningcss` and `lucide-static` are added to `zk`'s `devDependencies` (F21). The builder stays
+Lightning-based, as this plan's D14 decided; `zkcml`'s task calls the script in `zk`.
+
+### D28 — Default theme name — **RULED 2026-09-10 (chat D33-A)**
+
+`StandardTheme.DEFAULT_NAME` (`zweb`) becomes `"marble"`, and `zul/.../dom.ts:18` is synced. The
+only `zkcml` use (`ResponsiveThemeRegistry:50`) keeps its meaning. Belongs to item 1.5.
+
 ### First run — the pilot (item 3.1)
 
 Item **3.1** (merge the two tooling skills) is Source-only, 100 KB, has a crisp
