@@ -105,7 +105,7 @@ repository, and `dependency:resolve` succeeding does **not** tell you which one 
 
 The preview app is Spring Boot 3 and needs the **jakarta** flavour; the wrong one fails at
 startup with `Failed to introspect … ZkAutoConfiguration: javax/servlet/…`. `pom.xml`'s
-`<zk.version>` is currently `11.0.0-jakarta.FL.20260904` — the `pom.xml` is authoritative, and the
+`<zk.version>` is currently `11.0.0-jakarta.FL.20260909` — the `pom.xml` is authoritative, and the
 root `CLAUDE.md` still names an older version. List candidates with
 `curl -s https://mavensync.zkoss.org/eval/org/zkoss/zk/zk/maven-metadata.xml | grep '<version>11'`;
 check a resolved jar's flavour with
