@@ -853,3 +853,95 @@ as F68 — append-only is not enough when two sessions hold the file open; re-re
 ### F69 — P2 gate PASSED (2026-09-11): 183 rows, no `OPEN`; two bookkeeping gaps Opus found and how they were closed
 
 `gate-p2.sh` 1–6 under an Opus Evaluator (run `wf_bcfe51e0-c81`, 3 m 20 s). Opus's non-binding notes, both acted on the same day: (1) the ledgers name two zkpreview commits (2.6 measured at `79ce20577a`, 2.7 / 2.8 at `49a7ebe65c`) — `git diff --stat 79ce20577a 49a7ebe65c -- zkpreview zul zk` is empty, the intervening commits touch `scripts/`, `zktest/` and `.gitignore` only, so every row was measured against the same zkpreview and theme tree; recorded in gates/P2.md rather than re-measured. (2) A reader with only the TSV could take `IDENTICAL` for "deterministic": each ledger now carries a third `#` header line saying the status is the outcome of the capture run that wrote the row, not a property of the page; the flake evidence stays in the run logs and gate files (four re-shot gallery rows in 2.6's Evaluator run, `bandbox-focus` in 2.7's, one tablet shot in the gate's stage 6). Tooling: stage 6 of `gate-p2.sh` now prints the flaky shot's name (it had filtered the line out). Session note: the P2 Planner session ends with this gate (§D); the chat D-series stands at template D71, P2 D70, P3 D203.
+
+### F70 — 3.5's first Generator stopped on 10 "missing" path citations: 8 were the checker's, 2 were template-only facts the copy still carried (P3 session, 2026-09-11)
+
+`verify-3.5.sh static` resolved every cited path against the `zk` root only. The skill's readers write paths against four roots —
+the `zk` root, its parent (`zk/zul/…`, `zkcml/…` as the `ZK10` checkout sees them), the served web root (`zul/css/zk.wcs`) and the
+widget-source root `web/js/` (`zk/flex.ts`, `zk/drag.ts`) — and one placeholder (`doc/css-audit-<theme>.md`). The checker now
+accepts a hit under any of those roots, skips a match followed by `<` / `{`, and leaves gitignored `build/` paths to the live stage.
+The two real ones: `layers.md:36` still says Marble ships an empty `zul/font/font-awesome.css.dsp` stub and `css-dsp.md:18` says
+`zk.wcs` hard-wires two stylesheets — in `zk` D39 removed the stub with IceBlue's icon-font CSS and `zk.wcs` names only `norm.css.dsp`
+(checked on the tree; the `lang.xml` / `lang-addon.xml` `<css-uri>` counts 86 / 35 / 8 in the same table still hold). A third sentence the
+first Generator rewrote by analogy, "throwaway `.zul` into `zkpreview/build/webapp/`", named a directory that does not exist: gretty's
+in-place overlay is `zkpreview/build/inplaceWebapp/` — hand-proven live (a dropped-in page answers 200 with its marker, an unknown page
+404). The Generator behaved correctly: it stopped at the `FAIL at:` line and listed every miss with its reason instead of editing files
+outside its brief. Static now adds a "template-only facts gone" stage and live proves the directory the copy names; the brief gained
+steps 6–8 and two FACTS; second dispatch of 3.5 only (`resumeFromRunId`, 3.6 and 3.9 replay from cache). Bookkeeping note: the file has
+two `### F6` headings (lines 69 and 111, pre-existing), so `grep -c '^### F'` reads one higher than the last number — guard on the last
+heading, not on the count.
+
+### F71 — Wave 3 measured before dispatch: the 3.2 map already covers `zk-component-rules` (no second map), four of the five agents carry template-only build or hash instructions the map cannot fix, and two verify defects were caught on scratch copies (P3 session, 2026-09-11)
+
+Applying `apply-path-map.js` + `stale-fixes.tsv` to a scratch copy of the 97-file skill rewrites 42 strings in 31 files and leaves
+`--check` clean, so the "second map file" D202 foresaw is not created (F20's 23 files counted only the `src/` forms). Five fixes rows were
+added for what the scan surfaced: the `src/test/playwright/` family (only per-file rows existed), the `$PROJECT_ROOT/src/test/resources/web`
+form in `check-icon-coverage.sh` (a source after `/`, which the tool leaves alone by design — the shape the skill scripts needed in 3.5),
+`doc/component-dom-structures.md` and `doc/contracts/biglistbox.html` (cited, never in the template; retired note / the `.md` contract),
+and `target/.../` → `zul/codegen/resources/web/`. The five agents take 21 substitutions and lose every `tasks/` mention, but four of
+them say things the map cannot rewrite: `zk-theme-creator` items 5 and 7 (`npm run build:css` / `npm run watch`, `setjdk 17 && mvn test
+exec:java@preview-app`), `zk-theme-generator` §4 and its tools list (`npm run build:css`), and the "hash the jars on the classpath, never
+the checkout" paragraphs of `zk-spec-author` and `zk-theme-evaluator` — the opposite of what 3.21's re-pointed `js-source-hash.sh` does in
+zk, where the checkout is the widget being styled. Those become brief-named hand steps, and the per-agent verify (`verify-agent.sh`)
+accepts a changed block only if it held a map source or one of the brief's anchors. Two verify defects were caught by running the late
+stages on the scratch copies (the F70 lesson applied): `verify-3.19.sh`'s template-only-token filter flagged zk-side `zk/src/main/…`
+forms (now token-start only), and `verify-3.5.sh live` appended a second `--console=plain` to the command it reads from the copy
+(Gradle refuses duplicates) and grepped a hyphenated marker that ZK writes as `\-` in the page script. `zk-spec-author` §1 also names
+`ZK10/zkex/` and `ZK10/zkmax/` as the EE/PE roots — wrong in the template too (`ZK10/zkcml/…`); fixed in the copy as a hand step.
+`zk-theme-creator` item 4 (`zk-material.css`) is template-era content, not host-specific, and is left as it is.
+
+### F72 — Ten contracts write `js-source-files:` in a long form no resolver can read (found by `verify-3.21.sh`, P3 session, 2026-09-11)
+
+`breadcrumb`, `carousel`, `coachmark`, `confirmpopup`, `linelayout`, `rowlayout`, `signature`, `splitlayout`, `stepbar` and `timepicker`
+list entries such as `zkmax/src/main/resources/web/js/zkmax/nav/Coachmark.ts` where the convention (and the other 14 contracts, e.g.
+`zkmax/cropper/Cropper.ts`) is the path under `web/js/`. The template's jar-based `js-source-hash.sh` cannot find `web/js/zkmax/src/main/…`
+in any jar (exit 1) and the checkout-based zk port cannot either, so `zk-theme-evaluator`'s Gate 0b reports a missing file for those ten
+and `zk-spec-author` would record no hash. Not a P3 defect (3.7 copied the contracts verbatim, as ruled) and not fixed in zk by hand:
+the contracts are the agents' data. Recorded for P4's contract clean-up; the verify picks a short-form zkmax contract for its reference.
+
+### F73 — A third session (`zk-05`) is committing in zk beside the P3 session: two commits touch the 3.5 copy and a harness spec (2026-09-11, 15:20–15:22)
+
+`434921550f` adds `zkpreview/start.sh`, `index.zul` + `PageIndexVM`, a README and two nav entries; `ba7244c0f2` corrects two claims in
+the marble-theme copy that 3.5 had landed minutes earlier (`./gradlew appStop` does not stop an `appRun` server — only the status port
+listens; the "ZK version coordinates" section described the template's Maven app) and rewrites `render-smoke.spec.ts`'s header
+comment. Effects on the migration's guards: `verify-3.5.sh static` flagged the new sentence "There is no `zkpreview/pom.xml`" as a
+missing path (a negated mention; the checker now skips paths preceded by no / not / without / never), and the harness copy is no longer
+byte-identical to the template's (`render-smoke.spec.ts`, one comment line) — the 2.3 / D18 rule that the harness is synced as a whole.
+The 3.5 verdict stands for the commit it judged (`2421c7e47f`); the corrections themselves are right (the `appStop` fact came from a
+test against a running server) and supersede two sentences of brief 3.5's FACTS. Coordination: this session owns port 8085 during its
+Evaluators' live stages; `zk-05` was told which rows have landed and which guards its edits touch.
+
+### F74 — 3.20: the fix is proven by pixels, but the harness's selected-family focus test cannot see it — its "fill" is a computed colour Chromium fakes under forced colors (P3 session, 2026-09-11)
+
+`verify-3.20.sh static` and `probe green` pass on the Generator's +8/−3 edit: with `emulateMedia({ forcedColors: 'active' })` the focus
+ring on a selected tree row and org node now paints HighlightText (white; 550 away from the emulated Highlight-on-Canvas, 0 from
+HighlightText) over the Highlight fill — the clip PNGs under `zkpreview/build/probe-3.20/` show a white ring around the dark row and
+node; on the pre-fix tree the same probe read the ring 110 from Highlight (Highlight on Highlight, RED on record). The plan's third
+criterion — the harness's own `focus-scan` green three times under load — fails 0 / 3 after the fix (2 / 3 green before it), and the
+reason is the harness, not the CSS: `focus-ring-scan.spec.ts`'s selected-family test takes the fill from `getComputedStyle(…)
+.backgroundColor` of the element under the ring band, and under the emulation Chromium reports the `<tr>`'s forced background as Canvas
+white while painting Highlight (diagnosed with a throw-away spec: `Highlight` on a div computes to rgba(5,0,73,.8), the selected `<tr>`
+to rgb(255,255,255)). Before the fix the test compared a Highlight ring with that fake white fill and passed — a false pass; its
+intermittent failures (F61) were the cases where `elementFromPoint` landed on a `forced-color-adjust: none` descendant whose computed
+colour is real. After the fix it compares a white ring with the fake white fill and fails every time. The test also samples the band at
+`|offset| + width/2` = 3 px inside, which for a 2 px inset ring is the fill, not the ring. The oracle needs pixels (what the 3.20 probe
+does); the harness is a byte-identical copy of the template's (2.3 / D18), so that is a template-side change and a decision (chat
+D207). Nothing was committed for 3.20; the CSS edit stays in zk's working tree pending the ruling.
+
+### F75 — A screenshot PASS under 1% tolerance is not "the clip excludes the change": `gallery-scan.spec.ts` clips `.z-p-8`, the whole page (P3 session, corrected by `zk-05`, 2026-09-11)
+
+3.18b's live stage compared `gallery › a` against the copied baseline and passed while peer session `zk-05`'s uncommitted 142-file
+typography sweep sat in the same working tree. The Planner's first-pass explanation — "the gallery capture region evidently does not
+include the swept wrapper elements" — was wrong and would have misled the next reader. `zk-05` checked the harness source instead of
+guessing: `gallery-scan.spec.ts:61` clips `page.locator('.z-p-8').first()`, the outermost wrapper on every preview page, which includes
+the page heading, section labels and the demo grid — exactly what the sweep touches. The real reason `a` passes is the spec's own
+`maxDiffPixelRatio: 0.01` (line 73): `a-gallery.png` is 1280×289 = 369,920 px, a ~3,699-pixel budget, and the sweep's text-only change on
+that specific page stays under it. `zk-05` then ran the full `gallery` project against the swept tree and measured 78 passed / 4 failed
+(`component-theming`, `dropupload`, `label`, `timepicker` — all four pages the sweep touches, each failing outside the 1% budget); the
+Planner independently confirmed the static parts of the claim (the locator, the tolerance line, and all three cited PNG dimensions) by
+reading the spec and running `file` on the committed baselines — all matched exactly. Lesson: don't infer "this element isn't in the
+diff region" from a PASS when a tolerance is in play; read the harness's actual locator and threshold, or measure directly. Also: a
+PASS on a tolerant screenshot comparison means "within budget," not "matches the current source" — the other 78 baselines in `zkpreview/
+doc/screenshots/` encode pre-sweep rendering and will stay green after the sweep lands without actually agreeing with it. Recorded in
+[gates/3.18b.md](gates/3.18b.md) Planner notes; the four affected baselines are queued for regeneration once `zk-05`'s sweep commits
+(owned by 3.18b's directory, so this session regenerates them, not `zk-05`).
