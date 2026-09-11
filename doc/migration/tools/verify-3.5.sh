@@ -57,20 +57,39 @@ if [ "$MODE" = static ]; then
   /usr/bin/python3 - "$ZK" $(echo "$FILES" | sed "s#^#$ZK/#") <<'PY' || fail "every zk-side path the copy cites exists"
 import re, os, sys
 zk = sys.argv[1]; files = sys.argv[2:]
+# A cited path may be written relative to several roots the skill's readers know: the zk root, its parent
+# (`zk/zul/...`, `zkcml/...` as the ZK10 checkout sees them), the served web root (`zul/css/zk.wcs`) and the
+# widget-source root `web/js/` (`zk/flex.ts`). One hit under any root is enough (2026-09-11, second dispatch).
+roots = [zk, os.path.dirname(zk), os.path.join(zk, 'zul/src/main/resources/web'),
+         os.path.join(zk, 'zk/src/main/resources/web/js'), os.path.join(zk, 'zul/src/main/resources/web/js'),
+         os.path.join(zk, '../zkcml/zkmax/src/main/resources/web'), os.path.join(zk, '../zkcml/zkmax/src/main/resources/web/js'),
+         os.path.join(zk, '../zkcml/zkex/src/main/resources/web/js')]
 pat = re.compile(r'(?<![\w/.-])((?:\.\./zkcml/|zul/|zk/|zkpreview/|scripts/|doc/|\.claude/)[A-Za-z0-9_./-]*[A-Za-z0-9_-])')
 skip = ('<', '*', '{', '…')
 missing = 0; checked = 0
 for f in files:
+    prev = ''
     for i, line in enumerate(open(f, encoding='utf-8'), 1):
-        for m in pat.findall(line):
-            if any(s in m for s in skip) or m.endswith('.'): continue
-            p = m.rstrip('/')
-            if not os.path.exists(os.path.join(zk, p)):
-                missing += 1; print(f'MISSING {os.path.relpath(f, zk)}:{i}: {m}')
+        for m in pat.finditer(line):
+            p = m.group(1); nxt = line[m.end():m.end()+1]
+            if any(c in p for c in skip) or p.endswith('.') or nxt in ('<', '{'): continue   # placeholders like doc/css-audit-<theme>.md
+            before = (prev.rstrip() + ' ' + line[:m.start()]) if m.start() <= 2 else line[:m.start()]   # a wrapped sentence: negation on the previous line
+            if re.search(r'(?i)\b(no|not|without|never)\s+`?$', before): continue   # a negated mention: "There is no `zkpreview/pom.xml`" (zk-05's edit, 2026-09-11)
+            if '/build/' in p + '/': continue   # gitignored build output: proven by the live stage, not by the tree
+            p = p.rstrip('/')
+            if not any(os.path.exists(os.path.join(r, p)) for r in roots):
+                missing += 1; print(f'MISSING {os.path.relpath(f, zk)}:{i}: {p}')
             else: checked += 1
+        prev = line
 print(f'{checked} path(s) exist, {missing} missing')
 sys.exit(1 if missing else 0)
 PY
+
+  stage "template-only facts gone (D39: no font-awesome stub or zk.wcs pair in zk; the throwaway-page dir is gretty's, not Maven's)"
+  for tok in '`font-awesome.css.dsp`, `norm.css.dsp`' 'zul/font/' 'build/webapp/' 'target/test-classes'; do
+    n=$(cd "$ZK" && /usr/bin/grep -rF -- "$tok" $SK | wc -l | tr -d ' ')
+    test "$n" = 0 || { cd "$ZK" && /usr/bin/grep -rnF -- "$tok" $SK | head -3; fail "template-only facts gone ('$tok' ×$n)"; }
+  done
 
   stage "the four scripts run from the zk copy (F64)"
   S=$ZK/$SK/scripts
@@ -78,7 +97,7 @@ PY
   ( cd "$ZK" && node "$S/check-default-display.js" --out "$T/dd.md" >/dev/null 2>"$T/dd.err" && test -s "$T/dd.md" ) || { tail -5 "$T/dd.err"; fail "the four scripts run (check-default-display.js)"; }
   ( cd "$ZK" && node "$S/count-important.js" 2>"$T/ci.err" | tail -1 ) || { tail -5 "$T/ci.err"; fail "the four scripts run (count-important.js)"; }
   ( cd "$ZK" && node "$S/probe.js" >/dev/null 2>&1; test $? -eq 2 ) || fail "the four scripts run (probe.js usage exit 2)"
-  echo "3.5 static ok — copy rewritten, 0 leftovers, zkpreview facts stated, cited paths exist, four scripts run from zk"
+  echo "3.5 static ok — copy rewritten, 0 leftovers, zkpreview facts stated, template-only facts gone, cited paths exist, four scripts run from zk"
   exit 0
 fi
 
@@ -95,7 +114,8 @@ if [ "$MODE" = live ]; then
   . "$TPL/doc/migration/tools/preview-server.sh"
   preview_port_free
   PREVIEW_LOG=$(mktemp); F=$(mktemp -u); mkfifo "$F"; exec 3<>"$F"
-  ( cd "$MOD" && eval "$CMD --console=plain -q" < "$F" > "$PREVIEW_LOG" 2>&1 ) & RUNPID=$!
+  EXTRA="-q"; echo "$CMD" | /usr/bin/grep -q -- '--console=' || EXTRA="--console=plain -q"   # the copy's command already carries --console=plain (F51); Gradle rejects a duplicate
+  ( cd "$MOD" && eval "$CMD $EXTRA" < "$F" > "$PREVIEW_LOG" 2>&1 ) & RUNPID=$!
   url="http://127.0.0.1:$PORT/button.zul"; code=000
   for _ in $(seq 1 "${START_TIMEOUT:-300}"); do
     code=$(curl -s -o /dev/null -w '%{http_code}' "$url" 2>/dev/null || echo 000); [ "$code" = 200 ] && break
@@ -103,9 +123,20 @@ if [ "$MODE" = live ]; then
   done
   [ "$code" = 200 ] || { tail -n 40 "$PREVIEW_LOG"; preview_stop; fail "GET $url → HTTP $code"; }
   echo "   GET $url → 200"
+
+  stage "the throwaway-page directory the copy names is served live (zul-authoring.md), and an unknown page is a 404"
+  PDIR=$(/usr/bin/grep -oE 'throwaway `\.zul` into `[^`]+`' "$ZK/$SK/reference/zul-authoring.md" | head -1 | sed -E 's/.*into `([^`]+)`/\1/')
+  test -n "$PDIR" || { preview_stop; fail "throwaway-page directory (zul-authoring.md names none)"; }
+  mkdir -p "$ZK/$PDIR" && echo '<zk><label value="probemarker35"/></zk>' > "$ZK/$PDIR/__verify35_probe.zul"
+  sleep 1; body=$(mktemp); pc=$(curl -s -o "$body" -w '%{http_code}' "http://127.0.0.1:$PORT/__verify35_probe.zul" || echo 000)
+  nc=$(curl -s -o /dev/null -w '%{http_code}' "http://127.0.0.1:$PORT/__verify35_absent.zul" || echo 000)
+  rm -f "$ZK/$PDIR/__verify35_probe.zul"
+  [ "$pc" = 200 ] && /usr/bin/grep -q 'probemarker35' "$body" || { preview_stop; fail "throwaway-page directory ($PDIR → HTTP $pc, marker $(/usr/bin/grep -c probemarker35 "$body"))"; }
+  [ "$nc" = 404 ] || { preview_stop; fail "unknown page → HTTP $nc, expected 404"; }
+  echo "   $PDIR serves a dropped-in page live (200 + marker); unknown page → 404"
   preview_stop
   preview_assert_free
-  echo "3.5 live ok — the stated command served /button.zul on 8085 and stopped cleanly"
+  echo "3.5 live ok — the stated command served /button.zul on 8085, the throwaway-page dir is live, stopped cleanly"
   exit 0
 fi
 fail "unknown mode $MODE"
