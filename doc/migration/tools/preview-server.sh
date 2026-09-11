@@ -29,7 +29,14 @@ preview_stop() {
     kill "$sp" 2>/dev/null; sleep 2
     for p in $(preview_ours); do echo "   stopping zkpreview gretty runner pid $p"; kill "$p"; done
   fi
-  [ -n "${RUNPID:-}" ] && kill "$RUNPID" 2>/dev/null; true
+  [ -n "${RUNPID:-}" ] && kill "$RUNPID" 2>/dev/null
+  # Reap every gretty Runner whose cwd is this module, not only the one holding the port: on 2026-09-11 a stopped
+  # runner left a serving child (port held) and an orphan Runner (status port only) behind — found by another session.
+  for p in $(pgrep -f 'org.akhikhl.gretty.Runner' 2>/dev/null); do
+    test "$(/usr/sbin/lsof -a -p "$p" -d cwd -Fn 2>/dev/null | sed -n 's/^n//p')" = "$MOD" && { echo "   reaping leftover zkpreview runner pid $p"; kill "$p" 2>/dev/null; }
+  done
+  for _ in $(seq 1 15); do [ -z "$(/usr/sbin/lsof -nP -t -iTCP:"$PORT" -sTCP:LISTEN 2>/dev/null)" ] && break; sleep 1; done
+  true
 }
 
 preview_port_free() {
