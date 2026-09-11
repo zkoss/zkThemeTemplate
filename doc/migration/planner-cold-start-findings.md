@@ -680,3 +680,34 @@ root `npm run lint -- .` from passing (the CLAUDE.md lint line, P3 follow-up). `
 `package.json` `workspaces`, so its `package.json` is a self-contained package that root `npm ci` ignores. The
 module `.gitignore` hides Playwright's own `test-results/` and `playwright-report/`; `git status --porcelain --
 zkpreview` is empty after the commit.
+
+### F55 — Rule-2 hand run for 2.6–2.8: zkpreview reproduces 177 of 183 template baselines pixel-exactly; the six differences are not theme CSS
+Method (D49 C): the template's unchanged spec files were run from the template checkout with `PREVIEW_URL=http://127.0.0.1:8085`
+while `zkpreview` (zk `60f4895c4f`) served the pages, through [tools/zero-tolerance/shots.config.ts](tools/zero-tolerance/shots.config.ts)
+(same specs, `snapshotDir` redirected, `updateSnapshots: 'all'`), then every PNG produced was compared with the committed baseline
+through Playwright's own comparator at `threshold: 0, maxDiffPixels: 0` ([compare.config.ts](tools/zero-tolerance/compare.config.ts),
+[compare.spec.ts](tools/zero-tolerance/compare.spec.ts), summary by [summarize-cmp.py](tools/zero-tolerance/summarize-cmp.py)); no
+image library is installed here and none is needed. Projects `chromium` + `gallery` + `tablet`: 260 tests, **258 passed** in 1.8 m, 183
+PNGs. **Zero tolerance: 177 identical, 6 differ.** Two of the six are flaky (`selectbox-focus` 2 px, `timepicker-gallery` 6 px — a second
+shot of the same pages was byte-different from the first and identical to the baseline), so the P2 harness re-shoots a differing page up to
+three times before it counts as a difference. The four deterministic ones (byte-identical across two runs): `portallayout-gallery`
+(1 397 px — the two `<calendar/>` on the page have no value, so the today marker moved from the 7th, the day the baseline was cut, to the
+11th: date-dependent content, not a rendering difference), `codeeditor-gallery` (1 314 px — the baseline predates `db3e1c2d`, which
+changed the captions `theme=` → `colorScheme=`; a stale baseline of the template's own page, plus 1-px edges around the dark surfaces),
+`splitter-gallery` (4 470 px — everything right of the vertical splitter sits 1 px to the left: the `.z-hbox` is 155 px wide in `zkpreview`,
+156 px in the baseline), `progressmeter-gallery` (202 px — the fill's leading pill is ~3 px shorter). The Marble CSS **sources** in `zul`
+are byte-identical to the template's except `_fonts.css` (font paths `~./marble/font/` → `~./zul/font/`, intended by P1), and the served
+splitter and progressmeter rules match the sources, so the splitter and progressmeter differences come from the ZK runtime, not the theme:
+**the baselines were rendered on ZK `10.4.0-jakarta.FL.20260713`** (the template's `pom.xml` at `2233c586`, the 2026-09-07 re-cut) — only
+`codeeditor-gallery` (2026-09-08) was cut on 11.0.0 — while `zkpreview` renders on 11.0.0-SNAPSHOT (branch base `f6429e7f8b`, 2026-09-08).
+Two tests fail on `zkpreview` for a structural reason: `screenshot.spec.ts` finds the theme prefix by looking for a stylesheet `href`
+containing `/marble/` (`/zkau/web/<v>/marble/zul/css/reset.css` in the template, where Marble is a theme jar); in `zk` Marble is the core
+theme and the link is `/zkres/web/<v>/zul/css/reset.css`, so `combo.css.dsp` is never fetched and both datebox assertions fail — they cannot
+pass on `zk` without a spec change. Bookkeeping: 16 baselines under `doc/screenshots` are produced by no spec any more (`breadcrumb-*`,
+`carousel-*`, `linelayout-*`, `stepbar-fixed-*`, `grid-utilities-gallery`; July files) — orphans; the 100 `*-forced-colors.png` are written
+directly by the `forced-colors-gallery` project, not `toHaveScreenshot` baselines, and are outside 2.6–2.8. Control run: the template's own
+preview app on 8081 (started 2026-09-09 09:19, before the template's last two days of commits, on the old ZK pin) fails 70 of its own
+tests and differs from **every** baseline by size (1 264 px wide against 1 280 — a visible scrollbar), so it is stale and not a reference;
+it must be restarted before the template can measure itself. Timings: shots 1.8 m (zkpreview) / 6.5 m (stale 8081, many timeouts),
+compare 11 s, re-shoot of six pages 8 s. Helpers for inspection: [zoom.js](tools/zero-tolerance/zoom.js) (magnified crop through Chromium)
+and [probe.js](tools/zero-tolerance/probe.js) (stylesheet list + computed boxes).
