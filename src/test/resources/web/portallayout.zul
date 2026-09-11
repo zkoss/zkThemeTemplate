@@ -1,5 +1,16 @@
 <?page title="Portallayout" contentType="text/html;charset=UTF-8"?>
 <zk xmlns:h="native">
+<zscript>
+    import java.util.Date;
+    import java.util.Calendar;
+    // Fixed past date so the screenshot baseline is deterministic: ZK bakes the server's
+    // "now" into a &lt;calendar&gt;'s default value, so the today-highlight moved every day and
+    // portallayout-gallery.png drifted with it. A past month is unambiguously "past", so the
+    // highlight never shows. Same idiom as calendar.zul; see doc/test-architecture.md §5.
+    Calendar _c = Calendar.getInstance();
+    _c.set(2020, Calendar.MARCH, 15, 10, 30, 0);
+    Date fixedDate = _c.getTime();
+</zscript>
 <div sclass="z-p-8">
     <div sclass="z-border-bottom z-text-xl z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Portallayout</div>
 
@@ -10,7 +21,7 @@
                 <portalchildren width="50%">
                     <panel height="200px" title="Calendar" border="normal">
                         <panelchildren>
-                            <calendar/>
+                            <calendar value="${fixedDate}"/>
                         </panelchildren>
                     </panel>
                     <panel height="200px" title="Colorbox" border="normal">
@@ -64,7 +75,7 @@
                 <portalchildren height="50%">
                     <panel width="calc(50% - 6px)" height="100%" title="Calendar" border="normal">
                         <panelchildren>
-                            <calendar/>
+                            <calendar value="${fixedDate}"/>
                         </panelchildren>
                     </panel>
                     <panel width="calc(50% - 6px)" height="100%" title="Colorbox" border="normal">

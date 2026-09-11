@@ -50,6 +50,14 @@ test.describe('gallery', () => {
       // Wait for the Inter web font to settle — otherwise the shot can be taken
       // mid font-swap and the page height drifts a few px (see reorg investigation).
       await page.evaluate(() => document.fonts.ready.then(() => true));
+      // Snap CSS transitions to their end state. `animations: 'disabled'` below does not
+      // cover a transition that ZK starts client-side after Playwright has set the page up:
+      // progressmeter's fill transitions width 0 -> value on first render (~0.3s, see
+      // progressmeter.css), so the shot landed at a variable point and progressmeter-gallery
+      // was non-reproducible run to run — three samples differed only along the 4px-tall
+      // fill's antialiased leading edge. Zero duration completes any in-flight transition
+      // immediately (chat D68).
+      await page.addStyleTag({ content: '*{transition-duration:0s !important}' });
       const wrapper = page.locator('.z-p-8').first();
       // Every standard preview page renders the .z-p-8 wrapper; fail loudly if a
       // newly-added page uses a different shell so it gets an explicit decision
