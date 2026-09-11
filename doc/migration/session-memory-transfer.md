@@ -112,3 +112,6 @@ P3's `zk`-side items run in their **own** Planner session while the P2 session f
 **First message for the P3 session (paste as is):**
 
 > You are the Planner for the Marble → zk migration, **phase P3 only**, running in parallel with the P2 Planner session. Read `zkThemeTemplate/doc/migration/session-memory-transfer.md` §E in its reading order, then §F (your scope and the three coordination rules), then plan D24's amendment and rows 3.4–3.18 of the execution plan. Chat D-numbers start at D200. Report the current P3 state in the Task Report format before doing anything.
+
+**Known-wrong sentence to watch (F61):** the template's `doc/skill-gaps.md:308` says tree row and organigram node are "checked and clean" for forced-colors focus rings; two full-suite runs on 2026-09-11 show the opposite (Highlight ring on Highlight fill). 3.18 copies that file into `zk/doc/`: wait for the template session's correction commit (its D69) or re-sync the file afterwards; the copy is never patched by hand.
+
