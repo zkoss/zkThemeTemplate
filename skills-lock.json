@@ -51,6 +51,12 @@
       "sourceType": "github",
       "computedHash": "33a8b5195481719e954b71762de56faaabc68c479602673894e0d0e47336756b"
     },
+    "show-me": {
+      "source": "humanlayer/skills",
+      "sourceType": "github",
+      "skillPath": "plugins/show-me/skills/show-me/SKILL.md",
+      "computedHash": "de32a72f802801f08a84641b467f2c6306d35a58ce5e59ea607ac3a993a18c91"
+    },
     "zul-writer": {
       "source": "zkoss-demo/agent-skill",
       "sourceType": "github",
