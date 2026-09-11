@@ -35,3 +35,6 @@ tasks/scrape_mira.py
 tasks
 .vscode
 test-results
+
+# OS junk — ignored repo-side, not only via a machine-local core.excludesFile (chat D71)
+.DS_Store
