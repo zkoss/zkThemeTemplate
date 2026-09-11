@@ -764,7 +764,7 @@ Fourth `live` hand run (un-re-cut oracle, exception list active): shots 2.0 m, 9
 - **`splitter-gallery` is not a clean stale baseline:** nine samples after `1cfb6750` — `.z-hbox` 155 px eight times, 156 px once, and the 156 px sample is byte-identical to the OLD baseline. `40c4ddda` baselines the majority (155 px, the geometry zkpreview renders); the rare 156 px shot is what the 3-re-shoot rule is for, so the ledger row is `IDENTICAL` / `IDENTICAL-ON-RESHOOT`, not `NOISY`, unless a run shows it differing three shots in a row.
 - **Re-sync in `zk`:** `79ce20577a` copies `portallayout.zul` and `gallery-scan.spec.ts` into zkpreview (byte-identical apart from 2.3's WEB_DIR line; the 159 pages and the 15 harness files diff clean against the template). No allowlist change: the 8 new lines are identical in both copies. `verify-2.10.sh static`, like `verify-2.3.sh static`, cannot be re-run green after its item is committed (its `git diff --numstat` reads the working tree) — the harness diff was repeated inline instead (F56's rule).
 - **Operational:** the forced-colors specs write straight into `doc/screenshots` (their `snapshotDir` is not what `shots.config.ts` redirects); a full-suite run from inside the template dirties five tracked PNGs. The 2.6–2.8 runs start only the `chromium` / `gallery` / `tablet` projects, so they never trigger it — keep it that way.
-- Chat D-series: the template session's last-used number is **D68**; mine is **D67** (P3 timing, open); next Planner number **D69**.
+- Chat D-series (corrected later the same day): the template session holds D61–D66, D68 and **D69** (the forced-colors sweep, open); the P2 Planner holds **D67** (P3 timing, ruled A) and **D70** (the zkcml skeleton regression, ruled A); the P3 session holds D200+. Later the same day the template session raised **D71** (`.gitignore` hardening: no `.DS_Store` rule in either repository; 89 such files on this machine, none committed, protected only by the user's global excludes — its recommendation A adds the line to both repositories; the `zk` line would be a Planner's to land, as a staged hunk beside another session's uncommitted `.gitignore` line, D25). Next free number for the P2 Planner: **D72**.
 - **Measured on the new oracle (fifth `verify-2.6.sh live`, exception list switched off, zk `79ce20577a` serving):** shots 2.3 m, 98 gallery PNGs, **98 / 98 byte-identical at zero tolerance, no re-shoot needed**. `avatar-gallery` and `component-theming-gallery` are identical here as on the template side, so both leave [ledgers/noisy-exceptions.tsv](ledgers/noisy-exceptions.tsv) (delisted with their evidence kept as comments); the list is empty. The 2.6 ledger is expected to be 98 × `IDENTICAL`; splitter's rare 156 px flake, if it ever shows on this machine, is covered by the re-shoot rule.
 
 ### F61 — A real forced-colors defect the harness detects only intermittently: focus ring on a selected tree row / org node paints Highlight on Highlight (template session, 2026-09-11; its D69)
@@ -776,3 +776,80 @@ Two full-suite runs on `40c4ddda`: 674 / 3 / 47 and 676 / 1 / 47 (passed / faile
 
 `verify-2.9.sh live` on the brief's three files: Gradle 1 m 45 s warm, both tests FAILED — not on the href-order assertions (they held) but on the closing `assertNoAnyError()`: the browser console carries `[SEVERE] …/zkres/web/<v>/js/zkex/wgt/css/skeleton.css.dsp — 404`. Control: the unrelated `B103_ZK_5818Test` (non-fork, also ends with `assertNoAnyError`) fails with the same message, so the whole suite's no-error tests have been red since P1's `zkcml` commit. Cause: `zkex/src/main/resources/metainfo/zk/lang-addon.xml:31` declares a **global** `<stylesheet href="~./js/zkex/wgt/css/skeleton.css.dsp"/>` (ZK-6099, peaker, 2026-08-26 — the PE skeleton feature, after Marble's design scope), and P1's `eea2b6428` deleted `zkex/…/wgt/less/skeleton.less` (85 lines) with the rest of the LESS without replacing it: no `z-skeleton` rule exists in zkex or zul today, the template never styled skeleton (only its audit script mentions the word), and `check-css-dsp.js` verifies `<css-uri>` entries plus zul's global bundles only, so a zkex `<stylesheet href>` is outside its guard — which is why the build stayed green. Effects: skeleton renders without its grey pulsing placeholder (`F110_ZK_6099Test` checks the hidden content and will fail), and 2.9 cannot pass until the 404 is gone. The port is small: the LESS uses two theme values (`@colorGreyLighter` → `--zk-color-surface-variant`, `@baseBorderRadius` → `--zk-shape-corner-extra-small`), everything else is literal; `build-css.js` auto-emits a `.css.dsp` per `.css` source and its orphan guard needs `skeleton.css.dsp` in its known list (one line) — but `scripts/build-css.js` and `scripts/check-css-dsp.js` carry another session's uncommitted edits in `zk` right now. Decision put to the user as chat **D70**. 2.9's throw-away files were reverted; the brief and the verify script stand.
 
+
+### F63 — Three `doc/spec` pages link Java sources the path map never saw (P3 session, 2026-09-11)
+
+`brand-override.md:188` links `../../src/main/java/org/zkoss/theme/marble/MarbleBrand.java`, `data-dense-mode.md:46`
+`../src/main/java/org/zkoss/theme/marble/MarbleDensity.java`, `reset-scoping.md:50` `../src/main/java/org/zkoss/theme/marble/MarbleThemeProvider.java`.
+`check-path-map.js` scans `doc/spec` but its token rule drops the `../` forms, so the map has no `src/main/java` family and
+3.2 passed with the three strings unmapped. In `zk` the first two classes live at `zul/src/main/java/org/zkoss/zul/theme/`
+(the package changed with D26) and `MarbleThemeProvider` has no counterpart — D29 put the reset insertion in
+`StandardThemeProvider`. Ruling (Planner): 3.6 carries the three as hand-ruled rows; the checker is not reopened (3.2's
+verdict stands for the set it measured).
+
+### F64 — The four skill scripts hardcode the template layout and an absolute `zk` path (P3 session, 2026-09-11)
+
+`count-important.js:16` defaults its root to `src/main/resources/web`; `audit-css.sh:39,44` and `check-default-display.js:49-50`
+compare a template `WEB` root against `ZK_SOURCE=/Users/hawk/Documents/workspace/ZK10/zk/zul/src/main/resources/web/js/zul`.
+In `zk` the two roots are one tree and the EE CSS sits in `../zkcml`. A path-map substitution alone leaves the scripts
+runnable but semantically odd (a tree compared with itself), so 3.5's verify runs all four from the `zk` copy — the 3.1
+command shape with cwd `zk` — and the copy's `css-audit.md` / `important-reduction.md` state the new defaults. Measured
+with `node …/count-important.js` from `zk`: ENOENT on `src/main/resources/web` today.
+
+### F65 — 67 of the 94 contracts cite template paths; "the harness's contract loader" does not exist (P3 session, 2026-09-11)
+
+`grep -l 'src/main\|src/test\|scripts/\|target/' doc/contracts/*.md` = 67 files, 120 strings, the largest families
+`src/main/resources/web/js/zul/wgt/css` (17), `…/js/zkmax/layout/mold` (11), `…/js/zkmax/layout` (11), `…/js/zul/inp/css` (10) —
+all inside the ruled destination families (F12), so the rewrite is mechanical. 3.2's row set never scanned `doc/contracts`
+(ROOTS = skill, agents, `doc/spec`). Rows 3.7 / 3.8 verified "the harness's contract loader finds them": no Playwright spec or
+script reads `doc/contracts/` (three specs cite it in comments); the readers are the agents (`zk-spec-author` 21 mentions,
+`zk-theme-evaluator` 5, `md3-design-verifier` 4, `zk-theme-generator` 1). Ruling (Planner, applying D202-A's principle to a
+live normative input): 3.7 + 3.8 become one copy-and-rewrite item verified by counts, source-prefix grep = 0 and existence of
+the 9 mapped `doc/contracts/…` strings. The eleven F17 documents (logs and status tables: `skill-gaps.md` 30 hits,
+`work-status.md` 24, `component-theme-variables-progress.md` 23) stay verbatim as D12-B ruled — they describe template-time events.
+
+### F66 — Item 2.11 hand run (2026-09-11): the skeleton port, the orphan-guard entry and the new global-stylesheet check work end to end; 3 m 05 s
+
+Throw-away application of brief 2.11's three changes (zkcml `skeleton.css` 76 lines; `build-css.js` +3; `check-css-dsp.js` +8), then `verify-2.11.sh`: static ok; live — `build-css.js --module zkex` emits `js/zkex/wgt/css/skeleton.css.dsp` with the orphan guard and the layer guard silent; `check-css-dsp.js --module zkex` now counts **8** required files (7 `<css-uri>` + the global `<stylesheet>`) and passes; run against a copy of the build output with that one file removed it exits 1 and lists `js/zkex/wgt/css/skeleton.css.dsp ← (global <stylesheet>)` — the class of dangling reference F62 describes is caught at build time from now on; Gradle (`processResources` depends on `compileMarbleCss`, so the jar carries the new file without a separate step) ran `F110_ZK_6099Test` (8 tests), `F110_ZK_6099ReducedMotionTest` (1) and the F62 control `B103_ZK_5818Test` (2): all green, no console 404. Whole `live` 3 m 05 s warm. Reverted afterwards; dispatched as `2.11` then `2.9` in one workflow run (2.9 depends on 2.11). Note for the P3 session: the `check-css-dsp.js` change adds required entries only where a lang file declares a global `<stylesheet href="…css.dsp">`; zkmax and zul declare none, so their reports (and the "empty stubs" wording the P3 gate reads) are unchanged.
+- **Rule for every copy or count of the template's `doc/screenshots` (template session, same day):** take it from a committed state with `git ls-files`, never from `ls` on the live working tree — the forced-colors specs write straight into that directory during a run (five PNGs per full-suite run, restored to HEAD afterwards), which is how a "292 files" reading arose while the tree holds 291 tracked files (282 PNG + 7 GIF + 2 JSON). Binding for 3.18b and for the P4 re-sync.
+- **Landed (same day):** 2.11 and 2.9 PASSED in one workflow run (`wf_76388596-517`, Opus): zkcml `aabceeff2`, zk `0e29a12db6` (scripts) and `0889b51540` (zktest). Incident while landing: another session had staged a `.gitignore` hunk in `zk` (the D71-A `.DS_Store` rule) and my commit chain — `git add <paths> && git diff --cached --name-only && git commit` — printed the extra file and committed anyway (the check decorated, it did not gate); repaired at once with `git reset --soft HEAD~2` and two commits limited by pathspec (`git commit … -- <paths>`), which leave the rest of the index untouched; the hunk is staged again for its owner and no commit left the machine. Rule from now on: commit with explicit pathspecs, and treat any unexpected name in `git diff --cached --name-only` as a stop.
+
+### F67 — Hand runs for 2.7 (state) and 2.8 (tablet) on the re-cut oracle (2026-09-11): 55 / 55 and 30 / 30
+
+`verify-2.7.sh live` (family `state`, project `chromium`): 124 passed + the two structural F55 failures in 1.8 m; 55 PNGs, every one with a baseline; **54 identical at the first shot, `bandbox-focus` identical on the first re-shoot** (the `-g bandbox` round ran 4 tests in 4 s, one of them the expected `datebox & bandbox open-state` structural failure); 0 differences; whole run 2 m 07 s; the designed stop at "ledger file". `verify-2.8.sh live` (family `tablet`, project `tablet`, mobile UA): 52 passed in 53 s; **30 / 30 identical at the first shot**, no re-shoot; about 1.3 m. Both `static` runs pass the oracle stage (55 / 30, no orphan, pin `FL.20260909`) and stop at "ledger file". The tablet spec's two 2 % opt-ins never came into play — at zero tolerance all thirty match. Briefs 2.7 / 2.8 are brief 2.6 with the family, count, ledger path and projects substituted (generator-checked for leftovers); dispatched together as `2.7` then `2.8`.
+
+
+### F68 — Throw-away runs of `apply-path-map.js` found four defects in the mechanical rewrite before any Generator ran (P3 session, 2026-09-11)
+
+The Planner-authored [tools/apply-path-map.js](tools/apply-path-map.js) was run on `git archive HEAD` copies of the skill, `doc/spec`,
+`doc/contracts` and the five agents (scratch only). What the diff showed, and what changed:
+
+1. **Prefix doubling.** The map row `src/main/resources/` → `zul/src/main/resources/` fired inside strings that were already zk-side
+   (`zk/zul/src/main/resources/metainfo/zk/lang.xml`, `ZK10/zkcml/zkmax/src/main/…`) and produced `zk/zul/zul/src/…`. A source now
+   matches only where a path token can start (not after `[\w/.-]`); identity rows are kept as protective matches so a shorter fix rule
+   (`scripts/probe.js`) never fires inside `.claude/skills/marble-theme/scripts/probe.js`.
+2. **EE trees mis-mapped.** The map holds specific rows only; `doc/contracts` (F65) and `doc/spec` cite 15 more `js/zkmax/`, `js/zkex/`
+   and `zkmax/css/tablet` strings, which the generic `src/main/resources/web/js/` row sent to `zul/`. The F12 destination families are
+   now explicit rows in [stale-fixes.tsv](stale-fixes.tsv) (`→ ../zkcml/zkmax/…`, `→ ../zkcml/zkex/…`), longest-match-first.
+3. **The preview-page family was one segment short.** 3.2 mapped `src/test/resources/web/` → `zkpreview/src/main/webapp/` on 2026-09-10
+   13:20; D44 (layout A, `/web` prefix, ruled later that day) put the pages under `zkpreview/src/main/webapp/web/`. Nine map rows, the
+   checker's RULES line and the `../../` fix row corrected; `check-path-map.js` re-run: `rows=101 … PASS`. The 3.2 verdict stands
+   for the set it measured; the map file records the correction.
+4. **Relative links the tokenizer never saw** (the F63 class is wider than three Java files): `doc/spec` carries `../../src/…` and
+   one-level `../src/…` links (the latter resolved to `doc/src/…` and were already dead in the template) to `_colors.css`,
+   `_sizing.css`, `_reset.css`, `_component-theme.css`, `component-theming.zul`, two specs — and `../../doc/harness-followups.md`,
+   a live root doc that F17's twelve-path list (derived from the same map) omitted. Fix rows added; **3.18 gains
+   `doc/harness-followups.md` as its 12th path**; every `../../` link from `doc/spec` now resolves against the zk root (checked
+   file by file).
+
+Also learned: `--check` distinguishes **LEFTOVER** (a source at a token start — a real miss, fails) from **REVIEW** (a source after a
+path character and outside any written target — `zkcml/zkmax/src/main/…`, absolute zk paths — printed for a human, never fails);
+after the fixes the four roots report 0 LEFTOVER (skill 3, contracts 40 REVIEW lines, all already zk-side paths). Two 3.5 content
+notes for the Opus Evaluator, not the tool: `css-dsp.md:116` (the template's four version-pin locations) and `css-dsp.md:14-16`
+(paths relative to `ZK10/`, correct but unlike the rest of the page) need a sentence, not a substitution. **Bookkeeping:** this section
+was first appended as F66 and lost to a concurrent write of this file by the P2 session (which then appended its own F66/F67); re-appended
+as F68 — append-only is not enough when two sessions hold the file open; re-read and re-check the last heading in the same call as the write.
+
+### F69 — P2 gate PASSED (2026-09-11): 183 rows, no `OPEN`; two bookkeeping gaps Opus found and how they were closed
+
+`gate-p2.sh` 1–6 under an Opus Evaluator (run `wf_bcfe51e0-c81`, 3 m 20 s). Opus's non-binding notes, both acted on the same day: (1) the ledgers name two zkpreview commits (2.6 measured at `79ce20577a`, 2.7 / 2.8 at `49a7ebe65c`) — `git diff --stat 79ce20577a 49a7ebe65c -- zkpreview zul zk` is empty, the intervening commits touch `scripts/`, `zktest/` and `.gitignore` only, so every row was measured against the same zkpreview and theme tree; recorded in gates/P2.md rather than re-measured. (2) A reader with only the TSV could take `IDENTICAL` for "deterministic": each ledger now carries a third `#` header line saying the status is the outcome of the capture run that wrote the row, not a property of the page; the flake evidence stays in the run logs and gate files (four re-shot gallery rows in 2.6's Evaluator run, `bandbox-focus` in 2.7's, one tablet shot in the gate's stage 6). Tooling: stage 6 of `gate-p2.sh` now prints the flaky shot's name (it had filtered the line out). Session note: the P2 Planner session ends with this gate (§D); the chat D-series stands at template D71, P2 D70, P3 D203.

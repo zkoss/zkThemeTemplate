@@ -1,5 +1,6 @@
 # oracle zkThemeTemplate 40c4ddda
 # zkpreview zk 79ce20577a
+# status = the outcome of the capture run that wrote this row (IDENTICAL-ON-RESHOOT n = matched at re-shoot n of that run); it is not a property of the page — a later run may need a re-shoot where this one did not, and vice versa
 a-gallery.png	IDENTICAL
 absolutelayout-gallery.png	IDENTICAL
 anchorlayout-gallery.png	IDENTICAL
