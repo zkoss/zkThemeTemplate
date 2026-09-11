@@ -76,11 +76,13 @@ static)
         /usr/bin/grep -q "baseURL: process.env.PREVIEW_URL ?? 'http://localhost:8085'," "$HDST/$b" || fail "playwright.config.ts: default baseURL is not http://localhost:8085" ;;
       screenshot.spec.ts)   # item 2.10 (D51-A): the two theme-prefix lookups may derive the prefix from the reset.css link
         extra=$(diff "$f" "$HDST/$b" | /usr/bin/grep -E '^[<>]' | /usr/bin/grep -vE "^< .*\.find\(h => h\.includes\('/marble/'\)\);$|^> .*\.find\(h => h\.includes\('/zul/css/reset\.css'\)\);$|^< *const prefix = link\.slice\(0, link\.indexOf\('/marble/'\) \+ '/marble'\.length\);$|^> *const prefix = link\.slice\(0, link\.indexOf\('/zul/css/reset\.css'\)\);$" || true) ;;
+      render-smoke.spec.ts)   # D206-A: the header's "how to start the preview app" line differs by build tool (template: Maven; zk: Gradle/gretty via zkpreview/start.sh) — no single command starts both
+        extra=$(diff "$f" "$HDST/$b" | /usr/bin/grep -E '^[<>]' | /usr/bin/grep -vE "^< //   withjdk\.sh 17 mvn test exec:java@preview-app\$|^> //   cd zkpreview && \./start\.sh\$" || true) ;;
       *) extra=$(diff "$f" "$HDST/$b" | /usr/bin/grep -E '^[<>]' || true) ;;
     esac
     test -z "$extra" || { echo "$b:"; echo "$extra"; fail "$b differs from the template beyond the allowed lines"; }
   done
-  ok "harness: 15 files; byte-identical apart from the 3 WEB_DIR lines, the config's baseURL default and (2.10) the four theme-prefix lines of screenshot.spec.ts"
+  ok "harness: 15 files; byte-identical apart from the 3 WEB_DIR lines, the config's baseURL default, (2.10) the four theme-prefix lines of screenshot.spec.ts, and (D206-A) render-smoke.spec.ts's start-command comment line"
   cmp -s "$TPL/doc/focus-ring-known-clips.json" "$MOD/doc/focus-ring-known-clips.json" || fail "doc/focus-ring-known-clips.json missing or not byte-identical"
   ok "focus-ring-known-clips.json copied byte-identical (BASELINE_FILE resolves to zkpreview/doc/)"
 
