@@ -74,7 +74,7 @@ worktree teardown (out of scope), and two methodology lessons already absorbed i
 2. A long session is summarised automatically, several times; every summary can carry a stale or wrong detail (F-series records one: a workflow-script path that had moved). Summaries of summaries accumulate such errors and never correct themselves. The P1 + P2 Planner session crossed two summary boundaries.
 3. Cross-session addresses and the shared chat D-series are session-bound anyway; the hand-over writes the last-used numbers (Planner and template session) and the peer's address here.
 
-**Signals to switch earlier than a phase boundary:** a summary states something the files contradict; the Planner asks the user a question already ruled in the plan; a verify script's dry-run contradicts what the Planner "remembers". **Cost of switching:** one cold start — read the status line of the execution plan, the open D-items, this document, `tasks/lessons.md` in `zk`; about the first hour of a session.
+**Signals to switch earlier than a phase boundary:** a summary states something the files contradict; the Planner asks the user a question already ruled in the plan; a verify script's dry-run contradicts what the Planner "remembers". **Cost of switching:** one cold start — read the status line of the execution plan, the open D-items, this document, `ZK10/zk/tasks/lessons.md`; about the first hour of a session.
 
 **Hand-over checklist before the switch:** update this document and the plan's status line to the day; state the last-used chat D-number (Planner) and the template session's last-used number; list the uncommitted batch candidates; state which servers (8081 / 8085) are up and who owns them; write the first message the new session should receive.
 
