@@ -18,9 +18,13 @@
 # row per baseline of the family:
 #   # oracle zkThemeTemplate <commit>        the template commit whose doc/screenshots the rows were measured against
 #   # zkpreview zk <commit>                  the zk commit that served the pages
-#   <baseline-name>\t<STATUS>               STATUS = IDENTICAL | IDENTICAL-ON-RESHOOT <1..3> | FIXED <zk-commit|WORKTREE> | OPEN
+#   <baseline-name>\t<STATUS>               STATUS = IDENTICAL | IDENTICAL-ON-RESHOOT <1..3> | FIXED <zk-commit|WORKTREE>
+#                                                   | NOISY <sub-pixel %> | OPEN
 # OPEN is allowed only with the image pair in front of the user under zk's tasks/marble-screenshot-diffs/ (chat D58),
 # and `live` exits 3 while any row is OPEN: the item does not pass until the user has ruled on every pair.
+# NOISY (the D66 hybrid, ruled 2026-09-11) is allowed only for a name in ledgers/noisy-exceptions.tsv — a shot proven
+# non-reproducible on the template's own machine — and such a shot is compared at the template's own per-shot
+# tolerance (compare.spec.ts, $ZERO_TOLERATED) instead of zero; the measurement of every other shot stays zero.
 #
 # `static` (seconds): the oracle is the re-cut one (family count exact, no orphan PNG left), the ledger exists and is
 # consistent with the oracle (same name set, valid statuses, FIXED commits exist in zk, OPEN rows have their pair).
@@ -41,6 +45,7 @@ TOOLS="$TPL/doc/migration/tools"
 ZT="$TOOLS/zero-tolerance"
 MOD="$ZK/zkpreview"
 ORACLE="$TPL/doc/screenshots"
+EXC="$TPL/doc/migration/ledgers/noisy-exceptions.tsv"
 PAIRS_HOME="$ZK/tasks/marble-screenshot-diffs"
 PORT=${PREVIEW_PORT:-8085}
 BASE="http://127.0.0.1:$PORT"
@@ -56,6 +61,7 @@ LEDGER="$TPL/doc/migration/ledgers/$ITEM-$FAMILY.tsv"
 fail() { echo "$ITEM $MODE FAIL at: $1"; exit 1; }
 ok()   { echo "stage: $1"; }
 family_of() { ls "$1" | /usr/bin/grep -E -- "$PAT" | sort; }          # family PNG names in a directory
+tolerated() { test -f "$EXC" && /usr/bin/grep -v '^#' "$EXC" | cut -f1 | /usr/bin/grep -E -- "$PAT" | sort || true; }   # exceptions of this family
 
 ledger_static() {                                                    # shared by static and the end of live
   test -f "$LEDGER" || fail "ledger file $LEDGER (written by the Generator)"
@@ -66,7 +72,7 @@ ledger_static() {                                                    # shared by
   z=$(sed -n 's/^# zkpreview zk \([0-9a-f]\{7,40\}\)$/\1/p' "$LEDGER"); test -n "$z" || fail "ledger header '# zkpreview zk <commit>'"
   git -C "$ZK" cat-file -e "$z^{commit}" 2>/dev/null || fail "ledger zkpreview commit $z exists in zk"
   rows=$(/usr/bin/grep -v '^#' "$LEDGER" | /usr/bin/grep -v '^$' || true)
-  bad=$(echo "$rows" | /usr/bin/grep -vE $'^[a-z0-9-]+\.png\t(IDENTICAL|IDENTICAL-ON-RESHOOT [123]|FIXED ([0-9a-f]{7,40}|WORKTREE)|OPEN)$' || true)
+  bad=$(echo "$rows" | /usr/bin/grep -vE $'^[a-z0-9-]+\.png\t(IDENTICAL|IDENTICAL-ON-RESHOOT [123]|FIXED ([0-9a-f]{7,40}|WORKTREE)|NOISY .+|OPEN)$' || true)
   test -z "$bad" || { echo "$bad"; fail "every ledger row is '<name>.png<TAB><STATUS>' with a valid STATUS"; }
   d=$(diff <(echo "$rows" | cut -f1 | sort) <(family_of "$ORACLE") || true)
   test -z "$d" || { echo "$d"; fail "ledger rows name exactly the $EXPECT $FAMILY baselines (< ledger only, > oracle only)"; }
@@ -77,13 +83,15 @@ ledger_static() {                                                    # shared by
   if echo "$rows" | /usr/bin/grep -q $'\tFIXED WORKTREE$'; then
     test -n "$(git -C "$ZK" status --short -- zul zkpreview)" || fail "FIXED WORKTREE rows need an uncommitted change under zk's zul/ or zkpreview/"
   fi
+  d=$(diff <(echo "$rows" | /usr/bin/grep $'\tNOISY ' | cut -f1 | sort) <(tolerated) || true)
+  test -z "$d" || { echo "$d"; fail "NOISY rows are exactly this family's names in $EXC (< ledger only, > exception list only)"; }
   OPEN_ROWS=$(echo "$rows" | /usr/bin/grep $'\tOPEN$' | cut -f1 || true)
   for n in $OPEN_ROWS; do b=${n%.png}
     dir=$(ls -d "$PAIRS_HOME"/*"$b" "$PAIRS_HOME/$b" 2>/dev/null | head -n 1)
     test -n "$dir" && test -f "$dir/template-baseline.png" && test -f "$dir/zkpreview.png" && test -f "$dir/diff.png" \
       || fail "OPEN row $n has its image pair (template-baseline.png, zkpreview.png, diff.png) under $PAIRS_HOME/"
   done
-  ok "ledger: $(echo "$rows" | wc -l | tr -d ' ') rows = the $FAMILY oracle; statuses valid; FIXED commits exist; $(echo "$OPEN_ROWS" | /usr/bin/grep -c . || true) OPEN row(s) with pairs"
+  ok "ledger: $(echo "$rows" | wc -l | tr -d ' ') rows = the $FAMILY oracle; statuses valid; FIXED commits exist; NOISY = the exception list ($(tolerated | /usr/bin/grep -c . || true)); $(echo "$OPEN_ROWS" | /usr/bin/grep -c . || true) OPEN row(s) with pairs"
 }
 
 oracle_static() {
@@ -119,11 +127,12 @@ live)
       npx playwright test --config doc/migration/tools/zero-tolerance/shots.config.ts $PROJECTS "$@" > "$ROOT/shots$n.log" 2>&1) || true
     tail -n 4 "$ROOT/shots$n.log" | tr -d '\033' | sed 's/\[[0-9;]*[A-Za-z]//g' | /usr/bin/grep -E 'passed|failed|skipped' | sed 's/^/   /'
   }
+  TOL=$(tolerated | paste -sd ',' -)                                  # exceptions compared at the template's own tolerance
   compare() {  # compare <n> <name>... — copy the named PNGs from snap<n> and compare them with the oracle; prints summarize-cmp lines
     local n=$1; shift
     mkdir -p "$ROOT/fam$n" "$ROOT/cmp$n"
     for f in "$@"; do test -f "$ROOT/snap$n/$f" && cp "$ROOT/snap$n/$f" "$ROOT/fam$n/"; done
-    (cd "$TPL" && ZERO_SNAP="$ROOT/fam$n" ZERO_BASE="$ORACLE" ZERO_OUT="$ROOT/cmp$n" \
+    (cd "$TPL" && ZERO_SNAP="$ROOT/fam$n" ZERO_BASE="$ORACLE" ZERO_OUT="$ROOT/cmp$n" ZERO_TOLERATED="$TOL" \
       npx playwright test --config doc/migration/tools/zero-tolerance/compare.config.ts > "$ROOT/compare$n.log" 2>&1) || true
     test -f "$ROOT/cmp$n/compare.json" || { tail -n 20 "$ROOT/compare$n.log"; fail "compare.config.ts produced compare.json (round $n)"; }
     /usr/bin/python3 "$ZT/summarize-cmp.py" "$ROOT/cmp$n/compare.json" > "$ROOT/summary$n.txt" || true
@@ -144,10 +153,10 @@ live)
 
   compare 1 $produced
   tail -n 1 "$ROOT/summary1.txt" | sed 's/^/   /'
-  diffs=$(/usr/bin/grep -v '^---' "$ROOT/summary1.txt" | awk '$2 != "IDENTICAL" {print $1}')
-  : > "$ROOT/result.tsv"                                               # <name>\t<IDENTICAL|IDENTICAL-ON-RESHOOT n|DIFF ...>
-  /usr/bin/grep -v '^---' "$ROOT/summary1.txt" | awk '$2 == "IDENTICAL" {printf "%s\tIDENTICAL\n", $1}' >> "$ROOT/result.tsv"
-  ok "compare round 1 at zero tolerance: $(echo "$diffs" | /usr/bin/grep -c . || true) of $(echo "$produced" | wc -l | tr -d ' ') differ"
+  diffs=$(/usr/bin/grep -v '^---' "$ROOT/summary1.txt" | awk '$2 != "IDENTICAL" && $2 != "WITHIN-TOLERANCE" {print $1}')
+  : > "$ROOT/result.tsv"                                               # <name>\t<IDENTICAL|WITHIN-TOLERANCE|…-ON-RESHOOT n|DIFF ...>
+  /usr/bin/grep -v '^---' "$ROOT/summary1.txt" | awk '$2 == "IDENTICAL" || $2 == "WITHIN-TOLERANCE" {printf "%s\t%s\n", $1, $2}' >> "$ROOT/result.tsv"
+  ok "compare round 1 (zero tolerance; exceptions at the template's own: ${TOL:-none}): $(echo "$diffs" | /usr/bin/grep -c . || true) of $(echo "$produced" | wc -l | tr -d ' ') differ"
 
   round=0
   while [ -n "$diffs" ] && [ "$round" -lt 3 ]; do
@@ -157,9 +166,9 @@ live)
     missing=$(for f in $diffs; do test -f "$ROOT/snap$n/$f" || echo "$f"; done)
     if [ -n "$missing" ]; then echo "   re-shoot $round: -g \"$comps\" did not produce $(echo $missing | tr '\n' ' '); re-running the full projects"; shoot "$n"; fi
     compare "$n" $diffs
-    now_ok=$(/usr/bin/grep -v '^---' "$ROOT/summary$n.txt" | awk '$2 == "IDENTICAL" {print $1}')
-    for f in $now_ok; do printf '%s\tIDENTICAL-ON-RESHOOT %s\n' "$f" "$round" >> "$ROOT/result.tsv"; done
-    diffs=$(/usr/bin/grep -v '^---' "$ROOT/summary$n.txt" | awk '$2 != "IDENTICAL" {print $1}')
+    now_ok=$(/usr/bin/grep -v '^---' "$ROOT/summary$n.txt" | awk '$2 == "IDENTICAL" || $2 == "WITHIN-TOLERANCE" {print $1}')
+    for f in $now_ok; do printf '%s\t%s-ON-RESHOOT %s\n' "$f" "$(/usr/bin/grep -E "^$f " "$ROOT/summary$n.txt" | awk '{print $2}')" "$round" >> "$ROOT/result.tsv"; done
+    diffs=$(/usr/bin/grep -v '^---' "$ROOT/summary$n.txt" | awk '$2 != "IDENTICAL" && $2 != "WITHIN-TOLERANCE" {print $1}')
     ok "re-shoot $round: $(echo "$now_ok" | /usr/bin/grep -c . || true) now identical, $(echo "$diffs" | /usr/bin/grep -c . || true) still differ"
   done
 
@@ -173,7 +182,7 @@ live)
   done
   sort -o "$ROOT/result.tsv" "$ROOT/result.tsv"
   cat "$ROOT/result.tsv" | /usr/bin/grep -v $'\tIDENTICAL$' | sed 's/^/   /'
-  ok "result: $ROOT/result.tsv ($(/usr/bin/grep -c $'\tIDENTICAL' "$ROOT/result.tsv") identical within 3 re-shoots, $(echo "$diffs" | /usr/bin/grep -c . || true) difference(s); pairs under $ROOT/pairs/)"
+  ok "result: $ROOT/result.tsv ($(/usr/bin/grep -cE $'\t(IDENTICAL|WITHIN-TOLERANCE)' "$ROOT/result.tsv") identical or within tolerance within 3 re-shoots, $(echo "$diffs" | /usr/bin/grep -c . || true) difference(s); pairs under $ROOT/pairs/)"
 
   preview_stop; trap - EXIT
   preview_assert_free
@@ -189,9 +198,12 @@ live)
   for f in $(sed -n $'s/^\\(.*\\)\tFIXED .*$/\\1/p' "$LEDGER"); do
     /usr/bin/grep -qE "^$f"$'\t'"IDENTICAL" "$ROOT/result.tsv" || fail "FIXED row $f is identical now"
   done
-  dis=$(join -t $'\t' <(sort "$LEDGER" | /usr/bin/grep -v '^#') "$ROOT/result.tsv" | awk -F'\t' '$2 != $3 && $2 !~ /^FIXED/ && $2 != "OPEN"' || true)
+  for f in $(sed -n $'s/^\\(.*\\)\tNOISY .*$/\\1/p' "$LEDGER"); do
+    /usr/bin/grep -qE "^$f"$'\t'"(IDENTICAL|WITHIN-TOLERANCE)" "$ROOT/result.tsv" || fail "NOISY row $f passes at the template's own tolerance"
+  done
+  dis=$(join -t $'\t' <(sort "$LEDGER" | /usr/bin/grep -v '^#') "$ROOT/result.tsv" | awk -F'\t' '$2 != $3 && $2 !~ /^(FIXED|NOISY)/ && $2 != "OPEN"' || true)
   test -z "$dis" || { echo "   flaky rows whose re-shoot count differs from the ledger's (informational):"; echo "$dis" | sed 's/^/   /'; }
-  ok "ledger cross-check: every remaining difference is OPEN, every OPEN row still differs, every FIXED row is identical"
+  ok "ledger cross-check: every remaining difference is OPEN, every OPEN row still differs, every FIXED row is identical, every NOISY row within tolerance"
   nopen=$(echo "$OPEN_ROWS" | /usr/bin/grep -c . || true)
   test "$nopen" = 0 || { echo "$ITEM live: $nopen OPEN row(s) await the user's ruling (pairs under $PAIRS_HOME/)"; exit 3; }
   echo "$ITEM live ok" ;;

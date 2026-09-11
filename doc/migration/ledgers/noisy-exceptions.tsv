@@ -1,0 +1,11 @@
+# noisy-exceptions.tsv — the evidenced exception list of the D66 hybrid (chat D64 / D66, ruled 2026-09-11):
+# a baseline whose rendering is NOT reproducible on the template's own machine, so a zero-tolerance
+# comparison can never pass for it. A 2.6–2.8 ledger row may read `NOISY <sub-pixel %>` only for a name
+# listed here. Evidence = three template-side samples of the same shot (scratch snapshotDir seeded with the
+# committed PNG, owning project run with --update-snapshots=all, result hashed); the sub-pixel percentage is
+# from a byte-by-byte comparison of the decoded BMPs. Source: the template session's measurement report
+# (tasks/d61-screenshot-oracle-recut.md, Appendices A and D, 2026-09-11). progressmeter-gallery is NOT here:
+# its fill animation is fixed instead (chat D64 A — a fixed value, no animation).
+# name	sub-pixel %	evidence
+avatar-gallery.png	n/a (matched 3/3 in isolation)	committed 8fedefce; runs 8fedefce 8fedefce 8fedefce; exceeded the 1 % gallery budget once in the full 260-test run
+component-theming-gallery.png	0.00004 % / 0.0002 %	committed 0dd0dad1; runs 0dd0dad1 f5c53327 cf4b3e36 (one match, two mutually different rewrites)
