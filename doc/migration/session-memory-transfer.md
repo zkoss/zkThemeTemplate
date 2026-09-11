@@ -65,3 +65,50 @@ worktree teardown (out of scope), and two methodology lessons already absorbed i
 | ZK version coordinates, MUI reference | `marble-theme/SKILL.md` |
 | The preview-module recipe, `master`'s LESS being vestigial, fork-delta sizing | `marble-to-zk-migration-appendix.md` §A.5 and the decision document — migration-time knowledge, not maintenance knowledge |
 | Migration state, `tasks/` gitignored, IceBlue worktree teardown | End with the migration; the plan is the source of truth while it runs |
+
+## D. When the Planner session is replaced (user question, 2026-09-11)
+
+**Rule: replace the Planner session at a phase boundary — P2 gate → P3 — not on a clock.** Reasons:
+
+1. The plan is built on "every ruling lives in a tracked file" (the execution plan, the findings, this document, the gates). The P3 gate is itself a cold-start drill judged by an Opus Evaluator: a fresh session must take over from the files alone. Running P3 in the session that wrote those files would leave that gate untested.
+2. A long session is summarised automatically, several times; every summary can carry a stale or wrong detail (F-series records one: a workflow-script path that had moved). Summaries of summaries accumulate such errors and never correct themselves. The P1 + P2 Planner session crossed two summary boundaries.
+3. Cross-session addresses and the shared chat D-series are session-bound anyway; the hand-over writes the last-used numbers (Planner and template session) and the peer's address here.
+
+**Signals to switch earlier than a phase boundary:** a summary states something the files contradict; the Planner asks the user a question already ruled in the plan; a verify script's dry-run contradicts what the Planner "remembers". **Cost of switching:** one cold start — read the status line of the execution plan, the open D-items, this document, `tasks/lessons.md` in `zk`; about the first hour of a session.
+
+**Hand-over checklist before the switch:** update this document and the plan's status line to the day; state the last-used chat D-number (Planner) and the template session's last-used number; list the uncommitted batch candidates; state which servers (8081 / 8085) are up and who owns them; write the first message the new session should receive.
+
+## E. Where the new Planner session reads back (in this order)
+
+The scratchpad, the background-task outputs and the cross-session socket address of the old session do **not** survive; everything below is tracked.
+
+1. `zkThemeTemplate/doc/migration/marble-to-zk-execution-plan.md` — the **Status** line (first paragraph) is the single current state; then §4 (the harness rules), the P2 gate row, the P3 rows.
+2. Every `D<n>` in that plan marked **PROPOSED** or **deferred** (plan-side numbering; the chat-side series is separate — see the memory `decision-id-numbering-per-document`). The chat-side last-used numbers are recorded in the plan's status line at hand-over time.
+3. `doc/migration/gates/` — one verdict file per passed item; `P1.md` for the P1 gate; the P2 gate file when it exists.
+4. `doc/migration/planner-cold-start-findings.md` — F1…F59+: every trap met so far, newest last. Read the last ten before touching a verify script.
+5. `doc/migration/ledgers/` — the 2.6–2.8 ledgers and `noisy-exceptions.tsv`.
+6. `doc/migration/tools/` — every verify script is self-documenting (header: usage, dry-run contract); `zero-tolerance/` for 2.6–2.8; `preview-server.sh` is the only way to start / stop zkpreview.
+7. `doc/migration/drafts/brief-<item>.md` — the Generator briefs already written.
+8. `ZK10/zk/tasks/lessons.md` — the Planner's own corrections (both sessions' lessons live here; `tasks/` is gitignored but persistent on this machine); `ZK10/zk/tasks/marble-screenshot-diffs/` — the review pack of image pairs.
+9. The workflow script: `~/.claude/projects/-Users-hawk-Documents-workspace-ZK10-zk/<session-id>/workflows/scripts/marble-p2-verify.js` belongs to the OLD session's directory — copy it (or its ITEMS table) into the new session's first Workflow call; the per-item verify commands it embeds are all in the plan rows anyway.
+10. The template session (the external Evaluator for judgement gates) is found with `ListAgents`; its name starts `zkthemetemplate-`. It judges; it cannot approve a write.
+11. This document, §A–§C (how the user works, this machine, unwritten project context) and §D (why the switch).
+
+First message for the new session, to be pasted by the user: *"You are the Planner for the Marble → zk migration. Read zkThemeTemplate/doc/migration/session-memory-transfer.md §E and follow its reading order, then report the current state in the Task Report format before doing anything."*
+
+## F. The parallel P3 Planner session (chat D67 A, 2026-09-11)
+
+P3's `zk`-side items run in their **own** Planner session while the P2 session finishes 2.6–2.10 (D24 amended). It is the fresh session §D asks for; the P2 session ends after the P2 gate without starting anything else.
+
+**What the P3 session owns:** rows 3.4–3.9, 3.10–3.14, 3.18 and the P3 gate; the `zk` paths `.claude/skills/marble-theme/`, `doc/` (spec, contracts, the twelve F17 paths), `CLAUDE.md` (the 3.9 pointer). It does **not** touch `zkpreview/`, `zul/`, `doc/migration/ledgers/`, `tools/zero-tolerance/` or the P2 rows.
+
+**Coordination rules (three, also in plan D24):**
+1. Disjoint footprints as above; when in doubt, ask in the plan file, not in the other repo.
+2. The execution plan is shared: the P3 session edits only its rows, its D-items and its own `P3:` sentence in the status line. Whichever session commits the plan file carries the other's uncommitted edits and says so in the batch report — both are the user's approved batches. Findings go in the same `planner-cold-start-findings.md`, numbered on from the last F (check `grep -c '^### F'` first) — the P3 session appends only.
+3. Chat D-numbers: the P3 session starts at **D200**. The P2 session continues from D69; the template session (`zkthemetemplate-*`, the external Evaluator) has used D61–D68. Every cross-session message states the sender's last-used number.
+
+**Harness for P3:** the same Generator (Sonnet) / Evaluator (**Opus**, every item from 2026-09-11) pattern and Workflow script shape as P2 (§4 of the plan); the P2 script `marble-p2-verify.js` is under the P2 session's `~/.claude/projects/-Users-hawk-Documents-workspace-ZK10-zk/<session>/workflows/scripts/` — copy the shape, not the ITEMS. Every verify step is a tracked `tools/verify-<item>.sh`, dry-run by the Planner before dispatch (rule 2 of §4, server variant included). Commits in `zk` on PASS per D49-A; template batches only on the user's word; never `git add -A`.
+
+**First message for the P3 session (paste as is):**
+
+> You are the Planner for the Marble → zk migration, **phase P3 only**, running in parallel with the P2 Planner session. Read `zkThemeTemplate/doc/migration/session-memory-transfer.md` §E in its reading order, then §F (your scope and the three coordination rules), then plan D24's amendment and rows 3.4–3.18 of the execution plan. Chat D-numbers start at D200. Report the current P3 state in the Task Report format before doing anything.
