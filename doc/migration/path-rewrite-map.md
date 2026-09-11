@@ -11,6 +11,7 @@ later item to decide (`DEFER`). Items 3.5, 3.6 and 3.10–3.14 apply this map wh
 rewrite the skill, the agents and `doc/spec` for the `zk` repository.
 
 - **Measured:** 2026-09-10, by `doc/migration/tools/check-path-map.js --list`
+- **Corrected:** 2026-09-11 (F68) — the `src/test/resources/web/` family lands under `zkpreview/src/main/webapp/web/` (plan D44 layout A, ruled after this map passed); 9 rows
 - **Row count:** 101 distinct path strings (the plan's "63" was a lower bound)
 - **Verify:** `cd /Users/hawk/Documents/workspace/zkThemeTemplate && node doc/migration/tools/check-path-map.js` — exits 0 when every found string is mapped, no extra rows exist, every `MAP` target is the mechanical prefix substitution, every `STALE` source is confirmed absent from this repo, and every `DEFER` row names the deciding item.
 
@@ -114,15 +115,15 @@ rewrite the skill, the agents and `doc/spec` for the `zk` repository.
 | `src/test/playwright/reset-scoping.spec.ts` | MAP | `zkpreview/src/test/playwright/reset-scoping.spec.ts` | reset-scoping.md |
 | `src/test/playwright/tablet.spec.ts` | MAP | `zkpreview/src/test/playwright/tablet.spec.ts` | css-dsp-file-structure.md, responsive-design.md |
 | `src/test/playwright/zindex-scale.spec.ts` | MAP | `zkpreview/src/test/playwright/zindex-scale.spec.ts` | zindex-scale.md |
-| `src/test/resources/web/` | MAP | `zkpreview/src/main/webapp/` | verification.md, zul-authoring.md, zk-spec-author.md, zk-theme-evaluator.md, icon-index.md, icon-policy.md, spacing-policy.md |
-| `src/test/resources/web/component-theming.zul` | MAP | `zkpreview/src/main/webapp/component-theming.zul` | zk-theme-generator.md |
-| `src/test/resources/web/icons-lucide.zul` | MAP | `zkpreview/src/main/webapp/icons-lucide.zul` | icon-policy.md |
-| `src/test/resources/web/label.zul` | MAP | `zkpreview/src/main/webapp/label.zul` | DESIGN.md |
-| `src/test/resources/web/pv/matrix.zul` | MAP | `zkpreview/src/main/webapp/pv/matrix.zul` | zk-theme-evaluator.md, responsive-design.md |
-| `src/test/resources/web/utility/grid-layout.zul` | MAP | `zkpreview/src/main/webapp/utility/grid-layout.zul` | responsive-design.md |
-| `src/test/resources/web/utility/print.zul` | MAP | `zkpreview/src/main/webapp/utility/print.zul` | print-styles.md |
-| `src/test/resources/web/utility/responsive.zul` | MAP | `zkpreview/src/main/webapp/utility/responsive.zul` | responsive-design.md |
-| `src/test/resources/web/utility/zindex.zul` | MAP | `zkpreview/src/main/webapp/utility/zindex.zul` | zindex-scale.md |
+| `src/test/resources/web/` | MAP | `zkpreview/src/main/webapp/web/` | verification.md, zul-authoring.md, zk-spec-author.md, zk-theme-evaluator.md, icon-index.md, icon-policy.md, spacing-policy.md |
+| `src/test/resources/web/component-theming.zul` | MAP | `zkpreview/src/main/webapp/web/component-theming.zul` | zk-theme-generator.md |
+| `src/test/resources/web/icons-lucide.zul` | MAP | `zkpreview/src/main/webapp/web/icons-lucide.zul` | icon-policy.md |
+| `src/test/resources/web/label.zul` | MAP | `zkpreview/src/main/webapp/web/label.zul` | DESIGN.md |
+| `src/test/resources/web/pv/matrix.zul` | MAP | `zkpreview/src/main/webapp/web/pv/matrix.zul` | zk-theme-evaluator.md, responsive-design.md |
+| `src/test/resources/web/utility/grid-layout.zul` | MAP | `zkpreview/src/main/webapp/web/utility/grid-layout.zul` | responsive-design.md |
+| `src/test/resources/web/utility/print.zul` | MAP | `zkpreview/src/main/webapp/web/utility/print.zul` | print-styles.md |
+| `src/test/resources/web/utility/responsive.zul` | MAP | `zkpreview/src/main/webapp/web/utility/responsive.zul` | responsive-design.md |
+| `src/test/resources/web/utility/zindex.zul` | MAP | `zkpreview/src/main/webapp/web/utility/zindex.zul` | zindex-scale.md |
 | `target/classes/web/marble/` | OUTPUT | `zul/codegen/resources/web/` | SKILL.md, css-dsp-file-structure.md |
 | `target/classes/web/marble/zul/css/norm.css.dsp` | OUTPUT | `zul/codegen/resources/web/zul/css/norm.css.dsp` | forced-colors.md |
 | `target/test-classes/web/` | OUTPUT | `zkpreview/build/webapp/` | zul-authoring.md |

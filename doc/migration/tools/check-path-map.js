@@ -46,7 +46,7 @@ const RULES = [
   { kind: 'MAP', from: 'src/main/resources/web/js/zkex/', to: '../zkcml/zkex/src/main/resources/web/js/zkex/' },
   { kind: 'DEFER', from: 'src/main/resources/metainfo/zk/' },                 // theme-jar registration → item 1.5
   { kind: 'MAP', from: 'src/main/resources/', to: 'zul/src/main/resources/' },   // covers web/zul/**, web/js/zul/**, bare dirs
-  { kind: 'MAP', from: 'src/test/resources/web/', to: 'zkpreview/src/main/webapp/' },
+  { kind: 'MAP', from: 'src/test/resources/web/', to: 'zkpreview/src/main/webapp/web/' },   // D44 layout A (F68, 2026-09-11)
   { kind: 'MAP', from: 'src/test/playwright/', to: 'zkpreview/src/test/playwright/' },
   { kind: 'DROP', from: 'src/test/java/zk/example/' },                           // Spring Boot host, replaced by the servlet
   { kind: 'MAP', from: 'scripts/', to: 'scripts/' },

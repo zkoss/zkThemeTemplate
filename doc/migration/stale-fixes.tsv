@@ -44,3 +44,8 @@ $PROJECT_ROOT/src/main/resources/web	$PROJECT_ROOT/zul/src/main/resources/web
 [marble-compact.css](./marble-compact.css)	`marble-compact.css` (a retired example file)
 **[../native-severity-naming-proposal.md](../native-severity-naming-proposal.md)**	`native-severity-naming-proposal.md` (retired with the template)
 ../scripts/build-css.js	../../scripts/build-css.js
+doc/component-dom-structures.md	doc/component-dom-structures.md (retired with the template)
+doc/contracts/biglistbox.html	doc/contracts/biglistbox.md
+target/.../	zul/codegen/resources/web/
+src/test/playwright/	zkpreview/src/test/playwright/
+$PROJECT_ROOT/src/test/resources/web	$PROJECT_ROOT/zkpreview/src/main/webapp/web
