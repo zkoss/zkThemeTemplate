@@ -945,3 +945,50 @@ PASS on a tolerant screenshot comparison means "within budget," not "matches the
 doc/screenshots/` encode pre-sweep rendering and will stay green after the sweep lands without actually agreeing with it. Recorded in
 [gates/3.18b.md](gates/3.18b.md) Planner notes; the four affected baselines are queued for regeneration once `zk-05`'s sweep commits
 (owned by 3.18b's directory, so this session regenerates them, not `zk-05`).
+
+### F76 — Two `tasks/…` citations were rewritten to unblock the build, and the migration plan's "residual choice" sentence is now stale (template session, 2026-09-11)
+
+This entry is a hand-off. The template session (external Evaluator) could not deliver it by message: at the time of writing, `ListAgents`
+showed one peer on this machine (`zk-79`, scope = the Marble scrollview stylesheet only) and it confirmed it is **not** the session
+editing `doc/migration/`. That session is unreachable, so the two items below are recorded here instead — §E item 4 puts this file on the
+cold-start reading list.
+
+**1. Commit `948d3200` changed one line in each of two files, to make `npm run check:doc-links` exit 0.** `scripts/check-doc-links.js`
+enforces "if a tracked file references a path, that path must be tracked", and its `resolveRef` treats any root-relative `tasks/…` token
+as resolvable whether or not the file exists (`c.split('/')[0] === 'tasks'`). Since `tasks/` is gitignored wholesale, such a citation can
+**never** be satisfied by tracking its target — rewriting the reference is the only fix. Two citations were in that state and the Maven
+build failed on them. The rewrites:
+
+| File | Was | Is |
+|---|---|---|
+| `session-memory-transfer.md` §D | `lessons.md`, root-relative under `tasks/`, plus the words "in `zk`" | `` `ZK10/zk/tasks/lessons.md` `` |
+| this file, F57 | "re-verifiable from its `d61-screenshot-oracle-recut.md`", root-relative under `tasks/` | "re-verifiable from its D61 screenshot-oracle re-cut report — template side, gitignored `tasks/`" |
+
+Note the shape of the "Was" column above: quoting either old citation verbatim re-breaks the build, because the checker does not care
+why a path appears. The first draft of this entry did exactly that and failed with the same two violations. Name the file and say it
+was root-relative under the ignored directory; do not reproduce the token.
+
+`ZK10/…` is outside the checker's `REPO_DIRS`, so it is skipped — §E item 8 already used exactly that form and passed silently, which is
+what proved the fix before it was applied. F57 lost its path token but kept attribution and provenance; the one durable lesson that report
+carried had already migrated on its own ("Geometry claims are read off the captured PNG, never the live DOM (F57)" — verified live at
+`ZK10/zk/.claude/skills/marble-theme/reference/verification.md:130`), so nothing was lost by dropping the citation. Revert either line and
+the build goes red again.
+
+**2. `marble-to-zk-migration-plan.md`'s D20 section still says the archive "currently sits untracked at the repository root".** That
+described `ToDelete.zip`. The file no longer exists on disk; it was removed during 2026-09-11 by a session other than the template one,
+which had explicitly excluded it from every commit and ran no delete. The "one residual choice, not a decision" it raised is therefore
+moot, and the sentence should go when whoever owns that document next touches it. It was left alone deliberately — see below.
+
+**Working-tree state when this was written (2026-09-11, ~21:20).** `marble-to-zk-execution-plan.md`, `marble-to-zk-migration-plan.md` and
+`session-memory-transfer.md` all carry uncommitted edits by an unidentified session (mtimes 20:38 / 20:38 / 21:03; the plan is ~111 lines
+ahead of HEAD, the execution plan adds P4 row 4.4b, and `session-memory-transfer.md` holds both a new §G paragraph and the template
+session's one-line fix). `948d3200` was staged by filtering the template session's single hunk out of that shared file and verifying
+`1 1` per file before committing — none of the other work was touched or committed. **Run `git status` before assuming a document in
+`doc/migration/` is yours.**
+
+**Unrelated, but it will bite a byte-for-byte gate:** `scripts/build-css.js` now differs by exactly one line between the two repos.
+`zk-79` removed `'js/zkmax/layout/css/scrollview.css.dsp'` from `stubPaths` on the zk side (uncommitted there) because its `scrollview.css`
+is now real rather than a stub; the template's copy still lists it (line 311). The `CSS_URI_BACKED` entry — the bare `'scrollview.css.dsp'`
+at line 261 — is unchanged in both and must stay: zkmax's `lang-addon.xml` requests it through a `<css-uri>`, and build stage 0's
+`assertNoOrphanComponentCss()` throws if a non-empty component CSS is not css-uri-backed. zk is the source of truth; the template copy is
+frozen, so the single-line delta is expected, not drift.
