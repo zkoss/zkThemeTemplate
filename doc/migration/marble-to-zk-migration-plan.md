@@ -1,8 +1,19 @@
 # Marble → zk Repository Migration Plan
 
-**Status:** **P0 complete.** P3 under way. D14–D18, **D21, D22 ruled**; **D19 open** (blocks P4 only); **D20 resolved in practice**. Execution runs from a new Planner session rooted in `zk` (§4) per [marble-to-zk-execution-plan.md](marble-to-zk-execution-plan.md). The IceBlue-side
-work that used to sit in P0 is out of scope (see the scope note).
-**Written:** 2026-09-08 · **Last revised:** 2026-09-09 · **Decision series:** D13–
+**Status:** **P0, P1, P2 and P3 complete** (P1 gate PASSED — [gates/P1.md](gates/P1.md); P2 gate
+PASSED — [gates/P2.md](gates/P2.md); P3 gate PASSED-WITH-FINDINGS — [gates/P3.md](gates/P3.md), an
+independent Opus judge scoring a genuine cold-start drill: the substantive question — can a session
+do real Marble work from `zk` + `../zkcml` alone? — answered yes, with residue (three agents' stale
+pointers, a harness-coverage gap) routed to P4, not disqualifying). **P4 not started**; one item is
+already queued from a finding made during P3 (a `.z-label` CSS defect, execution-plan row 4.4b), and
+several more are queued from the P3 gate's findings but not yet sized into rows (see
+[session-memory-transfer.md §H](session-memory-transfer.md)). D14–D18, **D21, D22 ruled**; **D19
+open** (blocks P4's template-`master` promotion only); **D20 resolved in practice**. Execution runs
+from a Planner session rooted in `zk` (§4) per
+[marble-to-zk-execution-plan.md](marble-to-zk-execution-plan.md) — that document's own **Status** line
+carries the item-by-item detail this one summarizes. The IceBlue-side work that used to sit in P0 is
+out of scope (see the scope note).
+**Written:** 2026-09-08 · **Last revised:** 2026-09-12 · **Decision series:** D13–
 
 **Technical appendix:** [marble-to-zk-migration-appendix.md](marble-to-zk-migration-appendix.md) —
 every file reference, line number, commit hash, raw measurement, closed decision and change-log
@@ -66,18 +77,30 @@ this one.
 | # | Phase | Milestone | Owner | Progress |
 |---|-------|-----------|-------|----------|
 | **P0** | Consolidate & Freeze | This workspace holds only what is worth moving | done (old session) | **100%** |
-| **P1** | Build Integration | Marble CSS builds from inside `zk`; LESS retired | Planner session | 0% |
-| **P2** | Verification Environment | Preview pages and harness run inside `zk` | Planner session | 0% |
-| **P3** | Knowledge Encapsulation | One skill answers every maintenance question | Planner session | **≈40%** |
+| **P1** | Build Integration | Marble CSS builds from inside `zk`; LESS retired | done (Planner session) | **100%** |
+| **P2** | Verification Environment | Preview pages and harness run inside `zk` | done (Planner session) | **100%** |
+| **P3** | Knowledge Encapsulation | One skill answers every maintenance question | done (Planner session) | **100%** — gate PASS-WITH-FINDINGS |
 | **P4** | Cutover & Archive | This workspace goes read-only; Jess work resumes in `zk` | Planner session | 0% |
 
 ### Overall progress
 
-**≈15%**, weighting P1 and P2 as the bulk of the engineering. P0 is done: the asset triage produced
+**≈80%** by sized-item count (execution plan §Counts: P1 16/16, P2 10/10, P3 16/16 including its gate
+— P4 0/15+, and P4's Jess-issue tail is not sized item-by-item). P0 is done: the asset triage produced
 a reviewed manifest, the live documents are tracked, the archive set is disposed of, and the
-session's memory is split — 48 files folded into the `marble-theme` skill (now 11 files) and the
-18 that cannot travel written up for the target session to re-establish. All of that is under
-version control for the first time.
+session's memory is split — 48 files folded into the `marble-theme` skill (now 11 files) and the 18
+that cannot travel written up for the target session to re-establish. All of that is under version
+control. **P1 is done:** the composite build produces Marble CSS from `zk`/`zkcml` sources and the
+LESS tree is retired ([gates/P1.md](gates/P1.md)). **P2 is done:** the preview module serves Marble
+inside `zk`, the harness runs there, and the zero-tolerance comparison passed with no unexplained
+difference across 183 baseline rows ([gates/P2.md](gates/P2.md)). **P3 is done:** skill, 94 contracts,
+26 specs, 5 subagents and `zk-component-rules` are all in `zk`, every path rewritten, and its
+cold-start drill gate PASSED — an independent judge scored a genuine drill session doing real Marble
+CSS work using only `zk` and `../zkcml`, with zero filesystem access outside those repos across 241
+tool calls ([gates/P3.md](gates/P3.md)). The gate's findings (three agents' stale template/MUI/ZKDoc
+pointers, a harness-coverage gap, two gate-script clauses that needed rewording) are real but do not
+undercut the phase's own goal; they are queued for P4. **P4 has not started**, beyond one item (4.4b,
+a `.z-label` CSS defect surfaced during P3) already sized, and several more queued from the P3 gate's
+findings but not yet sized into rows.
 
 ### Where the risk actually is
 
@@ -208,20 +231,22 @@ requests. A build-time orphan guard **fails the build** on any component stylesh
 registered, bundled, nor served in the aggregate, which makes a silently dead file impossible by
 construction.
 
-Work items:
+Work items — **all done; P1 gate PASSED** ([gates/P1.md](gates/P1.md), 17/17 items including 1.10
+added after the gate; landed as `zk` `2100200284` + `771c410038` and `zkcml` `eea2b6428` after the
+D38 squash):
 
-- [ ] Relocate CSS sources to the unprefixed core layout — no `marble/` path segment — and delete
+- [x] Relocate CSS sources to the unprefixed core layout — no `marble/` path segment — and delete
       the theme provider's prefix rewrite.
-- [ ] Port the builder's bundling rules and its two empirically-found minifier workarounds. **Do
+- [x] Port the builder's bundling rules and its two empirically-found minifier workarounds. **Do
       not treat these as optional**: both were silent-corruption bugs, and both are
       minifier-specific, so a pipeline change re-opens them.
-- [ ] Convert all three modules in one commit range; keep LESS in place until all three are green
+- [x] Convert all three modules in one commit range; keep LESS in place until all three are green
       (a core-only conversion does not compile).
-- [ ] **Author a second variant of the 5 Java classes**, rather than re-homing them. Theme
+- [x] **Author a second variant of the 5 Java classes**, rather than re-homing them. Theme
       registration in core is not the same as registration from a theme jar — and under D18 the
       jar-registration variant must keep existing here for the forkable template. Both variants
       are live; neither is a copy of the other.
-- [ ] Port the stylesheet-registration checker into the `zk` build. Without it a mis-pathed
+- [x] Port the stylesheet-registration checker into the `zk` build. Without it a mis-pathed
       stylesheet silently 404s. **Note: there is no version-drift checker to port — it does not
       exist.** That gap is worth closing on the way through (appendix §A.4).
 
@@ -251,24 +276,28 @@ ZK by published coordinate with no substitution, so it builds against whatever w
 locally, and its theme comes from a theme *jar* rather than the source tree. A preview module whose
 CSS edits require a publish step is unusable for this work.
 
-Work items:
+Work items — **P2 gate PASSED** ([gates/P2.md](gates/P2.md); 10 items, three zero-tolerance ledgers
+covering 183 baseline rows with no `OPEN`; landed as `zk` `5cfc315c9d` · `abd78dd210` · `2e85f09947` ·
+`60f4895c4f` · `9236dbe514` · `79ce20577a` · `0e29a12db6` · `0889b51540` and `zkcml` `aabceeff2`):
 
-- [ ] Stand up the new preview module per the recipe above, carrying the page shell **verbatim** —
+- [x] Stand up the new preview module per the recipe above, carrying the page shell **verbatim** —
       the shell is what makes the baselines comparable, so this is a copy, not a redesign.
-- [ ] Move the preview and use-case pages, including the single-page-application host and its
+- [x] Move the preview and use-case pages, including the single-page-application host and its
       bookmark navigation.
-- [ ] Move the Playwright harness and re-point its base URL and configuration at the new host.
-- [ ] Drop `zksandbox`'s external theme-jar pin — it depends on the very theme this migration
-      removes.
-- [ ] **Solve the servlet-flavour mismatch — bounded, and the boundary is measured.** `zk` compiles
+- [x] Move the Playwright harness and re-point its base URL and configuration at the new host.
+- [~] Drop `zksandbox`'s external theme-jar pin — **superseded, not done as written.** `zksandbox`
+      itself was dropped from this plan (D45, 2026-09-11): it is the released ZK Sandbox demo, its
+      IceBlue pin was a deliberate product choice, not migration debt, and it waits for its own
+      owners rather than this migration.
+- [x] **Solve the servlet-flavour mismatch — bounded, and the boundary is measured.** `zk` compiles
       against the older servlet namespace; the current preview app is Spring Boot 3 on the newer
       one. The preview module therefore cannot be a straight copy of the Spring Boot host, and the
       workable combination is narrow (appendix §A.5). This affects the *host*, not the rendered pixels, so
-      it does not threaten the D16 comparison — but the live-reload workflow must be either rebuilt
-      or consciously dropped, and the skill must document whichever is true.
-- [ ] **Run the migration comparison at zero tolerance** and explain every difference. Expect the
-      font-URL signature first: a uniform vertical drift on every page means the web font failed to
-      load. Only after every difference is explained should the normal tolerances be restored.
+      it does not threaten the D16 comparison — the live-reload workflow was **consciously dropped**
+      (D48) and that is documented in the skill.
+- [x] **Run the migration comparison at zero tolerance** and explain every difference. The oracle
+      needed one re-cut on ZK 11 first (D50/D66) before the comparison was meaningful; the final
+      three ledgers (gallery/state/tablet families) show 183/183 `IDENTICAL`, no `NOISY`, no `OPEN`.
 
 ### P3 — Knowledge Encapsulation
 
@@ -311,21 +340,28 @@ Work items:
 - [x] **Fold in what the skill itself declared missing** — cascade-layer mechanics, the ZUL
       authoring rules, the visual-regression gotchas, the ZK version coordinates. Done with the P0
       memory split. What the skill still names as unmerged is the two tooling skills below.
-- [ ] **Copy the skill into `zk` and commit it there.** Step 2 of the two-step sequence in §4.
+- [x] **Copy the skill into `zk` and commit it there.** Step 2 of the two-step sequence in §4. Done
+      2026-09-11 (execution-plan item 3.4, [gates/3.4.md](gates/3.4.md)); landed as `zk` `d02d455290`.
 - [x] **Merge the two tooling skills** — `css-theme-audit` and `important-reduction` — into
       `marble-theme`, as classified in appendix §A.7. Done 2026-09-10 (item 3.1, verdict
       [gates/3.1.md](gates/3.1.md)); the skill now holds 17 files — 12 reference pages and 4 scripts.
-- [ ] Move the 26 specifications (normative) and the 94 component contracts with their 19 mockups.
+- [x] Move the 26 specifications (normative) and the 94 component contracts with their 19 mockups.
       The contracts are the harness's expected values; without them the harness has nothing to
-      compare against.
-- [ ] Move the 5 subagents, and re-point every path they cite. **Two of them still cite a report
+      compare against. Done 2026-09-11 across execution-plan items 3.6, 3.10–3.14 and 3.19; the
+      knowledge layer in `zk` now carries all 26 specs and all 94 contracts.
+- [x] Move the 5 subagents, and re-point every path they cite. **Two of them still cite a report
       directory that was deleted in P0 and has no counterpart in the tracked tree** — a two-line
-      fix, but until it is made their output would land in two places.
-- [ ] Fold the Marble-relevant parts of this repository's root `CLAUDE.md` into `zk`'s much smaller
-      one — as a pointer to the skill, not as a second copy of it.
-- [ ] **Rewrite every repository-relative path.** Memories and specifications cite paths that
+      fix, but until it is made their output would land in two places. Done 2026-09-11 (execution-plan
+      items 3.10–3.14, [gates/3.10.md](gates/3.10.md) through [gates/3.14.md](gates/3.14.md)); all 5
+      subagents landed in `zk` with paths re-pointed.
+- [x] Fold the Marble-relevant parts of this repository's root `CLAUDE.md` into `zk`'s much smaller
+      one — as a pointer to the skill, not as a second copy of it. Done 2026-09-11 (execution-plan
+      item 3.9, [gates/3.9.md](gates/3.9.md)); landed as `zk` `e124d5c075`.
+- [x] **Rewrite every repository-relative path.** Memories and specifications cite paths that
       resolve against the *wrong repository* without erroring once the session is rooted in `zk`.
-      This is a silent-failure class of its own.
+      This is a silent-failure class of its own. Applied mechanically across every copy item via
+      `tools/apply-path-map.js` and `path-rewrite-map.md` (51 rows); verified by each item's own
+      path-existence stage.
 
 ### P4 — Cutover & Archive
 
@@ -358,6 +394,12 @@ Work items:
 - [ ] **Mark template `master` as generated** so no one hand-edits the upstream copy. The first
       sync happens at the ZK 11.0 release, so this is the tail of the work, not a blocker.
 - [ ] Resume the 50 in-scope Jess issues, in `zk`.
+- [ ] **Added 2026-09-11 (execution-plan row 4.4b), found during P3:** `.z-label` re-declares five
+      properties it already inherits from `body`; deleting the redundant `color` fixes 52 dead text
+      colours on `z-bg-*` container wrappers with no new utility classes. Shipped theme CSS — must
+      land before the D18 sync above, or the template inherits the stale rule. Full write-up:
+      `zk/doc/marble-theme-followups.md` item 6 (renamed from `harness-followups.md` in `zk` `67dd066352`;
+      same item number, same content).
 
 ---
 

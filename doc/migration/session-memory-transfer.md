@@ -84,7 +84,7 @@ The scratchpad, the background-task outputs and the cross-session socket address
 
 1. `zkThemeTemplate/doc/migration/marble-to-zk-execution-plan.md` — the **Status** line (first paragraph) is the single current state; then §4 (the harness rules), the P2 gate row, the P3 rows.
 2. Every `D<n>` in that plan marked **PROPOSED** or **deferred** (plan-side numbering; the chat-side series is separate — see the memory `decision-id-numbering-per-document`). The chat-side last-used numbers are recorded in the plan's status line at hand-over time.
-3. `doc/migration/gates/` — one verdict file per passed item; `P1.md` for the P1 gate; the P2 gate file when it exists.
+3. `doc/migration/gates/` — one verdict file per passed item; `P1.md`, `P2.md` and `P3.md` for the phase gates.
 4. `doc/migration/planner-cold-start-findings.md` — F1…F59+: every trap met so far, newest last. Read the last ten before touching a verify script.
 5. `doc/migration/ledgers/` — the 2.6–2.8 ledgers and `noisy-exceptions.tsv`.
 6. `doc/migration/tools/` — every verify script is self-documenting (header: usage, dry-run contract); `zero-tolerance/` for 2.6–2.8; `preview-server.sh` is the only way to start / stop zkpreview.
@@ -119,8 +119,75 @@ P3's `zk`-side items run in their **own** Planner session while the P2 session f
 
 - **P2 complete.** Gate [gates/P2.md](gates/P2.md) PASSED (Opus). Items 2.0–2.3, 2.6–2.11 PASSED; 2.4 (`zksandbox`, old demo) and 2.5 (live-reload) dropped by the user. Landed: zk `5cfc315c9d` `abd78dd210` `2e85f09947` `60f4895c4f` `9236dbe514` `79ce20577a` `0e29a12db6` `0889b51540`; zkcml `aabceeff2`. Ledgers under [ledgers/](ledgers/) (183 rows, no `OPEN`, exception list empty); the oracle is template `40c4ddda` (the D50-A re-cut as re-scoped by D61 A′ / D64 / D66).
 - **Chat D-numbers at close:** template session D61–D66, D68, D69 (open: forced-colors sweep, F61), D71 (ruled A, landed zk `49a7ebe65c`); P2 Planner D67 (A) and D70 (A); P3 Planner D200–D203. Next free for a new Planner: **D72** (P3 keeps D200+).
-- **P3 session progress (2026-09-11, night):** chat D200–D207 ruled (D204-A row 3.21, D205-A row 3.20, D207-A the 3.20 acceptance criterion, D206-A the `verify-2.3.sh` allowlist exception); landed in zk — 3.4 `d02d455290`, 3.18 `b8472729fd`, 3.7+3.8 `da540d2863`, 3.6 `f4b2d8f54f`, 3.9 `e124d5c075`, 3.5 `2421c7e47f`, 3.21 `eacdb7db1b`, 3.10 `321e7d0d9b`, 3.12 `3a041e7f4e`, 3.14 `f46fdaf456`, 3.19 `c2be449856`, 3.11 `009fb23479`, 3.13 `974b4dbd45`, 3.20 `a35ba12634` (D207-A: `static`+`probe` PASS, harness `scan` stage rejected as pre-existing oracle defect F74, logged as a follow-up owed to the template), 3.18b `cd02d18943` (PASSED first run after the 17:50 quota reset — `gallery › a` compared, 1 passed, nothing written; genuine PASS by the harness's 1% pixel tolerance, corrected from the Planner's first wrong explanation, F75) + `43d2a7d4ee` (the 4 baselines F75 flagged — `component-theming`, `dropupload`, `label`, `timepicker` — regenerated once zk-05's typography sweep committed as `zk` `47d26068ed`; full gallery project re-verified 82/82 green afterward); D206-A applied to `tools/verify-2.3.sh` (uncommitted, template-side — a `render-smoke.spec.ts` case in the harness-diff block, hand-verified zero residual diff; the script's other stages are stale against current zk HEAD and were not re-run wholesale); gates 3.4–3.21, 3.20 and 3.18b under `gates/`; findings F63–F65, F68, F70–F75 (next free **F76**). Open at the time of writing: the P3 gate (brief + verify written, the only P3 item left; the drill is the user's fresh session). Next free chat D for the P3 session: **D208**. Every template-side file of this session is uncommitted (the user commits the template).
+- **P3 session progress (2026-09-11, night):** chat D200–D207 ruled (D204-A row 3.21, D205-A row 3.20, D207-A the 3.20 acceptance criterion, D206-A the `verify-2.3.sh` allowlist exception); landed in zk — 3.4 `d02d455290`, 3.18 `b8472729fd`, 3.7+3.8 `da540d2863`, 3.6 `f4b2d8f54f`, 3.9 `e124d5c075`, 3.5 `2421c7e47f`, 3.21 `eacdb7db1b`, 3.10 `321e7d0d9b`, 3.12 `3a041e7f4e`, 3.14 `f46fdaf456`, 3.19 `c2be449856`, 3.11 `009fb23479`, 3.13 `974b4dbd45`, 3.20 `a35ba12634` (D207-A: `static`+`probe` PASS, harness `scan` stage rejected as pre-existing oracle defect F74, logged as a follow-up owed to the template), 3.18b `cd02d18943` (PASSED first run after the 17:50 quota reset — `gallery › a` compared, 1 passed, nothing written; genuine PASS by the harness's 1% pixel tolerance, corrected from the Planner's first wrong explanation, F75) + `43d2a7d4ee` (the 4 baselines F75 flagged — `component-theming`, `dropupload`, `label`, `timepicker` — regenerated once zk-05's typography sweep committed as `zk` `47d26068ed`; full gallery project re-verified 82/82 green afterward); D206-A applied to `tools/verify-2.3.sh` (uncommitted, template-side — a `render-smoke.spec.ts` case in the harness-diff block, hand-verified zero residual diff; the script's other stages are stale against current zk HEAD and were not re-run wholesale); gates 3.4–3.21, 3.20 and 3.18b under `gates/`; findings F63–F65, F68, F70–F75 (F76 was taken by the
+template session in the meantime; this session's F77 records the P3 gate's mechanical-criterion
+lesson — next free for a new session: **F78**). Open at the time of writing: the P3 gate (brief + verify written, the only P3 item left; the drill is the user's fresh session). Row **4.4b** added to P4 (2026-09-11, relayed by zk-05 on their user's ruling, D6 in zk-05's own chat series): delete `.z-label`'s redundant `color` (stage 1) and evaluate the four redundant font properties (stage 2) in `zul/src/main/resources/web/js/zul/wgt/css/label.css` — root cause of the 52 dead `z-bg-*` container text colours; full write-up `zk/doc/marble-theme-followups.md` item 6 (renamed from `harness-followups.md` in `zk` `67dd066352`, same item, same content); must land before 4.5 (the D18 sync) or the template inherits the stale rule. Next free chat D for the P3 session: **D208**. Every template-side file of this session is uncommitted (the user commits the template).
 - D69 (template session's forced-colors sweep) — **ruled B 2026-09-11: the CSS fix lands in zk (`zul/src/main/resources/web/zul/css/tokens/_forced-colors.css`), verified with zkpreview's `focus-scan` project under full-suite load; the template stays as it is** (the user's direction: the template changes as little as possible from here on, the end state is zk). Owner and row: the P3 session, **row 3.20 (chat D205 ruled A 2026-09-11)**; the three uncopied template scripts are row 3.21 (chat D204 ruled A the same day).
 - **Servers at close:** 8085 free (this session started zkpreview only through `preview-server.sh` and stopped it every time); 8081 is the template session's preview app, not ours. Scratch outputs of this session are gone with it; everything cited above is tracked.
 - **Tools that outlive the session:** `tools/zero-tolerance/` (measurement), `tools/verify-2.*.sh`, `tools/gate-p2.sh`, `tools/gate-from-journal.py`; the workflow script `marble-p2-verify.js` lives under the P2 session's `~/.claude/projects/…/workflows/scripts/` — copy its shape (ITEMS, COMMON_RULES, evaluatorBrief, gateOnly) for P4, not its ITEMS.
 - **Uncommitted at close:** template batch 21 (this session's gates 2.7 / 2.8 / 2.9 / 2.11 / P2, ledgers 2.7 / 2.8 + the header line on 2.6, briefs 2.7 / 2.8 / 2.11, `verify-2.11.sh`, `gate-p2.sh`, this document, and the shared plan / findings carrying the P3 session's edits and its staged gate files and briefs) awaits the user's word; nothing uncommitted in zk or zkcml from this session.
+
+## H. P3 Planner session closed 2026-09-12 — state at hand-over (for the P4 Planner)
+
+- **P3 complete.** Gate [gates/P3.md](gates/P3.md) **PASS-WITH-FINDINGS** — an independent Opus judge
+  scored a genuine cold-start drill (session `zk-79`, task: scrollview's Marble CSS in `../zkcml`),
+  found the substantive question ("can a session do real Marble work from `zk` + `zkcml` alone?")
+  answered yes across 241 tool calls with zero filesystem access outside the two repos, the
+  scratchpad and `~/.claude/`. Not a clean pass: three of five migrated agents still point at
+  `zkThemeTemplate`, `workspace/THEME/material-ui-7.3.1` and `workspace/DOC/zkdoc` (the drill never
+  hit this because it dispatched zero agents — self-sufficiency is proven for the hand-worked path
+  only), and the gate's own "re-cut the gallery baseline" clause was unsatisfiable as written (the
+  desktop path is pure structure; the new `scrollview-tablet.png` baseline is what actually shows the
+  styling). Both are accepted findings, not disqualifying defects; gate file has the full verdict,
+  the drill's RED→GREEN closure of C10, and this session's independent spot-checks of every material
+  claim (commits, working-tree status, the stale-path lines) before accepting it.
+- **Every P3 item PASSED** (3.1–3.21 and 3.18b; the earlier progress lines in §G above have the
+  commit hashes). D208 was the last chat-D number this session used with nothing new raised while
+  closing the gate — **next free for a new session: D208** still stands (P4 continues from there
+  unless it prefers its own series, matching the convention P3 used against P2's).
+- **Plan changes landed as part of closing this gate** (same commit range as `gates/P3.md`): the P3
+  gate row's literal "grep the transcript for `zkThemeTemplate`" clause is replaced by the judge's
+  amended criterion (verdict §3.4 — measured over tool-call inputs with a judge-dispatch cutoff, not
+  raw transcript text); the "`scrollview-gallery.png` re-cut" clause is reworded to accept a baseline
+  that demonstrates the styling (satisfied by `scrollview-tablet.png`) rather than requiring the
+  desktop shot to differ, which it structurally cannot.
+- **Findings routed to P4** (full detail in `gates/P3.md` §5 and its Planner notes; **not yet sized
+  into P4 rows** — that sizing is left to the P4 Planner, matching how every other phase's items were
+  sized fresh rather than inherited pre-sized):
+  1. Rewrite the stale pointers in three agents (`md3-design-verifier.md`, `zk-theme-creator.md`,
+     `zk-spec-author.md`, `zk-theme-evaluator.md`) plus `SKILL.md:137` and `audit-css.sh` (agent-memory
+     under `zk/.claude/agent-memory/`; MUI/ZKDoc vendored, declared external-by-design, or softened to
+     "if present") — absorbs the planner's own open **F64**. Acceptance test: a second drill whose task
+     forces at least one `Agent` dispatch.
+  2. The harness status files (`doc/harness/work-status.md`, `doc/harness/outcome-migration-status.md`)
+     are stale and self-contradicting after the drill's refusal to write them (single-writer,
+     orchestrator-owned) — needs an orchestrator pass and a written rule for what a non-orchestrator
+     session does with a status delta it cannot write (the drill's own **D2**, still open).
+  3. Sweep interaction-purpose components (drawer, splitter, slider, cropper, organigram pan,
+     biglistbox scroll, portallayout drag) for a contract row that performs the interaction, not just
+     asserts presence/geometry — the scrollview drill found six passing rows over dead touch scrolling.
+  4. `tasks/p3-gate-drill-audit.py` needs a judge-dispatch timestamp cutoff and should report accesses
+     as well as distinct paths, if a future cold-start drill reuses its shape.
+  5. Add a horizontal `scrollview.zul` instance to exercise M7 and c19–c22 (re-cuts both baseline
+     families per the dual-project rule the drill added to `verification.md`).
+  6. Row 3.18b's earlier "closed" status is reconfirmed superseded by `cd02d18943` — no action.
+  - Row **4.4b** (the `.z-label` fix from `zk-05`, already sized and sitting in the P4 table) is
+    unaffected by any of the above and still must land before row 4.5 (the D18 sync).
+- **Servers at close:** 8085 free (announced to peer session `zk-05` before every live run this
+  session made; stopped every time via `preview-server.sh`, which this session patched to reap orphan
+  Runners — see finding F71/F74 lineage). Nothing of this session's own is running.
+- **Uncommitted at close:** every template-side file this P3 session touched — the execution plan,
+  this document, `planner-cold-start-findings.md`, `gates/3.4.md` … `gates/3.21.md`, `gates/3.18b.md`,
+  `gates/P3.md` (new), briefs `drafts/brief-3.*.md`, `drafts/brief-p3-gate.md`, every `tools/verify-*.sh`
+  this session wrote or edited (including the D206-A allowlist line in `verify-2.3.sh`, template-side,
+  from before this session's own scope but landed by this session) — awaits the user's word, per the
+  standing rule that template-side files commit only on the user's instruction. Nothing is
+  uncommitted in `zk` or `zkcml` from this session's own hand; the scrollview commits, the 4.4b
+  discovery's supporting file rename, and everything else material-side landed as they were made,
+  per the earlier reports in this conversation.
+- **First message for the P4 session, to be pasted by the user:** *"You are the Planner for the
+  Marble → zk migration, phase P4. Read `zkThemeTemplate/doc/migration/session-memory-transfer.md`
+  §E in its reading order, then §H (the P3 hand-over and the findings queued for you to size into P4
+  rows), then the P4 section of the execution plan (row 4.4b is already sized; the rest is yours to
+  size from `gates/P3.md`'s findings). Report the current P4 state in the Task Report format before
+  doing anything."*

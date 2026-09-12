@@ -992,3 +992,19 @@ is now real rather than a stub; the template's copy still lists it (line 311). T
 at line 261 — is unchanged in both and must stay: zkmax's `lang-addon.xml` requests it through a `<css-uri>`, and build stage 0's
 `assertNoOrphanComponentCss()` throws if a non-empty component CSS is not css-uri-backed. zk is the source of truth; the template copy is
 frozen, so the single-line delta is expected, not drift.
+
+### F77 — A "grep the transcript for a path" mechanical criterion is unsatisfiable by construction once the migrated files legitimately cite the source repo (P3 gate, Opus judge scoring drill `zk-79`, 2026-09-12)
+
+The P3 gate row's mechanical clause read `grep -c 'zkThemeTemplate' <drill session>.jsonl` = 0. The judge who scored the
+actual cold-start drill found this fails **any** session that behaves correctly, because `zk`'s own migrated files
+(`.claude/skills/marble-theme/reference/verification.md`, `.claude/skills/marble-theme/scripts/audit-css.sh`) legitimately
+mention the template by name, and reading them is exactly what a self-sufficient session is supposed to do. The drill that
+passed this gate had 16 matching lines in its transcript — all from tool_result content (files it correctly read), its own
+self-audit script's needle list, an inbound peer message, and the judge's own dispatch prompt — and zero from actual
+filesystem access to the template. A literal transcript grep cannot distinguish "mentions a path" from "accessed a path".
+**Rule for any future cold-start / isolation gate:** measure over tool-call **inputs** (the parameters that cause real
+access — absolute paths, `~` forms, relative paths resolved against the call's own `cd` target), not raw transcript text;
+exclude records at or after a judge's own dispatch (its prompt otherwise inflates the count with itself); and name any
+argument-only path (like `--zk-home <parent-of-both-repos>`) as a sanctioned zone rather than a leak, if the repo's own
+skill documents that exact command (it did here — `SKILL.md:78`). Full reasoning: [gates/P3.md](gates/P3.md) §3.4 and
+Finding 6.
