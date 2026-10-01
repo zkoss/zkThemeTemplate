@@ -35,7 +35,7 @@
     .z-daterangebox-popup,
     .z-listbox,
     .z-grid,
-    .z-card {
+    .z-paper {
         border: 1px solid CanvasText;
     }
 
@@ -194,10 +194,15 @@
     /* (2a focus) A selected item is filled with Highlight, and --zk-focus-ring is
        Highlight too → the keyboard focus ring on the SELECTED item paints
        Highlight-on-Highlight and disappears. Re-point it to HighlightText, the
-       same pairing the label already uses. Only navbar is covered here; the other
-       selected-tint families are queued in doc/skill-gaps.md 2026-09-04. */
+       same pairing the label already uses. Covers navbar, tree row and organigram
+       node (tree row / org node added 2026-09-11 after the focus-ring scan caught
+       the collision, F61 of the migration notes); listbox row and accordion tab
+       have no outline to fix — see the scan's notes. */
     .z-navitem-selected > .z-navitem-content:focus-visible,
-    .z-navitem.z-navitem-selected > .z-navitem-content:focus-visible {
+    .z-navitem.z-navitem-selected > .z-navitem-content:focus-visible,
+    .z-treerow.z-treerow-selected:focus-visible,
+    .z-treerow.z-selected:focus-visible,
+    .z-orgitem-selected > .z-orgnode:focus-visible {
         outline-color: HighlightText;
     }
 

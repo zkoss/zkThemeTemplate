@@ -55,7 +55,7 @@
        so keep the surface boundary visible without the (invisible) shadow.
        Brand colors / backgrounds are intentionally kept (no ink-saving). */
     [class*="z-elevation-"],
-    .z-window, .z-panel, .z-card, .z-groupbox {
+    .z-window, .z-panel, .z-paper, .z-groupbox {
         box-shadow: none;
         border: 1px solid var(--zk-color-outline-variant);
     }

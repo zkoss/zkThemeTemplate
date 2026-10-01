@@ -6,7 +6,7 @@
    Font Weight
    ============================================ */
 .z-fw-light   { font-weight: 300; }
-.z-fw-regular { font-weight: 400; }
+.z-fw-normal { font-weight: 400; }
 .z-fw-medium  { font-weight: 500; }
 .z-fw-semibold{ font-weight: 600; }
 .z-fw-bold    { font-weight: 700; }
@@ -14,34 +14,41 @@
 /* Font Size — pure size scale (T-shirt naming).
    Values map to MD3 typescale sizes from tokens/_typography.css;
    sizes appearing in multiple roles share one utility (e.g. 16px = title-md = body-lg).
-   ┌──────────────┬─────┬──────────────────────────────────┐
-   │ class        │ px  │ MD3 typescale role(s)            │
-   ├──────────────┼─────┼──────────────────────────────────┤
-   │ z-text-xs    │ 11  │ label-small                      │
-   │ z-text-sm    │ 12  │ body-small, label-medium         │
-   │ z-text-md    │ 13  │ body-medium (default body)       │
-   │ z-text-base  │ 14  │ title-small, label-large         │
-   │ z-text-lg    │ 16  │ title-medium, body-large         │
-   │ z-text-xl    │ 22  │ title-large                      │
-   │ z-text-2xl   │ 24  │ headline-small                   │
-   │ z-text-3xl   │ 28  │ headline-medium                  │
-   │ z-text-4xl   │ 32  │ headline-large                   │
-   │ z-text-5xl   │ 36  │ display-small                    │
-   │ z-text-6xl   │ 45  │ display-medium                   │
-   │ z-text-7xl   │ 57  │ display-large                    │
-   └──────────────┴─────┴──────────────────────────────────┘ */
+
+   The run is deliberately monotone T-shirt with NO `base` step. An earlier scale had both
+   `z-text-md` (13) and `z-text-base` (14), but `base` means "the default size" in Tailwind,
+   and Marble's default body is the 13px one — so reaching for `z-text-base` to mean "normal
+   text" silently gave you one step too big. Every step is now a size word whose order you can
+   guess. See doc/utility-class-naming-review.md D3.
+
+   ┌─────────────┬─────┬──────────────────────────────────┐
+   │ class       │ px  │ MD3 typescale role(s)            │
+   ├─────────────┼─────┼──────────────────────────────────┤
+   │ z-text-xs   │ 11  │ label-small                      │
+   │ z-text-sm   │ 12  │ body-small, label-medium         │
+   │ z-text-md   │ 13  │ body-medium (default body)       │
+   │ z-text-lg   │ 14  │ title-small, label-large         │
+   │ z-text-xl   │ 16  │ title-medium, body-large         │
+   │ z-text-2xl  │ 22  │ title-large                      │
+   │ z-text-3xl  │ 24  │ headline-small                   │
+   │ z-text-4xl  │ 28  │ headline-medium                  │
+   │ z-text-5xl  │ 32  │ headline-large                   │
+   │ z-text-6xl  │ 36  │ display-small                    │
+   │ z-text-7xl  │ 45  │ display-medium                   │
+   │ z-text-8xl  │ 57  │ display-large                    │
+   └─────────────┴─────┴──────────────────────────────────┘ */
 .z-text-xs   { font-size: var(--zk-typescale-label-small-size); }
 .z-text-sm   { font-size: var(--zk-typescale-body-small-size); }
 .z-text-md   { font-size: var(--zk-typescale-body-medium-size); }
-.z-text-base { font-size: var(--zk-typescale-title-small-size); }
-.z-text-lg   { font-size: var(--zk-typescale-title-medium-size); }
-.z-text-xl   { font-size: var(--zk-typescale-title-large-size); }
-.z-text-2xl  { font-size: var(--zk-typescale-headline-small-size); }
-.z-text-3xl  { font-size: var(--zk-typescale-headline-medium-size); }
-.z-text-4xl  { font-size: var(--zk-typescale-headline-large-size); }
-.z-text-5xl  { font-size: var(--zk-typescale-display-small-size); }
-.z-text-6xl  { font-size: var(--zk-typescale-display-medium-size); }
-.z-text-7xl  { font-size: var(--zk-typescale-display-large-size); }
+.z-text-lg   { font-size: var(--zk-typescale-title-small-size); }
+.z-text-xl   { font-size: var(--zk-typescale-title-medium-size); }
+.z-text-2xl  { font-size: var(--zk-typescale-title-large-size); }
+.z-text-3xl  { font-size: var(--zk-typescale-headline-small-size); }
+.z-text-4xl  { font-size: var(--zk-typescale-headline-medium-size); }
+.z-text-5xl  { font-size: var(--zk-typescale-headline-large-size); }
+.z-text-6xl  { font-size: var(--zk-typescale-display-small-size); }
+.z-text-7xl  { font-size: var(--zk-typescale-display-medium-size); }
+.z-text-8xl  { font-size: var(--zk-typescale-display-large-size); }
 
 /* Text Alignment */
 .z-text-start  { text-align: start; }
@@ -64,8 +71,21 @@
 .z-lh-base { line-height: 1.5; }
 .z-lh-lg   { line-height: 1.75; }
 
-/* White-space */
+/* Text Decoration */
+.z-text-decoration-underline    { text-decoration: underline; }
+.z-text-decoration-line-through { text-decoration: line-through; }
+.z-text-decoration-none         { text-decoration: none; }
+
+/* Font Family */
+.z-font-monospace { font-family: var(--zk-typescale-mono-family); }
+
+/* White-space & word breaking */
+.z-text-wrap   { white-space: normal; }
 .z-text-nowrap { white-space: nowrap; }
+.z-text-break  { word-wrap: break-word; word-break: break-word; }
+.z-whitespace-pre      { white-space: pre; }
+.z-whitespace-pre-line { white-space: pre-line; }
+.z-whitespace-pre-wrap { white-space: pre-wrap; }
 
 /* ── Heading utility classes: z-h1 → z-h7 ──────────────────────
    Apply as sclass on any ZK component (label, div, span, etc.)

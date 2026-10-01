@@ -7,7 +7,6 @@
    ============================================ */
 .z-text-primary     { color: var(--zk-color-primary); }
 .z-text-secondary   { color: var(--zk-color-on-surface-variant); }
-.z-text-muted       { color: var(--zk-color-on-surface-variant); }
 .z-text-success     { color: var(--zk-color-success); }
 .z-text-warning     { color: var(--zk-color-warning); }
 .z-text-error       { color: var(--zk-color-error); }
@@ -17,6 +16,11 @@
 .z-text-inverse     { color: var(--zk-color-inverse-on-surface); }
 .z-text-on-primary  { color: var(--zk-color-on-primary); }
 .z-text-on-surface  { color: var(--zk-color-on-surface); }
+.z-text-on-primary-container   { color: var(--zk-color-on-primary-container); }
+.z-text-on-secondary-container { color: var(--zk-color-on-secondary-container); }
+.z-text-on-error-container     { color: var(--zk-color-on-error-container); }
+.z-text-on-success-container   { color: var(--zk-color-on-success-container); }
+.z-text-on-warning-container   { color: var(--zk-color-on-warning-container); }
 
 /* ============================================
    Background Colors
@@ -34,8 +38,11 @@
 .z-bg-info               { background-color: var(--zk-color-status-info-fill);    color: var(--zk-color-on-status); }
 .z-bg-surface            { background-color: var(--zk-color-surface); }
 .z-bg-surface-variant    { background-color: var(--zk-color-surface-variant); }
-.z-bg-surface-low        { background-color: var(--zk-color-surface-container-low); }
+.z-bg-surface-container-low        { background-color: var(--zk-color-surface-container-low); }
+.z-bg-surface-container-lowest     { background-color: var(--zk-color-surface-container-lowest); }
 .z-bg-surface-container  { background-color: var(--zk-color-surface-container); }
+.z-bg-surface-container-high       { background-color: var(--zk-color-surface-container-high); }
+.z-bg-surface-container-highest    { background-color: var(--zk-color-surface-container-highest); }
 .z-bg-transparent        { background-color: transparent; }
 
 } /* end @layer zk-utilities */
