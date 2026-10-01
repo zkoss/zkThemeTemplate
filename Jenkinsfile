@@ -41,7 +41,8 @@ pipeline {
                 dir('marble') {
                     sh 'npm ci'
                     // skip.watch.css: the async dev-mode watcher would overwrite the minified CSS before packaging
-                    sh '../release-helper/mavenBuild.sh -e ${edition} -Dskip.watch.css=true'
+                    // params are empty on a job's very first run, hence the fallback
+                    sh "../release-helper/mavenBuild.sh -e ${params.edition ?: 'freshly'} -Dskip.watch.css=true"
                 }
                 // releaseToFileServer.sh reads version.properties from the workspace root
                 sh 'cp marble/version.properties .'
