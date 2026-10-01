@@ -2,8 +2,8 @@
 // when 'publish' is ticked, triggers PBFUM to push it to the ZK CE Maven repo
 // (https://mavensync.zkoss.org/maven2/org/zkoss/theme/marble/).
 //
-// Version: mavenBuild.sh takes <version> from pom.xml (11.0.0) and, for the
-// 'freshly' edition, appends .FL.yyyymmdd  ->  11.0.0.FL.20261001
+// Version: mavenBuild.sh takes <version> from pom.xml (11.0.0) and appends
+// .FL.yyyymmdd (freshly edition)  ->  11.0.0.FL.20261001
 pipeline {
     agent any
 
@@ -14,7 +14,6 @@ pipeline {
     }
 
     parameters {
-        choice(name: 'edition', choices: ['freshly', 'official'], description: 'Build edition: freshly = 11.0.0.FL.yyyymmdd, official = 11.0.0')
         booleanParam(name: 'publish', defaultValue: false, description: 'Also trigger PBFUM to publish to the CE Maven repo. Maven releases are immutable - leave unticked for a trial run.')
     }
 
@@ -41,8 +40,8 @@ pipeline {
                 dir('marble') {
                     sh 'npm ci'
                     // skip.watch.css: the async dev-mode watcher would overwrite the minified CSS before packaging
-                    // params are empty on a job's very first run, hence the fallback
-                    sh "../release-helper/mavenBuild.sh -e ${params.edition ?: 'freshly'} -Dskip.watch.css=true"
+                    // This job only ever releases the 'freshly' edition (11.0.0.FL.yyyymmdd)
+                    sh '../release-helper/mavenBuild.sh -e freshly -Dskip.watch.css=true'
                 }
                 // releaseToFileServer.sh reads version.properties from the workspace root
                 sh 'cp marble/version.properties .'
