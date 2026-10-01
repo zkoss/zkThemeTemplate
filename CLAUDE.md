@@ -7,7 +7,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 This is **Marble** - a Material Design theme for ZK Framework targeting enterprise customers, visually aligned with MUI (React Material UI). The project uses pure CSS (no LESS) with CSS Custom Properties for theming.
 
 - **Theme Name**: `marble`
-- **Version**: 1.0.0
+- **Version**: 11.0.0
 - **ZK Version**: 10.4.0-jakarta.FL.20260713-Eval
 - **Design System**: Material Design (MUI-aligned; tokens follow MD3 naming, visual values follow MUI v7)
 - **Spring Boot Version**: 3.2.6 (for preview app)

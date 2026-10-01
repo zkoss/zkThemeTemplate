@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.zkoss.theme</groupId>
 	<artifactId>marble</artifactId>
-	<version>1.0.0</version>
+	<version>11.0.0</version>
 	<properties>
 		<maven.compiler.source>17</maven.compiler.source>
 		<maven.compiler.target>17</maven.compiler.target>
@@ -11,6 +11,8 @@
 		<zkspringboot.version>3.2.6</zkspringboot.version>
 		<springboot.version>3.2.6</springboot.version>
 		<maven.build.timestamp.format>yyyy-MM-dd</maven.build.timestamp.format>
+		<!-- CI/release builds set -Dskip.watch.css=true so the async dev-mode watcher cannot overwrite the minified CSS before packaging -->
+		<skip.watch.css>false</skip.watch.css>
 		<packname>-${project.version}</packname>
 		<zktheme.resources>${project.basedir}/src/main/resources</zktheme.resources>
 		<zktheme.web.resources>${zktheme.resources}/web</zktheme.web.resources>
@@ -267,6 +269,7 @@
 								<argument>watch</argument>
 							</arguments>
 							<async>true</async>
+							<skip>${skip.watch.css}</skip>
 						</configuration>
 					</execution>
 				</executions>

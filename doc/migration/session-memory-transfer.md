@@ -166,7 +166,7 @@ lesson — next free for a new session: **F78**). Open at the time of writing: t
   3. Sweep interaction-purpose components (drawer, splitter, slider, cropper, organigram pan,
      biglistbox scroll, portallayout drag) for a contract row that performs the interaction, not just
      asserts presence/geometry — the scrollview drill found six passing rows over dead touch scrolling.
-  4. `tasks/p3-gate-drill-audit.py` needs a judge-dispatch timestamp cutoff and should report accesses
+  4. the untracked P3 gate-drill audit script (local scratch, not in the repo) needs a judge-dispatch timestamp cutoff and should report accesses
      as well as distinct paths, if a future cold-start drill reuses its shape.
   5. Add a horizontal `scrollview.zul` instance to exercise M7 and c19–c22 (re-cuts both baseline
      families per the dual-project rule the drill added to `verification.md`).
