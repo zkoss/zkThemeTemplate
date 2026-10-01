@@ -1,4 +1,4 @@
-/* MD3 Utility Classes — Component utilities (paper, etc.)
+/* MD3 Utility Classes — Surface utilities
    .z-paper is the elevated surface primitive — MUI's <Paper>. It is deliberately not named
    .z-card: every ZK widget renders .z-<widgetname>, so a Card component would collide with it
    from a different cascade layer and silently win or lose. The --zk-shape-card and

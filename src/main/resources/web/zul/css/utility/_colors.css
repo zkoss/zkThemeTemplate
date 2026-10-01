@@ -43,6 +43,7 @@
 .z-bg-surface-container  { background-color: var(--zk-color-surface-container); }
 .z-bg-surface-container-high       { background-color: var(--zk-color-surface-container-high); }
 .z-bg-surface-container-highest    { background-color: var(--zk-color-surface-container-highest); }
+.z-bg-inverse-surface    { background-color: var(--zk-color-inverse-surface);    color: var(--zk-color-inverse-on-surface); }
 .z-bg-transparent        { background-color: transparent; }
 
 } /* end @layer zk-utilities */

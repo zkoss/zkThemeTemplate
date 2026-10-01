@@ -4,11 +4,9 @@
    (build-css.js asserts every component/base file is wrapped). So utilities override components,
    components override base, and unlayered styles — the theme's own tokens/tablet plus ALL downstream
    USER CSS — win over every layer with any specificity, no !important.
-   The bare order statement below MUST stay OUTSIDE any block and load first (reset.css is served
-   ahead of the component CSS). NOTE: keep this comment free of any literal at-rule "layer <name>;"
-   form — build-css.js extracts bare layer statements by regex (incl. from comments) for a CleanCSS guard. */
-@layer zk-base, zk-components, zk-utilities;
-
+   The order itself is declared in zul/css/_layer-order.css, the first file of zk.wcs, not here:
+   this file holds only zk-base, the lowest layer, so loading it first cannot change the order,
+   and a page that never loads it keeps utilities above components. */
 @layer zk-base {
 
 /* CSS Reset for marble — normalize browser defaults */
