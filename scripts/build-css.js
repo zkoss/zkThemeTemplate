@@ -362,15 +362,15 @@ function getLucideIcons() {
 const FONT_SOURCES = [
     {
         from: 'node_modules/@fontsource-variable/inter/files/inter-latin-wght-normal.woff2',
-        to: 'font/inter-latin-variable.woff2',
+        to: 'zul/font/inter-latin-variable.woff2',
     },
     {
         from: 'node_modules/@fontsource-variable/inter/files/inter-latin-ext-wght-normal.woff2',
-        to: 'font/inter-latin-ext-variable.woff2',
+        to: 'zul/font/inter-latin-ext-variable.woff2',
     },
     {
         from: 'node_modules/@fontsource-variable/inter/LICENSE',
-        to: 'font/inter-LICENSE.txt',
+        to: 'zul/font/inter-LICENSE.txt',
     },
 ];
 
@@ -387,7 +387,7 @@ function copyFonts() {
         fs.copyFileSync(src, dest);
         copied++;
     }
-    if (copied) console.log(`  font/ — Inter latin + latin-ext variable woff2 (+ OFL license) [${copied} files]`);
+    if (copied) console.log(`  zul/font/ — Inter latin + latin-ext variable woff2 (+ OFL license) [${copied} files]`);
 }
 
 // Font Awesome name → Lucide name aliases.
@@ -552,10 +552,36 @@ ${entries}
     fs.writeFileSync(destPath, zul, 'utf8');
 }
 
+// ─── TRIAL PERIOD ONLY — remove when Marble becomes ZK's default theme ──────────────────────
+// This template builds Marble as an EXTRA, non-default theme jar, for ZK runtimes whose default
+// theme is still IceBlue (e.g. zul 11.0.0.FL.20260930, StandardTheme.DEFAULT_NAME = "iceblue").
+// The CSS source is synced from zk (zk/scripts/sync-marble-theme-baseline.sh), where Marble IS
+// the default theme and lives in the zul jar. zk writes theme resource URLs either as
+// `${c:encodeURL("~./…")}` or, once its DSP removal lands, as plain `url("~./…")` resolved at
+// runtime by zk's ThemeCSSFns.includeCSS. Neither works in this jar on an older runtime:
+// c:encodeURL never adds the theme prefix, so `~./zul/font/…` is looked up in the zul jar instead
+// of this one (404), and the older runtime has no ThemeCSSFns. Rewrite both forms to
+// `${c:encodeThemeURL("~./…")}`: ZK resolves it to `~./marble/…` while Marble is a non-default
+// theme jar, and leaves it `~./…` once Marble is the default. Matching layout: FONT_SOURCES copies
+// the fonts to zul/font/, the same path as in the zul jar.
+//
+// REMOVE toTrialThemeUrls, its call in readFile and the taglib prepend in writeDsp when this
+// branch replaces master because Marble became the default theme: the theme then ships inside the
+// ZK jars and this jar is no longer built.
+const TRIAL_PLAIN_URL_RE = /url\(\s*(['"]?)(~\.\/[^'")\s]+)\1\s*\)/g;
+const TRIAL_ENCODE_URL_RE = /\$\{c:encodeURL\("(~\.\/[^"]+)"\)\}/g;
+
+function toTrialThemeUrls(css) {
+    return css
+        .replace(TRIAL_PLAIN_URL_RE, (_, q, uri) => `url(\${c:encodeThemeURL("${uri}")})`)
+        .replace(TRIAL_ENCODE_URL_RE, (_, uri) => `\${c:encodeThemeURL("${uri}")}`);
+}
+// ─── end TRIAL PERIOD ONLY ─────────────────────────────────────────────────────────────────
+
 function readFile(relativePath) {
     const fullPath = path.join(webDir, relativePath);
     if (fs.existsSync(fullPath)) {
-        return fs.readFileSync(fullPath, 'utf8');
+        return toTrialThemeUrls(fs.readFileSync(fullPath, 'utf8'));
     }
     return '';
 }
@@ -563,7 +589,9 @@ function readFile(relativePath) {
 function writeDsp(relativePath, content) {
     const fullPath = path.join(themeDir, relativePath);
     fs.mkdirSync(path.dirname(fullPath), { recursive: true });
-    fs.writeFileSync(fullPath, minifyCss(content));
+    const css = minifyCss(content);
+    // TRIAL PERIOD ONLY: a file that toTrialThemeUrls gave a DSP expression needs the taglib.
+    fs.writeFileSync(fullPath, css.includes('${c:') ? DSP_CORE_TAGLIB + css : css);
 }
 
 // Write content verbatim (no minify pass). Used for CSS the build has already minified and
