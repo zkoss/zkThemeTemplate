@@ -107,6 +107,8 @@ function assertLayer(relPath, content, layer) {
 
 // norm.css.dsp = tokens + base + global styles (loaded first by WCS)
 const normFiles = [
+    // Cascade layer order — must stay first so it precedes every layer in zk.wcs.
+    'zul/css/_layer-order.css',
     'zul/css/tokens/_fonts.css',
     'zul/css/tokens/_colors.css',
     'zul/css/tokens/_typography.css',
@@ -138,11 +140,12 @@ const normFiles = [
     // _spacing.css — see doc/spec/spacing-policy.md, gap log 2026-06-05).
     'zul/css/utility/_colors.css',
     'zul/css/utility/_elevation.css',
-    'zul/css/utility/_components.css',
+    'zul/css/utility/_surface.css',
     'zul/css/utility/_spacing.css',
     'zul/css/utility/_layout.css',
     'zul/css/utility/_typography.css',
     'zul/css/utility/_borders.css',
+    'zul/css/utility/_interactions.css',
     'zul/css/utility/_stack.css',
     'zul/css/utility/_print.css',
     'zul/css/base/_icons.css',
@@ -649,6 +652,38 @@ function assertNoOrphanComponentCss() {
     }
 }
 
+// zul/css sources emitted as their own stylesheet rather than bundled (see buildResetVariants).
+const standaloneZulCssFiles = [
+    'zul/css/base/_reset.css',
+];
+
+// Build-time guard: every zul/css source must be bundled or emitted on its own. These files are
+// not auto-scanned, so one missing from the lists is silently left out of the jar. The upstream
+// sync (zk/scripts/sync-marble-theme-baseline.sh) copies CSS only, so a file it adds or renames
+// lands here without a matching list edit — this is how _layer-order.css, _surface.css (renamed
+// from _components.css) and _interactions.css were all dropped once.
+function assertZulCssCovered() {
+    const listed = new Set([...normFiles, ...footerFiles, ...standaloneZulCssFiles]);
+    const zulCssDir = path.join(webDir, 'zul/css');
+    const unlisted = [];
+    (function walk(dir) {
+        for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+            const fullPath = path.join(dir, entry.name);
+            if (entry.isDirectory()) walk(fullPath);
+            else if (entry.name.endsWith('.css')) {
+                const relPath = path.relative(webDir, fullPath).replace(/\\/g, '/');
+                if (!listed.has(relPath)) unlisted.push(relPath);
+            }
+        }
+    })(zulCssDir);
+    if (unlisted.length) {
+        throw new Error(
+            'zul/css source not in any build list — it would be left out of the jar:\n' +
+            unlisted.map(f => '  - ' + f).join('\n') +
+            '\nFix: add it to `normFiles`, `footerFiles` or `standaloneZulCssFiles` in scripts/build-css.js.');
+    }
+}
+
 // Bare `@layer <names>;` order statement (same shape minifyCss guards against).
 const LAYER_STMT_RE = /@layer\s+[\w-]+(?:\s*,\s*[\w-]+)*\s*;/;
 // The html/body page-frame block, delimited by markers in _reset.css.
@@ -696,6 +731,7 @@ function buildResetVariants() {
 function build() {
     // 0. Fail fast if any no-css-uri component CSS would be emitted as an orphaned 1:1 dsp.
     assertNoOrphanComponentCss();
+    assertZulCssCovered();
 
     // 0a. Write empty stubs for unimplemented components
     for (const stubPath of stubPaths) {

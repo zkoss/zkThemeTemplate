@@ -3,6 +3,7 @@ package org.zkoss.theme.marble;
 import org.zkoss.lang.Library;
 import org.zkoss.web.fn.ServletFns;
 import org.zkoss.zk.ui.Execution;
+import org.zkoss.zk.ui.WebApps;
 import org.zkoss.zk.ui.util.ThemeProvider;
 
 import java.util.*;
@@ -29,6 +30,9 @@ public class MarbleThemeProvider implements ThemeProvider {
     public Collection<Object> getThemeURIs(Execution exec, List<Object> uris) {
         final boolean embedSafe = Boolean.parseBoolean(Library.getProperty(BROWSER_DEFAULT, "false"));
         final String resetUri = ServletFns.resolveThemeURL(embedSafe ? RESET_EMBED : RESET_GLOBAL);
+        // a theme that predates Marble ships no reset stylesheet; its norm.css.dsp carries its own
+        if (WebApps.getCurrent().getResource(resetUri) == null)
+            return uris;
 
         final List<Object> out = new ArrayList<>(uris.size() + 1);
         boolean inserted = false;
