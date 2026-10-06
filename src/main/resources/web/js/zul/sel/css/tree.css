@@ -164,9 +164,9 @@
     cursor: not-allowed;
 }
 
-/* Focus */
-.z-treerow:focus-visible,
-.z-treerow.z-treerow-focus {
+/* Focus — keyboard navigation only: gate on the hidden .z-focus-a trap's
+ * :focus-visible (see listbox.css) so a mouse click shows no ring. */
+.z-tree:has(.z-focus-a:focus-visible) .z-treerow.z-treerow-focus {
     outline: var(--zk-focus-ring);
     outline-offset: -2px;
 }

@@ -196,12 +196,16 @@
        Highlight-on-Highlight and disappears. Re-point it to HighlightText, the
        same pairing the label already uses. Covers navbar, tree row and organigram
        node (tree row / org node added 2026-09-11 after the focus-ring scan caught
-       the collision, F61 of the migration notes); listbox row and accordion tab
-       have no outline to fix — see the scan's notes. */
+       the collision, F61 of the migration notes). Listbox and tree rows are never
+       DOM-focused, so their ring is keyboard-gated via .z-focus-a:focus-visible
+       (see listbox.css / tree.css); accordion tab has no outline to fix — see the
+       scan's notes. */
     .z-navitem-selected > .z-navitem-content:focus-visible,
     .z-navitem.z-navitem-selected > .z-navitem-content:focus-visible,
-    .z-treerow.z-treerow-selected:focus-visible,
-    .z-treerow.z-selected:focus-visible,
+    .z-tree:has(.z-focus-a:focus-visible) .z-treerow.z-treerow-focus.z-treerow-selected,
+    .z-tree:has(.z-focus-a:focus-visible) .z-treerow.z-treerow-focus.z-selected,
+    .z-listbox:has(.z-focus-a:focus-visible) .z-listitem.z-listitem-focus.z-listitem-selected,
+    .z-listbox:has(.z-focus-a:focus-visible) .z-listitem.z-listitem-focus.z-selected,
     .z-orgitem-selected > .z-orgnode:focus-visible {
         outline-color: HighlightText;
     }

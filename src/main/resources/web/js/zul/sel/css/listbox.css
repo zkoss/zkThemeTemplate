@@ -263,10 +263,13 @@
     background-color: color-mix(in srgb, var(--zk-listbox-selected-fg) 8%, var(--zk-listbox-selected-bg));
 }
 
-/* Focus — outline on <tr> clips at cell boundaries; use box-shadow on the first cell instead */
-.z-listitem:focus-visible .z-listcell:first-child,
-.z-listitem.z-listitem-focus .z-listcell:first-child {
-    box-shadow: inset 3px 0 0 var(--zk-color-primary);
+/* Focus — rows are never DOM-focused; ZK marks the current row with
+ * .z-listitem-focus on mouse click and keyboard alike. Gate on the hidden
+ * .z-focus-a trap's :focus-visible so the ring shows for keyboard navigation
+ * only. Inset offset keeps the ring inside the row (same as tree). */
+.z-listbox:has(.z-focus-a:focus-visible) .z-listitem.z-listitem-focus {
+    outline: var(--zk-focus-ring);
+    outline-offset: -2px;
 }
 
 /* Cell */
