@@ -228,6 +228,18 @@
         forced-color-adjust: none;
     }
 
+    /* (2a-tab) Tab active indicator is a painted bar (background-color); forced-colors
+       would flip it to Canvas and the selected tab would look like the others. Opt the
+       bar out and pin it to Highlight; unselected tabs draw no bar (and no border). */
+    .z-tabbox-top > .z-tabs .z-tab-selected .z-tab-content::after,
+    .z-tabbox-bottom > .z-tabs .z-tab-selected .z-tab-content::after,
+    .z-tabbox-left > .z-tabs .z-tab-selected::after,
+    .z-tabbox-vertical > .z-tabs .z-tab-selected::after,
+    .z-tabbox-right > .z-tabs .z-tab-selected::after {
+        forced-color-adjust: none;
+        background-color: Highlight;
+    }
+
     /* (2a-cont) Calendar selected day: the Highlight remap collapses the day-number
        into its disc. Opt the cell out to reproduce the primary-disc / on-primary-number
        pairing (forced-color-adjust inherits → covers the number and the ::before disc). */

@@ -91,13 +91,11 @@
     line-height: var(--zk-typescale-label-large-line-height);
     white-space: nowrap;
     user-select: none;
-    border-bottom: 2px solid transparent;
+    padding-bottom: 2px;   /* 2px slot the active indicator sits in (was a border) */
     margin-bottom: -1px;
     overflow: hidden;
     background: transparent;
-    transition:
-        color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard),
-        border-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
+    transition: color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
 }
 
 /* State layer */
@@ -121,7 +119,78 @@
 /* ─── Selected tab ───────────────────────────────────────────────────────── */
 .z-tab.z-tab-selected {
     color: var(--zk-tab-accent);
-    border-bottom-color: var(--zk-tab-accent);
+}
+
+/* ─── Active indicator (MD3 primary tab) ─────────────────────────────────── */
+/* 3px bar in --zk-tab-accent, as long as the label (min 24px), centred on it,
+ * rounded on the label-facing side, sitting on the tab's outer edge but 1px
+ * inside it: the tab overlaps the tabs divider by 1px (margin -1px), so the
+ * bar ends where the divider begins and all 3 rows stay visible. ::before is
+ * the state layer, so the bar is ::after. The label box is not touched (it
+ * keeps overflow:hidden for the ellipsis). Top/bottom: anchored to
+ * .z-tab-content, stretched to the tab so its edge is the tab edge less the
+ * 2px slot; the label's span is the content less its padding and the trailing
+ * close button (16px + 4px gap), so the bar's width follows the label and its
+ * centre stays on the label's. Left/right: anchored to .z-tab; the label
+ * height is its line-height. Selectors are scoped to the four orientations, so
+ * the accordion mold is untouched. */
+.z-tabbox-top > .z-tabs .z-tab-content,
+.z-tabbox-bottom > .z-tabs .z-tab-content {
+    align-self: stretch;
+    --zk-tab-label-start: var(--zk-spacing-4);
+    --zk-tab-label-end: var(--zk-spacing-4);
+}
+
+.z-tabbox-top > .z-tabs .z-tab-content:has(> .z-tab-button),
+.z-tabbox-bottom > .z-tabs .z-tab-content:has(> .z-tab-button) {
+    --zk-tab-label-end: calc(var(--zk-spacing-2) + 16px + var(--zk-spacing-1));
+}
+
+.z-tabbox-top > .z-tabs .z-tab-selected .z-tab-content::after,
+.z-tabbox-bottom > .z-tabs .z-tab-selected .z-tab-content::after {
+    content: '';
+    position: absolute;
+    left: calc(var(--zk-tab-label-start) + (100% - var(--zk-tab-label-start) - var(--zk-tab-label-end)) / 2);
+    width: calc(100% - var(--zk-tab-label-start) - var(--zk-tab-label-end));
+    min-width: 24px;
+    height: 3px;
+    transform: translateX(-50%);
+    background-color: var(--zk-tab-accent);
+    pointer-events: none;
+}
+
+.z-tabbox-top > .z-tabs .z-tab-selected .z-tab-content::after {
+    bottom: -1px;
+    border-radius: 3px 3px 0 0;
+}
+
+.z-tabbox-bottom > .z-tabs .z-tab-selected .z-tab-content::after {
+    top: -1px;
+    border-radius: 0 0 3px 3px;
+}
+
+.z-tabbox-left > .z-tabs .z-tab-selected::after,
+.z-tabbox-vertical > .z-tabs .z-tab-selected::after,
+.z-tabbox-right > .z-tabs .z-tab-selected::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 3px;
+    height: max(24px, var(--zk-typescale-label-large-line-height));
+    transform: translateY(-50%);
+    background-color: var(--zk-tab-accent);
+    pointer-events: none;
+}
+
+.z-tabbox-left > .z-tabs .z-tab-selected::after,
+.z-tabbox-vertical > .z-tabs .z-tab-selected::after {
+    right: 1px;
+    border-radius: 3px 0 0 3px;
+}
+
+.z-tabbox-right > .z-tabs .z-tab-selected::after {
+    left: 1px;
+    border-radius: 0 3px 3px 0;
 }
 
 /* ─── Disabled tab ───────────────────────────────────────────────────────── */
@@ -365,14 +434,10 @@
 }
 
 .z-tabbox-bottom .z-tab {
-    border-bottom: none;
-    border-top: 2px solid transparent;
+    padding-bottom: 0;
+    padding-top: 2px;
     margin-top: -1px;
     margin-bottom: 0;
-}
-
-.z-tabbox-bottom .z-tab.z-tab-selected {
-    border-top-color: var(--zk-color-primary);
 }
 
 /* orient="vertical" → z-tabbox-vertical; orient="left" → z-tabbox-left */
@@ -398,8 +463,8 @@
 
 .z-tabbox-left .z-tab,
 .z-tabbox-vertical .z-tab {
-    border-bottom: none;
-    border-right: 2px solid transparent;
+    padding-bottom: 0;
+    padding-right: 2px;
     margin-bottom: 0;
     margin-right: -1px;
     justify-content: flex-start;
@@ -407,7 +472,6 @@
 
 .z-tabbox-left .z-tab.z-tab-selected,
 .z-tabbox-vertical .z-tab.z-tab-selected {
-    border-right-color: var(--zk-color-primary);
     color: var(--zk-color-primary);
 }
 
@@ -445,15 +509,14 @@
 }
 
 .z-tabbox-right .z-tab {
-    border-bottom: none;
-    border-left: 2px solid transparent;
+    padding-bottom: 0;
+    padding-left: 2px;
     margin-bottom: 0;
     margin-left: -1px;
     justify-content: flex-start;
 }
 
 .z-tabbox-right .z-tab.z-tab-selected {
-    border-left-color: var(--zk-color-primary);
     color: var(--zk-color-primary);
 }
 
