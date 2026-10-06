@@ -78,7 +78,7 @@
     /* cell padding → --zk-grid-cell-padding (tokens/_sizing.css). */
 
     /* ── Listbox — outlined data table WITH row selection ────────────────
-       Grid's model plus selection (primary-container fill + paired text).
+       Grid's model plus selection (secondary-container fill + paired text).
        Foot/group accents + legacy striping fallbacks stay on base tokens. */
     --zk-listbox-bg:           var(--zk-color-surface);
     --zk-listbox-border-color: var(--zk-color-outline-variant);
@@ -86,8 +86,8 @@
     --zk-listbox-header-fg:    var(--zk-color-on-surface-variant);
     --zk-listbox-row-hover-bg: color-mix(in srgb, var(--zk-color-on-surface) 8%, var(--zk-color-surface));
     --zk-listbox-stripe-bg:    var(--zk-color-surface-container-lowest);
-    --zk-listbox-selected-bg:  var(--zk-color-primary-container);
-    --zk-listbox-selected-fg:  var(--zk-color-on-primary-container);
+    --zk-listbox-selected-bg:  var(--zk-color-secondary-container);
+    --zk-listbox-selected-fg:  var(--zk-color-on-secondary-container);
     /* cell padding → --zk-listbox-cell-padding (tokens/_sizing.css). */
 
     /* ── Tree — outlined tree table WITH row selection ───────────────────
@@ -97,8 +97,8 @@
     --zk-tree-radius:       var(--zk-shape-card);
     --zk-tree-header-fg:    var(--zk-color-on-surface-variant);
     --zk-tree-row-hover-bg: color-mix(in srgb, var(--zk-color-on-surface) 8%, var(--zk-color-surface));
-    --zk-tree-selected-bg:  var(--zk-color-primary-container);
-    --zk-tree-selected-fg:  var(--zk-color-on-primary-container);
+    --zk-tree-selected-bg:  var(--zk-color-secondary-container);
+    --zk-tree-selected-fg:  var(--zk-color-on-secondary-container);
     /* cell padding → --zk-tree-cell-padding (tokens/_sizing.css). */
 
     /* ── Panel — card surface + header (window-like; has resting elevation) */
@@ -135,8 +135,8 @@
     --zk-combobox-popup-bg:           var(--zk-color-surface);
     --zk-combobox-popup-radius:       var(--zk-shape-menu);
     --zk-combobox-item-hover-bg:      rgba(0, 0, 0, 0.08);
-    --zk-combobox-selected-bg:        var(--zk-color-primary-container);
-    --zk-combobox-selected-fg:        var(--zk-color-on-primary-container);
+    --zk-combobox-selected-bg:        var(--zk-color-secondary-container);
+    --zk-combobox-selected-fg:        var(--zk-color-on-secondary-container);
 
     /* ── Datebox — outlined date-picker field + calendar popup ───────────
        Wrapper-border model: border sits on .z-datebox and focus is an inset
@@ -241,7 +241,7 @@
     --zk-chosenbox-popup-bg:           var(--zk-color-surface);
     --zk-chosenbox-popup-radius:       var(--zk-shape-menu);
     --zk-chosenbox-item-bg:            var(--zk-color-surface-container-high);
-    --zk-chosenbox-item-focus-bg:      var(--zk-color-primary-container);
+    --zk-chosenbox-item-focus-bg:      var(--zk-color-secondary-container);
 
     /* ── Tab (tabbox) — nav chrome + active accent ───────────────────────
        State is a ::before overlay; the accent colors the state-layer tint,
@@ -257,7 +257,7 @@
     --zk-menupopup-bg:           var(--zk-color-surface);
     --zk-menupopup-radius:       var(--zk-shape-menu);
     --zk-menupopup-border-color: var(--zk-color-outline-variant);
-    --zk-menuitem-selected-bg:   var(--zk-color-primary-container);
+    --zk-menuitem-selected-bg:   var(--zk-color-secondary-container);
 
     /* ── Badge (native, ZK-6097) — the indicator resolves these. ZK always stamps
        a severity class (default `info`), and the indicator is a CHILD of it, so a
@@ -681,8 +681,8 @@
        text, and each (non-selected) item's text — all four read
        var(--zk-color-on-surface) today, the same "one knob, several roles"
        precedent as chosenbox/cascader's fg. The selected item is the
-       LIST-ROW selection family (primary-container fill + paired text, NOT
-       the chip/secondary-container family — see doc/contracts/searchbox.md),
+       LIST-ROW selection family (secondary-container fill + paired text, MD3 list-item.selected;
+       not the primary-container picker — see doc/contracts/searchbox.md),
        the defining state: --zk-searchbox-selected-bg / -selected-fg, the
        same pairing precedent as combobox's selected-bg/-fg. The placeholder
        text, trigger/item icons, item hover/active background, the search
@@ -699,8 +699,8 @@
     --zk-searchbox-border-color-focus: var(--zk-color-primary);
     --zk-searchbox-popup-bg:           var(--zk-color-surface);
     --zk-searchbox-popup-radius:       var(--zk-shape-corner-medium);
-    --zk-searchbox-selected-bg:        var(--zk-color-primary-container);
-    --zk-searchbox-selected-fg:        var(--zk-color-on-primary-container);
+    --zk-searchbox-selected-bg:        var(--zk-color-secondary-container);
+    --zk-searchbox-selected-fg:        var(--zk-color-on-secondary-container);
 
     /* ── Drawer (EE, zkmax) — sliding side-sheet panel + header + close button
        (zkmax/wgt/css/drawer.css). --zk-drawer-elevation is a single STATIC

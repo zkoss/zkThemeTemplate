@@ -370,7 +370,7 @@
 .z-menuitem.z-menuitem-selected > .z-menuitem-content,
 .z-menuitem.z-selected > .z-menuitem-content {
     background-color: var(--zk-menuitem-selected-bg);
-    color: var(--zk-color-on-primary-container);
+    color: var(--zk-color-on-secondary-container);
 }
 
 /* Menuitem image */
