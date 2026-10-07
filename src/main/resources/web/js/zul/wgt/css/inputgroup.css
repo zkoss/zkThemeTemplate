@@ -62,13 +62,28 @@
  * (shared horizontal edge → drop top border) lives in the vertical block below. */
 .z-inputgroup:not(.z-inputgroup-vertical) .z-inputgroup-text + .z-inputgroup-text,
 .z-inputgroup:not(.z-inputgroup-vertical) .z-inputgroup-text + .z-textbox,
+.z-inputgroup:not(.z-inputgroup-vertical) .z-inputgroup-text + .z-intbox,
+.z-inputgroup:not(.z-inputgroup-vertical) .z-inputgroup-text + .z-longbox,
+.z-inputgroup:not(.z-inputgroup-vertical) .z-inputgroup-text + .z-doublebox,
+.z-inputgroup:not(.z-inputgroup-vertical) .z-inputgroup-text + .z-decimalbox,
 .z-inputgroup:not(.z-inputgroup-vertical) .z-inputgroup-text + .z-combobox,
-.z-inputgroup:not(.z-inputgroup-vertical) .z-inputgroup-text + .z-combobox .z-combobox-input {
+.z-inputgroup:not(.z-inputgroup-vertical) .z-inputgroup-text + .z-combobox .z-combobox-input,
+/* Trailing addon: the input's right border is the shared edge, so the addon drops its left. */
+.z-inputgroup:not(.z-inputgroup-vertical) .z-textbox + .z-inputgroup-text,
+.z-inputgroup:not(.z-inputgroup-vertical) .z-intbox + .z-inputgroup-text,
+.z-inputgroup:not(.z-inputgroup-vertical) .z-longbox + .z-inputgroup-text,
+.z-inputgroup:not(.z-inputgroup-vertical) .z-doublebox + .z-inputgroup-text,
+.z-inputgroup:not(.z-inputgroup-vertical) .z-decimalbox + .z-inputgroup-text,
+.z-inputgroup:not(.z-inputgroup-vertical) .z-combobox + .z-inputgroup-text {
     border-left: none;
 }
 
 /* Input inside inputgroup — integrate with the group border */
 .z-inputgroup .z-textbox,
+.z-inputgroup .z-intbox,
+.z-inputgroup .z-longbox,
+.z-inputgroup .z-doublebox,
+.z-inputgroup .z-decimalbox,
 .z-inputgroup .z-combobox .z-combobox-input {
     border: 1px solid var(--zk-inputgroup-border-color);
     border-radius: 0;
@@ -106,6 +121,14 @@
  * See skill reference/focus-affordance-no-layout-shift.md. */
 .z-inputgroup .z-textbox:focus,
 .z-inputgroup .z-textbox:focus-visible,
+.z-inputgroup .z-intbox:focus,
+.z-inputgroup .z-longbox:focus,
+.z-inputgroup .z-doublebox:focus,
+.z-inputgroup .z-decimalbox:focus,
+.z-inputgroup .z-intbox:focus-visible,
+.z-inputgroup .z-longbox:focus-visible,
+.z-inputgroup .z-doublebox:focus-visible,
+.z-inputgroup .z-decimalbox:focus-visible,
 .z-inputgroup .z-combobox .z-combobox-input:focus,
 .z-inputgroup .z-combobox .z-combobox-input:focus-visible {
     border-width: 1px;
@@ -146,6 +169,14 @@
 .z-inputgroup-vertical .z-inputgroup-text + .z-inputgroup-text,
 .z-inputgroup-vertical .z-inputgroup-text + .z-textbox,
 .z-inputgroup-vertical .z-textbox + .z-inputgroup-text,
+.z-inputgroup-vertical .z-inputgroup-text + .z-intbox,
+.z-inputgroup-vertical .z-inputgroup-text + .z-longbox,
+.z-inputgroup-vertical .z-inputgroup-text + .z-doublebox,
+.z-inputgroup-vertical .z-inputgroup-text + .z-decimalbox,
+.z-inputgroup-vertical .z-intbox + .z-inputgroup-text,
+.z-inputgroup-vertical .z-longbox + .z-inputgroup-text,
+.z-inputgroup-vertical .z-doublebox + .z-inputgroup-text,
+.z-inputgroup-vertical .z-decimalbox + .z-inputgroup-text,
 .z-inputgroup-vertical .z-inputgroup-text + .z-combobox,
 .z-inputgroup-vertical .z-combobox + .z-inputgroup-text,
 .z-inputgroup-vertical .z-inputgroup-text + .z-combobox .z-combobox-input {
