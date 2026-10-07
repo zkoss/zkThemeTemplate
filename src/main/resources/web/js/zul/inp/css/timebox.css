@@ -46,14 +46,13 @@
     box-shadow: inset 0 0 0 1px var(--zk-timebox-border-color-focus);
 }
 
-/* Content-hug (contract tw1/tw2/M1): same size-less input as datebox (see
-   components/combo-trio.md). `field-sizing: content` makes the input hug its time
-   text; `flex: 1 1 auto` (basis = content) still lets an hflex / width-forced field
-   fill its container. The `min-width` floor keeps an empty field a usable target.
-   Left-aligned; degrades to the prior look where `field-sizing` is unsupported. */
+/* Width follows the cols API (rendered as the input's `size`; Timebox derives the default
+   from the value's formatted length), like IceBlue. `field-sizing: content` is deliberately
+   NOT used: it makes the browser ignore `size`, so an explicit cols had no effect.
+   `flex: 1 1 auto` still lets an hflex / width-forced field fill its container; the
+   `min-width` floor keeps a small cols a usable click target. */
 .z-timebox-input {
     flex: 1 1 auto;
-    field-sizing: content;
     min-width: 5em;
     border: none;
     background: transparent;
