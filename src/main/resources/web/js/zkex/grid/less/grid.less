@@ -14,11 +14,9 @@
 
 .z-detail {
 	font-size: @baseFontSize;
-	.size(@baseIconWidth, @baseIconHeight);
+	// WCAG 1.4.12 Text Spacing: grow-with-floor + flex centring (see .iconBox)
+	.iconBox(@baseIconWidth, @baseIconHeight);
 	padding: 0;
-	line-height: @baseLineHeight;
-	text-align: center;
-	overflow: hidden;
 	white-space: nowrap;
 	cursor: pointer;
 	margin-left: -3px;
