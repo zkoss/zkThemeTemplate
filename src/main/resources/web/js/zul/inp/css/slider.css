@@ -89,6 +89,7 @@
 .z-slider-vertical {
     display: inline-block;
     width: auto;
+    height: 200px; /* default track length (IceBlue parity); an explicit height attribute overrides */
     padding: 0 var(--zk-spacing-3);
 }
 
@@ -127,6 +128,12 @@
 
 /* ── Knob mold (PE) ───────────────────────────────────── */
 /* SVG arc strokes — stroke-width and arc geometry are JS-controlled (NOT CSS-themable) */
+.z-slider-knob-svg {
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+
 .z-slider-knob-inner {
     stroke: var(--zk-slider-track-bg);
     fill: none;
