@@ -157,4 +157,18 @@
     border-inline-end: 1px solid var(--zk-color-outline-variant);
     box-shadow: 2px 0 4px -1px color-mix(in srgb, var(--zk-color-shadow, #000) 12%, transparent);
 }
+
+/* Frozen/scrollable boundary on the BODY cells (header cells are handled above).
+   Drawn as an inset -1px box-shadow on the last frozen cell: an outer shadow or
+   border vanishes in the body after horizontal scroll.
+   Known limits: rows using colspan are not supported; more than 4 frozen
+   columns get no line; requires ZK smooth frozen (header .z-frozen-col marker) and
+   :has(); group rows have no line. Selectors use an exact child chain (widget > body >
+   table > tbody > row) so nested grids/listboxes/trees inside a cell never get the line. */
+:is(.z-grid, .z-listbox, .z-tree):has(> :is(.z-grid-header, .z-listbox-header, .z-tree-header) > table > tbody > :is(.z-columns, .z-listhead, .z-treecols) > .z-frozen-col:nth-child(1)):not(:has(> :is(.z-grid-header, .z-listbox-header, .z-tree-header) > table > tbody > :is(.z-columns, .z-listhead, .z-treecols) > .z-frozen-col:nth-child(2))) > :is(.z-grid-body, .z-listbox-body, .z-tree-body) > table > tbody > :is(.z-row, .z-listitem, .z-treerow) > :nth-child(1),
+:is(.z-grid, .z-listbox, .z-tree):has(> :is(.z-grid-header, .z-listbox-header, .z-tree-header) > table > tbody > :is(.z-columns, .z-listhead, .z-treecols) > .z-frozen-col:nth-child(2)):not(:has(> :is(.z-grid-header, .z-listbox-header, .z-tree-header) > table > tbody > :is(.z-columns, .z-listhead, .z-treecols) > .z-frozen-col:nth-child(3))) > :is(.z-grid-body, .z-listbox-body, .z-tree-body) > table > tbody > :is(.z-row, .z-listitem, .z-treerow) > :nth-child(2),
+:is(.z-grid, .z-listbox, .z-tree):has(> :is(.z-grid-header, .z-listbox-header, .z-tree-header) > table > tbody > :is(.z-columns, .z-listhead, .z-treecols) > .z-frozen-col:nth-child(3)):not(:has(> :is(.z-grid-header, .z-listbox-header, .z-tree-header) > table > tbody > :is(.z-columns, .z-listhead, .z-treecols) > .z-frozen-col:nth-child(4))) > :is(.z-grid-body, .z-listbox-body, .z-tree-body) > table > tbody > :is(.z-row, .z-listitem, .z-treerow) > :nth-child(3),
+:is(.z-grid, .z-listbox, .z-tree):has(> :is(.z-grid-header, .z-listbox-header, .z-tree-header) > table > tbody > :is(.z-columns, .z-listhead, .z-treecols) > .z-frozen-col:nth-child(4)):not(:has(> :is(.z-grid-header, .z-listbox-header, .z-tree-header) > table > tbody > :is(.z-columns, .z-listhead, .z-treecols) > .z-frozen-col:nth-child(5))) > :is(.z-grid-body, .z-listbox-body, .z-tree-body) > table > tbody > :is(.z-row, .z-listitem, .z-treerow) > :nth-child(4) {
+    box-shadow: inset -1px 0 0 var(--zk-color-outline-variant);
+}
 }
