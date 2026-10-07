@@ -9,6 +9,8 @@
  *  - Default is an outline star; selected/hover swaps to a filled-star mask so the
  *    visual fill matches MD3 / MUI Rating (outline → filled, not just colour change).
  *  - We use SVG masks instead of the icon font so the glyph itself swaps.
+ *  - Only the default z-icon-star is drawn here; any other iconSclass keeps the theme's own icon
+ *    (colour changes only), so iconSclass picks the glyph.
  */
 
 @layer zk-components {
@@ -20,21 +22,13 @@
     cursor: pointer;
 }
 
-/* Each star — outline glyph via SVG mask, currentColor-driven */
+/* Each icon. The glyph comes from the icon font (iconSclass) unless the icon is the
+ * default z-icon-star, which Marble draws itself — see the star block below. */
 .z-rating-icon {
     display: inline-block;
     width: 32px;
     height: 32px;
-    background-color: currentColor;
     color: var(--zk-rating-fg);
-    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolygon points='12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2'/%3E%3C/svg%3E");
-    -webkit-mask-repeat: no-repeat;
-    -webkit-mask-position: center;
-    -webkit-mask-size: 24px 24px;
-    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolygon points='12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2'/%3E%3C/svg%3E");
-    mask-repeat: no-repeat;
-    mask-position: center;
-    mask-size: 24px 24px;
     transition:
         background-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard),
         color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard),
@@ -43,15 +37,41 @@
     user-select: none;
 }
 
-/* Suppress the icon-font glyph that ZK would otherwise render via ::before. */
-.z-rating-icon::before {
+/* Custom iconSclass: size the icon-font glyph to the 32px box. */
+.z-rating-icon:not(.z-icon-star) {
+    font-size: 24px;
+    line-height: 32px;
+    text-align: center;
+}
+
+/* Default star — outline glyph via SVG mask, currentColor-driven. Scoped to z-icon-star so a
+ * custom iconSclass keeps its own glyph (ZK-6112). */
+.z-rating-icon.z-icon-star {
+    background-color: currentColor;
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolygon points='12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2'/%3E%3C/svg%3E");
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    -webkit-mask-size: 24px 24px;
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolygon points='12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2'/%3E%3C/svg%3E");
+    mask-repeat: no-repeat;
+    mask-position: center;
+    mask-size: 24px 24px;
+}
+
+/* Suppress the icon-font glyph that ZK would otherwise render via ::before (default star only). */
+.z-rating-icon.z-icon-star::before {
     content: none;
 }
 
-/* Filled star (selected/hover) — same SVG with fill='currentColor'. */
+/* Selected / hover — colour for every icon; a custom iconSclass changes by colour only. */
 .z-rating-icon.z-rating-selected,
 .z-rating-icon.z-rating-hover {
     color: var(--zk-rating-accent);
+}
+
+/* Filled star (selected/hover) — same SVG with fill='currentColor'. */
+.z-rating-icon.z-icon-star.z-rating-selected,
+.z-rating-icon.z-icon-star.z-rating-hover {
     -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='currentColor' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolygon points='12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2'/%3E%3C/svg%3E");
     mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='currentColor' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolygon points='12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2'/%3E%3C/svg%3E");
 }

@@ -270,7 +270,7 @@
     [class^="z-icon-"]:not(.z-icon-check):not(.z-icon-radio)::before,
     [class*=" z-icon-"]:not(.z-icon-check):not(.z-icon-radio)::before,
     .z-tree-icon i,
-    .z-rating-icon,
+    .z-rating-icon.z-icon-star,
     .z-colorbox-icon,
     .z-colorbox-paletteicon::before,
     .z-colorbox-pickericon::before,
