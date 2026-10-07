@@ -227,7 +227,7 @@
 }
 
 .z-row-odd:hover {
-    background-color: color-mix(in srgb, var(--zk-color-on-surface) 8%, var(--zk-grid-stripe-bg));
+    background-color: var(--zk-grid-row-hover-bg);
 }
 
 /* Grid does NOT support row selection — listbox/tree do, but Grid widget
@@ -314,7 +314,6 @@
     background-color: var(--zk-color-surface-container);
     border-top: 1px solid var(--zk-color-outline-variant);
     border-bottom: 1px solid var(--zk-color-outline-variant);
-    cursor: pointer;
 }
 
 .z-group:hover {
@@ -376,7 +375,7 @@
 }
 
 .z-row.z-grid-odd:hover {
-    background-color: color-mix(in srgb, var(--zk-color-on-surface) 8%, var(--zk-grid-stripe-bg));
+    background-color: var(--zk-grid-row-hover-bg);
 }
 
 /* ─── Legacy: sclass="z-grid-odd" on the <grid> container ───────────────── */

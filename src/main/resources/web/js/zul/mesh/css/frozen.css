@@ -118,8 +118,9 @@
     background-color: color-mix(in srgb, var(--zk-color-on-surface) 4%, var(--zk-color-surface));
 }
 
-.z-grid:has(.z-grid-frozen) .z-row-odd:hover {
-    background-color: color-mix(in srgb, var(--zk-color-on-surface) 8%, var(--zk-color-surface-container-lowest));
+.z-grid:has(.z-grid-frozen) .z-row-odd:hover,
+.z-grid:has(.z-grid-frozen) .z-row.z-grid-odd:hover {
+    background-color: color-mix(in srgb, var(--zk-color-on-surface) 4%, var(--zk-color-surface));
 }
 
 /* Body cells in a frozen listbox */
@@ -136,13 +137,6 @@
    properly cover non-frozen cells scrolled behind them. */
 .z-tree:has(.z-tree-frozen) .z-treefoot .z-treefooter {
     background-color: var(--zk-color-surface-container-low);
-}
-
-/* ZK applies .z-grid-odd to even TR elements. The general .z-row:hover rule
-   in frozen.css uses surface as the base, but even rows need surface-container-lowest.
-   Override here so even-row frozen cells inherit the correct opaque hover color. */
-.z-grid:has(.z-grid-frozen) .z-row.z-grid-odd:hover {
-    background-color: color-mix(in srgb, var(--zk-color-on-surface) 8%, var(--zk-color-surface-container-lowest));
 }
 
 /* Listbox selected state uses a semi-transparent rgba; replace with opaque
