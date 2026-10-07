@@ -183,6 +183,11 @@
     margin-right: var(--zk-spacing-3);
 }
 
+.z-comboitem .z-comboitem-inner {
+    color: var(--zk-color-on-surface-variant);
+    font-size: var(--zk-typescale-body-small-size);
+}
+
 .z-comboitem:hover {
     background-color: var(--zk-combobox-item-hover-bg);
 }
@@ -191,6 +196,13 @@
 .z-comboitem.z-selected {
     background-color: var(--zk-combobox-selected-bg);
     color: var(--zk-combobox-selected-fg);
+}
+
+/* The selected row recolors the li; keep the description a step lighter than the
+   label while staying dark enough on the selected background. */
+.z-comboitem.z-comboitem-selected .z-comboitem-inner,
+.z-comboitem.z-selected .z-comboitem-inner {
+    color: color-mix(in oklch, var(--zk-combobox-selected-fg) 85%, transparent);
 }
 
 /* Disabled */
@@ -328,6 +340,15 @@
 .z-combobox[readonly] .z-combobox-button,
 .z-combobox.z-combobox-readonly .z-combobox-button {
     cursor: pointer;
+}
+
+/* Hide the selection highlight on the readonly input (user-select:none is ignored
+   by Chromium for readonly inputs); the text keeps its colour. */
+.z-combobox[readonly] .z-combobox-input::selection,
+.z-combobox.z-combobox-readonly .z-combobox-input::selection,
+.z-combobox-input[readonly]::selection {
+    background-color: transparent;
+    color: inherit;
 }
 
 /* ─── Open state ──────────────────────────────────────────────────────────── */
