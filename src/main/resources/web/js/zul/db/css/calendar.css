@@ -180,6 +180,12 @@
     color: var(--zk-calendar-fg);
 }
 
+/* Disabled weekend cells — same colour as disabled weekdays. Selector
+ * specificity (0,3,2) beats the weekend rule above (0,2,2). */
+.z-calendar-body tbody td.z-calendar-cell.z-calendar-disabled {
+    color: var(--zk-color-disabled);
+}
+
 /* ─── Outside-month days ─────────────────────────────────────────────────── */
 /* Cells from previous/next month that fill out the grid rows */
 .z-calendar-cell.z-calendar-outside {
