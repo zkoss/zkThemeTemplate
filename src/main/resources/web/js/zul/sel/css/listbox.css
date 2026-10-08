@@ -731,7 +731,9 @@ td.z-listgroup-inner {
 }
 
 .z-listhead-bar {
-    background-color: var(--zk-color-surface-container);
+    /* Header cell above the vertical scrollbar: same fill as every other
+       .z-listheader (transparent over the listbox surface), not a tinted bar. */
+    background-color: transparent;
     border-bottom: 1px solid var(--zk-color-outline-variant);
 }
 

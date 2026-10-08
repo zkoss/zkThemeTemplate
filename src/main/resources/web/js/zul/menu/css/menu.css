@@ -459,6 +459,13 @@
     min-width: unset;
 }
 
+/* Nested menu iconSclass: same 18px glyph box as .z-menuitem-content icons, so the
+   label starts at the same x as the sibling menuitem rows (caret excluded). */
+.z-menupopup .z-menu-content [class*="z-icon-"]:not(.z-menu-icon) {
+    font-size: 18px;
+    flex-shrink: 0;
+}
+
 .z-menupopup .z-menu-content::before {
     content: '';
     position: absolute;
