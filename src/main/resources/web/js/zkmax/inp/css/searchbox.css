@@ -206,9 +206,9 @@
 /* MD3 selection family: LIST-ROW.
  * The searchbox dropdown is a list of options the user navigates with the
  * keyboard — semantically the same as listbox / combobox dropdown / menu /
- * tree, so it shares the same primary-container background. This is NOT the
- * chip family (secondary-container) — those are filter tags, not list rows.
- * See reference/selected-state-families.md. */
+ * tree, so it shares the same secondary-container background (MD3
+ * list-item.selected.container.color). This is NOT the chip family (filter
+ * tags, not list rows). See reference/selected-state-families.md. */
 .z-searchbox-selected {
     color: var(--zk-searchbox-selected-fg);
     background-color: var(--zk-searchbox-selected-bg);

@@ -351,10 +351,7 @@
 .z-calendar-cell.z-cell-range-end::before,
 .z-calendar-cell.z-cell-range-preview-mid::before,
 .z-calendar-cell.z-cell-range-preview-end::before {
-    top: 4px;
-    bottom: 4px;
-    left: 0;
-    right: 0;
+    inset: 4px 0;
     width: auto;
     height: auto;
     transform: none;

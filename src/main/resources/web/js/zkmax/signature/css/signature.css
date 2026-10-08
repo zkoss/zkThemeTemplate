@@ -96,15 +96,15 @@
 }
 
 .z-signature-tool-button-undo {
-    --_icon: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2224%22 height=%2224%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22currentColor%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22 %3E %3Cpath d=%22M9 14 4 9l5-5%22 /%3E %3Cpath d=%22M4 9h10.5a5.5 5.5 0 0 1 5.5 5.5a5.5 5.5 0 0 1-5.5 5.5H11%22 /%3E %3C/svg%3E");
+    --_icon: url(~./zkmax/img/marble/signature-undo.svg);
 }
 
 .z-signature-tool-button-save {
-    --_icon: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2224%22 height=%2224%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22currentColor%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22 %3E %3Cpath d=%22M15.2 3a2 2 0 0 1 1.4.6l3.8 3.8a2 2 0 0 1 .6 1.4V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z%22 /%3E %3Cpath d=%22M17 21v-7a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v7%22 /%3E %3Cpath d=%22M7 3v4a1 1 0 0 0 1 1h7%22 /%3E %3C/svg%3E");
+    --_icon: url(~./zkmax/img/marble/signature-save.svg);
 }
 
 .z-signature-tool-button-clear {
-    --_icon: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2224%22 height=%2224%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22currentColor%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22 %3E %3Cpath d=%22M21 21H8a2 2 0 0 1-1.42-.587l-3.994-3.999a2 2 0 0 1 0-2.828l10-10a2 2 0 0 1 2.829 0l5.999 6a2 2 0 0 1 0 2.828L12.834 21%22 /%3E %3Cpath d=%22m5.082 11.09 8.828 8.828%22 /%3E %3C/svg%3E");
+    --_icon: url(~./zkmax/img/marble/signature-clear.svg);
 }
 
 /* label — hidden; buttons are icon-only */

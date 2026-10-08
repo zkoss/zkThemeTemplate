@@ -1,0 +1,190 @@
+/* MD3 Scrollview — momentum-scrolling container (EE only)
+   Root:       .z-scrollview (.z-scrollview-vertical | .z-scrollview-horizontal)
+   Cave:       .z-scrollview-content  (id="{uuid}-cave"; the element _move() translates)
+   Child slot: .z-scrollview-inner    (id="{childUuid}-chdex"; one per child widget)
+   Scrollbar:  .z-scrollview-scrollbar > .z-scrollview-scrollbar-indicator
+   Load hint:  .z-scrollview-load > .z-scrollview-load-{up|down|left|right}
+   DESIGN.md:  §2 (text colors), §5 (shape), §6 (elevation), §9 (motion)
+   NOTE:       This file fully replaces the stock ZK iceblue scrollview CSS.
+               Every structural rule Scrollview.ts depends on must be re-authored here.
+
+   Two rendering paths share this file, and only the first one is reachable from
+   the preview app:
+
+   - Desktop — bind_() writes an inline `overflow: auto` on the root and the
+     browser scrolls natively. The scrollbar and load-hint elements below are
+     never created, so everything this file contributes is structural.
+   - Touch (zk.mobile) — the root stays clipped while _move() drives
+     `transform: translate3d(…)` on the cave. _addBar() then appends the overlay
+     scrollbars and _loadBoundary() reveals the pull-past-the-edge hint.
+
+   Scrollview draws no surface of its own in either path: it is a viewport onto
+   the children, which carry their own background (contract row c2). */
+
+@layer zk-components {
+/* ─── Root — the viewport ────────────────────────────────────────────────── */
+.z-scrollview {
+    /* Containing block for the JS-created overlay scrollbars and load hint,
+       both of which are absolutely positioned against the root. */
+    position: relative;
+    /* The touch path clips the translated cave. The desktop path replaces this
+       with an inline `overflow: auto` in bind_(), which outranks the stylesheet
+       — so this value also covers the gap before the widget binds. */
+    overflow: hidden;
+    background: transparent;
+}
+
+/* ─── Cave — the single element the momentum animation moves ─────────────── */
+.z-scrollview-content {
+    /* _move() writes translate3d() here every frame. Anchoring the origin at
+       the top-left corner keeps the px offsets JS computes mapping 1:1 onto the
+       rendered offset; a centred origin would halve every scroll position. */
+    transform-origin: 0 0;
+    /* Load-bearing, not a no-op: doTouchStart_ (Scrollview.ts:598) seeds the
+       scroll position by parsing this element's COMPUTED transform matrix. With
+       no transform the browser reports `none`, the parse yields NaN, and every
+       later _move() writes an invalid translate3d — the content never scrolls
+       on touch while the overlay bar still appears. */
+    transform: translate3d(0, 0, 0);
+}
+
+/* ─── Child slot ─────────────────────────────────────────────────────────── */
+.z-scrollview-inner {
+    /* Children are positioned within their own slot, not against the cave. */
+    position: relative;
+}
+
+/* ─── Vertical orientation — slots stack down the cave ───────────────────── */
+.z-scrollview-vertical .z-scrollview-content {
+    width: 100%;
+}
+
+/* ─── Horizontal orientation — slots run along one line ──────────────────── */
+.z-scrollview-horizontal .z-scrollview-content {
+    height: 100%;
+    /* Keeps the inline-block slots below on a single line. Scoped to the cave
+       rather than the root (where stock ZK puts it) so it never reaches the
+       children's own text and suppress their wrapping. */
+    white-space: nowrap;
+}
+
+.z-scrollview-horizontal .z-scrollview-inner {
+    display: inline-block;
+    vertical-align: top;
+    /* Undo the cave's nowrap for the child's own content. */
+    white-space: normal;
+}
+
+/* ─── Overlay scrollbar — _addBar() creates this on the touch path only ──── */
+.z-scrollview-scrollbar {
+    position: absolute;
+    /* Local to the root's stacking context. Scrollview is not a ZK floating
+       widget, so no --zk-index-* role applies; the only ordering that matters
+       is bar (100) under load hint (999). */
+    z-index: 100;
+    overflow: hidden;
+    /* A read-out, never a drag handle — the root owns the whole touch stream. */
+    pointer-events: none;
+    /* _barPos() and _resetPos() toggle inline opacity between 0 and 1. */
+    opacity: 0;
+    transition: opacity var(--zk-motion-duration-short2) var(--zk-motion-easing-standard);
+}
+
+/* Physical offsets, not logical ones: _barPos() translates the indicator with a
+   physical translate3d(), so a flipped inset under RTL would send the bar the
+   wrong way. */
+.z-scrollview-horizontal .z-scrollview-scrollbar {
+    height: 6px;
+    bottom: 1px;
+    left: 2px;
+    right: 2px;
+}
+
+.z-scrollview-vertical .z-scrollview-scrollbar {
+    width: 6px;
+    top: 2px;
+    bottom: 2px;
+    right: 1px;
+}
+
+.z-scrollview-scrollbar-indicator {
+    position: absolute;
+    /* _addBar() sizes the indicator along the scroll axis from the
+       visible/total ratio; the cross axis comes from the two rules below. */
+    border: 1px solid var(--zk-color-surface);
+    border-radius: var(--zk-shape-corner-full);
+    background: var(--zk-color-scrim);
+    /* The light border is a halo that keeps the pill legible over dark content,
+       not a stroke on the fill — clip the scrim at the padding edge so the
+       border stays a separate ring rather than tinting it. */
+    background-clip: padding-box;
+}
+
+.z-scrollview-horizontal .z-scrollview-scrollbar-indicator {
+    height: 100%;
+}
+
+.z-scrollview-vertical .z-scrollview-scrollbar-indicator {
+    width: 100%;
+}
+
+/* ─── Pull-past-the-edge load hint — touch path only ─────────────────────── */
+.z-scrollview-load {
+    /* _loadBoundary() flips this to `block` and positions the box with inline
+       left/top. Until then it must take no space: the mold emits it inside the
+       root ahead of the cave, so a visible empty div would offset the content. */
+    display: none;
+    position: absolute;
+    /* Above the overlay scrollbars (100). */
+    z-index: 999;
+}
+
+/* A Material pull-to-refresh puck. _loadBoundary() centres the hint by reading
+   this element's offsetWidth/offsetHeight, so the explicit size is load-bearing;
+   32px matches the glyph size stock ZK positions against. */
+.z-scrollview-load-up,
+.z-scrollview-load-down,
+.z-scrollview-load-left,
+.z-scrollview-load-right {
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    border-radius: var(--zk-shape-corner-full);
+    background: var(--zk-color-surface);
+    box-shadow: var(--zk-elevation-2);
+    color: var(--zk-color-on-surface-variant);
+}
+
+/* Direction chevron, drawn from two borders so the hint needs no image asset —
+   a url() here could not be theme-resolved anyway, because the DSP `c` taglib
+   is only prepended to norm.css.dsp (see reference/css-dsp.md). */
+.z-scrollview-load-up::before,
+.z-scrollview-load-down::before,
+.z-scrollview-load-left::before,
+.z-scrollview-load-right::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 10px;
+    height: 10px;
+    border-top: 2px solid currentColor;
+    border-right: 2px solid currentColor;
+}
+
+.z-scrollview-load-up::before {
+    transform: translate(-50%, -35%) rotate(-45deg);
+}
+
+.z-scrollview-load-down::before {
+    transform: translate(-50%, -65%) rotate(135deg);
+}
+
+.z-scrollview-load-left::before {
+    transform: translate(-35%, -50%) rotate(-135deg);
+}
+
+.z-scrollview-load-right::before {
+    transform: translate(-65%, -50%) rotate(45deg);
+}
+}

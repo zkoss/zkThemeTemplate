@@ -92,6 +92,8 @@
     border-radius: var(--zk-cascader-popup-radius);
     overflow: hidden;
     white-space: nowrap;
+    display: flex;
+    align-items: flex-start;
 }
 
 /* Closed-state hide: scoped so it only applies while popup is still a child of .z-cascader */
@@ -119,6 +121,16 @@
 
 .z-cascader-cave:first-child {
     border-left: none;
+}
+
+/* Columns keep their natural width; the last one absorbs any width the popup has
+   beyond them (popup min-width = trigger width), so the hover band reaches the edge. */
+.z-cascader-cave {
+    flex: 0 0 auto;
+}
+
+.z-cascader-cave:last-child {
+    flex-grow: 1;
 }
 
 /* ─── Item ────────────────────────────────────────────────────────────── */

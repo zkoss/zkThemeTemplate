@@ -18,6 +18,7 @@
     background-color: var(--zk-chosenbox-bg);
     cursor: text;
     box-sizing: border-box;
+    font-style: normal;
     transition: border-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
 }
 
@@ -52,7 +53,7 @@
 .z-chosenbox-item-content {
     font-family: var(--zk-typescale-font-family);
     font-size: var(--zk-typescale-label-large-size);
-    font-weight: var(--zk-typescale-label-large-weight);
+    font-weight: var(--zk-typescale-body-medium-weight);
     color: var(--zk-chosenbox-fg);
     white-space: nowrap;
 }
@@ -175,6 +176,10 @@
 .z-chosenbox-create {
     font-size: 16px;
     color: var(--zk-color-primary);
+    /* ZK sets display:block inline on the row, so the row's flex gap is inert:
+       separate and center the inline icon with its own margin + vertical-align. */
+    margin-right: var(--zk-spacing-2);
+    vertical-align: middle;
 }
 
 /* ─── Disabled ────────────────────────────────────────────────────────── */

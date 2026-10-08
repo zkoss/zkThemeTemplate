@@ -96,7 +96,7 @@
 
 /* ─── Custom scrollbar (zul.WScroll) ───────────────────────────────────────
    Biglistbox renders its own scrollbar, not a native one. Marble presents it as a
-   thin MD3 overlay: a rounded translucent thumb on a transparent track, with the
+   thin MD3 overlay: a rounded thumb with no track drawn, with the
    arrow buttons (home/up/down/end) hidden. Wheel + thumb-drag still work; ZK hides
    the whole bar automatically when content fits.
    Geometry note: the thumb size used by WScroll = edrag.offsetHeight − _gap, where
@@ -108,6 +108,8 @@
     position: absolute;
     z-index: 10;
     background: transparent;
+    /* The track draws nothing and never takes hits; only the thumb (-drag) is visible. */
+    visibility: hidden;
 }
 .z-biglistbox-wscroll-vertical {
     width: 14px;
@@ -121,28 +123,10 @@
     left: 0;
     bottom: 0;
 }
-/* Faint always-visible track groove, drawn in the thumb's lane so the scroll
-   region stays perceptible even when the thumb is compressed into a corner
-   (scale=1 modest-data case). Painted behind the thumb (-drag is a normal-flow
-   child, so it stacks above this ::before). */
+/* No track groove: the document scrollbar has none at rest. */
 .z-biglistbox-wscroll-vertical::before,
 .z-biglistbox-wscroll-horizontal::before {
-    content: "";
-    position: absolute;
-    background-color: color-mix(in srgb, var(--zk-color-on-surface) 6%, transparent);
-    border-radius: 999px;
-}
-.z-biglistbox-wscroll-vertical::before {
-    top: 0;
-    bottom: 0;
-    left: 3px;
-    width: 8px;
-}
-.z-biglistbox-wscroll-horizontal::before {
-    left: 0;
-    right: 0;
-    top: 3px;
-    height: 8px;
+    content: none;
 }
 
 /* Hide the arrow buttons — they're absolutely positioned inside the fixed-height
@@ -175,13 +159,14 @@
    the box where display:none would zero it. display is forced to override ZK's inline none. */
 .z-biglistbox-wscroll-drag {
     position: absolute;
-    background-color: color-mix(in srgb, var(--zk-color-on-surface) 38%, transparent);
+    visibility: visible;   /* the track is visibility:hidden; the thumb opts back in */
+    background-color: var(--zk-color-outline-variant);
     border-radius: 999px;
     border: 0;
     overflow: hidden;
 }
 .z-biglistbox-wscroll-drag:hover {
-    background-color: color-mix(in srgb, var(--zk-color-on-surface) 55%, transparent);
+    background-color: var(--zk-color-on-surface-variant);
 }
 .z-biglistbox-wscroll-pos {
     position: absolute;
@@ -193,13 +178,13 @@
 .z-biglistbox-wscroll-vertical .z-biglistbox-wscroll-pos {
     width: 8px;
     height: 48px;
-    left: 3px;
+    left: 6px;
 }
 .z-biglistbox-wscroll-horizontal .z-biglistbox-wscroll-drag,
 .z-biglistbox-wscroll-horizontal .z-biglistbox-wscroll-pos {
     height: 8px;
     width: 48px;
-    top: 3px;
+    top: 4px;
 }
 
 /* The grabbable body fills the whole thumb pill (drag is bound to this element only). */

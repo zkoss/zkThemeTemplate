@@ -205,6 +205,13 @@
     cursor: default;
 }
 
+/* Disabled button on a draggable bar: the click does nothing but a drag still
+   starts from the button, so it inherits the bar's resize cursor (col-resize /
+   row-resize) instead of showing default. A collapsible button keeps pointer. */
+.z-splitlayout-splitter-draggable .z-splitlayout-splitter-button-disabled {
+    cursor: inherit;
+}
+
 /* ── Splitter icons ──────────────────────────────────────────────────────── */
 /* Grip and caret glyphs share the same base. */
 .z-splitlayout-splitter-icon {

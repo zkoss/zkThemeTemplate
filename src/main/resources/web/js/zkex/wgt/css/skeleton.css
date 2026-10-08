@@ -1,0 +1,76 @@
+/* Skeleton — the loading placeholder any component can show through setSkeleton("rect" | "circle" | "text")
+   (ZK-6099, PE). DOM (from wgt/skeleton.ts):
+     <div class="z-… z-skeleton-active z-skeleton-rect" aria-busy="true">…</div>        ← ordinary element:
+          descendants hidden, the element's own text node masked by the grey ::after overlay
+     <img class="z-image z-skeleton-masked"> + <div class="z-skeleton-overlay z-skeleton-circle">  ← replaced/void
+          root: the skeleton module lays a real overlay element over it and sizes it from JS
+   Ported from the retired wgt/less/skeleton.less (ZK-6112, item 2.11): the two theme values became Marble
+   tokens; duration, text radius and minimum opacity stay literal. App authors can still override every value
+   through the --zk-skeleton-* custom properties, as before. */
+
+@layer zk-components {
+/* ─── Placeholder fill (shared by the in-place ::after overlay and the JS-laid overlay div) ── */
+.z-skeleton-active,
+.z-skeleton-overlay {
+    background: var(--zk-skeleton-background, var(--zk-color-surface-variant));
+    animation: z-skeleton-pulse var(--zk-skeleton-duration, 1.5s) ease-in-out infinite;
+}
+
+/* ─── Shapes ───────────────────────────────────────────────────────────── */
+.z-skeleton-active.z-skeleton-rect,
+.z-skeleton-overlay.z-skeleton-rect {
+    border-radius: var(--zk-skeleton-radius, var(--zk-shape-corner-extra-small));
+}
+.z-skeleton-active.z-skeleton-circle,
+.z-skeleton-overlay.z-skeleton-circle {
+    border-radius: 50%;
+}
+.z-skeleton-active.z-skeleton-text,
+.z-skeleton-overlay.z-skeleton-text {
+    border-radius: var(--zk-skeleton-text-radius, 2px);
+}
+
+/* ─── Ordinary element ─────────────────────────────────────────────────── */
+.z-skeleton-active {
+    position: relative;
+    overflow: hidden;
+}
+/* Hide descendant elements (grid cells, a button's icon, …). `*` matches elements only, so on its
+   own it cannot reach the element's OWN direct text node (Label renders <span>text</span>, Button
+   <button>label</button>) — the ::after overlay below masks those. */
+.z-skeleton-active * {
+    visibility: hidden !important;
+}
+/* Opaque overlay painted by the element itself: the pseudo element renders above the element's
+   text node and children, so the grey block fully masks them. content must be '' (an empty box
+   that paints), not none. */
+.z-skeleton-active::after {
+    content: '' !important;
+    position: absolute;
+    inset: 0;
+    background: var(--zk-skeleton-background, var(--zk-color-surface-variant));
+}
+.z-skeleton-active::before {
+    content: none !important;
+}
+
+/* ─── Replaced / void root ─────────────────────────────────────────────── */
+/* The overlay sits ABOVE the replaced root as a separate element, so when the pulse lowers its
+   opacity the root's own painted content (bitmap, sub-document, input value) would bleed through.
+   The skeleton module adds this class to every root it overlays; visibility:hidden keeps the box
+   in layout (the overlay stays aligned) and is honoured in every browser. */
+.z-skeleton-masked {
+    visibility: hidden !important;
+}
+
+@keyframes z-skeleton-pulse {
+    0%, 100% { opacity: 1; }
+    50%      { opacity: var(--zk-skeleton-min-opacity, 0.4); }
+}
+
+/* WCAG 2.3.3 / SC 2.2.2: respect users who request reduced motion. */
+@media (prefers-reduced-motion: reduce) {
+    .z-skeleton-active,
+    .z-skeleton-overlay { animation: none; }
+}
+}

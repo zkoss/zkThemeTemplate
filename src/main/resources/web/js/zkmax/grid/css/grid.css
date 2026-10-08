@@ -13,8 +13,7 @@
 .z-grid--stacking {
     /* Allow vertical scroll on fixed-height stacking grids (override
        `overflow: hidden` from .z-grid). */
-    overflow-y: auto;
-    overflow-x: hidden;
+    overflow: hidden auto;
 }
 
 /* Hide table-mode chrome that has no card-layout meaning. `.z-frozen` uses a
