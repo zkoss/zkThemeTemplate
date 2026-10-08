@@ -29,7 +29,7 @@
 }
 
 .z-loading-indicator {
-    display: inline-flex;
+    display: flex;
     align-items: center;
     gap: var(--zk-spacing-3);
     color: var(--zk-color-on-surface);
@@ -111,7 +111,7 @@
 }
 
 .z-apply-loading-indicator {
-    display: inline-flex;
+    display: flex;
     align-items: center;
     gap: var(--zk-spacing-3);
     color: var(--zk-color-on-surface);
@@ -231,6 +231,11 @@
     mask-size: contain;
     mask-repeat: no-repeat;
     mask-position: center;
+}
+
+/* Visual order only: DOM is numbers, remove, refresh; close sits at the far right. */
+.z-error #zk_err-remove-btn {
+    order: 1;
 }
 
 .z-error .errornumbers {
