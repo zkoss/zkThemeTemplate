@@ -267,6 +267,9 @@ const CSS_URI_BACKED = new Set([
     // zkex (EE)
     'colorbox.css.dsp', 'columnlayout.css.dsp', 'fisheye.css.dsp', 'pdfviewer.css.dsp',
     'rangeslider.css.dsp', 'sliderbuttons.css.dsp',
+    // zkex, but requested through a global `<stylesheet href=".../skeleton.css.dsp">` in zkex's
+    // lang-addon.xml (not a `<css-uri>`), so the regenerate grep above does not list it.
+    'skeleton.css.dsp',
 ]);
 
 // No `css-uri`, NOT in any bundle list — but a runtime `document.styleSheets` probe (2026-06-30)
