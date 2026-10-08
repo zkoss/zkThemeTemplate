@@ -205,4 +205,16 @@
     pointer-events: none;
     white-space: nowrap;
 }
+
+/* ZK positions the popup with its left (horizontal) / top (vertical) edge on the
+ * thumb's edge, and the popup sits under <body> with no orientation class. While
+ * dragging, the pressed thumb is :active, so :has() recovers the orientation.
+ * Shift by the popup's own size (translate %) to centre it on the 20px thumb. */
+body:has(.z-slider-horizontal .z-slider-button:active) .z-slider-popup {
+    translate: calc(-50% + 10px) 0;
+}
+
+body:has(.z-slider-vertical .z-slider-button:active) .z-slider-popup {
+    translate: 0 calc(-50% + 10px);
+}
 }
