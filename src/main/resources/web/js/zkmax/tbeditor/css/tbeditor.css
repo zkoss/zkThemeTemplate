@@ -81,7 +81,14 @@
 
 /* SVG icon default fill */
 .z-tbeditor-button-pane svg {
-    fill: var(--zk-color-on-surface-variant);
+    flex: none;
+    width: 14px;
+    height: 14px;
+    /* Opaque token colour + one group opacity: a translucent colour would be
+     * painted once per overlapping sub-shape (fullscreen glyph looked darker). */
+    fill: rgb(from var(--zk-color-on-surface-variant) r g b / 1);
+    color: rgb(from var(--zk-color-on-surface-variant) r g b / 1);
+    opacity: 0.6;
 }
 
 /* Button hover / focus */
@@ -94,6 +101,7 @@
 .z-tbeditor-button-pane button:hover svg,
 .z-tbeditor-button-pane button.z-tbeditor-active svg {
     fill: var(--zk-color-primary);
+    opacity: 1;
 }
 
 /* Active (toggled formatting command) */
