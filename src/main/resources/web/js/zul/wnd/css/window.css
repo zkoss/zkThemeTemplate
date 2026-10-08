@@ -129,10 +129,10 @@
     color: var(--zk-color-on-surface);
 }
 
-/* Close button gets error tint on hover */
+/* Close button hover is neutral, same as the other icon buttons; --zk-window-close-hover-bg stays as the override knob */
 .z-window-close:hover {
     background-color: var(--zk-window-close-hover-bg);
-    color: var(--zk-color-on-error-container);
+    color: var(--zk-color-on-surface);
 }
 
 /* Maximized state — button icon switches; no extra visual needed */
