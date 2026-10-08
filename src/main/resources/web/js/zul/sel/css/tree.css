@@ -194,6 +194,12 @@
     box-sizing: border-box;
 }
 
+/* align on treecol is rendered as inline text-align on the TD; the flex content
+   box ignores it, so map it to justify-content */
+.z-treecell[style*="text-align: right"] > .z-treecell-content,
+.z-treecell[style*="text-align: end"] > .z-treecell-content { justify-content: flex-end; }
+.z-treecell[style*="text-align: center"] > .z-treecell-content { justify-content: center; }
+
 .z-treecell-text {
     overflow: hidden;
     text-overflow: ellipsis;

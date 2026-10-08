@@ -202,6 +202,13 @@
 .z-button-outlined-error.z-button::before     { background-color: var(--zk-color-error, #d32f2f); }
 .z-button-outlined-info.z-button::before      { background-color: var(--zk-color-status-info); }
 
+/* Colour variants reset the base elevation like .z-button-outlined.z-button does */
+.z-button-outlined-secondary.z-button,
+.z-button-outlined-success.z-button,
+.z-button-outlined-warning.z-button,
+.z-button-outlined-error.z-button,
+.z-button-outlined-info.z-button { box-shadow: none; }
+
 /* Disabled overrides for outlined color variants (spec 0,3,0 > 0,2,0 variant rules) */
 .z-button-outlined-secondary.z-button[disabled],
 .z-button-outlined-success.z-button[disabled],
@@ -235,6 +242,12 @@
 .z-button-text-error.z-button::before     { background-color: var(--zk-color-error, #d32f2f); }
 .z-button-text-info.z-button::before      { background-color: var(--zk-color-status-info); }
 
+.z-button-text-secondary.z-button,
+.z-button-text-success.z-button,
+.z-button-text-warning.z-button,
+.z-button-text-error.z-button,
+.z-button-text-info.z-button { box-shadow: none; }
+
 /* Disabled overrides for text color variants (spec 0,3,0 > 0,2,0 variant rules) */
 .z-button-text-secondary.z-button[disabled],
 .z-button-text-success.z-button[disabled],
@@ -263,6 +276,7 @@
     background-color: transparent;
     color: var(--zk-color-on-surface-variant);
     border: none;
+    box-shadow: none;
     border-radius: 50%;
     width: var(--zk-icon-button-size);
     height: var(--zk-icon-button-size);
