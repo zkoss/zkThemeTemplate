@@ -46,7 +46,8 @@
 /* ─── Outer container ───────────────────────────────────────────────── */
 .z-rangeslider {
     position: relative;
-    cursor: pointer;
+    /* only the elements that react to a click are pointer (track, area, marks) */
+    cursor: default;
     user-select: none;
     box-sizing: border-box;
 }
@@ -81,6 +82,7 @@
     inset: 0;
     background-color: var(--zk-rangeslider-track-bg);
     border-radius: var(--zk-rangeslider-radius);
+    cursor: pointer;
 }
 
 /* ─── Sliderbuttons (thumb container) ───────────────────────────────── */
@@ -100,6 +102,7 @@
     background-color: var(--zk-rangeslider-accent);
     border-radius: var(--zk-rangeslider-radius);
     z-index: 1;
+    cursor: pointer;
 }
 
 .z-rangeslider-horizontal .z-sliderbuttons-area { top: 0; height: 100%; }
@@ -154,7 +157,7 @@
     transition: var(--zk-state-layer-transition);
 }
 
-.z-rangeslider:hover         .z-sliderbuttons-button::before { opacity: var(--zk-state-hover-opacity); }
+.z-rangeslider .z-sliderbuttons-button:hover::before { opacity: var(--zk-state-hover-opacity); }
 .z-rangeslider:focus-within  .z-sliderbuttons-button::before { opacity: var(--zk-state-focus-opacity); }
 
 /* ─── Marks ─────────────────────────────────────────────────────────── */
@@ -179,6 +182,7 @@
     border: var(--zk-rangeslider-dot-border-width) solid var(--zk-rangeslider-track-bg);
     border-radius: 50%;
     box-sizing: border-box;
+    cursor: pointer;
 }
 
 .z-rangeslider-horizontal .z-rangeslider-mark-dot {
@@ -203,6 +207,7 @@
     font-size: var(--zk-typescale-label-small-size);
     text-align: center;
     white-space: nowrap;
+    cursor: pointer;
 }
 
 /* +4px correction = mark anchor (track centre / dot) → track near edge. */

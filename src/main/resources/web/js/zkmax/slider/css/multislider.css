@@ -26,7 +26,8 @@
     display: block;
     position: relative;
     padding: var(--zk-spacing-3) 0;
-    cursor: pointer;
+    /* only the elements that react to a click are pointer (track, area, marks) */
+    cursor: default;
     user-select: none;
     box-sizing: border-box;
 }
@@ -61,6 +62,7 @@
     inset: 0;
     background-color: var(--zk-multislider-track-bg);
     border-radius: var(--zk-multislider-radius);
+    cursor: pointer;
 }
 
 /* ── Horizontal orientation ───────────────────────────── */
@@ -91,6 +93,7 @@
     height: 100%;
     background-color: var(--zk-multislider-accent);
     border-radius: var(--zk-multislider-radius);
+    cursor: pointer;
 }
 
 /* ── Thumb handle ─────────────────────────────────────── */
@@ -140,7 +143,7 @@
     transition: var(--zk-state-layer-transition);
 }
 
-.z-multislider:hover .z-sliderbuttons-button::before {
+.z-multislider .z-sliderbuttons-button:hover::before {
     opacity: var(--zk-state-hover-opacity);
 }
 
@@ -244,6 +247,7 @@
     font-size: var(--zk-typescale-label-small-size);
     color: var(--zk-color-on-surface-variant);
     white-space: nowrap;
+    cursor: pointer;
 }
 
 /* Label gap shares the rangeslider token so the slider family stays consistent
