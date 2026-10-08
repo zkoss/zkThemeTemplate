@@ -199,6 +199,28 @@
     padding-left: calc(var(--zk-spacing-4) + 26px);
 }
 
+/* Per-level indent of the expanded vertical navbar: each nesting level adds one
+   26px step, matching the step above. The depth is read from the nested
+   `.z-nav > ul` chain, so padding stays on the content element and the state
+   layer keeps the full row width. Group headers: L2..L4; items: L3..L5. */
+.z-navbar-vertical .z-nav > ul > .z-nav > .z-nav-content {
+    padding-left: calc(var(--zk-spacing-4) + 26px);
+}
+
+.z-navbar-vertical .z-nav > ul > .z-nav > ul > .z-nav > .z-nav-content,
+.z-navbar-vertical .z-nav > ul > .z-nav > ul > .z-navitem > .z-navitem-content {
+    padding-left: calc(var(--zk-spacing-4) + 52px);
+}
+
+.z-navbar-vertical .z-nav > ul > .z-nav > ul > .z-nav > ul > .z-nav > .z-nav-content,
+.z-navbar-vertical .z-nav > ul > .z-nav > ul > .z-nav > ul > .z-navitem > .z-navitem-content {
+    padding-left: calc(var(--zk-spacing-4) + 78px);
+}
+
+.z-navbar-vertical .z-nav > ul > .z-nav > ul > .z-nav > ul > .z-nav > ul > .z-navitem > .z-navitem-content {
+    padding-left: calc(var(--zk-spacing-4) + 104px);
+}
+
 /* ─── Active/selected states ────────────────────────────────────────────── */
 .z-navitem-selected > .z-navitem-content,
 .z-navitem.z-navitem-selected > .z-navitem-content {
@@ -273,6 +295,26 @@
     padding: 8px var(--zk-spacing-4);
     border-radius: 0;
     color: var(--zk-color-on-surface);
+}
+
+/* Nested lists inside the popup (moved to body, so the `.z-navbar ul` reset does
+   not reach them): drop the browser default bullet and 40px padding so nested rows
+   start at the popup's left edge and their state layer spans the full width. */
+.z-nav-popup ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+/* Popup indent per nesting level (L2 rows 16px; each deeper level +26px). The
+   L3 item step (42px) already comes from `.z-nav > ul .z-navitem-content`. */
+.z-nav-popup .z-nav > ul > .z-nav > .z-nav-content,
+.z-nav-popup .z-nav > ul > .z-navitem > .z-navitem-content {
+    padding-left: calc(var(--zk-spacing-4) + 26px);
+}
+
+.z-nav-popup .z-nav > ul > .z-nav > ul > .z-navitem > .z-navitem-content {
+    padding-left: calc(var(--zk-spacing-4) + 52px);
 }
 
 /* ─── Collapsed state ────────────────────────────────────────────────────── */
