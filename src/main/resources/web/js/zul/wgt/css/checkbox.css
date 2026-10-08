@@ -87,7 +87,7 @@
     position: absolute;
     inset: 0;
     display: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 18'%3E%3Cpath fill='%23ffffff' d='M7 14l-4-4 1.4-1.4L7 11.2l6.6-6.6L15 6z'/%3E%3C/svg%3E");
+    background-image: url(~./zul/img/marble/checkbox-check.svg);
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
@@ -144,7 +144,7 @@
 .z-checkbox-indeterminate > .z-checkbox-mold::after,
 .z-checkbox-tristate-indeterminate > .z-checkbox-mold::after {
     display: block;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 18'%3E%3Crect fill='%23ffffff' x='3' y='8' width='12' height='2'/%3E%3C/svg%3E");
+    background-image: url(~./zul/img/marble/checkbox-indeterminate.svg);
 }
 
 /* ═══════════════════════════════════════════════════════════════════

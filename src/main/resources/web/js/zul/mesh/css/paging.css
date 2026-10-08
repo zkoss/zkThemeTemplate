@@ -130,26 +130,26 @@
 
 /* First button — chevrons-left (double left) */
 .z-paging-os ul > li.z-paging-navigate:first-child .z-paging-noborder::after {
-    -webkit-mask-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='m11 17-5-5 5-5'/><path d='m18 17-5-5 5-5'/></svg>");
-    mask-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='m11 17-5-5 5-5'/><path d='m18 17-5-5 5-5'/></svg>");
+    -webkit-mask-image: url(~./zul/img/marble/paging-first.svg);
+    mask-image: url(~./zul/img/marble/paging-first.svg);
 }
 
 /* Prev button — chevron-left */
 .z-paging-os ul > li.z-paging-navigate:nth-child(2) .z-paging-noborder::after {
-    -webkit-mask-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='m15 18-6-6 6-6'/></svg>");
-    mask-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='m15 18-6-6 6-6'/></svg>");
+    -webkit-mask-image: url(~./zul/img/marble/paging-prev.svg);
+    mask-image: url(~./zul/img/marble/paging-prev.svg);
 }
 
 /* Next button — chevron-right */
 .z-paging-os ul > li.z-paging-navigate:nth-last-child(2) .z-paging-noborder::after {
-    -webkit-mask-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='m9 18 6-6-6-6'/></svg>");
-    mask-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='m9 18 6-6-6-6'/></svg>");
+    -webkit-mask-image: url(~./zul/img/marble/paging-next.svg);
+    mask-image: url(~./zul/img/marble/paging-next.svg);
 }
 
 /* Last button — chevrons-right (double right) */
 .z-paging-os ul > li.z-paging-navigate:last-child .z-paging-noborder::after {
-    -webkit-mask-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='m6 17 5-5-5-5'/><path d='m13 17 5-5-5-5'/></svg>");
-    mask-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='m6 17 5-5-5-5'/><path d='m13 17 5-5-5-5'/></svg>");
+    -webkit-mask-image: url(~./zul/img/marble/paging-last.svg);
+    mask-image: url(~./zul/img/marble/paging-last.svg);
 }
 
 /* ─── Default mold nav icons (angle-left/right from ZK icon font) ────────── */
