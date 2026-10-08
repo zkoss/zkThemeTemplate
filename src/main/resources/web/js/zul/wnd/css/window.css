@@ -203,9 +203,11 @@
 
 /* ─── Drag / resize utilities ────────────────────────────────────────────── */
 .z-window-move-ghost {
-    opacity: 0.5;
+    /* opacity removed: it also faded the cloned title bar text to half */
     outline: var(--zk-focus-ring);
     outline-offset: -2px;
+    /* ghost interior was transparent and showed the page content through it; D57-B */
+    background-color: var(--zk-color-surface);
 }
 
 .z-window-resize-faker {

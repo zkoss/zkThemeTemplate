@@ -165,6 +165,11 @@
     border-bottom: none;
 }
 
+/* Rounded border: ZK adds noborder but not noframe for border="rounded", so restore the outline only (border="none" adds both and stays borderless) */
+.z-panel-noborder:not(.z-panel-noframe) {
+    border: 1px solid var(--zk-panel-border-color);
+}
+
 /* Shadow: elevated shadow for floating panels */
 .z-panel-shadow {
     box-shadow: var(--zk-elevation-dialog);
