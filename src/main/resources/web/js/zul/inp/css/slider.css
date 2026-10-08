@@ -147,8 +147,11 @@
 /* Numeric input overlay — position:absolute required so JS top/left take effect */
 .z-slider-input {
     position: absolute;
-    background-color: var(--zk-color-surface-container);
-    border: 1px solid var(--zk-color-outline);
+    /* inline look (like the inplace textbox): no fill / visible border at rest; the
+       transparent 1px border keeps the box and text position identical to focus */
+    background-color: transparent;
+    border: 1px solid transparent;
+    padding: 1px 2px;
     border-radius: var(--zk-shape-corner-extra-small);
     box-sizing: border-box;
     color: var(--zk-color-primary);
@@ -158,6 +161,14 @@
        sized from digit count, so reserved spinner space de-centers the value) */
     appearance: textfield;
     -moz-appearance: textfield;
+}
+
+/* Focus = textbox focus ring (2px primary); padding shrinks 1px so the text does not move */
+.z-slider-input:focus,
+.z-slider-input:focus-visible {
+    outline: none;
+    border: 2px solid var(--zk-input-border-color-focus);
+    padding: 0 1px;
 }
 
 .z-slider-input::-webkit-outer-spin-button,

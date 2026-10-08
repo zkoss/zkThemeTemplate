@@ -62,9 +62,20 @@
     transition: var(--zk-state-layer-transition);
 }
 
-.z-combobutton:hover .z-combobutton-content::before { opacity: var(--zk-combobutton-hover-opacity); }
-.z-combobutton:active .z-combobutton-content::before { opacity: var(--zk-combobutton-active-opacity); }
-.z-combobutton:focus-within .z-combobutton-content::before { opacity: var(--zk-combobutton-focus-opacity); }
+.z-combobutton:hover .z-combobutton-content:where(:not(:has(.z-combobutton-button:hover)))::before {
+    opacity: var(--zk-combobutton-hover-opacity);
+    /* label half only: the arrow (32px, absolute) has its own state layer below */
+    clip-path: inset(0 32px 0 0);
+}
+.z-combobutton:active .z-combobutton-content:where(:not(:has(.z-combobutton-button:hover)))::before {
+    opacity: var(--zk-combobutton-active-opacity);
+    clip-path: inset(0 32px 0 0);
+}
+/* Focus keeps the whole-label layer (clip-path reset beats the hover clip above). */
+.z-combobutton:focus-within .z-combobutton-content::before {
+    opacity: var(--zk-combobutton-focus-opacity);
+    clip-path: none;
+}
 
 /* Dropdown arrow portion — positioned absolutely on the right */
 .z-combobutton-button {
@@ -83,6 +94,20 @@
     transition: background-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
 }
 
+/* State layer for the arrow half — hover / press only the arrow rectangle */
+.z-combobutton-button::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-color: var(--zk-combobutton-overlay-color);
+    opacity: 0;
+    pointer-events: none;
+    transition: var(--zk-state-layer-transition);
+}
+
+.z-combobutton-button:hover::before { opacity: var(--zk-combobutton-hover-opacity); }
+.z-combobutton-button:active::before { opacity: var(--zk-combobutton-active-opacity); }
+
 /* Icon inside arrow area */
 .z-combobutton-icon {
     font-size: 14px;
@@ -97,6 +122,11 @@
 /* Open state — pressed appearance on the wrapper */
 .z-combobutton-open .z-combobutton-content::before {
     opacity: var(--zk-combobutton-active-opacity);
+}
+
+/* Open keeps the whole-wrapper layer even while the label is hovered (beats the hover clip). */
+.z-combobutton.z-combobutton-open .z-combobutton-content::before {
+    clip-path: none;
 }
 
 /* ─── Toolbar mold ─────────────────────────────────────────────────────── */
@@ -116,6 +146,10 @@
 }
 
 .z-combobutton-toolbar .z-combobutton-content::before {
+    background-color: var(--zk-color-on-surface-variant);
+}
+
+.z-combobutton-toolbar .z-combobutton-button::before {
     background-color: var(--zk-color-on-surface-variant);
 }
 
@@ -141,8 +175,14 @@
     display: none;
 }
 
+.z-combobutton[disabled] .z-combobutton-button::before {
+    display: none;
+}
+
+/* Transparent: the button sits on top of .z-combobutton-content, which already paints the
+   (semi-transparent) disabled container — painting it again made the arrow darker. */
 .z-combobutton[disabled] .z-combobutton-button {
-    background-color: var(--zk-color-disabled-container);
+    background-color: transparent;
     color: var(--zk-color-disabled);
     border-left-color: transparent;
 }

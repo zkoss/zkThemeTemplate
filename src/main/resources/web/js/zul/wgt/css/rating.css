@@ -22,6 +22,11 @@
     cursor: pointer;
 }
 
+/* Readonly / disabled icons are pointer-events:none, so the pointer lands on this wrapper. */
+.z-rating:has(> .z-rating-readonly, > .z-rating-disabled) {
+    cursor: default;
+}
+
 /* Each icon. The glyph comes from the icon font (iconSclass) unless the icon is the
  * default z-icon-star, which Marble draws itself — see the star block below. */
 .z-rating-icon {
