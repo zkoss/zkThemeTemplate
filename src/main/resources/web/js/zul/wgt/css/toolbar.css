@@ -165,11 +165,18 @@
 }
 
 .z-toolbar-panel .z-toolbar-content {
-    /* Table element — reset flex on the content wrapper */
+    /* Table element — reset flex on the content wrapper. It shrinks to its cells
+       (width: auto) so that cells keep their natural width and the auto margins
+       below can honour align="start|center|end". */
     display: table;
-    width: 100%;
+    flex: 0 1 auto;
+    width: auto;
     padding: 0;
 }
+
+.z-toolbar-panel .z-toolbar-start { margin-right: auto; }
+.z-toolbar-panel .z-toolbar-center { margin-inline: auto; }
+.z-toolbar-panel .z-toolbar-end { margin-left: auto; }
 
 /* Panel mold table cells (scoped inside .z-toolbar-panel to avoid colliding with
    the .z-toolbar-vertical orientation class on the toolbar root div) */
@@ -197,7 +204,13 @@
 }
 
 /* ─── Overflow popup ─────────────────────────────────────────────────────── */
-/* The overflow button (ellipsis icon) */
+/* Items ZK judged as fitting must stay on one row; the rest is moved into the popup */
+.z-toolbar-overflowpopup > .z-toolbar-content {
+    flex-wrap: nowrap;
+}
+
+/* The overflow button (ellipsis icon). The icon itself is the element's ::before
+   (mask-image from base/_icons.css), so the hover state layer uses ::after. */
 .z-toolbar-overflowpopup-button {
     display: inline-flex;
     align-items: center;
@@ -213,7 +226,7 @@
     transition: background-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
 }
 
-.z-toolbar-overflowpopup-button::before {
+.z-toolbar-overflowpopup-button::after {
     content: '';
     position: absolute;
     inset: 0;
@@ -222,7 +235,7 @@
     pointer-events: none;
 }
 
-.z-toolbar-overflowpopup-button:hover::before {
+.z-toolbar-overflowpopup-button:hover::after {
     opacity: var(--zk-state-hover-opacity);
 }
 
@@ -239,7 +252,10 @@
 .z-toolbar-popup {
     position: absolute;
     top: 100%;
-    right: 0;
+    /* ZK positions the popup with an inline left; a CSS right would stretch it to the viewport edge */
+    right: auto;
+    width: max-content;
+    max-width: 100vw;
     z-index: 1600;
     margin-top: var(--zk-spacing-1);
     padding: var(--zk-spacing-1) 0;
