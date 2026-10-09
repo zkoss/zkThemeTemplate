@@ -278,6 +278,18 @@
     padding: var(--zk-spacing-1) 0;
 }
 
+/* Per-level indent of the horizontal dropdown, same 26px step as the vertical
+   rules above: a nested group title lines up with its sibling items (L2 items
+   keep the 42px step from `.z-nav > ul .z-navitem-content`), and a third-level
+   item sits one more step in. */
+.z-navbar-horizontal .z-nav > ul > .z-nav > .z-nav-content {
+    padding-left: calc(var(--zk-spacing-4) + 26px);
+}
+
+.z-navbar-horizontal .z-nav > ul > .z-nav > ul > .z-navitem > .z-navitem-content {
+    padding-left: calc(var(--zk-spacing-4) + 52px);
+}
+
 /* ─── Popup (overflow menu in horizontal mode) ───────────────────────────── */
 .z-nav-popup {
     list-style: none;
