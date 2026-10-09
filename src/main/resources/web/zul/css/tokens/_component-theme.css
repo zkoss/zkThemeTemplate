@@ -632,7 +632,10 @@
     --zk-toast-bg:     var(--zk-color-surface-container-highest);
     --zk-toast-fg:     var(--zk-color-on-surface);
     --zk-toast-radius: var(--zk-shape-corner-extra-small);
-    --zk-toast-accent: var(--zk-color-status-info);
+    /* status-info mixed 20% toward on-surface: the raw tone is 3.68:1 on the default
+       fill, below the 4.5:1 floor. The icon paints this value as-is, so an override
+       shows exactly the colour it sets. */
+    --zk-toast-accent: color-mix(in srgb, var(--zk-color-status-info) 80%, var(--zk-color-on-surface));
 
     /* ── A (anchor/link) — MD3 text link ──────────────────────────────────
        Text-only component: no bg/border/radius. Resting AND hover text color

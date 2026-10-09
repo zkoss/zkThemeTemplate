@@ -302,6 +302,14 @@
         background-color: CanvasText;
     }
 
+    /* (2e-cont) Selectbox chevron: a mask painted with background-color on the
+       ::picker-icon pseudo-element. Kept as its own rule — a selector list with a
+       pseudo-element the browser does not know would drop the whole list, and the
+       combobox rules above with it. */
+    .z-selectbox::picker-icon {
+        background-color: CanvasText;
+    }
+
     /* dnd drop glyph (.z-drop-icon): per-state rules set a light color for the dark
        ghost chip; in forced-colors the chip flattens to Canvas → light-on-white. Match
        that specificity and repaint. forced-color-adjust:none is required — Chromium

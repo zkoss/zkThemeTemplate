@@ -395,6 +395,13 @@
     display: none;
 }
 
+/* Inside a popup the 16px image sits centred in the same 18px slot as an iconSclass
+   glyph, so image rows and iconSclass rows share one icon centre and text start. */
+.z-menupopup .z-menuitem-image,
+.z-menupopup .z-menu-image {
+    margin: 0 1px;
+}
+
 /* Menuitem icon (user-provided iconSclass) */
 .z-menuitem-content [class*="z-icon-"]:not(.z-menuitem-icon) {
     font-size: 18px;

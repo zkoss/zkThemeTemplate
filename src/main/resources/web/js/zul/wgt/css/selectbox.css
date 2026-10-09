@@ -116,15 +116,6 @@
         transition: transform var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
     }
 
-    /* The chevron is a mask painted with background-color; forced-colors maps that to
-       Canvas and the arrow vanishes. Same fix as the combobox caret in
-       tokens/_forced-colors.css (2e). */
-    @media (forced-colors: active) {
-        .z-selectbox::picker-icon {
-            background-color: CanvasText;
-        }
-    }
-
     .z-selectbox:open::picker-icon {
         transform: rotate(180deg);
     }
