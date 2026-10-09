@@ -12,6 +12,16 @@
     transition: color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
 }
 
+/* Gap between the font icon and the label (matches Button's icon/label gap).
+   dir="reverse" renders the label first, so the gap moves to the icon's start. */
+.z-a > [class*="z-icon-"] {
+    margin-inline-end: var(--zk-spacing-2);
+}
+
+.z-a-reverse > [class*="z-icon-"] {
+    margin-inline: var(--zk-spacing-2) 0;
+}
+
 .z-a:hover {
     text-decoration: underline;
     color: var(--zk-a-fg);

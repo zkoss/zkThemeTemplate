@@ -199,6 +199,14 @@
     transition: background-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
 }
 
+/* Vertical menubar: top-level menuitem matches its sibling .z-menu-content */
+.z-menubar-vertical .z-menuitem > .z-menuitem-content {
+    display: flex;
+    width: 100%;
+    padding: var(--zk-spacing-2) var(--zk-spacing-4);
+    min-height: var(--zk-control-height);
+}
+
 .z-menubar .z-menuitem > .z-menuitem-content::before {
     content: '';
     position: absolute;
