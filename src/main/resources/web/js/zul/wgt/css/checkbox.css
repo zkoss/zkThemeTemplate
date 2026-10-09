@@ -392,9 +392,10 @@
 
 /* ═══════════════════════════════════════════════════════════════════════════
    Switch variant  (mold="switch" → z-checkbox-switch on the wrapper)
-   MUI v7 Switch (medium) values — see doc/contracts/checkbox.md sw1–sw9.
-   Track 34×14 (radius 7, no border); 20px thumb overhangs the track 3px on
-   every side; checked travel = 20px. Do NOT use the MD3 spec-sheet sizes.
+   Material Design 3 Switch — see doc/contracts/checkbox.md sw1–sw9.
+   Track 52×32 (border-box, radius 16, 2px border). Thumb 16px (off) / 24px (on),
+   centre 16px from the track's outer edge. State layer 40px on the thumb centre.
+   Absolute children are placed against the 48×28 padding box.
    ═══════════════════════════════════════════════════════════════════════════ */
 
 /* Wrapper holds inline-block layout */
@@ -414,17 +415,17 @@
     pointer-events: none;
 }
 
-/* The mold element IS the switch track; the thumb overhangs it (no overflow clip) */
+/* The mold element IS the switch track (52×32 outer box, 2px border) */
 .z-checkbox-switch > .z-checkbox-mold {
     position: relative;
     display: inline-block;
-    width: 34px;
-    height: 14px;
-    min-width: 34px;
-    border-radius: 7px;
-    /* ≈ rgba(0,0,0,.38) — MUI off-track is #000 @ .38; on-surface is 87% black, so 44% of it ≈ .38 */
-    background-color: color-mix(in srgb, var(--zk-color-on-surface) 44%, transparent);
-    border: none;
+    box-sizing: border-box;
+    width: 52px;
+    height: 32px;
+    min-width: 52px;
+    border-radius: 16px;
+    background-color: var(--zk-color-surface-container-highest);
+    border: 2px solid var(--zk-color-outline);
     overflow: visible;
     cursor: pointer;
     flex-shrink: 0;
@@ -432,18 +433,19 @@
        vertically, so it stays centered at any --zk-control-height (compact mode). */
     margin: 0 4px;
     transition:
-        background-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
+        background-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard),
+        border-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
 }
 
-/* State-layer halo: 38px circle centered on the thumb, follows its travel */
+/* State layer: 40px circle centred on the thumb (padding-box x = 14 off), follows its travel */
 .z-checkbox-switch > .z-checkbox-mold::before {
     content: '';
     position: absolute;
     top: 50%;
-    left: -12px;
+    left: -6px;
     transform: translateY(-50%);
-    width: 38px;
-    height: 38px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     background-color: var(--zk-color-on-surface);
     opacity: 0;
@@ -453,22 +455,24 @@
         left var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
 }
 
-/* Thumb (knob) — 20px, overhangs the 14px track by 3px on every side */
+/* Thumb (knob) — 16px off (centre 14px from padding-box left), 24px on */
 .z-checkbox-switch > .z-checkbox-mold::after {
     content: '';
     position: absolute;
     top: 50%;
-    left: -3px;
+    left: 6px;
     transform: translateY(-50%);
-    width: 20px;
-    height: 20px;
+    width: 16px;
+    height: 16px;
     border-radius: 50%;
-    background-color: var(--zk-color-surface);
-    box-shadow: var(--zk-elevation-1);
+    background-color: var(--zk-color-on-surface-variant);
+    box-shadow: none;
     display: block;
     background-image: none;
     transition:
         left var(--zk-motion-duration-standard) var(--zk-motion-easing-standard),
+        width var(--zk-motion-duration-standard) var(--zk-motion-easing-standard),
+        height var(--zk-motion-duration-standard) var(--zk-motion-easing-standard),
         background-color var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
 }
 
@@ -479,17 +483,20 @@
 
 /* Switch ON state */
 .z-checkbox-switch-on > .z-checkbox-mold {
-    background-color: color-mix(in srgb, var(--zk-color-primary) 50%, transparent);
+    background-color: var(--zk-color-primary);
+    border-color: var(--zk-color-primary);
 }
 
 .z-checkbox-switch-on > .z-checkbox-mold::before {
-    left: calc(100% - 26px);
+    left: calc(100% - 34px);
     background-color: var(--zk-color-primary);
 }
 
 .z-checkbox-switch-on > .z-checkbox-mold::after {
-    left: calc(100% - 17px);
-    background-color: var(--zk-color-primary);
+    left: calc(100% - 26px);
+    width: 24px;
+    height: 24px;
+    background-color: var(--zk-color-on-primary);
     background-image: none;
 }
 
