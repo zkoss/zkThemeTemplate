@@ -206,6 +206,7 @@
     display: flex;
     align-items: center;
     gap: var(--zk-spacing-1);
+    min-width: 0;
     padding: var(--zk-spacing-3) var(--zk-spacing-4);
     position: relative;
     z-index: 1;
@@ -217,10 +218,17 @@
     display: inline-flex;
     align-items: center;
     gap: var(--zk-spacing-1);
+    min-width: 0;
     pointer-events: none;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+}
+
+/* text-overflow only works on a block container: a text-only label (no icon child)
+   is a block so the ellipsis shows; a label with an icon child keeps the flex row. */
+.z-tab-text:not(:has(> *)) {
+    display: block;
 }
 
 /* ─── Tab close button (.z-tab-button, not z-tab-close) ─────────────────── */
