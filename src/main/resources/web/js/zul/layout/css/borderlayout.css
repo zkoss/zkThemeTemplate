@@ -398,24 +398,21 @@
     box-sizing: border-box;
 }
 
-/* ─── Region title (collapsed rotation) ──────────────────────────────────── *
- * `transform-origin: center` (the default) keeps the rotated text's visual
- * centre on its laid-out box centre, so the flex column places the icon and
- * the rotated title on the same vertical line. Using `left bottom` (the old
- * value) pivoted around the box's bottom-left corner and pushed the visible
- * text down-and-right of its layout position — that's what made the icon and
- * title fall on different x-coordinates.
+/* ─── Region title (collapsed, vertical) ─────────────────────────────────── *
+ * `writing-mode: vertical-rl` lays the text out top-to-bottom, so the title's
+ * layout box is as narrow as one line of text. A `rotate(90deg)` only changed
+ * the painted box: the pre-rotation (horizontal) width of a long title such as
+ * "Customers" still sized the shrink-to-fit west strip (65px instead of 48px)
+ * and the icon overlapped the text.
  *
- * ZK's layoutregion.js writes an inline `width: <stripHeight>px` on this
- * element (so the OLD `left bottom` rotation could make the text span the
- * full strip). That width is no longer needed once we rotate around centre,
- * and worse, it stretches the pre-rotation box well beyond the icon's
- * horizontal centre — `width: auto !important` is required because we cannot
- * intercept the JS-set inline style any other way. ──────────────────────── */
+ * ZK's Borderlayout.ts writes an inline `width: <strip - icon>px` on this
+ * element; `width: auto !important` is required because we cannot intercept
+ * the JS-set inline style any other way. ──────────────────────────────── */
 .z-west-title,
 .z-east-title {
-    transform: rotate(90deg);
+    writing-mode: vertical-rl;
     width: auto !important;
+    min-height: 0;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;

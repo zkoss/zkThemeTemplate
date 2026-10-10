@@ -372,7 +372,7 @@
     .z-progressmeter-image  { background-color: Highlight; }
 
     /* Separator / space (bar="true") dividers — 1px hairlines */
-    .z-separator-horizontal-bar,
+    .z-separator-horizontal-bar { background: linear-gradient(CanvasText, CanvasText) center / 100% 1px no-repeat; }
     .z-separator-vertical-bar { background-color: CanvasText; }
 
     /* Slider / rangeslider / multislider — rail + active fill (thumbs bordered above) */
