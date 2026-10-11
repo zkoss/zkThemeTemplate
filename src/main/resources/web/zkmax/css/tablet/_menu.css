@@ -25,3 +25,9 @@
 .z-menubar-icon {
     font-size: var(--zk-touch-icon-size);
 }
+
+/* Touch menubar has no scroll buttons (menubar-touch.ts makes setScrollable()
+ * a no-op), so a horizontal bar narrower than its items scrolls natively */
+.z-menubar-horizontal {
+    overflow: auto;
+}
