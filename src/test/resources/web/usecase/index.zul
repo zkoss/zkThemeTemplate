@@ -8,19 +8,19 @@
 
     <west size="258px" border="none" collapsible="false">
         <div sclass="z-p-2">
-            <div sclass="sidebar-brand z-d-flex z-align-baseline z-gap-2">
+            <div sclass="sidebar-brand z-d-flex z-items-baseline z-gap-2">
                 <label value="Marble"/>
                 <!-- HEAD commit date + short hash, stamped in at build time so a design
                      reviewer can pin a screenshot to a commit. See UseCaseVM.getCommitStamp(). -->
-                <label value="@load(vm.commitStamp)" sclass="z-text-xs z-fw-regular z-text-muted"/>
+                <label value="@load(vm.commitStamp)" sclass="z-text-xs z-fw-normal z-text-secondary"/>
             </div>
-            <div sclass="z-d-flex z-align-center z-gap-2 z-px-2 z-py-2 z-mb-2 z-border-bottom">
+            <div sclass="z-d-flex z-items-center z-gap-2 z-px-2 z-py-2 z-mb-2 z-border-bottom">
                 <label value="Compact density" sclass="z-text-sm z-flex-1"/>
                 <checkbox mold="switch" checked="@load(vm.compactMode)"
                           onCheck="@command('toggleCompactMode', on=self.checked)"/>
             </div>
             <button label="Report this page" iconSclass="z-icon-flag"
-                    sclass="z-button-outlined z-w-full z-mb-2"
+                    sclass="z-button-outlined z-w-100 z-mb-2"
                     xmlns:w="client" w:onClick="marbleReportIssue()"/>
             <navbar orient="vertical">
                 <nav label="Use Cases" open="@load(vm.openNavLabel eq 'Use Cases')">
@@ -88,6 +88,7 @@
                 </nav>
                 <nav label="Navigation" open="@load(vm.openNavLabel eq 'Navigation')">
                     <navitem label="Anchornav"             selected="@load(vm.currentPage eq '~./anchornav.zul')" onClick="@command('navigate', page='~./anchornav.zul')" />
+                    <navitem label="Breadcrumb"            selected="@load(vm.currentPage eq '~./breadcrumb.zul')" onClick="@command('navigate', page='~./breadcrumb.zul')" />
                     <navitem label="Coachmark"             selected="@load(vm.currentPage eq '~./coachmark.zul')" onClick="@command('navigate', page='~./coachmark.zul')" />
                     <navitem label="Drawer"                selected="@load(vm.currentPage eq '~./drawer.zul')" onClick="@command('navigate', page='~./drawer.zul')" />
                     <navitem label="Fisheyebar"            selected="@load(vm.currentPage eq '~./fisheyebar.zul')" onClick="@command('navigate', page='~./fisheyebar.zul')" />
@@ -145,6 +146,7 @@
                     <navitem label="Barcode Scanner" selected="@load(vm.currentPage eq '~./barcodescanner.zul')" onClick="@command('navigate', page='~./barcodescanner.zul')" />
                     <navitem label="Camera"          selected="@load(vm.currentPage eq '~./camera.zul')" onClick="@command('navigate', page='~./camera.zul')" />
                     <navitem label="Captcha"         selected="@load(vm.currentPage eq '~./captcha.zul')" onClick="@command('navigate', page='~./captcha.zul')" />
+                    <navitem label="Carousel"        selected="@load(vm.currentPage eq '~./carousel.zul')" onClick="@command('navigate', page='~./carousel.zul')" />
                     <navitem label="Cropper"         selected="@load(vm.currentPage eq '~./cropper.zul')" onClick="@command('navigate', page='~./cropper.zul')" />
                     <navitem label="Drop Upload"     selected="@load(vm.currentPage eq '~./dropupload.zul')" onClick="@command('navigate', page='~./dropupload.zul')" />
                     <navitem label="File Upload"     selected="@load(vm.currentPage eq '~./fileupload.zul')" onClick="@command('navigate', page='~./fileupload.zul')" />
@@ -169,7 +171,10 @@
                     <navitem label="Stacking (z-index)" selected="@load(vm.currentPage eq '~./utility/zindex.zul')" onClick="@command('navigate', page='~./utility/zindex.zul')" />
                     <navitem label="Border &amp; Shape" selected="@load(vm.currentPage eq '~./utility/borders.zul')" onClick="@command('navigate', page='~./utility/borders.zul')" />
                     <navitem label="Elevation"          selected="@load(vm.currentPage eq '~./utility/elevation.zul')" onClick="@command('navigate', page='~./utility/elevation.zul')" />
-                    <navitem label="Components"         selected="@load(vm.currentPage eq '~./utility/components.zul')" onClick="@command('navigate', page='~./utility/components.zul')" />
+                    <navitem label="Opacity"            selected="@load(vm.currentPage eq '~./utility/opacity.zul')" onClick="@command('navigate', page='~./utility/opacity.zul')" />
+                    <navitem label="Visibility"         selected="@load(vm.currentPage eq '~./utility/visibility.zul')" onClick="@command('navigate', page='~./utility/visibility.zul')" />
+                    <navitem label="Interactions"       selected="@load(vm.currentPage eq '~./utility/interactions.zul')" onClick="@command('navigate', page='~./utility/interactions.zul')" />
+                    <navitem label="Surface"            selected="@load(vm.currentPage eq '~./utility/surface.zul')" onClick="@command('navigate', page='~./utility/surface.zul')" />
                 </nav>                
             </navbar>
         </div>

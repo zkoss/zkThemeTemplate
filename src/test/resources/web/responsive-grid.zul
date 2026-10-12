@@ -1,16 +1,14 @@
 <?page title="Responsive Grid" contentType="text/html;charset=UTF-8"?>
 <zk>
 <div sclass="z-p-8">
-    <div sclass="z-border-bottom z-text-xl z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Responsive Grid (stacking)</div>
+    <div sclass="z-border-bottom z-mb-8 z-pb-3"><label sclass="z-text-2xl z-fw-medium z-text-on-surface" value="Responsive Grid (stacking)"/></div>
 
-    <div sclass="z-py-3 z-text-sm z-text-secondary z-mb-6">
-        <label value="A grid with responsive=&quot;stacking&quot; reflows its table into a card-per-row layout when the grid's own width drops below a breakpoint (default 768px). Each row becomes a card; each cell becomes a labelled value. The check is against the grid's container width — not the viewport — so a grid in a narrow column or popup stacks too. (Stacking transformation ships in ZK EE / zkmax; ZK-5409.)"/>
-    </div>
+    <div sclass="z-py-3 z-mb-6"><label sclass="z-text-sm z-text-secondary" value="A grid with responsive=&quot;stacking&quot; reflows its table into a card-per-row layout when the grid's own width drops below a breakpoint (default 768px). Each row becomes a card; each cell becomes a labelled value. The check is against the grid's container width — not the viewport — so a grid in a narrow column or popup stacks too. (Stacking transformation ships in ZK EE / zkmax; ZK-5409.)"/></div>
 
     <!-- 1. Basic stacking: a narrow grid always renders as cards -->
     <div sclass="z-mb-8">
-        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Basic stacking (narrow container)</div>
-        <div sclass="z-py-3 z-text-sm z-text-secondary z-mb-3">Fixed at 460px — below the 768px default breakpoint, so it stacks to one card per row.</div>
+        <div sclass="z-text-uppercase z-border-bottom z-pb-2 z-mb-4"><label sclass="z-text-xs z-fw-semibold z-text-secondary" value="Basic stacking (narrow container)"/></div>
+        <div sclass="z-py-3 z-mb-3"><label sclass="z-text-sm z-text-secondary" value="Fixed at 460px — below the 768px default breakpoint, so it stacks to one card per row."/></div>
         <grid responsive="stacking" width="460px">
             <columns>
                 <column label="Name"/>
@@ -27,8 +25,8 @@
 
     <!-- 2. Live breakpoint: full-width grid switches when the window crosses 768px -->
     <div sclass="z-mb-8">
-        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Live breakpoint (resize the window)</div>
-        <div sclass="z-py-3 z-text-sm z-text-secondary z-mb-3">Full width — renders as a normal table at ≥768px. Narrow the browser below 768px to watch it stack, and widen it again to restore the table.</div>
+        <div sclass="z-text-uppercase z-border-bottom z-pb-2 z-mb-4"><label sclass="z-text-xs z-fw-semibold z-text-secondary" value="Live breakpoint (resize the window)"/></div>
+        <div sclass="z-py-3 z-mb-3"><label sclass="z-text-sm z-text-secondary" value="Full width — renders as a normal table at ≥768px. Narrow the browser below 768px to watch it stack, and widen it again to restore the table."/></div>
         <grid responsive="stacking" width="100%">
             <columns>
                 <column label="Author"/>
@@ -46,8 +44,8 @@
 
     <!-- 3. responsiveColumns: multiple cards per row -->
     <div sclass="z-mb-8">
-        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">responsiveColumns="sm-1 md-2 lg-none"</div>
-        <div sclass="z-py-3 z-text-sm z-text-secondary z-mb-3">Bootstrap-style cascade: 1 card/row below 768px, 2 cards/row from 768–991px, normal table at ≥992px. Fixed at 820px here → 2 cards per row.</div>
+        <div sclass="z-text-uppercase z-border-bottom z-pb-2 z-mb-4"><label sclass="z-text-xs z-fw-semibold z-text-secondary" value="responsiveColumns=&quot;sm-1 md-2 lg-none&quot;"/></div>
+        <div sclass="z-py-3 z-mb-3"><label sclass="z-text-sm z-text-secondary" value="Bootstrap-style cascade: 1 card/row below 768px, 2 cards/row from 768–991px, normal table at ≥992px. Fixed at 820px here → 2 cards per row."/></div>
         <grid responsive="stacking" responsiveColumns="sm-1 md-2 lg-none" width="820px">
             <columns>
                 <column label="Product"/>
@@ -65,8 +63,8 @@
 
     <!-- 4. responsiveVisible: hide a column from cards -->
     <div sclass="z-mb-8">
-        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Per-column hide (responsiveVisible="false")</div>
-        <div sclass="z-py-3 z-text-sm z-text-secondary z-mb-3">The "Internal ID" column is visible in table mode but omitted from each card in stacking mode — useful for technical/debug columns that are noise on mobile.</div>
+        <div sclass="z-text-uppercase z-border-bottom z-pb-2 z-mb-4"><label sclass="z-text-xs z-fw-semibold z-text-secondary" value="Per-column hide (responsiveVisible=&quot;false&quot;)"/></div>
+        <div sclass="z-py-3 z-mb-3"><label sclass="z-text-sm z-text-secondary" value="The &quot;Internal ID&quot; column is visible in table mode but omitted from each card in stacking mode — useful for technical/debug columns that are noise on mobile."/></div>
         <grid responsive="stacking" width="460px">
             <columns>
                 <column label="Name"/>
@@ -82,8 +80,8 @@
 
     <!-- 5. Paging + footer compatibility -->
     <div sclass="z-mb-8">
-        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Paging + footer</div>
-        <div sclass="z-py-3 z-text-sm z-text-secondary z-mb-3">mold="paging" and the &lt;foot&gt; both work in stacking mode: the footer renders as a full-width card below the row grid.</div>
+        <div sclass="z-text-uppercase z-border-bottom z-pb-2 z-mb-4"><label sclass="z-text-xs z-fw-semibold z-text-secondary" value="Paging + footer"/></div>
+        <div sclass="z-py-3 z-mb-3"><label sclass="z-text-sm z-text-secondary" value="mold=&quot;paging&quot; and the &lt;foot&gt; both work in stacking mode: the footer renders as a full-width card below the row grid."/></div>
         <grid responsive="stacking" mold="paging" pageSize="3" width="460px">
             <columns>
                 <column label="Order"/>

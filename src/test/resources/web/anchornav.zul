@@ -1,10 +1,10 @@
 <?page title="Anchornav" contentType="text/html;charset=UTF-8"?>
 <zk xmlns:h="native" xmlns:ca="client/attribute">
 <div sclass="z-p-8">
-    <div sclass="z-border-bottom z-text-xl z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Anchor Navigation</div>
+    <div sclass="z-border-bottom z-mb-8 z-pb-3"><label sclass="z-text-2xl z-fw-medium z-text-on-surface" value="Anchor Navigation"/></div>
 
     <div sclass="z-mb-6">
-        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Anchornav with Sections</div>
+        <div sclass="z-text-uppercase z-border-bottom z-pb-2 z-mb-4"><label sclass="z-text-xs z-fw-semibold z-text-secondary" value="Anchornav with Sections"/></div>
         <div sclass="z-py-3">
             <anchornav>
                 <listbox sizedByContent="true" hflex="min">
@@ -14,15 +14,15 @@
                 </listbox>
             </anchornav>
             <div id="win1" sclass="z-mt-6 z-p-4 z-border z-rounded" style="height:200px;background:skyblue">
-                <div sclass="z-fw-medium z-mb-2">1. First Section</div>
+                <div sclass="z-mb-2"><label sclass="z-fw-medium" value="1. First Section"/></div>
                 Hello world.
             </div>
             <div id="win2" sclass="z-mt-6 z-p-4 z-border z-rounded" style="height:200px;background:coral">
-                <div sclass="z-fw-medium z-mb-2">2. Second Section</div>
+                <div sclass="z-mb-2"><label sclass="z-fw-medium" value="2. Second Section"/></div>
                 Welcome to ZK world.
             </div>
             <div id="win3" sclass="z-mt-6 z-p-4 z-border z-rounded" style="height:200px;background:bisque">
-                <div sclass="z-fw-medium z-mb-2">3. Third Section</div>
+                <div sclass="z-mb-2"><label sclass="z-fw-medium" value="3. Third Section"/></div>
                 Welcome to ZK world.
             </div>
         </div>

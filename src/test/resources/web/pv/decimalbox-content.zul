@@ -4,7 +4,7 @@
        rowsTemplate="decimalbox-rows">
     <template name="decimalbox-rows">
         <div sclass="z-d-contents">
-            <div sclass="z-text-sm z-text-secondary">Value</div>
+            <div><label sclass="z-text-sm z-text-secondary" value="Value"/></div>
             <div><decimalbox value="3.14"/></div>
             <div><decimalbox value="3.14" disabled="true"/></div>
             <div><decimalbox value="3.14" readonly="true"/></div>
@@ -12,7 +12,7 @@
             <div><decimalbox value="3.14" inplace="true"/></div>
         </div>
         <div sclass="z-d-contents">
-            <div sclass="z-text-sm z-text-secondary">Placeholder</div>
+            <div><label sclass="z-text-sm z-text-secondary" value="Placeholder"/></div>
             <div><decimalbox placeholder="Enter decimal"/></div>
             <div><decimalbox placeholder="Enter decimal" disabled="true"/></div>
             <div><decimalbox placeholder="Enter decimal" readonly="true"/></div>

@@ -1,14 +1,14 @@
 <?page title="Onboarding Wizard"?>
 <zk>
 <style src="~./usecase/usecase.css"/>
-<vlayout hflex="1" sclass="z-d-flex z-flex-col z-gap-4 z-p-4 z-bg-surface-low">
+<vlayout hflex="1" sclass="z-d-flex z-flex-col z-gap-4 z-p-4 z-bg-surface-container-low">
 
   <!-- Centered narrow column so form inputs don't stretch edge-to-edge -->
   <div width="600px" sclass="z-mx-auto z-d-flex z-flex-col z-gap-4">
 
     <label value="Account Setup" sclass="z-h2"/>
 
-    <div sclass="z-card">
+    <div sclass="z-paper">
         <!-- stepbar is an EE (zkmax) component -->
         <stepbar activeIndex="1" hflex="1">
             <step title="Account"/>
@@ -19,8 +19,8 @@
     </div>
 
     <!-- Only the current step's form is shown (progressive disclosure) -->
-    <div sclass="z-card">
-        <label value="Step 2 · Profile" sclass="z-d-block z-text-base z-fw-medium z-text-on-surface z-mb-3"/>
+    <div sclass="z-paper">
+        <label value="Step 2 · Profile" sclass="z-d-block z-text-lg z-fw-medium z-text-on-surface z-mb-3"/>
         <grid hflex="1" sclass="z-border-0">
             <columns>
                 <column width="160px"/>
@@ -56,7 +56,7 @@
     </div>
 
     <!-- Wizard nav -->
-    <div sclass="z-card z-d-flex z-flex-row z-flex-wrap z-gap-4 z-align-center">
+    <div sclass="z-paper z-d-flex z-flex-row z-flex-wrap z-gap-4 z-items-center">
         <button label="Back" sclass="z-button-outlined"/>
         <button label="Next" sclass="z-button-primary z-ms-auto"/>
     </div>

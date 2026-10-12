@@ -1,30 +1,30 @@
 <?page title="Item Detail"?>
 <zk>
 <style src="~./usecase/usecase.css"/>
-<vlayout hflex="1" sclass="z-d-flex z-flex-col z-gap-4 z-p-4 z-bg-surface-low">
+<vlayout hflex="1" sclass="z-d-flex z-flex-col z-gap-4 z-p-4 z-bg-surface-container-low">
 
-    <div sclass="z-d-flex z-flex-row z-flex-wrap z-gap-4 z-align-center">
+    <div sclass="z-d-flex z-flex-row z-flex-wrap z-gap-4 z-items-center">
         <label value="Edit Item" sclass="z-h2"/>
         <chip label="SKU FST-0481" severity="secondary" sclass="z-ms-auto"/>
     </div>
 
-    <div sclass="z-card">
+    <div sclass="z-paper">
 
         <!-- Basic Info -->
-        <label value="Basic Info" sclass="z-d-block z-text-base z-fw-medium z-text-on-surface z-mb-3"/>
+        <label value="Basic Info" sclass="z-d-block z-text-lg z-fw-medium z-text-on-surface z-mb-3"/>
         <div sclass="z-d-flex z-flex-row z-flex-wrap z-gap-4">
             <div sclass="z-flex-1 z-min-w-0">
-                <label value="Product Name *" sclass="z-d-block z-mb-1 z-text-muted z-text-xs"/>
+                <label value="Product Name *" sclass="z-d-block z-mb-1 z-text-secondary z-text-xs"/>
                 <textbox value="M6 Hex Bolt (100pk)" hflex="1"/>
             </div>
             <div sclass="z-flex-1 z-min-w-0">
-                <label value="SKU *" sclass="z-d-block z-mb-1 z-text-muted z-text-xs"/>
+                <label value="SKU *" sclass="z-d-block z-mb-1 z-text-secondary z-text-xs"/>
                 <textbox value="" hflex="1" constraint="no empty"/>
             </div>
         </div>
         <div sclass="z-d-flex z-flex-row z-flex-wrap z-gap-4 z-mt-3">
             <div sclass="z-flex-1 z-min-w-0">
-                <label value="Category" sclass="z-d-block z-mb-1 z-text-muted z-text-xs"/>
+                <label value="Category" sclass="z-d-block z-mb-1 z-text-secondary z-text-xs"/>
                 <combobox value="Fasteners" readonly="true" hflex="1">
                     <comboitem label="Fasteners"/>
                     <comboitem label="Tools"/>
@@ -33,24 +33,24 @@
                 </combobox>
             </div>
             <div sclass="z-flex-1 z-min-w-0">
-                <label value="Supplier" sclass="z-d-block z-mb-1 z-text-muted z-text-xs"/>
+                <label value="Supplier" sclass="z-d-block z-mb-1 z-text-secondary z-text-xs"/>
                 <textbox value="Acme Industrial Co." hflex="1"/>
             </div>
         </div>
 
         <!-- Stock -->
-        <label value="Stock" sclass="z-d-block z-text-base z-fw-medium z-text-on-surface z-mb-3 z-mt-4"/>
+        <label value="Stock" sclass="z-d-block z-text-lg z-fw-medium z-text-on-surface z-mb-3 z-mt-4"/>
         <div sclass="z-d-flex z-flex-row z-flex-wrap z-gap-4">
             <div sclass="z-flex-1 z-min-w-0">
-                <label value="Quantity" sclass="z-d-block z-mb-1 z-text-muted z-text-xs"/>
+                <label value="Quantity" sclass="z-d-block z-mb-1 z-text-secondary z-text-xs"/>
                 <spinner value="1240" hflex="1"/>
             </div>
             <div sclass="z-flex-1 z-min-w-0">
-                <label value="Reorder Level" sclass="z-d-block z-mb-1 z-text-muted z-text-xs"/>
+                <label value="Reorder Level" sclass="z-d-block z-mb-1 z-text-secondary z-text-xs"/>
                 <spinner value="200" hflex="1"/>
             </div>
             <div sclass="z-flex-1 z-min-w-0">
-                <label value="Unit" sclass="z-d-block z-mb-1 z-text-muted z-text-xs"/>
+                <label value="Unit" sclass="z-d-block z-mb-1 z-text-secondary z-text-xs"/>
                 <combobox value="Pack" readonly="true" hflex="1">
                     <comboitem label="Each"/>
                     <comboitem label="Pack"/>
@@ -60,23 +60,23 @@
         </div>
 
         <!-- Pricing -->
-        <label value="Pricing" sclass="z-d-block z-text-base z-fw-medium z-text-on-surface z-mb-3 z-mt-4"/>
+        <label value="Pricing" sclass="z-d-block z-text-lg z-fw-medium z-text-on-surface z-mb-3 z-mt-4"/>
         <div sclass="z-d-flex z-flex-row z-flex-wrap z-gap-4">
             <div sclass="z-flex-1 z-min-w-0">
-                <label value="Cost" sclass="z-d-block z-mb-1 z-text-muted z-text-xs"/>
+                <label value="Cost" sclass="z-d-block z-mb-1 z-text-secondary z-text-xs"/>
                 <decimalbox value="3.40" format="#,##0.00" hflex="1"/>
             </div>
             <div sclass="z-flex-1 z-min-w-0">
-                <label value="Price" sclass="z-d-block z-mb-1 z-text-muted z-text-xs"/>
+                <label value="Price" sclass="z-d-block z-mb-1 z-text-secondary z-text-xs"/>
                 <decimalbox value="5.99" format="#,##0.00" hflex="1"/>
             </div>
         </div>
 
         <!-- Options -->
-        <label value="Options" sclass="z-d-block z-text-base z-fw-medium z-text-on-surface z-mb-3 z-mt-4"/>
+        <label value="Options" sclass="z-d-block z-text-lg z-fw-medium z-text-on-surface z-mb-3 z-mt-4"/>
         <checkbox label="Active (available for ordering)" checked="true"/>
         <div sclass="z-mt-2">
-            <label value="Storage Type" sclass="z-d-block z-mb-1 z-text-muted z-text-xs"/>
+            <label value="Storage Type" sclass="z-d-block z-mb-1 z-text-secondary z-text-xs"/>
             <radiogroup>
                 <radio label="Ambient" selected="true"/>
                 <radio label="Refrigerated"/>
@@ -84,7 +84,7 @@
             </radiogroup>
         </div>
         <div sclass="z-mt-2">
-            <label value="Notes" sclass="z-d-block z-mb-1 z-text-muted z-text-xs"/>
+            <label value="Notes" sclass="z-d-block z-mb-1 z-text-secondary z-text-xs"/>
             <textbox multiline="true" rows="3" hflex="1" placeholder="Internal notes…"/>
         </div>
     </div>
@@ -93,7 +93,7 @@
          GAP: spec asks for a *sticky* bottom action bar. No utility class pins an element to
          the viewport bottom; this renders as a normal trailing bar. Consider a .z-sticky-bottom
          utility (position: sticky; bottom: 0) if a pinned bar is desired. -->
-    <div sclass="z-card z-d-flex z-flex-row z-flex-wrap z-gap-4 z-align-center">
+    <div sclass="z-paper z-d-flex z-flex-row z-flex-wrap z-gap-4 z-items-center">
         <button label="Cancel" sclass="z-button-outlined z-ms-auto"/>
         <button label="Save" sclass="z-button-primary"/>
     </div>

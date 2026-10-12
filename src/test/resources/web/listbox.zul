@@ -1,14 +1,14 @@
 <?page title="Listbox" contentType="text/html;charset=UTF-8"?>
 <zk xmlns:h="native">
 <div sclass="z-p-8">
-    <div sclass="z-border-bottom z-text-xl z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Listbox</div>
+    <div sclass="z-border-bottom z-mb-8 z-pb-3"><label sclass="z-text-2xl z-fw-medium z-text-on-surface" value="Listbox"/></div>
 
     <div sclass="z-mb-8">
-        <div sclass="z-text-md z-fw-bold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-3">Listbox — State Gallery</div>
+        <div sclass="z-text-uppercase z-border-bottom z-pb-2 z-mb-3"><label sclass="z-text-md z-fw-bold z-text-secondary" value="Listbox — State Gallery"/></div>
 
-        <div sclass="z-d-flex z-flex-wrap z-gap-6 z-align-start z-py-4 z-mb-2">
-            <div sclass="z-d-flex z-flex-col z-align-center z-gap-2">
-                <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-center z-text-secondary">Row States</div>
+        <div sclass="z-d-flex z-flex-wrap z-gap-6 z-items-start z-py-4 z-mb-2">
+            <div sclass="z-d-flex z-flex-col z-items-center z-gap-2">
+                <div sclass="z-text-uppercase z-text-center"><label sclass="z-text-xs z-fw-semibold z-text-secondary" value="Row States"/></div>
                 <listbox width="280px">
                     <listhead><listheader label="Name"/><listheader label="Role"/></listhead>
                     <listitem>
@@ -27,9 +27,9 @@
             </div>
         </div>
 
-        <div sclass="z-d-flex z-flex-wrap z-gap-6 z-align-start z-py-4 z-mb-2">
-            <div sclass="z-d-flex z-flex-col z-align-center z-gap-2">
-                <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-center z-text-secondary">Checkmark (multiple — checkbox)</div>
+        <div sclass="z-d-flex z-flex-wrap z-gap-6 z-items-start z-py-4 z-mb-2">
+            <div sclass="z-d-flex z-flex-col z-items-center z-gap-2">
+                <div sclass="z-text-uppercase z-text-center"><label sclass="z-text-xs z-fw-semibold z-text-secondary" value="Checkmark (multiple — checkbox)"/></div>
                 <listbox width="280px" multiple="true" checkmark="true">
                     <listhead><listheader label="Name"/><listheader label="Role"/></listhead>
                     <listitem>
@@ -46,8 +46,8 @@
                     </listitem>
                 </listbox>
             </div>
-            <div sclass="z-d-flex z-flex-col z-align-center z-gap-2">
-                <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-center z-text-secondary">Checkmark (single — radio)</div>
+            <div sclass="z-d-flex z-flex-col z-items-center z-gap-2">
+                <div sclass="z-text-uppercase z-text-center"><label sclass="z-text-xs z-fw-semibold z-text-secondary" value="Checkmark (single — radio)"/></div>
                 <listbox width="280px" checkmark="true">
                     <listhead><listheader label="Name"/><listheader label="Role"/></listhead>
                     <listitem>
@@ -68,7 +68,7 @@
     </div>
 
     <div sclass="z-mb-6">
-        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Standard</div>
+        <div sclass="z-text-uppercase z-border-bottom z-pb-2 z-mb-4"><label sclass="z-text-xs z-fw-semibold z-text-secondary" value="Standard"/></div>
         <div sclass="z-py-3">
             <listbox>
                 <listhead sizable="true">
@@ -100,7 +100,7 @@
     </div>
 
     <div sclass="z-mb-6">
-        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Checkmarks</div>
+        <div sclass="z-text-uppercase z-border-bottom z-pb-2 z-mb-4"><label sclass="z-text-xs z-fw-semibold z-text-secondary" value="Checkmarks"/></div>
         <div sclass="z-py-3">
             <listbox multiple="true" checkmark="true">
                 <listhead menupopup="auto">
@@ -124,7 +124,7 @@
     </div>
 
     <div sclass="z-mb-6">
-        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Select Mold</div>
+        <div sclass="z-text-uppercase z-border-bottom z-pb-2 z-mb-4"><label sclass="z-text-xs z-fw-semibold z-text-secondary" value="Select Mold"/></div>
         <div sclass="z-py-3">
             <listbox rows="1" mold="select">
                 <listitem label="Inbox"/>
@@ -136,7 +136,7 @@
     </div>
 
     <div sclass="z-mb-6">
-        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Frozen Columns</div>
+        <div sclass="z-text-uppercase z-border-bottom z-pb-2 z-mb-4"><label sclass="z-text-xs z-fw-semibold z-text-secondary" value="Frozen Columns"/></div>
         <div sclass="z-py-3">
             <listbox>
                 <frozen columns="2"/>
@@ -155,7 +155,7 @@
     </div>
 
     <div sclass="z-mb-6">
-        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Empty State</div>
+        <div sclass="z-text-uppercase z-border-bottom z-pb-2 z-mb-4"><label sclass="z-text-xs z-fw-semibold z-text-secondary" value="Empty State"/></div>
         <div sclass="z-py-3">
             <listbox emptyMessage="This listbox is empty.">
                 <listhead><listheader label="Name"/></listhead>
@@ -164,8 +164,8 @@
     </div>
 
     <div sclass="z-mb-6">
-        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">No-Border Variant (z-listbox-noborder)</div>
-        <div sclass="z-py-3 z-text-sm z-text-secondary z-mb-3">A listbox is an outlined card by default. Add sclass="z-listbox-noborder" to strip its own frame when nesting it inside another bounded surface — here an elevated card — so it blends into the parent instead of double-framing.</div>
+        <div sclass="z-text-uppercase z-border-bottom z-pb-2 z-mb-4"><label sclass="z-text-xs z-fw-semibold z-text-secondary" value="No-Border Variant (z-listbox-noborder)"/></div>
+        <div sclass="z-py-3 z-mb-3"><label sclass="z-text-sm z-text-secondary" value="A listbox is an outlined card by default. Add sclass=&quot;z-listbox-noborder&quot; to strip its own frame when nesting it inside another bounded surface — here an elevated card — so it blends into the parent instead of double-framing."/></div>
         <div sclass="z-bg-surface z-rounded-lg z-elevation-2 z-p-6">
             <listbox sclass="z-listbox-noborder">
                 <listhead><listheader label="Name"/><listheader label="Value"/></listhead>

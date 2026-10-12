@@ -15,10 +15,10 @@
     orgModel.addOpenPaths(new int[][]{{0}, {0, 0}, {0, 1}});
 ]]></zscript>
 <div sclass="z-p-8">
-    <div sclass="z-border-bottom z-text-xl z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Organigram</div>
+    <div sclass="z-border-bottom z-mb-8 z-pb-3"><label sclass="z-text-2xl z-fw-medium z-text-on-surface" value="Organigram"/></div>
 
     <div sclass="z-mb-6">
-        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Basic Organigram</div>
+        <div sclass="z-text-uppercase z-border-bottom z-pb-2 z-mb-4"><label sclass="z-text-xs z-fw-semibold z-text-secondary" value="Basic Organigram"/></div>
         <div sclass="z-py-3">
             <label value="Selected item: "/>
             <label id="label"/>
@@ -57,7 +57,7 @@
     </div>
 
     <div sclass="z-mb-6">
-        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Organigram with Model</div>
+        <div sclass="z-text-uppercase z-border-bottom z-pb-2 z-mb-4"><label sclass="z-text-xs z-fw-semibold z-text-secondary" value="Organigram with Model"/></div>
         <div sclass="z-py-3">
             <label value="Selected item: "/>
             <label id="label2"/>
@@ -84,9 +84,9 @@
     </div>
 
     <div sclass="z-mb-6">
-        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Node State Gallery</div>
+        <div sclass="z-text-uppercase z-border-bottom z-pb-2 z-mb-4"><label sclass="z-text-xs z-fw-semibold z-text-secondary" value="Node State Gallery"/></div>
         <div sclass="z-py-3">
-            <div sclass="z-text-xs z-text-secondary z-mb-3">Selected, disabled, non-selectable, and closed branch — static state samples</div>
+            <div sclass="z-mb-3"><label sclass="z-text-xs z-text-secondary" value="Selected, disabled, non-selectable, and closed branch — static state samples"/></div>
             <organigram id="stateOrg">
                 <orgchildren>
                     <orgitem id="rootItem" label="Root">

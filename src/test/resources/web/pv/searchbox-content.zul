@@ -20,7 +20,7 @@
        rowsTemplate="searchbox-rows">
     <template name="searchbox-rows">
         <div sclass="z-d-contents">
-            <div sclass="z-text-sm z-text-secondary">Default</div>
+            <div><label sclass="z-text-sm z-text-secondary" value="Default"/></div>
             <div>
                 <searchbox model="${searchModel}" placeholder="Search regions..." autoclose="true">
                     <template name="model"><html><![CDATA[<i class="z-icon-globe"></i> ${each}]]></html></template>
@@ -34,7 +34,7 @@
 </apply>
 
 <div sclass="z-mb-6">
-    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Selected + Multiple + Clear + searchMessage</div>
+    <div sclass="z-text-uppercase z-border-bottom z-pb-2 z-mb-4"><label sclass="z-text-xs z-fw-semibold z-text-secondary" value="Selected + Multiple + Clear + searchMessage"/></div>
     <div sclass="z-d-flex z-flex-wrap z-gap-6 z-py-3">
         <div sclass="z-d-flex z-flex-col z-gap-2">
             <label sclass="z-text-xs z-text-secondary">Single — pre-selected (clear icon visible)</label>

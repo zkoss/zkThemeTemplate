@@ -4,17 +4,17 @@
        rowsTemplate="colorbox-rows">
     <template name="colorbox-rows">
         <div sclass="z-d-contents">
-            <div sclass="z-text-sm z-text-secondary">Default (palette)</div>
+            <div><label sclass="z-text-sm z-text-secondary" value="Default (palette)"/></div>
             <div><colorbox/></div>
             <div><colorbox disabled="true"/></div>
         </div>
         <div sclass="z-d-contents">
-            <div sclass="z-text-sm z-text-secondary">With value</div>
+            <div><label sclass="z-text-sm z-text-secondary" value="With value"/></div>
             <div><colorbox color="#184dc6"/></div>
             <div><colorbox color="#184dc6" disabled="true"/></div>
         </div>
         <div sclass="z-d-contents">
-            <div sclass="z-text-sm z-text-secondary">Open swatch</div>
+            <div><label sclass="z-text-sm z-text-secondary" value="Open swatch"/></div>
             <div><colorbox color="#990000"/></div>
             <div>—</div>
         </div>
@@ -22,7 +22,7 @@
 </apply>
 
 <div sclass="z-mb-6">
-    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Colorbox in Menu</div>
+    <div sclass="z-text-uppercase z-border-bottom z-pb-2 z-mb-4"><label sclass="z-text-xs z-fw-semibold z-text-secondary" value="Colorbox in Menu"/></div>
     <div sclass="z-py-3">
         <menubar>
             <menu label="Format">

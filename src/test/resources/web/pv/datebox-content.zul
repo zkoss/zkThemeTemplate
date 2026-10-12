@@ -5,7 +5,7 @@
 ]]></zscript>
 
 <div sclass="z-mb-6">
-    <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Calendar Popup Variants</div>
+    <div sclass="z-text-uppercase z-border-bottom z-pb-2 z-mb-4"><label sclass="z-text-xs z-fw-semibold z-text-secondary" value="Calendar Popup Variants"/></div>
     <div sclass="z-d-flex z-flex-wrap z-gap-6 z-py-3">
         <div sclass="z-d-flex z-flex-col z-gap-2">
             <label sclass="z-text-xs z-text-secondary">Seeded value (content-fit)</label>
@@ -21,7 +21,7 @@
         </div>
         <div sclass="z-d-flex z-flex-col z-gap-2">
             <label sclass="z-text-xs z-text-secondary">Time in popup (yyyy/MM/dd HH:mm)</label>
-            <datebox format="yyyy/MM/dd HH:mm" value="${sampleDate}"/>
+            <datebox format="yyyy/MM/dd HH:mm" cols="16" value="${sampleDate}"/>
         </div>
         <div sclass="z-d-flex z-flex-col z-gap-2">
             <label sclass="z-text-xs z-text-secondary">Timezone selector</label>
@@ -47,7 +47,7 @@
        rowsTemplate="datebox-rows">
     <template name="datebox-rows">
         <div sclass="z-d-contents">
-            <div sclass="z-text-sm z-text-secondary">With button</div>
+            <div><label sclass="z-text-sm z-text-secondary" value="With button"/></div>
             <div><datebox/></div>
             <div><datebox disabled="true"/></div>
             <div><datebox readonly="true"/></div>
@@ -55,7 +55,7 @@
             <div><datebox inplace="true" value="${sampleDate}"/></div>
         </div>
         <div sclass="z-d-contents">
-            <div sclass="z-text-sm z-text-secondary">No button</div>
+            <div><label sclass="z-text-sm z-text-secondary" value="No button"/></div>
             <div><datebox buttonVisible="false"/></div>
             <div><datebox buttonVisible="false" disabled="true"/></div>
             <div><datebox buttonVisible="false" readonly="true"/></div>

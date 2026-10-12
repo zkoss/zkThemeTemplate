@@ -4,7 +4,7 @@
        rowsTemplate="textbox-rows">
     <template name="textbox-rows">
         <div sclass="z-d-contents">
-            <div sclass="z-text-sm z-text-secondary">Text</div>
+            <div><label sclass="z-text-sm z-text-secondary" value="Text"/></div>
             <div><textbox value="Hello"/></div>
             <div><textbox value="Hello" disabled="true"/></div>
             <div><textbox value="Hello" readonly="true"/></div>
@@ -12,7 +12,7 @@
             <div><textbox value="Hello" inplace="true"/></div>
         </div>
         <div sclass="z-d-contents">
-            <div sclass="z-text-sm z-text-secondary">Password</div>
+            <div><label sclass="z-text-sm z-text-secondary" value="Password"/></div>
             <div><textbox value="secret" type="password"/></div>
             <div><textbox value="secret" type="password" disabled="true"/></div>
             <div><textbox value="secret" type="password" readonly="true"/></div>
@@ -20,7 +20,7 @@
             <div><textbox value="secret" type="password" inplace="true"/></div>
         </div>
         <div sclass="z-d-contents">
-            <div sclass="z-text-sm z-text-secondary">Placeholder</div>
+            <div><label sclass="z-text-sm z-text-secondary" value="Placeholder"/></div>
             <div><textbox placeholder="Enter text"/></div>
             <div><textbox placeholder="Enter text" disabled="true"/></div>
             <div><textbox placeholder="Enter text" readonly="true"/></div>

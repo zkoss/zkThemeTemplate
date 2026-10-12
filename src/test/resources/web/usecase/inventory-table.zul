@@ -1,17 +1,17 @@
 <?page title="Inventory List"?>
 <zk>
 <style src="~./usecase/usecase.css"/>
-<vlayout hflex="1" sclass="z-d-flex z-flex-col z-gap-4 z-p-4 z-bg-surface-low">
+<vlayout hflex="1" sclass="z-d-flex z-flex-col z-gap-4 z-p-4 z-bg-surface-container-low">
 
     <!-- Page header -->
-    <div sclass="z-d-flex z-flex-row z-flex-wrap z-gap-4 z-align-center">
+    <div sclass="z-d-flex z-flex-row z-flex-wrap z-gap-4 z-items-center">
         <label value="Inventory" sclass="z-h2"/>
         <button label="Add Item" iconSclass="z-icon-plus" sclass="z-ms-auto"/>
     </div>
 
     <!-- Filter toolbar -->
-    <div sclass="z-card">
-        <div sclass="z-d-flex z-flex-row z-flex-wrap z-gap-4 z-align-center">
+    <div sclass="z-paper">
+        <div sclass="z-d-flex z-flex-row z-flex-wrap z-gap-4 z-items-center">
             <textbox placeholder="Search SKU or product…" hflex="1" sclass="z-flex-1 z-min-w-0"/>
             <combobox placeholder="Category" readonly="true">
                 <comboitem label="All Categories"/>
@@ -30,7 +30,7 @@
     </div>
 
     <!-- Stock grid -->
-    <div sclass="z-card">
+    <div sclass="z-paper">
         <grid hflex="1">
             <columns>
                 <column label="SKU" width="110px"/>

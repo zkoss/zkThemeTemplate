@@ -9,11 +9,11 @@
     });
 </zscript>
 <div sclass="z-p-8">
-    <div sclass="z-border-bottom z-text-xl z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Linelayout</div>
+    <div sclass="z-border-bottom z-mb-8 z-pb-3"><label sclass="z-text-2xl z-fw-medium z-text-on-surface" value="Linelayout"/></div>
 
     <div sclass="z-mb-6">
-        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Timeline with Model</div>
-        <div sclass="z-text-xs z-text-secondary z-mb-2">Quarterly milestones — no width set, fills the full page width</div>
+        <div sclass="z-text-uppercase z-border-bottom z-pb-2 z-mb-4"><label sclass="z-text-xs z-fw-semibold z-text-secondary" value="Timeline with Model"/></div>
+        <div sclass="z-mb-2"><label sclass="z-text-xs z-text-secondary" value="Quarterly milestones — no width set, fills the full page width"/></div>
         <div sclass="z-py-3">
             <linelayout model="${model4LineLayout}" height="200px">
                 <template name="model">
@@ -26,7 +26,7 @@
     </div>
 
     <div sclass="z-mb-6">
-        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Orientation: Horizontal (orient)</div>
+        <div sclass="z-text-uppercase z-border-bottom z-pb-2 z-mb-4"><label sclass="z-text-xs z-fw-semibold z-text-secondary" value="Orientation: Horizontal (orient)"/></div>
         <div sclass="z-py-3">
             <linelayout orient="horizontal" height="160px">
                 <lineitem>
@@ -50,7 +50,7 @@
     </div>
 
     <div sclass="z-mb-6">
-        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Alternating Sides (opposite)</div>
+        <div sclass="z-text-uppercase z-border-bottom z-pb-2 z-mb-4"><label sclass="z-text-xs z-fw-semibold z-text-secondary" value="Alternating Sides (opposite)"/></div>
         <div sclass="z-py-3">
             <linelayout width="440px" height="280px">
                 <lineitem>
@@ -70,7 +70,7 @@
     </div>
 
     <div sclass="z-mb-6">
-        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Point Variations (pointIconSclass / pointImageSrc / pointVisible)</div>
+        <div sclass="z-text-uppercase z-border-bottom z-pb-2 z-mb-4"><label sclass="z-text-xs z-fw-semibold z-text-secondary" value="Point Variations (pointIconSclass / pointImageSrc / pointVisible)"/></div>
         <div sclass="z-py-3">
             <linelayout width="440px" height="300px">
                 <lineitem>
@@ -93,10 +93,10 @@
     </div>
 
     <div sclass="z-mb-6">
-        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Line Position (firstScale / lastScale)</div>
-        <div sclass="z-d-flex z-align-start z-flex-wrap z-gap-6 z-py-3">
-            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <div sclass="z-text-xs z-text-secondary">firstScale=1 lastScale=3 — line shifts left</div>
+        <div sclass="z-text-uppercase z-border-bottom z-pb-2 z-mb-4"><label sclass="z-text-xs z-fw-semibold z-text-secondary" value="Line Position (firstScale / lastScale)"/></div>
+        <div sclass="z-d-flex z-items-start z-flex-wrap z-gap-6 z-py-3">
+            <div sclass="z-d-flex z-flex-col z-items-start z-gap-2">
+                <div><label sclass="z-text-xs z-text-secondary" value="firstScale=1 lastScale=3 — line shifts left"/></div>
                 <linelayout width="280px" height="200px" firstScale="1" lastScale="3">
                     <lineitem>
                         <button label="A"/>
@@ -109,8 +109,8 @@
                     </lineitem>
                 </linelayout>
             </div>
-            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <div sclass="z-text-xs z-text-secondary">firstScale=3 lastScale=1 — line shifts right</div>
+            <div sclass="z-d-flex z-flex-col z-items-start z-gap-2">
+                <div><label sclass="z-text-xs z-text-secondary" value="firstScale=3 lastScale=1 — line shifts right"/></div>
                 <linelayout width="280px" height="200px" firstScale="3" lastScale="1">
                     <lineitem opposite="true">
                         <button label="A"/>
@@ -127,7 +127,7 @@
     </div>
 
     <div sclass="z-mb-6">
-        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Item Spacing (frontSpace / backSpace)</div>
+        <div sclass="z-text-uppercase z-border-bottom z-pb-2 z-mb-4"><label sclass="z-text-xs z-fw-semibold z-text-secondary" value="Item Spacing (frontSpace / backSpace)"/></div>
         <div sclass="z-py-3">
             <linelayout height="320px">
                 <lineitem>

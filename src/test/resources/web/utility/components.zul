@@ -10,7 +10,7 @@
     <div sclass="z-card">
         <label value="Card  (.z-card)" sclass="z-d-block z-text-base z-fw-medium z-text-on-surface z-mb-3"/>
         <label value="A surface container with background-color, border-radius (--zk-shape-card), and elevation shadow (--zk-elevation-card) from the design token system." sclass="z-text-secondary z-text-sm z-mb-3"/>
-        <div sclass="z-d-flex z-gap-4 z-flex-wrap z-align-start">
+        <div sclass="z-d-flex z-gap-4 z-flex-wrap z-items-start">
 
             <div sclass="z-card" style="width:240px">
                 <label value="Simple Card" sclass="z-h5 z-d-block z-mb-2"/>

@@ -1,14 +1,14 @@
 <?page title="Tabbox" contentType="text/html;charset=UTF-8"?>
 <zk xmlns:h="native">
 <div sclass="z-p-8">
-    <div sclass="z-border-bottom z-text-xl z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Tabbox</div>
+    <div sclass="z-border-bottom z-mb-8 z-pb-3"><label sclass="z-text-2xl z-fw-medium z-text-on-surface" value="Tabbox"/></div>
 
     <div sclass="z-mb-8">
-        <div sclass="z-text-md z-fw-bold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-3">Tabbox — State Gallery</div>
+        <div sclass="z-text-uppercase z-border-bottom z-pb-2 z-mb-3"><label sclass="z-text-md z-fw-bold z-text-secondary" value="Tabbox — State Gallery"/></div>
 
-        <div sclass="z-d-flex z-flex-wrap z-gap-6 z-align-start z-py-4 z-mb-2">
-            <div sclass="z-d-flex z-flex-col z-align-center z-gap-2 z-flex-1">
-                <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-center z-text-secondary">Tab States</div>
+        <div sclass="z-d-flex z-flex-wrap z-gap-6 z-items-start z-py-4 z-mb-2">
+            <div sclass="z-d-flex z-flex-col z-items-center z-gap-2 z-flex-1">
+                <div sclass="z-text-uppercase z-text-center"><label sclass="z-text-xs z-fw-semibold z-text-secondary" value="Tab States"/></div>
                 <tabbox width="100%">
                     <tabs>
                         <tab label="Default"/>
@@ -26,10 +26,10 @@
     </div>
 
     <div sclass="z-mb-6">
-        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Horizontal with Toolbar</div>
-        <div sclass="z-d-flex z-align-start z-flex-wrap z-gap-6 z-py-3">
-            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2 z-flex-1">
-                <div sclass="z-text-xs z-text-secondary">Closable tabs + toolbar</div>
+        <div sclass="z-text-uppercase z-border-bottom z-pb-2 z-mb-4"><label sclass="z-text-xs z-fw-semibold z-text-secondary" value="Horizontal with Toolbar"/></div>
+        <div sclass="z-d-flex z-items-start z-flex-wrap z-gap-6 z-py-3">
+            <div sclass="z-d-flex z-flex-col z-items-start z-gap-2 z-flex-1">
+                <div><label sclass="z-text-xs z-text-secondary" value="Closable tabs + toolbar"/></div>
                 <tabbox height="200px"  width="500px">
                     <toolbar>
                         <toolbarbutton label="Button 1" image="~./img/volumn.gif" />
@@ -57,10 +57,10 @@
     </div>
 
     <div sclass="z-mb-6">
-        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Horizontal with Tab Images</div>
-        <div sclass="z-d-flex z-align-start z-flex-wrap z-gap-6 z-py-3">
-            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2 z-flex-1">
-                <div sclass="z-text-xs z-text-secondary">Tabs with images</div>
+        <div sclass="z-text-uppercase z-border-bottom z-pb-2 z-mb-4"><label sclass="z-text-xs z-fw-semibold z-text-secondary" value="Horizontal with Tab Images"/></div>
+        <div sclass="z-d-flex z-items-start z-flex-wrap z-gap-6 z-py-3">
+            <div sclass="z-d-flex z-flex-col z-items-start z-gap-2 z-flex-1">
+                <div><label sclass="z-text-xs z-text-secondary" value="Tabs with images"/></div>
                 <tabbox height="200px" width="100%">
                     <tabs>
                         <tab label="Tab1" closable="true" image="~./img/volumn.gif" />
@@ -82,10 +82,10 @@
     </div>
 
     <div sclass="z-mb-6">
-        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Vertical Left</div>
-        <div sclass="z-d-flex z-align-start z-flex-wrap z-gap-6 z-py-3">
-            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2 z-flex-1">
-                <div sclass="z-text-xs z-text-secondary">Vertical left (many tabs)</div>
+        <div sclass="z-text-uppercase z-border-bottom z-pb-2 z-mb-4"><label sclass="z-text-xs z-fw-semibold z-text-secondary" value="Vertical Left"/></div>
+        <div sclass="z-d-flex z-items-start z-flex-wrap z-gap-6 z-py-3">
+            <div sclass="z-d-flex z-flex-col z-items-start z-gap-2 z-flex-1">
+                <div><label sclass="z-text-xs z-text-secondary" value="Vertical left (many tabs)"/></div>
                 <tabbox height="250px" width="100%" orient="vertical">
                     <tabs width="80px">
                         <tab label="Tab1" closable="true" />
@@ -113,8 +113,8 @@
                     </tabpanels>
                 </tabbox>
             </div>
-            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2 z-flex-1">
-                <div sclass="z-text-xs z-text-secondary">Vertical left with image</div>
+            <div sclass="z-d-flex z-flex-col z-items-start z-gap-2 z-flex-1">
+                <div><label sclass="z-text-xs z-text-secondary" value="Vertical left with image"/></div>
                 <tabbox height="200px" width="100%" orient="vertical">
                     <tabs width="80px">
                         <tab label="Tab1 ZK" closable="true" />
@@ -136,10 +136,10 @@
     </div>
 
     <div sclass="z-mb-6">
-        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Vertical Right</div>
-        <div sclass="z-d-flex z-align-start z-flex-wrap z-gap-6 z-py-3">
-            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2 z-flex-1">
-                <div sclass="z-text-xs z-text-secondary">Vertical right (many tabs)</div>
+        <div sclass="z-text-uppercase z-border-bottom z-pb-2 z-mb-4"><label sclass="z-text-xs z-fw-semibold z-text-secondary" value="Vertical Right"/></div>
+        <div sclass="z-d-flex z-items-start z-flex-wrap z-gap-6 z-py-3">
+            <div sclass="z-d-flex z-flex-col z-items-start z-gap-2 z-flex-1">
+                <div><label sclass="z-text-xs z-text-secondary" value="Vertical right (many tabs)"/></div>
                 <tabbox height="250px" width="100%" orient="right">
                     <tabs width="80px">
                         <tab label="Tab1" closable="true" />
@@ -167,8 +167,8 @@
                     </tabpanels>
                 </tabbox>
             </div>
-            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2 z-flex-1">
-                <div sclass="z-text-xs z-text-secondary">Vertical right with image</div>
+            <div sclass="z-d-flex z-flex-col z-items-start z-gap-2 z-flex-1">
+                <div><label sclass="z-text-xs z-text-secondary" value="Vertical right with image"/></div>
                 <tabbox height="200px" width="100%" orient="right">
                     <tabs width="80px">
                         <tab label="Tab1 ZK" closable="true" />
@@ -190,10 +190,10 @@
     </div>
 
     <div sclass="z-mb-6">
-        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Bottom with Toolbar</div>
-        <div sclass="z-d-flex z-align-start z-flex-wrap z-gap-6 z-py-3">
-            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2 z-flex-1">
-                <div sclass="z-text-xs z-text-secondary">Bottom tabs with toolbar</div>
+        <div sclass="z-text-uppercase z-border-bottom z-pb-2 z-mb-4"><label sclass="z-text-xs z-fw-semibold z-text-secondary" value="Bottom with Toolbar"/></div>
+        <div sclass="z-d-flex z-items-start z-flex-wrap z-gap-6 z-py-3">
+            <div sclass="z-d-flex z-flex-col z-items-start z-gap-2 z-flex-1">
+                <div><label sclass="z-text-xs z-text-secondary" value="Bottom tabs with toolbar"/></div>
                 <tabbox height="200px" width="100%" orient="bottom">
                     <toolbar>
                         <toolbarbutton label="Button 1" image="~./img/volumn.gif" />
@@ -214,8 +214,8 @@
                     </tabpanels>
                 </tabbox>
             </div>
-            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2 z-flex-1">
-                <div sclass="z-text-xs z-text-secondary">Bottom tabs fewer</div>
+            <div sclass="z-d-flex z-flex-col z-items-start z-gap-2 z-flex-1">
+                <div><label sclass="z-text-xs z-text-secondary" value="Bottom tabs fewer"/></div>
                 <tabbox height="200px" width="100%" orient="bottom">
                     <toolbar>
                         <toolbarbutton label="Button 1" image="~./img/volumn.gif" />
@@ -236,10 +236,10 @@
     </div>
 
     <div sclass="z-mb-6">
-        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Horizontal — Scroll (many tabs)</div>
-        <div sclass="z-d-flex z-align-start z-flex-wrap z-gap-6 z-py-3">
-            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2 z-flex-1">
-                <div sclass="z-text-xs z-text-secondary">Horizontal scroll arrows</div>
+        <div sclass="z-text-uppercase z-border-bottom z-pb-2 z-mb-4"><label sclass="z-text-xs z-fw-semibold z-text-secondary" value="Horizontal — Scroll (many tabs)"/></div>
+        <div sclass="z-d-flex z-items-start z-flex-wrap z-gap-6 z-py-3">
+            <div sclass="z-d-flex z-flex-col z-items-start z-gap-2 z-flex-1">
+                <div><label sclass="z-text-xs z-text-secondary" value="Horizontal scroll arrows"/></div>
                 <tabbox height="200px" width="100%">
                     <tabs>
                         <tab label="Overview" />
@@ -265,8 +265,8 @@
                     </tabpanels>
                 </tabbox>
             </div>
-            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2 z-flex-1">
-                <div sclass="z-text-xs z-text-secondary">Scroll arrows + toolbar + closable</div>
+            <div sclass="z-d-flex z-flex-col z-items-start z-gap-2 z-flex-1">
+                <div><label sclass="z-text-xs z-text-secondary" value="Scroll arrows + toolbar + closable"/></div>
                 <tabbox height="200px" width="100%">
                     <toolbar>
                         <toolbarbutton label="Add" iconSclass="z-icon-plus"/>
@@ -297,10 +297,10 @@
     </div>
 
     <div sclass="z-mb-6">
-        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Icon-only Tabs</div>
-        <div sclass="z-d-flex z-align-start z-flex-wrap z-gap-6 z-py-3">
-            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2 z-flex-1">
-                <div sclass="z-text-xs z-text-secondary">Icon-only (horizontal)</div>
+        <div sclass="z-text-uppercase z-border-bottom z-pb-2 z-mb-4"><label sclass="z-text-xs z-fw-semibold z-text-secondary" value="Icon-only Tabs"/></div>
+        <div sclass="z-d-flex z-items-start z-flex-wrap z-gap-6 z-py-3">
+            <div sclass="z-d-flex z-flex-col z-items-start z-gap-2 z-flex-1">
+                <div><label sclass="z-text-xs z-text-secondary" value="Icon-only (horizontal)"/></div>
                 <tabbox height="200px" width="100%">
                     <tabs>
                         <tab iconSclass="z-icon-home" />
@@ -318,8 +318,8 @@
                     </tabpanels>
                 </tabbox>
             </div>
-            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2 z-flex-1">
-                <div sclass="z-text-xs z-text-secondary">Icon-only (vertical)</div>
+            <div sclass="z-d-flex z-flex-col z-items-start z-gap-2 z-flex-1">
+                <div><label sclass="z-text-xs z-text-secondary" value="Icon-only (vertical)"/></div>
                 <tabbox height="200px" width="100%" orient="vertical">
                     <tabs width="48px">
                         <tab iconSclass="z-icon-home" />
@@ -339,10 +339,10 @@
     </div>
 
     <div sclass="z-mb-6">
-        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Bottom — plain</div>
-        <div sclass="z-d-flex z-align-start z-flex-wrap z-gap-6 z-py-3">
-            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2 z-flex-1">
-                <div sclass="z-text-xs z-text-secondary">Bottom, no toolbar</div>
+        <div sclass="z-text-uppercase z-border-bottom z-pb-2 z-mb-4"><label sclass="z-text-xs z-fw-semibold z-text-secondary" value="Bottom — plain"/></div>
+        <div sclass="z-d-flex z-items-start z-flex-wrap z-gap-6 z-py-3">
+            <div sclass="z-d-flex z-flex-col z-items-start z-gap-2 z-flex-1">
+                <div><label sclass="z-text-xs z-text-secondary" value="Bottom, no toolbar"/></div>
                 <tabbox height="200px" width="100%" orient="bottom">
                     <tabs>
                         <tab label="Overview" />
@@ -356,8 +356,8 @@
                     </tabpanels>
                 </tabbox>
             </div>
-            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2 z-flex-1">
-                <div sclass="z-text-xs z-text-secondary">Bottom scroll arrows</div>
+            <div sclass="z-d-flex z-flex-col z-items-start z-gap-2 z-flex-1">
+                <div><label sclass="z-text-xs z-text-secondary" value="Bottom scroll arrows"/></div>
                 <tabbox height="200px" width="100%" orient="bottom">
                     <tabs>
                         <tab label="Overview" />
@@ -383,10 +383,10 @@
     </div>
 
     <div sclass="z-mb-6">
-        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">tabscroll=false</div>
-        <div sclass="z-d-flex z-align-start z-flex-wrap z-gap-6 z-py-3">
-            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2 z-flex-1">
-                <div sclass="z-text-xs z-text-secondary">Horizontal, tabscroll=false (overflow clips)</div>
+        <div sclass="z-text-uppercase z-border-bottom z-pb-2 z-mb-4"><label sclass="z-text-xs z-fw-semibold z-text-secondary" value="tabscroll=false"/></div>
+        <div sclass="z-d-flex z-items-start z-flex-wrap z-gap-6 z-py-3">
+            <div sclass="z-d-flex z-flex-col z-items-start z-gap-2 z-flex-1">
+                <div><label sclass="z-text-xs z-text-secondary" value="Horizontal, tabscroll=false (overflow clips)"/></div>
                 <tabbox tabscroll="false" height="200px" width="100%">
                     <tabs>
                         <tab label="Overview" />
@@ -408,8 +408,8 @@
                     </tabpanels>
                 </tabbox>
             </div>
-            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2 z-flex-1">
-                <div sclass="z-text-xs z-text-secondary">Vertical, tabscroll=false (overflow clips)</div>
+            <div sclass="z-d-flex z-flex-col z-items-start z-gap-2 z-flex-1">
+                <div><label sclass="z-text-xs z-text-secondary" value="Vertical, tabscroll=false (overflow clips)"/></div>
                 <tabbox tabscroll="false" orient="vertical" height="160px" width="100%">
                     <tabs width="100px">
                         <tab label="Overview" />
@@ -431,10 +431,10 @@
     </div>
 
     <div sclass="z-mb-6">
-        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Accordion Mold</div>
-        <div sclass="z-d-flex z-align-start z-flex-wrap z-gap-6 z-py-3">
-            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2 z-flex-1">
-                <div sclass="z-text-xs z-text-secondary">Text only (disabled + closable states)</div>
+        <div sclass="z-text-uppercase z-border-bottom z-pb-2 z-mb-4"><label sclass="z-text-xs z-fw-semibold z-text-secondary" value="Accordion Mold"/></div>
+        <div sclass="z-d-flex z-items-start z-flex-wrap z-gap-6 z-py-3">
+            <div sclass="z-d-flex z-flex-col z-items-start z-gap-2 z-flex-1">
+                <div><label sclass="z-text-xs z-text-secondary" value="Text only (disabled + closable states)"/></div>
                 <tabbox height="300px" width="100%" mold="accordion">
                     <tabs>
                         <tab label="Tab1" closable="true" />
@@ -452,8 +452,8 @@
                     </tabpanels>
                 </tabbox>
             </div>
-            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2 z-flex-1">
-                <div sclass="z-text-xs z-text-secondary">With images (disabled + closable states)</div>
+            <div sclass="z-d-flex z-flex-col z-items-start z-gap-2 z-flex-1">
+                <div><label sclass="z-text-xs z-text-secondary" value="With images (disabled + closable states)"/></div>
                 <tabbox height="300px" width="100%" mold="accordion">
                     <tabs>
                         <tab label="Tab1" image="~./img/volumn.gif" closable="true" />

@@ -4,7 +4,7 @@
        rowsTemplate="spinner-rows">
     <template name="spinner-rows">
         <div sclass="z-d-contents">
-            <div sclass="z-text-sm z-text-secondary">With buttons</div>
+            <div><label sclass="z-text-sm z-text-secondary" value="With buttons"/></div>
             <div><spinner/></div>
             <div><spinner disabled="true"/></div>
             <div><spinner readonly="true"/></div>
@@ -12,7 +12,7 @@
             <div><spinner inplace="true" value="5"/></div>
         </div>
         <div sclass="z-d-contents">
-            <div sclass="z-text-sm z-text-secondary">No buttons</div>
+            <div><label sclass="z-text-sm z-text-secondary" value="No buttons"/></div>
             <div><spinner buttonVisible="false"/></div>
             <div><spinner buttonVisible="false" disabled="true"/></div>
             <div><spinner buttonVisible="false" readonly="true"/></div>
@@ -27,7 +27,7 @@
        rowsTemplate="doublespinner-spinner-rows">
     <template name="doublespinner-spinner-rows">
         <div sclass="z-d-contents">
-            <div sclass="z-text-sm z-text-secondary">With buttons</div>
+            <div><label sclass="z-text-sm z-text-secondary" value="With buttons"/></div>
             <div><doublespinner/></div>
             <div><doublespinner disabled="true"/></div>
             <div><doublespinner readonly="true"/></div>
@@ -35,7 +35,7 @@
             <div><doublespinner inplace="true" value="3.5"/></div>
         </div>
         <div sclass="z-d-contents">
-            <div sclass="z-text-sm z-text-secondary">No buttons</div>
+            <div><label sclass="z-text-sm z-text-secondary" value="No buttons"/></div>
             <div><doublespinner buttonVisible="false"/></div>
             <div><doublespinner buttonVisible="false" disabled="true"/></div>
             <div><doublespinner buttonVisible="false" readonly="true"/></div>

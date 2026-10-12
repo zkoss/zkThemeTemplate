@@ -1,14 +1,14 @@
 <?page title="ConfirmPopup" contentType="text/html;charset=UTF-8"?>
 <zk xmlns:h="native">
 <div sclass="z-p-8">
-    <div sclass="z-border-bottom z-text-xl z-fw-medium z-text-on-surface z-mb-8 z-pb-3">ConfirmPopup</div>
+    <div sclass="z-border-bottom z-mb-8 z-pb-3"><label sclass="z-text-2xl z-fw-medium z-text-on-surface" value="ConfirmPopup"/></div>
 
     <div sclass="z-mb-8">
-        <div sclass="z-text-md z-fw-bold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-3">ConfirmPopup — State Gallery (Severity)</div>
+        <div sclass="z-text-uppercase z-border-bottom z-pb-2 z-mb-3"><label sclass="z-text-md z-fw-bold z-text-secondary" value="ConfirmPopup — State Gallery (Severity)"/></div>
 
-        <div sclass="z-d-flex z-flex-wrap z-gap-8 z-align-start z-py-4 z-mb-2">
-            <div sclass="z-d-flex z-flex-col z-align-center z-gap-2">
-                <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-center z-text-secondary">Info</div>
+        <div sclass="z-d-flex z-flex-wrap z-gap-8 z-items-start z-py-4 z-mb-2">
+            <div sclass="z-d-flex z-flex-col z-items-center z-gap-2">
+                <div sclass="z-text-uppercase z-text-center"><label sclass="z-text-xs z-fw-semibold z-text-secondary" value="Info"/></div>
                 <h:div class="z-confirmpopup z-confirmpopup-info z-confirmpopup-placement-top" style="position:relative;">
                     <h:span class="z-confirmpopup-arrow"/>
                     <h:div class="z-confirmpopup-header">Confirm</h:div>
@@ -22,8 +22,8 @@
                     </h:div>
                 </h:div>
             </div>
-            <div sclass="z-d-flex z-flex-col z-align-center z-gap-2">
-                <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-center z-text-secondary">Success</div>
+            <div sclass="z-d-flex z-flex-col z-items-center z-gap-2">
+                <div sclass="z-text-uppercase z-text-center"><label sclass="z-text-xs z-fw-semibold z-text-secondary" value="Success"/></div>
                 <h:div class="z-confirmpopup z-confirmpopup-success z-confirmpopup-placement-top" style="position:relative;">
                     <h:span class="z-confirmpopup-arrow"/>
                     <h:div class="z-confirmpopup-header">Confirm</h:div>
@@ -37,8 +37,8 @@
                     </h:div>
                 </h:div>
             </div>
-            <div sclass="z-d-flex z-flex-col z-align-center z-gap-2">
-                <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-center z-text-secondary">Warning</div>
+            <div sclass="z-d-flex z-flex-col z-items-center z-gap-2">
+                <div sclass="z-text-uppercase z-text-center"><label sclass="z-text-xs z-fw-semibold z-text-secondary" value="Warning"/></div>
                 <h:div class="z-confirmpopup z-confirmpopup-warning z-confirmpopup-placement-top" style="position:relative;">
                     <h:span class="z-confirmpopup-arrow"/>
                     <h:div class="z-confirmpopup-header">Confirm</h:div>
@@ -52,8 +52,8 @@
                     </h:div>
                 </h:div>
             </div>
-            <div sclass="z-d-flex z-flex-col z-align-center z-gap-2">
-                <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-center z-text-secondary">Danger</div>
+            <div sclass="z-d-flex z-flex-col z-items-center z-gap-2">
+                <div sclass="z-text-uppercase z-text-center"><label sclass="z-text-xs z-fw-semibold z-text-secondary" value="Danger"/></div>
                 <h:div class="z-confirmpopup z-confirmpopup-danger z-confirmpopup-placement-top" style="position:relative;">
                     <h:span class="z-confirmpopup-arrow"/>
                     <h:div class="z-confirmpopup-header">Delete item?</h:div>
@@ -67,8 +67,8 @@
                     </h:div>
                 </h:div>
             </div>
-            <div sclass="z-d-flex z-flex-col z-align-center z-gap-2">
-                <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-center z-text-secondary">Secondary</div>
+            <div sclass="z-d-flex z-flex-col z-items-center z-gap-2">
+                <div sclass="z-text-uppercase z-text-center"><label sclass="z-text-xs z-fw-semibold z-text-secondary" value="Secondary"/></div>
                 <h:div class="z-confirmpopup z-confirmpopup-secondary z-confirmpopup-placement-top" style="position:relative;">
                     <h:span class="z-confirmpopup-arrow"/>
                     <h:div class="z-confirmpopup-header">Confirm</h:div>
@@ -86,11 +86,11 @@
     </div>
 
     <div sclass="z-mb-8">
-        <div sclass="z-text-md z-fw-bold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-3">ConfirmPopup — State Gallery (Placement)</div>
+        <div sclass="z-text-uppercase z-border-bottom z-pb-2 z-mb-3"><label sclass="z-text-md z-fw-bold z-text-secondary" value="ConfirmPopup — State Gallery (Placement)"/></div>
 
-        <div sclass="z-d-flex z-flex-wrap z-gap-8 z-align-start z-py-4 z-mb-2">
-            <div sclass="z-d-flex z-flex-col z-align-center z-gap-2">
-                <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-center z-text-secondary">Top</div>
+        <div sclass="z-d-flex z-flex-wrap z-gap-8 z-items-start z-py-4 z-mb-2">
+            <div sclass="z-d-flex z-flex-col z-items-center z-gap-2">
+                <div sclass="z-text-uppercase z-text-center"><label sclass="z-text-xs z-fw-semibold z-text-secondary" value="Top"/></div>
                 <h:div class="z-confirmpopup z-confirmpopup-warning z-confirmpopup-placement-top" style="position:relative;">
                     <h:span class="z-confirmpopup-arrow"/>
                     <h:div class="z-confirmpopup-body">
@@ -103,8 +103,8 @@
                     </h:div>
                 </h:div>
             </div>
-            <div sclass="z-d-flex z-flex-col z-align-center z-gap-2">
-                <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-center z-text-secondary">Bottom</div>
+            <div sclass="z-d-flex z-flex-col z-items-center z-gap-2">
+                <div sclass="z-text-uppercase z-text-center"><label sclass="z-text-xs z-fw-semibold z-text-secondary" value="Bottom"/></div>
                 <h:div class="z-confirmpopup z-confirmpopup-warning z-confirmpopup-placement-bottom" style="position:relative;">
                     <h:span class="z-confirmpopup-arrow"/>
                     <h:div class="z-confirmpopup-body">
@@ -117,8 +117,8 @@
                     </h:div>
                 </h:div>
             </div>
-            <div sclass="z-d-flex z-flex-col z-align-center z-gap-2">
-                <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-center z-text-secondary">Left</div>
+            <div sclass="z-d-flex z-flex-col z-items-center z-gap-2">
+                <div sclass="z-text-uppercase z-text-center"><label sclass="z-text-xs z-fw-semibold z-text-secondary" value="Left"/></div>
                 <h:div class="z-confirmpopup z-confirmpopup-warning z-confirmpopup-placement-left" style="position:relative;">
                     <h:span class="z-confirmpopup-arrow"/>
                     <h:div class="z-confirmpopup-body">
@@ -131,8 +131,8 @@
                     </h:div>
                 </h:div>
             </div>
-            <div sclass="z-d-flex z-flex-col z-align-center z-gap-2">
-                <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-center z-text-secondary">Right</div>
+            <div sclass="z-d-flex z-flex-col z-items-center z-gap-2">
+                <div sclass="z-text-uppercase z-text-center"><label sclass="z-text-xs z-fw-semibold z-text-secondary" value="Right"/></div>
                 <h:div class="z-confirmpopup z-confirmpopup-warning z-confirmpopup-placement-right" style="position:relative;">
                     <h:span class="z-confirmpopup-arrow"/>
                     <h:div class="z-confirmpopup-body">
@@ -149,7 +149,7 @@
     </div>
 
     <div sclass="z-mb-6">
-        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Live — By Severity</div>
+        <div sclass="z-text-uppercase z-border-bottom z-pb-2 z-mb-4"><label sclass="z-text-xs z-fw-semibold z-text-secondary" value="Live — By Severity"/></div>
         <div sclass="z-py-3 z-d-flex z-gap-4 z-flex-wrap">
             <button label="Info" popup="cpInfo"/>
             <button label="Success" popup="cpSuccess"/>
@@ -160,7 +160,7 @@
     </div>
 
     <div sclass="z-mb-6">
-        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Live — Placement</div>
+        <div sclass="z-text-uppercase z-border-bottom z-pb-2 z-mb-4"><label sclass="z-text-xs z-fw-semibold z-text-secondary" value="Live — Placement"/></div>
         <div sclass="z-py-3 z-d-flex z-gap-4 z-flex-wrap">
             <button label="Top" popup="cpTop"/>
             <button label="Bottom" popup="cpBottom"/>
@@ -170,8 +170,8 @@
     </div>
 
     <div sclass="z-mb-6">
-        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Live — OK / Cancel Feedback</div>
-        <div sclass="z-py-3 z-d-flex z-gap-4 z-flex-wrap z-align-center">
+        <div sclass="z-text-uppercase z-border-bottom z-pb-2 z-mb-4"><label sclass="z-text-xs z-fw-semibold z-text-secondary" value="Live — OK / Cancel Feedback"/></div>
+        <div sclass="z-py-3 z-d-flex z-gap-4 z-flex-wrap z-items-center">
             <button label="Delete item" popup="cpDelete"/>
             <label id="deleteResult" value=""/>
         </div>

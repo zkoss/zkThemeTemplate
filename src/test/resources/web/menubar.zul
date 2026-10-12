@@ -1,10 +1,10 @@
 <?page title="Menubar" contentType="text/html;charset=UTF-8"?>
 <zk xmlns:h="native">
 <div sclass="z-p-8">
-    <div sclass="z-border-bottom z-text-xl z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Menubar</div>
+    <div sclass="z-border-bottom z-mb-8 z-pb-3"><label sclass="z-text-2xl z-fw-medium z-text-on-surface" value="Menubar"/></div>
 
     <div sclass="z-mb-6">
-        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Horizontal</div>
+        <div sclass="z-text-uppercase z-border-bottom z-pb-2 z-mb-4"><label sclass="z-text-xs z-fw-semibold z-text-secondary" value="Horizontal"/></div>
         <div sclass="z-py-3">
             <menubar id="menubar1" width="100%">
                 <menu label="Project" image="~./img/Centigrade-Widget-Icons/Briefcase-16x16.png">
@@ -48,7 +48,7 @@
     </div>
 
     <div sclass="z-mb-6">
-        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Horizontal with Icons</div>
+        <div sclass="z-text-uppercase z-border-bottom z-pb-2 z-mb-4"><label sclass="z-text-xs z-fw-semibold z-text-secondary" value="Horizontal with Icons"/></div>
         <div sclass="z-py-3">
             <menubar>
                 <menu label="File" iconSclass="z-icon-file">
@@ -77,7 +77,7 @@
     </div>
 
     <div sclass="z-mb-6">
-        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Vertical</div>
+        <div sclass="z-text-uppercase z-border-bottom z-pb-2 z-mb-4"><label sclass="z-text-xs z-fw-semibold z-text-secondary" value="Vertical"/></div>
         <div sclass="z-py-3">
             <menubar width="200px" orient="vertical">
                 <menu label="Project" image="~./img/Centigrade-Widget-Icons/Briefcase-16x16.png" disabled="true">
@@ -114,7 +114,7 @@
     </div>
 
     <div sclass="z-mb-6">
-        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Menupopup (standalone)</div>
+        <div sclass="z-text-uppercase z-border-bottom z-pb-2 z-mb-4"><label sclass="z-text-xs z-fw-semibold z-text-secondary" value="Menupopup (standalone)"/></div>
         <div sclass="z-py-3">
             <button label="Open menupopup" popup="menupopup1"/>
             <menupopup id="menupopup1">
@@ -128,7 +128,7 @@
     </div>
 
     <div sclass="z-mb-6">
-        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Auto Drop</div>
+        <div sclass="z-text-uppercase z-border-bottom z-pb-2 z-mb-4"><label sclass="z-text-xs z-fw-semibold z-text-secondary" value="Auto Drop"/></div>
         <div sclass="z-py-3">
             <menubar id="menubar2" width="100%">
                 <attribute name="onCreate">self.setAutodrop(true);</attribute>
@@ -158,7 +158,7 @@
     </div>
 
     <div sclass="z-mb-6">
-        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Scrollable Menubar</div>
+        <div sclass="z-text-uppercase z-border-bottom z-pb-2 z-mb-4"><label sclass="z-text-xs z-fw-semibold z-text-secondary" value="Scrollable Menubar"/></div>
         <div sclass="z-py-3">
             <menubar width="200px">
                 <attribute name="onCreate">self.setScrollable(true);</attribute>

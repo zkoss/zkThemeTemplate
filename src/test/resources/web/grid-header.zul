@@ -1,12 +1,12 @@
 <?page title="Grid Header" contentType="text/html;charset=UTF-8"?>
 <zk xmlns:h="native">
 <div sclass="z-p-8">
-    <div sclass="z-border-bottom z-text-xl z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Grid Header</div>
+    <div sclass="z-border-bottom z-mb-8 z-pb-3"><label sclass="z-text-2xl z-fw-medium z-text-on-surface" value="Grid Header"/></div>
 
     <div sclass="z-mb-6">
-        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Auxhead + Column Combinations</div>
+        <div sclass="z-text-uppercase z-border-bottom z-pb-2 z-mb-4"><label sclass="z-text-xs z-fw-semibold z-text-secondary" value="Auxhead + Column Combinations"/></div>
         <div sclass="z-py-3">
-            <div sclass="z-d-flex z-flex-col z-gap-4 z-align-start">
+            <div sclass="z-d-flex z-flex-col z-gap-4 z-items-start">
                 <grid width="300px">
                     <auxhead>
                         <auxheader label="A+B" colspan="2"/>
@@ -95,9 +95,9 @@
     </div>
 
     <div sclass="z-mb-6">
-        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Column / Auxhead Only</div>
+        <div sclass="z-text-uppercase z-border-bottom z-pb-2 z-mb-4"><label sclass="z-text-xs z-fw-semibold z-text-secondary" value="Column / Auxhead Only"/></div>
         <div sclass="z-py-3">
-            <div sclass="z-d-flex z-flex-col z-gap-4 z-align-start">
+            <div sclass="z-d-flex z-flex-col z-gap-4 z-items-start">
                 <grid width="300px">
                     <columns>
                         <column label="Align Left" align="left" width="100px"/>
@@ -157,9 +157,9 @@
     </div>
 
     <div sclass="z-mb-6">
-        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Static Sort Direction</div>
+        <div sclass="z-text-uppercase z-border-bottom z-pb-2 z-mb-4"><label sclass="z-text-xs z-fw-semibold z-text-secondary" value="Static Sort Direction"/></div>
         <div sclass="z-py-3">
-            <div sclass="z-d-flex z-flex-col z-gap-4 z-align-start">
+            <div sclass="z-d-flex z-flex-col z-gap-4 z-items-start">
                 <grid width="300px">
                     <columns>
                         <column label="Subject (asc)" sort="auto" sortDirection="ascending"/>
@@ -198,9 +198,9 @@
     </div>
 
     <div sclass="z-mb-6">
-        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Auxheader Rowspan</div>
+        <div sclass="z-text-uppercase z-border-bottom z-pb-2 z-mb-4"><label sclass="z-text-xs z-fw-semibold z-text-secondary" value="Auxheader Rowspan"/></div>
         <div sclass="z-py-3">
-            <div sclass="z-d-flex z-flex-col z-gap-4 z-align-start">
+            <div sclass="z-d-flex z-flex-col z-gap-4 z-items-start">
                 <grid width="360px">
                     <auxhead>
                         <auxheader label="Group A" colspan="2"/>
@@ -245,9 +245,9 @@
     </div>
 
     <div sclass="z-mb-6">
-        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">sizedByContent + Span Column</div>
+        <div sclass="z-text-uppercase z-border-bottom z-pb-2 z-mb-4"><label sclass="z-text-xs z-fw-semibold z-text-secondary" value="sizedByContent + Span Column"/></div>
         <div sclass="z-py-3">
-            <div sclass="z-d-flex z-flex-col z-gap-4 z-align-start">
+            <div sclass="z-d-flex z-flex-col z-gap-4 z-items-start">
                 <grid sizedByContent="true">
                     <columns sizable="true">
                         <column label="ID"/>
@@ -277,7 +277,7 @@
     </div>
 
     <div sclass="z-mb-6">
-        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Frozen Right (Start Columns Scroll)</div>
+        <div sclass="z-text-uppercase z-border-bottom z-pb-2 z-mb-4"><label sclass="z-text-xs z-fw-semibold z-text-secondary" value="Frozen Right (Start Columns Scroll)"/></div>
         <div sclass="z-py-3">
             <grid width="500px">
                 <frozen columns="2" start="1"/>
@@ -300,7 +300,7 @@
     </div>
 
     <div sclass="z-mb-6">
-        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Sticky Header (z-sticky-header)</div>
+        <div sclass="z-text-uppercase z-border-bottom z-pb-2 z-mb-4"><label sclass="z-text-xs z-fw-semibold z-text-secondary" value="Sticky Header (z-sticky-header)"/></div>
         <div sclass="z-py-3">
             <div style="height:200px; overflow-y:auto; border:1px solid var(--zk-color-outline);">
                 <grid sclass="z-sticky-header" width="500px">
@@ -337,9 +337,9 @@
     </div>
 
     <div sclass="z-mb-6">
-        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Embedded Components in Header</div>
+        <div sclass="z-text-uppercase z-border-bottom z-pb-2 z-mb-4"><label sclass="z-text-xs z-fw-semibold z-text-secondary" value="Embedded Components in Header"/></div>
         <div sclass="z-py-3">
-            <div sclass="z-d-flex z-flex-col z-gap-4 z-align-start">
+            <div sclass="z-d-flex z-flex-col z-gap-4 z-items-start">
                 <grid width="600px">
                     <columns>
                         <column label="Align Left" align="left" width="100px"/>

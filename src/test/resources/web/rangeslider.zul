@@ -9,49 +9,49 @@
     rangeMarks.put(100, "End");
 ]]></zscript>
 <div sclass="z-p-8">
-    <div sclass="z-border-bottom z-text-xl z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Rangeslider</div>
+    <div sclass="z-border-bottom z-mb-8 z-pb-3"><label sclass="z-text-2xl z-fw-medium z-text-on-surface" value="Rangeslider"/></div>
 
     <div sclass="z-mb-6">
-        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Horizontal</div>
-        <div sclass="z-d-flex z-flex-col z-align-start z-gap-4 z-py-3">
-            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <div sclass="z-text-xs z-text-secondary">Default</div>
+        <div sclass="z-text-uppercase z-border-bottom z-pb-2 z-mb-4"><label sclass="z-text-xs z-fw-semibold z-text-secondary" value="Horizontal"/></div>
+        <div sclass="z-d-flex z-flex-col z-items-start z-gap-4 z-py-3">
+            <div sclass="z-d-flex z-flex-col z-items-start z-gap-2">
+                <div><label sclass="z-text-xs z-text-secondary" value="Default"/></div>
                 <rangeslider startValue="10" endValue="90" width="500px"/>
             </div>
-            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <div sclass="z-text-xs z-text-secondary">With scale marks</div>
+            <div sclass="z-d-flex z-flex-col z-items-start z-gap-2">
+                <div><label sclass="z-text-xs z-text-secondary" value="With scale marks"/></div>
                 <rangeslider startValue="20" endValue="80" markScale="20" width="500px"/>
             </div>
         </div>
     </div>
 
     <div sclass="z-mb-6">
-        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Vertical</div>
-        <div sclass="z-d-flex z-align-start z-flex-wrap z-gap-6 z-py-3">
-            <div sclass="z-d-flex z-flex-col z-align-center z-gap-2">
-                <div sclass="z-text-xs z-text-secondary">Default</div>
+        <div sclass="z-text-uppercase z-border-bottom z-pb-2 z-mb-4"><label sclass="z-text-xs z-fw-semibold z-text-secondary" value="Vertical"/></div>
+        <div sclass="z-d-flex z-items-start z-flex-wrap z-gap-6 z-py-3">
+            <div sclass="z-d-flex z-flex-col z-items-center z-gap-2">
+                <div><label sclass="z-text-xs z-text-secondary" value="Default"/></div>
                 <rangeslider orient="vertical" startValue="20" endValue="80" height="500px"/>
             </div>
-            <div sclass="z-d-flex z-flex-col z-align-center z-gap-2">
-                <div sclass="z-text-xs z-text-secondary">With scale marks</div>
+            <div sclass="z-d-flex z-flex-col z-items-center z-gap-2">
+                <div><label sclass="z-text-xs z-text-secondary" value="With scale marks"/></div>
                 <rangeslider orient="vertical" startValue="20" endValue="80" markScale="20" height="500px"/>
             </div>
         </div>
     </div>
 
     <div sclass="z-mb-6">
-        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Marks / Disabled / Tooltip Visible</div>
-        <div sclass="z-d-flex z-flex-col z-align-start z-gap-8 z-py-3">
-            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <div sclass="z-text-xs z-text-secondary">Custom text marks (Start/Q1/Mid/Q3/End)</div>
+        <div sclass="z-text-uppercase z-border-bottom z-pb-2 z-mb-4"><label sclass="z-text-xs z-fw-semibold z-text-secondary" value="Marks / Disabled / Tooltip Visible"/></div>
+        <div sclass="z-d-flex z-flex-col z-items-start z-gap-8 z-py-3">
+            <div sclass="z-d-flex z-flex-col z-items-start z-gap-2">
+                <div><label sclass="z-text-xs z-text-secondary" value="Custom text marks (Start/Q1/Mid/Q3/End)"/></div>
                 <rangeslider startValue="25" endValue="75" marks="${rangeMarks}" width="500px"/>
             </div>
-            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <div sclass="z-text-xs z-text-secondary">Disabled</div>
+            <div sclass="z-d-flex z-flex-col z-items-start z-gap-2">
+                <div><label sclass="z-text-xs z-text-secondary" value="Disabled"/></div>
                 <rangeslider startValue="20" endValue="80" disabled="true" width="500px"/>
             </div>
-            <div sclass="z-d-flex z-flex-col z-align-start z-gap-8">
-                <div sclass="z-text-xs z-text-secondary">Always-visible tooltips</div>
+            <div sclass="z-d-flex z-flex-col z-items-start z-gap-8">
+                <div><label sclass="z-text-xs z-text-secondary" value="Always-visible tooltips"/></div>
                 <rangeslider startValue="30" endValue="70" tooltipVisible="true" width="500px"/>
             </div>
         </div>

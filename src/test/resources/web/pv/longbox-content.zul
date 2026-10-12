@@ -4,7 +4,7 @@
        rowsTemplate="longbox-rows">
     <template name="longbox-rows">
         <div sclass="z-d-contents">
-            <div sclass="z-text-sm z-text-secondary">Value</div>
+            <div><label sclass="z-text-sm z-text-secondary" value="Value"/></div>
             <div><longbox value="1000"/></div>
             <div><longbox value="1000" disabled="true"/></div>
             <div><longbox value="1000" readonly="true"/></div>
@@ -12,7 +12,7 @@
             <div><longbox value="1000" inplace="true"/></div>
         </div>
         <div sclass="z-d-contents">
-            <div sclass="z-text-sm z-text-secondary">Placeholder</div>
+            <div><label sclass="z-text-sm z-text-secondary" value="Placeholder"/></div>
             <div><longbox placeholder="Enter number"/></div>
             <div><longbox placeholder="Enter number" disabled="true"/></div>
             <div><longbox placeholder="Enter number" readonly="true"/></div>

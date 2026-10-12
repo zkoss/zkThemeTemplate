@@ -4,7 +4,7 @@
        rowsTemplate="intbox-rows">
     <template name="intbox-rows">
         <div sclass="z-d-contents">
-            <div sclass="z-text-sm z-text-secondary">Value</div>
+            <div><label sclass="z-text-sm z-text-secondary" value="Value"/></div>
             <div><intbox value="42"/></div>
             <div><intbox value="42" disabled="true"/></div>
             <div><intbox value="42" readonly="true"/></div>
@@ -12,7 +12,7 @@
             <div><intbox value="42" inplace="true"/></div>
         </div>
         <div sclass="z-d-contents">
-            <div sclass="z-text-sm z-text-secondary">Placeholder</div>
+            <div><label sclass="z-text-sm z-text-secondary" value="Placeholder"/></div>
             <div><intbox placeholder="Enter number"/></div>
             <div><intbox placeholder="Enter number" disabled="true"/></div>
             <div><intbox placeholder="Enter number" readonly="true"/></div>

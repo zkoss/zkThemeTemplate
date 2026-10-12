@@ -1,38 +1,38 @@
 <?page title="Separator" contentType="text/html;charset=UTF-8"?>
 <zk xmlns:h="native">
 <div sclass="z-p-8">
-    <div sclass="z-border-bottom z-text-xl z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Separator</div>
+    <div sclass="z-border-bottom z-mb-8 z-pb-3"><label sclass="z-text-2xl z-fw-medium z-text-on-surface" value="Separator"/></div>
     <div sclass="z-mb-6">
-        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Horizontal</div>
-        <div sclass="z-d-flex z-align-start z-flex-wrap z-gap-6 z-py-3">
-            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2" style="width:200px">
-                <div sclass="z-text-xs z-text-secondary">Above</div>
+        <div sclass="z-text-uppercase z-border-bottom z-pb-2 z-mb-4"><label sclass="z-text-xs z-fw-semibold z-text-secondary" value="Horizontal"/></div>
+        <div sclass="z-d-flex z-items-start z-flex-wrap z-gap-6 z-py-3">
+            <div sclass="z-d-flex z-flex-col z-items-start z-gap-2" style="width:200px">
+                <div><label sclass="z-text-xs z-text-secondary" value="Above"/></div>
                 <separator orient="horizontal" bar="true" spacing="8px"/>
-                <div sclass="z-text-xs z-text-secondary">Below</div>
-                <div sclass="z-text-xs z-text-secondary">Default spacing</div>
+                <div><label sclass="z-text-xs z-text-secondary" value="Below"/></div>
+                <div><label sclass="z-text-xs z-text-secondary" value="Default spacing"/></div>
             </div>
-            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2" style="width:200px">
-                <div sclass="z-text-xs z-text-secondary">Above</div>
+            <div sclass="z-d-flex z-flex-col z-items-start z-gap-2" style="width:200px">
+                <div><label sclass="z-text-xs z-text-secondary" value="Above"/></div>
                 <separator orient="horizontal" bar="true" spacing="20px"/>
-                <div sclass="z-text-xs z-text-secondary">Below</div>
-                <div sclass="z-text-xs z-text-secondary">Large spacing (20px)</div>
+                <div><label sclass="z-text-xs z-text-secondary" value="Below"/></div>
+                <div><label sclass="z-text-xs z-text-secondary" value="Large spacing (20px)"/></div>
             </div>
-            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2" style="width:200px">
-                <div sclass="z-text-xs z-text-secondary">Above</div>
+            <div sclass="z-d-flex z-flex-col z-items-start z-gap-2" style="width:200px">
+                <div><label sclass="z-text-xs z-text-secondary" value="Above"/></div>
                 <separator orient="horizontal" spacing="8px"/>
-                <div sclass="z-text-xs z-text-secondary">Below</div>
-                <div sclass="z-text-xs z-text-secondary">No bar</div>
+                <div><label sclass="z-text-xs z-text-secondary" value="Below"/></div>
+                <div><label sclass="z-text-xs z-text-secondary" value="No bar"/></div>
             </div>
         </div>
     </div>
     <div sclass="z-mb-6">
-        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Vertical</div>
-        <div sclass="z-d-flex z-align-center z-gap-4 z-py-3" style="height:80px">
-            <div sclass="z-text-xs z-text-secondary">Left</div>
+        <div sclass="z-text-uppercase z-border-bottom z-pb-2 z-mb-4"><label sclass="z-text-xs z-fw-semibold z-text-secondary" value="Vertical"/></div>
+        <div sclass="z-d-flex z-items-center z-gap-4 z-py-3" style="height:80px">
+            <div><label sclass="z-text-xs z-text-secondary" value="Left"/></div>
             <separator orient="vertical" bar="true" spacing="16px"/>
-            <div sclass="z-text-xs z-text-secondary">Middle</div>
+            <div><label sclass="z-text-xs z-text-secondary" value="Middle"/></div>
             <separator orient="vertical" bar="true" spacing="16px"/>
-            <div sclass="z-text-xs z-text-secondary">Right</div>
+            <div><label sclass="z-text-xs z-text-secondary" value="Right"/></div>
         </div>
     </div>
 </div>

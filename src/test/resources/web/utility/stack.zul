@@ -1,18 +1,18 @@
 <?page title="Stack Utilities"?>
 <zk xmlns:h="native">
 <style src="~./usecase/usecase.css"/>
-<vlayout hflex="1" sclass="z-d-flex z-flex-col z-gap-4 z-p-4 z-bg-surface-low">
+<vlayout hflex="1" sclass="z-d-flex z-flex-col z-gap-4 z-p-4 z-bg-surface-container-low">
 
     <label value="Stack Utilities" sclass="z-h2"/>
 
     <!-- Concept -->
-    <div sclass="z-card">
-        <label value="Concept" sclass="z-d-block z-text-base z-fw-medium z-text-on-surface z-mb-3"/>
+    <div sclass="z-paper">
+        <label value="Concept" sclass="z-d-block z-text-lg z-fw-medium z-text-on-surface z-mb-3"/>
         <label sclass="z-d-block z-text-secondary z-text-md z-mb-2"
                value="Marble has two opt-in container utilities for grouping items with consistent spacing. Naming follows Bootstrap 5 / SwiftUI."/>
         <div sclass="z-d-grid z-grid-cols-2 z-gap-4">
             <div sclass="z-bg-surface z-p-4 z-rounded-md">
-                <label value=".z-vstack — vertical group" sclass="z-d-block z-text-base z-fw-semibold z-mb-2"/>
+                <label value=".z-vstack — vertical group" sclass="z-d-block z-text-lg z-fw-semibold z-mb-2"/>
                 <label sclass="z-d-block z-text-secondary z-text-sm z-mb-3"
                        value="Lobotomized Owl pattern. Every child except the first gets margin-top. Use for stacked items in a column."/>
                 <html><![CDATA[<pre style="margin:0;font-size:12px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:var(--zk-color-surface-variant);color:var(--zk-color-on-surface);padding:8px;border-radius:4px;white-space:pre;overflow:auto">&lt;div sclass="z-vstack"&gt;
@@ -22,7 +22,7 @@
 &lt;/div&gt;</pre>]]></html>
             </div>
             <div sclass="z-bg-surface z-p-4 z-rounded-md">
-                <label value=".z-hstack — horizontal group" sclass="z-d-block z-text-base z-fw-semibold z-mb-2"/>
+                <label value=".z-hstack — horizontal group" sclass="z-d-block z-text-lg z-fw-semibold z-mb-2"/>
                 <label sclass="z-d-block z-text-secondary z-text-sm z-mb-3"
                        value="display:flex + gap + wrap. Use for buttons / chips / atomic widgets in a row."/>
                 <html><![CDATA[<pre style="margin:0;font-size:12px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:var(--zk-color-surface-variant);color:var(--zk-color-on-surface);padding:8px;border-radius:4px;white-space:pre;overflow:auto">&lt;div sclass="z-hstack"&gt;
@@ -34,57 +34,57 @@
     </div>
 
     <!-- z-vstack demo -->
-    <div sclass="z-card">
-        <label value=".z-vstack — vertical stack" sclass="z-d-block z-text-base z-fw-medium z-text-on-surface z-mb-3"/>
+    <div sclass="z-paper">
+        <label value=".z-vstack — vertical stack" sclass="z-d-block z-text-lg z-fw-medium z-text-on-surface z-mb-3"/>
         <label sclass="z-d-block z-text-secondary z-text-sm z-mb-3"
                value="Five size variants. Default = 12px (z-vstack), sm = 8px, md = 16px, lg = 24px, 0 = none."/>
         <div sclass="z-d-grid z-grid-cols-5 z-gap-4">
             <div>
                 <label value=".z-vstack-sm  (8px)" sclass="z-d-block z-text-sm z-text-secondary z-mb-2"/>
                 <div sclass="z-bg-surface-variant z-rounded z-p-3 z-vstack-sm">
-                    <div sclass="z-bg-primary-container z-rounded z-py-2 z-px-3 z-text-sm z-fw-medium">Item 1</div>
-                    <div sclass="z-bg-primary-container z-rounded z-py-2 z-px-3 z-text-sm z-fw-medium">Item 2</div>
-                    <div sclass="z-bg-primary-container z-rounded z-py-2 z-px-3 z-text-sm z-fw-medium">Item 3</div>
+                    <div sclass="z-bg-primary-container z-rounded z-py-2 z-px-3"><label sclass="z-text-sm z-fw-medium" value="Item 1"/></div>
+                    <div sclass="z-bg-primary-container z-rounded z-py-2 z-px-3"><label sclass="z-text-sm z-fw-medium" value="Item 2"/></div>
+                    <div sclass="z-bg-primary-container z-rounded z-py-2 z-px-3"><label sclass="z-text-sm z-fw-medium" value="Item 3"/></div>
                 </div>
             </div>
             <div>
                 <label value=".z-vstack    (12px)" sclass="z-d-block z-text-sm z-text-secondary z-mb-2"/>
                 <div sclass="z-bg-surface-variant z-rounded z-p-3 z-vstack">
-                    <div sclass="z-bg-primary-container z-rounded z-py-2 z-px-3 z-text-sm z-fw-medium">Item 1</div>
-                    <div sclass="z-bg-primary-container z-rounded z-py-2 z-px-3 z-text-sm z-fw-medium">Item 2</div>
-                    <div sclass="z-bg-primary-container z-rounded z-py-2 z-px-3 z-text-sm z-fw-medium">Item 3</div>
+                    <div sclass="z-bg-primary-container z-rounded z-py-2 z-px-3"><label sclass="z-text-sm z-fw-medium" value="Item 1"/></div>
+                    <div sclass="z-bg-primary-container z-rounded z-py-2 z-px-3"><label sclass="z-text-sm z-fw-medium" value="Item 2"/></div>
+                    <div sclass="z-bg-primary-container z-rounded z-py-2 z-px-3"><label sclass="z-text-sm z-fw-medium" value="Item 3"/></div>
                 </div>
             </div>
             <div>
                 <label value=".z-vstack-md (16px)" sclass="z-d-block z-text-sm z-text-secondary z-mb-2"/>
                 <div sclass="z-bg-surface-variant z-rounded z-p-3 z-vstack-md">
-                    <div sclass="z-bg-primary-container z-rounded z-py-2 z-px-3 z-text-sm z-fw-medium">Item 1</div>
-                    <div sclass="z-bg-primary-container z-rounded z-py-2 z-px-3 z-text-sm z-fw-medium">Item 2</div>
-                    <div sclass="z-bg-primary-container z-rounded z-py-2 z-px-3 z-text-sm z-fw-medium">Item 3</div>
+                    <div sclass="z-bg-primary-container z-rounded z-py-2 z-px-3"><label sclass="z-text-sm z-fw-medium" value="Item 1"/></div>
+                    <div sclass="z-bg-primary-container z-rounded z-py-2 z-px-3"><label sclass="z-text-sm z-fw-medium" value="Item 2"/></div>
+                    <div sclass="z-bg-primary-container z-rounded z-py-2 z-px-3"><label sclass="z-text-sm z-fw-medium" value="Item 3"/></div>
                 </div>
             </div>
             <div>
                 <label value=".z-vstack-lg (24px)" sclass="z-d-block z-text-sm z-text-secondary z-mb-2"/>
                 <div sclass="z-bg-surface-variant z-rounded z-p-3 z-vstack-lg">
-                    <div sclass="z-bg-primary-container z-rounded z-py-2 z-px-3 z-text-sm z-fw-medium">Item 1</div>
-                    <div sclass="z-bg-primary-container z-rounded z-py-2 z-px-3 z-text-sm z-fw-medium">Item 2</div>
-                    <div sclass="z-bg-primary-container z-rounded z-py-2 z-px-3 z-text-sm z-fw-medium">Item 3</div>
+                    <div sclass="z-bg-primary-container z-rounded z-py-2 z-px-3"><label sclass="z-text-sm z-fw-medium" value="Item 1"/></div>
+                    <div sclass="z-bg-primary-container z-rounded z-py-2 z-px-3"><label sclass="z-text-sm z-fw-medium" value="Item 2"/></div>
+                    <div sclass="z-bg-primary-container z-rounded z-py-2 z-px-3"><label sclass="z-text-sm z-fw-medium" value="Item 3"/></div>
                 </div>
             </div>
             <div>
                 <label value=".z-vstack-0   (0)" sclass="z-d-block z-text-sm z-text-secondary z-mb-2"/>
                 <div sclass="z-bg-surface-variant z-rounded z-p-3 z-vstack-0">
-                    <div sclass="z-bg-primary-container z-rounded z-py-2 z-px-3 z-text-sm z-fw-medium">Item 1</div>
-                    <div sclass="z-bg-primary-container z-rounded z-py-2 z-px-3 z-text-sm z-fw-medium">Item 2</div>
-                    <div sclass="z-bg-primary-container z-rounded z-py-2 z-px-3 z-text-sm z-fw-medium">Item 3</div>
+                    <div sclass="z-bg-primary-container z-rounded z-py-2 z-px-3"><label sclass="z-text-sm z-fw-medium" value="Item 1"/></div>
+                    <div sclass="z-bg-primary-container z-rounded z-py-2 z-px-3"><label sclass="z-text-sm z-fw-medium" value="Item 2"/></div>
+                    <div sclass="z-bg-primary-container z-rounded z-py-2 z-px-3"><label sclass="z-text-sm z-fw-medium" value="Item 3"/></div>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- z-hstack demo -->
-    <div sclass="z-card">
-        <label value=".z-hstack — horizontal stack" sclass="z-d-block z-text-base z-fw-medium z-text-on-surface z-mb-3"/>
+    <div sclass="z-paper">
+        <label value=".z-hstack — horizontal stack" sclass="z-d-block z-text-lg z-fw-medium z-text-on-surface z-mb-3"/>
         <label sclass="z-d-block z-text-secondary z-text-sm z-mb-3"
                value="Four size variants. Wraps automatically when the row overflows. Default = 12px, sm = 8px, md = 16px, lg = 24px."/>
 
@@ -118,8 +118,8 @@
     </div>
 
     <!-- Mixed example -->
-    <div sclass="z-card">
-        <label value="Real-world Example — Form Actions" sclass="z-d-block z-text-base z-fw-medium z-text-on-surface z-mb-3"/>
+    <div sclass="z-paper">
+        <label value="Real-world Example — Form Actions" sclass="z-d-block z-text-lg z-fw-medium z-text-on-surface z-mb-3"/>
         <label sclass="z-d-block z-text-secondary z-text-sm z-mb-3"
                value="Stack form rows vertically with .z-vstack, then group the action buttons horizontally with .z-hstack."/>
         <div sclass="z-bg-surface z-p-4 z-rounded-md" style="max-width:480px">
@@ -145,8 +145,8 @@
     </div>
 
     <!-- Opt-in spacing (no default widget margins) -->
-    <div sclass="z-card">
-        <label value="Opt-in Spacing — Widgets Have No Default Margins" sclass="z-d-block z-text-base z-fw-medium z-text-on-surface z-mb-3"/>
+    <div sclass="z-paper">
+        <label value="Opt-in Spacing — Widgets Have No Default Margins" sclass="z-d-block z-text-lg z-fw-medium z-text-on-surface z-mb-3"/>
         <label sclass="z-d-block z-text-secondary z-text-sm z-mb-3"
                value="No widget carries a theme-default margin (ZK's hflex/vflex sizing measures child margins — see doc/spec/spacing-policy.md). To space stacked widgets, put .z-vstack on the parent; it works for container widgets (panel, window, grid, …) and atomic widgets alike."/>
         <div sclass="z-d-grid z-grid-cols-2 z-gap-4">
@@ -180,12 +180,12 @@
     </div>
 
     <!-- Class reference -->
-    <div sclass="z-card">
-        <label value="Class Reference" sclass="z-d-block z-text-base z-fw-medium z-text-on-surface z-mb-3"/>
+    <div sclass="z-paper">
+        <label value="Class Reference" sclass="z-d-block z-text-lg z-fw-medium z-text-on-surface z-mb-3"/>
         <div sclass="z-d-grid z-grid-cols-2 z-gap-6">
             <div>
                 <label value="Vertical (margin-top on child #2+)" sclass="z-d-block z-text-sm z-fw-semibold z-mb-2"/>
-                <div sclass="z-d-grid z-grid-cols-auto-1fr z-col-gap-4 z-row-gap-2">
+                <div sclass="z-d-grid z-grid-cols-auto-1fr z-gap-x-4 z-gap-y-2">
                     <label value=".z-vstack-sm" sclass="z-text-sm z-text-secondary"/><label value="8px"  sclass="z-text-sm"/>
                     <label value=".z-vstack"    sclass="z-text-sm z-text-secondary"/><label value="12px (default)" sclass="z-text-sm"/>
                     <label value=".z-vstack-md" sclass="z-text-sm z-text-secondary"/><label value="16px" sclass="z-text-sm"/>
@@ -195,7 +195,7 @@
             </div>
             <div>
                 <label value="Horizontal (flex + gap, wraps)" sclass="z-d-block z-text-sm z-fw-semibold z-mb-2"/>
-                <div sclass="z-d-grid z-grid-cols-auto-1fr z-col-gap-4 z-row-gap-2">
+                <div sclass="z-d-grid z-grid-cols-auto-1fr z-gap-x-4 z-gap-y-2">
                     <label value=".z-hstack-sm" sclass="z-text-sm z-text-secondary"/><label value="8px"  sclass="z-text-sm"/>
                     <label value=".z-hstack"    sclass="z-text-sm z-text-secondary"/><label value="12px (default)" sclass="z-text-sm"/>
                     <label value=".z-hstack-md" sclass="z-text-sm z-text-secondary"/><label value="16px" sclass="z-text-sm"/>

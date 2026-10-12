@@ -4,7 +4,7 @@
        rowsTemplate="doublebox-rows">
     <template name="doublebox-rows">
         <div sclass="z-d-contents">
-            <div sclass="z-text-sm z-text-secondary">Value</div>
+            <div><label sclass="z-text-sm z-text-secondary" value="Value"/></div>
             <div><doublebox value="2.718"/></div>
             <div><doublebox value="2.718" disabled="true"/></div>
             <div><doublebox value="2.718" readonly="true"/></div>
@@ -12,7 +12,7 @@
             <div><doublebox value="2.718" inplace="true"/></div>
         </div>
         <div sclass="z-d-contents">
-            <div sclass="z-text-sm z-text-secondary">Placeholder</div>
+            <div><label sclass="z-text-sm z-text-secondary" value="Placeholder"/></div>
             <div><doublebox placeholder="Enter value"/></div>
             <div><doublebox placeholder="Enter value" disabled="true"/></div>
             <div><doublebox placeholder="Enter value" readonly="true"/></div>

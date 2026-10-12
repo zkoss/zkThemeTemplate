@@ -38,14 +38,14 @@
 
 ]]></zscript>
 <div sclass="z-p-8">
-    <div sclass="z-border-bottom z-text-xl z-fw-medium z-text-on-surface z-mb-8 z-pb-3">Tree</div>
+    <div sclass="z-border-bottom z-mb-8 z-pb-3"><label sclass="z-text-2xl z-fw-medium z-text-on-surface" value="Tree"/></div>
 
     <div sclass="z-mb-8">
-        <div sclass="z-text-md z-fw-bold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-3">Tree — State Gallery</div>
+        <div sclass="z-text-uppercase z-border-bottom z-pb-2 z-mb-3"><label sclass="z-text-md z-fw-bold z-text-secondary" value="Tree — State Gallery"/></div>
 
-        <div sclass="z-d-flex z-flex-wrap z-gap-6 z-align-start z-py-4 z-mb-2">
-            <div sclass="z-d-flex z-flex-col z-align-center z-gap-2">
-                <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-center z-text-secondary">Node States</div>
+        <div sclass="z-d-flex z-flex-wrap z-gap-6 z-items-start z-py-4 z-mb-2">
+            <div sclass="z-d-flex z-flex-col z-items-center z-gap-2">
+                <div sclass="z-text-uppercase z-text-center"><label sclass="z-text-xs z-fw-semibold z-text-secondary" value="Node States"/></div>
                 <tree width="280px">
                     <treecols><treecol label="Name"/></treecols>
                     <treechildren>
@@ -75,7 +75,7 @@
     </div>
 
     <div sclass="z-mb-6">
-        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Basic Tree</div>
+        <div sclass="z-text-uppercase z-border-bottom z-pb-2 z-mb-4"><label sclass="z-text-xs z-fw-semibold z-text-secondary" value="Basic Tree"/></div>
         <div sclass="z-py-3">
             <tree id="tree" width="400px" rows="8">
                 <treecols sizable="true">
@@ -143,14 +143,14 @@
     </div>
 
     <div sclass="z-mb-6">
-        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Tree Live Data</div>
+        <div sclass="z-text-uppercase z-border-bottom z-pb-2 z-mb-4"><label sclass="z-text-xs z-fw-semibold z-text-secondary" value="Tree Live Data"/></div>
         <div sclass="z-py-3">
             <tree id="tree2" model="&#36;{btm}"/>
         </div>
     </div>
 
     <div sclass="z-mb-6">
-        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Tree with Checkmark</div>
+        <div sclass="z-text-uppercase z-border-bottom z-pb-2 z-mb-4"><label sclass="z-text-xs z-fw-semibold z-text-secondary" value="Tree with Checkmark"/></div>
         <div sclass="z-py-3">
             <div sclass="z-hstack z-mb-3">
                 <button label="Toggle checkmark" onClick="tree3.checkmark = !tree3.checkmark;"/>
@@ -212,7 +212,7 @@
             </tree>
         </div>
         <div sclass="z-py-3">
-            <div sclass="z-text-sm z-fw-medium z-text-on-surface-variant z-mb-2">Single selection — renders a radio, not a checkbox</div>
+            <div sclass="z-text-on-surface-variant z-mb-2"><label sclass="z-text-sm z-fw-medium" value="Single selection — renders a radio, not a checkbox"/></div>
             <tree rows="4" checkmark="true">
                 <treecols>
                     <treecol label="Name"/>
@@ -309,7 +309,7 @@
         tristateModel.recompute(tristateRoot);   // derive parent states (parentC stays empty)
         ]]></zscript>
         <div sclass="z-py-3">
-            <div sclass="z-text-sm z-fw-medium z-text-on-surface-variant z-mb-2">Tristate — toggle a child and its parent recomputes (all→checked, some→indeterminate, none→unchecked); toggle a parent and it cascades to its children</div>
+            <div sclass="z-text-on-surface-variant z-mb-2"><label sclass="z-text-sm z-fw-medium" value="Tristate — toggle a child and its parent recomputes (all→checked, some→indeterminate, none→unchecked); toggle a parent and it cascades to its children"/></div>
             <tree model="${tristateModel}" checkmark="true" multiple="true" width="320px">
                 <treecols>
                     <treecol label="Node"/>
@@ -333,7 +333,7 @@
     </div>
 
     <div sclass="z-mb-6">
-        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Paging with Tree</div>
+        <div sclass="z-text-uppercase z-border-bottom z-pb-2 z-mb-4"><label sclass="z-text-xs z-fw-semibold z-text-secondary" value="Paging with Tree"/></div>
         <div sclass="z-py-3">
             <div sclass="z-hstack z-mb-3">
                 <radiogroup onCheck="tree4.pagingPosition = self.selectedItem.label;">
@@ -357,7 +357,7 @@
     </div>
 
     <div sclass="z-mb-6">
-        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Frozen Columns</div>
+        <div sclass="z-text-uppercase z-border-bottom z-pb-2 z-mb-4"><label sclass="z-text-xs z-fw-semibold z-text-secondary" value="Frozen Columns"/></div>
         <div sclass="z-py-3">
             <tree>
                 <frozen columns="2"/>
@@ -399,10 +399,10 @@
     </div>
 
     <div sclass="z-mb-6">
-        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">Disabled State</div>
-        <div sclass="z-d-flex z-align-start z-flex-wrap z-gap-6 z-py-3">
-            <div sclass="z-d-flex z-flex-col z-align-start z-gap-2">
-                <div sclass="z-text-xs z-text-secondary">Individual disabled treeitems</div>
+        <div sclass="z-text-uppercase z-border-bottom z-pb-2 z-mb-4"><label sclass="z-text-xs z-fw-semibold z-text-secondary" value="Disabled State"/></div>
+        <div sclass="z-d-flex z-items-start z-flex-wrap z-gap-6 z-py-3">
+            <div sclass="z-d-flex z-flex-col z-items-start z-gap-2">
+                <div><label sclass="z-text-xs z-text-secondary" value="Individual disabled treeitems"/></div>
                 <tree width="280px">
                     <treecols><treecol label="Name"/></treecols>
                     <treechildren>
@@ -429,8 +429,8 @@
     </div>
 
     <div sclass="z-mb-6">
-        <div sclass="z-text-xs z-fw-semibold z-text-uppercase z-text-secondary z-border-bottom z-pb-2 z-mb-4">No-Border Variant (z-tree-noborder)</div>
-        <div sclass="z-py-3 z-text-sm z-text-secondary z-mb-3">A tree is an outlined card by default. Add sclass="z-tree-noborder" to strip its own frame when nesting it inside another bounded surface — here an elevated card — so it blends into the parent instead of double-framing.</div>
+        <div sclass="z-text-uppercase z-border-bottom z-pb-2 z-mb-4"><label sclass="z-text-xs z-fw-semibold z-text-secondary" value="No-Border Variant (z-tree-noborder)"/></div>
+        <div sclass="z-py-3 z-mb-3"><label sclass="z-text-sm z-text-secondary" value="A tree is an outlined card by default. Add sclass=&quot;z-tree-noborder&quot; to strip its own frame when nesting it inside another bounded surface — here an elevated card — so it blends into the parent instead of double-framing."/></div>
         <div sclass="z-bg-surface z-rounded-lg z-elevation-2 z-p-6">
             <tree sclass="z-tree-noborder">
                 <treecols><treecol label="Name"/><treecol label="Value"/></treecols>
