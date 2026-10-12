@@ -4,7 +4,7 @@
 #
 #   ./scripts/build-preview-war.sh                                     # -> target/marble.war
 #   WAR_NAME=marble-rc2 ./scripts/build-preview-war.sh                 # -> target/marble-rc2.war
-#   ZK_VERSION=10.4.0-jakarta.FL.20260713-Eval ./scripts/build-preview-war.sh
+#   ZK_VERSION=11.0.0-jakarta.FL.20260909 ./scripts/build-preview-war.sh
 #
 # Locally the preview app runs as a Spring Boot main class (ThemePreviewApp).
 # That class is deliberately left OUT of the WAR: a servlet container serves the
@@ -17,10 +17,10 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT"
 
 WAR_NAME="${WAR_NAME:-marble}"
-# javax-servlet flavour of ZK 10.4.0 - the review server runs Tomcat 9 (Servlet 4.0).
+# javax-servlet flavour of ZK 11.0.0 - the review server runs Tomcat 9 (Servlet 4.0).
 # For a Tomcat 10/11 target use the jakarta flavour instead (see the header) and
 # nothing else changes: the theme jar and the view-models touch no servlet API.
-ZK_VERSION="${ZK_VERSION:-10.4.0.FL.20260713-Eval}"
+ZK_VERSION="${ZK_VERSION:-11.0.0.FL.20261007-Eval}"
 JDK="${JDK:-17}"
 
 STAGE="$ROOT/target/preview-war"
@@ -40,7 +40,7 @@ npm run build:css
 ./scripts/check-icon-coverage.sh
 
 step "Building theme jar + preview classes"
-withjdk.sh "$JDK" ./mvnw -q package -DskipTests -Dexec.skip=true -Dzk.version="$ZK_VERSION"
+withjdk.sh "$JDK" ./mvnw -q package -DskipTests -Dexec.skip=true -Dskip.watch.css=true -Dzk.version="$ZK_VERSION"
 
 # target/ also holds -sources.jar and the Maven-Central -bundle.jar (pom + jar inside
 # a jar), so name the main artifact explicitly rather than globbing for it.

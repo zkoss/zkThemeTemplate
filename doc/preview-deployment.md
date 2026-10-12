@@ -79,15 +79,15 @@ strings (see also the note in `pom.xml`):
 
 | Flavour | `zk.version` | Container |
 |---|---|---|
-| javax (default for the WAR) | `10.4.0.FL.20260713-Eval` | Tomcat 9 / Servlet 4.0 |
-| jakarta (default for dev)   | `10.4.0-jakarta.FL.20260713-Eval` | Tomcat 10+ / Servlet 5+ |
+| javax (default for the WAR) | `11.0.0.FL.20261007-Eval` | Tomcat 9 / Servlet 4.0 |
+| jakarta (default for dev)   | `11.0.0-jakarta.FL.20260909` | Tomcat 10+ / Servlet 5+ |
 
 The WAR defaults to **javax**, because the review Tomcat is 9.0.83. Nothing else
 changes between the two: neither the theme classes nor the preview view-models
 touch a servlet type, so the same sources compile and run against either.
 
 ```bash
-ZK_VERSION=10.4.0-jakarta.FL.20260713-Eval ./scripts/build-preview-war.sh   # Tomcat 10/11
+ZK_VERSION=11.0.0-jakarta.FL.20260909 ./scripts/build-preview-war.sh   # Tomcat 10/11
 ```
 
 The generated `web.xml` is written for the javax flavour (Servlet 4.0 schema);
