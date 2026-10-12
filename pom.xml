@@ -246,6 +246,24 @@
 							</successCodes>
 						</configuration>
 					</execution>
+					<execution>
+						<!-- A preview ZUL must not apply a z-* class that no CSS defines. The ZULs are
+						     copied from zkoss/zk and the CSS arrives through a separate sync, so a renamed
+						     utility leaves the old class matching nothing and the layout silently loses its
+						     gaps and alignment. Exit 1 fails the build. -->
+						<id>check-zul-classes</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<configuration>
+							<executable>npm</executable>
+							<arguments>
+								<argument>run</argument>
+								<argument>check:zul-classes</argument>
+							</arguments>
+						</configuration>
+					</execution>
 					<execution> <!-- stamp HEAD commit date+hash for the use-case sidebar build marker -->
 						<id>stamp-commit</id>
 						<phase>process-test-resources</phase>
