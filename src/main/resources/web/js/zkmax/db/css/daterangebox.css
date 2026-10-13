@@ -416,6 +416,25 @@
     border-bottom-right-radius: var(--zk-shape-corner-full);
 }
 
+/* Per-panel anchor day — ZK puts .z-calendar-selected on day 1 of every month panel (the
+   panel's own _value), even when it is no range endpoint. calendar.css paints that class as a
+   filled disc, so the anchor would read as a selection. DaterangePopup leaves the class in
+   place on purpose (keyboard Space/Enter locate their target by it), so the paint is neutralised
+   here, only where no range role (begin/end/mid/preview) is set — those keep their own fill.
+   Selector outranks calendar.css's `.z-calendar-selected` rules, hover included. */
+.z-daterangebox-popup .z-calendar-body tbody td.z-calendar-cell.z-calendar-selected:not(.z-cell-range-begin):not(.z-cell-range-end):not(.z-cell-range-mid):not(.z-cell-range-preview-mid):not(.z-cell-range-preview-end):not(.z-calendar-disabled) {
+    color: var(--zk-calendar-fg);
+    font-weight: var(--zk-typescale-body-medium-weight);
+}
+
+.z-daterangebox-popup .z-calendar-body tbody td.z-calendar-cell.z-calendar-selected:not(.z-cell-range-begin):not(.z-cell-range-end):not(.z-cell-range-mid):not(.z-cell-range-preview-mid):not(.z-cell-range-preview-end):not(.z-calendar-disabled)::before {
+    background-color: transparent;
+}
+
+.z-daterangebox-popup .z-calendar-body tbody td.z-calendar-cell.z-calendar-selected:not(.z-cell-range-begin):not(.z-cell-range-end):not(.z-cell-range-mid):not(.z-cell-range-preview-mid):not(.z-cell-range-preview-end):not(.z-calendar-disabled):hover::before {
+    background-color: color-mix(in srgb, var(--zk-color-on-surface) 8%, transparent);
+}
+
 /* ─── Narrow viewport (<576px) — full-screen modal popup ─────────────────────────────────── *
  * Same DOM, no new classes: purely a layout breakpoint. Panels/times collapse to a single
  * column and the footer pins to the bottom of the viewport.
