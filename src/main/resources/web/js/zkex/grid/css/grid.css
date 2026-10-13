@@ -1,0 +1,43 @@
+/* Grid Detail (zkex) — expandable row detail.
+   DOM: td.z-row-inner.z-detail-outer > div.z-detail > i.z-detail-icon + div.z-detail-content,
+   and when open the content moves into the fake row: tr > td.z-detail-inner > div.z-detail-content. */
+@layer zk-components {
+.z-row .z-detail-outer {
+    min-width: 40px;
+    padding: 0;
+    vertical-align: top;
+    position: relative;
+}
+
+.z-detail-inner {
+    padding: 0;
+}
+
+.z-detail {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    min-width: var(--zk-spacing-6);
+    height: var(--zk-spacing-6);
+    padding: 0;
+    cursor: pointer;
+    white-space: nowrap;
+    color: var(--zk-color-on-surface-variant);
+    font-size: var(--zk-typescale-body-large-size);
+}
+
+.z-detail-icon {
+    color: inherit;
+    line-height: 1;
+}
+
+.z-detail-content {
+    /* Left padding follows the row content (--zk-grid-cell-padding, whatever its shorthand arity),
+       so the detail text sits on the same keyline as the row text; top/right/bottom are explicit. */
+    padding: var(--zk-grid-cell-padding);
+    padding-top: var(--zk-grid-detail-padding);
+    padding-right: var(--zk-grid-detail-padding);
+    padding-bottom: var(--zk-grid-detail-padding);
+}
+}
