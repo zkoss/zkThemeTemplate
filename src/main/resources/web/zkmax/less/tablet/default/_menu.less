@@ -16,8 +16,20 @@
 	min-width: 24px;
 }
 .z-menupopup .z-menuitem-icon {
-	font-size: 24px;
-	top: 10px;
+	// ZK-6043: in a Grid menupopup, the checkmark glyph was rendered at the
+	// same 24px font-size as its 24px-wide blue checkbox container, so it
+	// overflowed the box and the absolute `top: 10px` left it visually
+	// off-centre. Shrink the glyph and centre it inside the @menuImageSize
+	// box (24px on the tablet UI) so there's room for breathing space.
+	// top/left match the image box origin: content padding is 4px 12px and
+	// the image sits flush in that corner with min-size 24x24.
+	font-size: 16px;
+	width: 24px;
+	height: 24px;
+	line-height: 24px;
+	text-align: center;
+	top: 4px;
+	left: 12px;
 }
 
 .z-menu-icon {

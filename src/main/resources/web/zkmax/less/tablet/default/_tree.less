@@ -1,8 +1,13 @@
 .z-tree {
+	// ZK-6044: the toggle glyph is rendered at font-size 22px but the box
+	// was only 12x12 with a 12px line-height, so the triangle overflowed
+	// the box and the next-row text appeared to slide underneath it. Grow
+	// the icon/line box to match the font-size so the triangle fits and
+	// keep an 8px gap between the icon and the cell text.
 	&-icon,
 	&-line {
-		.size(12px, 12px);
-		line-height: 12px;
+		.size(22px, 22px);
+		line-height: 22px;
 	}
 	&-icon {
 		font-size: 22px;
@@ -10,7 +15,7 @@
 }
 
 .z-treecell-text {
-	margin-left: 4px;
+	margin-left: 8px;
 }
 
 .z-treecol-content, .z-treecell-content, .z-treefooter-content {
