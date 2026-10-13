@@ -159,5 +159,9 @@
     width: auto;
     background: var(--zk-color-primary-container);
     border-radius: var(--zk-shape-corner-extra-small);
+    /* WCAG 1.4.11: the fill alone is ~1.3:1 against the surface; a dashed primary
+       border brings the placeholder to >= 3:1. border-box keeps the 10px height. */
+    box-sizing: border-box;
+    border: 2px dashed var(--zk-color-primary);
 }
 }

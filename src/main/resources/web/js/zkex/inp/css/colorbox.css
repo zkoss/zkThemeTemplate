@@ -108,6 +108,13 @@
     padding: 8px;
 }
 
+/* WCAG 1.4.10 Reflow: the 340px palette / 310px picker exceed a 320px viewport. max-width beats
+   ZK's inline width; the popup scrolls sideways instead. Colorbox popup only, not .z-menu-popup. */
+.z-colorbox-popup {
+    max-width: calc(100% - var(--zk-spacing-4));
+    overflow-x: auto;
+}
+
 /* Closed state: force-hide the popup while it sits INSIDE .z-colorbox.
    ZK's outside-click/Escape dismiss path calls undoVParent() but does NOT reset
    the inline `display:block` (and position/z-index) that openPopup() set — so the

@@ -143,6 +143,11 @@
     overflow: hidden;
 }
 
+/* WCAG 1.4.10 Reflow: never wider than the viewport (the inline min-width follows the control). */
+.z-searchbox-popup {
+    max-width: calc(100% - var(--zk-spacing-4));
+}
+
 /* Hidden while attached (initial paint + after close()'s undoVParent). */
 .z-searchbox .z-searchbox-popup {
     display: none;

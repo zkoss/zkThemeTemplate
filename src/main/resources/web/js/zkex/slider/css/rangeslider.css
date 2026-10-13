@@ -41,6 +41,9 @@
        reads the same token) stay consistent. Each orientation adds a small
        mark-anchor correction on top of this gap via calc(). */
     --zk-rangeslider-label-gap: 18px;
+    /* Clear space between the knob and the tooltip that sits to its right on a
+       vertical slider; the hover bridge is exactly this wide. */
+    --zk-rangeslider-tooltip-gap: 6px;
 }
 
 /* ─── Outer container ───────────────────────────────────────────────── */
@@ -53,7 +56,10 @@
 }
 
 .z-rangeslider-horizontal { width: 300px; padding: 10px 0; }
-.z-rangeslider-vertical   { height: 300px; padding: 0 10px; display: inline-block; }
+.z-rangeslider-vertical   { height: 300px; padding: 0 32px 0 14px; display: inline-block; }
+/* Vertical box is 50px wide as in IceBlue: the 4px rail is 14px from the left (knob
+   6px from the left edge) and 24px of room is left of the knob's right edge for the
+   right-hand tooltip, so a slider at a container's right edge still shows part of it. */
 
 /* ─── Inner (sizing container) ──────────────────────────────────────── */
 /* The inner is just a positioning shell — no background. The visible rail is
@@ -89,6 +95,19 @@
 .z-sliderbuttons {
     position: absolute;
     inset: 0;
+}
+
+/* The container stretches over the whole rail, above the track, so it would be the target of
+   every press on the track and trackJump_ (which only accepts the track, a mark or the area)
+   would never move a handle. Let the pointer fall through it to the track; only its children
+   take the pointer. The tooltip keeps its own pointer-events rules. */
+.z-rangeslider .z-sliderbuttons {
+    pointer-events: none;
+}
+
+.z-rangeslider .z-sliderbuttons-button,
+.z-rangeslider .z-sliderbuttons-area {
+    pointer-events: auto;
 }
 
 /* Scoped under .z-rangeslider (not a bare .z-sliderbuttons-area selector):
@@ -237,19 +256,30 @@
     pointer-events: none;
     white-space: nowrap;
     z-index: var(--zk-index-slider-tooltip);
-    opacity: 0;
-    visibility: hidden;
+    /* display:none while hidden, as in IceBlue: a box that is merely invisible still
+       counts toward the scrollable overflow, so a tooltip beside a slider at the right
+       edge would widen the page without any hover. The display/opacity transition with
+       allow-discrete (and @starting-style below) keeps the fade-in where supported; other
+       browsers just show it without the animation. The resting opacity is 1 (only the
+       starting style is 0) so a tooltip that ZK shows with an inline `display:block`
+       (tooltipVisible, dragging) is fully visible; the price is no fade-out. */
+    display: none;
+    opacity: 1;
     transition:
         opacity var(--zk-motion-duration-standard) var(--zk-motion-easing-standard),
-        visibility 0s linear var(--zk-motion-duration-standard);
+        display var(--zk-motion-duration-standard) allow-discrete;
 }
 
 .z-sliderbuttons-button:hover .z-sliderbuttons-tooltip,
 .z-sliderbuttons-button:active .z-sliderbuttons-tooltip,
 .z-sliderbuttons-button:focus-visible .z-sliderbuttons-tooltip {
-    opacity: 1;
-    visibility: visible;
-    transition-delay: 0s;
+    display: block;
+}
+
+@starting-style {
+    .z-sliderbuttons-tooltip {
+        opacity: 0;
+    }
 }
 
 .z-rangeslider-horizontal .z-sliderbuttons-tooltip {
@@ -259,11 +289,57 @@
 }
 
 .z-rangeslider-vertical .z-sliderbuttons-tooltip {
-    /* Same clearance as horizontal `top: -36px`: keep tooltip near the thumb
-       on both axes for symmetric spacing. */
-    left: -40px;
+    /* To the right of the thumb, as in IceBlue: a vertical slider usually sits at the
+       left edge of its container, where a tooltip on its left would fall off the page.
+       Clears the thumb by --zk-rangeslider-tooltip-gap (the offset is from the thumb's
+       left edge, so thumb size + gap). */
+    left: calc(var(--zk-rangeslider-button-size) + var(--zk-rangeslider-tooltip-gap));
     top: 50%;
     transform: translateY(-50%);
+}
+
+/* Flipped by the widget (_placeTooltip) when the right side has no room: mirror the tooltip
+   to the left of the thumb with the same gap. */
+.z-rangeslider-vertical .z-sliderbuttons-tooltip-start {
+    left: auto;
+    right: calc(var(--zk-rangeslider-button-size) + var(--zk-rangeslider-tooltip-gap, 6px));
+}
+
+/* WCAG 1.4.13 Hoverable: the revealed tooltip must be reachable by the pointer.
+   The bridge is anchored to the tooltip's own top/left edge and spans exactly the
+   tooltip offset (-36px above, thumb size + gap to the right), i.e. it ends on the knob edge whatever the
+   tooltip size (digit count, line height), so it never covers the knob and never
+   falls short of it. It belongs to the tooltip (hover bubbles to the knob) and is
+   only active while the knob is hovered. */
+.z-rangeslider-horizontal .z-sliderbuttons-button:hover .z-sliderbuttons-tooltip,
+.z-rangeslider-vertical .z-sliderbuttons-button:hover .z-sliderbuttons-tooltip {
+    pointer-events: auto;
+}
+
+.z-rangeslider-horizontal .z-sliderbuttons-button:hover .z-sliderbuttons-tooltip::after,
+.z-rangeslider-vertical .z-sliderbuttons-button:hover .z-sliderbuttons-tooltip::after {
+    content: '';
+    position: absolute;
+}
+
+.z-rangeslider-horizontal .z-sliderbuttons-button:hover .z-sliderbuttons-tooltip::after {
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 36px;
+}
+
+.z-rangeslider-vertical .z-sliderbuttons-button:hover .z-sliderbuttons-tooltip::after {
+    top: 0;
+    bottom: 0;
+    right: 100%;
+    width: var(--zk-rangeslider-tooltip-gap);
+}
+
+/* Flipped tooltip: the bridge moves to its right side and still spans exactly the gap. */
+.z-rangeslider-vertical .z-sliderbuttons-button:hover .z-sliderbuttons-tooltip-start::after {
+    right: auto;
+    left: 100%;
 }
 
 /* ─── Disabled ──────────────────────────────────────────────────────── */

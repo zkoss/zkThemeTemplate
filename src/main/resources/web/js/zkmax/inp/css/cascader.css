@@ -96,6 +96,13 @@
     align-items: flex-start;
 }
 
+/* WCAG 1.4.10 Reflow: at 320px the two caves are wider than the viewport. Cap the popup
+   and let the caves scroll sideways inside it; y stays clipped (each cave scrolls itself). */
+.z-cascader-popup {
+    max-width: calc(100% - var(--zk-spacing-4));
+    overflow: auto hidden;
+}
+
 /* Closed-state hide: scoped so it only applies while popup is still a child of .z-cascader */
 .z-cascader .z-cascader-popup {
     display: none;
