@@ -8,7 +8,7 @@
      <a class="z-daterangebox-button" role="button" tabindex="0" aria-haspopup="dialog">   (omitted entirely when buttonVisible=false at initial render)
        <i class="z-icon-calendar">
      </a>
-     <div class="sr-only" role="status" aria-live="polite">   (appended by za11y only; hidden by the .sr-only utility)
+     <div class="sr-only" role="status" aria-live="polite" aria-atomic="true">   (appended by za11y only; hidden by the .sr-only utility)
    </div>
 
    <!-- Popup: body-detached (NOT a descendant of .z-daterangebox); created lazily on first open,
