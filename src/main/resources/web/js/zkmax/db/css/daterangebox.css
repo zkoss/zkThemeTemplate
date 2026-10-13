@@ -8,7 +8,7 @@
      <a class="z-daterangebox-button" role="button" tabindex="0" aria-haspopup="dialog">   (omitted entirely when buttonVisible=false at initial render)
        <i class="z-icon-calendar">
      </a>
-     <div class="z-daterangebox-status" role="status" aria-live="polite" aria-atomic="true">   (always present, visually hidden)
+     <div class="sr-only" role="status" aria-live="polite">   (appended by za11y only; hidden by the .sr-only utility)
    </div>
 
    <!-- Popup: body-detached (NOT a descendant of .z-daterangebox); created lazily on first open,
@@ -188,19 +188,6 @@
 
 .z-daterangebox-button:hover::before { opacity: var(--zk-state-hover-opacity); }
 .z-daterangebox-button:active::before { opacity: var(--zk-state-pressed-opacity); }
-
-/* ─── Status live region — always in the DOM (WCAG 4.1.3), visually hidden only ──────────── */
-.z-daterangebox-status {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
-}
 
 /* ═══════════════════════════════════════════════════════════════════════════════════════════
    Popup — the ONE elevated surface (canonical dropdown-popup recipe shared with
