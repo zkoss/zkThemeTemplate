@@ -266,7 +266,6 @@
 .z-navbar-horizontal > ul > li {
     display: inline-flex;
     align-items: center;
-    position: relative;      /* containing block for the dropdown below */
 }
 
 .z-navbar-horizontal .z-nav > ul {
@@ -277,15 +276,6 @@
     box-shadow: var(--zk-elevation-2);
     min-width: 180px;
     padding: var(--zk-spacing-1) 0;
-}
-
-/* Top-level dropdown opens below its trigger. Without `top`, the absolute list keeps its
-   static position, which the li's `align-items: center` centres over the trigger and so
-   covers it (it could not be clicked again to close). Nested lists stay in flow position.
-   `max-content` keeps the width the list had when its containing block was the whole navbar. */
-.z-navbar-horizontal > ul > .z-nav > ul {
-    top: 100%;
-    width: max-content;
 }
 
 /* Per-level indent of the horizontal dropdown, same 26px step as the vertical

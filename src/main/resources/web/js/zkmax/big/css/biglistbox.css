@@ -34,33 +34,6 @@
     border-spacing: 0;
 }
 
-/* ─── Panes ────────────────────────────────────────────────────────────── */
-/* With frozenCols, ZK renders the frozen pane, a shim and the scrollable pane as siblings
-   in each -head-outer / -body-outer (the mold ends them with .z-clear). They sit side by
-   side only when floated, as in IceBlue; the scrollable pane's width is set inline by
-   Biglistbox.onSize(). */
-.z-biglistbox-head-outer,
-.z-biglistbox-body-outer {
-    overflow: hidden;
-}
-.z-biglistbox-head,
-.z-biglistbox-body {
-    float: left;
-    width: 100%;
-    overflow: hidden;
-}
-.z-biglistbox-head-shim,
-.z-biglistbox-body-shim {
-    float: left;
-    overflow: hidden;
-}
-/* onSize() subtracts this bar's offsetWidth from the scrollable pane width; unstyled it
-   is a full-width block, the subtraction goes negative and the pane wraps below the
-   frozen one. It draws nothing, so taking it out of flow changes no pixel. */
-.z-biglistbox-verticalbar-frozen {
-    position: absolute;
-}
-
 /* ─── Header ───────────────────────────────────────────────────────────── */
 .z-biglistbox-header {
     padding: var(--zk-spacing-2) var(--zk-spacing-4);

@@ -79,12 +79,6 @@
         ~ td:not(.z-cell-hide-stacking) {
     border-top: 1px solid var(--zk-color-outline-variant);
 }
-/* The <td> already pads the card entry; the cell's inner content div must not
-   add a second layer, so the value lines up with the column label. */
-.z-grid--stacking .z-grid-body > table > tbody:not(.z-grid-emptybody) > tr > td > .z-row-content,
-.z-grid--stacking .z-grid-body > table > tbody:not(.z-grid-emptybody) > tr.z-groupfoot > td > .z-groupfoot-content {
-    padding: 0;
-}
 /* Column label, injected from `data-label`. Empty / missing → no ::before. */
 .z-grid--stacking .z-grid-body > table > tbody:not(.z-grid-emptybody) > tr > td[data-label]:not([data-label=""])::before {
     content: attr(data-label);
@@ -108,13 +102,9 @@
 .z-grid--stacking .z-grid-body > table > tbody:not(.z-grid-emptybody) > tr.z-group > td::before {
     content: none;
 }
-/* Group / Groupfoot cards keep the table-mode tints (a `tr` card background
-   would otherwise paint both white). */
-.z-grid--stacking .z-grid-body > table > tbody:not(.z-grid-emptybody) > tr.z-group {
-    background: var(--zk-color-surface-container);
-}
+/* Groupfoot card styling. */
 .z-grid--stacking .z-grid-body > table > tbody:not(.z-grid-emptybody) > tr.z-groupfoot {
-    background: var(--zk-color-surface-container-low);
+    background: var(--zk-color-surface-container-lowest);
 }
 /* Odd-row stripe in cards. */
 .z-grid--stacking .z-grid-body > table > tbody:not(.z-grid-emptybody) > tr.z-grid-odd {
@@ -155,10 +145,6 @@
     display: block;
     padding: var(--zk-grid-cell-padding);
     border-bottom: none;
-}
-/* Same single padding layer as the body cards: the <td> pads, its content div does not. */
-.z-grid--stacking > .z-grid-footer > table > tbody:not(.z-grid-emptybody) > tr > td > .z-footer-content {
-    padding: 0;
 }
 /* Same separator-as-top-border trick as the body section. */
 .z-grid--stacking > .z-grid-footer > table > tbody:not(.z-grid-emptybody) > tr
