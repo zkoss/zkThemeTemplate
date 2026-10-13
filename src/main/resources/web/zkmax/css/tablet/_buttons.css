@@ -4,7 +4,9 @@
  * Marble desktop: .z-button 36px, icon-button 40px, toolbarbutton 36px.
  * ========================================================================== */
 
-.z-button {
+.z-button,
+.z-confirmpopup-ok,
+.z-confirmpopup-cancel {
     min-height: var(--zk-touch-target-min);
     padding: 6px var(--zk-spacing-5);
 }
