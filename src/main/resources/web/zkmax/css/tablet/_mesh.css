@@ -34,6 +34,25 @@
     font-size: var(--zk-touch-icon-size);
 }
 
+/* The 44px menu button (right: spacing-1) is wider than the 24px the zul header rules reserve, so
+   reserve its box and sit the sort icon just left of it. Same shape as the zul rules in grid.css and
+   listbox.css (button; sort + button; sort icon offset) with the touch target in place of 24px. This
+   sheet is unlayered, so each rule beats every layered zul padding-right rule whatever its specificity:
+   a select-all Listbox header (`:has(.z-listheader-checkable)`) is covered by the same two rules, and the
+   sort + button rule must follow the button rule to win on source order. */
+.z-column:has(.z-column-button),
+.z-listheader:has(.z-listheader-button) {
+    padding-right: calc(var(--zk-spacing-1) + var(--zk-touch-target-min) + var(--zk-spacing-2));
+}
+.z-column-sort:has(.z-column-button),
+.z-listheader-sort:has(.z-listheader-button) {
+    padding-right: calc(var(--zk-spacing-1) * 3 + var(--zk-touch-target-min) + 12px);
+}
+.z-column:has(.z-column-button) .z-column-sorticon,
+.z-listheader:has(.z-listheader-button) .z-listheader-sorticon {
+    right: calc(var(--zk-spacing-1) * 2 + var(--zk-touch-target-min));
+}
+
 /* Row selection checkboxes/radios (listbox / grid / tree) → 24px touch box */
 .z-listitem-checkable,
 .z-listgroup-checkable,
