@@ -62,6 +62,22 @@
     font-size: var(--zk-touch-icon-size);
 }
 
+/* The 24px box and its 24px glyph line stretch a Listbox row by 2px and a Tree row by 4px over the Grid row
+   (follow-up 28). Negative block margins let the box overhang the 20px line of the label instead of
+   growing it; the extra 1px on the top margin moves the box up so that the 16px glyph, which hangs from the
+   24px baseline, is centred on the label. `width: auto` keeps the 40px the inline Listbox span has always
+   rendered, so the label does not move 16px to the left. */
+.z-listitem-checkable,
+.z-treerow-checkable {
+    display: inline-block;
+    margin-block: calc((var(--zk-typescale-body-medium-line-height) - var(--zk-touch-icon-size)) / 2 - 1px)
+        calc((var(--zk-typescale-body-medium-line-height) - var(--zk-touch-icon-size)) / 2 + 1px);
+}
+.z-listitem-checkable {
+    width: auto;
+    vertical-align: top;
+}
+
 /* Expand/collapse toggles: tree rows, grid/listbox groups, grid detail.
    Glyph only — keeping the box size preserves tree indentation geometry. */
 .z-tree-icon,
