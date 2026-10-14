@@ -62,25 +62,17 @@
     font-size: var(--zk-touch-icon-size);
 }
 
-/* The 24px box and its 24px glyph line stretch a Listbox row by 2px and a Tree row by 4px over the Grid row
-   (follow-up 28). Negative block margins let the box overhang the 20px line of the label instead of
-   growing it; the extra 1px on the top margin moves the box up so that the 16px glyph, which hangs from the
-   24px baseline, is centred on the label. `width: auto` keeps the 40px the inline Listbox span has always
-   rendered, so the label does not move 16px to the left. */
+/* The 24px box would stretch a checkmark row that is laid out on the line of its label by 4px at the
+   desktop line height (follow-up 28). The block margins, computed from the tokens, make its margin box
+   as tall as that line, so the flex row keeps the Grid row height and the box stays centred on the
+   label or on a control in the cell. `width: auto` keeps the 40px the Listbox span has always rendered,
+   so the label does not move 16px to the left. */
 .z-listitem-checkable,
 .z-treerow-checkable {
-    display: inline-block;
-    margin-block: calc((var(--zk-typescale-body-medium-line-height) - var(--zk-touch-icon-size)) / 2 - 1px)
-        calc((var(--zk-typescale-body-medium-line-height) - var(--zk-touch-icon-size)) / 2 + 1px);
+    margin-block: calc((var(--zk-typescale-body-medium-line-height) - var(--zk-touch-icon-size)) / 2);
 }
-/* The Listbox box stays `middle`, so that a row whose first cell holds a taller control (a textbox or a
-   button) keeps the box on the control, and the margins are the 24px-box version of the rule in zul's
-   listbox.css: the margin box is ~8px, so it never grows the line box, and the 1.7px of unevenness puts
-   the 16px glyph within 1px of the label centre and of the control centre. */
 .z-listitem-checkable {
     width: auto;
-    vertical-align: middle;
-    margin-block: -6.7px -3.3px;
 }
 
 /* Expand/collapse toggles: tree rows, grid/listbox groups, grid detail.
