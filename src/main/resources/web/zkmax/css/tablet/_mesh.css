@@ -73,9 +73,14 @@
     margin-block: calc((var(--zk-typescale-body-medium-line-height) - var(--zk-touch-icon-size)) / 2 - 1px)
         calc((var(--zk-typescale-body-medium-line-height) - var(--zk-touch-icon-size)) / 2 + 1px);
 }
+/* The Listbox box stays `middle`, so that a row whose first cell holds a taller control (a textbox or a
+   button) keeps the box on the control, and the margins are the 24px-box version of the rule in zul's
+   listbox.css: the margin box is ~8px, so it never grows the line box, and the 1.7px of unevenness puts
+   the 16px glyph within 1px of the label centre and of the control centre. */
 .z-listitem-checkable {
     width: auto;
-    vertical-align: top;
+    vertical-align: middle;
+    margin-block: -6.7px -3.3px;
 }
 
 /* Expand/collapse toggles: tree rows, grid/listbox groups, grid detail.
