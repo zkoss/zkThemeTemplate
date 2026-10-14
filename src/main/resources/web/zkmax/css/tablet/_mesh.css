@@ -30,12 +30,18 @@
 }
 
 /* Row selection checkboxes/radios (listbox / grid / tree) → 24px touch box */
-.z-listheader-checkable,
 .z-listitem-checkable,
 .z-listgroup-checkable,
 .z-treerow-checkable {
     width: var(--zk-touch-icon-size);
     height: var(--zk-touch-icon-size);
+    font-size: var(--zk-touch-icon-size);
+}
+
+/* The listbox select-all header span is laid out by zul's listbox.css, which caps it as an
+   inline-block. A width/height here would be picked up by that inline-block and break its label
+   and height, so it only gets the glyph size. */
+.z-listheader-checkable {
     font-size: var(--zk-touch-icon-size);
 }
 
