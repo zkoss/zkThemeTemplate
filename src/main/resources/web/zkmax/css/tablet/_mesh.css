@@ -38,13 +38,6 @@
     font-size: var(--zk-touch-icon-size);
 }
 
-/* The listbox select-all header span is laid out by zul's listbox.css, which caps it as an
-   inline-block. A width/height here would be picked up by that inline-block and break its label
-   and height, so it only gets the glyph size. */
-.z-listheader-checkable {
-    font-size: var(--zk-touch-icon-size);
-}
-
 /* Expand/collapse toggles: tree rows, grid/listbox groups, grid detail.
    Glyph only — keeping the box size preserves tree indentation geometry. */
 .z-tree-icon,
