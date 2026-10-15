@@ -49,7 +49,7 @@
 .z-multislider-vertical .z-multislider-inner {
     width: var(--zk-rangeslider-inner-size, 4px);
     height: 100%;
-    margin: 12px 30px 12px 12px;
+    margin: 0 30px 0 12px;
 }
 
 /* ── Track rail ───────────────────────────────────────── */
@@ -68,13 +68,20 @@
 /* ── Horizontal orientation ───────────────────────────── */
 .z-multislider-horizontal {
     min-width: 120px;
+    /* Encloses what hangs off the 4px rail, measured from its top edge: the tooltip (top
+       44px; ZK shows it with an inline display for `tooltipVisible`, so CSS cannot tell
+       it from the hover case), the mark label below (label-gap + 20px, less the rail's
+       4px) and the tooltip of a three-digit value at the sides (18px, centred on a thumb
+       at the rail's end). Same box as rangeslider. */
+    padding: 44px 18px calc(var(--zk-rangeslider-label-gap, 18px) + 20px);
 }
 
 /* ── Vertical orientation ─────────────────────────────── */
 .z-multislider-vertical {
     display: inline-block;
     width: auto;
-    padding: 0 var(--zk-spacing-3);
+    /* 14px above and below: the 28px-high tooltip is centred on a thumb at the rail's end. */
+    padding: 14px var(--zk-spacing-3);
 }
 
 /* ── Range container (.z-sliderbuttons) ───────────────── */
