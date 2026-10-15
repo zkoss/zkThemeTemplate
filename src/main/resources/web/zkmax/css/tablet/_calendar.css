@@ -8,8 +8,9 @@
     max-width: 360px;
 }
 
-/* Unlayered, so zul calendar.css's layered `.z-calendar[style*="width"]` cannot lift the cap; repeat it here. */
-.z-calendar[style*="width"] {
+/* Unlayered, so zul calendar.css's layered inline-width rule cannot lift the cap; repeat it here
+   (anchored so `min-width` and `border-width` do not match). */
+.z-calendar:is([style^="width"], [style*=";width"], [style*="; width"]) {
     max-width: none;
 }
 
