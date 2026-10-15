@@ -27,11 +27,31 @@
     box-shadow: var(--zk-elevation-2);
 }
 
-/* Text selection overlay — structural opacity must not be removed */
+/* Text selection overlay — structural opacity must not be removed.
+ * The spans are positioned and scaled by pdf.js (inline left/top/font-size and,
+ * for scaled text, a transform); `transform-origin: 0 0`, `white-space: pre` and `line-height: 1`
+ * keep that geometry aligned with the canvas glyphs, and `color: transparent`
+ * leaves only the selection highlight visible over the canvas. */
 .z-pdfviewer-text-layer {
     position: absolute;
     inset: 0;
+    overflow: hidden;
     opacity: 0.2;
+    line-height: 1;
+}
+
+/* The layer is drawn at opacity 0.2, where the browser's default selection colour is
+ * barely visible over the canvas; primary reads as a clear tint at that opacity. */
+.z-pdfviewer-text-layer ::selection {
+    background-color: var(--zk-color-primary);
+}
+
+.z-pdfviewer-text-layer > span {
+    position: absolute;
+    color: transparent;
+    white-space: pre;
+    cursor: text;
+    transform-origin: 0 0;
 }
 
 /* PDF link annotation layer — required for clickable PDF links */
