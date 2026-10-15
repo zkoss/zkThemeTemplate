@@ -8,6 +8,11 @@
     max-width: 360px;
 }
 
+/* Unlayered, so zul calendar.css's layered `.z-calendar[style*="width"]` cannot lift the cap; repeat it here. */
+.z-calendar[style*="width"] {
+    max-width: none;
+}
+
 .z-calendar-cell {
     height: var(--zk-touch-target-comfortable);
 }
