@@ -75,17 +75,24 @@
 .z-listitem-checkable {
     width: auto;
 }
+/* The group checkbox (groupSelect) likewise sits at the x of the row checkbox, not centred in a 24px span
+   (follow-up 41). */
+.z-listgroup-checkable {
+    width: auto;
+}
 
 /* Expand/collapse toggles: tree rows, grid/listbox groups, grid detail.
-   Glyph only — keeping the box size preserves tree indentation geometry. */
+   Glyph only — keeping the box size preserves tree indentation geometry.
+   The group checkbox (groupSelect) also carries `z-listgroup-icon`, on its `z-icon-check` icon; that icon
+   keeps the 16px box of a row checkbox, centred in the 24px-high `.z-listgroup-checkable` span (follow-up 41). */
 .z-tree-icon,
 .z-group-icon,
-.z-listgroup-icon,
+.z-listgroup-icon:not(.z-icon-check),
 .z-detail-icon {
     font-size: var(--zk-touch-icon-size);
 }
 .z-group-icon,
-.z-listgroup-icon,
+.z-listgroup-icon:not(.z-icon-check),
 .z-detail {
     width: var(--zk-touch-icon-size);
     height: var(--zk-touch-icon-size);
