@@ -8,52 +8,52 @@
  *     </div>
  *   </div>
  *
- * Magnification is JS-driven (zul.menu.Fisheye sets inline width/height on mousemove).
- * CSS transform is not used — transitions apply to width/height via inline style changes.
+ * Layout is JS-driven (zkex.menu.Fisheyebar sets inline left/top/width/height on every
+ * mousemove and positions the label from the item's size), so the item, the image and
+ * the label are `position: absolute` inside the relative bar and carry no flex layout,
+ * padding, gap, margin or transition: any of those would offset or lag behind the JS
+ * geometry.
  */
 
 /* ─── Container ───────────────────────────────────────────────────────────── */
 @layer zk-components {
 .z-fisheyebar {
     position: relative;
-    display: flex;
-    flex-direction: row;
-    align-items: flex-end;
     background-color: transparent;
-    padding: var(--zk-spacing-2) var(--zk-spacing-4);
-    gap: var(--zk-spacing-2);
 }
 
 /* ─── Individual item ─────────────────────────────────────────────────────── */
 .z-fisheye {
     position: absolute;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-end;
+    z-index: 2;
     cursor: pointer;
-    transition: width var(--zk-motion-duration-standard) var(--zk-motion-easing-standard),
-                height var(--zk-motion-duration-standard) var(--zk-motion-easing-standard);
 }
 
 /* ─── Image / icon ────────────────────────────────────────────────────────── */
 .z-fisheye-image {
-    display: block;
+    position: absolute;
     width: 100%;
     height: 100%;
     object-fit: contain;
     border-radius: var(--zk-fisheye-radius);
-    transition: inherit;
 }
 
 /* ─── Label ───────────────────────────────────────────────────────────────── */
+/* Tooltip chip, same look as the slider drag tooltip (.z-slider-popup). The widget
+ * shows it with an inline display and places it with inline left/top after reading
+ * its margin and offset size, so it needs no margin of its own. */
 .z-fisheye-text {
-    font-size: 13px;
-    font-family: var(--zk-typescale-font-family);
+    position: absolute;
+    display: none;
+    padding: 4px 8px;
+    background-color: var(--zk-color-inverse-surface);
     color: var(--zk-fisheye-fg);
+    font-family: var(--zk-typescale-font-family);
+    font-size: var(--zk-typescale-label-small-size);
+    line-height: 1.2;
     text-align: center;
     white-space: nowrap;
-    margin-top: var(--zk-spacing-1);
-    line-height: 1.2;
+    border-radius: var(--zk-shape-corner-extra-small);
+    box-shadow: var(--zk-elevation-1);
 }
 }
