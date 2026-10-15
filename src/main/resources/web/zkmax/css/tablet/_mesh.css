@@ -18,8 +18,9 @@
     --zk-tree-cell-padding: var(--zk-spacing-5);
 }
 
-/* Guarantee a touch-height row regardless of content */
-.z-listcell-content,
+/* Guarantee a touch-height row regardless of content. A group row is no data row: it pads once, on its td, and
+   stays as tall as a Grid group row, so the content of a Listbox group gets no floor (follow-up 40). */
+.z-listcell:not(.z-listgroup-inner) > .z-listcell-content,
 .z-row > .z-cell,
 .z-treecell-content {
     min-height: var(--zk-touch-row-min-height);
