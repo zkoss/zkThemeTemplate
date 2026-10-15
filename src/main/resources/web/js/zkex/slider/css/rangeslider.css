@@ -55,10 +55,30 @@
     box-sizing: border-box;
 }
 
-.z-rangeslider-horizontal { width: 300px; padding: 10px 0; }
-.z-rangeslider-vertical   { height: 300px; padding: 0 32px 0 14px; display: inline-block; }
-/* Vertical box is 50px wide as in IceBlue: the 4px rail is 14px from the left (knob
-   6px from the left edge) and 24px of room is left of the knob's right edge for the
+.z-rangeslider-horizontal {
+    width: 300px;
+    /* The box encloses what hangs off the 4px rail, measured from the rail's top edge:
+       - top 44px: the tooltip, which ZK shows permanently for `tooltipVisible` with an
+         inline display and no class, so CSS cannot tell it apart from the hover case;
+         its top edge is 36px above the thumb's top, itself 8px above the rail
+         (thumb 20px, rail 4px), see `.z-sliderbuttons-tooltip` below;
+       - bottom: the mark label, label-gap + 4px below the rail and 20px high, less the
+         rail's own 4px;
+       - sides 18px: the tooltip of a three-digit value, centred on a thumb at the
+         rail's end, overhangs it by 17px (the thumb itself by 10px, the last mark
+         label by about 9px). */
+    padding: 44px 18px calc(var(--zk-rangeslider-label-gap) + 20px);
+}
+.z-rangeslider-vertical {
+    height: 300px;
+    /* 14px above and below: the tooltip is 28px high and centred on a thumb at the
+       rail's end (the thumb and the end mark labels overhang it by 10px). Left 14px /
+       right 36px: the 4px rail is 14px from the left edge (knob 6px from it), the mark
+       labels end at 54px. */
+    padding: 14px 36px 14px 14px;
+    display: inline-block;
+}
+/* Vertical box is 54px wide: 28px of room is left of the knob's right edge for the
    right-hand tooltip, so a slider at a container's right edge still shows part of it. */
 
 /* ─── Inner (sizing container) ──────────────────────────────────────── */
