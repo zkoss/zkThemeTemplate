@@ -80,6 +80,12 @@
 .z-listgroup-checkable {
     width: auto;
 }
+/* The 24px Tree row span centred its 16px icon, 4px right of the header box in a left-aligned column. The icon
+   goes to the start of the span, which keeps the 24px that the label follows (follow-up 54); a centred cell keeps
+   the centred icon, as the header box of a centred column is centred too. */
+.z-treecell:not([style*="text-align:center"], [style*="text-align: center"]) > .z-treecell-content > .z-treerow-checkable {
+    justify-content: flex-start;
+}
 
 /* Expand/collapse toggles: tree rows, grid/listbox groups, grid detail.
    Glyph only — keeping the box size preserves tree indentation geometry.
