@@ -84,7 +84,8 @@
 .z-chosenbox-input {
     flex: 1;
     min-width: 60px;
-    height: 28px;
+    /* 28px, but never taller than what leaves the box at --zk-control-height (less 4+4 padding and 2px border) */
+    height: min(28px, calc(var(--zk-control-height) - 10px));
     border: none;
     background: transparent;
     outline: none;

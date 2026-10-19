@@ -60,7 +60,7 @@
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-    line-height: 38px; /* match trigger inner height */
+    line-height: calc(var(--zk-control-height) - 2px); /* trigger inner height: min-height less the 2px border */
 }
 
 /* Hidden by default — ZK clears the inline display when a selection exists and
