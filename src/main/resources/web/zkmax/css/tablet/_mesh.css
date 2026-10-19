@@ -7,11 +7,17 @@
  * ========================================================================== */
 
 /* Roomier cell padding → taller rows */
+/* The group rows read their own tokens, which compact density lowers; a tablet keeps 8px 16px in every density, so
+   they are set here with the cell padding that would otherwise shadow compact (follow-up 46 F1). */
 .z-listbox {
     --zk-listbox-cell-padding: var(--zk-spacing-5);
+    --zk-group-padding-y: var(--zk-spacing-2);
+    --zk-group-padding-x: var(--zk-spacing-4);
 }
 .z-grid {
     --zk-grid-cell-padding: var(--zk-spacing-5);
+    --zk-group-padding-y: var(--zk-spacing-2);
+    --zk-group-padding-x: var(--zk-spacing-4);
 }
 .z-tree {
     --zk-tree-header-padding: var(--zk-spacing-5);
