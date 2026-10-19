@@ -194,6 +194,12 @@
     display: block;
 }
 
+/* Nav.open() adds .z-nav-open to a collapsed topmost nav but deliberately skips showing its
+   submenu (the rail has no room); the stylesheet must keep it hidden. */
+.z-navbar-collapsed > ul > .z-nav > ul {
+    display: none;
+}
+
 /* Indent submenu items */
 .z-nav > ul .z-navitem-content {
     padding-left: calc(var(--zk-spacing-4) + 26px);

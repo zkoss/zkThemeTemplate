@@ -199,12 +199,23 @@
     display: none;
 }
 
-/* ─── Misc hidden helpers ─────────────────────────────────────────────── */
-.z-chosenbox-hide {
-    display: none;
+/* ─── Inplace label ───────────────────────────────────────────────────── */
+/* Shown while the chosenbox is inplace and idle: the widget toggles only .z-chosenbox-hide
+   on it, so it must be visible by default. It fills the root and keeps a padding box so an
+   empty selection still leaves something to click. Declared before .z-chosenbox-hide, which
+   must win. */
+.z-chosenbox-inplace {
+    display: inline-block;
+    box-sizing: border-box;
+    width: 100%;
+    padding: var(--zk-spacing-1);
+    font-family: var(--zk-typescale-font-family);
+    font-size: var(--zk-typescale-body-medium-size);
+    font-style: normal;
 }
 
-.z-chosenbox-inplace {
+/* ─── Misc hidden helpers ─────────────────────────────────────────────── */
+.z-chosenbox-hide {
     display: none;
 }
 }

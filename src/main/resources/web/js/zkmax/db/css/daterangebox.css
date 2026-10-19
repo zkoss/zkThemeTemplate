@@ -140,17 +140,16 @@
     border-color: var(--zk-color-outline-variant);
 }
 
-/* ─── Readonly — NARROWER than disabled: the popup refuses to open while readonly, so only
-   the now-nonfunctional trigger icon is dimmed. Inputs stay full-opacity/transparent/legible
-   (a "read-only display", not a disabled one). ──────────────────────────────────────────── */
+/* ─── Readonly — NARROWER than disabled: ZK-6131 keeps the popup and the trigger button working
+   while readonly, so the button stays full-opacity and clickable. Inputs stay
+   full-opacity/transparent/legible (a "read-only display", not a disabled one). ─────────── */
 .z-daterangebox.z-daterangebox-readonly .z-daterangebox-input {
     cursor: default;
     background-color: transparent;
 }
 
 .z-daterangebox.z-daterangebox-readonly .z-daterangebox-button {
-    opacity: var(--zk-state-disabled-opacity);
-    pointer-events: none;
+    cursor: pointer;
 }
 
 /* ─── Trigger button ──────────────────────────────────────────────────────────────────────── */

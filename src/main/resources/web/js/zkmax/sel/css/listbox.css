@@ -1,0 +1,232 @@
+/* MD3 Listbox — responsive stacking mode (ZK-6110, zkmax/EE) */
+/* Port of the zkmax stacking block (zkmax: js/zkmax/sel/less/listbox.less, removed with the
+   LESS pipeline in ZK-6112) with Marble --zk-* token substitution; it mirrors the Grid
+   stacking CSS (grid/css/grid.css) so the two look the same.
+
+   PURE CSS TRANSFORMATION. listbox-responsive.ts only toggles `.z-listbox--stacking`, sets
+   `--zk-resp-cols`, stamps each <td> with `data-label` and marks hidden cells
+   `.z-cell-hide-stacking` / `.z-cell-cm-only` / `.z-cell-cm-lead`. Every selector is scoped
+   with the child combinator so a nested non-stacking listbox keeps its table rendering. */
+@layer zk-components {
+.z-listbox--stacking {
+    overflow: hidden auto;
+}
+
+/* Hide table-mode chrome that has no card-layout meaning. `.z-frozen` uses a descendant
+   scope because the frozen sub-node lives at a varying depth. */
+.z-listbox--stacking > .z-listbox-header,
+.z-listbox--stacking .z-frozen {
+    display: none;
+}
+
+/* Reset the table-mode pixel widths so body and footer stay inside the card layout. */
+.z-listbox--stacking > .z-listbox-body,
+.z-listbox--stacking > .z-listbox-footer {
+    overflow-x: hidden;
+    max-width: 100%;
+}
+.z-listbox--stacking > .z-listbox-body > table,
+.z-listbox--stacking > .z-listbox-footer > table {
+    width: 100% !important;
+    min-width: 0;
+    table-layout: auto;
+}
+
+/* ─── Body: <tbody> becomes a CSS Grid of N cards per row (--zk-resp-cols) ─── */
+.z-listbox--stacking > .z-listbox-body > table {
+    display: block;
+}
+.z-listbox--stacking > .z-listbox-body > table > tbody:not(.z-listbox-emptybody) {
+    display: grid;
+    grid-template-columns: repeat(var(--zk-resp-cols, 1), 1fr);
+    gap: var(--zk-spacing-2);
+    padding: var(--zk-spacing-2);
+    box-sizing: border-box;
+}
+/* Each <tr> (listitem) becomes a card. */
+.z-listbox--stacking > .z-listbox-body > table > tbody:not(.z-listbox-emptybody) > tr {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--zk-color-outline-variant);
+    border-radius: var(--zk-shape-card);
+    background: var(--zk-color-surface);
+    overflow: hidden;
+}
+/* Each <td> (listcell) becomes a key/value entry. */
+.z-listbox--stacking > .z-listbox-body > table > tbody:not(.z-listbox-emptybody) > tr > td {
+    display: block;
+    padding: var(--zk-listbox-cell-padding);
+    border-top: none;
+    border-bottom: none;
+}
+/* Separator: a TOP border on every visible cell that follows another visible cell, so a
+   hidden cell never strands a border. */
+.z-listbox--stacking > .z-listbox-body > table > tbody:not(.z-listbox-emptybody) > tr
+        > td:not(.z-cell-hide-stacking)
+        ~ td:not(.z-cell-hide-stacking) {
+    border-top: 1px solid var(--zk-color-outline-variant);
+}
+/* The <td> already pads the card entry; the inner content div must not add a second layer,
+   or the value sits indented right of and below its own label. */
+.z-listbox--stacking > .z-listbox-body > table > tbody:not(.z-listbox-emptybody) > tr.z-listitem > td > .z-listcell-content {
+    padding: 0;
+}
+/* Column label, injected from `data-label`. Empty / missing → no ::before. */
+.z-listbox--stacking > .z-listbox-body > table > tbody:not(.z-listbox-emptybody) > tr > td[data-label]:not([data-label=""])::before {
+    content: attr(data-label);
+    display: block;
+    margin-bottom: 2px;
+    font-size: var(--zk-typescale-body-small-size);
+    font-weight: 600;
+    color: var(--zk-color-on-surface-variant);
+}
+/* Per-column hide: <listheader responsiveVisible="false">. */
+.z-listbox--stacking > .z-listbox-body > table > tbody:not(.z-listbox-emptybody) > tr > td.z-cell-hide-stacking,
+.z-listbox--stacking > .z-listbox-body > table > tbody:not(.z-listbox-emptybody) > tr.z-listgroupfoot > td.z-cell-hide-stacking {
+    display: none;
+}
+
+/* A responsive-hidden column that hosts the selection checkbox is kept (z-cell-cm-only) so
+   the checkbox survives, but its data must be suppressed. The value is a bare text node, so
+   collapse the content with font-size:0 and restore the checkbox's own icon size. */
+.z-listbox--stacking > .z-listbox-body > table > tbody:not(.z-listbox-emptybody) > tr > td.z-cell-cm-only > .z-listcell-content {
+    font-size: 0;
+}
+.z-listbox--stacking > .z-listbox-body > table > tbody:not(.z-listbox-emptybody) > tr > td.z-cell-cm-only > .z-listcell-content > .z-listitem-checkable {
+    font-size: var(--zk-typescale-body-medium-size);
+}
+.z-listbox--stacking > .z-listbox-body > table > tbody:not(.z-listbox-emptybody) > tr > td.z-cell-cm-only > .z-listcell-content > :not(.z-listitem-checkable) {
+    display: none;
+}
+/* When the checkbox column is responsive-hidden, lay the card out as a
+   [checkbox gutter | content] grid so the fields indent beside the checkbox. Only cards that
+   keep a checkbox cell (:has) switch to grid. Shared gutter geometry (must match the
+   z-cell-cm-lead card below): 8px checkbox inset + 28px gutter column → content at 36px. */
+.z-listbox--stacking > .z-listbox-body > table > tbody:not(.z-listbox-emptybody) > tr.z-listitem:has(> td.z-cell-cm-only) {
+    display: grid;
+    grid-template-columns: 28px 1fr;
+}
+/* The gutter cell spans every field row and stretches to fill column 1, otherwise hover and
+   focus paint per cell and the empty strip shows the card background. The row grid has no
+   explicit rows, so `grid-row-end: -1` would resolve to line 1; over-span instead (the
+   unused implicit rows are zero-height). */
+.z-listbox--stacking > .z-listbox-body > table > tbody:not(.z-listbox-emptybody) > tr.z-listitem:has(> td.z-cell-cm-only) > td.z-cell-cm-only {
+    grid-column: 1;
+    grid-row: 1 / span 99;
+    align-self: stretch;
+    padding-left: var(--zk-spacing-2);
+    padding-right: 0;
+    padding-top: var(--zk-spacing-3);
+}
+.z-listbox--stacking > .z-listbox-body > table > tbody:not(.z-listbox-emptybody) > tr.z-listitem:has(> td.z-cell-cm-only) > td:not(.z-cell-cm-only) {
+    grid-column: 2;
+    padding-left: var(--zk-spacing-2);
+}
+/* No divider between the checkbox gutter and the first shown field; restore it from the
+   second shown cell on. */
+.z-listbox--stacking > .z-listbox-body > table > tbody:not(.z-listbox-emptybody) > tr.z-listitem
+        > td.z-cell-cm-only ~ td:not(.z-cell-hide-stacking) {
+    border-top: none;
+}
+.z-listbox--stacking > .z-listbox-body > table > tbody:not(.z-listbox-emptybody) > tr.z-listitem
+        > td.z-cell-cm-only ~ td:not(.z-cell-hide-stacking)
+        ~ td:not(.z-cell-hide-stacking) {
+    border-top: 1px solid var(--zk-color-outline-variant);
+}
+/* Visible checkbox column: the checkmark rides inside the first visible cell (z-cell-cm-lead).
+   Pad that cell past the gutter and anchor the checkbox at the same (8px, 12px) origin as the
+   cm-only gutter. The td (not the content box) is the containing block, so the content's
+   overflow:hidden cannot clip it. The checkmark markup emits a leading `&nbsp;` before the
+   value; cancel it only where it is emitted (z-cell-cm-sep). */
+.z-listbox--stacking > .z-listbox-body > table > tbody:not(.z-listbox-emptybody) > tr.z-listitem:has(> td.z-cell-cm-lead) > td.z-cell-cm-lead {
+    position: relative;
+    padding-left: calc(var(--zk-spacing-2) + 28px);
+}
+.z-listbox--stacking > .z-listbox-body > table > tbody:not(.z-listbox-emptybody) > tr.z-listitem:has(> td.z-cell-cm-lead) > td.z-cell-cm-lead.z-cell-cm-sep > .z-listcell-content {
+    text-indent: -0.35em;
+}
+.z-listbox--stacking > .z-listbox-body > table > tbody:not(.z-listbox-emptybody) > tr.z-listitem:has(> td.z-cell-cm-lead) > td.z-cell-cm-lead > .z-listcell-content > .z-listitem-checkable {
+    position: absolute;
+    left: var(--zk-spacing-2);
+    top: var(--zk-spacing-3);
+    text-indent: 0;
+}
+/* The card's other cells indent so label and value line up with the checkbox cell's content. */
+.z-listbox--stacking > .z-listbox-body > table > tbody:not(.z-listbox-emptybody) > tr.z-listitem:has(> td.z-cell-cm-lead) > td.z-listcell:not(.z-cell-cm-lead) {
+    padding-left: calc(var(--zk-spacing-2) + 28px);
+}
+/* Group / Groupfoot span all columns of the cards-per-row grid. */
+.z-listbox--stacking > .z-listbox-body > table > tbody:not(.z-listbox-emptybody) > tr.z-listgroup,
+.z-listbox--stacking > .z-listbox-body > table > tbody:not(.z-listbox-emptybody) > tr.z-listgroupfoot {
+    grid-column: 1 / -1;
+}
+/* The group header carries its own label — no per-cell data-label. */
+.z-listbox--stacking > .z-listbox-body > table > tbody:not(.z-listbox-emptybody) > tr.z-listgroup > td::before {
+    content: none;
+}
+/* Keep the table-mode tints (a `tr` card background would otherwise paint all white). */
+.z-listbox--stacking > .z-listbox-body > table > tbody:not(.z-listbox-emptybody) > tr.z-listgroupfoot {
+    background: var(--zk-color-surface-container-low);
+}
+.z-listbox--stacking > .z-listbox-body > table > tbody:not(.z-listbox-emptybody) > tr.z-listitem-odd {
+    background: var(--zk-listbox-stripe-bg);
+}
+/* Selected card; declared after the stripe rule so selection wins. The data-label captions
+   invert too, else they stay grey on the selected fill. */
+.z-listbox--stacking > .z-listbox-body > table > tbody:not(.z-listbox-emptybody) > tr.z-listitem-selected {
+    border-color: var(--zk-listbox-selected-bg);
+    background: var(--zk-listbox-selected-bg);
+    color: var(--zk-listbox-selected-fg);
+}
+.z-listbox--stacking > .z-listbox-body > table > tbody:not(.z-listbox-emptybody) > tr.z-listitem-selected > td[data-label]::before {
+    color: var(--zk-listbox-selected-fg);
+}
+/* Empty-body placeholder ("No data") — span the full container. */
+.z-listbox--stacking > .z-listbox-body > table > tbody.z-listbox-emptybody,
+.z-listbox--stacking > .z-listbox-body > table > tbody.z-listbox-emptybody > tr,
+.z-listbox--stacking > .z-listbox-body > table > tbody.z-listbox-emptybody > tr > td {
+    display: block;
+    width: 100%;
+}
+
+/* ─── Footer: a full-width card below the item grid ─── */
+.z-listbox--stacking > .z-listbox-footer > table,
+.z-listbox--stacking > .z-listbox-footer > table > tbody:not(.z-listbox-emptybody) {
+    display: block;
+}
+.z-listbox--stacking > .z-listbox-footer > table > tbody:not(.z-listbox-emptybody) > tr {
+    display: flex;
+    flex-direction: column;
+    margin: 0 var(--zk-spacing-2) var(--zk-spacing-2);
+    border: 1px solid var(--zk-color-outline-variant);
+    border-radius: var(--zk-shape-card);
+    background: var(--zk-color-surface-container-low);
+    overflow: hidden;
+}
+.z-listbox--stacking > .z-listbox-footer > table > tbody:not(.z-listbox-emptybody) > tr > td {
+    display: block;
+    padding: var(--zk-listbox-cell-padding);
+    border-bottom: none;
+}
+/* Same single padding layer as the body cards: the <td> pads, its content div does not. */
+.z-listbox--stacking > .z-listbox-footer > table > tbody:not(.z-listbox-emptybody) > tr > td > .z-listfooter-content {
+    padding: 0;
+}
+.z-listbox--stacking > .z-listbox-footer > table > tbody:not(.z-listbox-emptybody) > tr
+        > td:not(.z-cell-hide-stacking):not(:empty)
+        ~ td:not(.z-cell-hide-stacking):not(:empty) {
+    border-top: 1px solid var(--zk-color-outline-variant);
+}
+.z-listbox--stacking > .z-listbox-footer > table > tbody:not(.z-listbox-emptybody) > tr > td:empty,
+.z-listbox--stacking > .z-listbox-footer > table > tbody:not(.z-listbox-emptybody) > tr > td.z-cell-hide-stacking {
+    display: none;
+}
+.z-listbox--stacking > .z-listbox-footer > table > tbody:not(.z-listbox-emptybody) > tr > td[data-label]:not([data-label=""])::before {
+    content: attr(data-label);
+    display: block;
+    margin-bottom: 2px;
+    font-size: var(--zk-typescale-body-small-size);
+    font-weight: 600;
+    color: var(--zk-color-on-surface-variant);
+}
+}

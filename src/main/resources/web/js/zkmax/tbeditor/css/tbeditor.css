@@ -250,4 +250,144 @@ body.z-tbeditor-body-fullscreen {
 .z-tbeditor-dropdown button:focus {
     background-color: var(--zk-color-surface-container);
 }
+
+/* ── Modal (insert image / link form) and overlay ────────────────────────── */
+/* ZK-2698 / ZK-3336 (IceBlue tbeditor.less): Trumbowyg appends .z-tbeditor-modal to <body> and sets
+ * its inline top / z-index and height; the theme must position it, or the dialog renders unstyled in
+ * the page flow below the editor. The overlay is appended to the editor box and only shown while a
+ * modal is open (the widget JS fades it in and out). */
+.z-tbeditor-modal {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    max-width: 520px;
+    width: 100%;
+    height: 350px;
+    z-index: 11;
+    overflow: hidden;
+}
+
+.z-tbeditor-modal-box {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    box-sizing: border-box;
+    max-width: 500px;
+    width: calc(100% - 20px);
+    padding-bottom: 45px;
+    z-index: 1;
+    background-color: var(--zk-tbeditor-popup-bg);
+    color: var(--zk-tbeditor-fg);
+    font-family: var(--zk-typescale-font-family);
+    font-size: var(--zk-typescale-body-medium-size);
+    border-radius: 0 0 var(--zk-tbeditor-popup-radius) var(--zk-tbeditor-popup-radius);
+    box-shadow: var(--zk-elevation-2);
+}
+
+.z-tbeditor-modal-title {
+    display: block;
+    margin: 0 0 var(--zk-spacing-4);
+    padding: var(--zk-spacing-3) var(--zk-spacing-4);
+    font-size: var(--zk-typescale-title-large-size);
+    line-height: var(--zk-typescale-title-large-line-height);
+    font-weight: var(--zk-typescale-title-large-weight);
+    text-align: center;
+    background-color: var(--zk-tbeditor-toolbar-bg);
+    border-bottom: 1px solid var(--zk-color-outline-variant);
+}
+
+/* Field row: label text above its control (the widget emits .input-infos > label > span, then
+ * .input-html > input). */
+.z-tbeditor-modal-box .z-tbeditor-input-row {
+    margin: var(--zk-spacing-3) var(--zk-spacing-4);
+    text-align: left;
+}
+
+.z-tbeditor-modal-box .z-tbeditor-input-infos {
+    display: block;
+    color: var(--zk-color-on-surface-variant);
+    font-size: var(--zk-typescale-body-small-size);
+}
+
+.z-tbeditor-modal-box .z-tbeditor-msg-error {
+    margin-left: var(--zk-spacing-2);
+    color: var(--zk-color-error);
+}
+
+.z-tbeditor-modal-box .z-tbeditor-input-html input,
+.z-tbeditor-modal-box .z-tbeditor-input-html select {
+    box-sizing: border-box;
+    width: 100%;
+    height: 36px;
+    padding: 0 var(--zk-spacing-3);
+    color: var(--zk-tbeditor-fg);
+    font: inherit;
+    background-color: var(--zk-tbeditor-bg);
+    border: 1px solid var(--zk-tbeditor-border-color);
+    border-radius: var(--zk-shape-input);
+}
+
+.z-tbeditor-modal-box .z-tbeditor-input-html input:hover {
+    border-color: var(--zk-color-on-surface);
+}
+
+.z-tbeditor-modal-box .z-tbeditor-input-html input:focus {
+    outline: none;
+    border-color: var(--zk-tbeditor-border-color-focus);
+    box-shadow: inset 0 0 0 1px var(--zk-tbeditor-border-color-focus);
+}
+
+.z-tbeditor-modal-box .z-tbeditor-input-error .z-tbeditor-input-html input {
+    border-color: var(--zk-color-error);
+}
+
+/* Confirm / Cancel sit at the bottom-right corner, over the box's bottom padding. */
+.z-tbeditor-modal-button {
+    position: absolute;
+    bottom: var(--zk-spacing-3);
+    right: 0;
+    display: block;
+    box-sizing: border-box;
+    width: 100px;
+    height: 36px;
+    margin: 0 var(--zk-spacing-3);
+    font: inherit;
+    font-weight: 500;
+    border: none;
+    border-radius: var(--zk-shape-button);
+    cursor: pointer;
+}
+
+.z-tbeditor-modal-submit {
+    right: 112px;
+    color: var(--zk-color-on-primary);
+    background-color: var(--zk-color-primary);
+}
+
+.z-tbeditor-modal-reset {
+    color: var(--zk-color-on-surface);
+    background-color: var(--zk-color-surface-container);
+}
+
+.z-tbeditor-modal-button:hover {
+    box-shadow: inset 0 0 0 100vmax color-mix(in srgb, currentColor calc(var(--zk-state-hover-opacity) * 100%), transparent);
+}
+
+.z-tbeditor-modal-button:focus-visible {
+    outline: var(--zk-focus-ring);
+    outline-offset: 2px;
+}
+
+.z-tbeditor-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    z-index: 10;
+    background-color: rgb(from var(--zk-color-surface) r g b / 0.5);
+}
 }

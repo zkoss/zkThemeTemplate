@@ -25,6 +25,8 @@
     position: relative;
     margin: var(--zk-spacing-4) auto;
     box-shadow: var(--zk-elevation-2);
+    /* ZK-4395 (IceBlue rule): clips the text layer spans that overflow the page. */
+    overflow: hidden;
 }
 
 /* Text selection overlay — structural opacity must not be removed.

@@ -116,6 +116,29 @@
     padding-bottom: var(--zk-spacing-3);
 }
 
+/* ─── Drag handle of a title-less panel ──────────────────────────────────── */
+/* panel.css hides .z-panel-drag-button, but Portallayout.ts uses it as the
+   Draggable handle when the panel has no caption (ZK-6072). In a framed column
+   it is shown at the top centre of the panel, as IceBlue did. */
+.z-portalchildren-frame .z-portalchildren-content > .z-panel {
+    position: relative;
+}
+
+.z-portalchildren-frame .z-portalchildren-content > .z-panel > .z-panel-drag-button {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1;
+    width: var(--zk-control-height-xs);
+    height: var(--zk-control-height-xs);
+    line-height: var(--zk-control-height-xs);
+    text-align: center;
+    color: var(--zk-color-on-surface-variant);
+    cursor: move;
+}
+
 /* ─── Panel-count badge ──────────────────────────────────────────────────── */
 /* Base: always in DOM, hidden by default */
 .z-portalchildren-counter {

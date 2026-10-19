@@ -32,6 +32,11 @@
     min-height: var(--zk-touch-input-height);
 }
 
+/* The combobox input reserves the button's width with its right padding (see combobox.css). */
+.z-combobox {
+    --zk-combobox-button-width: var(--zk-touch-target-min);
+}
+
 /* Dropdown / picker buttons → at least the minimum touch width, full input height */
 .z-combobox-button,
 .z-bandbox-button,

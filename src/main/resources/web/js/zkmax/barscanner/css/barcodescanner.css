@@ -2,5 +2,20 @@
 .z-barcodescanner {
     border: 1px solid var(--zk-color-outline-variant);
     border-radius: var(--zk-shape-corner-extra-small);
+    /* ZK-4095 (IceBlue rule): containing block of the absolutely positioned canvas below. */
+    position: relative;
+}
+
+/* ZK-4095 (IceBlue rule): the detection canvas (drawn by Barcodescanner.ts) must lie exactly over the
+   video, not below it. */
+.z-barcodescanner-canvas {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: 100%;
+    height: 100%;
 }
 }

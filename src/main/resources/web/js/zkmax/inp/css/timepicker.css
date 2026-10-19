@@ -17,7 +17,7 @@
     display: inline-flex;
     align-items: center;
     position: relative;
-    min-height: 36px;
+    min-height: var(--zk-control-height);
     border: 1px solid var(--zk-timepicker-border-color);
     border-radius: var(--zk-timepicker-radius);
     background-color: var(--zk-timepicker-bg);
@@ -72,7 +72,7 @@
     background: transparent;
     padding: 0 var(--zk-spacing-3);
     height: 100%;
-    min-height: 34px;
+    min-height: calc(var(--zk-input-height) - 2px);
     font-family: var(--zk-typescale-font-family);
     font-size: var(--zk-typescale-body-medium-size);
     color: var(--zk-timepicker-fg);
@@ -91,7 +91,7 @@
     align-items: center;
     justify-content: center;
     width: 36px;
-    min-height: 34px;
+    min-height: calc(var(--zk-input-height) - 2px);
     flex-shrink: 0;
     border: none;
     border-left: 1px solid var(--zk-timepicker-border-color);

@@ -14,6 +14,13 @@
 
 /* ─── Item link — default state ──────────────────────────────────────────── */
 @layer zk-components {
+/* ZK-4386 (IceBlue rule): Anchornav.ts adds .z-anchornav-fixed to the cave once the page is scrolled
+   past it, to pin it to the viewport top. */
+.z-anchornav-fixed {
+    position: fixed;
+    top: 0;
+}
+
 .z-anchornav .z-a {
     font-size: var(--zk-typescale-label-large-size);
     color: var(--zk-anchornav-fg);

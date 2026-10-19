@@ -18,6 +18,11 @@
        the mask comes from the elevation shadow on the dark scrim, not a brand fill. */
     /* positioned context for the absolutely-pinned close button */
     position: relative;
+    /* _fixPadding gives the root the pointer's room as padding; the card fills the rest so
+       the width / height attributes size the visible card. */
+    box-sizing: border-box;
+    height: 100%;
+    overflow: hidden;
     background-color: var(--zk-coachmark-bg);
     color: var(--zk-coachmark-fg);
     border-radius: var(--zk-coachmark-radius);

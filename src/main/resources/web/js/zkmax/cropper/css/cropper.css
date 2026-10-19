@@ -132,8 +132,12 @@
     text-align: left;
 }
 
-.z-cropper-holder img {
-    max-width: none; /* structural — Jcrop needs unconstrained image width for crop geometry */
+.z-cropper img {
+    /* structural — Jcrop needs unconstrained image width for crop geometry. Covers the source img too: Jcrop hides it
+       and measures it with jQuery width(), which swaps it back to display:block; under the global img{max-width:100%}
+       that resolves against the shrink-to-fit .z-cropper whose width in turn comes from the holder, so it settles at 0
+       (B86-ZK-4269). */
+    max-width: none;
 }
 
 .z-cropper-vline,

@@ -39,15 +39,15 @@
 }
 
 /* ─── Body: <tbody> becomes a CSS Grid of N cards per row (--zk-resp-cols) ─── */
-.z-grid--stacking .z-grid-body > table,
-.z-grid--stacking .z-grid-body > table > thead {
+.z-grid--stacking > .z-grid-body > table,
+.z-grid--stacking > .z-grid-body > table > thead {
     display: block;
 }
 /* Hide the inner column header row — its labels are surfaced per-cell via data-label. */
-.z-grid--stacking .z-grid-body > table > thead > tr {
+.z-grid--stacking > .z-grid-body > table > thead > tr {
     display: none;
 }
-.z-grid--stacking .z-grid-body > table > tbody:not(.z-grid-emptybody) {
+.z-grid--stacking > .z-grid-body > table > tbody:not(.z-grid-emptybody) {
     display: grid;
     grid-template-columns: repeat(var(--zk-resp-cols, 1), 1fr);
     gap: var(--zk-spacing-2);
@@ -55,7 +55,7 @@
     box-sizing: border-box;
 }
 /* Each <tr> becomes a card. */
-.z-grid--stacking .z-grid-body > table > tbody:not(.z-grid-emptybody) > tr {
+.z-grid--stacking > .z-grid-body > table > tbody:not(.z-grid-emptybody) > tr {
     display: flex;
     flex-direction: column;
     border: 1px solid var(--zk-color-outline-variant);
@@ -64,7 +64,7 @@
     overflow: hidden;
 }
 /* Each <td> becomes a key/value entry. */
-.z-grid--stacking .z-grid-body > table > tbody:not(.z-grid-emptybody) > tr > td {
+.z-grid--stacking > .z-grid-body > table > tbody:not(.z-grid-emptybody) > tr > td {
     display: block;
     padding: var(--zk-grid-cell-padding);
     border-top: none;
@@ -74,19 +74,19 @@
    another visible cell — a sibling selector that skips `.z-cell-hide-stacking`
    (display:none but still in the DOM), so a hidden last column never strands a
    border. */
-.z-grid--stacking .z-grid-body > table > tbody:not(.z-grid-emptybody) > tr
+.z-grid--stacking > .z-grid-body > table > tbody:not(.z-grid-emptybody) > tr
         > td:not(.z-cell-hide-stacking)
         ~ td:not(.z-cell-hide-stacking) {
     border-top: 1px solid var(--zk-color-outline-variant);
 }
 /* The <td> already pads the card entry; the cell's inner content div must not
    add a second layer, so the value lines up with the column label. */
-.z-grid--stacking .z-grid-body > table > tbody:not(.z-grid-emptybody) > tr > td > .z-row-content,
-.z-grid--stacking .z-grid-body > table > tbody:not(.z-grid-emptybody) > tr.z-groupfoot > td > .z-groupfoot-content {
+.z-grid--stacking > .z-grid-body > table > tbody:not(.z-grid-emptybody) > tr > td > .z-row-content,
+.z-grid--stacking > .z-grid-body > table > tbody:not(.z-grid-emptybody) > tr.z-groupfoot > td > .z-groupfoot-content {
     padding: 0;
 }
 /* Column label, injected from `data-label`. Empty / missing → no ::before. */
-.z-grid--stacking .z-grid-body > table > tbody:not(.z-grid-emptybody) > tr > td[data-label]:not([data-label=""])::before {
+.z-grid--stacking > .z-grid-body > table > tbody:not(.z-grid-emptybody) > tr > td[data-label]:not([data-label=""])::before {
     content: attr(data-label);
     display: block;
     margin-bottom: 2px;
@@ -95,36 +95,36 @@
     color: var(--zk-color-on-surface-variant);
 }
 /* Per-column hide: <column responsiveVisible="false">. */
-.z-grid--stacking .z-grid-body > table > tbody:not(.z-grid-emptybody) > tr > td.z-cell-hide-stacking,
-.z-grid--stacking .z-grid-body > table > tbody:not(.z-grid-emptybody) > tr.z-groupfoot > td.z-cell-hide-stacking {
+.z-grid--stacking > .z-grid-body > table > tbody:not(.z-grid-emptybody) > tr > td.z-cell-hide-stacking,
+.z-grid--stacking > .z-grid-body > table > tbody:not(.z-grid-emptybody) > tr.z-groupfoot > td.z-cell-hide-stacking {
     display: none;
 }
 /* Group / Groupfoot span all columns of the cards-per-row grid. */
-.z-grid--stacking .z-grid-body > table > tbody:not(.z-grid-emptybody) > tr.z-group,
-.z-grid--stacking .z-grid-body > table > tbody:not(.z-grid-emptybody) > tr.z-groupfoot {
+.z-grid--stacking > .z-grid-body > table > tbody:not(.z-grid-emptybody) > tr.z-group,
+.z-grid--stacking > .z-grid-body > table > tbody:not(.z-grid-emptybody) > tr.z-groupfoot {
     grid-column: 1 / -1;
 }
 /* <group> headers carry their own label (the group name) — no per-cell label. */
-.z-grid--stacking .z-grid-body > table > tbody:not(.z-grid-emptybody) > tr.z-group > td::before {
+.z-grid--stacking > .z-grid-body > table > tbody:not(.z-grid-emptybody) > tr.z-group > td::before {
     content: none;
 }
 /* Group / Groupfoot cards keep the table-mode tints (a `tr` card background
    would otherwise paint both white). */
-.z-grid--stacking .z-grid-body > table > tbody:not(.z-grid-emptybody) > tr.z-group {
+.z-grid--stacking > .z-grid-body > table > tbody:not(.z-grid-emptybody) > tr.z-group {
     background: var(--zk-color-surface-container);
 }
-.z-grid--stacking .z-grid-body > table > tbody:not(.z-grid-emptybody) > tr.z-groupfoot {
+.z-grid--stacking > .z-grid-body > table > tbody:not(.z-grid-emptybody) > tr.z-groupfoot {
     background: var(--zk-color-surface-container-low);
 }
 /* Odd-row stripe in cards. */
-.z-grid--stacking .z-grid-body > table > tbody:not(.z-grid-emptybody) > tr.z-grid-odd {
+.z-grid--stacking > .z-grid-body > table > tbody:not(.z-grid-emptybody) > tr.z-grid-odd {
     background: var(--zk-color-surface-container-lowest);
 }
 /* Empty-body placeholder ("No data available") — span the full container as a
    single block, otherwise the inner <td> collapses to the message width. */
-.z-grid--stacking .z-grid-body > table > tbody.z-grid-emptybody,
-.z-grid--stacking .z-grid-body > table > tbody.z-grid-emptybody > tr,
-.z-grid--stacking .z-grid-body > table > tbody.z-grid-emptybody > tr > td {
+.z-grid--stacking > .z-grid-body > table > tbody.z-grid-emptybody,
+.z-grid--stacking > .z-grid-body > table > tbody.z-grid-emptybody > tr,
+.z-grid--stacking > .z-grid-body > table > tbody.z-grid-emptybody > tr > td {
     display: block;
     width: 100%;
 }
