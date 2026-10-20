@@ -105,11 +105,17 @@
  * ZK's own `innerWidth − 20` centred width; `transform:none` cancels the inline
  * translateY and the shared keyframe restores the slide-up. !important is needed
  * to beat ZK's inline position/top/transform. The popup's own height (JS-set to
- * `_items × _itemHeight`) is preserved, so the iScroll list still scrolls. */
+ * `_items × _itemHeight`) is preserved, so the iScroll list still scrolls.
+ * The anchor is `100% - 100dvh` below and `100% - 100vw` on the right, not 0: a page wider than the screen makes the
+ * browser enlarge the layout viewport (up to 556px taller on a 600px-wide screen), and `position:fixed` is measured
+ * against that, so `bottom:0` sank below the visible area. `100%` is the layout viewport, `100dvh` / `100vw` the visible
+ * area; the difference is 0 on a page that fits. Cost: after the user pinches out or scrolls to the end of such a page
+ * the sheet floats by that difference above the bottom edge (still fully visible). */
 .z-combobox-popup {
     position: fixed !important;
-    /* inset: top right bottom left — pinned to bottom, 10px side gutters */
-    inset: auto 10px 0 !important;
+    /* inset: top right bottom left — pinned to the bottom of the visible area, 10px side gutters; see the note on the
+       anchor in the comment above */
+    inset: auto calc(100% - 100vw + 10px) calc(100% - 100dvh) 10px !important;
     width: auto !important;
     transform: none !important;
     /* The JS height (5 rows × 60px = 300px) must stand: the desktop cap of 280px would hide 20px of the last row. */
@@ -130,10 +136,13 @@
  * Pin the popup to the viewport bottom the same way as the combobox sheet and the wheel picker; !important is needed to
  * beat the inline `top` / `transform` the widget writes. The inline width is `auto`, which beats any `width` rule here
  * and, with left and right insets of 0, stretches the sheet across the viewport. `max-width: fit-content` caps it at
- * the width of the palette or picker it holds (never beyond the viewport) and the auto margins centre it. */
+ * the width of the palette or picker it holds (never beyond the viewport) and the auto margins centre it.
+ * The insets are `100% - 100vw` on the right and `100% - 100dvh` at the bottom, not 0, for the reason given at the
+ * combobox sheet: on a page wider than the screen the layout viewport is larger than the visible area and a fixed
+ * `bottom:0` landed below it. */
 .z-colorbox-popup {
     position: fixed !important;
-    inset: auto 0 0 !important;
+    inset: auto calc(100% - 100vw) calc(100% - 100dvh) 0 !important;
     transform: none !important;
     max-width: fit-content;
     margin-inline: auto;

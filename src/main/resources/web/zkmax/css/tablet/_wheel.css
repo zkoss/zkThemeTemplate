@@ -41,8 +41,12 @@
 .z-datebox-popup:has(.z-calendar-wheel-cave),
 .z-timebox-popup:has(.z-timebox-wheel-cave) {
     position: fixed !important;
-    /* inset: top right bottom left — 10px side gutters (ZK's innerWidth − 20, centred), pinned to bottom */
-    inset: auto 10px 0 !important;
+    /* inset: top right bottom left — 10px side gutters (ZK's innerWidth − 20, centred), pinned to the bottom of the
+       visible area. `100% - 100vw` / `100% - 100dvh` is the part of the layout viewport that the visible area does not
+       cover: a page wider than the screen enlarges the layout viewport that `position:fixed` is measured against, and
+       `bottom:0` would sink below the visible area. It is 0 on a page that fits. After a pinch-out or a scroll to the end
+       of such a page the sheet floats by that difference above the bottom edge (still fully visible). */
+    inset: auto calc(100% - 100vw + 10px) calc(100% - 100dvh) 10px !important;
     width: auto !important;
     transform: none !important;
     animation: zk-bottom-sheet-up var(--zk-motion-duration-medium2) var(--zk-motion-easing-emphasized-decelerate);
