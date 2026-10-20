@@ -112,6 +112,8 @@
     inset: auto 10px 0 !important;
     width: auto !important;
     transform: none !important;
+    /* The JS height (5 rows × 60px = 300px) must stand: the desktop cap of 280px would hide 20px of the last row. */
+    max-height: none;
     animation: zk-bottom-sheet-up var(--zk-motion-duration-medium2) var(--zk-motion-easing-emphasized-decelerate);
 }
 
@@ -119,4 +121,35 @@
    Matches the stock ZK theme growing .z-comboitem for touch. */
 .z-comboitem {
     min-height: var(--zk-touch-target-min);
+}
+
+/* ─── Colorbox popup bottom-sheet positioning (override colorbox-touch's inline `top` / `transform`) ─
+ * zkmax/touch/colorbox-touch.ts `_syncPosition` writes the same inline `top = innerHeight + scrollY` and the same
+ * `translateY(-outerHeight)` slide as the combobox sheet above, on a popup that `makeVParent` detached to <body>.
+ * The sheet is `position:absolute`, so that slide stretches the page and scrolls the trigger out of the viewport.
+ * Pin the popup to the viewport bottom the same way as the combobox sheet and the wheel picker; !important is needed to
+ * beat the inline `top` / `transform` the widget writes. The inline width is `auto`, which beats any `width` rule here
+ * and, with left and right insets of 0, stretches the sheet across the viewport. `max-width: fit-content` caps it at
+ * the width of the palette or picker it holds (never beyond the viewport) and the auto margins centre it. */
+.z-colorbox-popup {
+    position: fixed !important;
+    inset: auto 0 0 !important;
+    transform: none !important;
+    max-width: fit-content;
+    margin-inline: auto;
+}
+
+/* ─── Colorbox picker: RGB / HSV / HEX rows ───────────────────────────────────
+ * zkex colorbox.css pins the three rows at top 0 / 43 / 86px inside a 460px picker, a pitch that fits the 40px desktop
+ * inputs. The touch inputs above are 48px high, so the rows overlapped by 5px and the HEX input hung 4px out of the
+ * picker. Keep the desktop 3px gap between rows (43 − 40) and grow the picker by the extra height of the three
+ * rows (3 × (48 − 40) = 24px), so the HEX input ends the same 4px inside it as on the desktop. */
+.z-colorpicker-hsv {
+    top: calc(var(--zk-touch-input-height) + 3px);
+}
+.z-colorpicker-hex {
+    top: calc(2 * (var(--zk-touch-input-height) + 3px));
+}
+.z-colorpicker {
+    height: calc(460px + 3 * (var(--zk-touch-input-height) - 40px));
 }

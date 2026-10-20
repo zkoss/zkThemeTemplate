@@ -1,16 +1,11 @@
 /* ============================================================================
  * Tablet — window / panel
- * Taller headers and larger header affordances (close / min / max / expand).
+ * Larger header affordances (close / min / max / expand).
+ * The headers keep their desktop height (window 56px / panel 48px): both already reach the 48px comfortable touch
+ * target, and the 44px icons below fit inside them.
  * Close-affordance placement is unchanged — see doc/spec/md3-close-affordance-placement.md.
- * Marble desktop: window header 56px / panel header 48px; icons 28-32px.
+ * Marble desktop: icons 28-32px.
  * ========================================================================== */
-
-.z-window-header {
-    min-height: var(--zk-touch-target-comfortable);
-}
-.z-panel-header {
-    min-height: var(--zk-touch-target-comfortable);
-}
 
 /* Header buttons → minimum touch target + larger glyph */
 .z-window-icon,

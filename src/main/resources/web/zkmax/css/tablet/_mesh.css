@@ -34,8 +34,7 @@
 
 /* Header sort/menu buttons → comfortable hit area */
 .z-listheader-button,
-.z-column-button,
-.z-treecol-button {
+.z-column-button {
     width: var(--zk-touch-target-min);
     height: var(--zk-touch-target-min);
     font-size: var(--zk-touch-icon-size);
