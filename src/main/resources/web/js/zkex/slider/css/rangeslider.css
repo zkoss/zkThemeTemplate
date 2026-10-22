@@ -318,13 +318,6 @@
     transform: translateY(-50%);
 }
 
-/* Flipped by the widget (_placeTooltip) when the right side has no room: mirror the tooltip
-   to the left of the thumb with the same gap. */
-.z-rangeslider-vertical .z-sliderbuttons-tooltip-start {
-    left: auto;
-    right: calc(var(--zk-rangeslider-button-size) + var(--zk-rangeslider-tooltip-gap, 6px));
-}
-
 /* WCAG 1.4.13 Hoverable: the revealed tooltip must be reachable by the pointer.
    The bridge is anchored to the tooltip's own top/left edge and spans exactly the
    tooltip offset (-36px above, thumb size + gap to the right), i.e. it ends on the knob edge whatever the
@@ -356,8 +349,8 @@
     width: var(--zk-rangeslider-tooltip-gap);
 }
 
-/* Flipped tooltip: the bridge moves to its right side and still spans exactly the gap. */
-.z-rangeslider-vertical .z-sliderbuttons-button:hover .z-sliderbuttons-tooltip-start::after {
+/* ZK-6192: flipped tooltip (class set by Sliderbuttons.ts): the bridge moves to its right side and still spans exactly the gap. */
+.z-rangeslider-vertical .z-sliderbuttons-button:hover .z-sliderbuttons-tooltip-left::after {
     right: auto;
     left: 100%;
 }

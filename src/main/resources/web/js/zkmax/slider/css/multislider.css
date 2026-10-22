@@ -243,13 +243,6 @@
     transform: translateY(-50%);
 }
 
-/* Flipped by the widget (_placeTooltip) when the right side has no room: mirror the tooltip
-   to the left of the thumb with the same gap. */
-.z-multislider-vertical .z-sliderbuttons-tooltip-start {
-    left: auto;
-    right: calc(20px + var(--zk-rangeslider-tooltip-gap, 6px));
-}
-
 .z-sliderbuttons-button:hover .z-sliderbuttons-tooltip,
 .z-sliderbuttons-button:active .z-sliderbuttons-tooltip,
 .z-sliderbuttons-button:focus-visible .z-sliderbuttons-tooltip {
@@ -293,8 +286,8 @@
     width: var(--zk-rangeslider-tooltip-gap, 6px); /* tooltip offset minus the 20px thumb */
 }
 
-/* Flipped tooltip: the bridge moves to its right side and still spans exactly the gap. */
-.z-multislider-vertical .z-sliderbuttons-button:hover .z-sliderbuttons-tooltip-start::after {
+/* ZK-6192: flipped tooltip (class set by Sliderbuttons.ts): the bridge moves to its right side and still spans exactly the gap. */
+.z-multislider-vertical .z-sliderbuttons-button:hover .z-sliderbuttons-tooltip-left::after {
     right: auto;
     left: 100%;
 }
