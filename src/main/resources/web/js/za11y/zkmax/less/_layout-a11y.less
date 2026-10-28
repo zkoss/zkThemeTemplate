@@ -1,0 +1,47 @@
+/* _layout-a11y.less
+
+	Purpose:
+
+	Description:
+		Counterpart to zkmax/layout-a11y.ts.
+
+	History:
+		Wed Sep 09 2026, Created by peggypeng
+
+Copyright (C) 2026 Potix Corporation. All Rights Reserved.
+*/
+// WCAG 2.5.7 Dragging Movements - the move popup of layout-a11y.ts. The column list and the positions
+// of the chosen column sit side by side, like Cascader's levels. The base popup rules are in
+// portallayout.less and in the themes' own copies of it, so these are descendant-qualified to win.
+.z-portallayout-popup {
+	white-space: nowrap;
+
+	.z-portallayout-popup-content {
+		min-width: 0; // the base 100% would stack the lists
+		vertical-align: top;
+	}
+	.z-portallayout-popup-content + .z-portallayout-popup-content {
+		border-left: 1px solid @comboPopupBorderColor;
+		margin-left: 4px;
+		padding-left: 4px;
+	}
+	.z-portallayout-popup-nav {
+		position: relative;
+		&:hover {
+			background-color: @colorPrimaryLighter;
+		}
+	}
+	.z-portallayout-popup-content:first-child > .z-portallayout-popup-nav {
+		padding-right: 24px; // room for the caret, as Cascader's items have
+	}
+	.z-portallayout-popup-selected {
+		color: @colorPrimary;
+	}
+	// placed as Cascader's caret
+	.z-portallayout-popup-icon {
+		position: absolute;
+		right: 5px;
+		top: 50%;
+		transform: translateY(-50%);
+	}
+}

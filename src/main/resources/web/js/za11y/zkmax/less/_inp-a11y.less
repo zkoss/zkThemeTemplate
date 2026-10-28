@@ -1,0 +1,24 @@
+/* _inp-a11y.less
+
+	Purpose:
+
+	Description:
+		Counterpart to zkmax/inp-a11y.ts.
+
+	History:
+		Wed Sep 16 2026, Created by peggypeng
+
+Copyright (C) 2026 Potix Corporation. All Rights Reserved.
+*/
+// WCAG 1.4.10 Reflow - two side-by-side cascader caves (`min-width: 148px` each) exceed a 320px
+// viewport.
+.z-cascader-popup {
+	max-width: calc(100% - 16px);
+	overflow-x: auto;
+}
+
+// WCAG 1.4.10 Reflow - inp-a11y.ts keeps the popup at the control's width; this is the backstop
+// for content wider than that, which `min-width` alone cannot bound.
+.z-searchbox-popup {
+	max-width: calc(100% - 16px);
+}

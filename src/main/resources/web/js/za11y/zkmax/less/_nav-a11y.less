@@ -1,0 +1,19 @@
+/* _nav-a11y.less
+
+	Purpose:
+
+	Description:
+		Counterpart to zkmax/nav-a11y.ts.
+
+	History:
+		Wed Oct 14 2026, Created by peggypeng
+
+Copyright (C) 2026 Potix Corporation. All Rights Reserved.
+*/
+// WCAG 2.5.8 Target Size - the links an anchornav tracks are inline text; stacked in a list they sit
+// one text line apart and pass neither on size nor on spacing. line-height sizes the box only once
+// it is inline-block. :where() keeps the specificity at zero, so a page's own nav styling wins.
+:where(.z-anchornav a[data-anchornav-target]) {
+	display: inline-block;
+	line-height: @baseButtonHeight;
+}

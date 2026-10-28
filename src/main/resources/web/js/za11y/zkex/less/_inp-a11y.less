@@ -1,0 +1,17 @@
+/* _inp-a11y.less
+
+	Purpose:
+
+	Description:
+		Counterpart to zkex/inp-a11y.ts.
+
+	History:
+		Wed Sep 16 2026, Created by peggypeng
+
+Copyright (C) 2026 Potix Corporation. All Rights Reserved.
+*/
+// WCAG 1.4.10 Reflow - the palette (340px) and picker (310px) exceed a 320px viewport; the popup
+// already scrolls inside, so a cap keeps the grid reachable.
+.z-colorbox-popup {
+	max-width: calc(100% - 16px);
+}

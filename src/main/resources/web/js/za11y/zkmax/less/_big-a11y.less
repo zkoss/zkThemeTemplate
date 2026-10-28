@@ -1,0 +1,111 @@
+/* _big-a11y.less
+
+	Purpose:
+
+	Description:
+		Counterpart to zkmax/big-a11y.ts.
+
+	History:
+		Fri Oct 02 2026, Created by peggypeng
+
+Copyright (C) 2026 Potix Corporation. All Rights Reserved.
+*/
+// WCAG 2.5.8 Target Size - nothing else scrolls the grid or moves the frozen columns with a pointer,
+// so every part of the scrollbars and the frozen-column tick has to reach the minimum. The bar,
+// its gutter, the grip and the position marker grow together: WScroll measures the grip against
+// the marker to work out its range. big-a11y.ts starts the horizontal track clear of the tick.
+.z-biglistbox {
+	@grip: calc(4 * @baseButtonHeight + @biglistboxWscrollButtonBodySize - 1px);
+
+	> .z-biglistbox-outer {
+		margin: 0 @baseButtonHeight @baseButtonHeight 0;
+	}
+	> .z-biglistbox-verticalbar-tick {
+		.size(@baseButtonHeight, @baseButtonHeight);
+		bottom: 0;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		&:before {
+			position: static;
+		}
+	}
+	.z-biglistbox-wscroll-vertical {
+		width: @baseButtonHeight;
+		right: calc(-1px - @baseButtonHeight);
+		.z-biglistbox-wscroll-drag {
+			.size(@baseButtonHeight, @grip);
+			> div {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				width: @baseButtonHeight;
+				height: @baseButtonHeight;
+				&:before {
+					position: static;
+				}
+			}
+			.z-biglistbox-wscroll-up {
+				top: @baseButtonHeight;
+				&:hover, &:active {
+					top: calc(@baseButtonHeight - 1px);
+				}
+			}
+			.z-biglistbox-wscroll-body {
+				height: @biglistboxWscrollButtonBodySize;
+				top: calc(2 * @baseButtonHeight);
+				&:hover, &:active {
+					top: calc(2 * @baseButtonHeight - 1px);
+				}
+			}
+			.z-biglistbox-wscroll-down {
+				bottom: @baseButtonHeight;
+			}
+		}
+		.z-biglistbox-wscroll-pos {
+			.size(@baseButtonHeight, calc(@grip - 1px));
+		}
+		.z-biglistbox-wscroll-endbar {
+			width: @baseButtonHeight;
+		}
+	}
+	.z-biglistbox-wscroll-horizontal {
+		height: @baseButtonHeight;
+		bottom: calc(-1px - @baseButtonHeight);
+		.z-biglistbox-wscroll-drag {
+			.size(@grip, @baseButtonHeight);
+			> div {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				width: @baseButtonHeight;
+				height: @baseButtonHeight;
+				&:before {
+					position: static;
+				}
+			}
+			.z-biglistbox-wscroll-up {
+				left: @baseButtonHeight;
+				&:hover, &:active {
+					left: calc(@baseButtonHeight - 1px);
+				}
+			}
+			.z-biglistbox-wscroll-body {
+				width: @biglistboxWscrollButtonBodySize;
+				left: calc(2 * @baseButtonHeight);
+				&:hover, &:active {
+					left: calc(2 * @baseButtonHeight - 1px);
+				}
+			}
+			.z-biglistbox-wscroll-down {
+				right: @baseButtonHeight;
+			}
+		}
+		.z-biglistbox-wscroll-pos {
+			.size(calc(@grip - 1px), @baseButtonHeight);
+		}
+		.z-biglistbox-wscroll-endbar {
+			height: @baseButtonHeight;
+		}
+	}
+}

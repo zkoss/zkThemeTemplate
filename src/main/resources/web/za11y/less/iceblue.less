@@ -1,0 +1,29 @@
+/* iceblue.less
+
+	Purpose:
+		za11y's stylesheet for the iceblue family's default-profile themes: iceblue and the
+		theme-pack palettes built on it, ~./<theme>/za11y/css/iceblue.css.dsp in each theme jar.
+
+	Description:
+		za11y loads it for the themes listed with "iceblue" in its
+		metainfo/org/zkoss/za11y/theme/themes.properties.
+
+	History:
+		Wed Oct 07 2026, Created by peggypeng
+
+Copyright (C) 2026 Potix Corporation. All Rights Reserved.
+*/
+@import "~./zul/less/_header.less";
+
+@import "_iceblue-common.less";
+
+// WCAG 2.5.8 Target Size - a click beside a Chosenbox item's remove button lands on the item, which
+// focuses the input and opens the list instead. Default profile only: a compact item is too
+// short to hold the box.
+.z-chosenbox-item > .z-chosenbox-delete {
+	top: calc(@chosenboxButtonPositionTop - (@baseButtonHeight - @chosenboxIconSize) / 2);
+	right: calc(@chosenboxButtonPositionRight - (@baseButtonHeight - @chosenboxIconSize) / 2);
+	width: @baseButtonHeight;
+	height: @baseButtonHeight;
+	padding-top: calc((@baseButtonHeight - @chosenboxIconSize) / 2);
+}

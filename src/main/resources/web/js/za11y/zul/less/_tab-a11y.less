@@ -1,0 +1,30 @@
+/* _tab-a11y.less
+
+	Purpose:
+
+	Description:
+		Counterpart to zul/tab-a11y.ts.
+
+	History:
+		Fri Oct 02 2026, Created by peggypeng
+
+Copyright (C) 2026 Potix Corporation. All Rights Reserved.
+*/
+// WCAG 2.5.8 Target Size - Tab.ts binds the close handler to the glyph, not its wrapper, and a
+// click anywhere else in the tab selects it, so the glyph itself must reach the minimum.
+// The glyph also carries `.z-tab-icon`, whose `left` would push the larger box out of the tab.
+// The padding keeps the 1em glyph centred where that `left: 5px` draws it, 5px + 0.5em in. A glyph
+// under 14px would need negative padding, which clamps to 0, so a smaller one sits slightly right.
+.z-tab-button > .z-tab-icon {
+	left: 0;
+	width: @baseButtonHeight;
+	height: @baseButtonHeight;
+	padding-left: calc(10px + 1em - @baseButtonHeight);
+	line-height: @baseButtonHeight;
+}
+
+// Tabs on the right fall back to the margin meant for the wider padding of horizontal tabs, so
+// the label runs under the close button. Mirrors what tabbox.less does for tabs on the left.
+.z-tabbox-right > .z-tabs .z-tab-button + .z-tab-text {
+	margin-right: @tabboxTabButtonTextSpacing;
+}

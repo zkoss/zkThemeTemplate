@@ -1,0 +1,21 @@
+/* _wnd-a11y.less
+
+	Purpose:
+
+	Description:
+		Counterpart to zul/wnd-a11y.ts.
+
+	History:
+		Wed Sep 16 2026, Created by peggypeng
+
+Copyright (C) 2026 Potix Corporation. All Rights Reserved.
+*/
+// WCAG 1.4.10 Reflow - @messageboxWindowWidth is fixed (480px, 360px compact), so the dialog
+// cannot fit a 320px viewport.
+.z-messagebox-window {
+	max-width: 100%;
+}
+
+.z-messagebox {
+	max-width: calc(100% - @messageboxIconMarginLeft - @messageboxIconSize);
+}

@@ -1,0 +1,44 @@
+/* _slider-a11y.less
+
+	Purpose:
+
+	Description:
+		Counterpart to zkex/slider-a11y.ts. The styled element is
+		.z-sliderbuttons-tooltip, owned by zkex Sliderbuttons; Rangeslider (zkex)
+		and Multislider (zkmax) both host it, so both are covered here.
+
+	History:
+		Mon Sep 08 2026, Created by peggypeng
+
+Copyright (C) 2026 Potix Corporation. All Rights Reserved.
+*/
+// WCAG 1.4.13 Hoverable - the tooltip sits clear of the knob, so a pointer moving towards it
+// loses :hover in the gap. A transparent bridge keeps the two hit areas continuous.
+.z-sliderbuttons-button:hover .z-sliderbuttons-tooltip::after {
+	content: '';
+	position: absolute;
+}
+// Derived from the tooltip's own offset, so a theme that moves it further out still reaches.
+// Overshooting into the knob is harmless: the bridge's hit target is the tooltip itself.
+.z-rangeslider-horizontal,
+.z-multislider-horizontal {
+	.z-sliderbuttons-button:hover .z-sliderbuttons-tooltip::after {
+		left: 0;
+		right: 0;
+		top: 100%;
+		height: calc(2px - @rangesliderHorizontalTooltipPositionTop);
+	}
+}
+.z-rangeslider-vertical,
+.z-multislider-vertical {
+	.z-sliderbuttons-button:hover .z-sliderbuttons-tooltip::after {
+		top: 0;
+		bottom: 0;
+		right: 100%;
+		width: calc(@rangesliderVerticalTooltipPositionLeft + 2px);
+	}
+	.z-sliderbuttons-button:hover .z-sliderbuttons-tooltip-left::after {
+		left: 100%;
+		right: auto;
+	}
+}
