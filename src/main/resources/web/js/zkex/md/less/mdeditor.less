@@ -1,0 +1,159 @@
+@import "~./zul/less/_header.less";
+
+.z-mdeditor {
+	box-sizing: border-box;
+	display: flex;
+	flex-direction: column;
+	border: 1px solid @baseBorderColor;
+	overflow: hidden;
+
+	&:focus-within {
+		border-color: @inputFocusBorderColor;
+	}
+
+	&-toolbar {
+		flex: none;
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 2px;
+		padding: 4px 6px;
+		background: @baseBackgroundColor;
+		border-bottom: 1px solid @baseBorderColor;
+	}
+	&-toolbar-button {
+		box-sizing: border-box;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 28px;
+		height: 28px;
+		padding: 0;
+		border: 1px solid transparent;
+		border-radius: @borderRadiusSmall;
+		background: transparent;
+		color: @baseTextColor;
+		font-size: 14px;
+		line-height: 1;
+		cursor: pointer;
+		transition: color .1s ease, background-color .1s ease, border-color .1s ease;
+	}
+	// colorScheme="dark" puts the toolbar on the editor's dark surface too; these sit
+	// before :hover/:active, whose equal-specificity rules must still win
+	&-dark &-toolbar {
+		background: var(--zk-codeeditor-background);
+		border-bottom-color: var(--zk-codeeditor-gutter-color);
+	}
+	&-dark &-toolbar-button {
+		color: var(--zk-codeeditor-color);
+	}
+	&-toolbar-button:hover {
+		color: @iconHoverColor;
+		background: @hoverBackgroundColor;
+		border-color: @hoverBorderColor;
+	}
+	&-toolbar-button:active {
+		color: @activeColor;
+		background: @activeBackgroundColor;
+		border-color: @activeBorderColor;
+	}
+	&-toolbar-button:focus-visible,
+	&-preview-pane:focus-visible {
+		box-shadow: none;
+		outline: 2px solid @colorPrimary;
+		outline-offset: -2px;
+	}
+	&-toolbar-button:disabled {
+		opacity: .5;
+		cursor: default;
+		pointer-events: none;
+	}
+
+	&-body {
+		flex: auto;
+		display: flex;
+		min-height: 0;
+	}
+	&-cave,
+	&-preview-pane {
+		box-sizing: border-box;
+		flex: 1 1 50%;
+		min-width: 0;
+		height: 100%;
+		overflow: auto;
+	}
+	&-cave {
+		.cm-editor {
+			height: 100%;
+		}
+		.cm-scroller {
+			overflow: auto;
+		}
+	}
+	&-preview-pane {
+		padding: 8px;
+		font-family: @baseContentFontFamily;
+		font-size: @fontSizeMedium;
+		overflow-wrap: break-word;
+		border-left: 1px solid @baseBorderColor;
+	}
+	&-preview-pane > :first-child {
+		margin-top: 0;
+	}
+	&-preview-pane img {
+		max-width: 100%;
+	}
+
+	&-source &-preview-pane {
+		display: none;
+	}
+	&-source &-cave {
+		flex-basis: 100%;
+	}
+	&-preview &-cave {
+		display: none;
+	}
+	&-preview &-preview-pane {
+		flex-basis: 100%;
+		border-left: none;
+	}
+
+	&-dark {
+		.cm-editor {
+			background: var(--zk-codeeditor-background);
+			color: var(--zk-codeeditor-color);
+		}
+		.cm-gutters {
+			background: var(--zk-codeeditor-background);
+			color: var(--zk-codeeditor-gutter-color);
+			border: none;
+		}
+		.cm-activeLine {
+			background: var(--zk-codeeditor-active-line);
+		}
+		.cm-cursor,
+		.cm-dropCursor {
+			border-left-color: var(--zk-codeeditor-color);
+		}
+	}
+	&-dark &-preview-pane {
+		background: var(--zk-codeeditor-background);
+		color: var(--zk-codeeditor-color);
+		border-left-color: var(--zk-codeeditor-gutter-color);
+	}
+	&-dark &-preview-pane a {
+		color: var(--zk-codeeditor-token-keyword);
+	}
+	&-disabled {
+		opacity: .5;
+		.cm-editor {
+			pointer-events: none;
+		}
+	}
+	&-disabled &-preview-pane {
+		pointer-events: none;
+	}
+	&-disabled &-toolbar-button:disabled {
+		opacity: 1;
+	}
+}
