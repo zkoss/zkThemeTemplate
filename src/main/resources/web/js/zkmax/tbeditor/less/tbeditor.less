@@ -21,9 +21,13 @@
     height: 0;
     width: 0; }
 
+// Potix: the modal sits under -modal, not -box, so it needs its own reset
 .@{zprefix}-box *,
 .@{zprefix}-box *::before,
-.@{zprefix}-box *::after {
+.@{zprefix}-box *::after,
+.@{zprefix}-modal *,
+.@{zprefix}-modal *::before,
+.@{zprefix}-modal *::after {
   box-sizing: border-box; }
 
 .@{zprefix}-box svg {
@@ -53,6 +57,16 @@
 .@{zprefix}-editor-box .@{zprefix}-editor p {
     margin: 0 0 1em; // Potix: style modified
 }
+
+// Potix: ZK-5992 an inserted table has empty cells; outline them while editing so it can be seen and clicked into
+.@{zprefix}-editor table {
+  border-collapse: collapse; }
+  .@{zprefix}-editor th,
+  .@{zprefix}-editor td {
+    min-width: 2em;
+    height: 1.5em;
+    padding: 4px 8px;
+    border: 1px dashed #d7e0e2; }
 
 .@{zprefix}-box.@{zprefix}-fullscreen {
   background: #FEFEFE;
@@ -98,7 +112,7 @@
   font-family: "Inconsolata", "Consolas", "Courier", "Courier New", sans-serif;
   line-height: 18px; }
 
-.trumbowyg-editor-box {
+.@{zprefix}-editor-box {
   padding: 0;
 }
 
@@ -177,7 +191,8 @@
       width: auto;
       line-height: 35px; }
   .@{zprefix}-button-pane.@{zprefix}-disable button:not(.@{zprefix}-not-disable):not(.@{zprefix}-active),
-  .@{zprefix}-disabled .@{zprefix}-button-pane button:not(.@{zprefix}-not-disable):not(.@{zprefix}-viewHTML-button) {
+  .@{zprefix}-disabled .@{zprefix}-button-pane button:not(.@{zprefix}-not-disable):not(.@{zprefix}-viewHTML-button),
+  .@{zprefix}-button-pane button.@{zprefix}-disable { // Potix: ZK-5992: the history plugin disables Undo / Redo one at a time
     opacity: 0.2;
     cursor: default; }
   .@{zprefix}-button-pane.@{zprefix}-disable .@{zprefix}-button-group::before,
@@ -209,15 +224,21 @@
     .@{zprefix}-button-pane .@{zprefix}-right::before {
       display: none !important; }
 
+// Potix: max-height keeps a long dropdown (emoji) off the editors below; z-index must beat the button pane's 11
 .@{zprefix}-dropdown {
-  width: 200px;
-  border: 1px solid #ecf0f1;
+  max-width: 300px;
+  max-height: 250px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  white-space: nowrap;
+  border: 1px solid #d7e0e2;
   padding: 5px 0;
   border-top: none;
   background: #FFF;
+  color: #222;
   margin-left: -1px;
   box-shadow: rgba(0, 0, 0, 0.1) 0 2px 3px;
-  z-index: 11; }
+  z-index: 12; }
   .@{zprefix}-dropdown button {
     display: block;
     width: 100%;
@@ -248,7 +269,7 @@
   max-width: 520px;
   width: 100%;
   height: 350px;
-  z-index: 11;
+  z-index: 12;
   overflow: hidden;
   -webkit-backface-visibility: hidden;
           backface-visibility: hidden; }
@@ -266,6 +287,7 @@
   background-color: #FFF;
   text-align: center;
   font-size: 14px;
+  font-family: "Trebuchet MS", Helvetica, Verdana, sans-serif;
   box-shadow: rgba(0, 0, 0, 0.2) 0 2px 3px;
   -webkit-backface-visibility: hidden;
           backface-visibility: hidden; }
@@ -287,51 +309,76 @@
       background: #2BC06A;
       height: 100%;
       transition: width 150ms linear; }
-  .@{zprefix}-modal-box label {
-    display: block;
+  // Potix: 2.31 modal markup is input-row > (input-infos + input-html), not a <label> wrapper
+  .@{zprefix}-modal-box .@{zprefix}-input-row {
     position: relative;
     margin: 15px 12px;
-    height: 29px;
-    line-height: 29px;
+    border: 1px solid #DEDEDE;
     overflow: hidden; }
-    .@{zprefix}-modal-box label .@{zprefix}-input-infos {
-      display: block;
-      text-align: left;
-      height: 25px;
-      line-height: 25px;
-      transition: all 150ms; }
-      .@{zprefix}-modal-box label .@{zprefix}-input-infos span {
-        display: block;
-        color: #69878f;
-        background-color: #fbfcfc;
-        border: 1px solid #DEDEDE;
-        padding: 0 7px;
-        width: 150px; }
-      .@{zprefix}-modal-box label .@{zprefix}-input-infos span.@{zprefix}-msg-error {
-        color: #e74c3c; }
-    .@{zprefix}-modal-box label.@{zprefix}-input-error input,
-    .@{zprefix}-modal-box label.@{zprefix}-input-error textarea {
-      border: 1px solid #e74c3c; }
-    .@{zprefix}-modal-box label.@{zprefix}-input-error .@{zprefix}-input-infos {
-      margin-top: -27px; }
-    .@{zprefix}-modal-box label input {
+    .@{zprefix}-modal-box .@{zprefix}-input-infos {
       position: absolute;
+      left: 0;
       top: 0;
-      right: 0;
-      height: 27px;
-      line-height: 27px;
-      border: 1px solid #DEDEDE;
-      background: #fff;
-      font-size: 14px;
-      max-width: 330px;
-      width: 70%;
+      bottom: 0;
+      width: 150px;
       padding: 0 7px;
+      text-align: left;
+      background-color: #fbfcfc;
+      border-right: 1px solid #DEDEDE;
       transition: all 150ms; }
-      .@{zprefix}-modal-box label input:hover, .@{zprefix}-modal-box label input:focus {
-        outline: none;
-        border: 1px solid #95a5a6; }
-      .@{zprefix}-modal-box label input:focus {
-        background: #fbfcfc; }
+      .@{zprefix}-modal-box .@{zprefix}-input-infos label,
+      .@{zprefix}-modal-box .@{zprefix}-input-infos label span {
+        display: block;
+        height: 27px;
+        line-height: 27px;
+        overflow: hidden;
+        color: #69878f;
+        transition: all 150ms; }
+      .@{zprefix}-modal-box .@{zprefix}-input-infos .@{zprefix}-msg-error {
+        color: #e74c3c; }
+    .@{zprefix}-modal-box .@{zprefix}-input-html {
+      padding: 1px 1px 1px 152px; }
+      .@{zprefix}-modal-box .@{zprefix}-input-html,
+      .@{zprefix}-modal-box .@{zprefix}-input-html input,
+      .@{zprefix}-modal-box .@{zprefix}-input-html textarea,
+      .@{zprefix}-modal-box .@{zprefix}-input-html select {
+        font-size: 14px; }
+      .@{zprefix}-modal-box .@{zprefix}-input-html input,
+      .@{zprefix}-modal-box .@{zprefix}-input-html textarea,
+      .@{zprefix}-modal-box .@{zprefix}-input-html select {
+        width: 100%;
+        height: 27px;
+        line-height: 27px;
+        padding: 0 7px;
+        border: 0;
+        transition: all 150ms; }
+        .@{zprefix}-modal-box .@{zprefix}-input-html input:hover,
+        .@{zprefix}-modal-box .@{zprefix}-input-html input:focus,
+        .@{zprefix}-modal-box .@{zprefix}-input-html textarea:hover,
+        .@{zprefix}-modal-box .@{zprefix}-input-html textarea:focus,
+        .@{zprefix}-modal-box .@{zprefix}-input-html select:hover,
+        .@{zprefix}-modal-box .@{zprefix}-input-html select:focus {
+          outline: 1px solid #95a5a6; }
+        .@{zprefix}-modal-box .@{zprefix}-input-html input:focus,
+        .@{zprefix}-modal-box .@{zprefix}-input-html textarea:focus,
+        .@{zprefix}-modal-box .@{zprefix}-input-html select:focus {
+          background: #fbfcfc; }
+      // Potix: ZK-5992 norm.less strips the checkbox's appearance; the margins keep its row as tall as a text row
+      .@{zprefix}-modal-box .@{zprefix}-input-html input[type=checkbox] {
+        -webkit-appearance: checkbox;
+        -moz-appearance: checkbox;
+        appearance: auto;
+        display: block;
+        width: 16px;
+        height: 16px;
+        margin: 5px 7px 6px;
+        padding: 0; }
+    .@{zprefix}-modal-box .@{zprefix}-input-error input,
+    .@{zprefix}-modal-box .@{zprefix}-input-error textarea,
+    .@{zprefix}-modal-box .@{zprefix}-input-error select {
+      outline: 1px solid #e74c3c; }
+    .@{zprefix}-modal-box .@{zprefix}-input-error .@{zprefix}-input-infos label span:first-child {
+      margin-top: -27px; }
   .@{zprefix}-modal-box .error {
     margin-top: 25px;
     display: block;
@@ -558,30 +605,38 @@ body.@{zprefix}-body-fullscreen {
     border-bottom: 1px solid #555;
     color: #fff;
     background: #3c3c3c; }
-  .@{zprefix}-dark .@{zprefix}-modal-box label {
-    display: block;
-    position: relative;
-    margin: 15px 12px;
-    height: 27px;
-    line-height: 27px;
-    overflow: hidden; }
-    .@{zprefix}-dark .@{zprefix}-modal-box label .@{zprefix}-input-infos span {
+  .@{zprefix}-dark .@{zprefix}-modal-box .@{zprefix}-input-row {
+    border-color: #222; }
+    .@{zprefix}-dark .@{zprefix}-modal-box .@{zprefix}-input-infos {
       color: #eee;
       background-color: #2f2f2f;
-      border-color: #222; }
-    .@{zprefix}-dark .@{zprefix}-modal-box label .@{zprefix}-input-infos span.@{zprefix}-msg-error {
-      color: #e74c3c; }
-    .@{zprefix}-dark .@{zprefix}-modal-box label.@{zprefix}-input-error input,
-    .@{zprefix}-dark .@{zprefix}-modal-box label.@{zprefix}-input-error textarea {
-      border-color: #e74c3c; }
-    .@{zprefix}-dark .@{zprefix}-modal-box label input {
-      border-color: #222;
-      color: #eee;
-      background: #333; }
-      .@{zprefix}-dark .@{zprefix}-modal-box label input:hover, .@{zprefix}-dark .@{zprefix}-modal-box label input:focus {
-        border-color: #626262; }
-      .@{zprefix}-dark .@{zprefix}-modal-box label input:focus {
-        background-color: #2f2f2f; }
+      border-right-color: #222; }
+      .@{zprefix}-dark .@{zprefix}-modal-box .@{zprefix}-input-infos label,
+      .@{zprefix}-dark .@{zprefix}-modal-box .@{zprefix}-input-infos label span {
+        color: #eee; }
+      .@{zprefix}-dark .@{zprefix}-modal-box .@{zprefix}-input-infos .@{zprefix}-msg-error {
+        color: #e74c3c; }
+    .@{zprefix}-dark .@{zprefix}-modal-box .@{zprefix}-input-error input,
+    .@{zprefix}-dark .@{zprefix}-modal-box .@{zprefix}-input-error textarea,
+    .@{zprefix}-dark .@{zprefix}-modal-box .@{zprefix}-input-error select {
+      outline-color: #e74c3c; }
+  .@{zprefix}-dark .@{zprefix}-modal-box input,
+  .@{zprefix}-dark .@{zprefix}-modal-box textarea,
+  .@{zprefix}-dark .@{zprefix}-modal-box select {
+    border-color: #222;
+    color: #eee;
+    background: #333; }
+    .@{zprefix}-dark .@{zprefix}-modal-box input:hover,
+    .@{zprefix}-dark .@{zprefix}-modal-box input:focus,
+    .@{zprefix}-dark .@{zprefix}-modal-box textarea:hover,
+    .@{zprefix}-dark .@{zprefix}-modal-box textarea:focus,
+    .@{zprefix}-dark .@{zprefix}-modal-box select:hover,
+    .@{zprefix}-dark .@{zprefix}-modal-box select:focus {
+      border-color: #626262; }
+    .@{zprefix}-dark .@{zprefix}-modal-box input:focus,
+    .@{zprefix}-dark .@{zprefix}-modal-box textarea:focus,
+    .@{zprefix}-dark .@{zprefix}-modal-box select:focus {
+      background-color: #2f2f2f; }
   .@{zprefix}-dark .@{zprefix}-modal-box .@{zprefix}-modal-button.@{zprefix}-modal-submit {
     background: #1b7943; }
     .@{zprefix}-dark .@{zprefix}-modal-box .@{zprefix}-modal-button.@{zprefix}-modal-submit:hover, .@{zprefix}-dark .@{zprefix}-modal-box .@{zprefix}-modal-button.@{zprefix}-modal-submit:focus {
