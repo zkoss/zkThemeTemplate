@@ -7,6 +7,7 @@ echo ""
 themeSrcPath=src/main/java/org/zkoss/theme
 themeTemplatePath=$themeSrcPath/___THEME_NAME___
 webAppInitFile=$themeTemplatePath/___THEME_NAME_CAP___ThemeWebAppInit.java
+themeURIHandlerFile=$themeTemplatePath/___THEME_NAME_CAP___ThemeURIHandler.java
 
 templateFiles="pom.xml \
 readme.md \
@@ -14,6 +15,7 @@ package.json \
 src/test/java/zk/example/ThemePreviewApp.java \
 ${themeTemplatePath}/Version.java \
 ${webAppInitFile} \
+${themeURIHandlerFile} \
 src/main/resources/metainfo/zk/config.xml \
 src/main/resources/metainfo/zk/lang-addon.xml"
 
@@ -103,6 +105,7 @@ echo "  from: ${themeTemplatePath}"
 echo "    to: $themeSrcPath/$themeName"
 
 mv ${webAppInitFile} ${themeTemplatePath}/${themeNameCap}ThemeWebAppInit.java
+mv ${themeURIHandlerFile} ${themeTemplatePath}/${themeNameCap}ThemeURIHandler.java
 mv $themeTemplatePath/ $themeSrcPath/$themeName
 
 echo "All done."

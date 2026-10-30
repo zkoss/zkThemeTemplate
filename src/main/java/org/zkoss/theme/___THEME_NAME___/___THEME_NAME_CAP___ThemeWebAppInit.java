@@ -35,6 +35,7 @@ public class ___THEME_NAME_CAP___ThemeWebAppInit implements WebAppInit {
 	
 	public void init(WebApp webapp) throws Exception {
 		Themes.register(THEME_NAME, THEME_DISPLAY, THEME_PRIORITY);
+		webapp.getConfiguration().addThemeURIHandler(new ___THEME_NAME_CAP___ThemeURIHandler());
 		// Bug ZK-2963: register sapphire theme for tablet responsive theme
 		String edition = WebApps.getEdition();
 		if ("EE".equals(edition)) {
