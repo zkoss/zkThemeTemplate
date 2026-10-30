@@ -24,6 +24,7 @@ import org.zkoss.web.fn.ThemeFns;
 import org.zkoss.zk.ui.Execution;
 import org.zkoss.zk.ui.util.ThemeURIHandler;
 import org.zkoss.zk.ui.util.ThemeURIModifier;
+import org.zkoss.zul.theme.StandardThemeProvider;
 
 /**
  * Adds this theme's Font Awesome stylesheet when this theme is the current theme.
@@ -33,7 +34,6 @@ import org.zkoss.zk.ui.util.ThemeURIModifier;
 public class ___THEME_NAME_CAP___ThemeURIHandler implements ThemeURIHandler {
 	private static final String THEME_NAME = "___THEME_NAME___";
 	private static final String FONT_AWESOME = "~./zul/font/font-awesome.css.dsp";
-	private static final String WCS = "~./zul/css/zk.wcs";
 
 	public void modifyThemeURIs(Execution exec, ThemeURIModifier modifier) {
 		if (!THEME_NAME.equals(ThemeFns.getCurrentTheme()))
@@ -46,7 +46,7 @@ public class ___THEME_NAME_CAP___ThemeURIHandler implements ThemeURIHandler {
 	private static int indexOfWcs(List<StyleSheet> sheets) {
 		for (int j = 0; j < sheets.size(); ++j) {
 			final String href = sheets.get(j).getHref();
-			if (href != null && href.startsWith(WCS))
+			if (href != null && href.startsWith(StandardThemeProvider.DEFAULT_WCS))
 				return j;
 		}
 		return 0;
