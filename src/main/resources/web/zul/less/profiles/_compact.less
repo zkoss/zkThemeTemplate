@@ -333,7 +333,7 @@
     --zk-combobutton-toolbar-padding: var(--zk-combobutton-padding);
 
     // ComboInput (combobox, datebox, bandbox, timebox, spinner...)
-    --zk-combo-button-icon-size: 18px;
+    --zk-combo-button-icon-size: 12px; // Spinner arrows (the other combo buttons use -large)
     --zk-combo-button-icon-size-large: 18px;
     --zk-combo-button-padding: 2px;
     --zk-combo-button-min-width: 24px;
@@ -355,8 +355,7 @@
     --zk-combo-input-height: 24px;
     --zk-combo-input-padding-right: calc(var(--zk-input-padding-right) + var(--zk-combo-button-min-width));
     --zk-spinner-button-width: var(--zk-combo-button-min-width);
-    --zk-spinner-button-icon-height: calc(var(--zk-combo-input-height) / 2);
-    --zk-spinner-button-icon-transform: translateY(-4px);
+    --zk-spinner-button-icon-height: calc((var(--zk-combo-input-height) - 2px) / 2);
     --zk-spinner-button-icon-position-top: 50%;
     --zk-spinner-button-padding: 0;
     --zk-comboitem-padding: 3px;
