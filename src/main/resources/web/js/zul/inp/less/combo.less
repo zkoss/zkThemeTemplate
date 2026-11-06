@@ -61,6 +61,12 @@ each(@components, {
 			padding-right: @inputPaddingRight;
 		}
 
+		// ZK-6253: the button draws the right corners. Clip the input's corner strip under it,
+		// or the input's own rounded corners show through as a seam. Inplace hides the button.
+		&:not(&-inplace) > &-input:not(&-input-full) {
+			clip-path: inset(0 @baseBorderRadius 0 0);
+		}
+
 		&-button {
 			.iconFontStyle(@comboButtonIconSize, @comboButtonIconColor);
 			display: inline-block;
@@ -217,10 +223,6 @@ each(@components, {
 		height: @spinnerButtonIconHeight;
 		padding: @spinnerButtonPadding;
 		text-decoration: none;
-
-		> i {
-			.transform(@spinnerButtonIconTransform)
-		}
 
 		&:hover {
 			background: @comboButtonHoverBackgroundColor;
