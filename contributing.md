@@ -3,6 +3,8 @@ Contributions of all kinds are welcome!
 
 **Reporting Issues**
 
+\* To report a security vulnerability, do not use the issue tracker; follow [SECURITY.md](SECURITY.md) instead.
+
 \* Before creating an issue, please review open issues to avoid a duplicate.
 
 \* If you have a question, not an issue, please discuss it in [ZK Forum](https://forum.zkoss.org/questions/).
