@@ -115,6 +115,23 @@
 	}
 }
 
+.z-toolbar-icon-only > .z-toolbar-content {
+	> .z-toolbarbutton > .z-toolbarbutton-content > .z-toolbarbutton-label,
+	> .z-button > .z-button-label,
+	> tbody > tr > td > .z-toolbarbutton > .z-toolbarbutton-content > .z-toolbarbutton-label,
+	> tbody > tr > td > .z-button > .z-button-label {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		padding: 0;
+		margin: -1px;
+		overflow: hidden;
+		clip: rect(0, 0, 0, 0);
+		white-space: nowrap;
+		border: 0;
+	}
+}
+
 // Toolbar Panel Mold
 .z-toolbar-panel {
 	background-color: transparent;
